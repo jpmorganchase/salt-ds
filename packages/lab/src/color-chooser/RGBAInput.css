@@ -6,7 +6,7 @@
 
 .uitk-light .uitkColorChooser-rgbaInput {
   width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-black);
+  border-bottom: 1px solid var(--uitk-grey-900);
   padding-top: var(--uitk-spacing-unit);
 }
 

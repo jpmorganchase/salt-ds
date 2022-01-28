@@ -1,0 +1,8 @@
+.uitkColorTokenByStateValues {
+  display: flex;
+  justify-content: space-between;
+  height: 34px;
+}
+.uitkColorTokenByStateValues-container {
+  display: flex;
+}

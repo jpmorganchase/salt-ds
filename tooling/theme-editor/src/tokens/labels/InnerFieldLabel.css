@@ -4,17 +4,17 @@
   margin-top: 5px;
 }
 
-.uitkInnerFieldLabel-Large {
+.uitkInnerFieldLabel-large {
   font-size: var(--uitk-typography-size-50);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
 
-.uitkInnerFieldLabel-Medium {
+.uitkInnerFieldLabel-medium {
   font-size: var(--uitk-typography-size-40);
   font-weight: var(--uitk-typography-weight-regular);
 }
 
-.uitkInnerFieldLabel-Small {
+.uitkInnerFieldLabel-small {
   font-size: var(--uitk-typography-size-30);
   font-weight: var(--uitk-typography-weight-light);
 }

@@ -17,9 +17,9 @@ import {
   getHexValue,
 } from "./ColorHelpers";
 import { uitkColorMap } from "./colorMap";
-import { createTabsMapping } from "./createTabsMapping";
-import { getColorPalettes } from "./GetColorPalettes";
 import { ColorChooserTabs, DictTabs } from "./DictTabs";
+import { getColorPalettes } from "./GetColorPalettes";
+import { createTabsMapping } from "./createTabsMapping";
 
 import "./ColorChooser.css";
 
@@ -51,8 +51,10 @@ function getActiveTab(
 export interface ColorChooserProps {
   color: Color | undefined;
   defaultAlpha?: number;
+  density?: "touch" | "low" | "medium" | "high";
   disableAlphaChooser?: boolean;
   displayHexOnly?: boolean;
+  hideLabel?: boolean;
   onClear: () => void; // called when user clicks "default" button
   onSelect: (
     color: Color | undefined,
@@ -71,10 +73,12 @@ export const ColorChooser = ({
   onClear,
   onSelect,
   color,
+  density,
   showSwatches = true,
   showColorPicker = true,
   defaultAlpha = 1,
   disableAlphaChooser = false,
+  hideLabel = false,
   placeholder,
   buttonProps,
   UITKColorOverrides,
@@ -135,11 +139,13 @@ export const ColorChooser = ({
   const onTabClick = (index: number): void => {
     setActiveTab(index);
   };
-
+  console.log(color);
   return (
-    <ToolkitProvider density="high">
+    <ToolkitProvider density={density ?? "high"}>
       <Button
-        className={cn(withBaseName("overlayButton"))}
+        className={cn(withBaseName("overlayButton"), {
+          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+        })}
         data-testid="color-chooser-overlay-button"
         disabled={readOnly}
         ref={setRef}
@@ -151,15 +157,19 @@ export const ColorChooser = ({
             className={cn(withBaseName("overlayButtonSwatch"), {
               [withBaseName("overlayButtonSwatchWithBorder")]:
                 color?.hex.startsWith("#ffffff"),
+              [withBaseName("overlayButtonSwatchTransparent")]:
+                color?.hex === "#00000000",
             })}
             style={{
               backgroundColor: color?.hex,
             }}
           />
         )}
-        <div className={cn(withBaseName("overlayButtonText"))}>
-          {displayColorName ?? placeholder ?? "No color selected"}
-        </div>
+        {!hideLabel && (
+          <div className={withBaseName("overlayButtonText")}>
+            {displayColorName ?? placeholder ?? "No color selected"}
+          </div>
+        )}
       </Button>
       <Overlay
         adaExceptions={{ showClose: false }}

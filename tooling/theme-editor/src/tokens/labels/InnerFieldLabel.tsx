@@ -11,6 +11,7 @@ const withBaseName = makePrefixer("uitkInnerFieldLabel");
 interface InnerFieldLabelProps {
   fieldName: string;
   patternName: string;
+  size?: string;
   remainingJSON: JSONObj;
 }
 
@@ -26,13 +27,15 @@ export const InnerFieldLabel = (props: InnerFieldLabelProps): ReactElement => {
   }
 
   const label = props.fieldName.split("-").slice(-1)[0];
-
+  const variantClassName = props.size
+    ? withBaseName(`${props.size}`)
+    : undefined;
   return (
     <div
-      className={cn(withBaseName(), {
-        [withBaseName("Large")]: tokenPositionInPath === 1,
-        [withBaseName("Medium")]: tokenPositionInPath === 2,
-        [withBaseName("Small")]: tokenPositionInPath > 2,
+      className={cn(withBaseName(), variantClassName, {
+        [withBaseName("large")]: !props.size && tokenPositionInPath === 1,
+        [withBaseName("medium")]: !props.size && tokenPositionInPath === 2,
+        [withBaseName("small")]: !props.size && tokenPositionInPath > 2,
       })}
     >
       {label === "cta" ? "CTA" : (capitalize(label) as string)}

@@ -30,15 +30,16 @@ const hslaRegex = new RegExp(
 );
 
 type ColorValueEditorProps = {
-  uitkColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
   extractValue: (value: string) => string;
+  isStateValue?: boolean;
   label: string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   originalValue: string;
   pathToUpdate: string;
   scope: string;
   setValue: (value: string) => void;
+  uitkColorOverrides?: Record<string, string>;
   value: string;
 };
 
@@ -96,9 +97,12 @@ export const ColorValueEditor = (
 
   useEffect(() => {
     const updatedColor = Color.makeColorFromHex(
-      props.extractValue(props.value)
+      props.extractValue(
+        props.value.includes("fade")
+          ? props.value.split("-fade")[0]
+          : props.value
+      )
     );
-
     setSelectedColor(updatedColor);
     if (isRGBAColor(props.value) && props.value.split("*").length > 1) {
       setAlpha(getAlphaValueToken(props.value));
@@ -203,21 +207,42 @@ export const ColorValueEditor = (
     <div
       className={cn(withBaseName("input"), {
         [withBaseName("foundationColor")]: !props.characteristicsView,
+        [withBaseName("colorByState")]: props.isStateValue,
       })}
     >
       {!props.pathToUpdate.includes("fade") && (
         <div
           className={cn({
             [withBaseName("jumpToFoundation")]:
-              props.characteristicsView && !props.pathToUpdate.includes("fade"),
+              props.characteristicsView &&
+              !props.pathToUpdate.includes("fade") &&
+              !props.isStateValue,
             [withBaseName("jumpToFoundationNotColor")]:
               props.characteristicsView && props.pathToUpdate.includes("fade"),
           })}
         >
-          <div className={cn(withBaseName("colorInput"))}>
-            <div className={cn(withBaseName("field"), "uitkFormLabel")}>
-              {formFieldLabel}
-            </div>
+          <div
+            className={cn(withBaseName("colorInput"), {
+              [withBaseName("backgroundState")]: props.isStateValue,
+            })}
+          >
+            {!props.isStateValue && (
+              <div className={cn(withBaseName("field"), "uitkFormLabel")}>
+                {formFieldLabel}
+              </div>
+            )}
+            {props.isStateValue && (
+              <div
+                className={cn(
+                  "uitkFormLabel",
+                  withBaseName("backgroundStateField")
+                )}
+              >
+                {["H", "A", "D"].includes(formFieldLabel[0])
+                  ? formFieldLabel[0]
+                  : "R"}
+              </div>
+            )}
             <div
               className={cn({
                 [withBaseName("backgroundColorInput")]:
@@ -227,15 +252,16 @@ export const ColorValueEditor = (
               <ColorChooser
                 color={selectedColor}
                 displayHexOnly={!props.characteristicsView}
-                UITKColorOverrides={props.uitkColorOverrides}
+                hideLabel={props.isStateValue}
                 showSwatches={props.characteristicsView ? true : false}
                 showColorPicker={props.characteristicsView ? false : true}
                 onSelect={onSelect}
                 onClear={onClear}
+                UITKColorOverrides={props.uitkColorOverrides}
               />
             </div>
           </div>
-          {props.characteristicsView && (
+          {props.characteristicsView && !props.isStateValue && (
             <JumpToTokenButton
               disabled={
                 props.value.split("-").length < 2 ||
@@ -252,7 +278,8 @@ export const ColorValueEditor = (
 
       {props.characteristicsView &&
         isRGBAColor(props.value) &&
-        props.value.split("*").length > 1 && (
+        props.value.split("*").length > 1 &&
+        !props.isStateValue && (
           <OpacityField
             alphaValue={alphaValue}
             formFieldLabel={formFieldLabel}

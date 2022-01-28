@@ -7,7 +7,7 @@
 }
 
 .uitk-light {
-  /* TODO: Design, scrim bgs should be in overlayable or containable. */
+  /* TODO: Design, scrim bgs should be in overlayable or container. */
   /* Black fade 80 */
   --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.8);
   /* TODO: Design, this is called scrim 'light' (not secondary) in Figma */

@@ -208,7 +208,7 @@ var UITK_CHARACTERISTICS = [
   "container",
   "disabled",
   "editable",
-  "focusable",
+  "focused",
   "icon",
   "navigable",
   "overlayable",

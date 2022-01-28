@@ -1,5 +1,9 @@
 .uitkColorChooser-overlayButtonSwatch {
   margin-right: 10px;
+  height: calc(2 * var(--uitk-spacing-unit));
+  width: calc(2 * var(--uitk-spacing-unit));
+}
+.uitk-density-high .uitkColorChooser-overlayButtonSwatch {
   height: calc(3 * var(--uitk-spacing-unit));
   width: calc(3 * var(--uitk-spacing-unit));
 }
@@ -8,18 +12,29 @@
   border: 0.2px solid var(--uitk-grey-600);
 }
 
+.uitkColorChooser-overlayButtonSwatchTransparent {
+  border: 0.2px solid var(--uitk-red-500);
+  background: linear-gradient(to bottom right, var(--uitk-white), var(--uitk-white) 50%, var(--uitk-red-500) 50%, var(--uitk-white));
+}
+
 .uitkColorChooser-overlayButtonText {
   color: var(--uitk-text-primary-color);
   font-weight: var(--uitk-typography-weight-regular);
   font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
   font-size: var(--uitk-typography-size-regular-unit);
   letter-spacing: normal;
+  color: var(--uitk-text-primary-color);
 }
 
 .uitkColorChooser-overlayButton {
   background-color: transparent;
   text-transform: none;
   justify-content: flex-start;
+}
+
+.uitkColorChooser-overlayButtonHiddenLabel {
+  width: calc(var(--uitk-spacing-unit) * 3);
+  display: contents;
 }
 
 .uitkColorChooser-overlayButtonClose {

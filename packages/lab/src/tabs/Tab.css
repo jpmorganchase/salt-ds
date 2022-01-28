@@ -18,9 +18,9 @@
   --uitk-input-min-width: 4em;
   --uitk-link-text-decoration: none;
   --uitk-link-text-decoration: none;
-  --uitk-focusable-outline-offset: -2px;
-  --uitk-focusable-outline-top: 0px;
-  --uitk-focusable-outline-bottom: 2px;
+  --uitk-focused-outline-offset: -2px;
+  --uitk-focused-outline-top: 0px;
+  --uitk-focused-outline-bottom: 2px;
   --tab-bar-color: var(--uitk-grey-90);
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-spacing-unit);
