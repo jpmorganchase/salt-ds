@@ -6,15 +6,16 @@ import { Color } from "./Color";
 const withBaseName = makePrefixer("uitkColorChooserSwatch");
 
 interface SwatchProps {
+  active: boolean;
+  alpha: number;
   color: string;
   onClick: (
     color: Color | undefined,
     finalSelection: boolean,
     e?: React.ChangeEvent
   ) => void;
-  active: boolean;
-  alpha: number;
   onDialogClosed: () => void;
+  transparent?: boolean;
 }
 
 export const withHandleFocus =
@@ -38,11 +39,15 @@ export const Swatch = ({
   active,
   alpha,
   onDialogClosed,
+  transparent = false,
 }: SwatchProps): JSX.Element => {
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
-    const newColor = Color.makeColorFromHex(color)?.setAlpha(alpha);
+    const newColor = Color.makeColorFromHex(color);
+    // Handle transparency
+    color === "#00000000" ? newColor?.setAlpha(0) : newColor?.setAlpha(alpha);
+
     onClick(newColor, true);
     onDialogClosed();
   };
@@ -65,14 +70,20 @@ export const Swatch = ({
   };
   const isWhite = (color: string): boolean => color === "white";
 
+  const getBackgroundColor = () => {
+    const backgroundColor = Color.makeColorFromHex(color);
+    return backgroundColor?.setAlpha(alpha).hex;
+  };
+
   return (
     <div
       data-testid={`swatch-${color}`}
       style={{
-        background: Color.makeColorFromHex(color)?.setAlpha(alpha).hex,
+        background: getBackgroundColor(),
       }}
       className={cn({
         [withBaseName("active")]: active,
+        [withBaseName("transparent")]: transparent,
         [withBaseName("greySwatch")]: isBlackOrGrey(color),
         [withBaseName("whiteSwatch")]: isWhite(color),
         [withBaseName("swatch")]: !isWhite(color) && !isBlackOrGrey(color),

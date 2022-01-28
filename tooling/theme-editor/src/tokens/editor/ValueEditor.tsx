@@ -16,6 +16,7 @@ const withBaseName = makePrefixer("uitkValueEditor");
 interface ValueEditorProps {
   characteristicsView?: boolean;
   extractValue: (value: string) => string;
+  isStateValue?: boolean;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   patternName: string;
   scope: string;
@@ -73,12 +74,13 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
 
   return (
     <div className={cn(withBaseName())}>
-      {isColor(props.extractValue(value)).length ? (
+      {props.isStateValue || isColor(props.extractValue(value)).length ? (
         <div className={cn(withBaseName("colorInput"))}>
           <ColorValueEditor
             uitkColorOverrides={props.uitkColorOverrides}
             characteristicsView={props.characteristicsView}
             extractValue={props.extractValue}
+            isStateValue={props.isStateValue}
             key={`colorswatch-${valueName}`}
             label={valueName}
             onUpdateJSON={props.onUpdateJSON}

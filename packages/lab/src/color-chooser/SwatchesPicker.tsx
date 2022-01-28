@@ -52,6 +52,11 @@ const SwatchesGroup = ({
       isBlackOrWhite(color)
     );
   };
+
+  const isTransparent = (color: string): boolean => {
+    return color.toLowerCase() === "#00000000";
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {swatchGroup
@@ -66,6 +71,7 @@ const SwatchesGroup = ({
             onClick={onClick}
             onDialogClosed={onDialogClosed}
             alpha={alpha}
+            transparent={isTransparent(color)}
           />
         ))}
     </div>

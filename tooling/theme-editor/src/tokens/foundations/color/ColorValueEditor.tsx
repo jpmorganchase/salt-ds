@@ -6,11 +6,17 @@ import {
   Color,
   ColorChooser,
   getColorNameByHexValue,
+  Tooltip,
 } from "@brandname/lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { UITK_COLOURS } from "../../../utils/uitkValues";
-import { OpacityField } from "./OpacityField";
+import { ActiveIcon } from "../../../icons/components/ActiveIcon";
+import { DisabledIcon } from "../../../icons/components/DisabledIcon";
+import { ErrorIcon } from "../../../icons/components/ErrorIcon";
+import { HoverIcon } from "../../../icons/components/HoverIcon";
+import { RegularIcon } from "../../../icons/components/RegularIcon";
+import { WarningIcon } from "../../../icons/components/WarningIcon";
 import "./ColorValueEditor.css";
 
 const withBaseName = makePrefixer("uitkColorValueEditor");
@@ -30,15 +36,16 @@ const hslaRegex = new RegExp(
 );
 
 type ColorValueEditorProps = {
-  uitkColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
   extractValue: (value: string) => string;
+  isStateValue?: boolean;
   label: string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   originalValue: string;
   pathToUpdate: string;
   scope: string;
   setValue: (value: string) => void;
+  uitkColorOverrides?: Record<string, string>;
   value: string;
 };
 
@@ -71,8 +78,23 @@ export function isColor(value: string): string {
   return "";
 }
 
-const getAlphaValueToken = (value: string) => {
-  return value.split("*")[1].replace(")", "");
+const StateIcon = (iconInitial: string) => {
+  switch (iconInitial) {
+    case "A":
+      return <ActiveIcon />;
+    case "D":
+      return <DisabledIcon />;
+    case "H":
+      return <HoverIcon />;
+    case "R":
+      return <RegularIcon />;
+    case "E":
+      return <ErrorIcon />;
+    case "W":
+      return <WarningIcon />;
+    default:
+      return iconInitial;
+  }
 };
 
 export const ColorValueEditor = (
@@ -81,12 +103,8 @@ export const ColorValueEditor = (
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
     undefined
   );
-  const [alphaValue, setAlpha] = useState<string | undefined>(undefined);
-  const alphaValuePattern = useMemo(() => {
-    return alphaValue ? alphaValue.split("-").slice(1)[0] : undefined;
-  }, [alphaValue]);
 
-  const formFieldLabel = useMemo(() => {
+  const formFieldLabel: string = useMemo(() => {
     return props.pathToUpdate.includes("fade")
       ? `${capitalize(props.pathToUpdate.split("-")[0]) as string} ${
           props.label
@@ -96,15 +114,13 @@ export const ColorValueEditor = (
 
   useEffect(() => {
     const updatedColor = Color.makeColorFromHex(
-      props.extractValue(props.value)
+      props.extractValue(
+        props.value.includes("fade")
+          ? props.value.split("-fade")[0]
+          : props.value
+      )
     );
-
     setSelectedColor(updatedColor);
-    if (isRGBAColor(props.value) && props.value.split("*").length > 1) {
-      setAlpha(getAlphaValueToken(props.value));
-    } else {
-      setAlpha(updatedColor?.rgba.a.toString());
-    }
   }, [props.extractValue, props.value]);
 
   const onSelect = (color: Color | undefined, finalSelection: boolean) => {
@@ -115,7 +131,11 @@ export const ColorValueEditor = (
   const onColorClose = (chosenColor: Color | undefined) => {
     if (chosenColor) {
       const colorName = getColorNameByHexValue(chosenColor.hex);
-      if (colorName && !colorName?.startsWith("#")) {
+      if (
+        colorName &&
+        !colorName?.startsWith("#") &&
+        chosenColor.rgba.a === 1 // Only use token if no alpha value set
+      ) {
         const colorParts = colorName.match(/[a-z]+|[^a-z]+/gi);
         if (colorParts?.length === 2) {
           const token = `uitk-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
@@ -125,50 +145,14 @@ export const ColorValueEditor = (
         const { r, g, b, a } = { ...chosenColor.rgba };
         const newColor =
           `rgb` +
-          (a ? `a` : ``) +
+          (a !== null ? `a` : ``) +
           `(${r}, ${g}, ${b}` +
-          (a
-            ? `, ${
-                alphaValue
-                  ? parseFloat(alphaValue)
-                    ? alphaValue
-                    : parseFloat(props.extractValue(alphaValue))
-                    ? `*${alphaValue}*`
-                    : a
-                  : a
-              }`
-            : ``) +
+          (a !== null ? `, ${a}` : ``) +
           `)`;
+
         props.onUpdateJSON(newColor, props.pathToUpdate, props.scope);
       }
       setSelectedColor(chosenColor);
-    }
-  };
-
-  const onAlphaClose = () => {
-    if (selectedColor) {
-      const { r, g, b, a } = { ...selectedColor?.rgba };
-      if (
-        alphaValue &&
-        (parseFloat(props.extractValue(alphaValue)) || parseFloat(alphaValue))
-      ) {
-        const newColor =
-          `rgb` +
-          (a ? `a` : ``) +
-          `(${r}, ${g}, ${b}` +
-          (a
-            ? `, ${
-                parseFloat(props.extractValue(alphaValue))
-                  ? `*${alphaValue}*`
-                  : parseFloat(alphaValue)
-              }`
-            : ``) +
-          `)`;
-
-        props.onUpdateJSON(newColor, props.pathToUpdate, props.scope);
-      } else {
-        setAlpha(getAlphaValueToken(props.originalValue));
-      }
     }
   };
 
@@ -177,47 +161,58 @@ export const ColorValueEditor = (
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
-  const onAlphaChange = (alpha: string) => {
-    if (selectedColor) {
-      const { r, g, b, a } = { ...selectedColor.rgba };
-      if (parseFloat(alpha)) {
-        const updatedColor = Color.makeColorFromRGB(r, g, b, parseFloat(alpha));
-        setSelectedColor(updatedColor);
-      } else {
-        const tokenValue = props.extractValue(alpha);
-        if (parseFloat(tokenValue)) {
-          const updatedColor = Color.makeColorFromRGB(
-            r,
-            g,
-            b,
-            parseFloat(tokenValue)
-          );
-          setSelectedColor(updatedColor);
-        }
-      }
-    }
-    setAlpha(alpha ?? "");
-  };
-
   return (
     <div
       className={cn(withBaseName("input"), {
         [withBaseName("foundationColor")]: !props.characteristicsView,
+        [withBaseName("colorByState")]: props.isStateValue,
       })}
     >
       {!props.pathToUpdate.includes("fade") && (
         <div
           className={cn({
             [withBaseName("jumpToFoundation")]:
-              props.characteristicsView && !props.pathToUpdate.includes("fade"),
+              props.characteristicsView &&
+              !props.pathToUpdate.includes("fade") &&
+              !props.isStateValue,
             [withBaseName("jumpToFoundationNotColor")]:
               props.characteristicsView && props.pathToUpdate.includes("fade"),
           })}
         >
-          <div className={cn(withBaseName("colorInput"))}>
-            <div className={cn(withBaseName("field"), "uitkFormLabel")}>
-              {formFieldLabel}
-            </div>
+          <div
+            className={cn(withBaseName("colorInput"), {
+              [withBaseName("colorStates")]: props.isStateValue,
+            })}
+          >
+            {!props.isStateValue && (
+              <div className={cn(withBaseName("field"), "uitkFormLabel")}>
+                {formFieldLabel}
+              </div>
+            )}
+            {props.isStateValue && (
+              <Tooltip
+                title={
+                  formFieldLabel === "Color" || formFieldLabel === "Background"
+                    ? "Regular"
+                    : formFieldLabel
+                }
+                placement="top-start"
+              >
+                <div
+                  className={cn(
+                    "uitkFormLabel",
+                    withBaseName("colorStatesField")
+                  )}
+                >
+                  {formFieldLabel !== "Background" &&
+                  formFieldLabel !== "Color" ? (
+                    StateIcon(formFieldLabel[0])
+                  ) : (
+                    <RegularIcon />
+                  )}
+                </div>
+              </Tooltip>
+            )}
             <div
               className={cn({
                 [withBaseName("backgroundColorInput")]:
@@ -227,15 +222,16 @@ export const ColorValueEditor = (
               <ColorChooser
                 color={selectedColor}
                 displayHexOnly={!props.characteristicsView}
-                UITKColorOverrides={props.uitkColorOverrides}
+                hideLabel={props.isStateValue}
                 showSwatches={props.characteristicsView ? true : false}
                 showColorPicker={props.characteristicsView ? false : true}
                 onSelect={onSelect}
                 onClear={onClear}
+                UITKColorOverrides={props.uitkColorOverrides}
               />
             </div>
           </div>
-          {props.characteristicsView && (
+          {props.characteristicsView && !props.isStateValue && (
             <JumpToTokenButton
               disabled={
                 props.value.split("-").length < 2 ||
@@ -249,18 +245,6 @@ export const ColorValueEditor = (
           )}
         </div>
       )}
-
-      {props.characteristicsView &&
-        isRGBAColor(props.value) &&
-        props.value.split("*").length > 1 && (
-          <OpacityField
-            alphaValue={alphaValue}
-            formFieldLabel={formFieldLabel}
-            alphaValuePattern={alphaValuePattern ?? ""}
-            onAlphaChange={onAlphaChange}
-            onAlphaClose={onAlphaClose}
-          />
-        )}
     </div>
   );
 };

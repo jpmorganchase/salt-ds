@@ -9,7 +9,7 @@ import {
   capitalize,
 } from "@brandname/lab";
 import { JSONObj } from "../../helpers/parseToJson";
-import { ChildrenValues } from "../ChildrenValues";
+import { ChildrenValuesWithinSection } from "../ChildrenValues";
 import { ScopeLabel } from "../labels/ScopeLabel";
 import "./Characteristics.css";
 
@@ -81,16 +81,15 @@ export const CharacteristicPattern = (
                         : [props.values[scope][node], node];
 
                     return (
-                      <ChildrenValues
+                      <ChildrenValuesWithinSection
                         characteristicsView={true}
-                        uitkColorOverrides={props.uitkColorOverrides}
                         children={values}
+                        uitkColorOverrides={props.uitkColorOverrides}
                         extractValue={props.extractValue}
                         fieldName={fieldName}
-                        key={`${props.themeName}-${props.patternName}${node}`}
                         onUpdateJSON={props.onUpdateJSON}
                         patternName={props.patternName}
-                        scope={scope}
+                        scope={props.scope}
                       />
                     );
                   })}

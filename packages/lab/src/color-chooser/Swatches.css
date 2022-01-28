@@ -24,9 +24,22 @@
   color: var(--uitk-color-grey-70);
 }
 
+.uitkColorChooserSwatches-alphaTextDiv {
+  font-size: var(--uitk-typography-size-regular-unit);
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitk-light .uitkColorChooserSwatches-alphaTextDiv {
+  color: var(--uitk-color-grey-200);
+}
+
+.uitk-dark .uitkColorChooserSwatches-alphaTextDiv {
+  color: var(--uitk-color-grey-70);
+}
+
 .uitkColorChooserSwatches-textDiv {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 8px 8px 0px 8px;
 }
 

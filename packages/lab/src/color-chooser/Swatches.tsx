@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
+import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
 import "./Swatches.css";
@@ -38,10 +39,23 @@ export const Swatches = ({
       onDialogClosed={onDialogClosed}
     />
     <div className={cn(withBaseName("textDiv"))}>
-      <span className={cn(withBaseName("colorTextDiv"))}>Color:</span>
-      <span className={cn(withBaseName("colorNameTextDiv"))}>
-        {displayColorName ?? placeholder}
-      </span>
+      <div>
+        <span className={cn(withBaseName("colorTextDiv"))}>Color:</span>
+        <span className={cn(withBaseName("colorNameTextDiv"))}>
+          {displayColorName ?? placeholder}
+        </span>
+      </div>
+      <div>
+        <span className={cn(withBaseName("alphaTextDiv"))}>Opacity:</span>
+        <AlphaInput
+          alphaValue={color?.rgba.a === 0 ? 0 : alpha}
+          showAsOpacity={true}
+          onSubmit={(alpha: number, e?: React.ChangeEvent): void => {
+            const newColor = color?.setAlpha(alpha);
+            handleColorChange(newColor, false, e);
+          }}
+        />
+      </div>
     </div>
   </div>
 );
