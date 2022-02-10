@@ -1,0 +1,5 @@
+.uitkFlowLayout {
+  /*  gap is defined by density, but it can change with row-gap and column-gap*/
+  /* TODO: this should probably be a characteristic of layouts*/
+  gap: 2px;
+}
