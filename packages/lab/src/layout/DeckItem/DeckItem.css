@@ -1,0 +1,40 @@
+.uitkDeckItem {
+  opacity: 0;
+}
+
+.uitkDeckItem-hidden {
+  display: none;
+}
+
+.uitkDeckItem-current {
+  display: block;
+  opacity: 1;
+}
+
+.uitkDeckItem-slide-in-top {
+  animation: var(--uitk-slide-in-top);
+}
+.uitkDeckItem-slide-in-bottom {
+  animation: var(--uitk-slide-in-bottom);
+}
+.uitkDeckItem-slide-in-left {
+  animation: var(--uitk-slide-in-left);
+}
+.uitkDeckItem-slide-in-right {
+  animation: var(--uitk-slide-in-right);
+}
+.uitkDeckItem-slide-out-top {
+  animation: var(--uitk-slide-out-top);
+}
+.uitkDeckItem-slide-out-bottom {
+  animation: var(--uitk-slide-out-bottom);
+}
+.uitkDeckItem-slide-out-left {
+  animation: var(--uitk-slide-out-left);
+}
+.uitkDeckItem-slide-out-right {
+  animation: var(--uitk-slide-out-right);
+}
+.uitkDeckItem-fade-in {
+  animation: var(--uitk-fade-in-center);
+}
