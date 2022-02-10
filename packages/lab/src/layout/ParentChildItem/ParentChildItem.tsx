@@ -1,0 +1,57 @@
+import { forwardRef, CSSProperties } from "react";
+import cx from "classnames";
+
+import { makePrefixer } from "@brandname/core";
+import { FlexItem, FlexItemProps } from "../FlexItem";
+import "./ParentChildItem.css";
+
+export type SlideDirection = "top" | "bottom" | "left" | "right";
+
+export interface ParentChildItemProps extends FlexItemProps {
+  /**
+   * Disable all animations.
+   */
+  disableAnimations?: boolean;
+  /**
+   * Direction for slide animations.
+   */
+  direction?: SlideDirection;
+  /**
+   * The className(s) of the component.
+   */
+  className?: string;
+  /**
+   * Custom styles
+   */
+  style?: CSSProperties;
+}
+
+const withBaseName = makePrefixer("uitkParentChildItem");
+export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
+  function ParentChildItem(
+    {
+      disableAnimations = true,
+      direction,
+      children,
+      id,
+      className,
+      style,
+      ...rest
+    },
+    ref
+  ) {
+    return (
+      <FlexItem
+        className={cx(className, withBaseName(), {
+          [withBaseName(`slide-${direction}`)]: !disableAnimations,
+        })}
+        ref={ref}
+        style={style}
+        key={id}
+        {...rest}
+      >
+        {children}
+      </FlexItem>
+    );
+  }
+);

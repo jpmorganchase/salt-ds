@@ -1,0 +1,16 @@
+.uitkParentChildItem {
+  --duration: 0.3s;
+}
+
+.uitkParentChildItem-slide-top {
+  animation: slide-in-top var(--duration) var(--timing-function);
+}
+.uitkParentChildItem-slide-bottom {
+  animation: slide-in-bottom var(--duration) var(--timing-function);
+}
+.uitkParentChildItem-slide-left {
+  animation: slide-in-left var(--duration) var(--timing-function);
+}
+.uitkParentChildItem-slide-right {
+  animation: slide-in-right var(--duration) var(--timing-function);
+}

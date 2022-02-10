@@ -1,0 +1,140 @@
+.Splitter {
+  --splitter-size: 3px;
+  --splitter-border-width: 4px;
+  --splitter-border-style: none;
+  --splitter-border-color: white;
+
+  align-items: center;
+  background-color: var(--uitk-grey-60);
+  border-color: var(--splitter-border-color);
+  border-style: var(--splitter-border-style);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  outline: none;
+  z-index: 1;
+}
+
+.Splitter:hover {
+  background-color: var(--uitk-grey-40);
+}
+.active.Splitter {
+  background-color: var(--uitk-blue-500);
+}
+
+.Splitter.column {
+  cursor: ns-resize;
+  height: var(--splitter-size);
+  border-width: var(--splitter-border-width) 0;
+}
+
+.Splitter:not(.column) {
+  cursor: ew-resize;
+  width: var(--splitter-size);
+  border-width: 0 var(--splitter-border-width);
+}
+
+.Splitter:before {
+  border: none;
+  border-radius: 0;
+  content: "";
+  display: block;
+  padding: 0;
+}
+
+.Splitter .grab-zone {
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.01);
+  cursor: inherit;
+}
+
+.Splitter.column .grab-zone {
+  left: 0;
+  right: 0;
+  top: -5px;
+  bottom: -5px;
+}
+
+.Splitter:not(column) .grab-zone {
+  left: -5px;
+  right: -5px;
+  top: 0;
+  bottom: 0;
+}
+
+.Splitter:not(.column):before {
+  width: 1px;
+  height: 10px;
+  background: linear-gradient(
+    to bottom,
+    var(--uitk-grey-900) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-grey-900) 30%,
+    var(--uitk-grey-900) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-grey-900) 60%,
+    var(--uitk-grey-900) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-grey-900) 90%
+  );
+}
+
+.active.Splitter.column:before {
+  background: linear-gradient(
+    to right,
+    #ffffff 10%,
+    transparent 10%,
+    transparent 30%,
+    #ffffff 30%,
+    #ffffff 40%,
+    transparent 40%,
+    transparent 60%,
+    #ffffff 60%,
+    #ffffff 70%,
+    transparent 70%,
+    transparent 90%,
+    #ffffff 90%
+  );
+}
+
+.active.Splitter:not(.column):before {
+  background: linear-gradient(
+    to bottom,
+    #ffffff 10%,
+    transparent 10%,
+    transparent 30%,
+    #ffffff 30%,
+    #ffffff 40%,
+    transparent 40%,
+    transparent 60%,
+    #ffffff 60%,
+    #ffffff 70%,
+    transparent 70%,
+    transparent 90%,
+    #ffffff 90%
+  );
+}
+
+.Splitter.column:before {
+  width: 10px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--uitk-grey-900) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-grey-900) 30%,
+    var(--uitk-grey-900) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-grey-900) 60%,
+    var(--uitk-grey-900) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-grey-900) 90%
+  );
+}
