@@ -5,4 +5,5 @@
 }
 .uitkColorTokenByStateValues-container {
   display: flex;
+  min-width: 100px;
 }

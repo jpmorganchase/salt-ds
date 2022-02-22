@@ -109,7 +109,9 @@ export const ColorChooser = ({
   };
   const handleClose = (): void => setOpen(false);
 
-  const alphaForTabs = color?.rgba?.a ?? defaultAlpha;
+  const alphaForTabs =
+    color?.hex !== "#00000000" ? color?.rgba?.a ?? defaultAlpha : defaultAlpha;
+
   const tabsMapping = createTabsMapping({
     swatches: showSwatches,
     colorPicker: showColorPicker,
@@ -139,7 +141,7 @@ export const ColorChooser = ({
   const onTabClick = (index: number): void => {
     setActiveTab(index);
   };
-  console.log(color);
+
   return (
     <ToolkitProvider density={density ?? "high"}>
       <Button

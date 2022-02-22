@@ -73,3 +73,19 @@
   margin-left: 1px;
   cursor: pointer;
 }
+
+.uitkColorChooserSwatch-transparent {
+  border: 1px solid var(--uitk-red-700) !important;
+  width: calc(var(--uitk-color-swatch-size-unit) - 2px) !important;
+  height: calc(var(--uitk-color-swatch-size-unit) - 2px) !important;
+  margin-bottom: 1px;
+  margin-left: 1px;
+  background: linear-gradient(
+    to top left,
+    rgba(166, 21, 11, 0) 0%,
+    rgba(166, 21, 11, 0) calc(50% - 0.8px),
+    rgba(166, 21, 11, 1) 50%,
+    rgba(166, 21, 11, 0) calc(50% + 0.8px),
+    rgba(166, 21, 11, 0) 100%
+  ) !important;
+}

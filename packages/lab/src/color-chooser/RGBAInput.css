@@ -10,6 +10,18 @@
   padding-top: var(--uitk-spacing-unit);
 }
 
+.uitkColorChooser-opacityInput {
+  min-width: 40px !important;
+  width: 40px !important;
+  min-height: unset !important;
+}
+.uitk-light .uitkColorChooser-opacityInput {
+  border-bottom: 1px solid var(--uitk-grey-900);
+}
+.uitk-dark .uitkColorChooser-opacityInput {
+  border-bottom: 1px solid var(--uitk-white);
+}
+
 .uitkColorChooser-rgbaText {
   margin-top: 5px;
   font-size: var(--uitk-typography-size-caption-unit);

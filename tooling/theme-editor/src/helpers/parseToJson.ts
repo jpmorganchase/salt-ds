@@ -140,6 +140,7 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
       scope: scopeAndJSON.label,
       jsonObj: JSON.parse(stringJSON),
     });
+    console.log(stringJSON)
   }
   return scopeToJSONMap;
 }

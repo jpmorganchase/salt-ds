@@ -6,6 +6,7 @@ import {
   Color,
   ColorChooser,
   getColorNameByHexValue,
+  Tooltip,
 } from "@brandname/lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
@@ -82,10 +83,6 @@ export const ColorValueEditor = (
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
     undefined
   );
-  const [alphaValue, setAlpha] = useState<string | undefined>(undefined);
-  const alphaValuePattern = useMemo(() => {
-    return alphaValue ? alphaValue.split("-").slice(1)[0] : undefined;
-  }, [alphaValue]);
 
   const formFieldLabel = useMemo(() => {
     return props.pathToUpdate.includes("fade")
@@ -104,11 +101,6 @@ export const ColorValueEditor = (
       )
     );
     setSelectedColor(updatedColor);
-    if (isRGBAColor(props.value) && props.value.split("*").length > 1) {
-      setAlpha(getAlphaValueToken(props.value));
-    } else {
-      setAlpha(updatedColor?.rgba.a.toString());
-    }
   }, [props.extractValue, props.value]);
 
   const onSelect = (color: Color | undefined, finalSelection: boolean) => {
@@ -119,7 +111,11 @@ export const ColorValueEditor = (
   const onColorClose = (chosenColor: Color | undefined) => {
     if (chosenColor) {
       const colorName = getColorNameByHexValue(chosenColor.hex);
-      if (colorName && !colorName?.startsWith("#")) {
+      if (
+        colorName &&
+        !colorName?.startsWith("#") &&
+        chosenColor.rgba.a === 1 // Only use token if no alpha value set
+      ) {
         const colorParts = colorName.match(/[a-z]+|[^a-z]+/gi);
         if (colorParts?.length === 2) {
           const token = `uitk-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
@@ -129,78 +125,20 @@ export const ColorValueEditor = (
         const { r, g, b, a } = { ...chosenColor.rgba };
         const newColor =
           `rgb` +
-          (a ? `a` : ``) +
+          (a !== null ? `a` : ``) +
           `(${r}, ${g}, ${b}` +
-          (a
-            ? `, ${
-                alphaValue
-                  ? parseFloat(alphaValue)
-                    ? alphaValue
-                    : parseFloat(props.extractValue(alphaValue))
-                    ? `*${alphaValue}*`
-                    : a
-                  : a
-              }`
-            : ``) +
+          (a !== null ? `, ${a}` : ``) +
           `)`;
+
         props.onUpdateJSON(newColor, props.pathToUpdate, props.scope);
       }
       setSelectedColor(chosenColor);
     }
   };
 
-  const onAlphaClose = () => {
-    if (selectedColor) {
-      const { r, g, b, a } = { ...selectedColor?.rgba };
-      if (
-        alphaValue &&
-        (parseFloat(props.extractValue(alphaValue)) || parseFloat(alphaValue))
-      ) {
-        const newColor =
-          `rgb` +
-          (a ? `a` : ``) +
-          `(${r}, ${g}, ${b}` +
-          (a
-            ? `, ${
-                parseFloat(props.extractValue(alphaValue))
-                  ? `*${alphaValue}*`
-                  : parseFloat(alphaValue)
-              }`
-            : ``) +
-          `)`;
-
-        props.onUpdateJSON(newColor, props.pathToUpdate, props.scope);
-      } else {
-        setAlpha(getAlphaValueToken(props.originalValue));
-      }
-    }
-  };
-
   const onClear = () => {
     const defaultColor = props.extractValue(props.value);
     setSelectedColor(Color.makeColorFromHex(defaultColor));
-  };
-
-  const onAlphaChange = (alpha: string) => {
-    if (selectedColor) {
-      const { r, g, b, a } = { ...selectedColor.rgba };
-      if (parseFloat(alpha)) {
-        const updatedColor = Color.makeColorFromRGB(r, g, b, parseFloat(alpha));
-        setSelectedColor(updatedColor);
-      } else {
-        const tokenValue = props.extractValue(alpha);
-        if (parseFloat(tokenValue)) {
-          const updatedColor = Color.makeColorFromRGB(
-            r,
-            g,
-            b,
-            parseFloat(tokenValue)
-          );
-          setSelectedColor(updatedColor);
-        }
-      }
-    }
-    setAlpha(alpha ?? "");
   };
 
   return (
@@ -223,7 +161,7 @@ export const ColorValueEditor = (
         >
           <div
             className={cn(withBaseName("colorInput"), {
-              [withBaseName("backgroundState")]: props.isStateValue,
+              [withBaseName("colorStates")]: props.isStateValue,
             })}
           >
             {!props.isStateValue && (
@@ -232,16 +170,25 @@ export const ColorValueEditor = (
               </div>
             )}
             {props.isStateValue && (
-              <div
-                className={cn(
-                  "uitkFormLabel",
-                  withBaseName("backgroundStateField")
-                )}
+              <Tooltip
+                title={
+                  formFieldLabel === "Color" || formFieldLabel === "Background"
+                    ? "Regular"
+                    : formFieldLabel
+                }
+                placement="top-start"
               >
-                {["H", "A", "D"].includes(formFieldLabel[0])
-                  ? formFieldLabel[0]
-                  : "R"}
-              </div>
+                <div
+                  className={cn(
+                    "uitkFormLabel",
+                    withBaseName("colorStatesField")
+                  )}
+                >
+                  {formFieldLabel !== "Background" && formFieldLabel !== "Color"
+                    ? formFieldLabel[0]
+                    : "R"}
+                </div>
+              </Tooltip>
             )}
             <div
               className={cn({
@@ -275,19 +222,6 @@ export const ColorValueEditor = (
           )}
         </div>
       )}
-
-      {props.characteristicsView &&
-        isRGBAColor(props.value) &&
-        props.value.split("*").length > 1 &&
-        !props.isStateValue && (
-          <OpacityField
-            alphaValue={alphaValue}
-            formFieldLabel={formFieldLabel}
-            alphaValuePattern={alphaValuePattern ?? ""}
-            onAlphaChange={onAlphaChange}
-            onAlphaClose={onAlphaClose}
-          />
-        )}
     </div>
   );
 };

@@ -12,9 +12,9 @@
 .uitk-light {
   /** TODO: Do we really need the emphasis tokens in here? The difference is that 
   low emphasis uses a border and high emphasis uses outline. **/
-  --uitk-focused-low-emphasis-color: var(--uitk-blue-500);
-  --uitk-focused-low-emphasis-color-warning: var(--uitk-orange-700);
-  --uitk-focused-low-emphasis-color-error: var(--uitk-red-500);
+  --uitk-focused-low-emphasis-border-color: var(--uitk-blue-500);
+  --uitk-focused-low-emphasis-border-color-warning: var(--uitk-orange-700);
+  --uitk-focused-low-emphasis-border-color-error: var(--uitk-red-500);
 
   --uitk-focused-med-emphasis-outline-color: var(--uitk-blue-500);
   --uitk-focused-med-emphasis-outline-color-warning: var(--uitk-orange-700);

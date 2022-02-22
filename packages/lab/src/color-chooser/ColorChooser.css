@@ -9,12 +9,22 @@
 }
 
 .uitkColorChooser-overlayButtonSwatchWithBorder {
-  border: 0.2px solid var(--uitk-grey-600);
+  border: 0.2px solid var(--uitk-grey-70);
 }
 
 .uitkColorChooser-overlayButtonSwatchTransparent {
-  border: 0.2px solid var(--uitk-red-500);
-  background: linear-gradient(to bottom right, var(--uitk-white), var(--uitk-white) 50%, var(--uitk-red-500) 50%, var(--uitk-white));
+  height: calc(3 * var(--uitk-spacing-unit) - 2px) !important;
+  width: calc(3 * var(--uitk-spacing-unit) - 2px) !important;
+  border: 1px solid var(--uitk-red-700);
+  /* RGBA using uitk-red-700 */
+  background: linear-gradient(
+    to top left,
+    rgba(166, 21, 11, 0) 0%,
+    rgba(166, 21, 11, 0) calc(50% - 0.8px),
+    rgba(166, 21, 11, 1) 50%,
+    rgba(166, 21, 11, 0) calc(50% + 0.8px),
+    rgba(166, 21, 11, 0) 100%
+  );
 }
 
 .uitkColorChooser-overlayButtonText {

@@ -15,8 +15,7 @@
 
   /** TODO: Do we want to provide 3 emphasis tokens even though all emphasis
    have the same values for below properties, or keep as is? **/
-  --uitk-editable-text-primary: var(--uitk-grey-900);
-  --uitk-editable-text-secondary: var(--uitk-grey-200);
+  --uitk-editable-secondary-text-color: var(--uitk-grey-200);
   --uitk-editable-icon-color: var(--uitk-grey-600);
   --uitk-editable-icon-color-hover: var(--uitk-grey-600);
   --uitk-editable-icon-color-active: var(--uitk-grey-600);
@@ -33,8 +32,7 @@
   --uitk-editable-med-emphasis-background: var(--uitk-grey-800);
   --uitk-editable-high-emphasis-background: var(--uitk-grey-900);
 
-  --uitk-editable-text-primary: var(--uitk-white);
-  --uitk-editable-text-secondary: var(--uitk-grey-70);
+  --uitk-editable-secondary-text-color: var(--uitk-grey-70);
   --uitk-editable-icon-color: var(--uitk-grey-60);
   --uitk-editable-icon-color-hover: var(--uitk-grey-60);
   --uitk-editable-icon-color-active: var(--uitk-grey-60);

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
-import { makePrefixer } from "@uitk/toolkit";
+import { makePrefixer } from "@brandname/core";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ValueEditor } from "../../editor/ValueEditor";
 import { InnerFieldLabel } from "../../labels/InnerFieldLabel";
@@ -19,36 +18,45 @@ interface ColorTokensByStateProps {
   scope: string;
 }
 
-const TokenStateValue = (props: ColorTokensByStateProps) => {
+const TokenStateValue = ({
+  uitkColorOverrides,
+  characteristicsView,
+  children,
+  extractValue,
+  fieldName,
+  onUpdateJSON,
+  patternName,
+  scope,
+}: ColorTokensByStateProps): ReactElement => {
   return (
     <>
-      {Object.keys(props.children).map((node) =>
+      {Object.keys(children).map((node) =>
         node === "value" ? (
-          props.children.value && (
+          children.value && (
             <ValueEditor
               isStateValue={true}
-              extractValue={props.extractValue}
-              characteristicsView={props.characteristicsView}
-              key={`${props.patternName}-${props.fieldName}-${node}-editor`}
-              onUpdateJSON={props.onUpdateJSON}
-              patternName={props.patternName}
-              scope={props.scope}
-              uitkColorOverrides={props.uitkColorOverrides}
-              value={props.children.value}
-              valueName={props.fieldName}
+              extractValue={extractValue}
+              characteristicsView={characteristicsView}
+              key={`${patternName}-${fieldName}-${node}-editor`}
+              onUpdateJSON={onUpdateJSON}
+              patternName={patternName}
+              scope={scope}
+              uitkColorOverrides={uitkColorOverrides}
+              value={children.value}
+              valueName={fieldName}
             />
           )
         ) : (
           <TokenStateValue
-            uitkColorOverrides={props.uitkColorOverrides}
-            extractValue={props.extractValue}
-            characteristicsView={props.characteristicsView}
-            children={props.children[node]}
-            fieldName={`${props.fieldName}-${node}`}
-            key={`${props.patternName}-${props.fieldName}-${node}`}
-            onUpdateJSON={props.onUpdateJSON}
-            patternName={props.patternName}
-            scope={props.scope}
+            uitkColorOverrides={uitkColorOverrides}
+            extractValue={extractValue}
+            characteristicsView={characteristicsView}
+            children={children[node]}
+            fieldName={`${fieldName}-${node}`}
+            key={`${patternName}-${fieldName}-${node}`}
+            onUpdateJSON={onUpdateJSON}
+            patternName={patternName}
+            scope={scope}
           />
         )
       )}
@@ -56,49 +64,56 @@ const TokenStateValue = (props: ColorTokensByStateProps) => {
   );
 };
 
-export const ColorTokensByState = (
-  props: ColorTokensByStateProps
-): ReactElement => {
+export const ColorTokensByState = ({
+  uitkColorOverrides,
+  characteristicsView,
+  children,
+  extractValue,
+  fieldName,
+  onUpdateJSON,
+  patternName,
+  scope,
+}: ColorTokensByStateProps): ReactElement => {
   return (
     <div className={withBaseName()}>
-      {props.fieldName && (
+      {fieldName && (
         <InnerFieldLabel
-          patternName={props.patternName}
-          fieldName={props.fieldName.replace("-color", "")}
-          remainingJSON={props.children}
+          patternName={patternName}
+          fieldName={fieldName.replace("-color", "")}
+          remainingJSON={children}
           size={"medium"}
         />
       )}
       <div className={withBaseName("container")}>
-        {Object.keys(props.children)
+        {Object.keys(children)
           .sort((a, b) => (a < b ? -1 : 1))
           .map((node) =>
             node === "value" ? (
-              props.children.value && (
+              children.value && (
                 <ValueEditor
                   isStateValue={true}
-                  extractValue={props.extractValue}
-                  characteristicsView={props.characteristicsView}
-                  key={`${props.patternName}-${props.fieldName}-${node}-editor`}
-                  onUpdateJSON={props.onUpdateJSON}
-                  patternName={props.patternName}
-                  scope={props.scope}
-                  uitkColorOverrides={props.uitkColorOverrides}
-                  value={props.children.value}
-                  valueName={props.fieldName}
+                  extractValue={extractValue}
+                  characteristicsView={characteristicsView}
+                  key={`${patternName}-${fieldName}-${node}-editor`}
+                  onUpdateJSON={onUpdateJSON}
+                  patternName={patternName}
+                  scope={scope}
+                  uitkColorOverrides={uitkColorOverrides}
+                  value={children.value}
+                  valueName={fieldName}
                 />
               )
             ) : (
               <TokenStateValue
-                uitkColorOverrides={props.uitkColorOverrides}
-                extractValue={props.extractValue}
-                characteristicsView={props.characteristicsView}
-                children={props.children[node]}
-                fieldName={`${props.fieldName}-${node}`}
-                key={`${props.patternName}-${props.fieldName}-${node}`}
-                onUpdateJSON={props.onUpdateJSON}
-                patternName={props.patternName}
-                scope={props.scope}
+                uitkColorOverrides={uitkColorOverrides}
+                extractValue={extractValue}
+                characteristicsView={characteristicsView}
+                children={children[node]}
+                fieldName={`${fieldName}-${node}`}
+                key={`${patternName}-${fieldName}-${node}`}
+                onUpdateJSON={onUpdateJSON}
+                patternName={patternName}
+                scope={scope}
               />
             )
           )}

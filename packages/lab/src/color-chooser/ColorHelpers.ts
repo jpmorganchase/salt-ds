@@ -9,6 +9,9 @@ export function getColorNameByHexValue(
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
   const uitkColors = UITKColorOverrides ?? uitkColorMap;
 
+  // Special case
+  if (hexValue === "#00000000") return "Transparent";
+
   let colorName = Object.keys(uitkColors).find((key: string) => {
     if (uitkColors[key]) {
       const rgbVals = uitkColors[key].startsWith("rgba")

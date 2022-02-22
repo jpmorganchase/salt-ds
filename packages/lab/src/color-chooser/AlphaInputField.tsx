@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { Input } from "../input";
 
@@ -8,12 +9,14 @@ const withBaseName = makePrefixer("uitkColorChooser");
 
 interface AlphaInputProps {
   alphaValue: number;
+  showAsOpacity?: boolean;
   onSubmit: (alpha: number, e?: React.ChangeEvent) => void;
 }
 
 export const AlphaInput = ({
   alphaValue,
   onSubmit,
+  showAsOpacity = false,
 }: AlphaInputProps): JSX.Element => {
   const [alphaInputValue, setAlphaInputValue] = useState<string>(
     !isNaN(alphaValue) ? alphaValue.toString() : ""
@@ -27,15 +30,20 @@ export const AlphaInput = ({
     event: React.ChangeEvent<HTMLInputElement>,
     value: string
   ): void => {
-    let alpha: string = value;
+    let alpha: string = showAsOpacity ? value.replace("%", "") : value;
 
     if (value.trim() === "" || Number.isNaN(alpha)) {
       alpha = "";
     }
 
+    if (showAsOpacity && Number.parseFloat(value)) {
+      value = (parseFloat(value) / 100).toString();
+    }
+
     if (value.charAt(1) === "." || value.charAt(0) === ".") {
       alpha = value;
     }
+
     setAlphaInputValue(alpha);
   };
 
@@ -52,9 +60,10 @@ export const AlphaInput = ({
   };
 
   const handleOnBlurAlpha = (e: React.FocusEvent<HTMLInputElement>): void => {
-    //Guard against parseFloat('') becoming NaN
+    // Guard against parseFloat('') becoming NaN
     const alpha =
       alphaInputValue.trim() !== "" ? parseFloat(alphaInputValue) : 0;
+
     const validatedAlpha = Math.max(0, Math.min(alpha, 1));
     setAlphaInputValue(validatedAlpha.toString());
     onSubmit(validatedAlpha, e);
@@ -63,9 +72,15 @@ export const AlphaInput = ({
   return (
     <Input
       data-testid="a-input"
-      // classes={{ root: classes.overrideInput }}
-      className={withBaseName("rgbaInput")}
-      value={alphaInputValue}
+      className={cn({
+        [withBaseName("rgbaInput")]: !showAsOpacity,
+        [withBaseName("opacityInput")]: showAsOpacity,
+      })}
+      value={
+        showAsOpacity
+          ? (parseFloat(alphaInputValue) * 100).toString() + "%"
+          : alphaInputValue
+      }
       onChange={handleAlphaInputChange}
       onBlur={handleOnBlurAlpha}
       onKeyDown={handleKeyDownAlpha}
