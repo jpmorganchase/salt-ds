@@ -1,0 +1,18 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-navigable-link-text-decoration: underline;
+}
+
+.uitk-light {
+  --uitk-navigable-link-color: var(--uitk-grey-900);
+  --uitk-navigable-link-color-hover: var(--uitk-blue-500);
+  --uitk-navigable-link-color-active: var(--uitk-blue-500);
+  --uitk-navigable-link-color-disabled: var(--uitk-grey-900);
+}
+
+.uitk-dark {
+  --uitk-navigable-link-color: var(--uitk-white);
+  --uitk-navigable-link-color-hover: var(--uitk-blue-200);
+  --uitk-navigable-link-color-active: var(--uitk-blue-200);
+  --uitk-navigable-link-color-disabled: var(--uitk-white);
+}

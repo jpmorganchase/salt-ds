@@ -1,0 +1,25 @@
+.uitkFormField-activationIndicator {
+  border-color: var(--activation-indicator-color);
+  border-bottom-width: var(--activation-indicator-size, 1px);
+  border-bottom-style: solid;
+  height: auto;
+  opacity: var(--activation-indicator-opacity, 1);
+  width: 100%;
+  /* We don't want the activation indicator to increase height of it's container */
+  position: absolute;
+  bottom: calc(var(--helper-text-height, 0) + 1px);
+}
+
+.uitkFormField-activationIndicatorIcon {
+  width: var(--activation-indicator-icon-size);
+  height: var(--activation-indicator-icon-size);
+  fill: var(--activation-indicator-color);
+  /** 
+ * It's only a solid icon showing different color for validation states. 
+ * Applying opacity instead of re-defining all colors.
+ */
+  opacity: var(--activation-indicator-icon-opacity, 1);
+  position: absolute;
+  bottom: 3px;
+  right: 2px;
+}

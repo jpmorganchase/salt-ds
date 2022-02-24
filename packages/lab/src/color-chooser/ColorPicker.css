@@ -1,0 +1,91 @@
+.uitkColorChooserPicker {
+  display: flex;
+  flex-direction: row;
+}
+
+.uitkColorChooserPicker-inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-left: 1px solid var(--uitk-separator-section-color);
+}
+
+.uitkColorChooserPicker-applyButtonDiv {
+  padding: var(--uitk-spacing-unit) calc(2 * var(--uitk-spacing-unit)) 0px calc(1.5 * var(--uitk-spacing-unit));
+  align-self: center;
+}
+
+.uitkColorChooserPicker-textDivOverrides {
+  font-size: var(--uitk-typography-size-caption-unit);
+  font-weight: var(--uitk-typography-weight-bold);
+  color: var(--uitk-text-primary-color);
+  padding: 0px !important;
+}
+
+.uitkColorChooserPicker-inputDivs {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  padding: var(--uitk-spacing-unit) 0px 0px var(--uitk-spacing-unit);
+}
+
+/**
+ Warning: Below are a lot of overridden styles from react-color 
+ **/
+
+/* Entire container for react-color component */
+.root,
+.rootDisabledAlpha {
+  box-shadow: none !important;
+  padding: 8px 8px 0px 0px !important;
+  background: transparent !important;
+  width: calc(9 * var(--uitk-size-stackable-unit)) !important;
+}
+/* Color sliders container */
+.root .flexbox-fix,
+.rootDisabledAlpha .flexbox-fix {
+  padding-top: 8px !important;
+}
+/* RGB Inputs provided by react-color */
+.rootDisabledAlpha .flexbox-fix ~ .flexbox-fix,
+.root .flexbox-fix ~ .flexbox-fix {
+  display: none !important;
+}
+/* Height of hue and saturation boxes */
+.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div {
+  height: calc(var(--uitk-size-stackable-unit) / 2) !important;
+}
+/* Height of saturation slider container */
+.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div {
+  height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
+}
+/* Height of saturation slider */
+.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div > div {
+  height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
+}
+/* Width of color preview box */
+.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div {
+  width: calc(var(--uitk-size-stackable-unit) / 2) !important;
+}
+/* Height of hue slider container */
+.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div {
+  height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
+}
+/* Height of hue slider */
+.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div > div {
+  height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
+}
+
+.uitkColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
+  width: calc(var(--uitk-size-regular-unit) / 4) !important;
+  height: calc(var(--uitk-size-regular-unit) / 4) !important;
+}
+/* Cursor on hue slider */
+.rootDisabledAlpha .hue-horizontal > div > div {
+  position: relative;
+  margin-top: 0px !important;
+  width: 4px !important;
+  height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
+  border: 1px solid var(--uitk-black);
+  background: var(--uitk-container-low-emphasis-background) !important;
+}

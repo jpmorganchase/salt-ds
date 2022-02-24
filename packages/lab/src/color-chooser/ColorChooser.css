@@ -1,0 +1,50 @@
+.uitkColorChooser-overlayButtonSwatch {
+  margin-right: 10px;
+  height: calc(3 * var(--uitk-spacing-unit));
+  width: calc(3 * var(--uitk-spacing-unit));
+}
+
+.uitkColorChooser-overlayButtonSwatchWithBorder {
+  border: 0.2px solid var(--uitk-grey-600);
+}
+
+.uitkColorChooser-overlayButtonText {
+  color: var(--uitk-text-primary-color);
+  font-weight: var(--uitk-typography-weight-regular);
+  font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
+  font-size: var(--uitk-typography-size-regular-unit);
+  letter-spacing: normal;
+}
+
+.uitkColorChooser-overlayButton {
+  background-color: transparent;
+  text-transform: none;
+  justify-content: flex-start;
+}
+
+.uitkColorChooser-overlayButtonClose {
+  margin: 5px;
+}
+
+.uitkColorChooser-defaultButton {
+  float: right;
+  background-color: transparent;
+  padding: 6px 2px 6px 2px;
+  height: var(--uitk-size-stackable-unit);
+}
+
+.uitk-light .uitkColorChooser-defaultButton {
+  border-bottom: 1px solid var(--uitk-grey-60);
+}
+
+.uitk-dark .uitkColorChooser-defaultButton {
+  border-bottom: 1px solid var(--uitk-grey-400);
+}
+
+.uitkColorChooser-overlayContent {
+  max-width: 100%;
+}
+
+.uitkColorChooser-refreshIcon {
+  padding-right: 5px;
+}

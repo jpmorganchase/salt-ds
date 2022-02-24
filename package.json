@@ -1,0 +1,167 @@
+{
+  "name": "@brandname/root",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/**",
+    "tooling/**",
+    "playground/**"
+  ],
+  "modular": {
+    "type": "root"
+  },
+  "scripts": {
+    "start": "yarn storybook",
+    "build": "yarn build:core && yarn build:lab && yarn build:icons",
+    "build:core": "modular build @brandname/core",
+    "build:icons": "modular build @brandname/icons",
+    "build:lab": "modular build @brandname/lab",
+    "build:theme": "cd packages/theme && yarn build",
+    "test": "modular test",
+    "test:core-components": "cypress run-ct --browser chrome --headless --config-file core-cypress.json",
+    "test:lab-components": "cypress run-ct --browser chrome --headless --config-file lab-cypress.json",
+    "test:core-components:local": "cypress open-ct --browser chrome --config-file core-cypress.json",
+    "test:lab-components:local": "cypress open-ct --browser chrome --config-file lab-cypress.json",
+    "publish:core": "cd ./dist/brandname-core && npm publish",
+    "publish:lab": "cd ./dist/brandname-lab && npm publish",
+    "publish:icons": "cd ./dist/brandname-icons && npm publish",
+    "lint": "modular lint",
+    "prettier": "prettier --write . --ignore-path .gitignore",
+    "prettier:ci": "prettier --check . --ignore-path .gitignore",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
+    "typecheck:modular": "modular typecheck",
+    "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
+    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json"
+  },
+  "eslintConfig": {
+    "extends": [
+      "modular-app",
+      "plugin:storybook/recommended"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "stories/**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ],
+    "plugins": [
+      "cypress"
+    ],
+    "env": {
+      "cypress/globals": true
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.16.0",
+    "@changesets/cli": "^2.19.0",
+    "@cypress/code-coverage": "^3.9.11",
+    "@cypress/react": "^5.10.3",
+    "@cypress/vite-dev-server": "^2.2.2",
+    "@floating-ui/core": "^0.3.1",
+    "@floating-ui/react-dom": "^0.4.1",
+    "@storybook/addon-actions": "^6.4.18",
+    "@storybook/addon-docs": "^6.4.18",
+    "@storybook/addon-essentials": "^6.4.18",
+    "@storybook/addon-links": "^6.4.18",
+    "@storybook/node-logger": "^6.4.18",
+    "@storybook/react": "^6.4.18",
+    "@storybook/testing-react": "^1.2.2",
+    "@testing-library/cypress": "^8.0.2",
+    "@testing-library/dom": "^8.5.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/classnames": "^2.2.11",
+    "@types/jest": "^26.0.20",
+    "@types/no-scroll": "^2.1.0",
+    "@types/node": "^14.14.20",
+    "@types/react": "^17.0.0",
+    "@types/react-color": "^3.0.6",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-window": "^1.8.2",
+    "@types/tinycolor2": "^1.4.3",
+    "@types/warning": "^3.0.0",
+    "@vitejs/plugin-react": "^1.0.4",
+    "ag-grid-community": "^25.0.0",
+    "ag-grid-enterprise": "^25.0.0",
+    "ag-grid-react": "^25.0.0",
+    "aria-hidden": "^1.1.1",
+    "attr-accept": "^2.0.0",
+    "axe-core": "^4.3.5",
+    "classnames": "^2.2.6",
+    "clipboard-copy": "^4.0.1",
+    "compute-scroll-into-view": "^1.0.16",
+    "cross-env": "^7.0.3",
+    "css-validator": "^0.10.0",
+    "csstree-validator": "^3.0.0",
+    "cypress": "^9.4.1",
+    "cypress-axe": "^0.14.0",
+    "cypress-image-snapshot": "^4.0.1",
+    "cypress-real-events": "^1.6.0",
+    "dayjs": "1.10.6",
+    "deepmerge": "^4.2.2",
+    "del": "^6.0.0",
+    "dom-accessibility-api": "^0.5.10",
+    "eslint-config-modular-app": "2.0.2",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-storybook": "^0.5.5",
+    "glob": "^7.1.6",
+    "is-ci": "^3.0.0",
+    "modular-scripts": "patch:modular-scripts@npm:2.2.0#.yarn/patches/modular-scripts-npm-2.2.0-fb4e9ac3bd.patch",
+    "no-scroll": "^2.1.1",
+    "package-build-stats": "patch:package-build-stats@npm:7.3.6#.yarn/patches/package-build-stats-npm-7.3.6-f434c8c1a5.patch",
+    "prettier": "^2.2.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-codemod": "^5.4.3",
+    "react-color": "^2.19.3",
+    "react-dom": "^17.0.1",
+    "react-fast-compare": "^3.2.0",
+    "react-router-dom": "^6.2.1",
+    "react-window": "^1.8.6",
+    "rifm": "^0.12.0",
+    "storybook-builder-vite": "^0.1.15",
+    "svgo": "^2.3.0",
+    "tinycolor2": "^1.4.2",
+    "ts-node": "^10.4.0",
+    "typescript": "4.4.3",
+    "vite": "^2.7.13",
+    "vite-plugin-istanbul": "^2.4.0",
+    "vite-plugin-optimize-persist": "^0.1.2",
+    "vite-plugin-package-config": "^0.1.1",
+    "vite-tsconfig-paths": "^3.3.17",
+    "warning": "^4.0.3"
+  },
+  "resolutions": {
+    "esbuild": "0.14.2",
+    "colors": "1.4.0"
+  },
+  "browserslist": {
+    "production": [
+      "chrome 79",
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "chrome 79",
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/csstree-validator"
+    ]
+  },
+  "packageManager": "yarn@3.1.1"
+}

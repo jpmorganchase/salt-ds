@@ -1,0 +1,84 @@
+.uitkBreadcrumb {
+  --color: var(--uitkBreadcrumb-color, var(--uitk-actionable-primary-text-color));
+  --color-hover: var(--uitkBreadcrumb-color-hover, var(--uitk-actionable-primary-text-color-hover));
+  --color-active: var(--uitkBreadcrumb-color-active, var(--uitk-actionable-primary-text-color-active));
+  --icon-color: var(--uitkBreadcrumb-icon-color, var(--color));
+  --icon-margin-right: var(--uitkBreadcrumb-margin-right, calc(var(--uitk-spacing-unit) * 0.5));
+}
+
+.uitkBreadcrumb {
+  overflow: hidden;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uitkBreadcrumb-regular {
+  display: flex;
+  align-items: center;
+  color: var(--color);
+  text-decoration: none;
+}
+
+.uitkBreadcrumb-regular:visited {
+  color: currentColor;
+}
+
+.uitkBreadcrumb-regular:visited .uitkBreadcrumb-icon {
+  color: currentColor;
+}
+
+.uitkBreadcrumb-regular:focus {
+  /*TODO getFocused()*/
+}
+
+.uitkBreadcrumb-regular:hover {
+  color: var(--color-hover);
+}
+
+.uitkBreadcrumb-regular:hover .uitkBreadcrumb-icon {
+  color: var(--color-hover);
+}
+
+.uitkBreadcrumb-regular:active {
+  color: var(--color-active);
+}
+
+.uitkBreadcrumb-regular:active .uitkBreadcrumb-icon {
+  color: var(--color-active);
+}
+
+.uitkBreadcrumb-regular .uitkBreadcrumb-icon {
+  margin-left: 1px;
+}
+
+.uitkBreadcrumb-currentLevel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.uitkBreadcrumb-currentLevel:focus {
+  /* TODO getFocused */
+}
+
+.uitkBreadcrumb-icon {
+  color: var(--icon-color);
+  margin-right: var(--icon-margin-right);
+}
+
+.uitkBreadcrumb-icon:only-child {
+  margin: 0;
+}
+
+.uitkBreadcrumb-justifyContentCenter {
+  justify-content: center;
+}
+
+.uitkBreadcrumb-text {
+  overflow: hidden;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

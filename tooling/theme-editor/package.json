@@ -1,0 +1,13 @@
+{
+  "name": "@brandname/theme-editor",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "files": [
+    "README.md"
+  ],
+  "dependencies": {
+    "js-beautify": "1.14.0",
+    "tinycolor2": "1.4.2"
+  }
+}

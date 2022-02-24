@@ -1,0 +1,19 @@
+.uitkDocGrid {
+  --doc-grid-gap: var(--uitk-spacing-unit);
+  --doc-grid-padding-block-start: var(--uitk-spacing-unit);
+  --doc-grid-padding-block-end: var(--uitk-spacing-unit);
+
+  --doc-grid-code-font-size: var(--uitk-typography-size-regular-unit);
+  --doc-grid-code-text-color: var(--uitk-text-primary-color);
+}
+
+.uitkDocGrid {
+  align-items: center;
+  background: var(--uitk-container-low-emphasis-background);
+  display: grid;
+  gap: var(--uitkDocGrid-gap, var(--doc-grid-gap));
+  grid-template-columns: repeat(2, auto);
+  padding-block-start: var(--doc-grid-padding-block-start);
+  padding-block-end: var(--doc-grid-padding-block-end);
+  width: var(--uitkDocGrid-width, auto);
+}

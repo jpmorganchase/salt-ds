@@ -1,0 +1,21 @@
+.uitkCalendarWeekHeader {
+  --calendar-week-header-underline-color: var(--uitk-separator-section-color);
+  --calendar-week-header-text-color: var(--uitk-text-secondary-color);
+  --calendar-week-header-size: var(--uitk-size-regular-unit);
+  --calendar-week-header-font-size: var(--uitk-typography-size-caption-unit);
+}
+
+.uitkCalendarWeekHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  box-shadow: inset 0 -1px 0 var(--calendar-week-header-underline-color);
+}
+
+.uitkCalendarWeekHeader-dayOfWeek {
+  width: var(--calendar-week-header-size);
+  height: var(--calendar-week-header-size);
+  color: var(--calendar-week-header-text-color);
+  line-height: var(--calendar-week-header-size);
+  font-size: var(--calendar-week-header-font-size);
+}

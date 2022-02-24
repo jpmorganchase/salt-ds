@@ -1,0 +1,14 @@
+{
+  "name": "@brandname/theme",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "style": "index.css",
+  "files": [
+    "/index.css",
+    "/global.css",
+    "/css"
+  ],
+  "scripts": {
+    "build": "yarn node ./scripts/build.js"
+  }
+}

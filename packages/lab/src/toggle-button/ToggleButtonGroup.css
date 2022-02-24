@@ -1,0 +1,59 @@
+.uitk-light .uitkToggleButtonGroup {
+  --toggle-button-group-border-color: var(--uitk-grey-60);
+}
+
+.uitk-light .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
+  --toggle-button-group-border-color: var(--uitk-blue-300);
+}
+
+.uitk-dark .uitkToggleButtonGroup {
+  --toggle-button-group-border-color: var(--uitk-grey-400);
+}
+
+.uitk-dark .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
+  --toggle-button-group-border-color: var(--uitk-blue-600);
+}
+
+.uitk-density-touch .uitkToggleButtonGroup {
+  --toggle-button-height: 34px;
+}
+
+.uitk-density-low .uitkToggleButtonGroup {
+  --toggle-button-height: 26px;
+}
+
+.uitk-density-medium .uitkToggleButtonGroup {
+  --toggle-button-height: 22px;
+}
+
+.uitk-density-high .uitkToggleButtonGroup {
+  --toggle-button-height: 14px;
+}
+
+.uitkToggleButtonGroup {
+  display: inline-flex;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 2px;
+  border: 1px solid var(--toggle-button-group-border-color);
+}
+
+.uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
+  border: none;
+}
+
+.uitkToggleButtonGroup-horizontal .uitkToggleButton {
+  height: var(--toggle-button-height);
+}
+
+.uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {
+  margin-left: 2px;
+}
+
+.uitkToggleButtonGroup-vertical {
+  flex-direction: column;
+}
+
+.uitkToggleButtonGroup-vertical .uitkToggleButton:not(:first-child) {
+  margin-top: 2px;
+}

@@ -1,0 +1,18 @@
+.uitkCalendarCarousel-track {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.uitkCalendarCarousel-track > * {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.uitkCalendarCarousel-track > :nth-child(2) {
+  position: relative;
+}
+
+.uitkCalendarCarousel-shouldAnimate {
+  transition: transform 200ms ease-in-out;
+}

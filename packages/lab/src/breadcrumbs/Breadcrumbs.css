@@ -1,0 +1,61 @@
+.uitk-density-high .uitkBreadcrumbs {
+  --font-size: var(--uitk-typography-size-30);
+}
+
+.uitk-density-medium .uitkBreadcrumbs {
+  --font-size: var(--uitk-typography-size-40);
+}
+
+.uitk-density-low .uitkBreadcrumbs {
+  --font-size: var(--uitk-typography-size-40);
+}
+
+.uitk-density-touch .uitkBreadcrumbs {
+  --font-size: var(--uitk-typography-size-50);
+}
+
+.uitkBreadcrumbs {
+  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-typography-line-height));
+}
+
+.uitkBreadcrumbs {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+.uitkBreadcrumbs-ol {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.uitkBreadcrumbs-li {
+  list-style: none;
+  flex: 0 1 auto;
+  padding: 2px;
+}
+
+.uitkBreadcrumbs-li,
+.uitkBreadcrumbs-separator {
+  margin-right: calc(var(--uitk-spacing-unit) - 2px);
+}
+
+.uitkBreadcrumbs-separator {
+  display: flex;
+  user-select: none;
+}
+
+.uitkBreadcrumbs-ol-wrap {
+  flex-wrap: wrap;
+}
+
+.uitkBreadcrumbs-ol-wrap li:not(:last-child) {
+  margin-bottom: calc(var(--uitk-spacing-unit) * 0.5 - 2px);
+}
+
+.uitkBreadcrumbs-overflowButton {
+  margin: 0 !important;
+}

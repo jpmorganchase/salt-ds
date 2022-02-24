@@ -1,0 +1,69 @@
+name: "Test"
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      # Enable lint when all errors are fixed
+      # - run: yarn run lint
+      - run: yarn run prettier:ci
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn run test --watchAll=false
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build packages
+        run: yarn run build
+      - name: Cypress Core Components
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          command: yarn run test:core-components
+      - name: Cypress Lab Components
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          command: yarn run test:lab-components
+  type-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn run typecheck

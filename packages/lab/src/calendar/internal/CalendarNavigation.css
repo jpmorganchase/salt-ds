@@ -1,0 +1,21 @@
+.uitkCalendarNavigation {
+  --calendar-navigation-gap: calc(var(--uitk-spacing-unit) * 0.5);
+}
+
+.uitk-density-high .uitkCalendarNavigation {
+  --calendar-navigation-gap: 0px;
+}
+
+.uitkCalendarNavigation-hideYearDropdown {
+  --calendar-navigation-gap: calc(var(--uitk-spacing-unit) * 2);
+}
+
+.uitkCalendarNavigation {
+  display: grid;
+  grid-template-columns: min-content auto auto min-content;
+  grid-gap: var(--calendar-navigation-gap);
+}
+
+.uitkCalendarNavigation-hideYearDropdown {
+  grid-template-columns: min-content auto min-content;
+}

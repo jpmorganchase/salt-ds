@@ -1,0 +1,9 @@
+.uitkDialogQA {
+  width: 700px;
+  background: var(--uitk-white);
+}
+
+.uitkDialogQA .uitkScrim {
+  position: unset;
+  background-color: var(--uitk-white);
+}

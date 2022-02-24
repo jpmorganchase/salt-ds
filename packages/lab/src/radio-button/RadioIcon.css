@@ -1,0 +1,96 @@
+.uitk-light .uitkRadioIcon {
+  --border-stroke: var(--uitk-grey-90);
+  --border-stroke-checked: var(--uitk-blue-500);
+  --border-stroke-hover: var(--uitk-blue-400);
+  --border-stroke-width: 1px;
+
+  --border-fill: var(--uitk-white);
+  --border-fill-checked: var(--uitk-blue-400);
+
+  --check-stroke: var(--uitk-white);
+  --check-fill: var(--uitk-white);
+
+  /* --icon-background-filled: var(--uitk-grey-20); */
+  /* --icon-background-theme: var(--uitk-white); */
+}
+
+.uitk-dark .uitkRadioIcon {
+  --border-stroke: var(--uitk-grey-100);
+  --border-stroke-checked: var(--uitk-blue-400);
+  --border-stroke-hover: var(--uitk-blue-300);
+  --border-stroke-width: 1px;
+
+  --border-fill: var(--uitk-grey-800);
+  --border-fill-checked: var(--uitk-grey-800);
+
+  --check-stroke: var(--uitk-blue-400);
+  --check-fill: var(--uitk-blue-400);
+
+  /* --icon-background-filled: var(--uitk-grey-900); */
+  /* --icon-background-theme: var(--uitk-grey-800); */
+}
+
+.uitk-density-medium .uitkRadioIcon {
+  --svg-size: 14px;
+}
+
+.uitk-density-high .uitkRadioIcon {
+  --svg-size: 12px;
+}
+
+.uitk-density-low .uitkRadioIcon {
+  --svg-size: 16px;
+}
+
+.uitk-density-touch .uitkRadioIcon {
+  --svg-size: 18px;
+}
+
+.uitkRadioIcon {
+  width: var(--svg-size);
+  height: var(--svg-size);
+}
+
+.uitkRadioIcon-border {
+  stroke: var(--border-stroke);
+  stroke-width: var(--border-stroke-width);
+  fill: var(--border-fill);
+}
+
+.uitkRadioIcon-checked .uitkRadioIcon-border {
+  stroke: var(--border-stroke-checked);
+  fill: var(--border-fill-checked);
+}
+
+.uitkRadio:hover .uitkRadioIcon-border {
+  stroke: var(--border-stroke-hover);
+}
+
+.uitkRadioButton:hover .uitkRadioIcon-border {
+  stroke: var(--border-stroke-hover);
+}
+
+.uitkRadio-disabled:hover .uitkRadioIcon-border {
+  stroke: var(--border-stroke);
+}
+
+.uitkRadioButton-disabled:hover .uitkRadioIcon-border {
+  stroke: var(--border-stroke);
+}
+
+/* .uitkRadio-filled .uitkRadioIcon-border {
+  fill: var(--icon-background-filled);
+} */
+
+/* .uitkRadio-theme .uitkRadioIcon-border {
+  fill: var(--icon-background-theme);
+} */
+
+/* .uitkRadio-transparent .uitkRadioIcon-border {
+  fill: transparent;
+} */
+
+.uitkRadioIcon-check {
+  stroke: var(--check-stroke);
+  fill: var(--check-fill);
+}

@@ -1,0 +1,37 @@
+.uitk-light .uitkControlLabel {
+  --control-label-color: var(--uitk-grey-900);
+}
+
+.uitk-dark .uitkControlLabel {
+  --control-label-color: var(--uitk-white);
+}
+
+.uitkControlLabel {
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+  margin-top: var(--label-margin-top, 0);
+
+  font-family: var(--uitk-typography-font-family);
+  font-size: var(--uitk-typography-size-regular-unit);
+  font-weight: var(--uitk-typography-weight-regular);
+
+  margin-right: var(--label-margin-right, 4px);
+}
+
+.uitkControlLabel-label {
+  color: var(--control-label-color);
+  line-height: var(--uitk-typography-line-height);
+
+  /* the default should be density aware. This can wait until density is avaiable via theme */
+  margin-left: var(--label-margin-left, 4px);
+}
+
+.uitkControlLabel-disabled {
+  cursor: var(--uitk-disabled-cursor);
+}
+
+.uitkControlLabel-disabled .uitkControlLabel-label {
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-disabled-text-opacity);
+}

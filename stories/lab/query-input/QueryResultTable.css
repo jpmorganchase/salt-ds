@@ -1,0 +1,26 @@
+.uitkQueryResultTable {
+  overflow-y: scroll;
+}
+
+.uitkQueryResultTable table {
+}
+
+.uitkQueryResultTable-col {
+  width: 150px;
+}
+
+.uitkQueryResultTable tr {
+  font-size: var(--uitk-typography-size-regular-unit);
+}
+
+.uitkQueryResultTable td {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.uitkQueryResultTable th {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}

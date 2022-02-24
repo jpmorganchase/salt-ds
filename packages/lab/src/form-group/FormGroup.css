@@ -1,0 +1,9 @@
+.uitkFormGroup {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.uitkFormGroup-row {
+  flex-direction: row;
+}

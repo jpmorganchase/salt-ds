@@ -1,0 +1,12 @@
+.uitkCheckboxGroup {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+
+.uitkCheckboxGroup-horizontal {
+  display: block;
+}

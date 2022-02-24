@@ -1,0 +1,4 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-draggable-box-shadow: var(--uitk-shadow-black-4);
+}

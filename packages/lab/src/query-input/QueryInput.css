@@ -1,0 +1,125 @@
+.uitkQueryInput {
+}
+
+.uitkQueryInputBody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.uitkQueryInputBody > .uitkIcon {
+  padding: var(--uitk-spacing-unit);
+  align-self: start;
+}
+
+.uitkQueryInputBody-separator {
+  width: 1px;
+  background-color: var(--uitk-separator-item-color);
+  margin: 0 var(--uitk-spacing-unit);
+  align-self: stretch;
+}
+
+.uitkQueryInputBody-buttonGroup {
+  flex-shrink: 0;
+  align-self: start;
+  margin-bottom: var(--uitk-spacing-unit);
+}
+
+.uitkQueryInputBody-input {
+  flex-grow: 1;
+}
+
+.uitkQueryInputValueSelector {
+}
+
+.uitkQueryInputValueSelector-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.uitkCategoryList-categoryWidthMeasure {
+  position: fixed;
+  left: -1000px;
+  top: 0;
+  border: solid 1px black;
+  box-sizing: border-box;
+}
+
+.uitkCategoryList-category {
+  font-size: var(--uitk-typography-size-regular-unit);
+}
+
+.uitkCategoryListItem-text {
+  flex-shrink: 0;
+  margin-right: calc(var(--uitk-spacing-unit) * 1.5);
+}
+
+.uitkCategoryListItem-valuesContainer {
+  font-style: italic;
+  color: var(--uitk-text-secondary-regular-color);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.uitkCategoryListItem-values {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uitkCategoryListItem-chevron {
+  flex-shrink: 0;
+  margin-left: var(--uitk-spacing-unit);
+}
+
+.uitkListItem-selected .uitkIcon {
+  fill: var(--list-item-text-active-color);
+}
+
+.uitkQueryInputValueList {
+  border: solid 1px var(--uitk-containerable-border-regular-color);
+}
+
+.uitkQueryInputValueList-back {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: solid 1px var(--uitk-separator-item-color);
+  cursor: pointer;
+}
+
+.uitkQueryInputValueList-back .uitkIcon {
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitkQueryInputValueList-category {
+  font-size: var(--uitk-typography-size-regular-unit);
+  flex-grow: 1;
+}
+
+.uitkQueryInputSearchList {
+}
+
+.uitkQueryInputSearchList-group {
+}
+
+.uitkQueryInputSearchList-addKeyword {
+  border-top: solid 1px var(--uitk-separator-item-color);
+}
+
+.uitkQueryInputSearchList-categoryTitle {
+  color: var(--uitk-text-primary-regular-color);
+  background: var(--uitk-containerable-secondary-background-regular-color);
+  font-size: var(--uitk-typography-size-regular-unit);
+  font-weight: var(--uitk-typography-weight-bold);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--uitk-spacing-unit);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.uitkQueryInputSearchList-value {
+}

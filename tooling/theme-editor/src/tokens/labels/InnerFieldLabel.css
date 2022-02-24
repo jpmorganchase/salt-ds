@@ -1,0 +1,20 @@
+.uitkInnerFieldLabel {
+  color: var(--uitk-text-primary-color);
+  padding: 2px 0px;
+  margin-top: 5px;
+}
+
+.uitkInnerFieldLabel-Large {
+  font-size: var(--uitk-typography-size-50);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+.uitkInnerFieldLabel-Medium {
+  font-size: var(--uitk-typography-size-40);
+  font-weight: var(--uitk-typography-weight-regular);
+}
+
+.uitkInnerFieldLabel-Small {
+  font-size: var(--uitk-typography-size-30);
+  font-weight: var(--uitk-typography-weight-light);
+}

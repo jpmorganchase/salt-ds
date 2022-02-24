@@ -1,0 +1,18 @@
+.custom-slider {
+  --uitkSlider-rail-height: 16px;
+  --uitkSlider-rail-color: black;
+
+  --uitkSlider-rail-mark-height: 8px;
+  --uitkSlider-rail-mark-color: var(--uitk-red-500);
+
+  --uitkSlider-selection-height: 4px;
+  --uitkSlider-selection-color: var(--uitk-green-500);
+
+  --uitkSlider-arrow-height: 12px;
+  --uitkSlider-arrow-width: 8px;
+
+  --uitkSlider-border-style: solid;
+  --uitkSlider-border-width: 1px 0 1px 0;
+  --uitkSlider-border-color: var(--uitk-grey-200);
+  --uitkSlider-flex-direction: column-reverse;
+}

@@ -1,0 +1,29 @@
+.uitkFormLabel {
+  align-items: flex-start;
+  box-sizing: border-box;
+  color: var(--uitk-label-text-color, var(--uitk-text-secondary-color));
+  display: flex;
+  font-size: var(--uitk-label-font-size, var(--uitk-typography-size-caption-unit));
+  margin-bottom: var(--uitk-field-label-margin-bottom, 0);
+  margin-top: var(--uitk-field-label-margin-top);
+  line-height: var(--uitk-field-label-line-height, var(--uitk-typography-line-height));
+  padding: var(--uitkFormLabel-padding, 0);
+  text-overflow: ellipsis;
+  transform: translate(0, var(--uitkFormLabel-top, 0));
+  white-space: nowrap;
+  width: 100%;
+}
+
+.uitkFormLabel-disabled {
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-disabled-text-opacity);
+}
+
+.uitkFormLabel-necessityIndicator {
+  font-style: italic;
+  margin-left: 1ch;
+}
+
+.uitkFormLabel-statusIndicator {
+  margin-left: var(--uitk-spacing-unit);
+}

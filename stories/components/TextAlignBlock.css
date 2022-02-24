@@ -1,0 +1,12 @@
+.TextAlignBlock-cell {
+  width: var(--uitk-size-regular-unit);
+  height: var(--uitk-size-regular-unit);
+  justify-self: end;
+
+  color: var(--uitk-text-primary-color);
+
+  border-color: var(--uitk-container-low-emphasis-border-color);
+  border-style: var(--uitk-container-border-style);
+  border-width: var(--uitk-container-border-width);
+  border-radius: var(--uitk-container-border-radius);
+}

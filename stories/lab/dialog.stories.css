@@ -1,0 +1,10 @@
+.DialogButtonBar-mediumDensity {
+}
+
+.DialogButton {
+}
+
+.Dialog-alignTop {
+  align-self: flex-start;
+  margin-top: 25px;
+}

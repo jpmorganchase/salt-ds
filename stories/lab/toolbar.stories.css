@@ -1,0 +1,3 @@
+#toolbar-simple-collapsible .toolbar-item[data-collapsed] {
+  --uitkButton-font-size: 0;
+}

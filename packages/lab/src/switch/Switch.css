@@ -1,0 +1,205 @@
+/*TODO change thumb background in formfield */
+
+.uitk-light .uitkSwitch-label {
+  --switch-label-color: var(--uitk-grey-200);
+  --switch-track-color: var(--uitk-grey-90);
+  --switch-track-color-hover: var(--uitk-blue-400);
+  --switch-thumb-background: var(--uitk-white);
+  --switch-checked-track-color: var(--uitk-blue-500);
+  --switch-checked-icon-color: var(--uitk-blue-500);
+}
+
+.uitk-dark .uitkSwitch-label {
+  --switch-label-color: var(--uitk-grey-70);
+  --switch-track-color: var(--uitk-grey-100);
+  --switch-track-color-hover: var(--uitk-blue-300);
+  --switch-thumb-background: var(--uitk-grey-800);
+  --switch-checked-track-color: var(--uitk-blue-400);
+  --switch-checked-icon-color: var(--uitk-white);
+}
+
+.uitk-density-touch .uitkSwitch {
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-thumb-margin: 3px 0 0 3px;
+  --switch-thumb-size: 18px;
+  --switch-thumb-translate: 20px;
+}
+
+.uitk-density-low .uitkSwitch {
+  --switch-width: 38px;
+  --switch-height: 20px;
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: 16px;
+  --switch-thumb-translate: 18px;
+}
+
+.uitk-density-medium .uitkSwitch {
+  --switch-width: 34px;
+  --switch-height: 18px;
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: 14px;
+  --switch-thumb-translate: 16px;
+}
+
+.uitk-density-high .uitkSwitch {
+  --switch-width: 30px;
+  --switch-height: 16px;
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: 12px;
+  --switch-thumb-translate: 14px;
+}
+
+.uitkSwitch-label {
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  vertical-align: middle;
+}
+
+.uitkSwitch-label .uitkControlLabel-text {
+  line-height: var(--uitk-typography-line-height);
+  text-align: right;
+
+  color: var(--switch-label-color);
+}
+
+.uitkSwitch-label:hover .uitkSwitch-track {
+  background-color: var(--switch-track-color-hover);
+}
+
+.uitkSwitch {
+  width: var(--switch-width);
+  height: var(--switch-height);
+
+  /* all densities */
+  padding: 0;
+  overflow: visible;
+  box-sizing: content-box;
+  margin-left: 0;
+  display: inline-flex;
+  z-index: 0;
+  position: relative;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.uitkSwitch-track {
+  opacity: 1;
+  position: absolute;
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-left: 0;
+  border-radius: 0;
+
+  background: var(--switch-track-color);
+  width: var(--switch-width);
+  height: var(--switch-height);
+  z-index: -1;
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.uitkSwitch-base {
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+  margin: var(--switch-thumb-margin);
+  /* end density */
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  justify-content: flex-start;
+  top: 0;
+  left: 0;
+  color: #fafafa;
+  z-index: 1;
+  position: absolute;
+  transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex: 0 0 auto;
+  overflow: visible;
+  font-size: 1.2857142857142856rem;
+  text-align: center;
+  display: inline-flex;
+  outline: 0;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.uitkSwitch-icon-label {
+  transform: translateX(0px);
+  transition: transform 0.15s;
+
+  width: 100%;
+  display: flex;
+  align-items: inherit;
+  justify-content: inherit;
+}
+
+.uitkSwitch-input {
+  left: -100%;
+  width: 300%;
+
+  top: 0;
+  cursor: inherit;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+}
+
+.uitkSwitch-thumb,
+.uitkSwitch-checked .uitkSwitch-icon {
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+
+  background: var(--switch-thumb-background);
+  fill: var(--switch-thumb-background);
+
+  outline: 1px solid transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.uitkSwitch-base.uitkSwitch-checked {
+  transform: none;
+}
+
+.uitkSwitch-base.uitkSwitch-checked .uitkSwitch-icon-label {
+  transform: translateX(var(--switch-thumb-translate));
+}
+
+.uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
+  opacity: 1;
+  background-color: var(--switch-checked-track-color);
+  border: 1px solid var(--switch-checked-track-color);
+}
+
+.uitkSwitch-icon-tick {
+  fill: var(--switch-checked-icon-color);
+}
+
+.uitkSwitch-focusVisible:before {
+  content: "";
+  display: block;
+  position: absolute;
+  outline: var(--uitk-focused-med-emphasis-outline);
+  background: transparent;
+
+  width: var(--switch-width);
+  height: var(--switch-height);
+  /* medium density */
+  top: -2px;
+  left: -2px;
+}
+
+.uitkSwitch-focusVisible + .uitkSwitch-track {
+  background-color: var(--switch-track-color-hover);
+}
+
+.uitkSwitch-disabled .uitkSwitch-track,
+.uitkSwitch-disabled:hover .uitkSwitch-track {
+  background: var(--switch-track-color);
+  opacity: var(--uitk-disabled-graphical-opacity);
+}

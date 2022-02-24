@@ -1,0 +1,43 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { SpacingBlock } from "../../components/SpacingBlock";
+import { DocGrid } from "../../components/DocGrid";
+
+<Meta title="Documentation/Styles and Theming/Foundation/Size" />
+
+# Base Values
+
+All size values are based on 4px.
+
+## Density Aware
+
+<Canvas>
+  <Story name="Density Aware">
+    <DocGrid>
+      <SpacingBlock spacingVar="--uitk-size-regular-unit" />
+      <SpacingBlock spacingVar="--uitk-size-stackable-unit" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Density Invariant
+
+Avoid using these values directly in code, use density aware ones above.
+
+<Canvas>
+  <Story name="Density Invariant">
+    <DocGrid>
+      <SpacingBlock spacingVar="--uitk-size-basis-unit" />
+      <SpacingBlock spacingVar="--uitk-size-icon-small" />
+      <SpacingBlock spacingVar="--uitk-size-icon-medium" />
+      <SpacingBlock spacingVar="--uitk-size-icon-large" />
+      <SpacingBlock spacingVar="--uitk-size-regular-high" />
+      <SpacingBlock spacingVar="--uitk-size-regular-medium" />
+      <SpacingBlock spacingVar="--uitk-size-regular-low" />
+      <SpacingBlock spacingVar="--uitk-size-regular-touch" />
+      <SpacingBlock spacingVar="--uitk-size-stackable-high" />
+      <SpacingBlock spacingVar="--uitk-size-stackable-medium" />
+      <SpacingBlock spacingVar="--uitk-size-stackable-low" />
+      <SpacingBlock spacingVar="--uitk-size-stackable-touch" />
+    </DocGrid>
+  </Story>
+</Canvas>

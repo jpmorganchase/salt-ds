@@ -1,0 +1,35 @@
+.uitkColorChooserSwatches-colorNameTextDiv {
+  font-size: var(--uitk-typography-size-regular-unit);
+  font-weight: var(--uitk-typography-weight-bold);
+}
+
+.uitk-light .uitkColorChooserSwatches-colorNameTextDiv {
+  color: var(--uitk-grey-200);
+}
+
+.uitk-dark .uitkColorChooserSwatches-colorNameTextDiv {
+  color: var(--uitk-white);
+}
+
+.uitkColorChooserSwatches-colorTextDiv {
+  font-size: var(--uitk-typography-size-regular-unit);
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitk-light .uitkColorChooserSwatches-colorTextDiv {
+  color: var(--uitk-grey-200);
+}
+
+.uitk-dark .uitkColorChooserSwatches-colorTextDiv {
+  color: var(--uitk-grey-70);
+}
+
+.uitkColorChooserSwatches-textDiv {
+  display: flex;
+  justify-content: flex-start;
+  padding: 8px 8px 0px 8px;
+}
+
+.uitkColorChooserSwatches-pickerDiv {
+  padding-top: calc(2 * var(--uitk-spacing-unit));
+}

@@ -1,0 +1,52 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "../components/ComponentAnatomy";
+import { FormField, Input } from "@brandname/lab";
+import "../components/ComponentAnatomy.css";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Lab/Form Field/Doc" component={FormField} />
+
+# Form Field
+
+# API
+
+```
+import { FormField } from "@brandname/lab";
+```
+
+## Props
+
+<ArgsTable of={FormField} />
+
+## HTML Anatomy of a Form Field
+
+<Canvas>
+  <Story name="FormField Anatomy">
+    <ComponentAnatomy showControls={false}>
+      <FormField
+        helperText="Sample helper text"
+        label="Default Form Field label"
+      >
+        <Input defaultValue="Value" />
+      </FormField>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={FormField} />
+
+## Characteristics Used
+
+- Disabled
+- Editable
+- Focused
+- Status
+
+## --uitkFormField CSS Custom Property API
+
+<CSSVariableTable of={FormField} />

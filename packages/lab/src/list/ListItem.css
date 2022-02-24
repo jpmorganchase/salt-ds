@@ -1,0 +1,103 @@
+.uitkListItem {
+  /* Color */
+  --list-item-text-color: var(--uitk-selectable-text-color);
+  --list-item-background: var(--uitk-selectable-background);
+  --list-item-background-hover: var(--uitk-selectable-background-hover);
+  --list-item-selected-focus-visible-outline-color: var(--uitk-white);
+
+  --list-item-text-color-active: var(--uitk-selectable-text-color-active);
+  --list-item-background-active: var(--uitk-selectable-background-active);
+
+  /* Text, Font */
+  --list-item-text-align: var(--uitk-selectable-default-text-align);
+  --list-item-font-size: var(--uitk-typography-size-regular-unit);
+  --list-item-line-height: var(--uitk-typography-line-height);
+
+  /* Spacing */
+  --list-item-padding: 0 var(--uitk-spacing-unit);
+
+  /* Misc. */
+
+  --list-item-focus-visible-outline-style: var(--uitk-focused-med-emphasis-outline-style);
+  --list-item-focus-visible-outline-width: var(--uitk-focused-med-emphasis-outline-width);
+  --list-item-focus-visible-outline-color: var(--uitk-focused-med-emphasis-outline-color);
+  --list-item-focus-visible-outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
+
+  --list-item-gap: 1px;
+  --list-item-align-items: center;
+  --list-item-selectable-cursor: pointer;
+  --list-item-cursor: default;
+
+  --list-item-disabled-cursor: var(--uitk-disabled-cursor);
+  --list-item-disabled-regular-opacity: var(--uitk-disabled-text-opacity);
+}
+
+.uitkListItem {
+  color: var(--list-item-text-color);
+  background: var(--list-item-background);
+  text-align: var(--list-item-text-align);
+  line-height: var(--list-item-line-height);
+  font-size: var(--list-item-font-size);
+  padding: var(--list-item-padding);
+  left: 0;
+  right: 0;
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  align-items: var(--list-item-align-items);
+  white-space: nowrap;
+}
+
+.uitkListItem {
+  /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
+  margin-bottom: var(--list-item-gap);
+  cursor: var(--list-item-selectable-cursor);
+}
+
+.uitkListItem:last-child {
+  margin-bottom: 0px;
+}
+
+.uitkListItem.uitkListItem-highlighted:not(.uitkListItem-selected) {
+  background: var(--list-item-background-hover);
+}
+
+.uitkListItem.uitkListItem-deselectable {
+  cursor: var(--list-item-selectable-cursor);
+}
+
+.uitkListItem-textWrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.uitkListItem-selected {
+  color: var(--list-item-text-color-active);
+  background: var(--list-item-background-active);
+  cursor: var(--list-item-cursor);
+}
+
+.uitkListItem-disabled {
+  cursor: var(--list-item-disabled-cursor);
+  opacity: var(--list-item-disabled-regular-opacity);
+}
+
+.uitkListItem-focusVisible:after {
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  content: "";
+  position: absolute;
+
+  outline-style: var(--list-item-focus-visible-outline-style);
+  outline-width: var(--list-item-focus-visible-outline-width);
+  outline-color: var(--list-item-focus-visible-outline-color);
+  outline-offset: var(--list-item-focus-visible-outline-offset);
+}
+
+.uitkListItem-focusVisible.uitkListItem-selected:after {
+  outline-color: var(--list-item-selected-focus-visible-outline-color);
+}

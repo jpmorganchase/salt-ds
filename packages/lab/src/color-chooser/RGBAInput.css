@@ -1,0 +1,44 @@
+.uitk-dark .uitkColorChooser-rgbaInput {
+  width: var(--uitk-spacing-unit);
+  border-bottom: 1px solid var(--uitk-white);
+  padding-top: 4px;
+}
+
+.uitk-light .uitkColorChooser-rgbaInput {
+  width: var(--uitk-spacing-unit);
+  border-bottom: 1px solid var(--uitk-black);
+  padding-top: var(--uitk-spacing-unit);
+}
+
+.uitkColorChooser-rgbaText {
+  margin-top: 5px;
+  font-size: var(--uitk-typography-size-caption-unit);
+  color: var(--uitk-text-secondary-color);
+  padding-top: 4px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.uitkColorChooser-rgbaInputDiv {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 0px var(--uitk-spacing-unit) 0px;
+}
+
+.uitkColorChooser-overrideInput {
+  min-width: 0em;
+  background: transparent !important;
+  color: var(--uitk-text-primary-color);
+  border-bottom: 1px solid var(--uitk-text-primary-color);
+}
+
+.uitkColorChooser-alphaSpacerDiv {
+  height: 24px;
+}
+
+.uitkColorChooser-textDivOverrides {
+  font-size: var(--uitk-typography-size-caption-unit);
+  font-weight: var(--uitk-typography-weight-bold);
+  color: var(--uitk-text-primary-color);
+  padding: 0px !important;
+}

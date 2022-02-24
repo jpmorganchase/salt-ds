@@ -1,0 +1,12 @@
+.uitk-light {
+  --uitk-icon-primary-color: var(--uitk-grey-200);
+  /* Grey 200 */
+  --uitk-icon-primary-color-disabled: rgba(97, 101, 110, var(--uitk-disabled-graphical-opacity));
+}
+
+.uitk-dark {
+  /* TODO: Confirm this color with designer */
+  --uitk-icon-primary-color: var(--uitk-grey-60);
+  /* grey 60 */
+  --uitk-icon-primary-color-disabled: rgba(197, 201, 208, var(--uitk-disabled-graphical-opacity));
+}

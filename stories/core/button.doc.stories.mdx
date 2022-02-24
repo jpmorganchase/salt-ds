@@ -1,0 +1,257 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "../components/ComponentAnatomy";
+import { Button, ToolkitProvider } from "@brandname/core";
+import {
+  DownloadIcon,
+  SearchIcon,
+  SendIcon,
+  SettingsSolidIcon,
+} from "@brandname/icons";
+import { withFlexGap } from "../decorators/withFlexGap";
+import { CustomStylingExample } from "./button.stories";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Core/Button/Doc" component={Button} />
+
+# Button
+
+A Button executes an action when clicked. Button labels should use only one or two words, and begin with an active verb. There are three Button variants: Primary is the most commonly-used button; Secondary performs an action less likely to be triggered; Call-To-Action (a.k.a. CTA) performs a critical action on the screen.
+
+## Button Variants
+
+Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
+
+<Canvas>
+  <Story name="Button Variants" decorators={[withFlexGap]}>
+    <Button variant="cta">CTA</Button>
+    <Button variant="primary">Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+  </Story>
+</Canvas>
+
+## Button with icon and label
+
+Icons can be put before or after text, or used alone.
+
+<Canvas>
+  <Story name="Button with icon and label" decorators={[withFlexGap]}>
+    <Button variant="cta">
+      Send <SendIcon size={12} />
+    </Button>
+    <Button variant="primary">
+      <SearchIcon size={12} /> Search
+    </Button>
+    <Button variant="secondary">
+      Setting <SettingsSolidIcon size={12} />
+    </Button>
+    <Button>
+      <DownloadIcon size={12} />
+    </Button>
+  </Story>
+</Canvas>
+
+## Button as link, div etc
+
+Sometimes a link must be styled as a button. The HTML must use the correct element, in order that browser built-in features function as expected.
+In this case, "Open link in new tab" should be available in the context menu. This is achieved with the `elementType` prop.
+
+<Canvas>
+  <Story name="Button as Link">
+    <Button
+      elementType="a"
+      href={window.location.href}
+      target="_blank"
+      aria-label="Button with HREF, opens in new window"
+    >
+      Link
+    </Button>
+  </Story>
+</Canvas>
+
+This is also useful where Button elements might otherwise be nested, a structure which would be flagged by accessibility tests as an error. An inner button can be
+rendered as a `div`.
+
+<Canvas>
+  <Story name="Button as Div">
+    <Button elementType="div" aria-label="Button as Div">
+      Div Button
+    </Button>
+  </Story>
+</Canvas>
+
+TypeScript users, note that in the above examples, strict typing is still enforced, so if `elementType` is set to `a` then the Component will be be TypeChecked as
+an `anchor` element and the attributes validated accordingly.
+
+# API
+
+```
+import { Button } from "@brandname/core";
+```
+
+## Props
+
+<ArgsTable of={Button} />
+
+## HTML Anatomy of a Button
+
+export const Link = ({ children, to, ...props }) => (
+  <a {...props} href={to}>
+    {children}
+  </a>
+);
+
+<Canvas>
+  <Story name="Button Anatomy">
+    <ComponentAnatomy showLegend>
+      <Button aria-label="Simple Button">Default</Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button elementType="div" aria-label="Button as Div" variant="secondary">
+        Secondary Div
+      </Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button variant="cta" aria-label="CTA with Icon">
+        CTA with Icon <SendIcon size={12} />
+      </Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button
+        elementType={Link}
+        to="/"
+        aria-label="Link as elementType"
+        role={null}
+      >
+        Custom Link
+      </Button>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+The Custom Link example above uses a simplified `Link` component defined as below. In reality, this might be A
+`RouterLink` from a routing library, for example. In this case, the `Button` does not know what root element will
+be rendered by the custom Component, by default it will add the `button` role. We suppress this by explicitly
+setting role = null. It will be rare to need to do this.
+
+```javascript
+export const Link = ({ children, to, ...props }) => (
+  <a {...props} href={to}>
+    {children}
+  </a>
+);
+```
+
+## CSS Class
+
+<CSSClassTable of={Button} />
+
+## Characteristics Used
+
+- [Actionable](/docs/themes-toolkit-characteristics--actionable-misc)
+  - all Actionable characteristics used
+- [Focused](/docs/themes-toolkit-characteristics--focused)
+  - --uitk-focused-med-emphasis-outline-style
+  - --uitk-focused-med-emphasis-outline-width
+  - --uitk-focused-med-emphasis-outline-color
+  - --uitk-focused-med-emphasis-outline-offset
+
+## --uitkButton CSS Custom Property API
+
+The default styling values for most Button attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Button. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Button, but not defined by Button. They can be defined via a container or
+a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Button} />
+
+## Customising Button styles - a fully worked through example
+
+Below is an illustration of some of the buttons used in a new application. Compared to the default UI Toolkit buttons, there are several complexities:
+
+- not just three variants but six. Besides `CTA`, `Primary` and `Secondary`, we have (abbreviating) `Final`, `Bid` and `Ask`.
+- an additional display state - `readonly`.
+- visual treatments not present on standard toolkit buttons - background gradients, border styling
+
+<Canvas>
+  <Story name="Custom Button Styling" decorators={[withFlexGap]}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <CustomStylingExample />
+    </ToolkitProvider>
+  </Story>
+</Canvas>
+
+We will assume the name `New App` for our application and we will use the identifier `mewapp` to label custom stylesheets and theme.
+
+When customising components, the approach taken will depend on whether the customisation is targetted at a specific component instance, or all components of a similar kind across an application. In this case, we will assume the latter and organise our changes into stylesheets accordingly. We will follow UI Toolkit design system conventions and divide our style overrides between theme and component parts.
+
+The documentation tells us that the styling of Button is largely driven by the `actionable` characteristic. Because we want to re-style Button throughout our application, we are going to provide a set of overrides for this characteristic. Exactly how we would approach this would depend on just how extensive our changes are. In most cases, we are likely to be selectively overriding parts of the existing UI Toolkit characteristic. In this case, we would load the base UI Toolkit styles and also load our overrides, using normal CSS selectivity rules to ensure our overrides take precedence (see below). In the case that we wanted to apply very extensive changes, or even redefine many characteristics from scratch, we could replace the UI Toolkit theme entirely with a custom theme - see Theme documentation for more details.
+
+The `actionable` characteristic provides styling variables for the three default variants - `CTA`, `Primary` etc. Because we are going to implement additional variants, and because we are going to follow the patterns used throughout the toolkit design system, we will define brand new`actionable` entries for these new variants. Our custom`actionable` stylesheet will therefore reproduce some of the existing toolkit actionable CSS Variables, assigning new values to them, and add additional variables for the new variants. The default variants are baked into the toolkit components (via the `variant` prop). We cannot change that, but all that prop does is cause a CSS class to be applied to the `button` html element, so we can easily extend the concept by explicitly applying classNames for our new variants.
+
+This button will have a className `uitkButton-cta`.
+
+```jsx
+<Button variant="CTA" />
+```
+
+We can simulate our custom variant with a className prop, our html `button` will have the CSS class `uitkButton-primary uitkButton-buy`. Note: `Primary` is the default variant, so that className gets added as well, but we can target `uitkButton-buy` in our styles
+
+```jsx
+<Button className="uitkButton-buy" />
+```
+
+Below is a small extract from the custom theme stylesheet, showing some overrides for the existing
+toolkit characteristics, as well as some new characteristics created to support the custom variants.
+Note that we scope these variables to the combined class name `.uitk-light.uitk-newapp`. This is appropriate as we are extending the existing theme by overriding some characteristics rather than replacing the theme entirely.
+
+```css
+  /* from the file Button.stories.newapp-theme.css */
+
+.uitk-light.uitk-newapp {
+
+  /* CTA */
+  --uitk-actionable-cta-text-color: var(--uitk-white);
+  --uitk-actionable-cta-background: linear-gradient(to bottom, var(--uitk-blue-500), var(--uitk-blue-600));
+  --uitk-actionable-cta-icon-color: var(--uitk-white);
+  --uitk-actionable-cta-topline-color: var(--uitk-blue-100);
+  --uitk-actionable-cta-baseline-color: var(--uitk-grey-900);
+
+  /* Bid / Buy */
+  --uitk-actionable-bid-text-color: var(--uitk-grey-900);
+  --uitk-actionable-bid-background: linear-gradient(to bottom, var(--uitk-blue-50), var(--uitk-blue-100));
+  --uitk-actionable-bid-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-bid-topline-color: var(--uitk-white);
+  --uitk-actionable-bid-baseline-color: var(--uitk-blue-300);
+```
+
+Following toolkit conventions, we have implemented the Buttom component styles in a separate stylesheet, extract below. Note: we only have to provide styling for the new custom variants, plus the new state `readonly`. All the existing variants will be handled already, they are characteristic-driven and we have provided new values for the characteristics. If it were not for the fact that we have these new custom vartiants, we might not need a custom component css stylesheet at all.
+
+```css
+/* from the file Button.stories.newapp-button.css */
+
+.uitk-newapp .uitkButton-primary.uitkButton-final-execution {
+  --button-background: var(--uitk-actionable-final-background);
+  --button-background-active: var(--uitk-actionable-final-background-active);
+  --button-background-disabled: var(
+    --uitk-actionable-final-background-disabled
+  );
+  --button-background-hover: var(--uitk-actionable-final-background-hover);
+  --button-text-color: var(--uitk-actionable-final-text-color);
+  --button-text-color-active: var(--uitk-actionable-final-text-color-active);
+  --button-text-color-disabled: var(
+    --uitk-actionable-final-text-color-disabled
+  );
+  --button-text-color-hover: var(--uitk-actionable-final-text-color-hover);
+  --uitkIcon-color: var(--uitk-actionable-final-icon-color);
+  --uitkButton-border-color: var(--uitk-actionable-final-topline-color) transparent
+    var(--uitk-actionable-final-baseline-color) transparent;
+}
+```

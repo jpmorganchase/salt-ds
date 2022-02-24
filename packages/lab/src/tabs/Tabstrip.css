@@ -1,0 +1,67 @@
+.uitkTabstrip {
+  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable-unit, 36px));
+  --tabstrip-tag-dragging-display: none;
+  --tabstrip-tab-display: inline-flex;
+  --tabstrip-tab-background: transparent;
+
+  align-items: flex-start;
+  align-self: var(--uitkTabstrip-align-self, stretch);
+  box-sizing: border-box;
+  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-weight: var(--uitk-typography-weight-regular);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  min-width: 28px;
+}
+
+.uitkTabstrip[class*="uitkTabstrip-draggingTab"] {
+  --uitkActivationIndicator-transition: none;
+}
+
+.uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab {
+  pointer-events: none;
+}
+
+.uitkTabstrip[class*="uitkTabstrip-draggingTab"] * {
+  cursor: move;
+}
+
+.uitkTabstrip-draggingTabIndicator {
+  --tab-drag-away-display: var(--tabstrip-tab-display);
+}
+
+.uitkTabstrip-horizontal {
+  height: var(--tabstrip-height);
+}
+
+.uitkTabstrip-addButton,
+.uitkTabstrip-overflowMenu {
+  margin-left: var(--uitk-spacing-unit);
+}
+
+.uitkTabstrip-inner {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Vertical uitkTabstrip */
+.uitkTabstrip-vertical {
+  align-self: flex-start;
+  display: inline-flex;
+}
+
+.uitkTabstrip-vertical .uitkTabstrip-inner {
+  flex-direction: column;
+  height: auto;
+}
+
+.uitkTabstrip-centered .uitkTabstrip-inner {
+  justify-content: center;
+}

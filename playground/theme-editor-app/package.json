@@ -1,0 +1,11 @@
+{
+  "name": "@brandname/theme-editor-app",
+  "version": "0.1.0",
+  "private": true,
+  "modular": {
+    "type": "app"
+  },
+  "dependencies": {
+    "@brandname/theme-editor": ">=1.0.0"
+  }
+}

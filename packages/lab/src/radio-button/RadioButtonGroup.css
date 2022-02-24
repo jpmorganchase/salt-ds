@@ -1,0 +1,33 @@
+.uitkRadioButtonGroup {
+  justify-content: space-between;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+
+.uitkRadioButtonGroup-horizontal {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  --button-spacing: calc(var(--uitk-spacing-unit) * 3);
+}
+
+.uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+  margin-right: var(--button-spacing);
+}
+
+.uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  margin-right: var(--button-spacing);
+}
+
+.uitkRadioButtonGroup-vertical {
+  line-height: 1;
+}
+
+.uitkRadioButtonGroup-legend {
+  transition: none;
+  width: auto;
+}

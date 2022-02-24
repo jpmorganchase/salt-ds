@@ -1,0 +1,7 @@
+.BackgroundBlock {
+  background: var(--uitk-container-low-emphasis-background);
+  padding: 8px;
+
+  /* We have to reset the line-height, otherwise in some smaller blocks, height will be larger than needed. */
+  line-height: 1;
+}

@@ -1,0 +1,112 @@
+.RenderVisualiser {
+  display: flex;
+  gap: 50px;
+  width: 800px;
+}
+
+.RenderVisualiser-component {
+  flex: 0 0 200px;
+}
+
+.RenderVisualiser-view {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+.RenderVisualiser-header {
+  align-items: flex-start;
+  border-bottom: solid 2px lightgray;
+  display: flex;
+  flex: 0 0 48px;
+  margin-bottom: 12px;
+}
+
+.RenderVisualiser-header .actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.RenderVisualiser-header .actions input {
+  vertical-align: bottom;
+}
+
+.component-name {
+  font-size: 16px;
+}
+
+.RenderVisualiser-content {
+  flex: 1 1 auto;
+}
+
+.RenderedElement {
+  align-items: flex-start;
+  color: #999;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.RenderedElement > .RenderedElement {
+  padding-left: 12px;
+}
+
+.RenderedElement > .string-value {
+  color: blue;
+  font-weight: bold;
+  padding-left: 12px;
+}
+
+.RenderVisualiser-content > .RenderedElement + .RenderedElement {
+  margin-top: 50px;
+}
+
+.RenderedElement > .attributes {
+  padding: 0 6px;
+}
+
+.rendered-attributes > .rendered-role {
+  background-color: red;
+  border-radius: 3px;
+  color: white;
+  margin-left: 3px;
+  padding: 0 3px;
+}
+
+.aria-attribute {
+  --attribute-color: cornflowerblue;
+}
+
+.data-attribute {
+  --attribute-color: brown;
+}
+
+.rendered-attributes > .class-name {
+  margin-left: 3px;
+  color: red;
+}
+
+.rendered-attributes > *[class$="attribute"] {
+  border-radius: 3px;
+  margin-left: 3px;
+  color: var(--attribute-color);
+  border: solid 1px var(--attribute-color);
+}
+
+.rendered-attributes > *[class$="attribute"] > .attribute-name {
+  background-color: var(--attribute-color);
+  color: white;
+  padding: 0 3px;
+}
+
+.rendered-attributes > *[class$="attribute"] > .attribute-name:not(:last-child) {
+  padding-right: 4px;
+}
+
+.rendered-attributes > *[class$="attribute"] > .attribute-value {
+  padding: 0 3px;
+}

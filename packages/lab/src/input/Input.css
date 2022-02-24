@@ -1,0 +1,130 @@
+.uitk-density-touch .uitkInput {
+  --input-button-inset: 4px;
+}
+.uitk-density-low .uitkInput {
+  --input-button-inset: 4px;
+}
+.uitk-density-medium .uitkInput {
+  --input-button-inset: 2px;
+}
+.uitk-density-high .uitkInput {
+  --input-button-inset: 2px;
+}
+
+.uitkInput {
+  --input-min-width: var(--uitk-input-min-width, 8em);
+  --input-min-height: var(--uitk-size-regular-unit);
+  --input-text-color: var(--uitk-text-primary-color);
+  --input-font-family: var(--uitk-typography-font-family);
+  --input-font-size: var(--uitk-typography-size-regular-unit);
+  --input-adornment-padding: var(--uitk-spacing-unit);
+  --input-padding: 0 var(--uitk-spacing-unit);
+  --input-position: var(--uitk-input-position, relative);
+
+  --input-disabled-cursor: var(--uitk-disabled-cursor);
+  --input-disabled-opacity: var(--uitk-disabled-text-opacity);
+
+  --input-focused-outline: var(--uitk-focused-med-emphasis-outline);
+
+  --input-selection-background: var(--uitk-editable-selection-background);
+}
+
+.uitkInput {
+  color: var(--input-text-color);
+  font-family: var(--input-font-family);
+  min-width: var(--input-min-width);
+  align-items: center;
+  box-sizing: border-box;
+  cursor: default;
+  display: inline-flex;
+  letter-spacing: 0;
+  position: var(--input-position);
+}
+
+.uitkInput-disabled .uitkInput-input {
+  cursor: var(--input-disabled-cursor);
+  opacity: var(--input-disabled-opacity);
+}
+
+/* Reset in the next class */
+.uitkInput-input:focus {
+  outline: none;
+}
+
+.uitkInput-focused {
+  outline: var(--input-focused-outline);
+}
+
+.uitkInput-input {
+  background: none;
+  border: 0;
+  box-sizing: content-box;
+  color: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  letter-spacing: inherit;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+
+  padding: 0;
+  height: 100%;
+
+  width: 100%;
+}
+
+.uitkInput-input::selection {
+  background-color: var(--input-selection-background);
+}
+
+.uitkInput {
+  font-size: var(--input-font-size);
+  padding: var(--input-padding);
+  min-height: var(--input-min-height);
+}
+
+.uitkInput-suffixContainer,
+.uitkInput-prefixContainer {
+  display: flex;
+  align-items: center;
+}
+
+.uitkInput-inputAdornedStart {
+  padding-left: 0;
+}
+
+.uitkInput-inputAdornedStart .uitkInput-input {
+  padding-left: var(--input-adornment-padding);
+}
+
+.uitkInput-inputAdornedEnd {
+  padding-right: 0;
+}
+
+.uitkInput-inputAdornedEnd .uitkInput-input {
+  padding-right: var(--input-adornment-padding);
+}
+
+.uitkInput .uitkInput-suffixContainer > .uitkButton,
+.uitkInput .uitkInput-prefixContainer > .uitkButton {
+  height: calc(var(--button-height) - (var(--input-button-inset) * 2));
+  margin: var(--input-button-inset);
+  padding: 0 calc(var(--uitk-spacing-unit) - var(--input-button-inset));
+}
+
+.uitkInput-leftTextAlign .uitkInput-input {
+  text-align: left;
+}
+
+.uitkInput-centerTextAlign .uitkInput-input {
+  text-align: center;
+}
+
+.uitkInput-rightTextAlign .uitkInput-input {
+  text-align: right;
+}
+
+.uitkInput-formField {
+  width: 100%;
+}

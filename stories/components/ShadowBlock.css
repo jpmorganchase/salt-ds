@@ -1,0 +1,13 @@
+.ShadowBlock {
+  grid-column: 1 / 2;
+
+  margin: var(--uitk-spacing-unit);
+  padding: var(--uitk-spacing-unit);
+
+  color: var(--uitk-text-primary-color);
+
+  border-color: var(--uitk-container-low-emphasis-border-color);
+  border-style: var(--uitk-container-border-style);
+  border-width: var(--uitk-container-border-width);
+  border-radius: var(--uitk-container-border-radius);
+}

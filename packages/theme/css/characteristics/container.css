@@ -1,0 +1,48 @@
+/** Container */
+/* Should container have padding? Refer to stories/components/BackgroundBlock.css */
+
+.uitk-light,
+.uitk-dark {
+  --uitk-container-cursor-hover: pointer;
+  --uitk-container-cursor-active: pointer;
+
+  /* TODO: The below are not in Figma - document these somewhere */
+  --uitk-container-border-width: 1px;
+  --uitk-container-border-style: solid;
+  --uitk-container-border-radius: 0;
+}
+
+.uitk-light {
+  /* TODO: Do we need all 3 if they are the same value (to allow for overrides)? */
+  --uitk-container-low-emphasis-background: var(--uitk-white);
+  --uitk-container-low-emphasis-background-hover: var(--uitk-white);
+  --uitk-container-low-emphasis-background-active: var(--uitk-white);
+
+  --uitk-container-low-emphasis-border-color: var(--uitk-grey-60);
+  --uitk-container-low-emphasis-border-color-hover: var(--uitk-blue-500);
+  --uitk-container-low-emphasis-border-color-active: var(--uitk-blue-500);
+  /* Below not in Figma */
+  --uitk-container-low-emphasis-border-color-disabled: var(--uitk-grey-60-fade-40);
+
+  --uitk-container-med-emphasis-background: var(--uitk-grey-20);
+  /* TODO: Awaiting other definitions from design */
+  /* Below not in Figma */
+  --uitk-container-med-emphasis-background-disabled: var(--uitk-grey-20-fade-40);
+}
+
+.uitk-dark {
+  --uitk-container-low-emphasis-background: var(--uitk-grey-800);
+  --uitk-container-low-emphasis-background-hover: var(--uitk-grey-800);
+  --uitk-container-low-emphasis-background-active: var(--uitk-grey-800);
+
+  --uitk-container-low-emphasis-border-color: var(--uitk-grey-400);
+  --uitk-container-low-emphasis-border-color-hover: var(--uitk-blue-400);
+  --uitk-container-low-emphasis-border-color-active: var(--uitk-blue-400);
+  /* Below not in Figma */
+  --uitk-container-low-emphasis-border-color-disabled: var(--uitk-grey-400-fade-40);
+
+  --uitk-container-med-emphasis-background: var(--uitk-grey-600);
+  /* TODO: Awaiting other definitions from design */
+  /* Below not in Figma */
+  --uitk-container-med-emphasis-background-disabled: var(--uitk-grey-600-fade-40);
+}

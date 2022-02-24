@@ -1,0 +1,12 @@
+.uitkListGroupHeader {
+  color: var(--uitk-text-primary-color);
+  background: var(--uitk-container-med-emphasis-background);
+  font-size: var(--uitk-typography-size-regular-unit);
+  font-weight: var(--uitk-typography-weight-bold);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--uitk-spacing-unit);
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}

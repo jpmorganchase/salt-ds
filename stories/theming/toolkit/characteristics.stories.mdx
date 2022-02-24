@@ -1,0 +1,246 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "../../components/DocGrid";
+import { ColorBlock } from "../../components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+} from "../../components/LineBlock";
+import { BlankBlockCell, BlankBlockCode } from "../../components/BlankBlock";
+
+import { CornerBlock } from "../../components/CornerBlock";
+import { TextAlignBlock } from "../../components/TextAlignBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics" />
+
+# Text
+
+<Canvas>
+  <Story name="Text">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-text-primary-color" />
+      <ColorBlock colorVar="--uitk-text-primary-color-disabled" />
+      <ColorBlock colorVar="--uitk-text-secondary-color" />
+      <ColorBlock colorVar="--uitk-text-secondary-color-disabled" />
+      <ColorBlock colorVar="--uitk-text-growth-indicator-up-color" />
+      <ColorBlock colorVar="--uitk-text-growth-indicator-down-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+# Icon
+
+<Canvas>
+  <Story name="Icon">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-icon-primary-color" />
+      <ColorBlock colorVar="--uitk-icon-primary-color-disabled" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+# Actionable
+
+Group of components allowing to action something, action is performed
+immediately (the component doesn’t stay selected).
+
+## CSS Variables
+
+<Canvas>
+  <Story name="Actionable Misc">
+    <DocGrid>
+      <TextAlignBlock textAlign="--uitk-actionable-text-align" />
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-actionable-font-weight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-actionable-letter-spacing</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-actionable-text-transform</BlankBlockCode>
+      <CornerBlock cornerRadius="--uitk-actionable-border-radius" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Actionable CTA Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-actionable-cta-text-color" />
+      <ColorBlock colorVar="--uitk-actionable-cta-background" />
+      <ColorBlock colorVar="--uitk-actionable-cta-icon-color" />
+      <ColorBlock colorVar="--uitk-actionable-cta-text-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-cta-background-active" />
+      <ColorBlock colorVar="--uitk-actionable-cta-icon-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-cta-text-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-cta-background-hover" />
+      <ColorBlock colorVar="--uitk-actionable-cta-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-cta-text-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-cta-icon-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-cta-background-disabled" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Actionable Primary Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-actionable-primary-text-color" />
+      <ColorBlock colorVar="--uitk-actionable-primary-background" />
+      <ColorBlock colorVar="--uitk-actionable-primary-icon-color" />
+      <ColorBlock colorVar="--uitk-actionable-primary-text-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-primary-background-active" />
+      <ColorBlock colorVar="--uitk-actionable-primary-icon-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-primary-text-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-primary-background-hover" />
+      <ColorBlock colorVar="--uitk-actionable-primary-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-primary-text-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-primary-icon-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-primary-background-disabled" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Actionable Secondary Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-actionable-secondary-text-color" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-icon-color" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-text-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-icon-color-active" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-text-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background-hover" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-text-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-icon-color-disabled" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background-disabled" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Button`
+- `ToggleButton`
+
+# Container
+
+Group of components used to contain and separate different types of content and
+allow hierarchical organization.
+
+<Canvas>
+  <Story name="Container">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-container-low-emphasis-background" />
+      <ColorBlock colorVar="--uitk-container-med-emphasis-background" />
+      <ColorBlock colorVar="--uitk-container-low-emphasis-border-color" />
+      <LineBlock lineWidth="--uitk-container-border-width" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-container-border-style</LineBlockCode>
+      <CornerBlock cornerRadius="--uitk-container-border-radius" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `List`
+
+# Disabled
+
+Group of components used to contain and separate different types of content and allow hierarchical organisation.
+
+# Focused
+
+<Canvas>
+  <Story name="Focused">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-color" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-style" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-offset" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-width" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-top" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-right" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-bottom" />
+      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-left" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+# Progress
+
+<Canvas>
+  <Story name="Progress">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-progress-track-color" />
+      <ColorBlock colorVar="--uitk-progress-color-active" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+# Selectable
+
+Group of components that allow single or multiple selection, Selection can
+trigger actions
+
+<Canvas>
+  <Story name="Selectable">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-selectable-text-color" />
+      <ColorBlock colorVar="--uitk-selectable-text-color-active" />
+      <ColorBlock colorVar="--uitk-selectable-background" />
+      <ColorBlock colorVar="--uitk-selectable-background-hover" />
+      <ColorBlock colorVar="--uitk-selectable-background-active" />
+      <TextAlignBlock textAlign="--uitk-selectable-default-text-align" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `ListItem`
+
+# Separator
+
+Group of attributes to separate information/elements.
+Connected to Container
+
+- S3 (section) - to divide not closely related areas
+- S2 (item) - to divide related areas eg. heading and body
+- S1 (subtle) - when subtle division needed
+
+<Canvas>
+  <Story name="Separator">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-separator-section-color" />
+      <ColorBlock colorVar="--uitk-separator-item-color" />
+      <ColorBlock colorVar="--uitk-separator-subtle-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- Tabs
+- List
+- Dialog
+
+# Status
+
+Group of attributes that denote Status and it's severity
+
+<Canvas>
+  <Story name="Status">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-status-info-color" />
+      <ColorBlock colorVar="--uitk-status-error-color" />
+      <ColorBlock colorVar="--uitk-status-warning-color" />
+      <ColorBlock colorVar="--uitk-status-success-color" />
+      <ColorBlock colorVar="--uitk-status-info-med-emphasis-background" />
+      <ColorBlock colorVar="--uitk-status-error-med-emphasis-background" />
+      <ColorBlock colorVar="--uitk-status-warning-med-emphasis-background" />
+      <ColorBlock colorVar="--uitk-status-success-med-emphasis-background" />
+    </DocGrid>
+  </Story>
+</Canvas>

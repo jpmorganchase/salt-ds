@@ -1,0 +1,19 @@
+{
+  "name": "@brandname/core",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "peerDependencies": {
+    "@types/react": "^16.8.6 || ^17.0.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  }
+}

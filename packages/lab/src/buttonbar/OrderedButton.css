@@ -1,0 +1,11 @@
+.uitkOrderedButton {
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitkOrderedButton-alignLeft {
+  margin-right: auto;
+}
+
+.uitkOrderedButton-alignRight {
+  margin-left: auto;
+}

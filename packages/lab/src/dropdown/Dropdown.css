@@ -1,0 +1,10 @@
+.uitkDropdown {
+  box-sizing: border-box;
+  display: inline-block;
+  line-height: 0;
+  position: relative;
+}
+
+.uitkDropdown-fullwidth {
+  width: 100%;
+}

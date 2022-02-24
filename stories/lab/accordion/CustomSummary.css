@@ -1,0 +1,59 @@
+.custom-accordion-summary {
+  display: flex;
+  flex-direction: row;
+  border: solid 1px lightgrey;
+  border-radius: 4px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.custom-accordion-summary:focus {
+  border: solid 1px red;
+  background-color: red;
+  text-decoration: underline;
+  color: white;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 0 16px;
+}
+
+.icon {
+  margin: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon > div {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+
+.plus > div :first-child {
+  height: 16px;
+  width: 2px;
+  background-color: red;
+  position: absolute;
+  top: 2px;
+  left: 9px;
+}
+
+.plus > div :last-child,
+.minus > div > div {
+  height: 2px;
+  width: 16px;
+  background-color: red;
+  position: absolute;
+  top: 9px;
+  left: 2px;
+}

@@ -1,0 +1,50 @@
+.uitkLink {
+  --link-color: var(--uitk-navigable-link-color);
+  --link-color-hover: var(--uitk-navigable-link-color-hover);
+  --link-color-active: var(--uitk-navigable-link-color-active);
+  --link-color-disabled: var(--uitk-navigable-link-color-disabled);
+
+  --link-text-decoration: var(--uitk-link-text-decoration);
+
+  --link-font-family: var(--uitk-typography-font-family);
+  --link-focus-outline: var(--uitk-focused-med-emphasis-outline);
+}
+
+.uitkLink {
+  color: var(--link-color);
+  letter-spacing: 0px;
+  text-decoration: var(--link-text-decoration);
+  font-family: var(--link-font-family);
+}
+
+.uitkLink-icon {
+  padding: 0px 0px 0px 6px;
+}
+
+.uitkLink:visited,
+.uitkLink:visited .uitkLink-icon {
+  color: currentColor;
+}
+
+.uitkLink:hover,
+.uitkLink:hover .uitkLink-icon {
+  color: var(--link-color-hover);
+}
+
+.uitkLink:active,
+.uitkLink:active .uitkLink-icon {
+  color: var(--link-color-active);
+}
+
+.uitkLink:focus {
+  outline: var(--link-focus-outline);
+  /* When focused, we also want hover style */
+  color: var(--link-color-hover);
+}
+
+.uitkLink-disabled,
+.uitkLink-disabled:hover {
+  cursor: var(--uitk-disabled-cursor);
+  color: var(--link-color-disabled);
+  opacity: var(--uitk-disabled-text-opacity);
+}

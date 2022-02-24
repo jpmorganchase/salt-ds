@@ -1,0 +1,4 @@
+.CustomIndicatorColor {
+  --uitk-text-growth-indicator-up-color: var(--uitk-red-500);
+  --uitk-text-growth-indicator-down-color: var(--uitk-green-500);
+}

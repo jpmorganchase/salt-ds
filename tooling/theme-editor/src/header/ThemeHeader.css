@@ -1,0 +1,37 @@
+.uitkThemeHeader {
+  display: flex;
+  flex: 0 0 auto;
+  height: 93px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px 20px;
+}
+
+.ThemeTitleBar {
+  display: flex;
+  height: 28px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ThemeTitle {
+  font-weight: 600;
+  font-size: var(--uitk-typography-size-70); /* TODO: Change to Title 4 */
+  color: var(--uitk-text-primary-color);
+}
+
+.themeSelector {
+  border-bottom: 1px solid var(--uitk-grey-70); /* TODO: Change to Editable regular colors? */
+}
+
+.ThemeHeaderMicroMenu {
+  width: 28px;
+}
+
+.ThemeHeaderMicroMenu .uitkDropdownButton {
+  width: 100% !important;
+}
+
+.ThemeHeaderMicroMenu .uitkDropdownButton-buttonLabel {
+  display: none;
+}

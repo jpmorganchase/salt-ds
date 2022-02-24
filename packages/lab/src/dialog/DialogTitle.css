@@ -1,0 +1,46 @@
+.uitk-density-touch .uitkDialogTitle {
+  --dialog-title-font-size: var(--uitk-typography-size-120);
+}
+
+.uitk-density-low .uitkDialogTitle {
+  --dialog-title-font-size: var(--uitk-typography-size-110);
+}
+
+.uitk-density-medium .uitkDialogTitle {
+  --dialog-title-font-size: var(--uitk-typography-size-100);
+}
+
+.uitk-density-high .uitkDialogTitle {
+  --dialog-title-font-size: var(--uitk-typography-size-90);
+}
+
+.uitkDialogTitle {
+  --dialog-close-button-padding: var(--uitkDialogTitle-close-button-padding, var(--uitk-spacing-unit));
+  --dialog-close-button-offset: var(--uitkDialogTitle-close-button-offset, calc(var(--dialog-padding) * -1));
+  --dialog-title-line-height: var(--uitkDialogTitle-line-height, var(--uitk-typography-line-height));
+  --dialog-title-font-weight: var(--uitkDialogTitle-font-weight, var(--uitk-typography-weight-semiBold));
+  --dialog-title-icon-margin-right: var(--uitkDialogTitle-icon-margin-right, 8px);
+  --dialog-title-color: var(--uitkDialogTitle-color, var(--uitk-text-primary-color));
+}
+
+.uitkDialogTitle {
+  display: flex;
+  flex: 0 0 auto;
+  font-size: var(--dialog-title-font-size);
+  font-weight: var(--dialog-title-font-weight);
+  min-height: 16px;
+  position: relative;
+  color: var(--dialog-title-color);
+}
+
+.uitkDialogTitle-close {
+  position: absolute;
+  padding-top: var(--dialog-close-button-padding);
+  padding-bottom: var(--dialog-close-button-padding);
+  right: var(--dialog-close-button-offset);
+  top: var(--dialog-close-button-offset);
+}
+
+.uitkDialogTitle-stateIcon {
+  margin-right: var(--dialog-title-icon-margin-right);
+}

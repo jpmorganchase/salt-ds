@@ -1,0 +1,70 @@
+.uitk-density-touch,
+.uitk-density-low,
+.uitk-density-medium,
+.uitk-density-high {
+  --uitk-typography-font-family: uitk-sans;
+
+  --uitk-typography-size-10: 8px;
+  --uitk-typography-size-30: 10px;
+  --uitk-typography-size-40: 11px;
+  --uitk-typography-size-50: 12px;
+  --uitk-typography-size-60: 14px;
+  --uitk-typography-size-70: 16px;
+  --uitk-typography-size-80: 18px;
+  --uitk-typography-size-90: 20px;
+  --uitk-typography-size-100: 22px;
+  --uitk-typography-size-110: 24px;
+  --uitk-typography-size-120: 26px;
+  --uitk-typography-size-130: 30px;
+  --uitk-typography-size-150: 36px;
+  --uitk-typography-size-180: 44px;
+  --uitk-typography-size-210: 56px;
+  --uitk-typography-size-240: 64px;
+
+  --uitk-typography-line-height: 1.3;
+
+  --uitk-typography-weight-light: 200;
+  --uitk-typography-weight-regular: 400;
+  --uitk-typography-weight-semiBold: 600;
+  --uitk-typography-weight-bold: 700;
+  --uitk-typography-weight-extraBold: 800;
+
+  --uitk-typography-size-regular-touch: var(--uitk-typography-size-70);
+  --uitk-typography-size-regular-low: var(--uitk-typography-size-60);
+  --uitk-typography-size-regular-medium: var(--uitk-typography-size-50);
+  --uitk-typography-size-regular-high: var(--uitk-typography-size-40);
+
+  --uitk-typography-size-caption-touch: var(--uitk-typography-size-50);
+  --uitk-typography-size-caption-low: var(--uitk-typography-size-40);
+  --uitk-typography-size-caption-medium: var(--uitk-typography-size-40);
+  --uitk-typography-size-caption-high: var(--uitk-typography-size-30);
+}
+
+.uitk-light,
+.uitk-dark {
+  font-family: "uitk-sans";
+}
+
+.uitk-density-touch {
+  --uitk-typography-size-regular-unit: var(--uitk-typography-size-regular-touch);
+  --uitk-typography-size-caption-unit: var(--uitk-typography-size-caption-touch);
+}
+.uitk-density-low {
+  --uitk-typography-size-regular-unit: var(--uitk-typography-size-regular-low);
+  --uitk-typography-size-caption-unit: var(--uitk-typography-size-caption-low);
+}
+.uitk-density-medium {
+  --uitk-typography-size-regular-unit: var(--uitk-typography-size-regular-medium);
+  --uitk-typography-size-caption-unit: var(--uitk-typography-size-caption-medium);
+}
+.uitk-density-high {
+  --uitk-typography-size-regular-unit: var(--uitk-typography-size-regular-high);
+  --uitk-typography-size-caption-unit: var(--uitk-typography-size-caption-high);
+}
+
+/* TODO add uitk top-level identifier */
+.uitk-light,
+.uitk-dark {
+  font-family: var(--uitk-typography-font-family);
+  /* default font-size - a density -unit value ? */
+}
