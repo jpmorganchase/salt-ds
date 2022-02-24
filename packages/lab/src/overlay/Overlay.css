@@ -1,0 +1,109 @@
+.uitk-dark .uitkOverlay {
+  /* TODO: Design, whether this is intentional */
+  --overlay-border-color: var(--uitk-grey-400);
+}
+
+/* Experimental - Overlay css variable API */
+.uitkOverlay {
+  --overlay-text-color: var(--uitk-text-primary-color);
+  --overlay-spacing: var(--uitk-spacing-unit);
+  --overlay-font-size: var(--uitk-typography-size-regular-unit);
+  /* TODO: Which emphasis should this be? */
+  --overlay-background-color: var(--uitk-container-low-emphasis-background);
+  --overlay-border-color: var(--uitk-container-low-emphasis-border-color);
+  /* TODO: z-index audit, provide z index here or rely on popper */
+  --overlay-zindex: var(--uitk-zindex-tooltip);
+
+  /* Arrow */
+  --overlay-arrow-size: 8px;
+  /* We need some placement invariant naming, block/inline taken from CSS's padding-block/inline naming  */
+  --overlay-arrow-placement-block: calc(50% - var(--overlay-arrow-size));
+  --overlay-arrow-placement-inline: calc(var(--overlay-arrow-size) * -2);
+}
+
+.uitkOverlay-content {
+  display: flex;
+  margin: calc(var(--overlay-spacing) * 3);
+  padding: calc(var(--overlay-spacing) * 2);
+  font-size: var(--overlay-font-size);
+
+  border: 1px solid var(--overlay-border-color);
+  position: relative;
+  box-shadow: var(--uitk-overlayable-interaction-box-shadow);
+  line-height: var(--uitk-typography-line-height);
+  background: var(--overlay-background-color);
+  color: var(--overlay-text-color);
+
+  font-family: var(--uitk-typography-font-family);
+  opacity: 1;
+  overflow: visible;
+  z-index: var(--overlay-zindex);
+}
+
+/* Arrow */
+.uitkOverlay-content:before,
+.uitkOverlay-content:after {
+  border: var(--overlay-arrow-size) solid transparent;
+  content: "";
+  position: absolute;
+}
+
+.uitkOverlay-top:before,
+.uitkOverlay-top:after {
+  left: var(--overlay-arrow-placement-block);
+  bottom: var(--overlay-arrow-placement-inline);
+  border-top-color: var(--overlay-border-color);
+}
+
+/*
+  White bits of the arrow.
+  '+1px' is a trick to show grey border for the arrow, which doesn't need to be on the API.
+*/
+.uitkOverlay-top:after {
+  border-top-color: var(--overlay-background-color);
+  border-bottom-width: calc(var(--overlay-arrow-size) + 1px);
+}
+
+.uitkOverlay-right:before,
+.uitkOverlay-right:after {
+  top: var(--overlay-arrow-placement-block);
+  left: var(--overlay-arrow-placement-inline);
+  border-right-color: var(--overlay-border-color);
+}
+
+.uitkOverlay-right:after {
+  border-right-color: var(--overlay-background-color);
+  border-left-width: calc(var(--overlay-arrow-size) + 1px);
+}
+
+.uitkOverlay-left:before,
+.uitkOverlay-left:after {
+  top: var(--overlay-arrow-placement-block);
+  right: var(--overlay-arrow-placement-inline);
+  border-left-color: var(--overlay-border-color);
+}
+
+.uitkOverlay-left:after {
+  border-left-color: var(--overlay-background-color);
+  border-right-width: calc(var(--overlay-arrow-size) + 1px);
+}
+
+.uitkOverlay-bottom:before,
+.uitkOverlay-bottom:after {
+  left: var(--overlay-arrow-placement-block);
+  top: var(--overlay-arrow-placement-inline);
+  border-bottom-color: var(--overlay-border-color);
+}
+
+.uitkOverlay-bottom:after {
+  border-bottom-color: var(--overlay-background-color);
+  border-top-width: calc(var(--overlay-arrow-size) + 1px);
+}
+
+/* Close Button */
+.uitkOverlay-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}

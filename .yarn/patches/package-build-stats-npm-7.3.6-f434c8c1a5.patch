@@ -1,0 +1,12 @@
+diff --git a/build/utils/common.utils.js b/build/utils/common.utils.js
+index aafa002aad71e86a3f0a15326b7c092c77bead1d..03115244979daeff74dfe6db729d6154beb09c86 100644
+--- a/build/utils/common.utils.js
++++ b/build/utils/common.utils.js
+@@ -95,7 +95,6 @@ function parseLocalPackageString(packageString) {
+     name: packageJSON.name,
+     version: packageJSON.version,
+     scoped: packageJSON.name.startsWith('@'),
+-    normalPath: packageString,
+     isLocal: true,
+   }
+ }

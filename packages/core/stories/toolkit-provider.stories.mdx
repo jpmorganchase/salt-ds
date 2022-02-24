@@ -1,0 +1,125 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Button, ToolkitProvider } from "@brandname/core";
+import { Card, Portal } from "@brandname/lab";
+
+import { NestedProviders } from "./toolkit-provider.stories";
+
+<Meta title="Core/Toolkit Provider/Docs" />
+
+# Toolkit Provider
+
+The UI Toolkit `ToolkitProvider` is a multi-purpose React Context provider. It allows values for cross-cutting concerns like `Theme` and `Density`
+to be injected into an application. This will commonly be done at the root level of an application, making these values are available throughout the
+application. ToolkitProviders can also be nested to effect local overrides. Note that because almost all styling effects related to theme and density
+are managed using CSS variables, it will very rarely be necessary for React components to access the theme or density directly. The main purpose of
+these providers is to inject the appropriate CSS classes into the page so that the CSS variables which apply theme and density values are scoped correctly.
+
+`ToolkitProvider` currently supports the following features:
+
+- Theme
+- Density
+- AriaAnnouncer
+
+For users of older versions of the UI Toolkit, ToolkitProvider replaces the original ThemeProvider, DensityProvider and AriaAnnouncer.
+
+Here is a `Card` including some very simple content and wrapped with a ToolkitProvider. We set the ToolkitProvider to use the toolkit
+light theme and high density.
+
+<Canvas>
+  <Story name="Simple ToolkitProvider - Touch Density">
+    <ToolkitProvider density="high" theme="light">
+      <Card>
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+        </div>
+      </Card>
+    </ToolkitProvider>
+  </Story>
+</Canvas>
+
+The same `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use
+the toolkit dark theme. Density is not specified on the inner ToolkitProvider, so is inherited from the outer instance.
+
+<Canvas>
+  <Story name="Nested ToolkitProvider">
+    <NestedProviders />
+  </Story>
+</Canvas>
+
+By default, the `ToolkitProvider` wraps nested content with a custom `uitk-theme` element to which the theme and density CSS classes are added.
+Given this JSX
+
+```jsx
+<ToolkitProvider theme="light" density="medium">
+  <Card>...</Card>
+</ToolkitProvider>
+```
+
+then we would see the following HTML.
+
+```html
+<uitk-theme class="uitk-theme-light uitk-density-medium">
+  <div class="uitkCard">...</div>
+</uitk-theme>
+```
+
+The `uitk-theme` element is styled with `display: contents` which generally ensures that it does not break any layout or formatting
+style rules that may be in effect. Child elements are styled and laid out as though the containing `uitk-theme` element were not present.
+Some browser implementations of `display: contents` are buggy (Safari, for example). Further, your code may rely on CSS query selectors
+in JavaScript that might be broken if they do not anticipate the additional `uitk-theme` element inserted by the ToolkitProvider.
+If you are concerned about either of these scenarios, the `ToolkitProvider` can be configured to not inject this additional element.
+Instead it can add the required CSS classes to the child element nested within the Provider. You may also simply prefer this approach.
+There is (currently) one limitation to this pattern, you must use a single child element only. This is enforced within the code and,
+for TypeScript users, via the typings.This would look as follows.
+
+```jsx
+<ToolkitProvider theme="light" density="dark" applyClassesToChild>
+  <Card>...</Card>
+</ToolkitProvider>
+```
+
+Then we would see the following HTML.
+
+```html
+<div class="uitkCard uitk-light uitk-density-medium">...</div>
+```
+
+#### AriaAnouncer
+
+None of the examples above mention `AriaAnnouncer`. The output it creates in markup is ignored for the sake of simplicity.
+It requires no configuration, but is included in your app when you use a ToolkitProvider. Because only one instance of
+AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
+nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
+
+<div style={{ backgroundColor: "red", color: "white" }}>
+  Note to self: what if multiple top-level ToolkitProviders are used ? Do we
+  need to guard against multiple AriaAnnouncer instances being cretaed ? Need to
+  check before release. <br />
+  Do we need a prop to suppress creation of AA - is there ever a case where it isn't
+  wanted (say, no content requires it )
+</div>
+
+#### Portal
+
+Note: `Portal` is not yet ready for release, the notes below are placeholder only. Need something to position the portal example
+
+`Portal` is a Toolkit component that makes working with React Portals easy. Portals are useful where a popout, dropdown or dialog
+needs to be rendered outside of the current HTML DOM tree. This is done to avoid Z-indexing and clipping issues that local element
+structures might impose. Portal renders contents directly into the document body, employing CSS to manage positioning. This has
+implications for styling. Because CSS Variables operate an inheritance model, a portal-rendered element which sits
+outside the root <`uitk-theme>` node wil be outside the scope of the theme variables. Therefore Portal always wraps rendered content
+with a local ToolkitProvider which echoes the current theme values in effect at the point whetre the Portal is launched. This is easier
+shown than explained.
+
+<Canvas>
+  <Story name="Portal">
+    <ToolkitProvider density="touch">
+      <Button variant="cta">CTA</Button>
+      <Button variant="primary">Primary</Button>
+      <Portal>
+        <Button variant="secondary">Secondary</Button>
+      </Portal>
+    </ToolkitProvider>
+  </Story>
+</Canvas>

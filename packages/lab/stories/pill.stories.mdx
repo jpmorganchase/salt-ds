@@ -1,0 +1,221 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { UserBadgeIcon } from "@brandname/icons";
+import { Pill, SelectablePill } from "@brandname/lab";
+
+<Meta title="Lab/Pill/Doc" component={Pill} />
+
+# Pill
+
+**AKA:** Chip, Lozenge, Tag, Token
+
+Pill components provide multiple ways to label, tag or categorize content to
+allow users to trigger actions, make selections or filter results.
+
+**Related components**  
+**Similar to:** [Badge](/?path=/docs/toolkit-2-0-badge),
+[Checkbox](/?path=/docs/toolkit-2-0-checkbox),
+[Link](/?path=/docs/toolkit-2-0-link),
+[Switch](/?path=/docs/toolkit-2-0-switch),
+[ToggleButton](/?path=/docs/toolkit-2-0-togglebutton)  
+**Uses:** [Button](/?path=/docs/toolkit-2-0-button),
+[Checkbox](/?path=/docs/toolkit-2-0-checkbox),
+[Icon](/?path=/docs/toolkit-2-0-icon),
+[Tooltip](/?path=/docs/toolkit-2-0-tooltip)
+
+**Usage**  
+Pill is a versatile, interactive and stand-alone component. It is often used to:
+
+- **Tag content**  
+   Use a Pill to organise content that may be mapped to more than one category. It
+  provides users with a way of distinguishing among different types of content and
+  categories.
+- **Display or remove a value**  
+   A Pill allows users to display or remove a value that’s been selected elsewhere
+  via another mechanism, like a filter or dropdown. Options selected within Auto
+  Complete or Combo Box components, for example, may be displayed alongside a Pill.
+- **Trigger a quick action**  
+   You can configure a Pill to trigger an immediate action—such as changing the view
+  of content that’s currently on display or navigating to a new page.
+- **Enable an action that’s subject to change**  
+   Actions that may change depending on the context, and are not fixed, are best
+  represented by Pills rather than buttons. In a messaging application, for example,
+  Pills can be used to display quick stock responses which change so they’re appropriate
+  responses to a received message.
+- **Allow multiselection**  
+   When screen space is limited, a Pill can provide a compact way of enabling multiselection
+  of items that may be subject to change.
+
+**Best practices**
+
+- Use title or sentence case when labelling a Pill, depending on the nature of
+  the label. This maintains a visual distinction between Pills and Buttons,
+  which always have uppercase labels.
+- Display multiple Pills that are related to the same content alongside each
+  other in a Pill group.
+
+## Default
+
+The default Pill is often used for tagging purposes, or to filter or change the
+page view. It can also be used to trigger an action that is subject to change as
+a result of user inputs or other factors. This Pill, for example, may be used to
+send an auto-generated quick response to a message.
+
+**Navigating to another page**  
+If the action triggered by a default Pill navigates the user to a different
+page, the ‘role’ prop must be changed from ‘button’ (the default attribute) to
+‘link’, to ensure it provides an accurate role to screen readers.
+
+**Best practices**
+
+- Position any Pill that you’re using to tag content _below_ or on the _right_
+  of the related content, so that it’s not the primary focus.
+- Never apply RAG (status) colors to the Pill component to differentiate between
+  categories—use [Icon Descriptor](/?path=/docs/toolkit-2-0-icon) instead.
+- If a Pill enables an action that is fixed, and not subject to change, use a
+  [Button](/?path=/docs/toolkit-2-0-button) instead.
+
+<Canvas>
+  <Story name="Default">
+    <Pill label="Basic Pill" />
+  </Story>
+</Canvas>
+
+## Closable
+
+The Closable Pill represents a value that was selected via another mechanism,
+and which can be removed within the Pill. It can appear on its own, for example,
+alongside a complex filter panel—or within an input control such as
+[Auto Complete](/components/autocomplete) or [Combo Box](/components/combobox).
+
+The close button is persistent for improved accessibility and usability.
+Actioning it removes the Pill and any associated content. Users will not,
+however, be able to edit a Closable Pill but can instead make another selection
+that adds a new Pill.
+
+**Best practices**
+
+- Position a Closable Pill that represents a selection or filter _above_ related
+  content.
+- Always use a separate selection mechanism with a Closable Pill. Consider using
+  a Selectable Pill to enable toggle selection of options that are always
+  visible.
+
+<Canvas>
+  <Story name="Closable">
+    <Pill label="Closable Pill" variant="closable" />
+  </Story>
+</Canvas>
+
+## Selectable
+
+This Pill variant allows selection to be toggled via the Pill itself, without
+involving other components or mechanisms.
+
+When used in a group, Selectable Pills can enable multiselection. Their
+background fill makes it easier to delineate between each Pill, and they are an
+ideal selection mechanism for a compact layout or user interface.
+
+**Best practices**
+
+- Consider using Checkboxes instead if the layout can accommodate them, ensuring
+  there’s enough space between each to clearly identify them.
+- Position Selectable Pills above the selected or filtered content, e.g., they
+  are often grouped horizontally above main page content for instant filtering
+  of the content below.
+- Use Selectable Pills when the available options are subject to change.
+- Never use a Selectable Pill to enable a single selection — a
+  [Radio Button](/components/radiobutton),
+  [Toggle Button](/components/togglebutton) or [Switch](/components/switch) is
+  more appropriate.
+
+<Canvas>
+  <Story name="Selectable">
+    <Pill label="Selectable Pill" variant="selectable" />
+  </Story>
+</Canvas>
+
+## Maximum Width
+
+You can configure a minimum or maximum width for all variants of the Pill
+component. Labels that exceed the maximum width you’ve set are truncated with an
+ellipsis. On hover or keyboard focus, a Tooltip displays the full label after a
+1.5 second delay, which you can also configure.
+
+By default, the Tooltip is positioned above the Pill unless screen real estate
+does not allow—in that case it’s auto-repositioned.
+
+<Canvas>
+  <Story name="MaximumWidth">
+    <Pill
+      label="Extra extra long Pill label example."
+      style={{ marginRight: 24 }}
+    />
+    <Pill label="FX" />
+  </Story>
+</Canvas>
+
+## Icon Descriptors
+
+Icons can be displayed on the left of a Basic or Closable Pill label to visually
+reinforce the theme or grouping of that Pill, and for quick recognition.
+
+<Canvas>
+  <Story name="Icon Descriptors">
+    <Pill icon={<UserBadgeIcon />} label="Pill with Icon" />
+  </Story>
+</Canvas>
+
+## Disabled
+
+A Pill can be set to a disabled state, with no resultant action when the user
+interacts with it.
+
+<Canvas>
+  <Story name="Disabled">
+    <Pill label="Disabled Pill" disabled variant="closable" />
+  </Story>
+</Canvas>
+
+## Controlled
+
+The controlled mode allows the logic of Selectable Pill to be controlled by the
+application and not internally, within the component. It provides developers
+finer-grained control of interactions.
+
+<Canvas>
+  <Story id="toolkit-pill--controlled-pill" />
+</Canvas>
+
+## Accessibility
+
+The Pill is accessible by assistive technologies like screen readers, and
+provides full WAI-ARIA support.
+
+### Navigating to another page
+
+If the action triggered by a Pill navigates the user to a different page, the
+‘role’ prop must be changed from ‘button’ (the default attribute) to ‘link’, to
+ensure it provides an accurate role to screen readers.
+
+### Keyboard Interactions
+
+| Key                        | Function                                                                                                                                                                         |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enter or Space             | Basic Pill:<br /> - When focus is on Pill, it’s activated. <br/> Selectable Pill:<br/> - When focus is on Pill, it’s activated; toggling between selected and unselected states. |
+| Enter, Backspace or Delete | Closable Pill:<br /> - When focus is on Pill, it’s closed and focus moves to the next component in tab order.                                                                    |
+| Tab                        | - Moves focus into Pill, setting focus to the entire Pill.<br/> - When Pill has focus, moves focus out of Pill to the next component in the tab order.                           |
+| Shift + Tab                | When Pill has focus, moves focus out of Pill to the previous component in the tab order.                                                                                         |
+
+## API
+
+### Default
+
+When `variant` is `'basic'` or '`closable`'
+
+<ArgsTable of={Pill} />
+
+### Selectable Pill
+
+When `variant` is `'selectable'`
+
+<ArgsTable of={SelectablePill} />

@@ -1,0 +1,7 @@
+.SpacingBlock-cell {
+  width: var(--uitk-size-regular-unit);
+  height: var(--uitk-size-regular-unit);
+  justify-self: end;
+
+  background: var(--uitk-container-med-emphasis-background);
+}

@@ -1,0 +1,75 @@
+.uitkColorChooserSwatch-swatch,
+.uitkColorChooserSwatch-greySwatch {
+  margin-bottom: 1px;
+  margin-left: 1px;
+  cursor: pointer;
+}
+
+.uitk-density-touch,
+.uitk-density-low,
+.uitk-density-medium,
+.uitk-density-high {
+  --uitk-color-swatch-density-high-size: calc(5 * var(--uitk-spacing-unit));
+  --uitk-color-swatch-density-medium-size: calc(3 * var(--uitk-spacing-unit));
+  --uitk-color-swatch-density-low-size: calc(3 * var(--uitk-spacing-unit));
+  --uitk-color-swatch-density-touch-size: calc(2 * var(--uitk-spacing-unit));
+}
+
+.uitk-density-touch {
+  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-touch-size);
+}
+.uitk-density-low {
+  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-low-size);
+}
+.uitk-density-medium {
+  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-medium-size);
+}
+.uitk-density-high {
+  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-high-size);
+}
+
+.uitkColorChooserSwatch-swatch,
+.uitk-light .uitkColorChooserSwatch-greySwatch {
+  width: var(--uitk-color-swatch-size-unit);
+  height: var(--uitk-color-swatch-size-unit);
+}
+
+.uitkColorChooserSwatch-whiteSwatch {
+  margin-bottom: 1px;
+  margin-left: 1px;
+  cursor: pointer;
+}
+
+.uitk-light .uitkColorChooserSwatch-whiteSwatch {
+  border: 1px solid var(--uitk-grey-50);
+}
+
+.uitk-light .uitkColorChooserSwatch-whiteSwatch,
+.uitk-dark .uitkColorChooserSwatch-greySwatch {
+  width: calc(var(--uitk-color-swatch-size-unit) - 2);
+  height: calc(var(--uitk-color-swatch-size-unit) - 2);
+}
+
+.uitk-dark .uitkColorChooserSwatch-whiteSwatch,
+.uitkColorChooserSwatch-greySwatch {
+  border: 0px;
+}
+
+.uitk-dark .uitkColorChooserSwatch-whiteSwatch {
+  width: calc(var(--uitk-color-swatch-size-unit) - 2);
+  height: calc(var(--uitk-color-swatch-size-unit) - 2);
+}
+
+.uitk-dark .uitkColorChooserSwatch-greySwatch {
+  border: 1px solid var(--uitk-grey-90);
+}
+
+.uitkColorChooserSwatch-active {
+  outline: 1px solid var(--uitk-grey-800);
+  border: 2px solid var(--uitk-white) !important;
+  width: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
+  height: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
+  margin-bottom: 1px;
+  margin-left: 1px;
+  cursor: pointer;
+}

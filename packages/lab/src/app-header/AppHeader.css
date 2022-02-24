@@ -1,0 +1,106 @@
+.uitk-light {
+  --appheader-separator: var(--uitk-grey-40);
+}
+.uitk-dark {
+  --appheader-separator: var(--uitk-grey-400);
+}
+
+.uitkAppHeader {
+  --appheader-background: var(--uitk-containerable-primary-background-regular-color);
+
+  --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
+  --appheader-border-bottom-width: 1px;
+  --uitk-toolbar-width: auto;
+  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-black-2));
+  --tabstrip-align-self: flex-end;
+  --appheader-padding: calc(var(--uitk-spacing-unit) * 3);
+  --appheader-padding-left: 8px;
+  --appheader-padding-right: var(--appheader-padding);
+  --uitkTabstrip-height: var(--appheader-height);
+}
+
+.uitkAppHeader {
+  align-items: flex-start;
+  background-color: var(--appheader-background);
+  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-grey-60);
+  box-shadow: var(--appheader-shadow);
+  box-sizing: content-box;
+  display: flex;
+  flex: 0 0 auto;
+  height: var(--appheader-height);
+  overflow: hidden;
+  padding: 0 var(--appheader-padding-right) 0 var(--appheader-padding-left);
+  width: 100%;
+}
+
+.uitkAppHeader > .Responsive-inner {
+  width: 100%;
+  /* overflow: hidden; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* justify-content: space-between; */
+  flex: 1;
+  min-height: var(--appheader-height);
+}
+
+.uitkAppHeader > .Responsive-inner > .responsive-pillar {
+  width: 0;
+  height: var(--appheader-height);
+}
+
+.uitkAppHeader-navMenu {
+  margin-right: 12px;
+  padding-right: 8px;
+}
+
+.uitkAppHeader-navMenu::after {
+  top: 0;
+  right: 0;
+  width: 1px;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  background: var(--appheader-separator);
+}
+
+.uitkAppHeader .uitkLogo:not(.uitkLogo-compact) {
+  margin-left: 16px;
+}
+
+.uitkAppHeader > .Responsive-inner > .Tabstrip {
+  align-self: flex-end;
+  flex: 0 0 auto;
+  margin-left: 48px;
+}
+
+.uitkAppHeader > .Responsive-inner > [data-pad-end] {
+  margin-right: auto;
+}
+
+.uitkAppHeader > .Responsive-inner > * {
+  flex-shrink: 0;
+}
+
+.uitkAppHeader > .Responsive-inner > .Toolbar {
+  justify-content: flex-end;
+  margin-left: 48px;
+}
+
+.uitkAppHeader > .Responsive-inner > [data-pad-start="true"] {
+  margin-left: auto;
+}
+
+.uitkAppHeader > .Responsive-inner[data-collapsing="true"] {
+  flex-wrap: nowrap;
+}
+
+.uitkAppHeader > .Responsive-inner > *[data-collapsing="true"] {
+  flex-shrink: 1;
+}
+
+.uitkAppHeader > .Responsive-inner > *[data-collapsible="dynamic"][data-collapsed="true"] {
+  flex-basis: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+}

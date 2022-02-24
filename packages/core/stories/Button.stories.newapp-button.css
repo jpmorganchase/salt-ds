@@ -1,0 +1,106 @@
+.uitk-newapp {
+  --uitkButton-border-width: 1px 0;
+}
+
+.uitk-newapp .uitkButton-cta {
+  --uitkButton-border-color: var(--uitk-actionable-cta-topline-color) transparent var(--uitk-actionable-cta-baseline-color) transparent;
+}
+.uitk-newapp .uitkButton-cta:hover:not(:active):not(.uitkButton-disabled) {
+  --uitkButton-border-color: var(--uitk-actionable-cta-topline-color-hover) transparent var(--uitk-actionable-cta-baseline-color-hover) transparent;
+}
+.uitk-newapp .uitkButton-cta:active {
+  --uitkButton-border-color: var(--uitk-actionable-cta-topline-color-active) transparent var(--uitk-actionable-cta-baseline-color-active) transparent;
+}
+.uitk-newapp .uitkButton-cta.uitkButton-disabled {
+  --uitkIcon-color: var(--uitk-actionable-cta-icon-color-disabled);
+}
+
+.uitk-newapp .uitkButton-primary {
+  --uitkButton-border-color: var(--uitk-actionable-primary-topline-color) transparent var(--uitk-actionable-primary-baseline-color) transparent;
+}
+.uitk-newapp .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
+  --uitkButton-border-color: var(--uitk-actionable-primary-topline-color-hover) transparent var(--uitk-actionable-primary-baseline-color-hover) transparent;
+}
+.uitk-newapp .uitkButton-primary:active {
+  --uitkButton-border-color: var(--uitk-actionable-primary-topline-color-active) transparent var(--uitk-actionable-primary-baseline-color-active) transparent;
+}
+
+.uitk-newapp .uitkButton-primary[data-readonly] {
+  --uitkButton-primary-text-color: var(--uitk-actionable-primary-text-color-readonly);
+  --uitkButton-primary-background: var(--uitk-actionable-primary-background-readonly);
+  --uitkIcon-color: var(--uitk-actionable-primary-icon-color-readonly);
+  --uitkButton-border-color: var(--uitk-actionable-primary-topline-color-readonly) transparent var(--uitk-actionable-primary-baseline-color-readonly) transparent;
+}
+
+.uitk-newapp .uitkButton-secondary[data-readonly] {
+  --uitkButton-secondary-text-color: var(--uitk-actionable-secondary-text-color-readonly);
+  --uitkButton-secondary-background: var(--uitk-actionable-secondary-background-readonly);
+  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-readonly);
+  --uitkButton-border-color: var(--uitk-actionable-secondary-topline-color-readonly) transparent var(--uitk-actionable-secondary-baseline-color-readonly) transparent;
+}
+
+.uitk-newapp .uitkButton-primary.uitkButton-final-execution {
+  --button-background: var(--uitk-actionable-final-background);
+  --button-background-active: var(--uitk-actionable-final-background-active);
+  --button-background-disabled: var(--uitk-actionable-final-background-disabled);
+  --button-background-hover: var(--uitk-actionable-final-background-hover);
+  --button-text-color: var(--uitk-actionable-final-text-color);
+  --button-text-color-active: var(--uitk-actionable-final-text-color-active);
+  --button-text-color-disabled: var(--uitk-actionable-final-text-color-disabled);
+  --button-text-color-hover: var(--uitk-actionable-final-text-color-hover);
+  --uitkIcon-color: var(--uitk-actionable-final-icon-color);
+  --uitkButton-border-color: var(--uitk-actionable-final-topline-color) transparent var(--uitk-actionable-final-baseline-color) transparent;
+}
+
+.uitk-newapp .uitkButton-primary.uitkButton-bid {
+  --button-background: var(--uitk-actionable-bid-background);
+  --button-background-active: var(--uitk-actionable-bid-background-active);
+  --button-background-disabled: var(--uitk-actionable-bid-background-disabled);
+  --button-background-hover: var(--uitk-actionable-bid-background-hover);
+  --button-text-color: var(--uitk-actionable-bid-text-color);
+  --button-text-color-active: var(--uitk-actionable-bid-text-color-active);
+  --button-text-color-disabled: var(--uitk-actionable-bid-text-color-disabled);
+  --button-text-color-hover: var(--uitk-actionable-bid-text-color-hover);
+  --uitkIcon-color: var(--uitk-actionable-bid-icon-color);
+  --uitkButton-border-color: var(--uitk-actionable-bid-topline-color) transparent var(--uitk-actionable-bid-baseline-color) transparent;
+}
+
+.uitk-newapp .uitkButton-primary.uitkButton-bid[data-readonly] {
+  --uitkButton-text-color: var(--uitk-actionable-bid-text-color-readonly);
+  --uitkButton-primary-background: var(--uitk-actionable-bid-background-readonly);
+  --uitkIcon-color: var(--uitk-actionable-bid-icon-color-readonly);
+  --uitkButton-border-color: var(--uitk-actionable-bid-topline-color-readonly) transparent var(--uitk-actionable-bid-baseline-color-readonly) transparent;
+}
+
+.uitkButton-primary.uitkButton-bid:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
+  --uitkIcon-color: var(--uitk-actionable-bid-icon-color-hover);
+}
+
+.uitk-newapp .uitkButton-primary.uitkButton-ask {
+  --button-background: var(--uitk-actionable-ask-background);
+  --button-background-active: var(--uitk-actionable-ask-background-active);
+  --button-background-disabled: var(--uitk-actionable-ask-background-disabled);
+  --button-background-hover: var(--uitk-actionable-ask-background-hover);
+  --button-text-color: var(--uitk-actionable-ask-text-color);
+  --button-text-color-active: var(--uitk-actionable-ask-text-color-active);
+  --button-text-color-hover: var(--uitk-actionable-ask-text-color-hover);
+  --button-text-color-disabled: var(--uitk-actionable-ask-text-color-disabled);
+  --uitkIcon-color: var(--uitk-actionable-ask-icon-color);
+  --uitkButton-border-color: var(--uitk-actionable-ask-topline-color) transparent var(--uitk-actionable-ask-baseline-color) transparent;
+}
+
+.uitk-newapp .uitkButton-primary.uitkButton-ask[data-readonly] {
+  --uitkButton-text-color: var(--uitk-actionable-ask-text-color-readonly);
+  --uitkButton-primary-background: var(--uitk-actionable-ask-background-readonly);
+  --uitkIcon-color: var(--uitk-actionable-ask-icon-color-readonly);
+  --uitkButton-border-color: var(--uitk-actionable-ask-topline-color-readonly) transparent var(--uitk-actionable-ask-baseline-color-readonly) transparent;
+  --button-background-hover: var(--uitk-actionable-ask-background-readonly);
+}
+
+.uitkButton-primary.uitkButton-ask:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
+  --uitkIcon-color: var(--uitk-actionable-ask-icon-color-hover);
+}
+
+.uitk-newapp .uitkButton-disabled {
+  opacity: var(--uitk-disabled-graphical-opacity);
+}

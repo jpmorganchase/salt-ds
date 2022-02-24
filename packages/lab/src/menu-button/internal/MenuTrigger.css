@@ -1,0 +1,38 @@
+.uitk-dark .uitkMenuTrigger {
+  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-grey-40));
+  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-grey-900));
+}
+
+.uitk-light .uitkMenuTrigger {
+  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-grey-200));
+  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-white));
+}
+
+.uitkMenuTrigger {
+  --icon-margin-left: var(--uitkMenuTrigger-icon-margin-left, var(--uitk-spacing-unit));
+}
+
+.uitkMenuTrigger {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.uitkMenuTrigger-buttonOpen {
+  background: var(--button-open-background);
+  color: var(--button-open-color);
+}
+
+.uitkMenuTrigger-buttonOpen:not(:hover) .uitkMenuTrigger-caretIcon {
+  color: var(--button-open-color);
+}
+
+.uitkMenuTrigger-buttonOpen:not(:hover) .uitkMenuTrigger-icon {
+  color: var(--button-open-color);
+}
+
+.uitkMenuTrigger-icon {
+}
+
+.uitkMenuTrigger-caretIcon {
+  margin-left: var(--icon-margin-left);
+}

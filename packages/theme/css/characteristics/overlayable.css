@@ -1,0 +1,23 @@
+/* TODO: Each layer needs z-index */
+.uitk-light,
+.uitk-dark {
+  --uitk-overlayable-layout-box-shadow: var(--uitk-shadow-black-2);
+  --uitk-overlayable-interaction-box-shadow: var(--uitk-shadow-black-4);
+  --uitk-overlayable-feedback-box-shadow: var(--uitk-shadow-black-6);
+}
+
+.uitk-light {
+  /* TODO: Design, scrim bgs should be in overlayable or containable. */
+  /* Black fade 80 */
+  --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.8);
+  /* TODO: Design, this is called scrim 'light' (not secondary) in Figma */
+  /* White fade 80. */
+  --uitk-overlayable-feedback-scrim-secondary-background: rgba(255, 255, 255, 0.8);
+}
+
+.uitk-dark {
+  /* Black fade 70 */
+  --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.7);
+  /* Grey 800 fade 80 */
+  --uitk-overlayable-feedback-scrim-secondary-background: rgba(36, 37, 38, 0.8);
+}

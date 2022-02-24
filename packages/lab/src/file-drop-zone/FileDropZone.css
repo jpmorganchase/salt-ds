@@ -1,0 +1,100 @@
+/* Theme / Colors */
+.uitkFileDropZone {
+  /* Colors */
+  --file-drop-zone-background: var(--uitk-container-med-emphasis-background);
+  --file-drop-zone-text-color: var(--uitk-text-primary-color);
+  /* TODO: Design, dark mode used to be grey-400 */
+  --file-drop-zone-border-color: var(--uitk-container-low-emphasis-border-color);
+  --file-drop-zone-background-disabled: var(--uitk-container-med-emphasis-background-disabled);
+  /* TODO: Design, light mode used to be grey 200 */
+  --file-drop-zone-icon-color: var(--uitk-icon-primary-color);
+
+  --file-drop-zone-border-width: var(--uitk-container-border-width);
+  /* Overriding containable characteristics */
+  --file-drop-zone-border-style: dashed;
+
+  /* Density / Spacings */
+  --file-drop-zone-padding: calc(var(--uitk-spacing-unit) * 3);
+
+  /* Font / Typography */
+  --file-drop-zone-font-family: var(--uitk-typography-font-family);
+  --file-drop-zone-font-size: var(--uitk-typography-size-regular-unit);
+  --file-drop-zone-line-height: var(--uitk-typography-line-height);
+
+  --file-drop-zone-title-font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+.uitkFileDropZone .uitkFileDropZone-icon {
+  margin-bottom: var(--uitk-spacing-unit);
+}
+
+.uitkFileDropZone .uitkFileDropZone-title:not(:last-child),
+.uitkFileDropZone .uitkFileDropZone-inputRoot:not(:last-child) {
+  margin-bottom: calc(var(--uitk-spacing-unit) * 2);
+}
+
+.uitkFileDropZone-icon {
+  fill: var(--file-drop-zone-icon-color);
+}
+
+.uitkFileDropZone {
+  color: var(--file-drop-zone-text-color);
+  display: inline-flex;
+  background: var(--file-drop-zone-background);
+  box-sizing: border-box;
+  text-align: center;
+  align-items: stretch;
+  justify-content: center;
+  border-color: var(--file-drop-zone-border-color);
+  border-style: var(--file-drop-zone-border-style);
+  border-width: var(--file-drop-zone-border-width);
+  flex-direction: column;
+  padding: var(--file-drop-zone-padding);
+  font-family: var(--file-drop-zone-font-family);
+}
+
+.uitkFileDropZone-active {
+  background: var(--uitk-selectable-background-hover);
+}
+
+.uitkFileDropZone-error .uitkFileDropZone-description {
+  margin-bottom: calc(var(--uitk-spacing-unit) * 2);
+}
+
+.uitkFileDropZone-error .uitkFileDropZone-icon {
+  fill: var(--uitk-status-error-color);
+}
+
+.uitkFileDropZone-title,
+.uitkFileDropZone-description {
+  font-size: var(--file-drop-zone-font-size);
+  line-height: var(--file-drop-zone-line-height);
+}
+
+.uitkFileDropZone-title {
+  font-weight: var(--file-drop-zone-title-font-weight);
+}
+
+.uitkFileDropZone-inputButton {
+  display: inline-flex;
+}
+
+.uitkFileDropZone-inputRoot {
+  line-height: 1;
+}
+
+.uitkFileDropZone-inputRoot .input-hidden {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  visibility: hidden;
+}
+
+.uitkFileDropZone-disabled {
+  cursor: var(--uitk-disabled-cursor);
+  background: var(--file-drop-zone-background-disabled);
+}
+
+.uitkFileDropZone-disabled .uitkFileDropZone-icon,
+.uitkFileDropZone-disabled .uitkFileDropZone-title {
+  opacity: var(--uitk-disabled-graphical-opacity);
+}

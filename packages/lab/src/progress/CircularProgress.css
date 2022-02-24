@@ -1,0 +1,113 @@
+.uitkCircularProgress {
+  color: var(--uitk-progress-color);
+  display: inline-flex;
+  position: relative;
+}
+
+.uitkCircularProgress-disabled .uitkCircularProgress-progressValue {
+  opacity: var(--uitk-disabled-border-opacity);
+  cursor: var(--uitk-disabled-cursor);
+}
+
+.uitkCircularProgress-disabled circle {
+  opacity: var(--uitk-disabled-border-opacity);
+}
+
+.uitkCircularProgress-circle {
+  stroke: url("#uitk-circular-progress-gradient");
+  stroke-width: 2px;
+}
+
+.uitkCircularProgress-progressValue {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.uitkCircularProgress-small {
+  font-size: var(--uitk-progress-small-font-size);
+}
+
+.uitkCircularProgress-medium {
+  font-size: var(--uitk-progress-medium-font-size);
+}
+
+.uitkCircularProgress-large {
+  font-size: var(--uitk-progress-large-font-size);
+}
+
+.uitkCircularProgress-disabled {
+}
+
+.uitkCircularProgress-completed {
+}
+
+.uitkCircularProgress-railCircle {
+  stroke: var(--uitk-progress-track-color);
+  stroke-width: 1px;
+}
+
+.uitkCircularProgress-gradientStart {
+  stop-color: var(--uitk-progress-color-active-start);
+}
+
+.uitkCircularProgress-gradientStop {
+  stop-color: var(--uitk-progress-color-active-stop);
+}
+
+.uitkCircularProgress-container {
+  display: inline-block;
+}
+
+.uitkCircularProgress-static {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.uitkCircularProgress-indeterminate {
+  animation: circular-rotate 1.4s linear infinite;
+}
+
+.uitkCircularProgress-svg {
+  display: block;
+}
+
+.uitkCircularProgress-circle {
+  stroke: url("#uitk-circular-progress-gradient");
+}
+
+.uitkCircularProgress-circleStatic {
+  transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.uitkCircularProgress-circleIndeterminate {
+  animation: circular-dash 1.4s ease-in-out infinite;
+}
+
+@keyframes circular-rotate {
+  0% {
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes circular-dash {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
+}

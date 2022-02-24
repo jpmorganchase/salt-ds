@@ -1,0 +1,113 @@
+.uitk-light .withoutAvatar {
+  --heading-color: var(--uitk-grey-700);
+}
+
+.uitk-dark .withoutAvatar {
+  --heading-color: var(--uitk-grey-10);
+}
+
+.withoutAvatar {
+}
+
+.withoutAvatar-container {
+  display: flex;
+}
+
+.withoutAvatar-firstColumn {
+  margin-right: calc(var(--uitk-spacing-unit) * 2);
+  width: 400px;
+}
+
+.withoutAvatar-secondColumn {
+  width: 400px;
+}
+
+.withoutAvatar-heading {
+  color: var(--heading-color);
+  margin-bottom: calc(var(--uitk-spacing-unit) * 2);
+  font-size: var(--uitk-typography-size-70);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+.favoriteToggle {
+  width: 600px;
+}
+
+.favoriteToggle-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.favoriteToggle-firstColumn {
+  flex-basis: 275px;
+  margin-right: 50px;
+}
+
+.favoriteToggle-secondColumn {
+  flex-basis: 275px;
+}
+
+.fastActions {
+  width: 840px;
+}
+
+.fastActions-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fastActions-container > div {
+  flex-basis: 400px;
+}
+
+.fastActions-container > div:not(:last-child) {
+  margin-right: 40px;
+}
+
+.collapsibleDetails {
+  width: 375px;
+}
+
+.withinCard {
+  width: 430px;
+}
+
+.withinTile-tile {
+  width: 320px;
+  padding: var(--uitk-spacing-unit);
+  border: solid 1px var(--uitk-container-low-emphasis-border-color);
+}
+
+.withinOverlay {
+  width: 375px;
+}
+
+.withinComboboxTooltip {
+  max-width: 300px;
+  word-wrap: inherit;
+}
+
+.withinComboboxTooltip-contactDetails {
+  width: 280px;
+}
+
+.allVariants {
+}
+
+.allVariants-container {
+  width: 400px;
+  margin-bottom: 16px;
+}
+
+.allVariants-narrowContainer {
+  width: 300px;
+  margin-bottom: 16px;
+}
+
+.uitk-dark .allVariants-withBackground {
+  background: var(--uitk-blue-900);
+}
+
+.uitk-light .allVariants-withBackground {
+  background: var(--uitk-blue-10);
+}

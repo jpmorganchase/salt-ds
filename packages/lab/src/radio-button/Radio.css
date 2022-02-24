@@ -1,0 +1,46 @@
+.uitkRadio {
+  padding: 1px 0;
+  flex: 0 0 auto;
+  overflow: visible;
+  text-align: center;
+  border-radius: 50%;
+  border: 0;
+  margin: 0;
+  display: inline-flex;
+  outline: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--uitk-text-secondary-color);
+}
+
+.uitkRadio-label {
+  width: 100%;
+  display: flex;
+  align-items: inherit;
+  justify-content: inherit;
+}
+
+.uitkRadio-input {
+  cursor: inherit;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+.uitkRadio-focusVisible {
+  outline: var(--uitk-focused-med-emphasis-outline);
+  outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
+}

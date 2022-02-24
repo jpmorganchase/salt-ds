@@ -1,0 +1,132 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-white: rgb(255, 255, 255);
+  --uitk-black: rgb(0, 0, 0);
+}
+
+.uitk-light,
+.uitk-dark {
+  /* Color palette will stay the same no matter of theming */
+  --uitk-white: rgb(255, 255, 255);
+  --uitk-black: rgb(0, 0, 0);
+
+  --uitk-red-10: rgb(255, 227, 224);
+  --uitk-red-20: rgb(255, 207, 201);
+  --uitk-red-30: rgb(255, 187, 178);
+  --uitk-red-40: rgb(255, 167, 156);
+  --uitk-red-50: rgb(255, 148, 133);
+  --uitk-red-100: rgb(255, 128, 111);
+  --uitk-red-200: rgb(255, 108, 88);
+  --uitk-red-300: rgb(255, 89, 66);
+  --uitk-red-400: rgb(237, 65, 42);
+  --uitk-red-500: rgb(227, 43, 22);
+  --uitk-red-600: rgb(196, 32, 16);
+  --uitk-red-700: rgb(166, 21, 11);
+  --uitk-red-800: rgb(136, 10, 5);
+  --uitk-red-900: rgb(106, 0, 0);
+
+  --uitk-orange-10: rgb(255, 232, 191);
+  --uitk-orange-20: rgb(254, 223, 166);
+  --uitk-orange-30: rgb(254, 214, 142);
+  --uitk-orange-40: rgb(254, 205, 118);
+  --uitk-orange-50: rgb(254, 197, 94);
+  --uitk-orange-100: rgb(250, 181, 81);
+  --uitk-orange-200: rgb(246, 165, 68);
+  --uitk-orange-300: rgb(242, 149, 56);
+  --uitk-orange-400: rgb(238, 133, 43);
+  --uitk-orange-500: rgb(234, 115, 25);
+  --uitk-orange-600: rgb(224, 101, 25);
+  --uitk-orange-700: rgb(214, 85, 19);
+  --uitk-orange-800: rgb(204, 68, 13);
+  --uitk-orange-900: rgb(194, 52, 7);
+
+  --uitk-green-10: rgb(209, 244, 201);
+  --uitk-green-20: rgb(184, 232, 182);
+  --uitk-green-30: rgb(160, 221, 164);
+  --uitk-green-40: rgb(136, 210, 145);
+  --uitk-green-50: rgb(112, 199, 127);
+  --uitk-green-100: rgb(93, 189, 116);
+  --uitk-green-200: rgb(77, 180, 105);
+  --uitk-green-300: rgb(60, 171, 96);
+  --uitk-green-400: rgb(48, 156, 90);
+  --uitk-green-500: rgb(36, 135, 75);
+  --uitk-green-600: rgb(24, 114, 61);
+  --uitk-green-700: rgb(12, 93, 46);
+  --uitk-green-800: rgb(1, 73, 32);
+  --uitk-green-900: rgb(0, 57, 18);
+
+  --uitk-teal-10: rgb(218, 240, 240);
+  --uitk-teal-20: rgb(199, 232, 232);
+  --uitk-teal-30: rgb(180, 224, 225);
+  --uitk-teal-40: rgb(162, 217, 218);
+  --uitk-teal-50: rgb(141, 205, 209);
+  --uitk-teal-100: rgb(123, 193, 200);
+  --uitk-teal-200: rgb(99, 181, 192);
+  --uitk-teal-300: rgb(73, 160, 172);
+  --uitk-teal-400: rgb(48, 149, 166);
+  --uitk-teal-500: rgb(0, 130, 151);
+  --uitk-teal-600: rgb(27, 107, 133);
+  --uitk-teal-700: rgb(0, 85, 113);
+  --uitk-teal-800: rgb(1, 65, 86);
+  --uitk-teal-900: rgb(0, 49, 76);
+
+  --uitk-blue-10: rgb(203, 231, 249);
+  --uitk-blue-20: rgb(183, 222, 246);
+  --uitk-blue-30: rgb(164, 213, 244);
+  --uitk-blue-40: rgb(144, 204, 242);
+  --uitk-blue-50: rgb(125, 195, 240);
+  --uitk-blue-100: rgb(100, 177, 228);
+  --uitk-blue-200: rgb(75, 159, 216);
+  --uitk-blue-300: rgb(51, 141, 205);
+  --uitk-blue-400: rgb(45, 129, 189);
+  --uitk-blue-500: rgb(38, 112, 169);
+  --uitk-blue-600: rgb(21, 92, 147);
+  --uitk-blue-700: rgb(0, 71, 123);
+  --uitk-blue-800: rgb(12, 53, 102);
+  --uitk-blue-900: rgb(0, 40, 88);
+  /* --uitk-blue-1000: rgb(0, 18, 40); TODO: Check this wasn't used anywhere in toolkit 1 */
+
+  --uitk-purple-10: rgb(249, 224, 247);
+  --uitk-purple-20: rgb(247, 212, 244);
+  --uitk-purple-30: rgb(245, 201, 241);
+  --uitk-purple-40: rgb(243, 189, 238);
+  --uitk-purple-50: rgb(241, 178, 235);
+  --uitk-purple-100: rgb(223, 156, 225);
+  --uitk-purple-200: rgb(205, 135, 215);
+  --uitk-purple-300: rgb(192, 116, 203);
+  --uitk-purple-400: rgb(169, 97, 181);
+  --uitk-purple-500: rgb(150, 78, 162);
+  --uitk-purple-600: rgb(129, 60, 141);
+  --uitk-purple-700: rgb(103, 46, 122);
+  --uitk-purple-800: rgb(83, 37, 109);
+  --uitk-purple-900: rgb(59, 16, 84);
+
+  --uitk-grey-10: rgb(242, 244, 246);
+  --uitk-grey-20: rgb(234, 237, 239);
+  --uitk-grey-30: rgb(224, 228, 233);
+  --uitk-grey-40: rgb(217, 221, 227);
+  --uitk-grey-50: rgb(206, 210, 217);
+  --uitk-grey-60: rgb(197, 201, 208);
+  --uitk-grey-70: rgb(180, 183, 190);
+  --uitk-grey-80: rgb(159, 163, 170);
+  --uitk-grey-90: rgb(132, 135, 142);
+  --uitk-grey-100: rgb(116, 119, 127);
+  --uitk-grey-200: rgb(97, 101, 110);
+  --uitk-grey-300: rgb(76, 80, 91);
+  --uitk-grey-400: rgb(68, 72, 79);
+  --uitk-grey-500: rgb(59, 63, 70);
+  --uitk-grey-600: rgb(47, 49, 54);
+  --uitk-grey-700: rgb(42, 44, 47);
+  --uitk-grey-800: rgb(36, 37, 38);
+  --uitk-grey-900: rgb(22, 22, 22);
+
+  /* TODO: Confirm these values with design */
+  --uitk-red-1000: rgb(65, 37, 34);
+  --uitk-orange-1000: rgb(54, 44, 36);
+  --uitk-green-1000: rgb(35, 52, 43);
+  --uitk-teal-1000: rgb(28, 55, 60);
+  --uitk-purple-1000: rgb(58, 45, 62);
+
+  /* TODO: We already had a blue-1000 which wasn't used, check this is OK to replace */
+  --uitk-blue-1000: rgb(35, 47, 56);
+}

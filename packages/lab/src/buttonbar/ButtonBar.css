@@ -1,0 +1,9 @@
+.uitkButtonBar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.uitkButtonBar-alignLeft {
+  justify-content: flex-start;
+}

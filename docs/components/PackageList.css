@@ -1,0 +1,13 @@
+.uitkPackageList {
+  display: flex;
+  flex-direction: var(--uitkPackageList-flex-direction, row);
+  gap: var(--uitkPackageList-gap, 10px);
+  margin: var(--uitkPackageList-margin, 24px 0 24px 0);
+}
+
+.uitkPackageList-package {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+  padding: 3px 6px;
+}

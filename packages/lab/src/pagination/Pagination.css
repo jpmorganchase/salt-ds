@@ -1,0 +1,115 @@
+.uitk-density-medium .uitkPagination {
+  --button-size: 28px;
+  --font-size: 12px;
+}
+
+.uitk-density-high .uitkPagination {
+  --button-size: 20px;
+  --font-size: 11px;
+}
+
+.uitk-density-low .uitkPagination {
+  --button-size: 36px;
+  --font-size: 14px;
+}
+
+.uitk-density-touch .uitkPagination {
+  --button-size: 44px;
+  --font-size: 16px;
+}
+
+.uitkPagination {
+  display: flex;
+  flex-direction: row;
+}
+
+.uitkPagination-arrowButton {
+  width: var(--button-size);
+  height: var(--button-size);
+}
+
+.uitkPagination-previousButton {
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitkPagination-nextButton {
+  margin-left: var(--uitk-spacing-unit);
+}
+
+.uitkPagination-pageButton {
+  min-width: var(--button-size);
+  height: var(--button-size);
+  --uitkButton-font-weight: var(--uitk-typography-weight-regular);
+}
+
+.uitkPagination-pageButtonSelected {
+  background-color: var(--uitk-selectable-background-active);
+  color: var(--uitk-selectable-text-color-active);
+}
+
+.uitkPagination-pageButtonFixed {
+  padding: 0;
+}
+
+.uitkPagination-ellipsis {
+  width: var(--button-size);
+  height: var(--button-size);
+  text-align: center;
+}
+
+.uitkPagination-accessibleText {
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.uitkPagination-compactInputField {
+}
+
+.uitkPagination-compactInput {
+  height: var(--button-size);
+  min-width: unset;
+}
+
+.uitkPagination-compactInputFixed {
+  min-width: var(--button-size);
+  width: var(--button-size);
+}
+
+.uitkPagination-compactSeparator {
+  height: var(--button-size);
+  width: var(--button-size);
+  text-align: center;
+  font-size: var(--font-size);
+  line-height: var(--button-size);
+}
+
+.uitkPagination-goToInputWrapper {
+}
+
+.uitkPagination-leftGoToInput {
+  margin-right: var(--uitk-spacing-unit);
+}
+
+.uitkPagination-rightGoToInput {
+  margin-left: var(--uitk-spacing-unit);
+  min-width: unset;
+}
+
+.uitkPagination-goToInputField {
+}
+
+.uitkPagination-goToInput {
+  height: var(--button-size);
+  min-width: unset;
+}
+
+.uitkPagination-goToInputFixed {
+  min-width: var(--button-size);
+  width: var(--button-size);
+}

@@ -1,0 +1,191 @@
+.uitk-newapp {
+  --uitk-disabled-background-opacity: 0.4;
+}
+
+.uitk-newapp.uitk-density-medium {
+  --uitkButton-height: 32px;
+}
+
+.uitk-light.uitk-newapp {
+  /* CTA */
+  --uitk-actionable-cta-text-color: var(--uitk-white);
+  --uitk-actionable-cta-background: linear-gradient(to bottom, var(--uitk-blue-500), var(--uitk-blue-600));
+  --uitk-actionable-cta-icon-color: var(--uitk-white);
+  --uitk-actionable-cta-topline-color: var(--uitk-blue-100);
+  --uitk-actionable-cta-baseline-color: var(--uitk-grey-900);
+
+  --uitk-actionable-cta-text-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-cta-background-hover: var(--uitk-blue-100);
+  --uitk-actionable-cta-icon-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-cta-topline-color-hover: var(--uitk-white);
+  --uitk-actionable-cta-baseline-color-hover: var(--uitk-grey-90);
+
+  --uitk-actionable-cta-text-color-active: var(--uitk-white);
+  --uitk-actionable-cta-background-active: var(--uitk-blue-600);
+  --uitk-actionable-cta-icon-color-active: var(--uitk-white);
+  --uitk-actionable-cta-topline-color-active: var(--uitk-blue-100);
+  --uitk-actionable-cta-baseline-color-active: var(--uitk-grey-90);
+
+  --uitk-actionable-cta-text-color-disabled: var(--uitk-actionable-cta-text-color);
+  --uitk-actionable-cta-icon-color-disabled: var(--uitk-actionable-cta-icon-color);
+  --uitk-actionable-cta-background-disabled: var(--uitk-actionable-cta-background);
+  --uitk-actionable-cta-topline-color-disabled: var(--uitk-actionable-cta-topline-color);
+  --uitk-actionable-cta-baseline-color-disabled: var(--uitk-actionable-cta-baseline-color);
+
+  /* Primary */
+  --uitk-actionable-primary-text-color: var(--uitk-grey-900);
+  --uitk-actionable-primary-background: linear-gradient(to bottom, var(--uitk-grey-60), var(--uitk-grey-70));
+  --uitk-actionable-primary-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-primary-topline-color: var(--uitk-white);
+  --uitk-actionable-primary-baseline-color: var(--uitk-grey-90);
+
+  --uitk-actionable-primary-text-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-primary-background-hover: var(--uitk-blue-100);
+  --uitk-actionable-primary-icon-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-primary-topline-color-hover: var(--uitk-white);
+  --uitk-actionable-primary-baseline-color-hover: var(--uitk-grey-90);
+
+  --uitk-actionable-primary-text-color-active: var(--uitk-white);
+  --uitk-actionable-primary-background-active: var(--uitk-blue-600);
+  --uitk-actionable-primary-icon-color-active: var(--uitk-white);
+  --uitk-actionable-primary-topline-color-active: transparent;
+  --uitk-actionable-primary-baseline-color-active: transparent;
+
+  --uitk-actionable-primary-text-color-disabled: var(--uitk-actionable-primary-text-color);
+  --uitk-actionable-primary-icon-color-disabled: var(--uitk-actionable-primary-icon-color);
+  --uitk-actionable-primary-background-disabled: var(--uitk-actionable-primary-background);
+  --uitk-actionable-primary-topline-color-disabled: var(--uitk-actionable-primary-topline-color);
+  --uitk-actionable-primary-baseline-color-disabled: var(--uitk-actionable-primary-baseline-color);
+
+  --uitk-actionable-primary-text-color-readonly: var(--uitk-grey-900);
+  --uitk-actionable-primary-background-readonly: transparent none;
+  --uitk-actionable-primary-icon-color-readonly: var(--uitk-grey-900);
+  --uitk-actionable-primary-topline-color-readonly: transparent;
+  --uitk-actionable-primary-baseline-color-readonly: var(--uitk-grey-40);
+
+  /* Secondary */
+
+  --uitk-actionable-secondary-text-color: var(--uitk-grey-900);
+  --uitk-actionable-secondary-background: transparent;
+  --uitk-actionable-secondary-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-secondary-topline-color: transparent;
+  --uitk-actionable-secondary-baseline-color: transparent;
+
+  --uitk-actionable-secondary-text-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-secondary-background-hover: var(--uitk-blue-100);
+  --uitk-actionable-secondary-icon-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-secondary-topline-color-hover: transparent;
+  --uitk-actionable-secondary-baseline-color-hover: transparent;
+
+  --uitk-actionable-secondary-text-color-active: var(--uitk-white);
+  --uitk-actionable-secondary-background-active: var(--uitk-blue-600);
+  --uitk-actionable-secondary-icon-color-active: var(--uitk-white);
+  --uitk-actionable-secondary-topline-color-active: transparent;
+  --uitk-actionable-secondary-baseline-color-active: transparent;
+
+  --uitk-actionable-secondary-text-color-disabled: var(--uitk-grey-300);
+  --uitk-actionable-secondary-icon-color-disabled: var(--uitk-grey-300);
+
+  --uitk-actionable-secondary-text-color-readonly: var(--uitk-grey-900);
+  --uitk-actionable-secondary-background-readonly: transparent none;
+  --uitk-actionable-secondary-icon-color-readonly: var(--uitk-grey-900);
+  --uitk-actionable-secondary-topline-color-readonly: transparent;
+  --uitk-actionable-secondary-baseline-color-readonly: transparent;
+
+  /* Final Execution */
+  --uitk-actionable-final-text-color: var(--uitk-grey-900);
+  --uitk-actionable-final-background: linear-gradient(to bottom, var(--uitk-orange-300), var(--uitk-orange-500));
+  --uitk-actionable-final-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-final-topline-color: var(--uitk-orange-100);
+  --uitk-actionable-final-baseline-color: var(--uitk-orange-900);
+
+  --uitk-actionable-final-text-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-final-background-hover: var(--uitk-orange-200);
+  --uitk-actionable-final-icon-color-hover: var(--uitk-grey-900);
+  --uitk-actionable-final-topline-color-hover: var(--uitk-orange-100);
+  --uitk-actionable-final-baseline-color-hover: var(--uitk-grey-900);
+
+  --uitk-actionable-final-text-color-active: var(--uitk-grey-900);
+  --uitk-actionable-final-background-active: var(--uitk-orange-600);
+  --uitk-actionable-final-icon-color-active: var(--uitk-grey-900);
+  --uitk-actionable-final-topline-color-active: transparent;
+  --uitk-actionable-final-baseline-color-active: transparent;
+
+  --uitk-actionable-final-text-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-final-background-disabled: linear-gradient(to bottom, var(--uitk-orange-300), var(--uitk-orange-500));
+  --uitk-actionable-final-icon-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-final-topline-color-disabled: var(--uitk-orange-100);
+  --uitk-actionable-final-baseline-color-disabled: var(--uitk-orange-900);
+
+  /* Bid / Buy */
+  --uitk-actionable-bid-text-color: var(--uitk-grey-900);
+  --uitk-actionable-bid-background: linear-gradient(to bottom, var(--uitk-blue-50), var(--uitk-blue-100));
+  --uitk-actionable-bid-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-bid-topline-color: var(--uitk-white);
+  --uitk-actionable-bid-baseline-color: var(--uitk-blue-300);
+
+  --uitk-actionable-bid-text-color-hover: var(--uitk-white);
+  --uitk-actionable-bid-background-hover: var(--uitk-blue-600);
+  --uitk-actionable-bid-icon-color-hover: var(--uitk-white);
+  --uitk-actionable-bid-topline-color-hover: var(--uitk-blue-300);
+  --uitk-actionable-bid-baseline-color-hover: var(--uitk-grey-900);
+
+  --uitk-actionable-bid-text-color-active: var(--uitk-grey-900);
+  --uitk-actionable-bid-background-active: var(--uitk-blue-50);
+  --uitk-actionable-bid-icon-color-active: var(--uitk-grey-900);
+  --uitk-actionable-bid-topline-color-active: transparent;
+  --uitk-actionable-bid-baseline-color-active: transparent;
+
+  --uitk-actionable-bid-text-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-bid-background-disabled: linear-gradient(to bottom, var(--uitk-blue-50), var(--uitk-blue-100));
+  --uitk-actionable-bid-icon-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-bid-topline-color-disabled: var(--uitk-white);
+  --uitk-actionable-bid-baseline-color-disabled: var(--uitk-blue-300);
+
+  --uitk-actionable-bid-text-color-readonly: var(--uitk-blue-600);
+  --uitk-actionable-bid-background-readonly: transparent none;
+  --uitk-actionable-bid-icon-color-readonly: var(--uitk-blue-600);
+  --uitk-actionable-bid-topline-color-readonly: transparent;
+  --uitk-actionable-bid-baseline-color-readonly: var(--uitk-grey-40);
+
+  /* Ask / Sell */
+  --uitk-actionable-ask-text-color: var(--uitk-grey-900);
+  --uitk-actionable-ask-background: linear-gradient(to bottom, var(--uitk-red-30), var(--uitk-red-50));
+  --uitk-actionable-ask-icon-color: var(--uitk-grey-900);
+  --uitk-actionable-ask-topline-color: var(--uitk-white);
+  --uitk-actionable-ask-baseline-color: var(--uitk-red-300);
+
+  --uitk-actionable-ask-text-color-hover: var(--uitk-white);
+  --uitk-actionable-ask-background-hover: var(--uitk-red-600);
+  --uitk-actionable-ask-icon-color-hover: var(--uitk-white);
+  --uitk-actionable-ask-topline-color-hover: var(--uitk-red-300);
+  --uitk-actionable-ask-baseline-color-hover: var(--uitk-grey-900);
+
+  --uitk-actionable-ask-text-color-active: var(--uitk-grey-900);
+  --uitk-actionable-ask-background-active: var(--uitk-red-40);
+  --uitk-actionable-ask-icon-color-active: var(--uitk-grey-900);
+  --uitk-actionable-ask-topline-color-active: transparent;
+  --uitk-actionable-ask-baseline-color-active: transparent;
+
+  --uitk-actionable-ask-text-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-ask-background-disabled: linear-gradient(to bottom, var(--uitk-red-30), var(--uitk-red-50));
+  --uitk-actionable-ask-icon-color-disabled: var(--uitk-grey-900);
+  --uitk-actionable-ask-topline-color-disabled: var(--uitk-white);
+  --uitk-actionable-ask-baseline-color-disabled: var(--uitk-red-300);
+
+  --uitk-actionable-ask-text-color-readonly: var(--uitk-red-600);
+  --uitk-actionable-ask-background-readonly: transparent none;
+  --uitk-actionable-ask-icon-color-readonly: var(--uitk-red-600);
+  --uitk-actionable-ask-topline-color-readonly: transparent;
+  --uitk-actionable-ask-baseline-color-readonly: var(--uitk-grey-40);
+}
+
+/*
+  cheating a bit here to keep the example generation simpler. In reality, we would not
+  create a button with both readonly and final-execution classes
+
+*/
+.uitk-newapp .uitkButton-cta[data-readonly],
+.uitk-newapp .uitkButton-final-execution[data-readonly] {
+  visibility: hidden;
+}

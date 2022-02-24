@@ -1,0 +1,83 @@
+.uitkBadge {
+  /* Colors */
+  --badge-content-text-color: var(--uitk-white);
+  --badge-content-background: var(--uitk-status-info-color);
+  /* Font, Typography */
+  --badge-children-font-family: var(--uitk-typography-font-family);
+  --badge-children-line-height: var(--uitk-typography-line-height);
+  --badge-children-font-size: var(--uitk-typography-size-regular-unit);
+  --badge-content-font-weight: var(--uitk-typography-weight-bold);
+  /* TODO: Design, make sure fixed size is ok. Should we use caption-unit instead ? */
+  --badge-content-font-size: var(--uitk-typography-size-30);
+  --badge-content-border-radius: 16px;
+  --badge-content-line-height: 15px;
+  --badge-content-padding: 0px 4px;
+
+  /* Derived */
+  /* Same as content padding in x */
+  --badge-offset-inline: -4px;
+
+  --badge-sequence-gap: var(--uitk-spacing-unit);
+}
+
+.uitkBadge {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+  vertical-align: middle;
+  font-family: var(--badge-children-font-family);
+  line-height: var(--badge-children-line-height);
+  font-size: var(--badge-children-font-size);
+}
+
+/* Give automatic margin when they sit next to each other */
+.uitkBadge + .uitkBadge {
+  margin-left: var(--badge-sequence-gap);
+}
+
+.uitkBadge-badge {
+  color: var(--badge-content-text-color);
+  box-sizing: border-box;
+  display: inline-block;
+  font-weight: var(--badge-content-font-weight);
+  font-size: var(--badge-content-font-size);
+  /* default small type */
+  width: auto;
+  min-width: 15px;
+  line-height: var(--badge-content-line-height);
+  border-radius: var(--badge-content-border-radius);
+  text-align: center;
+
+  transform: translate(var(--badge-offset-inline), -50%);
+  transform-origin: 100% 0%;
+  /*
+    We want offset the next inline element to be strictly next to the badge.
+    This negative margin makes sure this node "appears" to be narrower.
+   */
+  margin-right: var(--badge-offset-inline);
+
+  padding: var(--badge-content-padding);
+  background: var(--badge-content-background);
+
+  position: relative;
+
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.uitkBadge-info {
+  --badge-content-background: var(--uitk-status-info-color);
+}
+
+.uitkBadge-error {
+  --badge-content-background: var(--uitk-status-error-color);
+}
+
+.uitkBadge-success {
+  --badge-content-background: var(--uitk-status-success-color);
+}

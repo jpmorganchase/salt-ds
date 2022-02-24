@@ -1,0 +1,23 @@
+.uitkValueEditor-input {
+  padding: 0px 10px 2px 0px;
+  width: 100%;
+}
+
+.uitkValueEditor-inputWithColumns {
+  width: 80px;
+}
+
+.uitkValueEditor-jumpToFoundation {
+  display: flex;
+}
+
+.uitkValueEditor-jumpToFoundationNotColor {
+  display: flex;
+  align-items: flex-end;
+}
+
+.uitkValueEditor-colorInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}

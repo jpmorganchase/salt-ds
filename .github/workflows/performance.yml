@@ -1,0 +1,12 @@
+name: "Performance"
+on: push
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v7
+        with:
+          urls: "https://ui-toolkit.pages.dev/"
+          uploadArtifacts: true # save results as an action artifacts

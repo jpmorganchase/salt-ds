@@ -1,0 +1,35 @@
+.uitkEditableLabel {
+  --uitk-input-min-width: 14px;
+  --uitk-input-position: absolute;
+  --editable-label-padding: var(--uitk-editable-label-padding, 6px);
+  --editable-label-height: var(--uitk-editable-label-height, 26px);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--uitk-typography-size-regular-unit);
+  height: var(--editable-label-height);
+  justify-content: center;
+  padding: 0 var(--editable-label-padding);
+  position: relative;
+  z-index: 1;
+}
+
+.uitkEditableLabel:before {
+  content: attr(data-text);
+  display: block;
+  height: 0px;
+  visibility: hidden;
+  white-space: pre-wrap;
+}
+
+.uitkEditableLabel .uitkInput {
+  font-weight: var(--uitk-typography-weight-regular);
+  left: var(--editable-label-padding, 0);
+  padding: 0;
+  outline-style: none;
+  right: var(--editable-label-padding, 0);
+}
+
+.uitkEditableLabel-input {
+  outline: none;
+}

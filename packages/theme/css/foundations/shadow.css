@@ -1,0 +1,33 @@
+.uitk-light {
+  --uitk-shadow-flat: none;
+  --uitk-shadow-black-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --uitk-shadow-black-2: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --uitk-shadow-black-3: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+  --uitk-shadow-black-4: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+  --uitk-shadow-black-5: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  --uitk-shadow-black-6: 0 12px 40px 5px rgba(0, 0, 0, 0.3);
+  /* based on blue 900 */
+  --uitk-shadow-blue-1: 0 1px 3px 0 rgba(0, 40, 88, 0.35);
+  --uitk-shadow-blue-2: 0 2px 4px 0 rgba(0, 40, 88, 0.35);
+  --uitk-shadow-blue-3: 0 4px 8px 0 rgba(0, 40, 88, 0.45);
+  --uitk-shadow-blue-4: 0 6px 10px 0 rgba(0, 40, 88, 0.5);
+  --uitk-shadow-blue-5: 0 8px 16px 0 rgba(0, 40, 88, 0.5);
+  --uitk-shadow-blue-6: 0 12px 40px 5px rgba(0, 40, 88, 0.6);
+}
+
+.uitk-dark {
+  --uitk-shadow-flat: none;
+  --uitk-shadow-black-1: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --uitk-shadow-black-2: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --uitk-shadow-black-3: 0 4px 8px 0 rgba(0, 0, 0, 0.55);
+  --uitk-shadow-black-4: 0 6px 10px 0 rgba(0, 0, 0, 0.55);
+  --uitk-shadow-black-5: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+  --uitk-shadow-black-6: 0 12px 40px 5px rgba(0, 0, 0, 0.65);
+  /* based on blue 1000 */
+  --uitk-shadow-blue-1: 0 1px 3px 0 rgba(0, 18, 40, 1);
+  --uitk-shadow-blue-2: 0 2px 4px 0 rgba(0, 18, 40, 1);
+  --uitk-shadow-blue-3: 0 4px 8px 0 rgba(0, 18, 40, 1);
+  --uitk-shadow-blue-4: 0 6px 10px 0 rgba(0, 18, 40, 1);
+  --uitk-shadow-blue-5: 0 8px 16px 0 rgba(0, 18, 40, 1);
+  --uitk-shadow-blue-6: 0 12px 40px 5px rgba(0, 18, 40, 1);
+}

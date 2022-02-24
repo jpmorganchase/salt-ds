@@ -1,0 +1,17 @@
+/* A temp structure currently used to layout Tabs examples */
+.Flexbox {
+  border: solid 1px lightgrey;
+  display: flex;
+  flex-direction: column;
+}
+
+.Flexbox > .uitkAppHeader ~ *,
+.Flexbox > [role="tablist"] ~ * {
+  display: none;
+}
+
+.Flexbox .uitkAppHeader ~ [aria-hidden="false"],
+.Flexbox [role="tablist"] ~ [aria-hidden="false"] {
+  display: block;
+  flex: 1 1 0;
+}

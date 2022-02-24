@@ -1,0 +1,18 @@
+{
+  "name": "@brandname/theme-editor-showcase",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@brandname/theme-editor": ">=1.0.0",
+    "@brandname/theme-editor-app": ">=0.1.0"
+  },
+  "modular": {
+    "type": "app"
+  },
+  "main": "./public/electron.js",
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "electron": "^16.0.1",
+    "electron-is-dev": "^2.0.0"
+  }
+}

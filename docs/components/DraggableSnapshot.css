@@ -1,0 +1,38 @@
+.uitkDraggableSnapshot {
+  --header-height: 120px;
+  --img-height: var(--uitkDraggableSnapshot-img-height, 600px);
+  --img-opacity: var(--uitkDraggableSnapshot-opacity, 0.5);
+  --img-width: var(--uitkDraggableSnapshot-img-width, 600px);
+  --snapshot-url: var(--uitkDraggableSnapshot-url);
+  cursor: grab;
+  left: 0;
+  position: absolute;
+  height: calc(var(--header-height) + var(--img-height));
+  outline: none;
+  top: 0;
+  width: var(--img-width);
+}
+
+.uitkDraggableSnapshot-sliding {
+  transition-property: left, top;
+  transition-duration: 0.3s;
+}
+
+.uitkDraggableSnapshot-header {
+  background-color: var(--uitk-grey-40);
+  box-sizing: border-box;
+  height: var(--header-height);
+  padding: 8px;
+}
+
+.uitkDraggableSnapshot-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.uitkDraggableSnapshot-img {
+  background: var(--snapshot-url) no-repeat;
+  width: var(--img-width);
+  height: var(--img-height);
+  opacity: var(--img-opacity);
+}

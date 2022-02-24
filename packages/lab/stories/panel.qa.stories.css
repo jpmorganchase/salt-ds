@@ -1,0 +1,8 @@
+.uitkPanelQA {
+  --uitkDocGrid-width: 720px;
+  --uitkDocGrid-gap: 8px;
+}
+
+.uitkPanelQA p {
+  font-size: 14px;
+}

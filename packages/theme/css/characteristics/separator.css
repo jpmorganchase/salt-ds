@@ -1,0 +1,13 @@
+/* TODO: Design. Choose correct naming, originally called as S1,S2,S3, which is not great. */
+
+.uitk-light {
+  --uitk-separator-section-color: var(--uitk-grey-60);
+  --uitk-separator-item-color: var(--uitk-grey-40);
+  --uitk-separator-subtle-color: var(--uitk-grey-20);
+}
+
+.uitk-dark {
+  --uitk-separator-section-color: var(--uitk-grey-400);
+  --uitk-separator-item-color: var(--uitk-grey-500);
+  --uitk-separator-subtle-color: var(--uitk-grey-600);
+}

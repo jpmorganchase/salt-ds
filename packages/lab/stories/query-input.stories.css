@@ -1,0 +1,16 @@
+.root {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.query-input {
+  flex-shrink: 0;
+}
+
+.query-result {
+  margin-top: 64px;
+  border-top: solid 1px var(--uitk-separator-item-color);
+  flex-grow: 1;
+}

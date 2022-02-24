@@ -1,0 +1,137 @@
+.uitk-density-touch .uitkTokenizedInput {
+  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-touch) / 2 + 2px);
+  --tokenized-input-last-pill-margin: calc(var(--uitk-spacing-touch) / 2);
+}
+
+.uitk-density-low .uitkTokenizedInput {
+  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-low) / 2 + 1px);
+  --tokenized-input-last-pill-margin: calc(var(--uitk-spacing-low) / 2);
+}
+
+.uitk-density-medium .uitkTokenizedInput {
+  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-medium) / 2);
+  --tokenized-input-last-pill-margin: var(--uitk-spacing-medium);
+}
+
+.uitk-density-high .uitkTokenizedInput {
+  --tokenized-input-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-high) / 2 + 1px);
+  --tokenized-input-last-pill-margin: var(--uitk-spacing-high);
+}
+
+.uitkTokenizedInput {
+  --tokenized-input-spacing: var(--uitk-spacing-unit);
+  --tokenized-input-height: var(--uitk-size-regular-unit);
+  --tokenized-input-focused-outline: var(--uitk-focused-med-emphasis-outline);
+}
+
+.uitkTokenizedInput {
+  display: inline-flex;
+  justify-content: space-between;
+  /* same min-width as the Input component */
+  min-width: 8em;
+  width: 100%;
+
+  /* TODO: Check whether we should define font family here or rely on theme */
+  font-family: var(--uitk-typography-font-family);
+}
+
+.uitkTokenizedInput-disabled {
+  /* TODO: When shared disabled styles are ready */
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-disabled-text-opacity);
+}
+
+.uitkTokenizedInput:hover:not(.uitkTokenizedInput-disabled) {
+  cursor: pointer;
+}
+
+.uitkTokenizedInput-focused {
+  outline: var(--tokenized-input-focused-outline);
+}
+
+.uitkTokenizedInput-expanded {
+  height: auto;
+}
+
+.uitkTokenizedInput-hidden {
+  display: none;
+}
+
+/* Used to be .inputRoot */
+.uitkTokenizedInput-input {
+  flex-grow: 1;
+  padding: 0;
+  outline: none;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.uitkTokenizedInput-clearButton {
+  flex: none;
+  align-self: flex-end;
+}
+
+.uitkTokenizedInput-expandButton {
+  padding: 0 calc(var(--tokenized-input-spacing) / 4);
+}
+
+.uitkTokenizedInput-pillGroup {
+  min-height: var(--tokenized-input-height);
+  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
+
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  box-sizing: border-box;
+}
+
+.uitkTokenizedInput-expanded,
+.uitkTokenizedInput-expanded .uitkTokenizedInput-pillGroup {
+  height: auto;
+}
+
+/* TODO: Adjust specificity of .InputPill depending on styling solution. This is an example of internal sub-component naming convension. */
+.uitkTokenizedInput .uitkInputPill,
+.uitkTokenizedInput-expandButton,
+.uitkTokenizedInput-input,
+.uitkTokenizedInput-inputField.uitkTokenizedInput-inputMultiline .uitkTokenizedInput-input {
+  margin: calc(var(--tokenized-input-gutter-size) / 2) 0;
+  height: calc(var(--tokenized-input-height) - var(--tokenized-input-spacing) * 1.5);
+}
+
+.uitkTokenizedInput .uitkInputPill {
+  min-width: 0;
+  margin-right: var(--tokenized-input-gutter-size);
+}
+
+.uitkTokenizedInput .uitkInputPill > * {
+  min-width: 0;
+}
+
+.uitkTokenizedInput .uitkInputPill.uitkInputPill-hidden {
+  display: none;
+}
+
+.uitkTokenizedInput .uitkInputPill-pillLastVisible {
+  margin-right: var(--tokenized-input-last-pill-margin);
+}
+
+.uitkTokenizedInput .uitkInputPill-pillActive {
+  background: var(--uitk-selectable-background-hover);
+}
+
+.uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
+  color: var(--uitk-actionable-cta-icon-color-hover);
+}
+
+.uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
+  color: var(--uitk-actionable-cta-icon-color-hover);
+  background: var(--uitk-actionable-cta-background-hover);
+}

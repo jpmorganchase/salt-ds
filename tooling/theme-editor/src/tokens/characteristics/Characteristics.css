@@ -1,0 +1,4 @@
+.uitkCharacteristicPattern {
+  border-bottom: 1px solid var(--uitk-separator-section-color);
+  padding: var(--uitk-spacing-unit) 0;
+}

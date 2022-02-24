@@ -1,0 +1,10 @@
+{
+  "viewportWidth": 1280,
+  "viewportHeight": 1024,
+  "component": {
+    "testFiles": "**/*.cy.{js,ts,jsx,tsx}",
+    "componentFolder": "packages/lab/src",
+    "supportFile": "cypress/support/index.ts"
+  },
+  "video": false
+}

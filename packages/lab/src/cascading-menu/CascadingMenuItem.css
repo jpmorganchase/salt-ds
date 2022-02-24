@@ -1,0 +1,61 @@
+.uitk-light {
+  --menuitem-blur-selected-bg: var(--uitk-grey-30);
+  --menu-divider-bg: var(--uitk-grey-60);
+}
+
+.uitk-dark {
+  --menuitem-blur-selected-bg: var(--uitk-grey500);
+  --menu-divider-bg: var(--uitk-grey-300);
+}
+
+.uitkMenuItem {
+  background: var(--menu-item-background);
+  border-bottom: var(--menu-item-border-bottom);
+  box-sizing: border-box;
+  display: flex;
+
+  right: inherit;
+  align-items: center;
+  justify-content: space-between;
+
+  right: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: left;
+  align-items: center;
+  user-select: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.uitkMenuItem-menuItemText {
+  flex-grow: 2;
+  white-space: nowrap;
+}
+
+.uitkMenuItem-menuItemEndAdornment {
+  padding-left: 8px; /* density */
+}
+
+.uitkMenuItem-menuItemStartAdornmentContainer {
+  margin-right: var(--uitk-spacing-unit);
+  width: 12px;
+}
+
+.uitkMenuItem-menuItemAdornmentHidden {
+  visibility: hidden;
+}
+
+.uitkMenuItem.uitkMenuItem-menuItemDivider {
+  border-bottom: 1px solid var(--menu-divider-bg);
+}
+
+.uitkMenuItem-menuItemHover:hover {
+  background: #a4d5f4;
+}
+
+/* extra specificity requred to override ListItem selected */
+.uitkMenuItem.uitkMenuItem-menuItemBlurSelected {
+  background: var(--menuitem-blur-selected-bg) !important;
+}

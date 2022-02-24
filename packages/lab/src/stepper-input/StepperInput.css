@@ -1,0 +1,82 @@
+.uitk-density-medium .uitkStepperInput {
+  --adornment-container-top: -2px;
+  --input-max-height: 28px;
+  --secondary-button-height: 26px;
+  --secondary-button-width: 26px;
+  --secondary-button-margin-right: 2px;
+  --stepper-button-height: 12px;
+  --stepper-button-margin: 2px;
+  --stepper-button-width: 24px;
+}
+
+.uitk-density-touch .uitkStepperInput {
+  --adornment-container-top: 0;
+  --secondary-button-height: 36px;
+  --secondary-button-width: 36px;
+  --secondary-button-margin-right: 4px;
+  --stepper-button-height: 16px;
+  --stepper-button-margin: 4px;
+  --stepper-button-width: 36px;
+}
+
+.uitk-density-low .uitkStepperInput {
+  --adornment-container-top: 0;
+  --secondary-button-height: 28px;
+  --secondary-button-width: 28px;
+  --secondary-button-margin-right: 4px;
+  --stepper-button-height: 12px;
+  --stepper-button-margin: 4px;
+  --stepper-button-width: 28px;
+}
+
+.uitk-density-high .uitkStepperInput {
+  --adornment-container-top: -2px;
+  --input-max-height: 20px;
+  --secondary-button-height: 18px;
+  --secondary-button-width: 18px;
+  --secondary-button-margin-right: 2px;
+  --stepper-button-height: 8px;
+  --stepper-button-margin: 2px;
+  --stepper-button-width: 16px;
+}
+
+.uitkStepperInput-adornmentContainer {
+  display: flex;
+  position: relative;
+  top: var(--adornment-container-top);
+}
+
+.uitkStepperInput-secondaryButton {
+  height: var(--secondary-button-height);
+  margin: var(--secondary-button-margin-right);
+  width: var(--secondary-button-width);
+}
+
+.uitkStepperInput-hideSecondaryButton {
+  visibility: hidden;
+}
+
+.uitkStepperInput-buttonContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.uitkStepperInput-stepperButton {
+  height: var(--stepper-button-height);
+  margin: var(--stepper-button-margin);
+  width: var(--stepper-button-width);
+}
+
+.uitkStepperInput-increment {
+}
+
+.uitkStepperInput-decrement {
+  margin-top: 0;
+}
+
+.uitkStepperInput-stepperButtonIcon {
+}
+
+.uitkStepperInput-input {
+  max-height: var(--input-max-height);
+}

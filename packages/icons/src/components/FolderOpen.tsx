@@ -1,0 +1,13 @@
+import { createIcon } from "@brandname/core";
+
+export const FolderOpenIcon = createIcon(
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 12 12"
+    data-testid="FolderOpenIcon"
+  >
+    <path d="m1 10 3-6h7V3h1v9H0V1h4.118l2 1H11v1H5.882l-2-1H1v8z" />
+  </svg>,
+  "FolderOpen",
+  "folder open"
+);

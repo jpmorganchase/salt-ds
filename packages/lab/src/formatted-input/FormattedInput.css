@@ -1,0 +1,28 @@
+/* TODO check multiline styles */
+
+.uitkFormattedInput {
+  --formatted-input-mask-color: var(--uitk-text-secondary-color);
+}
+
+.uitkFormattedInput-inputWrapper {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+}
+
+.uitkFormattedInput-mask {
+  position: absolute;
+  color: var(--formatted-input-mask-color);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+}
+
+.uitkFormattedInput-mask i {
+  color: transparent;
+  opacity: 0;
+  visibility: hidden;
+  font: inherit;
+}

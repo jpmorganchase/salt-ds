@@ -1,0 +1,61 @@
+.uitkAvatar {
+  --avatar-background-color: var(--uitk-blue-500);
+  --avatar-foreground-color: var(--uitk-white);
+  --avatar-font-family: var(--uitk-typography-font-family);
+}
+
+.uitkAvatar {
+  background-color: var(--avatar-background-color);
+  color: var(--avatar-foreground-color);
+  font-size: var(--avatar-font-size);
+  line-height: var(--avatar-container-size);
+  width: var(--avatar-container-size);
+  height: var(--avatar-container-size);
+  font-family: var(--avatar-font-family);
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  user-select: none;
+  border-radius: 50%;
+}
+
+.uitkAvatar-image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  object-fit: cover;
+  color: transparent;
+  text-indent: 10000px;
+}
+
+.uitkAvatar > svg {
+  width: var(--avatar-container-size);
+  height: var(--avatar-container-size);
+}
+
+.uitkAvatar-svgDisc {
+  fill: var(--avatar-background-color);
+}
+
+.uitkAvatar-svgHead {
+  fill: var(--avatar-foreground-color);
+}
+
+.uitkAvatar-small {
+  --avatar-font-size: var(--uitk-typography-size-10);
+  --avatar-container-size: var(--uitk-size-regular-high);
+}
+
+.uitkAvatar-medium {
+  --avatar-font-size: var(--uitk-typography-size-40);
+  --avatar-container-size: var(--uitk-size-regular-medium);
+}
+
+.uitkAvatar-large {
+  --avatar-font-size: var(--uitk-typography-size-70);
+  --avatar-container-size: var(--uitk-size-regular-touch);
+}

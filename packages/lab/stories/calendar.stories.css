@@ -1,0 +1,16 @@
+.CustomDayRender .uitkCalendarDay {
+  position: relative;
+}
+
+.FadeMonthAnimation .uitkCalendarCarousel-shouldAnimate {
+  transition: none;
+}
+
+.FadeMonthAnimation .uitkCalendarCarousel-track .uitkCalendarCarousel-slide {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.FadeMonthAnimation .uitkCalendarCarousel-track .uitkCalendarCarousel-slide:nth-child(2) {
+  opacity: 1;
+}

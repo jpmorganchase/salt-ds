@@ -1,0 +1,105 @@
+.uitk-light .uitkCheckboxBase {
+  --checkbox-outline-color: var(--uitk-grey-90);
+  --checkbox-solid-color: var(--uitk-blue-500);
+  --checkbox-outline-color-hover: var(--uitk-blue-400);
+  --checkbox-tick-color: var(--uitk-white);
+}
+
+.uitk-dark .uitkCheckboxBase {
+  --checkbox-outline-color: var(--uitk-grey-100);
+  --checkbox-solid-color: var(--uitk-blue-400);
+  --checkbox-outline-color-hover: var(--uitk-blue-300);
+  --checkbox-tick-color: var(--uitk-grey-800);
+}
+
+.uitk-density-touch .uitkCheckboxBase {
+  --indeterminate-bar-y: 6;
+  --indeterminate-bar-height: 2px;
+  --icon-size: 18px;
+}
+
+.uitk-density-low .uitkCheckboxBase {
+  --indeterminate-bar-y: 6;
+  --indeterminate-bar-height: 2px;
+  --icon-size: 16px;
+}
+.uitk-density-medium .uitkCheckboxBase {
+  --indeterminate-bar-y: 6;
+  --indeterminate-bar-height: 2px;
+  --icon-size: 14px;
+}
+.uitk-density-high .uitkCheckboxBase {
+  --indeterminate-bar-y: 5;
+  --indeterminate-bar-height: 3px;
+  --icon-size: 12px;
+}
+
+.uitkCheckboxBase {
+  background: none;
+  position: relative;
+}
+
+.uitkCheckboxBase-label {
+  display: flex;
+}
+
+.uitkCheckboxBase-disabled {
+  cursor: var(--uitk-disabled-cursor);
+}
+
+.uitkCheckboxBase:focus-visible:before,
+.uitkCheckboxBase-focusVisible:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  background: transparent;
+  outline: var(--uitk-focused-med-emphasis-outline);
+}
+
+.uitkCheckboxBase-icon {
+  fill: transparent;
+  flex-grow: 0;
+  height: var(--icon-size);
+  overflow: visible;
+  stroke: var(--checkbox-outline-color);
+  width: var(--icon-size);
+}
+
+.uitkCheckboxBase-icon-tick {
+  fill: var(--checkbox-tick-color);
+}
+
+.uitkCheckboxBase-input {
+  top: 0;
+  left: 0;
+  width: 100%;
+  cursor: inherit;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  z-index: 1;
+  position: absolute;
+}
+
+.uitkCheckboxBase-checked .uitkCheckboxBase-icon {
+  stroke-width: 0;
+  fill: var(--checkbox-solid-color);
+}
+
+.uitkCheckboxBase-indeterminate .uitkCheckboxBase-icon {
+  fill: transparent;
+}
+.uitkCheckboxBase-indeterminate .uitkCheckboxBase-icon-tick {
+  fill: var(--checkbox-solid-color);
+  y: var(--indeterminate-bar-y);
+  height: var(--indeterminate-bar-height);
+}
+
+.uitkCheckboxBase:hover .uitkCheckboxBase-icon {
+  stroke: var(--checkbox-outline-color-hover);
+}

@@ -1,0 +1,31 @@
+.CornerBlock-cell {
+  width: var(--uitk-size-regular-unit);
+  height: var(--uitk-size-regular-unit);
+  justify-self: end;
+
+  border-color: var(--uitk-container-low-emphasis-border-color);
+  border-style: var(--uitk-container-border-style);
+  border-width: var(--uitk-container-border-width);
+  border-radius: var(--uitk-container-border-radius);
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+}
+
+.CornerBlock-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: calc(var(--uitk-size-regular-unit) * 3 / 4);
+  height: calc(var(--uitk-size-regular-unit) * 3 / 4);
+
+  border-color: var(--uitk-container-low-emphasis-border-color);
+  border-style: var(--uitk-container-border-style);
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-top-width: var(--uitk-container-border-width);
+  border-right-width: var(--uitk-container-border-width);
+}

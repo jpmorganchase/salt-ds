@@ -1,0 +1,25 @@
+.StoryContainer {
+  width: 90vw;
+  height: 90vh;
+}
+.StoryContainer-sliders {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 70px 100px 20fr;
+  padding-bottom: 1rem;
+  gap: 5px;
+  align-items: center;
+}
+
+.StoryContainer-slider {
+  width: 100%;
+}
+.StoryContainer-toggle {
+  grid-row: 1 / span 2;
+}
+
+.StoryContainer-wrapper {
+  border: 1px dotted lightgrey;
+  padding: 1rem;
+  overflow: hidden;
+}

@@ -1,0 +1,71 @@
+.uitk-ProgressWithControls-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uitk-ProgressWithControls-container {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uitk-ProgressWithControls-controls {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.uitk-ProgressWithControls-progressComponentContainer {
+  display: flex;
+  align-items: center;
+}
+
+.uitk-LinearCustomStyles-styles1 .uitk-progressIndicator {
+  background: var(--uitk-red-500);
+}
+
+.uitk-LinearCustomStyles-styles1 .uitk-buffer:after {
+  background: var(--uitk-red-500);
+}
+
+.uitk-LinearCustomStyles-styles1 .uitk-progressBarContainer:after {
+  background: var(--uitk-red-500);
+}
+
+.uitk-light .uitk-LinearCustomStyles-styles2 .uitk-progressIndicator {
+  background: var(--uitk-grey-90);
+}
+
+.uitk-light .uitk-LinearCustomStyles-styles2 .uitk-buffer:after {
+  background: var(--uitk-grey-300);
+}
+
+.uitk-light .uitk-LinearCustomStyles-styles2 .uitk-progressBarContainer:after {
+  background: var(--uitk-grey-300);
+}
+
+.uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-progressIndicator {
+  background: var(--uitk-grey-200);
+}
+
+.uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-buffer:after {
+  background: var(--uitk-grey-500);
+}
+
+.uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-progressBarContainer:after {
+  background: var(--uitk-grey-500);
+}
+
+.uitk-LinearCustomStyles-styles3 .uitk-progressIndicator {
+  background: var(--uitk-green-400);
+}
+
+.uitk-LinearCustomStyles-styles3 .uitk-buffer:after {
+  background: var(--uitk-orange-300);
+}
+
+.uitk-LinearCustomStyles-styles3 .uitk-progressBarContainer:after {
+  background: var(--uitk-orange-300);
+}

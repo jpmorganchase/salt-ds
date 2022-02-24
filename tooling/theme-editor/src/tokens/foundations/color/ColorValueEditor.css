@@ -1,0 +1,36 @@
+.uitkColorValueEditor-foundationColor {
+  display: flex;
+}
+
+.uitkColorValueEditor-input {
+  padding: 0px 10px 2px 0px;
+  width: 100%;
+}
+
+.uitkColorValueEditor-colorInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.uitkColorValueEditor-backgroundColorInput {
+  max-width: 80px;
+}
+
+.uitkColorValueEditor-jumpToFoundation {
+  display: flex;
+}
+
+.uitkColorValueEditor-jumpToFoundationNotColor {
+  display: flex;
+  align-items: flex-end;
+}
+
+.uitkColorValueEditor-field {
+  margin-right: 5px;
+  min-width: 20px;
+}
+
+.uitkFormField-labelContainer {
+  padding-left: 0px;
+}

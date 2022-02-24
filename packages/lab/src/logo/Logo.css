@@ -1,0 +1,58 @@
+.uitk-light .uitkLogo {
+  --logo-color: var(--uitk-grey-300);
+}
+.uitk-dark .uitkLogo {
+  --logo-color: var(--uitk-grey-70);
+}
+
+.uitkLogo {
+  --logo-font-size: var(--uitk-typography-size-regular-unit);
+  --logo-line-height: var(--uitk-typography-line-height);
+  --logo-pipe-color: var(--uitkLogo-pipe-color, var(--uitk-separator-section-color));
+  --logo-height: var(--uitkLogo-logo-height, calc(var(--logo-font-size) + var(--uitk-spacing-unit)));
+  --logo-pipe-height: var(--uitkLogo-title-height, calc(var(--uitk-size-regular-unit) - calc(0.75 * var(--uitk-spacing-unit) * 2)));
+  --logo-pipe-margin: 0 calc(var(--uitk-spacing-unit) * 2);
+}
+
+.uitkLogo-compact {
+  --logo-pipe-margin: 0 calc(var(--uitk-spacing-unit) * 1.5);
+}
+
+.uitkLogo {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: var(--logo-height);
+}
+
+.uitkLogo img {
+  max-height: 100%;
+}
+
+.uitkLogo-wrapper {
+  display: inline-flex;
+  position: relative;
+  height: var(--logo-height);
+}
+
+.uitkLogo-logo {
+  fill: var(--logo-color);
+  margin: auto;
+  stroke: none !important;
+  text-align: center;
+  font-size: var(--logo-font-size);
+  line-height: var(--logo-line-height);
+}
+
+.uitkLogo-appTitle {
+  align-self: center;
+  color: var(--logo-color);
+  position: relative;
+}
+
+.uitkLogo-titlePipe {
+  border-right: 1px solid var(--logo-pipe-color);
+  margin: var(--logo-pipe-margin);
+  height: var(--logo-pipe-height);
+}

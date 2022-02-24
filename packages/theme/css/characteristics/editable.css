@@ -1,0 +1,47 @@
+.uitk-dark,
+.uitk-light {
+  --uitk-editable-cursor-hover: text;
+  --uitk-editable-cursor-active: text;
+
+  --uitk-editable-border-size-active: 2px;
+  --uitk-editable-border-size-hover: 1px;
+  --uitk-editable-border-size: 1px;
+}
+
+.uitk-light {
+  --uitk-editable-low-emphasis-background: transparent;
+  --uitk-editable-med-emphasis-background: var(--uitk-white);
+  --uitk-editable-high-emphasis-background: var(--uitk-grey-20);
+
+  /** TODO: Do we want to provide 3 emphasis tokens even though all emphasis
+   have the same values for below properties, or keep as is? **/
+  --uitk-editable-text-primary: var(--uitk-grey-900);
+  --uitk-editable-text-secondary: var(--uitk-grey-200);
+  --uitk-editable-icon-color: var(--uitk-grey-600);
+  --uitk-editable-icon-color-hover: var(--uitk-grey-600);
+  --uitk-editable-icon-color-active: var(--uitk-grey-600);
+  --uitk-editable-border-color: var(--uitk-grey-90);
+  --uitk-editable-border-color-hover: var(--uitk-blue-400);
+  --uitk-editable-border-color-active: var(--uitk-blue-500);
+  --uitk-editable-border-color-readonly: var(--uitk-grey-90-fade-20);
+  /* blue 30 fade 99 - prevents browser adding transparency to the color */
+  --uitk-editable-selection-background: var(--uitk-blue-30-fade-99);
+}
+
+.uitk-dark {
+  --uitk-editable-low-emphasis-background: transparent;
+  --uitk-editable-med-emphasis-background: var(--uitk-grey-800);
+  --uitk-editable-high-emphasis-background: var(--uitk-grey-900);
+
+  --uitk-editable-text-primary: var(--uitk-white);
+  --uitk-editable-text-secondary: var(--uitk-grey-70);
+  --uitk-editable-icon-color: var(--uitk-grey-60);
+  --uitk-editable-icon-color-hover: var(--uitk-grey-60);
+  --uitk-editable-icon-color-active: var(--uitk-grey-60);
+  --uitk-editable-border-color: var(--uitk-grey-100);
+  --uitk-editable-border-color-hover: var(--uitk-blue-300);
+  --uitk-editable-border-color-active: var(--uitk-blue-400);
+  --uitk-editable-border-color-readonly: var(--uitk-grey-100-fade-20);
+  /* blue 700 fade 99 - prevents browser adding transparency to the color */
+  --uitk-editable-selection-background: var(--uitk-blue-700-fade-99);
+}

@@ -1,0 +1,66 @@
+.uitk-light .uitkCheckbox {
+  --checkbox-outline-color: var(--uitk-grey-90);
+  --checkbox-outline-color-hover: var(--uitk-blue-400);
+}
+
+.uitk-dark .uitkCheckbox {
+  --checkbox-outline-color: var(--uitk-grey-100);
+  --checkbox-outline-color-hover: var(--uitk-blue-300);
+}
+
+.uitk-density-touch .uitkCheckbox {
+  --checkbox-font-size: var(--uitk-typography-size-70);
+  --label-margin-left: 12px;
+  --label-margin-right: calc(var(--uitk-spacing-touch) * var(--checkbox-space-multiplier));
+  --label-margin-top: calc(var(--uitk-spacing-touch) * var(--checkbox-top-multiplier));
+  --label-min-height: 20px;
+}
+.uitk-density-low .uitkCheckbox {
+  --checkbox-font-size: var(--uitk-typography-size-60);
+  --label-margin-left: 9px;
+  --label-margin-right: calc(var(--uitk-spacing-low) * var(--checkbox-space-multiplier));
+  --label-margin-top: calc(var(--uitk-spacing-low) * var(--checkbox-top-multiplier));
+  --label-min-height: 18px;
+}
+.uitk-density-medium .uitkCheckbox {
+  --checkbox-font-size: var(--uitk-typography-size-50);
+  --label-margin-left: 6px;
+  --label-margin-right: calc(var(--uitk-spacing-medium) * var(--checkbox-space-multiplier));
+  --label-margin-top: calc(var(--uitk-spacing-medium) * var(--checkbox-top-multiplier));
+  --label-min-height: 16px;
+}
+.uitk-density-high .uitkCheckbox {
+  --checkbox-font-size: var(--uitk-typography-size-40);
+  --label-margin-left: 3px;
+  --label-margin-right: calc(var(--uitk-spacing-high) * var(--checkbox-space-multiplier));
+  --label-margin-top: calc(var(--uitk-spacing-high) * var(--checkbox-top-multiplier));
+  --label-min-height: 14px;
+}
+
+.uitkCheckbox {
+  --checkbox-space-multiplier: 3;
+  --checkbox-top-multiplier: 0.75;
+  font-size: var(--checkbox-font-size);
+  line-height: 1;
+}
+
+.uitkCheckbox-label {
+  align-items: flex-start;
+}
+
+.uitkCheckbox-disabled {
+  pointer-events: visible;
+}
+
+.uitkCheckbox .uitkControlLabel-label {
+  vertical-align: baseline;
+  min-height: var(--label-min-height);
+}
+
+.uitkCheckbox:hover .uitkCheckboxBase-icon {
+  stroke: var(--checkbox-outline-color-hover);
+}
+
+.uitkCheckbox-disabled:hover .uitkCheckboxBase-icon {
+  stroke: var(--checkbox-outline-color);
+}

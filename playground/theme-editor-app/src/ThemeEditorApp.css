@@ -1,0 +1,20 @@
+.uitkThemeEditorApp {
+  display: flex;
+  inset: 0;
+  position: absolute;
+}
+
+.uitkThemeEditorAppOutput {
+  color: var(--uitk-text-secondary-color);
+  background-color: var(--uitk-container-med-emphasis-background);
+}
+
+.uitkThemeEditorApp-leftPane {
+  flex: 0 0 240px;
+  overflow: hidden;
+}
+
+.uitkThemeEditorApp-Spinner {
+  width: 100%;
+  top: 30%;
+}

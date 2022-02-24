@@ -1,0 +1,25 @@
+.uitkColorChooserHexInput {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 0px calc(3 * var(--uitk-spacing-unit)) 0px;
+}
+
+.uitkColorChooserHexInput-hashSign {
+  margin-top: 5px;
+  font-size: var(--uitk-typography-size-caption-unit);
+  padding-right: 6px;
+  color: var(--uitk-text-secondary-color);
+  padding-left: 6px;
+}
+
+.uitkColorChooserHexInput-input {
+  width: var(--uitk-spacing-unit);
+}
+
+.uitk-light .uitkColorChooserHexInput-input {
+  border-bottom: 1px solid var(--uitk-black);
+}
+
+.uitk-dark .uitkColorChooserHexInput-input {
+  border-bottom: 1px solid var(--uitk-white);
+}

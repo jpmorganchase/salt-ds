@@ -1,0 +1,28 @@
+.uitk-density-touch .uitkStaticInputAdornment {
+  --adornment-padding: var(--uitk-spacing-touch);
+}
+
+.uitk-density-low .uitkStaticInputAdornment {
+  --adornment-padding: var(--uitk-spacing-low);
+}
+
+.uitk-density-medium .uitkStaticInputAdornment {
+  --adornment-padding: var(--uitk-spacing-medium);
+}
+
+.uitk-density-high .uitkStaticInputAdornment {
+  --adornment-padding: var(--uitk-spacing-high);
+}
+
+.uitkStaticInputAdornment {
+  display: flex;
+  align-items: center;
+}
+
+.uitkInput-prefixContainer .uitkStaticInputAdornment {
+  padding-left: var(--adornment-padding);
+}
+
+.uitkInput-suffixContainer .uitkStaticInputAdornment {
+  padding-right: var(--adornment-padding);
+}

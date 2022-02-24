@@ -1,0 +1,7 @@
+.uitkThemeEditorModeSelector {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--uitk-text-secondary-color);
+  font-size: var(--uitk-typography-size-regular-unit);
+}

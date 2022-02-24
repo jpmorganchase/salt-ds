@@ -1,0 +1,64 @@
+.uitkSvgSpinner-gradientStop1 {
+  stop-color: var(--uitk-blue-300);
+}
+.uitkSvgSpinner-gradientStop2 {
+  stop-color: var(--uitk-blue-300);
+}
+.uitkSvgSpinner-gradientStop3 {
+  stop-color: var(--uitk-teal-300);
+}
+.uitkSvgSpinner-gradientStop4 {
+  stop-color: var(--uitk-teal-300);
+}
+
+/* Not yet sure about procedure for implementing themes */
+
+/* .uitk-dark .uitkSvgSpinner-gradientStop1 {
+  stop-color: var(--uitk-blue-500);
+}
+.uitk-dark .uitkSvgSpinner-gradientStop2 {
+  stop-color: var(--uitk-teal-500);
+}
+.uitk-dark .uitkSvgSpinner-gradientStop3 {
+  stop-color: var(--uitk-teal-500);
+}
+.uitk-dark .uitkSvgSpinner-gradientStop4 {
+  stop-color: var(--uitk-teal-500);
+} */
+
+.uitkSvgSpinner {
+  position: relative;
+}
+
+.uitkSvgSpinner-small {
+  height: var(--uitk-size-icon-small);
+  width: var(--uitk-size-icon-small);
+}
+
+.uitkSvgSpinner-medium {
+  height: var(--uitk-size-icon-medium);
+  width: var(--uitk-size-icon-medium);
+}
+
+.uitkSvgSpinner-large {
+  height: var(--uitk-size-icon-large);
+  width: var(--uitk-size-icon-large);
+}
+
+.uitkSvgSpinner-spinner {
+  animation: spinner 0.9s linear infinite;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

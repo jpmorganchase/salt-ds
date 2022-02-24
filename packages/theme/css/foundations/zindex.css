@@ -1,0 +1,10 @@
+.uitk-density-touch,
+.uitk-density-low,
+.uitk-density-medium,
+.uitk-density-high {
+  --uitk-zindex-tooltip: 1500;
+  --uitk-zindex-snackbar: 1400;
+  --uitk-zindex-modal: 1300;
+  --uitk-zindex-drawer: 1200;
+  --uitk-zindex-appbar: 1100;
+}

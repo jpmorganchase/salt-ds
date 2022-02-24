@@ -1,0 +1,35 @@
+.uitkMetric {
+  --metric-text-color: var(--uitk-text-primary-color);
+  --metric-line-height: var(--uitk-typography-line-height);
+
+  --metric-horizontal-gap: calc(var(--uitk-spacing-unit) * 2);
+  --metric-vertical-gap: calc(var(--uitk-spacing-unit) * 0.25);
+
+  --metric-font-family: var(--uitk-typography-font-family);
+}
+
+.uitkMetric {
+  display: inline-flex;
+  white-space: nowrap;
+  line-height: var(--metric-line-height);
+  font-family: var(--metric-font-family);
+  color: var(--metric-text-color);
+}
+
+.uitkMetric-horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.uitkMetric-horizontal > :not(:last-child) {
+  margin-right: var(--metric-horizontal-gap);
+}
+
+.uitkMetric-vertical {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.uitkMetric-vertical > :not(:last-child) {
+  margin-bottom: var(--metric-vertical-gap);
+}
