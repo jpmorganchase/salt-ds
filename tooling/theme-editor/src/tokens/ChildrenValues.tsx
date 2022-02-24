@@ -10,7 +10,7 @@ import "./ChildrenValues.css";
 
 const withBaseName = makePrefixer("uitkChildrenValues");
 
-export const SECTIONED_BY_COLOR_STATE = ["text", "icon", "border"];
+export const SECTIONED_BY_COLOR_STATE = ["text", "icon", "border", "outline"];
 interface ChildrenValuesProps {
   uitkColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;

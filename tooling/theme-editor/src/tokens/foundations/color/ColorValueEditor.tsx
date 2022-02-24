@@ -11,7 +11,14 @@ import {
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { UITK_COLOURS } from "../../../utils/uitkValues";
-import { OpacityField } from "./OpacityField";
+import {
+  ActiveIcon,
+  DisabledIcon,
+  RegularIcon,
+  HoverIcon,
+  ErrorIcon,
+  WarningIcon,
+} from "../../../icons";
 import "./ColorValueEditor.css";
 
 const withBaseName = makePrefixer("uitkColorValueEditor");
@@ -73,8 +80,23 @@ export function isColor(value: string): string {
   return "";
 }
 
-const getAlphaValueToken = (value: string) => {
-  return value.split("*")[1].replace(")", "");
+const StateIcon = (iconInitial: string) => {
+  switch (iconInitial) {
+    case "A":
+      return <ActiveIcon />;
+    case "D":
+      return <DisabledIcon />;
+    case "H":
+      return <HoverIcon />;
+    case "R":
+      return <RegularIcon />;
+    case "E":
+      return <ErrorIcon />;
+    case "W":
+      return <WarningIcon />;
+    default:
+      return iconInitial;
+  }
 };
 
 export const ColorValueEditor = (
@@ -84,7 +106,7 @@ export const ColorValueEditor = (
     undefined
   );
 
-  const formFieldLabel = useMemo(() => {
+  const formFieldLabel: string = useMemo(() => {
     return props.pathToUpdate.includes("fade")
       ? `${capitalize(props.pathToUpdate.split("-")[0]) as string} ${
           props.label
@@ -184,9 +206,12 @@ export const ColorValueEditor = (
                     withBaseName("colorStatesField")
                   )}
                 >
-                  {formFieldLabel !== "Background" && formFieldLabel !== "Color"
-                    ? formFieldLabel[0]
-                    : "R"}
+                  {formFieldLabel !== "Background" &&
+                  formFieldLabel !== "Color" ? (
+                    StateIcon(formFieldLabel[0])
+                  ) : (
+                    <RegularIcon />
+                  )}
                 </div>
               </Tooltip>
             )}
