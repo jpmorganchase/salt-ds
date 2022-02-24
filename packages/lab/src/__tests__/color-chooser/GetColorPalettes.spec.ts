@@ -160,6 +160,7 @@ describe("getColorPalettes", () => {
           "rgb(36, 37, 38)",
           "rgb(22, 22, 22)",
           "rgb(0, 0, 0)",
+          "rgba(0, 0, 0, 0)",
         ],
       ]);
     });
