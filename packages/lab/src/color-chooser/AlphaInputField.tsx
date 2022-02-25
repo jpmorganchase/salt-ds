@@ -30,14 +30,15 @@ export const AlphaInput = ({
     event: React.ChangeEvent<HTMLInputElement>,
     value: string
   ): void => {
-    let alpha: string = showAsOpacity ? value.replace("%", "") : value;
+    value = value.replace("%", "");
+    let alpha: string = value;
 
-    if (value.trim() === "" || Number.isNaN(alpha)) {
+    if (value.trim() === "" || Number.isNaN(value)) {
       alpha = "";
     }
 
     if (showAsOpacity && Number.parseFloat(value)) {
-      value = (parseFloat(value) / 100).toString();
+      alpha = (parseFloat(value) / 100).toString();
     }
 
     if (value.charAt(1) === "." || value.charAt(0) === ".") {
@@ -52,7 +53,9 @@ export const AlphaInput = ({
   ): void => {
     if (e.key === "Enter") {
       const alpha =
-        alphaInputValue.trim() !== "" ? parseFloat(alphaInputValue) : 0;
+        alphaInputValue.trim().replace("%", "") !== ""
+          ? parseFloat(alphaInputValue)
+          : 0;
       const validatedAlpha = Math.max(0, Math.min(alpha, 1));
       setAlphaInputValue(validatedAlpha.toString());
       onSubmit(validatedAlpha);
@@ -78,7 +81,9 @@ export const AlphaInput = ({
       })}
       value={
         showAsOpacity
-          ? (parseFloat(alphaInputValue) * 100).toString() + "%"
+          ? alphaInputValue
+            ? (parseFloat(alphaInputValue) * 100).toString() + "%"
+            : "%"
           : alphaInputValue
       }
       onChange={handleAlphaInputChange}

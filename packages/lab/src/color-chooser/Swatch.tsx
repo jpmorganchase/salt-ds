@@ -72,8 +72,7 @@ export const Swatch = ({
 
   const getBackgroundColor = () => {
     const backgroundColor = Color.makeColorFromHex(color);
-    if (alpha !== 0) return backgroundColor?.setAlpha(alpha).hex;
-    else return backgroundColor?.hex;
+    return backgroundColor?.setAlpha(alpha).hex;
   };
 
   return (
