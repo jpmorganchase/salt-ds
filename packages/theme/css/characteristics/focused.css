@@ -6,10 +6,7 @@
   --uitk-focused-med-emphasis-outline-width: 2px;
   --uitk-focused-med-emphasis-outline-style: dotted;
   --uitk-focused-med-emphasis-outline-offset: 0;
-  --uitk-focused-med-emphasis-outline-top: -1px;
-  --uitk-focused-med-emphasis-outline-right: 0px;
-  --uitk-focused-med-emphasis-outline-bottom: -1px;
-  --uitk-focused-med-emphasis-outline-left: 0px;
+  --uitk-focused-med-emphasis-outline-inset: 0px 0px 0px 0px;
 }
 
 .uitk-light {
@@ -42,15 +39,16 @@
   --uitk-focused-med-emphasis-outline-error: var(--uitk-focused-med-emphasis-outline-color-error) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
 }
 
+/* TODO where do we use the className focused */
+.uitkFocusVisible {
+  outline: none;
+}
 .uitkFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
+  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-med-emphasis-outline-inset));
   position: absolute;
-  top: var(--uitk-focused-med-emphasis-outline-top);
-  left: var(--uitk-focused-med-emphasis-outline-left);
-  right: var(--uitk-focused-med-emphasis-outline-right);
-  bottom: var(--uitk-focused-med-emphasis-outline-bottom);
   outline-style: var(--uitk-focused-med-emphasis-outline-style);
   outline-width: var(--uitk-focused-med-emphasis-outline-width);
   outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
