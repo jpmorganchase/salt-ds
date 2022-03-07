@@ -1,6 +1,8 @@
 .uitk-light,
 .uitk-dark {
   --uitk-navigable-link-text-decoration: underline;
+  --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
+  --uitk-navigable-indicator-color-hover: var(--uitk-grey-90);
 }
 
 .uitk-light {
@@ -8,6 +10,18 @@
   --uitk-navigable-link-color-hover: var(--uitk-blue-500);
   --uitk-navigable-link-color-active: var(--uitk-blue-500);
   --uitk-navigable-link-color-disabled: var(--uitk-grey-900);
+
+  --uitk-navigable-indicator-color: var(--uitk-orange-700);
+  --uitk-navigable-text-color: var(--uitk-grey-400);
+  --uitk-navigable-text-color-active: var(--uitk-grey-900);
+
+  /* these are medium emphasis values */
+  --uitk-navigable-background-hover: var(--uitk-grey-20);
+  --uitk-navigable-border: solid 1px var(--uitk-grey-60);
+
+  /* question, do we want to encode emphasis into the token names like this, or should be use a
+     utility class, say --uitk-emphasis-low, and redefine the same token ?  */
+  --uitk-navigable-low-emphasis-border: solid 1px transparent;
 }
 
 .uitk-dark {
@@ -15,4 +29,12 @@
   --uitk-navigable-link-color-hover: var(--uitk-blue-200);
   --uitk-navigable-link-color-active: var(--uitk-blue-200);
   --uitk-navigable-link-color-disabled: var(--uitk-white);
+
+  --uitk-navigable-indicator-color: var(--uitk-orange-500);
+  --uitk-navigable-text-color: var(--uitk-grey-40);
+  --uitk-navigable-text-color-active: var(--uitk-white);
+
+  /* these are medium emphasis values */
+  --uitk-navigable-background-hover: var(--uitk-grey-600);
+  --uitk-navigable-border: solid 1px var(--uitk-grey-400);
 }
