@@ -1,4 +1,6 @@
 .uitk-light,
 .uitk-dark {
   --uitk-draggable-box-shadow: var(--uitk-shadow-black-4);
+  --uitk-draggable-cursor-hover: grab;
+  --uitk-draggable-cursor-active: grabbing;
 }

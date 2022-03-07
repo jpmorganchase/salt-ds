@@ -1,0 +1,7 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-delay-instant: 100;
+  --uitk-delay-perceptible: 300;
+  --uitk-delay-notable: 1000;
+  --uitk-delay-cutoff: 10000;
+}
