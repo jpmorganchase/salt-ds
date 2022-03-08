@@ -1,42 +1,32 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-focused-low-emphasis-border-width: 2px;
-  --uitk-focused-low-emphasis-border-style: solid;
+  --uitk-focused-line-width: 2px;
 
-  --uitk-focused-med-emphasis-outline-width: 2px;
-  --uitk-focused-med-emphasis-outline-style: dotted;
-  --uitk-focused-med-emphasis-outline-offset: 0;
-  --uitk-focused-med-emphasis-outline-inset: 0px 0px 0px 0px;
+  --uitk-focused-border-style: solid;
+  --uitk-focused-outline-style: dotted;
+
+  --uitk-focused-outline-offset: 0;
+  --uitk-focused-outline-inset: 0px 0px 0px 0px;
 }
 
 .uitk-light {
-  /** TODO: Do we really need the emphasis tokens in here? The difference is that 
-  low emphasis uses a border and high emphasis uses outline. **/
-  --uitk-focused-low-emphasis-color: var(--uitk-blue-500);
-  --uitk-focused-low-emphasis-color-warning: var(--uitk-orange-700);
-  --uitk-focused-low-emphasis-color-error: var(--uitk-red-500);
+  --uitk-focused-color: var(--uitk-blue-500);
+  --uitk-focused-color-warning: var(--uitk-orange-700);
+  --uitk-focused-color-error: var(--uitk-red-500);
 
-  --uitk-focused-med-emphasis-outline-color: var(--uitk-blue-500);
-  --uitk-focused-med-emphasis-outline-color-warning: var(--uitk-orange-700);
-  --uitk-focused-med-emphasis-outline-color-error: var(--uitk-red-500);
-
-  --uitk-focused-med-emphasis-outline-regular: var(--uitk-focused-med-emphasis-outline-color) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
-  --uitk-focused-med-emphasis-outline-warning: var(--uitk-focused-med-emphasis-outline-color-warning) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
-  --uitk-focused-med-emphasis-outline-error: var(--uitk-focused-med-emphasis-outline-color-error) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
+  --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
+  --uitk-focused-outline-warning: var(--uitk-focused-warning) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
+  --uitk-focused-outline-error: var(--uitk-focused-error) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
 }
 
 .uitk-dark {
-  --uitk-focused-low-emphasis-border-color: var(--uitk-blue-400);
-  --uitk-focused-low-emphasis-border-color-warning: var(--uitk-orange-500);
-  --uitk-focused-low-emphasis-border-color-error: var(--uitk-red-400);
+  --uitk-focused-color: var(--uitk-blue-400);
+  --uitk-focused-color-warning: var(--uitk-orange-500);
+  --uitk-focused-color-error: var(--uitk-red-400);
 
-  --uitk-focused-med-emphasis-outline-color: var(--uitk-blue-400);
-  --uitk-focused-med-emphasis-outline-color-warning: var(--uitk-orange-500);
-  --uitk-focused-med-emphasis-outline-color-error: var(--uitk-red-400);
-
-  --uitk-focused-med-emphasis-outline-regular: var(--uitk-focused-med-emphasis-outline-color) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
-  --uitk-focused-med-emphasis-outline-warning: var(--uitk-focused-med-emphasis-outline-color-warning) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
-  --uitk-focused-med-emphasis-outline-error: var(--uitk-focused-med-emphasis-outline-color-error) var(--uitk-focused-med-emphasis-outline-style) var(--uitk-focused-med-emphasis-outline-width);
+  --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
+  --uitk-focused-outline-warning: var(--uitk-focused-warning) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
+  --uitk-focused-outline-error: var(--uitk-focused-error) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
 }
 
 /* TODO where do we use the className focused */
@@ -47,10 +37,10 @@
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
-  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-med-emphasis-outline-inset));
+  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-outline-inset));
   position: absolute;
-  outline-style: var(--uitk-focused-med-emphasis-outline-style);
-  outline-width: var(--uitk-focused-med-emphasis-outline-width);
-  outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
-  outline-color: var(--uitk-focused-med-emphasis-outline-color);
+  outline-style: var(--uitk-focused-line-width);
+  outline-width: var(--uitk-focused-line-width);
+  outline-offset: var(--uitk-focused-outline-offset);
+  outline-color: var(--uitk-focused-color);
 }

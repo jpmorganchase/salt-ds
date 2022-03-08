@@ -207,16 +207,20 @@ var UITK_CHARACTERISTICS = [
   "actionable",
   "container",
   "disabled",
+  "draggable",
+  "droptarget",
   "editable",
-  "focusable",
+  "focused",
   "icon",
   "navigable",
   "overlayable",
   "progress",
+  "ratable",
   "selectable",
-  "separator",
+  "separable",
   "status",
-  "text",
+  "taggable",
+  "text"
 ];
 
 var UITK_FOUNDATIONS = [

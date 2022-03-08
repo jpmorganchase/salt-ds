@@ -2,16 +2,20 @@ export const UITK_CHARACTERISTICS = [
   "actionable",
   "container",
   "disabled",
+  "draggable",
+  "droptarget",
   "editable",
   "focused",
   "icon",
   "navigable",
   "overlayable",
   "progress",
+  "ratable",
   "selectable",
-  "separator",
+  "separable",
   "status",
-  "text",
+  "taggable",
+  "text"
 ];
 
 export const UITK_FOUNDATIONS = [

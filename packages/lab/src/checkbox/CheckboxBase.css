@@ -57,7 +57,7 @@
   width: var(--icon-size);
   height: var(--icon-size);
   background: transparent;
-  outline: var(--uitk-focused-med-emphasis-outline);
+  outline: var(--uitk-focused-outline);
 }
 
 .uitkCheckboxBase-icon {

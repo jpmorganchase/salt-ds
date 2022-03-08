@@ -18,10 +18,10 @@
 
   /* Misc. */
 
-  --list-item-focus-visible-outline-style: var(--uitk-focused-med-emphasis-outline-style);
-  --list-item-focus-visible-outline-width: var(--uitk-focused-med-emphasis-outline-width);
-  --list-item-focus-visible-outline-color: var(--uitk-focused-med-emphasis-outline-color);
-  --list-item-focus-visible-outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
+  --list-item-focus-visible-outline-style: var(--uitk-focused-outline-style);
+  --list-item-focus-visible-outline-width: var(--uitk-focused-outline-width);
+  --list-item-focus-visible-outline-color: var(--uitk-focused-color);
+  --list-item-focus-visible-outline-offset: var(--uitk-focused-outline-offset);
 
   --list-item-gap: 1px;
   --list-item-align-items: center;

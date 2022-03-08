@@ -9,7 +9,7 @@ export type characteristic =
   | "overlayable"
   | "progress"
   | "selectable"
-  | "separator"
+  | "separable"
   | "status"
   | "shadow"
   | "size"

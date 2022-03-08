@@ -1,8 +1,8 @@
 .uitk-light {
-  --appheader-separator: var(--uitk-grey-40);
+  --appheader-separable: var(--uitk-grey-40);
 }
 .uitk-dark {
-  --appheader-separator: var(--uitk-grey-400);
+  --appheader-separable: var(--uitk-grey-400);
 }
 
 .uitkAppHeader {
@@ -61,7 +61,7 @@
   bottom: 0;
   content: "";
   position: absolute;
-  background: var(--appheader-separator);
+  background: var(--appheader-separable);
 }
 
 .uitkAppHeader .uitkLogo:not(.uitkLogo-compact) {

@@ -1,0 +1,37 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-taggable-cursor-hover: grab;
+  --uitk-taggable-cursor-active: pointer;
+}
+
+.uitk-light {
+  --uitk-taggable-background: var(--uitk-grey-40);
+  --uitk-taggable-background-hover: var(--uitk-grey-30);
+  --uitk-taggable-background-active: var(--uitk-grey-200);
+
+  --uitk-taggable-text-color: var(--uitk-grey-900);
+  --uitk-taggable-text-color-hover: var(--uitk-grey-900);
+  --uitk-taggable-text-color-active: var(--uitk-white);
+
+  --uitk-taggable-icon: var(--uitk-grey-300);
+  --uitk-taggable-icon-hover: var(--uitk-grey-300);
+  --uitk-taggable-icon-active: var(--uitk-white);
+
+  --uitk-taggable-stroke: var(--uitk-grey-100);
+}
+
+.uitk-dark {
+  --uitk-taggable-background: var(--uitk-grey-500);
+  --uitk-taggable-background-hover: var(--uitk-grey-200);
+  --uitk-taggable-background-active: var(--uitk-grey-80);
+
+  --uitk-taggable-text-color: var(--uitk-white);
+  --uitk-taggable-text-color-hover: var(--uitk-white);
+  --uitk-taggable-text-color-active: var(--uitk-grey-900);
+
+  --uitk-taggable-icon: var(--uitk-grey-60);
+  --uitk-taggable-icon-hover: var(--uitk-grey-60);
+  --uitk-taggable-icon-active: var(--uitk-grey-900);
+
+  --uitk-taggable-stroke: var(--uitk-grey-80);
+}

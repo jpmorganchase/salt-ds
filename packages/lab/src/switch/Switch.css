@@ -184,7 +184,7 @@
   content: "";
   display: block;
   position: absolute;
-  outline: var(--uitk-focused-med-emphasis-outline);
+  outline: var(--uitk-focused-outline);
   background: transparent;
 
   width: var(--switch-width);

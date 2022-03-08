@@ -11,6 +11,6 @@
 
 .query-result {
   margin-top: 64px;
-  border-top: solid 1px var(--uitk-separator-item-color);
+  border-top: solid 1px var(--uitk-separable-item-color);
   flex-grow: 1;
 }

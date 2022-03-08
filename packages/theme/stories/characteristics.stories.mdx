@@ -155,15 +155,11 @@ Group of components used to contain and separate different types of content and 
 <Canvas>
   <Story name="Focused">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-color" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-style" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-offset" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-width" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-top" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-right" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-bottom" />
-      <ColorBlock colorVar="--uitk-focused-med-emphasis-outline-left" />
+      <ColorBlock colorVar="--uitk-focused-color" />
+      <ColorBlock colorVar="--uitk-focused-outline-style" />
+      <ColorBlock colorVar="--uitk-focused-outline-offset" />
+      <ColorBlock colorVar="--uitk-focused-line-width" />
+      <ColorBlock colorVar="--uitk-focused-outline" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -201,7 +197,7 @@ trigger actions
 
 - `ListItem`
 
-# Separator
+# Separable
 
 Group of attributes to separate information/elements.
 Connected to Container
@@ -211,11 +207,11 @@ Connected to Container
 - S1 (subtle) - when subtle division needed
 
 <Canvas>
-  <Story name="Separator">
+  <Story name="Separable">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-separator-section-color" />
-      <ColorBlock colorVar="--uitk-separator-item-color" />
-      <ColorBlock colorVar="--uitk-separator-subtle-color" />
+      <ColorBlock colorVar="--uitk-separable-section-color" />
+      <ColorBlock colorVar="--uitk-separable-item-color" />
+      <ColorBlock colorVar="--uitk-separable-subtle-color" />
     </DocGrid>
   </Story>
 </Canvas>
