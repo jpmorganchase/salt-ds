@@ -220,7 +220,7 @@ var UITK_CHARACTERISTICS = [
   "separable",
   "status",
   "taggable",
-  "text"
+  "text",
 ];
 
 var UITK_FOUNDATIONS = [

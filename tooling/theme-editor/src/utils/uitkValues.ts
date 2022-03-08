@@ -15,7 +15,7 @@ export const UITK_CHARACTERISTICS = [
   "separable",
   "status",
   "taggable",
-  "text"
+  "text",
 ];
 
 export const UITK_FOUNDATIONS = [
