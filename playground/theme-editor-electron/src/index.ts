@@ -233,17 +233,19 @@ const createWindow = (): void => {
 };
 
 var UITK_CHARACTERISTICS = [
+  "accent",
   "actionable",
   "container",
+  "delay",
   "disabled",
   "draggable",
   "droptarget",
   "editable",
   "focused",
   "icon",
+  "measured",
   "navigable",
   "overlayable",
-  "progress",
   "ratable",
   "selectable",
   "separable",
