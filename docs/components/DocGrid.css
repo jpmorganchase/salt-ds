@@ -9,7 +9,7 @@
 
 .uitkDocGrid {
   align-items: center;
-  background: var(--uitk-container-low-emphasis-background);
+  background: var(--uitk-container-background);
   display: grid;
   gap: var(--uitkDocGrid-gap, var(--doc-grid-gap));
   grid-template-columns: repeat(2, auto);

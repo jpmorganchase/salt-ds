@@ -34,7 +34,11 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
       className={cx(
         withBaseName(),
         {
+          [`uitk-emphasis-${emphasis}`]: emphasis,
           [withBaseName(`${emphasis}Emphasis`)]: emphasis,
+          // Is this how we should default? Doesn't seem right to me. What is the default?
+          [`uitk-emphasis-low`]: !emphasis,
+          [withBaseName(`lowEmphasis`)]: !emphasis,
         },
         className
       )}

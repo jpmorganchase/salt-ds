@@ -2,9 +2,9 @@
 .uitkList-wrapper {
   /* Color */
   /* TODO: Which emphasis should this be? */
-  --list-background: var(--uitk-container-low-emphasis-background);
+  --list-background: var(--uitk-container-background);
   /* Border */
-  --list-border-color: var(--uitk-container-low-emphasis-border-color);
+  --list-border-color: var(--uitk-container-border-color);
   --list-border-style: var(--uitk-container-border-style);
   --list-border-width: var(--uitk-container-border-width);
   --list-border-radius: var(--uitk-container-border-radius);

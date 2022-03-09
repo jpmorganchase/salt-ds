@@ -1,5 +1,5 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-containerable-secondary-background-regular-color);
+  --toolbar-background: var(--uitk-container-background);
   --toolbar-font-size: var(--uitk-typography-size-regular-unit);
   --toolbar-size: var(--uitk-size-toolbar-unit);
   /* --uitk-activation-indicator-size: 0; */

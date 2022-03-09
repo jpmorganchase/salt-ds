@@ -1,38 +1,48 @@
+.uitk-light {
+  --uitk-container-background-low-emphasis: transparent;
+  --uitk-container-border-color-low-emphasis: transparent;
+  --uitk-container-background-medium-emphasis: var(--uitk-white);
+  --uitk-container-border-color-medium-emphasis: var(--uitk-grey-60);
+  --uitk-container-background-high-emphasis: var(--uitk-grey-20);
+  --uitk-container-border-color-high-emphasis: transparent;
+  /* Below not in Figma */
+  --uitk-container-border-color-disabled-low-emphasis: var(--uitk-grey-60-fade-40);
+  --uitk-container-background-disabled-medium-emphasis: var(--uitk-grey-20-fade-40);
+}
+
+.uitk-dark {
+  --uitk-container-background-low-emphasis: transparent;
+  --uitk-container-border-color-low-emphasis: transparent;
+  --uitk-container-background-medium-emphasis: var(--uitk-grey-800);
+  --uitk-container-border-color-medium-emphasis: var(--uitk-grey-400);
+  --uitk-container-background-high-emphasis: var(--uitk-grey-600);
+  --uitk-container-border-color-high-emphasis: transparent;
+  /* Below not in Figma */
+  --uitk-container-border-color-disabled: var(--uitk-grey-400-fade-40);
+  --uitk-container-background-disabled: var(--uitk-grey-600-fade-40);
+}
+
 .uitk-light,
 .uitk-dark {
   --uitk-container-border-width: 1px;
   --uitk-container-border-style: solid;
-
-  /* below not in Figma */
+  /* Below not in Figma */
   --uitk-container-border-radius: 0;
 }
 
-.uitk-light {
-  --uitk-container-low-emphasis-background: transparent;
-  --uitk-container-low-emphasis-border-color: transparent;
-
-  --uitk-container-med-emphasis-background: var(--uitk-white);
-  --uitk-container-med-emphasis-background: var(--uitk-grey-60);
-
-  --uitk-container-high-emphasis-background: var(--uitk-grey-20);
-  --uitk-container-high-emphasis-background: transparent;
-
-  /* Below not in Figma */
-  --uitk-container-low-emphasis-border-color-disabled: var(--uitk-grey-60-fade-40);
-  --uitk-container-med-emphasis-background-disabled: var(--uitk-grey-20-fade-40);
+.uitk-emphasis-low {
+  --uitk-container-background: var(--uitk-container-background-low-emphasis);
+  --uitk-container-border-color: var(--uitk-container-border-color-low-emphasis);
+  --uitk-container-border-color-disabled: var(--uitk-container-border-color-disabled-low-emphasis);
 }
 
-.uitk-dark {
-  --uitk-container-low-emphasis-background: transparent;
-  --uitk-container-low-emphasis-border-color: transparent;
+.uitk-emphasis-medium {
+  --uitk-container-background: var(--uitk-container-background-medium-emphasis);
+  --uitk-container-border-color: var(--uitk-container-border-color-medium-emphasis);
+  --uitk-container-border-color-disabled: var(--uitk-container-border-color-disabled-medium-emphasis);
+}
 
-  --uitk-container-med-emphasis-background: var(--uitk-grey-800);
-  --uitk-container-med-emphasis-background: var(--uitk-grey-400);
-
-  --uitk-container-high-emphasis-background: var(--uitk-grey-600);
-  --uitk-container-high-emphasis-background: transparent;
-
-  /* Below not in Figma */
-  --uitk-container-low-emphasis-border-color-disabled: var(--uitk-grey-400-fade-40);
-  --uitk-container-med-emphasis-background-disabled: var(--uitk-grey-600-fade-40);
+.uitk-emphasis-high {
+  --uitk-container-background: var(--uitk-container-background-high-emphasis);
+  --uitk-container-border-color: var(--uitk-container-border-color-high-emphasis);
 }

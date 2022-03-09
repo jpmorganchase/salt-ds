@@ -19,7 +19,7 @@
   Color naming convention
   - Prefix with --uitk
   - Characteristics name, e.g. -actionable
-  - The 'variant' or 'emphasis', e.g. -primary, -low-emphasis
+  - The 'variant', e.g. -primary,
   - The 'property' to apply on, e.g. -text, -background
   - The 'category', e.g. -color (omitted for -background property)
   - The 'state', e.g. -regular, -hover, -active, -disabled. Mapped to CSS Dynamic pseudo-classes

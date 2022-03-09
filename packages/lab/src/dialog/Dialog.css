@@ -4,13 +4,13 @@
 }
 
 .uitk-light .uitkDialog {
-  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-container-low-emphasis-border-color));
+  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-container-border-color));
   --dialog-box-shadow: var(--uitkDialog-box-shadow, rgba(0, 0, 0, 0.3) 0 12px 40px 5px);
 }
 
 .uitkDialog {
   /* TODO: Which emphasis should this be? */
-  --dialog-background-color: var(--uitkDialog-background-color, var(--uitk-container-low-emphasis-background));
+  --dialog-background-color: var(--uitkDialog-background-color, var(--uitk-container-background));
   --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-border-width));
   --dialog-border-bottom-width: var(--uitkDialog-border-bottom-width, 2px);
   --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-typography-font-family));

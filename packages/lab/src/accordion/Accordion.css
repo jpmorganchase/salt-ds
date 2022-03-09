@@ -40,8 +40,7 @@
   --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable-unit));
   --summary-font-weight: var(--uitkAccordionSummary-font-weight, var(--uitk-typography-weight-regular));
 
-  /* TODO: Which emphasis should this be ? */
-  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-low-emphasis-background));
+  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background));
   --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background));
   --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background));
   --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));

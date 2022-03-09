@@ -87,5 +87,5 @@
   width: 4px !important;
   height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
   border: 1px solid var(--uitk-black);
-  background: var(--uitk-container-low-emphasis-background) !important;
+  background: var(--uitk-container-background) !important;
 }
