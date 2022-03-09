@@ -11,7 +11,7 @@
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
   --appheader-border-bottom-width: 1px;
   --uitk-toolbar-width: auto;
-  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-black-2));
+  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-2));
   --tabstrip-align-self: flex-end;
   --appheader-padding: calc(var(--uitk-spacing-unit) * 3);
   --appheader-padding-left: 8px;

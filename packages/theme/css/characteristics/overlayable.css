@@ -1,9 +1,9 @@
 /* TODO: Each layer needs z-index */
 .uitk-light,
 .uitk-dark {
-  --uitk-overlayable-layout-box-shadow: var(--uitk-shadow-black-2);
-  --uitk-overlayable-interaction-box-shadow: var(--uitk-shadow-black-4);
-  --uitk-overlayable-feedback-box-shadow: var(--uitk-shadow-black-6);
+  --uitk-overlayable-layout-box-shadow: var(--uitk-shadow-2);
+  --uitk-overlayable-interaction-box-shadow: var(--uitk-shadow-4);
+  --uitk-overlayable-feedback-box-shadow: var(--uitk-shadow-6);
 }
 
 .uitk-light {

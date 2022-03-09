@@ -11,7 +11,7 @@
   align-items: stretch;
   background-color: var(--overflow-menu-background-color);
   border: 1px solid var(--uitk-blue-500);
-  box-shadow: var(--uitk-shadow-black-4);
+  box-shadow: var(--uitk-shadow-4);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

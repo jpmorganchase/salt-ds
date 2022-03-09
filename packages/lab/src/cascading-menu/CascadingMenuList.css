@@ -6,7 +6,7 @@
 
 .uitkCascadingMenuList-popper {
   --list-box-content: content-box;
-  --list-box-shadow: var(--uitk-shadow-black-4);
+  --list-box-shadow: var(--uitk-shadow-4);
 }
 
 .uitkCascadingMenuList {
