@@ -131,7 +131,7 @@
 
 .uitkTooltip-info {
   --tooltip-status-color: var(--uitk-status-info-color);
-  box-shadow: var(--uitk-shadow-black-4);
+  box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
   --tooltip-status-color: var(--uitk-status-error-color);
