@@ -3,5 +3,5 @@
   height: var(--uitk-size-regular-unit);
   justify-self: end;
 
-  background: var(--uitk-container-med-emphasis-background);
+  background: var(--uitk-container-background);
 }

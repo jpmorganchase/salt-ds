@@ -28,7 +28,7 @@
 
 .uitkSlider {
   --rail-height: var(--uitkSlider-rail-height, 8px);
-  --rail-color: var(--uitkSlider-rail-color, var(--uitk-container-low-emphasis-border-color));
+  --rail-color: var(--uitkSlider-rail-color, var(--uitk-container-border-color));
 
   --rail-mark-height: var(--uitkSlider-rail-mark-height, 7px);
   --rail-mark-color: var(--uitkSlider-rail-mark-color, var(--rail-color));

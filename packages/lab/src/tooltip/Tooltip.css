@@ -15,8 +15,7 @@
 }
 
 .uitkTooltip {
-  /* TODO: Which emphasis should this be? */
-  --tooltip-background: var(--uitk-container-low-emphasis-background);
+  --tooltip-background: var(--uitk-container-background);
   --tooltip-font-size: var(--uitk-typography-size-regular-unit);
   --tooltip-color: var(--uitk-text-primary-color);
   --tooltip-padding: var(--uitk-spacing-unit);

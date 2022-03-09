@@ -78,7 +78,7 @@
 }
 
 .uitkQueryInputValueList {
-  border: solid 1px var(--uitk-containerable-border-regular-color);
+  border: solid 1px var(--uitk-container-border-color);
 }
 
 .uitkQueryInputValueList-back {

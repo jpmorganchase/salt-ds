@@ -1,7 +1,6 @@
 .uitkCascadingMenuList-popper {
-  --uitk-container-low-emphasis-border-color: var(--uitk-blue-500);
-  /* TODO: Which emphasis should this be? */
-  background: var(--uitk-container-low-emphasis-background);
+  --uitk-container-border-color: var(--uitk-blue-500);
+  background: var(--uitk-container-background);
 }
 
 .uitkCascadingMenuList-popper {

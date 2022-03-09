@@ -6,8 +6,7 @@
 }
 
 .uitkAppHeader {
-  --appheader-background: var(--uitk-containerable-primary-background-regular-color);
-
+  --appheader-background: var(--uitk-container-background);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
   --appheader-border-bottom-width: 1px;
   --uitk-toolbar-width: auto;

@@ -5,8 +5,8 @@
   --overlay-spacing: var(--uitk-spacing-unit);
   --overlay-font-size: var(--uitk-typography-size-regular-unit);
   /* TODO: Which emphasis should this be? */
-  --overlay-background-color: var(--uitk-container-low-emphasis-background);
-  --overlay-border-color: var(--uitk-container-low-emphasis-border-color);
+  --overlay-background-color: var(--uitk-container-background);
+  --overlay-border-color: var(--uitk-container-border-color);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
 

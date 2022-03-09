@@ -75,7 +75,7 @@
 .withinTile-tile {
   width: 320px;
   padding: var(--uitk-spacing-unit);
-  border: solid 1px var(--uitk-container-low-emphasis-border-color);
+  border: solid 1px var(--uitk-container-border-color);
 }
 
 .withinOverlay {
