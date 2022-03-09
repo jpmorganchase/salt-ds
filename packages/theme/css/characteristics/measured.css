@@ -1,0 +1,31 @@
+.uitk-light {
+  --uitk-measured-font-size-small: var(--uitk-typography-size-40);
+  --uitk-measured-font-size-medium: var(--uitk-typography-size-60);
+  --uitk-measured-font-size-large: var(--uitk-typography-size-70);
+
+  --uitk-measured-low-emphasis-font-size: 11px;
+  --uitk-measured-med-emphasis-font-size: 14px;
+  --uitk-measured-high-emphasis-font-size: 16px;
+}
+
+.uitk-light {
+  --uitk-measured-text-color: var(--uitk-grey-100);
+  --uitk-measured-color-active-start: var(--uitk-teal-500);
+  --uitk-measured-color-active-end: var(--uitk-blue-500);
+  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
+
+  --uitk-measured-low-emphasis-track-color: var(--uitk-grey-40);
+  --uitk-measured-med-emphasis-track-color: var(--uitk-grey-70);
+  --uitk-measured-high-emphasis-track-color: var(--uitk-grey-90);
+}
+
+.uitk-dark {
+  --uitk-measured-text-color: var(--uitk-grey-90);
+  --uitk-measured-color-active-start: var(--uitk-teal-300);
+  --uitk-measured-color-active-end: var(--uitk-blue-300);
+  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
+
+  --uitk-measured-low-emphasis-track-color: var(--uitk-grey-500);
+  --uitk-measured-med-emphasis-track-color: var(--uitk-grey-300);
+  --uitk-measured-high-emphasis-track-color: var(--uitk-grey-100);
+}
