@@ -11,12 +11,14 @@
   --uitk-status-warning-color: var(--uitk-orange-700);
   --uitk-status-error-color: var(--uitk-red-500);
 
-  --uitk-status-low-emphasis-background: var(--uitk-white);
+  /* Need to consider how components are using emphasis for this characteristic and improve tokens accordingly */
+  --uitk-status-low-emphasis-background: transparent;
+  --uitk-status-med-emphasis-background: var(--uitk-white);
 
-  --uitk-status-info-med-emphasis-background: var(--uitk-blue-10);
-  --uitk-status-success-med-emphasis-background: var(--uitk-green-10);
-  --uitk-status-warning-med-emphasis-background: var(--uitk-orange-10);
-  --uitk-status-error-med-emphasis-background: var(--uitk-red-10);
+  --uitk-status-info-high-emphasis-background: var(--uitk-blue-10);
+  --uitk-status-success-high-emphasis-background: var(--uitk-green-10);
+  --uitk-status-warning-high-emphasis-background: var(--uitk-orange-10);
+  --uitk-status-error-high-emphasis-background: var(--uitk-red-10);
 }
 
 .uitk-dark {
@@ -25,14 +27,11 @@
   --uitk-status-warning-color: var(--uitk-orange-500);
   --uitk-status-error-color: var(--uitk-red-400);
 
-  --uitk-status-low-emphasis-background: var(--uitk-grey-800);
+  --uitk-status-low-emphasis-background: transparent;
+  --uitk-status-med-emphasis-background: var(--uitk-grey-800);
 
-  /** 
-   TODO: These are completely different values v.s. the light theme color tokens -
-   decide if we want to change to using the same but with different opacity 
-   **/
-  --uitk-status-info-med-emphasis-background: var(--uitk-blue-1000);
-  --uitk-status-success-med-emphasis-background: var(--uitk-green-1000);
-  --uitk-status-warning-med-emphasis-background: var(--uitk-orange-1000);
-  --uitk-status-error-med-emphasis-background: var(--uitk-red-1000);
+  --uitk-status-info-high-emphasis-background: var(--uitk-blue-1000);
+  --uitk-status-success-high-emphasis-background: var(--uitk-green-1000);
+  --uitk-status-warning-high-emphasis-background: var(--uitk-orange-1000);
+  --uitk-status-error-high-emphasis-background: var(--uitk-red-1000);
 }

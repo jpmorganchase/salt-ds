@@ -1,26 +1,26 @@
 .uitkLinearProgress {
   align-items: center;
-  color: var(--uitk-progress-color);
+  color: var(--uitk-measured-text-color);
   display: flex;
   min-width: 200px;
 }
 
 .uitkLinearProgress-large {
-  font-size: var(--uitk-progress-large-font-size);
+  font-size: var(--uitk-measured-font-size-large);
   --linear-progress-after-top: 3px;
   --linear-progress-value-padding-left: 12px;
   --linear-progress-height: 7px;
 }
 
 .uitkLinearProgress-medium {
-  font-size: var(--uitk-progress-medium-font-size);
+  font-size: var(--uitk-measured-font-size-medium);
   --linear-progress-after-top: 2px;
   --linear-progress-value-padding-left: 8px;
   --linear-progress-height: 5px;
 }
 
 .uitkLinearProgress-small {
-  font-size: var(--uitk-progress-small-font-size);
+  font-size: var(--uitk-measured-font-size-small);
   --linear-progress-after-top: 1px;
   --linear-progress-value-padding-left: 4px;
   --linear-progress-height: 3px;
@@ -50,7 +50,7 @@
 /* Horizontal line under the progress indicator bar */
 .uitkLinearProgress-barContainer:after {
   top: var(--linear-progress-after-top);
-  background: var(--uitk-progress-track-color);
+  background: var(--uitk-measured-med-emphasis-track-color);
   content: "";
   display: block;
   height: 1px;
@@ -77,7 +77,7 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--uitk-progress-color-active);
+  background: var(--uitk-measured-text-color-active);
   z-index: 2;
 }
 
