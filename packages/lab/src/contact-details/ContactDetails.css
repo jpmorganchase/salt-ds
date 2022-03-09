@@ -320,7 +320,7 @@
 }
 
 .uitkContactFavoriteToggle-focused {
-  outline: var(--uitk-focused-med-emphasis-outline);
+  outline: var(--uitk-focused-outline);
 }
 
 .uitkContactFavoriteToggle-deselected {

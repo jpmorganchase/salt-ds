@@ -1,0 +1,29 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-ratable-cursor-hover: grab;
+  --uitk-ratable-cursor-active: pointer;
+}
+
+.uitk-light {
+  --uitk-ratable-background: transparent;
+  --uitk-ratable-background-hover: var(--uitk-orange-700);
+  --uitk-ratable-background-active: var(--uitk-orange-700);
+  --uitk-ratable-background-undo: transparent;
+
+  --uitk-ratable-border: var(--uitk-grey-90);
+  --uitk-ratable-border-hover: transparent;
+  --uitk-ratable-border-active: transparent;
+  --uitk-ratable-border-undo: var(--uitk-orange-700);
+}
+
+.uitk-dark {
+  --uitk-ratable-background: transparent;
+  --uitk-ratable-background-hover: var(--uitk-orange-500);
+  --uitk-ratable-background-active: var(--uitk-orange-500);
+  --uitk-ratable-background-undo: transparent;
+
+  --uitk-ratable-border: var(--uitk-grey-100);
+  --uitk-ratable-border-hover: transparent;
+  --uitk-ratable-border-active: transparent;
+  --uitk-ratable-border-undo: var(--uitk-orange-500);
+}

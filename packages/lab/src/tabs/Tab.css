@@ -184,11 +184,11 @@
   bottom: 2px;
   /* border: dotted cornflowerblue 2px;
    */
-  outline-style: var(--uitk-focused-med-emphasis-outline-style);
-  outline-width: var(--uitk-focused-med-emphasis-outline-width);
+  outline-style: var(--uitk-focused-outline-style);
+  outline-width: var(--uitk-focused-outline-width);
   outline-offset: -2px;
-  /* outline-offset: var(--uitk-focused-med-emphasis-outline-offset); */
-  outline-color: var(--uitk-focused-med-emphasis-outline-color);
+  /* outline-offset: var(--uitk-focused-outline-offset); */
+  outline-color: var(--uitk-focused-color);
 }
 
 .uitkTab-vertical.uitkTab-editing:after {

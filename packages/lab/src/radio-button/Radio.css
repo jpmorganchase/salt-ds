@@ -41,6 +41,6 @@
 }
 
 .uitkRadio-focusVisible {
-  outline: var(--uitk-focused-med-emphasis-outline);
-  outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
+  outline: var(--uitk-focused-outline);
+  outline-offset: var(--uitk-focused-outline-offset);
 }

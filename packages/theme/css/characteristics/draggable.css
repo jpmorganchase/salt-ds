@@ -1,6 +1,28 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-draggable-box-shadow: var(--uitk-shadow-black-4);
   --uitk-draggable-cursor-hover: grab;
   --uitk-draggable-cursor-active: grabbing;
+
+  /* not in figma */
+  --uitk-draggable-box-shadow: var(--uitk-shadow-black-4);
+}
+
+.uitk-light {
+  --uitk-draggable-background: var(--uitk-grey-60);
+  --uitk-draggable-background-hover: var(--uitk-grey-40);
+  --uitk-draggable-background-active: var(--uitk-blue-500);
+
+  --uitk-draggable-icon: var(--uitk-grey-900);
+  --uitk-draggable-icon-hover: var(--uitk-grey-900);
+  --uitk-draggable-icon-active: var(--uitk-white);
+}
+
+.uitk-dark {
+  --uitk-draggable-background: var(--uitk-grey-500);
+  --uitk-draggable-background-hover: var(--uitk-grey-200);
+  --uitk-draggable-background-active: var(--uitk-blue-500);
+
+  --uitk-draggable-icon: var(--uitk-white);
+  --uitk-draggable-icon-hover: var(--uitk-white);
+  --uitk-draggable-icon-active: var(--uitk-white);
 }

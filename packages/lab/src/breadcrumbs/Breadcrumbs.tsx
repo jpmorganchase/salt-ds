@@ -8,10 +8,10 @@ import warning from "warning";
 import classnames from "classnames";
 import { makePrefixer, IconProps } from "@brandname/core";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
-import "./Breadcrumbs.css";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { BreadcrumbProps } from "./Breadcrumb";
+import "./Breadcrumbs.css";
 
 const iconWidth = 12;
 

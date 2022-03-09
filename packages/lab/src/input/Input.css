@@ -24,7 +24,7 @@
   --input-disabled-cursor: var(--uitk-disabled-cursor);
   --input-disabled-opacity: var(--uitk-disabled-text-opacity);
 
-  --input-focused-outline: var(--uitk-focused-med-emphasis-outline);
+  --input-focused-outline: var(--uitk-focused-outline);
 
   --input-selection-background: var(--uitk-editable-selection-background);
 }

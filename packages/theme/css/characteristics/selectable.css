@@ -1,20 +1,72 @@
 .uitk-light,
 .uitk-dark {
+  --uitk-selectable-cursor-hover: pointer;
+  --uitk-selectable-cursor-active: pointer;
+
+  /* Not in Figma */
   --uitk-selectable-default-text-align: left;
-  --uitk-selectable-background-active: var(--uitk-blue-500);
-  --uitk-selectable-text-color-active: var(--uitk-white);
 }
 
 .uitk-light {
   --uitk-selectable-text-color: var(--uitk-grey-900);
+  --uitk-selectable-text-color-hover: var(--uitk-grey-900);
+  --uitk-selectable-text-color-active: var(--uitk-white);
+  --uitk-selectable-text-color-blur-active: var(--uitk-grey-900);
+
+  --uitk-selectable-icon-color: var(--uitk-grey-300);
+  --uitk-selectable-icon-color-hover: var(--uitk-grey-300);
+  --uitk-selectable-icon-color-active: var(--uitk-white);
+  --uitk-selectable-icon-color-blur-active: var(--uitk-grey-300);
+
   --uitk-selectable-background: var(--uitk-white);
   --uitk-selectable-background-hover: var(--uitk-blue-30);
+  --uitk-selectable-background-active: var(--uitk-blue-500);
   --uitk-selectable-background-blur-active: var(--uitk-grey-30);
+
+  --uitk-selectable-border: solid 1px var(--uitk-grey-400);
+  --uitk-selectable-border-hover: solid 1px var(--uitk-blue-500);
+  --uitk-selectable-border-active: solid 1px var(--uitk-blue-500);
+  --uitk-selectable-border-blur-active: solid 1px transparent;
+
+  --uitk-selectable-stroke: var(--uitk-grey-90);
+  --uitk-selectable-stroke-selecting: var(--uitk-blue-500);
+  --uitk-selectable-stroke-selected: transparent;
+  --uitk-selectable-stroke-partial: var(--uitk-grey-90);
+
+  --uitk-selectable-fill: transparent;
+  --uitk-selectable-fill-selecting: transparent;
+  --uitk-selectable-fill-selected: var(--uitk-blue-500);
+  --uitk-selectable-fill-partial: var(--uitk-blue-500);
 }
 
 .uitk-dark {
   --uitk-selectable-text-color: var(--uitk-white);
+  --uitk-selectable-text-color-hover: var(--uitk-white);
+  --uitk-selectable-text-color-active: var(--uitk-white);
+  --uitk-selectable-text-color-blur-active: var(--uitk-white);
+
+  --uitk-selectable-icon-color: var(--uitk-white);
+  --uitk-selectable-icon-color-hover: var(--uitk-white);
+  --uitk-selectable-icon-color-active: var(--uitk-white);
+  --uitk-selectable-icon-color-blur-active: var(--uitk-white);
+
   --uitk-selectable-background: var(--uitk-grey-800);
-  --uitk-selectable-background-hover: var(--uitk-blue-30);
+  --uitk-selectable-background-hover: var(--uitk-blue-900); /* TODO: Check value */
+  --uitk-selectable-background-active: var(--uitk-blue-700);
   --uitk-selectable-background-blur-active: var(--uitk-grey-500);
+
+  --uitk-selectable-border: solid 1px var(--uitk-grey-70);
+  --uitk-selectable-border-hover: solid 1px var(--uitk-blue-400);
+  --uitk-selectable-border-active: solid 1px var(--uitk-blue-400);
+  --uitk-selectable-border-blur-active: solid 1px transparent;
+
+  --uitk-selectable-stroke: var(--uitk-grey-100);
+  --uitk-selectable-stroke-selecting: var(--uitk-blue-400);
+  --uitk-selectable-stroke-selected: transparent;
+  --uitk-selectable-stroke-partial: var(--uitk-grey-100);
+
+  --uitk-selectable-fill: transparent;
+  --uitk-selectable-fill-selecting: transparent;
+  --uitk-selectable-fill-selected: var(--uitk-blue-400);
+  --uitk-selectable-fill-partial: var(--uitk-blue-400);
 }

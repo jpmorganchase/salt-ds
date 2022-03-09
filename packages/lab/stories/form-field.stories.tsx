@@ -463,7 +463,7 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
   >
     <style>{`
       .carbon{
-        --uitk-focused-med-emphasis-outline-style: none;
+        --uitk-focused-outline-style: none;
         --helper-text-font-style: normal;
       }
       .carbon .uitkFormField-focused {

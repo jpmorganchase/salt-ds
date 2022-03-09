@@ -1,10 +1,10 @@
 /* Style applied to the root element */
 .uitkButton {
   --button-font-weight: var(--uitkButton-font-weight, var(--uitk-actionable-font-weight));
-  --button-focus-outline-style: var(--uitk-focused-med-emphasis-outline-style);
-  --button-focus-outline-width: var(--uitk-focused-med-emphasis-outline-width);
-  --button-focus-outline-color: var(--uitk-focused-med-emphasis-outline-color);
-  --button-focus-outline-offset: var(--uitk-focused-med-emphasis-outline-offset);
+  --button-focus-outline-style: var(--uitk-focused-outline-style);
+  --button-focus-outline-width: var(--uitk-focused-line-width);
+  --button-focus-outline-color: var(--uitk-focused-color);
+  --button-focus-outline-offset: var(--uitk-focused-outline-offset);
   --uitkIcon-letter-spacing: 0;
 }
 

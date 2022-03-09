@@ -37,10 +37,10 @@
   --selection-color: var(--uitkSlider-selection-color, var(--uitk-status-info-color));
 
   --handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-regular-unit) * 0.5));
-  --handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-med-emphasis-outline-style));
-  --handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-med-emphasis-outline-width));
-  --handle-outline-color: var(--uitkSlider-handle-outline-color, var(--uitk-focused-med-emphasis-outline-color));
-  --handle-outline-offset: var(--uitkSlider-handle-outline-offset, var(--uitk-focused-med-emphasis-outline-offset));
+  --handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-outline-style));
+  --handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-outline-width));
+  --handle-outline-color: var(--uitkSlider-handle-outline-color, var(--uitk-focused-color));
+  --handle-outline-offset: var(--uitkSlider-handle-outline-offset, var(--uitk-focused-outline-offset));
 
   --arrow-height: var(--uitkSlider-arrow-height, 6px);
   --arrow-width: var(--uitkSlider-arrow-width, 8px);
