@@ -6,6 +6,7 @@ import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
 import { MountOptions, MountReturn } from "@cypress/react/dist/mount";
 import { ToolkitProvider } from "@brandname/core";
+import { AnnouncementListener } from "./AnnouncementListener";
 
 const SupportedThemeValues = ["light", "dark"] as const;
 type SupportedTheme = typeof SupportedThemeValues[number];
@@ -92,17 +93,24 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add("mount", function (children, options) {
+  const handleAnnouncement = (announcement: string) => {
+    // @ts-ignore
+    cy.state("announcement", announcement);
+  };
+
   return cypressMount(
     <ToolkitProvider density={this.density} theme={this.theme}>
       {children}
+      <AnnouncementListener onAnnouncement={handleAnnouncement} />
     </ToolkitProvider>,
     options
   );
 });
 
 Cypress.Commands.add("mountPerformance", function (children, options) {
-  const handleRender = async (result: PerformanceResult) => {
-    this.performanceResult = result;
+  const handleRender = (result: PerformanceResult) => {
+    // @ts-ignore
+    cy.state("performanceResult", result);
   };
 
   return cy.mount(
@@ -112,13 +120,13 @@ Cypress.Commands.add("mountPerformance", function (children, options) {
 });
 
 Cypress.Commands.add("getRenderTime", function () {
-  return cy.wrap(this?.performanceResult?.renderTime as number, { log: false });
+  // @ts-ignore
+  return cy.state("performanceResult").renderTime;
 });
 
 Cypress.Commands.add("getRenderCount", function () {
-  return cy.wrap(this?.performanceResult?.renderCount as number, {
-    log: false,
-  });
+  // @ts-ignore
+  return cy.state("performanceResult").renderCount;
 });
 
 // Workaround for an issue in Cypress, where ResizeObserver fails with the message
