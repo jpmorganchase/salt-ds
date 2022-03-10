@@ -29,7 +29,7 @@
 
   border: 1px solid var(--overlay-border-color);
   position: relative;
-  box-shadow: var(--uitk-overlayable-interaction-box-shadow);
+  box-shadow: var(--uitk-overlayable-elevation-4);
   line-height: var(--uitk-typography-line-height);
   background: var(--overlay-background-color);
   color: var(--overlay-text-color);

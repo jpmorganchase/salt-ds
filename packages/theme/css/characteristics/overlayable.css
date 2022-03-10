@@ -1,23 +1,30 @@
-/* TODO: Each layer needs z-index */
 .uitk-light,
 .uitk-dark {
-  --uitk-overlayable-layout-box-shadow: var(--uitk-shadow-2);
-  --uitk-overlayable-interaction-box-shadow: var(--uitk-shadow-4);
-  --uitk-overlayable-feedback-box-shadow: var(--uitk-shadow-6);
+  --uitk-overlayable-elevation-0: var(--uitk-shadow-0);
+  --uitk-overlayable-elevation-1: var(--uitk-shadow-1);
+  --uitk-overlayable-elevation-2: var(--uitk-shadow-2);
+  --uitk-overlayable-elevation-3: var(--uitk-shadow-3);
+  --uitk-overlayable-elevation-4: var(--uitk-shadow-4);
+  --uitk-overlayable-elevation-5: var(--uitk-shadow-5);
+  --uitk-overlayable-elevation-6: var(--uitk-shadow-6);
 }
 
 .uitk-light {
-  /* TODO: Design, scrim bgs should be in overlayable or containable. */
-  /* Black fade 80 */
-  --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.8);
-  /* TODO: Design, this is called scrim 'light' (not secondary) in Figma */
-  /* White fade 80. */
-  --uitk-overlayable-feedback-scrim-secondary-background: rgba(255, 255, 255, 0.8);
+  /* White fade 80 */
+  --uitk-overlayable-scrim-background: rgba(255, 255, 255, 0.8);
 }
 
 .uitk-dark {
+  /* Grey 800 fade 80 */
+  --uitk-overlayable-scrim-background: rgba(36, 37, 38, 0.8);
+}
+
+.uitk-light .uitkEmphasisHigh {
+  /* Black fade 80 */
+  --uitk-overlayable-scrim: rgba(0, 0, 0, 0.8);
+}
+
+.uitk-dark .uitkEmphasisHigh {
   /* Black fade 70 */
   --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.7);
-  /* Grey 800 fade 80 */
-  --uitk-overlayable-feedback-scrim-secondary-background: rgba(36, 37, 38, 0.8);
 }

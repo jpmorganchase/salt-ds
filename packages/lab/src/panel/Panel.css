@@ -3,8 +3,8 @@
   /* should the default height for Panel really be 100%, I would have thought auto */
   --panel-height: var(--uitkPanel-height, 100%);
   --panel-padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
-  --panel-background-low-emphasis: var(--uitkPanel-background-primary, var(--uitk-container-background));
-  --panel-background-medium-emphasis: var(--uitkPanel-background-secondary, var(--uitk-container-background));
+  --panel-background-medium-emphasis: var(--uitkPanel-background-medium-emphasis, var(--uitk-container-background));
+  --panel-background-high-emphasis: var(--uitkPanel-background-high-emphasis, var(--uitk-container-background));
   --panel-color-primary: var(--uitkPanel-color-primary, var(--uitk-text-primary-color));
   --panel-color-secondary: var(--uitkPanel-color-secondary, var(--uitk-text-secondary-color));
 }
@@ -15,14 +15,13 @@
   overflow: auto;
   box-sizing: border-box;
   padding: var(--panel-padding);
-}
 
-.uitkPanel-lowEmphasis {
-  background: var(--panel-background-low-emphasis);
+  /* Default medium emphasis values */
+  background: var(--panel-background-medium-emphasis);
   color: var(--panel-color-primary);
 }
 
-.uitkPanel-mediumEmphasis {
-  background: var(--panel-background-medium-emphasis);
+.uitkEmphasisHigh {
+  background: var(--panel-background-high-emphasis);
   color: var(--panel-color-secondary);
 }

@@ -25,7 +25,7 @@
   background: var(--tooltip-background);
   box-sizing: border-box;
   border: 1px solid var(--tooltip-status-color);
-  box-shadow: var(--uitk-overlayable-interaction-box-shadow);
+  box-shadow: var(--uitk-overlayable-elevation-4);
   color: var(--tooltip-color);
   font-size: var(--tooltip-font-size);
   line-height: var(--uitk-typography-line-height);
