@@ -71,7 +71,7 @@
 }
 
 .uitkFormField-filled {
-  --form-field-background: var(--uitk-editable-high-emphasis-background);
+  --form-field-background: var(--uitk-editable-background);
 }
 
 .uitkFormField-filled.uitkFormField-error {
@@ -83,7 +83,7 @@
 }
 
 .uitkFormField-transparent {
-  --form-field-background: var(--uitk-editable-low-emphasis-background);
+  --form-field-background: var(--uitk-editable-background);
 }
 
 .uitkFormField.uitkFormField-warning {
