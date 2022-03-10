@@ -17,7 +17,6 @@ import { Tooltip, TooltipProps } from "../tooltip";
 import { useDensity, makePrefixer } from "@brandname/core";
 
 import "./Text.css";
-import { timeStamp } from "console";
 
 const withBaseName = makePrefixer("uitkText");
 
@@ -116,7 +115,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         debounce(() => {
           entries.forEach((entry) => {
             setIsVisible(entry.isIntersecting);
-            console.log("scroll", contentRef.current);
           });
         });
       },
@@ -145,7 +143,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         for (const entry of entries) {
           const { width, height } = entry.contentRect;
           setResize({ width, height });
-          console.log("resize", contentRef.current);
         }
       });
     });
