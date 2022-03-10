@@ -1,0 +1,115 @@
+.uitk-density-high .uitkListNew {
+  --list-item-height: 24px;
+}
+
+.uitk-density-medium .uitkListNew {
+  --list-item-height: 36px;
+}
+
+.uitk-density-low .uitkListNew {
+  --list-item-height: 48px;
+}
+
+.uitk-density-touch .uitkListNew {
+  --list-item-height: 60px;
+}
+
+.uitkListNew {
+  --list-background: var(--uitk-container-low-emphasis-background);
+  --list-border: var(--uitk-container-low-emphasis-border-color);
+  --list-border-style: var(--uitk-container-border-style);
+  --list-border-width: var(--uitk-container-border-width);
+  --list-border-radius: var(--uitk-container-border-radius);
+
+  --list-item-text-regular-color: var(--uitk-selectable-text-color);
+  --list-item-background-regular-color: var(--uitk-selectable-background);
+  --list-item-background-hover-color: var(--uitk-selectable-background-hover);
+  --list-item-selected-focus-visible-outline-color: var(--uitk-white);
+
+  --list-item-text-align: var(--uitk-selectable-default-text-align);
+  --list-item-font-size: var(--uitk-typography-size-regular-unit);
+  --list-item-line-height: var(--uitk-typography-line-height);
+  --list-item-padding: 0 var(--uitk-spacing-unit);
+  --list-item-background-selected: var(--uitk-selectable-background-active);
+  --list-item-text-color-selected: var(--uitk-selectable-text-color-active);
+  --list-item-gap: 1px;
+  --list-item-align-items: center;
+  --list-item-selectable-cursor: pointer;
+  --list-item-cursor: default;
+  --list-item-disabled-regular-cursor: var(--uitk-disabled-cursor);
+  --list-item-disabled-regular-opacity: var(--uitk-disabled-background-opacity);
+
+  --list-group-background-color: var(--uitk-container-med-emphasis-background);
+}
+
+.uitkListNew {
+  box-sizing: border-box;
+  overflow-y: auto;
+  height: 200px;
+  width: 200px;
+
+  border-color: var(--list-border);
+  border-style: var(--list-border-style);
+  border-width: var(--list-border-width);
+  border-radius: var(--list-border-radius);
+
+  position: relative;
+  outline: none;
+}
+
+.uitkListNew-scrollable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.uitkListNew-space {
+  position: relative;
+}
+
+.uitkListNew-items {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.uitkListItemNew {
+  color: var(--list-item-text-regular-color);
+  background: var(--list-item-background-regular-color);
+  text-align: var(--list-item-text-align);
+  line-height: var(--list-item-line-height);
+  font-size: var(--list-item-font-size);
+  padding: var(--list-item-padding);
+  display: flex;
+  box-sizing: border-box;
+  align-items: var(--list-item-align-items);
+  white-space: nowrap;
+  height: var(--list-item-height);
+}
+
+.uitkListItemNew-highlighted {
+  background-color: var(--list-item-background-hover-color);
+}
+
+.uitkListItemNew-selected {
+  background-color: var(--list-item-background-selected);
+  color: var(--list-item-text-color-selected);
+}
+
+.uitkListItemNew-group {
+  background-color: var(--list-group-background-color);
+}
+
+.uitkListItemNew-regular {
+  position: relative;
+}
+
+.uitkListItemNew-sticky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}

@@ -23,6 +23,7 @@ export * from "./formatted-input";
 export * from "./input";
 export * from "./link";
 export * from "./list";
+export * from "./list-new";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
