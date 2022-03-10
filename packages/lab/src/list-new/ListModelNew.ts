@@ -10,6 +10,7 @@ export interface ListItemMouseEnterEvent {
 
 export interface ListItemSelectEvent {
   listItemIndex: number;
+  clearPrevious: boolean;
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -260,25 +261,50 @@ export class ListModelNew<G = any, T = any> {
     });
 
     this.selectEvents$.listen((event) => {
-      const { listItemIndex } = event;
-      console.log(`Selection changes to ${listItemIndex}`);
-      this.selection$.push([listItemIndex]);
+      const { listItemIndex, clearPrevious } = event;
+      const selectionMode = this.props$.getCurrent()?.selectionMode;
+      if (clearPrevious || selectionMode !== "multi") {
+        this.selection$.push([listItemIndex]);
+      } else {
+        const oldSelection = this.selection$.getCurrent() || [];
+        if (oldSelection.includes(listItemIndex)) {
+          const newSelection = oldSelection.filter((x) => x !== listItemIndex);
+          this.selection$.push(newSelection);
+        } else {
+          const newSelection = [...oldSelection, listItemIndex];
+          this.selection$.push(newSelection);
+        }
+      }
     });
 
     this.selection$.listen((newSelection, oldSelection) => {
       const itemModels = this.itemModels$.getCurrent()!;
-      if (oldSelection != undefined) {
-        const oldItem = oldSelection ? itemModels[oldSelection[0]] : undefined;
-        if (oldItem) {
-          oldItem.isSelected$.push(false);
+      const oldSet = new Set(oldSelection);
+      const newSet = new Set(newSelection);
+      const itemsToUnselect = new Set<number>();
+      const itemsToSelect = new Set<number>();
+      oldSet.forEach((i) => {
+        if (!newSet.has(i)) {
+          itemsToUnselect.add(i);
         }
-      }
-      if (newSelection != undefined) {
-        const newItem = newSelection ? itemModels[newSelection[0]] : undefined;
-        if (newItem) {
-          newItem.isSelected$.push(true);
+      });
+      newSet.forEach((i) => {
+        if (!oldSet.has(i)) {
+          itemsToSelect.add(i);
         }
-      }
+      });
+      itemsToUnselect.forEach((i) => {
+        const item = itemModels[i];
+        if (item) {
+          item.isSelected$.push(false);
+        }
+      });
+      itemsToSelect.forEach((i) => {
+        const item = itemModels[i];
+        if (item) {
+          item.isSelected$.push(true);
+        }
+      });
     });
 
     this.keyDownEvents$.listen((event) => {

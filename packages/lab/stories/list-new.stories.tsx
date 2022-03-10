@@ -72,6 +72,7 @@ const Template: Story<ListNewStoryProps> = () => {
       itemComponent={ItemExample}
       groupComponent={GroupExample}
       getGroupItems={getGroupItems}
+      selectionMode={"multi"}
     />
   );
 };

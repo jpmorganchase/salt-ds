@@ -61,7 +61,10 @@ export const ListItemNew = forwardRef<HTMLDivElement, ListItemNewProps>(
     };
 
     const onMouseDown: MouseEventHandler = (event) => {
-      listModel.onSelect({ listItemIndex: itemModel.index });
+      listModel.onSelect({
+        listItemIndex: itemModel.index,
+        clearPrevious: !event.metaKey,
+      });
     };
 
     const ItemComponent = itemComponent || DefaultItemComponent;
