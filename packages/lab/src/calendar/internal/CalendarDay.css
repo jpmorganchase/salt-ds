@@ -14,7 +14,7 @@
   --calendar-day-out-of-range-text-color: var(--uitk-grey-70);
   --calendar-day-blocked-text-color: var(--uitk-selectable-text-color);
   --calendar-day-blocked-cursor: var(--uitk-disabled-cursor);
-  --calendar-day-blocked-icon-color: var(--uitk-status-error-color);
+  --calendar-day-blocked-icon-color: var(--uitk-status-icon-color-error);
   --calendar-day-blocked-background: var(--calendar-day-background);
   --calendar-day-unselectable-text-color: var(--uitk-text-secondary-color-disabled);
   --calendar-day-unselectable-background: var(--calendar-day-background);

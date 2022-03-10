@@ -75,11 +75,11 @@
 }
 
 .uitkFormField-filled.uitkFormField-error {
-  --form-field-background: var(--uitk-status-error-background);
+  --form-field-background: var(--uitk-status-background-error);
 }
 
 .uitkFormField-filled.uitkFormField-warning {
-  --form-field-background: var(--uitk-status-warning-background);
+  --form-field-background: var(--uitk-status-background-warning);
 }
 
 .uitkFormField-transparent {
@@ -87,13 +87,13 @@
 }
 
 .uitkFormField.uitkFormField-warning {
-  --activation-indicator-color: var(--uitk-status-warning-color);
-  --form-field-focus-outline-color: var(--uitk-status-warning-color);
+  --activation-indicator-color: var(--uitk-status-color-warning);
+  --form-field-focus-outline-color: var(--uitk-status-color-warning);
 }
 
 .uitkFormField.uitkFormField-error {
-  --activation-indicator-color: var(--uitk-status-error-color);
-  --form-field-focus-outline-color: var(--uitk-status-error-color);
+  --activation-indicator-color: var(--uitk-status-color-error);
+  --form-field-focus-outline-color: var(--uitk-status-color-error);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */
