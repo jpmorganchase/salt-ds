@@ -1,5 +1,5 @@
 .uitkCircularProgress {
-  color: var(--uitk-measured-text-color);
+  color: var(--uitk-text-primary-color);
   display: inline-flex;
   position: relative;
 }
@@ -48,16 +48,16 @@
 }
 
 .uitkCircularProgress-railCircle {
-  stroke: var(--uitk-measured-med-emphasis-track-color);
+  stroke: var(--uitk-measured-track-color);
   stroke-width: 1px;
 }
 
 .uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-measured-text-color-active-start);
+  stop-color: var(--uitk-measured-color-active-start);
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-text-color-active-stop);
+  stop-color: var(--uitk-measured-color-active-stop);
 }
 
 .uitkCircularProgress-container {

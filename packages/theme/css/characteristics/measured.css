@@ -1,31 +1,46 @@
-.uitk-light {
+.uitk-light,
+.uitk-dark {
   --uitk-measured-font-size-small: var(--uitk-typography-size-40);
   --uitk-measured-font-size-medium: var(--uitk-typography-size-60);
   --uitk-measured-font-size-large: var(--uitk-typography-size-70);
 
-  --uitk-measured-low-emphasis-font-size: 11px;
-  --uitk-measured-med-emphasis-font-size: 14px;
-  --uitk-measured-high-emphasis-font-size: 16px;
+  --uitk-measured-font-size-low-emphasis: 11px;
+  --uitk-measured-font-size-medium-emphasis: 14px;
+  --uitk-measured-font-size-high-emphasis: 16px;
 }
 
 .uitk-light {
-  --uitk-measured-text-color: var(--uitk-grey-100);
+  --uitk-measured-tick-color: var(--uitk-grey-100);
   --uitk-measured-color-active-start: var(--uitk-teal-500);
   --uitk-measured-color-active-end: var(--uitk-blue-500);
   --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
 
-  --uitk-measured-low-emphasis-track-color: var(--uitk-grey-40);
-  --uitk-measured-med-emphasis-track-color: var(--uitk-grey-70);
-  --uitk-measured-high-emphasis-track-color: var(--uitk-grey-90);
+  --uitk-measured-track-color-low-emphasis: var(--uitk-grey-40);
+  --uitk-measured-track-color-medium-emphasis: var(--uitk-grey-70);
+  --uitk-measured-track-color-high-emphasis: var(--uitk-grey-90);
 }
 
 .uitk-dark {
-  --uitk-measured-text-color: var(--uitk-grey-90);
+  --uitk-measured-tick-color: var(--uitk-grey-90);
   --uitk-measured-color-active-start: var(--uitk-teal-300);
   --uitk-measured-color-active-end: var(--uitk-blue-300);
   --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
 
-  --uitk-measured-low-emphasis-track-color: var(--uitk-grey-500);
-  --uitk-measured-med-emphasis-track-color: var(--uitk-grey-300);
-  --uitk-measured-high-emphasis-track-color: var(--uitk-grey-100);
+  --uitk-measured-track-color-low-emphasis: var(--uitk-grey-500);
+  --uitk-measured-track-color-medium-emphasis: var(--uitk-grey-300);
+  --uitk-measured-track-color-high-emphasis: var(--uitk-grey-100);
+}
+
+.uitk-light,
+.uitk-dark {
+  /* Default medium emphasis */
+  --uitk-measured-track-color: var(--uitk-measured-track-color-medium-emphasis);
+}
+
+.uitkEmphasisLow {
+  --uitk-measured-track-color: var(--uitk-measured-track-color-low-emphasis);
+}
+
+.uitkEmphasisHigh {
+  --uitk-measured-track-color: var(--uitk-measured-track-color-high-emphasis);
 }
