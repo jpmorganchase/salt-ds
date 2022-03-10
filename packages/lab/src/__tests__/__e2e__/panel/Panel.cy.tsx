@@ -28,15 +28,10 @@ describe("GIVEN a Panel", () => {
   });
 
   describe("emphasis prop", () => {
-    it('THEN should display "low" emphasis by default', () => {
-      cy.mount(<Panel>Content</Panel>);
-      cy.get("div").should("have.class", "uitkPanel-lowEmphasis");
-    });
-
     describe('WHEN the "medium" emphasis is selected', () => {
       it('THEN should display "secondary" variant', () => {
         cy.mount(<Panel emphasis="medium">Content</Panel>);
-        cy.get("div").should("have.class", "uitkPanel-mediumEmphasis");
+        cy.get("div").should("have.class", "uitkEmphasisMedium");
       });
     });
   });

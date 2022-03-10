@@ -213,7 +213,6 @@ var UITK_CHARACTERISTICS = [
   "droptarget",
   "editable",
   "focused",
-  "icon",
   "measured",
   "navigable",
   "overlayable",
@@ -227,6 +226,7 @@ var UITK_CHARACTERISTICS = [
 
 var UITK_FOUNDATIONS = [
   "color",
+  "icon",
   "shadow",
   "size",
   "spacing",

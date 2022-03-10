@@ -10,7 +10,7 @@
   --uitk-actionable-cursor-hover: pointer;
   --uitk-actionable-cursor-active: pointer;
 
-  /* TODO: The below are not in Figma - document these somewhere */
+  /* Below are not in Figma */
   --uitk-actionable-text-align: center;
   --uitk-actionable-border-radius: 0;
 }
@@ -28,8 +28,8 @@
   Figma Style example: Actionable/CTA/Background/Regular
  */
 
-/* TODO: There are no disabled values in Figma - where do these come from? */
 .uitk-light {
+  /* TODO: There are no disabled values in Figma - where do these come from? */
   --uitk-actionable-primary-text-color: var(--uitk-grey-900);
   --uitk-actionable-primary-text-color-hover: var(--uitk-grey-900);
   --uitk-actionable-primary-text-color-active: var(--uitk-white);

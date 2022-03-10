@@ -8,7 +8,6 @@ export const UITK_CHARACTERISTICS = [
   "droptarget",
   "editable",
   "focused",
-  "icon",
   "measured",
   "navigable",
   "overlayable",
@@ -22,6 +21,7 @@ export const UITK_CHARACTERISTICS = [
 
 export const UITK_FOUNDATIONS = [
   "color",
+  "icon",
   "shadow",
   "size",
   "spacing",

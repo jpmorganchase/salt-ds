@@ -8,19 +8,20 @@ export type characteristic =
   | "droptarget"
   | "editable"
   | "focused"
-  | "icon"
   | "measured"
   | "navigable"
   | "overlayable"
   | "ratable"
   | "selectable"
   | "separable"
-  | "status" // The next 3 are foundations, should they really be here?
+  | "taggable"
+  | "text"
+  | "status"
+  // The next 4 are foundations, should they really be here?
+  | "icon"
   | "shadow"
   | "size"
-  | "spacing"
-  | "taggable"
-  | "text";
+  | "spacing";
 export class Theme {
   id: string;
   name: string;

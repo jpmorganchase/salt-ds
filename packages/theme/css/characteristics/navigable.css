@@ -1,24 +1,17 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-navigable-link-text-decoration: underline;
   --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-active: pointer;
 }
 
 .uitk-light {
-  /* TODO: Link tokens soon to be included in text */
-  --uitk-navigable-link-color: var(--uitk-grey-900);
-  --uitk-navigable-link-color-hover: var(--uitk-blue-500);
-  --uitk-navigable-link-color-active: var(--uitk-blue-500);
-  --uitk-navigable-link-color-disabled: var(--uitk-grey-900);
-
   --uitk-navigable-indicator-color-hover: var(--uitk-grey-90);
   --uitk-navigable-indicator-color-active: var(--uitk-orange-700);
 
-  --uitk-navigable-text-color: var(--uitk-grey-400);
-  --uitk-navigable-text-color-hover: var(--uitk-grey-400);
-  --uitk-navigable-text-color-active: var(--uitk-grey-900);
+  --uitk-navigable-link-color: var(--uitk-grey-400);
+  --uitk-navigable-link-color-hover: var(--uitk-grey-400);
+  --uitk-navigable-link-color-active: var(--uitk-grey-900);
 
   --uitk-navigable-border-low-emphasis: solid 1px transparent;
   --uitk-navigable-background-hover-low-emphasis: var(--uitk-grey-20);
@@ -33,18 +26,12 @@
 }
 
 .uitk-dark {
-  /* TODO: Link tokens soon to be included in text characteristic */
-  --uitk-navigable-link-color: var(--uitk-white);
-  --uitk-navigable-link-color-hover: var(--uitk-blue-200);
-  --uitk-navigable-link-color-active: var(--uitk-blue-200);
-  --uitk-navigable-link-color-disabled: var(--uitk-white);
-
   --uitk-navigable-indicator-color-hover: var(--uitk-grey-90);
   --uitk-navigable-indicator-color-active: var(--uitk-orange-500);
 
-  --uitk-navigable-text-color: var(--uitk-grey-40);
-  --uitk-navigable-text-color-hover: var(--uitk-grey-40);
-  --uitk-navigable-text-color-active: var(--uitk-white);
+  --uitk-navigable-link-color: var(--uitk-grey-40);
+  --uitk-navigable-link-color-hover: var(--uitk-grey-40);
+  --uitk-navigable-link-color-active: var(--uitk-white);
 
   --uitk-navigable-border-low-emphasis: none;
   --uitk-navigable-background-low-emphasis: none;

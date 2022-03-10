@@ -51,7 +51,7 @@ describe("Metric", () => {
     );
 
     expect(container.querySelector(".uitkMetricContent")).toHaveClass(
-      "uitkMetricContent-mediumEmphasis"
+      "uitkEmphasisMedium"
     );
   });
 

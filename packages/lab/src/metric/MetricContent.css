@@ -41,27 +41,27 @@
   color: var(--metric-direction-down-color);
 }
 
-.uitkMetricContent-highEmphasis .uitkMetricContent-value {
-  font-size: var(--metric-content-value-hight-emphasis-font-size);
+.uitkEmphasisHigh .uitkMetricContent-value {
+  font-size: var(--metric-content-value-high-emphasis-font-size);
 }
 
-.uitkMetricContent-mediumEmphasis .uitkMetricContent-value {
+.uitkEmphasisMedium .uitkMetricContent-value {
   font-size: var(--metric-content-value-med-emphasis-font-size);
 }
 
-.uitkMetricContent-lowEmphasis .uitkMetricContent-value {
+.uitkEmphasisLow .uitkMetricContent-value {
   font-size: var(--metric-content-value-low-emphasis-font-size);
 }
 
-.uitkMetricContent-horizontal.uitkMetricContent-highEmphasis .uitkMetricContent-value {
+.uitkMetricContent-horizontal.uitkEmphasisHigh .uitkMetricContent-value {
   line-height: var(--metric-content-value-high-emphasis-horizontal-line-height);
 }
 
-.uitkMetricContent-horizontal.uitkMetricContent-mediumEmphasis .uitkMetricContent-value {
+.uitkMetricContent-horizontal.uitkEmphasisMedium .uitkMetricContent-value {
   line-height: var(--metric-content-value-med-emphasis-horizontal-line-height);
 }
 
-.uitkMetricContent-horizontal.uitkMetricContent-lowEmphasis .uitkMetricContent-value {
+.uitkMetricContent-horizontal.uitkEmphasisLow .uitkMetricContent-value {
   line-height: var(--metric-content-value-low-emphasis-horizontal-line-height);
 }
 
