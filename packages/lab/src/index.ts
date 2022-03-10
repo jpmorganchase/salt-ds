@@ -47,5 +47,6 @@ export * from "./toggle-button";
 export * from "./toolbar";
 export * from "./tokenized-input";
 export * from "./tooltip";
+export * from "./typography";
 export * from "./window";
 export * from "./utils";

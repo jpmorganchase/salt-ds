@@ -33,7 +33,7 @@ import { ListChangeHandler } from "@brandname/lab/src/list/ListProps";
 import { Story } from "@storybook/react";
 
 import "./contact-details.stories.css";
-import { FC, forwardRef, Fragment, useRef, useState } from "react";
+import { FC, forwardRef, Fragment, useEffect, useRef, useState } from "react";
 
 export default {
   title: "Lab/ContactDetails",
@@ -137,11 +137,15 @@ const contactToString = (nameEmail: NameEmail) =>
   nameEmail ? nameEmail.name : "";
 
 const DefaultTemplate: Story = () => {
+  const primRef = useRef<HTMLHeadingElement>();
+  useEffect(() => {
+    console.log("primRef", primRef.current.textContent);
+  }, []);
   return (
     <div style={{ width: 390 }}>
       <ContactDetails>
         <ContactAvatar />
-        <ContactPrimaryInfo text={personaA.name} />
+        <ContactPrimaryInfo ref={primRef} text={personaA.name} />
         <ContactSecondaryInfo text={personaA.company} />
         <ContactTertiaryInfo text={personaA.spn} />
         <ContactMetadata>

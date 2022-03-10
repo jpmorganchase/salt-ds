@@ -1,0 +1,23 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.row {
+  display: flex;
+  width: 100%;
+}
+.table-cell {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 10px;
+  flex: 1 0 auto;
+  width: 11vw;
+  height: 18px;
+  justify-content: center;
+  align-items: center;
+}
+
+.uitk-density-touch .table-cell {
+  height: 22px;
+}

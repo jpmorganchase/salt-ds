@@ -8,7 +8,7 @@
 }
 
 .uitk-light {
-  --uitk-container-low-emphasis-background: transparent;
+  --uitk-container-low-emphasis-background: var(--uitk-white);
   --uitk-container-low-emphasis-border-color: transparent;
 
   --uitk-container-med-emphasis-background: var(--uitk-white);

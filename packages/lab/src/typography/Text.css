@@ -1,0 +1,310 @@
+/* Regular|Body text */
+/***********************/
+
+.uitk-density-touch .uitkText {
+  line-height: var(--uitk-typography-size-100);
+}
+.uitk-density-low .uitkText {
+  line-height: var(--uitk-typography-size-80);
+}
+.uitk-density-medium .uitkText {
+  line-height: var(--uitk-typography-size-70);
+}
+.uitk-density-high .uitkText {
+  line-height: var(--uitk-typography-size-60);
+}
+/* Body emphasis */
+.uitkText strong {
+  font-weight: var(--uitk-typography-weight-bold);
+}
+.uitkText small {
+  font-size: inherit;
+  font-weight: 300;
+}
+
+/* Main css class */
+/***********************/
+
+.uitkText {
+  --text-max-rows: 0;
+  --text-width: 100%;
+  --text-height: auto;
+
+  width: var(--text-width);
+  height: var(--text-height);
+  line-height: 1.3;
+  font-size: var(--uitk-typography-size-regular-unit);
+  font-weight: var(--uitk-typography-weight-regular);
+  word-break: break-word;
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+
+.uitkText-overflow {
+  --text-height: 100%;
+  overflow: auto;
+}
+
+.uitkText-lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--text-max-rows);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Heading 1 */
+/***********************/
+
+h1.uitkText,
+.uitkText-h1.uitkText {
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+}
+
+.uitk-density-touch h1.uitkText,
+.uitk-density-touch .uitkText-h1.uitkText {
+  font-size: var(--uitk-typography-size-150);
+  line-height: 1.3;
+  font-weight: var(--uitk-typography-weight-bold);
+}
+.uitk-density-low h1.uitkText,
+.uitk-density-low .uitkText-h1.uitkText {
+  font-size: var(--uitk-typography-size-140);
+  line-height: var(--uitk-typography-size-170);
+  font-weight: var(--uitk-typography-weight-bold);
+}
+.uitk-density-medium h1.uitkText,
+.uitk-density-medium .uitkText-h1.uitkText {
+  font-size: var(--uitk-typography-size-110);
+  line-height: var(--uitk-typography-size-140);
+  font-weight: var(--uitk-typography-weight-bold);
+}
+.uitk-density-high h1.uitkText,
+.uitk-density-high .uitkText-h1.uitkText {
+  font-size: var(--uitk-typography-size-80);
+  line-height: var(--uitk-typography-size-110);
+  font-weight: var(--uitk-typography-weight-bold);
+}
+
+/* H1 emphasis */
+h1.uitkText strong,
+.uitkText-h1.uitkText strong {
+  font-weight: var(--uitk-typography-weight-extraBold);
+}
+h1.uitkText small,
+.uitkText-h1.uitkText small {
+  font-size: inherit;
+  font-weight: 500;
+}
+
+/* Heading 2 */
+/***********************/
+
+h2.uitkText,
+.uitkText-h2.uitkText {
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+}
+
+.uitk-density-touch h2.uitkText,
+.uitk-density-touch .uitkText-h2.uitkText {
+  font-size: var(--uitk-typography-size-125);
+  line-height: var(--uitk-typography-size-150);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-low h2.uitkText,
+.uitk-density-low .uitkText-h2.uitkText {
+  font-size: var(--uitk-typography-size-110);
+  line-height: var(--uitk-typography-size-140);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-medium h2.uitkText,
+.uitk-density-medium .uitkText-h2.uitkText {
+  font-size: var(--uitk-typography-size-80);
+  line-height: var(--uitk-typography-size-110);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-high h2.uitkText,
+.uitk-density-high .uitkText-h2.uitkText {
+  font-size: var(--uitk-typography-size-60);
+  line-height: var(--uitk-typography-size-80);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* H2 emphasis */
+h2.uitkText strong,
+.uitkText-h2.uitkText strong {
+  font-weight: var(--uitk-typography-weight-extraBold);
+}
+h2.uitkText small,
+.uitkText-h2.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-typography-weight-regular);
+}
+
+/* Heading 3 */
+/***********************/
+
+h3.uitkText,
+.uitkText-h3.uitkText {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+
+.uitk-density-touch h3.uitkText,
+.uitk-density-touch .uitkText-h3.uitkText {
+  font-size: var(--uitk-typography-size-80);
+  line-height: var(--uitk-typography-size-120);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-low h3.uitkText,
+.uitk-density-low .uitkText-h3.uitkText {
+  font-size: var(--uitk-typography-size-80);
+  line-height: var(--uitk-typography-size-120);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-medium h3.uitkText,
+.uitk-density-medium .uitkText-h3.uitkText {
+  font-size: var(--uitk-typography-size-60);
+  line-height: var(--uitk-typography-size-100);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-high h3.uitkText,
+.uitk-density-high .uitkText-h3.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* H3 emphasis */
+h3.uitkText strong,
+.uitkText-h3.uitkText strong {
+  font-weight: var(--uitk-typography-weight-extraBold);
+}
+h3.uitkText small,
+.uitkText-h3.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-typography-weight-regular);
+}
+
+/* Heading 4 */
+/***********************/
+
+h4.uitkText,
+.uitkText-h4.uitkText {
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em;
+}
+
+.uitk-density-touch h4.uitkText,
+.uitk-density-touch .uitkText-h4.uitkText {
+  font-size: var(--uitk-typography-size-70);
+  line-height: var(--uitk-typography-size-100);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-low h4.uitkText,
+.uitk-density-low .uitkText-h4.uitkText {
+  font-size: var(--uitk-typography-size-60);
+  line-height: var(--uitk-typography-size-80);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-medium h4.uitkText,
+.uitk-density-medium .uitkText-h4.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitk-density-high h4.uitkText,
+.uitk-density-high .uitkText-h4.uitkText {
+  font-size: var(--uitk-typography-size-40);
+  line-height: var(--uitk-typography-size-60);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* H4 emphasis */
+h4.uitkText strong,
+.uitkText-h4.uitkText strong {
+  font-weight: var(--uitk-typography-weight-extraBold);
+}
+h4.uitkText small,
+.uitkText-h4.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-typography-weight-regular);
+}
+
+/* Label-Caption */
+/***********************/
+
+.uitk-density-touch label.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+}
+.uitk-density-low label.uitkText {
+  font-size: var(--uitk-typography-size-40);
+  line-height: var(--uitk-typography-size-60);
+}
+.uitk-density-medium label.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+}
+.uitk-density-high label.uitkText {
+  font-size: var(--uitk-typography-size-30);
+  line-height: var(--uitk-typography-size-60);
+}
+
+/* Help Text */
+/***********************/
+
+.uitkText-helpText.uitkText {
+  font-style: italic;
+  color: var(--uitk-text-secondary-regular-color);
+}
+.uitk-density-touch .uitkText-helpText.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+}
+.uitk-density-low .uitkText-helpText.uitkText {
+  font-size: var(--uitk-typography-size-40);
+  line-height: var(--uitk-typography-size-60);
+}
+.uitk-density-medium .uitkText-helpText.uitkText {
+  font-size: var(--uitk-typography-size-50);
+  line-height: var(--uitk-typography-size-70);
+}
+.uitk-density-high .uitkText-helpText.uitkText {
+  font-size: var(--uitk-typography-size-30);
+}
+
+/* Figure */
+/***********************/
+
+/* Figure 1 */
+.uitkText-figure1.uitkText {
+  font-size: var(--uitk-typography-size-210);
+  line-height: var(--uitk-typography-size-280);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 2 */
+.uitkText-figure2.uitkText {
+  font-size: var(--uitk-typography-size-150);
+  line-height: calc(var(--uitk-typography-size-110) * 2);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 3 */
+.uitkText-figure3.uitkText {
+  font-size: var(--uitk-typography-size-110);
+  line-height: var(--uitk-typography-size-140);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Code */
+/***********************/
+
+code.uitkText {
+  font-size: var(--uitk-typography-size-regular-unit);
+  /* line-height: var(--uitk-typography-size-140); */
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
