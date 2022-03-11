@@ -63,7 +63,7 @@ export const CharacteristicPattern = (
             return (
               <div
                 key={`${props.patternName}-${scope}`}
-                className={cn(withBaseName())}
+                className={cn("uitkEmphasisHigh", withBaseName())}
               >
                 <ScopeLabel scope={scope} />
                 {Object.keys(props.values[scope])

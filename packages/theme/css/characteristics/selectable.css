@@ -51,7 +51,7 @@
   --uitk-selectable-icon-color-blur-active: var(--uitk-white);
 
   --uitk-selectable-background: var(--uitk-grey-800);
-  --uitk-selectable-background-hover: var(--uitk-blue-900); /* TODO: Check value */
+  --uitk-selectable-background-hover: var(--uitk-blue-2000); /* TODO: Replace with -900 when palette updated */
   --uitk-selectable-background-active: var(--uitk-blue-700);
   --uitk-selectable-background-blur-active: var(--uitk-grey-500);
 

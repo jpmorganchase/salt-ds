@@ -1,9 +1,5 @@
 .uitk-light,
 .uitk-dark {
-  /*
-   These are not really light/dark theme specific.
-   Consider theme-invariant .uitk namespace? More around where to put this, keep in mind white-labelling
-  */
   --uitk-actionable-font-weight: var(--uitk-typography-weight-bold);
   --uitk-actionable-letter-spacing: 0.6px;
   --uitk-actionable-text-transform: uppercase;
@@ -24,12 +20,12 @@
   - The 'category', e.g. -color (omitted for -background property)
   - The 'state', e.g. -regular, -hover, -active, -disabled. Mapped to CSS Dynamic pseudo-classes
 
-
   Figma Style example: Actionable/CTA/Background/Regular
+  Disabled values are not in Figma - they come from applying the appropriate 
+  disabled opacity to the regular background color
  */
 
 .uitk-light {
-  /* TODO: There are no disabled values in Figma - where do these come from? */
   --uitk-actionable-primary-text-color: var(--uitk-grey-900);
   --uitk-actionable-primary-text-color-hover: var(--uitk-grey-900);
   --uitk-actionable-primary-text-color-active: var(--uitk-white);
@@ -63,7 +59,7 @@
   --uitk-actionable-secondary-background: transparent;
   --uitk-actionable-secondary-background-active: var(--uitk-grey-200);
   --uitk-actionable-secondary-background-hover: var(--uitk-grey-40);
-  /* TODO: No disabled value here? */
+  --uitk-actionable-secondary-background-disabled: transparent;
   --uitk-actionable-secondary-icon-color-active: var(--uitk-white);
   --uitk-actionable-secondary-icon-color: var(--uitk-grey-300);
   --uitk-actionable-secondary-icon-color-hover: var(--uitk-grey-900);

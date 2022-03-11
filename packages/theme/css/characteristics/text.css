@@ -12,9 +12,6 @@
   --uitk-text-link-color-hover: var(--uitk-blue-500);
   --uitk-text-link-color-active: var(--uitk-blue-500);
   --uitk-text-link-color-disabled: var(--uitk-grey-900);
-
-  /* TODO: Confirm with designer what is this and what's dark theme value */
-  /* --uitk-text-highlight-color: var(--uitk-blue-30); */
 }
 
 .uitk-dark {

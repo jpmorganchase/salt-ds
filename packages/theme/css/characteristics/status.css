@@ -51,6 +51,7 @@
   --uitk-status-background-warning-medium-emphasis: var(--uitk-grey-800);
   --uitk-status-background-error-medium-emphasis: var(--uitk-grey-800);
 
+  /* TODO: Replace blue with -800 and other colors -900 when palette updated */
   --uitk-status-background-info-high-emphasis: var(--uitk-blue-1000);
   --uitk-status-background-success-high-emphasis: var(--uitk-green-1000);
   --uitk-status-background-warning-high-emphasis: var(--uitk-orange-1000);

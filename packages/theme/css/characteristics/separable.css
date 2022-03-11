@@ -1,11 +1,31 @@
-.uitk-light {
-  --uitk-separable-section-color: var(--uitk-grey-60);
-  --uitk-separable-item-color: var(--uitk-grey-40);
-  --uitk-separable-subtle-color: var(--uitk-grey-20);
+.uitk-light,
+.uitk-dark {
+  --uitk-separable-border-width: 1px;
+  --uitk-separable-border-style: solid;
 }
 
+/* Default medium emphasis */
+.uitk-light {
+  --uitk-separable-border-color: var(--uitk-grey-40);
+}
+
+.uitk-light .uitkEmphasisLow {
+  --uitk-separable-border-color: var(--uitk-grey-20);
+}
+
+.uitk-light .uitkEmphasisHigh {
+  --uitk-separable-border-color: var(--uitk-grey-60);
+}
+
+/* Default medium emphasis */
 .uitk-dark {
-  --uitk-separable-section-color: var(--uitk-grey-400);
-  --uitk-separable-item-color: var(--uitk-grey-500);
-  --uitk-separable-subtle-color: var(--uitk-grey-600);
+  --uitk-separable-border-color: var(--uitk-grey-500);
+}
+
+.uitk-dark .uitkEmphasisLow {
+  --uitk-separable-border-color: var(--uitk-grey-600);
+}
+
+.uitk-dark .uitkEmphasisHigh {
+  --uitk-separable-border-color: var(--uitk-grey-400);
 }
