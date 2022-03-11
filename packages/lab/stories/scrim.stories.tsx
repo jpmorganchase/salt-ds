@@ -50,7 +50,7 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
         closeWithEscape
-        variant="lighter"
+        emphasis="medium"
         onBackDropClick={handleClose}
         onClose={handleClose}
         open={open}
@@ -128,7 +128,7 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         onClose={handleClose}
         open={open}
         parentRef={parentRef}
-        variant="lighter"
+        emphasis="medium"
         zIndex={2}
       >
         <Button onClick={handleClose}>CLOSE SCRIM</Button>

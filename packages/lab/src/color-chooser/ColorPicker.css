@@ -16,7 +16,7 @@
 }
 
 .uitkColorChooserPicker-textDivOverrides {
-  font-size: var(--uitk-typography-size-caption-unit);
+  font-size: var(--uitk-text-caption-font-size);
   font-weight: var(--uitk-typography-weight-bold);
   color: var(--uitk-text-primary-color);
   padding: 0px !important;

@@ -1,6 +1,6 @@
 .uitkDialogContent {
-  --dialog-content-font-size: var(--uitkDialogContent-font-size, var(--uitk-typography-size-regular-unit));
-  --dialog-content-line-height: var(--uitkDialogContent-line-height, var(--uitk-typography-line-height));
+  --dialog-content-font-size: var(--uitkDialogContent-font-size, var(--uitk-text-size));
+  --dialog-content-line-height: var(--uitkDialogContent-line-height, var(--uitk-text-line-height));
   --dialog-content-padding-top: var(--uitkDialogContent-padding-top, calc(var(--uitk-spacing-unit) * 2));
   --dialog-content-padding-bottom: var(--uitkDialogContent-padding-bottom, calc(var(--uitk-spacing-unit) * 3));
   --dialog-content-min-height: var(--uitkDialogContent-min-height, var(--dialog-content-font-size));

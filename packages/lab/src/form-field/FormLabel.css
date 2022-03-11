@@ -3,10 +3,10 @@
   box-sizing: border-box;
   color: var(--uitk-label-text-color, var(--uitk-text-secondary-color));
   display: flex;
-  font-size: var(--uitk-label-font-size, var(--uitk-typography-size-caption-unit));
+  font-size: var(--uitk-label-font-size, var(--uitk-text-caption-font-size));
   margin-bottom: var(--uitk-field-label-margin-bottom, 0);
   margin-top: var(--uitk-field-label-margin-top);
-  line-height: var(--uitk-field-label-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitk-field-label-line-height, var(--uitk-text-line-height));
   padding: var(--uitkFormLabel-padding, 0);
   text-overflow: ellipsis;
   transform: translate(0, var(--uitkFormLabel-top, 0));

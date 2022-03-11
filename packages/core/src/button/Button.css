@@ -95,9 +95,9 @@
   cursor: pointer;
   display: inline-block;
   justify-content: center;
-  font-size: var(--uitkButton-font-size, var(--uitk-typography-size-regular-unit));
+  font-size: var(--uitkButton-font-size, var(--uitk-text-size));
   font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
-  line-height: var(--uitkButton-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkButton-line-height, var(--uitk-text-line-height));
   letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing));
   text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-text-transform));
   padding: 0 var(--uitkButton-padding, var(--uitk-spacing-unit));

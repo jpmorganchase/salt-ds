@@ -58,7 +58,7 @@
 .uitk-light,
 .uitk-dark {
   /* Default medium emphasis background */
-  --uitk-editable-background: var(--uitk-editable-medium-emphasis-background);
+  --uitk-editable-background: var(--uitk-editable-background-medium-emphasis);
 }
 
 .uitkEmphasisLow {

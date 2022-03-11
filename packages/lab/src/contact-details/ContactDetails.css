@@ -15,10 +15,10 @@
 }
 
 .uitk-density-touch .uitkContactDetails {
-  --compact-primary-font-size: var(--uitk-typography-size-70);
-  --default-primary-font-size: var(--uitk-typography-size-130);
-  --compact-secondary-font-size: var(--uitk-typography-size-60);
-  --default-secondary-font-size: var(--uitk-typography-size-70);
+  --compact-primary-font-size: 16px;
+  --default-primary-font-size: 30px;
+  --compact-secondary-font-size: 14px;
+  --default-secondary-font-size: 16px;
   --metadata-font-size: 16px;
   --label-width: 80px;
   --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 1.5);
@@ -26,10 +26,10 @@
 }
 
 .uitk-density-low .uitkContactDetails {
-  --compact-primary-font-size: var(--uitk-typography-size-60);
-  --default-primary-font-size: var(--uitk-typography-size-110);
-  --compact-secondary-font-size: var(--uitk-typography-size-60);
-  --default-secondary-font-size: var(--uitk-typography-size-60);
+  --compact-primary-font-size: 14px;
+  --default-primary-font-size: 24px;
+  --compact-secondary-font-size: 14px;
+  --default-secondary-font-size: 14px;
   --metadata-font-size: 14px;
   --label-width: 70px;
   --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 1.5);
@@ -37,10 +37,10 @@
 }
 
 .uitk-density-medium .uitkContactDetails {
-  --compact-primary-font-size: var(--uitk-typography-size-50);
-  --default-primary-font-size: var(--uitk-typography-size-80);
-  --compact-secondary-font-size: var(--uitk-typography-size-50);
-  --default-secondary-font-size: var(--uitk-typography-size-50);
+  --compact-primary-font-size: 12px;
+  --default-primary-font-size: 18px;
+  --compact-secondary-font-size: 12px;
+  --default-secondary-font-size: 12px;
   --metadata-font-size: 12px;
   --label-width: 60px;
   --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 2);
@@ -48,10 +48,10 @@
 }
 
 .uitk-density-high .uitkContactDetails {
-  --compact-primary-font-size: var(--uitk-typography-size-40);
-  --default-primary-font-size: var(--uitk-typography-size-60);
-  --compact-secondary-font-size: var(--uitk-typography-size-40);
-  --default-secondary-font-size: var(--uitk-typography-size-40);
+  --compact-primary-font-size: 11px;
+  --default-primary-font-size: 14px;
+  --compact-secondary-font-size: 11px;
+  --default-secondary-font-size: 11px;
   --metadata-font-size: 11px;
   --label-width: 60px;
   --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 2);
@@ -59,7 +59,7 @@
 }
 
 .uitkContactDetails {
-  --line-height: var(--uitk-typography-line-height);
+  --line-height: var(--uitk-text-line-height);
   --no-avatar-indicator-width: 4px;
 }
 

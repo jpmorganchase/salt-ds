@@ -3,5 +3,5 @@
   display: flex;
   justify-content: space-between;
   color: var(--uitk-text-secondary-color);
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
 }

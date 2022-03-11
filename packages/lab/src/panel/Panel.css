@@ -1,27 +1,32 @@
+/* Local CSS variables for Panel */
 .uitkPanel {
   --panel-width: var(--uitkPanel-width, 100%);
-  /* should the default height for Panel really be 100%, I would have thought auto */
-  --panel-height: var(--uitkPanel-height, 100%);
+  --panel-height: var(--uitkPanel-height, auto);
   --panel-padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
+
+  /* Fallback values will pick up applied emphasis within characteristic */
   --panel-background-medium-emphasis: var(--uitkPanel-background-medium-emphasis, var(--uitk-container-background));
   --panel-background-high-emphasis: var(--uitkPanel-background-high-emphasis, var(--uitk-container-background));
-  --panel-color-primary: var(--uitkPanel-color-primary, var(--uitk-text-primary-color));
-  --panel-color-secondary: var(--uitkPanel-color-secondary, var(--uitk-text-secondary-color));
+
+  --panel-color-medium-emphasis: var(--uitkPanel-color-medium-emphasis, var(--uitk-text-secondary-color));
+  --panel-color-high-emphasis: var(--uitkPanel-color-high-emphasis, var(--uitk-text-primary-color));
 }
 
+/* Styles applied to the root element with default (high) emphasis */
 .uitkPanel {
-  width: var(--panel-width);
+  box-sizing: border-box;
   height: var(--panel-height);
   overflow: auto;
-  box-sizing: border-box;
   padding: var(--panel-padding);
+  width: var(--panel-width);
 
   /* Default high emphasis values */
   background: var(--panel-background-high-emphasis);
-  color: var(--panel-color-secondary);
+  color: var(--panel-color-high-emphasis);
 }
 
+/* Overrides when medium emphasis applied */
 .uitkEmphasisMedium {
   background: var(--panel-background-medium-emphasis);
-  color: var(--panel-color-primary);
+  color: var(--panel-color-medium-emphasis);
 }

@@ -22,10 +22,10 @@
 
 .uitk-light .uitkEmphasisHigh {
   /* Black fade 80 */
-  --uitk-overlayable-scrim: rgba(0, 0, 0, 0.8);
+  --uitk-overlayable-scrim-background: rgba(0, 0, 0, 0.8);
 }
 
 .uitk-dark .uitkEmphasisHigh {
   /* Black fade 70 */
-  --uitk-overlayable-feedback-scrim-primary-background: rgba(0, 0, 0, 0.7);
+  --uitk-overlayable-scrim-background: rgba(0, 0, 0, 0.7);
 }
