@@ -1,5 +1,5 @@
 .uitkScrim {
-  --scrim-bg: var(--uitk-overlayable-scrim);
+  --scrim-bg: var(--uitk-overlayable-scrim-background);
 }
 
 .uitkScrim {

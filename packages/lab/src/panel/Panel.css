@@ -16,12 +16,12 @@
   box-sizing: border-box;
   padding: var(--panel-padding);
 
-  /* Default medium emphasis values */
-  background: var(--panel-background-medium-emphasis);
-  color: var(--panel-color-primary);
-}
-
-.uitkEmphasisHigh {
+  /* Default high emphasis values */
   background: var(--panel-background-high-emphasis);
   color: var(--panel-color-secondary);
+}
+
+.uitkEmphasisMedium {
+  background: var(--panel-background-medium-emphasis);
+  color: var(--panel-color-primary);
 }

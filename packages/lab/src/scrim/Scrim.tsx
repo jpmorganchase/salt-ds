@@ -143,7 +143,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     parentRef,
     returnFocus = true,
     tabEnabledSelectors = defaultSelector,
-    emphasis = "medium",
+    emphasis = "high",
     zIndex,
     ...rest
   } = props;

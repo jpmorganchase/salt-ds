@@ -64,7 +64,7 @@ describe("Metric", () => {
       );
 
       expect(container.querySelector(".uitkMetricContent")).toHaveClass(
-        `uitkMetricContent-${emphasis}Emphasis`
+        `uitkEmphasis${emphasis[0].toUpperCase()}${emphasis.slice(1)}`
       );
     })
   );

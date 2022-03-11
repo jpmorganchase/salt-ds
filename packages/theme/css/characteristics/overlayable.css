@@ -9,6 +9,7 @@
   --uitk-overlayable-elevation-6: var(--uitk-shadow-6);
 }
 
+/* Default medium emphasis */
 .uitk-light {
   /* White fade 80 */
   --uitk-overlayable-scrim-background: rgba(255, 255, 255, 0.8);
