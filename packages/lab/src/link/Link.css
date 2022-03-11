@@ -4,7 +4,7 @@
   --link-color-active: var(--uitk-text-link-color-active);
   --link-color-disabled: var(--uitk-text-link-color-disabled);
 
-  --link-text-decoration: var(--uitk-link-text-decoration);
+  --link-text-decoration: var(--uitk-text-link-text-decoration);
 
   --link-font-family: var(--uitk-typography-font-family);
   --link-focus-outline: var(--uitk-focused-outline);

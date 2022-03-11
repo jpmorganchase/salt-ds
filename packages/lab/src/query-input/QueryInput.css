@@ -46,7 +46,7 @@
 }
 
 .uitkCategoryList-category {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
 }
 
 .uitkCategoryListItem-text {
@@ -94,7 +94,7 @@
 }
 
 .uitkQueryInputValueList-category {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
   flex-grow: 1;
 }
 
@@ -111,7 +111,7 @@
 .uitkQueryInputSearchList-categoryTitle {
   color: var(--uitk-text-primary-regular-color);
   background: var(--uitk-containerable-secondary-background-regular-color);
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
   font-weight: var(--uitk-typography-weight-bold);
   display: flex;
   align-items: center;

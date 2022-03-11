@@ -12,7 +12,7 @@
   --uitkTab-background: var(--uitk-grey-40);
   --uitkTab-hover-background: var(--uitk-grey-40);
   --tab-bar-color: var(--uitk-grey-90);
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-size: var(--uitk-text-size, 12px);
 }
 
 .uitkDraggable-tabstrip .uitkTab {

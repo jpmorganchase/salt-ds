@@ -3,13 +3,13 @@
   --metric-direction-up-color: var(--uitk-text-growth-indicator-up-color);
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
 
-  --metric-content-value-high-emphasis-font-size: var(--uitk-typography-size-210);
-  --metric-content-value-med-emphasis-font-size: var(--uitk-typography-size-150);
-  --metric-content-value-low-emphasis-font-size: var(--uitk-typography-size-110);
+  --metric-content-value-font-size-high-emphasis: 56px;
+  --metric-content-value-font-size-medium-emphasis: 36px;
+  --metric-content-value-font-size-low-emphasis: 24px;
 
-  --metric-content-value-high-emphasis-horizontal-line-height: 0.75;
-  --metric-content-value-med-emphasis-horizontal-line-height: 0.85;
-  --metric-content-value-low-emphasis-horizontal-line-height: 0.95;
+  --metric-content-value-horizontal-line-height-high-emphasis: 0.75;
+  --metric-content-value-horizontal-line-height-medium-emphasis: 0.85;
+  --metric-content-value-horizontal-line-height-low-emphasis: 0.95;
 }
 
 .uitkMetricContent {
@@ -42,27 +42,27 @@
 }
 
 .uitkEmphasisHigh .uitkMetricContent-value {
-  font-size: var(--metric-content-value-high-emphasis-font-size);
+  font-size: var(--metric-content-value-font-size-high-emphasis);
 }
 
 .uitkEmphasisMedium .uitkMetricContent-value {
-  font-size: var(--metric-content-value-med-emphasis-font-size);
+  font-size: var(--metric-content-value-font-size-medium-emphasis);
 }
 
 .uitkEmphasisLow .uitkMetricContent-value {
-  font-size: var(--metric-content-value-low-emphasis-font-size);
+  font-size: var(--metric-content-value-font-size-low-emphasi);
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisHigh .uitkMetricContent-value {
-  line-height: var(--metric-content-value-high-emphasis-horizontal-line-height);
+  line-height: var(--metric-content-value-horizontal-line-height-high-emphasis);
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisMedium .uitkMetricContent-value {
-  line-height: var(--metric-content-value-med-emphasis-horizontal-line-height);
+  line-height: var(--metric-content-value-horizontal-line-height-medium-emphasis);
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisLow .uitkMetricContent-value {
-  line-height: var(--metric-content-value-low-emphasis-horizontal-line-height);
+  line-height: var(--metric-content-value-horizontal-line-height-low-emphasis);
 }
 
 .uitkMetricContent-alignLeft {

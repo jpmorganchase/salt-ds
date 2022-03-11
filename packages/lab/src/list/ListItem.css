@@ -10,8 +10,8 @@
 
   /* Text, Font */
   --list-item-text-align: var(--uitk-selectable-default-text-align);
-  --list-item-font-size: var(--uitk-typography-size-regular-unit);
-  --list-item-line-height: var(--uitk-typography-line-height);
+  --list-item-font-size: var(--uitk-text-size);
+  --list-item-line-height: var(--uitk-text-line-height);
 
   /* Spacing */
   --list-item-padding: 0 var(--uitk-spacing-unit);

@@ -3,7 +3,7 @@
   --uitkDialog-box-shadow: none;
   --overlay-text-color: var(--uitk-text-primary-color);
   --overlay-spacing: var(--uitk-spacing-unit);
-  --overlay-font-size: var(--uitk-typography-size-regular-unit);
+  --overlay-font-size: var(--uitk-text-size);
   /* TODO: Which emphasis should this be? */
   --overlay-background-color: var(--uitk-container-background);
   --overlay-border-color: var(--uitk-container-border-color);

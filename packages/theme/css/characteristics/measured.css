@@ -1,8 +1,8 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-measured-font-size-small: var(--uitk-typography-size-40);
-  --uitk-measured-font-size-medium: var(--uitk-typography-size-60);
-  --uitk-measured-font-size-large: var(--uitk-typography-size-70);
+  --uitk-measured-font-size-small: 11px;
+  --uitk-measured-font-size-medium: 14px;
+  --uitk-measured-font-size-large: 16px;
 
   --uitk-measured-font-size-low-emphasis: 11px;
   --uitk-measured-font-size-medium-emphasis: 14px;

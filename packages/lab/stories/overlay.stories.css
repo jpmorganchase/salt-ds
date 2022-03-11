@@ -1,9 +1,9 @@
 .content-heading {
   margin: 0 0 calc(var(--uitk-spacing-unit) / 2);
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 .content-body {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
 }

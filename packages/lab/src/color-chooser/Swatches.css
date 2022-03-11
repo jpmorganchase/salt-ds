@@ -1,5 +1,5 @@
 .uitkColorChooserSwatches-colorNameTextDiv {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
   font-weight: var(--uitk-typography-weight-bold);
 }
 
@@ -12,7 +12,7 @@
 }
 
 .uitkColorChooserSwatches-colorTextDiv {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-size);
   margin-right: var(--uitk-spacing-unit);
 }
 

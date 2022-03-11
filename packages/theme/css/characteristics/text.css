@@ -114,6 +114,8 @@
   --uitk-text-link-color-hover: var(--uitk-blue-500);
   --uitk-text-link-color-active: var(--uitk-blue-500);
   --uitk-text-link-color-disabled: var(--uitk-grey-900);
+
+  --uitk-text-size: var(--uitk-text-size-medium);
 }
 
 .uitk-dark {
@@ -134,90 +136,90 @@
 }
 
 .uitk-density-touch {
-  --uitk-text-h1-font-size-unit: var(--uitk-text-h1-font-size-touch);
+  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-touch);
   --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-touch);
 
-  --uitk-text-h2-font-size-unit: var(--uitk-text-h2-font-size-touch);
+  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-touch);
   --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-touch);
 
-  --uitk-text-h3-font-size-unit: var(--uitk-text-h3-font-size-touch);
+  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-touch);
   --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-touch);
 
-  --uitk-text-h4-font-size-unit: var(--uitk-text-h4-font-size-touch);
+  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-touch);
   --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-touch);
 
-  --uitk-text-caption-font-size-unit: var(--uitk-text-caption-font-size-touch);
-  --uitk-text-caption-line-height-unit: var(--uitk-text-caption-line-height-touch);
+  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-touch);
+  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-touch);
 
-  --uitk-text-help-font-size-unit: var(--uitk-text-help-font-size-touch);
-  --uitk-text-help-line-height-unit: var(--uitk-text-help-line-height-touch);
+  --uitk-text-help-font-size: var(--uitk-text-help-font-size-touch);
+  --uitk-text-help-line-height: var(--uitk-text-help-line-height-touch);
 
-  --uitk-text-size: var(--uitk-typography-size-touch);
+  --uitk-text-size: var(--uitk-text-size-touch);
   --uitk-text-line-height: var(--uitk-text-line-height-touch);
 }
 .uitk-density-low {
-  --uitk-text-h1-font-size-unit: var(--uitk-text-h1-font-size-low);
+  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-low);
   --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-low);
 
-  --uitk-text-h2-font-size-unit: var(--uitk-text-h2-font-size-low);
+  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-low);
   --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-low);
 
-  --uitk-text-h3-font-size-unit: var(--uitk-text-h3-font-size-low);
+  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-low);
   --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-low);
 
-  --uitk-text-h4-font-size-unit: var(--uitk-text-h4-font-size-low);
+  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-low);
   --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-low);
 
-  --uitk-text-caption-font-size-unit: var(--uitk-text-caption-font-size-low);
-  --uitk-text-caption-line-height-unit: var(--uitk-text-caption-line-height-low);
+  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-low);
+  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-low);
 
-  --uitk-text-help-font-size-unit: var(--uitk-text-help-font-size-low);
-  --uitk-text-help-line-height-unit: var(--uitk-text-help-line-height-low);
+  --uitk-text-help-font-size: var(--uitk-text-help-font-size-low);
+  --uitk-text-help-line-height: var(--uitk-text-help-line-height-low);
 
-  --uitk-text-size: var(--uitk-typography-size-low);
+  --uitk-text-size: var(--uitk-text-size-low);
   --uitk-text-line-height: var(--uitk-text-line-height-low);
 }
 .uitk-density-medium {
-  --uitk-text-h1-font-size-unit: var(--uitk-text-h1-font-size-medium);
+  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-medium);
   --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-medium);
 
-  --uitk-text-h2-font-size-unit: var(--uitk-text-h2-font-size-medium);
+  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-medium);
   --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-medium);
 
-  --uitk-text-h3-font-size-unit: var(--uitk-text-h3-font-size-medium);
+  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-medium);
   --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-medium);
 
-  --uitk-text-h4-font-size-unit: var(--uitk-text-h4-font-size-medium);
+  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-medium);
   --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-medium);
 
-  --uitk-text-caption-font-size-unit: var(--uitk-text-caption-font-size-medium);
-  --uitk-text-caption-line-height-unit: var(--uitk-text-caption-line-height-medium);
+  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-medium);
+  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-medium);
 
-  --uitk-text-help-font-size-unit: var(--uitk-text-help-font-size-medium);
-  --uitk-text-help-line-height-unit: var(--uitk-text-help-line-height-medium);
+  --uitk-text-help-font-size: var(--uitk-text-help-font-size-medium);
+  --uitk-text-help-line-height: var(--uitk-text-help-line-height-medium);
 
-  --uitk-text-size-unit: var(--uitk-typography-size-medium);
+  --uitk-text-size: var(--uitk-text-size-medium);
   --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 .uitk-density-high {
-  --uitk-text-h1-font-size-unit: var(--uitk-text-h1-font-size-high);
+  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-high);
   --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-high);
 
-  --uitk-text-h2-font-size-unit: var(--uitk-text-h2-font-size-high);
+  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-high);
   --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-high);
 
-  --uitk-text-h3-font-size-unit: var(--uitk-text-h3-font-size-high);
+  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-high);
   --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-high);
 
-  --uitk-text-h4-font-size-unit: var(--uitk-text-h4-font-size-high);
+  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-high);
   --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-high);
 
-  --uitk-text-caption-font-size-unit: var(--uitk-text-caption-font-size-high);
-  --uitk-text-caption-line-height-unit: var(--uitk-text-caption-line-height-high);
+  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-high);
+  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-high);
 
-  --uitk-text-help-font-size-unit: var(--uitk-text-help-font-size-high);
-  --uitk-text-help-line-height-unit: var(--uitk-text-help-line-height-high);
+  --uitk-text-help-font-size: var(--uitk-text-help-font-size-high);
+  --uitk-text-help-line-height: var(--uitk-text-help-line-height-high);
 
-  --uitk-text-size-unit: var(--uitk-typography-size-high);
+  --uitk-text-size: var(--uitk-text-size-high);
   --uitk-text-line-height: var(--uitk-text-line-height-high);
 }

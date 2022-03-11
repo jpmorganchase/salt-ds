@@ -58,7 +58,7 @@
 }
 
 .uitkSwitch-label .uitkControlLabel-text {
-  line-height: var(--uitk-typography-line-height);
+  line-height: var(--uitk-text-line-height);
   text-align: right;
 
   color: var(--switch-label-color);
