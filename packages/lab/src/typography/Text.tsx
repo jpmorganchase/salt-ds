@@ -8,7 +8,6 @@ import {
   ReactNode,
   CSSProperties,
   forwardRef,
-  useCallback,
 } from "react";
 import cx from "classnames";
 import { useForkRef } from "../utils";
@@ -96,23 +95,13 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const rows = useRef(maxRows);
   const density = useDensity();
 
-  // Debounce hook
-  const debounce = useCallback((func: () => void, timeout = 100) => {
-    let timer: number;
-    const debouncer = function () {
-      clearTimeout(timer);
-      timer = window.setTimeout(() => func(), timeout);
-    };
-    return debouncer();
-  }, []);
-
   // Scrolling
   useLayoutEffect(() => {
     const { current: node } = contentRef;
 
     const scrollObserver = new IntersectionObserver(
       (entries) => {
-        debounce(() => {
+        requestAnimationFrame(() => {
           entries.forEach((entry) => {
             setIsVisible(entry.isIntersecting);
           });
@@ -130,16 +119,18 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     }
 
     return () => {
-      scrollObserver.disconnect();
+      if (node) {
+        scrollObserver.unobserve(node);
+      }
     };
-  }, [contentRef.current, debounce]);
+  }, [contentRef.current]);
 
   // Resizing
   useLayoutEffect(() => {
     const { current: node } = contentRef;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      debounce(() => {
+      requestAnimationFrame(() => {
         for (const entry of entries) {
           const { width, height } = entry.contentRect;
           setResize({ width, height });
@@ -156,7 +147,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         resizeObserver.unobserve(node);
       }
     };
-  }, [isVisible, contentRef.current, debounce]);
+  }, [isVisible, contentRef.current]);
 
   // Styling
   useEffect(() => {

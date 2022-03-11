@@ -50,7 +50,7 @@ const TextComponent: ComponentStory<typeof Text> = (props) => {
         </div>
       </div>
 
-      {transactions.slice(0, 1).map((item) => {
+      {transactions.slice(0, 500).map((item) => {
         const {
           activity_name,
           amount_paid,
