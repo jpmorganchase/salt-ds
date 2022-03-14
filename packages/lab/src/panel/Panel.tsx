@@ -34,9 +34,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
       className={cx(
         withBaseName(),
         {
-          /* Both needed due to Panel using different default emphasis to container default */
-          [`uitkEmphasisMedium`]: emphasis === "medium",
-          [`uitkEmphasisHigh`]: emphasis === "high",
+          [`uitkEmphasisHigh`]: emphasis !== "medium",
         },
         className
       )}

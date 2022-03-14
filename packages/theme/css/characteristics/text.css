@@ -8,7 +8,7 @@
 
   --uitk-text-h1-line-height-touch: auto;
   --uitk-text-h1-line-height-low: 42px;
-  --uitk-text-h1-line-height-medium: 32px;
+  --uitk-text-h1-line-height-medium: 31px;
   --uitk-text-h1-line-height-high: 24px;
 
   --uitk-text-h1-font-weight: var(--uitk-typography-weight-bold);
@@ -47,7 +47,7 @@
 
   /* H4 */
   --uitk-text-h4-font-size-touch: 16px;
-  --uitk-text-h4-font-size-low: 16px;
+  --uitk-text-h4-font-size-low: 14px;
   --uitk-text-h4-font-size-medium: 12px;
   --uitk-text-h4-font-size-high: 11px;
 
