@@ -7,7 +7,7 @@
 .uitkOverlay {
   --overlay-text-color: var(--uitk-text-primary-color);
   --overlay-spacing: var(--uitk-spacing-unit);
-  --overlay-font-size: var(--uitk-text-size);
+  --overlay-font-size: var(--uitk-text-font-size);
   /* TODO: Which emphasis should this be? */
   --overlay-background-color: var(--uitk-container-background);
   --overlay-border-color: var(--uitk-container-border-color);

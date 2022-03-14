@@ -6,7 +6,7 @@
   color: inherit;
   display: flex;
   flex-direction: column;
-  font-size: var(--uitk-text-size);
+  font-size: var(--uitk-text-font-size);
   height: var(--editable-label-height);
   justify-content: center;
   padding: 0 var(--editable-label-padding);

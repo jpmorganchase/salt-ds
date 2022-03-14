@@ -44,7 +44,7 @@
   /* Focus */
   --calendar-day-focused-outline: var(--uitk-focused-outline);
   --calendar-day-size: var(--uitk-size-regular-unit);
-  --calendar-day-font-size: var(--uitk-text-size);
+  --calendar-day-font-size: var(--uitk-text-font-size);
 }
 
 .uitkCalendarDay {

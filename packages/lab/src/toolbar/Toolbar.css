@@ -1,6 +1,6 @@
 .uitkToolbar {
   --toolbar-background: var(--uitk-container-background);
-  --toolbar-font-size: var(--uitk-text-size);
+  --toolbar-font-size: var(--uitk-text-font-size);
   --toolbar-size: var(--uitk-size-toolbar-unit);
   /* --uitk-activation-indicator-size: 0; */
 }

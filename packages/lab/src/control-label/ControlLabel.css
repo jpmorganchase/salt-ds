@@ -13,7 +13,7 @@
   margin-top: var(--label-margin-top, 0);
 
   font-family: var(--uitk-typography-font-family);
-  font-size: var(--uitk-text-size);
+  font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-regular);
 
   margin-right: var(--label-margin-right, 4px);

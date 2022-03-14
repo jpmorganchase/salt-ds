@@ -12,7 +12,7 @@
   color: var(--uitk-text-primary-color);
   font-weight: var(--uitk-typography-weight-regular);
   font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
-  font-size: var(--uitk-text-size);
+  font-size: var(--uitk-text-font-size);
   letter-spacing: normal;
 }
 

@@ -7,7 +7,7 @@
   align-items: flex-start;
   align-self: var(--uitkTabstrip-align-self, stretch);
   box-sizing: border-box;
-  font-size: var(--uitk-text-size, 12px);
+  font-size: var(--uitk-text-font-size, 12px);
   font-weight: var(--uitk-typography-weight-regular);
   position: relative;
   overflow: hidden;
