@@ -24,13 +24,13 @@ High.args = {
 export const All: ComponentStory<typeof Panel> = (props) => {
   return (
     <>
-      <h1>High emphasis</h1>
+      <h1>Medium emphasis</h1>
       <AllRenderer>
         <Panel {...props} />
       </AllRenderer>
-      <h1>Medium emphasis</h1>
+      <h1>High emphasis</h1>
       <AllRenderer>
-        <Panel emphasis="medium" {...props} />
+        <Panel emphasis="high" {...props} />
       </AllRenderer>
     </>
   );
