@@ -1,3 +1,4 @@
+import cx from "classnames";
 import {
   ChangeEvent,
   ElementType,
@@ -15,11 +16,10 @@ import {
 } from "react";
 import { makePrefixer } from "@brandname/core";
 import { useControlled, useForkRef } from "../utils";
-import cx from "classnames";
+import { useFormFieldProps } from "../form-field-context";
+import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./Input.css";
-import { useCursorOnFocus } from "./useCursorOnFocus";
-import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("uitkInput");
 
@@ -223,6 +223,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <div
       className={cx(
         withBaseName(),
+        "uitkEmphasisLow",
         {
           [withBaseName(`${textAlign}TextAlign`)]: textAlign,
           [withBaseName("formField")]: inFormField,

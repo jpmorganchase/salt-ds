@@ -36,8 +36,8 @@
   --form-field-focus-outline-style: var(--uitk-focused-outline-style);
   --form-field-focus-outline-width: var(--uitk-focused-line-width);
   --form-field-focus-outlineout-offset: var(--uitk-focused-outline-offset);
-  --form-field-font-size: var(--uitk-typography-size-caption-unit);
-  --form-field-line-height: var(--uitk-typography-line-height);
+  --form-field-font-size: var(--uitk-text-caption-font-size);
+  --form-field-line-height: var(--uitk-text-line-height);
   --form-field-background: var(--uitk-editable-background);
 
   --helper-text-color: var(--uitk-text-secondary-color);
@@ -71,29 +71,29 @@
 }
 
 .uitkFormField-filled {
-  --form-field-background: var(--uitk-editable-high-emphasis-background);
+  --form-field-background: var(--uitk-editable-background);
 }
 
 .uitkFormField-filled.uitkFormField-error {
-  --form-field-background: var(--uitk-status-error-background);
+  --form-field-background: var(--uitk-status-background-error);
 }
 
 .uitkFormField-filled.uitkFormField-warning {
-  --form-field-background: var(--uitk-status-warning-background);
+  --form-field-background: var(--uitk-status-background-warning);
 }
 
 .uitkFormField-transparent {
-  --form-field-background: var(--uitk-editable-low-emphasis-background);
+  --form-field-background: var(--uitk-editable-background);
 }
 
 .uitkFormField.uitkFormField-warning {
-  --activation-indicator-color: var(--uitk-status-warning-color);
-  --form-field-focus-outline-color: var(--uitk-status-warning-color);
+  --activation-indicator-color: var(--uitk-status-color-warning);
+  --form-field-focus-outline-color: var(--uitk-status-color-warning);
 }
 
 .uitkFormField.uitkFormField-error {
-  --activation-indicator-color: var(--uitk-status-error-color);
-  --form-field-focus-outline-color: var(--uitk-status-error-color);
+  --activation-indicator-color: var(--uitk-status-color-error);
+  --form-field-focus-outline-color: var(--uitk-status-color-error);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */

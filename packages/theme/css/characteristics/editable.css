@@ -10,9 +10,9 @@
 }
 
 .uitk-light {
-  --uitk-editable-low-emphasis-background: transparent;
-  --uitk-editable-med-emphasis-background: var(--uitk-white);
-  --uitk-editable-high-emphasis-background: var(--uitk-grey-20);
+  --uitk-editable-background-low-emphasis: transparent;
+  --uitk-editable-background-medium-emphasis: var(--uitk-white);
+  --uitk-editable-background-high-emphasis: var(--uitk-grey-20);
 
   --uitk-editable-text-primary: var(--uitk-grey-900);
   --uitk-editable-text-secondary: var(--uitk-grey-200);
@@ -33,9 +33,9 @@
 }
 
 .uitk-dark {
-  --uitk-editable-low-emphasis-background: transparent;
-  --uitk-editable-med-emphasis-background: var(--uitk-grey-800);
-  --uitk-editable-high-emphasis-background: var(--uitk-grey-900);
+  --uitk-editable-background-low-emphasis: transparent;
+  --uitk-editable-background-medium-emphasis: var(--uitk-grey-800);
+  --uitk-editable-background-high-emphasis: var(--uitk-grey-900);
 
   --uitk-editable-text-primary: var(--uitk-white);
   --uitk-editable-text-secondary: var(--uitk-grey-70);
@@ -50,7 +50,21 @@
   --uitk-editable-border-color-active: var(--uitk-blue-400);
   --uitk-editable-border-color-readonly: var(--uitk-grey-100-fade-20);
 
-  /* not in figma */
+  /* Not in figma */
   /* blue 700 fade 99 - prevents browser adding transparency to the color */
   --uitk-editable-selection-background: var(--uitk-blue-700-fade-99);
+}
+
+.uitk-light,
+.uitk-dark {
+  /* Default medium emphasis background */
+  --uitk-editable-background: var(--uitk-editable-medium-emphasis-background);
+}
+
+.uitkEmphasisLow {
+  --uitk-editable-background: var(--uitk-editable-background-low-emphasis);
+}
+
+.uitkEmphasisHigh {
+  --uitk-editable-background: var(--uitk-editable-background-high-emphasis);
 }

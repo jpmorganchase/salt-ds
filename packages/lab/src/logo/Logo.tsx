@@ -54,7 +54,7 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   // TODO check if we need ImageProps and TitleProps classNames interface.
   return (
     <span
-      className={cx(withBaseName(), className, {
+      className={cx("uitkEmphasisHigh", withBaseName(), className, {
         [withBaseName("compact")]: compact,
       })}
       ref={ref}

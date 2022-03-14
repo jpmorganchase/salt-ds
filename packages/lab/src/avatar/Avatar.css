@@ -46,16 +46,16 @@
 }
 
 .uitkAvatar-small {
-  --avatar-font-size: var(--uitk-typography-size-10);
+  --avatar-font-size: 8px;
   --avatar-container-size: var(--uitk-size-regular-high);
 }
 
 .uitkAvatar-medium {
-  --avatar-font-size: var(--uitk-typography-size-40);
+  --avatar-font-size: 11px;
   --avatar-container-size: var(--uitk-size-regular-medium);
 }
 
 .uitkAvatar-large {
-  --avatar-font-size: var(--uitk-typography-size-70);
+  --avatar-font-size: 14px;
   --avatar-container-size: var(--uitk-size-regular-touch);
 }

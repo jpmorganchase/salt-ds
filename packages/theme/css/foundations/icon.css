@@ -5,8 +5,7 @@
 }
 
 .uitk-dark {
-  /* TODO: Confirm this color with designer */
   --uitk-icon-primary-color: var(--uitk-grey-60);
-  /* grey 60 */
+  /* Grey 60 */
   --uitk-icon-primary-color-disabled: rgba(197, 201, 208, var(--uitk-disabled-graphical-opacity));
 }

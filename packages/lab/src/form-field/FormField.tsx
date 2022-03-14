@@ -252,7 +252,7 @@ export const FormField = forwardRef(
 
     const formField = (
       <div
-        className={cx(classBase, className, {
+        className={cx(classBase, className, "uitkEmphasisLow", {
           [`${classBase}-${variant}`]: variant !== "theme",
           [`${classBase}-disabled`]: disabled,
           [`${classBase}-readOnly`]: readOnly,

@@ -1,6 +1,6 @@
 .uitkDraggable {
   background-color: transparent;
-  box-shadow: var(--uitk-shadow-black-4);
+  box-shadow: var(--uitk-shadow-4);
   cursor: move;
   position: absolute;
 }
@@ -12,7 +12,7 @@
   --uitkTab-background: var(--uitk-grey-40);
   --uitkTab-hover-background: var(--uitk-grey-40);
   --tab-bar-color: var(--uitk-grey-90);
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-size: var(--uitk-text-size, 12px);
 }
 
 .uitkDraggable-tabstrip .uitkTab {
@@ -52,7 +52,7 @@
   --uitkTab-hover-background: white;
   --uitkTab-height: 100%;
   --uitk-size-stackable-unit: 100%;
-  border: solid 1px var(--uitk-status-info-color);
+  border: solid 1px var(--uitk-status-color-info);
 }
 .uitkDraggable-tooltip .uitkTab:hover:before,
 .uitkDraggable-tooltip .uitkTab:before {

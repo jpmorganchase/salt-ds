@@ -1,21 +1,21 @@
 .uitkCard {
-  --card-background-color: var(--uitkCard-background-color, var(--uitk-container-low-emphasis-background));
+  --card-background-color: var(--uitkCard-background-color, var(--uitk-container-background));
   --card-border-width: var(--uitkCard-border-width, var(--uitk-container-border-width));
   --card-border-style: var(--uitkCard-border-style, var(--uitk-container-border-style));
-  --card-border-color: var(--uitkCard-border-color, var(--uitk-container-low-emphasis-border-color));
-  --card-border-color-disabled: var(--uitkCard-border-color-disabled, var(--uitk-container-low-emphasis-border-color-disabled));
-  --card-border-color-hover: var(--uitkCard-border-color-hover, var(--uitk-container-low-emphasis-border-color-hover));
-  --card-box-shadow-hover: var(--uitkCard-box-shadow-hover, var(--uitk-shadow-black-4));
-  --card-box-shadow-active: var(--uitkCard-box-shadow-active, var(--uitk-shadow-black-2));
+  --card-border-color: var(--uitkCard-border-color, var(--uitk-container-border-color));
+  --card-border-color-disabled: var(--uitkCard-border-color-disabled, var(--uitk-container-border-color-disabled));
+  --card-border-color-hover: var(--uitkCard-border-color-hover, var(--uitk-container-border-color-hover)); /* TODO: This does not exist? Find appropriate fallback val */
+  --card-box-shadow-hover: var(--uitkCard-box-shadow-hover, var(--uitk-shadow-4));
+  --card-box-shadow-active: var(--uitkCard-box-shadow-active, var(--uitk-shadow-2));
   --card-border-radius: var(--uitkCard-border-radius, var(--uitk-container-border-radius));
-  --card-box-shadow: var(--uitkCard-box-shadow, var(--uitk-shadow-black-2));
+  --card-box-shadow: var(--uitkCard-box-shadow, var(--uitk-shadow-2));
   --card-color: var(--uitkCard-color, var(--uitk-text-primary-color));
   --card-padding: var(--uitkCard-padding, calc(var(--uitk-spacing-unit) * 3));
   --card-cursor-disabled: var(--uitkCard-cursor-disabled, var(--uitk-disabled-cursor));
   --content-padding: var(--uitkCard-content-padding, 0);
   --content-letter-spacing: var(--uitkCard-content-letter-spacing, 0);
-  --content-line-height: var(--uitkCard-content-line-height, var(--uitk-typography-line-height));
-  --content-font-size: var(--uitkCard-content-font-size, var(--uitk-typography-size-regular-unit));
+  --content-line-height: var(--uitkCard-content-line-height, var(--uitk-text-line-height));
+  --content-font-size: var(--uitkCard-content-font-size, var(--uitk-text-size));
 }
 
 .uitkCard {

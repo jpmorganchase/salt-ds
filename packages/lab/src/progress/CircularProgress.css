@@ -1,5 +1,5 @@
 .uitkCircularProgress {
-  color: var(--uitk-progress-color);
+  color: var(--uitk-text-primary-color);
   display: inline-flex;
   position: relative;
 }
@@ -30,15 +30,15 @@
 }
 
 .uitkCircularProgress-small {
-  font-size: var(--uitk-progress-small-font-size);
+  font-size: var(--uitk-measured-font-size-small);
 }
 
 .uitkCircularProgress-medium {
-  font-size: var(--uitk-progress-medium-font-size);
+  font-size: var(--uitk-measured-font-size-medium);
 }
 
 .uitkCircularProgress-large {
-  font-size: var(--uitk-progress-large-font-size);
+  font-size: var(--uitk-measured-font-size-large);
 }
 
 .uitkCircularProgress-disabled {
@@ -48,16 +48,16 @@
 }
 
 .uitkCircularProgress-railCircle {
-  stroke: var(--uitk-progress-track-color);
+  stroke: var(--uitk-measured-track-color);
   stroke-width: 1px;
 }
 
 .uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-progress-color-active-start);
+  stop-color: var(--uitk-measured-color-active-start);
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-progress-color-active-stop);
+  stop-color: var(--uitk-measured-color-active-stop);
 }
 
 .uitkCircularProgress-container {

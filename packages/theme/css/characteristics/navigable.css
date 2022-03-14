@@ -1,61 +1,73 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-navigable-link-text-decoration: underline;
   --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-active: pointer;
 }
 
 .uitk-light {
-  /* TODO: Link tokens soon to be included in text */
-  --uitk-navigable-link-color: var(--uitk-grey-900);
-  --uitk-navigable-link-color-hover: var(--uitk-blue-500);
-  --uitk-navigable-link-color-active: var(--uitk-blue-500);
-  --uitk-navigable-link-color-disabled: var(--uitk-grey-900);
-
   --uitk-navigable-indicator-color-hover: var(--uitk-grey-90);
   --uitk-navigable-indicator-color-active: var(--uitk-orange-700);
 
-  --uitk-navigable-text-color: var(--uitk-grey-400);
-  --uitk-navigable-text-color-hover: var(--uitk-grey-400);
-  --uitk-navigable-text-color-active: var(--uitk-grey-900);
+  --uitk-navigable-link-color: var(--uitk-grey-400);
+  --uitk-navigable-link-color-hover: var(--uitk-grey-400);
+  --uitk-navigable-link-color-active: var(--uitk-grey-900);
 
-  /* question, do we want to encode emphasis into the token names like this, or should be use a
-     utility class, say --uitk-emphasis-low, and redefine the same token ?  */
-  --uitk-navigable-low-emphasis-border: solid 1px transparent;
-  --uitk-navigable-low-emphasis-background-hover: var(--uitk-grey-20);
+  --uitk-navigable-border-low-emphasis: solid 1px transparent;
+  --uitk-navigable-background-hover-low-emphasis: var(--uitk-grey-20);
 
-  --uitk-navigable-med-emphasis-background-hover: var(--uitk-grey-20);
-  --uitk-navigable-border: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-border-medium-emphasis: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-background-hover-medium-emphasis: var(--uitk-grey-20);
 
-  --uitk-navigable-high-emphasis-background: var(--uitk-grey-20);
-  --uitk-navigable-high-emphasis-background-active: var(--uitk-grey-20);
-  --uitk-navigable-high-emphasis-background-hover: var(--uitk-grey-30);
-  --uitk-navigable-high-emphasis-border: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-border-high-emphasis: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-background-high-emphasis: var(--uitk-grey-20);
+  --uitk-navigable-background-active-high-emphasis: var(--uitk-grey-20);
+  --uitk-navigable-background-hover-high-emphasis: var(--uitk-grey-30);
 }
 
 .uitk-dark {
-  /* TODO: Link tokens soon to be included in text */
-  --uitk-navigable-link-color: var(--uitk-white);
-  --uitk-navigable-link-color-hover: var(--uitk-blue-200);
-  --uitk-navigable-link-color-active: var(--uitk-blue-200);
-  --uitk-navigable-link-color-disabled: var(--uitk-white);
-
   --uitk-navigable-indicator-color-hover: var(--uitk-grey-90);
   --uitk-navigable-indicator-color-active: var(--uitk-orange-500);
 
-  --uitk-navigable-text-color: var(--uitk-grey-40);
-  --uitk-navigable-text-color-hover: var(--uitk-grey-40);
-  --uitk-navigable-text-color-active: var(--uitk-white);
+  --uitk-navigable-link-color: var(--uitk-grey-40);
+  --uitk-navigable-link-color-hover: var(--uitk-grey-40);
+  --uitk-navigable-link-color-active: var(--uitk-white);
 
-  --uitk-navigable-low-emphasis-border: solid 1px transparent;
-  --uitk-navigable-low-emphasis-background-hover: var(--uitk-grey-600);
+  --uitk-navigable-border-low-emphasis: none;
+  --uitk-navigable-background-low-emphasis: none;
+  --uitk-navigable-background-hover-low-emphasis: var(--uitk-grey-600);
+  --uitk-navigable-background-active-low-emphasis: none;
 
-  --uitk-navigable-med-emphasis-background-hover: var(--uitk-grey-600);
-  --uitk-navigable-med-emphasis-border: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-border-medium-emphasis: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-background-medium-emphasis: none;
+  --uitk-navigable-background-hover-medium-emphasis: var(--uitk-grey-600);
+  --uitk-navigable-background-active-medium-emphasis: none;
 
-  --uitk-navigable-high-emphasis-background: var(--uitk-grey-600);
-  --uitk-navigable-high-emphasis-background-active: var(--uitk-grey-600);
-  --uitk-navigable-high-emphasis-background-hover: var(--uitk-grey-600);
-  --uitk-navigable-high-emphasis-border: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-border-high-emphasis: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-background-high-emphasis: var(--uitk-grey-600);
+  --uitk-navigable-background-hover-high-emphasis: var(--uitk-grey-600);
+  --uitk-navigable-background-active-high-emphasis: var(--uitk-grey-600);
+}
+
+.uitk-light,
+.uitk-dark {
+  /* Default medium values */
+  --uitk-navigable-border: var(--uitk-navigable-border-medium-emphasis);
+  --uitk-navigable-background: var(--uitk-navigable-background-medium-emphasis);
+  --uitk-navigable-background-active: var(--uitk-navigable-background-active-medium-emphasis);
+  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-medium-emphasis);
+}
+
+.uitkLowEmphasis {
+  --uitk-navigable-border: var(--uitk-navigable-border-low-emphasis);
+  --uitk-navigable-background: var(--uitk-navigable-background-low-emphasis);
+  --uitk-navigable-background-active: var(--uitk-navigable-background-active-low-emphasis);
+  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-low-emphasis);
+}
+
+.uitkHighEmphasis {
+  --uitk-navigable-border: var(--uitk-navigable-border-high-emphasis);
+  --uitk-navigable-background: var(--uitk-navigable-background-high-emphasis);
+  --uitk-navigable-background-active: var(--uitk-navigable-background-active-high-emphasis);
+  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-high-emphasis);
 }

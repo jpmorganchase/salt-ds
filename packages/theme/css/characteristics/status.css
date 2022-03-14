@@ -1,38 +1,82 @@
-/** 
-  Status
-
-  TODO: We're not following the naming convention yet, due to status colors used as background
-  (e.g. badge) has contrast issue. We need to fix the colors then find appropriate naming.
-**/
-
 .uitk-light {
-  --uitk-status-info-color: var(--uitk-blue-500);
-  --uitk-status-success-color: var(--uitk-green-500);
-  --uitk-status-warning-color: var(--uitk-orange-700);
-  --uitk-status-error-color: var(--uitk-red-500);
+  --uitk-status-color-info: var(--uitk-blue-500);
+  --uitk-status-color-success: var(--uitk-green-500);
+  --uitk-status-color-warning: var(--uitk-orange-700);
+  --uitk-status-color-error: var(--uitk-red-500);
 
-  --uitk-status-low-emphasis-background: var(--uitk-white);
+  --uitk-status-icon-color-info: var(--uitk-status-color-info);
+  --uitk-status-icon-color-success: var(--uitk-status-color-success);
+  --uitk-status-icon-color-warning: var(--uitk-status-color-warning);
+  --uitk-status-icon-color-error: var(--uitk-status-color-error);
 
-  --uitk-status-info-med-emphasis-background: var(--uitk-blue-10);
-  --uitk-status-success-med-emphasis-background: var(--uitk-green-10);
-  --uitk-status-warning-med-emphasis-background: var(--uitk-orange-10);
-  --uitk-status-error-med-emphasis-background: var(--uitk-red-10);
+  --uitk-status-border-color-info: var(--uitk-status-color-info);
+  --uitk-status-border-color-success: var(--uitk-status-color-success);
+  --uitk-status-border-color-warning: var(--uitk-status-color-warning);
+  --uitk-status-border-color-error: var(--uitk-status-color-error);
+
+  --uitk-status-background-info-low-emphasis: none;
+  --uitk-status-background-success-low-emphasis: none;
+  --uitk-status-background-warning-low-emphasis: none;
+  --uitk-status-background-error-low-emphasis: none;
+
+  --uitk-status-background-info-medium-emphasis: var(--uitk-white);
+  --uitk-status-background-success-medium-emphasis: var(--uitk-white);
+  --uitk-status-background-warning-medium-emphasis: var(--uitk-white);
+  --uitk-status-background-error-medium-emphasis: var(--uitk-white);
+
+  --uitk-status-background-info-high-emphasis: var(--uitk-blue-10);
+  --uitk-status-background-success-high-emphasis: var(--uitk-green-10);
+  --uitk-status-background-warning-high-emphasis: var(--uitk-orange-10);
+  --uitk-status-background-error-high-emphasis: var(--uitk-red-10);
 }
 
 .uitk-dark {
-  --uitk-status-info-color: var(--uitk-blue-400);
-  --uitk-status-success-color: var(--uitk-green-400);
-  --uitk-status-warning-color: var(--uitk-orange-500);
-  --uitk-status-error-color: var(--uitk-red-400);
+  --uitk-status-icon-color-info: var(--uitk-blue-400);
+  --uitk-status-icon-color-success: var(--uitk-green-400);
+  --uitk-status-icon-color-warning: var(--uitk-orange-500);
+  --uitk-status-icon-color-error: var(--uitk-red-400);
 
-  --uitk-status-low-emphasis-background: var(--uitk-grey-800);
+  --uitk-status-border-color-info: var(--uitk-blue-400);
+  --uitk-status-border-color-success: var(--uitk-green-400);
+  --uitk-status-border-color-warning: var(--uitk-orange-500);
+  --uitk-status-border-color-error: var(--uitk-red-400);
 
-  /** 
-   TODO: These are completely different values v.s. the light theme color tokens -
-   decide if we want to change to using the same but with different opacity 
-   **/
-  --uitk-status-info-med-emphasis-background: var(--uitk-blue-1000);
-  --uitk-status-success-med-emphasis-background: var(--uitk-green-1000);
-  --uitk-status-warning-med-emphasis-background: var(--uitk-orange-1000);
-  --uitk-status-error-med-emphasis-background: var(--uitk-red-1000);
+  --uitk-status-background-info-low-emphasis: none;
+  --uitk-status-background-success-low-emphasis: none;
+  --uitk-status-background-warning-low-emphasis: none;
+  --uitk-status-background-error-low-emphasis: none;
+
+  --uitk-status-background-info-medium-emphasis: var(--uitk-grey-800);
+  --uitk-status-background-success-medium-emphasis: var(--uitk-grey-800);
+  --uitk-status-background-warning-medium-emphasis: var(--uitk-grey-800);
+  --uitk-status-background-error-medium-emphasis: var(--uitk-grey-800);
+
+  /* TODO: Replace blue with -800 and other colors -900 when palette updated */
+  --uitk-status-background-info-high-emphasis: var(--uitk-blue-1000);
+  --uitk-status-background-success-high-emphasis: var(--uitk-green-1000);
+  --uitk-status-background-warning-high-emphasis: var(--uitk-orange-1000);
+  --uitk-status-background-error-high-emphasis: var(--uitk-red-1000);
+}
+
+.uitk-dark,
+.uitk-light {
+  /* Default low emphasis background */
+  --uitk-status-background-info: var(--uitk-status-background-info-low-emphasis);
+  --uitk-status-background-success: var(--uitk-status-background-success-low-emphasis);
+  --uitk-status-background-warning: var(--uitk-status-background-warning-low-emphasis);
+  --uitk-status-background-error: var(--uitk-status-background-error-low-emphasis);
+}
+
+.uitkEmphasisMedium {
+  --uitk-status-background-info: var(--uitk-status-background-info-medium-emphasis);
+  --uitk-status-background-success: var(--uitk-status-background-success-medium-emphasis);
+  --uitk-status-background-warning: var(--uitk-status-background-warning-medium-emphasis);
+  --uitk-status-background-error: var(--uitk-status-background-error-medium-emphasis);
+}
+
+.uitkEmphasisHigh {
+  --uitk-status-background-info: var(--uitk-status-background-info-high-emphasis);
+  --uitk-status-background-success: var(--uitk-status-background-success-high-emphasis);
+  --uitk-status-background-warning: var(--uitk-status-background-warning-high-emphasis);
+  --uitk-status-background-error: var(--uitk-status-background-error-high-emphasis);
 }

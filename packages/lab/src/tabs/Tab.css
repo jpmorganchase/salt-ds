@@ -16,8 +16,8 @@
   --uitk-editable-label-padding: 0;
   --uitk-editable-label-height: var(--tabstrip-height);
   --uitk-input-min-width: 4em;
-  --uitk-link-text-decoration: none;
-  --uitk-link-text-decoration: none;
+  --uitk-text-link-text-decoration: none;
+  --uitk-text-link-text-decoration: none;
   --uitk-focusable-outline-offset: -2px;
   --uitk-focusable-outline-top: 0px;
   --uitk-focusable-outline-bottom: 2px;

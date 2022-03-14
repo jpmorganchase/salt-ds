@@ -4,7 +4,7 @@
   --uitk-draggable-cursor-active: grabbing;
 
   /* not in figma */
-  --uitk-draggable-box-shadow: var(--uitk-shadow-black-4);
+  --uitk-draggable-box-shadow: var(--uitk-shadow-4);
 }
 
 .uitk-light {

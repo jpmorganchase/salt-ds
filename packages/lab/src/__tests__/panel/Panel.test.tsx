@@ -24,15 +24,10 @@ describe("GIVEN a Panel", () => {
   });
 
   describe("emphasis prop", () => {
-    it('THEN should display "low" emphasis by default', () => {
-      const { getByText } = render(<Panel>{text}</Panel>);
-      expect(getByText(text)).toHaveClass("uitkPanel-lowEmphasis");
-    });
-
     describe('WHEN the "medium" emphasis is selected', () => {
       it('THEN should display "medium" emphasis', () => {
         const { getByText } = render(<Panel emphasis="medium">{text}</Panel>);
-        expect(getByText(text)).toHaveClass("uitkPanel-mediumEmphasis");
+        expect(getByText(text)).toHaveClass("uitkEmphasisMedium");
       });
     });
   });
