@@ -6,7 +6,7 @@
 }
 
 .uitkLogo {
-  --logo-font-size: var(--uitk-text-size);
+  --logo-font-size: var(--uitk-text-font-size);
   --logo-line-height: var(--uitk-text-line-height);
   --logo-pipe-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color));
   --logo-height: var(--uitkLogo-logo-height, calc(var(--logo-font-size) + var(--uitk-spacing-unit)));

@@ -18,7 +18,7 @@
 
   /* Font / Typography */
   --file-drop-zone-font-family: var(--uitk-typography-font-family);
-  --file-drop-zone-font-size: var(--uitk-text-size);
+  --file-drop-zone-font-size: var(--uitk-text-font-size);
   --file-drop-zone-line-height: var(--uitk-text-line-height);
 
   --file-drop-zone-title-font-weight: var(--uitk-typography-weight-semiBold);

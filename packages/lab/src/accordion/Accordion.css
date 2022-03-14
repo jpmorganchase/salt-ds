@@ -97,7 +97,7 @@
   font-weight: var(--summary-font-weight);
   background: var(--summary-background);
   color: var(--summary-text-color);
-  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-size));
+  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-font-size));
   font-family: var(--uitkAccordionSummary-font-family, var(--uitk-typography-font-family));
   padding-left: var(--summary-padding-left);
   position: relative;

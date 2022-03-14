@@ -10,7 +10,7 @@
 }
 
 .uitkQueryResultTable tr {
-  font-size: var(--uitk-text-size);
+  font-size: var(--uitk-text-font-size);
 }
 
 .uitkQueryResultTable td {

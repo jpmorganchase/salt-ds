@@ -26,7 +26,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("uitkPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { className, children, emphasis = "high", ...restProps },
+  { className, children, emphasis = "medium", ...restProps },
   ref
 ) {
   return (

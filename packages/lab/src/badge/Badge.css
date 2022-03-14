@@ -5,7 +5,7 @@
   /* Font, Typography */
   --badge-children-font-family: var(--uitk-typography-font-family);
   --badge-children-line-height: var(--uitk-text-line-height);
-  --badge-children-font-size: var(--uitk-text-size);
+  --badge-children-font-size: var(--uitk-text-font-size);
   --badge-content-font-weight: var(--uitk-typography-weight-bold);
   --badge-content-font-size: var(--uitk-text-caption-font-size);
   --badge-content-border-radius: 16px;

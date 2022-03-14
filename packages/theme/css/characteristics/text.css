@@ -84,19 +84,19 @@
 
   /**
     Body text (default)
-    Avoid using these directly. Instead, use --uitk-text-size, --uitk-text-line-height values
+    Avoid using these directly. Instead, use --uitk-text-font-size, --uitk-text-line-height values
     below, which scope to density, unless strong reason applicable
   **/
-  --uitk-text-size-touch: 16px;
+  --uitk-text-font-size-touch: 16px;
   --uitk-text-line-height-touch: 22px;
 
-  --uitk-text-size-low: 14px;
+  --uitk-text-font-size-low: 14px;
   --uitk-text-line-height-low: 18px;
 
-  --uitk-text-size-medium: 12px;
+  --uitk-text-font-size-medium: 12px;
   --uitk-text-line-height-medium: 16px;
 
-  --uitk-text-size-high: 11px;
+  --uitk-text-font-size-high: 11px;
   --uitk-text-line-height-high: 14px;
 }
 
@@ -115,7 +115,8 @@
   --uitk-text-link-color-active: var(--uitk-blue-500);
   --uitk-text-link-color-disabled: var(--uitk-grey-900);
 
-  --uitk-text-size: var(--uitk-text-size-medium);
+  --uitk-text-font-size: var(--uitk-text-font-size-medium);
+  --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 
 .uitk-dark {
@@ -133,6 +134,9 @@
   --uitk-text-link-color-active: var(--uitk-blue-200);
   --uitk-text-link-color-disabled: var(--uitk-white);
   --uitk-text-link-text-decoration: underline;
+
+  --uitk-text-font-size: var(--uitk-text-font-size-medium);
+  --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 
 .uitk-density-touch {
@@ -154,7 +158,7 @@
   --uitk-text-help-font-size: var(--uitk-text-help-font-size-touch);
   --uitk-text-help-line-height: var(--uitk-text-help-line-height-touch);
 
-  --uitk-text-size: var(--uitk-text-size-touch);
+  --uitk-text-font-size: var(--uitk-text-font-size-touch);
   --uitk-text-line-height: var(--uitk-text-line-height-touch);
 }
 .uitk-density-low {
@@ -176,7 +180,7 @@
   --uitk-text-help-font-size: var(--uitk-text-help-font-size-low);
   --uitk-text-help-line-height: var(--uitk-text-help-line-height-low);
 
-  --uitk-text-size: var(--uitk-text-size-low);
+  --uitk-text-font-size: var(--uitk-text-font-size-low);
   --uitk-text-line-height: var(--uitk-text-line-height-low);
 }
 .uitk-density-medium {
@@ -198,7 +202,7 @@
   --uitk-text-help-font-size: var(--uitk-text-help-font-size-medium);
   --uitk-text-help-line-height: var(--uitk-text-help-line-height-medium);
 
-  --uitk-text-size: var(--uitk-text-size-medium);
+  --uitk-text-font-size: var(--uitk-text-font-size-medium);
   --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 .uitk-density-high {
@@ -220,6 +224,6 @@
   --uitk-text-help-font-size: var(--uitk-text-help-font-size-high);
   --uitk-text-help-line-height: var(--uitk-text-help-line-height-high);
 
-  --uitk-text-size: var(--uitk-text-size-high);
+  --uitk-text-font-size: var(--uitk-text-font-size-high);
   --uitk-text-line-height: var(--uitk-text-line-height-high);
 }

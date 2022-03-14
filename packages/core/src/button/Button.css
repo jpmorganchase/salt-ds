@@ -95,7 +95,7 @@
   cursor: pointer;
   display: inline-block;
   justify-content: center;
-  font-size: var(--uitkButton-font-size, var(--uitk-text-size));
+  font-size: var(--uitkButton-font-size, var(--uitk-text-font-size));
   font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
   line-height: var(--uitkButton-line-height, var(--uitk-text-line-height));
   letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing));

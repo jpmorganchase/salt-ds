@@ -15,7 +15,7 @@
   --content-padding: var(--uitkCard-content-padding, 0);
   --content-letter-spacing: var(--uitkCard-content-letter-spacing, 0);
   --content-line-height: var(--uitkCard-content-line-height, var(--uitk-text-line-height));
-  --content-font-size: var(--uitkCard-content-font-size, var(--uitk-text-size));
+  --content-font-size: var(--uitkCard-content-font-size, var(--uitk-text-font-size));
 }
 
 .uitkCard {
