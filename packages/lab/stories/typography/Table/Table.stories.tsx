@@ -9,11 +9,11 @@ export default {
   title: "Lab/Typography",
   component: Text,
   argTypes: {
-    width: {
+    wrapperWidth: {
       description: "For this demo only. Set '0' for 100% width",
       control: { type: "number" },
     },
-    height: {
+    wrapperHeight: {
       description: "For this demo only. Set '0' for 100% height",
       control: { type: "number" },
     },
@@ -21,49 +21,52 @@ export default {
 } as ComponentMeta<typeof Text>;
 
 const TextComponent: Story = (props) => {
-  const { width, height } = props;
+  const { wrapperWidth, wrapperHeight } = props;
 
   return (
     <div
-      style={{ width: width || "100vw", height: height || "100vh" }}
+      style={{
+        width: wrapperWidth || "100vw",
+        height: wrapperHeight || "100vh",
+      }}
       className="container"
     >
       <div className="table">
         <div className="row">
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Date</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Amount paid</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Activity name</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Status</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Reference</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Payment method</strong>
-            </LabelCaption>
+            </Div>
           </div>
           <div className="table-cell">
-            <LabelCaption>
+            <Div>
               <strong>Payment type</strong>
-            </LabelCaption>
+            </Div>
           </div>
         </div>
 
@@ -126,6 +129,6 @@ TableExample.parameters = {
   },
 };
 TableExample.args = {
-  width: undefined,
-  height: undefined,
+  wrapperWidth: undefined,
+  wrapperHeight: undefined,
 };

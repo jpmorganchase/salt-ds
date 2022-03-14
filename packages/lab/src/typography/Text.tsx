@@ -61,7 +61,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 }
 
 interface StylesType {
-  opacity?: number;
   "--text-height"?: string;
   "--text-max-rows"?: number;
 }
@@ -151,7 +150,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Styling
   useEffect(() => {
-    if (contentRef.current) {
+    if (contentRef.current && isVisible) {
       const styles: StylesType = {};
 
       if (maxRows) {
@@ -213,10 +212,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
           }
         }
       }
-      styles.opacity = 1;
       setStyle(styles);
     }
-  }, [elementType, maxRows, expanded, truncate, density, resize]);
+  }, [elementType, maxRows, expanded, truncate, density, resize, isVisible]);
 
   // Tooltip
   useEffect(() => {

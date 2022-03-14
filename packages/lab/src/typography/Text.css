@@ -10,19 +10,15 @@
 /* Main css class */
 .uitkText {
   --text-max-rows: 1;
-  --text-width: 100%;
   --text-height: 100%;
-  --text-line-height: 1.3;
 
-  width: var(--text-width);
+  width: 100%;
   height: var(--text-height);
-  line-height: var(--text-line-height);
-  font-size: var(--uitk-typography-size-regular-unit);
+  line-height: var(--uitk-text-line-height);
+  font-size: var(--uitk-text-font-size);
   font-weight: 400;
   overflow: auto;
   word-break: break-word;
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
 }
 
 .uitkText-lineClamp {
@@ -39,19 +35,20 @@ h1.uitkText,
 .uitkText-h1.uitkText {
   margin-block-start: 0.67em;
   margin-block-end: 0.67em;
-  font-size: var(--uitk-text-font-size-h1-unit);
-  font-weight: var(--uitk-text-font-weight-h1);
+  font-size: var(--uitk-text-h1-font-size);
+  line-height: var(--uitk-text-h1-line-height);
+  font-weight: var(--uitk-text-h1-font-weight);
 }
 
 /* H1 emphasis */
 h1.uitkText strong,
 .uitkText-h1.uitkText strong {
-  font-weight: var(--uitk-text-font-weight-h1-strong);
+  font-weight: var(--uitk-text-h1-font-weight-strong);
 }
 h1.uitkText small,
 .uitkText-h1.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-font-weight-h1-small);
+  font-weight: var(--uitk-text-h1-font-weight-small);
 }
 
 /* Heading 2 */
@@ -60,7 +57,8 @@ h2.uitkText,
 .uitkText-h2.uitkText {
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;
-  font-size: var(--uitk-text-h2-font-size-unit);
+  font-size: var(--uitk-text-h2-font-size);
+  line-height: var(--uitk-text-h2-line-height);
   font-weight: var(--uitk-text-h2-font-weight);
 }
 
@@ -80,7 +78,8 @@ h3.uitkText,
 .uitkText-h3.uitkText {
   margin-block-start: 1em;
   margin-block-end: 1em;
-  font-size: var(--uitk-text-h3-font-size-unit);
+  font-size: var(--uitk-text-h3-font-size);
+  line-height: var(--uitk-text-h3-line-height);
   font-weight: var(--uitk-text-h3-font-weight);
 }
 
@@ -100,7 +99,8 @@ h4.uitkText,
 .uitkText-h4.uitkText {
   margin-block-start: 1.33em;
   margin-block-end: 1.33em;
-  font-size: var(--uitk-text-h4-font-size-unit);
+  font-size: var(--uitk-text-h4-font-size);
+  line-height: var(--uitk-text-h4-line-height);
   font-weight: var(--uitk-text-h4-font-weight);
 }
 
@@ -117,14 +117,35 @@ h4.uitkText small,
 
 /* Label-Caption */
 label.uitkText {
-  font-size: var(--uitk-text-caption-font-size-unit);
-  line-height: var(--uitk-text-caption-line-height-unit);
+  font-size: var(--uitk-text-caption-font-size);
+  line-height: var(--uitk-text-caption-line-height);
 }
 
 /* Help text */
 .uitkText-helpText.uitkText {
   font-style: italic;
   color: var(--uitk-text-secondary-regular-color);
-  font-size: var(--uitk-text-help-font-size-unit);
-  line-height: var(--uitk-text-help-line-height-unit);
+  font-size: var(--uitk-text-help-font-size);
+  line-height: var(--uitk-text-help-line-height);
+}
+
+/* Figure 1 */
+.uitkText-figure1.uitkText {
+  font-size: 56px;
+  line-height: 74px;
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 2 */
+.uitkText-figure2.uitkText {
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 3 */
+.uitkText-figure3.uitkText {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
