@@ -116,7 +116,6 @@
   --uitk-text-link-color-disabled: var(--uitk-grey-900);
 
   --uitk-text-font-size: var(--uitk-text-font-size-medium);
-  --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 
 .uitk-dark {
@@ -134,9 +133,6 @@
   --uitk-text-link-color-active: var(--uitk-blue-200);
   --uitk-text-link-color-disabled: var(--uitk-white);
   --uitk-text-link-text-decoration: underline;
-
-  --uitk-text-font-size: var(--uitk-text-font-size-medium);
-  --uitk-text-line-height: var(--uitk-text-line-height-medium);
 }
 
 .uitk-density-touch {

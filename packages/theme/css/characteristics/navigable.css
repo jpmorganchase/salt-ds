@@ -12,17 +12,6 @@
   --uitk-navigable-link-color: var(--uitk-grey-400);
   --uitk-navigable-link-color-hover: var(--uitk-grey-400);
   --uitk-navigable-link-color-active: var(--uitk-grey-900);
-
-  --uitk-navigable-border-low-emphasis: solid 1px transparent;
-  --uitk-navigable-background-hover-low-emphasis: var(--uitk-grey-20);
-
-  --uitk-navigable-border-medium-emphasis: solid 1px var(--uitk-grey-60);
-  --uitk-navigable-background-hover-medium-emphasis: var(--uitk-grey-20);
-
-  --uitk-navigable-border-high-emphasis: solid 1px var(--uitk-grey-60);
-  --uitk-navigable-background-high-emphasis: var(--uitk-grey-20);
-  --uitk-navigable-background-active-high-emphasis: var(--uitk-grey-20);
-  --uitk-navigable-background-hover-high-emphasis: var(--uitk-grey-30);
 }
 
 .uitk-dark {
@@ -32,42 +21,50 @@
   --uitk-navigable-link-color: var(--uitk-grey-40);
   --uitk-navigable-link-color-hover: var(--uitk-grey-40);
   --uitk-navigable-link-color-active: var(--uitk-white);
-
-  --uitk-navigable-border-low-emphasis: none;
-  --uitk-navigable-background-low-emphasis: none;
-  --uitk-navigable-background-hover-low-emphasis: var(--uitk-grey-600);
-  --uitk-navigable-background-active-low-emphasis: none;
-
-  --uitk-navigable-border-medium-emphasis: solid 1px var(--uitk-grey-400);
-  --uitk-navigable-background-medium-emphasis: none;
-  --uitk-navigable-background-hover-medium-emphasis: var(--uitk-grey-600);
-  --uitk-navigable-background-active-medium-emphasis: none;
-
-  --uitk-navigable-border-high-emphasis: solid 1px var(--uitk-grey-400);
-  --uitk-navigable-background-high-emphasis: var(--uitk-grey-600);
-  --uitk-navigable-background-hover-high-emphasis: var(--uitk-grey-600);
-  --uitk-navigable-background-active-high-emphasis: var(--uitk-grey-600);
 }
 
-.uitk-light,
+/* Default medium emphasis values */
+
+.uitk-light {
+  --uitk-navigable-border: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-background: none;
+  --uitk-navigable-background-hover: var(--uitk-grey-20);
+  --uitk-navigable-background-active: none;
+}
+
 .uitk-dark {
-  /* Default medium values */
-  --uitk-navigable-border: var(--uitk-navigable-border-medium-emphasis);
-  --uitk-navigable-background: var(--uitk-navigable-background-medium-emphasis);
-  --uitk-navigable-background-active: var(--uitk-navigable-background-active-medium-emphasis);
-  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-medium-emphasis);
+  --uitk-navigable-border: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-background: none;
+  --uitk-navigable-background-hover: var(--uitk-grey-600);
+  --uitk-navigable-background-active: none;
 }
 
-.uitkLowEmphasis {
-  --uitk-navigable-border: var(--uitk-navigable-border-low-emphasis);
-  --uitk-navigable-background: var(--uitk-navigable-background-low-emphasis);
-  --uitk-navigable-background-active: var(--uitk-navigable-background-active-low-emphasis);
-  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-low-emphasis);
+/* High and low emphasis values */
+
+.uitkEmphasisLow .uitk-light .uitkEmphasisLow {
+  --uitk-navigable-border: solid 1px transparent;
+  --uitk-navigable-background-active: none;
+  --uitk-navigable-background: none;
+  --uitk-navigable-background-hover: var(--uitk-grey-20);
 }
 
-.uitkHighEmphasis {
-  --uitk-navigable-border: var(--uitk-navigable-border-high-emphasis);
-  --uitk-navigable-background: var(--uitk-navigable-background-high-emphasis);
-  --uitk-navigable-background-active: var(--uitk-navigable-background-active-high-emphasis);
-  --uitk-navigable-background-hover: var(--uitk-navigable-background-hover-high-emphasis);
+.uitk-dark .uitkEmphasisLow {
+  --uitk-navigable-border: none;
+  --uitk-navigable-background: none;
+  --uitk-navigable-background-hover: var(--uitk-grey-600);
+  --uitk-navigable-background-active: none;
+}
+
+.uitk-light .uitkEmphasisHigh {
+  --uitk-navigable-border: solid 1px var(--uitk-grey-60);
+  --uitk-navigable-background: var(--uitk-grey-20);
+  --uitk-navigable-background-hover: var(--uitk-grey-30);
+  --uitk-navigable-background-active: var(--uitk-grey-20);
+}
+
+.uitk-dark .uitkEmphasisHigh {
+  --uitk-navigable-border: solid 1px var(--uitk-grey-400);
+  --uitk-navigable-background: var(--uitk-grey-600);
+  --uitk-navigable-background-hover: var(--uitk-grey-600);
+  --uitk-navigable-background-active: var(--uitk-grey-600);
 }

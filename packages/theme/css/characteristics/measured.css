@@ -1,46 +1,47 @@
-.uitk-light,
-.uitk-dark {
-  --uitk-measured-font-size-small: 11px;
-  --uitk-measured-font-size-medium: 14px;
-  --uitk-measured-font-size-large: 16px;
-
-  --uitk-measured-font-size-low-emphasis: 11px;
-  --uitk-measured-font-size-medium-emphasis: 14px;
-  --uitk-measured-font-size-high-emphasis: 16px;
-}
-
 .uitk-light {
   --uitk-measured-tick-color: var(--uitk-grey-100);
   --uitk-measured-color-active-start: var(--uitk-teal-500);
   --uitk-measured-color-active-end: var(--uitk-blue-500);
-  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
-
-  --uitk-measured-track-color-low-emphasis: var(--uitk-grey-40);
-  --uitk-measured-track-color-medium-emphasis: var(--uitk-grey-70);
-  --uitk-measured-track-color-high-emphasis: var(--uitk-grey-90);
+  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-end) 100%);
 }
 
 .uitk-dark {
   --uitk-measured-tick-color: var(--uitk-grey-90);
   --uitk-measured-color-active-start: var(--uitk-teal-300);
   --uitk-measured-color-active-end: var(--uitk-blue-300);
-  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-stop) 100%);
-
-  --uitk-measured-track-color-low-emphasis: var(--uitk-grey-500);
-  --uitk-measured-track-color-medium-emphasis: var(--uitk-grey-300);
-  --uitk-measured-track-color-high-emphasis: var(--uitk-grey-100);
+  --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-end) 100%);
 }
 
-.uitk-light,
+/* Default medium emphasis values */
+
+.uitk-light {
+  --uitk-measured-track-color: var(--uitk-grey-70);
+  --uitk-measured-font-size: 14px;
+}
+
 .uitk-dark {
-  /* Default medium emphasis */
-  --uitk-measured-track-color: var(--uitk-measured-track-color-medium-emphasis);
+  --uitk-measured-track-color: var(--uitk-grey-300);
+  --uitk-measured-font-size: 14px;
 }
 
-.uitkEmphasisLow {
-  --uitk-measured-track-color: var(--uitk-measured-track-color-low-emphasis);
+/* High and low emphasis values */
+
+.uitk-light .uitkEmphasisLow {
+  --uitk-measured-track-color: var(--uitk-grey-40);
+  --uitk-measured-font-size: 11px;
 }
 
-.uitkEmphasisHigh {
-  --uitk-measured-track-color: var(--uitk-measured-track-color-high-emphasis);
+.uitk-dark .uitkEmphasisLow {
+  --uitk-measured-track-color: var(--uitk-grey-500);
+  --uitk-measured-font-size: 11px;
+}
+
+.uitk-light .uitkEmphasisHigh {
+  --uitk-measured-track-color: var(--uitk-grey-90);
+  --uitk-measured-font-size: 16px;
+}
+
+.uitk-dark .uitkEmphasisHigh {
+  --uitk-measured-track-color: var(--uitk-grey-100);
+  --uitk-measured-font-size: 16px;
 }

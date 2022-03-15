@@ -2,14 +2,6 @@
   /* TODO: Design, dark used to be green 300 for up */
   --metric-direction-up-color: var(--uitk-text-growth-indicator-up-color);
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
-
-  --metric-content-value-font-size-high-emphasis: 56px;
-  --metric-content-value-font-size-medium-emphasis: 36px;
-  --metric-content-value-font-size-low-emphasis: 24px;
-
-  --metric-content-value-horizontal-line-height-high-emphasis: 0.75;
-  --metric-content-value-horizontal-line-height-medium-emphasis: 0.85;
-  --metric-content-value-horizontal-line-height-low-emphasis: 0.95;
 }
 
 .uitkMetricContent {
@@ -42,27 +34,27 @@
 }
 
 .uitkEmphasisHigh .uitkMetricContent-value {
-  font-size: var(--metric-content-value-font-size-high-emphasis);
+  font-size: 56px;
 }
 
 .uitkEmphasisMedium .uitkMetricContent-value {
-  font-size: var(--metric-content-value-font-size-medium-emphasis);
+  font-size: 36px;
 }
 
 .uitkEmphasisLow .uitkMetricContent-value {
-  font-size: var(--metric-content-value-font-size-low-emphasi);
+  font-size: 24px;
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisHigh .uitkMetricContent-value {
-  line-height: var(--metric-content-value-horizontal-line-height-high-emphasis);
+  line-height: 0.75;
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisMedium .uitkMetricContent-value {
-  line-height: var(--metric-content-value-horizontal-line-height-medium-emphasis);
+  line-height: 0.85;
 }
 
 .uitkMetricContent-horizontal.uitkEmphasisLow .uitkMetricContent-value {
-  line-height: var(--metric-content-value-horizontal-line-height-low-emphasis);
+  line-height: 0.95;
 }
 
 .uitkMetricContent-alignLeft {
