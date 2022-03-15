@@ -129,15 +129,15 @@
 }
 
 .uitkTooltip-info {
-  --tooltip-status-color: var(--uitk-status-color-info);
+  --tooltip-status-color: var(--uitk-status-info-color);
   box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
-  --tooltip-status-color: var(--uitk-status-color-error);
+  --tooltip-status-color: var(--uitk-status-error-color);
 }
 .uitkTooltip-warning {
-  --tooltip-status-color: var(--uitk-status-color-warning);
+  --tooltip-status-color: var(--uitk-status-warning-color);
 }
 .uitkTooltip-success {
-  --tooltip-status-color: var(--uitk-status-color-success);
+  --tooltip-status-color: var(--uitk-status-success-color);
 }

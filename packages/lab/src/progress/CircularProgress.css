@@ -22,23 +22,12 @@
   align-items: center;
   color: inherit;
   display: flex;
+  font-size: var(--uitk-measured-font-size);
   height: 100%;
   justify-content: center;
   left: 0;
   position: absolute;
   width: 100%;
-}
-
-.uitkCircularProgress-small {
-  font-size: var(--uitk-measured-font-size-small);
-}
-
-.uitkCircularProgress-medium {
-  font-size: var(--uitk-measured-font-size-medium);
-}
-
-.uitkCircularProgress-large {
-  font-size: var(--uitk-measured-font-size-large);
 }
 
 .uitkCircularProgress-disabled {
@@ -57,7 +46,7 @@
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-color-active-stop);
+  stop-color: var(--uitk-measured-color-active-end);
 }
 
 .uitkCircularProgress-container {

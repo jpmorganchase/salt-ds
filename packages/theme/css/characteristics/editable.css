@@ -10,10 +10,6 @@
 }
 
 .uitk-light {
-  --uitk-editable-background-low-emphasis: transparent;
-  --uitk-editable-background-medium-emphasis: var(--uitk-white);
-  --uitk-editable-background-high-emphasis: var(--uitk-grey-20);
-
   --uitk-editable-text-primary: var(--uitk-grey-900);
   --uitk-editable-text-secondary: var(--uitk-grey-200);
 
@@ -27,16 +23,12 @@
   --uitk-editable-border-color-active: var(--uitk-blue-500);
   --uitk-editable-border-color-readonly: var(--uitk-grey-90-fade-20);
 
-  /* not in figma - should it really be included here? */
+  /* Not in Figma */
   /* blue 30 fade 99 - prevents browser adding transparency to the color */
   --uitk-editable-selection-background: var(--uitk-blue-30-fade-99);
 }
 
 .uitk-dark {
-  --uitk-editable-background-low-emphasis: transparent;
-  --uitk-editable-background-medium-emphasis: var(--uitk-grey-800);
-  --uitk-editable-background-high-emphasis: var(--uitk-grey-900);
-
   --uitk-editable-text-primary: var(--uitk-white);
   --uitk-editable-text-secondary: var(--uitk-grey-70);
 
@@ -50,21 +42,35 @@
   --uitk-editable-border-color-active: var(--uitk-blue-400);
   --uitk-editable-border-color-readonly: var(--uitk-grey-100-fade-20);
 
-  /* Not in figma */
+  /* Not in Figma */
   /* blue 700 fade 99 - prevents browser adding transparency to the color */
   --uitk-editable-selection-background: var(--uitk-blue-700-fade-99);
 }
 
-.uitk-light,
+/* Default medium emphasis values */
+
+.uitk-light {
+  --uitk-editable-background: var(--uitk-white);
+}
+
 .uitk-dark {
-  /* Default medium emphasis background */
-  --uitk-editable-background: var(--uitk-editable-background-medium-emphasis);
+  --uitk-editable-background: var(--uitk-grey-800);
 }
 
-.uitkEmphasisLow {
-  --uitk-editable-background: var(--uitk-editable-background-low-emphasis);
+/* High and low emphasis values */
+
+.uitk-light .uitkEmphasisLow {
+  --uitk-editable-background: transparent;
 }
 
-.uitkEmphasisHigh {
-  --uitk-editable-background: var(--uitk-editable-background-high-emphasis);
+.uitk-dark .uitkEmphasisLow {
+  --uitk-editable-background: transparent;
+}
+
+.uitk-light .uitkEmphasisHigh {
+  --uitk-editable-background: var(--uitk-grey-20);
+}
+
+.uitk-dark .uitkEmphasisHigh {
+  --uitk-editable-background: var(--uitk-grey-900);
 }

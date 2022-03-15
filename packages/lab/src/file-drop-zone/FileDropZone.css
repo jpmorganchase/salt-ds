@@ -62,7 +62,7 @@
 }
 
 .uitkFileDropZone-error .uitkFileDropZone-icon {
-  fill: var(--uitk-status-background-error);
+  fill: var(--uitk-status-error-background);
 }
 
 .uitkFileDropZone-title,

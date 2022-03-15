@@ -2,25 +2,23 @@
   align-items: center;
   color: var(--uitk-text-primary-color);
   display: flex;
+  font-size: var(--uitk-measured-font-size);
   min-width: 200px;
 }
 
 .uitkLinearProgress-large {
-  font-size: var(--uitk-measured-font-size-large);
   --linear-progress-after-top: 3px;
   --linear-progress-value-padding-left: 12px;
   --linear-progress-height: 7px;
 }
 
 .uitkLinearProgress-medium {
-  font-size: var(--uitk-measured-font-size-medium);
   --linear-progress-after-top: 2px;
   --linear-progress-value-padding-left: 8px;
   --linear-progress-height: 5px;
 }
 
 .uitkLinearProgress-small {
-  font-size: var(--uitk-measured-font-size-small);
   --linear-progress-after-top: 1px;
   --linear-progress-value-padding-left: 4px;
   --linear-progress-height: 3px;

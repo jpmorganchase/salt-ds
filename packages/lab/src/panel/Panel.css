@@ -3,17 +3,11 @@
   --panel-width: var(--uitkPanel-width, 100%);
   --panel-height: var(--uitkPanel-height, auto);
   --panel-padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
-
-  /* Fallback values will pick up applied emphasis within characteristic */
-  --panel-background-medium-emphasis: var(--uitkPanel-background-medium-emphasis, var(--uitk-container-background));
-  --panel-background-high-emphasis: var(--uitkPanel-background-high-emphasis, var(--uitk-container-background));
-
-  --panel-color-medium-emphasis: var(--uitkPanel-color-medium-emphasis, var(--uitk-text-secondary-color));
-  --panel-color-high-emphasis: var(--uitkPanel-color-high-emphasis, var(--uitk-text-primary-color));
 }
 
-/* Styles applied to the root element with default (high) emphasis */
+/* Styles applied to the root element with default (medium) emphasis */
 .uitkPanel {
+  background: var(--uitkPanel-background, var(--uitk-container-background));
   box-sizing: border-box;
   height: var(--panel-height);
   overflow: auto;
@@ -21,12 +15,10 @@
   width: var(--panel-width);
 
   /* Default medium emphasis values */
-  background: var(--panel-background-medium-emphasis);
-  color: var(--panel-color-medium-emphasis);
+  color: var(--uitkPanel-color, var(--uitk-text-secondary-color));
 }
 
-/* Overrides when high emphasis applied */
+/* Override values when high emphasis applied */
 .uitkEmphasisHigh {
-  background: var(--panel-background-high-emphasis);
-  color: var(--panel-color-high-emphasis);
+  color: var(--uitkPanel-color, var(--uitk-text-primary-color));
 }

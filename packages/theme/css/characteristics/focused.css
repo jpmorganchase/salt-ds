@@ -21,8 +21,8 @@
   --uitk-focused-outline-inset: 0px 0px 0px 0px;
 
   --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
-  --uitk-focused-outline-warning: var(--uitk-focused-warning) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
-  --uitk-focused-outline-error: var(--uitk-focused-error) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
+  --uitk-focused-outline-warning: var(--uitk-focused-color-warning) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
+  --uitk-focused-outline-error: var(--uitk-focused-color-error) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
 
   --uitk-focused-border: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color);
   --uitk-focused-border-warning: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color-warning);
