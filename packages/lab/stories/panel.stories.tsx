@@ -9,28 +9,28 @@ export default {
 
 const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 
-export const Low = Template.bind({});
-Low.args = {
-  children: "Lorem Ipsum",
-  emphasis: "low",
-};
-
 export const Medium = Template.bind({});
 Medium.args = {
   children: "Lorem Ipsum",
   emphasis: "medium",
 };
 
+export const High = Template.bind({});
+High.args = {
+  children: "Lorem Ipsum",
+  emphasis: "high",
+};
+
 export const All: ComponentStory<typeof Panel> = (props) => {
   return (
     <>
-      <h1>Primary</h1>
+      <h1>Medium emphasis</h1>
       <AllRenderer>
-        <Panel emphasis="low" {...props} />
+        <Panel {...props} />
       </AllRenderer>
-      <h1>Secondary</h1>
+      <h1>High emphasis</h1>
       <AllRenderer>
-        <Panel emphasis="medium" {...props} />
+        <Panel emphasis="high" {...props} />
       </AllRenderer>
     </>
   );

@@ -1,9 +1,5 @@
-.uitk-light {
-  --uitk-scrim-bg: rgba(0, 0, 0, 0.8);
-}
-
-.uitk-dark {
-  --uitk-scrim-bg: rgba(0, 0, 0, 0.7);
+.uitkScrim {
+  --scrim-bg: var(--uitk-overlayable-scrim-background);
 }
 
 .uitkScrim {
@@ -18,7 +14,7 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background-color: var(--uitk-scrim-bg, rgba(0, 0, 0, 0.8));
+  background-color: var(--uitkScrim-background, var(--scrim-bg));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -29,8 +25,4 @@
 .uitkScrim-containerFix {
   position: absolute;
   z-index: calc(var(--uitk-zindex-appbar) - 1);
-}
-
-.uitkScrim-lighter {
-  background-color: var(--uitk-overlayable-feedback-scrim-secondary-background);
 }

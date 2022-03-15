@@ -84,7 +84,6 @@
   --uitk-blue-700: rgb(0, 71, 123);
   --uitk-blue-800: rgb(12, 53, 102);
   --uitk-blue-900: rgb(0, 40, 88);
-  /* --uitk-blue-1000: rgb(0, 18, 40); TODO: Check this wasn't used anywhere in toolkit 1 */
 
   --uitk-purple-10: rgb(249, 224, 247);
   --uitk-purple-20: rgb(247, 212, 244);
@@ -120,13 +119,12 @@
   --uitk-grey-800: rgb(36, 37, 38);
   --uitk-grey-900: rgb(22, 22, 22);
 
-  /* TODO: Confirm these values with design */
+  /* TODO: These will soon replace the -900 values */
   --uitk-red-1000: rgb(65, 37, 34);
   --uitk-orange-1000: rgb(54, 44, 36);
   --uitk-green-1000: rgb(35, 52, 43);
   --uitk-teal-1000: rgb(28, 55, 60);
   --uitk-purple-1000: rgb(58, 45, 62);
-
-  /* TODO: We already had a blue-1000 which wasn't used, check this is OK to replace */
   --uitk-blue-1000: rgb(35, 47, 56);
+  --uitk-blue-2000: rgb(39, 60, 79);
 }

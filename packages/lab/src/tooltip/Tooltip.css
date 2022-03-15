@@ -15,9 +15,8 @@
 }
 
 .uitkTooltip {
-  /* TODO: Which emphasis should this be? */
-  --tooltip-background: var(--uitk-container-low-emphasis-background);
-  --tooltip-font-size: var(--uitk-typography-size-regular-unit);
+  --tooltip-background: var(--uitk-container-background);
+  --tooltip-font-size: var(--uitk-text-font-size);
   --tooltip-color: var(--uitk-text-primary-color);
   --tooltip-padding: var(--uitk-spacing-unit);
 }
@@ -26,11 +25,11 @@
   background: var(--tooltip-background);
   box-sizing: border-box;
   border: 1px solid var(--tooltip-status-color);
-  box-shadow: var(--uitk-overlayable-interaction-box-shadow);
+  box-shadow: var(--uitk-overlayable-elevation-4);
   color: var(--tooltip-color);
   font-size: var(--tooltip-font-size);
-  line-height: var(--uitk-typography-line-height);
-  min-height: calc(var(--tooltip-font-size) * var(--uitk-typography-line-height));
+  line-height: var(--uitk-text-line-height);
+  min-height: calc(var(--tooltip-font-size) * var(--uitk-text-line-height));
   padding: var(--tooltip-padding);
   position: relative;
   max-width: 230px;

@@ -25,7 +25,7 @@
 .withoutAvatar-heading {
   color: var(--heading-color);
   margin-bottom: calc(var(--uitk-spacing-unit) * 2);
-  font-size: var(--uitk-typography-size-70);
+  font-size: 16px;
   font-weight: var(--uitk-typography-weight-semiBold);
 }
 
@@ -75,7 +75,7 @@
 .withinTile-tile {
   width: 320px;
   padding: var(--uitk-spacing-unit);
-  border: solid 1px var(--uitk-container-low-emphasis-border-color);
+  border: solid 1px var(--uitk-container-border-color);
 }
 
 .withinOverlay {

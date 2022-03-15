@@ -16,7 +16,7 @@
 
 .ThemeTitle {
   font-weight: 600;
-  font-size: var(--uitk-typography-size-70); /* TODO: Change to Title 4 */
+  font-size: var(--uitk-text-h3-font-size);
   color: var(--uitk-text-primary-color);
 }
 

@@ -9,6 +9,7 @@ import {
 } from "react";
 import classnames from "classnames";
 import noScroll from "no-scroll";
+import { makePrefixer } from "@brandname/core";
 import { useForkRef, ownerDocument, useId } from "../utils";
 
 import { hideOthers } from "aria-hidden";
@@ -23,6 +24,8 @@ const scrims = new Set();
 const defaultParent = typeof document !== "undefined" ? document.body : null;
 
 const noop = () => {};
+
+const withBaseName = makePrefixer("uitkScrim");
 
 function preventSelection(parent = defaultParent): () => void {
   if (parent) {
@@ -111,9 +114,9 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   tabEnabledSelectors?: string;
   /**
-   * Variant - Can be standard or lighter.
+   * Emphasis - Can be one of "medium" or "high".
    */
-  variant?: "regular" | "lighter";
+  emphasis?: "medium" | "high";
   /**
    * Prop to pass z-index for Scrim.
    */
@@ -140,7 +143,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     parentRef,
     returnFocus = true,
     tabEnabledSelectors = defaultSelector,
-    variant = "regular",
+    emphasis = "high",
     zIndex,
     ...rest
   } = props;
@@ -151,8 +154,6 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   const undoSelection = useRef(noop);
   const undoTabIndex = useRef(noop);
   const scrimId = useId();
-
-  const classRoot = "uitkScrim";
 
   useEffect(() => {
     if (open && !containerFix) {
@@ -234,10 +235,16 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   return (
     <div
       aria-modal={!containerFix}
-      className={classnames(className, classRoot, {
-        [`${classRoot}-containerFix`]: containerFix,
-        [`${classRoot}-${variant}`]: variant !== "regular",
-      })}
+      className={classnames(
+        {
+          [`uitkEmphasisHigh`]: emphasis !== "medium",
+        },
+        className,
+        withBaseName(),
+        {
+          [withBaseName(`containerFix`)]: containerFix,
+        }
+      )}
       data-testid="scrim"
       onClick={handleClick}
       ref={setWrapperRef}

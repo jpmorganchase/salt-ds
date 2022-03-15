@@ -18,7 +18,7 @@ export const CalendarWeekHeader = forwardRef<
   return (
     <div
       data-testid="CalendarWeekHeader"
-      className={cx(withBaseName(), className)}
+      className={cx("uitkEmphasisHigh", withBaseName(), className)}
       ref={ref}
       {...rest}
     >

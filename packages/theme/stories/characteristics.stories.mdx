@@ -28,17 +28,6 @@ import { TextAlignBlock } from "docs/components/TextAlignBlock";
   </Story>
 </Canvas>
 
-# Icon
-
-<Canvas>
-  <Story name="Icon">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-icon-primary-color" />
-      <ColorBlock colorVar="--uitk-icon-primary-color-disabled" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
 # Actionable
 
 Group of components allowing to action something, action is performed
@@ -131,9 +120,8 @@ allow hierarchical organization.
 <Canvas>
   <Story name="Container">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-container-low-emphasis-background" />
-      <ColorBlock colorVar="--uitk-container-med-emphasis-background" />
-      <ColorBlock colorVar="--uitk-container-low-emphasis-border-color" />
+      <ColorBlock colorVar="--uitk-container-background" />
+      <ColorBlock colorVar="--uitk-container-border-color" />
       <LineBlock lineWidth="--uitk-container-border-width" />
       <LineBlockCell />
       <LineBlockCode>--uitk-container-border-style</LineBlockCode>
@@ -164,13 +152,14 @@ Group of components used to contain and separate different types of content and 
   </Story>
 </Canvas>
 
-# Progress
+# Measured
 
 <Canvas>
-  <Story name="Progress">
+  <Story name="Measured">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-progress-track-color" />
-      <ColorBlock colorVar="--uitk-progress-color-active" />
+      <ColorBlock colorVar="--uitk-measured-track-color" />
+      <ColorBlock colorVar="--uitk-measured-tick-color" />
+      <ColorBlock colorVar="--uitk-measured-color-active" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -209,9 +198,7 @@ Connected to Container
 <Canvas>
   <Story name="Separable">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-separable-section-color" />
-      <ColorBlock colorVar="--uitk-separable-item-color" />
-      <ColorBlock colorVar="--uitk-separable-subtle-color" />
+      <ColorBlock colorVar="--uitk-separable-border-color" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -233,10 +220,10 @@ Group of attributes that denote Status and it's severity
       <ColorBlock colorVar="--uitk-status-error-color" />
       <ColorBlock colorVar="--uitk-status-warning-color" />
       <ColorBlock colorVar="--uitk-status-success-color" />
-      <ColorBlock colorVar="--uitk-status-info-med-emphasis-background" />
-      <ColorBlock colorVar="--uitk-status-error-med-emphasis-background" />
-      <ColorBlock colorVar="--uitk-status-warning-med-emphasis-background" />
-      <ColorBlock colorVar="--uitk-status-success-med-emphasis-background" />
+      <ColorBlock colorVar="--uitk-status-info-background" />
+      <ColorBlock colorVar="--uitk-status-error-background" />
+      <ColorBlock colorVar="--uitk-status-warning-background" />
+      <ColorBlock colorVar="--uitk-status-success-background" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -1,11 +1,11 @@
 /* Theme / Colors */
 .uitkFileDropZone {
   /* Colors */
-  --file-drop-zone-background: var(--uitk-container-med-emphasis-background);
+  --file-drop-zone-background: var(--uitk-container-background);
   --file-drop-zone-text-color: var(--uitk-text-primary-color);
   /* TODO: Design, dark mode used to be grey-400 */
-  --file-drop-zone-border-color: var(--uitk-container-low-emphasis-border-color);
-  --file-drop-zone-background-disabled: var(--uitk-container-med-emphasis-background-disabled);
+  --file-drop-zone-border-color: var(--uitk-container-border-color);
+  --file-drop-zone-background-disabled: var(--uitk-container-background-disabled);
   /* TODO: Design, light mode used to be grey 200 */
   --file-drop-zone-icon-color: var(--uitk-icon-primary-color);
 
@@ -18,8 +18,8 @@
 
   /* Font / Typography */
   --file-drop-zone-font-family: var(--uitk-typography-font-family);
-  --file-drop-zone-font-size: var(--uitk-typography-size-regular-unit);
-  --file-drop-zone-line-height: var(--uitk-typography-line-height);
+  --file-drop-zone-font-size: var(--uitk-text-font-size);
+  --file-drop-zone-line-height: var(--uitk-text-line-height);
 
   --file-drop-zone-title-font-weight: var(--uitk-typography-weight-semiBold);
 }
@@ -62,7 +62,7 @@
 }
 
 .uitkFileDropZone-error .uitkFileDropZone-icon {
-  fill: var(--uitk-status-error-color);
+  fill: var(--uitk-status-error-background);
 }
 
 .uitkFileDropZone-title,

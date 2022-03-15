@@ -28,7 +28,7 @@
 
 .uitkSlider {
   --rail-height: var(--uitkSlider-rail-height, 8px);
-  --rail-color: var(--uitkSlider-rail-color, var(--uitk-container-low-emphasis-border-color));
+  --rail-color: var(--uitkSlider-rail-color, var(--uitk-container-border-color));
 
   --rail-mark-height: var(--uitkSlider-rail-mark-height, 7px);
   --rail-mark-color: var(--uitkSlider-rail-mark-color, var(--rail-color));
@@ -38,7 +38,7 @@
 
   --handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-regular-unit) * 0.5));
   --handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-outline-style));
-  --handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-outline-width));
+  --handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-line-width));
   --handle-outline-color: var(--uitkSlider-handle-outline-color, var(--uitk-focused-color));
   --handle-outline-offset: var(--uitkSlider-handle-outline-offset, var(--uitk-focused-outline-offset));
 
@@ -139,9 +139,9 @@
 
 .uitkSliderMarkLabels-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-color));
-  font-size: var(--uitkSlider-label-font-size, var(--uitk-typography-size-caption-unit));
+  font-size: var(--uitkSlider-label-font-size, var(--uitk-text-caption-font-size));
   margin-top: var(--uitkSlider-label-margin-top);
-  line-height: var(--uitkSlider-label-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkSlider-label-line-height, var(--uitk-text-line-height));
 
   white-space: nowrap;
 }
@@ -200,9 +200,9 @@
 
 .uitkSlider-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-color));
-  font-size: var(--uitkSlider-label-font-size, var(--uitk-typography-size-caption-unit));
+  font-size: var(--uitkSlider-label-font-size, var(--uitk-text-caption-font-size));
   margin-top: var(--uitkSlider-label-margin-top);
-  line-height: var(--uitkSlider-label-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkSlider-label-line-height, var(--uitk-text-line-height));
 
   padding-left: var(--label-padding-left);
   padding-right: var(--label-padding-right);

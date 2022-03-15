@@ -1,32 +1,32 @@
-.uitk-light,
-.uitk-dark {
-  --uitk-focused-line-width: 2px;
-
-  --uitk-focused-border-style: solid;
-  --uitk-focused-outline-style: dotted;
-
-  --uitk-focused-outline-offset: 0;
-  --uitk-focused-outline-inset: 0px 0px 0px 0px;
-}
-
 .uitk-light {
   --uitk-focused-color: var(--uitk-blue-500);
   --uitk-focused-color-warning: var(--uitk-orange-700);
   --uitk-focused-color-error: var(--uitk-red-500);
-
-  --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
-  --uitk-focused-outline-warning: var(--uitk-focused-warning) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
-  --uitk-focused-outline-error: var(--uitk-focused-error) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
 }
 
 .uitk-dark {
   --uitk-focused-color: var(--uitk-blue-400);
   --uitk-focused-color-warning: var(--uitk-orange-500);
   --uitk-focused-color-error: var(--uitk-red-400);
+}
 
-  --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
-  --uitk-focused-outline-warning: var(--uitk-focused-warning) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
-  --uitk-focused-outline-error: var(--uitk-focused-error) var(--uitk-focused-outline-style) var(--uitk-focused-outline-width);
+.uitk-light,
+.uitk-dark {
+  --uitk-focused-line-width: 2px;
+
+  --uitk-focused-border-style: solid;
+
+  --uitk-focused-outline-style: dotted;
+  --uitk-focused-outline-offset: 0;
+  --uitk-focused-outline-inset: 0px 0px 0px 0px;
+
+  --uitk-focused-outline: var(--uitk-focused-color) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
+  --uitk-focused-outline-warning: var(--uitk-focused-color-warning) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
+  --uitk-focused-outline-error: var(--uitk-focused-color-error) var(--uitk-focused-outline-style) var(--uitk-focused-line-width);
+
+  --uitk-focused-border: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color);
+  --uitk-focused-border-warning: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color-warning);
+  --uitk-focused-border-error: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color-error);
 }
 
 /* TODO where do we use the className focused */

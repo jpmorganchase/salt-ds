@@ -16,7 +16,7 @@
   --input-min-height: var(--uitk-size-regular-unit);
   --input-text-color: var(--uitk-text-primary-color);
   --input-font-family: var(--uitk-typography-font-family);
-  --input-font-size: var(--uitk-typography-size-regular-unit);
+  --input-font-size: var(--uitk-text-font-size);
   --input-adornment-padding: var(--uitk-spacing-unit);
   --input-padding: 0 var(--uitk-spacing-unit);
   --input-position: var(--uitk-input-position, relative);
@@ -26,7 +26,7 @@
 
   --input-focused-outline: var(--uitk-focused-outline);
 
-  --input-selection-background: var(--uitk-editable-selection-background);
+  --input-selection-background: var(--uitk-editable-background);
 }
 
 .uitkInput {

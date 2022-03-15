@@ -12,7 +12,7 @@
 
 .uitkColorChooser-rgbaText {
   margin-top: 5px;
-  font-size: var(--uitk-typography-size-caption-unit);
+  font-size: var(--uitk-text-caption-font-size);
   color: var(--uitk-text-secondary-color);
   padding-top: 4px;
   padding-right: 6px;
@@ -37,7 +37,7 @@
 }
 
 .uitkColorChooser-textDivOverrides {
-  font-size: var(--uitk-typography-size-caption-unit);
+  font-size: var(--uitk-text-caption-font-size);
   font-weight: var(--uitk-typography-weight-bold);
   color: var(--uitk-text-primary-color);
   padding: 0px !important;

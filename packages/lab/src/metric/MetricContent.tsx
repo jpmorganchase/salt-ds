@@ -92,7 +92,9 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
         className={cx(
           withBaseName(),
           {
-            [withBaseName(`${emphasis}Emphasis`)]: emphasis,
+            [`uitkEmphasisLow`]: emphasis === "low",
+            [`uitkEmphasisMedium`]: emphasis === "medium",
+            [`uitkEmphasisHigh`]: emphasis === "high",
             [withBaseName(`direction${capitalise(direction)}`)]: direction,
             [withBaseName(orientation as string)]: orientation,
             [withBaseName(`align${capitalise(align)}`)]: align,

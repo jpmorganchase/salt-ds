@@ -3,10 +3,10 @@
   --uitkDialog-box-shadow: none;
   --overlay-text-color: var(--uitk-text-primary-color);
   --overlay-spacing: var(--uitk-spacing-unit);
-  --overlay-font-size: var(--uitk-typography-size-regular-unit);
+  --overlay-font-size: var(--uitk-text-font-size);
   /* TODO: Which emphasis should this be? */
-  --overlay-background-color: var(--uitk-container-low-emphasis-background);
-  --overlay-border-color: var(--uitk-container-low-emphasis-border-color);
+  --overlay-background-color: var(--uitk-container-background);
+  --overlay-border-color: var(--uitk-container-border-color);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
 

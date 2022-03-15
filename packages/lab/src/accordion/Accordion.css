@@ -40,8 +40,7 @@
   --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable-unit));
   --summary-font-weight: var(--uitkAccordionSummary-font-weight, var(--uitk-typography-weight-regular));
 
-  /* TODO: Which emphasis should this be ? */
-  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-low-emphasis-background));
+  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background));
   --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background));
   --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background));
   --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
@@ -51,7 +50,7 @@
   --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-color-disabled));
   --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-color));
 
-  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-item-color));
+  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-border-color));
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-border-style));
   --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
   --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);
@@ -98,7 +97,7 @@
   font-weight: var(--summary-font-weight);
   background: var(--summary-background);
   color: var(--summary-text-color);
-  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-typography-size-regular-unit));
+  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-font-size));
   font-family: var(--uitkAccordionSummary-font-family, var(--uitk-typography-font-family));
   padding-left: var(--summary-padding-left);
   position: relative;

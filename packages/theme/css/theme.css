@@ -5,6 +5,7 @@
 
 @import url(foundations/color.css);
 @import url(foundations/fade.css);
+@import url(foundations/icon.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
 @import url(foundations/spacing.css);
@@ -13,18 +14,21 @@
 /* Other palettes, Typography, Spacing, Sizes, etc.  */
 
 /* Each characteristics files would reference values comes from different palettes above */
+@import url(characteristics/accent.css);
 @import url(characteristics/actionable.css);
 @import url(characteristics/container.css);
 @import url(characteristics/delay.css);
 @import url(characteristics/disabled.css);
 @import url(characteristics/draggable.css);
+@import url(characteristics/droptarget.css);
 @import url(characteristics/editable.css);
 @import url(characteristics/focused.css);
-@import url(characteristics/icon.css);
+@import url(characteristics/measured.css);
 @import url(characteristics/navigable.css);
 @import url(characteristics/overlayable.css);
-@import url(characteristics/progress.css);
+@import url(characteristics/ratable.css);
 @import url(characteristics/selectable.css);
 @import url(characteristics/separable.css);
 @import url(characteristics/status.css);
+@import url(characteristics/taggable.css);
 @import url(characteristics/text.css);

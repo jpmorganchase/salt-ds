@@ -1,5 +1,5 @@
 .uitkMetricHeader {
-  --metric-header-font-size: var(--uitk-typography-size-regular-unit);
+  --metric-header-font-size: var(--uitk-text-font-size);
 
   --metric-title-color: var(--uitk-text-primary-color);
   --metric-subtitle-color: var(--uitk-text-secondary-color);

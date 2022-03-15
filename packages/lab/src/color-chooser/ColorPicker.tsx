@@ -75,7 +75,10 @@ export const ColorPicker = ({
   };
 
   return (
-    <div data-testid="color-picker" className={cn(withBaseName())}>
+    <div
+      data-testid="color-picker"
+      className={cn("uitkEmphasisHigh", withBaseName())}
+    >
       <SketchPicker
         className={cn(withBaseName("swatchPickerStyles"), {
           ["rootDisabledAlpha"]: disableAlphaChooser,

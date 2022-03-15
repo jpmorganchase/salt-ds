@@ -15,7 +15,6 @@
 }
 
 .uitk-density-touch .uitkPill {
-  --font-size: var(--uitk-typography-size-50);
   --checkbox-size: calc(var(--uitk-size-icon-small) + 6px);
   --delete-left: 4px;
   --padding: calc(var(--uitk-spacing-touch) * 0.75);
@@ -23,7 +22,6 @@
 }
 
 .uitk-density-low .uitkPill {
-  --font-size: var(--uitk-typography-size-40);
   --checkbox-size: calc(var(--uitk-size-icon-small) + 4px);
   --delete-left: 3px;
   --padding: calc(var(--uitk-spacing-low) * 0.75);
@@ -31,7 +29,6 @@
 }
 
 .uitk-density-medium .uitkPill {
-  --font-size: var(--uitk-typography-size-40);
   --checkbox-size: calc(var(--uitk-size-icon-small) + 2px);
   --delete-left: 2px;
   --padding: calc(var(--uitk-spacing-medium) * 0.75);
@@ -39,7 +36,6 @@
 }
 
 .uitk-density-high .uitkPill {
-  --font-size: var(--uitk-typography-size-30);
   --checkbox-size: var(--uitk-size-icon-small);
   --delete-left: 1px;
   --padding: calc(var(--uitk-spacing-high) * 0.75);
@@ -47,6 +43,7 @@
 }
 
 .uitkPill {
+  --pill-font-size: var(--uitk-text-help-font-size);
   --pill-font-weight: normal;
   /* TODO: What's the best way to expose pill specific css var, but also override button's default */
   --button-font-weight: normal;
@@ -59,12 +56,12 @@
   background: var(--pill-background);
   color: var(--pill-color);
   display: inline-flex;
-  font-size: var(--font-size);
+  font-size: var(--pill-font-size);
   /* TODO: Check whether we should define font family here or rely on theme */
   font-family: var(--uitk-typography-font-family);
   height: calc(var(--checkbox-size) + 2px);
   letter-spacing: 0;
-  line-height: var(--uitk-typography-line-height);
+  line-height: var(--uitk-text-line-height);
   max-width: 160px;
   min-width: 40px;
   position: relative;

@@ -1,8 +1,8 @@
 .uitkFoundationsView-tabs {
-  background-color: var(--uitk-container-med-emphasis-background);
+  background-color: var(--uitk-container-background);
 }
 
 .uitkFoundationsView-routingError {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-text-font-size);
   padding: 10px;
 }

@@ -1,21 +1,6 @@
-.uitk-density-high .uitkBreadcrumbs {
-  --font-size: var(--uitk-typography-size-30);
-}
-
-.uitk-density-medium .uitkBreadcrumbs {
-  --font-size: var(--uitk-typography-size-40);
-}
-
-.uitk-density-low .uitkBreadcrumbs {
-  --font-size: var(--uitk-typography-size-40);
-}
-
-.uitk-density-touch .uitkBreadcrumbs {
-  --font-size: var(--uitk-typography-size-50);
-}
-
 .uitkBreadcrumbs {
-  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-typography-line-height));
+  --font-size: var(--uitk-text-caption-font-size);
+  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-text-line-height));
 }
 
 .uitkBreadcrumbs {

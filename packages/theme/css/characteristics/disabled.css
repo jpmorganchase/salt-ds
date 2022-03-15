@@ -1,4 +1,3 @@
-/** TODO: Should we persuade designers to move disabled to not using pure `opacity` (consider background on top of another), or even not as a characteristics? */
 .uitk-light,
 .uitk-dark {
   --uitk-disabled-cursor: not-allowed;

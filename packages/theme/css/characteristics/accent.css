@@ -1,0 +1,11 @@
+.uitk-light {
+  --uitk-accent-border-color: var(--uitk-blue-300);
+  --uitk-accent-background: var(--uitk-blue-500);
+  --uitk-accent-text-color: var(--uitk-white);
+}
+
+.uitk-dark {
+  --uitk-accent-border-color: var(--uitk-blue-300);
+  --uitk-accent-background: var(--uitk-blue-500);
+  --uitk-accent-text-color: var(--uitk-white);
+}

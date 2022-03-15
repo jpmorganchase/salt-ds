@@ -14,7 +14,7 @@
   --calendar-day-out-of-range-text-color: var(--uitk-grey-70);
   --calendar-day-blocked-text-color: var(--uitk-selectable-text-color);
   --calendar-day-blocked-cursor: var(--uitk-disabled-cursor);
-  --calendar-day-blocked-icon-color: var(--uitk-status-error-color);
+  --calendar-day-blocked-icon-color: var(--uitk-status-error-icon-color);
   --calendar-day-blocked-background: var(--calendar-day-background);
   --calendar-day-unselectable-text-color: var(--uitk-text-secondary-color-disabled);
   --calendar-day-unselectable-background: var(--calendar-day-background);
@@ -44,7 +44,7 @@
   /* Focus */
   --calendar-day-focused-outline: var(--uitk-focused-outline);
   --calendar-day-size: var(--uitk-size-regular-unit);
-  --calendar-day-font-size: var(--uitk-typography-size-regular-unit);
+  --calendar-day-font-size: var(--uitk-text-font-size);
 }
 
 .uitkCalendarDay {
@@ -142,17 +142,16 @@
   text-decoration: line-through;
 }
 
-/*TODO title 2 typography styles*/
 .uitk-density-high .uitkCalendarDay-blockedIcon {
-  --calendar-day-blocked-icon-size: var(--uitk-typography-size-60);
+  --calendar-day-blocked-icon-size: 14px;
 }
 
 .uitk-density-medium .uitkCalendarDay-blockedIcon {
-  --calendar-day-blocked-icon-size: var(--uitk-typography-size-80);
+  --calendar-day-blocked-icon-size: 18px;
 }
 
 .uitk-density-low .uitkCalendarDay-blockedIcon {
-  --calendar-day-blocked-icon-size: var(--uitk-typography-size-110);
+  --calendar-day-blocked-icon-size: 24px;
 }
 
 .uitk-density-touch .uitkCalendarDay-blockedIcon {

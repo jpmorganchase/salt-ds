@@ -1,20 +1,27 @@
 export type characteristic =
+  | "accent"
   | "actionable"
   | "container"
+  | "delay"
   | "disabled"
+  | "draggable"
+  | "droptarget"
   | "editable"
   | "focused"
-  | "icon"
+  | "measured"
   | "navigable"
   | "overlayable"
-  | "progress"
+  | "ratable"
   | "selectable"
   | "separable"
+  | "taggable"
+  | "text"
   | "status"
+  // The next 4 are foundations, should they really be here?
+  | "icon"
   | "shadow"
   | "size"
-  | "spacing"
-  | "text";
+  | "spacing";
 export class Theme {
   id: string;
   name: string;
