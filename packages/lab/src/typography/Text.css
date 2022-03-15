@@ -4,7 +4,7 @@
 }
 .uitkText small {
   font-size: inherit;
-  font-weight: 300; /* TODO: Add this to typography? */
+  font-weight: var(--uitk-typography-weight-light);
 }
 
 /* Main css class */
@@ -16,7 +16,7 @@
   height: var(--text-height);
   line-height: var(--uitk-text-line-height);
   font-size: var(--uitk-text-font-size);
-  font-weight: 400;
+  font-weight: var(--uitk-typography-weight-regular);
   overflow: auto;
   word-break: break-word;
 }
