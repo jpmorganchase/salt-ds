@@ -30,13 +30,10 @@ const BodyTextComponent: ComponentStory<typeof Text> = (props) => {
       <Text>
         Body text - div - His seasons Shall without form fourth seed so.
       </Text>
-      <br />
-      <br />
       <Text>
         Body text
         <strong> emphasis high</strong>
       </Text>
-      <br />
       <Text>
         Body text
         <small> emphasis low</small>
@@ -70,13 +67,10 @@ const DivTextComponent: ComponentStory<typeof Text> = (props) => {
       <DivText>
         Div text component - His seasons Shall without form fourth seed so.
       </DivText>
-      <br />
-      <br />
       <DivText>
         Div text component
         <strong> emphasis high</strong>
       </DivText>
-      <br />
       <DivText>
         Div text component
         <small> emphasis low</small>
@@ -110,7 +104,6 @@ const SpanTextComponent: ComponentStory<typeof Text> = (props) => {
       <SpanText>
         Span text component - His seasons Shall without form fourth seed so.
       </SpanText>
-      <br />
       <br />
       <SpanText>
         Span text component
@@ -151,13 +144,10 @@ const PTextComponent: ComponentStory<typeof Text> = (props) => {
         Paragraph text component - His seasons Shall without form fourth seed
         so.
       </PText>
-      <br />
-      <br />
       <PText>
         Paragraph text component
         <strong> emphasis high</strong>
       </PText>
-      <br />
       <PText>
         Paragraph text component
         <small> emphasis low</small>
@@ -191,7 +181,6 @@ const CodeTextComponent: ComponentStory<typeof Text> = (props) => {
       <CodeText>
         Code text component - His seasons Shall without form fourth seed so.
       </CodeText>
-      <br />
       <br />
       <CodeText>
         Code text component
@@ -229,9 +218,7 @@ const FigureTextComponent: ComponentStory<typeof Text> = (props) => {
   return (
     <>
       <Figure1>Figure 1</Figure1>
-      <br />
       <Figure2>Figure 2</Figure2>
-      <br />
       <Figure3>Figure 3</Figure3>
     </>
   );
@@ -333,13 +320,10 @@ const HelpTextComponent: ComponentStory<typeof Text> = (props) => {
       <HelpTextComp>
         Help Text - div - His seasons Shall without form fourth seed so.
       </HelpTextComp>
-      <br />
-      <br />
       <HelpTextComp>
         Help Text
         <strong> emphasis high</strong>
       </HelpTextComp>
-      <br />
       <HelpTextComp>
         Help Text
         <small> emphasis low</small>
@@ -374,7 +358,6 @@ const LabelCaptionTextComponent: ComponentStory<typeof Text> = (props) => {
         LabelCaption text - label - His seasons Shall without form fourth seed
         so.
       </LabelCaptionText>
-      <br />
       <br />
       <LabelCaptionText>
         LabelCaption text
