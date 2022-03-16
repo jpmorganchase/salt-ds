@@ -135,7 +135,7 @@ describe("GIVEN an H1", () => {
       expect($heading).to.have.css("font-weight", "700");
     });
     cy.get("strong").then(($emphasis) => {
-      expect($emphasis).to.have.css("font-weight", "500");
+      expect($emphasis).to.have.css("font-weight", "800");
     });
   });
   it("should be an h1 html tag syled as h2", () => {
