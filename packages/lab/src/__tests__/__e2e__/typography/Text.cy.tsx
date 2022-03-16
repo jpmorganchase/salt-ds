@@ -126,7 +126,7 @@ describe("GIVEN an H1", () => {
   it("should be an h1 html tag width an emphasis low", () => {
     cy.mount(
       <H1>
-        Testing Heading 1 <small>component</small>
+        Testing Heading 1 <strong>component</strong>
       </H1>
     );
     cy.contains(/Testing Heading 1 component/);
@@ -134,7 +134,7 @@ describe("GIVEN an H1", () => {
       expect($heading).to.have.css("font-size", "24px");
       expect($heading).to.have.css("font-weight", "700");
     });
-    cy.get("small").then(($emphasis) => {
+    cy.get("strong").then(($emphasis) => {
       expect($emphasis).to.have.css("font-weight", "500");
     });
   });

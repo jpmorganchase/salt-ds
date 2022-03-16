@@ -1,9 +1,8 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Text, LabelCaption, Div } from "@brandname/lab";
+import { Text, Div } from "@brandname/lab";
 import { transactions } from "./transactions";
 import "./Table.css";
-import { useEffect, useRef, useState } from "react";
 
 export default {
   title: "Lab/Typography",
