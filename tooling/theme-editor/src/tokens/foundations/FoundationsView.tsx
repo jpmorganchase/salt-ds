@@ -5,7 +5,7 @@ import { makePrefixer } from "@brandname/core";
 import { Tab, Tabstrip, capitalize } from "@brandname/lab";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
-import { UITK_FOUNDATIONS, UITK_COLOURS } from "../../utils/uitkValues";
+import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
 import { FoundationPatternsList } from "./FoundationsPatternsList";
 import "./Foundations.css";
 
@@ -22,6 +22,7 @@ interface FoundationsViewProps {
 
 export const foundationPathnames = [
   "/foundations/color",
+  "/foundations/icon",
   "/foundations/shadow",
   "/foundations/size",
   "/foundations/spacing",
@@ -30,15 +31,9 @@ export const foundationPathnames = [
 ];
 
 export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
-  const patternsInScope =
-    props.selectedTabIndex === 0
-      ? UITK_COLOURS
-      : [
-          foundationPathnames[props.selectedTabIndex].replace(
-            "/foundations/",
-            ""
-          ),
-        ];
+  const patternsInScope = [
+    foundationPathnames[props.selectedTabIndex].replace("/foundations/", ""),
+  ];
 
   return (
     <div className={cx(withBaseName())}>
@@ -49,7 +44,7 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
           overflowMenu={true}
           value={props.selectedTabIndex}
         >
-          {UITK_FOUNDATIONS.map((label, i) => (
+          {UITK_FOUNDATIONS.filter((f) => f !== "fade").map((label, i) => (
             <Tab
               aria-label={label}
               label={capitalize(label) as string}

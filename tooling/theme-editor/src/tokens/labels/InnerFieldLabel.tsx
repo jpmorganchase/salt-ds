@@ -3,7 +3,6 @@ import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { capitalize } from "@brandname/lab";
 import { JSONObj } from "../../helpers/parseToJson";
-import { UITK_COLOURS } from "../../utils/uitkValues";
 import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
 
@@ -39,7 +38,6 @@ export const InnerFieldLabel = ({
   let label = getLabel(fieldName, isEmphasis);
 
   if (
-    UITK_COLOURS.indexOf(patternName) !== -1 ||
     (Object.keys(remainingJSON).length === 1 &&
       Object.keys(remainingJSON)[0] === "value" &&
       label !== "background" &&

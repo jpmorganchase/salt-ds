@@ -21,22 +21,11 @@ export const UITK_CHARACTERISTICS = [
 
 export const UITK_FOUNDATIONS = [
   "color",
+  "fade",
   "icon",
   "shadow",
   "size",
   "spacing",
   "typography",
   "zindex",
-];
-
-export const UITK_COLOURS = [
-  "white",
-  "black",
-  "red",
-  "orange",
-  "green",
-  "teal",
-  "blue",
-  "purple",
-  "grey",
 ];

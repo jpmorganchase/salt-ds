@@ -10,7 +10,7 @@ import {
 } from "@brandname/lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
-import { UITK_COLOURS } from "../../../utils/uitkValues";
+import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";
 import { ActiveIcon } from "../../../icons/components/ActiveIcon";
 import { DisabledIcon } from "../../../icons/components/DisabledIcon";
 import { ErrorIcon } from "../../../icons/components/ErrorIcon";
@@ -204,9 +204,13 @@ export const ColorValueEditor = (
                     withBaseName("colorStatesField")
                   )}
                 >
-                  {formFieldLabel !== "Background" &&
-                  formFieldLabel !== "Color" ? (
-                    StateIcon(formFieldLabel[0])
+                  {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                    "background" &&
+                  formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                    "color" ? (
+                    StateIcon(
+                      formFieldLabel.split(" ").slice(-1)[0][0].toUpperCase()
+                    )
                   ) : (
                     <RegularIcon />
                   )}
@@ -233,12 +237,9 @@ export const ColorValueEditor = (
           </div>
           {props.characteristicsView && !props.isStateValue && (
             <JumpToTokenButton
-              disabled={
-                props.value.split("-").length < 2 ||
-                !UITK_COLOURS.includes(props.value.split("-").slice(1)[0])
-              }
+              disabled={props.value.split("-").length < 2}
               value={props.value.split("-").slice(1)[0]}
-              sectionToJumpTo={UITK_COLOURS}
+              sectionToJumpTo={UITK_FOUNDATIONS}
               pathname={"/foundations/color"}
               search={`?open=${props.value.split("-").slice(1)[0]}`}
             />

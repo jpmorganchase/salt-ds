@@ -6,7 +6,7 @@ import {
   ColorValueEditor,
   isColor,
 } from "../foundations/color/ColorValueEditor";
-import { UITK_COLOURS, UITK_FOUNDATIONS } from "../../utils/uitkValues";
+import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
 import { validateTokenInput } from "../../helpers/validateTokenInput";
 import { JumpToTokenButton } from "../toggles/JumpToTokenButton";
 import "./ValueEditor.css";
@@ -36,18 +36,10 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
     setValue(props.value);
   }, [props.value]);
 
-  let valueName;
-
-  if (UITK_COLOURS.indexOf(props.patternName) === -1) {
-    valueName = props.valueName.split("-").slice(-1)[0];
-  } else {
-    valueName = props.valueName.split("-").join(" ");
-  }
+  let valueName = props.valueName.split("-").join(" ");
 
   const pathToUpdate = useMemo(() => {
-    return UITK_COLOURS.includes(props.valueName)
-      ? props.valueName
-      : `${props.patternName}-${props.valueName}`;
+    return `${props.patternName}-${props.valueName}`;
   }, [props.valueName, props.patternName]);
 
   const originalValue = useMemo(() => {
@@ -71,7 +63,6 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
       }
     }
   };
-
   return (
     <div className={cn(withBaseName())}>
       {props.isStateValue || isColor(props.extractValue(value)).length ? (
@@ -94,9 +85,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
       ) : (
         <div
           className={cn(withBaseName("input"), {
-            [withBaseName("inputWithColumns")]:
-              displayValue.length < 7 &&
-              !UITK_COLOURS.includes(props.patternName),
+            [withBaseName("inputWithColumns")]: displayValue.length < 7,
             [withBaseName("jumpToFoundationNotColor")]:
               props.characteristicsView && props.value.startsWith("uitk"),
           })}

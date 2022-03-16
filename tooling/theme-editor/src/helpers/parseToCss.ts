@@ -1,8 +1,10 @@
 /* eslint-disable */
 //@ts-nocheck
+import {
+  capitalize
+} from "@brandname/lab";
 import { JSONByScope } from "./parseToJson";
 import {
-  UITK_COLOURS,
   UITK_CHARACTERISTICS,
   UITK_FOUNDATIONS,
 } from "../utils/uitkValues";
@@ -65,6 +67,8 @@ function transformToCSS(patternJsonByScope) {
       selector = `.uitk-light, .uitk-dark`;
     } else if (element.scope === "density-all") {
       selector = `.uitk-density-low, .uitk-density-medium, .uitk-density-high, .uitk-density-touch`;
+    } else if (element.scope.includes("emphasis")) {
+      selector = `.uitkEmphasis${capitalize(element.scope.split('-')[1])}`;
     } else {
       selector = `.uitk-${element.scope}`;
     }
@@ -85,39 +89,22 @@ function transformToCSS(patternJsonByScope) {
   return beautify_css(stringCSS);
 }
 
-function getColorPatternsJSON(uitk) {
-  let patterns = {};
-  for (var color of UITK_COLOURS) {
-    if (uitk[color]) {
-      patterns = { ...patterns, [color]: uitk[color] };
-    }
-  }
-  return patterns;
-}
-
 export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
   let cssByPattern = [];
 
   for (var patternName of UITK_FOUNDATIONS.concat(UITK_CHARACTERISTICS)) {
     const patternJsonByScope = jsonByScope
       .filter((element) => {
-        if (patternName === "color") {
-          return UITK_COLOURS.some((colour) => element.jsonObj.uitk[colour]);
-        } else {
-          return element.jsonObj.uitk[patternName];
-        }
+        return element.jsonObj.uitk[patternName];
+
       })
       .map((element) => {
-        if (patternName === "color") {
-          const colorPatternsJSON = getColorPatternsJSON(element.jsonObj.uitk);
-          return { scope: element.scope, jsonObj: colorPatternsJSON };
-        } else {
-          const patternJSON = element.jsonObj.uitk[patternName];
-          return {
-            scope: element.scope,
-            jsonObj: { [patternName]: patternJSON },
-          };
-        }
+        const patternJSON = element.jsonObj.uitk[patternName];
+        return {
+          scope: element.scope,
+          jsonObj: { [patternName]: patternJSON },
+        };
+
       });
 
     const transformedCSS = transformToCSS(patternJsonByScope);

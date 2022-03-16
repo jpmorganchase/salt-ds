@@ -5,10 +5,10 @@ import { Accordion } from "@brandname/lab";
 import { createColorMap } from "../../helpers/createColorMap";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
-import { UITK_COLOURS } from "../../utils/uitkValues";
 import { LightDarkToggle } from "../toggles/LightDarkToggle";
-import { FoundationPattern } from "./FoundationPattern";
+import { FoundationPatternByDensity } from "./general/FoundationPatternByDensity";
 import { ColorPattern } from "./color/ColorPattern";
+import { IconPattern } from "./icon/IconPattern";
 import { ShadowPattern } from "./shadow/ShadowPattern";
 import "./Foundations.css";
 
@@ -63,8 +63,34 @@ export const FoundationPatternsList = (
           return Object.keys(s.jsonObj.uitk)
             .filter((pattern) => props.patternsInScope.includes(pattern))
             .map(function (pattern) {
-              return s.scope.includes("density") ? (
-                <FoundationPattern
+              return s.scope.includes("density") ||
+                (pattern !== "shadow" &&
+                  pattern !== "color" &&
+                  pattern !== "icon") ? (
+                <FoundationPatternByDensity
+                  key={`${props.themeName}-${pattern}`}
+                  patternName={pattern}
+                  values={s.jsonObj.uitk[pattern]}
+                  themeName={props.themeName}
+                  onUpdateJSON={props.onUpdateJSON}
+                  extractValue={props.extractValue}
+                  scope={s.scope}
+                  uitkColorOverrides={uitkColorOverrides}
+                />
+              ) : pattern === "shadow" ? (
+                <div className={cn(withBaseName("ColorsAndShadows"))}>
+                  <ShadowPattern
+                    uitkColorOverrides={uitkColorOverrides}
+                    themeName={props.themeName}
+                    onUpdateJSON={props.onUpdateJSON}
+                    extractValue={props.extractValue}
+                    scope={s.scope}
+                    pattern={pattern}
+                    shadowPattern={s.jsonObj.uitk[pattern]}
+                  />
+                </div>
+              ) : pattern === "icon" ? (
+                <IconPattern
                   key={`${props.themeName}-${pattern}`}
                   patternName={pattern}
                   values={s.jsonObj.uitk[pattern]}
@@ -75,30 +101,18 @@ export const FoundationPatternsList = (
                   uitkColorOverrides={uitkColorOverrides}
                 />
               ) : (
-                <div className={cn(withBaseName("ColorsAndShadows"))}>
-                  {UITK_COLOURS.includes(pattern) ? (
-                    <ColorPattern
-                      uitkColorOverrides={uitkColorOverrides}
-                      key={`${props.themeName}-${pattern}`}
-                      patternName={pattern}
-                      values={s.jsonObj.uitk[pattern]}
-                      themeName={props.themeName}
-                      onUpdateJSON={props.onUpdateJSON}
-                      extractValue={props.extractValue}
-                      scope={s.scope}
-                    />
-                  ) : (
-                    <ShadowPattern
-                      uitkColorOverrides={uitkColorOverrides}
-                      themeName={props.themeName}
-                      onUpdateJSON={props.onUpdateJSON}
-                      extractValue={props.extractValue}
-                      scope={s.scope}
-                      pattern={pattern}
-                      shadowPattern={s.jsonObj.uitk[pattern]}
-                    />
-                  )}
-                </div>
+                ["mode-all"].includes(s.scope) && (
+                  <ColorPattern
+                    uitkColorOverrides={uitkColorOverrides}
+                    key={`${props.themeName}-${pattern}`}
+                    patternName={pattern}
+                    values={s.jsonObj.uitk[pattern]}
+                    themeName={props.themeName}
+                    onUpdateJSON={props.onUpdateJSON}
+                    extractValue={props.extractValue}
+                    scope={s.scope}
+                  />
+                )
               );
             });
         })}

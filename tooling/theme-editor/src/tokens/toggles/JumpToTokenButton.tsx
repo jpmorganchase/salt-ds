@@ -2,21 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@brandname/core";
 import { AddDocumentIcon } from "@brandname/icons";
 
-import {
-  UITK_CHARACTERISTICS,
-  UITK_COLOURS,
-  UITK_FOUNDATIONS,
-} from "../../utils/uitkValues";
+import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../../utils/uitkValues";
 import "../foundations/color/ColorValueEditor.css";
 
 interface JumpToTokenButtonProps {
   disabled: boolean;
   pathname: string;
   search: string;
-  sectionToJumpTo:
-    | typeof UITK_COLOURS
-    | typeof UITK_CHARACTERISTICS
-    | typeof UITK_FOUNDATIONS;
+  sectionToJumpTo: typeof UITK_CHARACTERISTICS | typeof UITK_FOUNDATIONS;
   value: string;
 }
 

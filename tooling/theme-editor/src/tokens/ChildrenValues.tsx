@@ -3,7 +3,6 @@ import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { JSONObj } from "../helpers/parseToJson";
 import { InnerFieldLabel } from "./labels/InnerFieldLabel";
-import { UITK_COLOURS } from "../utils/uitkValues";
 import { ValueEditor } from "./editor/ValueEditor";
 import { TokenWithColors } from "./TokenWithColors";
 import "./ChildrenValues.css";
@@ -75,8 +74,7 @@ export const ChildrenValuesWithinSection = ({
       {Object.keys(children)
         .filter(
           (node) =>
-            (!Object.keys(children[node]).includes("value") ||
-              UITK_COLOURS.includes(patternName)) &&
+            !Object.keys(children[node]).includes("value") &&
             !SECTIONED_BY_COLOR_STATE.some((token) => token === node)
         )
         .sort((k1, k2) => (k1 === "value" ? -1 : 1))
@@ -117,8 +115,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
       {props.children &&
         !!Object.keys(props.children).filter(
           (node) =>
-            (Object.keys(props.children[node]).includes("value") &&
-              !UITK_COLOURS.includes(props.patternName)) ||
+            Object.keys(props.children[node]).includes("value") ||
             SECTIONED_BY_COLOR_STATE.some((token) => token === node)
         ).length && (
           <ChildrenValuesWithinSection
@@ -136,8 +133,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
         Object.keys(props.children)
           .filter(
             (node) =>
-              (!Object.keys(props.children[node]).includes("value") ||
-                UITK_COLOURS.includes(props.patternName)) &&
+              !Object.keys(props.children[node]).includes("value") &&
               !SECTIONED_BY_COLOR_STATE.some((token) => token === node)
           )
           .sort((k1, k2) => (k1 === "value" ? -1 : 1))
