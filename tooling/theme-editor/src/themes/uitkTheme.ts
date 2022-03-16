@@ -38,7 +38,6 @@ const emphasisHighDarkJSON: JSONObj = JSON.parse(
   `{"uitk": {"container": {"background": {"value": "uitk-color-grey-600"},"border": {"color": {"value": "transparent"}}},"editable": {"background": {"value": "uitk-color-grey-900"}},"measured": {"track": {"color": {"value": "uitk-color-grey-100"}},"font": {"size": {"value": "16px"}}},"navigable": {"border": {"value": "solid 1px uitk-color-grey-400)"},"background": {"hover": {"value": "uitk-color-grey-600"},"active": {"value": "uitk-color-grey-600"}, "value": "uitk-color-grey-600"}},"overlayable": {"scrim": {"background": {"value": "rgba(0, 0, 0, 0.7)"}}},"separable": {"border": {"color": {"value": "uitk-color-grey-400"}}},"status": {"info": {"background": {"value": "uitk-color-blue-1000"}},"success": {"background": {"value": "uitk-color-green-1000"}},"warning": {"background": {"value": "uitk-color-orange-1000"}},"error": {"background": {"value": "uitk-color-red-1000"}}}}}`
 );
 
-
 export const uitkTheme: JSONByScope[] = [
   { scope: "mode-all", jsonObj: lightAndDarkJSON },
   { scope: "light", jsonObj: lightJSON },

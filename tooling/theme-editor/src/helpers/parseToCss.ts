@@ -1,13 +1,8 @@
 /* eslint-disable */
 //@ts-nocheck
-import {
-  capitalize
-} from "@brandname/lab";
+import { capitalize } from "@brandname/lab";
 import { JSONByScope } from "./parseToJson";
-import {
-  UITK_CHARACTERISTICS,
-  UITK_FOUNDATIONS,
-} from "../utils/uitkValues";
+import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 
 export type CSSByPattern = {
   pattern: string;
@@ -68,7 +63,7 @@ function transformToCSS(patternJsonByScope) {
     } else if (element.scope === "density-all") {
       selector = `.uitk-density-low, .uitk-density-medium, .uitk-density-high, .uitk-density-touch`;
     } else if (element.scope.includes("emphasis")) {
-      selector = `.uitkEmphasis${capitalize(element.scope.split('-')[1])}`;
+      selector = `.uitkEmphasis${capitalize(element.scope.split("-")[1])}`;
     } else {
       selector = `.uitk-${element.scope}`;
     }
@@ -96,7 +91,6 @@ export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
     const patternJsonByScope = jsonByScope
       .filter((element) => {
         return element.jsonObj.uitk[patternName];
-
       })
       .map((element) => {
         const patternJSON = element.jsonObj.uitk[patternName];
@@ -104,7 +98,6 @@ export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
           scope: element.scope,
           jsonObj: { [patternName]: patternJSON },
         };
-
       });
 
     const transformedCSS = transformToCSS(patternJsonByScope);

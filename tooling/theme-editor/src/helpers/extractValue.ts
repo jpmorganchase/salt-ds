@@ -9,18 +9,19 @@ import {
 import { JSONByScope, JSONObj } from "./parseToJson";
 
 function deepMerge(merged, toMerge) {
-  if ((typeof toMerge === 'object')) {
-    Object.keys(toMerge).forEach(key => {
+  if (typeof toMerge === "object") {
+    Object.keys(toMerge).forEach((key) => {
       if (merged[key]) {
-        if (key === "value") { /* Overwrite */
-          merged[key] = toMerge[key]
+        if (key === "value") {
+          /* Overwrite */
+          merged[key] = toMerge[key];
         } else {
           merged[key] = deepMerge(merged[key], toMerge[key]);
         }
       } else {
         merged[key] = toMerge[key];
       }
-    })
+    });
   }
 
   return merged;
@@ -29,15 +30,15 @@ function deepMerge(merged, toMerge) {
 function merge(jsonArray: JSONObj[]): JSONObj {
   let merged = {};
 
-  jsonArray.forEach(json => {
-    Object.keys(json).forEach(key => {
+  jsonArray.forEach((json) => {
+    Object.keys(json).forEach((key) => {
       if (merged[key]) {
         merged[key] = deepMerge(merged[key], json[key]);
       } else {
         merged[key] = json[key];
       }
-    })
-  })
+    });
+  });
 
   return merged;
 }
