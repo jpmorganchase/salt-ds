@@ -78,7 +78,7 @@ describe("A combo box", () => {
     describe("when focused", () => {
       it("should not highlight any item with a focus ring", () => {
         expect(
-          list.querySelector("uitkListItem-highlighted")
+          list.querySelector(".uitkListItem-highlighted")
         ).not.toBeInTheDocument();
       });
     });
@@ -182,7 +182,7 @@ describe("A combo box", () => {
         fireEvent.keyDown(input, { key: " " });
 
         // no list item is selected
-        expect(list.querySelector("aria-selected")).not.toBeInTheDocument();
+        expect(list.querySelector("[aria-selected]")).not.toBeInTheDocument();
 
         // change callback not invoked
         expect(changeSpy).not.toHaveBeenCalled();
@@ -193,12 +193,13 @@ describe("A combo box", () => {
       it("should remove highlight and focus style from the list", () => {
         fireEvent.keyDown(input, { key: "ArrowDown" });
         fireEvent.keyDown(input, { key: "Tab" });
+        fireEvent.blur(input);
 
         expect(
-          list.querySelector("uitkListItem-highlighted")
+          list.querySelector(".uitkListItem-highlighted")
         ).not.toBeInTheDocument();
         expect(
-          list.querySelector("uitkListItem-focusVisible")
+          list.querySelector(".uitkListItem-focusVisible")
         ).not.toBeInTheDocument();
       });
     });
@@ -371,7 +372,7 @@ describe("A multi-select combo box", () => {
     describe("when focused", () => {
       it("should not highlight any item with a focus ring", () => {
         expect(
-          getListbox().querySelector("uitkListItem-highlighted")
+          getListbox().querySelector(".uitkListItem-highlighted")
         ).not.toBeInTheDocument();
       });
     });
@@ -519,7 +520,7 @@ describe("A multi-select combo box", () => {
         fireEvent.keyDown(input, { key: " " });
 
         // no list item is selected
-        expect(list.querySelector("aria-selected")).not.toBeInTheDocument();
+        expect(list.querySelector("[aria-selected]")).not.toBeInTheDocument();
 
         // change callback not invoked
         expect(changeSpy).not.toHaveBeenCalled();
@@ -534,10 +535,10 @@ describe("A multi-select combo box", () => {
         fireEvent.keyDown(input, { key: "Tab" });
 
         expect(
-          list.querySelector("uitkListItem-highlighted")
+          list.querySelector(".uitkListItem-highlighted")
         ).not.toBeInTheDocument();
         expect(
-          list.querySelector("uitkListItem-focusVisible")
+          list.querySelector(".uitkListItem-focusVisible")
         ).not.toBeInTheDocument();
       });
 
@@ -612,7 +613,7 @@ describe("A multi-select combo box", () => {
     describe("when focused", () => {
       it("should not highlight any item with a focus ring", () => {
         expect(
-          list.querySelector("uitkListItem-highlighted")
+          list.querySelector(".uitkListItem-highlighted")
         ).not.toBeInTheDocument();
       });
     });
