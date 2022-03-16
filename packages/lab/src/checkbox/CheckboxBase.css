@@ -1,15 +1,15 @@
 .uitk-light .uitkCheckboxBase {
-  --checkbox-outline-color: var(--uitk-grey-90);
-  --checkbox-solid-color: var(--uitk-blue-500);
-  --checkbox-outline-color-hover: var(--uitk-blue-400);
-  --checkbox-tick-color: var(--uitk-white);
+  --checkbox-outline-color: var(--uitk-color-grey-90);
+  --checkbox-solid-color: var(--uitk-color-blue-500);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
+  --checkbox-tick-color: var(--uitk-color-white);
 }
 
 .uitk-dark .uitkCheckboxBase {
-  --checkbox-outline-color: var(--uitk-grey-100);
-  --checkbox-solid-color: var(--uitk-blue-400);
-  --checkbox-outline-color-hover: var(--uitk-blue-300);
-  --checkbox-tick-color: var(--uitk-grey-800);
+  --checkbox-outline-color: var(--uitk-color-grey-100);
+  --checkbox-solid-color: var(--uitk-color-blue-400);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
+  --checkbox-tick-color: var(--uitk-color-grey-800);
 }
 
 .uitk-density-touch .uitkCheckboxBase {

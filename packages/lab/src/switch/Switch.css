@@ -1,21 +1,21 @@
 /*TODO change thumb background in formfield */
 
 .uitk-light .uitkSwitch-label {
-  --switch-label-color: var(--uitk-grey-200);
-  --switch-track-color: var(--uitk-grey-90);
-  --switch-track-color-hover: var(--uitk-blue-400);
-  --switch-thumb-background: var(--uitk-white);
-  --switch-checked-track-color: var(--uitk-blue-500);
-  --switch-checked-icon-color: var(--uitk-blue-500);
+  --switch-label-color: var(--uitk-color-grey-200);
+  --switch-track-color: var(--uitk-color-grey-90);
+  --switch-track-color-hover: var(--uitk-color-blue-400);
+  --switch-thumb-background: var(--uitk-color-white);
+  --switch-checked-track-color: var(--uitk-color-blue-500);
+  --switch-checked-icon-color: var(--uitk-color-blue-500);
 }
 
 .uitk-dark .uitkSwitch-label {
-  --switch-label-color: var(--uitk-grey-70);
-  --switch-track-color: var(--uitk-grey-100);
-  --switch-track-color-hover: var(--uitk-blue-300);
-  --switch-thumb-background: var(--uitk-grey-800);
-  --switch-checked-track-color: var(--uitk-blue-400);
-  --switch-checked-icon-color: var(--uitk-white);
+  --switch-label-color: var(--uitk-color-grey-70);
+  --switch-track-color: var(--uitk-color-grey-100);
+  --switch-track-color-hover: var(--uitk-color-blue-300);
+  --switch-thumb-background: var(--uitk-color-grey-800);
+  --switch-checked-track-color: var(--uitk-color-blue-400);
+  --switch-checked-icon-color: var(--uitk-color-white);
 }
 
 .uitk-density-touch .uitkSwitch {

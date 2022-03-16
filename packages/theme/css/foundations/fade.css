@@ -1,20 +1,20 @@
 .uitk-light,
 .uitk-dark {
   /* Used in container */
-  --uitk-grey-20-fade-40: rgba(234, 237, 239, 0.4);
-  --uitk-grey-600-fade-40: rgba(47, 49, 54, 0.4);
-  --uitk-grey-60-fade-40: rgba(197, 201, 208, 0.4);
-  --uitk-grey-400-fade-40: rgba(68, 72, 79, 0.4);
-  --uitk-grey-90-fade-20: rgba(132, 135, 142, 0.2);
-  --uitk-grey-100-fade-20: rgba(116, 119, 127, 0.2);
+  --uitk-color-grey-20-fade-40: rgba(234, 237, 239, 0.4);
+  --uitk-color-grey-600-fade-40: rgba(47, 49, 54, 0.4);
+  --uitk-color-grey-60-fade-40: rgba(197, 201, 208, 0.4);
+  --uitk-color-grey-400-fade-40: rgba(68, 72, 79, 0.4);
+  --uitk-color-grey-90-fade-20: rgba(132, 135, 142, 0.2);
+  --uitk-color-grey-100-fade-20: rgba(116, 119, 127, 0.2);
 }
 
 .uitk-light {
   /* see Editable characteristic for explanation of this value */
-  --uitk-blue-30-fade-99: rgba(164, 213, 244, 0.99);
+  --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99);
 }
 
 .uitk-dark {
   /* see Editable characteristic for explanation of next value */
-  --uitk-blue-700-fade-99: rgba(0, 71, 123, 0.99);
+  --uitk-color-blue-700-fade-99: rgba(0, 71, 123, 0.99);
 }

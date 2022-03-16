@@ -9,9 +9,9 @@
   --tabstrip-tab-display: flex;
   --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable-unit, 36px));
   --tabstrip-tab-dragging-display: block;
-  --uitkTab-background: var(--uitk-grey-40);
-  --uitkTab-hover-background: var(--uitk-grey-40);
-  --tab-bar-color: var(--uitk-grey-90);
+  --uitkTab-background: var(--uitk-color-grey-40);
+  --uitkTab-hover-background: var(--uitk-color-grey-40);
+  --tab-bar-color: var(--uitk-color-grey-90);
   font-size: var(--uitk-text-font-size, 12px);
 }
 
@@ -32,11 +32,11 @@
 }
 
 .uitkDraggable-tabstrip .uitkTab[aria-selected="true"]:before {
-  background: var(--uitk-orange-700);
+  background: var(--uitk-color-orange-700);
 }
 
 /* .uitkTab-dragging[aria-selected="true"]:before {
-  background: var(--uitk-orange-700);
+  background: var(--uitk-color-orange-700);
   bottom: 0;
   content: "";
   opacity: 1;

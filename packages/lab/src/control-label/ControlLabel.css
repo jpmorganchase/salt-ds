@@ -1,9 +1,9 @@
 .uitk-light .uitkControlLabel {
-  --control-label-color: var(--uitk-grey-900);
+  --control-label-color: var(--uitk-color-grey-900);
 }
 
 .uitk-dark .uitkControlLabel {
-  --control-label-color: var(--uitk-white);
+  --control-label-color: var(--uitk-color-white);
 }
 
 .uitkControlLabel {
