@@ -112,7 +112,6 @@
 .uitkFormField {
   box-sizing: border-box;
   border: 0;
-  margin: 0;
   display: inline-grid;
   margin: var(--uitkFormField-margin, 0);
   padding: 0;
@@ -211,7 +210,7 @@
 }
 
 .uitkFormField-theme.uitkFormField-labelLeft > .uitkFormLabel ~ * {
-  background: var(--form-field-theme-background);
+  background: var(--form-field-background);
 }
 
 .uitkFormField-labelLeft > .uitkFormLabel ~ :not(.uitkFormField-helperText) {

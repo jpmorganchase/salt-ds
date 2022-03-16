@@ -11,7 +11,7 @@
   --uitk-actionable-border-radius: 0;
 }
 
-/* 
+/*
   Color naming convention
   - Prefix with --uitk
   - Characteristics name, e.g. -actionable
@@ -21,7 +21,7 @@
   - The 'state', e.g. -regular, -hover, -active, -disabled. Mapped to CSS Dynamic pseudo-classes
 
   Figma Style example: Actionable/CTA/Background/Regular
-  Disabled values are not in Figma - they come from applying the appropriate 
+  Disabled values are not in Figma - they come from applying the appropriate
   disabled opacity to the regular background color
  */
 
@@ -33,7 +33,7 @@
   --uitk-actionable-primary-background: var(--uitk-color-grey-60);
   --uitk-actionable-primary-background-hover: var(--uitk-color-grey-40);
   --uitk-actionable-primary-background-active: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-background-disabled: rgba(197, 201, 208, var(--uitk-disabled-graphical-opacity));
+  --uitk-actionable-primary-background-disabled: rgba(197, 201, 208, var(--uitk-disabled-background-opacity));
   --uitk-actionable-primary-icon-color-active: var(--uitk-color-white);
   --uitk-actionable-primary-icon-color: var(--uitk-color-grey-900);
   --uitk-actionable-primary-icon-color-hover: var(--uitk-color-grey-900);
@@ -46,7 +46,7 @@
   --uitk-actionable-cta-background: var(--uitk-color-blue-600);
   --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
   --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
-  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-graphical-opacity));
+  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-background-opacity));
   --uitk-actionable-cta-icon-color: var(--uitk-color-white);
   --uitk-actionable-cta-icon-color-hover: var(--uitk-color-white);
   --uitk-actionable-cta-icon-color-active: var(--uitk-color-white);
@@ -73,7 +73,7 @@
   --uitk-actionable-primary-background: var(--uitk-color-grey-300);
   --uitk-actionable-primary-background-active: var(--uitk-color-grey-80);
   --uitk-actionable-primary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-background-disabled: rgba(76, 80, 91, var(--uitk-disabled-graphical-opacity));
+  --uitk-actionable-primary-background-disabled: rgba(76, 80, 91, var(--uitk-disabled-background-opacity));
   --uitk-actionable-primary-icon-color: var(--uitk-color-white);
   --uitk-actionable-primary-icon-color-active: var(--uitk-color-grey-900);
   --uitk-actionable-primary-icon-color-hover: var(--uitk-color-white);
@@ -86,7 +86,7 @@
   --uitk-actionable-cta-background: var(--uitk-color-blue-600);
   --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
   --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
-  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-graphical-opacity));
+  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-background-opacity));
   --uitk-actionable-cta-icon-color: var(--uitk-color-white);
   --uitk-actionable-cta-icon-color-active: var(--uitk-color-white);
   --uitk-actionable-cta-icon-color-hover: var(--uitk-color-white);

@@ -108,7 +108,7 @@
 
 .uitkInput .uitkInput-suffixContainer > .uitkButton,
 .uitkInput .uitkInput-prefixContainer > .uitkButton {
-  height: calc(var(--button-height) - (var(--input-button-inset) * 2));
+  height: calc(var(--uitkButton-height, var(--uitk-size-regular-unit)) - (var(--input-button-inset) * 2));
   margin: var(--input-button-inset);
   padding: 0 calc(var(--uitk-spacing-unit) - var(--input-button-inset));
 }

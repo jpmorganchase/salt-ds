@@ -79,7 +79,7 @@
 .uitkCalendarDay-unselectableHighEmphasis:hover {
   color: var(--calendar-day-blocked-text-color);
   cursor: var(--calendar-day-blocked-cursor);
-  background: var(--calendar-day-blocked-background-color);
+  background: var(--calendar-day-blocked-background);
 }
 
 .uitkCalendarDay-today {
@@ -88,37 +88,37 @@
 
 .uitkCalendarDay-selectedSpan,
 .uitkCalendarDay-selectedSpan:hover {
-  background: var(--calendar-day-selected-span-background-color);
+  background: var(--calendar-day-selected-span-background);
   color: var(--calendar-day-selected-span-text-color);
 }
 
 .uitkCalendarDay-hoveredSpan,
 .uitkCalendarDay-hoveredSpan:hover {
-  background-color: var(--calendar-day-hovered-span-background-color);
+  background: var(--calendar-day-hovered-span-background);
   color: var(--calendar-day-hovered-span-text-color);
 }
 
 .uitkCalendarDay-hoveredOffset,
 .uitkCalendarDay-hoveredOffset:hover {
-  background-color: var(--calendar-day-hovered-offset-background-color);
+  background: var(--calendar-day-hovered-offset-background);
   color: var(--calendar-day-hovered-offset-text-color);
 }
 
 .uitkCalendarDay-selected,
 .uitkCalendarDay-selected:hover {
-  background: var(--calendar-day-selected-background-color);
+  background: var(--calendar-day-selected-background);
   color: var(--calendar-day-selected-text-color);
 }
 
 .uitkCalendarDay-selectedStart,
 .uitkCalendarDay-selectedStart:hover {
-  background: var(--calendar-day-selected-start-background-color);
+  background: var(--calendar-day-selected-start-background);
   color: var(--calendar-day-selected-start-text-color);
 }
 
 .uitkCalendarDay-selectedEnd,
 .uitkCalendarDay-selectedEnd:hover {
-  background: var(--calendar-day-selected-end-background-color);
+  background: var(--calendar-day-selected-end-background);
   color: var(--calendar-day-selected-end-text-color);
 }
 
@@ -137,7 +137,7 @@
 .uitkCalendarDay-unselectableLowEmphasis,
 .uitkCalendarDay-unselectableLowEmphasis:hover {
   color: var(--calendar-day-unselectable-text-color);
-  background: var(--calendar-day-unselectable-background-color);
+  background: var(--calendar-day-unselectable-background);
   cursor: var(--calendar-day-unselectable-cursor);
   text-decoration: line-through;
 }
