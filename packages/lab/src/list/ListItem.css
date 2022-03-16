@@ -3,7 +3,7 @@
   --list-item-text-color: var(--uitk-selectable-text-color);
   --list-item-background: var(--uitk-selectable-background);
   --list-item-background-hover: var(--uitk-selectable-background-hover);
-  --list-item-selected-focus-visible-outline-color: var(--uitk-white);
+  --list-item-selected-focus-visible-outline-color: var(--uitk-color-white);
 
   --list-item-text-color-active: var(--uitk-selectable-text-color-active);
   --list-item-background-active: var(--uitk-selectable-background-active);

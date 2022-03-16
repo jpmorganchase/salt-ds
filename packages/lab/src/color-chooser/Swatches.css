@@ -4,11 +4,11 @@
 }
 
 .uitk-light .uitkColorChooserSwatches-colorNameTextDiv {
-  color: var(--uitk-grey-200);
+  color: var(--uitk-color-grey-200);
 }
 
 .uitk-dark .uitkColorChooserSwatches-colorNameTextDiv {
-  color: var(--uitk-white);
+  color: var(--uitk-color-white);
 }
 
 .uitkColorChooserSwatches-colorTextDiv {
@@ -17,11 +17,11 @@
 }
 
 .uitk-light .uitkColorChooserSwatches-colorTextDiv {
-  color: var(--uitk-grey-200);
+  color: var(--uitk-color-grey-200);
 }
 
 .uitk-dark .uitkColorChooserSwatches-colorTextDiv {
-  color: var(--uitk-grey-70);
+  color: var(--uitk-color-grey-70);
 }
 
 .uitkColorChooserSwatches-textDiv {

@@ -1,9 +1,9 @@
 .uitk-light .uitkCalendarDay {
-  --calendar-day-current-day-border-color: var(--uitk-grey-900);
+  --calendar-day-current-day-border-color: var(--uitk-color-grey-900);
 }
 
 .uitk-dark .uitkCalendarDay {
-  --calendar-day-current-day-border-color: var(--uitk-white);
+  --calendar-day-current-day-border-color: var(--uitk-color-white);
 }
 
 .uitkCalendarDay {
@@ -11,7 +11,7 @@
   --calendar-day-background: var(--uitk-selectable-background);
   --calendar-day-background-hover: var(--uitk-selectable-background-hover);
   --calendar-day-text-color-hover: var(--uitk-selectable-text-color);
-  --calendar-day-out-of-range-text-color: var(--uitk-grey-70);
+  --calendar-day-out-of-range-text-color: var(--uitk-color-grey-70);
   --calendar-day-blocked-text-color: var(--uitk-selectable-text-color);
   --calendar-day-blocked-cursor: var(--uitk-disabled-cursor);
   --calendar-day-blocked-icon-color: var(--uitk-status-error-icon-color);
@@ -22,15 +22,15 @@
 
   --calendar-day-selected-background: var(--uitk-selectable-background-active);
   --calendar-day-selected-text-color: var(--uitk-selectable-text-color-active);
-  --calendar-day-selected-focused-outline-color: var(--uitk-white);
+  --calendar-day-selected-focused-outline-color: var(--uitk-color-white);
 
   --calendar-day-selected-start-background: var(--uitk-selectable-background-active);
   --calendar-day-selected-start-text-color: var(--uitk-selectable-text-color-active);
-  --calendar-day-selected-start-focused-outline-color: var(--uitk-white);
+  --calendar-day-selected-start-focused-outline-color: var(--uitk-color-white);
 
   --calendar-day-selected-end-background: var(--uitk-selectable-background-active);
   --calendar-day-selected-end-text-color: var(--uitk-selectable-text-color-active);
-  --calendar-day-selected-end-focused-outline-color: var(--uitk-white);
+  --calendar-day-selected-end-focused-outline-color: var(--uitk-color-white);
 
   --calendar-day-selected-span-background: var(--uitk-selectable-background-hover);
   --calendar-day-selected-span-text-color: var(--uitk-selectable-text-color);

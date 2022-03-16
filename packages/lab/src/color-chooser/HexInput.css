@@ -17,9 +17,9 @@
 }
 
 .uitk-light .uitkColorChooserHexInput-input {
-  border-bottom: 1px solid var(--uitk-black);
+  border-bottom: 1px solid var(--uitk-color-black);
 }
 
 .uitk-dark .uitkColorChooserHexInput-input {
-  border-bottom: 1px solid var(--uitk-white);
+  border-bottom: 1px solid var(--uitk-color-white);
 }

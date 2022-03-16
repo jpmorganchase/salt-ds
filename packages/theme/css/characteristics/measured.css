@@ -1,47 +1,47 @@
 .uitk-light {
-  --uitk-measured-tick-color: var(--uitk-grey-100);
-  --uitk-measured-color-active-start: var(--uitk-teal-500);
-  --uitk-measured-color-active-end: var(--uitk-blue-500);
+  --uitk-measured-tick-color: var(--uitk-color-grey-100);
+  --uitk-measured-color-active-start: var(--uitk-color-teal-500);
+  --uitk-measured-color-active-end: var(--uitk-color-blue-500);
   --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-end) 100%);
 }
 
 .uitk-dark {
-  --uitk-measured-tick-color: var(--uitk-grey-90);
-  --uitk-measured-color-active-start: var(--uitk-teal-300);
-  --uitk-measured-color-active-end: var(--uitk-blue-300);
+  --uitk-measured-tick-color: var(--uitk-color-grey-90);
+  --uitk-measured-color-active-start: var(--uitk-color-teal-300);
+  --uitk-measured-color-active-end: var(--uitk-color-blue-300);
   --uitk-measured-color-active: linear-gradient(0deg, var(--uitk-measured-color-active-start) 0%, var(--uitk-measured-color-active-end) 100%);
 }
 
 /* Default medium emphasis values */
 
 .uitk-light {
-  --uitk-measured-track-color: var(--uitk-grey-70);
+  --uitk-measured-track-color: var(--uitk-color-grey-70);
   --uitk-measured-font-size: 14px;
 }
 
 .uitk-dark {
-  --uitk-measured-track-color: var(--uitk-grey-300);
+  --uitk-measured-track-color: var(--uitk-color-grey-300);
   --uitk-measured-font-size: 14px;
 }
 
 /* High and low emphasis values */
 
 .uitk-light .uitkEmphasisLow {
-  --uitk-measured-track-color: var(--uitk-grey-40);
+  --uitk-measured-track-color: var(--uitk-color-grey-40);
   --uitk-measured-font-size: 11px;
 }
 
 .uitk-dark .uitkEmphasisLow {
-  --uitk-measured-track-color: var(--uitk-grey-500);
+  --uitk-measured-track-color: var(--uitk-color-grey-500);
   --uitk-measured-font-size: 11px;
 }
 
 .uitk-light .uitkEmphasisHigh {
-  --uitk-measured-track-color: var(--uitk-grey-90);
+  --uitk-measured-track-color: var(--uitk-color-grey-90);
   --uitk-measured-font-size: 16px;
 }
 
 .uitk-dark .uitkEmphasisHigh {
-  --uitk-measured-track-color: var(--uitk-grey-100);
+  --uitk-measured-track-color: var(--uitk-color-grey-100);
   --uitk-measured-font-size: 16px;
 }

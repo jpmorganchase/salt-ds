@@ -1,33 +1,33 @@
 .uitk-light .uitkRadioIcon {
-  --border-stroke: var(--uitk-grey-90);
-  --border-stroke-checked: var(--uitk-blue-500);
-  --border-stroke-hover: var(--uitk-blue-400);
+  --border-stroke: var(--uitk-color-grey-90);
+  --border-stroke-checked: var(--uitk-color-blue-500);
+  --border-stroke-hover: var(--uitk-color-blue-400);
   --border-stroke-width: 1px;
 
-  --border-fill: var(--uitk-white);
-  --border-fill-checked: var(--uitk-blue-400);
+  --border-fill: var(--uitk-color-white);
+  --border-fill-checked: var(--uitk-color-blue-400);
 
-  --check-stroke: var(--uitk-white);
-  --check-fill: var(--uitk-white);
+  --check-stroke: var(--uitk-color-white);
+  --check-fill: var(--uitk-color-white);
 
-  /* --icon-background-filled: var(--uitk-grey-20); */
-  /* --icon-background-theme: var(--uitk-white); */
+  /* --icon-background-filled: var(--uitk-color-grey-20); */
+  /* --icon-background-theme: var(--uitk-color-white); */
 }
 
 .uitk-dark .uitkRadioIcon {
-  --border-stroke: var(--uitk-grey-100);
-  --border-stroke-checked: var(--uitk-blue-400);
-  --border-stroke-hover: var(--uitk-blue-300);
+  --border-stroke: var(--uitk-color-grey-100);
+  --border-stroke-checked: var(--uitk-color-blue-400);
+  --border-stroke-hover: var(--uitk-color-blue-300);
   --border-stroke-width: 1px;
 
-  --border-fill: var(--uitk-grey-800);
-  --border-fill-checked: var(--uitk-grey-800);
+  --border-fill: var(--uitk-color-grey-800);
+  --border-fill-checked: var(--uitk-color-grey-800);
 
-  --check-stroke: var(--uitk-blue-400);
-  --check-fill: var(--uitk-blue-400);
+  --check-stroke: var(--uitk-color-blue-400);
+  --check-fill: var(--uitk-color-blue-400);
 
-  /* --icon-background-filled: var(--uitk-grey-900); */
-  /* --icon-background-theme: var(--uitk-grey-800); */
+  /* --icon-background-filled: var(--uitk-color-grey-900); */
+  /* --icon-background-theme: var(--uitk-color-grey-800); */
 }
 
 .uitk-density-medium .uitkRadioIcon {

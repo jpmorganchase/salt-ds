@@ -1,8 +1,8 @@
 .uitk-light .uitkLogo {
-  --logo-color: var(--uitk-grey-300);
+  --logo-color: var(--uitk-color-grey-300);
 }
 .uitk-dark .uitkLogo {
-  --logo-color: var(--uitk-grey-70);
+  --logo-color: var(--uitk-color-grey-70);
 }
 
 .uitkLogo {

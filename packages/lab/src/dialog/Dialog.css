@@ -1,5 +1,5 @@
 .uitk-dark .uitkDialog {
-  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-grey-400));
+  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-color-grey-400));
   --dialog-box-shadow: var(--uitkDialog-box-shadow, rgba(0, 0, 0, 0.65) 0px 12px 40px 5px);
 }
 

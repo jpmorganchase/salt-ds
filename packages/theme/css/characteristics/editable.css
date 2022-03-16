@@ -10,51 +10,51 @@
 }
 
 .uitk-light {
-  --uitk-editable-text-primary: var(--uitk-grey-900);
-  --uitk-editable-text-secondary: var(--uitk-grey-200);
+  --uitk-editable-text-primary: var(--uitk-color-grey-900);
+  --uitk-editable-text-secondary: var(--uitk-color-grey-200);
 
-  --uitk-editable-icon-color: var(--uitk-grey-600);
-  --uitk-editable-icon-color-hover: var(--uitk-grey-600);
-  --uitk-editable-icon-color-active: var(--uitk-grey-600);
+  --uitk-editable-icon-color: var(--uitk-color-grey-600);
+  --uitk-editable-icon-color-hover: var(--uitk-color-grey-600);
+  --uitk-editable-icon-color-active: var(--uitk-color-grey-600);
   --uitk-editable-icon-color-readonly: transparent;
 
-  --uitk-editable-border-color: var(--uitk-grey-90);
-  --uitk-editable-border-color-hover: var(--uitk-blue-400);
-  --uitk-editable-border-color-active: var(--uitk-blue-500);
-  --uitk-editable-border-color-readonly: var(--uitk-grey-90-fade-20);
+  --uitk-editable-border-color: var(--uitk-color-grey-90);
+  --uitk-editable-border-color-hover: var(--uitk-color-blue-400);
+  --uitk-editable-border-color-active: var(--uitk-color-blue-500);
+  --uitk-editable-border-color-readonly: var(--uitk-color-grey-90-fade-20);
 
   /* Not in Figma */
   /* blue 30 fade 99 - prevents browser adding transparency to the color */
-  --uitk-editable-selection-background: var(--uitk-blue-30-fade-99);
+  --uitk-editable-selection-background: var(--uitk-color-blue-30-fade-99);
 }
 
 .uitk-dark {
-  --uitk-editable-text-primary: var(--uitk-white);
-  --uitk-editable-text-secondary: var(--uitk-grey-70);
+  --uitk-editable-text-primary: var(--uitk-color-white);
+  --uitk-editable-text-secondary: var(--uitk-color-grey-70);
 
-  --uitk-editable-icon-color: var(--uitk-grey-60);
-  --uitk-editable-icon-color-hover: var(--uitk-grey-60);
-  --uitk-editable-icon-color-active: var(--uitk-grey-60);
+  --uitk-editable-icon-color: var(--uitk-color-grey-60);
+  --uitk-editable-icon-color-hover: var(--uitk-color-grey-60);
+  --uitk-editable-icon-color-active: var(--uitk-color-grey-60);
   --uitk-editable-icon-color-readonly: transparent;
 
-  --uitk-editable-border-color: var(--uitk-grey-100);
-  --uitk-editable-border-color-hover: var(--uitk-blue-300);
-  --uitk-editable-border-color-active: var(--uitk-blue-400);
-  --uitk-editable-border-color-readonly: var(--uitk-grey-100-fade-20);
+  --uitk-editable-border-color: var(--uitk-color-grey-100);
+  --uitk-editable-border-color-hover: var(--uitk-color-blue-300);
+  --uitk-editable-border-color-active: var(--uitk-color-blue-400);
+  --uitk-editable-border-color-readonly: var(--uitk-color-grey-100-fade-20);
 
   /* Not in Figma */
   /* blue 700 fade 99 - prevents browser adding transparency to the color */
-  --uitk-editable-selection-background: var(--uitk-blue-700-fade-99);
+  --uitk-editable-selection-background: var(--uitk-color-blue-700-fade-99);
 }
 
 /* Default medium emphasis values */
 
 .uitk-light {
-  --uitk-editable-background: var(--uitk-white);
+  --uitk-editable-background: var(--uitk-color-white);
 }
 
 .uitk-dark {
-  --uitk-editable-background: var(--uitk-grey-800);
+  --uitk-editable-background: var(--uitk-color-grey-800);
 }
 
 /* High and low emphasis values */
@@ -68,9 +68,9 @@
 }
 
 .uitk-light .uitkEmphasisHigh {
-  --uitk-editable-background: var(--uitk-grey-20);
+  --uitk-editable-background: var(--uitk-color-grey-20);
 }
 
 .uitk-dark .uitkEmphasisHigh {
-  --uitk-editable-background: var(--uitk-grey-900);
+  --uitk-editable-background: var(--uitk-color-grey-900);
 }

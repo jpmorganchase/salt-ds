@@ -5,7 +5,7 @@
 }
 
 .uitkColorChooser-overlayButtonSwatchWithBorder {
-  border: 0.2px solid var(--uitk-grey-600);
+  border: 0.2px solid var(--uitk-color-grey-600);
 }
 
 .uitkColorChooser-overlayButtonText {
@@ -34,11 +34,11 @@
 }
 
 .uitk-light .uitkColorChooser-defaultButton {
-  border-bottom: 1px solid var(--uitk-grey-60);
+  border-bottom: 1px solid var(--uitk-color-grey-60);
 }
 
 .uitk-dark .uitkColorChooser-defaultButton {
-  border-bottom: 1px solid var(--uitk-grey-400);
+  border-bottom: 1px solid var(--uitk-color-grey-400);
 }
 
 .uitkColorChooser-overlayContent {

@@ -1,6 +1,6 @@
 .uitk-dark .uitkOverlay {
   /* TODO: Design, whether this is intentional */
-  --overlay-border-color: var(--uitk-grey-400);
+  --overlay-border-color: var(--uitk-color-grey-400);
 }
 
 /* Experimental - Overlay css variable API */

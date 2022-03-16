@@ -1,11 +1,11 @@
 .uitk-light .uitkActivationIndicator {
-  --uitk-activation-indicator-bg: var(--uitk-grey-60);
-  --uitk-activation-indicator-thumb-bg: var(--uitk-orange-700);
+  --uitk-activation-indicator-bg: var(--uitk-color-grey-60);
+  --uitk-activation-indicator-thumb-bg: var(--uitk-color-orange-700);
 }
 
 .uitk-dark .uitkActivationIndicator {
-  --uitk-activation-indicator-bg: var(--uitk-grey-400);
-  --uitk-activation-indicator-thumb-bg: var(--uitk-orange-500);
+  --uitk-activation-indicator-bg: var(--uitk-color-grey-400);
+  --uitk-activation-indicator-thumb-bg: var(--uitk-color-orange-500);
 }
 
 .uitkActivationIndicator-no-background {
