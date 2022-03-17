@@ -38,26 +38,26 @@ const excludeProps = [
 
 //********** Body Text ***********/
 
-const BodyTextComponent: ComponentStory<typeof Text> = (props) => {
+const BasicTextComponent: ComponentStory<typeof Text> = (props) => {
   return (
     <>
       <Text>
-        Body text - div - His seasons Shall without form fourth seed so.
+        Basic text - div - His seasons Shall without form fourth seed so.
       </Text>
       <Text>
-        Body text
+        Basic text
         <strong> emphasis high</strong>
       </Text>
       <Text>
-        Body text
+        Basic text
         <small> emphasis low</small>
       </Text>
     </>
   );
 };
 
-export const BodyText = BodyTextComponent.bind({});
-BodyText.parameters = {
+export const BasicText = BasicTextComponent.bind({});
+BasicText.parameters = {
   controls: {
     exclude: excludeProps,
   },
