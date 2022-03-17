@@ -38,23 +38,34 @@ export const LowEmphasis: ComponentStory<typeof FormField> = () => (
     }}
   >
     <div style={{ width: "200px" }}>
-      <h3>Theme</h3>
-
+      <h3>Low emphasis</h3>
       <FormField
         label="Low emphasis form field"
         helperText="Helper text value"
-        lowEmphasisFocus
+        emphasis="low"
       >
         <Input defaultValue="Value" />
       </FormField>
     </div>
+  </div>
+);
+
+export const HighEmphasis: ComponentStory<typeof FormField> = () => (
+  <div
+    style={{
+      display: "grid",
+      rowGap: "20px",
+      columnGap: "20px",
+      gridTemplateColumns: "auto auto",
+      padding: "20px 20px",
+    }}
+  >
     <div style={{ width: "200px" }}>
-      <h3>Filled</h3>
+      <h3>High emphasis</h3>
       <FormField
-        label="Low emphasis form field"
+        label="High emphasis form field"
         helperText="Helper text value"
-        lowEmphasisFocus
-        variant="theme"
+        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -113,7 +124,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
       <FormField
         label="No validation state"
         helperText="Helper text value"
-        variant="filled"
+        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -132,7 +143,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
         label="Warning validation state"
         helperText="Helper text value"
         validationState="warning"
-        variant="filled"
+        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -151,7 +162,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
         label="Error validation state"
         helperText="Helper text value"
         validationState="error"
-        variant="filled"
+        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -215,12 +226,12 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
 );
 
 // We can't use SB controls here, otherwise SB crashes with circular JSON conversion error (iframe works)
-export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
+export const AllDensitiesTwoDefaults: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
-      <ToolkitProvider theme="light">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider Default="light">{renderAllDensities()}</ToolkitProvider>
 
-      <ToolkitProvider theme="dark">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider Default="dark">{renderAllDensities()}</ToolkitProvider>
     </div>
   );
 };
@@ -412,17 +423,17 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       }}
     >
       <ErrorState />
-      <ErrorState variant="filled" />
+      <ErrorState emphasis="high" />
       <ErrorState hasStatusIndicator />
-      <ErrorState hasStatusIndicator variant="filled" />
+      <ErrorState hasStatusIndicator emphasis="high" />
       <WarningState />
-      <WarningState variant="filled" />
+      <WarningState emphasis="high" />
       <WarningState hasStatusIndicator />
-      <WarningState hasStatusIndicator variant="filled" />
+      <WarningState hasStatusIndicator emphasis="high" />
       <DefaultState />
-      <DefaultState variant="filled" />
+      <DefaultState emphasis="high" />
       <DefaultState hasStatusIndicator />
-      <DefaultState hasStatusIndicator variant="filled" />
+      <DefaultState hasStatusIndicator emphasis="high" />
       <HelperTextAsTooltip hasStatusIndicator />
       <HelperTextAsTooltip />
       <MultipleMessagesStatusIndicator />
@@ -442,11 +453,14 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       <DefaultState labelPlacement="left" />
       <HelperTextAsTooltip labelPlacement="left" />
       <MultipleMessagesStatusIndicator labelPlacement="left" />
-      <ErrorState labelPlacement="left" variant="filled" />
-      <WarningState labelPlacement="left" variant="filled" />
-      <DefaultState labelPlacement="left" variant="filled" />
-      <HelperTextAsTooltip labelPlacement="left" variant="filled" />
-      <MultipleMessagesStatusIndicator labelPlacement="left" variant="filled" />
+      <ErrorState labelPlacement="left" variant="High emphasis" />
+      <WarningState labelPlacement="left" variant="High emphasis" />
+      <DefaultState labelPlacement="left" variant="High emphasis" />
+      <HelperTextAsTooltip labelPlacement="left" variant="High emphasis" />
+      <MultipleMessagesStatusIndicator
+        labelPlacement="left"
+        variant="High emphasis"
+      />
     </div>
   </>
 );
@@ -477,8 +491,7 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
       }
     `}</style>
     <div style={{ width: "200px" }}>
-      <h3>Theme</h3>
-
+      <h3>Default</h3>
       <FormField
         className="carbon"
         label="Carbon form field"
@@ -488,12 +501,12 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
       </FormField>
     </div>
     <div style={{ width: "200px" }}>
-      <h3>Filled</h3>
+      <h3>High emphasis</h3>
       <FormField
         className="carbon"
         label="Carbon form field"
         helperText="Helper text value"
-        variant="theme"
+        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -505,20 +518,20 @@ export const Variants: ComponentStory<typeof FormField> = () => (
   <>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <h3>Theme</h3>
+        <h3>Default</h3>
         <FormField label="Default Form Field label">
           <Input defaultValue="Value" />
         </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Filled</h3>
-        <FormField label="Default Form Field label" variant="filled">
+        <h3>High emphasis</h3>
+        <FormField label="Default Form Field label" emphasis="high">
           <Input defaultValue="Value" />
         </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Transparent</h3>
-        <FormField label="Default Form Field label" variant="transparent">
+        <h3>Low emphasis</h3>
+        <FormField label="Default Form Field label" emphasis="low">
           <Input defaultValue="Value" />
         </FormField>
       </div>
@@ -535,7 +548,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           label="Form Field label with helper text"
-          variant="filled"
+          emphasis="high"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
@@ -544,7 +557,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           label="Form Field label with helper text"
-          variant="transparent"
+          emphasis="low"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
@@ -553,27 +566,27 @@ export const Variants: ComponentStory<typeof FormField> = () => (
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <h3>Theme</h3>
+        <h3>Default</h3>
         <FormField label="Default Form Field label" labelPlacement="left">
           <Input defaultValue="Value" />
         </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Filled</h3>
+        <h3>High emphasis</h3>
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
-          variant="filled"
+          emphasis="high"
         >
           <Input defaultValue="Value" />
         </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Transparent</h3>
+        <h3>Low emphasis</h3>
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
-          variant="transparent"
+          emphasis="low"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -594,7 +607,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
-          variant="filled"
+          emphasis="high"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -604,7 +617,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
-          variant="transparent"
+          emphasis="low"
         >
           <Input defaultValue="Value" />
         </FormField>

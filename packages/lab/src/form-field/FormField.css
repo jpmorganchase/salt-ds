@@ -43,7 +43,6 @@
   --helper-text-color: var(--uitk-text-secondary-color);
   --helper-text-margin-top: var(--uitkFormField-helper-text-margin-top, 2px);
   --helper-text-height: 0px;
-  --form-field-text-height: calc(var(--form-field-font-size) * var(--form-field-line-height));
   --uitkFormLabel-padding: 0 8px;
 }
 
@@ -52,14 +51,14 @@
 }
 
 .uitkFormField-focused,
-.uitkFormField-lowFocused {
+.uitkEmphasisLow {
   --activation-indicator-color: var(--uitk-editable-border-color-active);
   --activation-indicator-size: var(--uitk-editable-border-size-active, 2px);
 }
 
 /* Class applied to the root element when helper text is provided */
 .uitkFormField-withHelperText {
-  --helper-text-height: var(--form-field-text-height);
+  --helper-text-height: var(--form-field-line-height);
 }
 
 /* Class applied to the root element if `disabled={true}` */
@@ -70,20 +69,12 @@
   cursor: var(--uitk-disabled-cursor);
 }
 
-.uitkFormField-filled {
-  --form-field-background: var(--uitk-editable-background);
-}
-
-.uitkFormField-filled.uitkFormField-error {
+.uitkEmphasisHigh.uitkFormField-error {
   --form-field-background: var(--uitk-status-error-background);
 }
 
-.uitkFormField-filled.uitkFormField-warning {
+.uitkEmphasisHigh.uitkFormField-warning {
   --form-field-background: var(--uitk-status-warning-background);
-}
-
-.uitkFormField-transparent {
-  --form-field-background: var(--uitk-editable-background);
 }
 
 .uitkFormField.uitkFormField-warning {
@@ -219,10 +210,6 @@
 
 /* Class applied to the root element if `readonly={true}` */
 .uitkFormField-readOnly {
-}
-
-/* Class applied to the root element when control has focus and `lowEmphasisFocus={true}` */
-.uitkFormField-lowFocused {
 }
 
 /* Class applied to the root element if `validationState="error"` */

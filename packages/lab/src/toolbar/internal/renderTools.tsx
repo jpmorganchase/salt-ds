@@ -39,7 +39,7 @@ export const renderToolbarField = (
       {...toolbarItemProps}
       {...fieldProps}
       key={index}
-      variant="filled"
+      emphasis="high"
       {...independentItemProps}
     >
       {React.cloneElement(tool, { ...props })}

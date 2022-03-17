@@ -92,7 +92,6 @@ export interface InputProps
   renderSuffix?: (state: {
     disabled?: boolean;
     error?: boolean;
-    filled?: boolean;
     focused?: boolean;
     margin?: "dense" | "none" | "normal";
     required?: boolean;
@@ -223,7 +222,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <div
       className={cx(
         withBaseName(),
-        "uitkEmphasisLow",
         {
           [withBaseName(`${textAlign}TextAlign`)]: textAlign,
           [withBaseName("formField")]: inFormField,
