@@ -124,6 +124,8 @@ TableExample.parameters = {
       "expanded",
       "style",
       "onOverflow",
+      "marginTop",
+      "marginBottom",
     ],
   },
 };

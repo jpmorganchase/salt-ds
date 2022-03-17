@@ -22,6 +22,20 @@ export default {
   component: Text,
 } as ComponentMeta<typeof Text>;
 
+const excludeProps = [
+  "children",
+  "elementType",
+  "maxRows",
+  "showTooltip",
+  "tooltipProps",
+  "truncate",
+  "expanded",
+  "style",
+  "onOverflow",
+  "marginTop",
+  "marginBottom",
+];
+
 //********** Body Text ***********/
 
 const BodyTextComponent: ComponentStory<typeof Text> = (props) => {
@@ -45,17 +59,7 @@ const BodyTextComponent: ComponentStory<typeof Text> = (props) => {
 export const BodyText = BodyTextComponent.bind({});
 BodyText.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -82,17 +86,7 @@ const DivTextComponent: ComponentStory<typeof Text> = (props) => {
 export const Div = DivTextComponent.bind({});
 Div.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -121,17 +115,7 @@ const SpanTextComponent: ComponentStory<typeof Text> = (props) => {
 export const Span = SpanTextComponent.bind({});
 Span.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -159,17 +143,7 @@ const PTextComponent: ComponentStory<typeof Text> = (props) => {
 export const P = PTextComponent.bind({});
 P.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -198,17 +172,7 @@ const CodeTextComponent: ComponentStory<typeof Text> = (props) => {
 export const Code = CodeTextComponent.bind({});
 Code.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -227,17 +191,7 @@ const FigureTextComponent: ComponentStory<typeof Text> = (props) => {
 export const Figure = FigureTextComponent.bind({});
 Figure.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -299,16 +253,7 @@ const HeadingsComponent: ComponentStory<typeof Text> = (args) => (
 export const Headings = HeadingsComponent.bind({});
 Headings.parameters = {
   controls: {
-    exclude: [
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -335,17 +280,7 @@ const HelpTextComponent: ComponentStory<typeof Text> = (props) => {
 export const HelpText = HelpTextComponent.bind({});
 HelpText.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };
 
@@ -375,16 +310,6 @@ const LabelCaptionTextComponent: ComponentStory<typeof Text> = (props) => {
 export const LabelCaption = LabelCaptionTextComponent.bind({});
 LabelCaption.parameters = {
   controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-    ],
+    exclude: excludeProps,
   },
 };

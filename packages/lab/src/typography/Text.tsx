@@ -10,10 +10,11 @@ import {
   forwardRef,
 } from "react";
 import cx from "classnames";
-import { useForkRef } from "../utils";
-
-import { Tooltip, TooltipProps } from "../tooltip";
 import { useDensity, makePrefixer } from "@brandname/core";
+import { Tooltip, TooltipProps } from "@brandname/lab";
+
+import { useForkRef } from "../utils";
+import { getComputedStyles } from "./getComputedStyles";
 
 import "./Text.css";
 
@@ -58,6 +59,14 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * @params [boolean] isOverflowed
    */
   onOverflow?: (isOverflowed: boolean) => unknown;
+  /**
+   * Override style for margin-top
+   */
+  marginTop?: number;
+  /**
+   * Override style for margin-bottom
+   */
+  marginBottom?: number;
 }
 
 interface StylesType {
@@ -79,6 +88,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     expanded,
     style,
     onOverflow,
+    marginTop,
+    marginBottom,
     ...restProps
   },
   ref
@@ -247,7 +258,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       tabIndex={hasTooltip ? 0 : -1}
       aria-hidden={hasTooltip ? true : undefined}
       ref={setContainerRef}
-      style={{ ...componentStyle, ...style }}
+      style={{ marginTop, marginBottom, ...componentStyle, ...style }}
     >
       {children}
     </Component>
@@ -270,14 +281,3 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     content
   );
 });
-
-// Utils
-function getComputedStyles(el: HTMLElement) {
-  const { lineHeight, height, width } = window.getComputedStyle(el);
-
-  return {
-    lineHeight: parseFloat(lineHeight.replace("px", "")),
-    height: parseFloat(height.replace("px", "")),
-    width: parseFloat(width.replace("px", "")),
-  };
-}

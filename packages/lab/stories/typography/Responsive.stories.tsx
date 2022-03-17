@@ -10,18 +10,6 @@ import { Text, LabelCaption, HelpText, P, Span, Div } from "@brandname/lab";
 export default {
   title: "Lab/Typography",
   component: Text,
-  argTypes: {
-    elementType: {
-      options: ["h1", "h2", "h3", "h4", "p", "div", "span"],
-      control: { type: "select" },
-    },
-    maxRows: {
-      control: { type: "number" },
-    },
-    fontSize: {
-      control: { type: "number" },
-    },
-  },
 } as ComponentMeta<typeof Text>;
 
 const ResponsiveTextComponent: ComponentStory<typeof Text> = (props) => {
@@ -148,7 +136,6 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 export const ResponsiveExample = ResponsiveTextComponent.bind({});
 ResponsiveExample.parameters = {
-  docs: { source: { type: "dynamic" } },
   controls: {
     exclude: [
       "elementType",
@@ -159,6 +146,8 @@ ResponsiveExample.parameters = {
       "expanded",
       "style",
       "onOverflow",
+      "marginTop",
+      "marginBottom",
     ],
   },
 };

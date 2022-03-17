@@ -120,7 +120,7 @@ label.uitkText {
 /* Help text */
 .uitkText-helpText.uitkText {
   font-style: italic;
-  color: var(--uitk-text-secondary-regular-color);
+  color: var(--uitk-text-secondary-color);
   font-size: var(--uitk-text-help-font-size);
   line-height: var(--uitk-text-help-line-height);
 }

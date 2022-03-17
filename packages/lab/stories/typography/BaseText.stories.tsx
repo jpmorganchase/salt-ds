@@ -21,6 +21,8 @@ export default {
       description: "Set 0 if you want to ignore",
       control: { type: "number" },
     },
+    marginTop: { control: { type: "number" } },
+    marginBottom: { control: { type: "number" } },
     expanded: { control: { type: "boolean" } },
     showTooltip: { control: { type: "boolean" } },
     truncate: { control: { type: "boolean" } },
@@ -43,6 +45,8 @@ const BaseComponent: Story = (args) => {
     truncate,
     showTooltip,
     maxRows,
+    marginTop,
+    marginBottom,
     parentWidth,
     parentHeight,
   } = args;
@@ -56,6 +60,8 @@ const BaseComponent: Story = (args) => {
     maxRows,
     truncate,
     showTooltip,
+    marginTop,
+    marginBottom,
   };
 
   useEffect(() => {
@@ -93,6 +99,8 @@ TextComponent.args = {
   showTooltip: true,
   expanded: undefined,
   maxRows: undefined,
+  marginTop: undefined,
+  marginBottom: undefined,
   parentWidth: undefined,
   parentHeight: undefined,
 };
