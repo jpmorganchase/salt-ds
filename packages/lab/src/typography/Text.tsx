@@ -140,9 +140,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Resizing
   useLayoutEffect(() => {
-    if (!contentRef.current) {
-      return;
-    }
     const { current: node } = contentRef;
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -163,7 +160,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         resizeObserver.unobserve(node);
       }
     };
-  }, [isVisible]);
+  }, [contentRef.current, isVisible]);
 
   // Styling
   useEffect(() => {
