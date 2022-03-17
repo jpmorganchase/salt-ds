@@ -107,6 +107,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Scrolling
   useLayoutEffect(() => {
+    if (!contentRef.current) {
+      return;
+    }
     const { current: node } = contentRef;
 
     const scrollObserver = new IntersectionObserver(
@@ -137,6 +140,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Resizing
   useLayoutEffect(() => {
+    if (!contentRef.current) {
+      return;
+    }
     const { current: node } = contentRef;
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -157,7 +163,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         resizeObserver.unobserve(node);
       }
     };
-  }, [isVisible, contentRef.current]);
+  }, [isVisible]);
 
   // Styling
   useEffect(() => {
@@ -182,7 +188,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         styles["--text-height"] = `100%`;
         setIsOverflowed(false);
       } else if (truncate) {
-        const { offsetHeight, scrollHeight, scrollWidth } = contentRef.current;
+        const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
+          contentRef.current;
         const { lineHeight: lineHeightComputed } = getComputedStyles(
           contentRef.current
         );
@@ -210,6 +217,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
           if (
             heightParent < scrollHeight ||
             heightParent < offsetHeight ||
+            offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
           ) {
             const newRows = Math.floor(heightParent / lineHeightComputed);
