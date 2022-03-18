@@ -18,6 +18,7 @@
   font-size: var(--uitk-text-font-size);
   overflow: hidden;
   word-break: break-word;
+  text-overflow: ellipsis;
 }
 
 .uitkText-overflow {
@@ -29,8 +30,6 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: break-spaces;
 }
 
 /* Heading 1 */
