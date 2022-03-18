@@ -28,6 +28,30 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = (props) => {
       }}
     >
       <div style={box}>
+        <strong>Default</strong>
+        <br />
+        elementType - div
+        <br />
+        truncate - true
+        <br />
+        <strong>Wraps</strong>
+      </div>
+      <div style={{ ...box }}>
+        <Div>
+          The European <i>languages</i> are members of the same family. Their
+          separate existence is a myth. For science, music, sport, etc,{" "}
+          <a href="">Europe uses the same vocabulary</a>. The languages only
+          differ in their grammar, their pronunciation and their most common
+          words. Everyone realizes why a new common language would be desirable:
+          one could refuse to pay expensive translators. The European languages
+          are members of the same family. Their separate existence is a myth.
+          For science, music, sport, etc, Europe uses the same vocabulary. The
+          languages only differ in their grammar, their pronunciation and their
+          most common words. Everyone realizes why a new common language would
+          be desirable: one could refuse to pay expensive translators.
+        </Div>
+      </div>
+      <div style={box}>
         elementType - div
         <br />
         truncate - false
@@ -40,16 +64,15 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = (props) => {
         <Div truncate={false}>
           The European <i>languages</i> are members of the same family. Their
           separate existence is a myth. For science, music, sport, etc,{" "}
-          <span style={{ fontWeight: 400, color: "blue" }}>Europe</span>
-          uses the same vocabulary. The languages only differ in their grammar,
-          their pronunciation and their most common words. Everyone realizes why
-          a new common language would be desirable: one could refuse to pay
-          expensive translators. The European languages are members of the same
-          family. Their separate existence is a myth. For science, music, sport,
-          etc, Europe uses the same vocabulary. The languages only differ in
-          their grammar, their pronunciation and their most common words.
-          Everyone realizes why a new common language would be desirable: one
-          could refuse to pay expensive translators.
+          <a href="">Europe uses the same vocabulary</a>. The languages only
+          differ in their grammar, their pronunciation and their most common
+          words. Everyone realizes why a new common language would be desirable:
+          one could refuse to pay expensive translators. The European languages
+          are members of the same family. Their separate existence is a myth.
+          For science, music, sport, etc, Europe uses the same vocabulary. The
+          languages only differ in their grammar, their pronunciation and their
+          most common words. Everyone realizes why a new common language would
+          be desirable: one could refuse to pay expensive translators.
         </Div>
       </div>
       <div style={box}>

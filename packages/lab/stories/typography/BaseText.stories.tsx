@@ -81,7 +81,7 @@ const BaseComponent: Story = (args) => {
         height: height || "auto",
       }}
     >
-      {/* We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! */}
+      {/* We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! :) */}
       <Text {...mappedProps} dangerouslySetInnerHTML={{ __html: children }} />
     </div>
   );

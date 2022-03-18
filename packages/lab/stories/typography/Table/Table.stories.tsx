@@ -10,11 +10,11 @@ export default {
   argTypes: {
     wrapperWidth: {
       description: "For this demo only. Set '0' for 100% width",
-      control: { type: "number" },
+      control: { type: "text" },
     },
     wrapperHeight: {
       description: "For this demo only. Set '0' for 100% height",
-      control: { type: "number" },
+      control: { type: "text" },
     },
   },
 } as ComponentMeta<typeof Text>;

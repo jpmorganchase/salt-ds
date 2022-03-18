@@ -16,8 +16,12 @@
   height: var(--text-height);
   line-height: var(--uitk-text-line-height);
   font-size: var(--uitk-text-font-size);
-  overflow: auto;
+  overflow: hidden;
   word-break: break-word;
+}
+
+.uitkText-overflow {
+  overflow: auto;
 }
 
 .uitkText-lineClamp {
