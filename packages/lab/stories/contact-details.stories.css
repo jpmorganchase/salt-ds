@@ -1,9 +1,9 @@
 .uitk-light .withoutAvatar {
-  --heading-color: var(--uitk-grey-700);
+  --heading-color: var(--uitk-color-grey-700);
 }
 
 .uitk-dark .withoutAvatar {
-  --heading-color: var(--uitk-grey-10);
+  --heading-color: var(--uitk-color-grey-10);
 }
 
 .withoutAvatar {
@@ -105,9 +105,9 @@
 }
 
 .uitk-dark .allVariants-withBackground {
-  background: var(--uitk-blue-900);
+  background: var(--uitk-color-blue-900);
 }
 
 .uitk-light .allVariants-withBackground {
-  background: var(--uitk-blue-10);
+  background: var(--uitk-color-blue-10);
 }

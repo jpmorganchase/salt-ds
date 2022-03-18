@@ -1,17 +1,17 @@
 .uitk-light .uitkToggleButtonGroup {
-  --toggle-button-group-border-color: var(--uitk-grey-60);
+  --toggle-button-group-border-color: var(--uitk-color-grey-60);
 }
 
 .uitk-light .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggle-button-group-border-color: var(--uitk-blue-300);
+  --toggle-button-group-border-color: var(--uitk-color-blue-300);
 }
 
 .uitk-dark .uitkToggleButtonGroup {
-  --toggle-button-group-border-color: var(--uitk-grey-400);
+  --toggle-button-group-border-color: var(--uitk-color-grey-400);
 }
 
 .uitk-dark .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggle-button-group-border-color: var(--uitk-blue-600);
+  --toggle-button-group-border-color: var(--uitk-color-blue-600);
 }
 
 .uitk-density-touch .uitkToggleButtonGroup {

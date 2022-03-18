@@ -1,12 +1,12 @@
 .uitk-dark .uitkColorChooser-rgbaInput {
   width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-white);
+  border-bottom: 1px solid var(--uitk-color-white);
   padding-top: 4px;
 }
 
 .uitk-light .uitkColorChooser-rgbaInput {
   width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-black);
+  border-bottom: 1px solid var(--uitk-color-black);
   padding-top: var(--uitk-spacing-unit);
 }
 

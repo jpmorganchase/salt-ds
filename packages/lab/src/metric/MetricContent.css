@@ -16,7 +16,7 @@
 
 .uitkMetricContent-indicator {
   line-height: 1;
-  bottom: 2;
+  bottom: 2px;
 }
 
 .uitkMetricContent-directionUp .uitkMetricContent-indicator {

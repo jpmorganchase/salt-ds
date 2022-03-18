@@ -1,17 +1,17 @@
 .uitk-dark .uitkContactDetails {
-  --separator-color: var(--uitk-grey-500);
-  --label-color: var(--uitk-grey-70);
-  --deselected-icon-color: var(--uitk-grey-100);
-  --selected-icon-color: var(--uitk-orange-500);
-  --no-avatar-color: var(--uitk-blue-300);
+  --separator-color: var(--uitk-color-grey-500);
+  --label-color: var(--uitk-color-grey-70);
+  --deselected-icon-color: var(--uitk-color-grey-100);
+  --selected-icon-color: var(--uitk-color-orange-500);
+  --no-avatar-color: var(--uitk-color-blue-300);
 }
 
 .uitk-light .uitkContactDetails {
-  --separator-color: var(--uitk-grey-40);
-  --label-color: var(--uitk-grey-200);
-  --deselected-icon-color: var(--uitk-grey-90);
-  --selected-icon-color: var(--uitk-orange-700);
-  --no-avatar-color: var(--uitk-blue-300);
+  --separator-color: var(--uitk-color-grey-40);
+  --label-color: var(--uitk-color-grey-200);
+  --deselected-icon-color: var(--uitk-color-grey-90);
+  --selected-icon-color: var(--uitk-color-orange-700);
+  --no-avatar-color: var(--uitk-color-blue-300);
 }
 
 .uitk-density-touch .uitkContactDetails {

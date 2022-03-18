@@ -1,13 +1,13 @@
 .uitk-light {
-  --uitk-focused-color: var(--uitk-blue-500);
-  --uitk-focused-color-warning: var(--uitk-orange-700);
-  --uitk-focused-color-error: var(--uitk-red-500);
+  --uitk-focused-color: var(--uitk-color-blue-500);
+  --uitk-focused-color-warning: var(--uitk-color-orange-700);
+  --uitk-focused-color-error: var(--uitk-color-red-500);
 }
 
 .uitk-dark {
-  --uitk-focused-color: var(--uitk-blue-400);
-  --uitk-focused-color-warning: var(--uitk-orange-500);
-  --uitk-focused-color-error: var(--uitk-red-400);
+  --uitk-focused-color: var(--uitk-color-blue-400);
+  --uitk-focused-color-warning: var(--uitk-color-orange-500);
+  --uitk-focused-color-error: var(--uitk-color-red-400);
 }
 
 .uitk-light,

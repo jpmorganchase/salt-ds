@@ -154,9 +154,10 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     INITIAL_INPUT_WIDTH +
     (expanded ? clearButtonWidth : expandButtonWidth);
 
-  const pillMaxWidth = expanded
-    ? pillGroupWidth! - INITIAL_INPUT_WIDTH - lastVisiblePillMargin
-    : 100;
+  const pillMaxWidth =
+    expanded && pillGroupWidth !== null
+      ? pillGroupWidth - INITIAL_INPUT_WIDTH - lastVisiblePillMargin
+      : 100;
 
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
@@ -272,14 +273,14 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   const mergedInputProps = deepmerge(
     {
       //  TODO: Convert to css nested override approach
-      classes: {
-        field: withBaseName("inputField"),
-        multiline: withBaseName("inputMultiline"),
-        root: classnames(withBaseName("inputRoot"), {
-          [withBaseName("hidden")]: showExpandButton,
-        }),
-        input: withBaseName("input"),
-      },
+      // classes: {
+      //   field: withBaseName("inputField"),
+      //   multiline: withBaseName("inputMultiline"),
+      //   root: classnames(withBaseName("inputRoot"), {
+      //     [withBaseName("hidden")]: showExpandButton,
+      //   }),
+      //   input: withBaseName("input"),
+      // },
       inputProps: {
         style: {
           width: inputWidth,

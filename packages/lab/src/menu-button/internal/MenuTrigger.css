@@ -1,11 +1,11 @@
 .uitk-dark .uitkMenuTrigger {
-  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-grey-40));
-  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-grey-900));
+  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-color-grey-40));
+  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-color-grey-900));
 }
 
 .uitk-light .uitkMenuTrigger {
-  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-grey-200));
-  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-white));
+  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-color-grey-200));
+  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-color-white));
 }
 
 .uitkMenuTrigger {

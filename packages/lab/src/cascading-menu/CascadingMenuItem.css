@@ -1,11 +1,11 @@
 .uitk-light {
-  --menuitem-blur-selected-bg: var(--uitk-grey-30);
-  --menu-divider-bg: var(--uitk-grey-60);
+  --menuitem-blur-selected-bg: var(--uitk-color-grey-30);
+  --menu-divider-bg: var(--uitk-color-grey-60);
 }
 
 .uitk-dark {
-  --menuitem-blur-selected-bg: var(--uitk-grey500);
-  --menu-divider-bg: var(--uitk-grey-300);
+  --menuitem-blur-selected-bg: var(--uitk-color-grey-500);
+  --menu-divider-bg: var(--uitk-color-grey-300);
 }
 
 .uitkMenuItem {
@@ -14,16 +14,13 @@
   box-sizing: border-box;
   display: flex;
 
-  right: inherit;
   align-items: center;
   justify-content: space-between;
 
   right: 0;
   cursor: pointer;
   overflow: hidden;
-  box-sizing: border-box;
   text-align: left;
-  align-items: center;
   user-select: none;
   white-space: nowrap;
   text-overflow: ellipsis;

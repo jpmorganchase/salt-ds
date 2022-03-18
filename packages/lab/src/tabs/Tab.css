@@ -1,15 +1,15 @@
 .uitk-light .uitkTab {
-  --tab-color: var(--uitk-grey-400);
-  --tab-selected-color: var(--uitk-grey-900);
-  --tab-drag-background: var(--uitk-grey-20);
-  --tab-hover-background: var(--uitk-grey-20);
+  --tab-color: var(--uitk-color-grey-400);
+  --tab-selected-color: var(--uitk-color-grey-900);
+  --tab-drag-background: var(--uitk-color-grey-20);
+  --tab-hover-background: var(--uitk-color-grey-20);
 }
 
 .uitk-dark .uitkTab {
-  --tab-color: var(--uitk-grey-40);
-  --tab-selected-color: var(--uitk-white);
-  --tab-drag-background: var(--uitk-grey-600);
-  --tab-hover-background: var(--uitk-grey-600);
+  --tab-color: var(--uitk-color-grey-40);
+  --tab-selected-color: var(--uitk-color-white);
+  --tab-drag-background: var(--uitk-color-grey-600);
+  --tab-hover-background: var(--uitk-color-grey-600);
 }
 
 .uitkTab {
@@ -18,10 +18,10 @@
   --uitk-input-min-width: 4em;
   --uitk-text-link-text-decoration: none;
   --uitk-text-link-text-decoration: none;
-  --uitk-focusable-outline-offset: -2px;
-  --uitk-focusable-outline-top: 0px;
-  --uitk-focusable-outline-bottom: 2px;
-  --tab-bar-color: var(--uitk-grey-90);
+  --uitk-focused-outline-offset: -2px;
+  --uitk-focused-outline-top: 0px;
+  --uitk-focused-outline-bottom: 2px;
+  --tab-bar-color: var(--uitk-color-grey-90);
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-spacing-unit);
   --tab-font-weight-selected: var(--uitk-typography-weight-semiBold);
@@ -78,7 +78,7 @@
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before {
-  background: var(--uitk-orange-700);
+  background: var(--uitk-color-orange-700);
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab[aria-selected="true"]:before,
@@ -148,7 +148,7 @@
 }
 
 .uitkTab .uitkTab-closeButton:hover {
-  background-color: var(--uitk-grey-40);
+  background-color: var(--uitk-color-grey-40);
 }
 
 .uitkTab .uitkTab-text {

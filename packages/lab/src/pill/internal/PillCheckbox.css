@@ -1,11 +1,11 @@
 .uitk-light .uitkPill-checkbox {
-  --stroke: var(--uitk-grey-100);
-  --tick: var(--uitk-grey-300);
+  --stroke: var(--uitk-color-grey-100);
+  --tick: var(--uitk-color-grey-300);
 }
 
 .uitk-dark .uitkPill-checkbox {
-  --stroke: var(--uitk-grey-80);
-  --tick: var(--uitk-grey-60);
+  --stroke: var(--uitk-color-grey-80);
+  --tick: var(--uitk-color-grey-60);
 }
 
 .uitkPill-checkbox-icon {

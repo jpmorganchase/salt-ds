@@ -23,49 +23,49 @@
 }
 
 .uitk-LinearCustomStyles-styles1 .uitk-progressIndicator {
-  background: var(--uitk-red-500);
+  background: var(--uitk-color-red-500);
 }
 
 .uitk-LinearCustomStyles-styles1 .uitk-buffer:after {
-  background: var(--uitk-red-500);
+  background: var(--uitk-color-red-500);
 }
 
 .uitk-LinearCustomStyles-styles1 .uitk-progressBarContainer:after {
-  background: var(--uitk-red-500);
+  background: var(--uitk-color-red-500);
 }
 
 .uitk-light .uitk-LinearCustomStyles-styles2 .uitk-progressIndicator {
-  background: var(--uitk-grey-90);
+  background: var(--uitk-color-grey-90);
 }
 
 .uitk-light .uitk-LinearCustomStyles-styles2 .uitk-buffer:after {
-  background: var(--uitk-grey-300);
+  background: var(--uitk-color-grey-300);
 }
 
 .uitk-light .uitk-LinearCustomStyles-styles2 .uitk-progressBarContainer:after {
-  background: var(--uitk-grey-300);
+  background: var(--uitk-color-grey-300);
 }
 
 .uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-progressIndicator {
-  background: var(--uitk-grey-200);
+  background: var(--uitk-color-grey-200);
 }
 
 .uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-buffer:after {
-  background: var(--uitk-grey-500);
+  background: var(--uitk-color-grey-500);
 }
 
 .uitk-dark .uitk-LinearCustomStyles-styles2 .uitk-progressBarContainer:after {
-  background: var(--uitk-grey-500);
+  background: var(--uitk-color-grey-500);
 }
 
 .uitk-LinearCustomStyles-styles3 .uitk-progressIndicator {
-  background: var(--uitk-green-400);
+  background: var(--uitk-color-green-400);
 }
 
 .uitk-LinearCustomStyles-styles3 .uitk-buffer:after {
-  background: var(--uitk-orange-300);
+  background: var(--uitk-color-orange-300);
 }
 
 .uitk-LinearCustomStyles-styles3 .uitk-progressBarContainer:after {
-  background: var(--uitk-orange-300);
+  background: var(--uitk-color-orange-300);
 }

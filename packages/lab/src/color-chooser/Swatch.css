@@ -41,7 +41,7 @@
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch {
-  border: 1px solid var(--uitk-grey-50);
+  border: 1px solid var(--uitk-color-grey-50);
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch,
@@ -61,12 +61,12 @@
 }
 
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  border: 1px solid var(--uitk-grey-90);
+  border: 1px solid var(--uitk-color-grey-90);
 }
 
 .uitkColorChooserSwatch-active {
-  outline: 1px solid var(--uitk-grey-800);
-  border: 2px solid var(--uitk-white) !important;
+  outline: 1px solid var(--uitk-color-grey-800);
+  border: 2px solid var(--uitk-color-white) !important;
   width: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
   height: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;

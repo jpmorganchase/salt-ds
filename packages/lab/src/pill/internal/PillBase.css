@@ -1,17 +1,17 @@
 .uitk-light .uitkPill {
-  --pill-background: var(--uitk-grey-40);
-  --pill-color: var(--uitk-grey-900);
-  --pill-background-active: var(--uitk-grey-200);
-  --pill-color-active: var(--uitk-white);
-  --pill-icon-color: var(--uitk-grey-300);
+  --pill-background: var(--uitk-color-grey-40);
+  --pill-color: var(--uitk-color-grey-900);
+  --pill-background-active: var(--uitk-color-grey-200);
+  --pill-color-active: var(--uitk-color-white);
+  --pill-icon-color: var(--uitk-color-grey-300);
 }
 
 .uitk-dark .uitkPill {
-  --pill-background: var(--uitk-grey-80);
-  --pill-background-active: var(--uitk-grey-80);
-  --pill-color: var(--uitk-white);
-  --pill-color-active: var(--uitk-grey-900);
-  --pill-icon-color: var(--uitk-grey-60);
+  --pill-background: var(--uitk-color-grey-80);
+  --pill-background-active: var(--uitk-color-grey-80);
+  --pill-color: var(--uitk-color-white);
+  --pill-color-active: var(--uitk-color-grey-900);
+  --pill-icon-color: var(--uitk-color-grey-60);
 }
 
 .uitk-density-touch .uitkPill {

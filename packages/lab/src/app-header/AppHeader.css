@@ -1,8 +1,8 @@
 .uitk-light {
-  --appheader-separable: var(--uitk-grey-40);
+  --appheader-separable: var(--uitk-color-grey-40);
 }
 .uitk-dark {
-  --appheader-separable: var(--uitk-grey-400);
+  --appheader-separable: var(--uitk-color-grey-400);
 }
 
 .uitkAppHeader {
@@ -21,7 +21,7 @@
 .uitkAppHeader {
   align-items: flex-start;
   background-color: var(--appheader-background);
-  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-grey-60);
+  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-color-grey-60);
   box-shadow: var(--appheader-shadow);
   box-sizing: content-box;
   display: flex;
