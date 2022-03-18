@@ -15,9 +15,9 @@ export const paginationContext = createContext<PaginationContext>({
   count: 0,
   compact: false,
   emphasis: "high",
-  onPageChange: () => { },
+  onPageChange: () => {},
   paginatorElement: undefined,
-  setPaginatorElement: () => { },
+  setPaginatorElement: () => {},
 });
 
 if (process.env.NODE_ENV !== "production") {

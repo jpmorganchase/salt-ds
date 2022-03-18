@@ -82,6 +82,8 @@
   --uitk-text-help-line-height-medium: 14px;
   --uitk-text-help-line-height-high: 13px;
 
+  --uitk-text-help-font-weight: var(--uitk-typography-weight-italic);
+
   /** 
     Body text (default)
     Avoid using these directly. Instead, use --uitk-text-font-size, --uitk-text-line-height values
