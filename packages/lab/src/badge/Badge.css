@@ -70,7 +70,11 @@
 }
 
 .uitkBadge-info {
-  --badge-content-background: var(--uitk-status-info-background);
+  --badge-content-background: var(--uitk-status-info-color);
+}
+
+.uitkBadge-warning {
+  --badge-content-background: var(--uitk-status-warning-background);
 }
 
 .uitkBadge-error {

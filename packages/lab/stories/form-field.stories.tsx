@@ -47,6 +47,17 @@ export const LowEmphasis: ComponentStory<typeof FormField> = () => (
         <Input defaultValue="Value" />
       </FormField>
     </div>
+    <div style={{ width: "200px" }}>
+      <h3>Low emphasis with disabled outer ring</h3>
+      <FormField
+        label="Low emphasis form field"
+        helperText="Helper text value"
+        disableFocusRing
+        emphasis="low"
+      >
+        <Input defaultValue="Value" />
+      </FormField>
+    </div>
   </div>
 );
 
@@ -65,6 +76,17 @@ export const HighEmphasis: ComponentStory<typeof FormField> = () => (
       <FormField
         label="High emphasis form field"
         helperText="Helper text value"
+        emphasis="high"
+      >
+        <Input defaultValue="Value" />
+      </FormField>
+    </div>
+    <div style={{ width: "200px" }}>
+      <h3>High emphasis with disabled outer ring</h3>
+      <FormField
+        label="Low emphasis form field"
+        helperText="Helper text value"
+        disableFocusRing
         emphasis="high"
       >
         <Input defaultValue="Value" />
@@ -226,12 +248,12 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
 );
 
 // We can't use SB controls here, otherwise SB crashes with circular JSON conversion error (iframe works)
-export const AllDensitiesTwoDefaults: ComponentStory<typeof FormField> = () => {
+export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
-      <ToolkitProvider Default="light">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider theme="light">{renderAllDensities()}</ToolkitProvider>
 
-      <ToolkitProvider Default="dark">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider theme="dark">{renderAllDensities()}</ToolkitProvider>
     </div>
   );
 };
@@ -453,14 +475,11 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       <DefaultState labelPlacement="left" />
       <HelperTextAsTooltip labelPlacement="left" />
       <MultipleMessagesStatusIndicator labelPlacement="left" />
-      <ErrorState labelPlacement="left" variant="High emphasis" />
-      <WarningState labelPlacement="left" variant="High emphasis" />
-      <DefaultState labelPlacement="left" variant="High emphasis" />
-      <HelperTextAsTooltip labelPlacement="left" variant="High emphasis" />
-      <MultipleMessagesStatusIndicator
-        labelPlacement="left"
-        variant="High emphasis"
-      />
+      <ErrorState labelPlacement="left" emphasis="high" />
+      <WarningState labelPlacement="left" emphasis="high" />
+      <DefaultState labelPlacement="left" emphasis="high" />
+      <HelperTextAsTooltip labelPlacement="left" emphasis="high" />
+      <MultipleMessagesStatusIndicator labelPlacement="left" emphasis="high" />
     </div>
   </>
 );
@@ -566,6 +585,37 @@ export const Variants: ComponentStory<typeof FormField> = () => (
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
+        <FormField
+          disableFocusRing
+          helperText="some helper text"
+          label="Form field with disabled outer ring"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div style={{ width: "250px", marginLeft: 16 }}>
+        <FormField
+          disableFocusRing
+          emphasis="high"
+          label="Form field with disabled outer ring"
+          helperText="some helper text"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div style={{ width: "250px", marginLeft: 16 }}>
+        <FormField
+          disableFocusRing
+          emphasis="low"
+          helperText="some helper text"
+          label="Form field with disabled outer ring"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+    </div>
+    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+      <div style={{ width: "250px" }}>
         <h3>Default</h3>
         <FormField label="Default Form Field label" labelPlacement="left">
           <Input defaultValue="Value" />
@@ -618,6 +668,37 @@ export const Variants: ComponentStory<typeof FormField> = () => (
           label="Label with helper text"
           labelPlacement="left"
           emphasis="low"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+    </div>
+    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+      <div style={{ width: "250px" }}>
+        <FormField
+          label="Disabled outer ring"
+          labelPlacement="left"
+          disableFocusRing
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div style={{ width: "250px", marginLeft: 16 }}>
+        <FormField
+          label="Disabled outer ring"
+          labelPlacement="left"
+          emphasis="high"
+          disableFocusRing
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div style={{ width: "250px", marginLeft: 16 }}>
+        <FormField
+          label="Disabled outer ring"
+          labelPlacement="left"
+          emphasis="low"
+          disableFocusRing
         >
           <Input defaultValue="Value" />
         </FormField>

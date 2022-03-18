@@ -113,7 +113,7 @@ const Tooltray: React.FC<TooltrayProps> = (props) => {
       data-pad-start
       data-priority={1}
       fullWidth={false}
-      variant="transparent"
+      emphasis="low"
     >
       <OverflowMenu
         {...OverflowButtonProps}

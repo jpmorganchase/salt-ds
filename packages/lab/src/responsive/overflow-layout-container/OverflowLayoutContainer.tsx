@@ -108,7 +108,7 @@ export const OverflowLayoutContainer: React.FC<
           data-orientation={orientation}
           data-priority={1}
           fullWidth={false}
-          variant="transparent"
+          emphasis="low"
         >
           <OverflowDropdown aria-haspopup aria-label="toolbar overflow">
             {overflowMenuItems}

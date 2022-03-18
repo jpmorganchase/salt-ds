@@ -51,7 +51,7 @@
 }
 
 .uitkFormField-focused,
-.uitkEmphasisLow {
+.uitkFormField-lowFocused {
   --activation-indicator-color: var(--uitk-editable-border-color-active);
   --activation-indicator-size: var(--uitk-editable-border-size-active, 2px);
 }

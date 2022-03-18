@@ -60,9 +60,13 @@ export interface FormFieldProps
    */
   ActivationIndicatorComponent?: ElementType<ActivationIndicatorProps>;
   /**
-   * In low emphasis mode, ths outer focus ring is not applied
+   * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium.
    */
   emphasis?: "low" | "medium" | "high";
+  /**
+   * Outer focus ring focus will not be applied. Defaults to false.
+   */
+  disableFocusRing?: boolean;
   // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behaviour)
   // we should also support 'auto' or explicit numeric values
   /**
@@ -190,6 +194,7 @@ export const FormField = forwardRef(
       children,
       className,
       disabled,
+      disableFocusRing = false,
       emphasis = "medium",
       fullWidth = true,
       hasStatusIndicator,
@@ -235,7 +240,7 @@ export const FormField = forwardRef(
     const labelLeft = labelPlacement === "left";
     const isWarning = validationState === "warning";
     const isError = validationState === "error";
-    const focusClass = emphasis === "low" ? "lowFocused" : "focused";
+    const focusClass = disableFocusRing ? "lowFocused" : "focused";
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =
