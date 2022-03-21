@@ -12,7 +12,7 @@ import {
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import PlaceholderLogo from "../../assets/placeholder.svg";
+import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 export default {
   title: "Layout/GridLayout",
