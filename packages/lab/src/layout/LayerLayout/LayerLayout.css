@@ -1,15 +1,15 @@
 .uitk-dark .uitkLayerLayout {
-  --layer-border-color: var(--uitkLayerLayout-border-color, var(--uitk-grey-400));
+  --layer-border-color: var(--uitkLayerLayout-border-color, var(--uitk-color-grey-400));
   --layer-box-shadow: var(--uitkLayerLayout-box-shadow, rgba(0, 0, 0, 0.65) 0px 12px 40px 5px);
 }
 
 .uitk-light .uitkLayerLayout {
-  --layer-border-color: var(--uitkLayerLayout-border-color, var(--uitk-container-low-emphasis-border-color));
+  --layer-border-color: var(--uitkLayerLayout-border-color, var(--uitk-container-border-color));
   --layer-box-shadow: var(--uitkLayerLayout-box-shadow, rgba(0, 0, 0, 0.3) 0 12px 40px 5px);
 }
 
 .uitkLayerLayout {
-  --layer-background-color: var(--uitkLayerLayout-background-color, var(--uitk-container-low-emphasis-background));
+  --layer-background-color: var(--uitkLayerLayout-background-color, var(--uitk-container-background));
   --layer-border-width: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
   --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-spacing-unit)));
   --layer-border-style: var(--uitkLayerLayout-border-style, var(--uitk-container-border-style));
