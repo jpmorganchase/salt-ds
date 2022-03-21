@@ -14,7 +14,7 @@
   --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-spacing-unit)));
   --layer-border-style: var(--uitkLayerLayout-border-style, var(--uitk-container-border-style));
   --layer-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-spacing-unit)));
-  --duration: 0.2s;
+  --uitk-animation-duration: 0.2s;
 }
 
 .uitkLayerLayout {
@@ -46,7 +46,7 @@
 }
 
 .uitkLayerLayout-centre.uitkLayerLayout-animate {
-  animation: var(--uitk-fade-in-center);
+  animation: var(--uitk-animation-fade-in-center);
 }
 
 .uitkLayerLayout-anchor {
@@ -64,7 +64,7 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-top.uitkLayerLayout-animate {
-  animation: slide-in-bottom var(--duration) var(--timing-function);
+  animation: slide-in-bottom var(--uitk-animation-duration) var(--uitk-animation-timing-function);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right {
@@ -74,7 +74,7 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-animate {
-  animation: slide-in-right var(--duration) var(--timing-function);
+  animation: slide-in-right var(--uitk-animation-duration) var(--uitk-animation-timing-function);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left {
@@ -84,7 +84,7 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-animate {
-  animation: slide-in-left var(--duration) var(--timing-function);
+  animation: slide-in-left var(--uitk-animation-duration) var(--uitk-animation-timing-function);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-bottom {
@@ -96,5 +96,5 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-bottom.uitkLayerLayout-animate {
-  animation: slide-in-top var(--duration) var(--timing-function);
+  animation: slide-in-top var(--uitk-animation-duration) var(--uitk-animation-timing-function);
 }
