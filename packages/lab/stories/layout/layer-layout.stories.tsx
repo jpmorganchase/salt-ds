@@ -16,7 +16,7 @@ import {
 } from "@brandname/lab";
 import { Button, Icon } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import {ChevronLeftIcon, CloseIcon} from "@brandname/icons";
+import { ChevronLeftIcon, CloseIcon } from "@brandname/icons";
 
 export default {
   title: "Layout/LayerLayout",
@@ -168,7 +168,7 @@ const steppedTracker = (
         Select payment method
       </span>
     </FlexLayout>
-    <div style={{ ...connectorStyles, borderColor: "#2670A9" }}></div>
+    <div style={{ ...connectorStyles, borderColor: "#2670A9" }} />
     <FlexLayout alignItems="center" role="listitem" aria-current="step">
       <FlexLayout
         alignItems="center"
@@ -177,7 +177,7 @@ const steppedTracker = (
       />
       <span style={stepStyles}>Enter card details</span>
     </FlexLayout>
-    <div style={connectorStyles}></div>
+    <div style={connectorStyles} />
     <FlexLayout alignItems="center" role="listitem" aria-current="step">
       <FlexLayout
         alignItems="center"
@@ -186,7 +186,7 @@ const steppedTracker = (
       />
       <span style={stepStyles}>Choose payment date</span>
     </FlexLayout>
-    <div style={connectorStyles}></div>
+    <div style={connectorStyles} />
     <FlexLayout alignItems="center" role="listitem" aria-current="step">
       <FlexLayout
         alignItems="center"
@@ -195,7 +195,7 @@ const steppedTracker = (
       />
       <span style={stepStyles}>Review summary</span>
     </FlexLayout>
-    <div style={connectorStyles}></div>
+    <div style={connectorStyles} />
     <FlexLayout alignItems="center" role="listitem" aria-current="step">
       <FlexLayout
         alignItems="center"
@@ -217,6 +217,7 @@ const PaymentCard = ({ index }: { index: number }) => (
     >
       <FlexItem>
         <img
+          alt={"placeholder"}
           src="https://via.placeholder.com/80x60?text=Logo"
           style={{ padding: 24 }}
         />
@@ -235,7 +236,7 @@ const PaymentDialog: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <LayerLayout {...args}>
       <FlexLayout alignItems="center" justifyContent="space-between">
-        <FlexItem></FlexItem>
+        <FlexItem />
         <FlexItem style={{ fontSize: 14 }}>Pay your bill</FlexItem>
         <FlexItem>
           <Button>

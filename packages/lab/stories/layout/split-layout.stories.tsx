@@ -9,9 +9,7 @@ import {
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
-import {
-  Button,
-} from "@brandname/core";
+import { Button } from "@brandname/core";
 
 import React from "react";
 import {
@@ -19,7 +17,7 @@ import {
   ExportIcon,
   ImportIcon,
   NotificationIcon,
-  SearchIcon
+  SearchIcon,
 } from "@brandname/icons";
 
 export default {
