@@ -9,7 +9,6 @@ export interface FormFieldContextValue {
   setFocused: Dispatch<SetStateAction<boolean>>;
   onBlur: FocusEventHandler<HTMLElement>;
   onFocus: FocusEventHandler<HTMLElement>;
-  variant?: "filled" | "theme" | "transparent";
 }
 
 export const FormFieldContext = createContext(

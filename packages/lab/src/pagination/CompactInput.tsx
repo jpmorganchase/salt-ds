@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { FormField, FormFieldVariantType } from "../form-field";
+import { FormField } from "../form-field";
 import { withBaseName } from "./utils";
 import { Input } from "../input";
 import cn from "classnames";
@@ -14,14 +14,14 @@ export interface CompactInputProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  variant: FormFieldVariantType;
+  emphasis: "low" | "medium" | "high";
 }
 
 export const CompactInput: FC<CompactInputProps> = ({
   page,
   count,
   onPageChange,
-  variant,
+  emphasis,
 }) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -53,7 +53,7 @@ export const CompactInput: FC<CompactInputProps> = ({
       <FormField
         className={withBaseName("compactInputField")}
         fullWidth={false}
-        variant={variant}
+        emphasis={emphasis}
       >
         <Input
           className={cn(withBaseName("compactInput"), {

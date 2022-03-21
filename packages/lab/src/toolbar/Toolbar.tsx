@@ -248,7 +248,7 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
               data-orientation={orientation}
               data-priority={1}
               fullWidth={false}
-              variant="transparent"
+              emphasis="low"
             >
               <OverflowMenu
                 OverflowPanelProps={OverflowPanelProps}

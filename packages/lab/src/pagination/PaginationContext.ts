@@ -1,10 +1,9 @@
 import { createContext } from "react";
-import { FormFieldVariantType } from "../form-field";
 
 export interface PaginationContext {
   page: number;
   count: number;
-  variant: FormFieldVariantType;
+  emphasis: "low" | "medium" | "high";
   compact: boolean;
   onPageChange: (page: number) => void;
   paginatorElement?: HTMLDivElement;
@@ -15,7 +14,7 @@ export const paginationContext = createContext<PaginationContext>({
   page: 0,
   count: 0,
   compact: false,
-  variant: "filled",
+  emphasis: "high",
   onPageChange: () => {},
   paginatorElement: undefined,
   setPaginatorElement: () => {},

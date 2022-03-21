@@ -7,7 +7,7 @@
   width: 100%;
   /* We don't want the activation indicator to increase height of it's container */
   position: absolute;
-  bottom: calc(var(--helper-text-height, 0) + 1px);
+  bottom: calc(var(--helper-text-height, 0px) + 1px);
 }
 
 .uitkFormField-activationIndicatorIcon {
