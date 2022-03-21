@@ -1,13 +1,13 @@
-.Splitter {
-  --splitter-size: 3px;
-  --splitter-border-width: 4px;
-  --splitter-border-style: none;
-  --splitter-border-color: white;
+.uitkSplitter {
+  --uitkSplitter-size: 3px;
+  --uitkSplitter-border-width: 4px;
+  --uitkSplitter-border-style: none;
+  --uitkSplitter-border-color: var(--uitk-color-white);
 
   align-items: center;
-  background-color: var(--uitk-grey-60);
-  border-color: var(--splitter-border-color);
-  border-style: var(--splitter-border-style);
+  background-color: var(--uitk-color-grey-60);
+  border-color: var(--uitkSplitter-border-color);
+  border-style: var(--uitkSplitter-border-style);
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -16,26 +16,26 @@
   z-index: 1;
 }
 
-.Splitter:hover {
-  background-color: var(--uitk-grey-40);
+.uitkSplitter:hover {
+  background-color: var(--uitk-color-grey-40);
 }
-.active.Splitter {
-  background-color: var(--uitk-blue-500);
+.active.uitkSplitter {
+  background-color: var(--uitk-color-blue-500);
 }
 
-.Splitter.column {
+.uitkSplitter.column {
   cursor: ns-resize;
-  height: var(--splitter-size);
-  border-width: var(--splitter-border-width) 0;
+  height: var(--uitkSplitter-size);
+  border-width: var(--uitkSplitter-border-width) 0;
 }
 
-.Splitter:not(.column) {
+.uitkSplitter:not(.column) {
   cursor: ew-resize;
-  width: var(--splitter-size);
-  border-width: 0 var(--splitter-border-width);
+  width: var(--uitkSplitter-size);
+  border-width: 0 var(--uitkSplitter-border-width);
 }
 
-.Splitter:before {
+.uitkSplitter:before {
   border: none;
   border-radius: 0;
   content: "";
@@ -43,98 +43,98 @@
   padding: 0;
 }
 
-.Splitter .grab-zone {
+.uitkSplitter .grab-zone {
   position: absolute;
   background-color: rgba(255, 0, 0, 0.01);
   cursor: inherit;
 }
 
-.Splitter.column .grab-zone {
+.uitkSplitter.column .grab-zone {
   left: 0;
   right: 0;
   top: -5px;
   bottom: -5px;
 }
 
-.Splitter:not(column) .grab-zone {
+.uitkSplitter:not(column) .grab-zone {
   left: -5px;
   right: -5px;
   top: 0;
   bottom: 0;
 }
 
-.Splitter:not(.column):before {
+.uitkSplitter:not(.column):before {
   width: 1px;
   height: 10px;
   background: linear-gradient(
     to bottom,
-    var(--uitk-grey-900) 10%,
+    var(--uitk-color-grey-900) 10%,
     transparent 10%,
     transparent 30%,
-    var(--uitk-grey-900) 30%,
-    var(--uitk-grey-900) 40%,
+    var(--uitk-color-grey-900) 30%,
+    var(--uitk-color-grey-900) 40%,
     transparent 40%,
     transparent 60%,
-    var(--uitk-grey-900) 60%,
-    var(--uitk-grey-900) 70%,
+    var(--uitk-color-grey-900) 60%,
+    var(--uitk-color-grey-900) 70%,
     transparent 70%,
     transparent 90%,
-    var(--uitk-grey-900) 90%
+    var(--uitk-color-grey-900) 90%
   );
 }
 
-.active.Splitter.column:before {
+.active.uitkSplitter.column:before {
   background: linear-gradient(
     to right,
-    #ffffff 10%,
+    var(--uitk-color-white) 10%,
     transparent 10%,
     transparent 30%,
-    #ffffff 30%,
-    #ffffff 40%,
+    var(--uitk-color-white) 30%,
+    var(--uitk-color-white) 40%,
     transparent 40%,
     transparent 60%,
-    #ffffff 60%,
-    #ffffff 70%,
+    var(--uitk-color-white) 60%,
+    var(--uitk-color-white) 70%,
     transparent 70%,
     transparent 90%,
-    #ffffff 90%
+    var(--uitk-color-white) 90%
   );
 }
 
-.active.Splitter:not(.column):before {
+.active.uitkSplitter:not(.column):before {
   background: linear-gradient(
     to bottom,
-    #ffffff 10%,
+    var(--uitk-color-white) 10%,
     transparent 10%,
     transparent 30%,
-    #ffffff 30%,
-    #ffffff 40%,
+    var(--uitk-color-white) 30%,
+    var(--uitk-color-white) 40%,
     transparent 40%,
     transparent 60%,
-    #ffffff 60%,
-    #ffffff 70%,
+    var(--uitk-color-white) 60%,
+    var(--uitk-color-white) 70%,
     transparent 70%,
     transparent 90%,
-    #ffffff 90%
+    var(--uitk-color-white) 90%
   );
 }
 
-.Splitter.column:before {
+.uitkSplitter.column:before {
   width: 10px;
   height: 1px;
   background: linear-gradient(
     to right,
-    var(--uitk-grey-900) 10%,
+    var(--uitk-color-grey-900) 10%,
     transparent 10%,
     transparent 30%,
-    var(--uitk-grey-900) 30%,
-    var(--uitk-grey-900) 40%,
+    var(--uitk-color-grey-900) 30%,
+    var(--uitk-color-grey-900) 40%,
     transparent 40%,
     transparent 60%,
-    var(--uitk-grey-900) 60%,
-    var(--uitk-grey-900) 70%,
+    var(--uitk-color-grey-900) 60%,
+    var(--uitk-color-grey-900) 70%,
     transparent 70%,
     transparent 90%,
-    var(--uitk-grey-900) 90%
+    var(--uitk-color-grey-900) 90%
   );
 }
