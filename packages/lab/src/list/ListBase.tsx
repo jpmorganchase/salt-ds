@@ -4,7 +4,6 @@ import {
   memo,
   useRef,
   useContext,
-  useLayoutEffect,
   useImperativeHandle,
   useMemo,
   ComponentType,
@@ -18,6 +17,7 @@ import {
 import classnames from "classnames";
 import { FixedSizeList, VariableSizeList, areEqual } from "react-window";
 import { makePrefixer, useCharacteristic } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 import { useForkRef, useId } from "../utils";
 import { ListItemBase } from "./ListItemBase";
 import { ListBaseProps } from "./ListProps";
@@ -266,7 +266,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
     [virtualized, scrollHandles, virtualizedScrollHandles]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (highlightedIndex == null) {
       return;
     }

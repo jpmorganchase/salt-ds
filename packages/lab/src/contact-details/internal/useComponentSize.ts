@@ -1,10 +1,5 @@
-import {
-  MutableRefObject,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { MutableRefObject, useCallback, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 
 export interface ComponentSize {
   height?: number;
@@ -21,7 +16,7 @@ export function useComponentSize<T extends HTMLElement>(
     setSize({ width, height });
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       if (process.env.NODE_ENV !== "production") {
         throw new Error(

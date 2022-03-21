@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { useCallback, useLayoutEffect, useRef, RefObject } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useCallback, useRef, RefObject } from "react";
 export const WidthHeight = ["height", "width"];
 export const WidthOnly = ["width"];
 
@@ -81,7 +82,7 @@ export function useResizeObserver(
   // Keep this effect separate in case user inadvertently passes different
   // dimensions or callback instance each time - we only ever want to
   // initiate new observation when ref changes.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const target = ref.current as HTMLElement;
     let cleanedUp = false;
 
@@ -123,7 +124,7 @@ export function useResizeObserver(
     };
   }, [ref, measure]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const target = ref.current as HTMLElement;
     const record = observedMap.get(target);
     if (record) {
