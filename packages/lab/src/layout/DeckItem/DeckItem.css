@@ -12,29 +12,29 @@
 }
 
 .uitkDeckItem-slide-in-top {
-  animation: var(--uitk-slide-in-top);
+  animation: var(--uitk-animation-slide-in-top);
 }
 .uitkDeckItem-slide-in-bottom {
-  animation: var(--uitk-slide-in-bottom);
+  animation: var(--uitk-animation-slide-in-bottom);
 }
 .uitkDeckItem-slide-in-left {
-  animation: var(--uitk-slide-in-left);
+  animation: var(--uitk-animation-slide-in-left);
 }
 .uitkDeckItem-slide-in-right {
-  animation: var(--uitk-slide-in-right);
+  animation: var(--uitk-animation-slide-in-right);
 }
 .uitkDeckItem-slide-out-top {
-  animation: var(--uitk-slide-out-top);
+  animation: var(--uitk-animation-slide-out-top);
 }
 .uitkDeckItem-slide-out-bottom {
-  animation: var(--uitk-slide-out-bottom);
+  animation: var(--uitk-animation-slide-out-bottom);
 }
 .uitkDeckItem-slide-out-left {
-  animation: var(--uitk-slide-out-left);
+  animation: var(--uitk-animation-slide-out-left);
 }
 .uitkDeckItem-slide-out-right {
-  animation: var(--uitk-slide-out-right);
+  animation: var(--uitk-animation-slide-out-right);
 }
 .uitkDeckItem-fade-in {
-  animation: var(--uitk-fade-in-center);
+  animation: var(--uitk-animation-fade-in-center);
 }
