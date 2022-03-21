@@ -82,7 +82,7 @@
   --uitk-text-help-line-height-medium: 14px;
   --uitk-text-help-line-height-high: 13px;
 
-  --uitk-text-help-font-weight: var(--uitk-typography-weight-italic);
+  --uitk-text-help-font-style: var(--uitk-typography-style-italic);
 
   /** 
     Body text (default)
