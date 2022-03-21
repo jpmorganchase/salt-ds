@@ -1,4 +1,5 @@
-import { useCallback, useLayoutEffect, useReducer } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useCallback, useReducer } from "react";
 import {
   ElementRef,
   ManagedItem,
@@ -112,7 +113,7 @@ export const useManagedItems = (
     [measureManagedItems]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     async function measure() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { fonts } = document as any;

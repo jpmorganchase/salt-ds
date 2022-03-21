@@ -1,10 +1,10 @@
 import React, {
   createContext,
   useContext,
-  useLayoutEffect,
   useState,
   useRef,
 } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 
 // //////////////////////////////////////////////////////////////////////////////
 // SUPER HACKS AHEAD: The React team will hate this enough to hopefully give us
@@ -31,7 +31,7 @@ export function DescendantProvider({ items, ...props }) {
   const [, forceUpdate] = useState();
 
   // parent useLayoutEffect is always last
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (assigning.current) {
       // At this point all of the children have pushed into the array so we set
       // assigning to false and force an update. Since we're in
@@ -65,7 +65,7 @@ export function useDescendant(descendant) {
   const { assigning, items } = useContext(DescendantContext);
   const index = useRef(-1);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (assigning.current) {
       index.current = items.current.push(descendant) - 1;
     }

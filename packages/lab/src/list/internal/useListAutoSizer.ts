@@ -1,4 +1,5 @@
-import { useRef, useState, useCallback, useLayoutEffect, Ref } from "react";
+import { useRef, useState, useCallback, Ref } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 
 export interface ListAutosizerProps {
   responsive: boolean;
@@ -27,11 +28,11 @@ export function useListAutoSizer<Element extends HTMLElement>(
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setSize({ width, height });
   }, [width, height]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (responsive) {
       let observer: ResizeObserver;
       if (ref.current) {

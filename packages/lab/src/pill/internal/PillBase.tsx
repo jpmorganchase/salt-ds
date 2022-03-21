@@ -10,11 +10,10 @@ import {
   ReactEventHandler,
   isValidElement,
   SyntheticEvent,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { makePrefixer, Button } from "@brandname/core";
+import { makePrefixer, Button, useIsomorphicLayoutEffect } from "@brandname/core";
 
 import { useTooltipContext } from "../../tooltip";
 import { DeleteButton } from "./DeleteButton";
@@ -29,7 +28,7 @@ const useEllipsisIsActive = (): [
   const labelRef = useRef<HTMLDivElement | null>(null);
   const [showEllipsis, setShowEllipsis] = useState(false);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (labelRef.current) {
       setShowEllipsis(
         labelRef.current.offsetWidth < labelRef.current.scrollWidth

@@ -3,11 +3,10 @@ import {
   FC,
   SetStateAction,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
 import { QueryInputCategory } from "../QueryInput";
 import { List, ListSelectHandler } from "../../list";
 import { CategoryListItem } from "./CategoryListItem";
@@ -45,7 +44,7 @@ export const CategoryList: FC<CategoryListProps> = function CategoryList(
     width: 0,
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
       if (measureRef.current) {
         const width = measureRef.current.offsetWidth;

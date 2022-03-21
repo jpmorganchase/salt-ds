@@ -1,6 +1,7 @@
 // TODO: Use resize observer from Tabstrip / Toolbar
 
-import { useRef, useEffect, useLayoutEffect, Ref } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useRef, useEffect, Ref } from "react";
 
 /**
  * This monitors the size of a component and calls `onSizeChange` callback
@@ -27,7 +28,7 @@ export function useResizeObserver<Element extends HTMLElement>(
     };
   }, [onSizeChange]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ref.current) {
       onSizeChange([
         {

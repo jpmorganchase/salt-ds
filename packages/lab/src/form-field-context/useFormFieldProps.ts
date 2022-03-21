@@ -1,5 +1,6 @@
-import { useContext, useLayoutEffect } from "react";
+import { useContext } from "react";
 import { FormFieldContext, FormFieldContextValue } from "./FormFieldContext";
+import {useIsomorphicLayoutEffect} from "@brandname/core"
 
 interface useFormFieldPropsProps {
   focusVisible?: boolean;
@@ -11,7 +12,7 @@ export function useFormFieldProps({
   // TODO shouel this be a separate value for FocusVisible
   const { setFocused, ...formFieldProps } = useContext(FormFieldContext) || {};
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (focusVisible !== undefined && setFocused) {
       setFocused(focusVisible);
     }

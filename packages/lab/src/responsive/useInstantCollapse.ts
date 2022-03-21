@@ -1,4 +1,5 @@
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useCallback, useMemo } from "react";
 import { ManagedItem, overflowHookProps } from "./overflowTypes";
 import {
   addAll,
@@ -197,7 +198,7 @@ export const useInstantCollapse = ({
     }
   }, [innerContainerSize, orientation]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const { current: managedItems } = managedItemsRef;
     const newlyCollapsedItem = newlyCollapsed(managedItems);
     if (newlyCollapsedItem) {

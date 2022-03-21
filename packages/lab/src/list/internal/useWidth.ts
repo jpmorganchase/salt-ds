@@ -1,7 +1,7 @@
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 import {
   RefObject,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -16,7 +16,7 @@ export function useWidth<Element extends HTMLElement>(
     setWidth(contentRect.width);
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       return undefined;
     }

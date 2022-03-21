@@ -3,10 +3,10 @@ import { useForkRef } from "../utils";
 import {
   forwardRef,
   HTMLAttributes,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
 import cn from "classnames";
 import "./Accordion.css";
@@ -54,7 +54,7 @@ export const AccordionDetails = forwardRef<
     isExpanded ? "expanded" : "collapsed"
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!rootRef.current) {
       return;
     }
