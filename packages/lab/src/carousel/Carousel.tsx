@@ -1,7 +1,4 @@
-import {
-  makePrefixer,
-  Button,
-} from "@brandname/core";
+import { makePrefixer, Button } from "@brandname/core";
 import {
   ChangeEventHandler,
   Children,
@@ -22,7 +19,7 @@ import "./Carousel.css";
 import { RadioButtonGroup } from "../radio-button";
 import warning from "warning";
 import { useId } from "../utils";
-import {ChevronLeftIcon, ChevronRightIcon} from "@brandname/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@brandname/icons";
 
 const withBaseName = makePrefixer("uitkCarousel");
 export type SlideDirections = "left" | "right";

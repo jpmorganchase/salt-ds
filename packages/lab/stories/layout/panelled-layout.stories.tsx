@@ -16,7 +16,7 @@ import {
 import { Button } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
-import {RefreshIcon, WarningIcon} from "@brandname/icons";
+import { RefreshIcon, WarningIcon } from "@brandname/icons";
 
 export default {
   title: "Layout/PanelledLayout",
