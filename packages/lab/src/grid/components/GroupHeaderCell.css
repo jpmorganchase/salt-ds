@@ -1,0 +1,54 @@
+.uitkGridGroupHeaderCell {
+}
+
+.uitkGridGroupHeaderCell {
+  border-collapse: collapse;
+  text-align: left;
+  padding: var(--cell-padding);
+  position: relative;
+  background-color: white;
+  color: var(--uitk-grey-200);
+  overflow: hidden;
+  white-space: nowrap;
+  height: var(--row-height);
+}
+
+.uitkGridGroupHeaderCell-text {
+  font-size: var(--font-size);
+}
+
+.uitkGridGroupHeaderCell-rowSeparator {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 0;
+  height: 1px;
+  background-color: grey;
+}
+
+.uitkGridGroupHeaderCell-firstGroupRowSeparator {
+  position: absolute;
+  left: 0;
+  right: 4px;
+  bottom: 0;
+  height: 1px;
+  background-color: grey;
+}
+
+.uitkGridGroupHeaderCell-lastGroupRowSeparator {
+  position: absolute;
+  left: 4px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: grey;
+}
+
+.uitkGridGroupHeaderCell-columnSeparator {
+  position: absolute;
+  right: 0;
+  top: 4px;
+  bottom: 0;
+  width: 1px;
+  background-color: grey;
+}

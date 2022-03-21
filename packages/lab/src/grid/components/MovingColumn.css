@@ -1,0 +1,12 @@
+.uitkGridMovingColumn {
+  position: absolute;
+  z-index: 4;
+  border: solid 1px var(--uitk-blue-500);
+  box-shadow: 6px 6px 10px 10px rgba(0, 0, 0, 0.0967821);
+  opacity: 0.85;
+}
+
+.uitkGridMovingColumn table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}

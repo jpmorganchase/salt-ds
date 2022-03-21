@@ -1,0 +1,47 @@
+.uitkGridRowSelectionCheckboxCellValue {
+  --checkbox-size: 12px;
+}
+
+.uitkGridRowSelectionCheckboxCellValue {
+  height: var(--row-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.uitkGridRowSelectionCheckboxCellValue-checkedIcon {
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  stroke: var(--uitk-color-grey-90);
+}
+
+.uitkGridRowSelectionCheckboxCellValue-uncheckedIcon {
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  stroke: var(--uitk-color-grey-90);
+}
+
+.uitkGridRowSelectionCheckboxHeaderValue {
+  --checkbox-size: 12px;
+}
+
+.uitkGridRowSelectionCheckboxHeaderValue {
+  height: var(--row-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.uitkGridRowSelectionCheckboxHeaderValue-checkedIcon {
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  stroke: var(--uitk-color-grey-90);
+}
+
+.uitkGridRowSelectionCheckboxHeaderValue-uncheckedIcon {
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  stroke: var(--uitk-color-grey-90);
+}

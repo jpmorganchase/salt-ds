@@ -1,0 +1,12 @@
+.uitkDataGrid {
+}
+
+.uitkDataGrid-treeCellValue {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.uitkDataGrid-treeCellText {
+  margin-left: var(--uitk-spacing-unit);
+}

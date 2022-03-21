@@ -1,0 +1,41 @@
+.uitk-density-touch .uitkGrid {
+  --row-height: 60px;
+  --padding: 16px;
+  --font-size: 16px;
+}
+
+.uitk-density-low .uitkGrid {
+  --row-height: 48px;
+  --padding: 12px;
+  --font-size: 14px;
+}
+
+.uitk-density-medium .uitkGrid {
+  --row-height: 36px;
+  --padding: 8px;
+  --font-size: 12px;
+}
+
+.uitk-density-high .uitkGrid {
+  --row-height: 24px;
+  --padding: 8px;
+  --font-size: 12px;
+}
+
+.uitkGrid {
+  --scroll-bar-size: 15px;
+
+  --cell-padding: 0 var(--padding) 0 var(--padding);
+  --zebra-color: #eaedef;
+  --hover-color: #a4d5f4;
+  --selected-color: #64b1e4;
+
+  /*border: solid 1px red;*/
+}
+
+.uitkGrid {
+  height: 1000px;
+  width: 1000px;
+  position: relative;
+  outline: none;
+}

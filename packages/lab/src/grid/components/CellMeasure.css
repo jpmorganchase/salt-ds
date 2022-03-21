@@ -1,0 +1,16 @@
+.uitkGridCellMeasure {
+  position: absolute;
+  top: -1000px;
+  left: 0;
+}
+
+.uitkGridCellMeasure table {
+  border-collapse: collapse;
+}
+
+.uitkGridCellMeasure tr {
+}
+
+.uitkGridCellMeasure th {
+  height: var(--row-height);
+}

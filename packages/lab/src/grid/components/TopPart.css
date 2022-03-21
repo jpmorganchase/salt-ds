@@ -1,0 +1,16 @@
+.uitkGridTopPart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: var(--scroll-bar-size); /* TODO scrollbar width and only when displayed */
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+}
+
+.uitkGridTopPart table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  position: absolute;
+  top: 0;
+}

@@ -1,0 +1,77 @@
+.uitkGridHeaderCell {
+  border-collapse: collapse;
+  text-align: left;
+  padding: var(--cell-padding);
+
+  border-style: solid;
+  border-color: grey;
+  border-width: 0 0 1px 0;
+
+  font-size: var(--font-size);
+  font-weight: normal;
+
+  height: var(--row-height);
+  line-height: var(--row-height);
+
+  position: relative;
+  box-sizing: border-box;
+
+  background-color: white;
+  color: var(--uitk-grey-200);
+
+  white-space: nowrap;
+}
+
+.uitkGridHeaderCell-valueContainer {
+  overflow: hidden;
+  line-height: var(--row-height);
+}
+
+.uitkGridHeaderCell-text {
+}
+
+.uitkGridHeaderCell-regularSeparator {
+  background-color: grey;
+  width: 1px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 4px;
+  bottom: 4px;
+}
+
+.uitkGridHeaderCell-edgeSeparator {
+  background-color: grey;
+  width: 1px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 4px;
+}
+
+.uitkGridHeaderCell-resizeHandle {
+  position: absolute;
+  right: -8px;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  background-color: transparent;
+  cursor: col-resize;
+  z-index: 2;
+}
+
+.uitkGridHeaderCell-moveHandle {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  /*left: 0;*/
+  background-color: transparent;
+  cursor: move;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

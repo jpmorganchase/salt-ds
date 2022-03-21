@@ -1,0 +1,8 @@
+.uitkGridColumnDropTarget {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--uitk-blue-500);
+  z-index: 3;
+}

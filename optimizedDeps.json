@@ -38,6 +38,7 @@
         "react-fast-compare",
         "react-window",
         "rifm",
+        "rxjs",
         "tinycolor2",
         "warning"
       ]

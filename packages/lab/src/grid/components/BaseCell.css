@@ -1,0 +1,41 @@
+.uitkGridBaseCell {
+}
+
+.uitkGridBaseCell {
+  border-collapse: collapse;
+  box-sizing: border-box;
+  height: var(--row-height);
+  overflow: hidden;
+
+  margin: 0;
+  padding: var(--cell-padding);
+
+  border-style: solid;
+  border-color: grey;
+  border-width: 0 0 1px 0;
+
+  font-size: var(--font-size);
+  font-weight: normal;
+
+  background-color: white;
+  white-space: nowrap;
+  position: relative;
+}
+
+.uitkGridBaseCell-hover {
+  background-color: var(--hover-color);
+}
+
+.uitkGridBaseCell-selected {
+  background-color: var(--selected-color);
+}
+
+.uitkGridBaseCell-zebra {
+  background-color: var(--zebra-color);
+}
+
+.uitkGridBaseCell-valueContainer {
+  height: var(--row-height);
+  overflow: hidden;
+  line-height: var(--row-height);
+}

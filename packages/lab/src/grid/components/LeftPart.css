@@ -1,0 +1,23 @@
+.uitkGridLeftPart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: var(--scroll-bar-size);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+}
+
+.uitkGridLeftPart-raised {
+  box-shadow: 6px 0 4px -4px rgba(0, 0, 0, 0.0967821);
+}
+
+.uitkGridLeftPart-space {
+  position: relative;
+}
+
+.uitkGridLeftPart table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  position: absolute;
+}

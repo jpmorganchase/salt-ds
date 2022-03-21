@@ -1,0 +1,20 @@
+.uitkGridMiddlePart {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  right: var(--scroll-bar-size);
+  bottom: var(--scroll-bar-size);
+  left: 0;
+}
+
+.uitkGridMiddlePart-space {
+  position: relative;
+}
+
+.uitkGridMiddlePart table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  position: absolute;
+  top: 0;
+}
