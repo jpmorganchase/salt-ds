@@ -26,6 +26,7 @@ import { useWindow } from "../window";
 import { useForkRef } from "../utils";
 import "./Popper.css";
 import { useResizeObserver, WidthHeight } from "../responsive";
+import { isElectron } from "../window/electron-utils";
 
 const withBaseName = makePrefixer("uitkPopper");
 
@@ -76,6 +77,12 @@ const PopperTooltip = forwardRef<
     ...restProps
   } = props;
 
+  const middlewares = [...middleware];
+
+  if (!isElectron) {
+    middleware.unshift(flip(), shift({ limiter: limitShift() }));
+  }
+
   const {
     x,
     y,
@@ -89,10 +96,7 @@ const PopperTooltip = forwardRef<
   } = useFloating({
     placement: placementProp,
     strategy: strategyProp,
-    middleware: useMemo(
-      () => [flip(), shift({ limiter: limitShift() }), ...middleware],
-      [middleware]
-    ),
+    middleware: useMemo(() => middlewares, [middleware]),
   });
 
   const handleResize = useCallback(() => {

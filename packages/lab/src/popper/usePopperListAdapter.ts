@@ -5,12 +5,14 @@ import {
   useFloating,
   getScrollParents,
 } from "@floating-ui/react-dom";
+import { isElectron } from "../window/electron-utils";
 
 export const usePopperListAdapter = (isOpen: boolean) => {
   const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
 
-  const { reference, floating, placement, update, refs } = useFloating({
-    middleware: [
+  const middleware = [];
+  if (!isElectron) {
+    middleware.push(
       flip({
         fallbackPlacements: ["bottom-start", "top-start"],
       }),
@@ -18,8 +20,11 @@ export const usePopperListAdapter = (isOpen: boolean) => {
         apply({ height }) {
           setMaxHeight(height);
         },
-      }),
-    ],
+      })
+    );
+  }
+  const { reference, floating, placement, update, refs } = useFloating({
+    middleware: middleware,
     placement: "bottom-start",
   });
 

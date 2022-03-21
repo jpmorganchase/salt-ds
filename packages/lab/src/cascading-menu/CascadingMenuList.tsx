@@ -173,6 +173,7 @@ export const CascadingMenuList = forwardRef<
             )
       }
       className={`${baseClass}-popper`}
+      id={menuId}
       open={parentElement != null}
       placement={isRoot ? rootPlacement : "right-start"}
       role="presentation"

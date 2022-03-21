@@ -24,6 +24,7 @@ import { useControlled, useForkRef, useId } from "../utils";
 import { getIconForState } from "./getIconForState";
 
 import "./Tooltip.css";
+import { isElectron } from "../window/electron-utils";
 
 // Keep in order of preference. First items are used as default
 
@@ -330,6 +331,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         });
       }
     };
+    const middlewares = [arrow({ element: arrowRef })];
+
+    if (!isElectron) {
+      middlewares.unshift(
+        shift({
+          limiter: limitShift({
+            offset: () =>
+              Math.max(
+                arrowRef.current?.offsetWidth ?? 0,
+                arrowRef.current?.offsetHeight ?? 0
+              ),
+          }),
+        })
+      );
+    }
+
     return (
       <>
         {cloneElement(children, {
@@ -350,18 +367,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           middleware={useMemo(
-            () => [
-              shift({
-                limiter: limitShift({
-                  offset: () =>
-                    Math.max(
-                      arrowRef.current?.offsetWidth ?? 0,
-                      arrowRef.current?.offsetHeight ?? 0
-                    ),
-                }),
-              }),
-              arrow({ element: arrowRef }),
-            ],
+            () => middlewares,
             // eslint-disable-next-line react-hooks/exhaustive-deps
             [hideArrow]
           )}
