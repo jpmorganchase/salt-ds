@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import classnames from "classnames";
-import { FormFieldVariantType, FormField } from "../../form-field";
+import { FormField } from "../../form-field";
 
 import { OrientationShape } from "../ToolbarProps";
 import {
@@ -11,7 +11,6 @@ import {
 
 const fieldProps = {
   fullWidth: false,
-  variant: "transparent" as FormFieldVariantType,
 };
 
 export const renderTrayTools = (
@@ -52,6 +51,7 @@ export const renderTrayTools = (
           <FormField
             {...toolbarProps}
             {...fieldProps}
+            emphasis="low"
             className={className}
             data-index={index}
             data-priority={2}

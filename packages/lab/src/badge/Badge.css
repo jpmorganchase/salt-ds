@@ -70,13 +70,17 @@
 }
 
 .uitkBadge-info {
-  --badge-content-background: var(--uitk-status-info-background);
+  --badge-content-background: var(--uitk-status-info-color);
+}
+
+.uitkBadge-warning {
+  --badge-content-background: var(--uitk-status-warning-color);
 }
 
 .uitkBadge-error {
-  --badge-content-background: var(--uitk-status-error-background);
+  --badge-content-background: var(--uitk-status-error-color);
 }
 
 .uitkBadge-success {
-  --badge-content-background: var(--uitk-status-success-background);
+  --badge-content-background: var(--uitk-status-success-color);
 }

@@ -26,8 +26,14 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     },
     forwardedRef
   ) => {
-    const { count, page, onPageChange, variant, compact, setPaginatorElement } =
-      usePaginationContext();
+    const {
+      count,
+      page,
+      onPageChange,
+      emphasis,
+      compact,
+      setPaginatorElement,
+    } = usePaginationContext();
 
     const ref = useForkRef(setPaginatorElement, forwardedRef);
 
@@ -58,7 +64,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             count={count}
             page={page}
             onPageChange={onPageChange}
-            variant={variant}
+            emphasis={emphasis}
           />
         ) : (
           <RegularControls

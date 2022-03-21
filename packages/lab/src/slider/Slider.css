@@ -28,13 +28,13 @@
 
 .uitkSlider {
   --rail-height: var(--uitkSlider-rail-height, 8px);
-  --rail-color: var(--uitkSlider-rail-color, var(--uitk-container-border-color));
+  --rail-color: var(--uitkSlider-rail-color, var(--uitk-measured-border-color));
 
   --rail-mark-height: var(--uitkSlider-rail-mark-height, 7px);
   --rail-mark-color: var(--uitkSlider-rail-mark-color, var(--rail-color));
 
   --selection-height: var(--uitkSlider-selection-height, 2px);
-  --selection-color: var(--uitkSlider-selection-color, var(--uitk-status-info-color));
+  --selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-color-active-end));
 
   --handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-regular-unit) * 0.5));
   --handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-outline-style));

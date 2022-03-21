@@ -2,7 +2,6 @@ import { Density, ToolkitProvider } from "@brandname/core";
 import { SuccessTickIcon } from "@brandname/icons";
 import {
   FormField,
-  FormFieldVariantType,
   makeRadioIcon,
   Panel,
   RadioButton,
@@ -189,16 +188,16 @@ export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
 type ExampleWithTitleAndVariant = FC<{
   name: string;
   title: string;
-  variant: FormFieldVariantType;
+  emphasis: "low" | "medium" | "high";
 }>;
 
 const FormFieldRadios: ExampleWithTitleAndVariant = ({
   name,
   title,
-  variant,
+  emphasis,
 }) => (
   <div data-testid="radio-button-form-field-variants-example">
-    <FormField variant={variant}>
+    <FormField emphasis={emphasis}>
       <RadioButtonGroup
         aria-label="Variants Example"
         defaultValue="forward"

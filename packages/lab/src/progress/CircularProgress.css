@@ -37,7 +37,7 @@
 }
 
 .uitkCircularProgress-railCircle {
-  stroke: var(--uitk-measured-track-color);
+  stroke: var(--uitk-measured-background-color);
   stroke-width: 1px;
 }
 

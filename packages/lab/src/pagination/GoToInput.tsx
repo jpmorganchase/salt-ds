@@ -22,7 +22,7 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
   ({ className, id: idProp, label = "Go to", ...restProps }, forwardedRef) => {
-    const { compact, count, onPageChange, variant, paginatorElement } =
+    const { compact, count, onPageChange, emphasis, paginatorElement } =
       usePaginationContext();
 
     const id = useId(idProp);
@@ -97,7 +97,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           fullWidth={false}
           label={label}
           labelPlacement="left"
-          variant={variant}
+          emphasis={emphasis}
         >
           <Input
             className={cx(withBaseName("goToInput"), {
