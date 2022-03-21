@@ -29,7 +29,6 @@ import { classBase } from "./constant";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
-export type FormFieldVariantType = "filled" | "theme" | "transparent";
 export type FormFieldValidationState = "error" | "warning";
 
 export interface A11yValueProps
@@ -60,6 +59,14 @@ export interface FormFieldProps
    * The component used for activation indicator. Default to `ActivationIndicator`.
    */
   ActivationIndicatorComponent?: ElementType<ActivationIndicatorProps>;
+  /**
+   * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium.
+   */
+  emphasis?: "low" | "medium" | "high";
+  /**
+   * Outer focus ring focus will not be applied. Defaults to false.
+   */
+  disableFocusRing?: boolean;
   // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behaviour)
   // we should also support 'auto' or explicit numeric values
   /**
@@ -105,10 +112,6 @@ export interface FormFieldProps
    */
   LabelProps?: Partial<FormLabelProps>;
   /**
-   * in lowEmphasisFocus mode, ths outer focus ring is not applied
-   */
-  lowEmphasisFocus?: boolean;
-  /**
    * Override props to be used with the StatusIndicator component
    */
   StatusIndicatorProps?: Partial<StatusIndicatorProps>;
@@ -116,11 +119,6 @@ export interface FormFieldProps
    * The state for the FormField: Must be one of: 'error'|'warning'|undefined
    */
   validationState?: FormFieldValidationState;
-  /**
-   * Changes the background color of the FormField
-   * values: 'filled, 'theme' (default), 'transparent'
-   */
-  variant?: FormFieldVariantType;
 }
 
 export interface useA11yValueValue {
@@ -196,6 +194,8 @@ export const FormField = forwardRef(
       children,
       className,
       disabled,
+      disableFocusRing = false,
+      emphasis = "medium",
       fullWidth = true,
       hasStatusIndicator,
       HelperTextComponent = FormHelperText,
@@ -206,14 +206,12 @@ export const FormField = forwardRef(
       LabelComponent = FormLabel,
       labelPlacement = "top",
       LabelProps = { displayedNecessity: "required" },
-      lowEmphasisFocus,
       onBlur,
       onFocus,
       readOnly,
       required,
       StatusIndicatorProps,
       validationState,
-      variant = "theme",
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -242,7 +240,7 @@ export const FormField = forwardRef(
     const labelLeft = labelPlacement === "left";
     const isWarning = validationState === "warning";
     const isError = validationState === "error";
-    const focusClass = lowEmphasisFocus ? "lowFocused" : "focused";
+    const focusClass = disableFocusRing ? "lowFocused" : "focused";
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =
@@ -252,8 +250,9 @@ export const FormField = forwardRef(
 
     const formField = (
       <div
-        className={cx(classBase, className, "uitkEmphasisLow", {
-          [`${classBase}-${variant}`]: variant !== "theme",
+        className={cx(classBase, className, {
+          [`uitkEmphasisLow`]: emphasis === "low",
+          [`uitkEmphasisHigh`]: emphasis === "high",
           [`${classBase}-disabled`]: disabled,
           [`${classBase}-readOnly`]: readOnly,
           [`${classBase}-warning`]: isWarning,
@@ -276,7 +275,6 @@ export const FormField = forwardRef(
             a11yProps: a11yValue,
             inFormField: true,
             ref: rootRef,
-            variant,
           }}
         >
           {!!label && (

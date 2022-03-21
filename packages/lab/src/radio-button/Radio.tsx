@@ -11,8 +11,8 @@ import { useFormFieldProps } from "../form-field-context";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { useControlled, useForkRef, useIsFocusVisible } from "../utils";
 import classnames from "classnames";
-import "./Radio.css";
 import { RadioIcon as DefaultRadioIcon, RadioIconProps } from "./RadioIcon";
+import "./Radio.css";
 
 const withBaseName = makePrefixer("uitkRadio");
 
@@ -20,6 +20,7 @@ export interface RadioProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
+  emphasis?: "low" | "medium" | "high";
   /**
    * custom icon component
    */
@@ -45,6 +46,7 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
     name: nameProp,
     className,
     disabled: disabledProp,
+    emphasis = "medium",
     icon: iconProp,
     value,
     onFocus,
@@ -55,7 +57,7 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
     ...rest
   } = props;
 
-  const { inFormField, variant } = useFormFieldProps();
+  const { inFormField } = useFormFieldProps();
 
   const radioGroup = useRadioGroup();
 
@@ -145,10 +147,9 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
       className={classnames(
         withBaseName(),
         {
-          [withBaseName("filled")]: inFormField && variant === "filled",
-          [withBaseName("theme")]: inFormField && variant === "theme",
-          [withBaseName("transparent")]:
-            inFormField && variant === "transparent",
+          [withBaseName("filled")]: inFormField && emphasis === "high",
+          [withBaseName("theme")]: inFormField && emphasis === "medium",
+          [withBaseName("transparent")]: inFormField && emphasis === "low",
           [withBaseName("disabled")]: disabled,
           [withBaseName("focusVisible")]: focusVisible,
         },

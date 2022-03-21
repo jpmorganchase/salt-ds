@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useAriaAnnouncer } from "@brandname/core";
 import { PaginationContext, paginationContext } from "./PaginationContext";
-import { FormFieldVariantType } from "../form-field";
 import { useControlled } from "../utils";
 import { withBaseName } from "./utils";
 import cn from "classnames";
@@ -22,7 +21,7 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   page?: number;
   initialPage?: number;
   onPageChange?: (page: number) => void;
-  variant?: FormFieldVariantType;
+  emphasis?: "low" | "medium" | "high";
   compact?: boolean;
 }
 
@@ -35,7 +34,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       initialPage = 1,
       page: pageProp,
       onPageChange: onPageChangeProp,
-      variant = "filled",
+      emphasis = "high",
       compact = false,
       ...restProps
     },
@@ -62,13 +61,13 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       () => ({
         page: pageState,
         count,
-        variant,
+        emphasis,
         compact,
         onPageChange,
         paginatorElement,
         setPaginatorElement,
       }),
-      [pageState, count, variant, onPageChange]
+      [pageState, count, emphasis, onPageChange]
     );
 
     const onKeyDown: KeyboardEventHandler = useCallback(

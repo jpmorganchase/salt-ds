@@ -17,7 +17,9 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Card> = () => {
       <AllRenderer>
         <Card>
           <div>
-            <h1 style={{ margin: 0 }}>Card with density</h1>
+            <h1 style={{ margin: 0, lineHeight: "1.3em" }}>
+              Card with density
+            </h1>
             <span>Content</span>
           </div>
         </Card>
