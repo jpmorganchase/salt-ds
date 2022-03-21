@@ -1,4 +1,12 @@
-import { Ref, useMemo } from "react";
+import {
+  ReactChild,
+  ReactFragment,
+  ReactPortal,
+  Ref,
+  useMemo,
+  Children,
+  isValidElement,
+} from "react";
 import { setRef } from "../utils";
 
 const globalObject = typeof global === "undefined" ? window : global;
@@ -12,6 +20,32 @@ const forwardedProperties = new Set([
   "offsetHeight",
   "parentNode",
 ]);
+
+export function getChildrenNames(
+  children:
+    | boolean
+    | ReactChild
+    | ReactFragment
+    | ReactPortal
+    | null
+    | undefined,
+  components: Set<any>
+) {
+  Children.forEach(children, (child) => {
+    if (!isValidElement(child)) {
+      return;
+    }
+    if (child.props.children) {
+      getChildrenNames(child.props.children, components);
+    }
+    if (typeof child.type !== "string") {
+      // @ts-ignore
+      if (child.type.render?.name)
+        // @ts-ignore
+        components.add(child.type.render.name);
+    }
+  });
+}
 
 export function useProxyRef<Instance>(
   ref: Ref<Instance>
@@ -28,11 +62,7 @@ export function useProxyRef<Instance>(
             // @ts-ignore
             return refValue[prop];
           } else if (prop === "toString") {
-            if (target.element && target.element.toString) {
-              return () => target.element.toString();
-            } else {
-              return () => undefined;
-            }
+            return () => target.element.toString();
           } else if (prop === "assignedSlot" || prop === "contextElement") {
             return undefined;
           } else {

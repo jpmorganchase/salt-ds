@@ -1,21 +1,9 @@
 .uitkWindow {
   --uitkDialog-margin: 0;
   --uitkDialog-box-shadow: none;
-  --overlay-text-color: var(--uitk-text-primary-color);
-  --overlay-spacing: var(--uitk-spacing-unit);
-  --overlay-font-size: var(--uitk-text-font-size);
-  /* TODO: Which emphasis should this be? */
-  --overlay-background-color: var(--uitk-container-background);
-  --overlay-border-color: var(--uitk-container-border-color);
-  /* TODO: z-index audit, provide z index here or rely on popper */
-  --overlay-zindex: var(--uitk-zindex-tooltip);
 
+  width: max-content;
+  height: max-content;
+  position: absolute;
   overflow: hidden;
-  width: fit-content;
-
-  /* Arrow */
-  --overlay-arrow-size: 8px;
-  /* We need some placement invariant naming, block/inline taken from CSS's padding-block/inline naming  */
-  --overlay-arrow-placement-block: calc(50% - var(--overlay-arrow-size));
-  --overlay-arrow-placement-inline: calc(var(--overlay-arrow-size) * -2);
 }
