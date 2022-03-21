@@ -1,5 +1,4 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { withFlexGap } from "../../decorators/withFlexGap";
 import {
   BorderLayout,
   BorderItem,
@@ -29,7 +28,7 @@ Defines the main content regions of an application, region or widget, such as a 
 The region is defined by the `position` prop.
 
 <Canvas>
-  <Story name="Border Layout" decorators={[withFlexGap]}>
+  <Story name="Border Layout">
     <BorderLayout>
       <BorderItem
         position="header"
@@ -95,7 +94,7 @@ Defines an equally distributed layout system using columns and rows.
 It defaults to a twelve column grid but you can customise it using the `columns` and `rows` props.
 
 <Canvas>
-  <Story name="Grid Layout" decorators={[withFlexGap]}>
+  <Story name="Grid Layout">
     <GridLayout className="gridLayout" columnGap="1rem" rowGap="1rem">
       {Array.from({ length: 12 }, (_, index) => (
         <GridItem className="item" style={{ backgroundColor: "lightcyan" }}>
@@ -129,7 +128,7 @@ import {GridLayout, GridItem} from "@jpmuitk/toolkit-odyssey";
 Dictates a vertical order and direction for UI elements.
 
 <Canvas>
-  <Story name="Stack Layout" decorators={[withFlexGap]}>
+  <Story name="Stack Layout">
     <StackLayout className="flexLayout">
       {Array.from({ length: 5 }, (i, index) => (
         <FlexItem className="flexItem">
@@ -157,7 +156,7 @@ Dictates a horizontal order and direction for UI elements.
 It wraps the content by default but you can customise it via the `wrap` prop.
 
 <Canvas>
-  <Story name="Flow Layout" decorators={[withFlexGap]}>
+  <Story name="Flow Layout">
     <FlowLayout className="flexLayout">
       {Array.from({ length: 8 }, (i, index) => (
         <FlexItem className="flexItem">
@@ -183,7 +182,7 @@ import {FlowLayout} from "@jpmuitk/toolkit-odyssey";
 Defines left and right regions for UI elements within a span, such as a button bar.
 
 <Canvas>
-  <Story name="Split Layout" decorators={[withFlexGap]}>
+  <Story name="Split Layout">
     <SplitLayout className="flexLayout">
       <FlexItem className="flexItem">
         <p>Flex Item 1</p>
@@ -262,7 +261,7 @@ import {LayerLayout} from "@jpmuitk/toolkit-odyssey";
 Displays a hierarchical structure comprising of a main content area and an accompanying ‘parent’ region, used to drive the content that’s displayed.
 
 <Canvas>
-  <Story name="Parent Child Layout" decorators={[withFlexGap]}>
+  <Story name="Parent Child Layout">
     <ParentChildLayout className="flexLayout" parentWidth={150}>
       <div
         className="flexItem"
@@ -311,7 +310,7 @@ Provides multiple content zones with flexible heights and widths.
 It uses the region splitter by default to allow resizing of content areas.
 
 <Canvas>
-  <Story name="Panelled Layout" decorators={[withFlexGap]}>
+  <Story name="Panelled Layout">
     <PanelledLayout className="panelledLayout">
       {Array.from({ length: 4 }, (_, index) => (
         <div className="panelledItem" key={index}>

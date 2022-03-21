@@ -7,7 +7,6 @@ import {
   SendIcon,
   SettingsSolidIcon,
 } from "@brandname/icons";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import { CustomStylingExample } from "./button.stories";
 import {
   CSSClassTable,
@@ -25,7 +24,7 @@ A Button executes an action when clicked. Button labels should use only one or t
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
 <Canvas>
-  <Story name="Button Variants" decorators={[withFlexGap]}>
+  <Story name="Button Variants">
     <Button variant="cta">CTA</Button>
     <Button variant="primary">Primary</Button>
     <Button variant="secondary">Secondary</Button>
@@ -37,7 +36,7 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
 Icons can be put before or after text, or used alone.
 
 <Canvas>
-  <Story name="Button with icon and label" decorators={[withFlexGap]}>
+  <Story name="Button with icon and label">
     <Button variant="cta">
       Send <SendIcon size={12} />
     </Button>
@@ -181,7 +180,7 @@ Below is an illustration of some of the buttons used in a new application. Compa
 - visual treatments not present on standard toolkit buttons - background gradients, border styling
 
 <Canvas>
-  <Story name="Custom Button Styling" decorators={[withFlexGap]}>
+  <Story name="Custom Button Styling">
     <ToolkitProvider density="high" theme={["light", "newapp"]}>
       <CustomStylingExample />
     </ToolkitProvider>
