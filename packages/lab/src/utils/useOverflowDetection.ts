@@ -1,12 +1,5 @@
-import {
-  useState,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  Ref,
-  DependencyList,
-} from "react";
-import { debounce } from "@brandname/core";
+import { useState, useRef, Ref, DependencyList, useCallback } from "react";
+import { debounce, useIsomorphicLayoutEffect } from "@brandname/core";
 import { ownerWindow } from "./ownerWindow";
 
 export function useOverflowDetection<Element extends HTMLElement>(
@@ -31,7 +24,7 @@ export function useOverflowDetection<Element extends HTMLElement>(
   );
 
   // check on resizing
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Multi window support
     const win = ownerWindow(targetRef.current);
 
@@ -44,7 +37,7 @@ export function useOverflowDetection<Element extends HTMLElement>(
 
   // We don't put handleResize in the dependency array as it's been handled by the `useLayoutEffect` above
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(handleResize, dependencies);
+  useIsomorphicLayoutEffect(handleResize, dependencies);
 
   return [targetRef, isOverflowed];
 }
