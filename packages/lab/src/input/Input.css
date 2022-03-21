@@ -1,3 +1,4 @@
+/* Styles applied to the root element dependent on density */
 .uitk-density-touch .uitkInput {
   --input-button-inset: 4px;
 }
@@ -11,39 +12,44 @@
   --input-button-inset: 2px;
 }
 
+/* Style applied to the root element */
 .uitkInput {
-  --input-min-width: var(--uitk-input-min-width, 8em);
-  --input-min-height: var(--uitk-size-regular-unit);
-  --input-text-color: var(--uitk-text-primary-color);
-  --input-font-family: var(--uitk-typography-font-family);
-  --input-font-size: var(--uitk-text-font-size);
   --input-adornment-padding: var(--uitk-spacing-unit);
-  --input-padding: 0 var(--uitk-spacing-unit);
-  --input-position: var(--uitk-input-position, relative);
+  --input-background: var(--uitkInput-background, none);
+  --input-border: var(--uitkInput-border, 0);
+  --input-font-family: var(--uitkInput-font-family, var(--uitk-typography-font-family));
+  --input-font-size: var(--uitkInput-font-size, var(--uitk-text-font-size));
+  --input-letter-spacing: var(--uitkInput-letter-spacing, 0);
+  --input-min-width: var(--uitkInput-min-width, 8em);
+  --input-min-height: var(--uitkInput-min-height, var(--uitk-size-regular-unit));
+  --input-padding: var(--uitkInput-padding, 0 var(--uitk-spacing-unit));
+  --input-position: var(--uitkInput-position, relative);
+  --input-text-color: var(--uitkInput-text-color, var(--uitk-text-primary-color));
 
   --input-disabled-cursor: var(--uitk-disabled-cursor);
   --input-disabled-opacity: var(--uitk-disabled-text-opacity);
 
-  --input-focused-outline: var(--uitk-focused-outline);
+  --input-focused-outline-style: var(--uitk-focused-outline-style);
+  --input-focused-outline-width: var(--uitk-focused-line-width);
+  --input-focused-outline-color: var(--uitk-focused-color);
+  --input-focused-outline-offset: var(--uitk-focused-outline-offset);
 
   --input-selection-background: var(--uitk-editable-background);
 }
 
 .uitkInput {
-  color: var(--input-text-color);
-  font-family: var(--input-font-family);
-  min-width: var(--input-min-width);
   align-items: center;
   box-sizing: border-box;
+  color: var(--input-text-color);
   cursor: default;
   display: inline-flex;
-  letter-spacing: 0;
+  font-family: var(--input-font-family);
+  font-size: var(--input-font-size);
+  letter-spacing: var(--input-letter-spacing);
+  min-height: var(--input-min-height);
+  min-width: var(--input-min-width);
+  padding: var(--input-padding);
   position: var(--input-position);
-}
-
-.uitkInput-disabled .uitkInput-input {
-  cursor: var(--input-disabled-cursor);
-  opacity: var(--input-disabled-opacity);
 }
 
 /* Reset in the next class */
@@ -51,13 +57,18 @@
   outline: none;
 }
 
+/* Pseudo-class applied to the root element when focused */
 .uitkInput-focused {
-  outline: var(--input-focused-outline);
+  outline-style: var(--input-focused-outline-style);
+  outline-width: var(--input-focused-outline-width);
+  outline-color: var(--input-focused-outline-color);
+  outline-offset: var(--input-focused-outline-offset);
 }
 
+/* Style applied to inner input component */
 .uitkInput-input {
-  background: none;
-  border: 0;
+  background: var(--input-background);
+  border: var(--input-border);
   box-sizing: content-box;
   color: inherit;
   display: block;
@@ -67,45 +78,50 @@
   margin: 0;
   min-width: 0;
   overflow: hidden;
-
   padding: 0;
   height: 100%;
-
   width: 100%;
 }
 
+/* Style applied to input when disabled={true} */
+.uitkInput-disabled .uitkInput-input {
+  cursor: var(--input-disabled-cursor);
+  opacity: var(--input-disabled-opacity);
+}
+
+/* Style applied to selected input */
 .uitkInput-input::selection {
   background-color: var(--input-selection-background);
 }
 
-.uitkInput {
-  font-size: var(--input-font-size);
-  padding: var(--input-padding);
-  min-height: var(--input-min-height);
-}
-
+/* Style applied to adornment containers */
 .uitkInput-suffixContainer,
 .uitkInput-prefixContainer {
   display: flex;
   align-items: center;
 }
 
+/* Style applied to root element with start adornment */
 .uitkInput-inputAdornedStart {
-  padding-left: 0;
+  padding-left: var(--uitkInput-adorned-start-padding, 0);
 }
 
+/* Style applied to inner input element with start adornment */
 .uitkInput-inputAdornedStart .uitkInput-input {
-  padding-left: var(--input-adornment-padding);
+  padding-left: var(--uitkInput-adorned-start-input-padding, var(--input-adornment-padding));
 }
 
+/* Style applied to root element with end adornment */
 .uitkInput-inputAdornedEnd {
-  padding-right: 0;
+  padding-right: var(--uitkInput-adorned-end-padding, 0);
 }
 
+/* Style applied to inner input element with end adornment */
 .uitkInput-inputAdornedEnd .uitkInput-input {
-  padding-right: var(--input-adornment-padding);
+  padding-right: var(--uitkInput-adorned-end-input-padding, var(--input-adornment-padding));
 }
 
+/* Style applied to uitk Button used within Input component */
 .uitkInput .uitkInput-suffixContainer > .uitkButton,
 .uitkInput .uitkInput-prefixContainer > .uitkButton {
   height: calc(var(--uitkButton-height, var(--uitk-size-regular-unit)) - (var(--input-button-inset) * 2));

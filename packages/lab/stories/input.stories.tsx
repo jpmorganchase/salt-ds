@@ -15,6 +15,7 @@ import {
   Dropdown,
 } from "@brandname/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import "./input.qa.stories.css";
 
 export default {
   title: "Lab/Input",

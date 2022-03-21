@@ -11,10 +11,6 @@
   --uitk-typography-weight-bold: 700;
   --uitk-typography-weight-extraBold: 800;
 
-  --uitk-typography-style-italic: italic;
-
-  --uitk-text-line-height: 1.3;
-
   /** 
     The below size values are now deprecated.
     Use appropriate -text size from characteristic instead 

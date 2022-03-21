@@ -1,10 +1,10 @@
 /* Style applied to the root element */
 .uitkButton {
   --button-font-weight: var(--uitkButton-font-weight, var(--uitk-actionable-font-weight));
-  --button-focus-outline-style: var(--uitk-focused-outline-style);
-  --button-focus-outline-width: var(--uitk-focused-line-width);
-  --button-focus-outline-color: var(--uitk-focused-color);
-  --button-focus-outline-offset: var(--uitk-focused-outline-offset);
+  --button-focused-outline-style: var(--uitk-focused-outline-style);
+  --button-focused-outline-width: var(--uitk-focused-line-width);
+  --button-focused-outline-color: var(--uitk-focused-color);
+  --button-focused-outline-offset: var(--uitk-focused-outline-offset);
   --uitkIcon-letter-spacing: 0;
 }
 
@@ -43,7 +43,6 @@
   --button-text-color-hover: var(--uitk-actionable-primary-text-color-hover);
   --uitkIcon-color: var(--uitk-actionable-primary-icon-color);
 }
-
 .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled) {
   --uitkIcon-color: var(--uitk-actionable-primary-icon-color-hover);
 }
@@ -129,10 +128,10 @@
 
 /* Added .uitkButton:focus for browsers don't support :focus-visible, like Safari and Firefox */
 .uitkButton:focus {
-  outline-style: var(--button-focus-outline-style);
-  outline-width: var(--button-focus-outline-width);
-  outline-color: var(--button-focus-outline-color);
-  outline-offset: var(--button-focus-outline-offset);
+  outline-style: var(--button-focused-outline-style);
+  outline-width: var(--button-focused-outline-width);
+  outline-color: var(--button-focused-outline-color);
+  outline-offset: var(--button-focused-outline-offset);
 }
 
 .uitkButton:focus:not(:focus-visible) {
@@ -140,10 +139,10 @@
 }
 
 .uitkButton:focus-visible {
-  outline-style: var(--button-focus-outline-style);
-  outline-width: var(--button-focus-outline-width);
-  outline-color: var(--button-focus-outline-color);
-  outline-offset: var(--button-focus-outline-offset);
+  outline-style: var(--button-focused-outline-style);
+  outline-width: var(--button-focused-outline-width);
+  outline-color: var(--button-focused-outline-color);
+  outline-offset: var(--button-focused-outline-offset);
 }
 
 .uitkButton:focus-visible:not(:active):not(.uitkButton-active) {
