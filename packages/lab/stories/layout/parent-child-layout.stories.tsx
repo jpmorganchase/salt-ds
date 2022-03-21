@@ -11,8 +11,9 @@ import {
   Card,
   Avatar,
 } from "@brandname/lab";
-import { Button, DoubleChevronLeftIcon } from "@brandname/core";
+import { Button } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {DoubleChevronLeftIcon} from "@brandname/icons";
 
 export default {
   title: "Layout/ParentChildLayout",

@@ -8,16 +8,19 @@ import {
   SplitLayout,
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import PlaceholderLogo from "../../assets/placeholder.svg";
+import PlaceholderLogo from "docs/assets/placeholder.svg";
 import {
   Button,
+} from "@brandname/core";
+
+import React from "react";
+import {
   ChatGroupIcon,
   ExportIcon,
   ImportIcon,
   NotificationIcon,
-  SearchIcon,
-} from "@brandname/core";
-import React from "react";
+  SearchIcon
+} from "@brandname/icons";
 
 export default {
   title: "Layout/SplitLayout",

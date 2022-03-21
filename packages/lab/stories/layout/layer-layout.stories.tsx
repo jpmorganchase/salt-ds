@@ -14,8 +14,9 @@ import {
   useIsStacked,
   StackedViewElement,
 } from "@brandname/lab";
-import { Button, Icon, CloseIcon, ChevronLeftIcon } from "@brandname/core";
+import { Button, Icon } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {ChevronLeftIcon, CloseIcon} from "@brandname/icons";
 
 export default {
   title: "Layout/LayerLayout",

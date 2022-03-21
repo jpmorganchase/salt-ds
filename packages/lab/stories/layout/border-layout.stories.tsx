@@ -14,8 +14,9 @@ import {
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { HeaderWithSplitLayout } from "./split-layout.stories";
-import { Button, TearOutIcon } from "@brandname/core";
+import { Button } from "@brandname/core";
 import { InTabstrip } from "./deck-layout.stories";
+import {TearOutIcon} from "@brandname/icons";
 
 export default {
   title: "Layout/BorderLayout",
