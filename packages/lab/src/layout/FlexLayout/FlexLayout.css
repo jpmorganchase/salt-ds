@@ -1,0 +1,12 @@
+.uitkFlexLayout {
+  --flex-gap: var(--uitk-spacing-unit);
+  font-size: var(--uitk-typography-size-regular-unit);
+}
+
+.uitkFlexLayout {
+  gap: var(--flex-gap);
+  min-width: min-content;
+}
+.uitkFlexLayout-split > *:not([role="separator"]) {
+  flex-grow: 1;
+}
