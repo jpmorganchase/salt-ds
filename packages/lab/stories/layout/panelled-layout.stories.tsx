@@ -13,9 +13,10 @@ import {
   SplitLayout,
   PanelFlexLayout,
 } from "@brandname/lab";
-import { Button, RefreshIcon, WarningIcon } from "@brandname/core";
+import { Button } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
+import {RefreshIcon, WarningIcon} from "@brandname/icons";
 
 export default {
   title: "Layout/PanelledLayout",
