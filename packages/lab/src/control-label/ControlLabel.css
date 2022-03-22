@@ -1,9 +1,9 @@
 .uitk-light .uitkControlLabel {
-  --control-label-color: var(--uitk-color-grey-900);
+  --control-label-color: var(--uitk-color-grey-200);
 }
 
 .uitk-dark .uitkControlLabel {
-  --control-label-color: var(--uitk-color-white);
+  --control-label-color: var(--uitk-color-grey-80); /* TODO: Check color with design */
 }
 
 .uitkControlLabel {
@@ -22,16 +22,22 @@
 .uitkControlLabel-label {
   color: var(--control-label-color);
   line-height: var(--uitk-text-line-height);
+  margin-left: var(--uitkControlLabel-margin-left, calc(var(--uitk-spacing-unit) / 2));
+}
 
-  /* the default should be density aware. This can wait until density is avaiable via theme */
-  margin-left: var(--label-margin-left, 4px);
+.uitkControlLabel-labelLeft {
+  color: var(--control-label-color);
+  line-height: var(--uitk-text-line-height);
+  margin-left: 0px;
+  margin-right: var(--uitkControlLabel-margin-left, var(--uitk-spacing-unit));
 }
 
 .uitkControlLabel-disabled {
   cursor: var(--uitk-disabled-cursor);
 }
 
-.uitkControlLabel-disabled .uitkControlLabel-label {
+.uitkControlLabel-disabled .uitkControlLabel-label,
+.uitkControlLabel-disabled .uitkControlLabel-labelLeft {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
 }
