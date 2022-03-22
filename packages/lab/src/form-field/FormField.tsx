@@ -60,7 +60,7 @@ export interface FormFieldProps
    */
   ActivationIndicatorComponent?: ElementType<ActivationIndicatorProps>;
   /**
-   * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium.
+   * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium - standard background color.
    */
   emphasis?: "low" | "medium" | "high";
   /**

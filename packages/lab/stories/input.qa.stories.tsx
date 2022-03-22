@@ -11,7 +11,11 @@ export default {
 } as ComponentMeta<typeof Input>;
 
 const Default = () => (
-  <Input data-jpmui-test="input-example" defaultValue="Value" />
+  <Input
+    data-jpmui-test="input-example"
+    defaultValue="Value"
+    style={{ width: "292px" }}
+  />
 );
 
 interface ExampleRowProps {
@@ -46,7 +50,7 @@ const ReadOnly = () => (
   <>
     <Input
       data-jpmui-test="input-example"
-      defaultValue="Read Only Input"
+      defaultValue="Value"
       readOnly
       style={{ width: 292 }}
     />

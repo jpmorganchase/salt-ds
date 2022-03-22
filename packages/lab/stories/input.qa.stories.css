@@ -4,5 +4,5 @@
 }
 
 .uitkQAContainer {
-  height: unset;
+  height: unset !important; /* TODO: How to fix this properly? */
 }
