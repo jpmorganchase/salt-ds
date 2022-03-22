@@ -1,53 +1,53 @@
 /*TODO change thumb background in formfield */
 
 .uitk-density-touch {
-  --switch-width: 44px;
-  --switch-height: 24px;
+  --switch-width: var(--uitkSwitch-width, 44px);
+  --switch-height: var(--uitkSwitch-height, 24px);
   --switch-thumb-margin: 3px 0 0 3px;
-  --switch-thumb-size: 18px;
-  --switch-thumb-translate: 20px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 18px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 20px);
 }
 
 .uitk-density-low {
-  --switch-width: 38px;
-  --switch-height: 20px;
+  --switch-width: var(--uitkSwitch-width, 38px);
+  --switch-height: var(--uitkSwitch-height, 20px);
   --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 16px;
-  --switch-thumb-translate: 18px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 16px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 18px);
 }
 
 .uitk-density-medium {
-  --switch-width: 34px;
-  --switch-height: 18px;
+  --switch-width: var(--uitkSwitch-width, 34px);
+  --switch-height: var(--uitkSwitch-height, 18px);
   --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 14px;
-  --switch-thumb-translate: 16px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 14px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 16px);
 }
 
 .uitk-density-high {
-  --switch-width: 30px;
-  --switch-height: 16px;
+  --switch-width: var(--uitkSwitch-width, 30px);
+  --switch-height: var(--uitkSwitch-height, 16px);
   --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 12px;
-  --switch-thumb-translate: 14px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 12px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 14px);
 }
 
 .uitk-light .uitkSwitch-label {
-  --switch-label-color: var(--uitk-color-grey-200);
-  --switch-track-color: var(--uitk-color-grey-90);
-  --switch-track-color-hover: var(--uitk-color-blue-400);
-  --switch-thumb-background: var(--uitk-color-white);
-  --switch-checked-track-color: var(--uitk-color-blue-500);
-  --switch-checked-icon-color: var(--uitk-color-blue-500);
+  --switch-label-color: var(--uitkSwitch-label-color, var(--uitk-color-grey-200));
+  --switch-track-color: var(--uitkSwitch-track-color, var(--uitk-color-grey-90));
+  --switch-track-color-hover: var(--uitkSwitch-track-color-hover, var(--uitk-color-blue-400));
+  --switch-thumb-background: var(--uitkSwitch-thumb-background, var(--uitk-color-white));
+  --switch-checked-track-color: var(--uitkSwitch-checked-track-color, var(--uitk-color-blue-500));
+  --switch-checked-icon-color: var(--uitkSwitch-checked-icon-color, var(--uitk-color-blue-500));
 }
 
 .uitk-dark .uitkSwitch-label {
-  --switch-label-color: var(--uitk-color-grey-70);
-  --switch-track-color: var(--uitk-color-grey-100);
-  --switch-track-color-hover: var(--uitk-color-blue-300);
-  --switch-thumb-background: var(--uitk-color-grey-800);
-  --switch-checked-track-color: var(--uitk-color-blue-400);
-  --switch-checked-icon-color: var(--uitk-color-white);
+  --switch-label-color: var(--uitkSwitch-label-color var(--uitk-color-grey-70));
+  --switch-track-color: var(--uitkSwitch-track-color, var(--uitk-color-grey-100));
+  --switch-track-color-hover: var(--uitkSwitch-track-color-hover, var(--uitk-color-blue-300));
+  --switch-thumb-background: var(--uitkSwitch-thumb-background, var(--uitk-color-grey-800));
+  --switch-checked-track-color: var(--uitkSwitch-checked-track-color, var(--uitk-color-blue-400));
+  --switch-checked-icon-color: var(--uitkSwitch-checked-icon-color, var(--uitk-color-white));
 }
 
 .uitkSwitch-label {
@@ -97,26 +97,18 @@
 
 .uitkSwitch-base {
   background: transparent;
-  border-radius: 0;
-  border: 0;
-  color: #fafafa;
+  color: var(--uitk-color-grey-10);
   display: inline-flex;
   flex: 0 0 auto;
-  font-size: 1.2857142857142856rem;
   height: var(--switch-thumb-size);
   justify-content: flex-start;
-  left: 0;
   margin: var(--switch-thumb-margin);
-  outline: 0;
   overflow: visible;
   padding: 0;
   position: absolute;
-  top: 0;
   text-align: center;
   transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  text-decoration: none;
   width: var(--switch-thumb-size);
-  vertical-align: middle;
   z-index: 1;
 }
 
@@ -162,8 +154,7 @@
 }
 
 .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
-  background-color: var(--switch-checked-track-color);
-  border: 1px solid var(--switch-checked-track-color);
+  background: var(--switch-checked-track-color);
 }
 
 .uitkSwitch-icon-tick {
