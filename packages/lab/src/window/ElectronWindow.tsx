@@ -88,10 +88,11 @@ const Window: windowType = forwardRef(function ElectronWindow(
     setMountNode(bodyElement);
     setWindowRef(win);
 
-    // new MutationObserver(() => {
-    //   resizeWindow();
-    // }).observe(bodyElement,
-    //   { attributes: false, childList: true, subtree: true });
+    // resizeWindow();
+    new MutationObserver(() => {
+      resizeWindow();
+    }).observe(bodyElement,
+      { attributes: false, childList: true, subtree: true });
   }
 
   const closeWindow = useCallback(() => {
