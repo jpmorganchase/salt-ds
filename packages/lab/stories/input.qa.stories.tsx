@@ -78,6 +78,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
     <QAContainer
       className="uitkInputQA"
       imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png"
+      height={2000}
     >
       <ToolkitProvider theme={"light"}>
         <Examples />
