@@ -138,7 +138,7 @@ export const Splitter = forwardRef<HTMLDivElement, SplitterProps>(
         onMouseDown={handleMouseDown}
         tabIndex={0}
       >
-        <div className="grab-zone" />
+        <div className={withBaseName("grabZone")} />
       </div>
     );
   }

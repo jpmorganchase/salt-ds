@@ -1,16 +1,16 @@
 .uitkParentChildItem {
-  --uitk-animation-duration: 0.3s;
+  --uitk-animation-parentChild-duration: 0.3s;
 }
 
 .uitkParentChildItem-slide-top {
-  animation: slide-in-top var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: slide-in-top var(--uitk-animation-parentChild-duration) var(--uitk-animation-timing-function);
 }
 .uitkParentChildItem-slide-bottom {
-  animation: slide-in-bottom var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: slide-in-bottom var(--uitk-animation-parentChild-duration) var(--uitk-animation-timing-function);
 }
 .uitkParentChildItem-slide-left {
-  animation: slide-in-left var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: slide-in-left var(--uitk-animation-parentChild-duration) var(--uitk-animation-timing-function);
 }
 .uitkParentChildItem-slide-right {
-  animation: slide-in-right var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: slide-in-right var(--uitk-animation-parentChild-duration) var(--uitk-animation-timing-function);
 }

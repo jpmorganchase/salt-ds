@@ -19,7 +19,7 @@
 .uitkSplitter:hover {
   background-color: var(--uitk-color-grey-40);
 }
-.active.uitkSplitter {
+.uitkSplitter-active.uitkSplitter {
   background-color: var(--uitk-color-blue-500);
 }
 
@@ -43,20 +43,20 @@
   padding: 0;
 }
 
-.uitkSplitter .grab-zone {
+.uitkSplitter .uitkSplitter-grabZone {
   position: absolute;
   background-color: rgba(255, 0, 0, 0.01);
   cursor: inherit;
 }
 
-.uitkSplitter.column .grab-zone {
+.uitkSplitter.column .uitkSplitter-grabZone {
   left: 0;
   right: 0;
   top: -5px;
   bottom: -5px;
 }
 
-.uitkSplitter:not(column) .grab-zone {
+.uitkSplitter:not(column) .uitkSplitter-grabZone {
   left: -5px;
   right: -5px;
   top: 0;
@@ -83,7 +83,7 @@
   );
 }
 
-.active.uitkSplitter.column:before {
+.uitkSplitter-active.uitkSplitter.column:before {
   background: linear-gradient(
     to right,
     var(--uitk-color-white) 10%,
@@ -101,7 +101,7 @@
   );
 }
 
-.active.uitkSplitter:not(.column):before {
+.uitkSplitter-active.uitkSplitter:not(.column):before {
   background: linear-gradient(
     to bottom,
     var(--uitk-color-white) 10%,
