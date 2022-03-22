@@ -103,7 +103,7 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
     console.log(`${buttonName} button clicked'`);
 
   return (
-    <Toolbar id="toolbar-default">
+    <Toolbar id="toolbar-default" wrapChildrenWithFormFields={false}>
       <div data-testid="toolbar-handle">
         <ToolbarAnchor />
       </div>
@@ -133,18 +133,18 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
           style={{ width: 90 }}
         />
       </FormField>
-      {/*<Button onClick={() => logItemName("export")} variant="secondary">*/}
-      {/*  <ExportIcon /> Export*/}
-      {/*</Button>*/}
-      {/*<Button onClick={() => logItemName("share")} variant="secondary">*/}
-      {/*  <ShareIcon /> Share*/}
-      {/*</Button>*/}
-      {/*<Button onClick={() => logItemName("alerts")} variant="secondary">*/}
-      {/*  <NotificationIcon /> Set Alerts*/}
-      {/*</Button>*/}
-      {/*<Button onClick={() => logItemName("expand")} variant="secondary">*/}
-      {/*  <TearOutIcon /> Expand*/}
-      {/*</Button>*/}
+      <Button onClick={() => logItemName("export")} variant="secondary">
+        <ExportIcon /> Export
+      </Button>
+      <Button onClick={() => logItemName("share")} variant="secondary">
+        <ShareIcon /> Share
+      </Button>
+      <Button onClick={() => logItemName("alerts")} variant="secondary">
+        <NotificationIcon /> Set Alerts
+      </Button>
+      <Button onClick={() => logItemName("expand")} variant="secondary">
+        <TearOutIcon /> Expand
+      </Button>
     </Toolbar>
   );
 };
@@ -257,7 +257,18 @@ export const App = () => {
         Toggle Popper
       </Button>
       <Popper anchorEl={anchorEl.current} open={openPopper}>
-        <div>The content of the popper.</div>
+        <FormField
+          data-close-on-click={false}
+          label="Range"
+          data-activation-indicator
+          variant="theme"
+        >
+          <Button
+            data-testid="FormField"
+          >
+            Test
+          </Button>
+        </FormField>
       </Popper>
       <Button
         data-testid="toolbar-trigger"
