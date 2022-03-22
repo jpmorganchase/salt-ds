@@ -3,7 +3,6 @@ import {
   useRef,
   useState,
   useCallback,
-  useLayoutEffect,
   HTMLAttributes,
   Ref,
   FocusEventHandler,
@@ -19,7 +18,13 @@ import {
 import classnames from "classnames";
 import deepmerge from "deepmerge";
 import warning from "warning";
-import { makePrefixer, Button, ButtonProps, useDensity } from "@brandname/core";
+import {
+  makePrefixer,
+  Button,
+  ButtonProps,
+  useDensity,
+  useIsomorphicLayoutEffect,
+} from "@brandname/core";
 import { OverflowMenuIcon, CloseIcon } from "@brandname/icons";
 import { useForkRef, useId } from "../utils";
 import { Input, InputProps } from "../input";
@@ -168,7 +173,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     )
   );
 
-  useLayoutEffect(
+  useIsomorphicLayoutEffect(
     () => () => {
       // When density changes, set hidden index to null so that pills are in their
       // readonly state before they are measured.
@@ -179,7 +184,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
 
   // useLayoutEffect because of potential layout change
   // We want to do that before paint to avoid layout jumps
-  useLayoutEffect(
+  useIsomorphicLayoutEffect(
     () => {
       if (expanded) {
         setFirstHiddenIndex(null);
@@ -198,7 +203,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     [expanded, pillGroupWidth, selectedItems]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (expanded && inputRulerRef.current) {
       const newInputWidth = inputRulerRef.current.scrollWidth;
       setInputWidth(Math.min(newInputWidth, pillGroupWidth || 0));

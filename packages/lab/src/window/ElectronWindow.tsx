@@ -1,11 +1,5 @@
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 import ReactDOM from "react-dom";
 import { ToolkitProvider } from "@brandname/core";
 import { windowType, Window as ToolkitWindow } from "./WindowContext";
@@ -54,7 +48,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
     };
   }, [closeWindow, windowRef]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       ipcRenderer.send("window-position", {
@@ -65,7 +59,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
     }
   }, [id, style]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (windowRoot.current) {
       const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
       const { ipcRenderer } = global as any;

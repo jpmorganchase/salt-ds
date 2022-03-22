@@ -1,5 +1,5 @@
-import { useState, useCallback, useLayoutEffect } from "react";
-import { Density } from "@brandname/core";
+import { useState, useCallback } from "react";
+import { Density, useIsomorphicLayoutEffect } from "@brandname/core";
 
 const safeParseFloat = (target?: string) => parseFloat(target || "0");
 
@@ -43,7 +43,7 @@ export const useWidth = (
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (node !== null) {
       setWidth(getWidth(node));
     }
