@@ -1,8 +1,3 @@
-.uitkInputQA-defaults {
-  display: flex;
-  flex-direction: column;
-}
-
 .uitkQAContainer {
   height: unset !important; /* TODO: How to fix this properly? */
 }

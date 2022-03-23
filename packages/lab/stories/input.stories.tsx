@@ -25,12 +25,13 @@ export default {
 const Template: ComponentStory<typeof Input> = (args) => {
   let text;
   // @ts-ignore
-  if (args.multiline) {
-    text =
-      "This is a Multiline Input with text which wraps onto more than one line.";
-  } else {
-    text = "Value";
-  }
+  // if (args.multiline) {
+  //   text =
+  //     "This is a Multiline Input with text which wraps onto more than one line.";
+  // } else {
+  // }
+  // TODO: Are we providing multiline?
+  text = "Value";
 
   return <Input defaultValue={text} style={{ width: "292px" }} {...args} />;
 };
@@ -266,7 +267,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
       <br />
       <br />
       <Input
-        defaultValue={"Multiline - Suffix: Static + Button\n\n"}
+        defaultValue={"Suffix: Static + Button\n\n"}
         style={styles.input}
         {...args}
         endAdornment={
@@ -277,7 +278,6 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
             </Button>
           </>
         }
-        // multiline
         startAdornment={
           <StaticInputAdornment>
             <UserIcon size="small" />
@@ -285,5 +285,6 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
     </>
+    // TODO: Are we allowing for multiline?
   );
 };

@@ -1,9 +1,11 @@
 import { Density, ToolkitProvider } from "@brandname/core";
 import { Input, Panel } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { QAContainer } from "docs/components";
+import { AllRenderer, QAContainer } from "docs/components";
+import { BackgroundBlock } from "docs/components/BackgroundBlock";
 import { ReactNode } from "react";
 import "./input.qa.stories.css";
+import { Adornments } from "./input.stories";
 
 export default {
   title: "Lab/Input/QA",
@@ -18,58 +20,29 @@ const Default = () => (
   />
 );
 
-interface ExampleRowProps {
-  children: ReactNode;
-  name: string;
-}
-
-const ExampleRow: React.FC<ExampleRowProps> = ({ children, name }) => {
-  const densities: Density[] = ["touch", "low", "medium", "high"];
-  return (
-    <Panel>
-      <h3>{name}</h3>
-      <div className="uitkInputQA">
-        {densities.map((density) => (
-          <ToolkitProvider density={density}>{children}</ToolkitProvider>
-        ))}
-      </div>
-    </Panel>
-  );
-};
-
 const Disabled = () => (
   <Input
     data-jpmui-test="input-example"
-    defaultValue="Value"
+    defaultValue="Disabled"
     disabled
     style={{ width: "292px" }}
   />
 );
 
-const ReadOnly = () => (
-  <>
-    <Input
-      data-jpmui-test="input-example"
-      defaultValue="Value"
-      readOnly
-      style={{ width: 292 }}
-    />
-  </>
-);
-
-const Examples = () => (
-  <>
-    <ExampleRow name="Default">
-      <Default />
-    </ExampleRow>
-    <ExampleRow name="Disabled">
-      <Disabled />
-    </ExampleRow>
-    <ExampleRow name="ReadOnly">
-      <ReadOnly />
-    </ExampleRow>
-  </>
-);
+const ReadOnly: ComponentStory<typeof Input> = () => {
+  return (
+    <>
+      <Input
+        defaultValue={"Read Only Input"} // Read Only isn't currently a prop
+        readOnly
+        style={{ width: "292px" }}
+      />
+      <br />
+      <br />
+      <Input readOnly style={{ width: "292px" }} />
+    </>
+  );
+};
 
 export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
   props
@@ -78,14 +51,46 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
     <QAContainer
       className="uitkInputQA"
       imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png"
+      width={2272}
       height={2000}
     >
-      <ToolkitProvider theme={"light"}>
-        <Examples />
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <Examples />
-      </ToolkitProvider>
+      <AllRenderer>
+        <div
+          style={{
+            background: "inherit",
+            display: "inline-grid",
+            gridTemplate: "auto / repeat(3,auto)",
+            gap: "4px",
+          }}
+        >
+          <Default />
+          <Disabled />
+          <ReadOnly />
+        </div>
+      </AllRenderer>
+      <div
+        style={{
+          background: "inherit",
+          display: "inline-grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "4px",
+        }}
+      >
+        <ToolkitProvider theme={"light"}>
+          <BackgroundBlock>
+            <div>
+              <Adornments />
+            </div>
+          </BackgroundBlock>
+        </ToolkitProvider>
+        <ToolkitProvider theme={"dark"}>
+          <BackgroundBlock>
+            <div>
+              <Adornments />
+            </div>
+          </BackgroundBlock>
+        </ToolkitProvider>
+      </div>
     </QAContainer>
   );
 };

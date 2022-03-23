@@ -29,7 +29,7 @@
   color: var(--control-label-color);
   line-height: var(--uitk-text-line-height);
   margin-left: 0px;
-  margin-right: var(--uitkControlLabel-margin-left, var(--uitk-spacing-unit));
+  margin-right: var(--uitkControlLabel-margin-left, calc(var(--uitk-spacing-unit) * 0.75));
 }
 
 .uitkControlLabel-disabled {
