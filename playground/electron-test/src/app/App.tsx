@@ -103,36 +103,23 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
     console.log(`${buttonName} button clicked'`);
 
   return (
-    <Toolbar id="toolbar-default" wrapChildrenWithFormFields={false}>
+    <Toolbar id="toolbar-default">
       <div data-testid="toolbar-handle">
         <ToolbarAnchor />
       </div>
-      <FormField
-        data-close-on-click={false}
-        label="Range"
-        data-activation-indicator
-        variant="theme"
-      >
-        <Dropdown
-          initialSelectedItem={range}
-          onSelect={(_, item) => setRange(item || undefined)}
-          source={rangeData}
-          style={{ width: 100 }}
-        />
-      </FormField>
-      <FormField
-        data-close-on-click={false}
-        label="Type"
-        data-activation-indicator
-        variant="theme"
-      >
-        <Dropdown
-          initialSelectedItem={type}
-          onSelect={(_, item) => setType(item || undefined)}
-          source={typeData}
-          style={{ width: 90 }}
-        />
-      </FormField>
+      <Dropdown
+        initialSelectedItem={range}
+        onSelect={(_, item) => setRange(item || undefined)}
+        source={rangeData}
+        style={{ width: 100 }}
+      />
+
+      <Dropdown
+        initialSelectedItem={type}
+        onSelect={(_, item) => setType(item || undefined)}
+        source={typeData}
+        style={{ width: 90 }}
+      />
       <Button onClick={() => logItemName("export")} variant="secondary">
         <ExportIcon /> Export
       </Button>
@@ -149,7 +136,6 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
   );
 };
 
-// There's nothing here. Just used to confirm whether font & icons are rendering fine.
 export const App = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
@@ -263,11 +249,7 @@ export const App = () => {
           data-activation-indicator
           variant="theme"
         >
-          <Button
-            data-testid="FormField"
-          >
-            Test
-          </Button>
+          <Button data-testid="FormField">Test</Button>
         </FormField>
       </Popper>
       <Button

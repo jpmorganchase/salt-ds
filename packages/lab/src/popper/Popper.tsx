@@ -80,7 +80,7 @@ const PopperTooltip = forwardRef<
   const middlewares = [...middleware];
 
   if (!isElectron) {
-    middleware.unshift(flip(), shift({ limiter: limitShift() }));
+    middlewares.unshift(flip(), shift({ limiter: limitShift() }));
   }
 
   const {

@@ -91,18 +91,18 @@ const createWindow = (): void => {
   });
 
   ipcMain.on("window-position", (event, { id, left, top }) => {
-    const mainWindow = windowByTitle("Toolkit Test App");
-    const mainBounds = mainWindow!.getContentBounds();
     const targetWindow = windowByTitle(id);
-
-    let targetX = parseInt(left + mainBounds.x);
-    let targetY = parseInt(top + mainBounds.y);
-    const size = screen.getDisplayNearestPoint({
-      x: mainBounds.x,
-      y: mainBounds.y,
-    }).size;
-
     if (targetWindow) {
+      const mainWindow = targetWindow.getParentWindow();
+      const mainBounds = mainWindow!.getContentBounds();
+
+      let targetX = parseInt(left + mainBounds.x);
+      let targetY = parseInt(top + mainBounds.y);
+      const size = screen.getDisplayNearestPoint({
+        x: mainBounds.x,
+        y: mainBounds.y,
+      }).size;
+
       if (targetX < 0) {
         targetX = 0;
       }
