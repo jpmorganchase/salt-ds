@@ -1,30 +1,26 @@
 import {
+  ComponentPropsWithoutRef,
   createContext,
   forwardRef,
   PropsWithChildren,
   useContext,
 } from "react";
 
-export type WindowProps = PropsWithChildren<{
-  className?: string;
-  id?: string;
-  open?: boolean;
-  style?: any;
-}>;
+export type WindowProps = PropsWithChildren<
+  {
+    open?: boolean;
+  } & ComponentPropsWithoutRef<"div">
+>;
 
 export const Window = forwardRef<HTMLDivElement, WindowProps>(function Window(
-  { children, className, ...props }: WindowProps,
+  { children, open, ...props },
   ref
 ) {
-  if (className) {
-    return (
-      <div {...props} className={className} ref={ref}>
-        {children}
-      </div>
-    );
-  } else {
-    return children as JSX.Element | null;
-  }
+  return (
+    <div {...props} ref={ref}>
+      {children}
+    </div>
+  );
 });
 
 export type windowType = typeof Window;
