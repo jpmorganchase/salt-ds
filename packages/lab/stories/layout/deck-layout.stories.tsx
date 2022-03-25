@@ -32,7 +32,7 @@ const gridItemStyles = {
 const gridLayoutStyle = {
   background: "lightblue",
 };
-const Template: ComponentStory<typeof DeckLayout> = (args) => {
+export const Template: ComponentStory<typeof DeckLayout> = (args) => {
   const [currentIndex, setCurrentIndex] = useState(10);
 
   const handleIncrease = () => {
@@ -53,6 +53,7 @@ const Template: ComponentStory<typeof DeckLayout> = (args) => {
             style={{
               ...gridItemStyles,
             }}
+            key={index}
           >
             <h2>{`GridItem ${index + 1}`}</h2>
             <p>
@@ -150,7 +151,7 @@ const WithVerticalTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
       />
       <DeckLayout {...args} activeIndex={selectedTab}>
         {tabs.map((i, index) => (
-          <StackLayout style={{ padding: "1rem 2rem" }}>
+          <StackLayout style={{ padding: "1rem 2rem" }} key={index}>
             <h2>{tabs[index]}</h2>
             <div>
               <p>
@@ -199,9 +200,9 @@ const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
   return (
     <Carousel {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <Card>
+        <Card key={index}>
           <img
-            alt={"placeholder slider image"}
+            alt="placeholder slider"
             src={`https://via.placeholder.com/1140x520/${
               colors[index]
             }?text=Carousel+Slide+${index + 1}`}
@@ -220,7 +221,7 @@ const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
 export const CarouselWithDeckLayout = WithCarousel.bind({});
 CarouselWithDeckLayout.args = {
   animation: undefined,
-  direction: "vertical",
+  direction: "horizontal",
 };
 
 CarouselWithDeckLayout.argTypes = {

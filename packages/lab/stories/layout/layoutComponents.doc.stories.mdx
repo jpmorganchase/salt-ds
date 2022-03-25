@@ -12,8 +12,10 @@ import {
   LayerLayout,
   ParentChildLayout,
   PanelledLayout,
+  DeckLayout,
 } from "@brandname/lab";
 import "./styles.css";
+import { ToolkitDeckLayout } from "./deck-layout.stories.tsx";
 
 <Meta title="Layout/Doc" />
 
@@ -208,6 +210,22 @@ import {SplitLayout} from "@jpmuitk/toolkit-odyssey";
 ## Deck Layout
 
 Defines pages of content that appear within the same specified region, one at a time.
+
+<Canvas>
+  <Story name="Deck Layout">
+    <ToolkitDeckLayout />
+  </Story>
+</Canvas>
+
+## API
+
+```
+import {DeckLayout} from "@jpmuitk/toolkit-odyssey";
+```
+
+## Props
+
+<ArgsTable of={DeckLayout} />
 
 ## Layer Layout
 
