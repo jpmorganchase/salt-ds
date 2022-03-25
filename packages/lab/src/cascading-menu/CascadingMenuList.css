@@ -10,5 +10,5 @@
 
 .uitkCascadingMenuList {
   --menu-item-background: var(--uitk-selectable-background);
-  --menu-item-border-bottom: solid 1px var(--uitk-color-white);
+  /* --menu-item-border-bottom: solid 1px var(--uitk-white); */
 }

@@ -45,7 +45,7 @@ const IconDescriptorsStory: Story<IconDescriptorsStoryProps> = (props) => (
     <Breadcrumb href="#" overflowLabel="Level 2 Entity" Icon={TreeIcon}>
       Level 2 Entity
     </Breadcrumb>
-    <Breadcrumb href="#" overflowLabel="Level 3 Entity">
+    <Breadcrumb href="#" maxWidth={40} overflowLabel="Level 3 Entity">
       Level 3 Entity
     </Breadcrumb>
   </Breadcrumbs>
@@ -138,7 +138,7 @@ const OverflowAtFirstPositionStory: Story<OverflowAtFirstPositionStoryProps> = (
     <Breadcrumbs
       data-testid="breadcrumbs-example"
       itemsBeforeCollapse={0}
-      maxItems={2}
+      maxItems={3}
     >
       <Breadcrumb
         href="#"
@@ -171,6 +171,14 @@ const OverflowAtFirstPositionStory: Story<OverflowAtFirstPositionStoryProps> = (
         }
       >
         Level 4 Entity
+      </Breadcrumb>
+      <Breadcrumb
+        href="#"
+        onItemClick={(sourceItem, event) =>
+          console.log("Clicked Level 5 Entity from menu", sourceItem, event)
+        }
+      >
+        Level 5 Entity
       </Breadcrumb>
     </Breadcrumbs>
   );

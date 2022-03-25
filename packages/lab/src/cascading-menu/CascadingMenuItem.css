@@ -17,18 +17,20 @@
   align-items: center;
   justify-content: space-between;
 
-  right: 0;
+  /* right: 0; */
   cursor: pointer;
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* box-sizing: border-box; */
   text-align: left;
+  /* align-items: center; */
   user-select: none;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  /* text-overflow: ellipsis; */
 }
 
 .uitkMenuItem-menuItemText {
-  flex-grow: 2;
-  white-space: nowrap;
+  /* flex-grow: 2; */
+  /* white-space: nowrap; */
 }
 
 .uitkMenuItem-menuItemEndAdornment {

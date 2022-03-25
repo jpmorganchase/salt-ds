@@ -45,12 +45,12 @@
   position: relative;
   box-sizing: border-box;
   align-items: var(--list-item-align-items);
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 .uitkListItem {
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
-  margin-bottom: var(--list-item-gap);
+  /* margin-bottom: var(--list-item-gap); */
   cursor: var(--list-item-selectable-cursor);
 }
 

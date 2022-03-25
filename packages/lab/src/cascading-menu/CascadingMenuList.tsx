@@ -109,12 +109,15 @@ export const CascadingMenuList = forwardRef<
       // it would be better to maybe use popper onUpdate callback
       // or some kind of polling mechanism to confirm placement is
       // correct before focus call
-      const id = setTimeout(() => {
+      // const id = setTimeout(() => {
+      //   menuRef.focus();
+      // });
+      // return () => {
+      //   clearTimeout(id);
+      // };
+      requestAnimationFrame(() => {
         menuRef.focus();
       });
-      return () => {
-        clearTimeout(id);
-      };
     }
   }, [menuRef, rootPlacementOffset]);
 

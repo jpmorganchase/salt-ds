@@ -9,19 +9,22 @@ import "./cascading-menu.stories.css";
 const initialSource: MenuDescriptor = {
   menuItems: [
     {
-      title: "Level 1 Menu Item 2",
+      title:
+        "Level 1 Menu Item 2 Menu Item Menu Item Menu Item Menu Item Menu Item",
       menuItems: [
         {
-          title: "Level 2 Menu Item",
+          title:
+            "Level 2 Menu Item Menu Item Menu Item Menu Item Menu Item Menu Item",
         },
         {
-          title: "Level 2 Menu Item",
+          title:
+            "Level 2 Menu Item Menu Item Menu Item Menu Item Menu Item Menu Item",
           menuItems: [
             {
-              title: "Level 3 Menu Item",
+              title: "Level 3 Menu Item Menu Item Menu Item Menu Item",
             },
             {
-              title: "Level 3 Menu Item",
+              title: "Level 3 Menu Item Menu Item Menu Item Menu Item",
             },
           ],
         },
@@ -64,17 +67,20 @@ export const DefaultCascadingMenu: ComponentStory<
   typeof CascadingMenu
 > = () => {
   return (
-    <CascadingMenu
-      initialSource={initialSource}
-      itemToString={(item) => item?.title}
-      onItemClick={(sourceItem) => {
-        console.log(`You clicked: ${sourceItem.title}`);
-      }}
-    >
-      <Button data-testid="cascading-menu-trigger">
-        Open/Close Cascading Menu
-      </Button>
-    </CascadingMenu>
+    <div style={{ width: "50vw" }}>
+      <CascadingMenu
+        // open={true}
+        initialSource={initialSource}
+        itemToString={(item) => item?.title}
+        onItemClick={(sourceItem) => {
+          console.log(`You clicked: ${sourceItem.title}`);
+        }}
+      >
+        <Button data-testid="cascading-menu-trigger">
+          Open/Close Cascading Menu
+        </Button>
+      </CascadingMenu>
+    </div>
   );
 };
 
@@ -85,10 +91,11 @@ export const MaximumWidthCascadingMenu: ComponentStory<
     () => ({
       menuItems: [
         {
-          title: "Extra extra long Level 1 Menu Item",
+          title:
+            "Extra extra long Level 1 Menu Item  Menu Item Menu Item Menu Item",
         },
         {
-          title: "Extra long Level 1 Menu Item 2",
+          title: "Extra long Level 1 Menu Item 2  Menu Item  Menu Item",
           menuItems: [
             {
               title: "Level 2 Menu Item",
@@ -135,6 +142,7 @@ export const MaximumWidthCascadingMenu: ComponentStory<
 
   return (
     <CascadingMenu
+      open={true}
       initialSource={initialSource}
       itemToString={(item) => item?.title}
       maxWidth={255}

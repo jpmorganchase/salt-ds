@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import cx from "classnames";
+import { Span } from "@brandname/lab";
 import { inferElementType, makePrefixer, polymorphicRef } from "../utils";
 
 import "./Button.css";
@@ -164,7 +165,9 @@ export const Button = forwardRef(function Button<
       {...restProps}
       ref={ref}
     >
-      <span className={withBaseName("label")}>{children}</span>
+      <Span maxRows={1} className={withBaseName("label")}>
+        {children}
+      </Span>
     </Component>
   );
 }) as PolymorphicButton;

@@ -91,23 +91,19 @@
   border-width: var(--uitkButton-border-width, 0);
   border-radius: var(--uitkButton-border-radius, var(--uitk-actionable-border-radius));
   box-sizing: border-box;
-  color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: pointer;
   display: inline-block;
   justify-content: center;
-  font-size: var(--uitkButton-font-size, var(--uitk-text-font-size));
-  font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
-  line-height: var(--uitkButton-line-height, var(--uitk-text-line-height));
-  letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing));
-  text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-text-transform));
   padding: 0 var(--uitkButton-padding, var(--uitk-spacing-unit));
   margin: 0;
   height: var(--uitkButton-height, var(--uitk-size-regular-unit));
+  max-width: 100%;
   min-width: var(--uitkButton-min-width, unset);
   min-height: 0;
   position: relative;
   text-align: var(--uitkButton-text-align, var(--uitk-actionable-text-align));
   text-decoration: none;
+  text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-text-transform));
   transition: none;
   user-select: none;
   vertical-align: middle;
@@ -117,14 +113,18 @@
 
 /* Styles applied to the inner element wrapping children of the component */
 .uitkButton-label {
-  font-weight: var(--uitkButton-font-weight, var(--button-font-weight));
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: inherit;
-  position: relative;
-  white-space: pre;
-  width: 100%;
+  color: var(--uitkButton-text-color, var(--button-text-color));
+  /* font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family)); */
+  /* font-weight: var(--uitkButton-font-weight, var(--button-font-weight)); */
+  /* font-size: var(--uitkButton-font-size, var(--uitk-text-font-size)); */
+  /* line-height: var(--uitkButton-line-height, var(--uitk-text-line-height)); */
+  /* letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing)); */
+  /* align-items: center; */
+  /* display: flex; */
+  /* height: 100%; */
+  /* position: relative; */
+  /* white-space: pre; */
+  /* width: 100%; */
 }
 
 /* Added .uitkButton:focus for browsers don't support :focus-visible, like Safari and Firefox */

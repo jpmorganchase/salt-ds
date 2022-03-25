@@ -69,7 +69,9 @@ const renderDummySections = (props?: DummySectionsProps) => {
       key={"mountains-and-hills"}
       {...sectionProps}
     >
-      <AccordionSummary {...summaryProps}>Mountains and hills</AccordionSummary>
+      <AccordionSummary {...summaryProps}>
+        Mountains and hills and Mountains and hills and Mountains and hills
+      </AccordionSummary>
       <AccordionDetails {...detailsProps}>
         <MountainsAndHills />
       </AccordionDetails>
@@ -79,13 +81,18 @@ const renderDummySections = (props?: DummySectionsProps) => {
       key={"rivers-and-lakes"}
       {...sectionProps}
     >
-      <AccordionSummary {...summaryProps}>Rivers and lakes</AccordionSummary>
+      <AccordionSummary {...summaryProps}>
+        Rivers and lakes Rivers and lakes Rivers and lakes Rivers and lakes
+      </AccordionSummary>
       <AccordionDetails {...detailsProps}>
         <RiversAndLakes />
       </AccordionDetails>
     </AccordionSection>,
     <AccordionSection className={"accordion"} key={"islands"} {...sectionProps}>
-      <AccordionSummary {...summaryProps}>Islands</AccordionSummary>
+      <AccordionSummary {...summaryProps}>
+        Islands Rivers and lakes Rivers and lakes Rivers and lakes Rivers and
+        lakes
+      </AccordionSummary>
       <AccordionDetails {...detailsProps}>
         <Islands />
       </AccordionDetails>

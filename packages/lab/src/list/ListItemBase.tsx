@@ -9,6 +9,7 @@ import {
 } from "react";
 import classnames from "classnames";
 import { makePrefixer } from "@brandname/core";
+import { Span } from "@brandname/lab";
 import { useForkRef, useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
 
@@ -87,7 +88,7 @@ export const ListItemBase = memo(
         ref={detectTruncation ? ref : setItemRef}
       >
         {detectTruncation ? (
-          <span className={withBaseName("textWrapper")} ref={overflowRef}>
+          <Span className={withBaseName("textWrapper")} ref={overflowRef}>
             {itemTextHighlightPattern == null ? (
               children
             ) : (
@@ -96,21 +97,22 @@ export const ListItemBase = memo(
                 text={children}
               />
             )}
-          </span>
+          </Span>
         ) : (
           children
         )}
       </div>
     );
 
-    return isOverflowed ? (
-      <>
-        <Tooltip open={openTooltip} placement={placement} title={tooltipText}>
-          {renderItem()}
-        </Tooltip>
-      </>
-    ) : (
-      renderItem()
-    );
+    return renderItem();
+    // isOverflowed ? (
+    //   <>
+    //     <Tooltip open={openTooltip} placement={placement} title={tooltipText}>
+    //       {renderItem()}
+    //     </Tooltip>
+    //   </>
+    // ) : (
+    //     renderItem()
+    //   );
   })
 );

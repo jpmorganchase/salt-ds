@@ -10,7 +10,7 @@
 /* Main css class */
 .uitkText {
   --text-max-rows: 1;
-  --text-height: 100%;
+  /* --text-height: 100%; */
 
   width: 100%;
   height: var(--text-height);

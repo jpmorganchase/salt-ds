@@ -11,8 +11,8 @@ export const BasicButtonBar: ComponentStory<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
-        <OrderedButton variant="cta">Save</OrderedButton>
-        <OrderedButton>Cancel</OrderedButton>
+        <OrderedButton variant="cta">Save Save Save Save</OrderedButton>
+        <OrderedButton>Cancel Cancel Cancel Cancel Cancel Cancel</OrderedButton>
       </ButtonBar>
     </div>
   );

@@ -11,12 +11,13 @@ import {
 } from "react";
 import cx from "classnames";
 import { useDensity, makePrefixer } from "@brandname/core";
-import { Tooltip, TooltipProps } from "@brandname/lab";
+// import { Tooltip, TooltipProps } from "@brandname/lab";
 
 import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
 
 import "./Text.css";
+import { TooltipNext, TooltipProps } from "../tooltip-next";
 
 const withBaseName = makePrefixer("uitkText");
 
@@ -104,6 +105,21 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const [componentStyle, setStyle] = useState<StylesType>();
   const rows = useRef(maxRows);
   const density = useDensity();
+
+  // Finding focusable parent to apply the tooltip on
+  const [parent, setParent] = useState<HTMLElement | null>(null);
+  const findFocusableParent = () => {
+    if (contentRef.current) {
+      const parent =
+        (contentRef.current.closest('[role="menuitem"]') as HTMLElement) ||
+        (contentRef.current.closest('[tabindex="0"]') as HTMLElement);
+      setParent(parent !== contentRef.current ? parent : null);
+    }
+  };
+
+  useEffect(() => {
+    findFocusableParent();
+  }, []);
 
   // Scrolling
   useLayoutEffect(() => {
@@ -195,6 +211,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
         if (rows.current) {
           const maxRowsHeight = rows.current * lineHeightComputed;
+          // console.log(
+          //   "maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight",
+          //   maxRowsHeight,
+          //   scrollHeight,
+          //   offsetHeight
+          // );
 
           if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
             styles["--text-height"] = `${maxRowsHeight}px`;
@@ -260,7 +282,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
-      tabIndex={hasTooltip ? 0 : -1}
+      tabIndex={hasTooltip && !parent ? 0 : -1}
       aria-hidden={hasTooltip ? true : undefined}
       ref={setContainerRef}
       style={{ marginTop, marginBottom, ...componentStyle, ...style }}
@@ -269,20 +291,25 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     </Component>
   );
 
-  return hasTooltip ? (
-    <Tooltip
-      enterNextDelay={TOOLTIP_DELAY}
-      placement="top"
-      title={
-        typeof children === "string"
-          ? children
-          : contentRef.current?.textContent || ""
-      }
-      {...tooltipProps}
-    >
+  const triggerRef = parent || contentRef.current;
+  const tooltipContent =
+    typeof children === "string"
+      ? children
+      : contentRef.current?.textContent || "";
+
+  return (
+    <>
+      {hasTooltip && triggerRef && (
+        // {/* {triggerRef && ( */}
+        <TooltipNext
+          enterNextDelay={TOOLTIP_DELAY}
+          placement="top"
+          title={tooltipContent}
+          {...tooltipProps}
+          contentRef={triggerRef}
+        />
+      )}
       {content}
-    </Tooltip>
-  ) : (
-    content
+    </>
   );
 });

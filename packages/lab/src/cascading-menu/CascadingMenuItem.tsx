@@ -9,6 +9,7 @@ import {
 } from "react";
 import classnames from "classnames";
 import { makePrefixer } from "@brandname/core";
+import { Div } from "@brandname/lab";
 import { ChevronRightIcon } from "@brandname/icons";
 
 import { MenuDescriptor } from "./CascadingMenuProps";
@@ -144,18 +145,18 @@ export const DefaultMenuItem = forwardRef<HTMLElement, MenuItemProps>(function (
     ...restProps
   } = props;
 
-  const menuTextRef = useRef<HTMLDivElement>(null);
-  const [hasTooltip, setHasTooltip] = useState(false);
+  // const menuTextRef = useRef<HTMLDivElement>(null);
+  // const [hasTooltip, setHasTooltip] = useState(false);
   const menuText = itemToString(sourceItem);
 
-  useEffect(() => {
-    const element = menuTextRef.current;
-    if (element) {
-      if (element.offsetWidth < element.scrollWidth) {
-        setHasTooltip(true);
-      }
-    }
-  }, [menuText]);
+  // useEffect(() => {
+  //   const element = menuTextRef.current;
+  //   if (element) {
+  //     if (element.offsetWidth < element.scrollWidth) {
+  //       setHasTooltip(true);
+  //     }
+  //   }
+  // }, [menuText]);
 
   const { open, ...tooltipMouseListeners } = useControlledTooltip(
     () => isInteracted && !isChildMenuOpen,
@@ -214,14 +215,15 @@ export const DefaultMenuItem = forwardRef<HTMLElement, MenuItemProps>(function (
           {icon}
         </div>
       )}
-      <div
+      <Div
+        maxRows={1}
         className={classnames(withBaseName("menuItemText"), {
           [withBaseName("menuItemDisabled")]: isDisabled,
         })}
-        ref={menuTextRef}
+        // ref={menuTextRef}
       >
         {menuText}
-      </div>
+      </Div>
       {hasEndAdornment && (
         <div
           className={classnames(withBaseName("menuItemEndAdornmentContainer"), {
@@ -239,19 +241,20 @@ export const DefaultMenuItem = forwardRef<HTMLElement, MenuItemProps>(function (
       {divider && <div role="separator" />}
     </ListItem>
   );
-  return hasTooltip ? (
-    <Tooltip
-      disableFocusListener
-      disableHoverListener
-      enterDelay={tooltipEnterDelay}
-      leaveDelay={tooltipLeaveDelay}
-      open={open}
-      placement="top"
-      title={sourceItem.tooltip || menuText}
-    >
-      {content(tooltipMouseListeners)}
-    </Tooltip>
-  ) : (
-    content({})
-  );
+  return content({});
+  //  hasTooltip ? (
+  //   <Tooltip
+  //     disableFocusListener
+  //     disableHoverListener
+  //     enterDelay={tooltipEnterDelay}
+  //     leaveDelay={tooltipLeaveDelay}
+  //     open={open}
+  //     placement="top"
+  //     title={sourceItem.tooltip || menuText}
+  //   >
+  //     {content(tooltipMouseListeners)}
+  //   </Tooltip>
+  // ) : (
+  //   content({})
+  // );
 });

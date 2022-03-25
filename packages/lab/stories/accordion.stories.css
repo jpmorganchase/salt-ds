@@ -1,12 +1,13 @@
 .story-root {
   height: 600px;
+  width: 70vw;
   overflow-y: auto;
   border: solid 1px var(--uitk-container-border-color);
   padding: var(--uitk-size-regular-unit);
 }
 
 .accordion {
-  width: 600px;
+  /* width: 600px; */
 }
 
 .accordion-story-details {

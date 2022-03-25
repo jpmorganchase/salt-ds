@@ -1,9 +1,8 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import classnames from "classnames";
 import { makePrefixer, IconProps } from "@brandname/core";
-import { Tooltip, TooltipProps } from "../tooltip";
-import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
-import { useOverflowDetection } from "../utils";
+import { Div, Span } from "@brandname/lab";
+import { TooltipProps } from "../tooltip";
 import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";
@@ -45,23 +44,18 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
   ) {
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
-    const [contentRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
-
-    const tooltipTitle = tooltipText || overflowLabel || String(children);
     const hasChildren = React.Children.count(children) !== 0;
     const hasOnlyIcon = Icon && !hasChildren;
 
     const getDefaultBreadcrumb = () =>
       isCurrentLevel ? (
-        <DefaultCurrentBreadcrumb
-          aria-disabled={isOverflowed}
+        <Div
+          aria-current="page"
+          tooltipProps={tooltipProps}
           className={withBaseName("currentLevel")}
-          ref={contentRef}
-          role={isOverflowed ? "link" : undefined}
-          tabIndex={isOverflowed ? 0 : undefined}
         >
           {children}
-        </DefaultCurrentBreadcrumb>
+        </Div>
       ) : (
         <Link
           {...props}
@@ -76,9 +70,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         >
           {Icon && <Icon className={withBaseName("icon")} />}
           {hasChildren && (
-            <span className={withBaseName("text")} ref={contentRef}>
-              {children}
-            </span>
+            <Span className={withBaseName("text")}>{children}</Span>
           )}
         </Link>
       );
@@ -97,18 +89,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         className={classnames(liClass, ContainerProps.className)}
         ref={ref}
       >
-        {isOverflowed ? (
-          <Tooltip
-            enterDelay={1500}
-            placement="top"
-            title={tooltipTitle}
-            {...tooltipProps}
-          >
-            {content}
-          </Tooltip>
-        ) : (
-          content
-        )}
+        {content}
       </li>
     );
   }

@@ -8,6 +8,7 @@ import {
 import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { ChevronRightIcon } from "@brandname/icons";
+import { Div } from "@brandname/lab";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
 import "./Accordion.css";
 
@@ -55,7 +56,7 @@ export const AccordionSummary = forwardRef<
       tabIndex={isDisabled ? -1 : 0}
     >
       <div className={withBaseName("icon")}>{icon}</div>
-      {children}
+      <Div maxRows={1}>{children}</Div>
     </div>
   );
 });

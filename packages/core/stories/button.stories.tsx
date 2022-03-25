@@ -34,8 +34,13 @@ const ButtonGrid = ({
 
   const buttonLabel = `${label} Button`;
   return (
-    <>
-      <div
+    <div style={{ width: "30vw" }}>
+      <Button variant={variant} onClick={handleClick}>
+        {buttonLabel} {buttonLabel} {buttonLabel} {buttonLabel} {buttonLabel}
+      </Button>
+      <br />
+      <br />
+      {/* <div
         className={className}
         style={{
           display: "grid",
@@ -45,7 +50,7 @@ const ButtonGrid = ({
         }}
       >
         <Button variant={variant} onClick={handleClick}>
-          {buttonLabel}
+          {buttonLabel} {buttonLabel} {buttonLabel} {buttonLabel} {buttonLabel}
         </Button>
         <Button variant={variant} onClick={handleClick}>
           <SearchIcon size={12} />
@@ -54,7 +59,7 @@ const ButtonGrid = ({
           <SearchIcon size={12} />
           {` ${buttonLabel}`}
         </Button>
-      </div>
+      </div> */}
       <br />
       <div>
         <Button
@@ -74,7 +79,7 @@ const ButtonGrid = ({
           {`${buttonLabel} (disabled)`}
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 
