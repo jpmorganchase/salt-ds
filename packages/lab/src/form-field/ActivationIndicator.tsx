@@ -10,8 +10,6 @@ const ErrorIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
       viewBox="0 0 16 16"
       focusable={false}
       data-testid="ErrorIndicatorIcon"
-      width="16"
-      height="16"
       {...props}
     >
       <circle cx={8} cy={8} r={8} />
@@ -25,11 +23,9 @@ const WarningIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
       viewBox="0 0 16 16"
       focusable={false}
       data-testid="WarningIndicatorIcon"
-      width="16"
-      height="16"
       {...props}
     >
-      <polygon points="0,16 16,16 16,0" />
+      <polygon points="0, 16 16, 16 16, 0" />
     </svg>
   );
 };
