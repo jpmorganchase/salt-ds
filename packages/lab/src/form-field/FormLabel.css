@@ -1,25 +1,37 @@
 /* Styles applied to the Form Field label element */
-.uitkFormLabel {
-  --form-label-color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
-  --form-label-font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
-  --form-label-line-height: var(--uitk-uitkFormLabel-line-height, var(--uitk-text-line-height));
-  --form-label-margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);
-  --form-label-margin-top: var(--uitk-uitkFormLabel-margin-top, 2px);
-  --form-label-padding: var(--uitkFormLabel-padding, 0 8px);
+.uitk-density-medium .uitkFormLabel {
+  --form-label-padding-right: 8px;
+  --form-label-margin-bottom: 6px;
+  transform: translate(0px, 5px);
+}
+.uitk-density-high .uitkFormLabel {
+  --form-label-padding-right: 4px;
+  --form-label-margin-bottom: 4px;
+  --form-label-transform: translate(0px, 3px);
+}
+.uitk-density-low .uitkFormLabel {
+  --form-label-padding-right: 12px;
+  --form-label-margin-bottom: 9px;
+  --form-label-transform: translate(0px, 7px);
+}
+.uitk-density-touch .uitkFormLabel {
+  --form-label-padding-right: 16px;
+  --form-label-margin-bottom: 12px;
+  --form-label-transform: translate(0px, 11px);
 }
 
 .uitkFormLabel {
   align-items: center;
   box-sizing: border-box;
-  color: var(--form-label-color);
+  color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
   display: flex;
-  font-size: var(--form-label-font-size);
-  line-height: var(--form-label-line-height);
-  margin-bottom: var(--form-label-margin-bottom);
-  margin-top: var(--form-label-margin-top);
-  padding: var(--form-label-padding);
+  font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
+  margin-bottom: var(--uitkFormLabel-margin-bottom, var(--form-label-margin-bottom));
+  margin-top: var(--uitkFormLabel-margin-top, 2px);
+  line-height: var(--uitkFormLabel-line-height, var(--uitk-typography-line-height));
+  padding-right: var(--uitkFormLabel-padding-right, var(--form-label-padding-right));
   text-overflow: ellipsis;
-  transform: translate(0, var(--form-label-margin-top, 0));
+  transform: var(--uitkFormLabel-transform, var(--form-label-transform));
   white-space: nowrap;
   width: 100%;
 }

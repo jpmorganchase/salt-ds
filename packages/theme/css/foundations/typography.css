@@ -48,4 +48,5 @@
 .uitk-light,
 .uitk-dark {
   font-family: var(--uitk-typography-font-family);
+  font-size: 14px;
 }
