@@ -30,7 +30,12 @@ export const AllRenderer = ({ children }: { children: ReactElement }) => {
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
             </ToolkitProvider>
-            <ToolkitProvider density={d} theme="dark" key={"theme-dark-" + d}>
+            <ToolkitProvider
+              applyClassesToChild
+              density={d}
+              theme="dark"
+              key={"theme-dark-" + d}
+            >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
             </ToolkitProvider>
           </Fragment>

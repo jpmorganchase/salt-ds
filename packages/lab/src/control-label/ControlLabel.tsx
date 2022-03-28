@@ -26,8 +26,8 @@ export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
         ref={ref}
         {...other}
       >
-        {children}
         <span className={`${baseName}-label`}>{label}</span>
+        {children}
       </label>
     );
   }

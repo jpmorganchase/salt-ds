@@ -1,53 +1,53 @@
 /*TODO change thumb background in formfield */
 
+.uitk-density-touch {
+  --switch-width: var(--uitkSwitch-width, 44px);
+  --switch-height: var(--uitkSwitch-height, 24px);
+  --switch-thumb-margin: 3px 0 0 3px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 18px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 20px);
+}
+
+.uitk-density-low {
+  --switch-width: var(--uitkSwitch-width, 38px);
+  --switch-height: var(--uitkSwitch-height, 20px);
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 16px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 18px);
+}
+
+.uitk-density-medium {
+  --switch-width: var(--uitkSwitch-width, 34px);
+  --switch-height: var(--uitkSwitch-height, 18px);
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 14px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 16px);
+}
+
+.uitk-density-high {
+  --switch-width: var(--uitkSwitch-width, 30px);
+  --switch-height: var(--uitkSwitch-height, 16px);
+  --switch-thumb-margin: 2px 0 0 2px;
+  --switch-thumb-size: var(--uitkSwitch-thumb-size, 12px);
+  --switch-thumb-translate: var(--uitkSwitch-thumb-translate, 14px);
+}
+
 .uitk-light .uitkSwitch-label {
-  --switch-label-color: var(--uitk-color-grey-200);
-  --switch-track-color: var(--uitk-color-grey-90);
-  --switch-track-color-hover: var(--uitk-color-blue-400);
-  --switch-thumb-background: var(--uitk-color-white);
-  --switch-checked-track-color: var(--uitk-color-blue-500);
-  --switch-checked-icon-color: var(--uitk-color-blue-500);
+  --switch-label-color: var(--uitkSwitch-label-color, var(--uitk-color-grey-200));
+  --switch-track-color: var(--uitkSwitch-track-color, var(--uitk-color-grey-90));
+  --switch-track-color-hover: var(--uitkSwitch-track-color-hover, var(--uitk-color-blue-400));
+  --switch-thumb-background: var(--uitkSwitch-thumb-background, var(--uitk-color-white));
+  --switch-checked-track-color: var(--uitkSwitch-checked-track-color, var(--uitk-color-blue-500));
+  --switch-checked-icon-color: var(--uitkSwitch-checked-icon-color, var(--uitk-color-blue-500));
 }
 
 .uitk-dark .uitkSwitch-label {
-  --switch-label-color: var(--uitk-color-grey-70);
-  --switch-track-color: var(--uitk-color-grey-100);
-  --switch-track-color-hover: var(--uitk-color-blue-300);
-  --switch-thumb-background: var(--uitk-color-grey-800);
-  --switch-checked-track-color: var(--uitk-color-blue-400);
-  --switch-checked-icon-color: var(--uitk-color-white);
-}
-
-.uitk-density-touch .uitkSwitch {
-  --switch-width: 44px;
-  --switch-height: 24px;
-  --switch-thumb-margin: 3px 0 0 3px;
-  --switch-thumb-size: 18px;
-  --switch-thumb-translate: 20px;
-}
-
-.uitk-density-low .uitkSwitch {
-  --switch-width: 38px;
-  --switch-height: 20px;
-  --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 16px;
-  --switch-thumb-translate: 18px;
-}
-
-.uitk-density-medium .uitkSwitch {
-  --switch-width: 34px;
-  --switch-height: 18px;
-  --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 14px;
-  --switch-thumb-translate: 16px;
-}
-
-.uitk-density-high .uitkSwitch {
-  --switch-width: 30px;
-  --switch-height: 16px;
-  --switch-thumb-margin: 2px 0 0 2px;
-  --switch-thumb-size: 12px;
-  --switch-thumb-translate: 14px;
+  --switch-label-color: var(--uitkSwitch-label-color var(--uitk-color-grey-70));
+  --switch-track-color: var(--uitkSwitch-track-color, var(--uitk-color-grey-100));
+  --switch-track-color-hover: var(--uitkSwitch-track-color-hover, var(--uitk-color-blue-300));
+  --switch-thumb-background: var(--uitkSwitch-thumb-background, var(--uitk-color-grey-800));
+  --switch-checked-track-color: var(--uitkSwitch-checked-track-color, var(--uitk-color-blue-400));
+  --switch-checked-icon-color: var(--uitkSwitch-checked-icon-color, var(--uitk-color-white));
 }
 
 .uitkSwitch-label {
@@ -60,106 +60,90 @@
 .uitkSwitch-label .uitkControlLabel-text {
   line-height: var(--uitk-text-line-height);
   text-align: right;
-
   color: var(--switch-label-color);
 }
 
-.uitkSwitch-label:hover .uitkSwitch-track {
+.uitkSwitch-label:hover:not(.uitkSwitch-disabled) .uitkSwitch-track {
   background-color: var(--switch-track-color-hover);
 }
 
 .uitkSwitch {
-  width: var(--switch-width);
-  height: var(--switch-height);
-
-  /* all densities */
-  padding: 0;
-  overflow: visible;
   box-sizing: content-box;
-  margin-left: 0;
   display: inline-flex;
-  z-index: 0;
-  position: relative;
   flex-shrink: 0;
+  height: var(--switch-height);
+  margin-left: 0;
+  overflow: visible;
+  padding: 0;
+  position: relative;
   vertical-align: middle;
+  width: var(--switch-width);
+  z-index: 0;
 }
 
 .uitkSwitch-track {
-  opacity: 1;
-  position: absolute;
+  background: var(--switch-track-color);
+  border-radius: 0;
   box-sizing: border-box;
+  height: var(--switch-height);
+  min-height: 16px;
   margin-top: 0;
   margin-left: 0;
-  border-radius: 0;
-
-  background: var(--switch-track-color);
-  width: var(--switch-width);
-  height: var(--switch-height);
-  z-index: -1;
+  opacity: 1;
+  position: absolute;
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  width: var(--switch-width);
+  z-index: -1;
 }
 
 .uitkSwitch-base {
-  width: var(--switch-thumb-size);
-  height: var(--switch-thumb-size);
-  margin: var(--switch-thumb-margin);
-  /* end density */
-  border: 0;
-  padding: 0;
   background: transparent;
-  border-radius: 0;
-  justify-content: flex-start;
-  top: 0;
-  left: 0;
-  color: #fafafa;
-  z-index: 1;
-  position: absolute;
-  transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  flex: 0 0 auto;
-  overflow: visible;
-  font-size: 1.2857142857142856rem;
-  text-align: center;
+  color: var(--uitk-color-grey-10);
   display: inline-flex;
-  outline: 0;
-  vertical-align: middle;
-  text-decoration: none;
+  flex: 0 0 auto;
+  height: var(--switch-thumb-size);
+  justify-content: flex-start;
+  margin: var(--switch-thumb-margin);
+  overflow: visible;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  width: var(--switch-thumb-size);
+  z-index: 1;
 }
 
 .uitkSwitch-icon-label {
+  align-items: inherit;
+  display: flex;
+  justify-content: inherit;
   transform: translateX(0px);
   transition: transform 0.15s;
-
   width: 100%;
-  display: flex;
-  align-items: inherit;
-  justify-content: inherit;
 }
 
 .uitkSwitch-input {
-  left: -100%;
-  width: 300%;
-
-  top: 0;
   cursor: inherit;
   height: 100%;
+  left: -100%;
   margin: 0;
   opacity: 0;
   padding: 0;
-  z-index: 1;
   position: absolute;
+  top: 0;
+  width: 300%;
+  z-index: 1;
 }
 
 .uitkSwitch-thumb,
 .uitkSwitch-checked .uitkSwitch-icon {
+  background: var(--switch-thumb-background);
+  border-radius: 0;
+  box-shadow: none;
   width: var(--switch-thumb-size);
   height: var(--switch-thumb-size);
-
-  background: var(--switch-thumb-background);
   fill: var(--switch-thumb-background);
-
   outline: 1px solid transparent;
-  box-shadow: none;
-  border-radius: 0;
 }
 
 .uitkSwitch-base.uitkSwitch-checked {
@@ -171,8 +155,7 @@
 }
 
 .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
-  opacity: 1;
-  background-color: var(--switch-checked-track-color);
+  background: var(--switch-checked-track-color);
   border: 1px solid var(--switch-checked-track-color);
 }
 
@@ -180,26 +163,27 @@
   fill: var(--switch-checked-icon-color);
 }
 
+.uitkSwitch-disabled .uitkSwitch-icon-tick {
+  opacity: var(--uitk-disabled-graphical-opacity);
+}
+
 .uitkSwitch-focusVisible:before {
+  background: transparent;
   content: "";
   display: block;
-  position: absolute;
-  outline: var(--uitk-focused-outline);
-  background: transparent;
-
-  width: var(--switch-width);
   height: var(--switch-height);
-  /* medium density */
-  top: -2px;
   left: -2px;
+  outline: var(--uitk-focused-outline);
+  position: absolute;
+  top: -2px;
+  width: var(--switch-width);
 }
 
 .uitkSwitch-focusVisible + .uitkSwitch-track {
-  background-color: var(--switch-track-color-hover);
+  background: var(--switch-track-color-hover);
 }
 
 .uitkSwitch-disabled .uitkSwitch-track,
 .uitkSwitch-disabled:hover .uitkSwitch-track {
-  background: var(--switch-track-color);
   opacity: var(--uitk-disabled-graphical-opacity);
 }

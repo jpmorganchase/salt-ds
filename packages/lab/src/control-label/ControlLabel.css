@@ -1,9 +1,9 @@
 .uitk-light .uitkControlLabel {
-  --control-label-color: var(--uitk-color-grey-900);
+  --control-label-color: var(--uitk-color-grey-200);
 }
 
 .uitk-dark .uitkControlLabel {
-  --control-label-color: var(--uitk-color-white);
+  --control-label-color: var(--uitk-color-grey-80); /* TODO: Check color with design */
 }
 
 .uitkControlLabel {
@@ -11,20 +11,15 @@
   cursor: pointer;
   display: inline-flex;
   margin-top: var(--label-margin-top, 0);
-
-  font-family: var(--uitk-typography-font-family);
-  font-size: var(--uitk-text-font-size);
-  font-weight: var(--uitk-typography-weight-regular);
-
-  margin-right: var(--label-margin-right, 4px);
 }
 
 .uitkControlLabel-label {
   color: var(--control-label-color);
+  font-family: var(--uitk-typography-font-family);
+  font-size: var(--uitk-text-font-size);
+  font-weight: var(--uitk-typography-weight-regular);
   line-height: var(--uitk-text-line-height);
-
-  /* the default should be density aware. This can wait until density is avaiable via theme */
-  margin-left: var(--label-margin-left, 4px);
+  margin-right: calc(var(--uitk-spacing-unit) / 1.5);
 }
 
 .uitkControlLabel-disabled {
@@ -34,4 +29,21 @@
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
+}
+
+/* Backwards compatable styling for TK1 */
+.uitk-density-medium .backwardsCompat .uitkControlLabel-label {
+  margin-right: 6px;
+}
+.uitk-density-high .backwardsCompat .uitkControlLabel-label {
+  margin-right: 4px;
+}
+.uitk-density-low .backwardsCompat .uitkControlLabel-label {
+  margin-right: 9px;
+}
+.uitk-density-touch .backwardsCompat .uitkControlLabel-label {
+  margin-right: 12px;
+}
+.backwardsCompat .uitkControlLabel-label {
+  line-height: 1.3;
 }
