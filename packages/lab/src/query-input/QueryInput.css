@@ -56,7 +56,7 @@
 
 .uitkCategoryListItem-valuesContainer {
   font-style: italic;
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-color);
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -109,7 +109,7 @@
 }
 
 .uitkQueryInputSearchList-categoryTitle {
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
   background: var(--uitk-container-background);
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-bold);

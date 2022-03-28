@@ -1,11 +1,10 @@
-import { Density, ToolkitProvider } from "@brandname/core";
-import { Input, Panel } from "@brandname/lab";
+import { ToolkitProvider } from "@brandname/core";
+import { Input } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
-import { ReactNode } from "react";
-import "./input.qa.stories.css";
 import { Adornments } from "./input.stories";
+import "./input.qa.stories.css";
 
 export default {
   title: "Lab/Input/QA",
@@ -31,29 +30,17 @@ const Disabled = () => (
 
 const ReadOnly: ComponentStory<typeof Input> = () => {
   return (
-    <>
-      <Input
-        defaultValue={"Read Only Input"} // Read Only isn't currently a prop
-        readOnly
-        style={{ width: "292px" }}
-      />
-      <br />
-      <br />
-      <Input readOnly style={{ width: "292px" }} />
-    </>
+    <Input
+      defaultValue={"Read Only Input"} // Read Only isn't currently a prop
+      readOnly
+      style={{ width: "292px" }}
+    />
   );
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
-  props
-) => {
+export const AllVariantsGrid: ComponentStory<typeof Input> = (props) => {
   return (
-    <QAContainer
-      className="uitkInputQA"
-      imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png"
-      width={2272}
-      height={2000}
-    >
+    <>
       <AllRenderer>
         <div
           style={{
@@ -91,6 +78,21 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
           </BackgroundBlock>
         </ToolkitProvider>
       </div>
+    </>
+  );
+};
+
+export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
+  props
+) => {
+  return (
+    <QAContainer
+      className="uitkInputQA"
+      imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png"
+      width={2272}
+      height={2000}
+    >
+      <AllVariantsGrid />
     </QAContainer>
   );
 };

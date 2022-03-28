@@ -1,6 +1,6 @@
 .uitkLinearProgress {
   align-items: center;
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
   display: flex;
   font-size: var(--uitk-measured-font-size);
   min-width: 200px;

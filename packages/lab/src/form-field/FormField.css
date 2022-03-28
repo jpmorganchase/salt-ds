@@ -43,7 +43,7 @@
   --form-field-font-size: var(--uitkFormField-font-size, var(--uitk-text-caption-font-size));
   --form-field-line-height: var(--uitkFormField-line-height, var(--uitk-text-line-height));
 
-  --helper-text-color: var(--uitkFormField-helper-text-color, var(--uitk-text-secondary-color));
+  --helper-text-color: var(--uitkFormField-helper-text-color, var(--uitk-text-color));
   --helper-text-margin-top: var(--uitkFormField-helper-text-margin-top, var(--form-field-helper-text-margin-top, 2px));
   --helper-text-height: 0px; /* TODO: Check if needed here */
 

@@ -17,6 +17,7 @@
   --input-adornment-padding: var(--uitk-spacing-unit);
   --input-background: var(--uitkInput-background, none);
   --input-border: var(--uitkInput-border, 0);
+  --input-border-radius: var(--uitkInput-border-radius, 0);
   --input-font-family: var(--uitkInput-font-family, var(--uitk-typography-font-family));
   --input-font-size: var(--uitkInput-font-size, var(--uitk-text-font-size));
   --input-letter-spacing: var(--uitkInput-letter-spacing, 0);
@@ -24,7 +25,7 @@
   --input-min-height: var(--uitkInput-min-height, var(--uitk-size-regular-unit));
   --input-padding: var(--uitkInput-padding, 0 var(--uitk-spacing-unit));
   --input-position: var(--uitkInput-position, relative);
-  --input-text-color: var(--uitkInput-text-color, var(--uitk-text-primary-color));
+  --input-text-color: var(--uitkInput-text-color, var(--uitk-text-color));
 
   --input-disabled-cursor: var(--uitk-disabled-cursor);
   --input-disabled-opacity: var(--uitk-disabled-text-opacity);
@@ -34,11 +35,12 @@
   --input-focused-outline-color: var(--uitk-focused-color);
   --input-focused-outline-offset: var(--uitk-focused-outline-offset);
 
-  --input-selection-background: var(--uitk-editable-background);
+  --input-selection-background: var(--uitk-text-highlight-color);
 }
 
 .uitkInput {
   align-items: center;
+  border-radius: var(--input-border-radius);
   box-sizing: border-box;
   color: var(--input-text-color);
   cursor: default;
@@ -66,6 +68,11 @@
   outline-offset: var(--input-focused-outline-offset);
 }
 
+/* Style applied to selected input */
+.uitkInput-input::selection {
+  background-color: var(--input-selection-background);
+}
+
 /* Style applied to inner input component */
 .uitkInput-input {
   background: var(--input-background);
@@ -88,11 +95,6 @@
 .uitkInput-disabled .uitkInput-input {
   cursor: var(--input-disabled-cursor);
   opacity: var(--input-disabled-opacity);
-}
-
-/* Style applied to selected input */
-.uitkInput-input::selection {
-  background-color: var(--input-selection-background);
 }
 
 /* Style applied to adornment containers */

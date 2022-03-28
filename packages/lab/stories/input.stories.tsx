@@ -71,8 +71,7 @@ export const ReadOnly: ComponentStory<typeof Input> = () => {
         readOnly
         style={{ width: "292px" }}
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input readOnly style={{ width: "292px" }} />
     </>
   );
@@ -152,16 +151,14 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </StaticInputAdornment>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Prefix: Text"
         style={styles.input}
         {...args}
         startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Icon"
         style={styles.input}
@@ -172,16 +169,14 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </StaticInputAdornment>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Text"
         style={styles.input}
         {...args}
         endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Button"
         style={styles.input}
@@ -192,8 +187,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </Button>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Prefix: Icon + Text"
         style={styles.input}
@@ -208,8 +202,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Prefix: Interactive Component"
         style={styles.input}
@@ -218,8 +211,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           <Dropdown initialSelectedItem={data[0]} source={data} width={90} />
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Text + Button"
         style={styles.input}
@@ -233,8 +225,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Interactive Component"
         style={styles.input}
@@ -247,8 +238,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           />
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Button + Button"
         style={styles.input}
@@ -264,8 +254,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </>
         }
       />
-      <br />
-      <br />
+      <div style={{ height: "15px" }} />
       <Input
         defaultValue={"Suffix: Static + Button\n\n"}
         style={styles.input}

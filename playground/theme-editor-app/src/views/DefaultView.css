@@ -1,6 +1,6 @@
 .themeEditorFileHandler {
   background-color: var(--uitk-container-background);
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
   display: flex;
   flex-direction: column;
   height: 100vh;

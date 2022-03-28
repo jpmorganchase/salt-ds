@@ -15,10 +15,10 @@
   width: var(--panel-width);
 
   /* Default medium emphasis values */
-  color: var(--uitkPanel-color, var(--uitk-text-secondary-color));
+  color: var(--uitkPanel-color, var(--uitk-text-color));
 }
 
 /* Override values when high emphasis applied */
 .uitkEmphasisHigh {
-  color: var(--uitkPanel-color, var(--uitk-text-primary-color));
+  color: var(--uitkPanel-color, var(--uitk-text-color));
 }

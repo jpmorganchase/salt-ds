@@ -3,7 +3,7 @@
   height: var(--uitk-size-regular-unit);
   justify-self: end;
 
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
 
   border-color: var(--uitk-container-border-color);
   border-style: var(--uitk-container-border-style);

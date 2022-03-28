@@ -4,7 +4,7 @@
   margin: var(--uitk-spacing-unit);
   padding: var(--uitk-spacing-unit);
 
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
 
   border-color: var(--uitk-container-border-color);
   border-style: var(--uitk-container-border-style);

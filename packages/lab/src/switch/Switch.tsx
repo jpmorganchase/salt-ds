@@ -100,7 +100,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
       )}
       disabled={disabled}
       label={label}
-      labelPlacement="left"
       ref={ref}
     >
       <span className={withBaseName()}>

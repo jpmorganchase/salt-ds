@@ -17,6 +17,10 @@
   width: 100%;
 }
 
+.uitkDropdownButton-icon {
+  padding-left: 8px;
+}
+
 .uitkDropdownButton-content {
   align-items: var(--uitkButton-align-items, center);
   flex: 1;
@@ -36,4 +40,9 @@
 .uitkDropdownButton-formField.uitkButton:focus,
 .uitkDropdownButton-formField.uitkButton:focus-visible {
   outline: none;
+}
+
+.uitkDropdownButton-backwardsCompat {
+  letter-spacing: normal;
+  text-align: left;
 }

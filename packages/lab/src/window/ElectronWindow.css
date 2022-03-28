@@ -1,7 +1,7 @@
 .uitkWindow {
   --uitkDialog-margin: 0;
   --uitkDialog-box-shadow: none;
-  --overlay-text-color: var(--uitk-text-primary-color);
+  --overlay-text-color: var(--uitk-text-color);
   --overlay-spacing: var(--uitk-spacing-unit);
   --overlay-font-size: var(--uitk-text-font-size);
   /* TODO: Which emphasis should this be? */

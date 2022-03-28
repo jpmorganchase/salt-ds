@@ -12,10 +12,16 @@ export default {
 } as ComponentMeta<typeof Switch>;
 
 const SwitchExamples = [
-  <Switch key="Default" label="Default" />,
-  <Switch checked key="Default" label="Default" />,
-  <Switch disabled key="Default" label="Default" />,
-  <Switch checked disabled key="Default" label="Default" />,
+  <Switch className="backwardsCompat" key="Default" label="Default" />,
+  <Switch className="backwardsCompat" checked key="Default" label="Default" />,
+  <Switch className="backwardsCompat" disabled key="Default" label="Default" />,
+  <Switch
+    className="backwardsCompat"
+    checked
+    disabled
+    key="Default"
+    label="Default"
+  />,
 ];
 
 export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
@@ -23,7 +29,6 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
 ) => {
   return (
     <QAContainer
-      height={190}
       width={948}
       imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
     >

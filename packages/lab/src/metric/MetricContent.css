@@ -11,7 +11,7 @@
 
 .uitkMetricContent-value {
   font-weight: var(--uitk-typography-weight-semiBold);
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
 }
 
 .uitkMetricContent-indicator {

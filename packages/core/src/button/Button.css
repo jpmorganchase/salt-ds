@@ -126,7 +126,7 @@
   width: 100%;
 }
 
-/* Added .uitkButton:focus for browsers don't support :focus-visible, like Safari and Firefox */
+/* Added .uitkButton:focus for browsers don't support :focus-visible, like Firefox */
 .uitkButton:focus {
   outline-style: var(--button-focused-outline-style);
   outline-width: var(--button-focused-outline-width);

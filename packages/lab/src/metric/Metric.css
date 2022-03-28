@@ -1,5 +1,5 @@
 .uitkMetric {
-  --metric-text-color: var(--uitk-text-primary-color);
+  --metric-text-color: var(--uitk-text-color);
   --metric-line-height: var(--uitk-text-line-height);
 
   --metric-horizontal-gap: calc(var(--uitk-spacing-unit) * 2);

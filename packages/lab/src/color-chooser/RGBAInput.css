@@ -13,7 +13,7 @@
 .uitkColorChooser-rgbaText {
   margin-top: 5px;
   font-size: var(--uitk-text-caption-font-size);
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-color);
   padding-top: 4px;
   padding-right: 6px;
   padding-left: 6px;
@@ -28,8 +28,8 @@
 .uitkColorChooser-overrideInput {
   min-width: 0em;
   background: transparent !important;
-  color: var(--uitk-text-primary-color);
-  border-bottom: 1px solid var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
+  border-bottom: 1px solid var(--uitk-text-color);
 }
 
 .uitkColorChooser-alphaSpacerDiv {
@@ -39,6 +39,6 @@
 .uitkColorChooser-textDivOverrides {
   font-size: var(--uitk-text-caption-font-size);
   font-weight: var(--uitk-typography-weight-bold);
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-color);
   padding: 0px !important;
 }

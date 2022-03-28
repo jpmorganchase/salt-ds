@@ -45,10 +45,10 @@
   --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background));
   --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
 
-  --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-color));
-  --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-color));
-  --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-color-disabled));
-  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-color));
+  --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-color));
+  --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-color));
+  --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-color-disabled));
+  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-color));
 
   --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-border-color));
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-border-style));

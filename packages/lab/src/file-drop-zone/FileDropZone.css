@@ -2,7 +2,7 @@
 .uitkFileDropZone {
   /* Colors */
   --file-drop-zone-background: var(--uitk-container-background);
-  --file-drop-zone-text-color: var(--uitk-text-primary-color);
+  --file-drop-zone-text-color: var(--uitk-text-color);
   /* TODO: Design, dark mode used to be grey-400 */
   --file-drop-zone-border-color: var(--uitk-container-border-color);
   --file-drop-zone-background-disabled: var(--uitk-container-background-disabled);
