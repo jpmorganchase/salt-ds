@@ -6,7 +6,7 @@
 
   /* Fonts, Text */
   --uitkButton-font-weight: var(--uitk-typography-weight-regular);
-  --button-text-align: left;
+  --uitkButton-text-align: left;
 }
 
 .uitkDropdownButton:active {
@@ -15,6 +15,11 @@
 
 .uitkDropdownButton-fullwidth {
   width: 100%;
+}
+
+.uitkDropdownButton-icon {
+  margin-top: 2px;
+  padding-left: 8px;
 }
 
 .uitkDropdownButton-content {
@@ -36,4 +41,9 @@
 .uitkDropdownButton-formField.uitkButton:focus,
 .uitkDropdownButton-formField.uitkButton:focus-visible {
   outline: none;
+}
+
+/* Backwards compat styling to match TK1 */
+.backwardsCompat .uitkDropdownButton {
+  letter-spacing: normal;
 }
