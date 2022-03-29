@@ -16,9 +16,9 @@ import { FormFieldContext } from "../form-field-context";
 import { Tooltip } from "../tooltip";
 import { useForkRef, useId } from "../utils";
 import {
-  ActivationIndicator,
-  ActivationIndicatorProps,
-} from "./ActivationIndicator";
+  FormActivationIndicator,
+  FormActivationIndicatorProps,
+} from "./FormActivationIndicator";
 import { FormHelperText, FormHelperTextProps } from "./FormHelperText";
 import { FormLabel, FormLabelProps } from "./FormLabel";
 import { NecessityIndicatorOptions } from "./NecessityIndicator";
@@ -58,7 +58,7 @@ export interface FormFieldProps
   /**
    * The component used for activation indicator. Default to `ActivationIndicator`.
    */
-  ActivationIndicatorComponent?: ElementType<ActivationIndicatorProps>;
+  ActivationIndicatorComponent?: ElementType<FormActivationIndicatorProps>;
   /**
    * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium - standard background color.
    */
@@ -190,7 +190,7 @@ export const useFormField = ({
 export const FormField = forwardRef(
   (
     {
-      ActivationIndicatorComponent = ActivationIndicator,
+      ActivationIndicatorComponent = FormActivationIndicator,
       children,
       className,
       disabled,

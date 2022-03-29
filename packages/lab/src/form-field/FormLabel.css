@@ -1,6 +1,6 @@
 /* Styles applied to the Form Field label element */
 .uitkFormLabel {
-  --form-label-color: var(--uitkFormLabel-text-color, var(--uitk-text-color));
+  --form-label-color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
   --form-label-font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
   --form-label-line-height: var(--uitk-uitkFormLabel-line-height, var(--uitk-text-line-height));
   --form-label-margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);

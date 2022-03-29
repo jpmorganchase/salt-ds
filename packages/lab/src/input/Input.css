@@ -25,7 +25,7 @@
   --input-min-height: var(--uitkInput-min-height, var(--uitk-size-regular-unit));
   --input-padding: var(--uitkInput-padding, 0 var(--uitk-spacing-unit));
   --input-position: var(--uitkInput-position, relative);
-  --input-text-color: var(--uitkInput-text-color, var(--uitk-text-color));
+  --input-text-color: var(--uitkInput-text-color, var(--uitk-text-primary-color));
 
   --input-disabled-cursor: var(--uitk-disabled-cursor);
   --input-disabled-opacity: var(--uitk-disabled-text-opacity);
