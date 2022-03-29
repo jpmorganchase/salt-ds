@@ -1,13 +1,6 @@
-import {
-  CSSProperties,
-  memo,
-  MutableRefObject,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from "react";
+import { CSSProperties, memo, MutableRefObject, useMemo, useRef } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
 import { Pill, PillProps } from "../../pill";
 
 import { getWidth } from "./useWidth";
@@ -70,13 +63,13 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
 
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
   // We need to collect widths before the calculation
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isRemovable && pillsRef.current) {
       pillsRef.current[index] = getWidth(ref.current);
     }
   }, [pillsRef, index, isRemovable, lastVisible]);
 
-  useLayoutEffect(
+  useIsomorphicLayoutEffect(
     () => () => {
       pillsRef.current[index] = undefined;
     },
