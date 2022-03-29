@@ -39,13 +39,13 @@ export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("uitkBorderLayout");
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
   function BorderLayout({ children, className, ...rest }, ref) {
     const topSection = "header ".repeat(numberOfColumns);
 
-    const midSection = "left main main right";
+    const midSection = "left main right";
 
     const bottomSection = "bottom ".repeat(numberOfColumns);
 
