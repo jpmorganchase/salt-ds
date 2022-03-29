@@ -12,15 +12,9 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof RadioButton>;
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
-  props
-) => {
+export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
   return (
-    <QAContainer
-      width={1180}
-      height={709}
-      imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
-    >
+    <>
       <AllRenderer>
         <div
           style={{
@@ -58,6 +52,20 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
           />
         </RadioButtonGroup>
       </AllRenderer>
+    </>
+  );
+};
+
+export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
+  props
+) => {
+  return (
+    <QAContainer
+      width={1180}
+      height={709}
+      imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
+    >
+      <AllExamplesGrid />
     </QAContainer>
   );
 };

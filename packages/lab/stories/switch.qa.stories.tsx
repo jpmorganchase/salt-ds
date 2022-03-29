@@ -25,6 +25,25 @@ const SwitchExamples = [
   />,
 ];
 
+export const AllExamplesGrid: ComponentStory<typeof Switch> = (props) => {
+  return (
+    <AllRenderer>
+      <div
+        style={{
+          background: "inherit",
+          display: "inline-grid",
+          gridTemplate: "auto / repeat(4,auto)",
+          gap: "4px",
+        }}
+      >
+        {SwitchExamples.map((s) => (
+          <>{s}</>
+        ))}
+      </div>
+    </AllRenderer>
+  );
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
   props
 ) => {
@@ -33,20 +52,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
       width={948}
       imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
     >
-      <AllRenderer>
-        <div
-          style={{
-            background: "inherit",
-            display: "inline-grid",
-            gridTemplate: "auto / repeat(4,auto)",
-            gap: "4px",
-          }}
-        >
-          {SwitchExamples.map((s) => (
-            <>{s}</>
-          ))}
-        </div>
-      </AllRenderer>
+      <AllExamplesGrid />
     </QAContainer>
   );
 };

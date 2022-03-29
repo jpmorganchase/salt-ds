@@ -2,7 +2,7 @@
 .uitk-density-medium .uitkFormLabel {
   --form-label-padding-right: 8px;
   --form-label-margin-bottom: 6px;
-  transform: translate(0px, 5px);
+  --form-label-transform: translate(0px, 5px);
 }
 .uitk-density-high .uitkFormLabel {
   --form-label-padding-right: 4px;
