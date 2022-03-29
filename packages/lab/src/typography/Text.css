@@ -12,6 +12,7 @@
   --text-max-rows: 1;
   /* --text-height: 100%; */
 
+  display: -webkit-box;
   width: 100%;
   height: var(--text-height);
   line-height: var(--uitk-text-line-height);
@@ -26,7 +27,6 @@
 }
 
 .uitkText-lineClamp {
-  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows);
   overflow: hidden;
