@@ -27,7 +27,7 @@ import {
 } from "./TabstripProps";
 import { ListProps, ListSingleSelectionVariant } from "../list";
 import { useTabstrip } from "./useTabstrip";
-import { ActivationIndicator } from "./ActivationIndicator";
+import { TabActivationIndicator } from "./TabActivationIndicator";
 import { useForkRef, useLayoutEffectSkipFirst } from "../utils";
 import {
   ManagedItem,
@@ -426,7 +426,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
         {renderContent()}
       </div>
       {showActivationIndicator ? (
-        <ActivationIndicator
+        <TabActivationIndicator
           hideThumb={selectedTabOverflowed || tabsHook.isDragging}
           hideBackground={noBorder}
           orientation={orientation}

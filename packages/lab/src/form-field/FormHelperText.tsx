@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
 import { FormFieldProps } from "./FormField";
-import { classBase } from "./constant";
+
+import "./FormHelperText.css";
 
 export type FormHelperTextProps<E extends React.ElementType = "p"> =
   ComponentPropsWithoutRef<E> & {
@@ -16,7 +17,7 @@ export const FormHelperText = <E extends React.ElementType = "p">({
   if (helperText) {
     if (helperTextPlacement === "bottom") {
       return (
-        <p className={`${classBase}-helperText`} {...restProps}>
+        <p className={`uitkFormFieldHelperText`} {...restProps}>
           {helperText}
         </p>
       );

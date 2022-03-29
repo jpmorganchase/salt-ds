@@ -500,7 +500,7 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
         --helper-text-font-style: normal;
       }
       .carbon .uitkFormField-focused {
-        --activation-indicator-size: 0;
+        --uitkFormActivationIndicator-size: 0;
       }
       .carbon .uitkFormField-controlContainer {
         --form-field-label-margin-bottom: 6px;
