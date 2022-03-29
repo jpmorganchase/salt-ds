@@ -2,11 +2,11 @@
   --toolbar-background: var(--uitk-container-background);
   --toolbar-font-size: var(--uitk-text-font-size);
   --toolbar-size: var(--uitk-size-toolbar-unit);
-  /* --uitkFormField-activation-indicator-size: 0; */
+  /* --uitkFormActivationIndicator-size: 0; */
 }
 
 .uitkToolbar [data-activation-indicator] {
-  --uitkFormField-activation-indicator-size: 1px;
+  --uitkFormActivationIndicator-size: 1px;
 }
 
 .uitkToolbar {

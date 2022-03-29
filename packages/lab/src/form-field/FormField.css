@@ -170,7 +170,7 @@
   content: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormField-activationIndicator, .uitkFormField-helperText, .uitkFormLabel):after {
+.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormActivationIndicator, .uitkFormFieldHelperText, .uitkFormLabel):after {
   content: none;
 }
 
@@ -225,8 +225,4 @@
 
 /* Class applied to the root element if `validationState="warning"` */
 .uitkFormField-warning {
-}
-
-/* Class applied to the Activation Indicator` */
-.uitkFormField-activationIndicator {
 }
