@@ -33,16 +33,26 @@ const flexLayoutStyle = {
   height: 500,
 };
 
+const parent = (
+  <div style={flexItemStyles}>
+    <p>Parent</p>
+  </div>
+);
+
+const child = (
+  <div style={flexItemStyles}>
+    <p>Child</p>
+  </div>
+);
+
 const Template: ComponentStory<typeof ParentChildLayout> = (args) => {
   return (
-    <ParentChildLayout style={flexLayoutStyle} {...args}>
-      <div style={flexItemStyles}>
-        <p>Parent</p>
-      </div>
-      <div style={flexItemStyles}>
-        <p>Child</p>
-      </div>
-    </ParentChildLayout>
+    <ParentChildLayout
+      style={flexLayoutStyle}
+      parent={parent}
+      child={child}
+      {...args}
+    />
   );
 };
 
@@ -72,15 +82,10 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         style={{ ...flexLayoutStyle, width: "50vw" }}
         stackedViewElement={currentView}
+        parent={parent}
+        child={child}
         {...args}
-      >
-        <div style={flexItemStyles}>
-          <p>Parent</p>
-        </div>
-        <div style={flexItemStyles}>
-          <p>Child</p>
-        </div>
-      </ParentChildLayout>
+      />
     </>
   );
 };
@@ -124,72 +129,78 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
     setCurrentView("child");
   };
 
+  const parent = (
+    <Tabstrip
+      onChange={handleTabSelection}
+      orientation="vertical"
+      onClick={() => {
+        if (isStacked) {
+          handleChild();
+        }
+      }}
+      value={selectedTab}
+      style={{ width: "100%" }}
+    >
+      {tabs.map((label, i) => (
+        <Tab label={label} key={i} />
+      ))}
+    </Tabstrip>
+  );
+
+  const child = (
+    <GridLayout rows={2} columns={5} columnGap="1em" rowGap="1em">
+      <GridItem rowSpan={2} colSpan={1}>
+        <Card
+          style={{
+            ...cardStyles,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h1>{tabs[selectedTab]}</h1>
+          {isStacked && (
+            <Button variant="cta" onClick={handleParent}>
+              <DoubleChevronLeftIcon size={12} />
+              {` Return`}
+            </Button>
+          )}
+        </Card>
+      </GridItem>
+
+      <GridItem colSpan={2}>
+        <Card style={cardStyles}>
+          <Avatar />
+          <p>{cardText}</p>
+        </Card>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <Card style={cardStyles}>
+          <Avatar />
+          <p>{cardText}</p>
+        </Card>
+      </GridItem>
+      <GridItem colSpan={4}>
+        <Card style={cardStyles}>
+          <Avatar />
+          <p>{cardText}</p>
+        </Card>
+      </GridItem>
+    </GridLayout>
+  );
+
   return (
     <ParentChildLayout
       stackedViewElement={currentView}
+      parent={parent}
+      child={child}
       style={{
         border: "solid 1px lightgrey",
         padding: 16,
         minWidth: "70vw",
       }}
       {...args}
-    >
-      <Tabstrip
-        onChange={handleTabSelection}
-        orientation="vertical"
-        onClick={() => {
-          if (isStacked) {
-            handleChild();
-          }
-        }}
-        value={selectedTab}
-        style={{ width: "100%" }}
-      >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
-        ))}
-      </Tabstrip>
-
-      <GridLayout rows={2} columns={5} columnGap="1em" rowGap="1em">
-        <GridItem rowSpan={2} colSpan={1}>
-          <Card
-            style={{
-              ...cardStyles,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <h1>{tabs[selectedTab]}</h1>
-            {isStacked && (
-              <Button variant="cta" onClick={handleParent}>
-                <DoubleChevronLeftIcon size={12} />
-                {` Return`}
-              </Button>
-            )}
-          </Card>
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <Card style={cardStyles}>
-            <Avatar />
-            <p>{cardText}</p>
-          </Card>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Card style={cardStyles}>
-            <Avatar />
-            <p>{cardText}</p>
-          </Card>
-        </GridItem>
-        <GridItem colSpan={4}>
-          <Card style={cardStyles}>
-            <Avatar />
-            <p>{cardText}</p>
-          </Card>
-        </GridItem>
-      </GridLayout>
-    </ParentChildLayout>
+    />
   );
 };
 

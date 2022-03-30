@@ -2,21 +2,15 @@ import {
   forwardRef,
   HTMLAttributes,
   CSSProperties,
-  ReactElement,
   useEffect,
-  Children,
   useState,
+  ReactNode,
 } from "react";
 import cx from "classnames";
-import warning from "warning";
 
 import { makePrefixer } from "@brandname/core";
 import { FlexLayout } from "../FlexLayout";
-import {
-  ParentChildItem,
-  ParentChildItemProps,
-  SlideDirection,
-} from "../ParentChildItem";
+import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import "./ParentChildLayout.css";
 import { AnimationsDirection } from "../types";
 import { useId } from "../../utils";
@@ -50,6 +44,14 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   colGap?: number | string;
   /**
+   * Parent component to be rendered
+   */
+  parent: ReactNode;
+  /**
+   * Child component to be rendered
+   */
+  child: ReactNode;
+  /**
    * The className(s) of the component.
    */
   className?: string;
@@ -57,10 +59,6 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Custom styles
    */
   style?: CSSProperties;
-  /**
-   * Flex item components to be rendered.
-   */
-  children: ReactElement<ParentChildItemProps>[];
 }
 
 const withBaseName = makePrefixer("uitkParentChildLayout");
@@ -73,7 +71,8 @@ export const ParentChildLayout = forwardRef<
     stackedAtBreakpoint = 600,
     stackedViewElement = "parent",
     disableAnimations = false,
-    children,
+    parent,
+    child,
     className,
     style,
     orientation = "horizontal",
@@ -97,9 +96,6 @@ export const ParentChildLayout = forwardRef<
   }, [orientation, stackedViewElement]);
 
   const stackedView = useIsStacked(stackedAtBreakpoint);
-
-  const parent = children[0];
-  const child = children[1];
 
   const stackedViewStyles = { width: "100%", height: "100%" };
 
@@ -125,17 +121,6 @@ export const ParentChildLayout = forwardRef<
       </ParentChildItem>
     ),
   };
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production") {
-      const validNumberOfChildren = Children.count(children) === 2;
-
-      warning(
-        validNumberOfChildren,
-        "An invalid number of children is being provided to ParentChildLayout. Two elements (parent and child) should be provided."
-      );
-    }
-  }, [children]);
 
   return (
     <FlexLayout

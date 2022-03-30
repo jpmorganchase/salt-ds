@@ -233,6 +233,46 @@ const PaymentCard = ({ index }: { index: number }) => (
 );
 
 const PaymentDialog: ComponentStory<typeof LayerLayout> = (args) => {
+  const parent = (
+    <ParentChildItem height="100%" style={{ borderRight: "1px solid #ddd" }}>
+      {steppedTracker}
+    </ParentChildItem>
+  );
+
+  const child = (
+    <ParentChildItem height="100%">
+      <FlexLayout direction="column" height="100%">
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 32,
+            fontWeight: 700,
+            padding: "0 0 24px 24px",
+          }}
+        >
+          Select payment method
+        </h1>
+        <FlexLayout style={{ flex: 1 }}>
+          <RadioButtonGroup
+            row
+            name="sample"
+            defaultValue="option1"
+            style={{ gap: 18 }}
+          >
+            {Array.from({ length: 4 }, (_, index) => (
+              <PaymentCard index={index} key={index} />
+            ))}
+          </RadioButtonGroup>
+        </FlexLayout>
+        <FlexLayout justifyContent="flex-end" style={{ paddingTop: 24 }}>
+          <Button variant="cta" style={{ width: 100 }}>
+            NEXT
+          </Button>
+        </FlexLayout>
+      </FlexLayout>
+    </ParentChildItem>
+  );
+
   return (
     <LayerLayout {...args}>
       <FlexLayout alignItems="center" justifyContent="space-between">
@@ -251,45 +291,9 @@ const PaymentDialog: ComponentStory<typeof LayerLayout> = (args) => {
           parentWidth={310}
           stackedViewElement="child"
           stackedAtBreakpoint={750}
-        >
-          <ParentChildItem
-            height="100%"
-            style={{ borderRight: "1px solid #ddd" }}
-          >
-            {steppedTracker}
-          </ParentChildItem>
-          <ParentChildItem height="100%">
-            <FlexLayout direction="column" height="100%">
-              <h1
-                style={{
-                  margin: 0,
-                  fontSize: 32,
-                  fontWeight: 700,
-                  padding: "0 0 24px 24px",
-                }}
-              >
-                Select payment method
-              </h1>
-              <FlexLayout style={{ flex: 1 }}>
-                <RadioButtonGroup
-                  row
-                  name="sample"
-                  defaultValue="option1"
-                  style={{ gap: 18 }}
-                >
-                  {Array.from({ length: 4 }, (_, index) => (
-                    <PaymentCard index={index} key={index} />
-                  ))}
-                </RadioButtonGroup>
-              </FlexLayout>
-              <FlexLayout justifyContent="flex-end" style={{ paddingTop: 24 }}>
-                <Button variant="cta" style={{ width: 100 }}>
-                  NEXT
-                </Button>
-              </FlexLayout>
-            </FlexLayout>
-          </ParentChildItem>
-        </ParentChildLayout>
+          parent={parent}
+          child={child}
+        />
       </FlexLayout>
     </LayerLayout>
   );
@@ -356,6 +360,39 @@ const PreferencesDialog: ComponentStory<typeof LayerLayout> = (args) => {
 
   const stackedChild = isStacked && currentView === "child";
 
+  const parent = (
+    <ParentChildItem height="100%">
+      <Tabstrip
+        onChange={handleTabSelection}
+        orientation="vertical"
+        onClick={() => {
+          if (isStacked) {
+            handleChild();
+          }
+        }}
+      >
+        {preferences.map((label, i) => (
+          <Tab label={label} key={i} />
+        ))}
+      </Tabstrip>
+    </ParentChildItem>
+  );
+
+  const child = (
+    <ParentChildItem height="100%">
+      <FlexLayout direction="column" height="100%">
+        <h2
+          style={{
+            fontSize: 14,
+          }}
+        >
+          Investment Banking
+        </h2>
+        {mockPreference}
+      </FlexLayout>
+    </ParentChildItem>
+  );
+
   return open ? (
     <LayerLayout {...args} style={{ maxWidth: 640 }}>
       <FlexLayout alignItems="center" justifyContent="space-between">
@@ -389,36 +426,10 @@ const PreferencesDialog: ComponentStory<typeof LayerLayout> = (args) => {
         stackedViewElement={currentView}
         stackedAtBreakpoint={stackedAtBreakpoint}
         colGap={24}
+        parent={parent}
+        child={child}
         style={{ padding: "24px 0", flex: 1 }}
-      >
-        <ParentChildItem height="100%">
-          <Tabstrip
-            onChange={handleTabSelection}
-            orientation="vertical"
-            onClick={() => {
-              if (isStacked) {
-                handleChild();
-              }
-            }}
-          >
-            {preferences.map((label, i) => (
-              <Tab label={label} key={i} />
-            ))}
-          </Tabstrip>
-        </ParentChildItem>
-        <ParentChildItem height="100%">
-          <FlexLayout direction="column" height="100%">
-            <h2
-              style={{
-                fontSize: 14,
-              }}
-            >
-              Investment Banking
-            </h2>
-            {mockPreference}
-          </FlexLayout>
-        </ParentChildItem>
-      </ParentChildLayout>
+      />
 
       <FlexLayout justifyContent="flex-end" style={{ paddingTop: 16 }}>
         <Button onClick={handleClose}>Close</Button>
