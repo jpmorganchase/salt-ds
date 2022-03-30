@@ -3,7 +3,7 @@ import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import "./FlowLayout.css";
 import { flexContentAlignment, FlexLayout } from "../FlexLayout";
-import { SeparatorVariant } from "../Separator";
+import { VerticalSeparatorVariant } from "../Separator";
 const withBaseName = makePrefixer("uitkFlowLayout");
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,13 +16,9 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   wrap?: "nowrap" | "wrap" | "wrap-reverse";
   /**
-   * Reverses the direction of children.
-   */
-  reverse?: boolean;
-  /**
    * Adds a line separator between items
    */
-  separator?: SeparatorVariant;
+  separator?: VerticalSeparatorVariant;
   /**
    * Defines the alignment along the main axis.
    */
@@ -31,7 +27,7 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the space between columns.
    */
-  colGap?: number;
+  gap?: number;
 }
 
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
@@ -40,9 +36,8 @@ export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
       alignContent,
       children,
       className,
-      colGap,
+      gap,
       justifyContent = "flex-start",
-      reverse = false,
       separator,
       style,
       wrap = "wrap",
@@ -51,14 +46,14 @@ export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
     ref
   ) {
     const flowLayoutStyles = {
-      flexFlow: `row${reverse ? "-reverse" : ""} ${wrap}`,
+      flexFlow: `row ${wrap}`,
       ...style,
     };
     return (
       <FlexLayout
         alignContent={alignContent}
         justifyContent={justifyContent}
-        colGap={colGap}
+        colGap={gap}
         className={cx(className, withBaseName())}
         style={flowLayoutStyles}
         separator={separator}

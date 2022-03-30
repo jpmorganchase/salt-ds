@@ -30,20 +30,20 @@
   position: relative;
 }
 .uitkSeparator-horizontal-start::after {
-  top: 1%;
+  top: 1px;
 }
 .uitkSeparator-horizontal-center::after {
   top: 50%;
 }
 .uitkSeparator-horizontal-end::after {
-  top: 99%;
+  top: calc(100% - 1px);
 }
 .uitkSeparator-vertical-start::after {
-  left: 1%;
+  left: 1px;
 }
 .uitkSeparator-vertical-center::after {
   left: 50%;
 }
 .uitkSeparator-vertical-end::after {
-  left: 99%;
+  left: calc(100% - 1px);
 }
