@@ -1,6 +1,6 @@
 import { ReactElement, useMemo, useState } from "react";
+import { Button } from "@brandname/core";
 import {
-  Button,
   CloneIcon,
   DownloadIcon,
   MicroMenuIcon,
@@ -8,7 +8,7 @@ import {
   RefreshIcon,
   UndoIcon,
   UploadIcon,
-} from "@brandname/core";
+} from "@brandname/icons";
 import {
   CascadingMenu,
   Dropdown,
