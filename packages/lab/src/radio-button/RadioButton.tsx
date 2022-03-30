@@ -50,7 +50,7 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
         ref={ref}
         {...rest}
       >
-        <label className={withBaseName("label")}>
+        <label className={withBaseName("labelContainer")}>
           <Radio
             checked={checked}
             disabled={disabled}

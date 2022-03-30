@@ -1,3 +1,4 @@
+/* Styles applied to root component RadioButtonGroup */
 .uitkRadioButtonGroup {
   border: 0;
   margin: 0;
@@ -7,62 +8,67 @@
   vertical-align: top;
 }
 
-.uitkRadioButtonGroup-horizontal {
-  float: left;
-  display: flex;
-  flex-direction: row;
-  --button-spacing: calc(var(--uitk-spacing-unit) * 3);
-}
-
-.uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
-  margin-top: 1px;
-  margin-right: 24px;
-  padding-right: 8px;
-  margin-bottom: 0px;
-}
-.uitk-density-high .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
-  margin-top: 2px;
-  margin-right: 12px;
-  padding-right: 4px;
-  margin-bottom: 0px;
-}
-.uitk-density-low .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
-  margin-top: 4px;
-  margin-right: 36px;
-  padding-right: 12px;
-  margin-bottom: 0px;
-}
-.uitk-density-touch .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
-  margin-top: 4px;
-  margin-right: 48px;
-  padding-right: 16px;
-  margin-bottom: 0px;
-}
-
-.uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  margin-right: var(--button-spacing);
-}
-
+/* Styles applied when `row=false OR undefined` */
 .uitkRadioButtonGroup-vertical {
   line-height: 1;
 }
 
+/* Styles applied when `row=true` */
+.uitkRadioButtonGroup-horizontal {
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Styles applied when `row=true` to FormLabel component */
+.uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+  --radio-button-group-horizontal-legend-margin-top: 1px;
+  --radio-button-group-horizontal-legend-margin-right: 24px;
+  --radio-button-group-horizontal-legend-padding-right: 8px;
+  --radio-button-group-horizontal-legend-margin-bottom: 0px;
+}
+.uitk-density-high .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+  --radio-button-group-horizontal-legend-margin-top: 2px;
+  --radio-button-group-horizontal-legend-margin-right: 12px;
+  --radio-button-group-horizontal-legend-padding-right: 4px;
+  --radio-button-group-horizontal-legend-margin-bottom: 0px;
+}
+.uitk-density-low .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+  --radio-button-group-horizontal-legend-margin-top: 4px;
+  --radio-button-group-horizontal-legend-margin-right: 36px;
+  --radio-button-group-horizontal-legend-padding-right: 12px;
+  --radio-button-group-horizontal-legend-margin-bottom: 0px;
+}
+.uitk-density-touch .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+  --radio-button-group-horizontal-legend-margin-top: 4px;
+  --radio-button-group-horizontal-legend-margin-right: 48px;
+  --radio-button-group-horizontal-legend-padding-right: 16px;
+  --radio-button-group-horizontal-legend-margin-bottom: 0px;
+}
+
+/* Styles applied when `row=true` to RadioButton component */
+.uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  margin-right: var(--uitkRadioButton-horizontal-margin-right, calc(var(--uitk-spacing-unit) * 3));
+}
+
+/* Styles applied to FormLabel component */
 .uitk-density-medium .uitkRadioButtonGroup-legend {
-  min-height: 14px;
+  --radio-button-group-legend-min-height: 14px;
 }
 .uitk-density-high .uitkRadioButtonGroup-legend {
-  min-height: 14px;
+  --radio-button-group-legend-min-height: 14px;
 }
 .uitk-density-low .uitkRadioButtonGroup-legend {
-  min-height: 14px;
+  --radio-button-group-legend-min-height: 14px;
 }
 .uitk-density-touch .uitkRadioButtonGroup-legend {
-  min-height: 16px;
+  --radio-button-group-legend-min-height: 16px;
 }
 
 .uitkRadioButtonGroup-legend {
-  margin-bottom: 4px;
-  padding-right: 4px;
+  margin-bottom: var(--uitkRadioButtonGroup-legend-margin-bottom, 4px);
+  min-height: var(--uitkRadioButtonGroup-legend-min-height, var(--radio-button-group-legend-min-height));
+  padding-right: var(--uitkRadioButtonGroup-legend-padding-right, 4px);
   transition: none;
   width: auto;
 }

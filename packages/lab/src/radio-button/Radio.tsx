@@ -160,7 +160,7 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
       onFocus={handleFocus}
       {...rest}
     >
-      <span className={withBaseName("label")}>
+      <span className={withBaseName("radioContainer")}>
         <input
           className={withBaseName("input")}
           checked={radioGroupChecked}

@@ -4,7 +4,7 @@
   --doc-grid-padding-block-end: var(--uitk-spacing-unit);
 
   --doc-grid-code-font-size: var(--uitk-text-font-size);
-  --doc-grid-code-text-color: var(--uitk-text-color);
+  --doc-grid-code-text-color: var(--uitk-text-primary-color);
 }
 
 .uitkDocGrid {

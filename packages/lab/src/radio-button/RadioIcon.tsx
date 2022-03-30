@@ -1,7 +1,7 @@
 import { FC, ReactElement } from "react";
 import { makePrefixer } from "@brandname/core";
-import "./RadioIcon.css";
 import classnames from "classnames";
+import "./RadioIcon.css";
 
 const withBaseName = makePrefixer("uitkRadioIcon");
 

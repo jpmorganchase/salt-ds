@@ -1,73 +1,71 @@
+/* Styles applied to root component (RadioButton) */
 .uitk-density-medium .uitkRadioButton {
-  --label-margin-left: var(--uitkRadioButton-label-margin-left, 6px);
-  --label-margin-top: var(--uitkRadioButton-label-margin-top, 6px);
-  --label-font-size: var(--uitkRadioButton-label-font-size, 12px);
+  --label-font-size: 12px;
+  --label-margin-left: 6px;
+  --label-margin-top: 6px;
+  --label-min-height: 16px;
 }
 
 .uitk-density-high .uitkRadioButton {
-  --label-margin-left: var(--uitkRadioButton-label-margin-left, 3px);
-  --label-margin-top: var(--uitkRadioButton-label-margin-top, 3px);
-  --label-font-size: var(--uitkRadioButton-label-font-size, 11px);
+  --label-font-size: 11px;
+  --label-margin-left: 3px;
+  --label-margin-top: 3px;
+  --label-min-height: 14px;
 }
 
 .uitk-density-low .uitkRadioButton {
-  --label-margin-left: var(--uitkRadioButton-label-margin-left, 9px);
-  --label-margin-top: var(--uitkRadioButton-label-margin-top, 9px);
-  --label-font-size: var(--uitkRadioButton-label-font-size, 14px);
+  --label-font-size: 14px;
+  --label-margin-left: 9px;
+  --label-margin-top: 9px;
+  --label-min-height: 18px;
 }
 
 .uitk-density-touch .uitkRadioButton {
-  --label-margin-left: var(--uitkRadioButton-label-margin-left, 12px);
-  --label-margin-top: var(--uitkRadioButton-label-margin-top, 12px);
-  --label-font-size: var(--uitkRadioButton-label-font-size, 16px);
+  --label-font-size: 16px;
+  --label-margin-left: 12px;
+  --label-margin-top: 12px;
+  --label-min-height: 20px;
 }
 
 .uitkRadioButton {
   cursor: pointer;
 }
 
+/* Styles applied to root component on hover */
 .uitkRadioButton:hover {
   background-color: var(--uitkRadioButton-background-hover, transparent);
 }
 
+/* Styles applied to root component on hover if `checked={true}` */
 .uitkRadioButton-checked:hover {
   background-color: var(--uitkRadioButton-checked-background-hover, transparent);
 }
 
+/* Styles applied to root component on hover if `disabled={true}` */
 .uitkRadioButton-disabled {
+  cursor: not-allowed;
   opacity: var(--uitk-disabled-graphical-opacity);
   pointer-events: visible;
-  cursor: not-allowed;
 }
 
-.uitkRadioButton-label {
+/* Styles applied to container of label and Radio component */
+.uitkRadioButton-labelContainer {
   cursor: inherit;
   display: inline-flex;
   align-items: flex-start;
   margin-left: 0;
   margin-right: 0;
-  margin-top: var(--label-margin-top);
+  margin-top: var(--uitkRadioButton-label-margin-top, var(--label-margin-top));
   vertical-align: baseline;
 }
 
+/* Styles applied to label */
 .uitkRadioButton-labelText {
   color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-color));
   flex-grow: 1;
-  font-size: var(--label-font-size);
-  line-height: 1.3;
-  margin-left: var(--label-margin-left);
+  font-size: var(--uitkRadioButton-label-font-size, var(--label-font-size));
   letter-spacing: 0;
-}
-
-.uitk-density-medium .uitkRadioButton-labelText {
-  min-height: 16px;
-}
-.uitk-density-high .uitkRadioButton-labelText {
-  min-height: 14px;
-}
-.uitk-density-low .uitkRadioButton-labelText {
-  min-height: 18px;
-}
-.uitk-density-touch .uitkRadioButton-labelText {
-  min-height: 20px;
+  line-height: var(--uitkRadioButton-label-line-height, var(--uitk-text-line-height));
+  margin-left: var(--uitkRadioButton-label-margin-left, var(--label-margin-left));
+  min-height: var(--uitkRadioButton-label-min-height, var(--label-text-min-height));
 }

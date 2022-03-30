@@ -48,7 +48,7 @@
   font-family: var(--input-font-family);
   font-size: var(--input-font-size);
   letter-spacing: var(--input-letter-spacing);
-  line-height: var(--uitk-typography-line-height);
+  line-height: var(--uitk-text-line-height);
   min-height: var(--input-min-height);
   min-width: var(--input-min-width);
   padding: var(--input-padding);
