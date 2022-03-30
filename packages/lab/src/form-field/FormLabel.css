@@ -1,23 +1,6 @@
-/* Styles applied to the Form Field label element */
-.uitk-density-medium .uitkFormLabel {
-  --form-label-padding-right: 8px;
-  --form-label-margin-bottom: 6px;
-  --form-label-transform: translate(0px, 5px);
-}
-.uitk-density-high .uitkFormLabel {
-  --form-label-padding-right: 4px;
-  --form-label-margin-bottom: 4px;
-  --form-label-transform: translate(0px, 3px);
-}
-.uitk-density-low .uitkFormLabel {
-  --form-label-padding-right: 12px;
-  --form-label-margin-bottom: 9px;
-  --form-label-transform: translate(0px, 7px);
-}
-.uitk-density-touch .uitkFormLabel {
-  --form-label-padding-right: 16px;
-  --form-label-margin-bottom: 12px;
-  --form-label-transform: translate(0px, 11px);
+/* Styles applied to root element */
+.uitkFormLabel {
+  --form-label-margin-top: var(--uitkFormLabel-margin-top, 2px);
 }
 
 .uitkFormLabel {
@@ -26,12 +9,12 @@
   color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
   display: flex;
   font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
-  margin-bottom: var(--uitkFormLabel-margin-bottom, var(--form-label-margin-bottom));
-  margin-top: var(--uitkFormLabel-margin-top, 2px);
-  line-height: var(--uitkFormLabel-line-height, var(--uitk-text-line-height));
-  padding-right: var(--uitkFormLabel-padding-right, var(--form-label-padding-right));
+  margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);
+  margin-top: var(--form-label-margin-top);
+  line-height: var(--uitkFormLabel-line-height, var(--uitk-typography-line-height));
+  padding: var(--uitkFormLabel-padding, 0 8px);
   text-overflow: ellipsis;
-  transform: var(--uitkFormLabel-transform, var(--form-label-transform));
+  transform: var(--uitkFormLabel-transform, translate(0, var(--form-label-margin-top)));
   white-space: nowrap;
   width: 100%;
 }

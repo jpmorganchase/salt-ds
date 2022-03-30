@@ -65,7 +65,7 @@
   flex-grow: 1;
   font-size: var(--uitkRadioButton-label-font-size, var(--label-font-size));
   letter-spacing: 0;
-  line-height: var(--uitkRadioButton-label-line-height, var(--uitk-text-line-height));
+  line-height: var(--uitkRadioButton-label-line-height, var(--uitk-typography-line-height));
   margin-left: var(--uitkRadioButton-label-margin-left, var(--label-margin-left));
   min-height: var(--uitkRadioButton-label-min-height, var(--label-text-min-height));
 }

@@ -38,7 +38,7 @@ const ReadOnly: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const AllVariantsGrid: ComponentStory<typeof Input> = (props) => {
+export const AllExamplesGrid: ComponentStory<typeof Input> = (props) => {
   return (
     <>
       <AllRenderer>
@@ -93,7 +93,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
       width={2272}
       height={2000}
     >
-      <AllVariantsGrid />
+      <AllExamplesGrid />
     </QAContainer>
   );
 };
