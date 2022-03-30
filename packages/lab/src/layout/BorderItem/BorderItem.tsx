@@ -6,7 +6,13 @@ import { makePrefixer } from "@brandname/core";
 import { GridAlignment } from "../types";
 import "./BorderItem.css";
 
-export const BORDER_POSITION = ["header", "left", "main", "right", "bottom"];
+export const BORDER_POSITION = [
+  "header",
+  "left",
+  "main",
+  "right",
+  "bottom",
+] as const;
 
 export type BorderPosition = typeof BORDER_POSITION[number];
 
