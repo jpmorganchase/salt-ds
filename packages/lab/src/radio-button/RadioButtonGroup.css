@@ -51,7 +51,7 @@
   margin-right: var(--uitkRadioButton-horizontal-margin-right, calc(var(--uitk-spacing-unit) * 3));
 }
 
-/* Styles applied to FormLabel component */
+/* Styles applied to FormLabel component legend */
 .uitk-density-medium .uitkRadioButtonGroup-legend {
   --radio-button-group-legend-min-height: 14px;
 }
