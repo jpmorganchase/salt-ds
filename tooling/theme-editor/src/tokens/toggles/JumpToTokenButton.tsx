@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Button, AddDocumentIcon } from "@brandname/core";
+import { Button } from "@brandname/core";
+import { AddDocumentIcon } from "@brandname/icons";
 
 import {
   UITK_CHARACTERISTICS,

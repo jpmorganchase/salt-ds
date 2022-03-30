@@ -36,6 +36,7 @@ export function useResizeObserver<Element extends HTMLElement>(
           contentRect: ref.current.getBoundingClientRect(),
           borderBoxSize: [],
           contentBoxSize: [],
+          devicePixelContentBoxSize: [],
         },
       ]);
     }
