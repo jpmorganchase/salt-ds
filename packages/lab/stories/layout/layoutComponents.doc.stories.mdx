@@ -280,30 +280,36 @@ Displays a hierarchical structure comprising of a main content area and an accom
 
 <Canvas>
   <Story name="Parent Child Layout">
-    <ParentChildLayout className="flexLayout" parentWidth={150}>
-      <div
-        className="flexItem"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 220,
-        }}
-      >
-        <p>Parent</p>
-      </div>
-      <div
-        className="flexItem"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: 220,
-        }}
-      >
-        <p>Child</p>
-      </div>
-    </ParentChildLayout>
+    <ParentChildLayout
+      className="flexLayout"
+      parentWidth={150}
+      parent={
+        <div
+          className="flexItem"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: 220,
+          }}
+        >
+          <p>Parent</p>
+        </div>
+      }
+      child={
+        <div
+          className="flexItem"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: 220,
+          }}
+        >
+          <p>Child</p>
+        </div>
+      }
+    />
   </Story>
 </Canvas>
 
