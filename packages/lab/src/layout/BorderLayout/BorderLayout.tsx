@@ -73,6 +73,7 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
         columns={numberOfColumns}
         gridTemplateAreas={gridTemplateAreas}
         gridTemplateColumns="min-content 1fr min-content"
+        gridTemplateRows="min-content 1fr min-content"
         ref={ref}
         {...rest}
       >
