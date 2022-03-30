@@ -109,7 +109,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
             [withBaseName("focusVisible")]: focusVisible,
           })}
         >
-          <span className={withBaseName("icon-label")}>
+          <span className={withBaseName("inputContainer")}>
             <input
               className={withBaseName("input")}
               checked={checked}
