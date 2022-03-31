@@ -4,7 +4,7 @@ import {
   TokenizedInputBase,
   TokenizedInputBaseProps,
 } from "./TokenizedInputBase";
-import { PopperProps } from "../popper";
+import { TooltipProps } from "../tooltip";
 import { useTokenizedInput } from "./useTokenizedInput";
 
 import "./TokenizedInput.css";
@@ -33,9 +33,9 @@ export interface TokenizedInputProps<Item>
   onCollapse?: () => void;
   onExpand?: () => void;
   stringToItem?: StringToItem<Item>;
-  tooltipEnterDelay?: number;
-  tooltipLeaveDelay?: number;
-  tooltipPlacement?: PopperProps["placement"];
+  tooltipEnterDelay?: TooltipProps["enterDelay"];
+  tooltipLeaveDelay?: TooltipProps["leaveDelay"];
+  tooltipPlacement?: TooltipProps["placement"];
 }
 
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(

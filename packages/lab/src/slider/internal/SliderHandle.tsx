@@ -3,7 +3,6 @@ import { makePrefixer } from "@brandname/core";
 import cn from "classnames";
 import { getSliderAriaLabel } from "./utils";
 import { Tooltip } from "../../tooltip";
-import { PopperProps } from "../../popper";
 import "../Slider.css";
 
 const withBaseName = makePrefixer("uitkSliderHandle");
@@ -16,12 +15,10 @@ export interface SliderHandleProps {
   disabled: boolean;
   valueLength: number;
   style: CSSProperties;
-  popperProps: PopperProps;
 }
 
 export function SliderHandle(props: SliderHandleProps) {
-  const { min, max, value, disabled, valueLength, index, popperProps, style } =
-    props;
+  const { min, max, value, disabled, valueLength, index, style } = props;
 
   const ariaAttributes: HTMLAttributes<HTMLDivElement> = {
     "aria-valuemin": min,
@@ -43,7 +40,7 @@ export function SliderHandle(props: SliderHandleProps) {
       data-handle-index={index}
       {...ariaAttributes}
     >
-      <Tooltip placement="top" title={`${value}`} PopperProps={popperProps}>
+      <Tooltip placement="top" title={`${value}`} disablePortal>
         <div className={cn(withBaseName("box"))} tabIndex={0} />
       </Tooltip>
     </div>

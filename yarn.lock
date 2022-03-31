@@ -1735,8 +1735,8 @@ __metadata:
     "@cypress/code-coverage": ^3.9.11
     "@cypress/react": ^5.10.3
     "@cypress/vite-dev-server": ^2.2.2
-    "@floating-ui/core": ^0.3.1
-    "@floating-ui/react-dom": ^0.4.1
+    "@floating-ui/core": ^0.6.1
+    "@floating-ui/react-dom": ^0.6.0
     "@storybook/addon-actions": ^6.4.18
     "@storybook/addon-docs": ^6.4.18
     "@storybook/addon-essentials": ^6.4.18
@@ -2865,32 +2865,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^0.3.0, @floating-ui/core@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@floating-ui/core@npm:0.3.1"
-  checksum: b5b646f662994cff2feb694781c1fae2025293b74c6bbdb891a647a26b57aa8499cee8d8211f8dd9eafa53909cc24ad451545678c250162b30c37bc02046845a
+"@floating-ui/core@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@floating-ui/core@npm:0.6.1"
+  checksum: 6761c4ced6c1ee8f5166b2d869ad4de6285ae36b9649d83adfcba82dc3c4e019b6020903073e20c0ddacf76e8078b5e2e43b1c82f7472ca0b52f1025c3a8f72b
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^0.1.10":
-  version: 0.1.10
-  resolution: "@floating-ui/dom@npm:0.1.10"
+"@floating-ui/dom@npm:^0.4.0":
+  version: 0.4.2
+  resolution: "@floating-ui/dom@npm:0.4.2"
   dependencies:
-    "@floating-ui/core": ^0.3.0
-  checksum: 9a247f87ef9fd5d20ebfcb262222adce394c49a9c9b35da966794edf7aecc193ee6481cdb6e25a561c6f3d4eb4dea1dad3bc712ccfdba4aeb565d9228618ca94
+    "@floating-ui/core": ^0.6.1
+  checksum: 44e5a572451132892edc7ba76764a41094956f18a346103e844120d175e1f614359033b85daa8ca465baae5d1a5e5f7ddeb99bc4e1f01922a3c43a0dea2b58a1
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^0.4.1":
-  version: 0.4.3
-  resolution: "@floating-ui/react-dom@npm:0.4.3"
+"@floating-ui/react-dom@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@floating-ui/react-dom@npm:0.6.0"
   dependencies:
-    "@floating-ui/dom": ^0.1.10
+    "@floating-ui/dom": ^0.4.0
     use-isomorphic-layout-effect: ^1.1.1
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 4406d4cc8c21ecd54e02db7fad26482b7d38d6d8f04cf317c370b12aaf7ebf5dc0303b2b62ce53ab4e02897fba2906ddc8731184c8e14d3283f9e6ea2d43fca9
+  checksum: f9cc86570675be2ea3250b22a8a3ed315bd21df71e1c9d9d5fe5110d24b3cc463b2917f7af01e5cfdf1565852529dbc95be832a1a2a21306fed93e940347ca0e
   languageName: node
   linkType: hard
 

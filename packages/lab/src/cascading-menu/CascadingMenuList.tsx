@@ -1,9 +1,9 @@
 import { forwardRef, useCallback, useEffect, useState, useMemo } from "react";
 import classnames from "classnames";
-import { useCharacteristic } from "@brandname/core";
+import { useCharacteristic, useIsomorphicLayoutEffect } from "@brandname/core";
 import { List, ListProps } from "../list";
 import { useForkRef } from "../utils";
-import { Popper, PopperProps } from "../popper";
+import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import { refsManager } from "./internal/useRefsManager";
 
 import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
@@ -19,6 +19,8 @@ import { getKeyDownHandlers } from "./internal/keydownHandlers";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
 
 import "./CascadingMenuList.css";
+import { Portal } from "../portal";
+import { useWindow } from "../window";
 
 export interface CascadingMenuListProps {
   className?: string;
@@ -42,7 +44,7 @@ export interface CascadingMenuListProps {
   onItemClick?: MenuItemProps["onItemClick"];
   parentElement?: HTMLElement | null;
   refsManager: refsManager;
-  rootPlacement?: PopperProps["placement"];
+  rootPlacement?: UseFloatingUIProps["placement"];
   rootPlacementOffset?: string;
   rowHeight?: number;
   setIsNavigatingWithKeyboard: (value: boolean) => void;
@@ -76,7 +78,7 @@ export const CascadingMenuList = forwardRef<
     getScreenBounds,
     disableMouseOutInteractions,
     rootPlacementOffset,
-    rootPlacement,
+    rootPlacement = "bottom-start",
   } = props;
 
   const baseClass = "uitkCascadingMenuList";
@@ -160,65 +162,82 @@ export const CascadingMenuList = forwardRef<
 
   // menu container size is 2px larger than the list to include the border
   const menuContainerHeight = menuHeight + 2;
-
-  return (
-    <Popper
-      anchorEl={
+  const Window = useWindow();
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: isRoot ? rootPlacement : "right-start",
+  });
+  useIsomorphicLayoutEffect(() => {
+    if (parentElement) {
+      reference(
         isRoot
           ? parentElement
-          : parentElement?.querySelector(
+          : parentElement.querySelector(
               `#${
                 parentElement.getAttribute("aria-activedescendant") as string
               }`
             )
-      }
-      className={`${baseClass}-popper`}
-      open={parentElement != null}
-      placement={isRoot ? rootPlacement : "right-start"}
-      role="presentation"
-    >
-      <List
-        className={classnames(baseClass, className)}
-        height={menuContainerHeight}
-        highlightedIndex={
-          highlightedItemIndex === null ? -1 : highlightedItemIndex
-        }
-        id={menuId}
-        itemHeight={rowHeight}
-        itemToString={itemToString}
-        key={menuId}
-        listRef={handleRef}
-        maxWidth={maxWidth}
-        minWidth={minWidth}
-        onFocus={onFocusHandler}
-        onKeyDown={handleKeyDown}
-        onMouseOut={disableMouseOutInteractions ? undefined : handleMouseOut}
-        role="menu"
-        width="auto"
+      );
+    }
+  }, [reference, isRoot, parentElement]);
+
+  if (parentElement === null) {
+    return null;
+  }
+
+  return (
+    <Portal>
+      <Window
+        className={`${baseClass}-popper`}
+        style={{
+          top: y ?? "",
+          left: x ?? "",
+          position: strategy,
+        }}
+        ref={floating}
       >
-        {data.menuItems.map((menuItem, idx) => {
-          const isInteracted = highlightedItemIndex === idx;
-          return (
-            <DefaultMenuItem
-              blurSelected={!isMenuActive && isInteracted}
-              hasEndAdornment={hasEndAdornment}
-              hasScrollbar={hasScrollbar}
-              hasStartAdornment={hasStartAdornment}
-              hasSubMenu={hasSubMenu(menuItem)}
-              isChildMenuOpen={isChildMenuOpen}
-              isInteracted={isInteracted}
-              isNavigatingWithKeyboard={isNavigatingWithKeyboard}
-              itemToString={itemToString}
-              key={idx}
-              onItemClick={onItemClick}
-              onMouseMove={() => handleMouseMove(idx)}
-              sourceItem={menuItem}
-              tooltipEnterDelay={tooltipEnterDelay}
-              tooltipLeaveDelay={tooltipLeaveDelay}
-            />
-          );
-        })}
-      </List>
-    </Popper>
+        <List
+          className={classnames(baseClass, className)}
+          height={menuContainerHeight}
+          highlightedIndex={
+            highlightedItemIndex === null ? -1 : highlightedItemIndex
+          }
+          id={menuId}
+          itemHeight={rowHeight}
+          itemToString={itemToString}
+          key={menuId}
+          listRef={handleRef}
+          maxWidth={maxWidth}
+          minWidth={minWidth}
+          onFocus={onFocusHandler}
+          onKeyDown={handleKeyDown}
+          onMouseOut={disableMouseOutInteractions ? undefined : handleMouseOut}
+          role="menu"
+          width="auto"
+        >
+          {data.menuItems.map((menuItem, idx) => {
+            const isInteracted = highlightedItemIndex === idx;
+            return (
+              <DefaultMenuItem
+                blurSelected={!isMenuActive && isInteracted}
+                hasEndAdornment={hasEndAdornment}
+                hasScrollbar={hasScrollbar}
+                hasStartAdornment={hasStartAdornment}
+                hasSubMenu={hasSubMenu(menuItem)}
+                isChildMenuOpen={isChildMenuOpen}
+                isInteracted={isInteracted}
+                isNavigatingWithKeyboard={isNavigatingWithKeyboard}
+                itemToString={itemToString}
+                key={idx}
+                onItemClick={onItemClick}
+                onMouseMove={() => handleMouseMove(idx)}
+                sourceItem={menuItem}
+                tooltipEnterDelay={tooltipEnterDelay}
+                tooltipLeaveDelay={tooltipLeaveDelay}
+              />
+            );
+          })}
+        </List>
+      </Window>
+    </Portal>
   );
 });

@@ -6,6 +6,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { useAriaAnnouncer } from "@brandname/core";
 
@@ -18,10 +19,13 @@ import {
   ListSelectionVariant,
   ListStateContext,
 } from "../../list";
-import { Popper, PopperProps, usePopperListAdapter } from "../../popper";
+import { useFloatingUI } from "../../popper";
 import { Input, InputProps } from "../../input";
 import { useForkRef } from "../../utils";
 import { TooltipContext, TooltipContextProps } from "../../tooltip";
+import { Portal } from "../../portal";
+import { Window } from "../../window";
+import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type BaseComboBoxProps<
   Item,
@@ -47,7 +51,6 @@ export type BaseComboBoxProps<
   > & {
     ListItem?: ReactNode;
     ListProps?: Partial<ListProps<Item, Variant>>;
-    PopperProps?: Partial<PopperProps>;
     Tooltip?: TooltipContextProps["Tooltip"];
     allowFreeText?: boolean;
     disabled?: boolean;
@@ -90,7 +93,6 @@ export function DefaultComboBox<Item>(
     inputRef: inputRefProp,
     rootWidth,
     listWidth,
-    PopperProps: popperProps,
     ...restProps
   } = props;
 
@@ -137,14 +139,29 @@ export function DefaultComboBox<Item>(
     }
   }, [firstItem, value, itemCount, announce]);
 
-  const [reference, floating, popperPosition, maxListHeight] =
-    usePopperListAdapter(isListOpen);
+  const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
+    undefined
+  );
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: [
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ height }) {
+          setMaxListHeight(height);
+        },
+      }),
+    ],
+  });
 
   useEffect(() => {
     if (rootRef.current) {
       reference(rootRef.current);
     }
-  }, [rootRef]);
+  }, [rootRef, reference]);
 
   return (
     <>
@@ -154,36 +171,36 @@ export function DefaultComboBox<Item>(
         value={value}
         {...restInputProps}
       />
-      {rootRef.current && (
-        <Popper
-          anchorEl={rootRef.current}
-          open={isListOpen}
-          placement={popperPosition}
-          role={null as any}
-          style={{
-            maxHeight: maxListHeight ?? "",
-          }}
-          ref={floating}
-          {...popperProps}
-        >
-          <TooltipContext.Provider value={tooltipContext}>
-            <ListStateContext.Provider value={listContext}>
-              <ListBase
-                {...{
-                  ListItem,
-                  disabled,
-                  itemCount,
-                  itemToString,
-                  width: listWidth || rootWidth,
-                  source,
-                  ...restListProps,
-                  listRef: setListRef,
-                }}
-                maxHeight={maxListHeight || listProps.maxHeight}
-              />
-            </ListStateContext.Provider>
-          </TooltipContext.Provider>
-        </Popper>
+      {rootRef.current && isListOpen && (
+        <Portal>
+          <Window
+            style={{
+              top: y ?? "",
+              left: x ?? "",
+              position: strategy,
+              maxHeight: maxListHeight ?? "",
+            }}
+            ref={floating}
+          >
+            <TooltipContext.Provider value={tooltipContext}>
+              <ListStateContext.Provider value={listContext}>
+                <ListBase
+                  {...{
+                    ListItem,
+                    disabled,
+                    itemCount,
+                    itemToString,
+                    width: listWidth || rootWidth,
+                    source,
+                    ...restListProps,
+                    listRef: setListRef,
+                  }}
+                  maxHeight={maxListHeight || listProps.maxHeight}
+                />
+              </ListStateContext.Provider>
+            </TooltipContext.Provider>
+          </Window>
+        </Portal>
       )}
     </>
   );

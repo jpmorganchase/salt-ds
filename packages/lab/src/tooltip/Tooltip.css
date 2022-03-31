@@ -36,24 +36,20 @@
   text-align: left;
 }
 
-.uitkPopper[data-popper-placement^="top"] .uitkTooltip {
+.uitkTooltip[data-placement^="top"] {
   transform-origin: bottom;
-  margin-bottom: 8px;
 }
 
-.uitkPopper[data-popper-placement^="bottom"] .uitkTooltip {
+.uitkTooltip[data-placement^="bottom"] {
   transform-origin: top;
-  margin-top: 8px;
 }
 
-.uitkPopper[data-popper-placement^="left"] .uitkTooltip {
+.uitkTooltip[data-placement^="left"] {
   transform-origin: right;
-  margin-right: 8px;
 }
 
-.uitkPopper[data-popper-placement^="right"] .uitkTooltip {
+.uitkTooltip[data-placement^="right"] {
   transform-origin: left;
-  margin-left: 8px;
 }
 
 .uitkTooltip-content {
@@ -84,45 +80,45 @@
   content: "";
 }
 
-.uitkPopper[data-popper-placement^="top"] .uitkTooltip-arrow {
+.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow {
   border-top-color: var(--tooltip-status-color);
   bottom: -11px;
 }
 
-.uitkPopper[data-popper-placement^="bottom"] .uitkTooltip-arrow {
+.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow {
   border-bottom-color: var(--tooltip-status-color);
   top: -11px;
 }
 
-.uitkPopper[data-popper-placement^="left"] .uitkTooltip-arrow {
+.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow {
   border-left-color: var(--tooltip-status-color);
   right: -11px;
 }
 
-.uitkPopper[data-popper-placement^="right"] .uitkTooltip-arrow {
+.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow {
   border-right-color: var(--tooltip-status-color);
   left: -11px;
 }
 
-.uitkPopper[data-popper-placement^="top"] .uitkTooltip-arrow::after {
+.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow::after {
   border-top-color: var(--tooltip-background);
   bottom: -4px;
   left: calc(100% - 5px);
 }
 
-.uitkPopper[data-popper-placement^="bottom"] .uitkTooltip-arrow::after {
+.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow::after {
   border-bottom-color: var(--tooltip-background);
   top: -4px;
   left: calc(100% - 5px);
 }
 
-.uitkPopper[data-popper-placement^="left"] .uitkTooltip-arrow::after {
+.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow::after {
   border-left-color: var(--tooltip-background);
   right: -4px;
   top: calc(100% - 5px);
 }
 
-.uitkPopper[data-popper-placement^="right"] .uitkTooltip-arrow::after {
+.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow::after {
   border-right-color: var(--tooltip-background);
   left: -4px;
   top: calc(100% - 5px);

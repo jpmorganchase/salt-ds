@@ -47,8 +47,6 @@ export interface SliderProps
   hideMarkLabels?: boolean;
 }
 
-const popperProps = { disablePortal: true };
-
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   {
     min = defaultMin,
@@ -159,7 +157,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
               disabled={!!disabled}
               valueLength={valueLength}
               style={handleStyles[i]}
-              popperProps={popperProps}
             />
           ))}
         </div>
