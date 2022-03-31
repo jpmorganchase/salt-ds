@@ -21,6 +21,10 @@ export const SEPARATOR_VARIANTS = [
   ...HORIZONTAL_SEPARATOR_VARIANTS,
   ...VERTICAL_SEPARATOR_VARIANTS,
 ];
+export type HorizontalSeparatorVariant =
+  typeof HORIZONTAL_SEPARATOR_VARIANTS[number];
+export type VerticalSeparatorVariant =
+  typeof VERTICAL_SEPARATOR_VARIANTS[number];
 export type SeparatorVariant = typeof SEPARATOR_VARIANTS[number];
 
 export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
