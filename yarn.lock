@@ -1774,7 +1774,11 @@ __metadata:
     "@storybook/addon-docs": ^6.4.18
     "@storybook/addon-essentials": ^6.4.18
     "@storybook/addon-links": ^6.4.18
+<<<<<<< HEAD
     "@storybook/builder-vite": ^0.1.24
+=======
+    "@storybook/builder-vite": ^0.1.22
+>>>>>>> 0abc75b3 (Move to @storybook/builder-vite)
     "@storybook/node-logger": ^6.4.18
     "@storybook/react": ^6.4.18
     "@storybook/testing-react": ^1.2.2
@@ -4052,6 +4056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@storybook/api@npm:6.4.20":
   version: 6.4.20
   resolution: "@storybook/api@npm:6.4.20"
@@ -4085,22 +4090,39 @@ __metadata:
   resolution: "@storybook/builder-vite@npm:0.1.24"
   dependencies:
     "@joshwooding/vite-plugin-react-docgen-typescript": 0.0.4
+=======
+"@storybook/builder-vite@npm:^0.1.22":
+  version: 0.1.22
+  resolution: "@storybook/builder-vite@npm:0.1.22"
+  dependencies:
+    "@joshwooding/vite-plugin-react-docgen-typescript": 0.0.2
+>>>>>>> 0abc75b3 (Move to @storybook/builder-vite)
     "@mdx-js/mdx": ^1.6.22
     "@storybook/csf-tools": ^6.3.3
     "@storybook/source-loader": ^6.3.12
     "@vitejs/plugin-react": ^1.0.8
+<<<<<<< HEAD
     ast-types: ^0.14.2
     es-module-lexer: ^0.9.3
     glob: ^7.2.0
     glob-promise: ^4.2.0
     magic-string: ^0.26.1
     react-docgen: ^6.0.0-alpha.0
+=======
+    es-module-lexer: ^0.9.3
+    glob: ^7.2.0
+    glob-promise: ^4.2.0
+>>>>>>> 0abc75b3 (Move to @storybook/builder-vite)
     slash: ^3.0.0
     vite-plugin-mdx: ^3.5.6
   peerDependencies:
     "@storybook/core-common": ^6.4.3
     vite: ">=2.6.7"
+<<<<<<< HEAD
   checksum: 92ac1a5c23e77670fefb34d58e763f80588ee3e21cbbbc2f52f1f427e61d90a9fd3cf3bd2dba2f78a07cf7a502565c558c8fd6bd798d4b8f341b4b7921fc10e9
+=======
+  checksum: 21ad27810ae044a3810084dfdcc4c2cb825bd5e481ae0729f86717bb30241f321fa233ab77f07bcb4501f1c041ea31c725e7de99426d78a8e494966d8bf98b53
+>>>>>>> 0abc75b3 (Move to @storybook/builder-vite)
   languageName: node
   linkType: hard
 
