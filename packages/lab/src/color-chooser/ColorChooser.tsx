@@ -167,7 +167,7 @@ export const ColorChooser = ({
         className={cn(withBaseName("overlayButtonClose"))}
         anchorEl={node}
         onClose={handleClose}
-        // onBackdropClick={(e): void => onSelect(initialColor, true, e)}
+        onBackdropClick={(): void => handleClose()}
         open={open}
         placement={"bottom"}
       >

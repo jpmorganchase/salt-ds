@@ -10,9 +10,7 @@ import "./ElectronWindow.css";
 import ReactDOMServer from "react-dom/server";
 import {
   useWindowParentContext,
-  useWindowParentPositionContext,
   WindowParentContext,
-  WindowParentPositionContext,
 } from "./desktop-utils";
 
 const Window: windowType = forwardRef(function ElectronWindow(
@@ -56,9 +54,6 @@ const Window: windowType = forwardRef(function ElectronWindow(
 
   components.add(".uitkOverflowMenu");
 
-  const parentStyle = useWindowParentPositionContext();
-  console.log(parentStyle);
-
   if (className)
     className.split(" ").forEach((classname) => components.add(classname));
 
@@ -94,14 +89,17 @@ const Window: windowType = forwardRef(function ElectronWindow(
     setMountNode(bodyElement);
     setWindowRef(win);
     // @ts-ignore
-    new MutationObserver(() => {
+    // new MutationObserver(() => {
+    //   resizeWindow();
+    // }).observe(bodyElement, {
+    //   attributes: false,
+    //   characterData: true,
+    //   childList: true,
+    //   subtree: true,
+    // });
+    new ResizeObserver(()=>{
       resizeWindow();
-    }).observe(bodyElement, {
-      attributes: false,
-      characterData: true,
-      childList: true,
-      subtree: true,
-    });
+    }).observe(bodyElement);
   }
 
   const parentWindow = useWindowParentContext();
@@ -125,20 +123,14 @@ const Window: windowType = forwardRef(function ElectronWindow(
   }, [closeWindow, windowRef]);
 
   useIsomorphicLayoutEffect(() => {
-    const { ipcRenderer } = global as any;
+    const {ipcRenderer} = global as any;
     if (ipcRenderer) {
-      let offsetX = parentStyle.left;
-      let offsetY = parentStyle.top;
-      if (parentWindow) {
-        offsetX = parentWindow.screenLeft - window.screenLeft;
-        // Will need a dynamic way to account for the window frame
-        offsetY = parentWindow.screenTop - window.screenTop - 26;
-      }
-      console.log(`${id} is being moved to ${style.left + offsetX},${style.top + offsetY}`);
+      console.log(`${id} is being moved to ${style.left + parentWindow.left},${style.top + parentWindow.top}`);
       ipcRenderer.send("window-position", {
         id: id,
-        left: style.left + offsetX,
-        top: style.top + offsetY,
+        parentWindowID: parentWindow.id,
+        left: style.left,
+        top: style.top,
       });
     }
   },[style]);
@@ -146,11 +138,11 @@ const Window: windowType = forwardRef(function ElectronWindow(
   return mountNode
     ? ReactDOM.createPortal(
         <ToolkitProvider>
-          <WindowParentContext.Provider value={windowRef}>
-            <WindowParentPositionContext.Provider
+            <WindowParentContext.Provider
               value={{
-                top: style.top + parentStyle.top,
-                left: style.left + parentStyle.left,
+                top: style.top + parentWindow.top,
+                left: style.left + parentWindow.left,
+                id: id
               }}
             >
               <div className="uitkWindow" ref={forkedRef}>
@@ -158,8 +150,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
                   {children}
                 </div>
               </div>
-            </WindowParentPositionContext.Provider>
-          </WindowParentContext.Provider>
+            </WindowParentContext.Provider>
         </ToolkitProvider>,
         mountNode
       )

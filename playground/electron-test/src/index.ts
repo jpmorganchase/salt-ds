@@ -88,10 +88,13 @@ const createWindow = (): void => {
     }
   });
 
-  ipcMain.on("window-position", (event, { id, left, top }) => {
+  ipcMain.on("window-position", (event, { id,parentWindowID, left, top }) => {
     const targetWindow = windowByTitle(id);
+    let mainWindow = windowByTitle(parentWindowID);
+    if(!mainWindow && targetWindow){
+      mainWindow = targetWindow.getParentWindow();
+    }
     if (targetWindow) {
-      const mainWindow = targetWindow.getParentWindow();
       const mainBounds = mainWindow!.getContentBounds();
 
       let targetX = parseInt(left + mainBounds.x);
