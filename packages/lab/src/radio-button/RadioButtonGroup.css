@@ -68,13 +68,6 @@
   transform: var(--uitkFormLabel-radio-transform, var(--form-label-transform));
 }
 
-/* Styles applied to group of radios when `row={true}` */
-.uitkRadioButtonGroup-horizontal .uitkFormGroup-row {
-  float: left;
-  display: flex;
-  flex-direction: row;
-}
-
 /* Styles applied  to legend if `row={true}` */
 .uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
   --radio-button-group-horizontal-legend-margin-top: 1px;
@@ -130,9 +123,17 @@
   width: auto;
 }
 
-/* Styles applied when `row=true` to RadioButton component */
-.uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  margin-right: var(--uitkRadioButton-horizontal-margin-right, calc(var(--uitk-spacing-unit) * 3));
+.uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  --radio-button-group-horizontal-button-margin-right: 24px;
+}
+.uitk-density-high .uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  --radio-button-group-horizontal-button-margin-right: 12px;
+}
+.uitk-density-low .uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  --radio-button-group-horizontal-button-margin-right: 36px;
+}
+.uitk-density-touch .uitkRadioButtonGroup-horizontal .uitkRadioButton {
+  --radio-button-group-horizontal-button-margin-right: 48px;
 }
 
 /* fieldset specific styles */

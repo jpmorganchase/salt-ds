@@ -29,6 +29,7 @@
 
 .uitkRadioButton {
   cursor: pointer;
+  display: block;
 }
 
 /* Styles applied to root component on hover */
@@ -57,6 +58,30 @@
   margin-right: 0;
   margin-top: var(--uitkRadioButton-label-margin-top, var(--label-margin-top));
   vertical-align: baseline;
+}
+
+.uitkRadioButton-labelContainer .uitkRadioButton {
+  display: inline-flex;
+  align-content: flex-start;
+  vertical-align: baseline;
+}
+
+/* Styles applied to RadioButton displayed in group when `row=true` */
+.uitk-density-medium .uitkFormGroup-row .uitkRadioButton {
+  --radio-button-horizontal-label-container-margin-right: 24px;
+}
+.uitk-density-high .uitkFormGroup-row .uitkRadioButton {
+  --radio-button-horizontal-label-container-margin-right: 12px;
+}
+.uitk-density-low .uitkFormGroup-row .uitkRadioButton {
+  --radio-button-horizontal-label-container-margin-right: 36px;
+}
+.uitk-density-touch .uitkFormGroup-row .uitkRadioButton {
+  --radio-button-horizontal-label-container-margin-right: 48px;
+}
+
+.uitkFormGroup.uitkFormGroup-row > .uitkRadioButton {
+  margin-right: var(--uitkRadioButton-label-container-margin-right, var(--radio-button-horizontal-label-container-margin-right));
 }
 
 /* Styles applied to label */

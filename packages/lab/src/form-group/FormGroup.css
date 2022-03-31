@@ -7,4 +7,5 @@
 
 .uitkFormGroup-row {
   flex-direction: row;
+  float: left;
 }

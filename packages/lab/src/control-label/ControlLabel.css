@@ -10,16 +10,18 @@
   align-items: center;
   cursor: pointer;
   display: inline-flex;
-  margin-top: var(--label-margin-top, 0);
+  /* margin-top: var(--label-margin-top, 0);*/
 }
 
-.uitkControlLabel-label {
+.uitkControlLabel-label,
+.uitkControlLabel-labelRight {
   color: var(--control-label-color);
   font-family: var(--uitk-typography-font-family);
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-regular);
-  line-height: var(--uitk-text-line-height);
+  line-height: var(--uitk-typography-line-height);
   margin-right: calc(var(--uitk-spacing-unit) / 1.5);
+  display: block;
 }
 
 .uitkControlLabel-disabled {
@@ -29,6 +31,23 @@
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
+}
+
+.uitk-density-medium .uitkControlLabel-labelRight {
+  margin-left: 6px;
+  margin-right: 0px;
+}
+.uitk-density-high .uitkControlLabel-labelRight {
+  margin-left: 3px;
+  margin-right: 0px;
+}
+.uitk-density-low .uitkControlLabel-labelRight {
+  margin-left: 9px;
+  margin-right: 0px;
+}
+.uitk-density-touch .uitkControlLabel-labelRight {
+  margin-left: 12px;
+  margin-right: 0px;
 }
 
 /* Backwards compatable styling for TK1 */
@@ -44,6 +63,7 @@
 .uitk-density-touch .backwardsCompat .uitkControlLabel-label {
   margin-right: 12px;
 }
+
 .backwardsCompat .uitkControlLabel-label {
   line-height: 1.3;
 }
