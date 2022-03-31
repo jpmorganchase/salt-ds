@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { CSSProperties, useState } from "react";
 import { ComponentAnatomy } from "docs/components";
 
 import { Button, ButtonProps } from "@brandname/core";
@@ -140,7 +140,7 @@ export const SimpleToolbarCollapsibleItemsAnatomy = ({
 };
 
 export const DefaultToolbar = ({ initialWidth = 315 }) => {
-  const typeData = ["Open", "Close", "Discarted", "Resolved"];
+  const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",
     "Yesterday",
@@ -162,7 +162,7 @@ export const DefaultToolbar = ({ initialWidth = 315 }) => {
           data-close-on-click={false}
           label="Range"
           data-activation-indicator
-          variant="theme"
+          emphasis="medium"
         >
           <Dropdown
             initialSelectedItem={range}
@@ -175,7 +175,7 @@ export const DefaultToolbar = ({ initialWidth = 315 }) => {
           data-close-on-click={false}
           label="Type"
           data-activation-indicator
-          variant="theme"
+          emphasis="medium"
         >
           <Dropdown
             initialSelectedItem={type}
@@ -250,7 +250,7 @@ export const InstantCollapseTooltray = () => {
 };
 
 export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
-  const pStyle = { whiteSpace: "nowrap", overflow: "hidden" } as any;
+  const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
   return (
     <AdjustableFlexbox height={500} width={initialWidth}>
@@ -431,7 +431,7 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
   );
 };
 export const MockAppHeader = () => {
-  const pStyle = { whiteSpace: "nowrap", overflow: "hidden" } as any;
+  const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
   return (
     <AdjustableFlexbox height={500} width={600}>
