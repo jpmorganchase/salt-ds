@@ -23,6 +23,7 @@ const flexLayoutStyle = {
 };
 
 const Template: ComponentStory<typeof FlexLayout> = (args) => {
+  console.log(args);
   const handleSplitterMoved = (sizes: any) => {
     console.log(`splitter moved ${JSON.stringify(sizes)}`);
   };
@@ -82,6 +83,7 @@ ToolkitFlexLayout.argTypes = {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
+  splitter: { table: { disable: true } },
 };
 
 const SplitterTemplate: ComponentStory<typeof FlexLayout> = (args) => {
@@ -114,6 +116,7 @@ ToolkitFlexWithSplitterLayout.argTypes = {
     options: ["row", "column"],
     control: { type: "radio" },
   },
+  splitter: { table: { disable: true } },
 };
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
@@ -172,4 +175,5 @@ ToolkitFlexLayoutResponsive.argTypes = {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
+  splitter: { table: { disable: true } },
 };
