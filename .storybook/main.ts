@@ -36,7 +36,7 @@ const config: ExtendedConfig = {
     // 'storybook-addon-performance/register',
   ],
   core: {
-    builder: "storybook-builder-vite",
+    builder: "@storybook/builder-vite",
   },
   features: {
     postcss: false,

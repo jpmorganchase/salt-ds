@@ -1741,6 +1741,7 @@ __metadata:
     "@storybook/addon-docs": ^6.4.18
     "@storybook/addon-essentials": ^6.4.18
     "@storybook/addon-links": ^6.4.18
+    "@storybook/builder-vite": ^0.1.22
     "@storybook/node-logger": ^6.4.18
     "@storybook/react": ^6.4.18
     "@storybook/testing-react": ^1.2.2
@@ -1795,7 +1796,6 @@ __metadata:
     react-router-dom: ^6.2.1
     react-window: ^1.8.6
     rifm: ^0.12.0
-    storybook-builder-vite: ^0.1.15
     svgo: ^2.3.0
     tinycolor2: ^1.4.2
     ts-node: ^10.4.0
@@ -3961,6 +3961,27 @@ __metadata:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
   checksum: 305c413ee81f98c0064bbefdd88ee61f4ce0af18465412d7e771ba7af9825c4aa134d827d21f5e7e0dafbb41fafd5a68c65df29525de8bd382b24a960b78e97a
+  languageName: node
+  linkType: hard
+
+"@storybook/builder-vite@npm:^0.1.22":
+  version: 0.1.22
+  resolution: "@storybook/builder-vite@npm:0.1.22"
+  dependencies:
+    "@joshwooding/vite-plugin-react-docgen-typescript": 0.0.2
+    "@mdx-js/mdx": ^1.6.22
+    "@storybook/csf-tools": ^6.3.3
+    "@storybook/source-loader": ^6.3.12
+    "@vitejs/plugin-react": ^1.0.8
+    es-module-lexer: ^0.9.3
+    glob: ^7.2.0
+    glob-promise: ^4.2.0
+    slash: ^3.0.0
+    vite-plugin-mdx: ^3.5.6
+  peerDependencies:
+    "@storybook/core-common": ^6.4.3
+    vite: ">=2.6.7"
+  checksum: 21ad27810ae044a3810084dfdcc4c2cb825bd5e481ae0729f86717bb30241f321fa233ab77f07bcb4501f1c041ea31c725e7de99426d78a8e494966d8bf98b53
   languageName: node
   linkType: hard
 
@@ -23696,27 +23717,6 @@ __metadata:
   version: 2.13.1
   resolution: "store2@npm:2.13.1"
   checksum: c5fa1ac7dbf8431d87ad4563d9838311bb421cc6e13696b668c772192942be2e07ef20d36104f7496acab6dc4d569a9b50d6c2299ceaddbcb86628f585323ff4
-  languageName: node
-  linkType: hard
-
-"storybook-builder-vite@npm:^0.1.15":
-  version: 0.1.16
-  resolution: "storybook-builder-vite@npm:0.1.16"
-  dependencies:
-    "@joshwooding/vite-plugin-react-docgen-typescript": 0.0.2
-    "@mdx-js/mdx": ^1.6.22
-    "@storybook/csf-tools": ^6.3.3
-    "@storybook/source-loader": ^6.3.12
-    "@vitejs/plugin-react": ^1.0.8
-    es-module-lexer: ^0.9.3
-    glob: ^7.2.0
-    glob-promise: ^4.2.0
-    slash: ^3.0.0
-    vite-plugin-mdx: ^3.5.6
-  peerDependencies:
-    "@storybook/core-common": ^6.4.3
-    vite: ">=2.6.7"
-  checksum: ea74ce39fcfe49568141cd0de1f565d61ce08ad33b4cacea7a64d65bd1780cd79ff3a4685b1e9dfad077bf0be91eb00d4d9527b9fbcf6f65777f5d58b6911a3d
   languageName: node
   linkType: hard
 
