@@ -1,4 +1,5 @@
 import warning from "warning";
+import { UseFloatingUIProps } from "../../popper";
 
 export const DEFAULT_ROOT_PLACEMENT = "bottom-start";
 
@@ -29,7 +30,10 @@ const getPlacement = ({
 }: {
   position: Position;
   alignment: Alignment;
-}): string => [position, alignment].filter(Boolean).join("-");
+}): UseFloatingUIProps["placement"] =>
+  [position, alignment]
+    .filter(Boolean)
+    .join("-") as UseFloatingUIProps["placement"];
 
 function getRootPlacement({ props }: MenuData) {
   const { rootPlacement = DEFAULT_ROOT_PLACEMENT } = props;
@@ -57,7 +61,9 @@ function getRootPlacement({ props }: MenuData) {
   });
 }
 
-export function evaluateMenuPlacement(menuData: MenuData): string {
+export function evaluateMenuPlacement(
+  menuData: MenuData
+): UseFloatingUIProps["placement"] {
   return getRootPlacement(menuData);
 }
 
@@ -69,7 +75,7 @@ export function evaluateMenuOffset({
   props: LayoutProps;
   getBoundingClientRect: (el: HTMLElement) => any;
   rootPlacementOffset?: string;
-}): string {
+}): { mainAxis: number; crossAxis: number } {
   const { parentElement } = props;
   const [x, y] = rootPlacementOffset.split(",").map(Number);
   let offsetY = y;
@@ -78,7 +84,7 @@ export function evaluateMenuOffset({
     const { top } = getBoundingClientRect(parentElement);
     offsetY = -y - top;
   }
-  return `${x},${offsetY}`;
+  return { mainAxis: x, crossAxis: offsetY }; //`${x},${offsetY}`;
 }
 
 export function getMaxHeight(

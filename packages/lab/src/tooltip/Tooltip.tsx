@@ -11,19 +11,18 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
-  useMemo,
   ReactElement,
-  ComponentType,
 } from "react";
 import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
-import { arrow, limitShift, shift } from "@floating-ui/react-dom";
+import { arrow, flip, limitShift, offset, shift } from "@floating-ui/react-dom";
 
-import { Popper, PopperProps } from "../popper";
+import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import { useControlled, useForkRef, useId } from "../utils";
 import { getIconForState } from "./getIconForState";
 
 import "./Tooltip.css";
+import { Portal, PortalProps } from "../portal";
+import { useWindow } from "../window";
 
 // Keep in order of preference. First items are used as default
 
@@ -40,7 +39,8 @@ export interface TooltipRenderProp {
 }
 
 export interface TooltipProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title">,
+    Pick<PortalProps, "disablePortal" | "container"> {
   /**
    * Only single child element is supported.
    */
@@ -58,7 +58,7 @@ export interface TooltipProps
   /**
    * Tooltip placement ['right', 'right-start', 'right-end', 'top', 'top-start', 'top-end', 'left', 'left-start', 'left-end', 'bottom', 'bottom-start', 'bottom-end']
    */
-  placement?: PopperProps["placement"];
+  placement?: UseFloatingUIProps["placement"];
   /**
    * A callback function to render the tooltip content
    * @param {function} getIcon getter for the icon based on the state
@@ -119,14 +119,6 @@ export interface TooltipProps
    * If `true`, the tooltip is shown.
    */
   open?: boolean;
-  /**
-   * The component used for the popper.
-   */
-  PopperComponent?: ComponentType<PopperProps>;
-  /**
-   * Props applied to the Popper element.
-   */
-  PopperProps?: Partial<PopperProps>;
 }
 
 let visibleTimer: number;
@@ -135,19 +127,19 @@ let uncontrolledOpen: boolean;
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(
     {
-      PopperComponent = Popper,
-      PopperProps = {},
       children,
       className: classNameProp,
+      container,
       disableFocusListener,
       disableHoverListener,
+      disablePortal,
       hideArrow,
       // API Changed from `hasIcon` = true
       hideIcon,
       open: openProp,
       onClose,
       onOpen,
-      placement = "right",
+      placement: placementProp = "right",
       render,
       state = "info",
       title,
@@ -159,14 +151,40 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     },
     ref
   ) {
-    const [childNode, setChildNode] = useState(null);
-    const childRef = useForkRef(children.ref, setChildNode);
+    const arrowRef = useRef<HTMLDivElement | null>(null);
+    const {
+      floating,
+      reference,
+      x,
+      y,
+      strategy,
+      update,
+      middlewareData,
+      placement,
+    } = useFloatingUI({
+      placement: placementProp,
+      middleware: [
+        offset(8),
+        flip(),
+        shift({
+          limiter: limitShift({
+            offset: () =>
+              Math.max(
+                arrowRef.current?.offsetWidth ?? 0,
+                arrowRef.current?.offsetHeight ?? 0
+              ),
+          }),
+        }),
+        arrow({ element: arrowRef }),
+      ],
+    });
+    const childRef = useForkRef(children.ref, reference);
+    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
     const enterTimer = useRef(-1);
     const leaveTimer = useRef(-1);
     const tooltipId = useId(idProp);
     const { announce } = useAriaAnnouncer();
     const tooltipContentRef = useRef<HTMLDivElement>(null);
-    const arrowRef = useRef<HTMLDivElement>(null);
 
     const [openState, setOpenState] = useControlled({
       controlled: openProp,
@@ -319,17 +337,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       onBlur?.(e);
     };
 
-    const handleMiddlewareDataChange: PopperProps["onMiddlewareDataChange"] = (
-      middlewareData
-    ) => {
-      if (middlewareData.arrow && arrowRef.current) {
-        const { x, y } = middlewareData.arrow;
-        Object.assign(arrowRef.current.style, {
-          left: x != null ? `${x}px` : "",
-          top: y != null ? `${y}px` : "",
-        });
-      }
-    };
+    const handleArrowRef = useCallback(
+      (element: HTMLDivElement) => {
+        arrowRef.current = element;
+        update();
+      },
+      [update]
+    );
+
+    const Window = useWindow();
     return (
       <>
         {cloneElement(children, {
@@ -341,66 +357,54 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           onFocus: handleFocus,
           onBlur: handleBlur,
         })}
-        <PopperComponent
-          anchorEl={childNode}
-          open={childNode ? open : false}
-          placement={placement}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          middleware={useMemo(
-            () => [
-              shift({
-                limiter: limitShift({
-                  offset: () =>
-                    Math.max(
-                      arrowRef.current?.offsetWidth ?? 0,
-                      arrowRef.current?.offsetHeight ?? 0
-                    ),
-                }),
-              }),
-              arrow({ element: arrowRef }),
-            ],
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            [hideArrow]
-          )}
-          onMiddlewareDataChange={handleMiddlewareDataChange}
-          {...PopperProps}
-        >
-          <div
-            className={cn(
-              withBaseName(),
-              withBaseName(state),
-              withBaseName(placement)
-            )}
-            ref={ref}
-            id={tooltipId}
-            {...rest}
-          >
-            <div className={withBaseName("content")} ref={tooltipContentRef}>
-              {render ? (
-                render({
-                  Icon: (passedProps: IconProps) => getIcon(passedProps),
-                  getIconProps: () => defaultIconProps,
-                  getTitleProps,
-                })
-              ) : (
-                <>
-                  {getIcon({})}
-                  <span className={withBaseName("body")}>{title}</span>
-                </>
+        {open && (
+          <Portal disablePortal={disablePortal} container={container}>
+            <Window
+              className={cn(withBaseName(), withBaseName(state))}
+              data-placement={placement}
+              id={tooltipId}
+              role="tooltip"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              ref={handleRef}
+              {...rest}
+              style={{
+                top: y ?? "",
+                left: x ?? "",
+                position: strategy,
+                ...(rest.style || {}),
+              }}
+            >
+              <div className={withBaseName("content")} ref={tooltipContentRef}>
+                {render ? (
+                  render({
+                    Icon: (passedProps: IconProps) => getIcon(passedProps),
+                    getIconProps: () => defaultIconProps,
+                    getTitleProps,
+                  })
+                ) : (
+                  <>
+                    {getIcon({})}
+                    <span className={withBaseName("body")}>{title}</span>
+                  </>
+                )}
+              </div>
+              {!hideArrow && (
+                <div
+                  ref={handleArrowRef}
+                  className={withBaseName("arrow")}
+                  data-popper-arrow="true"
+                  style={{
+                    left: middlewareData.arrow?.x ?? "",
+                    top: middlewareData.arrow?.y ?? "",
+                  }}
+                />
               )}
-            </div>
-            {!hideArrow && (
-              <div
-                ref={arrowRef}
-                className={withBaseName("arrow")}
-                data-popper-arrow="true"
-              />
-            )}
-          </div>
-        </PopperComponent>
+            </Window>
+          </Portal>
+        )}
       </>
     );
   }

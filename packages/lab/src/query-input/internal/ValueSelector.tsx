@@ -1,10 +1,13 @@
 import { QueryInputCategory, QueryInputItem } from "../QueryInput";
 import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
 import { ValueList } from "./ValueList";
 import { CategoryList } from "./CategoryList";
-import { Popper } from "../../popper";
 import { SearchList } from "./SearchList";
+import { Portal } from "../../portal";
+import { useWindow } from "../../window";
+import { useFloatingUI } from "../../popper";
+import { useForkRef } from "../../utils";
 
 const withBaseName = makePrefixer("uitkQueryInputValueSelector");
 
@@ -109,14 +112,33 @@ export const ValueSelector: FC<ValueSelectorProps> = function (props) {
     );
   };
 
+  const Window = useWindow();
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom",
+  });
+  const handleRef = useForkRef<HTMLDivElement>(floating, popperRef);
+  useIsomorphicLayoutEffect(() => {
+    if (anchorElement) {
+      reference(anchorElement);
+    }
+  }, [reference, anchorElement]);
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <Popper
-      anchorEl={anchorElement}
-      open={isOpen}
-      placement={"bottom"}
-      ref={popperRef}
-    >
-      <div className={withBaseName("content")}>{renderContent()}</div>
-    </Popper>
+    <Portal>
+      <Window
+        style={{
+          top: y ?? "",
+          left: x ?? "",
+          position: strategy,
+        }}
+        ref={handleRef}
+      >
+        <div className={withBaseName("content")}>{renderContent()}</div>
+      </Window>
+    </Portal>
   );
 };
