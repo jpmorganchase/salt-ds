@@ -287,7 +287,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       onMouseEnter: onMouseEnterChild,
       onMouseLeave: onMouseLeaveChild,
       onFocus: onFocusChild,
-      // onBlur,
+      onBlur: onBlurChild,
       ...restChildrenProps
     } = childrenProps;
 
@@ -307,6 +307,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       onFocusChild ||
       (anchorElement && anchorElement.onfocus
         ? () => anchorElement.onfocus
+        : undefined);
+
+    const onBlur =
+      onBlurChild ||
+      (anchorElement && anchorElement.onblur
+        ? () => anchorElement.onblur
         : undefined);
 
     const handleMouseEnter = (e: MouseEvent | ReactMouseEvent) => {
@@ -360,32 +366,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     useEffect(() => {
       if (anchorElement) {
-        anchorElement.addEventListener("mouseenter", (e: MouseEvent) =>
-          handleMouseEnter(e)
-        );
-        anchorElement.addEventListener("mouseleave", (e: MouseEvent) =>
-          handleMouseLeave(e)
-        );
-        anchorElement.addEventListener("focus", (e: FocusEvent) =>
-          handleFocus(e)
-        );
-        anchorElement.addEventListener("blur", (e: FocusEvent) =>
-          handleBlur(e)
-        );
+        anchorElement.addEventListener("mouseenter", handleMouseEnter);
+        anchorElement.addEventListener("mouseleave", handleMouseLeave);
+        anchorElement.addEventListener("focus", handleFocus);
+        anchorElement.addEventListener("blur", handleBlur);
       }
 
       return () => {
         if (anchorElement) {
-          anchorElement.removeEventListener(
-            "mouseenter",
-            () => handleMouseEnter
-          );
-          anchorElement.removeEventListener(
-            "mouseleave",
-            () => handleMouseLeave
-          );
-          anchorElement.removeEventListener("focus", () => handleFocus);
-          anchorElement.removeEventListener("blur", () => handleBlur);
+          anchorElement.removeEventListener("mouseenter", handleMouseEnter);
+          anchorElement.removeEventListener("mouseleave", handleMouseLeave);
+          anchorElement.removeEventListener("focus", handleFocus);
+          anchorElement.removeEventListener("blur", handleBlur);
         }
       };
     }, [anchorElement]);
@@ -407,7 +399,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           anchorEl={anchorElement || childNode}
           open={anchorElement || childNode ? open : false}
           placement={placement}
-          onMouseEnter={(e) => handleMouseEnter(e)}
+          onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
           onBlur={handleBlur}
