@@ -20,20 +20,20 @@ module.exports = [
     test: /\.tsx?$/,
     exclude: /(node_modules|\.webpack)/,
     use: {
-      loader: "ts-loader",
+      loader: "esbuild-loader",
       options: {
-        transpileOnly: true,
+          loader: 'tsx',  // Or 'ts' if you don't need tsx
+          target: 'es2015'
       },
     },
   },
-  // ... existing loader config ...
   {
     test: /\.jsx?$/,
     use: {
-      loader: "babel-loader",
+      loader: "esbuild-loader",
       options: {
-        exclude: /node_modules/,
-        presets: ["@babel/preset-react"],
+        loader: 'jsx',  // Or 'ts' if you don't need tsx
+        target: 'es2015'
       },
     },
   },

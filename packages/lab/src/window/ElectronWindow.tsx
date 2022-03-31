@@ -97,7 +97,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
     new MutationObserver(() => {
       resizeWindow();
     }).observe(bodyElement, {
-      attributes: true,
+      attributes: false,
+      characterData: true,
       childList: true,
       subtree: true,
     });
@@ -133,13 +134,14 @@ const Window: windowType = forwardRef(function ElectronWindow(
         // Will need a dynamic way to account for the window frame
         offsetY = parentWindow.screenTop - window.screenTop - 26;
       }
+      console.log(`${id} is being moved to ${style.left + offsetX},${style.top + offsetY}`);
       ipcRenderer.send("window-position", {
         id: id,
         left: style.left + offsetX,
         top: style.top + offsetY,
       });
     }
-  });
+  },[style]);
 
   return mountNode
     ? ReactDOM.createPortal(

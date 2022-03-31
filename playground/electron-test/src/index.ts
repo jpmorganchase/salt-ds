@@ -56,8 +56,6 @@ const createWindow = (): void => {
 
       return {
         action: "allow",
-        height: 100,
-        width: 100,
         overrideBrowserWindowOptions: {
           show: false,
           frame: false,

@@ -1,0 +1,56 @@
+diff --git a/dist-cjs/check/verifyWorkspaceDependencies.js b/dist-cjs/check/verifyWorkspaceDependencies.js
+index 89555c78426ac0c1a8a00089980ef6f121a50be8..19538e341073a3590e4241f9b137989b5c4299de 100644
+--- a/dist-cjs/check/verifyWorkspaceDependencies.js
++++ b/dist-cjs/check/verifyWorkspaceDependencies.js
+@@ -40,11 +40,6 @@ async function check() {
+       valid = false;
+     }
+ 
+-    if (!packageInfo.location.startsWith('packages')) {
+-      logger.error(`${packageName} is not located within the "/packages" directory in the repository, instead found "${packageInfo.location}"`);
+-      valid = false;
+-    }
+-
+     if (!(0, _isModularType.isValidModularType)(path.join(modularRoot, packageInfo.location))) {
+       logger.error(`${packageName} at ${packageInfo.location} is not a valid modular type - Found ${(0, _isModularType.getModularType)(packageInfo.location)}`);
+       valid = false;
+diff --git a/react-scripts/config/paths.js b/react-scripts/config/paths.js
+index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..7c286ff121ac946a46c82e401060da0e8594269c 100644
+--- a/react-scripts/config/paths.js
++++ b/react-scripts/config/paths.js
+@@ -88,6 +88,8 @@ module.exports = {
+   appSrc: resolveApp('src'),
+   modularSrc: [
+     resolveModular('packages'),
++    resolveModular('playground'),
++    resolveModular('tooling'),
+     resolveModular('node_modules/.modular'),
+   ],
+   appTsConfig: resolveApp('tsconfig.json'),
+diff --git a/react-scripts/config/webpack.config.js b/react-scripts/config/webpack.config.js
+index d32d7d53445d775cf4c2762cae07838d06dad7f6..1d02b20190c3d8e47ebb712f675c294217bc60d0 100644
+--- a/react-scripts/config/webpack.config.js
++++ b/react-scripts/config/webpack.config.js
+@@ -488,6 +488,9 @@ module.exports = function (webpackEnv) {
+             : undefined,
+         ),
+       ),
++      new webpack.ProvidePlugin({
++        React: 'react',
++      }),
+       // Inlines the webpack runtime script. This script is too small to warrant
+       // a network request.
+       // https://github.com/facebook/create-react-app/issues/5358
+diff --git a/tsconfig.json b/tsconfig.json
+index 43e147d2a1993eaa3f405000fa984b9373eb3498..389493ab49f16f533aa75c289c275902a5d4c5ad 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -15,7 +15,7 @@
+     "resolveJsonModule": true,
+     "isolatedModules": true,
+     "noEmit": true,
+-    "jsx": "react",
++    "jsx": "react-jsx",
+     "sourceMap": true
+   }
+ }
