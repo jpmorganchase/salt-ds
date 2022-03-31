@@ -1,6 +1,5 @@
 import {
   Children,
-  CSSProperties,
   FC,
   ForwardedRef,
   forwardRef,
@@ -16,10 +15,6 @@ import { FlexItem, FlexItemProps } from "../FlexItem";
 const withBaseName = makePrefixer("uitkPanelledLayout");
 
 export interface PanelledLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
   /**
    * Flex item components to be rendered.
    */

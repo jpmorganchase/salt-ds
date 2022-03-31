@@ -1,10 +1,9 @@
 import {
-  forwardRef,
-  CSSProperties,
-  ReactElement,
-  HTMLAttributes,
-  useEffect,
   Children,
+  forwardRef,
+  HTMLAttributes,
+  ReactElement,
+  useEffect,
 } from "react";
 import cx from "classnames";
 import warning from "warning";
@@ -16,10 +15,6 @@ import "./BorderLayout.css";
 
 export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  /**
    * Defines the size of the gutter between the columns
    */
   columnGap?: number | string;
@@ -27,10 +22,6 @@ export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the size of the gutter between the rows
    */
   rowGap?: number | string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
   /**
    * Border item components to be rendered.
    */

@@ -1,6 +1,5 @@
 import {
   Children,
-  CSSProperties,
   forwardRef,
   HTMLAttributes,
   useEffect,
@@ -19,15 +18,9 @@ export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The animation when the slides are shown.
    **/
-
   animation?: "slide" | "fade";
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
   activeIndex?: number;
   direction?: AnimationsDirection;
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkDeckLayout");
@@ -79,7 +72,13 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
               animation={animation}
               direction={direction}
               transition={transition}
-              current={activeIndex === index}
+              position={
+                activeIndex === index
+                  ? "current"
+                  : activeIndex < index
+                  ? "next"
+                  : "previous"
+              }
             >
               {child}
             </DeckItem>

@@ -1,9 +1,9 @@
-import { forwardRef, HTMLAttributes, CSSProperties } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
 import "./GridLayout.css";
-import { GridAlignment, GridProperty, GRID_ALIGNMENT_BASE } from "../types";
+import { GRID_ALIGNMENT_BASE, GridAlignment, GridProperty } from "../types";
 
 export const GRID_LAYOUT_CONTENT_ALIGNMENT = [
   ...GRID_ALIGNMENT_BASE,
@@ -15,10 +15,6 @@ export const GRID_LAYOUT_CONTENT_ALIGNMENT = [
 export type gridContentAlignment = typeof GRID_LAYOUT_CONTENT_ALIGNMENT[number];
 
 export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
   /**
    * Defines a grid container; inline or block depending on the given value.
    */
@@ -73,10 +69,6 @@ export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
   gridTemplateAreas?: string;
   gridTemplateColumns?: string;
   gridTemplateRows?: string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkGridLayout");

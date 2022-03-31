@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  HTMLAttributes,
-  CSSProperties,
-  useState,
-  useEffect,
-} from "react";
+import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
@@ -45,14 +39,6 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Props to be passed to the Scrim component.
    */
   scrimProps?: ScrimProps;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkLayerLayout");

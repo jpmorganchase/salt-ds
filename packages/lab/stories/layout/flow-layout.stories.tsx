@@ -9,8 +9,8 @@ import {
   Metric,
   MetricContent,
   MetricHeader,
-  SEPARATOR_VARIANTS,
   StackLayout,
+  VERTICAL_SEPARATOR_VARIANTS,
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
@@ -50,11 +50,8 @@ ToolkitFlowLayout.argTypes = {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
-  reverse: {
-    control: { type: "boolean" },
-  },
   separator: {
-    options: SEPARATOR_VARIANTS,
+    options: VERTICAL_SEPARATOR_VARIANTS,
     control: { type: "select" },
   },
   wrap: {
@@ -134,11 +131,8 @@ MetricsFlowLayout.argTypes = {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
-  reverse: {
-    control: { type: "boolean" },
-  },
   separator: {
-    options: SEPARATOR_VARIANTS,
+    options: VERTICAL_SEPARATOR_VARIANTS,
     control: { type: "select" },
   },
   wrap: {
