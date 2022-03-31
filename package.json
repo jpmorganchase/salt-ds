@@ -117,7 +117,6 @@
     "is-ci": "^3.0.0",
     "modular-scripts": "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch",
     "no-scroll": "^2.1.1",
-    "package-build-stats": "patch:package-build-stats@npm:7.3.6#.yarn/patches/package-build-stats-npm-7.3.6-f434c8c1a5.patch",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
