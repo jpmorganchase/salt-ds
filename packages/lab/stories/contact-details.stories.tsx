@@ -158,7 +158,7 @@ const DefaultTemplate: Story = () => {
 
 const CompactContactDetailsTemplate: Story = () => {
   return (
-    <div style={{ width: 400 }}>
+    <div style={{ width: 150 }}>
       <ContactDetails variant="compact">
         <ContactAvatar />
         <ContactPrimaryInfo text={personaA.name} />
@@ -171,7 +171,7 @@ const CompactContactDetailsTemplate: Story = () => {
 
 const MiniContactDetailsTemplate: Story = () => {
   return (
-    <div style={{ maxWidth: 400 }}>
+    <div style={{ maxWidth: 150 }}>
       <ContactDetails variant="mini">
         <ContactPrimaryInfo text={personaA.name} />
         <ContactSecondaryInfo text={personaA.email} />

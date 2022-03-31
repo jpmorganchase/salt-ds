@@ -1,13 +1,12 @@
 import cn from "classnames";
 import {
   cloneElement,
-  FocusEvent,
   forwardRef,
   HTMLAttributes,
   ReactNode,
   Ref,
+  RefObject,
   SyntheticEvent,
-  MouseEvent,
   useCallback,
   useEffect,
   useRef,
@@ -15,6 +14,8 @@ import {
   useMemo,
   ReactElement,
   ComponentType,
+  MouseEvent as ReactMouseEvent,
+  FocusEvent as ReactFocusEvent,
 } from "react";
 import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
 import { arrow, limitShift, shift } from "@floating-ui/react-dom";
@@ -44,9 +45,10 @@ export interface TooltipProps
   /**
    * Only single child element is supported.
    */
-  children: ReactElement & {
-    ref?: Ref<unknown>;
+  children?: ReactElement & {
+    ref?: RefObject<HTMLElement>;
   };
+  anchorElement?: HTMLElement;
   /**
    * Removes the tooltip arrow.
    */
@@ -114,7 +116,7 @@ export interface TooltipProps
    *
    * @param {object} event The event source of the callback.
    */
-  onOpen?: (event: SyntheticEvent) => void;
+  onOpen?: (event: SyntheticEvent | Event) => void;
   /**
    * If `true`, the tooltip is shown.
    */
@@ -138,6 +140,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       PopperComponent = Popper,
       PopperProps = {},
       children,
+      anchorElement,
       className: classNameProp,
       disableFocusListener,
       disableHoverListener,
@@ -159,8 +162,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     },
     ref
   ) {
-    const [childNode, setChildNode] = useState(null);
-    const childRef = useForkRef(children.ref, setChildNode);
+    if (!children && !anchorElement) {
+      console.error("Tooltip is missing children or anchorElement");
+      return <></>;
+    }
+
+    const [childNode, setChildNode] = useState<HTMLElement | undefined>();
+    const childRef = useForkRef(children?.ref, setChildNode);
+
     const enterTimer = useRef(-1);
     const leaveTimer = useRef(-1);
     const tooltipId = useId(idProp);
@@ -177,7 +186,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     let open = openState;
 
-    const handleOpen = (event: SyntheticEvent) => {
+    const handleOpen = (event: SyntheticEvent | Event) => {
       clearTimeout(visibleTimer);
       uncontrolledOpen = true;
 
@@ -199,7 +208,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       [leaveDelay, onClose, setOpenState]
     );
 
-    const handleEnter = (event: SyntheticEvent) => {
+    const handleEnter = (event: SyntheticEvent | Event) => {
       clearTimeout(enterTimer.current);
       clearTimeout(leaveTimer.current);
       if (enterDelay || (uncontrolledOpen && enterNextDelay)) {
@@ -214,7 +223,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       }
     };
 
-    const handleLeave = (event: SyntheticEvent) => {
+    const handleLeave = (event: SyntheticEvent | Event) => {
       clearTimeout(enterTimer.current);
       clearTimeout(leaveTimer.current);
       leaveTimer.current = window.setTimeout(() => {
@@ -269,21 +278,38 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     );
 
     const childrenProps: HTMLAttributes<HTMLElement> & {
-      ref: Ref<unknown>;
+      ref?: RefObject<unknown>;
     } = {
-      ...(children.props as HTMLAttributes<HTMLElement>),
-      ref: childRef,
+      ...(children?.props as HTMLAttributes<HTMLElement>),
+      ref: children?.ref,
     };
-
     const {
-      onMouseEnter,
-      onMouseLeave,
-      onFocus,
-      onBlur,
+      onMouseEnter: onMouseEnterChild,
+      onMouseLeave: onMouseLeaveChild,
+      onFocus: onFocusChild,
+      // onBlur,
       ...restChildrenProps
     } = childrenProps;
 
-    const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {
+    const onMouseEnter =
+      onMouseEnterChild ||
+      (anchorElement && anchorElement.onmouseenter
+        ? () => anchorElement.onmouseenter
+        : undefined);
+
+    const onMouseLeave =
+      onMouseLeaveChild ||
+      (anchorElement && anchorElement.onmouseleave
+        ? () => anchorElement.onmouseleave
+        : undefined);
+
+    const onFocus =
+      onFocusChild ||
+      (anchorElement && anchorElement.onfocus
+        ? () => anchorElement.onfocus
+        : undefined);
+
+    const handleMouseEnter = (e: MouseEvent | ReactMouseEvent) => {
       if (!disableHoverListener) {
         handleEnter(e);
 
@@ -295,28 +321,29 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           }
         }, enterDelay);
       }
-      onMouseEnter?.(e);
+
+      // onMouseEnter && onMouseEnter(e);
     };
 
-    const handleMouseLeave = (e: MouseEvent<HTMLElement>) => {
+    const handleMouseLeave = (e: MouseEvent | ReactMouseEvent) => {
       if (!disableHoverListener) {
         handleLeave(e);
       }
-      onMouseLeave?.(e);
+      // onMouseLeave?.(e);
     };
 
-    const handleFocus = (e: FocusEvent<HTMLElement>) => {
+    const handleFocus = (e: FocusEvent | ReactFocusEvent) => {
       if (!disableFocusListener) {
         handleEnter(e);
       }
-      onFocus?.(e);
+      // onFocus?.(e);
     };
 
-    const handleBlur = (e: FocusEvent<HTMLElement>) => {
+    const handleBlur = (e: FocusEvent | ReactFocusEvent) => {
       if (!disableFocusListener) {
         handleLeave(e);
       }
-      onBlur?.(e);
+      // onBlur?.(e);
     };
 
     const handleMiddlewareDataChange: PopperProps["onMiddlewareDataChange"] = (
@@ -330,22 +357,57 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         });
       }
     };
+
+    useEffect(() => {
+      if (anchorElement) {
+        anchorElement.addEventListener("mouseenter", (e: MouseEvent) =>
+          handleMouseEnter(e)
+        );
+        anchorElement.addEventListener("mouseleave", (e: MouseEvent) =>
+          handleMouseLeave(e)
+        );
+        anchorElement.addEventListener("focus", (e: FocusEvent) =>
+          handleFocus(e)
+        );
+        anchorElement.addEventListener("blur", (e: FocusEvent) =>
+          handleBlur(e)
+        );
+      }
+
+      return () => {
+        if (anchorElement) {
+          anchorElement.removeEventListener(
+            "mouseenter",
+            () => handleMouseEnter
+          );
+          anchorElement.removeEventListener(
+            "mouseleave",
+            () => handleMouseLeave
+          );
+          anchorElement.removeEventListener("focus", () => handleFocus);
+          anchorElement.removeEventListener("blur", () => handleBlur);
+        }
+      };
+    }, [anchorElement]);
+
     return (
       <>
-        {cloneElement(children, {
-          ...restChildrenProps,
-          "aria-owns": open ? tooltipId : undefined,
-          "aria-describedby": open ? tooltipId : undefined,
-          onMouseEnter: handleMouseEnter,
-          onMouseLeave: handleMouseLeave,
-          onFocus: handleFocus,
-          onBlur: handleBlur,
-        })}
+        {!!children &&
+          cloneElement(children, {
+            ...restChildrenProps,
+            "aria-owns": open ? tooltipId : undefined,
+            "aria-describedby": open ? tooltipId : undefined,
+            onMouseEnter: handleMouseEnter,
+            onMouseLeave: handleMouseLeave,
+            onFocus: handleFocus,
+            onBlur: handleBlur,
+            ref: childRef,
+          })}
         <PopperComponent
-          anchorEl={childNode}
-          open={childNode ? open : false}
+          anchorEl={anchorElement || childNode}
+          open={anchorElement || childNode ? open : false}
           placement={placement}
-          onMouseEnter={handleMouseEnter}
+          onMouseEnter={(e) => handleMouseEnter(e)}
           onMouseLeave={handleMouseLeave}
           onFocus={handleFocus}
           onBlur={handleBlur}

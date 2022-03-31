@@ -11,11 +11,13 @@ interface BasicBreadcrumbsStoryProps {}
 
 const BasicBreadcrumbsTemplate: Story<BasicBreadcrumbsStoryProps> = (props) => {
   return (
-    <Breadcrumbs>
-      <Breadcrumb href="#">Root Level Entity</Breadcrumb>
-      <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
-      <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
-    </Breadcrumbs>
+    <div style={{ width: 300 }}>
+      <Breadcrumbs>
+        <Breadcrumb href="#">Root Level Entity</Breadcrumb>
+        <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
+        <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
+      </Breadcrumbs>
+    </div>
   );
 };
 

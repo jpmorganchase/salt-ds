@@ -56,7 +56,7 @@ export const AccordionSummary = forwardRef<
       tabIndex={isDisabled ? -1 : 0}
     >
       <div className={withBaseName("icon")}>{icon}</div>
-      <Div maxRows={1}>{children}</Div>
+      <Div>{children}</Div>
     </div>
   );
 });
