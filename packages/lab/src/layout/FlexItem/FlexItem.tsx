@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@brandname/core";
 import "./FlexItem.css";
 import cx from "classnames";
@@ -20,10 +20,6 @@ export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
    * Allows the alignment specified by parent to be overridden for individual items.
    */
   alignSelf?: flexItemAlignment;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
   /**
    * Controls the order in which the item appears in the flex container.
    */
@@ -47,10 +43,6 @@ export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the item's height
    */
   height?: number | string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(

@@ -1,6 +1,5 @@
 .uitkSeparator {
   width: auto;
-  margin: 0 var(--uitk-spacing-unit);
 }
 .uitkSeparator-stretch {
   flex-basis: 100%;

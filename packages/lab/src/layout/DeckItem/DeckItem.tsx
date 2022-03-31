@@ -1,22 +1,16 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import { GridItem } from "../GridItem";
 
 import { makePrefixer } from "@brandname/core";
-import { GridAlignment, AnimationsDirection } from "../types";
+import { AnimationsDirection, GridAlignment } from "../types";
 import "./DeckItem.css";
 
 export type transition = "increase" | "decrease";
 
 export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
   animation?: "slide" | "fade";
-  current: boolean;
   direction?: AnimationsDirection;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
-
   /**
    * Aligns a grid item inside a cell along the inline (row) axis
    */
@@ -26,17 +20,22 @@ export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
    */
   align?: GridAlignment;
   transition: transition;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
+  position: "current" | "previous" | "next";
 }
 
 const withBaseName = makePrefixer("uitkDeckItem");
 
 export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
   function DeckItem(
-    { animation, current, children, className, direction, transition, ...rest },
+    {
+      animation,
+      children,
+      className,
+      direction,
+      position,
+      transition,
+      ...rest
+    },
     ref
   ) {
     const getActiveClasses = () => {
@@ -58,15 +57,16 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
           ];
     };
 
+    const current = position === "current";
+
     const animationClass =
       animation && current ? getActiveClasses()[0] : getActiveClasses()[1];
     return (
       <GridItem
         className={cx(
           withBaseName(),
-          current && withBaseName("current"),
-          withBaseName(animationClass),
-          !current && withBaseName("hidden")
+          withBaseName(position),
+          withBaseName(animationClass)
         )}
         colStart={1}
         colEnd={2}

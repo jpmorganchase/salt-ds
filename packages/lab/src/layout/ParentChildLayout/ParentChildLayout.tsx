@@ -1,10 +1,9 @@
 import {
   forwardRef,
   HTMLAttributes,
-  CSSProperties,
+  ReactNode,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
 import cx from "classnames";
 
@@ -51,14 +50,6 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Child component to be rendered
    */
   child: ReactNode;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkParentChildLayout");

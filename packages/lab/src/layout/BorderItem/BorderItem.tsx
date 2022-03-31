@@ -1,6 +1,6 @@
-import { CSSProperties, HTMLAttributes, forwardRef } from "react";
+import { forwardRef } from "react";
 import cx from "classnames";
-import { GridItem } from "../GridItem";
+import { GridItem, GridItemProps } from "../GridItem";
 
 import { makePrefixer } from "@brandname/core";
 import { GridAlignment } from "../types";
@@ -16,11 +16,7 @@ export const BORDER_POSITION = [
 
 export type BorderPosition = typeof BORDER_POSITION[number];
 
-export interface BorderItemProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
+export interface BorderItemProps extends GridItemProps {
   /**
    * Aligns a grid item inside a cell along the inline (row) axis
    */
@@ -45,11 +41,6 @@ export interface BorderItemProps extends HTMLAttributes<HTMLDivElement> {
    * Defines if the item should stick to the edges of its container
    */
   sticky?: boolean;
-
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkBorderItem");

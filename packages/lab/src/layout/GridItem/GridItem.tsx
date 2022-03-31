@@ -1,14 +1,10 @@
-import { CSSProperties, HTMLAttributes, forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
 import { GridAlignment, GridProperty } from "../types";
 
 export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
   /**
    * The item will span across the provided number of grid columns
    */
@@ -45,10 +41,6 @@ export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
    * Gives an item a name so that it can be referenced by a template created with the grid-template-areas property
    */
   area?: string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkGridItem");
