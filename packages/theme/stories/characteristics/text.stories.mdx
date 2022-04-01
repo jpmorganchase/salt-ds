@@ -1,0 +1,179 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { TextBlock } from "docs/components/TextBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+} from "docs/components/LineBlock";
+import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
+
+import { CornerBlock } from "docs/components/CornerBlock";
+import { TextAlignBlock } from "docs/components/TextAlignBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Text" />
+
+# Text
+
+## Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-text-primary-color" />
+      <ColorBlock colorVar="--uitk-text-primary-color-disabled" />
+      <ColorBlock colorVar="--uitk-text-secondary-color" />
+      <ColorBlock colorVar="--uitk-text-secondary-color-disabled" />
+      <ColorBlock colorVar="--uitk-text-growth-indicator-up-color" />
+      <ColorBlock colorVar="--uitk-text-growth-indicator-down-color" />
+      <ColorBlock colorVar="--uitk-text-link-color" />
+      <ColorBlock colorVar="--uitk-text-link-color-hover" />
+      <ColorBlock colorVar="--uitk-text-link-color-active" />
+      <ColorBlock colorVar="--uitk-text-link-color-disabled" />
+      <ColorBlock colorVar="--uitk-text-highlight-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## H1
+
+<Canvas>
+  <Story name="H1">
+    <>
+      <TextBlock
+        lineHeight="--uitk-text-h1-line-height"
+        fontSize="--uitk-text-h1-font-size"
+        fontWeight="--uitk-text-h1-font-weight"
+      />
+      <DocGrid textExample={true}>
+        <BlankBlockCell />
+        <BlankBlockCode>--uitk-text-h1-line-height</BlankBlockCode>
+        <BlankBlockCell />
+        <BlankBlockCode>--uitk-text-h1-font-size</BlankBlockCode>
+        <BlankBlockCell />
+        <BlankBlockCode>--uitk-text-h1-font-weight</BlankBlockCode>
+      </DocGrid>
+    </>
+  </Story>
+</Canvas>
+
+## H2
+
+<Canvas>
+  <Story name="H2">
+    <TextBlock
+      lineHeight="--uitk-text-h2-line-height"
+      fontSize="--uitk-text-h2-font-size"
+      fontWeight="--uitk-text-h2-font-weight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h2-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h2-font-size</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h2-font-weight</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## H3
+
+<Canvas>
+  <Story name="H3">
+    <TextBlock
+      lineHeight="--uitk-text-h3-line-height"
+      fontSize="--uitk-text-h3-font-size"
+      fontWeight="--uitk-text-h3-font-weight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h3-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h3-font-size</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h3-font-weight</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## H4
+
+<Canvas>
+  <Story name="H4">
+    <TextBlock
+      lineHeight="--uitk-text-h4-line-height"
+      fontSize="--uitk-text-h4-font-size"
+      fontWeight="--uitk-text-h4-font-weight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h4-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h4-font-size</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-h4-font-weight</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Body
+
+<Canvas>
+  <Story name="Body">
+    <TextBlock
+      lineHeight="--uitk-text-line-height"
+      fontSize="--uitk-text-font-size"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-font-size</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Caption
+
+<Canvas>
+  <Story name="Caption">
+    <TextBlock
+      lineHeight="--uitk-text-caption-line-height"
+      fontSize="--uitk-text-caption-font-size"
+      fontWeight="--uitk-text-caption-font-weight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-caption-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-caption-font-size</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-caption-font-weight</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Help
+
+<Canvas>
+  <Story name="Help">
+    <TextBlock
+      lineHeight="--uitk-text-help-line-height"
+      fontSize="--uitk-text-help-font-size"
+      fontStyle="--uitk-text-help-font-style"
+      fontWeight="--uitk-text-help-font-weight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-help-line-height</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-help-font-size</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-help-font-weight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-text-help-font-style</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>

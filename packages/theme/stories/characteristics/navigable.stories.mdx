@@ -1,0 +1,96 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
+import { FontWeightBlock } from "docs/components/FontWeightBlock";
+import { BorderBlock } from "docs/components/BorderBlock";
+import { BlankBlockCode } from "docs/components/BlankBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Navigable" />
+
+# Navigable
+
+Components that allow a user to navigate across UI sections or data sets and change view context.
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-navigable-cursor-active" />
+      <CursorBlock cursor="--uitk-navigable-cursor-hover" />
+      <FontWeightBlock fontWeight="--uitk-navigable-font-weight-active" />
+      <ColorBlock colorVar="--uitk-navigable-indicator-color-active" />
+      <ColorBlock colorVar="--uitk-navigable-indicator-color-hover" />
+      <ColorBlock colorVar="--uitk-navigable-link-color" />
+      <ColorBlock colorVar="--uitk-navigable-link-active" />
+      <ColorBlock colorVar="--uitk-navigable-link-hover" />
+      <ColorBlock colorVar="--uitk-navigable-background" />
+      <ColorBlock colorVar="--uitk-navigable-background-active" />
+      <ColorBlock colorVar="--uitk-navigable-background-hover" />
+      <BorderBlock borderBottom="--uitk-navigable-border" />
+      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### High emphasis overrides
+
+<Canvas>
+  <Story name="High emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-navigable-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-navigable-background-active"
+      />
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-navigable-background-hover"
+      />
+      <BorderBlock
+        className="uitkEmphasisHigh"
+        borderBottom="--uitk-navigable-border"
+      />
+      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Low emphasis overrides
+
+<Canvas>
+  <Story name="Low emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-navigable-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-navigable-background-active"
+      />
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-navigable-background-hover"
+      />
+      <BorderBlock
+        className="uitkEmphasisLow"
+        borderBottom="--uitk-navigable-border"
+      />
+      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Announcement Dialog`
+- `Link`
+- `Tabs`
+- `Vertical Nav`

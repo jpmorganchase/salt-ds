@@ -1,0 +1,30 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Accent" />
+
+# Accent
+
+Components which can or should be emphasized against others in close proximity.
+
+## CSS Variables
+
+### Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-accent-background" />
+      <ColorBlock colorVar="--uitk-accent-border-color" />
+      <ColorBlock colorVar="--uitk-accent-text-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Avatar`
+- `Contact Details`
+- `ECW`
+- `Wizard`

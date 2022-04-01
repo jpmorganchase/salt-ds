@@ -1,0 +1,41 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockDashed,
+} from "docs/components/LineBlock";
+import { NumberBlock } from "docs/components/NumberBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Drop Target" />
+
+# Drop Target
+
+Components which indicate a target area where a draggable item can be dropped (related to Draggable).
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <LineBlockDashed
+        lineStyle="--uitk-droptarget-border-style"
+        lineWidth="--uitk-droptarget-border-width"
+      />
+      <LineBlock lineWidth="--uitk-droptarget-border-width" />
+      <ColorBlock colorVar="--uitk-droptarget-border-color" />
+      <ColorBlock colorVar="--uitk-droptarget-background" />
+      <ColorBlock colorVar="--uitk-droptarget-background-hover" />
+      <ColorBlock colorVar="--uitk-droptarget-icon-color" />
+      <ColorBlock colorVar="--uitk-droptarget-icon-color-hover" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Data Grid`
+- `File Drop Zone`

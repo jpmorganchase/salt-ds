@@ -1,0 +1,94 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { ShadowBlockCell } from "docs/components/ShadowBlock";
+import { BlankBlockCode } from "docs/components/BlankBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Overlayable" />
+
+# Overlayable
+
+Components that may form a hierarchy and stack upon or beneath other elements of the UI.
+
+## CSS Variables
+
+### Elevation
+
+<Canvas>
+  <Story name="Elevation">
+    <DocGrid>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-0" />
+      <BlankBlockCode>--uitk-overlayable-elevation-0</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-1" />
+      <BlankBlockCode>--uitk-overlayable-elevation-1</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-2" />
+      <BlankBlockCode>--uitk-overlayable-elevation-2</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-3" />
+      <BlankBlockCode>--uitk-overlayable-elevation-3</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-4" />
+      <BlankBlockCode>--uitk-overlayable-elevation-4</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-5" />
+      <BlankBlockCode>--uitk-overlayable-elevation-5</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-6" />
+      <BlankBlockCode>--uitk-overlayable-elevation-6</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Scrim
+
+<Canvas>
+  <Story name="Scrim">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-overlayable-scrim-background" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### High emphasis overrides
+
+<Canvas>
+  <Story name="High emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-overlayable-scrim-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Low emphasis overrides
+
+<Canvas>
+  <Story name="Low emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-overlayable-scrim-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Announcement Dialog` (inherited)
+- `App Header`
+- `Card`
+- `Cascading Menu`
+- `Context Menu` (inherited)
+- `Data Grid`
+- `Date Picker`
+- `Dialog`
+- `Drawer`
+- `ECW` (inherited)
+- `Mega Menu`
+- `Overlay`
+- `Preferences Dialog` (inherited)
+- `Scrim`
+- `Selectable Card`
+- `Skip Link`
+- `Toast`
+- `Tooltip`
+- `Wizard`

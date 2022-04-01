@@ -1,0 +1,46 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Taggable" />
+
+# Taggable
+
+Components allowing for individual items or data to be organized.
+
+## CSS Variables
+
+### Misc
+
+<Canvas>
+  <Story name="Misc">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-taggable-cursor-active" />
+      <CursorBlock cursor="--uitk-taggable-cursor-hover" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-taggable-background" />
+      <ColorBlock colorVar="--uitk-taggable-background-active" />
+      <ColorBlock colorVar="--uitk-taggable-background-hover" />
+      <ColorBlock colorVar="--uitk-taggable-text-color" />
+      <ColorBlock colorVar="--uitk-taggable-text-color-active" />
+      <ColorBlock colorVar="--uitk-taggable-text-color-hover" />
+      <ColorBlock colorVar="--uitk-taggable-icon-color" />
+      <ColorBlock colorVar="--uitk-taggable-icon-color-active" />
+      <ColorBlock colorVar="--uitk-taggable-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-taggable-stroke" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Pill`

@@ -1,0 +1,80 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
+import { TextAlignBlock } from "docs/components/TextAlignBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Selectable" />
+
+# Selectable
+
+Group of components that allow single or multiple selection, Selection can
+trigger actions.
+
+## CSS Variables
+
+### Misc
+
+<Canvas>
+  <Story name="Misc">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-selectable-cursor-active" />
+      <CursorBlock cursor="--uitk-selectable-cursor-active" />
+      <TextAlignBlock textAlign="--uitk-selectable-default-text-align" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-selectable-background" />
+      <ColorBlock colorVar="--uitk-selectable-background-hover" />
+      <ColorBlock colorVar="--uitk-selectable-background-active" />
+      <ColorBlock colorVar="--uitk-selectable-background-blur-active" />
+      <ColorBlock colorVar="--uitk-selectable-border" />
+      <ColorBlock colorVar="--uitk-selectable-border-hover" />
+      <ColorBlock colorVar="--uitk-selectable-border-active" />
+      <ColorBlock colorVar="--uitk-selectable-border-blur-active" />
+      <ColorBlock colorVar="--uitk-selectable-fill" />
+      <ColorBlock colorVar="--uitk-selectable-fill-selecting" />
+      <ColorBlock colorVar="--uitk-selectable-fill-selected" />
+      <ColorBlock colorVar="--uitk-selectable-fill-partial" />
+      <ColorBlock colorVar="--uitk-selectable-icon-color" />
+      <ColorBlock colorVar="--uitk-selectable-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-selectable-icon-color-active" />
+      <ColorBlock colorVar="--uitk-selectable-icon-color-blur-active" />
+      <ColorBlock colorVar="--uitk-selectable-stroke" />
+      <ColorBlock colorVar="--uitk-selectable-stroke-selecting" />
+      <ColorBlock colorVar="--uitk-selectable-stroke-selected" />
+      <ColorBlock colorVar="--uitk-selectable-stroke-partial" />
+      <ColorBlock colorVar="--uitk-selectable-text-color" />
+      <ColorBlock colorVar="--uitk-selectable-text-color-hover" />
+      <ColorBlock colorVar="--uitk-selectable-text-color-active" />
+      <ColorBlock colorVar="--uitk-selectable-text-color-blur-active" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Calendar`
+- `Card`
+- `Carousel`
+- `Cascading Menu`
+- `Checkbox`
+- `Combo Box` (inherited)
+- `Context Menu` (inherited)
+- `Data Grid`
+- `List`
+- `Menu Button` (inherited)
+- `Pagination`
+- `Radio Button`
+- `Reorderable List`
+- `Selectable Card`
+- `Split Button` (inherited)
+- `Switch`
+- `Toggle Button`
+- `Tree`

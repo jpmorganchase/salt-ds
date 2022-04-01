@@ -19,3 +19,7 @@
   line-height: 1;
   width: var(--uitkDocGrid-width, auto);
 }
+
+.uitkDocGrid-textExample {
+  width: fit-content;
+}

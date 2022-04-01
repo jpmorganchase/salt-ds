@@ -1,3 +1,9 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-droptarget-border-style: dashed;
+  --uitk-droptarget-border-width: 1px;
+}
+
 .uitk-light {
   --uitk-droptarget-background: var(--uitk-color-grey-20);
   --uitk-droptarget-background-hover: var(--uitk-color-blue-30);
@@ -5,7 +11,7 @@
   --uitk-droptarget-icon-color: var(--uitk-color-grey-200);
   --uitk-droptarget-icon-color-hover: var(--uitk-color-grey-200);
 
-  --uitk-droptarget-border: dashed 1px var(--uitk-color-grey-60);
+  --uitk-droptarget-border-color: var(--uitk-color-grey-60);
 }
 
 .uitk-dark {
@@ -15,5 +21,5 @@
   --uitk-droptarget-icon-color: var(--uitk-color-grey-60);
   --uitk-droptarget-icon-color-hover: var(--uitk-color-grey-60);
 
-  --uitk-droptarget-border: dashed 1px var(--uitk-color-grey-200);
+  --uitk-droptarget-border-color: var(--uitk-color-grey-200);
 }

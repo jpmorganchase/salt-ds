@@ -1,0 +1,90 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockDashed,
+} from "docs/components/LineBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Editable" />
+
+# Editable
+
+Components that hold mutable data and allow for data entry.
+
+## CSS Variables
+
+### Misc
+
+<Canvas>
+  <Story name="Misc">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-editable-cursor-active" />
+      <CursorBlock cursor="--uitk-editable-cursor-hover" />
+      <LineBlock lineWidth="--uitk-editable-border-width" />
+      <LineBlock lineWidth="--uitk-editable-border-width-hover" />
+      <LineBlock lineWidth="--uitk-editable-border-width-active" />
+      <LineBlock lineWidth="--uitk-editable-border-width-readonly" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-editable-background" />
+      <ColorBlock colorVar="--uitk-editable-border-color" />
+      <ColorBlock colorVar="--uitk-editable-border-color-active" />
+      <ColorBlock colorVar="--uitk-editable-border-color-hover" />
+      <ColorBlock colorVar="--uitk-editable-border-color-readonly" />
+      <ColorBlock colorVar="--uitk-editable-icon-color" />
+      <ColorBlock colorVar="--uitk-editable-icon-color-active" />
+      <ColorBlock colorVar="--uitk-editable-icon-color-hover" />
+      <ColorBlock colorVar="--uitk-editable-icon-color-readonly" />
+      <ColorBlock colorVar="--uitk-editable-text-primary" />
+      <ColorBlock colorVar="--uitk-editable-text-secondary" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### High emphasis overrides
+
+<Canvas>
+  <Story name="High emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-editable-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Low emphasis overrides
+
+<Canvas>
+  <Story name="Low emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-editable-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Combo Box` (inherited)
+- `Date Picker` (inherited)
+- `Filterable List`(inherited)
+- `Form Field`
+- `Formatted Input` (inherited)
+- `Input`
+- `Search` (inherited)
+- `Stepper Input` (inherited)
+- `Tokenized Input` (inherited)
