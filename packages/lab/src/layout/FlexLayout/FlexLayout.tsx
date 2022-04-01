@@ -1,13 +1,4 @@
-import {
-  Children,
-  forwardRef,
-  HTMLAttributes,
-  SyntheticEvent,
-  useState,
-  useEffect,
-  useMemo,
-  SetStateAction,
-} from "react";
+import { Children, forwardRef, HTMLAttributes, SyntheticEvent } from "react";
 import { makePrefixer } from "@brandname/core";
 import cx from "classnames";
 
@@ -96,18 +87,11 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   onSplitterMoved?: (event: SyntheticEvent | Event) => void;
 }
 
-const defaultDirection = "row";
-const defaultWrap = "wrap";
-
-function getResponsiveValue<T>(
-  value: T[],
-  defaultValue: T,
-  viewport: Viewport
-): T {
+function getResponsiveValue<T>(value: T[], viewport: Viewport): T {
   const flexBreakpoints = Object.values(Viewport);
 
   const customResponsiveProps = flexBreakpoints.map((breakpoint, index) => ({
-    [breakpoint]: value[index] ? value[index] : defaultValue,
+    [breakpoint]: value[index] ? value[index] : value[0],
   }));
 
   const responsiveValue =
@@ -125,11 +109,11 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       className,
       colGap,
       display = "flex",
-      direction = defaultDirection,
+      direction = "row",
       justifyContent = "flex-start",
       rowGap,
       style,
-      wrap = defaultWrap,
+      wrap = "wrap",
       onSplitterMoved,
       width,
       height,
@@ -140,42 +124,15 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
     },
     ref
   ) {
-    const [flexWrap, setFlexWrap] = useState<Wrap | Wrap[]>(defaultWrap);
-
-    const [flexDirection, setFlexDirection] = useState<Direction | Direction[]>(
-      defaultDirection
-    );
-
     const viewport = useViewport();
 
-    const customProps = useMemo(
-      () => [
-        {
-          prop: direction,
-          defaultValue: defaultDirection,
-          setState: (value: string | boolean) => {
-            setFlexDirection(value as SetStateAction<Direction | Direction[]>);
-          },
-        },
-        {
-          prop: wrap,
-          defaultValue: defaultWrap,
-          setState: (value: string | boolean) =>
-            setFlexWrap(value as SetStateAction<Wrap | Wrap[]>),
-        },
-      ],
-      []
-    );
+    const flexDirection = !Array.isArray(direction)
+      ? direction
+      : getResponsiveValue(direction, viewport);
 
-    useEffect(() => {
-      customProps.forEach(({ prop, defaultValue, setState }) => {
-        if (!Array.isArray(prop)) {
-          setState(prop);
-          return;
-        }
-        setState(getResponsiveValue(prop, defaultValue, viewport));
-      });
-    }, [viewport]);
+    const flexWrap = !Array.isArray(wrap)
+      ? wrap
+      : getResponsiveValue(wrap, viewport);
 
     const flexLayoutStyles = {
       alignContent,
