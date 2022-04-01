@@ -8,6 +8,7 @@ import { withThemeBackground } from "./theme-switch/helpers";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { withToolkitProvider } from "docs/decorators/withToolkitProvider";
+import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -35,11 +36,19 @@ export const globalTypes: GlobalTypes = {
     name: "Responsive Container",
     description: "wrap example in responsive container",
     defaultValue: "unwrap",
-    control: { type: "boolean" },
-
     toolbar: {
       icon: "collapse",
       items: ["wrap", "unwrap"],
+    },
+  },
+  textSpacing: {
+    name: "Text Spacing",
+    description:
+      "Applied styles meeting minimum required for WCAG 1.4.12 Text Spacing",
+    defaultValue: "disable",
+    toolbar: {
+      icon: "expand",
+      items: ["disable", "enable"],
     },
   },
 };
@@ -70,4 +79,5 @@ export const decorators = [
   withThemeBackground,
   withTestIdWrapper,
   withToolkitProvider,
+  WithTextSpacingWrapper,
 ];
