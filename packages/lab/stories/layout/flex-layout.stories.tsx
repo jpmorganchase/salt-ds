@@ -46,7 +46,6 @@ ToolkitFlexLayout.args = {
   alignItems: "stretch",
   display: "flex",
   direction: "row",
-  reverse: false,
   wrap: "wrap",
   justifyContent: "flex-start",
 };
@@ -67,9 +66,6 @@ ToolkitFlexLayout.argTypes = {
   direction: {
     options: ["row", "column"],
     control: { type: "radio" },
-  },
-  reverse: {
-    control: { type: "boolean" },
   },
   separator: {
     options: SEPARATOR_VARIANTS,
@@ -125,7 +121,6 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
       style={{ ...flexLayoutStyle, maxWidth: "none" }}
       direction={["column", "column", "row"]}
       wrap={["wrap", "wrap", "nowrap"]}
-      reverse={[true, true]}
       {...args}
     >
       {Array.from({ length: 12 }, (_, index) => (
@@ -159,9 +154,6 @@ ToolkitFlexLayoutResponsive.argTypes = {
   direction: {
     options: ["row", "column"],
     control: { type: "radio" },
-  },
-  reverse: {
-    control: { type: "boolean" },
   },
   separator: {
     options: SEPARATOR_VARIANTS,

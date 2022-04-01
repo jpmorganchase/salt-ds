@@ -1,6 +1,6 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef } from "react";
 import cx from "classnames";
-import { GridItem } from "../GridItem";
+import { GridItem, GridItemProps } from "../GridItem";
 
 import { makePrefixer } from "@brandname/core";
 import { AnimationsDirection, GridAlignment } from "../types";
@@ -8,7 +8,7 @@ import "./DeckItem.css";
 
 export type transition = "increase" | "decrease";
 
-export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface DeckItemProps extends GridItemProps {
   animation?: "slide" | "fade";
   direction?: AnimationsDirection;
   /**

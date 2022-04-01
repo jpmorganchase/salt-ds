@@ -49,9 +49,6 @@ ToolkitSplitLayout.args = {
 };
 
 ToolkitSplitLayout.argTypes = {
-  reverse: {
-    control: { type: "boolean" },
-  },
   separator: {
     options: SEPARATOR_VARIANTS,
     control: { type: "select" },
@@ -127,9 +124,6 @@ HeaderWithSplitLayout.args = {
 };
 
 HeaderWithSplitLayout.argTypes = {
-  reverse: {
-    control: { type: "boolean" },
-  },
   separator: {
     options: SEPARATOR_VARIANTS,
     control: { type: "select" },
@@ -158,9 +152,6 @@ ButtonBarInSplitLayout.args = {
 };
 
 ButtonBarInSplitLayout.argTypes = {
-  reverse: {
-    control: { type: "boolean" },
-  },
   separator: {
     options: SEPARATOR_VARIANTS,
     control: { type: "select" },

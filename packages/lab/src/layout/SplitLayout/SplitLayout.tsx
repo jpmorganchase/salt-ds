@@ -9,10 +9,6 @@ const withBaseName = makePrefixer("uitkSplitLayout");
 
 export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Reverses the direction of children.
-   */
-  reverse?: boolean;
-  /**
    * Adds a line separator between items
    */
   separator?: SeparatorVariant;
@@ -24,19 +20,11 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
-    {
-      children,
-      className,
-      reverse = false,
-      separator,
-      stretchedItem,
-      style,
-      ...rest
-    },
+    { children, className, separator, stretchedItem, style, ...rest },
     ref
   ) {
     const flowLayoutStyles = {
-      flexFlow: `row${reverse ? "-reverse" : ""} nowrap`,
+      flexFlow: "row nowrap",
       ...style,
     };
     return (

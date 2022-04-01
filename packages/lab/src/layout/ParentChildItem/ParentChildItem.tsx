@@ -1,4 +1,4 @@
-import { forwardRef, CSSProperties } from "react";
+import { forwardRef } from "react";
 import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
@@ -16,14 +16,6 @@ export interface ParentChildItemProps extends FlexItemProps {
    * Direction for slide animations.
    */
   direction?: SlideDirection;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  /**
-   * Custom styles
-   */
-  style?: CSSProperties;
 }
 
 const withBaseName = makePrefixer("uitkParentChildItem");
