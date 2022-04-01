@@ -10,16 +10,20 @@ import useViewport, { Viewport } from "../internal/useViewport";
 
 const withBaseName = makePrefixer("uitkFlexLayout");
 
-export const FLEX_ALIGNMENT_BASE = ["flex-start", "flex-end", "center"];
+export const FLEX_ALIGNMENT_BASE = [
+  "flex-start",
+  "flex-end",
+  "center",
+] as const;
 export const FLEX_CONTENT_ALIGNMENT_BASE = [
   ...FLEX_ALIGNMENT_BASE,
   "space-between",
   "space-around",
   "space-evenly",
-];
+] as const;
 
-export type flexAlignment = typeof FLEX_ALIGNMENT_BASE[number];
-export type flexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
+export type FlexAlignment = typeof FLEX_ALIGNMENT_BASE[number];
+export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 type Direction = "row" | "column";
 
@@ -43,15 +47,15 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the alignment along the main axis.
    */
-  justifyContent?: flexContentAlignment;
+  justifyContent?: FlexContentAlignment;
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  alignItems?: flexAlignment | "stretch" | "baseline";
+  alignItems?: FlexAlignment | "stretch" | "baseline";
   /**
    * Aligns a flex container’s lines within when there is extra space in the cross-axis.
    */
-  alignContent?: flexContentAlignment | "stretch";
+  alignContent?: FlexContentAlignment | "stretch";
   resizeable?: boolean;
   /**
    * Controls the space between rows.
