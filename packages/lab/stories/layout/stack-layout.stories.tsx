@@ -39,9 +39,6 @@ ToolkitStackLayout.argTypes = {
     options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
     control: { type: "select" },
   },
-  reverse: {
-    control: { type: "boolean" },
-  },
   splitter: {
     control: { type: "boolean" },
   },
@@ -80,9 +77,6 @@ CardsInStackLayout.argTypes = {
   alignItems: {
     options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
     control: { type: "select" },
-  },
-  reverse: {
-    control: { type: "boolean" },
   },
   splitter: {
     control: { type: "boolean" },

@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@brandname/core";
 import "./Separator.css";
 import cx from "classnames";
@@ -30,11 +30,6 @@ export type SeparatorVariant = typeof SEPARATOR_VARIANTS[number];
 export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   width?: number;
   variant?: SeparatorVariant;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  style?: CSSProperties;
   stretch?: boolean;
 }
 

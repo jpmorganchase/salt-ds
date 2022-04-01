@@ -2,7 +2,7 @@ import { makePrefixer } from "@brandname/core";
 import { forwardRef, HTMLAttributes, SyntheticEvent } from "react";
 import cx from "classnames";
 import { flexAlignment, FlexLayout } from "../FlexLayout";
-import { SeparatorVariant } from "../Separator";
+import { HorizontalSeparatorVariant } from "../Separator";
 
 const withBaseName = makePrefixer("uitkStackLayout");
 
@@ -12,17 +12,13 @@ export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   alignItems?: flexAlignment | "stretch" | "baseline";
   /**
-   * Reverses the direction of children.
-   */
-  reverse?: boolean;
-  /**
    * Controls the space between rows.
    */
   rowGap?: number | string;
   /**
    * Adds a line separator between items
    */
-  separator?: SeparatorVariant;
+  separator?: HorizontalSeparatorVariant;
   /**
    * Allows the items to resize with a splitter
    */
@@ -39,7 +35,6 @@ export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
       alignItems,
       children,
       className,
-      reverse,
       rowGap,
       style,
       separator,
@@ -57,7 +52,6 @@ export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
         splitter={splitter}
         onSplitterMoved={onSplitterMoved}
         alignItems={alignItems}
-        reverse={reverse}
         className={cx(className, withBaseName())}
         style={style}
         ref={ref}
