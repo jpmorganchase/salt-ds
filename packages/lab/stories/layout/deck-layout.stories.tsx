@@ -9,6 +9,7 @@ import {
   GridItem,
   StackLayout,
   Tabstrip,
+  GridLayoutProps,
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
@@ -93,7 +94,7 @@ const useTabSelection = (initialValue?: any) => {
 
 const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
-  const blogProps = {
+  const blogProps: GridLayoutProps = {
     columns: 3,
     columnGap: "8rem",
     rowGap: "1rem",
@@ -108,7 +109,8 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
       <Tabstrip onChange={handleTabSelection} defaultTabs={tabs} />
       <DeckLayout {...args} activeIndex={selectedTab}>
         <ToolkitParentChildLayoutResponsive
-          children={[]}
+          parent={[]}
+          child={[]}
           stackedAtBreakpoint={600}
         />
         <MetricsFlowLayout />

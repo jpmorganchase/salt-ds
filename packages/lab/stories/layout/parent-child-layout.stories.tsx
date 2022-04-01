@@ -48,10 +48,10 @@ const child = (
 const Template: ComponentStory<typeof ParentChildLayout> = (args) => {
   return (
     <ParentChildLayout
+      {...args}
       style={flexLayoutStyle}
       parent={parent}
       child={child}
-      {...args}
     />
   );
 };
@@ -80,11 +80,11 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
         Show child
       </Button>
       <ParentChildLayout
+        {...args}
         style={{ ...flexLayoutStyle, width: "50vw" }}
         stackedViewElement={currentView}
         parent={parent}
         child={child}
-        {...args}
       />
     </>
   );
@@ -191,6 +191,7 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
 
   return (
     <ParentChildLayout
+      {...args}
       stackedViewElement={currentView}
       parent={parent}
       child={child}
@@ -199,7 +200,6 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
         padding: 16,
         minWidth: "70vw",
       }}
-      {...args}
     />
   );
 };
