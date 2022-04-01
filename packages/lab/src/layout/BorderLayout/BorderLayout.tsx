@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   ReactElement,
   useEffect,
+  useMemo,
 } from "react";
 import cx from "classnames";
 import warning from "warning";
@@ -34,21 +35,33 @@ const numberOfColumns = 3;
 
 export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
   function BorderLayout({ children, className, ...rest }, ref) {
-    const topSection = "header ".repeat(numberOfColumns);
+    const borderAreas = useMemo(
+      () =>
+        Children.map(
+          children,
+          (child: ReactElement<BorderItemProps>) => child.props.position
+        ),
+      []
+    );
 
-    const midSection = "left main right";
+    const topSection = borderAreas.includes("header")
+      ? "header ".repeat(numberOfColumns)
+      : "none ".repeat(numberOfColumns);
 
-    const bottomSection = "bottom ".repeat(numberOfColumns);
+    const leftSection = borderAreas.includes("left") ? "left" : "main";
+
+    const rightSection = borderAreas.includes("right") ? "right" : "main";
+
+    const midSection = `${leftSection} main ${rightSection}`;
+
+    const bottomSection = borderAreas.includes("bottom")
+      ? "bottom ".repeat(numberOfColumns)
+      : "none ".repeat(numberOfColumns);
 
     const gridTemplateAreas = `"${topSection}" "${midSection}" "${bottomSection}"`;
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
-        const borderAreas = Children.map(
-          children,
-          (child: ReactElement<BorderItemProps>) => child.props.position
-        );
-
         const hasMainSection = borderAreas.includes("main");
 
         warning(
