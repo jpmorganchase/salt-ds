@@ -1,0 +1,140 @@
+.uitkSplitter {
+  --uitkSplitter-size: 3px;
+  --uitkSplitter-border-width: 4px;
+  --uitkSplitter-border-style: none;
+  --uitkSplitter-border-color: var(--uitk-color-white);
+
+  align-items: center;
+  background-color: var(--uitk-color-grey-60);
+  border-color: var(--uitkSplitter-border-color);
+  border-style: var(--uitkSplitter-border-style);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  outline: none;
+  z-index: 1;
+}
+
+.uitkSplitter:hover {
+  background-color: var(--uitk-color-grey-40);
+}
+.uitkSplitter-active.uitkSplitter {
+  background-color: var(--uitk-color-blue-500);
+}
+
+.uitkSplitter.column {
+  cursor: ns-resize;
+  height: var(--uitkSplitter-size);
+  border-width: var(--uitkSplitter-border-width) 0;
+}
+
+.uitkSplitter:not(.column) {
+  cursor: ew-resize;
+  width: var(--uitkSplitter-size);
+  border-width: 0 var(--uitkSplitter-border-width);
+}
+
+.uitkSplitter:before {
+  border: none;
+  border-radius: 0;
+  content: "";
+  display: block;
+  padding: 0;
+}
+
+.uitkSplitter .uitkSplitter-grabZone {
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.01);
+  cursor: inherit;
+}
+
+.uitkSplitter.column .uitkSplitter-grabZone {
+  left: 0;
+  right: 0;
+  top: -5px;
+  bottom: -5px;
+}
+
+.uitkSplitter:not(column) .uitkSplitter-grabZone {
+  left: -5px;
+  right: -5px;
+  top: 0;
+  bottom: 0;
+}
+
+.uitkSplitter:not(.column):before {
+  width: 1px;
+  height: 10px;
+  background: linear-gradient(
+    to bottom,
+    var(--uitk-color-grey-900) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-color-grey-900) 30%,
+    var(--uitk-color-grey-900) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-color-grey-900) 60%,
+    var(--uitk-color-grey-900) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-color-grey-900) 90%
+  );
+}
+
+.uitkSplitter-active.uitkSplitter.column:before {
+  background: linear-gradient(
+    to right,
+    var(--uitk-color-white) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-color-white) 30%,
+    var(--uitk-color-white) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-color-white) 60%,
+    var(--uitk-color-white) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-color-white) 90%
+  );
+}
+
+.uitkSplitter-active.uitkSplitter:not(.column):before {
+  background: linear-gradient(
+    to bottom,
+    var(--uitk-color-white) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-color-white) 30%,
+    var(--uitk-color-white) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-color-white) 60%,
+    var(--uitk-color-white) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-color-white) 90%
+  );
+}
+
+.uitkSplitter.column:before {
+  width: 10px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--uitk-color-grey-900) 10%,
+    transparent 10%,
+    transparent 30%,
+    var(--uitk-color-grey-900) 30%,
+    var(--uitk-color-grey-900) 40%,
+    transparent 40%,
+    transparent 60%,
+    var(--uitk-color-grey-900) 60%,
+    var(--uitk-color-grey-900) 70%,
+    transparent 70%,
+    transparent 90%,
+    var(--uitk-color-grey-900) 90%
+  );
+}
