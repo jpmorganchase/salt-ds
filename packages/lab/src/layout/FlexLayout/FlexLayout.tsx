@@ -32,7 +32,7 @@ export type flexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 type Direction = "row" | "column";
 
-type Wrap = "nowrap" | "wrap" | "wrap-reverse";
+type Wrap = "nowrap" | "wrap";
 
 export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -45,13 +45,8 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   direction?: Direction | Direction[];
   /**
-   * Reverses the direction of children.
-   * Value can be true, false or an array of values for each breakpoint e.g. [true", "false", true", true", "false"]
-   */
-  reverse?: boolean | boolean[];
-  /**
    * Allow the items to wrap as needed.
-   * Value can be "nowrap", "wrap", "wrap-reverse" or an array of values for each breakpoint e.g. ["wrap", "nowrap", "wrap", "nowrap", "wrap-reverse"]
+   * Value can be "nowrap", "wrap", or an array of values for each breakpoint e.g. ["wrap", "nowrap", "wrap", "nowrap"]
    */
   wrap?: Wrap | Wrap[];
   /**
@@ -103,7 +98,6 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const defaultDirection = "row";
 const defaultWrap = "wrap";
-const defaultReverse = false;
 
 function getResponsiveValue<T>(
   value: T[],
@@ -133,7 +127,6 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       display = "flex",
       direction = defaultDirection,
       justifyContent = "flex-start",
-      reverse = defaultReverse,
       rowGap,
       style,
       wrap = defaultWrap,
@@ -153,10 +146,6 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       defaultDirection
     );
 
-    const [flexReverse, setFlexReverse] = useState<boolean | boolean[]>(
-      defaultReverse
-    );
-
     const viewport = useViewport();
 
     const customProps = useMemo(
@@ -167,12 +156,6 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
           setState: (value: string | boolean) => {
             setFlexDirection(value as SetStateAction<Direction | Direction[]>);
           },
-        },
-        {
-          prop: reverse,
-          defaultValue: defaultReverse,
-          setState: (value: string | boolean) =>
-            setFlexReverse(value as SetStateAction<boolean | boolean[]>),
         },
         {
           prop: wrap,
@@ -198,7 +181,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       alignContent,
       alignItems,
       display,
-      flexFlow: `${flexDirection}${flexReverse ? "-reverse" : ""} ${flexWrap}`,
+      flexFlow: `${flexDirection} ${flexWrap}`,
       justifyContent,
       columnGap: colGap,
       rowGap,

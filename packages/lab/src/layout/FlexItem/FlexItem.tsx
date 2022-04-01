@@ -20,10 +20,6 @@ export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
    * Allows the alignment specified by parent to be overridden for individual items.
    */
   alignSelf?: flexItemAlignment;
-  /**
-   * Controls the order in which the item appears in the flex container.
-   */
-  order?: number;
   resizeable?: boolean;
   /**
    * Defines the ability for an item to shrink x times more compared to it's siblings,
@@ -51,7 +47,6 @@ export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
       alignSelf = "auto",
       children,
       className,
-      order,
       resizeable,
       shrink = 1,
       stretch,
@@ -65,7 +60,6 @@ export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
     const flexStyles = {
       ...style,
       alignSelf,
-      order,
       flexGrow: stretch,
       flexShrink: shrink,
       width,

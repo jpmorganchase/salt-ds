@@ -14,7 +14,7 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Allow the items to wrap as needed.
    */
-  wrap?: "nowrap" | "wrap" | "wrap-reverse";
+  wrap?: "nowrap" | "wrap";
   /**
    * Adds a line separator between items
    */

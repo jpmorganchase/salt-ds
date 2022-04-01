@@ -47,7 +47,6 @@ ToolkitFlexItemInFlexLayout.argTypes = {
     options: FLEX_ITEM_ALIGNMENTS,
     control: { type: "select" },
   },
-  order: { control: { type: "number" } },
   shrink: { control: { type: "number" } },
   stretch: { control: { type: "number" } },
 };
