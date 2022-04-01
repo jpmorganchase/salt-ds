@@ -68,6 +68,7 @@
     "@cypress/vite-dev-server": "^2.2.2",
     "@floating-ui/core": "^0.6.1",
     "@floating-ui/react-dom": "^0.6.0",
+    "@storybook/addon-a11y": "^6.4.18",
     "@storybook/addon-actions": "^6.4.18",
     "@storybook/addon-docs": "^6.4.18",
     "@storybook/addon-essentials": "^6.4.18",

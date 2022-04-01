@@ -23,6 +23,7 @@ const config: ExtendedConfig = {
   staticDirs: ["../docs/public"],
   addons: [
     "@storybook/addon-links",
+    "@storybook/addon-a11y",
     {
       name: "@storybook/addon-essentials",
       options: {
