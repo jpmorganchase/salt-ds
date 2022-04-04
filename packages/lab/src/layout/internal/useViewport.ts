@@ -38,8 +38,9 @@ const getViewport = (
 };
 
 const useViewport = () => {
-  const defaultViewport = getViewport(window.innerWidth, breakpoints);
-  const [viewport, setViewport] = useState<Viewport>(defaultViewport);
+  const [viewport, setViewport] = useState<Viewport>(() =>
+    getViewport(window.innerWidth, breakpoints)
+  );
 
   useEffect(() => {
     const listener = () => {
