@@ -6,7 +6,13 @@ import { makePrefixer } from "@brandname/core";
 import "./LayerLayout.css";
 import { Scrim, ScrimProps } from "../../scrim";
 
-export const LAYER_POSITION = ["centre", "left", "top", "right", "bottom"];
+export const LAYER_POSITION = [
+  "centre",
+  "left",
+  "top",
+  "right",
+  "bottom",
+] as const;
 
 export type LayerPosition = typeof LAYER_POSITION[number];
 
