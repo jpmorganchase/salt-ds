@@ -7,7 +7,7 @@ import "./LayerLayout.css";
 import { Scrim, ScrimProps } from "../../scrim";
 
 export const LAYER_POSITION = [
-  "centre",
+  "center",
   "left",
   "top",
   "right",
@@ -57,7 +57,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       displayScrim = true,
       width,
       zIndex,
-      position = "centre",
+      position = "center",
       fullScreenAtBreakpoint = 600,
       disableAnimations = false,
       scrimProps,
@@ -79,7 +79,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       return () => window.removeEventListener("resize", listener);
     }, [fullScreenAtBreakpoint]);
 
-    const anchored = position !== "centre" && !fullScreen;
+    const anchored = position !== "center" && !fullScreen;
 
     const layerStyles = { ...(!fullScreen && { width }), zIndex, ...style };
 

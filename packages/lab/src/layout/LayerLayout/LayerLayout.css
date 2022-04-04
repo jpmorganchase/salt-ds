@@ -41,11 +41,11 @@
   margin: 0;
 }
 
-.uitkLayerLayout-centre {
+.uitkLayerLayout-center {
   margin: var(--uitkLayerLayout-margin, var(--layer-margin));
 }
 
-.uitkLayerLayout-centre.uitkLayerLayout-animate {
+.uitkLayerLayout-center.uitkLayerLayout-animate {
   animation: var(--uitk-animation-fade-in-center);
 }
 

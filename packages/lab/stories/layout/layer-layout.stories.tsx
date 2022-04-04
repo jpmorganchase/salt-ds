@@ -58,7 +58,7 @@ const Template: ComponentStory<typeof LayerLayout> = (args) => {
 export const ToolkitLayerLayout = Template.bind({});
 ToolkitLayerLayout.args = {
   displayScrim: true,
-  position: "centre",
+  position: "center",
   disableAnimations: false,
 };
 
@@ -302,7 +302,7 @@ const PaymentDialog: ComponentStory<typeof LayerLayout> = (args) => {
 export const ToolkitLayerLayoutPaymentDialog = PaymentDialog.bind({});
 ToolkitLayerLayoutPaymentDialog.args = {
   displayScrim: true,
-  position: "centre",
+  position: "center",
   disableAnimations: false,
   width: 970,
   fullScreenAtBreakpoint: 1000,
@@ -443,7 +443,7 @@ const PreferencesDialog: ComponentStory<typeof LayerLayout> = (args) => {
 export const ToolkitLayerLayoutPreferencesDialog = PreferencesDialog.bind({});
 ToolkitLayerLayoutPreferencesDialog.args = {
   displayScrim: true,
-  position: "centre",
+  position: "center",
   disableAnimations: false,
 };
 
