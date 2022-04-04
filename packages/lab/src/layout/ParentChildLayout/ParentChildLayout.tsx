@@ -41,7 +41,7 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the space between columns.
    */
-  colGap?: number | string;
+  gap?: number | string;
   /**
    * Parent component to be rendered
    */
@@ -67,7 +67,7 @@ export const ParentChildLayout = forwardRef<
     className,
     style,
     orientation = "horizontal",
-    colGap,
+    gap,
     ...rest
   },
   ref
@@ -120,7 +120,7 @@ export const ParentChildLayout = forwardRef<
       })}
       ref={ref}
       wrap="nowrap"
-      colGap={colGap}
+      colGap={gap}
       style={style}
       {...rest}
     >
