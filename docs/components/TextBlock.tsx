@@ -7,11 +7,13 @@ export const TextBlock = ({
   fontStyle,
   fontWeight,
   lineHeight,
+  fontFamily,
 }: {
   fontSize?: string;
   fontStyle?: string;
   fontWeight?: string;
   lineHeight?: string;
+  fontFamily?: string;
 }) => {
   return (
     <>
@@ -23,6 +25,7 @@ export const TextBlock = ({
             fontWeight: `var(${fontWeight})`,
             lineHeight: `var(${lineHeight})`,
             fontStyle: `var(${fontStyle})`,
+            fontFamily: `var(${fontFamily})`,
           } as CSSProperties
         }
       >
