@@ -73,7 +73,16 @@ export const parameters: Parameters = {
       method: "alphabetical",
       order: [
         "Documentation",
-        ["Introduction", "Foundation", "*"],
+        [
+          "Styles and Theming",
+          [
+            "Introduction",
+            "Foundations",
+            ["Introduction", "*"],
+            "Characteristics",
+            ["Introduction", "*"],
+          ],
+        ],
         "Core",
         "Icons",
         "Lab",
