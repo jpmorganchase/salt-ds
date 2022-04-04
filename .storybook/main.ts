@@ -9,8 +9,7 @@ type ViteFinalOptions = {
   configType: "DEVELOPMENT" | "PRODUCTION";
 };
 
-interface ExtendedConfig extends Omit<StorybookConfig, "core"> {
-  core?: StorybookConfig["core"] | "storybook-builder-vite";
+interface ExtendedConfig extends StorybookConfig {
   viteFinal?: (
     config: UserConfig,
     options: ViteFinalOptions
