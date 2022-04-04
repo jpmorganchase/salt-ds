@@ -21,7 +21,7 @@ export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the space between rows.
    */
-  rowGap?: number | string;
+  gap?: number | string;
   /**
    * Adds a line separator between items
    */
@@ -42,7 +42,7 @@ export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
       alignItems,
       children,
       className,
-      rowGap,
+      gap,
       style,
       separator,
       splitter,
@@ -54,7 +54,7 @@ export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
     return (
       <FlexLayout
         direction="column"
-        rowGap={rowGap}
+        rowGap={gap}
         separator={separator}
         splitter={splitter}
         onSplitterMoved={onSplitterMoved}
