@@ -23,21 +23,16 @@
   border-width: var(--layer-border-width);
   border-style: var(--layer-border-style);
   box-sizing: border-box;
+  display: flex;
   flex-direction: column;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
   padding: var(--layer-padding);
-  /* position: fixed;
-  top: 50%;
-  left: 50%; */
+  position: relative;
   box-shadow: var(--uitkLayerLayout-box-shadow, var(--layer-box-shadow));
-  /* width: 50vw; */
+  width: 50vw;
   z-index: 1199;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .uitkLayerLayout-fullScreen {
