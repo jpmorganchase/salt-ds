@@ -1,16 +1,18 @@
 import { makePrefixer } from "@brandname/core";
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
 import cx from "classnames";
 import "./FlowLayout.css";
-import { FlexContentAlignment, FlexLayout } from "../FlexLayout";
+import { FlexLayout } from "../FlexLayout";
 import { VerticalSeparatorVariant } from "../Separator";
 const withBaseName = makePrefixer("uitkFlowLayout");
+
+type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Aligns a flex container’s lines within when there is extra space in the cross-axis.
    */
-  alignContent?: FlexContentAlignment | "stretch";
+  alignContent?: FlexLayoutProps["alignContent"];
   /**
    * Allow the items to wrap as needed.
    */
@@ -22,8 +24,7 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the alignment along the main axis.
    */
-  justifyContent?: FlexContentAlignment;
-
+  justifyContent?: FlexLayoutProps["justifyContent"];
   /**
    * Controls the space between columns.
    */

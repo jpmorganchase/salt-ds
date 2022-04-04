@@ -5,6 +5,7 @@ import {
   ReactElement,
   useEffect,
   useMemo,
+  ComponentPropsWithoutRef,
 } from "react";
 import cx from "classnames";
 import warning from "warning";
@@ -14,15 +15,17 @@ import { GridLayout } from "../GridLayout";
 import { BorderItemProps } from "../BorderItem";
 import "./BorderLayout.css";
 
+type GridLayoutProps = ComponentPropsWithoutRef<typeof GridLayout>;
+
 export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the size of the gutter between the columns
    */
-  columnGap?: number | string;
+  columnGap?: GridLayoutProps["columnGap"];
   /**
    * Defines the size of the gutter between the rows
    */
-  rowGap?: number | string;
+  rowGap?: GridLayoutProps["rowGap"];
   /**
    * Border item components to be rendered.
    */

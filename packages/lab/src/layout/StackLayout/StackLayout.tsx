@@ -1,16 +1,23 @@
 import { makePrefixer } from "@brandname/core";
-import { forwardRef, HTMLAttributes, SyntheticEvent } from "react";
+import {
+  forwardRef,
+  HTMLAttributes,
+  SyntheticEvent,
+  ComponentPropsWithoutRef,
+} from "react";
 import cx from "classnames";
-import { FlexAlignment, FlexLayout } from "../FlexLayout";
+import { FlexLayout } from "../FlexLayout";
 import { HorizontalSeparatorVariant } from "../Separator";
 
 const withBaseName = makePrefixer("uitkStackLayout");
+
+type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 
 export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  alignItems?: FlexAlignment | "stretch" | "baseline";
+  alignItems?: FlexLayoutProps["alignItems"];
   /**
    * Controls the space between rows.
    */
