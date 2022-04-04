@@ -65,7 +65,9 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       ...rest
     } = props;
 
-    const [fullScreen, setFullScreen] = useState(false);
+    const [fullScreen, setFullScreen] = useState(
+      () => window.innerWidth <= fullScreenAtBreakpoint
+    );
 
     useEffect(() => {
       const listener = () => {
@@ -73,8 +75,6 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       };
 
       window.addEventListener("resize", listener);
-
-      window.dispatchEvent(new Event("resize")); // trigger resize on initial render
 
       return () => window.removeEventListener("resize", listener);
     }, [fullScreenAtBreakpoint]);
