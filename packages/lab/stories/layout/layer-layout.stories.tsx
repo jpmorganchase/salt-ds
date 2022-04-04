@@ -425,7 +425,7 @@ const PreferencesDialog: ComponentStory<typeof LayerLayout> = (args) => {
       <ParentChildLayout
         stackedViewElement={currentView}
         stackedAtBreakpoint={stackedAtBreakpoint}
-        colGap={24}
+        gap={24}
         parent={parent}
         child={child}
         style={{ padding: "24px 0", flex: 1 }}

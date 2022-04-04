@@ -414,7 +414,7 @@ const Page: ComponentStory<typeof BorderLayout> = (args) => {
           <StackLayout
             key={index}
             id={heading}
-            rowGap="2rem"
+            gap="2rem"
             style={{ scrollMarginTop: 110 }}
           >
             <h2>{heading}</h2>
