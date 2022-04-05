@@ -56,7 +56,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
         setTransition("increase");
       }
       containerRef.current = activeIndex;
-    }, [activeIndex]);
+    }, [activeIndex, decksCount]);
 
     return (
       <GridLayout

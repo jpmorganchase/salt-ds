@@ -3,7 +3,7 @@ import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import "./SplitLayout.css";
 import { FlexLayout } from "../FlexLayout";
-import { SeparatorVariant } from "../Separator";
+import { VerticalSeparatorVariant } from "../Separator";
 
 const withBaseName = makePrefixer("uitkSplitLayout");
 
@@ -11,7 +11,7 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Adds a line separator between items
    */
-  separator?: SeparatorVariant;
+  separator?: VerticalSeparatorVariant;
   /**
    * Stretches the separator with index of stretchedItem
    */
