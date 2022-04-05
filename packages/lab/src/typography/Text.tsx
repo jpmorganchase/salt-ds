@@ -261,7 +261,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       })}
       {...restProps}
       tabIndex={hasTooltip ? 0 : -1}
-      aria-hidden={hasTooltip ? true : undefined}
       ref={setContainerRef}
       style={{ marginTop, marginBottom, ...componentStyle, ...style }}
     >
