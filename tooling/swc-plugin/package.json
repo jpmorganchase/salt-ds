@@ -1,0 +1,10 @@
+{
+  "name": "swc-plugin",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@swc/core": "^1.2.160",
+    "rollup": "2.67.2"
+  }
+}

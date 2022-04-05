@@ -1,5 +1,5 @@
 import { FormField } from "../../form-field";
-import { ComponentType } from "react";
+import { ComponentType, FC } from "react";
 
 import {
   fireEvent,
@@ -78,7 +78,7 @@ import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
       beforeEach(() => {
         render(
           <Component
-            PopperProps={{ disablePortal: true }}
+            disablePortal
             initialSelectedItem={
               isMultiSelect
                 ? [simpleSource[defaultIndex]]
@@ -215,10 +215,7 @@ import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
         const { container } = render(<div data-testid="dropdown" />);
         hostContainer = container;
         render(
-          <Component
-            PopperProps={{ container: container.firstChild }}
-            source={simpleSource}
-          />
+          <Component container={container.firstChild} source={simpleSource} />
         );
         fireEvent.click(screen.getByTestId("dropdown-button"));
         menu = await screen.findByTestId("dropdown-list");
@@ -448,9 +445,7 @@ import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
       describe("Custom item renderer", () => {
         const customTestId = "custom-test-list-id";
 
-        const CustomListItem: React.FC<IndexedListItemProps<string>> = (
-          props
-        ) => {
+        const CustomListItem: FC<IndexedListItemProps<string>> = (props) => {
           const { item, itemProps } = useListItem(props);
 
           return (

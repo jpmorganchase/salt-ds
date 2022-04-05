@@ -1,6 +1,6 @@
 .uitkEditableLabel {
-  --uitk-input-min-width: 14px;
-  --uitk-input-position: absolute;
+  --uitkInput-min-width: 14px;
+  --uitkInput-position: absolute;
   --editable-label-padding: var(--uitkEditableLabel-padding, 6px);
   --editable-label-height: var(--uitkEditableLabel-height, 26px);
   color: inherit;

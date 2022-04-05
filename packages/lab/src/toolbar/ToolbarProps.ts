@@ -1,24 +1,17 @@
 import { HTMLAttributes, FC, ReactNode, Ref } from "react";
 
 import { OverflowButtonProps, OverflowPanelProps } from "../responsive";
+import { TooltipProps } from "../tooltip";
 
 export type OrientationShape = "vertical" | "horizontal";
 
-export interface TooltipComponentProps {
-  // PopperProps?: TooltipProps['PopperProps'];
-  PopperProps?: any;
-  enterDelay: number;
-  interactive: boolean;
-  orientation?: OrientationShape;
-  title: string;
-}
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
   OverflowButtonProps?: Partial<OverflowButtonProps>;
   OverflowPanelProps?: Partial<OverflowPanelProps>;
   /**
    * Used by custom elements to render a custom tooltip
    */
-  TooltipComponent?: FC<TooltipComponentProps>;
+  TooltipComponent?: FC<Partial<TooltipProps>>;
   /**
    * The content of the component.
    */

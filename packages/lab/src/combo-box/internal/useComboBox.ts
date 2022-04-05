@@ -37,7 +37,6 @@ export type UseComboBoxProps<Item> = Omit<
   | "inputRef"
   | "rootWidth"
   | "listWidth"
-  | "PopperProps"
 >;
 
 export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {

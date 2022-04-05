@@ -22,7 +22,7 @@ const Template: Story<PaginationProps & PaginatorProps & StoryProps> = (
 ) => {
   const {
     count,
-    variant,
+    emphasis,
     boundaryCount,
     siblingCount,
     showPreviousNext,
@@ -39,7 +39,7 @@ const Template: Story<PaginationProps & PaginatorProps & StoryProps> = (
       page={page}
       onPageChange={onPageChange}
       count={count}
-      variant={variant}
+      emphasis={emphasis}
       compact={compact}
     >
       {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}

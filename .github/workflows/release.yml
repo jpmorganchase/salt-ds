@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
@@ -28,6 +28,6 @@ jobs:
         run: yarn build
       - name: Create Release Pull Request
         id: changesets
-        uses: changesets/action@master
+        uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

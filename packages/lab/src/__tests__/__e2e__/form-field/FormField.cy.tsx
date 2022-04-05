@@ -10,7 +10,7 @@ describe("GIVEN an Input", () => {
       );
       cy.findByTestId("WarningIndicatorIcon").should(
         "have.class",
-        "uitkFormField-activationIndicatorIcon"
+        "uitkFormActivationIndicator-icon"
       );
     });
   });
@@ -24,7 +24,7 @@ describe("GIVEN an Input", () => {
       );
       cy.findByTestId("ErrorIndicatorIcon").should(
         "have.class",
-        "uitkFormField-activationIndicatorIcon"
+        "uitkFormActivationIndicator-icon"
       );
     });
   });

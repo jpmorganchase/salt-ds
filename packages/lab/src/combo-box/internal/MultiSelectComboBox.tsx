@@ -1,13 +1,16 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useAriaAnnouncer } from "@brandname/core";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { BaseComboBoxProps } from "./DefaultComboBox";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
-import { Popper, usePopperListAdapter } from "../../popper";
+import { useFloatingUI } from "../../popper";
 import { TooltipContext } from "../../tooltip";
 import { ListBase, ListStateContext } from "../../list";
 import { useForkRef } from "../../utils";
+import { Portal } from "../../portal";
+import { useWindow } from "../../window";
+import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,
@@ -43,7 +46,6 @@ export function MultiSelectComboBox<Item>(
     rootWidth,
     listWidth,
     inputRef: inputRefProp,
-    PopperProps,
     ...restProps
   } = props;
 
@@ -87,14 +89,31 @@ export function MultiSelectComboBox<Item>(
     }
   }, [value, firstItem, itemCount, announce]);
 
-  const [reference, floating, popperPosition, maxListHeight] =
-    usePopperListAdapter(isListOpen);
+  const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
+    undefined
+  );
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: [
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ height }) {
+          setMaxListHeight(height);
+        },
+      }),
+    ],
+  });
 
   useEffect(() => {
     if (rootRef.current) {
       reference(rootRef.current);
     }
-  }, [rootRef]);
+  }, [rootRef, reference]);
+
+  const Window = useWindow();
 
   return (
     <>
@@ -108,36 +127,36 @@ export function MultiSelectComboBox<Item>(
           {...restInputProps}
         />
       </TooltipContext.Provider>
-      {rootRef.current && (
-        <Popper
-          anchorEl={rootRef.current}
-          open={isListOpen}
-          placement={popperPosition}
-          role={null as any}
-          ref={floating}
-          style={{
-            maxHeight: maxListHeight ?? "",
-          }}
-          {...PopperProps}
-        >
-          <TooltipContext.Provider value={tooltipContext}>
-            <ListStateContext.Provider value={listContext}>
-              <ListBase
-                {...{
-                  ListItem,
-                  disabled,
-                  itemCount,
-                  itemToString,
-                  width: listWidth || rootWidth,
-                  source,
-                  ...restListProps,
-                  listRef: setListRef,
-                }}
-                maxHeight={maxListHeight || listProps.maxHeight}
-              />
-            </ListStateContext.Provider>
-          </TooltipContext.Provider>
-        </Popper>
+      {rootRef.current && isListOpen && (
+        <Portal>
+          <Window
+            ref={floating}
+            style={{
+              top: y ?? "",
+              left: x ?? "",
+              position: strategy,
+              maxHeight: maxListHeight ?? "",
+            }}
+          >
+            <TooltipContext.Provider value={tooltipContext}>
+              <ListStateContext.Provider value={listContext}>
+                <ListBase
+                  {...{
+                    ListItem,
+                    disabled,
+                    itemCount,
+                    itemToString,
+                    width: listWidth || rootWidth,
+                    source,
+                    ...restListProps,
+                    listRef: setListRef,
+                  }}
+                  maxHeight={maxListHeight || listProps.maxHeight}
+                />
+              </ListStateContext.Provider>
+            </TooltipContext.Provider>
+          </Window>
+        </Portal>
       )}
     </>
   );
