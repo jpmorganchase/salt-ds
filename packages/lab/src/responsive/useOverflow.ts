@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import {
   addAll,
   allExceptOverflowIndicator,
@@ -13,6 +13,7 @@ import {
 } from "./overflowUtils";
 import { ManagedItem, overflowHookProps } from "./overflowTypes";
 import { partition } from "../utils";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 
 const NO_OVERFLOW_INDICATOR = { size: 0 };
 
@@ -329,7 +330,7 @@ export const useOverflow = ({
     });
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const { current: wasOverflowed } = overflowed;
     const { current: managedItems } = managedItemsRef;
 

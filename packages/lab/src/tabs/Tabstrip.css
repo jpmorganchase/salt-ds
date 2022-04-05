@@ -16,7 +16,7 @@
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] {
-  --uitkActivationIndicator-transition: none;
+  --uitkTabActivationIndicator-transition: none;
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab {

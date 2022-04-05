@@ -3,6 +3,13 @@
   "compilerOptions": {
     "noImplicitAny": true
   },
-  "include": ["modular", "packages/*/src", "integration/toolkit", "stories"],
+  "include": [
+    "modular",
+    "packages",
+    "integration/toolkit",
+    "docs",
+    "tooling",
+    "playground"
+  ],
   "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]
 }

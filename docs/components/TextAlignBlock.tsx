@@ -7,7 +7,7 @@ export const TextAlignBlock = ({ textAlign }: { textAlign: string }) => {
     <>
       <div
         className="TextAlignBlock-cell"
-        style={{ textAlign: `var(${textAlign})` } as CSSProperties}
+        style={{ textAlign: `var(${textAlign})` as CSSProperties["textAlign"] }}
       >
         T
       </div>

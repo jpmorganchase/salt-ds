@@ -274,8 +274,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
-      tabIndex={hasTooltip && triggerEl === contentRef.current ? 0 : -1}
-      aria-hidden={hasTooltip ? true : undefined}
+      tabIndex={hasTooltip ? 0 : -1}
       ref={setContainerRef}
       style={{ marginTop, marginBottom, ...componentStyle, ...style }}
     >

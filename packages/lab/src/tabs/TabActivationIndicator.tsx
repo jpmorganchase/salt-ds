@@ -2,9 +2,9 @@ import React, { RefObject, useRef } from "react";
 import classnames from "classnames";
 import { useActivationIndicator } from "./useActivationIndicator";
 
-import "./ActivationIndicator.css";
+import "./TabActivationIndicator.css";
 
-interface ActivationIndicatorProps {
+interface TabActivationIndicatorProps {
   hideBackground?: boolean;
   hideThumb?: boolean;
   orientation?: "horizontal" | "vertical";
@@ -12,14 +12,14 @@ interface ActivationIndicatorProps {
   tabRef: RefObject<HTMLElement | null>;
 }
 
-export const ActivationIndicator: React.FC<ActivationIndicatorProps> = ({
+export const TabActivationIndicator: React.FC<TabActivationIndicatorProps> = ({
   hideBackground = false,
   hideThumb = false,
   orientation = "horizontal",
   tabRef,
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const rootClass = "uitkActivationIndicator";
+  const rootClass = "uitkTabActivationIndicator";
   const style = useActivationIndicator(rootRef, tabRef, orientation);
 
   return (

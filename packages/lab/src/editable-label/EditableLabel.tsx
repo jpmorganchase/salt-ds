@@ -1,13 +1,8 @@
-import React, {
-  ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import React, { ChangeEvent, KeyboardEvent, useCallback, useRef } from "react";
 import classnames from "classnames";
 import { useControlled } from "../utils";
 import { Input } from "../input";
+import { useIsomorphicLayoutEffect } from "@brandname/core";
 
 import "./EditableLabel.css";
 
@@ -58,7 +53,7 @@ export const EditableLabel: React.FC<EditableLabelProps> = ({
 
   const initialValue = useRef(value);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (editing) {
       if (inputRef.current !== null) {
         inputRef.current.select();

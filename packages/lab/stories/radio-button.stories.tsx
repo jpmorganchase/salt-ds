@@ -224,18 +224,22 @@ const VariantExample = ({ name, theme }: { name: string; theme: string }) => (
         <ColumnLayoutItem>
           <FormFieldRadios
             name={`${name}-1`}
-            title="Theme Variant"
-            variant="theme"
+            title="High emphasis"
+            emphasis="high"
           />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
-          <FormFieldRadios name="fx2" title="Filled Variant" variant="filled" />
+          <FormFieldRadios
+            name="fx2"
+            title="Medium Emphasis"
+            emphasis="medium"
+          />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios
             name={`${name}-2`}
-            title="Transparent Variant"
-            variant="transparent"
+            title="Low Emphasis"
+            emphasis="low"
           />
         </ColumnLayoutItem>
       </ColumnLayoutContainer>

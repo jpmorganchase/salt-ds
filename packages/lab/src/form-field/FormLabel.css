@@ -1,29 +1,42 @@
+/* Styles applied to the Form Field label element */
 .uitkFormLabel {
-  align-items: flex-start;
+  --form-label-color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
+  --form-label-font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
+  --form-label-line-height: var(--uitk-uitkFormLabel-line-height, var(--uitk-text-line-height));
+  --form-label-margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);
+  --form-label-margin-top: var(--uitk-uitkFormLabel-margin-top, 2px);
+  --form-label-padding: var(--uitkFormLabel-padding, 0 8px);
+}
+
+.uitkFormLabel {
+  align-items: center;
   box-sizing: border-box;
-  color: var(--uitk-label-text-color, var(--uitk-text-secondary-color));
+  color: var(--form-label-color);
   display: flex;
-  font-size: var(--uitk-label-font-size, var(--uitk-text-caption-font-size));
-  margin-bottom: var(--uitk-field-label-margin-bottom, 0);
-  margin-top: var(--uitk-field-label-margin-top);
-  line-height: var(--uitk-field-label-line-height, var(--uitk-text-line-height));
-  padding: var(--uitkFormLabel-padding, 0);
+  font-size: var(--form-label-font-size);
+  line-height: var(--form-label-line-height);
+  margin-bottom: var(--form-label-margin-bottom);
+  margin-top: var(--form-label-margin-top);
+  padding: var(--form-label-padding);
   text-overflow: ellipsis;
-  transform: translate(0, var(--uitkFormLabel-top, 0));
+  transform: translate(0, var(--form-label-margin-top, 0));
   white-space: nowrap;
   width: 100%;
 }
 
+/* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
 }
 
+/* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
   font-style: italic;
   margin-left: 1ch;
 }
 
+/* Styles applied when `hasStatusIndicator={true}` */
 .uitkFormLabel-statusIndicator {
   margin-left: var(--uitk-spacing-unit);
 }

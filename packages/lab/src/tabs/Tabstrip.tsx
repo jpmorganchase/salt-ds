@@ -4,13 +4,17 @@ import React, {
   KeyboardEvent,
   RefObject,
   useCallback,
-  useLayoutEffect,
   useRef,
   useState,
   useEffect,
 } from "react";
 import cx from "classnames";
-import { Button, ButtonProps, makePrefixer } from "@brandname/core";
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@brandname/core";
 import { AddIcon } from "@brandname/icons";
 import { Tab } from "./Tab";
 import {
@@ -23,7 +27,7 @@ import {
 } from "./TabstripProps";
 import { ListProps, ListSingleSelectionVariant } from "../list";
 import { useTabstrip } from "./useTabstrip";
-import { ActivationIndicator } from "./ActivationIndicator";
+import { TabActivationIndicator } from "./TabActivationIndicator";
 import { useForkRef, useLayoutEffectSkipFirst } from "../utils";
 import {
   ManagedItem,
@@ -255,7 +259,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   };
 
   // shouldn't we use ref for this ?
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // We don't care about changes to overflowedItems here, the overflowObserver
     // always does the right thing. We only care about changes to selected tab
     if (selectedIndex.current !== tabsHook.value && overflowMenu) {
@@ -266,7 +270,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   }, [overflowMenu, tabsHook.value]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (React.Children.count(children) !== childCount.current) {
       childCount.current = React.Children.count(children);
       // TODO
@@ -274,7 +278,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   }, [children]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (focusedTabIndex !== tabsHook.value && focusedTabIndex !== -1) {
       tabsHook.focusTab(tabsHook.value);
     }
@@ -422,7 +426,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
         {renderContent()}
       </div>
       {showActivationIndicator ? (
-        <ActivationIndicator
+        <TabActivationIndicator
           hideThumb={selectedTabOverflowed || tabsHook.isDragging}
           hideBackground={noBorder}
           orientation={orientation}

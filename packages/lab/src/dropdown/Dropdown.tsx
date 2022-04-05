@@ -10,6 +10,7 @@ import {
   useRef,
   FocusEvent,
   MouseEventHandler,
+  useState,
 } from "react";
 import { makePrefixer, IconProps } from "@brandname/core";
 import { ChevronDownIcon } from "@brandname/icons";
@@ -23,13 +24,16 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { PopperProps, Popper, usePopperListAdapter } from "../popper";
+import { useFloatingUI } from "../popper";
 import { useForkRef, useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+import { Portal, PortalProps } from "../portal";
+import { useWindow } from "../window";
+import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,
@@ -51,9 +55,10 @@ export interface DropdownProps<
   Item = string,
   Variant extends ListSelectionVariant = "default"
 > extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "children" | "onChange" | "onSelect"
-  > {
+      HTMLAttributes<HTMLDivElement>,
+      "children" | "onChange" | "onSelect"
+    >,
+    Pick<PortalProps, "disablePortal" | "container"> {
   /**
    * Props to be applied on the default button component
    */
@@ -70,10 +75,6 @@ export interface DropdownProps<
    * Props to be applied on the list component
    */
   ListProps?: Partial<ListProps<Item, Variant>>;
-  /**
-   * Override Popper props
-   */
-  PopperProps?: Partial<PopperProps>;
   /**
    * Object that houses ADA-related props.
    *
@@ -186,9 +187,10 @@ export const Dropdown = forwardRef(function Dropdown<
   {
     IconComponent = ChevronDownIcon,
     className,
-    PopperProps,
     width = 180,
     children,
+    container,
+    disablePortal,
     ...restProps
   }: DropdownProps<Item, Variant>,
   ref: ForwardedRef<HTMLDivElement>
@@ -210,8 +212,23 @@ export const Dropdown = forwardRef(function Dropdown<
     ...restRootProps
   } = rootProps;
 
-  const [reference, floating, popperPosition, maxListHeight] =
-    usePopperListAdapter(isOpen);
+  const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
+    undefined
+  );
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: [
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ height }) {
+          setMaxListHeight(height);
+        },
+      }),
+    ],
+  });
 
   const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(reference, ref);
   const handleRootRef = useForkRef(rootRef, handlePopperListAdapterRef);
@@ -222,6 +239,7 @@ export const Dropdown = forwardRef(function Dropdown<
   );
   // Will need to figure out a better way to assign popper id's for the electron windows
   const id = useId();
+  const Window = useWindow();
 
   return (
     <div
@@ -251,28 +269,28 @@ export const Dropdown = forwardRef(function Dropdown<
           ref={buttonRef}
         />
       )}
-      {rootRef.current && (
-        <Popper
-          anchorEl={rootRef.current}
-          open={isOpen}
-          placement={popperPosition}
-          role={undefined}
-          id={id}
-          style={{
-            maxHeight: maxListHeight ?? "",
-          }}
-          ref={floating}
-          {...PopperProps}
-        >
-          <ListStateContext.Provider value={listContext}>
-            <ListBase<Item>
-              data-testid="dropdown-list"
-              {...listProps}
-              maxHeight={maxListHeight || listProps.maxHeight}
-              listRef={listRef}
-            />
-          </ListStateContext.Provider>
-        </Popper>
+      {rootRef.current && isOpen && (
+        <Portal disablePortal={disablePortal} container={container}>
+          <Window
+            id={id}
+            style={{
+              top: y ?? "",
+              left: x ?? "",
+              position: strategy,
+              maxHeight: maxListHeight ?? "",
+            }}
+            ref={floating}
+          >
+            <ListStateContext.Provider value={listContext}>
+              <ListBase<Item>
+                data-testid="dropdown-list"
+                {...listProps}
+                maxHeight={maxListHeight || listProps.maxHeight}
+                listRef={listRef}
+              />
+            </ListStateContext.Provider>
+          </Window>
+        </Portal>
       )}
     </div>
   );

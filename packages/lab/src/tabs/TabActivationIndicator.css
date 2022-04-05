@@ -1,0 +1,44 @@
+.uitk-light .uitkTabActivationIndicator {
+  --activation-indicator-bg: var(--uitk-color-grey-60);
+  --activation-indicator-thumb-bg: var(--uitk-color-orange-700);
+}
+
+.uitk-dark .uitkTabActivationIndicator {
+  --activation-indicator-bg: var(--uitk-color-grey-400);
+  --activation-indicator-thumb-bg: var(--uitk-color-orange-500);
+}
+
+.uitkTabActivationIndicator-no-background {
+  --activation-indicator-bg: transparent !important;
+}
+
+.uitkTabActivationIndicator {
+  background-color: var(--uitkTabActivationIndicator-bg, var(--activation-indicator-bg));
+  bottom: 0;
+  box-sizing: border-box;
+  position: absolute;
+  height: 1px;
+  width: 100%;
+}
+
+.uitkTabActivationIndicator-thumb {
+  position: absolute;
+  height: 2px;
+  background-color: var(--uitkTabActivationIndicator-thumb-bg, var(--activation-indicator-thumb-bg));
+  transition: var(--uitkTabActivationIndicator-transition, left 0.2s ease);
+  bottom: 0;
+  z-index: 1;
+}
+
+.uitkTabActivationIndicator-vertical {
+  right: 0;
+  height: 100%;
+  width: 1px;
+}
+
+.uitkTabActivationIndicator-vertical .uitkTabActivationIndicator-thumb {
+  bottom: auto;
+  right: 0;
+  transition: top 0.2s ease;
+  width: 2px;
+}

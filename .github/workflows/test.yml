@@ -6,11 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -34,23 +34,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
       - name: Build packages
         run: yarn run build
       - name: Cypress Core Components
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v3
         with:
           install: false
           command: yarn run test:core-components
       - name: Cypress Lab Components
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v3
         with:
           install: false
           command: yarn run test:lab-components
@@ -58,11 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
       - name: Install dependencies
         run: yarn

@@ -1,7 +1,7 @@
 import { ComponentType, HTMLAttributes, ReactNode } from "react";
 import { ItemToStringFunction } from "../list";
 import { CascadingMenuListProps } from "./CascadingMenuList";
-import { PopperProps } from "../popper";
+import { UseFloatingUIProps } from "../popper";
 import { IconProps } from "@brandname/core";
 
 export interface ScreenBounds {
@@ -59,7 +59,7 @@ export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
   /**
    * The menu placement with regard to its trigger component.
    */
-  rootPlacement?: PopperProps["placement"];
+  rootPlacement?: UseFloatingUIProps["placement"];
   /**
    * The x and y offset coordinates of the root menu. Conforms to Popper spec in format `${x},${y}`
    */

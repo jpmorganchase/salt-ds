@@ -1,5 +1,5 @@
-import { useLayoutEffect, MutableRefObject } from "react";
-import { useDensity } from "@brandname/core";
+import { MutableRefObject } from "react";
+import { useDensity, useIsomorphicLayoutEffect } from "@brandname/core";
 import { useFormFieldProps } from "../../form-field-context";
 
 const refreshButtonWidth = {
@@ -21,7 +21,7 @@ export function useActivationIndicatorPosition(
   const { ref: formFieldRef } = formFieldProps;
   const density = useDensity();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     let offset;
     if (adornmentRef && adornmentRef.current !== null) {
       const marginAdjustment =
@@ -38,7 +38,7 @@ export function useActivationIndicatorPosition(
     }
     if (formFieldRef && formFieldRef.current && offset) {
       const activationIndicator = formFieldRef.current.getElementsByClassName(
-        "uitkFormField-activationIndicatorIcon"
+        "uitkFormActivationIndicator-icon"
       ) as HTMLCollectionOf<HTMLElement>;
       if (activationIndicator.length > 0) {
         activationIndicator[0].style.transform = `translateX(-${offset}px)`;

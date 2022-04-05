@@ -4,77 +4,38 @@ import React, {
   useCallback,
   useEffect,
   useState,
-  useMemo,
   ReactElement,
 } from "react";
 import classnames from "classnames";
+import { limitShift, shift } from "@floating-ui/react-dom";
 import { Button, useIsomorphicLayoutEffect } from "@brandname/core";
 
-import { Popper } from "../../popper";
+import { useFloatingUI } from "../../popper";
 import { PanelItemRendererProps } from "./PanelItemRendererProps";
 import OverflowPanelItem from "./OverflowPanelItem";
 import { OverflowPanelItemProps } from "./OverflowPanelProps";
-import {
-  evaluateMenuOffset,
-  evaluateMenuPlacement,
-  getMaxHeight,
-  getHeight,
-  LayoutProps,
-} from "./menuPositioning";
 import { Tooltray } from "../../toolbar";
-
-type popperState = {
-  modifiers: {
-    offset: any;
-    flip: any;
-    preventOverflow: any;
-    hide: any;
-  };
-  placement: any;
-};
+import { Portal } from "../../portal";
+import { useWindow } from "../../window";
+import { useForkRef } from "../../utils";
 
 const OverflowPanelItems = forwardRef<HTMLDivElement, OverflowPanelItemProps>(
   function OverflowPanelItems(props, ref) {
     const {
       className,
-      minWidth,
       onKeyDown,
       onItemClick,
       refsManager,
       closeMenu: closeMenuProp,
-      rowHeight: rowHeightProp,
       isNavigatingWithKeyboard,
       tooltipEnterDelay,
       tooltipLeaveDelay,
-      height: heightProp,
       highlightedItemIndex = 0,
       menuItems,
       menuTriggerEl,
       parentElement,
-      getBoundingClientRect,
-      getScreenBounds,
       rootPlacementOffset,
     } = props;
-
-    // from stackable, based on density
-    const defaultRowHeight = 36;
-    const spacing = 16;
-
-    const [popperState, setPopperState] = useState<popperState>({
-      modifiers: {
-        offset: {
-          offset: 0,
-        },
-        flip: {
-          enabled: false,
-        },
-        preventOverflow: {
-          boundariesElement: "viewport",
-        },
-        hide: { enabled: true },
-      },
-      placement: "left-end",
-    });
 
     const isMenuActiveState = useState(true);
     const [isMenuActive, setIsMenuActive] = isMenuActiveState;
@@ -110,47 +71,21 @@ const OverflowPanelItems = forwardRef<HTMLDivElement, OverflowPanelItemProps>(
       setIsMenuActive(true);
     }, [setIsMenuActive]);
 
-    const rowHeight = rowHeightProp != null ? rowHeightProp : defaultRowHeight;
-    const maxHeight = getMaxHeight(heightProp, spacing, getScreenBounds);
-    const calculatedMenuHeight = rowHeight * menuItems!.length;
-    const menuHeight = getHeight(heightProp, calculatedMenuHeight, maxHeight);
-
-    const layoutProps: LayoutProps = useMemo(
-      () => ({
-        parentElement: props.parentElement,
-        rootPlacement: props.rootPlacement,
-      }),
-      [props.parentElement, props.rootPlacement]
-    );
+    const { reference, floating, x, y, strategy } = useFloatingUI({
+      placement: "bottom-end",
+      middleware: [
+        shift({
+          limiter: limitShift(),
+        }),
+      ],
+    });
+    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
     useIsomorphicLayoutEffect(() => {
-      setPopperState(({ modifiers }) => ({
-        modifiers: {
-          ...modifiers,
-          offset: {
-            offset: evaluateMenuOffset({
-              props: layoutProps,
-              getBoundingClientRect,
-              rootPlacementOffset,
-            }),
-          },
-        },
-        placement: evaluateMenuPlacement({
-          props: layoutProps,
-          menuHeight,
-          minWidth,
-          getBoundingClientRect,
-          getScreenBounds,
-        }),
-      }));
-    }, [
-      getBoundingClientRect,
-      getScreenBounds,
-      rootPlacementOffset,
-      layoutProps,
-      rowHeight,
-      menuHeight,
-    ]);
+      if (parentElement) {
+        reference(parentElement);
+      }
+    }, [reference, parentElement]);
 
     const closeMenu = () => {
       if (!isNavigatingWithKeyboard) {
@@ -214,61 +149,63 @@ const OverflowPanelItems = forwardRef<HTMLDivElement, OverflowPanelItemProps>(
 
     const menuItemsCount = menuItems.reduce((count, item) => {
       if (item.type === Tooltray) {
-        // eslint-disable-next-line no-param-reassign
         count = count + item.props.children.length;
       } else {
-        // eslint-disable-next-line no-param-reassign
         count++;
       }
       return count;
     }, 0);
 
+    const Window = useWindow();
+
     return (
-      <Popper
-        anchorEl={parentElement}
-        // modifiers={popperState.modifiers}
-        onFocus={onFocusHandler}
-        open
-        placement={popperState.placement}
-        // ref={ref}
-        role={undefined}
-      >
-        <div
-          aria-label={`Overflow menu with ${menuItemsCount} items`}
-          className={className}
-          id="overflowPanelContainer"
-          ref={setMenuRef}
-          role="group"
+      <Portal>
+        <Window
+          onFocus={onFocusHandler}
+          ref={handleRef}
+          style={{
+            top: y ?? "",
+            left: x ?? "",
+            position: strategy,
+          }}
         >
-          {menuItems.map((menuItem, index) => {
-            const isInteracted = highlightedItemIndex === index;
-            // const hasToolTip = !!menuItem.tooltip;
-            const panelItemProps = {
-              onItemClick,
-              onKeyDown,
-              tooltipEnterDelay,
-              tooltipLeaveDelay,
-              isNavigatingWithKeyboard,
-              closeMenu,
-              blurSelected: !isMenuActive && isInteracted,
-              isInteracted,
-              sourceItem: menuItem,
-              index,
-            };
-            switch (menuItem.type) {
-              case Tooltray:
-                return renderTooltrayOverflow(
-                  menuItem.props.children,
-                  menuItem.props["data-collapsible"],
-                  menuItem.props["data-pad-end"],
-                  index
-                );
-              default:
-                return <OverflowPanelItem key={index} {...panelItemProps} />;
-            }
-          })}
-        </div>
-      </Popper>
+          <div
+            aria-label={`Overflow menu with ${menuItemsCount} items`}
+            className={className}
+            id="overflowPanelContainer"
+            ref={setMenuRef}
+            role="group"
+          >
+            {menuItems.map((menuItem, index) => {
+              const isInteracted = highlightedItemIndex === index;
+              // const hasToolTip = !!menuItem.tooltip;
+              const panelItemProps = {
+                onItemClick,
+                onKeyDown,
+                tooltipEnterDelay,
+                tooltipLeaveDelay,
+                isNavigatingWithKeyboard,
+                closeMenu,
+                blurSelected: !isMenuActive && isInteracted,
+                isInteracted,
+                sourceItem: menuItem,
+                index,
+              };
+              switch (menuItem.type) {
+                case Tooltray:
+                  return renderTooltrayOverflow(
+                    menuItem.props.children,
+                    menuItem.props["data-collapsible"],
+                    menuItem.props["data-pad-end"],
+                    index
+                  );
+                default:
+                  return <OverflowPanelItem key={index} {...panelItemProps} />;
+              }
+            })}
+          </div>
+        </Window>
+      </Portal>
     );
   }
 );

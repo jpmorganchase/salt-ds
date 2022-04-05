@@ -1,15 +1,18 @@
 import classnames from "classnames";
-import { ForwardedRef, forwardRef, ReactElement } from "react";
+import { ForwardedRef, forwardRef, ReactElement, useState } from "react";
 import { makePrefixer } from "@brandname/core";
 import { ChevronDownIcon } from "@brandname/icons";
 import { ListBase, ListStateContext } from "../list";
-import { Popper } from "../popper";
+import { useFloatingUI } from "../popper";
 import { useForkRef } from "../utils";
 import { DropdownProps } from "./Dropdown";
 import { DropdownButton } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
+import { Portal } from "../portal";
+import { useWindow } from "../window";
+import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type MultiSelectDropdownProps<Item = string> = DropdownProps<
   Item,
@@ -28,7 +31,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
     IconComponent = ChevronDownIcon,
     className,
     children,
-    PopperProps,
+    container,
+    disablePortal,
     width = "180px",
     ...restProps
   }: MultiSelectDropdownProps<Item>,
@@ -38,6 +42,24 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
     Item,
     "multiple"
   >({ IconComponent, width, ...restProps }, true);
+  const Window = useWindow();
+  const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
+    undefined
+  );
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: [
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ height }) {
+          setMaxListHeight(height);
+        },
+      }),
+    ],
+  });
 
   const {
     disabled,
@@ -46,6 +68,9 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
     ref: rootRef,
     ...restRootProps
   } = rootProps;
+
+  const handleRootRef = useForkRef(rootRef, ref);
+  const handleRef = useForkRef<HTMLDivElement>(reference, handleRootRef);
 
   return (
     <div
@@ -57,7 +82,7 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
         },
         className
       )}
-      ref={useForkRef(rootRef, ref)}
+      ref={handleRef}
       {...restRootProps}
     >
       {children ? (
@@ -70,20 +95,27 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
       ) : (
         <DropdownButton {...buttonProps} />
       )}
-      {rootRef.current && (
-        <Popper
-          anchorEl={rootRef.current}
-          className={withBaseName("popper")}
-          open={isOpen}
-          placement="bottom-start"
-          // We don't want the default role of 'tooltip'
-          role={undefined}
-          {...PopperProps}
-        >
-          <ListStateContext.Provider value={listContext}>
-            <ListBase data-testid="dropdown-list" {...listProps} />
-          </ListStateContext.Provider>
-        </Popper>
+      {rootRef.current && isOpen && (
+        <Portal disablePortal={disablePortal} container={container}>
+          <Window
+            className={withBaseName("popper")}
+            style={{
+              top: y ?? "",
+              left: x ?? "",
+              position: strategy,
+              maxHeight: maxListHeight ?? "",
+            }}
+            ref={floating}
+          >
+            <ListStateContext.Provider value={listContext}>
+              <ListBase
+                data-testid="dropdown-list"
+                maxHeight={maxListHeight}
+                {...listProps}
+              />
+            </ListStateContext.Provider>
+          </Window>
+        </Portal>
       )}
     </div>
   );
