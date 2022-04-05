@@ -4,8 +4,8 @@ import {
   FlexLayout,
   Logo,
   MenuButton,
-  SEPARATOR_VARIANTS,
   SplitLayout,
+  VERTICAL_SEPARATOR_VARIANTS,
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
@@ -50,7 +50,7 @@ ToolkitSplitLayout.args = {
 
 ToolkitSplitLayout.argTypes = {
   separator: {
-    options: SEPARATOR_VARIANTS,
+    options: VERTICAL_SEPARATOR_VARIANTS,
     control: { type: "select" },
   },
 };
@@ -125,7 +125,7 @@ HeaderWithSplitLayout.args = {
 
 HeaderWithSplitLayout.argTypes = {
   separator: {
-    options: SEPARATOR_VARIANTS,
+    options: VERTICAL_SEPARATOR_VARIANTS,
     control: { type: "select" },
   },
 };
@@ -153,7 +153,7 @@ ButtonBarInSplitLayout.args = {
 
 ButtonBarInSplitLayout.argTypes = {
   separator: {
-    options: SEPARATOR_VARIANTS,
+    options: VERTICAL_SEPARATOR_VARIANTS,
     control: { type: "select" },
   },
 };

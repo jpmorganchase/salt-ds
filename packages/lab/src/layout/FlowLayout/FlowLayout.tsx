@@ -34,12 +34,10 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout(
     {
-      alignContent,
       children,
       className,
       gap,
       justifyContent = "flex-start",
-      separator,
       style,
       wrap = "wrap",
       ...rest
@@ -52,12 +50,10 @@ export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
     };
     return (
       <FlexLayout
-        alignContent={alignContent}
         justifyContent={justifyContent}
         colGap={gap}
         className={cx(className, withBaseName())}
         style={flowLayoutStyles}
-        separator={separator}
         ref={ref}
         {...rest}
       >
