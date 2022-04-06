@@ -14,6 +14,7 @@
   --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-spacing-unit)));
   --layer-border-style: var(--uitkLayerLayout-border-style, var(--uitk-container-border-style));
   --layer-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-spacing-unit)));
+  --layer-anchor-width: 240px;
   --uitk-animation-duration: 0.2s;
 }
 
@@ -72,7 +73,7 @@
 .uitkLayerLayout-anchor.uitkLayerLayout-right {
   left: auto;
   right: 0;
-  width: 240px;
+  width: var(--layer-anchor-width);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-animate {
@@ -82,7 +83,7 @@
 .uitkLayerLayout-anchor.uitkLayerLayout-left {
   left: 0;
   right: auto;
-  width: 240px;
+  width: var(--layer-anchor-width);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-animate {
