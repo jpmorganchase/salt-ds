@@ -107,7 +107,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const [isOverflowed, setIsOverflowed] = useState(false);
   const [hasTooltip, setHasTooltip] = useState(false);
   const [resize, setResize] = useState<{ width: number; height: number }>();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
   const [componentStyle, setStyle] = useState<StylesType>();
   const rows = useRef(maxRows);
   const density = useDensity();
@@ -120,7 +120,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       (entries) => {
         requestAnimationFrame(() => {
           entries.forEach((entry) => {
-            setIsVisible(entry.isIntersecting);
+            setIsIntersecting(entry.isIntersecting);
           });
         });
       },
@@ -159,7 +159,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       }
     });
 
-    if (node && isVisible) {
+    if (node && isIntersecting) {
       resizeObserver.observe(node);
     }
 
@@ -168,7 +168,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         resizeObserver.unobserve(node);
       }
     };
-  }, [contentRef.current, isVisible]);
+  }, [contentRef.current, isIntersecting]);
 
   // Styling
   useEffect(() => {
