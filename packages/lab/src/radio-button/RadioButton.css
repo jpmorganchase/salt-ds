@@ -45,7 +45,7 @@
 /* Styles applied to root component on hover if `disabled={true}` */
 .uitkRadioButton-disabled {
   cursor: not-allowed;
-  opacity: var(--uitk-disabled-graphical-opacity);
+  opacity: var(--uitk-disabled-text-opacity);
   pointer-events: visible;
 }
 

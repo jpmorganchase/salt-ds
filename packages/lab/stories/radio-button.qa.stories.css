@@ -1,7 +1,7 @@
 .uitkQAContainer {
   height: unset !important;
 }
-
-.uitkDocGrid {
+.uitkRadioButtonQA .uitkDocGrid {
   --uitkDocGrid-width: 1180px;
+  --uitkDocGrid-height: 589px;
 }
