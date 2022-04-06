@@ -10,6 +10,7 @@ import {
   StackLayout,
   Tabstrip,
   GridLayoutProps,
+  Viewport,
 } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
@@ -111,7 +112,7 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
         <ToolkitParentChildLayoutResponsive
           parent={[]}
           child={[]}
-          stackedAtBreakpoint={600}
+          stackedAtBreakpoint={Viewport.SMALL}
         />
         <MetricsFlowLayout />
         <InVerticalTabStrip />

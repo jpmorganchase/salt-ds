@@ -6,7 +6,8 @@ import "./FlexLayout.css";
 import { useForkRef } from "../../utils";
 import { useSplitterResizing } from "./useSplitterResizing";
 import { Separator, SeparatorVariant } from "../Separator";
-import useViewport, { Viewport } from "../internal/useViewport";
+import useViewport from "../internal/useViewport";
+import { Viewport } from "../types";
 
 const withBaseName = makePrefixer("uitkFlexLayout");
 

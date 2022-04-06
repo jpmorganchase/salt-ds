@@ -10,6 +10,7 @@ import {
   GridItem,
   Card,
   Avatar,
+  Viewport,
 } from "@brandname/lab";
 import { Button } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -93,7 +94,7 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
 export const ToolkitParentChildLayoutStacked = Stacked.bind({});
 ToolkitParentChildLayoutStacked.args = {
   parentWidth: 200,
-  stackedAtBreakpoint: 2000,
+  stackedAtBreakpoint: Viewport.EXTRA_LARGE,
 };
 
 ToolkitParentChildLayoutStacked.argTypes = {};
@@ -113,7 +114,7 @@ const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
 const cardStyles = { height: "100%" };
 
-const stackedAtBreakpoint = 700;
+const stackedAtBreakpoint = Viewport.SMALL;
 
 const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
@@ -209,4 +210,9 @@ ToolkitParentChildLayoutResponsive.args = {
   stackedAtBreakpoint,
 };
 
-ToolkitParentChildLayoutResponsive.argTypes = {};
+ToolkitParentChildLayoutResponsive.argTypes = {
+  stackedAtBreakpoint: {
+    options: Object.values(Viewport),
+    control: { type: "select" },
+  },
+};
