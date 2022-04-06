@@ -13,6 +13,7 @@ import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import "./ParentChildLayout.css";
 import { AnimationsDirection } from "../types";
 import { useIsStacked } from "./";
+import { Viewport } from "../types";
 
 export type StackedViewElement = "parent" | "child";
 
@@ -24,7 +25,7 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
-  stackedAtBreakpoint?: number;
+  stackedAtBreakpoint?: Viewport;
   /**
    * Change element that is displayed when in staked view.
    */
@@ -58,7 +59,7 @@ export const ParentChildLayout = forwardRef<
 >(function ParentChildLayout(
   {
     parentWidth,
-    stackedAtBreakpoint = 600,
+    stackedAtBreakpoint = Viewport.SMALL,
     stackedViewElement = "parent",
     disableAnimations = false,
     parent,

@@ -13,6 +13,7 @@ import {
   Tab,
   useIsStacked,
   StackedViewElement,
+  Viewport,
 } from "@brandname/lab";
 import { Button, Icon } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -290,7 +291,7 @@ const PaymentDialog: ComponentStory<typeof LayerLayout> = (args) => {
         <ParentChildLayout
           parentWidth={310}
           stackedViewElement="child"
-          stackedAtBreakpoint={750}
+          stackedAtBreakpoint={Viewport.SMALL}
           parent={parent}
           child={child}
         />
@@ -339,7 +340,7 @@ const headingStyles = {
   fontWeight: 600,
 };
 
-const stackedAtBreakpoint = 960;
+const stackedAtBreakpoint = Viewport.MEDIUM;
 
 const PreferencesDialog: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);

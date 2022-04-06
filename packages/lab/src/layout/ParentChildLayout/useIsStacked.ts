@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
+import useViewport from "../internal/useViewport";
+import { Viewport } from "../types";
 
-export const useIsStacked = (stackedAtBreakpoint: number) => {
-  const [stackedView, setStackedView] = useState(false);
-  useEffect(() => {
-    const listener = () => {
-      setStackedView(window.innerWidth <= stackedAtBreakpoint);
-    };
+export const useIsStacked = (stackedAtBreakpoint: Viewport) => {
+  const viewport = useViewport();
 
-    window.addEventListener("resize", listener);
+  const allBreakpoints = Object.values(Viewport);
+  const index = allBreakpoints.indexOf(stackedAtBreakpoint);
+  const allPreviousBreakpoints = allBreakpoints.slice(0, index + 1);
 
-    window.dispatchEvent(new Event("resize")); // trigger resize on initial render
-
-    return () => window.removeEventListener("resize", listener);
-  }, [stackedAtBreakpoint]);
+  const stackedView = allPreviousBreakpoints.includes(viewport);
 
   return stackedView;
 };

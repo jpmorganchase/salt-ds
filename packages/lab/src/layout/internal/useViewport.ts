@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-
-export enum Viewport {
-  EXTRA_SMALL = "xs",
-  SMALL = "sm",
-  MEDIUM = "md",
-  LARGE = "lg",
-  EXTRA_LARGE = "xl",
-}
+import { Viewport } from "../types";
 
 const breakpoints = {
   sm: 600,
