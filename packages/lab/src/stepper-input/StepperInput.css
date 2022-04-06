@@ -1,55 +1,58 @@
 .uitk-density-medium .uitkStepperInput {
-  --adornment-container-top: -2px;
-  --input-max-height: 28px;
-  --secondary-button-height: 26px;
-  --secondary-button-width: 26px;
-  --secondary-button-margin-right: 2px;
+  --stepper-adornment-container-top: -2px;
   --stepper-button-height: 12px;
   --stepper-button-margin: 2px;
   --stepper-button-width: 24px;
+  --stepper-input-max-height: 28px;
+  --stepper-secondary-button-height: 26px;
+  --stepper-secondary-button-width: 26px;
+  --stepper-secondary-button-margin-right: 2px;
 }
 
 .uitk-density-touch .uitkStepperInput {
-  --adornment-container-top: 0;
-  --secondary-button-height: 36px;
-  --secondary-button-width: 36px;
-  --secondary-button-margin-right: 4px;
+  --stepper-adornment-container-top: 0;
   --stepper-button-height: 16px;
   --stepper-button-margin: 4px;
   --stepper-button-width: 36px;
+  --stepper-secondary-button-height: 36px;
+  --stepper-secondary-button-width: 36px;
+  --stepper-secondary-button-margin-right: 4px;
 }
 
 .uitk-density-low .uitkStepperInput {
-  --adornment-container-top: 0;
-  --secondary-button-height: 28px;
-  --secondary-button-width: 28px;
-  --secondary-button-margin-right: 4px;
+  --stepper-adornment-container-top: 0;
   --stepper-button-height: 12px;
   --stepper-button-margin: 4px;
   --stepper-button-width: 28px;
+  --stepper-secondary-button-height: 28px;
+  --stepper-secondary-button-width: 28px;
+  --stepper-secondary-button-margin-right: 4px;
 }
 
 .uitk-density-high .uitkStepperInput {
-  --adornment-container-top: -2px;
-  --input-max-height: 20px;
-  --secondary-button-height: 18px;
-  --secondary-button-width: 18px;
-  --secondary-button-margin-right: 2px;
+  --stepper-adornment-container-top: -2px;
   --stepper-button-height: 8px;
   --stepper-button-margin: 2px;
   --stepper-button-width: 16px;
+  --stepper-input-max-height: 20px;
+  --stepper-secondary-button-height: 18px;
+  --stepper-secondary-button-width: 18px;
+  --stepper-secondary-button-margin-right: 2px;
 }
 
 .uitkStepperInput-adornmentContainer {
   display: flex;
   position: relative;
-  top: var(--adornment-container-top);
+  top: var(--uitkStepperInput-adornment-container-top, var(--stepper-adornment-container-top));
 }
 
 .uitkStepperInput-secondaryButton {
-  height: var(--secondary-button-height);
-  margin: var(--secondary-button-margin-right);
-  width: var(--secondary-button-width);
+  height: var(--uitkStepperInput-secondary-button-height, var(--stepper-secondary-button-height));
+  margin-left: var(--uitkStepperInput-secondary-button-margin-left, var(--stepper-button-margin));
+  margin-bottom: var(--uitkStepperInput-secondary-button-margin-bottom, var(--stepper-button-margin));
+  margin-top: var(--uitkStepperInput-secondary-button-margin-top, var(--stepper-button-margin));
+  margin-right: var(--uitkStepperInput-secondary-button-margin-right, var(--stepper-secondary-button-margin-right));
+  width: var(--uitkStepperInput-secondary-button-width, var(--stepper-secondary-button-width));
 }
 
 .uitkStepperInput-hideSecondaryButton {
@@ -62,21 +65,24 @@
 }
 
 .uitkStepperInput-stepperButton {
-  height: var(--stepper-button-height);
-  margin: var(--stepper-button-margin);
-  width: var(--stepper-button-width);
+  height: var(--uitkStepperInput-button-height, var(--stepper-button-height));
+  margin: var(--uitkStepperInput-button-margin, var(--stepper-button-margin));
+  width: var(--uitkStepperInput-button-width, var(--stepper-button-width));
 }
 
 .uitkStepperInput-increment {
+  background: var(--uitkStepperInput-increment-background, var(--button-background));
 }
 
 .uitkStepperInput-decrement {
+  background: var(--uitkStepperInput-decrement-background, var(--button-background));
   margin-top: 0;
 }
 
 .uitkStepperInput-stepperButtonIcon {
+  fill: var(--uitkStepperInput-stepperButtonIcon-color, var(--icon-color));
 }
 
 .uitkStepperInput-input {
-  max-height: var(--input-max-height);
+  max-height: var(--uitkStepperInput-max-height, var(--stepper-input-max-height));
 }

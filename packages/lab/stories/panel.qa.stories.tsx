@@ -8,6 +8,16 @@ export default {
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 
+export const ExamplesGrid: ComponentStory<typeof Panel> = (props) => {
+  return (
+    <AllRenderer>
+      <Panel {...props}>
+        <p>This is a panel around some text</p>
+      </Panel>
+    </AllRenderer>
+  );
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Panel> = (
   props
 ) => {
@@ -16,11 +26,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Panel> = (
       className="uitkPanelQA"
       imgSrc="/visual-regression-screenshots/Panel-vr-snapshot.png"
     >
-      <AllRenderer>
-        <Panel {...props}>
-          <p>This is a panel around some text</p>
-        </Panel>
-      </AllRenderer>
+      <ExamplesGrid />
     </QAContainer>
   );
 };
