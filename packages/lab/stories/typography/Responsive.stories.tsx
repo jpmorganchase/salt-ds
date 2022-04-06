@@ -12,7 +12,7 @@ export default {
   component: Text,
 } as ComponentMeta<typeof Text>;
 
-const ResponsiveTextComponent: ComponentStory<typeof Text> = (props) => {
+const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
   const box = {
     border: "1px solid #ccc",
     padding: 10,
