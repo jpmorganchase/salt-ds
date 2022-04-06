@@ -9,11 +9,11 @@ export default {
   component: Text,
   argTypes: {
     wrapperWidth: {
-      description: "For this demo only. Set '0' for 100% width",
+      description: "For this demo only",
       control: { type: "text" },
     },
     wrapperHeight: {
-      description: "For this demo only. Set '0' for 100% height",
+      description: "For this demo only",
       control: { type: "text" },
     },
   },

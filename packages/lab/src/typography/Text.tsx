@@ -10,7 +10,11 @@ import {
   forwardRef,
 } from "react";
 import cx from "classnames";
-import { useDensity, makePrefixer } from "@brandname/core";
+import {
+  useDensity,
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@brandname/core";
 import { Tooltip, TooltipProps } from "@brandname/lab";
 
 import { useForkRef } from "../utils";
@@ -24,6 +28,7 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   children?: string | ReactNode;
   /**
    * Represents the semantic element tag name as a string.
+   * Defaults to 'div'
    */
   elementType?: ElementType;
   /**
@@ -32,10 +37,12 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   maxRows?: number;
   /**
    * If 'false' then text will be displayed at 100% height and will show scrollbar if the parent restricts it's height.
+   * Defaults to 'true'
    */
   truncate?: boolean;
   /**
    * If 'true' it will show the Tooltip only if the text is truncated.
+   * Defaults to 'true'
    */
   showTooltip?: boolean;
   /**
@@ -99,17 +106,14 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   const [isOverflowed, setIsOverflowed] = useState(false);
   const [hasTooltip, setHasTooltip] = useState(false);
-  const [resize, setResize] = useState<{ width?: number; height?: number }>();
+  const [resize, setResize] = useState<{ width: number; height: number }>();
   const [isVisible, setIsVisible] = useState(false);
   const [componentStyle, setStyle] = useState<StylesType>();
   const rows = useRef(maxRows);
   const density = useDensity();
 
   // Scrolling
-  useLayoutEffect(() => {
-    if (!contentRef.current) {
-      return;
-    }
+  useIsomorphicLayoutEffect(() => {
     const { current: node } = contentRef;
 
     const scrollObserver = new IntersectionObserver(
@@ -139,16 +143,20 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [contentRef.current]);
 
   // Resizing
-  useLayoutEffect(() => {
+  useEffect(() => {
     const { current: node } = contentRef;
 
     const resizeObserver = new ResizeObserver((entries) => {
-      requestAnimationFrame(() => {
-        for (const entry of entries) {
-          const { width, height } = entry.contentRect;
-          setResize({ width, height });
-        }
-      });
+      if (entries.length > 0 && entries[0].contentRect) {
+        requestAnimationFrame(() => {
+          for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            if (width !== resize?.width || height !== resize.height) {
+              setResize({ width, height });
+            }
+          }
+        });
+      }
     });
 
     if (node && isVisible) {
@@ -164,7 +172,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Styling
   useEffect(() => {
-    if (contentRef.current && isVisible) {
+    if (contentRef.current) {
       const styles: StylesType = {};
 
       if (maxRows) {
@@ -187,14 +195,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       } else if (truncate) {
         const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
           contentRef.current;
-        const { lineHeight: lineHeightComputed } = getComputedStyles(
-          contentRef.current
-        );
+        const { lineHeight } = getComputedStyles(contentRef.current);
 
         const parent = contentRef.current.parentElement;
 
         if (rows.current) {
-          const maxRowsHeight = rows.current * lineHeightComputed;
+          const maxRowsHeight = rows.current * lineHeight;
 
           if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
             styles["--text-height"] = `${maxRowsHeight}px`;
@@ -211,16 +217,17 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         ) {
           const { width: widthParent, height: heightParent } =
             getComputedStyles(parent);
+
           if (
             heightParent < scrollHeight ||
             heightParent < offsetHeight ||
             offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
           ) {
-            const newRows = Math.floor(heightParent / lineHeightComputed);
+            const newRows = Math.floor(heightParent / lineHeight);
 
             styles["--text-max-rows"] = newRows;
-            styles["--text-height"] = `${newRows * lineHeightComputed}px`;
+            styles["--text-height"] = `${newRows * lineHeight}px`;
 
             setIsOverflowed(true);
           } else {
@@ -228,9 +235,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
           }
         }
       }
-      setStyle(styles);
+
+      if (Object.keys(styles).length > 0) {
+        setStyle(styles);
+      }
     }
-  }, [elementType, maxRows, expanded, truncate, density, resize, isVisible]);
+  }, [elementType, maxRows, expanded, truncate, density, resize]);
 
   // Tooltip
   useEffect(() => {
@@ -245,10 +255,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         setHasTooltip(false);
       }
     }
-
-    return () => {
-      setHasTooltip(false);
-    };
   }, [isOverflowed, showTooltip, truncate, expanded, onOverflow]);
 
   // Rendering
