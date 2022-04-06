@@ -64,9 +64,8 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     return (
       <GridItem
         className={cx(
-          withBaseName(),
           withBaseName(position),
-          withBaseName(animationClass)
+          withBaseName(animationClass),
         )}
         colStart={1}
         colEnd={2}
