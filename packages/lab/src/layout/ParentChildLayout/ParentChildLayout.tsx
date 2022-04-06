@@ -12,7 +12,6 @@ import { FlexLayout } from "../FlexLayout";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import "./ParentChildLayout.css";
 import { AnimationsDirection } from "../types";
-import { useId } from "../../utils";
 import { useIsStacked } from "./";
 
 export type StackedViewElement = "parent" | "child";
@@ -93,7 +92,6 @@ export const ParentChildLayout = forwardRef<
   const stackedViewChildren = {
     parent: (
       <ParentChildItem
-        id={useId()}
         disableAnimations={disableAnimations}
         direction={direction}
         {...stackedViewStyles}
@@ -103,7 +101,6 @@ export const ParentChildLayout = forwardRef<
     ),
     child: (
       <ParentChildItem
-        id={useId()}
         disableAnimations={disableAnimations}
         direction={direction}
         {...stackedViewStyles}
