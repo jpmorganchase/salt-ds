@@ -55,7 +55,6 @@
 /* Styles applied to label element */
 .uitkCheckbox-label {
   align-items: flex-start;
-  margin-right: var(--label-margin-right);
   margin-top: var(--label-margin-top);
 }
 

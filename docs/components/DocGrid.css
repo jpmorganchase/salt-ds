@@ -11,6 +11,7 @@
   align-items: center;
   background: var(--uitk-container-background);
   display: grid;
+  height: var(--uitkDocGrid-height, auto);
   gap: var(--uitkDocGrid-gap, var(--doc-grid-gap));
   grid-template-columns: repeat(2, auto);
   padding-block-start: var(--doc-grid-padding-block-start);

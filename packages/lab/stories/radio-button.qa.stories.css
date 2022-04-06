@@ -1,3 +1,7 @@
 .uitkQAContainer {
   height: unset !important;
 }
+
+.uitkDocGrid {
+  --uitkDocGrid-width: 1180px;
+}

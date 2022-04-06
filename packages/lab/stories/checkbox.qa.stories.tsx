@@ -1,6 +1,7 @@
 import { Checkbox } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
+import "./checkbox.qa.stories.css";
 
 export default {
   title: "Lab/Checkbox/QA",
