@@ -25,7 +25,6 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
       disableAnimations = true,
       direction,
       children,
-      id,
       className,
       style,
       ...rest
@@ -39,7 +38,6 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
         })}
         ref={ref}
         style={style}
-        key={id}
         {...rest}
       >
         {children}
