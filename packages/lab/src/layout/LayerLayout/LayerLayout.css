@@ -29,7 +29,6 @@
   max-width: 100%;
   overflow: auto;
   padding: var(--layer-padding);
-  position: relative;
   box-shadow: var(--uitkLayerLayout-box-shadow, var(--layer-box-shadow));
   width: 50vw;
   z-index: 1199;
