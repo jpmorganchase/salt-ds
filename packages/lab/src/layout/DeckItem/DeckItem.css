@@ -1,17 +1,11 @@
-.uitkDeckItem {
-  /*opacity: 0;*/
-  position: relative;
-}
-
 .uitkDeckItem-current {
   opacity: 1;
-  right: 0;
 }
 .uitkDeckItem-previous {
-  right: 100%;
+  opacity: 0;
 }
 .uitkDeckItem-next {
-  right: -100%;
+  opacity: 0;
 }
 
 .uitkDeckItem-slide-in-top {
