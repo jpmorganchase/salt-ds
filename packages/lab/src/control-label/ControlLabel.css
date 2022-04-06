@@ -1,11 +1,3 @@
-.uitk-light .uitkControlLabel {
-  --control-label-color: var(--uitk-color-grey-200);
-}
-
-.uitk-dark .uitkControlLabel {
-  --control-label-color: var(--uitk-color-grey-80); /* TODO: Check color with design */
-}
-
 .uitkControlLabel {
   align-items: center;
   cursor: pointer;
@@ -15,7 +7,7 @@
 
 .uitkControlLabel-label,
 .uitkControlLabel-labelRight {
-  color: var(--control-label-color);
+  color: var(--uitkControlLabel-color, var(--uitk-text-primary-color));
   font-family: var(--uitk-typography-font-family);
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-regular);

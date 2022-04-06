@@ -1,3 +1,4 @@
+/* Styles applied to root component */
 .uitk-light .uitkCheckbox {
   --checkbox-outline-color: var(--uitk-color-grey-90);
   --checkbox-outline-color-hover: var(--uitk-color-blue-400);
@@ -8,6 +9,18 @@
   --checkbox-outline-color-hover: var(--uitk-color-blue-300);
 }
 
+.uitkCheckbox {
+  --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
+  --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
+}
+
+.uitk-density-medium .uitkCheckbox {
+  --checkbox-font-size: 12px;
+  --label-margin-left: 6px;
+  --label-margin-right: calc(var(--uitk-spacing-medium) * var(--checkbox-space-multiplier));
+  --label-margin-top: calc(var(--uitk-spacing-medium) * var(--checkbox-top-multiplier));
+  --label-min-height: 16px;
+}
 .uitk-density-touch .uitkCheckbox {
   --checkbox-font-size: 16px;
   --label-margin-left: 12px;
@@ -22,13 +35,6 @@
   --label-margin-top: calc(var(--uitk-spacing-low) * var(--checkbox-top-multiplier));
   --label-min-height: 18px;
 }
-.uitk-density-medium .uitkCheckbox {
-  --checkbox-font-size: 12px;
-  --label-margin-left: 6px;
-  --label-margin-right: calc(var(--uitk-spacing-medium) * var(--checkbox-space-multiplier));
-  --label-margin-top: calc(var(--uitk-spacing-medium) * var(--checkbox-top-multiplier));
-  --label-min-height: 16px;
-}
 .uitk-density-high .uitkCheckbox {
   --checkbox-font-size: 11px;
   --label-margin-left: 3px;
@@ -38,29 +44,32 @@
 }
 
 .uitkCheckbox {
-  --checkbox-space-multiplier: 3;
-  --checkbox-top-multiplier: 0.75;
-  font-size: var(--checkbox-font-size);
-  line-height: 1;
+  line-height: var(--uitkCheckbox-line-height, 1);
 }
 
-.uitkCheckbox-label {
-  align-items: flex-start;
-}
-
+/* Styles applied to root component if `disabled={true}` */
 .uitkCheckbox-disabled {
   pointer-events: visible;
 }
 
+/* Styles applied to label element */
+.uitkCheckbox-label {
+  align-items: flex-start;
+  margin-right: var(--label-margin-right);
+  margin-top: var(--label-margin-top);
+}
+
 .uitkCheckbox .uitkControlLabel-label {
   vertical-align: baseline;
-  min-height: var(--label-min-height);
+  min-height: var(--uitkCheckbox-label-min-height, var(--label-min-height));
 }
 
+/* Styles applied to icon on hover state */
 .uitkCheckbox:hover .uitkCheckboxBase-icon {
-  stroke: var(--checkbox-outline-color-hover);
+  stroke: var(--uitkCheckbox-outline-color-hover, var(--checkbox-outline-color-hover));
 }
 
+/* Styles applied to icon on hover state if `disabled={true}` */
 .uitkCheckbox-disabled:hover .uitkCheckboxBase-icon {
-  stroke: var(--checkbox-outline-color);
+  stroke: var(--uitkCheckbox-outline-color, var(--checkbox-outline-color));
 }
