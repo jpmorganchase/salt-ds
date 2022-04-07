@@ -1,12 +1,12 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Text, Div } from "@brandname/lab";
-import { transactions } from "./transactions";
-import "./Table.css";
+import { Text } from "@brandname/lab";
+import { transactions } from "./Table/transactions";
+import "./Table/Table.css";
 
 export default {
   title: "Lab/Typography",
-  component: Text,
+  component: "Text",
   argTypes: {
     wrapperWidth: {
       description: "For this demo only",
@@ -17,7 +17,7 @@ export default {
       control: { type: "text" },
     },
   },
-} as ComponentMeta<typeof Text>;
+};
 
 const TextComponent: Story = (props) => {
   const { wrapperWidth, wrapperHeight } = props;
@@ -33,39 +33,39 @@ const TextComponent: Story = (props) => {
       <div className="table">
         <div className="row">
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Date</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Amount paid</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Activity name</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Status</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Reference</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Payment method</strong>
-            </Div>
+            </div>
           </div>
           <div className="table-cell">
-            <Div>
+            <div>
               <strong>Payment type</strong>
-            </Div>
+            </div>
           </div>
         </div>
 
@@ -83,25 +83,25 @@ const TextComponent: Story = (props) => {
           return (
             <div className="row" key={id}>
               <div className="table-cell">
-                <Div>{date}</Div>
+                <div>{date}</div>
               </div>
               <div className="table-cell">
-                <Div>{amount_paid}</Div>
+                <div>{amount_paid}</div>
               </div>
               <div className="table-cell">
-                <Div>{activity_name}</Div>
+                <div>{activity_name}</div>
               </div>
               <div className="table-cell">
-                <Div>{status}</Div>
+                <div>{status}</div>
               </div>
               <div className="table-cell">
-                <Div>{reference}</Div>
+                <div>{reference}</div>
               </div>
               <div className="table-cell">
-                <Div>{name}</Div>
+                <div>{name}</div>
               </div>
               <div className="table-cell">
-                <Div>{payment_type}</Div>
+                <div>{payment_type}</div>
               </div>
             </div>
           );
@@ -111,8 +111,8 @@ const TextComponent: Story = (props) => {
   );
 };
 
-export const TableExample = TextComponent.bind({});
-TableExample.parameters = {
+export const SimpleTable = TextComponent.bind({});
+SimpleTable.parameters = {
   controls: {
     exclude: [
       "children",
@@ -129,7 +129,7 @@ TableExample.parameters = {
     ],
   },
 };
-TableExample.args = {
+SimpleTable.args = {
   wrapperWidth: undefined,
   wrapperHeight: undefined,
 };

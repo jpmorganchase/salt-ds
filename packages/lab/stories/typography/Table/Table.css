@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-  width: 100%;
+  width: calc(100% - 2rem);
   height: 100%;
 }
 .row {

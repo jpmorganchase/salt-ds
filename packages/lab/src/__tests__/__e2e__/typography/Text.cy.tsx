@@ -123,7 +123,7 @@ describe("GIVEN an expandable Text", () => {
 });
 
 describe("GIVEN an H1", () => {
-  it("should be an h1 html tag width an emphasis low", () => {
+  it("should be an h1 html tag width strong emphasis", () => {
     cy.mount(
       <H1>
         Testing Heading 1 <strong>component</strong>
@@ -138,7 +138,7 @@ describe("GIVEN an H1", () => {
       expect($emphasis).to.have.css("font-weight", "800");
     });
   });
-  it("should be an h1 html tag syled as h2", () => {
+  it("should be an h1 html tag syled as h2 with small emphasis", () => {
     cy.mount(
       <H1 styleAs="h2">
         Testing Heading 1 <small>component</small>
