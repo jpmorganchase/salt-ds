@@ -1,4 +1,10 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import ReactDOM from "react-dom";
 
 import { ToolkitProvider, useIsomorphicLayoutEffect } from "@brandname/core";
@@ -44,6 +50,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
       .split(" ")
       .forEach((classname) => components.add(classname))
   );
+  //Need to manually add styles to the list
+
   //Window Styles
   components.add(".uitkWindow");
   //Theme
@@ -52,54 +60,29 @@ const Window: windowType = forwardRef(function ElectronWindow(
   //Fonts
   components.add("@font-face");
 
+  //Overflow menu is added post initial render
   components.add(".uitkOverflowMenu");
 
   if (className)
     className.split(" ").forEach((classname) => components.add(classname));
 
-  function resizeWindow() {
-    if (windowRoot.current) {
-      // @ts-ignore
-      const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
-      const { ipcRenderer } = global as any;
-      if (ipcRenderer) {
-        ipcRenderer.send("window-size", {
-          id: id,
-          height: Math.ceil(height + 1),
-          width: Math.ceil(width + 1),
-        });
-      }
-    }
-  }
-
   if (!mountNode) {
     const win = window.open("", id);
     (win as Window).document.write(
+      // eslint-disable-next-line no-restricted-globals
       `<html lang="en"><head><title>${id}</title><base href="${location.origin}"><style>body {margin: 0;}</style></head><body></body></html>`
     );
     document.head.querySelectorAll("style").forEach((htmlElement) => {
       if (
         // @ts-ignore
         Array.from(components).some((v) => htmlElement.textContent.includes(v))
-      ) {
+        || true) {
         (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
       }
     });
     const bodyElement = (win as Window).document.body;
     setMountNode(bodyElement);
     setWindowRef(win);
-    // @ts-ignore
-    // new MutationObserver(() => {
-    //   resizeWindow();
-    // }).observe(bodyElement, {
-    //   attributes: false,
-    //   characterData: true,
-    //   childList: true,
-    //   subtree: true,
-    // });
-    new ResizeObserver(()=>{
-      resizeWindow();
-    }).observe(bodyElement);
   }
 
   const parentWindow = useWindowParentContext();
@@ -112,9 +95,27 @@ const Window: windowType = forwardRef(function ElectronWindow(
   }, [id]);
 
   useEffect(() => {
+    if (windowRoot.current) {
+      // @ts-ignore
+      const {offsetWidth: height, scrollWidth: width} = windowRoot.current;
+      // @ts-ignore
+      const {ipcRenderer} = global as any;
+      if (ipcRenderer) {
+        ipcRenderer.send("window-size", {
+          id: id,
+          height: Math.ceil(height + 1),
+          width: Math.ceil(width + 1),
+        });
+      }
+    }
+  },[id]);
+
+  useEffect(() => {
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      ipcRenderer.send("window-ready", { id: id });
+      requestAnimationFrame(() => {
+        ipcRenderer.send("window-ready", {id: id});
+      });
     }
 
     return () => {
@@ -123,9 +124,9 @@ const Window: windowType = forwardRef(function ElectronWindow(
   }, [closeWindow, windowRef]);
 
   useIsomorphicLayoutEffect(() => {
-    const {ipcRenderer} = global as any;
+    const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      console.log(`${id} is being moved to ${style.left + parentWindow.left},${style.top + parentWindow.top}`);
+      console.log(`${id} is being moved to ${style.left as number + parentWindow.left},${style.top as number + parentWindow.top}`);
       ipcRenderer.send("window-position", {
         id: id,
         parentWindowID: parentWindow.id,
@@ -140,8 +141,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
         <ToolkitProvider>
             <WindowParentContext.Provider
               value={{
-                top: style.top + parentWindow.top,
-                left: style.left + parentWindow.left,
+                top: style.top as number+ parentWindow.top,
+                left: style.left as number + parentWindow.left,
                 id: id
               }}
             >

@@ -4,7 +4,6 @@ import {
   Dialog,
   Dropdown,
   MenuDescriptor,
-  Popper,
   Tooltip,
   WindowContext,
   ElectronWindow,
@@ -17,6 +16,8 @@ import {
   ButtonBar,
   Toolbar,
   FormField,
+  Portal,
+  useWindow,
 } from "@brandname/lab";
 
 import { Button, useDensity } from "@brandname/core";
@@ -136,6 +137,17 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
   );
 };
 
+// @ts-ignore
+const Popper = ({ children, open, id, anchorEl = null }) => {
+  const Window = useWindow();
+  return open ? (
+    <Portal>
+      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+      <Window id={id}>{children}</Window>
+    </Portal>
+  ) : null;
+};
+
 export const App = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
@@ -181,6 +193,7 @@ export const App = () => {
         </Button>
         <Dialog
           className="Dialog-alignTop"
+          disablePortal={true}
           id="steve-1"
           open={open}
           onClose={handleClose}
@@ -220,8 +233,9 @@ export const App = () => {
       <CascadingMenu
         disableClickAway
         initialSource={initialSource}
-        itemToString={(item) => item && item.title}
+        itemToString={(item: { title: string }) => item && item.title}
         onItemClick={(sourceItem) => {
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           console.log(`You clicked: ${sourceItem.title}`);
           return undefined;
         }}
@@ -242,12 +256,11 @@ export const App = () => {
       <Button ref={anchorEl} onClick={() => setOpenPopper(!openPopper)}>
         Toggle Popper
       </Button>
-      <Popper anchorEl={anchorEl.current} open={openPopper}>
+      <Popper id="formfield1" anchorEl={anchorEl.current} open={openPopper}>
         <FormField
           data-close-on-click={false}
           label="Range"
           data-activation-indicator
-          variant="theme"
         >
           <Button data-testid="FormField">Test</Button>
         </FormField>
@@ -259,11 +272,7 @@ export const App = () => {
       >
         Toggle Toolbar
       </Button>
-      <Popper
-        anchorEl={toolbarAnchorEl.current}
-        id="toolbar-popper"
-        open={openToolbarPopper}
-      >
+      <Popper id="toolbar-popper" open={openToolbarPopper}>
         <DefaultToolbar />
       </Popper>
     </WindowContext.Provider>

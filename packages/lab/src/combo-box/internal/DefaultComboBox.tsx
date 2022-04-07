@@ -24,7 +24,7 @@ import { Input, InputProps } from "../../input";
 import { useForkRef } from "../../utils";
 import { TooltipContext, TooltipContextProps } from "../../tooltip";
 import { Portal } from "../../portal";
-import { Window } from "../../window";
+import { isElectron, Window } from "../../window";
 import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type BaseComboBoxProps<
@@ -142,19 +142,26 @@ export function DefaultComboBox<Item>(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const { reference, floating, x, y, strategy } = useFloatingUI({
-    placement: "bottom-start",
-    middleware: [
+  const middleware = [
+    size({
+      apply({ height }) {
+        setMaxListHeight(height);
+      },
+    }),
+  ];
+
+  if (!isElectron) {
+    middleware.unshift(
       flip({
         fallbackPlacements: ["bottom-start", "top-start"],
       }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ height }) {
-          setMaxListHeight(height);
-        },
-      }),
-    ],
+      shift({ limiter: limitShift() })
+    );
+  }
+
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: middleware,
   });
 
   useEffect(() => {

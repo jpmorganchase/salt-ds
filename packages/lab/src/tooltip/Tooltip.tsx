@@ -22,7 +22,7 @@ import { getIconForState } from "./getIconForState";
 
 import "./Tooltip.css";
 import { Portal, PortalProps } from "../portal";
-import { useWindow } from "../window";
+import { isElectron, useWindow } from "../window";
 
 // Keep in order of preference. First items are used as default
 
@@ -152,6 +152,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     ref
   ) {
     const arrowRef = useRef<HTMLDivElement | null>(null);
+    const middleware = isElectron
+      ? [offset(8), arrow({ element: arrowRef })]
+      : [
+          offset(8),
+          flip(),
+          shift({
+            limiter: limitShift({
+              offset: () =>
+                Math.max(
+                  arrowRef.current?.offsetWidth ?? 0,
+                  arrowRef.current?.offsetHeight ?? 0
+                ),
+            }),
+          }),
+          arrow({ element: arrowRef }),
+        ];
     const {
       floating,
       reference,
@@ -163,20 +179,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement,
     } = useFloatingUI({
       placement: placementProp,
-      middleware: [
-        offset(8),
-        flip(),
-        shift({
-          limiter: limitShift({
-            offset: () =>
-              Math.max(
-                arrowRef.current?.offsetWidth ?? 0,
-                arrowRef.current?.offsetHeight ?? 0
-              ),
-          }),
-        }),
-        arrow({ element: arrowRef }),
-      ],
+      middleware: middleware,
     });
     const childRef = useForkRef(children.ref, reference);
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);

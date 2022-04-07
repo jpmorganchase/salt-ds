@@ -8,6 +8,8 @@ import {
 import type { Placement, Strategy, Middleware } from "@floating-ui/core";
 import { useEffect } from "react";
 
+import { isElectron } from "@brandname/lab";
+
 export interface UseFloatingUIProps {
   middleware?: Middleware[];
   /**
@@ -17,10 +19,9 @@ export interface UseFloatingUIProps {
   strategy?: Strategy;
 }
 
-export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
-  flip(),
-  shift({ limiter: limitShift() }),
-];
+export const DEFAULT_FLOATING_UI_MIDDLEWARE = isElectron
+  ? []
+  : [flip(), shift({ limiter: limitShift() })];
 
 export function useFloatingUI(props: UseFloatingUIProps) {
   const {

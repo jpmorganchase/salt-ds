@@ -90,7 +90,8 @@
     "node-loader": "^2.0.0",
     "playwright": "^1.19.0",
     "style-loader": "^3.0.0",
-    "ts-loader": "^9.2.2"
+    "ts-loader": "^9.2.2",
+    "webpack": "5.69.1"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",

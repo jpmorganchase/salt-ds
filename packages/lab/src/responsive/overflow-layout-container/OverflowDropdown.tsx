@@ -13,7 +13,7 @@ import { useOverflowDropdown } from "./useOverflowDropdown";
 import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
 
 import { useFloatingUI } from "../../popper";
-import { useWindow } from "../../window";
+import { isElectron, useWindow } from "../../window";
 import { Portal } from "../../portal";
 import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
@@ -33,19 +33,26 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const { reference, floating, x, y, strategy } = useFloatingUI({
-    placement: "bottom-start",
-    middleware: [
+  const middleware = [
+    size({
+      apply({ height }) {
+        setMaxListHeight(height);
+      },
+    }),
+  ];
+
+  if (!isElectron) {
+    middleware.unshift(
       flip({
         fallbackPlacements: ["bottom-start", "top-start"],
       }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ height }) {
-          setMaxListHeight(height);
-        },
-      }),
-    ],
+      shift({ limiter: limitShift() })
+    );
+  }
+
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: middleware,
   });
   const Window = useWindow();
   const handleRef = useForkRef<HTMLDivElement>(forwardedRef, reference);

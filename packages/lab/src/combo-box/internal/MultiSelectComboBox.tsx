@@ -9,7 +9,7 @@ import { TooltipContext } from "../../tooltip";
 import { ListBase, ListStateContext } from "../../list";
 import { useForkRef } from "../../utils";
 import { Portal } from "../../portal";
-import { useWindow } from "../../window";
+import { isElectron, useWindow } from "../../window";
 import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
@@ -92,19 +92,26 @@ export function MultiSelectComboBox<Item>(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const { reference, floating, x, y, strategy } = useFloatingUI({
-    placement: "bottom-start",
-    middleware: [
+  const middleware = [
+    size({
+      apply({ height }) {
+        setMaxListHeight(height);
+      },
+    }),
+  ];
+
+  if (!isElectron) {
+    middleware.unshift(
       flip({
         fallbackPlacements: ["bottom-start", "top-start"],
       }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ height }) {
-          setMaxListHeight(height);
-        },
-      }),
-    ],
+      shift({ limiter: limitShift() })
+    );
+  }
+
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: middleware,
   });
 
   useEffect(() => {

@@ -115,7 +115,7 @@
     "eslint-plugin-storybook": "^0.5.5",
     "glob": "^7.1.6",
     "is-ci": "^3.0.0",
-    "modular-scripts": "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch",
+    "modular-scripts": "patch:modular-scripts@npm:3.0.0-alpha-webpack5.0#.yarn/patches/modular-scripts-npm-3.0.0-alpha-webpack5.0-9bbea642d6",
     "no-scroll": "^2.1.1",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",

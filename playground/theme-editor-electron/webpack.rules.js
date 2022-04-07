@@ -22,8 +22,8 @@ module.exports = [
     use: {
       loader: "esbuild-loader",
       options: {
-          loader: 'tsx',  // Or 'ts' if you don't need tsx
-          target: 'es2015'
+        loader: "tsx",
+        target: "es2015",
       },
     },
   },
@@ -32,8 +32,8 @@ module.exports = [
     use: {
       loader: "esbuild-loader",
       options: {
-        loader: 'jsx',  // Or 'ts' if you don't need tsx
-        target: 'es2015'
+        loader: "jsx",
+        target: "es2015",
       },
     },
   },

@@ -11,7 +11,7 @@ import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
 import { Portal } from "../portal";
-import { useWindow } from "../window";
+import { isElectron, useWindow } from "../window";
 import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
 
 export type MultiSelectDropdownProps<Item = string> = DropdownProps<
@@ -46,19 +46,26 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const { reference, floating, x, y, strategy } = useFloatingUI({
-    placement: "bottom-start",
-    middleware: [
+  const middleware = [
+    size({
+      apply({ height }) {
+        setMaxListHeight(height);
+      },
+    }),
+  ];
+
+  if (!isElectron) {
+    middleware.unshift(
       flip({
         fallbackPlacements: ["bottom-start", "top-start"],
       }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ height }) {
-          setMaxListHeight(height);
-        },
-      }),
-    ],
+      shift({ limiter: limitShift() })
+    );
+  }
+
+  const { reference, floating, x, y, strategy } = useFloatingUI({
+    placement: "bottom-start",
+    middleware: middleware,
   });
 
   const {

@@ -45,9 +45,7 @@ const createWindow = (): void => {
 
   ipcMain.on("window-ready", (event, { id }) => {
     const targetWindow = windowByTitle(id);
-    setTimeout(() => {
-      if (targetWindow) targetWindow.showInactive();
-    }, 100);
+    if (targetWindow) targetWindow.showInactive();
   });
 
   mainWindow.webContents.setWindowOpenHandler(
@@ -88,10 +86,11 @@ const createWindow = (): void => {
     }
   });
 
-  ipcMain.on("window-position", (event, { id,parentWindowID, left, top }) => {
+  ipcMain.on("window-position", (event, { id, parentWindowID, left, top }) => {
     const targetWindow = windowByTitle(id);
     let mainWindow = windowByTitle(parentWindowID);
-    if(!mainWindow && targetWindow){
+    if (!mainWindow && targetWindow) {
+      // @ts-ignore
       mainWindow = targetWindow.getParentWindow();
     }
     if (targetWindow) {
@@ -99,20 +98,20 @@ const createWindow = (): void => {
 
       let targetX = parseInt(left + mainBounds.x);
       let targetY = parseInt(top + mainBounds.y);
-      const size = screen.getDisplayNearestPoint({
-        x: mainBounds.x,
-        y: mainBounds.y,
-      }).size;
+      // const size = screen.getDisplayNearestPoint({
+      //   x: mainBounds.x,
+      //   y: mainBounds.y,
+      // }).size;
 
-      if (targetX < 0) {
-        targetX = 0;
-      }
-      if (targetY + targetWindow!.getBounds().height > size.height) {
-        targetY -= targetY + targetWindow!.getBounds().height - size.height;
-      }
-      if (targetX + targetWindow!.getBounds().width > size.width) {
-        targetX -= targetX + targetWindow!.getBounds().width - size.width;
-      }
+      // if (targetX < 0) {
+      //   targetX = 0;
+      // }
+      // if (targetY + targetWindow!.getBounds().height > size.height) {
+      //   targetY -= targetY + targetWindow!.getBounds().height - size.height;
+      // }
+      // if (targetX + targetWindow!.getBounds().width > size.width) {
+      //   targetX -= targetX + targetWindow!.getBounds().width - size.width;
+      // }
       try {
         targetWindow!.setPosition(targetX, targetY);
         // @ts-ignore
