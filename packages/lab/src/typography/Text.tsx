@@ -138,6 +138,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     return () => {
       if (node) {
         scrollObserver.unobserve(node);
+      } else {
+        scrollObserver.disconnect();
       }
     };
   }, [contentRef.current]);
