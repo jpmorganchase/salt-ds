@@ -115,16 +115,18 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   // Scrolling
   useIsomorphicLayoutEffect(() => {
     const { current: node } = contentRef;
-    let raf: number;
+    let timeoutScroll: number;
 
     const scrollObserver = new IntersectionObserver(
       (entries) => {
-        raf && cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
+        if (timeoutScroll) {
+          window.clearTimeout(timeoutScroll);
+        }
+        timeoutScroll = window.setTimeout(() => {
           entries.forEach((entry) => {
             setIsIntersecting(entry.isIntersecting);
           });
-        });
+        }, 200);
       },
       {
         root: null,
@@ -138,30 +140,29 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     }
 
     return () => {
-      if (node) {
-        scrollObserver.unobserve(node);
-      } else {
-        scrollObserver.disconnect();
-      }
+      scrollObserver.disconnect();
     };
   }, [contentRef.current]);
 
   // Resizing
   useEffect(() => {
     const { current: node } = contentRef;
-    let raf: number;
+    let timeoutResize: number;
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0 && entries[0].contentRect) {
-        raf && cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
+        if (timeoutResize) {
+          window.clearTimeout(timeoutResize);
+        }
+
+        timeoutResize = window.setTimeout(() => {
           for (const entry of entries) {
             const { width, height } = entry.contentRect;
-            if (width !== resize?.width || height !== resize.height) {
+            if (width !== resize?.width || height !== resize?.height) {
               setResize({ width, height });
             }
           }
-        });
+        }, 200);
       }
     });
 
@@ -170,9 +171,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     }
 
     return () => {
-      if (node) {
-        resizeObserver.unobserve(node);
-      }
+      resizeObserver.disconnect();
     };
   }, [contentRef.current, isIntersecting]);
 
