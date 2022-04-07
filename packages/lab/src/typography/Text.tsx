@@ -115,10 +115,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   // Scrolling
   useIsomorphicLayoutEffect(() => {
     const { current: node } = contentRef;
+    let raf: number;
 
     const scrollObserver = new IntersectionObserver(
       (entries) => {
-        requestAnimationFrame(() => {
+        raf && cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
           entries.forEach((entry) => {
             setIsIntersecting(entry.isIntersecting);
           });
@@ -147,10 +149,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   // Resizing
   useEffect(() => {
     const { current: node } = contentRef;
+    let raf: number;
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0 && entries[0].contentRect) {
-        requestAnimationFrame(() => {
+        raf && cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
           for (const entry of entries) {
             const { width, height } = entry.contentRect;
             if (width !== resize?.width || height !== resize.height) {
