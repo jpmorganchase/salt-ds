@@ -9,8 +9,7 @@ type ViteFinalOptions = {
   configType: "DEVELOPMENT" | "PRODUCTION";
 };
 
-interface ExtendedConfig extends Omit<StorybookConfig, "core"> {
-  core?: StorybookConfig["core"] | "storybook-builder-vite";
+interface ExtendedConfig extends StorybookConfig {
   viteFinal?: (
     config: UserConfig,
     options: ViteFinalOptions
@@ -23,6 +22,7 @@ const config: ExtendedConfig = {
   staticDirs: ["../docs/public"],
   addons: [
     "@storybook/addon-links",
+    "@storybook/addon-a11y",
     {
       name: "@storybook/addon-essentials",
       options: {
