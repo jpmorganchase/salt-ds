@@ -4,28 +4,14 @@
   --uitk-separable-border-style: solid;
 }
 
-/* Default medium emphasis */
 .uitk-light {
-  --uitk-separable-border-color: var(--uitk-color-grey-40);
+  --uitk-separable-border-color-1: var(--uitk-color-grey-20);
+  --uitk-separable-border-color-2: var(--uitk-color-grey-40);
+  --uitk-separable-border-color-3: var(--uitk-color-grey-60);
 }
 
-.uitk-light .uitkEmphasisLow {
-  --uitk-separable-border-color: var(--uitk-color-grey-20);
-}
-
-.uitk-light .uitkEmphasisHigh {
-  --uitk-separable-border-color: var(--uitk-color-grey-60);
-}
-
-/* Default medium emphasis */
 .uitk-dark {
-  --uitk-separable-border-color: var(--uitk-color-grey-500);
-}
-
-.uitk-dark .uitkEmphasisLow {
-  --uitk-separable-border-color: var(--uitk-color-grey-600);
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  --uitk-separable-border-color: var(--uitk-color-grey-400);
+  --uitk-separable-border-color-1: var(--uitk-color-grey-400);
+  --uitk-separable-border-color-2: var(--uitk-color-grey-500);
+  --uitk-separable-border-color-3: var(--uitk-color-grey-600);
 }
