@@ -63,6 +63,8 @@ test("Opens the cascading menu in a new child window", async () => {
   const newPage = electronApp.windows()[1];
   expect(newPage).toBeTruthy();
 
+  await page.waitForTimeout(200);
+
   const cascadingMenuHandle = await electronApp.browserWindow(newPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
@@ -89,7 +91,7 @@ test.skip("Opens multiple cascading menu windows", async () => {
   await newPage
     .locator("#UITK-cascading-menu-item-0 >> text=Level 1 Menu Item 2")
     .hover();
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(200);
   expect(electronApp.windows().length).toBe(3);
   const cascadingMenuLevel2 = electronApp.windows()[2];
   await cascadingMenuLevel2
@@ -98,7 +100,7 @@ test.skip("Opens multiple cascading menu windows", async () => {
   expect(electronApp.windows().length).toBe(1);
 });
 
-test.skip("Opens the dialog in a new child window", async () => {
+test("Opens the dialog in a new child window", async () => {
   page = await electronApp.firstWindow();
 
   // Open Dialog
@@ -107,7 +109,7 @@ test.skip("Opens the dialog in a new child window", async () => {
   const newPage = electronApp.windows()[1];
   expect(newPage).toBeTruthy();
 
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(200);
 
   const dialogWindowHandle = await electronApp.browserWindow(newPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
@@ -123,7 +125,7 @@ test.skip("Opens the dialog in a new child window", async () => {
 
   expect(childWindowPosition).toStrictEqual([0, 0]);
   // catches an issue where the window starts off with the default size and then corrects itself
-  expect(childWindowSize).toStrictEqual([501, 211]);
+  expect(childWindowSize).toStrictEqual([501, 212]);
 
   // Close Dialog
   await newPage.locator("button >> nth=0").click();
@@ -138,7 +140,7 @@ test("Opens the colour chooser in a new child window", async () => {
   const colourPickerPage = electronApp.windows()[1];
   expect(colourPickerPage).toBeTruthy();
   // Will need to find a way to wait for event
-  // await page.waitForTimeout(1000);
+  await page.waitForTimeout(200);
 
   const colourPickerHandle = await electronApp.browserWindow(colourPickerPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
@@ -160,11 +162,14 @@ test("Opens the colour chooser in a new child window", async () => {
 
 test("Opens the dropdown in a new child window", async () => {
   page = await electronApp.firstWindow();
-  // Open Dialog
+  // Open Dropdown
   await page.locator("data-testid=dropdown").click();
   expect(electronApp.windows().length).toBe(2);
   const dropdownPage = electronApp.windows()[1];
   expect(dropdownPage).toBeTruthy();
+
+
+  await page.waitForTimeout(200);
 
   const dropdownHandle = await electronApp.browserWindow(dropdownPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
@@ -176,7 +181,7 @@ test("Opens the dropdown in a new child window", async () => {
   );
 
   expect(childWindowPosition).toStrictEqual([175, 36]);
-  expect(childWindowSize).toStrictEqual([181, 373]);
+  expect(childWindowSize).toStrictEqual([181, 374]);
 
   // Click Colorado
   await dropdownPage.locator("text=Colorado").click();
@@ -197,7 +202,7 @@ test("Opens the tooltip", async () => {
   const toolTipHandle = await electronApp.browserWindow(toolTipPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
 
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(200);
   // get positions of the windows to make sure they are in the right place relative to one another
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
     toolTipHandle,
@@ -205,7 +210,7 @@ test("Opens the tooltip", async () => {
   );
 
   // Catches an issue where the window starts off with the default size and then corrects itself
-  expect(childWindowSize).toStrictEqual([93, 35]);
+  expect(childWindowSize).toStrictEqual([92, 35]);
   expect(childWindowPosition).toStrictEqual([76, 33]);
 
   // Hover on something else
@@ -227,7 +232,7 @@ test.skip("Opens the toolbar", async () => {
   const toolTipHandle = await electronApp.browserWindow(toolbarPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
 
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(200);
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
     toolTipHandle,
     mainWindowHandle

@@ -95,27 +95,30 @@ const Window: windowType = forwardRef(function ElectronWindow(
   }, [id]);
 
   useEffect(() => {
+    setTimeout(() => {
     if (windowRoot.current) {
       // @ts-ignore
-      const {offsetWidth: height, scrollWidth: width} = windowRoot.current;
+      const {scrollHeight: height, scrollWidth: width} = windowRoot.current;
       // @ts-ignore
       const {ipcRenderer} = global as any;
       if (ipcRenderer) {
-        ipcRenderer.send("window-size", {
-          id: id,
-          height: Math.ceil(height + 1),
-          width: Math.ceil(width + 1),
-        });
+          ipcRenderer.send("window-size", {
+            id: id,
+            height: Math.ceil(height + 1),
+            width: Math.ceil(width + 1),
+          });
+
       }
     }
+    },100);
   },[id]);
 
   useEffect(() => {
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         ipcRenderer.send("window-ready", {id: id});
-      });
+      },120);
     }
 
     return () => {
