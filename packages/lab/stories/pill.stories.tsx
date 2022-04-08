@@ -10,6 +10,7 @@ import { useState, SyntheticEvent } from "react";
 import { ToolkitProvider } from "@brandname/core";
 import { Pill } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { StarIcon } from "../src/contact-details/internal/StarIcon";
 
 export default {
   title: "Lab/Pill",
@@ -42,6 +43,58 @@ export const ControlledPill: ComponentStory<typeof Pill> = () => {
       checked={checked}
       onChange={handleChange}
     />
+  );
+};
+
+export const DisabledPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      disabled
+      label="Disabled Pill"
+      onDelete={() => console.log("Deleted.")}
+      variant={"closable"}
+    />
+  );
+};
+
+export const ClosablePill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      label="Closable Pill"
+      onDelete={() => console.log("Deleted.")}
+      variant={"closable"}
+    />
+  );
+};
+
+export const IconPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      icon={<StarIcon />}
+      label="Pill with Icon"
+      onClick={() => console.log("Clicked.")}
+    />
+  );
+};
+
+export const SelectablePill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      label="Selectable Pill"
+      onChange={() => console.log("changed")}
+      variant="selectable"
+    />
+  );
+};
+
+export const MaxWidthPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <>
+      <Pill
+        label="Extra extra long Pill label example."
+        onClick={() => console.log("Clicked.")}
+      />
+    </>
   );
 };
 

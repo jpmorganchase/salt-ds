@@ -166,7 +166,7 @@ export const PillBase = forwardRef(function PillBase(
         withBaseName(),
         {
           [withBaseName("clickable")]: clickable,
-          [withBaseName("deletable")]: deletable,
+          [withBaseName("deletable")]: deletable && !disabled,
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
         },
@@ -183,7 +183,7 @@ export const PillBase = forwardRef(function PillBase(
     >
       {pillIcon || null}
       <div className={withBaseName("label")} ref={labelRef}>
-        {label}
+        <span className={withBaseName("innerLabel")}>{label}</span>
       </div>
       {deletable ? renderDeleteIcon() : null}
     </Component>

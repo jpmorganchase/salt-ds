@@ -1,141 +1,199 @@
-.uitk-light .uitkPill {
-  --pill-background: var(--uitk-color-grey-40);
-  --pill-color: var(--uitk-color-grey-900);
-  --pill-background-active: var(--uitk-color-grey-200);
-  --pill-color-active: var(--uitk-color-white);
-  --pill-icon-color: var(--uitk-color-grey-300);
+.uitk-density-high {
+  --pill-icon-offset: 1px;
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, var(--uitk-size-icon-small));
+  --pill-min-height: 14px;
 }
 
-.uitk-dark .uitkPill {
-  --pill-background: var(--uitk-color-grey-80);
-  --pill-background-active: var(--uitk-color-grey-80);
-  --pill-color: var(--uitk-color-white);
-  --pill-color-active: var(--uitk-color-grey-900);
-  --pill-icon-color: var(--uitk-color-grey-60);
+.uitk-density-medium {
+  --pill-icon-offset: 2px;
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 2px));
+  --pill-min-height: 16px;
 }
 
-.uitk-density-touch .uitkPill {
-  --checkbox-size: calc(var(--uitk-size-icon-small) + 6px);
-  --delete-left: 4px;
-  --padding: calc(var(--uitk-spacing-touch) * 0.75);
-  --pill-spacing: calc(var(--uitk-spacing-touch) * 0.5);
+.uitk-density-low {
+  --pill-icon-offset: 3px;
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 4px));
+  --pill-min-height: 18px;
 }
 
-.uitk-density-low .uitkPill {
-  --checkbox-size: calc(var(--uitk-size-icon-small) + 4px);
-  --delete-left: 3px;
-  --padding: calc(var(--uitk-spacing-low) * 0.75);
-  --pill-spacing: calc(var(--uitk-spacing-low) * 0.5);
-}
-
-.uitk-density-medium .uitkPill {
-  --checkbox-size: calc(var(--uitk-size-icon-small) + 2px);
-  --delete-left: 2px;
-  --padding: calc(var(--uitk-spacing-medium) * 0.75);
-  --pill-spacing: calc(var(--uitk-spacing-medium) * 0.5);
-}
-
-.uitk-density-high .uitkPill {
-  --checkbox-size: var(--uitk-size-icon-small);
-  --delete-left: 1px;
-  --padding: calc(var(--uitk-spacing-high) * 0.75);
-  --pill-spacing: calc(var(--uitk-spacing-high) * 0.5);
+.uitk-density-touch {
+  --pill-icon-offset: 4px;
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 6px));
+  --pill-min-height: 20px;
 }
 
 .uitkPill {
-  --pill-font-size: var(--uitk-text-help-font-size);
-  --pill-font-weight: normal;
-  /* TODO: What's the best way to expose pill specific css var, but also override button's default */
-  --button-font-weight: normal;
-  --button-padding: 0;
-  --button-text-transform: unset;
+  --pill-background: var(--uitk-taggable-background);
+  --pill-background-active: var(--uitk-taggable-background-active);
+  --pill-icon-color: var(--uitk-taggable-icon);
+  --pill-icon-color-hover: var(--uitk-taggable-icon-hover);
+  --pill-icon-color-active: var(--uitk-taggable-icon-active);
+  --pill-text-color: var(--uitk-taggable-text-color);
+  --pill-text-color-hover: var(--uitk-taggable-text-color-hover);
+  --pill-text-color-active: var(--uitk-taggable-text-color-active);
+}
+
+/* Button Component API - reset to default state so they don't interfere with Pill styling */
+.uitkPill {
+  --uitkButton-background-active: var(--pill-background);
+  --uitkButton-text-color-active: var(--pill-text-color);
+  --uitkButton-background-hover: var(--pill-background);
+  --uitkButton-text-color-hover: var(--pill-text-color);
+  --uitkButton-font-weight: var(--uitkPill-button-font-weight, var(--uitk-typography-weight-regular));
+  --uitkButton-padding: var(--uitkPill-button-padding, 0);
+  --uitkButton-text-transform: var(--uitkPill-button-text-transform, unset);
+  --uitkButton-cursor: normal;
+}
+
+.uitkPill-deleteButton {
+  --uitkButton-cursor: pointer;
+  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color);
 }
 
 .uitkPill {
   align-items: center;
-  background: var(--pill-background);
-  color: var(--pill-color);
+  background: var(--uitkPill-background, var(--pill-background));
+  border-radius: var(--uitkPill-border-radius, 0);
+  color: var(--uitkPill-text-color, var(--pill-text-color));
   display: inline-flex;
-  font-size: var(--pill-font-size);
-  /* TODO: Check whether we should define font family here or rely on theme */
-  font-family: var(--uitk-typography-font-family);
-  height: calc(var(--checkbox-size) + 2px);
-  letter-spacing: 0;
-  line-height: var(--uitk-text-line-height);
-  max-width: 160px;
-  min-width: 40px;
+  font-size: var(--uitkPill-font-size, var(--uitk-text-help-font-size));
+  height: var(--uitkPill-height, calc(var(--pill-checkbox-size) + 2px));
+  letter-spacing: var(--uitkPill-letter-spacing, 0);
+  line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
+  max-width: var(--uitkPill-max-width, 160px);
+  min-width: var(--uitkPill-min-width, 40px);
+  min-height: var(--uitkPill-min-height, var(--pill-min-height));
+  outline: var(--uitkPill-outline, 0);
   position: relative;
-  outline: 0;
 }
 
+/* Check against TK1 */
 .uitkPill:focus {
-  outline-color: #2670a9;
+  outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-color));
+  outline-style: var(--uitkPill-focused-outline-style, var(--uitk-focused-outline-style));
   outline-style: dotted;
-  outline-width: 2px;
-  outline-offset: 0;
+  outline-width: var(--uitk-focused-line-width);
+  outline-offset: var(--uitk-focused-outline-offset);
 }
 
 .uitkPill-label {
+  display: inline;
   flex-grow: 1;
-  line-height: calc(var(--checkbox-size) + 2px);
-  padding: 0 var(--padding);
+  font-weight: var(--uitkPill-font-weight, var(--uitk-typography-weight-regular));
   overflow: hidden;
+  padding-left: var(--uitkPill-label-padding-left, calc(var(--uitk-spacing-unit) * 0.75));
   pointer-events: none;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: var(--pill-font-weight);
+}
+.uitkPill-innerLabel {
+  vertical-align: top;
+  line-height: calc(var(--pill-checkbox-size) + 2px);
+}
+
+.uitkPill:not(.uitkPill-deletable) .uitkPill-label {
+  padding-right: var(--uitkPill-label-padding-right, calc(var(--uitk-spacing-unit) * 0.75));
 }
 
 .uitkPill-disabled {
-  cursor: not-allowed;
-  opacity: 1;
-  background: rgba(217, 221, 227, 0.4);
-  pointer-events: none;
+  --uitkButton-background-hover: var(--uitk-taggable-background-disabled);
+
+  background: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
+  cursor: var(--uitk-disabled-cursor);
 }
 
-.uitkPill-disabled .uitkPill-label {
-  opacity: 0.7;
+.uitkPill-disabled .uitkPill-label,
+.uitkPill-disabled .uitkIcon {
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-disabled-text-opacity);
+
+  --uitkIcon-color: var(--pill-icon-color);
+  --uitkIcon-color-hover: var(--pill-icon-color);
 }
 
-.uitkPill-clickable {
-  cursor: pointer;
-  user-select: none;
+.uitkPill:hover:not(:active) {
+  background: var(--uitkPill-background-hover, var(--pill-background));
+  color: var(--uitkPill-text-color-hover, var(--pill-text-color-hover));
 }
 
-.uitkPill-deletable .uitkPill-label {
-  padding-right: 0;
+.uitkPill:active,
+.uitkPill.uitkPill-active {
+  background: var(--uitkPill-background-active, var(--pill-background-active));
+  color: var(--uitkPill-text-color-active, var(--pill-text-color-active));
 }
 
-.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable):active,
-.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable).uitkPill-active {
-  background: var(--pill-background-active);
-  color: var(--pill-color-active);
-}
-
-.uitkPill-checkbox {
-  height: var(--checkbox-size);
-  margin-left: 1px;
-  padding-right: 0;
-  width: var(--checkbox-size);
+.uitkPill-noShadow:active {
+  box-shadow: none;
 }
 
 .uitkPill-deleteButton {
-  height: calc(var(--checkbox-size) + 2px);
-  padding-left: var(--pill-spacing);
-  padding-right: var(--pill-spacing);
+  flex-shrink: 0;
+  height: calc(var(--pill-checkbox-size) + 2px);
+  min-height: var(--uitkPill-min-height, var(--pill-min-height));
+}
+
+.uitkPill-deletable .uitkPill-deleteButton {
+  margin-left: calc(var(--uitk-spacing-unit) / 2);
+  padding-right: calc(var(--uitk-spacing-unit) / 2);
+}
+
+.uitkPill-disabled .uitkPill-deleteButton {
+  --uitkButton-padding: 8px;
 }
 
 .uitkPill-deleteButton .uitkButton-label {
   justify-content: center;
 }
 
+.uitkPill-deleteButton:hover:not(.uitkPill-disabled):not(.uitkPill-deleteButton-disabled) {
+  background: var(--uitkPill-delete-button-background-hover, var(--pill-background));
+}
+
+.uitkPill-deleteButton:active:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled):not(.uitkPill-selectable) {
+  background: var(--uitkPill-delete-button-background-hover, var(--pill-background));
+}
+
+.uitkPill-deleteButton:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled) .uitkPill-deleteIcon {
+  color: var(--uitkPill-delete-icon-content, var(--pill-background-active));
+  left: var(--uitkPill-delete-icon-offset, var(--pill-icon-offset));
+  position: relative;
+}
+
 .uitkPill .uitkPill-icon {
-  color: var(--pill-icon-color);
-  margin-left: var(--padding);
-  margin-right: var(--pill-spacing);
+  fill: var(--pill-icon-color);
+  height: var(--uitk-size-icon-small);
+  margin-left: calc(var(--uitk-spacing-unit) * 0.75);
+  margin-right: calc(var(--uitk-spacing-unit) * 0.5);
+}
+
+.uitkPill .uitkPill-icon:hover {
+  color: var(--pill-icon-color-hover);
+}
+
+.uitkPill:active .uitkPill-icon,
+.uitkPill-active .uitkPill-icon {
+  color: var(--pill-icon-color-active);
 }
 
 .uitkPill:not(.uitkPill-deletable) .uitkPill-icon + .uitkPill-label {
   padding-left: 0;
+}
+
+.uitkPill-clickable:not(.uitkPill-disabled) {
+  cursor: pointer;
+  user-select: none;
+}
+
+.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable):active,
+.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable).uitkPill-active {
+  background: var(--pill-background-active);
+  color: var(--pill-text-color-active);
+}
+
+.uitkPill-checkbox {
+  height: var(--pill-checkbox-size);
+  margin-left: 1px;
+  padding-right: 0;
+  width: var(--pill-checkbox-size);
 }

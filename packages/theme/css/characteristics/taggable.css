@@ -8,6 +8,7 @@
   --uitk-taggable-background: var(--uitk-color-grey-40);
   --uitk-taggable-background-hover: var(--uitk-color-grey-30);
   --uitk-taggable-background-active: var(--uitk-color-grey-200);
+  --uitk-taggable-background-disabled: var(--uitk-color-grey-40-fade-40);
 
   --uitk-taggable-text-color: var(--uitk-color-grey-900);
   --uitk-taggable-text-color-hover: var(--uitk-color-grey-900);
@@ -24,6 +25,7 @@
   --uitk-taggable-background: var(--uitk-color-grey-500);
   --uitk-taggable-background-hover: var(--uitk-color-grey-200);
   --uitk-taggable-background-active: var(--uitk-color-grey-80);
+  --uitk-taggable-background-disabled: var(--uitk-color-grey-500-fade-40);
 
   --uitk-taggable-text-color: var(--uitk-color-white);
   --uitk-taggable-text-color-hover: var(--uitk-color-white);
