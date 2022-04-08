@@ -1,0 +1,14 @@
+.uitkGridLayout {
+  --grid-layout-gap: var(--uitk-spacing-unit);
+  --grid-layout-space: 1fr;
+}
+
+.uitkGridLayout {
+  display: grid;
+  column-gap: calc(var(--grid-layout-gap) * var(--grid-layout-column-gap));
+  row-gap: calc(var(--grid-layout-gap) * var(--grid-layout-row-gap));
+  grid-template-columns: repeat(var(--grid-layout-columns), var(--grid-layout-space));
+  grid-template-rows: repeat(var(--grid-layout-rows), var(--grid-layout-space));
+  grid-auto-columns: auto;
+  grid-auto-rows: auto;
+}

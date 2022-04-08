@@ -76,6 +76,7 @@ export const parameters: Parameters = {
         ["Introduction", "Foundation", "*"],
         "Core",
         "Icons",
+        "Layout",
         "Lab",
       ],
     },

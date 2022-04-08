@@ -1,0 +1,5 @@
+.uitkGridItem {
+  justify-self: var(--grid-item-justify-self);
+  align-self: var(--grid-item-align-self);
+  grid-area: var(--grid-item-grid-area);
+}
