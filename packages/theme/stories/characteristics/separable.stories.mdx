@@ -15,9 +15,9 @@ import {
 Group of attributes to separate information/elements.
 Connected to Container
 
-- Default (medium emphasis) - to divide related areas eg. heading and body
-- High emphasis - to divide not closely related areas
-- Low emphasis - when subtle division needed
+- Level 1 - used when subtle division is needed/to divide similar items e.g. options within a list, individual comments
+- Level 2 - used to divide related areas e.g. heading and body text
+- Level 3 - used to separate areas of content that are not closely related e.g. app header from main content
 
 ## CSS Variables
 
@@ -29,33 +29,9 @@ Connected to Container
       <LineBlock lineWidth="--uitk-separable-border-width" />
       <LineBlockCell />
       <LineBlockCode>--uitk-separable-border-style</LineBlockCode>
-      <ColorBlock colorVar="--uitk-separable-border-color" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### High emphasis overrides
-
-<Canvas>
-  <Story name="High Emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-separable-border-color"
-      />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Low emphasis overrides
-
-<Canvas>
-  <Story name="Low Emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-separable-border-color"
-      />
+      <ColorBlock colorVar="--uitk-separable-border-color-1" />
+      <ColorBlock colorVar="--uitk-separable-border-color-2" />
+      <ColorBlock colorVar="--uitk-separable-border-color-3" />
     </DocGrid>
   </Story>
 </Canvas>

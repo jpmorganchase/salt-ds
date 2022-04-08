@@ -12,25 +12,33 @@ Components that may form a hierarchy and stack upon or beneath other elements of
 
 ## CSS Variables
 
-### Elevation
+### Shadow (Elevation)
+
+Scroll: Dropshadow found at the top of an overflowing scrollable area (e.g. Comments)
+Border region: Dropshadow found around application regions (e.g. App Header, Drawer)
+Default: Dropshadow default (e.g. Card)
+Hover: Dropshadow found around a component using the default (e.g. Card) on hover state
+Popout: Dropshadow found around temporarily overlaying elements (e.g. Tooltip)
+Drag: Dropshadow found around draggable objects on drag (e.g. Tabs)
+Modal: Dropshadow found around modal windows (e.g. Dialog)
 
 <Canvas>
-  <Story name="Elevation">
+  <Story name="Shadow">
     <DocGrid>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-0" />
-      <BlankBlockCode>--uitk-overlayable-elevation-0</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-1" />
-      <BlankBlockCode>--uitk-overlayable-elevation-1</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-2" />
-      <BlankBlockCode>--uitk-overlayable-elevation-2</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-3" />
-      <BlankBlockCode>--uitk-overlayable-elevation-3</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-4" />
-      <BlankBlockCode>--uitk-overlayable-elevation-4</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-5" />
-      <BlankBlockCode>--uitk-overlayable-elevation-5</BlankBlockCode>
-      <ShadowBlockCell shadowVar="--uitk-overlayable-elevation-6" />
-      <BlankBlockCode>--uitk-overlayable-elevation-6</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-scroll" />
+      <BlankBlockCode>--uitk-overlayable-shadow-scroll</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-border-region" />
+      <BlankBlockCode>--uitk-overlayable-shadow-border-region</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-default" />
+      <BlankBlockCode>--uitk-overlayable-shadow-default</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-hover" />
+      <BlankBlockCode>--uitk-overlayable-shadow-hover</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-popout" />
+      <BlankBlockCode>--uitk-overlayable-shadow-popout</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-drag" />
+      <BlankBlockCode>--uitk-overlayable-shadow-drag</BlankBlockCode>
+      <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-modal" />
+      <BlankBlockCode>--uitk-overlayable-shadow-modal</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>

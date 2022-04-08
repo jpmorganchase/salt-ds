@@ -10,7 +10,7 @@
   bottom: 0;
   height: 100%;
   display: flex;
-  z-index: 1199;
+  z-index: var(--uitk-zindex-default) 199;
   position: fixed;
   align-items: center;
   justify-content: center;
@@ -24,5 +24,5 @@
 
 .uitkScrim-containerFix {
   position: absolute;
-  z-index: calc(var(--uitk-zindex-appbar) - 1);
+  z-index: calc(var(--uitk-zindex-appheader) - 1);
 }
