@@ -3,118 +3,62 @@ import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
 import "./GridLayout.css";
-import { GRID_ALIGNMENT_BASE, GridAlignment, GridProperty } from "../types";
-
-export const GRID_LAYOUT_CONTENT_ALIGNMENT = [
-  ...GRID_ALIGNMENT_BASE,
-  "space-around",
-  "space-between",
-  "space-evenly",
-];
-
-export type gridContentAlignment = typeof GRID_LAYOUT_CONTENT_ALIGNMENT[number];
+import { ResponsiveProp, useResponsiveProp } from "../internal/ResponsiveProps";
 
 export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Defines a grid container; inline or block depending on the given value.
-   */
-  display?: "grid" | "inline-grid";
-  /**
    * Number of columns to be displayed
    */
-  columns?: number;
+  columns?: number | ResponsiveProp<number>;
   /**
    * Number of rows to be displayed
    */
-  rows?: number;
+  rows?: number | ResponsiveProp<number>;
   /**
-   * Amount of space each grid element should take up
+   * Defines the size of the gutter between the columns by setting a density multiplier.
    */
-  gridSpace?: string;
+  columnGap?: number | ResponsiveProp<number>;
   /**
-   * Defines the size of the gutter between the columns
+   * Defines the size of the gutter between the rows by setting a density multiplier
    */
-  columnGap?: number | string;
-  /**
-   * Defines the size of the gutter between the rows
-   */
-  rowGap?: number | string;
-  /**
-   * Aligns grid items along the inline (row) axis
-   */
-  justifyItems?: GridAlignment;
-  /**
-   * Aligns grid items along the block (column) axis
-   */
-  alignItems?: GridAlignment | "baseline";
-  /**
-   * Aligns the grid along the inline (row) axis
-   */
-  justifyContent?: gridContentAlignment;
-  /**
-   * Aligns the grid along the block (column) axis
-   */
-  alignContent?: gridContentAlignment;
-  /**
-   * Specifies the size of any auto-generated grid columns
-   */
-  autoColumns?: GridProperty;
-  /**
-   * Specifies the size of any auto-generated grid rows
-   */
-  autoRows?: GridProperty;
-  /**
-   * Defines a grid template by referencing the names of the grid areas which are specified with the grid-area property.
-   */
-  gridTemplateAreas?: string;
-  gridTemplateColumns?: string;
-  gridTemplateRows?: string;
+  rowGap?: number | ResponsiveProp<number>;
 }
 
 const withBaseName = makePrefixer("uitkGridLayout");
+
+const gridSpace = "1fr";
+const autoColumns = "auto";
+const autoRows = "auto";
 
 export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
   function GridLayout(
     {
       children,
       className,
-      display = "grid",
       columns = 12,
       rows = 1,
-      gridSpace = "1fr",
-      columnGap = 0,
-      rowGap = 0,
-      justifyItems = "stretch",
-      alignItems = "stretch",
-      justifyContent = "stretch",
-      alignContent = "stretch",
-      autoColumns = "auto",
-      autoRows = "auto",
-      gridTemplateAreas,
-      gridTemplateColumns,
-      gridTemplateRows,
+      columnGap = 1,
+      rowGap = 1,
       style,
     },
     ref
   ) {
+    const gridColumns = useResponsiveProp(columns, 12);
+
+    const gridRows = useResponsiveProp(rows, 1);
+
+    const gridColumnGap = useResponsiveProp(columnGap, 1);
+
+    const gridRowGap = useResponsiveProp(rowGap, 1);
+
     const gridLayoutStyles = {
       ...style,
-      display,
-      gridTemplateColumns: gridTemplateColumns
-        ? gridTemplateColumns
-        : `repeat(${columns}, ${gridSpace})`,
-      gridTemplateRows: gridTemplateRows
-        ? gridTemplateRows
-        : `repeat(${rows}, ${gridSpace})`,
-      columnGap,
-      rowGap,
-      justifyItems,
-      alignItems,
-      justifyContent,
-      alignContent,
+      gridTemplateColumns: `repeat(${gridColumns}, ${gridSpace})`,
+      gridTemplateRows: `repeat(${gridRows}, ${gridSpace})`,
       gridAutoColumns: autoColumns,
       gridAutoRows: autoRows,
-      gridTemplateAreas,
+      "--grid-layout-column-gap": gridColumnGap,
+      "--grid-layout-row-gap": gridRowGap,
     };
 
     return (

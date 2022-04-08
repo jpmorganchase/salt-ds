@@ -1,26 +1,18 @@
 import { CSSProperties } from "react";
-import {
-  GridLayout,
-  GridItem,
-  GRID_ALIGNMENT_BASE,
-  GRID_LAYOUT_CONTENT_ALIGNMENT,
-  Logo,
-  Avatar,
-  FlexLayout,
-  FlexItem,
-  Card,
-} from "@brandname/lab";
+import { GridLayout, GridItem, Logo, Avatar, Card } from "@brandname/lab";
+import { ToolkitProvider, Breakpoints } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 export default {
   title: "Layout/GridLayout",
   component: GridLayout,
+  subcomponents: { GridItem },
 } as ComponentMeta<typeof GridLayout>;
 
 const gridItemStyles = {
-  padding: "1rem",
+  padding: 16,
+  height: "calc(100% - 32px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -30,129 +22,218 @@ const gridLayoutStyle = {
 };
 const Template: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout style={gridLayoutStyle} {...args}>
-      {Array.from({ length: 12 }, (_, index) => (
-        <GridItem
-          style={{ ...gridItemStyles, background: "lightcyan" }}
-          {...args}
-        >
-          <p>{`GridItem ${index + 1}`}</p>
-        </GridItem>
-      ))}
-    </GridLayout>
+    <div style={gridLayoutStyle}>
+      <GridLayout {...args}>
+        {Array.from({ length: 12 }, (_, index) => (
+          <GridItem key={index}>
+            <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+              <p>{`GridItem ${index + 1}`}</p>
+            </div>
+          </GridItem>
+        ))}
+      </GridLayout>
+    </div>
   );
 };
 export const ToolkitGridLayout = Template.bind({});
 ToolkitGridLayout.args = {
-  display: "grid",
   columns: 12,
   rows: 1,
-  columnGap: "1rem",
-  rowGap: "1rem",
-  justifyItems: "stretch",
-  alignItems: "stretch",
-  justifyContent: "stretch",
-  alignContent: "stretch",
-  autoColumns: "auto",
-  autoRows: "auto",
+  rowGap: 1,
+  columnGap: 1,
 };
 
-ToolkitGridLayout.argTypes = {
-  display: {
-    options: ["grid", "inline-grid"],
-    control: { type: "radio" },
-  },
-  justifyItems: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  alignItems: {
-    options: [...GRID_ALIGNMENT_BASE, "baseline"],
-    control: { type: "select" },
-  },
-  justifyContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
-  alignContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
+const MultipleRows: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <div style={gridLayoutStyle}>
+      <GridLayout {...args}>
+        {Array.from({ length: 12 }, (_, index) => (
+          <GridItem key={index}>
+            <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+              <p>{`GridItem ${index + 1}`}</p>
+            </div>
+          </GridItem>
+        ))}
+      </GridLayout>
+    </div>
+  );
+};
+export const ToolkitGridLayoutMultipleRows = MultipleRows.bind({});
+ToolkitGridLayoutMultipleRows.args = {
+  columns: 4,
+  rows: 3,
+  rowGap: 1,
+  columnGap: 1,
+};
+
+const stackedGridItemStyles = {
+  ...gridItemStyles,
+  minHeight: 200,
+  minWidth: 200,
+  background: "lightcyan",
+};
+
+const StackedView: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <div style={gridLayoutStyle}>
+      <GridLayout {...args}>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+        >
+          <div style={stackedGridItemStyles}>
+            <p>GridItem 1</p>
+          </div>
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+        >
+          <div style={stackedGridItemStyles}>
+            <p>GridItem 2</p>
+          </div>
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+        >
+          <div style={stackedGridItemStyles}>
+            <p>GridItem 3</p>
+          </div>
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+        >
+          <div style={stackedGridItemStyles}>
+            <p>GridItem 4</p>
+          </div>
+        </GridItem>
+      </GridLayout>
+    </div>
+  );
+};
+export const ToolkitGridLayoutStackedView = StackedView.bind({});
+ToolkitGridLayoutStackedView.args = {
+  columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
+  rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
+  rowGap: 1,
+  columnGap: 1,
+};
+
+declare global {
+  interface BreakpointsType {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  }
+}
+
+const breakpoints: Breakpoints = {
+  xs: 0,
+  sm: 500,
+  md: 860,
+  lg: 1180,
+  xl: 1820,
+};
+
+const CustomBreakpoints: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <ToolkitProvider breakpoints={breakpoints}>
+      <div style={gridLayoutStyle}>
+        <GridLayout {...args}>
+          <GridItem
+            colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+            rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+          >
+            <div style={stackedGridItemStyles}>
+              <p>GridItem 1</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+            rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+          >
+            <div style={stackedGridItemStyles}>
+              <p>GridItem 2</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+            rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+          >
+            <div style={stackedGridItemStyles}>
+              <p>GridItem 3</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+            rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+          >
+            <div style={stackedGridItemStyles}>
+              <p>GridItem 4</p>
+            </div>
+          </GridItem>
+        </GridLayout>
+      </div>
+    </ToolkitProvider>
+  );
+};
+export const ToolkitGridLayoutCustomBreakpoints = CustomBreakpoints.bind({});
+ToolkitGridLayoutCustomBreakpoints.args = {
+  columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
+  rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
+  rowGap: 1,
+  columnGap: 1,
 };
 
 const Border: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout style={{ ...gridLayoutStyle }} {...args}>
-      <GridItem
-        style={{ ...gridItemStyles, backgroundColor: "#c5afa4" }}
-        colSpan={4}
-      >
-        <p>Header</p>
-      </GridItem>
-      <GridItem
-        colSpan={1}
-        style={{ ...gridItemStyles, backgroundColor: "#cc7e85" }}
-      >
-        <p>Left</p>
-      </GridItem>
-      <GridItem
-        colSpan={2}
-        style={{ ...gridItemStyles, backgroundColor: "#cf4d6f", minWidth: 100 }}
-      >
-        <p>Main</p>
-      </GridItem>
-      <GridItem
-        colSpan={1}
-        style={{ ...gridItemStyles, backgroundColor: "#a36d90" }}
-      >
-        <p>Right</p>
-      </GridItem>
-      <GridItem
-        colSpan={4}
-        style={{ ...gridItemStyles, backgroundColor: "#76818e" }}
-      >
-        <p>Bottom</p>
-      </GridItem>
-    </GridLayout>
+    <div style={gridLayoutStyle}>
+      <GridLayout {...args}>
+        <GridItem colSpan={4}>
+          <div style={{ ...gridItemStyles, backgroundColor: "#c5afa4" }}>
+            <p>Header</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <div style={{ ...gridItemStyles, backgroundColor: "#cc7e85" }}>
+            <p>Left</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={2}>
+          <div
+            style={{
+              ...gridItemStyles,
+              backgroundColor: "#cf4d6f",
+              minWidth: 100,
+            }}
+          >
+            <p>Main</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <div style={{ ...gridItemStyles, backgroundColor: "#a36d90" }}>
+            <p>Right</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={4}>
+          <div style={{ ...gridItemStyles, backgroundColor: "#76818e" }}>
+            <p>Bottom</p>
+          </div>
+        </GridItem>
+      </GridLayout>
+    </div>
   );
 };
 export const ToolkitGridLayoutBorder = Border.bind({});
 ToolkitGridLayoutBorder.args = {
-  display: "grid",
   columns: 4,
   rows: 3,
-  gridSpace: "auto",
-  columnGap: 0,
   rowGap: 0,
-  justifyItems: "stretch",
-  alignItems: "stretch",
-  justifyContent: "stretch",
-  alignContent: "stretch",
-  autoColumns: "auto",
-  autoRows: "auto",
-};
-
-ToolkitGridLayoutBorder.argTypes = {
-  display: {
-    options: ["grid", "inline-grid"],
-    control: { type: "radio" },
-  },
-  justifyItems: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  alignItems: {
-    options: [...GRID_ALIGNMENT_BASE, "baseline"],
-    control: { type: "select" },
-  },
-  justifyContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
-  alignContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
+  columnGap: 0,
 };
 
 const headerStyles: CSSProperties = {
@@ -162,9 +243,10 @@ const headerStyles: CSSProperties = {
   textTransform: "uppercase",
 };
 const textStyles = { color: "#74777F" };
-const copyrightStyles = {
+const copyrightStyles: CSSProperties = {
   color: "#84878E",
   borderTop: "1px solid #D9DDE3",
+  textAlign: "center",
 };
 
 const footerHeaders = ["Solutions", "Support", "Company", "Legal"];
@@ -190,56 +272,30 @@ const footerColumns = footerHeaders.map((header, index) => (
 const Footer: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args}>
-      <GridItem colSpan={2} align="center" justify="center">
+      <GridItem
+        colSpan={2}
+        horizontalAlignment="center"
+        verticalAlignment="center"
+      >
         <Logo src={PlaceholderLogo} appTitle="Toolkit" />
         <p style={textStyles}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
       </GridItem>
       {footerColumns}
-      <GridItem colSpan={6} style={copyrightStyles}>
-        <FlexLayout alignItems="center" justifyContent="center">
+      <GridItem colSpan={6}>
+        <div style={copyrightStyles}>
           <p>© 2022 BrandName All rights reserved.</p>
-        </FlexLayout>
+        </div>
       </GridItem>
     </GridLayout>
   );
 };
 export const ToolkitGridLayoutFooter = Footer.bind({});
 ToolkitGridLayoutFooter.args = {
-  display: "grid",
   columns: 6,
-  columnGap: "3rem",
-  rowGap: "1rem",
-  justifyItems: "stretch",
-  alignItems: "stretch",
-  justifyContent: "stretch",
-  alignContent: "stretch",
-  autoColumns: "auto",
-  autoRows: "auto",
-};
-
-ToolkitGridLayoutFooter.argTypes = {
-  display: {
-    options: ["grid", "inline-grid"],
-    control: { type: "radio" },
-  },
-  justifyItems: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  alignItems: {
-    options: [...GRID_ALIGNMENT_BASE, "baseline"],
-    control: { type: "select" },
-  },
-  justifyContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
-  alignContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
+  columnGap: 8,
+  rowGap: 1,
 };
 
 const blogMainContent = (
@@ -299,12 +355,12 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
         {blogMainContent}
       </GridItem>
       <GridItem colSpan={1}>
-        <FlexLayout alignItems="center">
-          <FlexItem style={{ marginRight: "1em" }}>
+        <div style={{ alignItems: "center", display: "flex" }}>
+          <div style={{ marginRight: "1em" }}>
             <Avatar children="ABC" size="large" />
-          </FlexItem>
-          <FlexItem>Lorem Ipsum</FlexItem>
-        </FlexLayout>
+          </div>
+          <div>Lorem Ipsum</div>
+        </div>
         <p>
           Id aliqua veniam in sit dolore ea dolore sit. Ea Lorem exercitation
           voluptate irure occaecat. Ipsum id culpa aute occaecat amet eiusmod
@@ -322,37 +378,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
 };
 export const ToolkitGridLayoutBlog = Blog.bind({});
 ToolkitGridLayoutBlog.args = {
-  display: "grid",
   columns: 3,
-  columnGap: "8rem",
-  rowGap: "1rem",
-  justifyItems: "stretch",
-  alignItems: "stretch",
-  justifyContent: "stretch",
-  alignContent: "stretch",
-  autoColumns: "auto",
-  autoRows: "auto",
-};
-
-ToolkitGridLayoutBlog.argTypes = {
-  display: {
-    options: ["grid", "inline-grid"],
-    control: { type: "radio" },
-  },
-  justifyItems: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  alignItems: {
-    options: [...GRID_ALIGNMENT_BASE, "baseline"],
-    control: { type: "select" },
-  },
-  justifyContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
-  alignContent: {
-    options: GRID_LAYOUT_CONTENT_ALIGNMENT,
-    control: { type: "select" },
-  },
+  columnGap: 12,
+  rowGap: 1,
 };

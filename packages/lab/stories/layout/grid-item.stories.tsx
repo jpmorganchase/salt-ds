@@ -1,4 +1,4 @@
-import { GridItem, GridLayout, GRID_ALIGNMENT_BASE } from "@brandname/lab";
+import { GridItem, GridLayout } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -7,7 +7,8 @@ export default {
 } as ComponentMeta<typeof GridItem>;
 
 const gridItemStyles = {
-  padding: "1rem",
+  padding: 16,
+  height: "calc(100% - 32px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -15,8 +16,10 @@ const gridItemStyles = {
 
 const Template: ComponentStory<typeof GridItem> = () => {
   return (
-    <GridItem style={{ ...gridItemStyles, background: "lightcyan" }}>
-      <p>Item</p>
+    <GridItem>
+      <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+        <p>Item</p>
+      </div>
     </GridItem>
   );
 };
@@ -25,63 +28,89 @@ ToolkitGridItem.args = {};
 
 const gridLayoutStyle = { background: "lightblue" };
 
-const InsideGrid: ComponentStory<typeof GridItem> = (args) => {
+const VerticalAlignmentInsideGrid: ComponentStory<typeof GridItem> = (args) => {
   return (
-    <GridLayout
-      rows={2}
-      columns={5}
-      rowGap="1rem"
-      columnGap="1rem"
-      style={gridLayoutStyle}
-    >
-      <GridItem
-        style={{
-          ...gridItemStyles,
-          background: "lightcyan",
-        }}
-        rowSpan={2}
-        colSpan={1}
-        {...args}
-      >
-        <p>Item</p>
-      </GridItem>
-      <GridItem
-        colSpan={2}
-        style={{ ...gridItemStyles, background: "lightcoral" }}
-      >
-        <p>Item</p>
-      </GridItem>
-      <GridItem
-        colSpan={2}
-        style={{ ...gridItemStyles, background: "lightcoral" }}
-      >
-        <p>Item</p>
-      </GridItem>
-      <GridItem
-        colSpan={4}
-        style={{ ...gridItemStyles, background: "lightcoral" }}
-      >
-        <p>Item</p>
-      </GridItem>
-    </GridLayout>
+    <div style={gridLayoutStyle}>
+      <GridLayout rows={2} columns={5}>
+        <GridItem rowSpan={2} colSpan={1} {...args}>
+          <div
+            style={{
+              ...gridItemStyles,
+              background: "lightcyan",
+            }}
+          >
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={2}>
+          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={2}>
+          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={4}>
+          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+      </GridLayout>
+    </div>
   );
 };
-export const ToolkitGridItemInGridLayout = InsideGrid.bind({});
-ToolkitGridItemInGridLayout.args = {};
+export const ToolkitGridItemVerticalAlignment =
+  VerticalAlignmentInsideGrid.bind({});
+ToolkitGridItemVerticalAlignment.args = {};
 
-ToolkitGridItemInGridLayout.argTypes = {
+ToolkitGridItemVerticalAlignment.argTypes = {
   colSpan: { control: { type: "number" } },
-  colStart: { control: { type: "number" } },
-  colEnd: { control: { type: "number" } },
   rowSpan: { control: { type: "number" } },
-  rowStart: { control: { type: "number" } },
-  rowEnd: { control: { type: "number" } },
-  justify: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  align: {
-    options: GRID_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
+};
+
+const HorizontalAlignmentInsideGrid: ComponentStory<typeof GridItem> = (
+  args
+) => {
+  return (
+    <div style={gridLayoutStyle}>
+      <GridLayout rows={2} columns={5}>
+        <GridItem rowSpan={2} colSpan={1}>
+          <div
+            style={{
+              ...gridItemStyles,
+              background: "lightcoral",
+            }}
+          >
+            {" "}
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={2} {...args}>
+          <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={2}>
+          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+        <GridItem colSpan={4}>
+          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
+            <p>Item</p>
+          </div>
+        </GridItem>
+      </GridLayout>
+    </div>
+  );
+};
+export const ToolkitGridItemHorizontalAlignment =
+  HorizontalAlignmentInsideGrid.bind({});
+ToolkitGridItemHorizontalAlignment.args = {};
+
+ToolkitGridItemHorizontalAlignment.argTypes = {
+  colSpan: { control: { type: "number" } },
+  rowSpan: { control: { type: "number" } },
 };

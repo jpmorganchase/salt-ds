@@ -22,6 +22,8 @@ import {
 } from "../theme";
 
 import { AriaAnnouncerProvider } from "../aria-announcer";
+import { DEFAULT_BREAKPOINTS, Breakpoints } from "../breakpoints";
+export type { Breakpoints } from "../breakpoints";
 export const DEFAULT_DENSITY = "medium";
 
 // TODDO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
@@ -29,6 +31,7 @@ export const DEFAULT_DENSITY = "medium";
 export interface ToolkitContextProps {
   density?: Density;
   themes?: Theme[];
+  breakpoints: Breakpoints;
 }
 
 const DEFAULT_THEME_NAME = "light";
@@ -48,6 +51,7 @@ declare global {
 export const ToolkitContext = createContext<ToolkitContextProps>({
   density: undefined,
   themes: [],
+  breakpoints: {} as Breakpoints,
 });
 
 const createThemedChildren = (
@@ -93,6 +97,7 @@ interface ToolkitProviderThatAppliesClassesToChild {
   density?: Density;
   theme?: ThemeNameType;
   applyClassesToChild?: true;
+  breakpoints?: Breakpoints;
 }
 
 type ThemeNameType = string | Array<string>;
@@ -101,6 +106,7 @@ interface ToolkitProviderThatInjectsThemeElement {
   density?: Density;
   theme?: ThemeNameType;
   applyClassesToChild?: false;
+  breakpoints?: Breakpoints;
 }
 
 type toolkitProvider =
@@ -125,6 +131,7 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   children,
   density: densityProp,
   theme: themesProp,
+  breakpoints: breakpointsProp,
 }) => {
   const { themes: inheritedThemes, density: inheritedDensity } =
     useContext(ToolkitContext);
@@ -135,6 +142,7 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
   const themes: Theme[] = getTheme(themeName);
+  const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
   const themedChildren = createThemedChildren(
     children,
@@ -144,7 +152,7 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   );
 
   const toolkitProvider = (
-    <ToolkitContext.Provider value={{ density, themes }}>
+    <ToolkitContext.Provider value={{ density, themes, breakpoints }}>
       {themedChildren}
     </ToolkitContext.Provider>
   );
@@ -168,6 +176,11 @@ export function useDensity(density?: Density): Density {
   const { density: densityFromContext } = useContext(ToolkitContext);
   return density || densityFromContext || DEFAULT_DENSITY;
 }
+
+export const useBreakpoints = () => {
+  const { breakpoints } = useContext(ToolkitContext);
+  return breakpoints;
+};
 
 type HTMLElementRef = RefObject<HTMLElement>;
 // We might want to cache values in a local WeakMap ?

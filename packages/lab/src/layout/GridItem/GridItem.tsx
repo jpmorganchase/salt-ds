@@ -2,48 +2,44 @@ import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
-import { GridAlignment, GridProperty } from "../types";
+import "./GridItem.css";
+import { ResponsiveProp, useResponsiveProp } from "../internal/ResponsiveProps";
 
+export const GRID_ALIGNMENT_BASE = [
+  "start",
+  "end",
+  "center",
+  "stretch",
+] as const;
+
+type GridAlignment = typeof GRID_ALIGNMENT_BASE[number];
+
+type GridProperty = number | "auto";
 export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The item will span across the provided number of grid columns
    */
-  colSpan?: GridProperty;
-  /**
-   * The column where the item begins
-   */
-  colStart?: GridProperty;
-  /**
-   * The column where the item ends
-   */
-  colEnd?: GridProperty;
+  colSpan?: GridProperty | ResponsiveProp<GridProperty>;
   /**
    * The item will span across the provided number of grid rows
    */
-  rowSpan?: GridProperty;
-  /**
-   * The row where the item begins
-   */
-  rowStart?: GridProperty;
-  /**
-   * The row where the item ends
-   */
-  rowEnd?: GridProperty;
+  rowSpan?: GridProperty | ResponsiveProp<GridProperty>;
   /**
    * Aligns a grid item inside a cell along the inline (row) axis
    */
-  justify?: GridAlignment;
+  horizontalAlignment?: GridAlignment;
   /**
    * Aligns a grid item inside a cell along the block (column) axis
    */
-  align?: GridAlignment;
-  /**
-   * Gives an item a name so that it can be referenced by a template created with the grid-template-areas property
-   */
-  area?: string;
+  verticalAlignment?: GridAlignment;
 }
 
 const withBaseName = makePrefixer("uitkGridItem");
+
+const colStart = "auto";
+const colEnd = "auto";
+const rowStart = "auto";
+const rowEnd = "auto";
 
 export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
   function GridItem(
@@ -51,39 +47,34 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
       children,
       className,
       colSpan,
-      colStart = "auto",
-      colEnd = "auto",
       rowSpan,
-      rowStart = "auto",
-      rowEnd = "auto",
-      justify = "stretch",
-      align = "stretch",
-      area = null,
+      horizontalAlignment = "stretch",
+      verticalAlignment = "stretch",
       style,
       ...rest
     },
     ref
   ) {
-    const gridColumnStart = colSpan ? `span ${colSpan}` : colStart;
+    const gridItemColSpan = useResponsiveProp(colSpan, "auto");
 
-    const gridColumnEnd = colSpan ? `span ${colSpan}` : colEnd;
+    const gridItemRowSpan = useResponsiveProp(rowSpan, "auto");
 
-    const gridRowStart = rowSpan ? `span ${rowSpan}` : rowStart;
+    const gridColumnStart = gridItemColSpan
+      ? `span ${gridItemColSpan}`
+      : colStart;
 
-    const gridRowEnd = rowSpan ? `span ${rowSpan}` : rowEnd;
+    const gridColumnEnd = gridItemColSpan ? `span ${gridItemColSpan}` : colEnd;
 
-    const gridArea = area
-      ? area
-      : `${gridRowStart} ${gridColumnStart} ${gridRowEnd} ${gridColumnEnd}`;
+    const gridRowStart = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowStart;
+
+    const gridRowEnd = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowEnd;
+
+    const gridArea = `${gridRowStart} / ${gridColumnStart} / ${gridRowEnd} / ${gridColumnEnd}`;
 
     const gridStyles = {
       ...style,
-      gridColumnStart,
-      gridColumnEnd,
-      gridRowStart,
-      gridRowEnd,
-      justifySelf: justify,
-      alignSelf: align,
+      justifySelf: horizontalAlignment,
+      alignSelf: verticalAlignment,
       gridArea,
     };
 
