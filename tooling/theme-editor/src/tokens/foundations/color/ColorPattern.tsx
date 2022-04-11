@@ -21,59 +21,65 @@ export interface ColorPatternProps {
 export const ColorPattern = (props: ColorPatternProps): ReactElement => {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     const openSections = searchParams.get("open")?.split("&") || [];
     setExpandedSections(openSections);
   }, [searchParams]);
 
   return (
-    <AccordionSection
-      expanded={expandedSections.includes(props.patternName)}
-      key={`${props.themeName}-${props.patternName}-accordion`}
-      onChange={(isExpanded) => {
-        let colors;
-        if (isExpanded) {
-          const openColors = searchParams.get("open");
-          colors = props.patternName;
-          if (openColors) {
-            colors = [colors, openColors].join("&");
-          }
-        } else {
-          const colorsOpen = searchParams.get("open")?.split("&");
-          if (colorsOpen) {
-            colors = colorsOpen
-              .filter((color) => color !== props.patternName)
-              .join("&");
-          }
-        }
-        colors ? setSearchParams({ open: colors }) : setSearchParams({});
-      }}
-    >
-      <AccordionSummary>
-        {capitalize(props.patternName) as string}
-      </AccordionSummary>
-      <AccordionDetails>
-        {props.values &&
-          Object.keys(props.values).map(function (node) {
-            const [values, fieldName] =
-              node === "value"
-                ? [props.values, props.patternName]
-                : [props.values[node], node];
+    <>
+      {Object.keys(props.values).map(function (color) {
+        return (
+          <AccordionSection
+            expanded={expandedSections.includes(color)}
+            key={`${props.themeName}-${props.patternName}-${color}-accordion`}
+            onChange={(isExpanded) => {
+              let colors;
+              if (isExpanded) {
+                const openColors = searchParams.get("open");
+                colors = color;
+                if (openColors) {
+                  colors = [colors, openColors].join("&");
+                }
+              } else {
+                const colorsOpen = searchParams.get("open")?.split("&");
+                if (colorsOpen) {
+                  colors = colorsOpen
+                    .filter((openColor) => openColor !== color)
+                    .join("&");
+                }
+              }
+              colors ? setSearchParams({ open: colors }) : setSearchParams({});
+            }}
+          >
+            <AccordionSummary>{capitalize(color) as string}</AccordionSummary>
+            <AccordionDetails>
+              {Object.keys(props.values[color]).map(function (node) {
+                const [values, fieldName] =
+                  node === "value"
+                    ? [props.values[color], props.patternName]
+                    : [props.values[color][node], node];
 
-            return (
-              <ChildrenValues
-                uitkColorOverrides={props.uitkColorOverrides}
-                children={values}
-                extractValue={props.extractValue}
-                fieldName={fieldName}
-                key={`${props.themeName}-${props.patternName}${node}`}
-                onUpdateJSON={props.onUpdateJSON}
-                patternName={props.patternName}
-                scope={props.scope}
-              />
-            );
-          })}
-      </AccordionDetails>
-    </AccordionSection>
+                return (
+                  <ChildrenValues
+                    uitkColorOverrides={props.uitkColorOverrides}
+                    children={values}
+                    extractValue={props.extractValue}
+                    fieldName={fieldName}
+                    key={`${props.themeName}-${props.patternName}-${color}-${node}`}
+                    onUpdateJSON={props.onUpdateJSON}
+                    patternName={props.patternName}
+                    scope={props.scope}
+                  />
+                );
+              })}
+            </AccordionDetails>
+          </AccordionSection>
+        );
+      })}
+    </>
   );
 };
+{
+}

@@ -3,36 +3,59 @@ import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { capitalize } from "@brandname/lab";
 import { JSONObj } from "../../helpers/parseToJson";
-import { UITK_COLOURS } from "../../utils/uitkValues";
 import "./InnerFieldLabel.css";
+import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
 
 const withBaseName = makePrefixer("uitkInnerFieldLabel");
 
 interface InnerFieldLabelProps {
   fieldName: string;
+  isEmphasis?: boolean;
   patternName: string;
   remainingJSON: JSONObj;
+  size?: string;
 }
 
-export const InnerFieldLabel = (props: InnerFieldLabelProps): ReactElement => {
-  const tokenPositionInPath = props.fieldName.split("-").length;
+const getLabel = (fieldName: string, isEmphasis?: boolean) => {
+  let label = fieldName.split("-").slice(-1)[0];
+
+  if (isEmphasis) {
+    if (label === "med") label = "Medium";
+    label += " emphasis";
+  }
+
+  return label;
+};
+
+export const InnerFieldLabel = ({
+  fieldName,
+  patternName,
+  remainingJSON,
+  size,
+  isEmphasis = false,
+}: InnerFieldLabelProps): ReactElement => {
+  const tokenPositionInPath = fieldName.split("-").length;
+  let label = getLabel(fieldName, isEmphasis);
 
   if (
-    UITK_COLOURS.indexOf(props.patternName) !== -1 ||
-    (Object.keys(props.remainingJSON).length === 1 &&
-      Object.keys(props.remainingJSON)[0] === "value")
+    (Object.keys(remainingJSON).length === 1 &&
+      Object.keys(remainingJSON)[0] === "value" &&
+      label !== "background" &&
+      label !== "color" &&
+      !SECTIONED_BY_COLOR_STATE.includes(label)) ||
+    label === "emphasis"
   ) {
     return <></>; // no need to return, will be shown next to value
   }
 
-  const label = props.fieldName.split("-").slice(-1)[0];
+  const variantClassName = size ? withBaseName(`${size}`) : undefined;
 
   return (
     <div
-      className={cn(withBaseName(), {
-        [withBaseName("Large")]: tokenPositionInPath === 1,
-        [withBaseName("Medium")]: tokenPositionInPath === 2,
-        [withBaseName("Small")]: tokenPositionInPath > 2,
+      className={cn(withBaseName(), variantClassName, {
+        [withBaseName("large")]: !size && tokenPositionInPath === 1,
+        [withBaseName("medium")]: !size && tokenPositionInPath === 2,
+        [withBaseName("small")]: !size && tokenPositionInPath > 2,
       })}
     >
       {label === "cta" ? "CTA" : (capitalize(label) as string)}

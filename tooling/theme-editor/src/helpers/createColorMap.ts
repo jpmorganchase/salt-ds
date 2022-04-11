@@ -1,5 +1,16 @@
 import { JSONByScope } from "./parseToJson";
-import { UITK_COLOURS } from "../utils/uitkValues";
+
+const UITK_COLORS = [
+  "white",
+  "black",
+  "red",
+  "green",
+  "blue",
+  "teal",
+  "orange",
+  "grey",
+  "purple",
+];
 
 export function createColorMap(
   jsonByScope: JSONByScope[]
@@ -8,9 +19,9 @@ export function createColorMap(
 
   jsonByScope.forEach((element) => {
     if (["mode-all", "light", "dark"].includes(element.scope)) {
-      for (const colour of UITK_COLOURS) {
-        if (element.jsonObj.uitk[colour]) {
-          Object.keys(element.jsonObj.uitk[colour]).forEach((key) => {
+      for (const color of UITK_COLORS) {
+        if (element.jsonObj.uitk.color[color]) {
+          Object.keys(element.jsonObj.uitk.color[color]).forEach((key) => {
             if (
               [
                 "10",
@@ -33,18 +44,18 @@ export function createColorMap(
                 "900",
               ].includes(key)
             ) {
-              if (element.jsonObj.uitk[colour][key].value !== undefined) {
-                colorMap[`uitk${colour}${key}`] = element.jsonObj.uitk[colour][
-                  key
-                ].value as string;
+              if (element.jsonObj.uitk.color[color][key].value !== undefined) {
+                colorMap[`uitk${color}${key}`] = element.jsonObj.uitk.color[
+                  color
+                ][key].value as string;
               }
               // Note that we skip over fade values as we don't need them here
             }
             if (
               key === "value" &&
-              element.jsonObj.uitk[colour].value !== undefined
+              element.jsonObj.uitk.color[color].value !== undefined
             ) {
-              colorMap[`uitk${colour}`] = element.jsonObj.uitk[colour]
+              colorMap[`uitk${color}`] = element.jsonObj.uitk.color[color]
                 .value as string;
             }
           });

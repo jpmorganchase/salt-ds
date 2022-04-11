@@ -28,6 +28,7 @@ export class Color {
   static makeColorFromHex(hexValue: string | undefined): Color | undefined {
     const colorObj = new Color();
     colorObj.color = tinycolor(hexValue);
+
     if (colorObj.color.isValid()) {
       return colorObj;
     } else {

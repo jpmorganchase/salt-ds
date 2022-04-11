@@ -13,12 +13,28 @@
   width: 100%;
 }
 
+.uitkColorValueEditor-colorByState {
+  padding: 0;
+}
+.uitkColorValueEditor-colorStates {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.uitkColorValueEditor-colorStatesField {
+  width: auto;
+  height: 14px;
+}
+
 .uitkColorValueEditor-backgroundColorInput {
   max-width: 80px;
 }
 
 .uitkColorValueEditor-jumpToFoundation {
   display: flex;
+}
+
+.uitkColorValueEditor-jumpToFoundationButton {
+  align-items: flex-end;
 }
 
 .uitkColorValueEditor-jumpToFoundationNotColor {
@@ -29,6 +45,7 @@
 .uitkColorValueEditor-field {
   margin-right: 5px;
   min-width: 20px;
+  width: auto;
 }
 
 .uitkFormField-labelContainer {

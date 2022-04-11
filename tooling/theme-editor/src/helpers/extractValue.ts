@@ -6,16 +6,52 @@ import {
   isLinearGradient,
   isRGBAColor,
 } from "../tokens/foundations/color/ColorValueEditor";
-import { JSONByScope } from "./parseToJson";
+import { JSONByScope, JSONObj } from "./parseToJson";
+
+function deepMerge(merged: any, toMerge: any) {
+  if (typeof toMerge === "object") {
+    Object.keys(toMerge).forEach((key) => {
+      if (merged[key]) {
+        if (key === "value") {
+          /* Overwrite */
+          merged[key] = toMerge[key];
+        } else {
+          merged[key] = deepMerge(merged[key], toMerge[key]);
+        }
+      } else {
+        merged[key] = toMerge[key];
+      }
+    });
+  }
+
+  return merged;
+}
+
+function merge(jsonArray: JSONObj[]): JSONObj {
+  let merged: JSONObj = {};
+
+  jsonArray.forEach((json) => {
+    Object.keys(json).forEach((key) => {
+      if (merged[key]) {
+        merged[key] = deepMerge(merged[key], json[key]);
+      } else {
+        merged[key] = json[key];
+      }
+    });
+  });
+
+  return merged;
+}
 
 export const extractValueFromJSON = (
   value: string,
   jsonInCurrentScope: JSONByScope[]
 ): string => {
-  const mergedJSON = jsonInCurrentScope.map((js) => js.jsonObj.uitk);
+  const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.uitk));
 
   function recursePath(v: string): string {
-    let path = Object.assign({}, ...mergedJSON);
+    let path = mergedJSON;
+
     const original = v;
     if (v.startsWith("uitk-")) v = v.substring(5);
 
@@ -23,7 +59,6 @@ export const extractValueFromJSON = (
       path = path[p];
       if (!path) return original;
     }
-
     if (path.value && typeof path.value === "string") {
       if (path.value.startsWith("uitk")) return recursePath(path.value);
       else return path.value;

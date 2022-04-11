@@ -1,3 +1,4 @@
+import { ToolkitProvider } from "@brandname/core";
 import { ColorChooser, Color } from "@brandname/lab";
 import { useState, useCallback } from "react";
 import { customColorMap } from "./custom-color-map";
@@ -31,13 +32,15 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      showSwatches={true}
-      showColorPicker={false}
-      onSelect={onSelect}
-      onClear={onClear}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        showSwatches={true}
+        showColorPicker={false}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -56,12 +59,14 @@ export const JustColorPicker: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      showSwatches={false}
-      onSelect={onSelect}
-      onClear={onClear}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        showSwatches={false}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -80,7 +85,13 @@ export const DefaultColorChooser: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ColorChooser color={selectedColor} onSelect={onSelect} onClear={onClear} />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -101,12 +112,14 @@ export const ColorChooserWithAlphaDisabled: ComponentStory<
     setSelectedColor(defaultColor);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      disableAlphaChooser={true}
-      onSelect={onSelect}
-      onClear={onClear}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        disableAlphaChooser={true}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -127,7 +140,13 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: Co
     setSelectedColor(defaultColor);
   };
   return (
-    <ColorChooser color={selectedColor} onSelect={onSelect} onClear={onClear} />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -148,13 +167,15 @@ export const ColorChooserWithDefaultAlpha: ComponentStory<
     setSelectedColor(undefined);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      disableAlphaChooser={false}
-      defaultAlpha={0.4}
-      onSelect={onSelect}
-      onClear={onClear}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        disableAlphaChooser={false}
+        defaultAlpha={0.4}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -195,12 +216,14 @@ export const ColorChooserWithCustomColors: ComponentStory<
     setSelectedColor(undefined);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      UITKColorOverrides={customColorMap}
-      onSelect={onSelect}
-      onClear={onClear}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        UITKColorOverrides={customColorMap}
+        onSelect={onSelect}
+        onClear={onClear}
+      />
+    </ToolkitProvider>
   );
 };
 
@@ -219,11 +242,13 @@ export const ColorChooserReadOnly: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(undefined);
   };
   return (
-    <ColorChooser
-      color={selectedColor}
-      onSelect={onSelect}
-      onClear={onClear}
-      readOnly={true}
-    />
+    <ToolkitProvider density="high">
+      <ColorChooser
+        color={selectedColor}
+        onSelect={onSelect}
+        onClear={onClear}
+        readOnly={true}
+      />
+    </ToolkitProvider>
   );
 };
