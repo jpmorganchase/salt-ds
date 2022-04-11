@@ -19,7 +19,7 @@ const IconGrid = ({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "100px 100px 100px 150px",
+        gridTemplateColumns: "100px 100px 100px",
         gridTemplateRows: "100px auto",
         gridGap: 10,
       }}
