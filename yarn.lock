@@ -1837,6 +1837,7 @@ __metadata:
     "@cypress/vite-dev-server": ^2.2.2
     "@floating-ui/core": ^0.6.1
     "@floating-ui/react-dom": ^0.6.0
+    "@floating-ui/react-dom-interactions": ^0.0.15
     "@storybook/addon-a11y": ^6.4.18
     "@storybook/addon-actions": ^6.4.18
     "@storybook/addon-docs": ^6.4.18
@@ -2982,6 +2983,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@floating-ui/dom@npm:^0.4.2":
+  version: 0.4.4
+  resolution: "@floating-ui/dom@npm:0.4.4"
+  dependencies:
+    "@floating-ui/core": ^0.6.1
+  checksum: 1031cf3b5c18a9fe1edafafac1920ce882e50767a7b16ffed35807ccb84f5ff72b8247d94c7c680f6e8d913a0efe2d8906e051dbfa49c2633d2fc809d77e69b6
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom-interactions@npm:^0.0.15":
+  version: 0.0.15
+  resolution: "@floating-ui/react-dom-interactions@npm:0.0.15"
+  dependencies:
+    "@floating-ui/react-dom": ^0.6.1
+    point-in-polygon: ^1.1.0
+    use-isomorphic-layout-effect: ^1.1.1
+  checksum: 6680873e33c32a167807f4d752357c961a00d25af75b8be9f9df4b4f8fb12e36fdb150f71389b2d3bd253461195800facf14932d8b478409138fa74053af712f
+  languageName: node
+  linkType: hard
+
 "@floating-ui/react-dom@npm:^0.6.0":
   version: 0.6.0
   resolution: "@floating-ui/react-dom@npm:0.6.0"
@@ -2992,6 +3013,19 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: f9cc86570675be2ea3250b22a8a3ed315bd21df71e1c9d9d5fe5110d24b3cc463b2917f7af01e5cfdf1565852529dbc95be832a1a2a21306fed93e940347ca0e
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "@floating-ui/react-dom@npm:0.6.1"
+  dependencies:
+    "@floating-ui/dom": ^0.4.2
+    use-isomorphic-layout-effect: ^1.1.1
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 50bb996db54eb661360224c2be7586c6b8882a6c1bda661d4b695c1edea8af337d5671dcb018b2db237c367385cbca19241bed38c9a41213dd54d26036f99a64
   languageName: node
   linkType: hard
 
@@ -20318,6 +20352,13 @@ __metadata:
   dependencies:
     ts-pnp: ^1.1.6
   checksum: 0606a63db96400b07f182300168298da9518727a843f9e10cf5045d2a102a4be06bb18c73dc481281e3e0f1ed8d04ef0d285a342b6dcd0eff1340e28e5d2328d
+  languageName: node
+  linkType: hard
+
+"point-in-polygon@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "point-in-polygon@npm:1.1.0"
+  checksum: 67a6374f0b79bc872bde8e375d7d5ea011a1419c5f4320dfb7705801cd3a8fcaee8bff385465e075b2ce863bbc86ccd74c63345d9f326981cd0807642bc5199c
   languageName: node
   linkType: hard
 

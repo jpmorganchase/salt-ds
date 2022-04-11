@@ -1,31 +1,31 @@
-import cn from "classnames";
 import {
   cloneElement,
   forwardRef,
   HTMLAttributes,
   ReactNode,
-  Ref,
   RefObject,
   SyntheticEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
   ReactElement,
-  ComponentType,
-  MouseEvent as ReactMouseEvent,
-  FocusEvent as ReactFocusEvent,
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+  useRef,
 } from "react";
-import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
+import cn from "classnames";
+import { useFloating } from "@floating-ui/react-dom-interactions";
 import { arrow, flip, limitShift, offset, shift } from "@floating-ui/react-dom";
 
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
-import { useControlled, useForkRef, useId } from "../utils";
-import { getIconForState } from "./getIconForState";
+import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
+import {
+  UseFloatingUIProps,
+  PortalProps,
+  useControlled,
+  useForkRef,
+  useId,
+} from "@brandname/lab";
 
+import { getIconForState } from "./getIconForState";
 import "./Tooltip.css";
-import { Portal, PortalProps } from "../portal";
-import { useWindow } from "../window";
 
 // Keep in order of preference. First items are used as default
 
@@ -157,48 +157,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     ref
   ) {
     if (!children && !anchorElement) {
-      console.error("Tooltip is missing children or anchorElement");
+      console.error(
+        "Tooltip needs to contain children or to have an anchor element"
+      );
       return <></>;
     }
 
-    const [childNode, setChildNode] = useState<HTMLElement | undefined>();
-    const childRef = useForkRef(children?.ref, setChildNode);
-
-    const arrowRef = useRef<HTMLDivElement | null>(null);
-    const {
-      floating,
-      reference,
-      x,
-      y,
-      strategy,
-      update,
-      middlewareData,
-      placement,
-    } = useFloatingUI({
-      placement: placementProp,
-      middleware: [
-        offset(8),
-        flip(),
-        shift({
-          limiter: limitShift({
-            offset: () =>
-              Math.max(
-                arrowRef.current?.offsetWidth ?? 0,
-                arrowRef.current?.offsetHeight ?? 0
-              ),
-          }),
-        }),
-        arrow({ element: arrowRef }),
-      ],
-    });
-
-    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
-    const enterTimer = useRef(-1);
-    const leaveTimer = useRef(-1);
-    const tooltipId = useId(idProp);
-    const { announce } = useAriaAnnouncer();
-    const tooltipContentRef = useRef<HTMLDivElement>(null);
-
+    const arrowRef = useRef<HTMLDivElement>(null);
     const [openState, setOpenState] = useControlled({
       controlled: openProp,
       default: false,
@@ -208,10 +173,37 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     let open = openState;
 
+    const { x, y, reference, floating, strategy, middlewareData, placement } =
+      useFloating({
+        open,
+        onOpenChange: setOpenState,
+        placement: placementProp,
+        middleware: [
+          offset(8),
+          flip(),
+          shift({
+            limiter: limitShift({
+              offset: () =>
+                Math.max(
+                  arrowRef.current?.offsetWidth ?? 0,
+                  arrowRef.current?.offsetHeight ?? 0
+                ),
+            }),
+          }),
+          arrow({ element: arrowRef }),
+        ],
+      });
+
+    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
+    const enterTimer = useRef(-1);
+    const leaveTimer = useRef(-1);
+    const tooltipId = useId(idProp);
+    const { announce } = useAriaAnnouncer();
+    const tooltipContentRef = useRef<HTMLDivElement>(null);
+
     const handleOpen = (event: SyntheticEvent | Event) => {
       clearTimeout(visibleTimer);
       uncontrolledOpen = true;
-
       setOpenState(true);
 
       onOpen?.(event);
@@ -271,9 +263,62 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       };
     }, [handleClose, open]);
 
-    if (!title && !render) {
-      open = false;
-    }
+    const handleMouseEnter = (e: SyntheticEvent | MouseEvent) => {
+      if (!disableHoverListener) {
+        handleEnter(e);
+
+        setTimeout(() => {
+          const tooltipContent = tooltipContentRef.current?.innerText;
+
+          if (tooltipContent) {
+            announce(tooltipContent);
+          }
+        }, enterDelay);
+      }
+    };
+
+    const handleMouseLeave = (e: SyntheticEvent | MouseEvent) => {
+      if (!disableHoverListener) {
+        handleLeave(e);
+      }
+    };
+
+    const handleFocus = (e: SyntheticEvent | FocusEvent) => {
+      if (!disableFocusListener) {
+        handleEnter(e);
+      }
+    };
+
+    const handleBlur = (e: SyntheticEvent | FocusEvent) => {
+      if (!disableFocusListener) {
+        handleLeave(e);
+      }
+    };
+
+    useLayoutEffect(() => {
+      if (anchorElement) {
+        reference(anchorElement);
+
+        anchorElement.addEventListener("mouseenter", handleMouseEnter);
+        anchorElement.addEventListener("mouseleave", handleMouseLeave);
+        anchorElement.addEventListener("focus", handleFocus);
+        anchorElement.addEventListener("blur", handleBlur);
+
+        return () => {
+          anchorElement.removeEventListener("mouseenter", handleMouseEnter);
+          anchorElement.removeEventListener("mouseleave", handleMouseLeave);
+          anchorElement.removeEventListener("focus", handleFocus);
+          anchorElement.removeEventListener("blur", handleBlur);
+        };
+      }
+    }, []);
+
+    useEffect(() => {
+      if (anchorElement && open) {
+        anchorElement.setAttribute("aria-owns", tooltipId);
+        anchorElement.setAttribute("aria-describedby", tooltipId);
+      }
+    }, [openState, tooltipId]);
 
     const getIcon = useCallback(
       (iconProps: IconProps) => {
@@ -305,163 +350,65 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...(children?.props as HTMLAttributes<HTMLElement>),
       ref: children?.ref,
     };
-    const {
-      onMouseEnter: onMouseEnterChild,
-      onMouseLeave: onMouseLeaveChild,
-      onFocus: onFocusChild,
-      onBlur: onBlurChild,
-      ...restChildrenProps
-    } = childrenProps;
 
-    const onMouseEnter =
-      onMouseEnterChild ||
-      (anchorElement && anchorElement.onmouseenter
-        ? () => anchorElement.onmouseenter
-        : undefined);
-
-    const onMouseLeave =
-      onMouseLeaveChild ||
-      (anchorElement && anchorElement.onmouseleave
-        ? () => anchorElement.onmouseleave
-        : undefined);
-
-    const onFocus =
-      onFocusChild ||
-      (anchorElement && anchorElement.onfocus
-        ? () => anchorElement.onfocus
-        : undefined);
-
-    const onBlur =
-      onBlurChild ||
-      (anchorElement && anchorElement.onblur
-        ? () => anchorElement.onblur
-        : undefined);
-
-    const handleMouseEnter = (e: MouseEvent | ReactMouseEvent) => {
-      if (!disableHoverListener) {
-        handleEnter(e);
-
-        setTimeout(() => {
-          const tooltipContent = tooltipContentRef.current?.innerText;
-
-          if (tooltipContent) {
-            announce(tooltipContent);
-          }
-        }, enterDelay);
-      }
-
-      // onMouseEnter && onMouseEnter(e);
-    };
-
-    const handleMouseLeave = (e: MouseEvent | ReactMouseEvent) => {
-      if (!disableHoverListener) {
-        handleLeave(e);
-      }
-      // onMouseLeave?.(e);
-    };
-
-    const handleFocus = (e: FocusEvent | ReactFocusEvent) => {
-      if (!disableFocusListener) {
-        handleEnter(e);
-      }
-      // onFocus?.(e);
-    };
-
-    const handleBlur = (e: FocusEvent | ReactFocusEvent) => {
-      if (!disableFocusListener) {
-        handleLeave(e);
-      }
-      // onBlur?.(e);
-    };
-
-    useEffect(() => {
-      if (anchorElement) {
-        anchorElement.addEventListener("mouseenter", handleMouseEnter);
-        anchorElement.addEventListener("mouseleave", handleMouseLeave);
-        anchorElement.addEventListener("focus", handleFocus);
-        anchorElement.addEventListener("blur", handleBlur);
-      }
-
-      return () => {
-        if (anchorElement) {
-          anchorElement.removeEventListener("mouseenter", handleMouseEnter);
-          anchorElement.removeEventListener("mouseleave", handleMouseLeave);
-          anchorElement.removeEventListener("focus", handleFocus);
-          anchorElement.removeEventListener("blur", handleBlur);
-        }
-      };
-    }, [anchorElement]);
-
-    const handleArrowRef = useCallback(
-      (element: HTMLDivElement) => {
-        arrowRef.current = element;
-        update();
-      },
-      [update]
-    );
-
-    const Window = useWindow();
     return (
       <>
         {!!children &&
           cloneElement(children, {
-            ...restChildrenProps,
+            ...childrenProps,
             "aria-owns": open ? tooltipId : undefined,
             "aria-describedby": open ? tooltipId : undefined,
             onMouseEnter: handleMouseEnter,
             onMouseLeave: handleMouseLeave,
             onFocus: handleFocus,
             onBlur: handleBlur,
-            ref: childRef,
+            ref: reference,
           })}
-
         {open && (
-          <Portal disablePortal={disablePortal} container={container}>
-            <Window
-              className={cn(withBaseName(), withBaseName(state))}
-              data-placement={placement}
-              id={tooltipId}
-              role="tooltip"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              ref={handleRef}
-              {...rest}
-              style={{
-                top: y ?? "",
-                left: x ?? "",
-                position: strategy,
-                ...(rest.style || {}),
-              }}
-            >
-              <div className={withBaseName("content")} ref={tooltipContentRef}>
-                {render ? (
-                  render({
-                    Icon: (passedProps: IconProps) => getIcon(passedProps),
-                    getIconProps: () => defaultIconProps,
-                    getTitleProps,
-                  })
-                ) : (
-                  <>
-                    {getIcon({})}
-                    <span className={withBaseName("body")}>{title}</span>
-                  </>
-                )}
-              </div>
-              {!hideArrow && (
-                <div
-                  ref={handleArrowRef}
-                  className={withBaseName("arrow")}
-                  data-popper-arrow="true"
-                  style={{
-                    left: middlewareData.arrow?.x ?? "",
-                    top: middlewareData.arrow?.y ?? "",
-                  }}
-                />
+          <div
+            className={cn(withBaseName(), withBaseName(state))}
+            data-placement={placement}
+            id={tooltipId}
+            role="tooltip"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            ref={handleRef}
+            {...rest}
+            style={{
+              top: y ?? "",
+              left: x ?? "",
+              position: strategy,
+              ...(rest.style || {}),
+            }}
+          >
+            <div className={withBaseName("content")} ref={tooltipContentRef}>
+              {render ? (
+                render({
+                  Icon: (passedProps: IconProps) => getIcon(passedProps),
+                  getIconProps: () => defaultIconProps,
+                  getTitleProps,
+                })
+              ) : (
+                <>
+                  {getIcon({})}
+                  <span className={withBaseName("body")}>{title}</span>
+                </>
               )}
-            </Window>
-          </Portal>
+            </div>
+            {!hideArrow && (
+              <div
+                ref={arrowRef}
+                className={withBaseName("arrow")}
+                data-popper-arrow="true"
+                style={{
+                  left: middlewareData.arrow?.x ?? "",
+                  top: middlewareData.arrow?.y ?? "",
+                }}
+              />
+            )}
+          </div>
         )}
       </>
     );

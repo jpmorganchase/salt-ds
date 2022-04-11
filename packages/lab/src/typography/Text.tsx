@@ -21,7 +21,6 @@ import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
 
 import "./Text.css";
-// import { TooltipNext, TooltipProps } from "../tooltip-next";
 
 const withBaseName = makePrefixer("uitkText");
 
@@ -102,8 +101,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   },
   ref
 ) {
-  const contentRef = useRef<HTMLElement>();
-  const setContainerRef = useForkRef(ref, contentRef);
+  const contentRef = useRef<HTMLElement>(null);
+  const setContentRef = useForkRef(ref, contentRef);
+  const [triggerEl, setTriggerEl] = useState<HTMLElement>();
 
   const [isOverflowed, setIsOverflowed] = useState(false);
   const [hasTooltip, setHasTooltip] = useState(false);
@@ -113,9 +113,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const rows = useRef(maxRows);
   const density = useDensity();
 
-  // Finding focusable parent to apply the tooltip on
-  const [triggerEl, setTriggerEl] = useState<HTMLElement | undefined>();
-
+  // Finding focusable parent, we'll apply the tooltip on it
   useEffect(() => {
     if (contentRef.current) {
       const parent =
@@ -124,7 +122,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         (contentRef.current.closest('[tabindex="0"]') as HTMLElement);
       setTriggerEl(parent || contentRef.current);
     }
-  }, [contentRef]);
+  }, [contentRef.current]);
 
   // Scrolling
   useIsomorphicLayoutEffect(() => {
@@ -285,8 +283,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
-      tabIndex={hasTooltip ? 0 : -1}
-      ref={setContainerRef}
+      tabIndex={hasTooltip && triggerEl === contentRef.current ? 0 : -1}
+      ref={setContentRef}
       style={{ marginTop, marginBottom, ...componentStyle, ...style }}
     >
       {children}

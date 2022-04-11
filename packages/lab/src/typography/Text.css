@@ -23,6 +23,7 @@
 }
 
 .uitkText-overflow {
+  --text-height: 100%;
   overflow: auto;
 }
 
