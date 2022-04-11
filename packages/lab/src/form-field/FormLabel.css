@@ -1,6 +1,6 @@
 /* Styles applied to root element */
 .uitkFormLabel {
-  --form-label-margin-top: var(--uitkFormLabel-margin-top, 2px);
+  --form-label-margin-top: 2px;
 }
 
 .uitkFormLabel {
@@ -10,9 +10,12 @@
   display: flex;
   font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
   margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);
-  margin-top: var(--form-label-margin-top);
+  margin-top: var(--uitkFormLabel-margin-top, var(--form-label-margin-top));
   line-height: var(--uitkFormLabel-line-height, var(--uitk-typography-line-height));
-  padding: var(--uitkFormLabel-padding, 0 8px);
+  padding-right: var(--uitkFormLabel-padding-right, 8px);
+  padding-left: var(--uitkFormLabel-padding-left, 8px);
+  padding-top: var(--uitkFormLabel-padding-top, 0);
+  padding-bottom: var(--uitkFormLabel-padding-bottom, 0);
   text-overflow: ellipsis;
   transform: var(--uitkFormLabel-transform, translate(0, var(--form-label-margin-top)));
   white-space: nowrap;

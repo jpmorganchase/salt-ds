@@ -120,8 +120,8 @@
 
 /* Class applied to the root element if `labelPlacement="left"` */
 .uitkFormField-labelLeft {
-  --form-label-top: var(--uitk-spacing-unit);
-  --form-label-padding: 0 calc(0.75 * var(--uitk-spacing-unit)) 0 0;
+  --uitkFormLabel-margin-top: var(--uitk-spacing-unit);
+  --uitkFormLabel-padding-right: calc(0.75 * var(--uitk-spacing-unit));
 }
 
 /* Class applied to the root element if `labelPlacement="top"` or labelPlacement omitted (default is 'top') */

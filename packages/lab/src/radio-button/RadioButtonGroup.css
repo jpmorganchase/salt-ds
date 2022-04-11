@@ -8,53 +8,64 @@
   vertical-align: top;
 }
 
+/* Styles applied to root component (RadioButton) */
+.uitk-density-medium {
+  --radio-vertical-label-margin-bottom: 6px;
+}
+
+.uitk-density-high .uitkRadioButton {
+  --radio-vertical-label-margin-bottom: 4px;
+}
+
+.uitk-density-low .uitkRadioButton {
+  --radio-vertical-label-margin-bottom: 9px;
+}
+
+.uitk-density-touch .uitkRadioButton {
+  --radio-vertical-label-margin-bottom: 12px;
+}
+
 /* Styles applied when `row=false OR undefined` */
 .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
   margin-top: 0;
   border-right: 16px;
-  margin-bottom: 12px;
+  margin-bottom: var(--radio-vertical-label-margin-bottom);
 }
 
 /* Styles applied to the Form Field label element */
 .uitk-density-medium .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-padding-right: 8px;
-  --form-label-margin-bottom: 6px;
-  --form-label-transform: translate(0px, 5px);
+  --uitkFormLabel-padding-right: 8px;
+  --uitkFormLabel-margin-bottom: 6px;
+  --uitkFormLabel-transform: translate(0px, 5px);
 }
 .uitk-density-high .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-padding-right: 4px;
-  --form-label-margin-bottom: 4px;
-  --form-label-transform: translate(0px, 3px);
+  --uitkFormLabel-padding-right: 4px;
+  --uitkFormLabel-margin-bottom: 4px;
+  --uitkFormLabel-transform: translate(0px, 3px);
 }
 .uitk-density-low .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-padding-right: 12px;
-  --form-label-margin-bottom: 9px;
-  --form-label-transform: translate(0px, 7px);
+  --uitkFormLabel-padding-right: 12px;
+  --uitkFormLabel-margin-bottom: 9px;
+  --uitkFormLabel-transform: translate(0px, 7px);
 }
 .uitk-density-touch .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-padding-right: 16px;
-  --form-label-margin-bottom: 12px;
-  --form-label-transform: translate(0px, 11px);
+  --uitkFormLabel-padding-right: 16px;
+  --uitkFormLabel-margin-bottom: 12px;
+  --uitkFormLabel-transform: translate(0px, 11px);
 }
 
 /* Styles applied to the Form Field FormLabel component */
 .uitk-density-medium .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-transform: translate(0px, 5px);
+  --uitkFormLabel-transform: translate(0px, 5px);
 }
 .uitk-density-high .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-transform: translate(0px, 3px);
+  --uitkFormLabel-transform: translate(0px, 3px);
 }
 .uitk-density-low .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-transform: translate(0px, 7px);
+  --uitkFormLabel-transform: translate(0px, 7px);
 }
 .uitk-density-touch .uitkRadioButtonGroup-legend.uitkFormLabel {
-  --form-label-transform: translate(0px, 11px);
-}
-
-/* Styles applied to the Form Field FormLabel component if `row={false OR undefined}` */
-.uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
-  padding-right: var(--uitkFormLabel-radio-padding-right, var(--form-label-padding-right));
-  margin-bottom: var(--uitkFormLabel-radio-margin-bottom, var(--form-label-margin-bottom));
+  --uitkFormLabel-transform: translate(0px, 11px);
 }
 
 /* Styles applied to the Form Field FormLabel component if `row={true}` */
@@ -64,8 +75,7 @@
 
 /* Styles applied to the Form Field FormLabel component */
 .uitkRadioButtonGroup-legend.uitkFormLabel {
-  padding-left: var(--uitkFormLabel-radio-padding-left, 0px);
-  transform: var(--uitkFormLabel-radio-transform, var(--form-label-transform));
+  padding-left: var(--uitkRadioButtonGroup-form-label-padding-left, 0px);
 }
 
 /* Styles applied  to legend if `row={true}` */

@@ -1,4 +1,4 @@
-import { FormField, RadioButton, RadioButtonGroup } from "@brandname/lab";
+import { RadioButton, RadioButtonGroup } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./radio-button.qa.stories.css";
@@ -66,8 +66,9 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
 ) => {
   return (
     <QAContainer
+      className="uitkRadioButtonQA"
       width={1180}
-      height={621}
+      height={605}
       imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
     >
       <AllExamplesGrid />
