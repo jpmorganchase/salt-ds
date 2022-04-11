@@ -10,7 +10,12 @@ export function createTotalHeight<T>(
   const totalHeight$ = new BehaviorSubject<number>(0);
 
   combineLatest([topHeight$, middleHeight$, bottomHeight$])
-    .pipe(map(sum))
+    .pipe(
+      map(sum),
+      tap((x) => {
+        console.log(`totalHeight$: ${x}`);
+      })
+    )
     .subscribe(totalHeight$);
 
   return totalHeight$;

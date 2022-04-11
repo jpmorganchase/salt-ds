@@ -1,9 +1,12 @@
-import { BehaviorSubject, combineLatest } from "rxjs";
+import { BehaviorSubject, combineLatest, map } from "rxjs";
 import { ColumnDefinition } from "../ColumnDefinition";
 import { ColumnGroupDefinition } from "../ColumnGroupDefinition";
 import { ColumnGroup } from "../ColumnGroup";
 import { Column } from "../Column";
 import { ColumnsAndGroups } from "../GridModel";
+import { RowSelectionCheckboxCellValue } from "../../column-types/row-selection-checkbox/RowSelectionCheckboxCellValue";
+import { RowSelectionCheckboxHeaderValue } from "../../column-types/row-selection-checkbox/RowSelectionCheckboxHeaderValue";
+import { AutoSizingHeaderCell } from "../../components";
 
 export function createColumnsAndColumnGroups<T>(
   columnDefinitions: BehaviorSubject<ColumnDefinition<T>[] | undefined>,
@@ -53,19 +56,19 @@ export function createColumnsAndColumnGroups<T>(
           }
         });
 
-        [...leftColumns, ...middleColumns, ...rightColumns].forEach(
-          (column, columnIndex) => {
-            column.index = columnIndex;
-          }
-        );
-        const allGroups = [...leftGroups, ...middleGroups, ...rightGroups];
-        allGroups.forEach((group, groupIndex) => {
-          group.index = groupIndex;
-        });
-        if (allGroups.length > 0) {
-          allGroups[0].rowSeparator.next("first");
-          allGroups[allGroups.length - 1].rowSeparator.next("last");
-        }
+        // [...leftColumns, ...middleColumns, ...rightColumns].forEach(
+        //   (column, columnIndex) => {
+        //     column.index = columnIndex;
+        //   }
+        // );
+        // const allGroups = [...leftGroups, ...middleGroups, ...rightGroups];
+        // allGroups.forEach((group, groupIndex) => {
+        //   group.index = groupIndex;
+        // });
+        // if (allGroups.length > 0) {
+        //   allGroups[0].rowSeparator.next("first");
+        //   allGroups[allGroups.length - 1].rowSeparator.next("last");
+        // }
 
         columnsAndGroups$.next({
           leftColumns,
@@ -94,11 +97,11 @@ export function createColumnsAndColumnGroups<T>(
             middleColumns.push(column);
           }
         });
-        [...leftColumns, ...middleColumns, ...rightColumns].forEach(
-          (column, columnIndex) => {
-            column.index = columnIndex;
-          }
-        );
+        // [...leftColumns, ...middleColumns, ...rightColumns].forEach(
+        //   (column, columnIndex) => {
+        //     column.index = columnIndex;
+        //   }
+        // );
 
         columnsAndGroups$.next({
           leftColumns,
@@ -109,5 +112,87 @@ export function createColumnsAndColumnGroups<T>(
     }
   );
 
+  return columnsAndGroups$;
+}
+
+export function addAutoColumnsAndGroups<T>(
+  userColumnsAndGroups$: BehaviorSubject<ColumnsAndGroups<T>>,
+  showCheckboxes$: BehaviorSubject<boolean | undefined>
+): BehaviorSubject<ColumnsAndGroups<T>> {
+  const columnsAndGroups$ = new BehaviorSubject<ColumnsAndGroups<T>>(
+    userColumnsAndGroups$.getValue()
+  );
+  combineLatest([userColumnsAndGroups$, showCheckboxes$])
+    .pipe(
+      map(([userColumnsAndGroups, showCheckboxes]) => {
+        const {
+          middleColumns,
+          rightColumns,
+          middleColumnGroups,
+          rightColumnGroups,
+        } = userColumnsAndGroups;
+        let { leftColumns, leftColumnGroups } = userColumnsAndGroups;
+        // Add checkbox column and group if showCheckboxes is set to true
+        if (showCheckboxes) {
+          const checkboxColumnDefinition: ColumnDefinition<T> = {
+            key: "rowSelector",
+            title: "",
+            width: 100,
+            pinned: "left",
+            cellValueComponent: RowSelectionCheckboxCellValue,
+            headerComponent: AutoSizingHeaderCell,
+            headerValueComponent: RowSelectionCheckboxHeaderValue,
+          } as ColumnDefinition<T>;
+          const checkboxColumn = new Column(checkboxColumnDefinition);
+          if (
+            leftColumnGroups != undefined &&
+            middleColumnGroups != undefined &&
+            rightColumnGroups != undefined
+          ) {
+            const checkboxColumnGroup = new ColumnGroup({
+              key: "rowSelectorGroup",
+              pinned: "left",
+              title: "",
+              columns: [checkboxColumnDefinition],
+            });
+            leftColumnGroups = [checkboxColumnGroup, ...leftColumnGroups];
+          }
+          leftColumns = [checkboxColumn, ...leftColumns];
+        }
+        // Set column/group indices (this should be moved to another function probably)
+        if (
+          leftColumnGroups != undefined &&
+          middleColumnGroups != undefined &&
+          rightColumnGroups != undefined
+        ) {
+          const allGroups = [
+            ...leftColumnGroups,
+            ...middleColumnGroups,
+            ...rightColumnGroups,
+          ];
+          allGroups.forEach((group, groupIndex) => {
+            group.index = groupIndex;
+          });
+          if (allGroups.length > 0) {
+            allGroups[0].rowSeparator.next("first");
+            allGroups[allGroups.length - 1].rowSeparator.next("last");
+          }
+        }
+        [...leftColumns, ...middleColumns, ...rightColumns].forEach(
+          (column, columnIndex) => {
+            column.index = columnIndex;
+          }
+        );
+        return {
+          leftColumns,
+          middleColumns,
+          rightColumns,
+          leftColumnGroups,
+          middleColumnGroups,
+          rightColumnGroups,
+        };
+      })
+    )
+    .subscribe(columnsAndGroups$);
   return columnsAndGroups$;
 }

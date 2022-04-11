@@ -11,7 +11,7 @@
   padding: var(--cell-padding);
 
   border-style: solid;
-  border-color: grey;
+  border-color: #D9DDE3;
   border-width: 0 0 1px 0;
 
   font-size: var(--font-size);
@@ -32,6 +32,15 @@
 
 .uitkGridBaseCell-zebra {
   background-color: var(--zebra-color);
+}
+
+.uitkGridBaseCell-allEditable {
+  border-width: 0 0 1px 1px;
+}
+
+.uitkGridBaseCell-editable {
+  border-width: 0 1px 1px 2px;
+  border-color: #84878E;
 }
 
 .uitkGridBaseCell-valueContainer {

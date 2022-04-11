@@ -2,14 +2,16 @@ import { Story } from "@storybook/react";
 import { useState } from "react";
 import { Blotter, BlotterRecord, makeFakeBlotterRecord } from "./grid/blotter";
 import {
+  ColumnDefinition,
   ColumnGroupDefinition,
   createNumericColumn,
-  createRowSelectionCheckboxColumn,
+  // createRowSelectionCheckboxColumn,
   createTextColumn,
   DataGrid,
   DataSetColumnDefinition,
   Grid,
 } from "@brandname/lab";
+import column from "ag-grid-enterprise/dist/lib/excelExport/files/xml/column";
 
 export default {
   title: "Lab/Grid",
@@ -17,7 +19,7 @@ export default {
 };
 
 const blotter = new Blotter();
-for (let i = 0; i < 2000; ++i) {
+for (let i = 0; i < 10; ++i) {
   const record = makeFakeBlotterRecord();
   record.identifier = `${i}-${record.identifier}`;
   blotter.addRecord(record);
@@ -32,12 +34,12 @@ for (let i = 0; i < 2000; ++i) {
 }
 
 const columnGroups: ColumnGroupDefinition<BlotterRecord>[] = [
-  {
-    key: "checkboxGroup",
-    title: "Checkbox",
-    columns: [createRowSelectionCheckboxColumn()],
-    pinned: "left",
-  },
+  // {
+  //   key: "checkboxGroup",
+  //   title: "Checkbox",
+  //   columns: [createRowSelectionCheckboxColumn()],
+  //   pinned: "left",
+  // },
   {
     key: "group1",
     title: "Group One",
@@ -72,11 +74,42 @@ const columnGroups: ColumnGroupDefinition<BlotterRecord>[] = [
   },
 ];
 
-interface BlotterStoryProps {}
+const columnDefinitions: ColumnDefinition<BlotterRecord>[] = [
+  // createRowSelectionCheckboxColumn(),
+  createTextColumn("identifier", "Identifier", "identifier", 100),
+  createTextColumn("client", "Client", "client", 100),
+];
+
+const allEditableColumnGroups = columnGroups.map((columnGroup) => ({
+  ...columnGroup,
+  columns: columnGroup.columns.map((column) => ({
+    ...column,
+    isEditable: true,
+  })),
+}));
+
+const mixedEditableColumnGroups = columnGroups.map(
+  (columnGroup, groupIndex) => {
+    if (groupIndex === 1) {
+      return {
+        ...columnGroup,
+        columns: columnGroup.columns.map((column) => ({
+          ...column,
+          isEditable: true,
+        })),
+      };
+    }
+    return columnGroup;
+  }
+);
+
+interface BlotterStoryProps {
+  columnGroupDefinitions: ColumnGroupDefinition<BlotterRecord>[];
+}
 
 const getKey = (record: BlotterRecord) => record.key;
 
-const BlotterStoryTemplate: Story<BlotterStoryProps> = (props) => {
+const ReadonlyGridTemplate: Story = () => {
   const [data, setData] = useState<BlotterRecord[]>(
     () => blotter.visibleRecords
   );
@@ -86,7 +119,56 @@ const BlotterStoryTemplate: Story<BlotterStoryProps> = (props) => {
   );
 };
 
-export const BlotterExample = BlotterStoryTemplate.bind({});
+const AllEditableGridTemplate: Story = () => {
+  const [data, setData] = useState<BlotterRecord[]>(
+    () => blotter.visibleRecords
+  );
+
+  return (
+    <Grid
+      data={data}
+      columnGroupDefinitions={allEditableColumnGroups}
+      getKey={getKey}
+    />
+  );
+};
+
+const MixedEditableGridTemplate: Story = () => {
+  const [data, setData] = useState<BlotterRecord[]>(
+    () => blotter.visibleRecords
+  );
+
+  return (
+    <Grid
+      data={data}
+      columnGroupDefinitions={mixedEditableColumnGroups}
+      getKey={getKey}
+    />
+  );
+};
+
+const MultiRowSelectionGridTemplate: Story = () => {
+  const [data, setData] = useState<BlotterRecord[]>(
+    () => blotter.visibleRecords
+  );
+  return (
+    <Grid
+      data={data}
+      columnDefinitions={columnDefinitions}
+      rowSelectionMode={"single"}
+      showCheckboxes={true}
+      getKey={getKey}
+    />
+  );
+};
+
+export const ReadonlyGridExample = ReadonlyGridTemplate.bind({});
+
+export const AllEditableGridExample = AllEditableGridTemplate.bind({});
+
+export const MixedEditableGridExample = MixedEditableGridTemplate.bind({});
+
+export const MultiRowSelectionGrid = MultiRowSelectionGridTemplate.bind({});
 
 const dataSetColumnDefinitions: DataSetColumnDefinition[] = [
   {

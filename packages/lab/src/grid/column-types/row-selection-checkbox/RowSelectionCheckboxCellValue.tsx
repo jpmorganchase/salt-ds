@@ -1,10 +1,11 @@
 import { memo, MouseEventHandler, useCallback } from "react";
-import { CellValueProps, useObservable } from "../../model";
+import { CellValueProps } from "../../model";
 import "./RowSelectionCheckboxColumn.css";
 import { CheckboxCheckedIcon, CheckboxIcon } from "../../../checkbox";
 import { getRowKey } from "../../features/getAttribute";
 import { useGridContext } from "../../GridContext";
 import { makePrefixer } from "@brandname/core";
+import classnames from "classnames";
 
 const withBaseName = makePrefixer("uitkGridRowSelectionCheckboxCellValue");
 

@@ -13,7 +13,8 @@ export function createTextColumn<T>(
   title: string,
   field: KeyOfType<T, string>,
   width?: number,
-  pinned?: ColumnPinType
+  pinned?: ColumnPinType,
+  isEditable?: boolean
 ): ColumnDefinition<T, string> {
   return {
     key,
@@ -21,6 +22,7 @@ export function createTextColumn<T>(
     field,
     width,
     pinned,
+    isEditable,
     cellValueComponent: TextCellValue as ComponentType<
       CellValueProps<T, string>
     >,

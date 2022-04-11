@@ -1,9 +1,10 @@
 import "./HeaderCell.css";
 import { Column, ColumnSeparatorType } from "../model";
-import { ReactNode } from "react";
+import { Children, ReactNode, useEffect, useRef } from "react";
 import { useColumnResize } from "../features/useColumnResize";
 import { useColumnMove } from "../features/useColumnMove";
 import { makePrefixer } from "@brandname/core";
+import { useGridContext } from "../GridContext";
 
 const withBaseName = makePrefixer("uitkGridHeaderCell");
 
@@ -47,6 +48,50 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
         className={withBaseName("moveHandle")}
         onMouseDown={onMoveHandleMouseDown}
       />
+    </th>
+  );
+}
+
+// Auto-sizing header cell
+// Cannot be resized manually or moved
+// Currently used for row selector column only
+export function AutoSizingHeaderCell<T>(props: HeaderCellProps<T>) {
+  const { column, children } = props;
+  const valueContainerRef = useRef<HTMLDivElement>(null);
+
+  const { model } = useGridContext();
+  const separator = column.useSeparator();
+  const rowHeight = model.useRowHeight();
+
+  const width = valueContainerRef.current
+    ? valueContainerRef.current.offsetWidth
+    : undefined;
+
+  useEffect(() => {
+    if (width != undefined) {
+      console.log(`AutoSizingHeaderCell measured width: ${width}`);
+      model.resizeColumn({
+        columnIndex: column.index,
+        width,
+      });
+    }
+  }, [width, rowHeight]);
+
+  return (
+    <th
+      data-column-index={column.index}
+      className={withBaseName()}
+      role="columnheader"
+    >
+      <div className={withBaseName("autosizeContainer")}>
+        <div
+          ref={valueContainerRef}
+          className={withBaseName("measuredContent")}
+        >
+          {children}
+        </div>
+      </div>
+      <HeaderCellSeparator separatorType={separator} />
     </th>
   );
 }

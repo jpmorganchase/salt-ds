@@ -1,3 +1,31 @@
+.uitk-light .uitkGridRowSelectionCheckboxCellValue {
+  --checkbox-outline-color: var(--uitk-color-grey-90);
+  --checkbox-solid-color: var(--uitk-color-blue-500);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
+  --checkbox-tick-color: var(--uitk-color-white);
+}
+
+.uitk-dark .uitkGridRowSelectionCheckboxCellValue {
+  --checkbox-outline-color: var(--uitk-color-grey-100);
+  --checkbox-solid-color: var(--uitk-color-blue-400);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
+  --checkbox-tick-color: var(--uitk-color-grey-800);
+}
+
+.uitk-light .uitkGridRowSelectionCheckboxHeaderValue {
+  --checkbox-outline-color: var(--uitk-color-grey-90);
+  --checkbox-solid-color: var(--uitk-color-blue-500);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
+  --checkbox-tick-color: var(--uitk-color-white);
+}
+
+.uitk-dark .uitkGridRowSelectionCheckboxHeaderValue {
+  --checkbox-outline-color: var(--uitk-color-grey-100);
+  --checkbox-solid-color: var(--uitk-color-blue-400);
+  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
+  --checkbox-tick-color: var(--uitk-color-grey-800);
+}
+
 .uitkGridRowSelectionCheckboxCellValue {
   --checkbox-size: 12px;
 }
@@ -13,13 +41,18 @@
 .uitkGridRowSelectionCheckboxCellValue-checkedIcon {
   height: var(--checkbox-size);
   width: var(--checkbox-size);
-  stroke: var(--uitk-color-grey-90);
+  stroke: var(--checkbox-outline-color);
+  fill: var(--checkbox-solid-color);
+}
+
+.uitkGridRowSelectionCheckboxCellValue-checkedIcon-tick {
+  fill: var(--checkbox-tick-color);
 }
 
 .uitkGridRowSelectionCheckboxCellValue-uncheckedIcon {
   height: var(--checkbox-size);
   width: var(--checkbox-size);
-  stroke: var(--uitk-color-grey-90);
+  stroke: var(--checkbox-outline-color);
 }
 
 .uitkGridRowSelectionCheckboxHeaderValue {
@@ -28,16 +61,23 @@
 
 .uitkGridRowSelectionCheckboxHeaderValue {
   height: var(--row-height);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
 }
 
 .uitkGridRowSelectionCheckboxHeaderValue-checkedIcon {
   height: var(--checkbox-size);
   width: var(--checkbox-size);
-  stroke: var(--uitk-color-grey-90);
+  overflow: visible;
+  stroke: var(--checkbox-outline-color);
+  fill: var(--checkbox-solid-color);
+}
+
+.uitkGridRowSelectionCheckboxHeaderValue-checkedIcon-tick {
+  fill: var(--checkbox-tick-color);
 }
 
 .uitkGridRowSelectionCheckboxHeaderValue-uncheckedIcon {

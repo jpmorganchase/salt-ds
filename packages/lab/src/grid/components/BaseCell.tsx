@@ -4,6 +4,7 @@ import cn from "classnames";
 import "./BaseCell.css";
 import { Cursor } from "./Cursor";
 import { makePrefixer } from "@brandname/core";
+import { useGridContext } from "../GridContext";
 
 const withBaseName = makePrefixer("uitkGridBaseCell");
 
@@ -23,32 +24,33 @@ export function getCellId(row: Row, column: Column) {
   return `R${row.key}C${column.key}`;
 }
 
-// TODO this is a temporary thing for debugging
-function shouldNotUpdate<T>(
-  prev: BaseCellProps<T>,
-  next: BaseCellProps<T>
-): boolean {
-  const props: (keyof BaseCellProps<T>)[] = [
-    "row",
-    "column",
-    "isHoverOverRow",
-    "isSelectedRow",
-    "isFocused",
-    "isAlternate",
-    "className",
-    "style",
-  ];
-  const idx = props.findIndex((p) => prev[p] !== next[p]);
-  if (idx !== -1) {
-    // console.log(`Prop ${props[idx]} changed`);
-    return false;
-  }
-  return true;
-}
+// // TODO this is a temporary thing for debugging
+// function shouldNotUpdate<T>(
+//   prev: BaseCellProps<T>,
+//   next: BaseCellProps<T>
+// ): boolean {
+//   const props: (keyof BaseCellProps<T>)[] = [
+//     "row",
+//     "column",
+//     "isHoverOverRow",
+//     "isSelectedRow",
+//     "isFocused",
+//     "isAlternate",
+//     "className",
+//     "style",
+//   ];
+//   const idx = props.findIndex((p) => prev[p] !== next[p]);
+//   if (idx !== -1) {
+//     // console.log(`Prop ${props[idx]} changed`);
+//     return false;
+//   }
+//   return true;
+// }
 
 // The standard wrapper for cell values.
 // Takes care of the basic features such as zebra, hover over and selected row highlighting.
-export const BaseCell: FC<BaseCellProps> = memo(function BaseCell(props) {
+// export const BaseCell: FC<BaseCellProps> = memo(function BaseCell(props) {
+export const BaseCell: FC<BaseCellProps> = function BaseCell(props) {
   const {
     row,
     column,
@@ -63,6 +65,9 @@ export const BaseCell: FC<BaseCellProps> = memo(function BaseCell(props) {
   } = props;
 
   const index = row.useIndex();
+  const isEditable = column.useIsEditable();
+  const { model } = useGridContext();
+  const isAllEditable = model.useIsAllEditable();
 
   return (
     <td
@@ -78,6 +83,8 @@ export const BaseCell: FC<BaseCellProps> = memo(function BaseCell(props) {
           [withBaseName("hover")]: isHoverOverRow,
           [withBaseName("selected")]: isSelectedRow,
           [withBaseName("zebra")]: isAlternate,
+          [withBaseName("editable")]: !isAllEditable && isEditable,
+          [withBaseName("allEditable")]: isAllEditable && column.index !== 0,
         },
         className
       )}
@@ -87,4 +94,5 @@ export const BaseCell: FC<BaseCellProps> = memo(function BaseCell(props) {
       <div className={withBaseName("valueContainer")}>{children}</div>
     </td>
   );
-}, shouldNotUpdate);
+};
+//}, shouldNotUpdate);

@@ -11,6 +11,7 @@ import { Column } from "./Column";
 import { ColumnGroup } from "./ColumnGroup";
 import { Row } from "./Row";
 import {
+  addAutoColumnsAndGroups,
   createBodyVisibleAreaLeft,
   createBodyVisibleAreaTop,
   createBodyVisibleColumnRange,
@@ -19,7 +20,6 @@ import {
   createBottomHeight,
   createClientMiddleHeight,
   createClientMiddleWidth,
-  createColumnGroups,
   createColumns,
   createColumnsAndColumnGroups,
   createColumnsWidth,
@@ -29,6 +29,7 @@ import {
   createHeaderVisibleColumnRange,
   createHeaderVisibleColumns,
   createHeaderVisibleColumnWidth,
+  createIsAllEditable,
   createIsLeftRaised,
   createIsRightRaised,
   createMiddleHeight,
@@ -117,6 +118,9 @@ export interface GridSize {
   height: number;
 }
 
+export type RowSelectionMode = "single" | "multi" | "none";
+export type CellSelectionMode = "single" | "multi" | "none";
+
 // 1. Any component rendered within a Grid should be able to access any part of
 //    the grid model. For example a checkbox column header cell needs to be able
 //    to select/unselect all rows in the grid. Passing everything as props to
@@ -140,6 +144,7 @@ export interface IGridModel<T> {
   // Props
   readonly setShowFooter: (showFooter?: boolean) => void;
   readonly setShowTree: (showTree?: boolean) => void;
+  // TODO checkboxes can be radio buttons in single-row mode. Rename this.
   readonly setShowCheckboxes: (showCheckboxes?: boolean) => void;
   readonly setColumnDefinitions: (
     columnDefinitions?: ColumnDefinition<T>[]
@@ -162,6 +167,7 @@ export interface IGridModel<T> {
   readonly useIsLeftRaised: () => boolean | undefined;
   readonly useIsRightRaised: () => boolean | undefined;
   // Layout (heights, widths and scrolls)
+  readonly useRowHeight: () => number;
   readonly useLeftWidth: () => number;
   readonly useRightWidth: () => number;
   readonly useTopHeight: () => number;
@@ -183,6 +189,7 @@ export interface IGridModel<T> {
   readonly useLeftColumnGroups: () => ColumnGroup<T>[] | undefined;
   readonly useRightColumnGroups: () => ColumnGroup<T>[] | undefined;
   readonly useVisibleColumnGroups: () => ColumnGroup<T>[] | undefined;
+  readonly useIsAllEditable: () => boolean;
 }
 
 export class GridModel<T = any> implements IGridModel<T> {
@@ -201,6 +208,10 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly setColumnGroupDefinitions: (
     groupDefinitions?: ColumnGroupDefinition<T>[]
   ) => void;
+  public readonly setRowSelectionMode: (m: RowSelectionMode) => void;
+  public readonly setCellSelectionMode: (m: CellSelectionMode) => void;
+  public readonly useRowSelectionMode: () => RowSelectionMode;
+  public readonly useCellSelectionMode: () => CellSelectionMode;
   // Events
   public readonly resize: (size: GridSize) => void;
   public readonly scroll: (event: GridScrollEvent) => void;
@@ -215,6 +226,7 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly useIsLeftRaised: () => boolean | undefined;
   public readonly useIsRightRaised: () => boolean | undefined;
   // Layout (heights, widths and scrolls)
+  public readonly useRowHeight: () => number;
   public readonly useLeftWidth: () => number;
   public readonly useRightWidth: () => number;
   public readonly useTopHeight: () => number;
@@ -236,6 +248,7 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly useLeftColumnGroups: () => ColumnGroup<T>[] | undefined;
   public readonly useRightColumnGroups: () => ColumnGroup<T>[] | undefined;
   public readonly useVisibleColumnGroups: () => ColumnGroup<T>[] | undefined;
+  public readonly useIsAllEditable: () => boolean;
 
   public constructor(getKey: (x: T) => string) {
     const clientSize$ = new BehaviorSubject<GridSize>({
@@ -255,12 +268,18 @@ export class GridModel<T = any> implements IGridModel<T> {
       ColumnDefinition<T>[] | undefined
     >([]);
     const data$ = new BehaviorSubject<T[]>([]);
+
+    // TODO consider extracting these into a selection model class
+    const rowSelectionMode$ = new BehaviorSubject<RowSelectionMode>("single");
+    const cellSelectionMode$ = new BehaviorSubject<CellSelectionMode>("none");
+    const showCheckboxes$ = new BehaviorSubject<boolean | undefined>(undefined);
+
     const columnGroupDefinitions$ = new BehaviorSubject<
       ColumnGroupDefinition<T>[] | undefined
     >(undefined);
     const showFooter$ = new BehaviorSubject<boolean | undefined>(undefined);
     const showTree$ = new BehaviorSubject<boolean | undefined>(undefined);
-    const showCheckboxes$ = new BehaviorSubject<boolean | undefined>(undefined);
+
     const showToolbar$ = new BehaviorSubject<boolean | undefined>(undefined);
     const hoverOverRowIndex$ = new BehaviorSubject<number | undefined>(
       undefined
@@ -291,6 +310,7 @@ export class GridModel<T = any> implements IGridModel<T> {
       ColumnGroup<T>[] | undefined
     >(undefined);
 
+    // TODO replace columnGroupDefinitions by columnGroups. There may be auto-groups
     const headerRowCount$ = createHeaderRowCount(
       columnGroupDefinitions$,
       showToolbar$
@@ -316,9 +336,15 @@ export class GridModel<T = any> implements IGridModel<T> {
       leftWidth$,
       rightWidth$
     );
-    const columnsAndGroups$ = createColumnsAndColumnGroups(
+    // Columns and groups specified by the user explicitly.
+    const userColumnsAndGroups$ = createColumnsAndColumnGroups(
       columnDefinitions$,
       columnGroupDefinitions$
+    );
+    // User columns and groups + automatic columns (row selection column with checkboxes etc)
+    const columnsAndGroups$ = addAutoColumnsAndGroups(
+      userColumnsAndGroups$,
+      showCheckboxes$
     );
     const columns$ = createColumns(columnsAndGroups$);
 
@@ -401,7 +427,10 @@ export class GridModel<T = any> implements IGridModel<T> {
       middleWidth$
     );
 
+    const isAllEditable$ = createIsAllEditable(columns$);
+
     // Interface implementation
+    this.useRowHeight = createHook(rowHeight$);
     this.resize = createHandler(resizeEvents$);
     this.scroll = createHandler(scrollEvents$);
     this.useScrollPosition = createHook(scrollPosition$);
@@ -446,6 +475,11 @@ export class GridModel<T = any> implements IGridModel<T> {
     this.useRows = createHook(rows$);
     this.useIsLeftRaised = createHook(isLeftRaised$);
     this.useIsRightRaised = createHook(isRightRaised$);
+    this.useIsAllEditable = createHook(isAllEditable$);
+    this.setRowSelectionMode = createHandler(rowSelectionMode$);
+    this.setCellSelectionMode = createHandler(cellSelectionMode$);
+    this.useRowSelectionMode = createHook(rowSelectionMode$);
+    this.useCellSelectionMode = createHook(cellSelectionMode$);
 
     scrollPosition$
       .pipe(
@@ -542,5 +576,25 @@ export class GridModel<T = any> implements IGridModel<T> {
         distinctUntilChanged()
       )
       .subscribe(clientHeight$);
+
+    // columnsAndGroups$.subscribe((x) => {
+    //   console.log(`columnsAndGroups$: changed`);
+    // });
+    //
+    // headerVisibleColumnRange$.subscribe((r) => {
+    //   console.log(`headerVisibleColumnRange$: ${r}`);
+    // });
+    //
+    // topHeight$.subscribe((h) => {
+    //   console.log(`topHeight$: ${h}`);
+    // });
+    //
+    // middleHeight$.subscribe((h) => {
+    //   console.log(`middleHeight$: ${h}`);
+    // });
+    //
+    // bottomHeight$.subscribe((h) => {
+    //   console.log(`bottomHeight$: ${h}`);
+    // });
   }
 }

@@ -16,6 +16,7 @@ export * from "./createHeaderVisibleAreaLeft";
 export * from "./createHeaderVisibleColumnRange";
 export * from "./createHeaderVisibleColumnWidth";
 export * from "./createHeaderVisibleColumns";
+export * from "./createIsAllEditable";
 export * from "./createIsLeftRaised";
 export * from "./createIsRightRaised";
 export * from "./createMiddleHeight";

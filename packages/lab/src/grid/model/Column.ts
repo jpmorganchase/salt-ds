@@ -9,11 +9,17 @@ export type ColumnSeparatorType = "regular" | "none" | "groupEdge";
 export class Column<T = any, U = any> {
   public readonly key: string;
   public index: number = 0;
+  public isResizable: boolean = false;
   public readonly definition: ColumnDefinition<T, U>;
   public readonly width$: BehaviorSubject<number>;
+  public readonly isEditable$: BehaviorSubject<boolean>;
 
   public useWidth() {
     return useObservable(this.width$);
+  }
+
+  public useIsEditable() {
+    return useObservable(this.isEditable$);
   }
 
   public readonly pinned$: BehaviorSubject<ColumnPinType | null>;
@@ -40,5 +46,6 @@ export class Column<T = any, U = any> {
     this.pinned$ = new BehaviorSubject<ColumnPinType>(null);
     this.separator$ = new BehaviorSubject<ColumnSeparatorType>("regular");
     this.title$ = new BehaviorSubject<string>(definition.title || "");
+    this.isEditable$ = new BehaviorSubject(!!definition.isEditable);
   }
 }

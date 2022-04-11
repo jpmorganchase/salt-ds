@@ -25,6 +25,7 @@ export interface ColumnDefinition<T = any, U = any> {
   cellValueGetter?: CellValueGetter<T, U>;
   title?: string;
   pinned?: ColumnPinType;
+  isEditable?: boolean;
   width?: number;
   cellComponent?: ComponentType<CellProps<T, U>>;
   cellValueComponent?: ComponentType<CellValueProps<T, U>>;

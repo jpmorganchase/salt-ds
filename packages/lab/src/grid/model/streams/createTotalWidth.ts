@@ -1,5 +1,4 @@
-import { BehaviorSubject, combineLatest, map, tap } from "rxjs";
-import { sum } from "../GridModel";
+import { BehaviorSubject, combineLatest, map } from "rxjs";
 import { scrollBarSize } from "../utils";
 
 // Total width of the table. This is how wide the grid would be without scrolling.

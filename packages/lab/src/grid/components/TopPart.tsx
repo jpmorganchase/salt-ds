@@ -39,7 +39,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
 
   const spaceStyle = useMemo(() => {
     return {
-      height: `${topHeight}px`,
+      height: `${topHeight + 1}px`, // TODO +1px is a hack to fix the border. Find something better.
       width: `${totalWidth}px`,
     };
   }, [topHeight, totalWidth]);

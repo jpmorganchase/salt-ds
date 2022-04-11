@@ -1,4 +1,10 @@
-import { ColumnDefinition, ColumnGroupDefinition, GridModel } from "./model";
+import {
+  CellSelectionMode,
+  ColumnDefinition,
+  ColumnGroupDefinition,
+  GridModel,
+  RowSelectionMode,
+} from "./model";
 import { useState } from "react";
 import { GridContext } from "./GridContext";
 import { GridBase } from "./components";
@@ -10,6 +16,8 @@ export interface GridProps<T> {
   showFooter?: boolean;
   showTree?: boolean;
   showCheckboxes?: boolean;
+  rowSelectionMode?: RowSelectionMode;
+  cellSelectionMode?: CellSelectionMode;
   data: T[];
 }
 
@@ -19,6 +27,7 @@ export function Grid<T>(props: GridProps<T>) {
   }));
 
   const { model } = context;
+  const { rowSelectionMode = "single", cellSelectionMode = "none" } = props;
 
   model.setColumnDefinitions(props.columnDefinitions);
   model.setColumnGroupDefinitions(props.columnGroupDefinitions);
@@ -26,6 +35,8 @@ export function Grid<T>(props: GridProps<T>) {
   model.setShowTree(props.showTree);
   model.setShowCheckboxes(props.showCheckboxes);
   model.setData(props.data);
+  model.setRowSelectionMode(rowSelectionMode);
+  model.setCellSelectionMode(cellSelectionMode);
 
   return (
     <GridContext.Provider value={context}>
