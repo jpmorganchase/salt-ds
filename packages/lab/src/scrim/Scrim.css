@@ -10,7 +10,7 @@
   bottom: 0;
   height: 100%;
   display: flex;
-  z-index: var(--uitk-zindex-default) 199;
+  z-index: 1199;
   position: fixed;
   align-items: center;
   justify-content: center;

@@ -115,7 +115,7 @@
   --tab-cursor: grabbing;
   background-color: var(--tab-drag-background);
   box-shadow: var(--uitk-draggable-box-shadow);
-  z-index: var(--uitk-zindex-default) 00;
+  z-index: 100;
   display: var(--tabstrip-tag-dragging-display);
 }
 
