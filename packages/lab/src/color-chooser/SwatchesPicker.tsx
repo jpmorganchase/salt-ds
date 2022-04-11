@@ -1,6 +1,7 @@
 import { Color } from "./Color";
 import { Swatch } from "./Swatch";
 import { convertColorMapValueToHex } from "./ColorHelpers";
+import { isTransparent } from "./color-utils";
 
 import "./Swatch.css";
 
@@ -51,10 +52,6 @@ const SwatchesGroup = ({
         selectedColor?.substring(0, 7).toString().toLowerCase() ||
       isBlackOrWhite(color)
     );
-  };
-
-  const isTransparent = (color: string): boolean => {
-    return color.toLowerCase() === "#00000000";
   };
 
   return (

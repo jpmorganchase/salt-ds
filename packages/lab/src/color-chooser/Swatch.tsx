@@ -2,6 +2,7 @@ import { useState } from "react";
 import cn from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { Color } from "./Color";
+import { isTransparent } from "./color-utils";
 
 const withBaseName = makePrefixer("uitkColorChooserSwatch");
 
@@ -45,8 +46,7 @@ export const Swatch = ({
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
     const newColor = Color.makeColorFromHex(color);
-    // Handle transparency
-    color === "#00000000" ? newColor?.setAlpha(0) : newColor?.setAlpha(alpha);
+    isTransparent(color) ? newColor?.setAlpha(0) : newColor?.setAlpha(alpha);
 
     onClick(newColor, true);
     onDialogClosed();

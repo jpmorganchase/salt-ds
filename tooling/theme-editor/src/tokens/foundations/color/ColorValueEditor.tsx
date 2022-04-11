@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer, ToolkitProvider } from "@brandname/core";
 import {
   capitalize,
   Color,
@@ -223,16 +223,18 @@ export const ColorValueEditor = (
                   formFieldLabel.includes("Background"),
               })}
             >
-              <ColorChooser
-                color={selectedColor}
-                displayHexOnly={!props.characteristicsView}
-                hideLabel={props.isStateValue}
-                showSwatches={props.characteristicsView ? true : false}
-                showColorPicker={props.characteristicsView ? false : true}
-                onSelect={onSelect}
-                onClear={onClear}
-                UITKColorOverrides={props.uitkColorOverrides}
-              />
+              <ToolkitProvider density="high">
+                <ColorChooser
+                  color={selectedColor}
+                  displayHexOnly={!props.characteristicsView}
+                  hideLabel={props.isStateValue}
+                  showSwatches={props.characteristicsView ? true : false}
+                  showColorPicker={props.characteristicsView ? false : true}
+                  onSelect={onSelect}
+                  onClear={onClear}
+                  UITKColorOverrides={props.uitkColorOverrides}
+                />
+              </ToolkitProvider>
             </div>
           </div>
           {props.characteristicsView && !props.isStateValue && (

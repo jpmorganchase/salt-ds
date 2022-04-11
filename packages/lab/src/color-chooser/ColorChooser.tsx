@@ -1,14 +1,10 @@
 import { useState, useCallback } from "react";
 import cn from "classnames";
 import { Overlay } from "../overlay";
-import {
-  Button,
-  ButtonProps,
-  ToolkitProvider,
-  makePrefixer,
-} from "@brandname/core";
+import { Button, ButtonProps, makePrefixer } from "@brandname/core";
 import { RefreshIcon } from "@brandname/icons";
 import { Color } from "./Color";
+import { isTransparent } from "./color-utils";
 
 import {
   hexValueWithoutAlpha,
@@ -51,7 +47,6 @@ function getActiveTab(
 export interface ColorChooserProps {
   color: Color | undefined;
   defaultAlpha?: number;
-  density?: "touch" | "low" | "medium" | "high";
   disableAlphaChooser?: boolean;
   displayHexOnly?: boolean;
   hideLabel?: boolean;
@@ -73,7 +68,6 @@ export const ColorChooser = ({
   onClear,
   onSelect,
   color,
-  density,
   showSwatches = true,
   showColorPicker = true,
   defaultAlpha = 1,
@@ -109,8 +103,9 @@ export const ColorChooser = ({
   };
   const handleClose = (): void => setOpen(false);
 
-  const alphaForTabs =
-    color?.hex !== "#00000000" ? color?.rgba?.a ?? defaultAlpha : defaultAlpha;
+  const alphaForTabs = isTransparent(color?.hex)
+    ? defaultAlpha
+    : color?.rgba?.a ?? defaultAlpha;
 
   const tabsMapping = createTabsMapping({
     swatches: showSwatches,
@@ -143,7 +138,7 @@ export const ColorChooser = ({
   };
 
   return (
-    <ToolkitProvider density={density ?? "high"}>
+    <>
       <Button
         className={cn(withBaseName("overlayButton"), {
           [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
@@ -159,8 +154,9 @@ export const ColorChooser = ({
             className={cn(withBaseName("overlayButtonSwatch"), {
               [withBaseName("overlayButtonSwatchWithBorder")]:
                 color?.hex.startsWith("#ffffff"),
-              [withBaseName("overlayButtonSwatchTransparent")]:
-                color?.hex === "#00000000",
+              [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
+                color?.hex
+              ),
             })}
             style={{
               backgroundColor: color?.hex,
@@ -204,6 +200,6 @@ export const ColorChooser = ({
           />
         </div>
       </Overlay>
-    </ToolkitProvider>
+    </>
   );
 };

@@ -1,5 +1,6 @@
 import { uitkColorMap } from "./colorMap";
 import { Color } from "./Color";
+import { isTransparent } from "./color-utils";
 
 export function getColorNameByHexValue(
   hexValue: string | undefined,
@@ -10,7 +11,7 @@ export function getColorNameByHexValue(
   const uitkColors = UITKColorOverrides ?? uitkColorMap;
 
   // Special case
-  if (hexValue === "#00000000") return "Transparent";
+  if (isTransparent(hexValue)) return "Transparent";
 
   let colorName = Object.keys(uitkColors).find((key: string) => {
     if (uitkColors[key]) {

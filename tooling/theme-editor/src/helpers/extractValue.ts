@@ -8,7 +8,7 @@ import {
 } from "../tokens/foundations/color/ColorValueEditor";
 import { JSONByScope, JSONObj } from "./parseToJson";
 
-function deepMerge(merged, toMerge) {
+function deepMerge(merged: any, toMerge: any) {
   if (typeof toMerge === "object") {
     Object.keys(toMerge).forEach((key) => {
       if (merged[key]) {
@@ -28,7 +28,7 @@ function deepMerge(merged, toMerge) {
 }
 
 function merge(jsonArray: JSONObj[]): JSONObj {
-  let merged = {};
+  let merged: JSONObj = {};
 
   jsonArray.forEach((json) => {
     Object.keys(json).forEach((key) => {
