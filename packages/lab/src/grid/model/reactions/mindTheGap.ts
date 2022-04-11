@@ -10,6 +10,11 @@ import {
 import { Column } from "../Column";
 import { ColumnResizeEvent, ColumnsAndGroups } from "../GridModel";
 
+interface ColumnToResize {
+  column: Column;
+  canShrink: boolean;
+}
+
 // When a column resizes, a gap may appear between the middle columns and the right (pinned) columns
 // This gap has to be filled by expanding either
 // 1) the last scrollable column or
@@ -25,16 +30,15 @@ export function mindTheGap(
   const gap$ = new BehaviorSubject<number>(0);
   combineLatest([clientMiddleWidth$, middleWidth$])
     .pipe(
-      map(([clientMiddleWidth, middleWidth]) =>
-        Math.max(0, clientMiddleWidth - middleWidth)
+      map(
+        ([clientMiddleWidth, middleWidth]) => clientMiddleWidth - middleWidth
       ),
       distinctUntilChanged()
       // tap((gap) => console.log(`gap$: ${gap}`))
     )
     .subscribe(gap$);
 
-  // The column to be expanded to fill the gap
-  const columnToFillTheGap$ = new BehaviorSubject<Column | undefined>(
+  const columnToResize$ = new BehaviorSubject<ColumnToResize | undefined>(
     undefined
   );
 
@@ -45,10 +49,14 @@ export function mindTheGap(
         return middleColumns[middleColumns.length - 1] || rightColumns[0];
       }),
       filter((c) => c != null),
-      take(1)
+      take(1),
+      map((column) => ({
+        column,
+        canShrink: false,
+      }))
     )
     .subscribe((c) => {
-      columnToFillTheGap$.next(c);
+      columnToResize$.next(c);
     });
 
   // When the user resizes a pinned right column then the last scrollable column
@@ -61,22 +69,34 @@ export function mindTheGap(
           columnsAndGroups$.getValue();
         const isRightColumn =
           columnIndex >= leftColumns.length + middleColumns.length;
-        return isRightColumn
-          ? middleColumns[middleColumns.length - 1]
-          : rightColumns[0];
+        // If there is nothing pinned to the right then the last middle column
+        // is a dummy column that can expand and shrink to fill the space
+        const isNoRightColumns = rightColumns.length === 0;
+        if (isNoRightColumns) {
+          return {
+            column: middleColumns[middleColumns.length - 1],
+            canShrink: true,
+          };
+        }
+        return {
+          column: isRightColumn
+            ? middleColumns[middleColumns.length - 1]
+            : rightColumns[0],
+          canShrink: false,
+        };
       })
     )
     .subscribe((column) => {
-      columnToFillTheGap$.next(column);
+      columnToResize$.next(column);
     });
 
-  combineLatest([gap$, columnToFillTheGap$]).subscribe(
-    ([gap, columnToFillTheGap]) => {
-      if (gap > 0 && columnToFillTheGap != null) {
-        columnToFillTheGap.width$.next(
-          columnToFillTheGap.width$.getValue() + gap
-        );
-      }
+  combineLatest([gap$, columnToResize$]).subscribe(([gap, columnToResize]) => {
+    if (columnToResize == null) {
+      return;
     }
-  );
+    const { column, canShrink } = columnToResize;
+    if (gap > 0 || canShrink) {
+      column.width$.next(Math.max(0, column.width$.getValue() + gap));
+    }
+  });
 }

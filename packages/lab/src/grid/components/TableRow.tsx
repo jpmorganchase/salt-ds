@@ -58,15 +58,12 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
           return <Editor />;
         }
 
-        const Cell = definition.cellComponent;
-        if (Cell) {
-          return <Cell />;
-        }
-
+        const Cell = definition.cellComponent || BaseCell;
         const CellValue = definition.cellValueComponent;
-        if (CellValue) {
+
+        if (Cell) {
           return (
-            <BaseCell
+            <Cell
               key={column.key}
               row={row}
               column={column}
@@ -75,12 +72,31 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
               isFocused={isFocused}
               isAlternate={isZebra}
             >
-              <CellValue column={column} row={row} value={value} />
-            </BaseCell>
+              {CellValue ? (
+                <CellValue column={column} row={row} value={value} />
+              ) : null}
+            </Cell>
           );
         }
 
-        return <td>ERROR</td>;
+        // const CellValue = definition.cellValueComponent;
+        // if (CellValue) {
+        //   return (
+        //     <BaseCell
+        //       key={column.key}
+        //       row={row}
+        //       column={column}
+        //       isHoverOverRow={isHoverOver}
+        //       isSelectedRow={isSelected}
+        //       isFocused={isFocused}
+        //       isAlternate={isZebra}
+        //     >
+        //       <CellValue column={column} row={row} value={value} />
+        //     </BaseCell>
+        //   );
+        // }
+        //
+        // return <td>ERROR</td>;
       })}
     </tr>
   );

@@ -56,20 +56,6 @@ export function createColumnsAndColumnGroups<T>(
           }
         });
 
-        // [...leftColumns, ...middleColumns, ...rightColumns].forEach(
-        //   (column, columnIndex) => {
-        //     column.index = columnIndex;
-        //   }
-        // );
-        // const allGroups = [...leftGroups, ...middleGroups, ...rightGroups];
-        // allGroups.forEach((group, groupIndex) => {
-        //   group.index = groupIndex;
-        // });
-        // if (allGroups.length > 0) {
-        //   allGroups[0].rowSeparator.next("first");
-        //   allGroups[allGroups.length - 1].rowSeparator.next("last");
-        // }
-
         columnsAndGroups$.next({
           leftColumns,
           middleColumns,
@@ -97,11 +83,6 @@ export function createColumnsAndColumnGroups<T>(
             middleColumns.push(column);
           }
         });
-        // [...leftColumns, ...middleColumns, ...rightColumns].forEach(
-        //   (column, columnIndex) => {
-        //     column.index = columnIndex;
-        //   }
-        // );
 
         columnsAndGroups$.next({
           leftColumns,
@@ -125,13 +106,13 @@ export function addAutoColumnsAndGroups<T>(
   combineLatest([userColumnsAndGroups$, showCheckboxes$])
     .pipe(
       map(([userColumnsAndGroups, showCheckboxes]) => {
-        const {
+        const { rightColumns, rightColumnGroups } = userColumnsAndGroups;
+        let {
+          leftColumns,
+          leftColumnGroups,
           middleColumns,
-          rightColumns,
           middleColumnGroups,
-          rightColumnGroups,
         } = userColumnsAndGroups;
-        let { leftColumns, leftColumnGroups } = userColumnsAndGroups;
         // Add checkbox column and group if showCheckboxes is set to true
         if (showCheckboxes) {
           const checkboxColumnDefinition: ColumnDefinition<T> = {
@@ -158,6 +139,29 @@ export function addAutoColumnsAndGroups<T>(
             leftColumnGroups = [checkboxColumnGroup, ...leftColumnGroups];
           }
           leftColumns = [checkboxColumn, ...leftColumns];
+        }
+        // Add an empty column to fill the space
+        // If nothing is pinned to the right
+        if (rightColumns.length === 0) {
+          const emptyColumnDefinition: ColumnDefinition<T> = {
+            key: "emptyColumn",
+            title: "",
+            width: 100,
+          };
+          const emptyColumn = new Column(emptyColumnDefinition);
+          if (
+            leftColumnGroups != undefined &&
+            middleColumnGroups != undefined &&
+            rightColumnGroups != undefined
+          ) {
+            const emptyColumnGroup = new ColumnGroup({
+              key: "emptyColumnGroup",
+              title: "",
+              columns: [emptyColumnDefinition],
+            });
+            middleColumnGroups = [...middleColumnGroups, emptyColumnGroup];
+          }
+          middleColumns = [...middleColumns, emptyColumn];
         }
         // Set column/group indices (this should be moved to another function probably)
         if (

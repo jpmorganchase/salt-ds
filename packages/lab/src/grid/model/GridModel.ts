@@ -504,13 +504,13 @@ export class GridModel<T = any> implements IGridModel<T> {
       rightColumnGroups$.next(x.rightColumnGroups);
     });
 
-    columnsAndGroups$.subscribe((x) =>
-      console.log(
-        `columns: ${x.leftColumns.map((c) => c.key)} | ${x.middleColumns.map(
-          (c) => c.key
-        )} | ${x.rightColumns.map((c) => c.key)}`
-      )
-    );
+    // columnsAndGroups$.subscribe((x) =>
+    //   console.log(
+    //     `columns: ${x.leftColumns.map((c) => c.key)} | ${x.middleColumns.map(
+    //       (c) => c.key
+    //     )} | ${x.rightColumns.map((c) => c.key)}`
+    //   )
+    // );
 
     columnResizeEvents$.pipe(throttleTime(50)).subscribe((columnResize) => {
       const { columnIndex, width } = columnResize;
