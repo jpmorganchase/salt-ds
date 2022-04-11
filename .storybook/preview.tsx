@@ -9,6 +9,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { withToolkitProvider } from "docs/decorators/withToolkitProvider";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
+import { withStrictMode } from "docs/decorators/withStrictMode";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -44,11 +45,20 @@ export const globalTypes: GlobalTypes = {
   textSpacing: {
     name: "Text Spacing",
     description:
-      "Applied styles meeting minimum required for WCAG 1.4.12 Text Spacing",
+      "Applies styles meeting minimum required for WCAG 1.4.12 Text Spacing",
     defaultValue: "disable",
     toolbar: {
-      icon: "expand",
+      showName: true,
       items: ["disable", "enable"],
+    },
+  },
+  strictMode: {
+    name: "Strict Mode",
+    description: "Enables React's Strict Mode",
+    defaultValue: "enable",
+    toolbar: {
+      items: ["disable", "enable"],
+      showName: true,
     },
   },
 };
@@ -80,4 +90,5 @@ export const decorators = [
   withTestIdWrapper,
   withToolkitProvider,
   WithTextSpacingWrapper,
+  withStrictMode,
 ];
