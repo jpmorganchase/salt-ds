@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 import { ToolkitProvider, useIsomorphicLayoutEffect } from "@brandname/core";
@@ -14,10 +8,7 @@ import { getChildrenNames, isElectron } from "./electron-utils";
 
 import "./ElectronWindow.css";
 import ReactDOMServer from "react-dom/server";
-import {
-  useWindowParentContext,
-  WindowParentContext,
-} from "./desktop-utils";
+import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
 
 const Window: windowType = forwardRef(function ElectronWindow(
   {
@@ -30,6 +21,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
   },
   forwardedRef
 ) {
+  const { top, left, position, ...styleRest } = style;
+  console.log(styleRest);
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [windowRef, setWindowRef] = useState<Window | null>(null);
   const windowRoot = useRef<HTMLDivElement>(null);
@@ -74,9 +67,12 @@ const Window: windowType = forwardRef(function ElectronWindow(
     );
     document.head.querySelectorAll("style").forEach((htmlElement) => {
       if (
-        // @ts-ignore
-        Array.from(components).some((v) => htmlElement.textContent.includes(v))
-        || true) {
+        Array.from(components).some((v) =>
+          // @ts-ignore
+          htmlElement.textContent.includes(v)
+        ) ||
+        true
+      ) {
         (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
       }
     });
@@ -96,40 +92,43 @@ const Window: windowType = forwardRef(function ElectronWindow(
 
   useEffect(() => {
     setTimeout(() => {
-    if (windowRoot.current) {
-      // @ts-ignore
-      const {scrollHeight: height, scrollWidth: width} = windowRoot.current;
-      // @ts-ignore
-      const {ipcRenderer} = global as any;
-      if (ipcRenderer) {
+      if (windowRoot.current) {
+        // @ts-ignore
+        const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
+        // @ts-ignore
+        const { ipcRenderer } = global as any;
+        if (ipcRenderer) {
           ipcRenderer.send("window-size", {
             id: id,
             height: Math.ceil(height + 1),
             width: Math.ceil(width + 1),
           });
-
+        }
       }
-    }
-    },100);
-  },[id]);
+    }, 100);
+  });
 
   useEffect(() => {
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       setTimeout(() => {
-        ipcRenderer.send("window-ready", {id: id});
-      },120);
+        ipcRenderer.send("window-ready", { id: id });
+      }, 100);
     }
 
     return () => {
       closeWindow();
     };
-  }, [closeWindow, windowRef]);
+  }, [closeWindow, windowRef,id]);
 
   useIsomorphicLayoutEffect(() => {
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      console.log(`${id} is being moved to ${style.left as number + parentWindow.left},${style.top as number + parentWindow.top}`);
+      console.log(
+        `${id} is being moved to ${
+          (style.left as number) + parentWindow.left
+        },${(style.top as number) + parentWindow.top}`
+      );
       ipcRenderer.send("window-position", {
         id: id,
         parentWindowID: parentWindow.id,
@@ -137,24 +136,24 @@ const Window: windowType = forwardRef(function ElectronWindow(
         top: style.top,
       });
     }
-  },[style]);
+  }, [style]);
 
   return mountNode
     ? ReactDOM.createPortal(
         <ToolkitProvider>
-            <WindowParentContext.Provider
-              value={{
-                top: style.top as number+ parentWindow.top,
-                left: style.left as number + parentWindow.left,
-                id: id
-              }}
-            >
-              <div className="uitkWindow" ref={forkedRef}>
-                <div className={className} {...rest}>
-                  {children}
-                </div>
+          <WindowParentContext.Provider
+            value={{
+              top: (style.top as number) + parentWindow.top,
+              left: (style.left as number) + parentWindow.left,
+              id: id,
+            }}
+          >
+            <div className="uitkWindow" ref={forkedRef}>
+              <div className={className} style={{ ...styleRest }} {...rest}>
+                {children}
               </div>
-            </WindowParentContext.Provider>
+            </div>
+          </WindowParentContext.Provider>
         </ToolkitProvider>,
         mountNode
       )

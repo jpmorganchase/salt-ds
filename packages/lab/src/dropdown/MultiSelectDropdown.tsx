@@ -46,22 +46,19 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const middleware = [
-    size({
-      apply({ height }) {
-        setMaxListHeight(height);
-      },
-    }),
-  ];
-
-  if (!isElectron) {
-    middleware.unshift(
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() })
-    );
-  }
+  const middleware = isElectron
+    ? []
+    : [
+        size({
+          apply({ height }) {
+            setMaxListHeight(height);
+          },
+        }),
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+      ];
 
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",

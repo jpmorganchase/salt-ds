@@ -168,7 +168,6 @@ test("Opens the dropdown in a new child window", async () => {
   const dropdownPage = electronApp.windows()[1];
   expect(dropdownPage).toBeTruthy();
 
-
   await page.waitForTimeout(200);
 
   const dropdownHandle = await electronApp.browserWindow(dropdownPage);
@@ -181,7 +180,7 @@ test("Opens the dropdown in a new child window", async () => {
   );
 
   expect(childWindowPosition).toStrictEqual([175, 36]);
-  expect(childWindowSize).toStrictEqual([181, 374]);
+  expect(childWindowSize).toStrictEqual([181, 372]);
 
   // Click Colorado
   await dropdownPage.locator("text=Colorado").click();
