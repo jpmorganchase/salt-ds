@@ -9,26 +9,25 @@
 }
 
 /* Styles applied to root component (RadioButton) */
-.uitk-density-medium {
+.uitk-density-medium .uitkRadioButtonGroup-vertical {
   --radio-vertical-label-margin-bottom: 6px;
 }
 
-.uitk-density-high .uitkRadioButton {
+.uitk-density-high .uitkRadioButtonGroup-vertical {
   --radio-vertical-label-margin-bottom: 4px;
 }
 
-.uitk-density-low .uitkRadioButton {
+.uitk-density-low .uitkRadioButtonGroup-vertical {
   --radio-vertical-label-margin-bottom: 9px;
 }
 
-.uitk-density-touch .uitkRadioButton {
+.uitk-density-touch .uitkRadioButtonGroup-vertical {
   --radio-vertical-label-margin-bottom: 12px;
 }
 
 /* Styles applied when `row=false OR undefined` */
 .uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
   margin-top: 0;
-  border-right: 16px;
   margin-bottom: var(--radio-vertical-label-margin-bottom);
 }
 
@@ -114,36 +113,27 @@
 /* Styles applied to legend */
 .uitk-density-medium .uitkRadioButtonGroup-legend {
   --radio-button-group-legend-min-height: 14px;
+  --radio-button-group-legend-padding-right: 16px;
 }
 .uitk-density-high .uitkRadioButtonGroup-legend {
   --radio-button-group-legend-min-height: 14px;
+  --radio-button-group-legend-padding-right: 16px;
 }
 .uitk-density-low .uitkRadioButtonGroup-legend {
   --radio-button-group-legend-min-height: 14px;
+  --radio-button-group-legend-padding-right: 16px;
 }
 .uitk-density-touch .uitkRadioButtonGroup-legend {
   --radio-button-group-legend-min-height: 16px;
+  --radio-button-group-legend-padding-right: 16px;
 }
 
 .uitkRadioButtonGroup-legend {
   margin-bottom: var(--uitkRadioButtonGroup-legend-margin-bottom, 4px);
   min-height: var(--uitkRadioButtonGroup-legend-min-height, var(--radio-button-group-legend-min-height));
-  padding-right: var(--uitkRadioButtonGroup-legend-padding-right, 4px);
+  padding-right: var(--uitkRadioButtonGroup-legend-padding-right, var(--radio-button-group-legend-padding-right));
   transition: none;
   width: auto;
-}
-
-.uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  --radio-button-group-horizontal-button-margin-right: 24px;
-}
-.uitk-density-high .uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  --radio-button-group-horizontal-button-margin-right: 12px;
-}
-.uitk-density-low .uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  --radio-button-group-horizontal-button-margin-right: 36px;
-}
-.uitk-density-touch .uitkRadioButtonGroup-horizontal .uitkRadioButton {
-  --radio-button-group-horizontal-button-margin-right: 48px;
 }
 
 /* fieldset specific styles */
@@ -154,4 +144,5 @@ fieldset.uitkRadioButtonGroup.uitkRadioButtonGroup-vertical {
 fieldset.uitkRadioButtonGroup.uitkRadioButtonGroup-horizontal {
   display: block;
   padding-left: 0px;
+  min-inline-size: max-content;
 }
