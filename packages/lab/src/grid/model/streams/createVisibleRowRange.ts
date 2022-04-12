@@ -3,6 +3,7 @@ import {
   combineLatest,
   distinctUntilChanged,
   map,
+  tap,
 } from "rxjs";
 import { Rng } from "../Rng";
 
@@ -30,6 +31,9 @@ export function createVisibleRowRange<T>(
         return new Rng(start, end);
       }),
       distinctUntilChanged((a, b) => Rng.equals(a, b))
+      // tap((rng) => {
+      //   console.log(`visibleRowRange$: ${rng}`);
+      // })
     )
     .subscribe(visibleRowRange$);
   return visibleRowRange$;

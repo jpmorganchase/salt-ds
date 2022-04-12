@@ -6,6 +6,7 @@ import {
   map,
   Subject,
   take,
+  tap,
 } from "rxjs";
 import { Column } from "../Column";
 import { ColumnResizeEvent, ColumnsAndGroups } from "../GridModel";
@@ -49,7 +50,7 @@ export function mindTheGap(
         return middleColumns[middleColumns.length - 1] || rightColumns[0];
       }),
       filter((c) => c != null),
-      take(1),
+      // take(1),
       map((column) => ({
         column,
         canShrink: false,
@@ -92,11 +93,17 @@ export function mindTheGap(
 
   combineLatest([gap$, columnToResize$]).subscribe(([gap, columnToResize]) => {
     if (columnToResize == null) {
+      // console.log(`columnToResize is null. Doing nothing`);
       return;
     }
     const { column, canShrink } = columnToResize;
+    // console.log(
+    //   `Resizing column ${column.key}. canShrink: ${canShrink}. gap: ${gap}`
+    // );
     if (gap > 0 || canShrink) {
-      column.width$.next(Math.max(0, column.width$.getValue() + gap));
+      const newWidth = Math.max(0, column.width$.getValue() + gap);
+      // console.log(`New width: ${newWidth}`);
+      column.width$.next(newWidth);
     }
   });
 }

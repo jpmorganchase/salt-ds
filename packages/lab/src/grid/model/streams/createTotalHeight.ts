@@ -11,10 +11,10 @@ export function createTotalHeight<T>(
 
   combineLatest([topHeight$, middleHeight$, bottomHeight$])
     .pipe(
-      map(sum),
-      tap((x) => {
-        console.log(`totalHeight$: ${x}`);
-      })
+      map(sum)
+      // tap((x) => {
+      //   console.log(`totalHeight$: ${x}`);
+      // })
     )
     .subscribe(totalHeight$);
 

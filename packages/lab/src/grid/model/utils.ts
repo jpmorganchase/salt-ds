@@ -1,5 +1,6 @@
-import { BehaviorSubject, scan, Subject } from "rxjs";
+import { BehaviorSubject, distinctUntilChanged, scan, Subject } from "rxjs";
 import { useObservable } from "./useObservable";
+import { useRef } from "react";
 
 type Replacement<T> = T | ((old: T) => T);
 
@@ -45,7 +46,9 @@ export const createHook =
   <T>(bs: BehaviorSubject<T>) =>
   () =>
     useObservable(bs);
-export const createHandler =
-  <T>(s: Subject<T>) =>
-  (v: T) =>
-    s.next(v);
+
+export const createHandler = <T>(s: Subject<T>) => {
+  const distinctSubject = new Subject<T>();
+  distinctSubject.pipe(distinctUntilChanged()).subscribe((x) => s.next(x));
+  return (v: T) => distinctSubject.next(v);
+};

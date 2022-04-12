@@ -1,8 +1,11 @@
 import {
   BehaviorSubject,
+  combineLatest,
   distinctUntilChanged,
+  filter,
   map,
   Subject,
+  tap,
   throttleTime,
 } from "rxjs";
 import { ColumnDefinition } from "./ColumnDefinition";
@@ -53,7 +56,7 @@ import {
 import { ColumnDragAndDrop, IColumnDragAndDrop } from "./ColumnDragAndDrop";
 import { GridScrollPosition } from "./GridScrollPosition";
 import { EditMode, IEditMode } from "./EditMode";
-import { createHandler, createHook } from "./utils";
+import { createHandler, createHook, prevNextPairs } from "./utils";
 import { RowKeyGetter } from "../Grid";
 
 export type KeyOfType<T, U> = {
@@ -154,8 +157,8 @@ export interface IGridModel<T> {
   readonly setColumnGroupDefinitions: (
     groupDefinitions?: ColumnGroupDefinition<T>[]
   ) => void;
-  readonly setCallbacks: (
-    onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void
+  readonly setOnVisibleRowRangeChange: (
+    handler?: VisibleRowRangeChangeHandler
   ) => void;
   // Events
   readonly resize: (size: GridSize) => void;
@@ -196,9 +199,15 @@ export interface IGridModel<T> {
   readonly useIsAllEditable: () => boolean;
 }
 
+export type VisibleRowRangeChangeHandler = (
+  visibleRowRange: [number, number]
+) => void;
+
 export class GridModel<T = any> implements IGridModel<T> {
   // Callbacks
-  private onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void;
+  public readonly setOnVisibleRowRangeChange: (
+    handler?: VisibleRowRangeChangeHandler
+  ) => void;
   // Parts
   public readonly columnDragAndDrop: ColumnDragAndDrop<T>;
   public readonly editMode: EditMode;
@@ -257,7 +266,6 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly useIsAllEditable: () => boolean;
 
   public constructor(getKey: RowKeyGetter<T>) {
-    this.onVisibleRowRangeChange;
     const clientSize$ = new BehaviorSubject<GridSize>({
       width: 0,
       height: 0,
@@ -305,6 +313,9 @@ export class GridModel<T = any> implements IGridModel<T> {
 
     const leftWidth$ = createColumnsWidth(leftColumns$);
     const middleWidth$ = createColumnsWidth(middleColumns$);
+    // middleWidth$.subscribe((middleWidth) => {
+    //   console.log(`middleWidth$: ${middleWidth}`);
+    // });
     const rightWidth$ = createColumnsWidth(rightColumns$);
 
     const leftColumnGroups$ = new BehaviorSubject<ColumnGroup<T>[] | undefined>(
@@ -436,6 +447,10 @@ export class GridModel<T = any> implements IGridModel<T> {
 
     const isAllEditable$ = createIsAllEditable(columns$);
 
+    const onVisibleRowRangeChange$ = new BehaviorSubject<
+      VisibleRowRangeChangeHandler | undefined
+    >(undefined);
+
     // Interface implementation
     this.useRowHeight = createHook(rowHeight$);
     this.resize = createHandler(resizeEvents$);
@@ -487,6 +502,7 @@ export class GridModel<T = any> implements IGridModel<T> {
     this.setCellSelectionMode = createHandler(cellSelectionMode$);
     this.useRowSelectionMode = createHook(rowSelectionMode$);
     this.useCellSelectionMode = createHook(cellSelectionMode$);
+    this.setOnVisibleRowRangeChange = createHandler(onVisibleRowRangeChange$);
 
     scrollPosition$
       .pipe(
@@ -511,13 +527,13 @@ export class GridModel<T = any> implements IGridModel<T> {
       rightColumnGroups$.next(x.rightColumnGroups);
     });
 
-    // columnsAndGroups$.subscribe((x) =>
-    //   console.log(
-    //     `columns: ${x.leftColumns.map((c) => c.key)} | ${x.middleColumns.map(
-    //       (c) => c.key
-    //     )} | ${x.rightColumns.map((c) => c.key)}`
-    //   )
-    // );
+    columnsAndGroups$.subscribe((x) =>
+      console.log(
+        `columns: ${x.leftColumns.map((c) => c.key)} | ${x.middleColumns.map(
+          (c) => c.key
+        )} | ${x.rightColumns.map((c) => c.key)}`
+      )
+    );
 
     columnResizeEvents$.pipe(throttleTime(50)).subscribe((columnResize) => {
       const { columnIndex, width } = columnResize;
@@ -604,16 +620,31 @@ export class GridModel<T = any> implements IGridModel<T> {
     //   console.log(`bottomHeight$: ${h}`);
     // });
 
-    visibleRowRange$.subscribe((rng) => {
-      if (this.onVisibleRowRangeChange) {
-        this.onVisibleRowRangeChange([rng.start, rng.end]);
+    // visibleRowRange$.subscribe((rr) => {
+    //   console.log(`visibleRowRange$: ${rr}`);
+    // });
+
+    // onVisibleRowRangeChange$.subscribe((h) => {
+    //   console.log(`onVisibleRowRangeChange$: ${h}`);
+    // });
+
+    visibleRowRange$.subscribe((visibleRowRange) => {
+      const currentHandler = onVisibleRowRangeChange$.getValue();
+      if (currentHandler) {
+        const { start, end } = visibleRowRange;
+        currentHandler([start, end]);
       }
     });
-  }
 
-  public setCallbacks(
-    onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void
-  ) {
-    this.onVisibleRowRangeChange = onVisibleRowRangeChange;
+    onVisibleRowRangeChange$
+      .pipe(
+        prevNextPairs(),
+        filter(([prev, next]) => prev == null && next != null),
+        map(([prev, next]) => next)
+      )
+      .subscribe((onVisibleRowRangeChange) => {
+        const { start, end } = visibleRowRange$.getValue();
+        onVisibleRowRangeChange!([start, end]);
+      });
   }
 }

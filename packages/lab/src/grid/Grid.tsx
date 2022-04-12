@@ -5,7 +5,7 @@ import {
   GridModel,
   RowSelectionMode,
 } from "./model";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GridContext } from "./GridContext";
 import { GridBase } from "./components";
 
@@ -37,15 +37,17 @@ export function Grid<T>(props: GridProps<T>) {
   const { model } = context;
   const { rowSelectionMode = "single", cellSelectionMode = "none" } = props;
 
-  model.setColumnDefinitions(props.columnDefinitions);
-  model.setColumnGroupDefinitions(props.columnGroupDefinitions);
-  model.setShowFooter(props.showFooter);
-  model.setShowTree(props.showTree);
-  model.setShowCheckboxes(props.showCheckboxes);
-  model.setData(props.data);
-  model.setRowSelectionMode(rowSelectionMode);
-  model.setCellSelectionMode(cellSelectionMode);
-  model.setCallbacks(props.onVisibleRowRangeChanged);
+  useEffect(() => {
+    model.setColumnDefinitions(props.columnDefinitions);
+    model.setColumnGroupDefinitions(props.columnGroupDefinitions);
+    model.setShowFooter(props.showFooter);
+    model.setShowTree(props.showTree);
+    model.setShowCheckboxes(props.showCheckboxes);
+    model.setData(props.data);
+    model.setRowSelectionMode(rowSelectionMode);
+    model.setCellSelectionMode(cellSelectionMode);
+    model.setOnVisibleRowRangeChange(props.onVisibleRowRangeChanged);
+  });
 
   return (
     <GridContext.Provider value={context}>

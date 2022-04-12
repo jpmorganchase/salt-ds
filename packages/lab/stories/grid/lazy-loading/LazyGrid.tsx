@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { ColumnDefinition, createTextColumn, Grid } from "../../../src";
 import { randomAmount, randomSide, randomStatus, randomString } from "../utils";
 import Timeout = NodeJS.Timeout;
@@ -48,7 +48,7 @@ export const LazyGrid: FC<LazyGridProps> = (props) => {
   };
 
   const onVisibleRangeChanged = ([start, end]: [number, number]) => {
-    console.log(`VisibleRowRangeChanged: [${start}, ${end}]`);
+    // console.log(`VisibleRowRangeChanged: [${start}, ${end}]`);
     if (loaderRef.current) {
       clearTimeout(loaderRef.current);
     }
