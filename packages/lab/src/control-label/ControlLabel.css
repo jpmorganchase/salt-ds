@@ -16,7 +16,8 @@
   display: block;
 }
 
-.uitkControlLabel-disabled {
+.uitkControlLabel-disabled,
+.uitkFormField-disabled .uitkControlLabel {
   cursor: var(--uitk-disabled-cursor);
 }
 

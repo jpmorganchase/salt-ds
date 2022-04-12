@@ -74,7 +74,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
               onChange={onChange}
               icon={icon}
             />
-          </div>{" "}
+          </div>
         </ControlLabel>
       </div>
     );

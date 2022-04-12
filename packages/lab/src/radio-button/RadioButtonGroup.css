@@ -78,25 +78,25 @@
 }
 
 /* Styles applied  to legend if `row={true}` */
-.uitk-density-medium .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+.uitk-density-medium .uitkRadioButtonGroup-horizontal {
   --radio-button-group-horizontal-legend-margin-top: 1px;
   --radio-button-group-horizontal-legend-margin-right: 24px;
   --radio-button-group-horizontal-legend-padding-right: 8px;
   --radio-button-group-horizontal-legend-margin-bottom: 0px;
 }
-.uitk-density-high .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+.uitk-density-high .uitkRadioButtonGroup-horizontal {
   --radio-button-group-horizontal-legend-margin-top: 2px;
   --radio-button-group-horizontal-legend-margin-right: 12px;
   --radio-button-group-horizontal-legend-padding-right: 4px;
   --radio-button-group-horizontal-legend-margin-bottom: 0px;
 }
-.uitk-density-low .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+.uitk-density-low .uitkRadioButtonGroup-horizontal {
   --radio-button-group-horizontal-legend-margin-top: 4px;
   --radio-button-group-horizontal-legend-margin-right: 36px;
   --radio-button-group-horizontal-legend-padding-right: 12px;
   --radio-button-group-horizontal-legend-margin-bottom: 0px;
 }
-.uitk-density-touch .uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend {
+.uitk-density-touch .uitkRadioButtonGroup-horizontal {
   --radio-button-group-horizontal-legend-margin-top: 4px;
   --radio-button-group-horizontal-legend-margin-right: 48px;
   --radio-button-group-horizontal-legend-padding-right: 16px;

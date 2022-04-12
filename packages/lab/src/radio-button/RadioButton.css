@@ -1,27 +1,23 @@
 /* Styles applied to root component (RadioButton) */
 .uitk-density-medium .uitkRadioButton {
-  --label-font-size: 12px;
   --label-margin-left: 6px;
   --label-margin-top: 6px;
   --label-min-height: 16px;
 }
 
 .uitk-density-high .uitkRadioButton {
-  --label-font-size: 11px;
   --label-margin-left: 3px;
   --label-margin-top: 3px;
   --label-min-height: 14px;
 }
 
 .uitk-density-low .uitkRadioButton {
-  --label-font-size: 14px;
   --label-margin-left: 9px;
   --label-margin-top: 9px;
   --label-min-height: 18px;
 }
 
 .uitk-density-touch .uitkRadioButton {
-  --label-font-size: 16px;
   --label-margin-left: 12px;
   --label-margin-top: 12px;
   --label-min-height: 20px;
@@ -42,16 +38,19 @@
   background-color: var(--uitkRadioButton-checked-background-hover, transparent);
 }
 
-/* Styles applied to root component on hover if `disabled={true}` */
+/* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
+.uitkRadioButton-disabled,
+.uitkFormField-disabled .uitkRadioButton {
+  cursor: var(--uitk-disabled-cursor);
+}
+
 .uitkRadioButton-disabled {
-  cursor: not-allowed;
   opacity: var(--uitk-disabled-text-opacity);
   pointer-events: visible;
 }
 
 /* Styles applied to container of label and Radio component */
 .uitkRadioButton-labelContainer {
-  cursor: inherit;
   display: inline-flex;
   align-items: flex-start;
   margin-left: 0;
@@ -88,7 +87,7 @@
 .uitkRadioButton-labelText {
   color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-color));
   flex-grow: 1;
-  font-size: var(--uitkRadioButton-label-font-size, var(--label-font-size));
+  font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-font-size));
   letter-spacing: 0;
   line-height: var(--uitkRadioButton-label-line-height, var(--uitk-typography-line-height));
   margin-left: var(--uitkRadioButton-label-margin-left, var(--label-margin-left));

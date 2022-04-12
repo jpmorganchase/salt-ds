@@ -56,12 +56,11 @@
 /* Styles applied to RadioIcon border when `checked={true}` */
 .uitkRadioIcon-checked .uitkRadioIcon-border {
   stroke: var(--uitkRadioIcon-border-stroke-checked, var(--border-stroke-checked));
-  fill: var(--uitkRadioIcon-border-fill-checked, var(--border-fill-checked)) !important;
+  fill: var(--uitkRadioIcon-border-fill-checked, var(--border-fill-checked));
 }
 
 /* Styles applied to RadioIcon border on hover */
-.uitkRadio:hover .uitkRadioIcon-border,
-.uitkRadioButton:hover .uitkRadioIcon-border {
+*:not(.uitkFormField-disabled).uitkRadio:not(.uitkRadio-disabled):hover .uitkRadioIcon-border {
   stroke: var(--uitkRadioIcon-border-stroke-hover, var(--border-stroke-hover));
 }
 
