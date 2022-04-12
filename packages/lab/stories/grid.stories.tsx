@@ -5,13 +5,12 @@ import {
   ColumnDefinition,
   ColumnGroupDefinition,
   createNumericColumn,
-  // createRowSelectionCheckboxColumn,
   createTextColumn,
   DataGrid,
   DataSetColumnDefinition,
   Grid,
 } from "@brandname/lab";
-import column from "ag-grid-enterprise/dist/lib/excelExport/files/xml/column";
+import { LazyGrid } from "./grid/lazy-loading/LazyGrid";
 
 export default {
   title: "Lab/Grid",
@@ -34,12 +33,6 @@ for (let i = 0; i < 10; ++i) {
 }
 
 const columnGroups: ColumnGroupDefinition<BlotterRecord>[] = [
-  // {
-  //   key: "checkboxGroup",
-  //   title: "Checkbox",
-  //   columns: [createRowSelectionCheckboxColumn()],
-  //   pinned: "left",
-  // },
   {
     key: "group1",
     title: "Group One",
@@ -75,7 +68,6 @@ const columnGroups: ColumnGroupDefinition<BlotterRecord>[] = [
 ];
 
 const columnDefinitions: ColumnDefinition<BlotterRecord>[] = [
-  // createRowSelectionCheckboxColumn(),
   createTextColumn("identifier", "Identifier", "identifier", 100),
   createTextColumn("client", "Client", "client", 100),
 ];
@@ -162,6 +154,12 @@ const MultiRowSelectionGridTemplate: Story = () => {
   );
 };
 
+const LazyGridTemplate: Story = () => {
+  return <LazyGrid />;
+};
+
+// const SingleRowSelectionGridTemplate: Story = ()
+
 export const ReadonlyGridExample = ReadonlyGridTemplate.bind({});
 
 export const AllEditableGridExample = AllEditableGridTemplate.bind({});
@@ -169,6 +167,10 @@ export const AllEditableGridExample = AllEditableGridTemplate.bind({});
 export const MixedEditableGridExample = MixedEditableGridTemplate.bind({});
 
 export const MultiRowSelectionGrid = MultiRowSelectionGridTemplate.bind({});
+
+// export const SingleRowSelectionGrid = SingleRowSelectionGridTemplate.bind({});
+
+export const LazyGridExample = LazyGridTemplate.bind({});
 
 const dataSetColumnDefinitions: DataSetColumnDefinition[] = [
   {

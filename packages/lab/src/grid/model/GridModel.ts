@@ -54,6 +54,7 @@ import { ColumnDragAndDrop, IColumnDragAndDrop } from "./ColumnDragAndDrop";
 import { GridScrollPosition } from "./GridScrollPosition";
 import { EditMode, IEditMode } from "./EditMode";
 import { createHandler, createHook } from "./utils";
+import { RowKeyGetter } from "../Grid";
 
 export type KeyOfType<T, U> = {
   [P in keyof T]: T[P] extends U ? P : never;
@@ -153,6 +154,9 @@ export interface IGridModel<T> {
   readonly setColumnGroupDefinitions: (
     groupDefinitions?: ColumnGroupDefinition<T>[]
   ) => void;
+  readonly setCallbacks: (
+    onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void
+  ) => void;
   // Events
   readonly resize: (size: GridSize) => void;
   readonly scroll: (event: GridScrollEvent) => void;
@@ -193,6 +197,8 @@ export interface IGridModel<T> {
 }
 
 export class GridModel<T = any> implements IGridModel<T> {
+  // Callbacks
+  private onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void;
   // Parts
   public readonly columnDragAndDrop: ColumnDragAndDrop<T>;
   public readonly editMode: EditMode;
@@ -250,7 +256,8 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly useVisibleColumnGroups: () => ColumnGroup<T>[] | undefined;
   public readonly useIsAllEditable: () => boolean;
 
-  public constructor(getKey: (x: T) => string) {
+  public constructor(getKey: RowKeyGetter<T>) {
+    this.onVisibleRowRangeChange;
     const clientSize$ = new BehaviorSubject<GridSize>({
       width: 0,
       height: 0,
@@ -596,5 +603,17 @@ export class GridModel<T = any> implements IGridModel<T> {
     // bottomHeight$.subscribe((h) => {
     //   console.log(`bottomHeight$: ${h}`);
     // });
+
+    visibleRowRange$.subscribe((rng) => {
+      if (this.onVisibleRowRangeChange) {
+        this.onVisibleRowRangeChange([rng.start, rng.end]);
+      }
+    });
+  }
+
+  public setCallbacks(
+    onVisibleRowRangeChange?: (visibleRowRange: [number, number]) => void
+  ) {
+    this.onVisibleRowRangeChange = onVisibleRowRangeChange;
   }
 }

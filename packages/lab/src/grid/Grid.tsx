@@ -9,8 +9,14 @@ import { useState } from "react";
 import { GridContext } from "./GridContext";
 import { GridBase } from "./components";
 
-export interface GridProps<T> {
-  getKey: (x: T) => string;
+export interface GridCallbacks<T> {
+  onVisibleRowRangeChanged?: (visibleRowRange: [number, number]) => void;
+}
+
+export type RowKeyGetter<T> = (row: T, index: number) => string;
+
+export interface GridData<T> {
+  getKey: RowKeyGetter<T>;
   columnDefinitions?: ColumnDefinition<T>[];
   columnGroupDefinitions?: ColumnGroupDefinition<T>[];
   showFooter?: boolean;
@@ -20,6 +26,8 @@ export interface GridProps<T> {
   cellSelectionMode?: CellSelectionMode;
   data: T[];
 }
+
+export type GridProps<T> = GridCallbacks<T> & GridData<T>;
 
 export function Grid<T>(props: GridProps<T>) {
   const [context] = useState(() => ({
@@ -37,6 +45,7 @@ export function Grid<T>(props: GridProps<T>) {
   model.setData(props.data);
   model.setRowSelectionMode(rowSelectionMode);
   model.setCellSelectionMode(cellSelectionMode);
+  model.setCallbacks(props.onVisibleRowRangeChanged);
 
   return (
     <GridContext.Provider value={context}>

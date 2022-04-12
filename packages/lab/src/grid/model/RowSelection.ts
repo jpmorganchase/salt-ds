@@ -6,6 +6,7 @@ import {
   Subject,
 } from "rxjs";
 import { useObservable } from "./useObservable";
+import { RowKeyGetter } from "../Grid";
 
 export interface SelectAllEvent {
   isAllSelected: boolean;
@@ -50,7 +51,7 @@ export class RowSelection<T> implements IRowSelection<T> {
     return useObservable(this.isAllSelected$);
   }
 
-  public constructor(data$: BehaviorSubject<T[]>, getRowKey: (x: T) => string) {
+  public constructor(data$: BehaviorSubject<T[]>, getRowKey: RowKeyGetter<T>) {
     data$.subscribe((data) => {
       const allKeys = new Set(data.map(getRowKey));
       const newKeys = new Set<string>();

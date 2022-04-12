@@ -15,8 +15,11 @@ export interface TableRowProps<T = any> {
 
 function getCellValue<T, U>(
   columnDefinition: ColumnDefinition<T, U>,
-  rowData: T
+  rowData?: T
 ) {
+  if (!rowData) {
+    return undefined;
+  }
   const { field, cellValueGetter } = columnDefinition;
   if (cellValueGetter) {
     return cellValueGetter(rowData);
@@ -78,25 +81,6 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
             </Cell>
           );
         }
-
-        // const CellValue = definition.cellValueComponent;
-        // if (CellValue) {
-        //   return (
-        //     <BaseCell
-        //       key={column.key}
-        //       row={row}
-        //       column={column}
-        //       isHoverOverRow={isHoverOver}
-        //       isSelectedRow={isSelected}
-        //       isFocused={isFocused}
-        //       isAlternate={isZebra}
-        //     >
-        //       <CellValue column={column} row={row} value={value} />
-        //     </BaseCell>
-        //   );
-        // }
-        //
-        // return <td>ERROR</td>;
       })}
     </tr>
   );

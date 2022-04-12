@@ -1,11 +1,12 @@
-import { BehaviorSubject, combineLatest, map, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, map } from "rxjs";
 import { Row } from "../Row";
 import { Rng } from "../Rng";
 import { RowSelection } from "../RowSelection";
 import { CellPosition } from "../GridModel";
+import { RowKeyGetter } from "../../Grid";
 
 export function createRows<T>(
-  getKey: (x: T) => string,
+  getKey: RowKeyGetter<T>,
   data: BehaviorSubject<T[]>,
   visibleRowRange: BehaviorSubject<Rng>,
   rowSelection: RowSelection<T>,
@@ -21,7 +22,7 @@ export function createRows<T>(
         const rows: Row<T>[] = [];
         const cursor = cursorPosition.getValue();
         visibleRowRange.forEach((i) => {
-          const key = getKey(data[i]);
+          const key = getKey(data[i], i);
           const oldRow = oldRows.get(key);
           if (oldRow) {
             if (oldRow.data$.getValue() !== data[i]) {
@@ -32,7 +33,7 @@ export function createRows<T>(
             }
             rows.push(oldRow);
           } else {
-            const row = new Row(getKey(data[i]), i, data[i]);
+            const row = new Row(key, i, data[i]);
             row.isSelected$.next(
               rowSelection.selectedKeys$.getValue().has(row.key)
             );

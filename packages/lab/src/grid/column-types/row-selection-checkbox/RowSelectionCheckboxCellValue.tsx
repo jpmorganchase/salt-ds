@@ -5,7 +5,6 @@ import { CheckboxCheckedIcon, CheckboxIcon } from "../../../checkbox";
 import { getRowKey } from "../../features/getAttribute";
 import { useGridContext } from "../../GridContext";
 import { makePrefixer } from "@brandname/core";
-import classnames from "classnames";
 
 const withBaseName = makePrefixer("uitkGridRowSelectionCheckboxCellValue");
 

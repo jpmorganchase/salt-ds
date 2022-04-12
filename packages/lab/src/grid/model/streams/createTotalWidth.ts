@@ -13,7 +13,7 @@ export function createTotalWidth<T>(
     .pipe(
       map(
         ([leftWidth, middleWidth, rightWidth]) =>
-          leftWidth + middleWidth + rightWidth // + scrollBarSize
+          leftWidth + middleWidth + rightWidth + scrollBarSize
       )
     )
     .subscribe(totalWidth$);
