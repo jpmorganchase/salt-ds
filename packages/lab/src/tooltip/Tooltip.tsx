@@ -24,10 +24,12 @@ import {
 import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
 import {
   UseFloatingUIProps,
+  Portal,
   PortalProps,
   useControlled,
   useForkRef,
   useId,
+  useWindow,
 } from "@brandname/lab";
 
 import { getIconForState } from "./getIconForState";
@@ -355,6 +357,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ref: children?.ref,
     };
 
+    const Window = useWindow();
     return (
       <>
         {!!children &&
@@ -369,50 +372,52 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ref: reference,
           })}
         {open && (
-          <div
-            className={cn(withBaseName(), withBaseName(state))}
-            data-placement={placement}
-            id={tooltipId}
-            role="tooltip"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            ref={handleRef}
-            {...rest}
-            style={{
-              top: y ?? "",
-              left: x ?? "",
-              position: strategy,
-              ...(rest.style || {}),
-            }}
-          >
-            <div className={withBaseName("content")} ref={tooltipContentRef}>
-              {render ? (
-                render({
-                  Icon: (passedProps: IconProps) => getIcon(passedProps),
-                  getIconProps: () => defaultIconProps,
-                  getTitleProps,
-                })
-              ) : (
-                <>
-                  {getIcon({})}
-                  <span className={withBaseName("body")}>{title}</span>
-                </>
+          <Portal disablePortal={disablePortal} container={container}>
+            <Window
+              className={cn(withBaseName(), withBaseName(state))}
+              data-placement={placement}
+              id={tooltipId}
+              role="tooltip"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              ref={handleRef}
+              {...rest}
+              style={{
+                top: y ?? "",
+                left: x ?? "",
+                position: strategy,
+                ...(rest.style || {}),
+              }}
+            >
+              <div className={withBaseName("content")} ref={tooltipContentRef}>
+                {render ? (
+                  render({
+                    Icon: (passedProps: IconProps) => getIcon(passedProps),
+                    getIconProps: () => defaultIconProps,
+                    getTitleProps,
+                  })
+                ) : (
+                  <>
+                    {getIcon({})}
+                    <span className={withBaseName("body")}>{title}</span>
+                  </>
+                )}
+              </div>
+              {!hideArrow && (
+                <div
+                  ref={arrowRef}
+                  className={withBaseName("arrow")}
+                  data-popper-arrow="true"
+                  style={{
+                    left: middlewareData.arrow?.x ?? "",
+                    top: middlewareData.arrow?.y ?? "",
+                  }}
+                />
               )}
-            </div>
-            {!hideArrow && (
-              <div
-                ref={arrowRef}
-                className={withBaseName("arrow")}
-                data-popper-arrow="true"
-                style={{
-                  left: middlewareData.arrow?.x ?? "",
-                  top: middlewareData.arrow?.y ?? "",
-                }}
-              />
-            )}
-          </div>
+            </Window>
+          </Portal>
         )}
       </>
     );
