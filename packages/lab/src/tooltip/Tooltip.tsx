@@ -12,8 +12,14 @@ import {
   useRef,
 } from "react";
 import cn from "classnames";
-import { useFloating } from "@floating-ui/react-dom-interactions";
-import { arrow, flip, limitShift, offset, shift } from "@floating-ui/react-dom";
+import {
+  arrow,
+  flip,
+  limitShift,
+  offset,
+  shift,
+  useFloating,
+} from "@floating-ui/react-dom";
 
 import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
 import {
@@ -175,8 +181,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const { x, y, reference, floating, strategy, middlewareData, placement } =
       useFloating({
-        open,
-        onOpenChange: setOpenState,
         placement: placementProp,
         middleware: [
           offset(8),
