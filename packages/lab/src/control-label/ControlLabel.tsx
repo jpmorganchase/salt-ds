@@ -8,12 +8,16 @@ export interface ControlLabelProps
   extends LabelHTMLAttributes<HTMLLabelElement> {
   disabled?: boolean;
   label?: ReactNode;
+  labelPlacement?: "left" | "right";
 }
 
 export const baseName = "uitkControlLabel";
 
 export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
-  ({ children, className, disabled, label, ...other }, ref) => {
+  (
+    { children, className, disabled, label, labelPlacement = "left", ...other },
+    ref
+  ) => {
     return (
       <label
         className={classnames(
@@ -26,8 +30,13 @@ export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
         ref={ref}
         {...other}
       >
+        {labelPlacement === "left" && (
+          <span className={`${baseName}-label`}>{label}</span>
+        )}
         {children}
-        <span className={`${baseName}-label`}>{label}</span>
+        {labelPlacement === "right" && (
+          <span className={`${baseName}-labelRight`}>{label}</span>
+        )}
       </label>
     );
   }

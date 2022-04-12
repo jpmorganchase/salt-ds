@@ -62,6 +62,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           className={`${classBase}-label`}
           disabled={disabled}
           label={label}
+          labelPlacement={"right"}
         >
           <CheckboxBase
             checked={checked}

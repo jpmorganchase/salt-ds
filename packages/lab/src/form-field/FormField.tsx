@@ -56,7 +56,7 @@ export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
     A11yValueProps {
   /**
-   * The component used for activation indicator. Default to `ActivationIndicator`.
+   * The component used for activation indicator. Default to `FormActivationIndicator`.
    */
   ActivationIndicatorComponent?: ElementType<FormActivationIndicatorProps>;
   /**

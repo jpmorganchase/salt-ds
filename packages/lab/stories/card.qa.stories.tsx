@@ -11,6 +11,8 @@ export default {
 export const CompareWithOriginalToolkit: ComponentStory<typeof Card> = () => {
   return (
     <QAContainer
+      width={600}
+      height={632}
       className="uitkCardQA"
       imgSrc="/visual-regression-screenshots/Card-vr-snapshot.png"
     >

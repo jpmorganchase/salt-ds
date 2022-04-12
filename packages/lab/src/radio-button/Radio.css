@@ -1,3 +1,4 @@
+/* Styles applied to root component (Radio) */
 .uitkRadio {
   padding: 1px 0;
   flex: 0 0 auto;
@@ -20,13 +21,15 @@
   color: var(--uitk-text-secondary-color);
 }
 
-.uitkRadio-label {
+/* Styles applied to container of Radio input and icon */
+.uitkRadio-radioContainer {
   width: 100%;
   display: flex;
   align-items: inherit;
   justify-content: inherit;
 }
 
+/* Styles applied to input component */
 .uitkRadio-input {
   cursor: inherit;
   position: absolute;
@@ -40,6 +43,7 @@
   z-index: 1;
 }
 
+/* Styles applied to root component when state `focusVisible={true}` */
 .uitkRadio-focusVisible {
   outline: var(--uitk-focused-outline);
   outline-offset: var(--uitk-focused-outline-offset);
