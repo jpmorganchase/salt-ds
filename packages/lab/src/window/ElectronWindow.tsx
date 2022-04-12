@@ -119,7 +119,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
     return () => {
       closeWindow();
     };
-  }, [closeWindow, windowRef,id]);
+  }, [closeWindow, windowRef, id]);
 
   useIsomorphicLayoutEffect(() => {
     const { ipcRenderer } = global as any;
