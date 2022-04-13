@@ -13,7 +13,7 @@ export interface GridCallbacks<T> {
   onVisibleRowRangeChanged?: (visibleRowRange: [number, number]) => void;
 }
 
-export type RowKeyGetter<T> = (row: T, index: number) => string;
+export type RowKeyGetter<T> = (row: T | undefined, index: number) => string;
 
 export interface GridData<T> {
   getKey: RowKeyGetter<T>;

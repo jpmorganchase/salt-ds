@@ -7,6 +7,7 @@ import { RowSelectionCheckboxCellValue } from "./RowSelectionCheckboxCellValue";
 import { ComponentType } from "react";
 import { RowSelectionCheckboxHeaderValue } from "./RowSelectionCheckboxHeaderValue";
 
+// TODO remove this ?
 export function createRowSelectionCheckboxColumn<T>(): ColumnDefinition<T> {
   return {
     key: "rowSelection",

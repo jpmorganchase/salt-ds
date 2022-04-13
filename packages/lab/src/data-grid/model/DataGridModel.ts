@@ -1,5 +1,5 @@
 import { DataSet, DataSetColumnDefinition, DataSetRow } from "../model";
-import { createHandler, GridModel, KeyOfType } from "../../grid";
+import { createHandler, GridModel, KeyOfType, RowKeyGetter } from "../../grid";
 import { BehaviorSubject } from "rxjs";
 import { createGridColumnDefinitions } from "./columnFactory";
 
@@ -14,10 +14,12 @@ export class DataGridModel<T = any> {
   public setColumnDefinitions = createHandler(this.columnDefinitions$);
 
   constructor(
-    getKey: (x: T) => string,
+    getKey: RowKeyGetter<T>,
     childrenPropName: KeyOfType<T, T[] | undefined>
   ) {
-    this.gridModel = new GridModel<DataSetRow<T>>((row) => row.key);
+    this.gridModel = new GridModel<DataSetRow<T>>((row, index) =>
+      row ? row.key : `row_${index}`
+    );
     this.dataSet = new DataSet<T>(getKey, childrenPropName);
     this.columnDefinitions$.subscribe((columnDefinitions) => {
       this.dataSet.setColumnDefinitions(columnDefinitions);

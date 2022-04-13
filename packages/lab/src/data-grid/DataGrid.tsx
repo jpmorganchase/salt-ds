@@ -1,14 +1,14 @@
 import { DataSetColumnDefinition } from "./model";
 import { DataGridModel } from "./model";
 import { useMemo, useState } from "react";
-import { KeyOfType } from "../grid";
+import { KeyOfType, RowKeyGetter } from "../grid";
 import { GridContext } from "../grid/GridContext";
 import { GridBase } from "../grid/components";
 import { DataGridContext } from "./DataGridContext";
 import "./DataGrid.css";
 
 export interface DataGridProps<T> {
-  getKey: (x: T) => string;
+  getKey: RowKeyGetter<T>;
   childrenPropName: KeyOfType<T, T[] | undefined>;
   columnDefinitions: DataSetColumnDefinition<T>[];
   data: T[];

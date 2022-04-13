@@ -63,19 +63,18 @@ export function AutoSizingHeaderCell<T>(props: HeaderCellProps<T>) {
   const separator = column.useSeparator();
   const rowHeight = model.useRowHeight();
 
-  const width = valueContainerRef.current
-    ? valueContainerRef.current.offsetWidth
-    : undefined;
-
   useEffect(() => {
+    const width = valueContainerRef.current
+      ? valueContainerRef.current.offsetWidth
+      : undefined;
     if (width != undefined) {
-      console.log(`AutoSizingHeaderCell measured width: ${width}`);
+      console.log(`AutoSizingHeaderCell measured width: ${width}px`);
       model.resizeColumn({
         columnIndex: column.index,
         width,
       });
     }
-  }, [width, rowHeight]);
+  }, [valueContainerRef.current, rowHeight]);
 
   return (
     <th

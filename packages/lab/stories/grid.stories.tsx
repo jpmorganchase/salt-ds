@@ -18,7 +18,7 @@ export default {
 };
 
 const blotter = new Blotter();
-for (let i = 0; i < 10; ++i) {
+for (let i = 0; i < 100; ++i) {
   const record = makeFakeBlotterRecord();
   record.identifier = `${i}-${record.identifier}`;
   blotter.addRecord(record);
@@ -99,7 +99,8 @@ interface BlotterStoryProps {
   columnGroupDefinitions: ColumnGroupDefinition<BlotterRecord>[];
 }
 
-const getKey = (record: BlotterRecord) => record.key;
+const getKey = (record: BlotterRecord | undefined, index: number) =>
+  record ? record.key : String(index);
 
 const ReadonlyGridTemplate: Story = () => {
   const [data, setData] = useState<BlotterRecord[]>(

@@ -3,6 +3,7 @@ import {
   createHandler,
   createHook,
   KeyOfType,
+  RowKeyGetter,
 } from "../../grid";
 import {
   BehaviorSubject,
@@ -160,7 +161,7 @@ function getDefaultSortFn<T>(column: DataSetColumn<T>) {
 }
 
 export class DataSet<T = any> {
-  private readonly getKey: (item: T) => string;
+  private readonly getKey: RowKeyGetter<T>;
   private readonly childrenPropName: KeyOfType<T, T[] | undefined>;
   private readonly data$ = new BehaviorSubject<T[]>([]);
   private readonly columnDefinitions$ = new BehaviorSubject<
@@ -193,7 +194,7 @@ export class DataSet<T = any> {
   public useColumnsByKey = createHook(this.columnsByKey$);
 
   constructor(
-    getKey: (item: T) => string,
+    getKey: RowKeyGetter<T>,
     childrenPropName: KeyOfType<T, T[] | undefined>
   ) {
     this.getKey = getKey;

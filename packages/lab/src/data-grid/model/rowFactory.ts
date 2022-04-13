@@ -6,24 +6,27 @@ import {
   createTreeField,
   TreeField,
 } from "./fields";
-import { KeyOfType } from "../../grid";
+import { KeyOfType, RowKeyGetter } from "../../grid";
 
 export function createRows<T>(
-  getKey: (x: T) => string,
+  getKey: RowKeyGetter<T>,
   data: T[],
   columns: DataSetColumn<T>[],
   childrenPropName: KeyOfType<T, T[] | undefined>
 ): DataSetRow<T>[] {
-  return data.map((item) => createRow(getKey, item, columns, childrenPropName));
+  return data.map((item, index) =>
+    createRow(getKey, item, index, columns, childrenPropName)
+  );
 }
 
 export function createRow<T>(
-  getKey: (x: T) => string,
+  getKey: RowKeyGetter<T>,
   item: T,
+  index: number,
   columns: DataSetColumn<T>[],
   childrenPropName: KeyOfType<T, T[] | undefined>
 ) {
-  const key = getKey(item);
+  const key = getKey(item, index);
 
   let treeField: TreeField | undefined = undefined;
   const fields = new Map<string, TreeDataSetField>();
