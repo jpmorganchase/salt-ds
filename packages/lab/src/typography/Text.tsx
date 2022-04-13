@@ -14,6 +14,7 @@ import {
   useDensity,
   makePrefixer,
   useIsomorphicLayoutEffect,
+  debounce,
 } from "@brandname/core";
 import { Tooltip, TooltipProps } from "@brandname/lab";
 
@@ -106,27 +107,41 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   const [isOverflowed, setIsOverflowed] = useState(false);
   const [hasTooltip, setHasTooltip] = useState(false);
-  const [resize, setResize] = useState<{ width: number; height: number }>();
+  const [size, setSize] = useState<{ width: number; height: number }>();
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [componentStyle, setStyle] = useState<StylesType>();
   const rows = useRef(maxRows);
   const density = useDensity();
 
+  const [resizeObserver] = useState(
+    () =>
+      new ResizeObserver((entries) => {
+        if (entries.length > 0 && entries[0].contentRect) {
+          const debounced = debounce(() => {
+            for (const entry of entries) {
+              const { width, height } = entry.contentRect;
+              if (width !== size?.width || height !== size?.height) {
+                setSize({ width, height });
+              }
+            }
+          });
+          debounced();
+        }
+      })
+  );
+
   // Scrolling
   useIsomorphicLayoutEffect(() => {
     const { current: node } = contentRef;
-    let timeoutScroll: number;
 
     const scrollObserver = new IntersectionObserver(
       (entries) => {
-        if (timeoutScroll) {
-          window.clearTimeout(timeoutScroll);
-        }
-        timeoutScroll = window.setTimeout(() => {
+        const debounced = debounce(() => {
           entries.forEach((entry) => {
             setIsIntersecting(entry.isIntersecting);
           });
-        }, 200);
+        });
+        debounced();
       },
       {
         root: null,
@@ -145,35 +160,15 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [contentRef.current]);
 
   // Resizing
-  useEffect(() => {
-    const { current: node } = contentRef;
-    let timeoutResize: number;
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries.length > 0 && entries[0].contentRect) {
-        if (timeoutResize) {
-          window.clearTimeout(timeoutResize);
-        }
-
-        timeoutResize = window.setTimeout(() => {
-          for (const entry of entries) {
-            const { width, height } = entry.contentRect;
-            if (width !== resize?.width || height !== resize?.height) {
-              setResize({ width, height });
-            }
-          }
-        }, 200);
-      }
-    });
-
-    if (node && isIntersecting) {
-      resizeObserver.observe(node);
+  useIsomorphicLayoutEffect(() => {
+    if (contentRef.current && isIntersecting) {
+      resizeObserver.observe(contentRef.current);
     }
 
     return () => {
       resizeObserver.disconnect();
     };
-  }, [contentRef.current, isIntersecting]);
+  }, [isIntersecting]);
 
   // Styling
   useEffect(() => {
@@ -245,22 +240,24 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         setStyle(styles);
       }
     }
-  }, [elementType, maxRows, expanded, truncate, density, resize]);
+  }, [elementType, maxRows, expanded, truncate, density, size]);
+
+  useEffect(() => {
+    if (onOverflow) {
+      onOverflow(isOverflowed);
+    }
+  }, [isOverflowed]);
 
   // Tooltip
   useEffect(() => {
     if (contentRef.current) {
-      if (onOverflow) {
-        onOverflow(isOverflowed);
-      }
-
       if (isOverflowed && truncate && showTooltip && expanded === undefined) {
         setHasTooltip(true);
       } else {
         setHasTooltip(false);
       }
     }
-  }, [isOverflowed, showTooltip, truncate, expanded, onOverflow]);
+  }, [isOverflowed, showTooltip, truncate, expanded]);
 
   // Rendering
   const Component: ElementType = elementType;
