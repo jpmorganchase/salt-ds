@@ -362,7 +362,8 @@ export class GridModel<T = any> implements IGridModel<T> {
     // User columns and groups + automatic columns (row selection column with checkboxes etc)
     const columnsAndGroups$ = addAutoColumnsAndGroups(
       userColumnsAndGroups$,
-      showCheckboxes$
+      showCheckboxes$,
+      rowSelectionMode$
     );
     const columns$ = createColumns(columnsAndGroups$);
 
@@ -428,7 +429,7 @@ export class GridModel<T = any> implements IGridModel<T> {
       leftWidth$
     );
 
-    this.rowSelection = new RowSelection<T>(data$, getKey);
+    this.rowSelection = new RowSelection<T>(data$, getKey, rowSelectionMode$);
 
     const rows$ = createRows<T>(
       getKey,

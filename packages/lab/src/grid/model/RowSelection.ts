@@ -7,6 +7,7 @@ import {
 } from "rxjs";
 import { useObservable } from "./useObservable";
 import { RowKeyGetter } from "../Grid";
+import { RowSelectionMode } from "./GridModel";
 
 export interface SelectAllEvent {
   isAllSelected: boolean;
@@ -32,6 +33,8 @@ export interface IRowSelection<T> {
 export class RowSelection<T> implements IRowSelection<T> {
   public readonly selectedKeys$ = new BehaviorSubject<Set<string>>(new Set());
   public readonly selectAllEvents$ = new Subject<SelectAllEvent>();
+  private readonly rowSelectionMode$: BehaviorSubject<RowSelectionMode>;
+
   public selectAll(isAllSelected: boolean) {
     this.selectAllEvents$.next({ isAllSelected });
   }
@@ -51,7 +54,13 @@ export class RowSelection<T> implements IRowSelection<T> {
     return useObservable(this.isAllSelected$);
   }
 
-  public constructor(data$: BehaviorSubject<T[]>, getRowKey: RowKeyGetter<T>) {
+  public constructor(
+    data$: BehaviorSubject<T[]>,
+    getRowKey: RowKeyGetter<T>,
+    rowSelectionMode$: BehaviorSubject<RowSelectionMode>
+  ) {
+    this.rowSelectionMode$ = rowSelectionMode$;
+
     data$.subscribe((data) => {
       const allKeys = new Set(data.map(getRowKey));
       const newKeys = new Set<string>();
@@ -80,29 +89,41 @@ export class RowSelection<T> implements IRowSelection<T> {
     });
 
     this.toggleRowEvents$.subscribe((event) => {
-      const newKeys = new Set(this.selectedKeys$.getValue());
-      if (newKeys.has(event.rowKey)) {
-        newKeys.delete(event.rowKey);
+      const rowSelectionMode = this.rowSelectionMode$.getValue();
+      if (rowSelectionMode === "single") {
+        this.selectedKeys$.next(new Set(event.rowKey));
       } else {
-        newKeys.add(event.rowKey);
+        const newKeys = new Set(this.selectedKeys$.getValue());
+        if (newKeys.has(event.rowKey)) {
+          newKeys.delete(event.rowKey);
+        } else {
+          newKeys.add(event.rowKey);
+        }
+        this.selectedKeys$.next(newKeys);
       }
-      this.selectedKeys$.next(newKeys);
     });
 
     this.selectRowsEvents$.subscribe((event) => {
-      const newKeys = event.clearPreviouslySelected
-        ? new Set<string>()
-        : new Set(this.selectedKeys$.getValue());
-      if (event.isSelected) {
-        for (let k of event.rowKeys) {
-          newKeys.add(k);
-        }
+      const rowSelectionMode = this.rowSelectionMode$.getValue();
+      if (rowSelectionMode === "single") {
+        const newKeys = new Set<string>();
+        newKeys.add(event.rowKeys[0]);
+        this.selectedKeys$.next(newKeys);
       } else {
-        for (let k of event.rowKeys) {
-          newKeys.delete(k);
+        const newKeys = event.clearPreviouslySelected
+          ? new Set<string>()
+          : new Set(this.selectedKeys$.getValue());
+        if (event.isSelected) {
+          for (let k of event.rowKeys) {
+            newKeys.add(k);
+          }
+        } else {
+          for (let k of event.rowKeys) {
+            newKeys.delete(k);
+          }
         }
+        this.selectedKeys$.next(newKeys);
       }
-      this.selectedKeys$.next(newKeys);
     });
   }
 }

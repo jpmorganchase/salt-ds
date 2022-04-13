@@ -148,7 +148,7 @@ const MultiRowSelectionGridTemplate: Story = () => {
     <Grid
       data={data}
       columnDefinitions={columnDefinitions}
-      rowSelectionMode={"single"}
+      rowSelectionMode={"multi"}
       showCheckboxes={true}
       getKey={getKey}
     />
@@ -159,7 +159,20 @@ const LazyGridTemplate: Story = () => {
   return <LazyGrid />;
 };
 
-// const SingleRowSelectionGridTemplate: Story = ()
+const SingleRowSelectionGridTemplate: Story = () => {
+  const [data, setData] = useState<BlotterRecord[]>(
+    () => blotter.visibleRecords
+  );
+  return (
+    <Grid
+      data={data}
+      columnDefinitions={columnDefinitions}
+      rowSelectionMode={"single"}
+      showCheckboxes={true}
+      getKey={getKey}
+    />
+  );
+};
 
 export const ReadonlyGridExample = ReadonlyGridTemplate.bind({});
 
@@ -169,7 +182,7 @@ export const MixedEditableGridExample = MixedEditableGridTemplate.bind({});
 
 export const MultiRowSelectionGrid = MultiRowSelectionGridTemplate.bind({});
 
-// export const SingleRowSelectionGrid = SingleRowSelectionGridTemplate.bind({});
+export const SingleRowSelectionGrid = SingleRowSelectionGridTemplate.bind({});
 
 export const LazyGridExample = LazyGridTemplate.bind({});
 

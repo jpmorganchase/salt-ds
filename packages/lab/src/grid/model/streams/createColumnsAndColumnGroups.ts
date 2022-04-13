@@ -3,10 +3,12 @@ import { ColumnDefinition } from "../ColumnDefinition";
 import { ColumnGroupDefinition } from "../ColumnGroupDefinition";
 import { ColumnGroup } from "../ColumnGroup";
 import { Column } from "../Column";
-import { ColumnsAndGroups } from "../GridModel";
+import { ColumnsAndGroups, RowSelectionMode } from "../GridModel";
 import { RowSelectionCheckboxCellValue } from "../../column-types/row-selection-checkbox/RowSelectionCheckboxCellValue";
 import { RowSelectionCheckboxHeaderValue } from "../../column-types/row-selection-checkbox/RowSelectionCheckboxHeaderValue";
 import { AutoSizingHeaderCell } from "../../components";
+import { RowSelectionRadioCellValue } from "../../column-types/row-selection-radio/RowSelectionRadioCellValue";
+import { RowSelectionRadioHeaderValue } from "../../column-types/row-selection-radio";
 
 export function createColumnsAndColumnGroups<T>(
   columnDefinitions: BehaviorSubject<ColumnDefinition<T>[] | undefined>,
@@ -96,16 +98,45 @@ export function createColumnsAndColumnGroups<T>(
   return columnsAndGroups$;
 }
 
+function createRowSelectionColumnDef<T>(
+  rowSelectionMode: Exclude<RowSelectionMode, "none">
+): ColumnDefinition<T> {
+  if (rowSelectionMode === "multi") {
+    return {
+      key: "checkboxRowSelectorColumn",
+      title: "",
+      width: 100,
+      pinned: "left",
+      cellValueComponent: RowSelectionCheckboxCellValue,
+      headerComponent: AutoSizingHeaderCell,
+      headerValueComponent: RowSelectionCheckboxHeaderValue,
+    } as ColumnDefinition<T>;
+  } else if (rowSelectionMode === "single") {
+    return {
+      key: "radioRowSelectorColumn",
+      title: "",
+      width: 100,
+      pinned: "left",
+      cellValueComponent: RowSelectionRadioCellValue,
+      headerComponent: AutoSizingHeaderCell,
+      headerValueComponent: RowSelectionRadioHeaderValue,
+    };
+  } else {
+    throw new Error(`Unexpected row selection mode: "${rowSelectionMode}"`);
+  }
+}
+
 export function addAutoColumnsAndGroups<T>(
   userColumnsAndGroups$: BehaviorSubject<ColumnsAndGroups<T>>,
-  showCheckboxes$: BehaviorSubject<boolean | undefined>
+  showCheckboxes$: BehaviorSubject<boolean | undefined>,
+  rowSelectionMode$: BehaviorSubject<RowSelectionMode>
 ): BehaviorSubject<ColumnsAndGroups<T>> {
   const columnsAndGroups$ = new BehaviorSubject<ColumnsAndGroups<T>>(
     userColumnsAndGroups$.getValue()
   );
-  combineLatest([userColumnsAndGroups$, showCheckboxes$])
+  combineLatest([userColumnsAndGroups$, showCheckboxes$, rowSelectionMode$])
     .pipe(
-      map(([userColumnsAndGroups, showCheckboxes]) => {
+      map(([userColumnsAndGroups, showCheckboxes, rowSelectionMode]) => {
         const { rightColumns, rightColumnGroups } = userColumnsAndGroups;
         let {
           leftColumns,
@@ -113,17 +144,10 @@ export function addAutoColumnsAndGroups<T>(
           middleColumns,
           middleColumnGroups,
         } = userColumnsAndGroups;
-        // Add checkbox column and group if showCheckboxes is set to true
-        if (showCheckboxes) {
-          const checkboxColumnDefinition: ColumnDefinition<T> = {
-            key: "rowSelector",
-            title: "",
-            width: 100,
-            pinned: "left",
-            cellValueComponent: RowSelectionCheckboxCellValue,
-            headerComponent: AutoSizingHeaderCell,
-            headerValueComponent: RowSelectionCheckboxHeaderValue,
-          } as ColumnDefinition<T>;
+        // Add checkbox/radio column and group if showCheckboxes is set to true and selection mode is not "none"
+        if (showCheckboxes && rowSelectionMode !== "none") {
+          const checkboxColumnDefinition: ColumnDefinition<T> =
+            createRowSelectionColumnDef(rowSelectionMode);
           const checkboxColumn = new Column(checkboxColumnDefinition);
           if (
             leftColumnGroups != undefined &&
