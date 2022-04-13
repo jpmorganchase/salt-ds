@@ -6,12 +6,12 @@ import { Text, TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 
-export interface HeadingProps extends TextProps {
+export interface HeadingProps extends Omit<TextProps, "elementType"> {
   children: string | ReactNode;
   /**
    * Represents the semantic element.
    */
-  elementType?: ElementType & ("h1" | "h2" | "h3" | "h4");
+  // elementType?: ElementType & ("h1" | "h2" | "h3" | "h4");
   /**
    * Match styling to a specified heading
    */
