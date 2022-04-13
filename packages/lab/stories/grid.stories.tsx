@@ -170,6 +170,7 @@ const SingleRowSelectionGridTemplate: Story = () => {
       rowSelectionMode={"single"}
       showCheckboxes={true}
       getKey={getKey}
+      isZebra={true}
     />
   );
 };

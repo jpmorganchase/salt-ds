@@ -148,6 +148,7 @@ export interface IGridModel<T> {
   // Props
   readonly setShowFooter: (showFooter?: boolean) => void;
   readonly setShowTree: (showTree?: boolean) => void;
+  readonly setIsZebra: (isZebra?: boolean) => void;
   // TODO checkboxes can be radio buttons in single-row mode. Rename this.
   readonly setShowCheckboxes: (showCheckboxes?: boolean) => void;
   readonly setColumnDefinitions: (
@@ -227,6 +228,7 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly setCellSelectionMode: (m: CellSelectionMode) => void;
   public readonly useRowSelectionMode: () => RowSelectionMode;
   public readonly useCellSelectionMode: () => CellSelectionMode;
+  public readonly setIsZebra: (isZebra?: boolean) => void;
   // Events
   public readonly resize: (size: GridSize) => void;
   public readonly scroll: (event: GridScrollEvent) => void;
@@ -283,6 +285,7 @@ export class GridModel<T = any> implements IGridModel<T> {
       ColumnDefinition<T>[] | undefined
     >([]);
     const data$ = new BehaviorSubject<T[]>([]);
+    const isZebra$ = new BehaviorSubject<boolean | undefined>(undefined);
 
     // TODO consider extracting these into a selection model class
     const rowSelectionMode$ = new BehaviorSubject<RowSelectionMode>("single");
@@ -436,7 +439,8 @@ export class GridModel<T = any> implements IGridModel<T> {
       data$,
       visibleRowRange$,
       this.rowSelection,
-      cursorPosition$
+      cursorPosition$,
+      isZebra$
     );
 
     const isLeftRaised$ = createIsLeftRaised(scrollLeft$);
@@ -504,6 +508,7 @@ export class GridModel<T = any> implements IGridModel<T> {
     this.useRowSelectionMode = createHook(rowSelectionMode$);
     this.useCellSelectionMode = createHook(cellSelectionMode$);
     this.setOnVisibleRowRangeChange = createHandler(onVisibleRowRangeChange$);
+    this.setIsZebra = createHandler(isZebra$);
 
     scrollPosition$
       .pipe(

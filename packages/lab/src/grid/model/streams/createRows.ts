@@ -7,20 +7,21 @@ import { RowKeyGetter } from "../../Grid";
 
 export function createRows<T>(
   getKey: RowKeyGetter<T>,
-  data: BehaviorSubject<T[]>,
-  visibleRowRange: BehaviorSubject<Rng>,
-  rowSelection: RowSelection<T>,
-  cursorPosition: BehaviorSubject<CellPosition | undefined>
+  data$: BehaviorSubject<T[]>,
+  visibleRowRange$: BehaviorSubject<Rng>,
+  rowSelection$: RowSelection<T>,
+  cursorPosition$: BehaviorSubject<CellPosition | undefined>,
+  isZebra$: BehaviorSubject<boolean | undefined>
 ) {
   const rows$ = new BehaviorSubject<Row<T>[]>([]);
 
-  combineLatest([data, visibleRowRange])
+  combineLatest([data$, visibleRowRange$])
     .pipe(
       map(([data, visibleRowRange]) => {
         const oldRows = new Map(rows$.getValue().map((row) => [row.key, row]));
 
         const rows: Row<T>[] = [];
-        const cursor = cursorPosition.getValue();
+        const cursor = cursorPosition$.getValue();
         visibleRowRange.forEach((i) => {
           const key = getKey(data[i], i);
           const oldRow = oldRows.get(key);
@@ -35,7 +36,7 @@ export function createRows<T>(
           } else {
             const row = new Row(key, i, data[i]);
             row.isSelected$.next(
-              rowSelection.selectedKeys$.getValue().has(row.key)
+              rowSelection$.selectedKeys$.getValue().has(row.key)
             );
             if (cursor && cursor.rowIndex === i) {
               row.cursorColumnIndex$.next(cursor.columnIndex);
@@ -48,7 +49,13 @@ export function createRows<T>(
     )
     .subscribe(rows$);
 
-  rowSelection.selectedKeys$.subscribe((selectedKeys) => {
+  combineLatest([rows$, isZebra$]).subscribe(([rows, isZebra]) => {
+    rows.forEach((row, index) => {
+      row.isZebra$.next(!!isZebra && index % 2 === 0);
+    });
+  });
+
+  rowSelection$.selectedKeys$.subscribe((selectedKeys) => {
     const rows = rows$.getValue();
     rows.forEach((row) => {
       const isSelected = selectedKeys.has(row.key);
