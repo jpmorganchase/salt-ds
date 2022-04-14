@@ -50,6 +50,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
             aria-hidden={!expanded1}
             onOverflow={(isOverflowed: boolean) => {
               setHidden1(!isOverflowed && !expanded1);
+              console.log("onOverflow was called on 1st Text component");
             }}
             lazyLoading={lazyLoading}
           >
@@ -91,6 +92,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
             aria-hidden={!expanded2}
             onOverflow={(isOverflowed: boolean) => {
               setHidden2(!isOverflowed && !expanded2);
+              console.log("onOverflow was called on 2nd Text component");
             }}
             lazyLoading={lazyLoading}
           >
@@ -125,6 +127,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
             aria-hidden={!expanded3}
             onOverflow={(isOverflowed: boolean) => {
               setHidden3(!isOverflowed && !expanded3);
+              console.log("onOverflow was called on 3rd Text component");
             }}
             lazyLoading={lazyLoading}
           >
@@ -159,6 +162,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
             aria-hidden={!expanded4}
             onOverflow={(isOverflowed: boolean) => {
               setHidden4(!isOverflowed && !expanded4);
+              console.log("onOverflow was called on 4th Text component");
             }}
             lazyLoading={lazyLoading}
           >
