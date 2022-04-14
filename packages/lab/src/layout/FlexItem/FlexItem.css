@@ -1,0 +1,12 @@
+/* VARIABLES */
+.uitkFlexItem {
+  --item-alignment: auto;
+  --shrink: 1;
+  --stretch: 0;
+}
+
+.uitkFlexItem {
+  align-self: var(--item-alignment);
+  flex-grow: var(--shrink);
+  flex-shrink: var(--stretch);
+}

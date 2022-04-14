@@ -1,0 +1,18 @@
+/* VARIABLES */
+.uitkFlexLayout {
+  --gap: var(--uitk-spacing-unit);
+  --gap-multiplier: 1;
+  --layout-display: flex;
+  --direction: row;
+  --wrap: wrap;
+  --justify: flex-start;
+  --align: stretch;
+}
+
+.uitkFlexLayout {
+  gap: calc(var(--gap) * var(--gap-multiplier));
+  display: var(--layout-display);
+  flex-flow: var(--direction) var(--wrap);
+  justify-content: var(--justify);
+  align-items: var(--align);
+}
