@@ -28,7 +28,8 @@
   --cell-padding: 0 var(--padding) 0 var(--padding);
   --zebra-color: #eaedef;
   --hover-color: #a4d5f4;
-  --selected-color: #64b1e4;
+  --selected-row-color: #64b1e4;
+  --selected-cell-color: #64b1e4;
 
   /*border: solid 1px red;*/
 }

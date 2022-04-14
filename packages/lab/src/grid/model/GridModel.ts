@@ -58,6 +58,7 @@ import { GridScrollPosition } from "./GridScrollPosition";
 import { EditMode, IEditMode } from "./EditMode";
 import { createHandler, createHook, prevNextPairs } from "./utils";
 import { RowKeyGetter } from "../Grid";
+import { CellSelection, ICellSelection } from "./CellSelection";
 
 export type KeyOfType<T, U> = {
   [P in keyof T]: T[P] extends U ? P : never;
@@ -145,6 +146,7 @@ export interface IGridModel<T> {
   readonly columnDragAndDrop: IColumnDragAndDrop<T>;
   readonly editMode: IEditMode;
   readonly rowSelection: IRowSelection<T>;
+  readonly cellSelection: ICellSelection<T>;
   // Props
   readonly setShowFooter: (showFooter?: boolean) => void;
   readonly setShowTree: (showTree?: boolean) => void;
@@ -213,6 +215,7 @@ export class GridModel<T = any> implements IGridModel<T> {
   public readonly columnDragAndDrop: ColumnDragAndDrop<T>;
   public readonly editMode: EditMode;
   public readonly rowSelection: RowSelection<T>;
+  public readonly cellSelection: CellSelection<T>;
   // Props
   public readonly setShowFooter: (showFooter?: boolean) => void;
   public readonly setShowTree: (showTree?: boolean) => void;
@@ -433,12 +436,19 @@ export class GridModel<T = any> implements IGridModel<T> {
     );
 
     this.rowSelection = new RowSelection<T>(data$, getKey, rowSelectionMode$);
+    this.cellSelection = new CellSelection<T>(
+      data$,
+      getKey,
+      cellSelectionMode$,
+      columns$
+    );
 
     const rows$ = createRows<T>(
       getKey,
       data$,
       visibleRowRange$,
       this.rowSelection,
+      this.cellSelection,
       cursorPosition$,
       isZebra$
     );

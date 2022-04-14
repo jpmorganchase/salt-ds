@@ -35,12 +35,13 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
   const { row, columns, onMouseEnter, onMouseLeave } = props;
 
   const data = row.useData();
-  const isSelected = row.useIsSelected();
+  const isSelectedRow = row.useIsSelected();
   const isHoverOver = row.useIsHoverOver();
   const isZebra = row.useIsZebra();
   const cursorColumnIndex = row.useCursorColumnIndex();
   const isEditMode = row.useIsEditMode();
   const index = row.useIndex();
+  const selectedCells = row.useSelectedCells();
 
   return (
     <tr
@@ -55,6 +56,7 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
         const definition = column.definition;
         const value = getCellValue(definition, data);
         const isFocused = cursorColumnIndex === column.index;
+        const isSelected = selectedCells?.has(column.key);
 
         if (isEditMode && isFocused && definition.editorComponent) {
           const Editor = definition.editorComponent;
@@ -71,7 +73,8 @@ export const TableRow = memo<TableRowProps>(function TableRow<T>(
               row={row}
               column={column}
               isHoverOverRow={isHoverOver}
-              isSelectedRow={isSelected}
+              isSelectedRow={isSelectedRow}
+              isSelected={isSelected}
               isFocused={isFocused}
               isAlternate={isZebra}
             >

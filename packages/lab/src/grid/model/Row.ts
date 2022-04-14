@@ -31,6 +31,11 @@ export class Row<T = any> {
     return useObservable(this.cursorColumnIndex$);
   }
 
+  public readonly selectedCells$: BehaviorSubject<Set<string> | undefined>;
+  public useSelectedCells() {
+    return useObservable(this.selectedCells$);
+  }
+
   public readonly isEditMode$: BehaviorSubject<boolean>;
   public useIsEditMode() {
     return useObservable(this.isEditMode$);
@@ -52,5 +57,8 @@ export class Row<T = any> {
     );
     this.isZebra$ = new BehaviorSubject<boolean>(false);
     this.isEditMode$ = new BehaviorSubject<boolean>(false);
+    this.selectedCells$ = new BehaviorSubject<Set<string> | undefined>(
+      undefined
+    );
   }
 }

@@ -4,12 +4,15 @@ import { Rng } from "../Rng";
 import { RowSelection } from "../RowSelection";
 import { CellPosition } from "../GridModel";
 import { RowKeyGetter } from "../../Grid";
+import { CellSelection } from "../CellSelection";
+import { prevNextPairs } from "../utils";
 
 export function createRows<T>(
   getKey: RowKeyGetter<T>,
   data$: BehaviorSubject<T[]>,
   visibleRowRange$: BehaviorSubject<Rng>,
   rowSelection$: RowSelection<T>,
+  cellSelection$: CellSelection<T>,
   cursorPosition$: BehaviorSubject<CellPosition | undefined>,
   isZebra$: BehaviorSubject<boolean | undefined>
 ) {
@@ -62,6 +65,14 @@ export function createRows<T>(
       if (row.isSelected$.getValue() !== isSelected) {
         row.isSelected$.next(isSelected);
       }
+    });
+  });
+
+  cellSelection$.selectedCells$.subscribe((selectedCells) => {
+    const rows = rows$.getValue();
+    rows.forEach((row) => {
+      const rowSelectedCells = selectedCells.get(row.key);
+      row.selectedCells$.next(rowSelectedCells);
     });
   });
 

@@ -26,8 +26,12 @@
   background-color: var(--hover-color);
 }
 
-.uitkGridBaseCell-selected {
-  background-color: var(--selected-color);
+.uitkGridBaseCell-selectedRow {
+  background-color: var(--selected-row-color);
+}
+
+.uitkGridBaseCell-selectedCell {
+  background-color: var(--selected-cell-color);
 }
 
 .uitkGridBaseCell-zebra {

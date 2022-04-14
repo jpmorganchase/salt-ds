@@ -14,6 +14,7 @@ export interface BaseCellProps<T = any>
   column: Column<T>;
   isHoverOverRow?: boolean;
   isSelectedRow?: boolean;
+  isSelected?: boolean;
   isFocused?: boolean;
   isAlternate?: boolean;
   className?: string;
@@ -56,6 +57,7 @@ export const BaseCell: FC<BaseCellProps> = function BaseCell(props) {
     column,
     isHoverOverRow,
     isSelectedRow,
+    isSelected,
     isFocused,
     isAlternate,
     className,
@@ -81,8 +83,10 @@ export const BaseCell: FC<BaseCellProps> = function BaseCell(props) {
         withBaseName(),
         {
           [withBaseName("hover")]: isHoverOverRow,
-          [withBaseName("selected")]: isSelectedRow,
-          [withBaseName("zebra")]: isAlternate,
+          [withBaseName("selectedRow")]: isSelectedRow,
+          [withBaseName("selectedCell")]: isSelected,
+          [withBaseName("zebra")]:
+            isAlternate && !isSelected && !isSelectedRow && !isHoverOverRow, // TODO css?
           [withBaseName("editable")]: !isAllEditable && isEditable,
           [withBaseName("allEditable")]: isAllEditable && column.index !== 0,
         },

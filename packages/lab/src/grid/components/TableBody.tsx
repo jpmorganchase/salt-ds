@@ -15,6 +15,8 @@ export interface TableBodyProps<T> {
 export function TableBody<T>(props: TableBodyProps<T>) {
   const { columns, rows } = props;
   const { model } = useGridContext();
+  const rowSelectionMode = model.useRowSelectionMode();
+  const cellSelectionMode = model.useCellSelectionMode();
 
   const onMouseEnter: MouseEventHandler<HTMLTableRowElement> = useCallback(
     (event) => {
@@ -30,16 +32,32 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     []
   );
 
-  const onMouseDown: MouseEventHandler = useCallback((event) => {
-    const cell = getCellPosition(event.target as HTMLElement);
-    const rowKey = getRowKey(event.target as HTMLElement);
-    model.rowSelection.selectRows({
-      clearPreviouslySelected: true,
-      rowKeys: [rowKey],
-      isSelected: true,
-    });
-    model.moveCursor(cell);
-  }, []);
+  const onMouseDown: MouseEventHandler = useCallback(
+    (event) => {
+      const cell = getCellPosition(event.target as HTMLElement);
+      const rowKey = getRowKey(event.target as HTMLElement);
+      if (rowSelectionMode !== "none") {
+        model.rowSelection.selectRows({
+          clearPreviouslySelected: true,
+          rowKeys: [rowKey],
+          isSelected: true,
+        });
+      }
+      if (cellSelectionMode !== "none") {
+        model.cellSelection.selectCells({
+          cellKeys: [
+            {
+              rowKey,
+              columnIndex: cell.columnIndex,
+              rowIndex: cell.rowIndex,
+            },
+          ],
+        });
+      }
+      model.moveCursor(cell);
+    },
+    [rowSelectionMode, cellSelectionMode]
+  );
 
   const onDoubleClick: MouseEventHandler = useCallback((event) => {
     model.editMode.start();

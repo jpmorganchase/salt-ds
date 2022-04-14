@@ -62,14 +62,18 @@ export class RowSelection<T> implements IRowSelection<T> {
     this.rowSelectionMode$ = rowSelectionMode$;
 
     data$.subscribe((data) => {
-      const allKeys = new Set(data.map(getRowKey));
-      const newKeys = new Set<string>();
-      for (let k of this.selectedKeys$.getValue()) {
-        if (allKeys.has(k)) {
-          newKeys.add(k);
+      const selectedKeys = this.selectedKeys$.getValue();
+      if (selectedKeys.size > 0) {
+        // TODO this is slow. Find another way of preserving selection when data changes.
+        const allKeys = new Set(data.map(getRowKey));
+        const newKeys = new Set<string>();
+        for (let k of this.selectedKeys$.getValue()) {
+          if (allKeys.has(k)) {
+            newKeys.add(k);
+          }
         }
+        this.selectedKeys$.next(newKeys);
       }
-      this.selectedKeys$.next(newKeys);
     });
 
     combineLatest([this.selectedKeys$, data$])
