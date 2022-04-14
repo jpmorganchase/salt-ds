@@ -113,35 +113,17 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const rows = useRef(maxRows);
   const density = useDensity();
 
-  const [resizeObserver] = useState(
-    () =>
-      new ResizeObserver((entries) => {
-        if (entries.length > 0 && entries[0].contentRect) {
-          const debounced = debounce(() => {
-            for (const entry of entries) {
-              const { width, height } = entry.contentRect;
-              if (width !== size?.width || height !== size?.height) {
-                setSize({ width, height });
-              }
-            }
-          });
-          debounced();
-        }
-      })
-  );
-
   // Scrolling
-  useIsomorphicLayoutEffect(() => {
-    const { current: node } = contentRef;
+  const debounceScrolling = debounce((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      setIsIntersecting(entry.isIntersecting);
+    });
+  });
 
+  useIsomorphicLayoutEffect(() => {
     const scrollObserver = new IntersectionObserver(
       (entries) => {
-        const debounced = debounce(() => {
-          entries.forEach((entry) => {
-            setIsIntersecting(entry.isIntersecting);
-          });
-        });
-        debounced();
+        debounceScrolling(entries);
       },
       {
         root: null,
@@ -150,8 +132,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       }
     );
 
-    if (node) {
-      scrollObserver.observe(node);
+    if (contentRef.current) {
+      scrollObserver.observe(contentRef.current);
     }
 
     return () => {
@@ -160,6 +142,24 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [contentRef.current]);
 
   // Resizing
+  const debounceResize = debounce((entries) => {
+    for (const entry of entries) {
+      const { width, height } = entry.contentRect;
+      if (width !== size?.width || height !== size?.height) {
+        setSize({ width, height });
+      }
+    }
+  });
+
+  const [resizeObserver] = useState(
+    () =>
+      new ResizeObserver((entries) => {
+        if (entries.length > 0 && entries[0].contentRect) {
+          debounceResize(entries);
+        }
+      })
+  );
+
   useIsomorphicLayoutEffect(() => {
     if (contentRef.current && isIntersecting) {
       resizeObserver.observe(contentRef.current);
