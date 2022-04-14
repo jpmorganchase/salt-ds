@@ -8,6 +8,7 @@ import {
   ReactNode,
   CSSProperties,
   forwardRef,
+  useMemo,
 } from "react";
 import cx from "classnames";
 import {
@@ -75,9 +76,15 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * Override style for margin-bottom
    */
   marginBottom?: number;
+  /**
+   * On first render, display the text after it's size has been calculated to avoid snapping into shape if overflows
+   * Defaults to 'false'
+   */
+  lazyLoading?: boolean;
 }
 
 interface StylesType {
+  opacity?: number;
   "--text-height"?: string;
   "--text-max-rows"?: number;
 }
@@ -98,6 +105,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     onOverflow,
     marginTop,
     marginBottom,
+    lazyLoading = false,
     ...restProps
   },
   ref
@@ -106,17 +114,18 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const setContainerRef = useForkRef(ref, contentRef);
 
   const [isOverflowed, setIsOverflowed] = useState(false);
-  const [hasTooltip, setHasTooltip] = useState(false);
   const [size, setSize] = useState<{ width: number; height: number }>();
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const [componentStyle, setStyle] = useState<StylesType>();
   const rows = useRef(maxRows);
   const density = useDensity();
+  let firstRendered = false;
 
   // Scrolling
   const debounceScrolling = debounce((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
-      setIsIntersecting(entry.isIntersecting);
+      if (entry.target.isConnected) {
+        setIsIntersecting(entry.isIntersecting);
+      }
     });
   });
 
@@ -145,7 +154,10 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const debounceResize = debounce((entries) => {
     for (const entry of entries) {
       const { width, height } = entry.contentRect;
-      if (width !== size?.width || height !== size?.height) {
+      if (
+        entry.target.isConnected &&
+        (width !== size?.width || height !== size?.height)
+      ) {
         setSize({ width, height });
       }
     }
@@ -171,9 +183,10 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [isIntersecting]);
 
   // Styling
-  useEffect(() => {
+  const componentStyle = useMemo(() => {
     if (contentRef.current) {
       const styles: StylesType = {};
+      let shouldOverflow = false;
 
       if (maxRows) {
         rows.current = maxRows;
@@ -183,15 +196,13 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         styles["--text-max-rows"] = 1;
       } else if (maxRows === 0) {
         // mostly for accommodating reset maxRows in stories
-        setIsOverflowed(false);
-        setStyle({});
-        return;
+
+        return {};
       }
 
       if (expanded) {
         styles["--text-max-rows"] = 0;
         styles["--text-height"] = `100%`;
-        setIsOverflowed(false);
       } else if (truncate) {
         const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
           contentRef.current;
@@ -204,9 +215,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
           if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
             styles["--text-height"] = `${maxRowsHeight}px`;
-            setIsOverflowed(true);
-          } else {
-            setIsOverflowed(false);
+            shouldOverflow = true;
           }
         }
         // we check for wrapper size only if it's the only child, otherwise we depend on too much styling
@@ -229,15 +238,22 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
             styles["--text-max-rows"] = newRows;
             styles["--text-height"] = `${newRows * lineHeight}px`;
 
-            setIsOverflowed(true);
-          } else {
-            setIsOverflowed(false);
+            shouldOverflow = true;
           }
         }
       }
 
+      if (lazyLoading && !firstRendered) {
+        styles.opacity = 1;
+        firstRendered = true;
+      }
+
       if (Object.keys(styles).length > 0) {
-        setStyle(styles);
+        if (shouldOverflow !== isOverflowed) {
+          setIsOverflowed(shouldOverflow);
+        }
+
+        return styles;
       }
     }
   }, [elementType, maxRows, expanded, truncate, density, size]);
@@ -249,14 +265,14 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [isOverflowed]);
 
   // Tooltip
-  useEffect(() => {
+  const hasTooltip = useMemo(() => {
+    let shouldHaveTooltip = false;
     if (contentRef.current) {
       if (isOverflowed && truncate && showTooltip && expanded === undefined) {
-        setHasTooltip(true);
-      } else {
-        setHasTooltip(false);
+        shouldHaveTooltip = true;
       }
     }
+    return shouldHaveTooltip;
   }, [isOverflowed, showTooltip, truncate, expanded]);
 
   // Rendering
@@ -264,6 +280,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const content = (
     <Component
       className={cx(withBaseName(), className, {
+        [withBaseName("lazy")]: lazyLoading,
         [withBaseName("lineClamp")]: isOverflowed && truncate,
         [withBaseName("overflow")]: !truncate,
       })}

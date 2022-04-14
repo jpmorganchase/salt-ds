@@ -10,9 +10,18 @@ import { Text, LabelCaption, HelpText, P, Span, Div } from "@brandname/lab";
 export default {
   title: "Lab/Typography",
   component: Text,
+  argTypes: {
+    lazyLoading: {
+      description:
+        "Display the text after it's size has been calculated to avoid snapping into shape. Refresh the page after you've changed the prop",
+      control: { type: "boolean" },
+    },
+  },
 } as ComponentMeta<typeof Text>;
 
-const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
+const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
+  lazyLoading,
+}) => {
   const box = {
     border: "1px solid #ccc",
     padding: 10,
@@ -38,7 +47,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>Wraps</strong>
       </div>
       <div style={{ ...box }}>
-        <Div>
+        <Div lazyLoading={lazyLoading}>
           The king's son said he was to send her up to him, but the mother
           answered, oh, no, she is much too dirty, she cannot show herself. But
           he absolutely insisted on it, and Cinderella had to be called.
@@ -54,7 +63,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>Has scrollbar</strong>
       </div>
       <div style={{ ...box, height: 70 }}>
-        <Div truncate={false}>
+        <Div truncate={false} lazyLoading={lazyLoading}>
           She first washed her hands and face clean, and then went and bowed
           down before the king's son, who gave her the golden shoe. Then she
           seated herself on a stool, drew her foot out of the heavy wooden shoe,
@@ -69,7 +78,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>shows Tooltip</strong>
       </div>
       <div style={{ ...box, height: 40 }}>
-        <Div>
+        <Div lazyLoading={lazyLoading}>
           And when she rose up and the king's son looked at her face he
           recognized the beautiful maiden who had danced with him and cried,
           that is the true bride.
@@ -83,7 +92,12 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>expandable</strong>
       </div>
       <div style={{ ...box, display: "flex" }}>
-        <P maxRows={2} expanded={expanded} style={{ marginRight: 20 }}>
+        <P
+          maxRows={2}
+          expanded={expanded}
+          style={{ marginRight: 20 }}
+          lazyLoading={lazyLoading}
+        >
           The step-mother and the two sisters were horrified and became pale
           with rage, he, however, took Cinderella on his horse and rode away
           with her.
@@ -108,7 +122,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>shows Tooltip</strong>
       </div>
       <div style={box}>
-        <Span maxRows={2}>
+        <Span maxRows={2} lazyLoading={lazyLoading}>
           When the wedding with the king's son was to be celebrated, the two
           false sisters came and wanted to get into favor with cinderella and
           share her good fortune.
