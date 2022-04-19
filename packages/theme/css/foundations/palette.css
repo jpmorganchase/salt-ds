@@ -1,0 +1,169 @@
+.uitk-light,
+.uitk-dark {
+  /* Greens */
+  --uitk-palette-success-border: var(--uitk-color-green-500);
+  --uitk-palette-success-icon: var(--uitk-color-green-500);
+
+  /* Oranges */
+  --uitk-palette-warning-border: var(--uitk-color-orange-500);
+  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
+
+  /* Greyscales */
+  --uitk-palette-action-border: var(--uitk-color-grey-90);
+  --uitk-palette-accent-foreground: var(--uitk-color-white);
+  --uitk-palette-action-stroke: var(--uitk-color-grey-90);
+  --uitk-palette-action-foreground-cta: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-hover: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-selected: var(--uitk-color-white);
+  --uitk-palette-navigate-underline-hover: var(--uitk-color-grey-90); /* check vs medium emphasis navigate hover background with design */
+  --uitk-palette-neutral-measured-border: var(--uitk-color-grey-90); /* check vs medium emphasis neutral border with design */
+
+  /* Reds */
+  --uitk-palette-error-border: var(--uitk-color-red-500);
+  --uitk-palette-error-icon: var(--uitk-color-red-500);
+
+  /* Blues */
+  --uitk-palette-accent-background: var(--uitk-color-blue-500);
+  --uitk-palette-accent-border: var(--uitk-color-blue-500);
+  --uitk-palette-action-background-cta: var(--uitk-color-blue-600);
+  --uitk-palette-action-background-cta-active: var(--uitk-color-blue-700);
+  --uitk-palette-action-background-cta-hover: var(--uitk-color-blue-500);
+  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
+  --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
+  --uitk-palette-action-stroke-hover: var(--uitk-color-blue-500);
+  --uitk-palette-info-border: var(--uitk-color-blue-500);
+  --uitk-palette-info-icon: var(--uitk-color-blue-500);
+}
+
+.uitk-light {
+  /* Greens */
+  --uitk-palette-positive-foreground: var(--uitk-color-green-700);
+
+  /* Oranges */
+  --uitk-palette-navigate-background-active: var(--uitk-color-orange-600);
+  --uitk-palette-rate-background-active: var(--uitk-color-orange-600);
+  --uitk-palette-rate-background-hover: var(--uitk-color-orange-600);
+  --uitk-palette-rate-border-undo: var(--uitk-color-orange-600);
+  --uitk-palette-warning-background: var(--uitk-color-orange-10);
+
+  /* Greyscales */
+  --uitk-action-background: var(--uitk-color-white);
+  --uitk-action-background-bluractive: var(--uitk-color-grey-30);
+  --uitk-action-background-primary: var(--uitk-color-grey-60);
+  --uitk-action-background-primary-active: var(--uitk-color-grey-200);
+  --uitk-action-background-primary-hover: var(--uitk-color-grey-40);
+  --uitk-action-background-secondary-active: var(--uitk-color-grey-200);
+  --uitk-action-background-secondary-hover: var(--uitk-color-grey-40);
+  --uitk-action-foreground: var(--uitk-color-grey-900);
+  --uitk-action-foreground-active: var(--uitk-color-grey-900);
+  --uitk-action-foreground-bluractive: var(--uitk-color-grey-900);
+  --uitk-action-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-action-foreground-primary-active: var(--uitk-color-white);
+  --uitk-action-foreground-secondary-active: var(--uitk-color-white);
+  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-20);
+  --uitk-palette-navigate-foreground: var(--uitk-color-grey-400);
+  --uitk-palette-navigate-foreground-hover: var(--uitk-color-grey-400);
+  --uitk-palette-neutral-background: var(--uitk-color-white);
+  --uitk-palette-neutral-border: var(--uitk-color-grey-60);
+  --uitk-palette-neutral-scrim: var(--uitk-color-white);
+
+  /* Reds */
+  --uitk-palette-negative-foreground: var(--uitk-color-red-700);
+
+  /* Blues */
+  --uitk-palette-action-background-hover: var(--uitk-color-blue-20);
+  --uitk-palette-action-border-selected: var(--uitk-color-blue-600);
+  --uitk-palette-action-fill-selected: var(--uitk-color-blue-600);
+  --uitk-palette-info-background: var(--uitk-color-blue-10);
+  --uitk-palette-info-gradient-end: var(--uitk-color-blue-500);
+
+  /* Teals */
+  --uitk-palette-info-gradient-start: var(--uitk-color-teal-500);
+}
+
+.uitk-dark {
+  /* Greens */
+  --uitk-palette-positive-foreground: var(--uitk-color-green-300);
+
+  /* Oranges */
+  --uitk-palette-navigate-background-active: var(--uitk-color-orange-400);
+  --uitk-palette-rate-background-active: var(--uitk-color-orange-400);
+  --uitk-palette-rate-background-hover: var(--uitk-color-orange-400);
+  --uitk-palette-rate-border-undo: var(--uitk-color-orange-400);
+  --uitk-palette-warning-background: var(--uitk-color-orange-900);
+
+  /* Greyscales */
+  --uitk-action-background: var(--uitk-color-grey-800);
+  --uitk-action-background-bluractive: var(--uitk-color-grey-600);
+  --uitk-action-background-primary: var(--uitk-color-grey-300);
+  --uitk-action-background-primary-active: var(--uitk-color-grey-70);
+  --uitk-action-background-primary-hover: var(--uitk-color-grey-200);
+  --uitk-action-background-secondary-active: var(--uitk-color-grey-70);
+  --uitk-action-background-secondary-hover: var(--uitk-color-grey-200);
+  --uitk-action-foreground: var(--uitk-color-white);
+  --uitk-action-foreground-active: var(--uitk-color-white);
+  --uitk-action-foreground-bluractive: var(--uitk-color-white);
+  --uitk-action-foreground-hover: var(--uitk-color-white);
+  --uitk-action-foreground-primary-active: var(--uitk-color-grey-800);
+  --uitk-action-foreground-secondary-active: var(--uitk-color-grey-800);
+  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-700);
+  --uitk-palette-navigate-foreground: var(--uitk-color-grey-50);
+  --uitk-palette-navigate-foreground-hover: var(--uitk-color-grey-50);
+  --uitk-palette-neutral-background: var(--uitk-color-grey-800);
+  --uitk-palette-neutral-border: var(--uitk-color-grey-300);
+  --uitk-palette-neutral-scrim: var(--uitk-color-grey-800);
+
+  /* Reds */
+  --uitk-palette-negative-foreground: var(--uitk-color-red-300);
+
+  /* Blues */
+  --uitk-palette-action-background-hover: var(--uitk-color-blue-800);
+  --uitk-palette-action-border-selected: var(--uitk-color-blue-400);
+  --uitk-palette-action-fill-selected: var(--uitk-color-blue-400);
+  --uitk-palette-info-background: var(--uitk-color-blue-900);
+  --uitk-palette-info-gradient-end: var(--uitk-color-blue-300);
+
+  /* Teals */
+  --uitk-palette-info-gradient-start: var(--uitk-color-teal-300);
+}
+
+.uitkEmphasisHigh .uitk-light {
+  /* Greens */
+  --uitk-palette-success-border: var(--uitk-color-green-10);
+
+  /* Greyscales */
+  --uitk-palette-action-background: var(--uitk-color-grey-20);
+  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-30);
+  --uitk-palette-neutral-background: var(--uitk-color-grey-20);
+  --uitk-palette-neutral-border: var(--uitk-color-grey-90);
+  --uitk-palette-neutral-scrim: var(--uitk-color-black);
+
+  /* Reds */
+  --uitk-palette-error-background: var(--uitk-color-red-10);
+}
+
+.uitkEmphasisHigh .uitk-dark {
+  /* Greens */
+  --uitk-palette-success-border: var(--uitk-color-green-900);
+
+  /* Greyscales */
+  --uitk-palette-action-background: var(--uitk-color-grey-700);
+  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-600);
+  --uitk-palette-neutral-background: var(--uitk-color-grey-700);
+  --uitk-palette-neutral-border: var(--uitk-color-grey-90);
+  --uitk-palette-neutral-scrim: var(--uitk-color-black);
+
+  /* Reds */
+  --uitk-palette-error-background: var(--uitk-color-red-900);
+}
+
+.uitkEmphasisLow .uitk-light {
+  /* Greyscales */
+  --uitk-palette-neutral-border: var(--uitk-color-grey-30);
+}
+
+.uitkEmphasisLow .uitk-light {
+  /* Greyscales */
+  --uitk-palette-neutral-border: var(--uitk-color-grey-600);
+}
