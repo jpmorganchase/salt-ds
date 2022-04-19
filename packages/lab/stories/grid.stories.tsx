@@ -190,6 +190,20 @@ const SingleCellSelectionGridTemplate: Story = () => {
   );
 };
 
+const MultiCellSelectionGridTemplate: Story = () => {
+  const [data] = useState<BlotterRecord[]>(() => blotter.visibleRecords);
+  return (
+    <Grid
+      data={data}
+      columnDefinitions={columnDefinitions}
+      rowSelectionMode={"none"}
+      cellSelectionMode={"multi"}
+      getKey={getKey}
+      isZebra={true}
+    />
+  );
+};
+
 export const ReadonlyGridExample = ReadonlyGridTemplate.bind({});
 
 export const AllEditableGridExample = AllEditableGridTemplate.bind({});
@@ -203,6 +217,8 @@ export const SingleRowSelectionGrid = SingleRowSelectionGridTemplate.bind({});
 export const LazyGridExample = LazyGridTemplate.bind({});
 
 export const SingleCellSelectionGrid = SingleCellSelectionGridTemplate.bind({});
+
+export const MultiCellSelectionGrid = MultiCellSelectionGridTemplate.bind({});
 
 const dataSetColumnDefinitions: DataSetColumnDefinition[] = [
   {

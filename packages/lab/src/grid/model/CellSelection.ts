@@ -11,6 +11,7 @@ export interface CellKey {
 }
 
 export interface SelectCellsEvent {
+  clearPrevious?: boolean;
   cellKeys: CellKey[];
 }
 
@@ -53,8 +54,21 @@ export class CellSelection<T> implements ICellSelection<T> {
         newSelectedCells.set(rowKey, new Set<string>([columnKey]));
         this.selectedCells$.next(newSelectedCells);
       } else {
-        // TODO
-        // const newSelectedCells = new Map
+        const { cellKeys, clearPrevious } = event;
+        const newSelectedCells = new Map<string, Set<string>>();
+        const columns = columns$.getValue();
+        cellKeys.forEach((cellKey) => {
+          const { rowKey, columnIndex, rowIndex } = cellKey;
+          const columnKey = columns[columnIndex].key;
+          let rowSelection = newSelectedCells.get(rowKey);
+          if (rowSelection) {
+            rowSelection.add(columnKey);
+          } else {
+            rowSelection = new Set<string>([columnKey]);
+            newSelectedCells.set(rowKey, rowSelection);
+          }
+        });
+        this.selectedCells$.next(newSelectedCells);
       }
     });
   }
