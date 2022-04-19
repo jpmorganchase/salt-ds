@@ -1,3 +1,8 @@
+.uitk-density-medium .uitkTokenizedInput {
+  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-medium) / 2);
+  --tokenized-input-last-pill-margin: var(--uitk-spacing-medium);
+}
 .uitk-density-touch .uitkTokenizedInput {
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-touch) / 2 + 2px);
@@ -8,12 +13,6 @@
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-low) / 2 + 1px);
   --tokenized-input-last-pill-margin: calc(var(--uitk-spacing-low) / 2);
-}
-
-.uitk-density-medium .uitkTokenizedInput {
-  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-medium) / 2);
-  --tokenized-input-last-pill-margin: var(--uitk-spacing-medium);
 }
 
 .uitk-density-high .uitkTokenizedInput {
@@ -31,30 +30,36 @@
 .uitkTokenizedInput {
   display: inline-flex;
   justify-content: space-between;
-  /* same min-width as the Input component */
-  min-width: 8em;
+  min-width: 8em; /* same min-width as Input component */
   width: 100%;
-
-  /* TODO: Check whether we should define font family here or rely on theme */
-  font-family: var(--uitk-typography-font-family);
-}
-
-.uitkTokenizedInput-disabled {
-  /* TODO: When shared disabled styles are ready */
-  cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-disabled-text-opacity);
 }
 
 .uitkTokenizedInput:hover:not(.uitkTokenizedInput-disabled) {
   cursor: pointer;
 }
 
+.uitkTokenizedInput-pillGroup {
+  align-content: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  min-height: var(--tokenized-input-height);
+  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
+}
+
+.uitkTokenizedInput-disabled {
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-disabled-text-opacity);
+}
+
 .uitkTokenizedInput-focused {
-  outline: var(--tokenized-input-focused-outline);
+  outline: var(--uitkTokenizedInput-focused-outline, var(--tokenized-input-focused-outline));
 }
 
 .uitkTokenizedInput-expanded {
   height: auto;
+  --uitkPill-max-width: 91px;
 }
 
 .uitkTokenizedInput-hidden {
@@ -63,6 +68,8 @@
 
 /* Used to be .inputRoot */
 .uitkTokenizedInput-input {
+  align-items: flex-start;
+  cursor: text;
   flex-grow: 1;
   padding: 0;
   outline: none;
@@ -79,17 +86,6 @@
 
 .uitkTokenizedInput-expandButton {
   padding: 0 calc(var(--tokenized-input-spacing) / 4);
-}
-
-.uitkTokenizedInput-pillGroup {
-  min-height: var(--tokenized-input-height);
-  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
-
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  box-sizing: border-box;
 }
 
 .uitkTokenizedInput-expanded,
@@ -109,6 +105,7 @@
 .uitkTokenizedInput .uitkInputPill {
   min-width: 0;
   margin-right: var(--tokenized-input-gutter-size);
+  --uitkPill-max-width: 100px;
 }
 
 .uitkTokenizedInput .uitkInputPill > * {
@@ -124,14 +121,14 @@
 }
 
 .uitkTokenizedInput .uitkInputPill-pillActive {
-  background: var(--uitk-selectable-background-hover);
+  background: var(--uitkTokenizedInput-pill-background-active, var(--uitk-selectable-background-hover));
 }
 
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
-  color: var(--uitk-actionable-cta-icon-color-hover);
+  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-cta-icon-color-hover));
 }
 
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
-  color: var(--uitk-actionable-cta-icon-color-hover);
-  background: var(--uitk-actionable-cta-background-hover);
+  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-cta-text-color-hover));
+  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-cta-background-hover));
 }
