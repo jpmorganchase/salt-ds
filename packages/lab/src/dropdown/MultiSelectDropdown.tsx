@@ -12,7 +12,12 @@ import { useDropdown } from "./useDropdown";
 import "./Dropdown.css";
 import { Portal } from "../portal";
 import { useWindow } from "../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type MultiSelectDropdownProps<Item = string> = DropdownProps<
   Item,
@@ -95,8 +100,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
       ) : (
         <DropdownButton {...buttonProps} />
       )}
-      {rootRef.current && isOpen && (
-        <Portal disablePortal={disablePortal} container={container}>
+      <Portal disablePortal={disablePortal} container={container}>
+        {rootRef.current && isOpen && (
           <Window
             className={withBaseName("popper")}
             style={{
@@ -115,8 +120,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
               />
             </ListStateContext.Provider>
           </Window>
-        </Portal>
-      )}
+        )}
+      </Portal>
     </div>
   );
 }) as <Item = string>(

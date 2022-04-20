@@ -10,7 +10,12 @@ import { ListBase, ListStateContext } from "../../list";
 import { useForkRef } from "../../utils";
 import { Portal } from "../../portal";
 import { useWindow } from "../../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,
@@ -128,8 +133,8 @@ export function MultiSelectComboBox<Item>(
           {...restInputProps}
         />
       </TooltipContext.Provider>
-      {rootRef.current && isListOpen && (
-        <Portal>
+      <Portal>
+        {rootRef.current && isListOpen && (
           <Window
             ref={floating}
             style={{
@@ -157,8 +162,8 @@ export function MultiSelectComboBox<Item>(
               </ListStateContext.Provider>
             </TooltipContext.Provider>
           </Window>
-        </Portal>
-      )}
+        )}
+      </Portal>
     </>
   );
 }

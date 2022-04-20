@@ -1,7 +1,11 @@
-import { useState, useCallback } from "react";
 import { Button } from "@jpmorganchase/uitk-core";
-import { Overlay } from "@jpmorganchase/uitk-lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {
+  Overlay,
+  OverlayProps,
+  useOverlay,
+  UseOverlayProps,
+} from "@jpmorganchase/uitk-lab";
+import { ComponentMeta, Story } from "@storybook/react";
 
 import "./overlay.stories.css";
 
@@ -10,26 +14,15 @@ export default {
   component: Overlay,
 } as ComponentMeta<typeof Overlay>;
 
-const OverlayTemplate: ComponentStory<typeof Overlay> = (props) => {
-  const [open, setOpen] = useState(false);
-
-  const [node, setNode] = useState();
-  const setRef = useCallback((node) => {
-    if (node) {
-      setNode(node);
-    }
-  }, []);
-
-  const toggleOverlay = () => setOpen((o) => !o);
-  const handleClose = () => setOpen(false);
+const OverlayTemplate: Story<OverlayProps & UseOverlayProps> = (props) => {
+  const { placement, open, ...rest } = props;
+  const { getTriggerProps, getOverlayProps } = useOverlay({ placement, open });
 
   return (
     <>
-      <Button ref={setRef} onClick={toggleOverlay}>
-        Toggle Overlay
-      </Button>
+      <Button {...getTriggerProps<typeof Button>()}>Toggle Overlay</Button>
 
-      <Overlay anchorEl={node} open={open} onClose={handleClose} {...props}>
+      <Overlay {...getOverlayProps(rest)}>
         <div>
           <h3 className="content-heading">Title</h3>
           <div className="content-body">Content of Overlay</div>
@@ -39,19 +32,17 @@ const OverlayTemplate: ComponentStory<typeof Overlay> = (props) => {
   );
 };
 
-export const FeatureOverlay: ComponentStory<typeof Overlay> = (props) => {
-  const [node, setNode] = useState();
-  const setRef = useCallback((node) => {
-    if (node) {
-      setNode(node);
-    }
-  }, []);
+export const FeatureOverlay: Story<OverlayProps & UseOverlayProps> = (
+  props
+) => {
+  const { placement, open, ...rest } = props;
+  const { getTriggerProps, getOverlayProps } = useOverlay({ placement, open });
 
   return (
     <>
-      <div ref={setRef}>Overlay Anchor</div>
+      <div {...getTriggerProps()}>Overlay Anchor</div>
 
-      <Overlay anchorEl={node} {...props}>
+      <Overlay {...getOverlayProps(rest)}>
         <div>
           <h3 className="content-heading">Title</h3>
           <div className="content-body">Content of Overlay</div>
@@ -60,18 +51,14 @@ export const FeatureOverlay: ComponentStory<typeof Overlay> = (props) => {
     </>
   );
 };
-
 FeatureOverlay.args = {
   placement: "top",
   open: true,
 };
 
-FeatureOverlay.argTypes = {
-  placement: {
-    options: ["top", "right", "bottom", "left"],
-    control: {
-      type: "inline-radio",
-    },
+FeatureOverlay.parameters = {
+  axe: {
+    skip: true,
   },
 };
 

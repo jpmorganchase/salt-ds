@@ -17,13 +17,15 @@ import {
   makePrefixer,
   Button,
   useIsomorphicLayoutEffect,
+  ButtonProps,
 } from "@jpmorganchase/uitk-core";
 
-import { useTooltipContext } from "../../tooltip";
+import { useTooltip, useTooltipContext } from "../../tooltip";
 import { DeleteButton } from "./DeleteButton";
 import { pillBaseName } from "../constants";
 
 import "./PillBase.css";
+import { useForkRef } from "../../utils";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -94,6 +96,12 @@ export interface PillBaseProps extends HTMLAttributes<HTMLDivElement> {
   onDelete?: ReactEventHandler<HTMLElement>;
 }
 
+const DivButton = forwardRef<HTMLDivElement, ButtonProps<"div">>(
+  function DivButton({ elementType = "div", ...props }, ref) {
+    return <Button elementType={elementType} {...props} ref={ref} />;
+  }
+);
+
 export const PillBase = forwardRef(function PillBase(
   {
     "aria-roledescription": ariaRoledescription = "Pill",
@@ -142,7 +150,7 @@ export const PillBase = forwardRef(function PillBase(
     setActive(false);
   };
 
-  const Component = deletable || clickable ? Button : "div";
+  const Component = deletable || clickable ? DivButton : "div";
 
   const renderDeleteIcon = () => {
     if (deleteIconProp && isValidElement<any>(deleteIconProp)) {
@@ -159,46 +167,48 @@ export const PillBase = forwardRef(function PillBase(
     }
   };
 
-  const pill = (
-    <Component
-      aria-roledescription={ariaRoledescription}
-      className={cn(
-        withBaseName(),
-        {
-          [withBaseName("clickable")]: clickable,
-          [withBaseName("deletable")]: deletable && !disabled,
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("active")]: active,
-        },
-        className
-      )}
-      elementType="div"
-      data-testid="pill"
-      onKeyDown={disabled ? undefined : handleKeyDown}
-      onKeyUp={disabled ? undefined : handleKeyUp}
-      role="button"
-      tabIndex={disabled ? -1 : 0}
-      {...rest}
-      ref={ref}
-    >
-      {pillIcon || null}
-      <div className={withBaseName("label")} ref={labelRef}>
-        <span className={withBaseName("innerLabel")}>{label}</span>
-      </div>
-      {deletable ? renderDeleteIcon() : null}
-    </Component>
-  );
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    disabled: !ellipsis && disabled,
+    enterDelay,
+    placement,
+    leaveDelay,
+  });
 
-  return ellipsis && !disabled ? (
-    <Tooltip
-      enterDelay={enterDelay}
-      placement={placement}
-      leaveDelay={leaveDelay}
-      title={label}
-    >
-      {pill}
-    </Tooltip>
-  ) : (
-    pill
+  const { ref: triggerRef, ...triggerProps } = getTriggerProps<
+    typeof Component
+  >({
+    "aria-roledescription": ariaRoledescription,
+    className: cn(
+      withBaseName(),
+      {
+        [withBaseName("clickable")]: clickable,
+        [withBaseName("deletable")]: deletable && !disabled,
+        [withBaseName("disabled")]: disabled,
+        [withBaseName("active")]: active,
+      },
+      className
+    ),
+    // @ts-ignore
+    "data-testid": "pill",
+    onKeyDown: disabled ? undefined : handleKeyDown,
+    onKeyUp: disabled ? undefined : handleKeyUp,
+    role: "button",
+    tabIndex: disabled ? -1 : 0,
+    ...rest,
+  });
+
+  const handleRef = useForkRef(triggerRef, ref);
+
+  return (
+    <>
+      <Tooltip {...getTooltipProps({ title: label })} />
+      <Component ref={handleRef} {...triggerProps}>
+        {pillIcon || null}
+        <div className={withBaseName("label")} ref={labelRef}>
+          <span className={withBaseName("innerLabel")}>{label}</span>
+        </div>
+        {deletable ? renderDeleteIcon() : null}
+      </Component>
+    </>
   );
 });

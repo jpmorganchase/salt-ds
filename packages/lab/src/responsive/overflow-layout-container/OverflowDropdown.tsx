@@ -15,7 +15,12 @@ import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
 import { useFloatingUI } from "../../popper";
 import { useWindow } from "../../window";
 import { Portal } from "../../portal";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export interface OverflowDropdownProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -55,8 +60,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
       <Button {...triggerProps}>
         <OverflowMenuIcon />
       </Button>
-      {isOpen ? (
-        <Portal>
+      <Portal>
+        {isOpen ? (
           <Window
             style={{
               top: y ?? "",
@@ -70,8 +75,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
               {children}
             </OverflowLayoutPanel>
           </Window>
-        </Portal>
-      ) : null}
+        ) : null}
+      </Portal>
     </div>
   );
 });

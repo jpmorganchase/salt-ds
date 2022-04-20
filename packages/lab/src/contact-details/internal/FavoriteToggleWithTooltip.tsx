@@ -1,6 +1,7 @@
-import { Tooltip, TooltipProps } from "../../tooltip";
-import React, { forwardRef } from "react";
+import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
+import { forwardRef } from "react";
 import { FavoriteToggle, FavoriteToggleProps } from "./FavoriteToggle";
+import { useForkRef } from "../../utils";
 
 export interface FavoriteToggleWithTooltipProps extends FavoriteToggleProps {
   tooltipProps?: TooltipProps;
@@ -17,14 +18,20 @@ export const FavoriteToggleWithTooltip = forwardRef<
     ...restProps
   } = props;
 
+  const { getTooltipProps, getTriggerProps } = useTooltip({
+    enterDelay: 1500,
+    placement: "bottom",
+  });
+
+  const { ref: triggerRef, ...triggerProps } =
+    getTriggerProps<typeof FavoriteToggle>(restProps);
+
+  const handleRef = useForkRef(triggerRef, ref);
+
   return (
-    <Tooltip
-      enterDelay={1500}
-      placement="bottom"
-      title={tooltipTitle}
-      {...tooltipProps}
-    >
-      <FavoriteToggle {...restProps} ref={ref} />
-    </Tooltip>
+    <>
+      <Tooltip {...getTooltipProps({ title: tooltipTitle, ...tooltipProps })} />
+      <FavoriteToggle {...triggerProps} ref={handleRef} />
+    </>
   );
 });

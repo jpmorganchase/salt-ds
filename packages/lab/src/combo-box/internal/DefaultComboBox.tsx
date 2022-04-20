@@ -25,7 +25,12 @@ import { useForkRef } from "../../utils";
 import { TooltipContext, TooltipContextProps } from "../../tooltip";
 import { Portal } from "../../portal";
 import { Window } from "../../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type BaseComboBoxProps<
   Item,
@@ -172,8 +177,8 @@ export function DefaultComboBox<Item>(
         value={value}
         {...restInputProps}
       />
-      {rootRef.current && isListOpen && (
-        <Portal>
+      <Portal>
+        {rootRef.current && isListOpen && (
           <Window
             style={{
               top: y ?? "",
@@ -201,8 +206,8 @@ export function DefaultComboBox<Item>(
               </ListStateContext.Provider>
             </TooltipContext.Provider>
           </Window>
-        </Portal>
-      )}
+        )}
+      </Portal>
     </>
   );
 }

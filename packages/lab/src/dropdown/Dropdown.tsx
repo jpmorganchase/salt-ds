@@ -33,7 +33,12 @@ import "./Dropdown.css";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
 import { Portal, PortalProps } from "../portal";
 import { useWindow } from "../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,
@@ -269,8 +274,8 @@ export const Dropdown = forwardRef(function Dropdown<
           ref={buttonRef}
         />
       )}
-      {rootRef.current && isOpen && (
-        <Portal disablePortal={disablePortal} container={container}>
+      <Portal disablePortal={disablePortal} container={container}>
+        {rootRef.current && isOpen && (
           <Window
             id={id}
             style={{
@@ -290,8 +295,8 @@ export const Dropdown = forwardRef(function Dropdown<
               />
             </ListStateContext.Provider>
           </Window>
-        </Portal>
-      )}
+        )}
+      </Portal>
     </div>
   );
 }) as <Item = string, Variant extends ListSingleSelectionVariant = "default">(
