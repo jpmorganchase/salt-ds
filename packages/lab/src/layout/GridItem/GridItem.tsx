@@ -69,13 +69,14 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
 
     const gridRowEnd = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowEnd;
 
-    const gridArea = `${gridRowStart} / ${gridColumnStart} / ${gridRowEnd} / ${gridColumnEnd}`;
-
     const gridStyles = {
       ...style,
       "--grid-item-justify-self": horizontalAlignment,
       "--grid-item-align-self": verticalAlignment,
-      "--grid-item-grid-area": gridArea,
+      "--grid-item-row-start": gridRowStart,
+      "--grid-item-column-start": gridColumnStart,
+      "--grid-item-row-end": gridRowEnd,
+      "--grid-item-column-end": gridColumnEnd,
     };
 
     return (
