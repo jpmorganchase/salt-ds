@@ -22,6 +22,7 @@ export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 type Direction = "row" | "column";
 
+type Separator = "start" | "center" | "end";
 type Wrap = "nowrap" | "wrap";
 type DensityMultiplier = 1 | 2 | 3 | 4;
 
@@ -44,6 +45,10 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   justify?: FlexContentAlignment;
   /**
+   * Adds a separator between elements.
+   */
+  separator?: Separator;
+  /**
    * Allow the items to wrap as needed.
    * Value can be "nowrap", "wrap", or an array of values for each breakpoint e.g. ["wrap", "nowrap", "wrap", "nowrap"]
    */
@@ -59,6 +64,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       direction,
       gapMultiplier,
       justify,
+      separator,
       style,
       wrap,
       ...rest
@@ -76,7 +82,12 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
 
     return (
       <div
-        className={cx(className, withBaseName())}
+        className={cx(className, withBaseName(), {
+          [withBaseName("separator")]: separator,
+          [withBaseName(`separator-${direction || "row"}-${separator}`)]:
+            separator,
+          [withBaseName(`separator-${direction || "row"}`)]: separator,
+        })}
         ref={ref}
         style={flexLayoutStyles}
         {...rest}

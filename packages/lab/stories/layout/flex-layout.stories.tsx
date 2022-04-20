@@ -42,6 +42,10 @@ ToolkitFlexLayout.argTypes = {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
+  separator: {
+    options: ["start", "center", "end"],
+    control: { type: "select" },
+  },
   wrap: {
     options: ["wrap", "nowrap"],
     control: { type: "select" },

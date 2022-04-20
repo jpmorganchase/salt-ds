@@ -6,6 +6,7 @@
 }
 
 .uitkFlexItem {
+  position: relative;
   align-self: var(--item-alignment);
   flex-grow: var(--shrink);
   flex-shrink: var(--stretch);

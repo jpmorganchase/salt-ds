@@ -1,18 +1,55 @@
 /* VARIABLES */
 .uitkFlexLayout {
-  --gap: var(--uitk-spacing-unit);
   --gap-multiplier: 1;
   --layout-display: flex;
   --direction: row;
   --wrap: wrap;
   --justify: flex-start;
   --align: stretch;
+  --separatorSize: var(--uitk-separable-border-width);
+  --gap: calc(var(--uitk-spacing-unit) * var(--gap-multiplier) + var(--separatorSize));
 }
 
 .uitkFlexLayout {
-  gap: calc(var(--gap) * var(--gap-multiplier));
+  gap: var(--gap);
   display: var(--layout-display);
   flex-flow: var(--direction) var(--wrap);
   justify-content: var(--justify);
   align-items: var(--align);
+  overflow: hidden;
+}
+
+.uitkFlexLayout-separator > *:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  background-color: var(--uitk-separable-border-color);
+}
+
+.uitkFlexLayout-separator-row > *:not(:last-child)::after {
+  width: var(--separatorSize);
+  top: 0;
+  height: 100%;
+}
+.uitkFlexLayout-separator-row-start > *:not(:last-child)::after {
+  right: calc(var(--separatorSize) * -1);
+}
+.uitkFlexLayout-separator-row-center > *:not(:last-child)::after {
+  right: calc(var(--separatorSize) * -1 + var(--gap) / 2 * -1);
+}
+.uitkFlexLayout-separator-row-end > *:not(:last-child)::after {
+  right: calc(var(--gap) * -1);
+}
+
+.uitkFlexLayout-separator-column > *:not(:last-child)::after {
+  height: var(--separatorSize);
+  width: 100%;
+}
+.uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
+  bottom: calc(var(--separatorSize) * -1);
+}
+.uitkFlexLayout-separator-column-center > *:not(:last-child)::after {
+  bottom: calc(var(--separatorSize) * -1 + var(--gap) / 2 * -1);
+}
+.uitkFlexLayout-separator-column-end > *:not(:last-child)::after {
+  bottom: calc(var(--gap) * -1);
 }
