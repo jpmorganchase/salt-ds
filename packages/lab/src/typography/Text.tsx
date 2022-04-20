@@ -2,13 +2,13 @@ import {
   ElementType,
   HTMLAttributes,
   useEffect,
-  useLayoutEffect,
   useState,
   useRef,
   ReactNode,
   CSSProperties,
   forwardRef,
   useMemo,
+  useCallback,
 } from "react";
 import cx from "classnames";
 import {
@@ -84,8 +84,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 }
 
 interface StylesType {
-  opacity?: number;
-  "--text-height"?: string;
   "--text-max-rows"?: number;
 }
 
@@ -113,33 +111,35 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const [contentRef, setContentRef] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setContentRef);
 
-  const [isOverflowed, setIsOverflowed] = useState(false);
   const [size, setSize] = useState<{ width: number; height: number }>();
   const [isIntersecting, setIsIntersecting] = useState(false);
   const rows = useRef(maxRows);
   const density = useDensity();
-  let firstRendered = false;
 
   // Scrolling
-  const debounceScrolling = debounce((entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.target.isConnected) {
-        setIsIntersecting(entry.isIntersecting);
-      }
-    });
-  });
+
+  const scrollingCallback = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.target.isConnected) {
+          setIsIntersecting(entry.isIntersecting);
+        }
+      });
+    },
+    []
+  );
+
+  const debounceScrolling = useMemo(
+    () => debounce(scrollingCallback),
+    [scrollingCallback]
+  );
 
   useIsomorphicLayoutEffect(() => {
-    const scrollObserver = new IntersectionObserver(
-      (entries) => {
-        debounceScrolling(entries);
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0,
-      }
-    );
+    const scrollObserver = new IntersectionObserver(debounceScrolling, {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0,
+    });
 
     if (contentRef) {
       scrollObserver.observe(contentRef);
@@ -148,29 +148,30 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     return () => {
       scrollObserver.disconnect();
     };
-  }, [contentRef]);
+  }, [contentRef, debounceScrolling]);
 
   // Resizing
-  const debounceResize = debounce((entries) => {
-    for (const entry of entries) {
-      const { width, height } = entry.contentRect;
-      if (
-        entry.target.isConnected &&
-        (width !== size?.width || height !== size?.height)
-      ) {
-        setSize({ width, height });
-      }
-    }
-  });
 
-  const [resizeObserver] = useState(
+  const debounceResize = useMemo(
     () =>
-      new ResizeObserver((entries) => {
-        if (entries.length > 0 && entries[0].contentRect) {
-          debounceResize(entries);
+      debounce((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect;
+          if (entry.target.isConnected) {
+            setSize({ width, height });
+          }
         }
-      })
+      }),
+    []
   );
+
+  const [resizeObserver] = useState(() => {
+    return new ResizeObserver((entries) => {
+      if (entries.length > 0 && entries[0].contentRect) {
+        debounceResize(entries);
+      }
+    });
+  });
 
   useIsomorphicLayoutEffect(() => {
     if (contentRef && isIntersecting) {
@@ -180,13 +181,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     return () => {
       resizeObserver.disconnect();
     };
-  }, [isIntersecting]);
+  }, [contentRef, isIntersecting]);
 
   // Styling
   const componentStyle = useMemo(() => {
     if (contentRef) {
       const styles: StylesType = {};
-      let shouldOverflow = false;
 
       if (maxRows) {
         rows.current = maxRows;
@@ -201,28 +201,14 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
       if (expanded) {
         styles["--text-max-rows"] = 0;
-        styles["--text-height"] = `100%`;
-      } else if (truncate) {
+      } else if (truncate && !rows.current) {
         const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
           contentRef;
         const { lineHeight } = getComputedStyles(contentRef);
 
         const parent = contentRef.parentElement;
 
-        if (rows.current) {
-          const maxRowsHeight = rows.current * lineHeight;
-
-          if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
-            styles["--text-height"] = `${maxRowsHeight}px`;
-            shouldOverflow = true;
-          }
-        }
-        // we check for wrapper size only if it's the only child, otherwise we depend on too much styling
-        else if (
-          parent &&
-          !contentRef.nextSibling &&
-          !contentRef.previousSibling
-        ) {
+        if (parent && !contentRef.nextSibling && !contentRef.previousSibling) {
           const { width: widthParent, height: heightParent } =
             getComputedStyles(parent);
 
@@ -235,27 +221,49 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
             const newRows = Math.floor(heightParent / lineHeight);
 
             styles["--text-max-rows"] = newRows;
-            styles["--text-height"] = `${newRows * lineHeight}px`;
-
-            shouldOverflow = true;
           }
         }
       }
 
-      if (lazyLoading && !firstRendered) {
-        styles.opacity = 1;
-        firstRendered = true;
-      }
-
       if (Object.keys(styles).length > 0) {
-        if (shouldOverflow !== isOverflowed) {
-          setIsOverflowed(shouldOverflow);
-        }
-
         return styles;
       }
     }
   }, [elementType, maxRows, expanded, truncate, density, size]);
+
+  const isOverflowed = useMemo(() => {
+    if (contentRef && truncate) {
+      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
+        contentRef;
+      const { lineHeight } = getComputedStyles(contentRef);
+
+      if (rows.current) {
+        const maxRowsHeight = rows.current * lineHeight;
+
+        if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
+          return true;
+        }
+      }
+
+      const parent = contentRef.parentElement;
+
+      if (parent && !contentRef.nextSibling && !contentRef.previousSibling) {
+        const { width: widthParent, height: heightParent } =
+          getComputedStyles(parent);
+
+        if (
+          heightParent < scrollHeight ||
+          heightParent < offsetHeight ||
+          offsetWidth < scrollWidth ||
+          Math.ceil(widthParent) < scrollWidth
+        ) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }, [componentStyle]);
 
   useEffect(() => {
     if (onOverflow) {
@@ -279,8 +287,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const content = (
     <Component
       className={cx(withBaseName(), className, {
-        [withBaseName("lazy")]: lazyLoading,
-        [withBaseName("lineClamp")]: isOverflowed && truncate,
+        [withBaseName("lineClamp")]: isOverflowed,
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
