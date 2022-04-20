@@ -9,19 +9,19 @@ export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Number of columns to be displayed
    */
-  columns?: number | ResponsiveProp<number>;
+  columns?: ResponsiveProp<number>;
   /**
    * Number of rows to be displayed
    */
-  rows?: number | ResponsiveProp<number>;
+  rows?: ResponsiveProp<number>;
   /**
    * Defines the size of the gutter between the columns by setting a density multiplier.
    */
-  columnGap?: number | ResponsiveProp<number>;
+  columnGap?: ResponsiveProp<number>;
   /**
    * Defines the size of the gutter between the rows by setting a density multiplier
    */
-  rowGap?: number | ResponsiveProp<number>;
+  rowGap?: ResponsiveProp<number>;
 }
 
 const withBaseName = makePrefixer("uitkGridLayout");

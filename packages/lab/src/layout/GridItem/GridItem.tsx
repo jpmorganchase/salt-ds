@@ -19,11 +19,11 @@ export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The item will span across the provided number of grid columns
    */
-  colSpan?: GridProperty | ResponsiveProp<GridProperty>;
+  colSpan?: ResponsiveProp<GridProperty>;
   /**
    * The item will span across the provided number of grid rows
    */
-  rowSpan?: GridProperty | ResponsiveProp<GridProperty>;
+  rowSpan?: ResponsiveProp<GridProperty>;
   /**
    * Aligns a grid item inside a cell along the inline (row) axis
    */
