@@ -1,5 +1,5 @@
 import { Column, Row } from "../model";
-import { MouseEventHandler, useCallback } from "react";
+import { MouseEventHandler, useCallback, useState } from "react";
 import { TableRow } from "./TableRow";
 import { useGridContext } from "../GridContext";
 import { getCellPosition, getRowKey } from "../features/getAttribute";
@@ -17,6 +17,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
   const { model } = useGridContext();
   const rowSelectionMode = model.useRowSelectionMode();
   const cellSelectionMode = model.useCellSelectionMode();
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
   const onMouseEnter: MouseEventHandler<HTMLTableRowElement> = useCallback(
     (event) => {
@@ -43,7 +44,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
           isSelected: true,
         });
       }
-      if (cellSelectionMode !== "none") {
+      if (cellSelectionMode === "single") {
         model.cellSelection.selectCells({
           cellKeys: [
             {
@@ -53,10 +54,46 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             },
           ],
         });
+      } else if (cellSelectionMode === "multi") {
+        model.cellSelection.selectionStart({
+          cellKey: {
+            rowKey,
+            columnIndex: cell.columnIndex,
+            rowIndex: cell.rowIndex,
+          },
+        });
+        setIsMouseDown(true);
+        event.preventDefault();
       }
       model.moveCursor(cell);
     },
     [rowSelectionMode, cellSelectionMode]
+  );
+
+  const onMouseMove: MouseEventHandler = useCallback(
+    (event) => {
+      if (isMouseDown) {
+        const cell = getCellPosition(event.target as HTMLElement);
+        const rowKey = getRowKey(event.target as HTMLElement);
+        model.cellSelection.selectionMove({
+          cellKey: {
+            rowKey,
+            columnIndex: cell.columnIndex,
+            rowIndex: cell.rowIndex,
+          },
+        });
+      }
+    },
+    [rowSelectionMode, cellSelectionMode, isMouseDown]
+  );
+
+  const onMouseUp: MouseEventHandler = useCallback(
+    (event) => {
+      if (isMouseDown) {
+        setIsMouseDown(false);
+      }
+    },
+    [isMouseDown]
   );
 
   const onDoubleClick: MouseEventHandler = useCallback((event) => {
@@ -64,7 +101,12 @@ export function TableBody<T>(props: TableBodyProps<T>) {
   }, []);
 
   return (
-    <tbody onMouseDown={onMouseDown} onDoubleClick={onDoubleClick}>
+    <tbody
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onDoubleClick={onDoubleClick}
+    >
       {rows.map((row) => {
         return (
           <TableRow
