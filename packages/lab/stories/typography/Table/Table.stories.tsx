@@ -16,16 +16,11 @@ export default {
       description: "For this demo only",
       control: { type: "text" },
     },
-    lazyLoading: {
-      description:
-        "Display the text after it's size has been calculated to avoid snapping into shape. Refresh the page after you've changed the prop",
-      control: { type: "boolean" },
-    },
   },
 } as ComponentMeta<typeof Text>;
 
 const TextComponent: Story = (props) => {
-  const { wrapperWidth, wrapperHeight, lazyLoading } = props;
+  const { wrapperWidth, wrapperHeight } = props;
 
   return (
     <div
@@ -38,37 +33,37 @@ const TextComponent: Story = (props) => {
       <div className="table">
         <div className="row">
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Date</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Amount paid</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Activity name</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Status</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Reference</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Payment method</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div lazyLoading={lazyLoading}>
+            <Div>
               <strong>Payment type</strong>
             </Div>
           </div>
@@ -88,25 +83,25 @@ const TextComponent: Story = (props) => {
           return (
             <div className="row" key={id}>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{date}</Div>
+                <Div>{date}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{amount_paid}</Div>
+                <Div>{amount_paid}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{activity_name}</Div>
+                <Div>{activity_name}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{status}</Div>
+                <Div>{status}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{reference}</Div>
+                <Div>{reference}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{name}</Div>
+                <Div>{name}</Div>
               </div>
               <div className="table-cell">
-                <Div lazyLoading={lazyLoading}>{payment_type}</Div>
+                <Div>{payment_type}</Div>
               </div>
             </div>
           );

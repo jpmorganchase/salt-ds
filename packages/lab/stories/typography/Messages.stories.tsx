@@ -10,18 +10,9 @@ import { Text, P, Span, Div } from "@brandname/lab";
 export default {
   title: "Lab/Typography",
   component: Text,
-  argTypes: {
-    lazyLoading: {
-      description:
-        "Display the text after it's size has been calculated to avoid snapping into shape. Refresh the page after you've changed the prop",
-      control: { type: "boolean" },
-    },
-  },
 } as ComponentMeta<typeof Text>;
 
-const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
-  lazyLoading,
-}) => {
+const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
   const [expanded1, setExpand1] = useState(false);
   const [expanded2, setExpand2] = useState(false);
   const [expanded3, setExpand3] = useState(false);
@@ -52,7 +43,6 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
               setHidden1(!isOverflowed && !expanded1);
               console.log("onOverflow was called on 1st Text component");
             }}
-            lazyLoading={lazyLoading}
           >
             The European <i>languages</i> are members of the same family. Their
             separate existence is a myth. For science, music, sport, etc, Europe
@@ -94,7 +84,6 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
               setHidden2(!isOverflowed && !expanded2);
               console.log("onOverflow was called on 2nd Text component");
             }}
-            lazyLoading={lazyLoading}
           >
             Notice how the chevrons will appear on the right when this text
             truncates. Resize this screen until you see ellipsis and the
@@ -129,7 +118,6 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
               setHidden3(!isOverflowed && !expanded3);
               console.log("onOverflow was called on 3rd Text component");
             }}
-            lazyLoading={lazyLoading}
           >
             maxRows=2. Notice how the chevrons will appear on the right when
             this text truncates. Resize this screen until you see ellipsis and
@@ -164,7 +152,6 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = ({
               setHidden4(!isOverflowed && !expanded4);
               console.log("onOverflow was called on 4th Text component");
             }}
-            lazyLoading={lazyLoading}
           >
             maxRows=2. A wonderful serenity has taken possession of my entire
             soul, like these sweet mornings of spring which I enjoy with my

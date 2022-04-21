@@ -76,11 +76,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * Override style for margin-bottom
    */
   marginBottom?: number;
-  /**
-   * On first render, display the text after it's size has been calculated to avoid snapping into shape if overflows
-   * Defaults to 'false'
-   */
-  lazyLoading?: boolean;
 }
 
 interface StylesType {
@@ -97,13 +92,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     maxRows,
     showTooltip = true,
     truncate = true,
-    tooltipProps,
     expanded,
-    style,
     onOverflow,
+    tooltipProps,
+    style,
     marginTop,
     marginBottom,
-    lazyLoading = false,
     ...restProps
   },
   ref
