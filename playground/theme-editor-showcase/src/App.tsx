@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { ThemeEditorApp } from "@jpmorganchase/uitk-/theme-editor-app/src/ThemeEditorApp";
+import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 import {
   WindowContext,
   ElectronWindow,
 } from "@jpmorganchase/uitk-lab/src/window";
 import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
-import { CSSByPattern } from "@jpmorganchase/uitk-/theme-editor";
+import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
 import "./App.css";
 

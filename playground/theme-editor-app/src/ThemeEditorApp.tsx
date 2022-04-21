@@ -20,9 +20,9 @@ import {
   parseJSONtoCSS,
   ThemeEditor,
   uitkTheme,
-} from "@jpmorganchase/uitk-/theme-editor";
+} from "@jpmorganchase/theme-editor";
 import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
-import { ThemeMode } from "@jpmorganchase/uitk-/theme-editor/src/header/ScopeSelector";
+import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";
 import { useTheme } from "./helpers/useTheme";
@@ -30,7 +30,7 @@ import { DefaultView } from "./views/DefaultView";
 import { CSSView } from "./views/CSSView";
 import { saveToDirectory } from "./views/FileHandler";
 
-import "@jpmorganchase/uitk-/theme/index.css";
+import "@jpmorganchase/uitk-theme/index.css";
 import "./ThemeEditorApp.css";
 
 interface JSONHistory {
