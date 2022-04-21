@@ -23,6 +23,7 @@ import { getIconForState } from "./getIconForState";
 import "./Tooltip.css";
 import { Portal, PortalProps } from "../portal";
 import { isElectron, useWindow } from "../window";
+import { margin } from "../utils/marginMiddleware";
 
 // Keep in order of preference. First items are used as default
 
@@ -153,7 +154,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   ) {
     const arrowRef = useRef<HTMLDivElement | null>(null);
     const middleware = isElectron
-      ? [offset(8), arrow({ element: arrowRef })]
+      ? [margin(8), arrow({ element: arrowRef })]
       : [
           offset(8),
           flip(),

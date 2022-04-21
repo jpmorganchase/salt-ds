@@ -70,8 +70,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
         Array.from(components).some((v) =>
           // @ts-ignore
           htmlElement.textContent.includes(v)
-        ) ||
-        true
+        )
       ) {
         (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
       }
@@ -84,8 +83,10 @@ const Window: windowType = forwardRef(function ElectronWindow(
   const parentWindow = useWindowParentContext();
 
   const closeWindow = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       ipcRenderer.send("window-close", { id: id });
     }
   }, [id]);
@@ -96,8 +97,10 @@ const Window: windowType = forwardRef(function ElectronWindow(
         // @ts-ignore
         const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
         // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const { ipcRenderer } = global as any;
         if (ipcRenderer) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
           ipcRenderer.send("window-size", {
             id: id,
             height: Math.ceil(height + 1),
@@ -109,9 +112,11 @@ const Window: windowType = forwardRef(function ElectronWindow(
   });
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       setTimeout(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ipcRenderer.send("window-ready", { id: id });
       }, 100);
     }
@@ -122,6 +127,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
   }, [closeWindow, windowRef, id]);
 
   useIsomorphicLayoutEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       console.log(
@@ -129,6 +135,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
           (style.left as number) + parentWindow.left
         },${(style.top as number) + parentWindow.top}`
       );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       ipcRenderer.send("window-position", {
         id: id,
         parentWindowID: parentWindow.id,
