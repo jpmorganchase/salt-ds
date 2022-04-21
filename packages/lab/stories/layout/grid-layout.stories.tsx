@@ -62,8 +62,7 @@ export const ToolkitGridLayoutMultipleRows = MultipleRows.bind({});
 ToolkitGridLayoutMultipleRows.args = {
   columns: 4,
   rows: 3,
-  rowGap: 1,
-  columnGap: 1,
+  gap: 2,
 };
 
 const responsiveGridItemStyles = {
