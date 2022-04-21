@@ -64,27 +64,28 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       justify,
       separators,
       style,
-      wrap= true,
+      wrap = true,
       ...rest
     },
     ref
   ) {
-    const separatorAlignment = separators === true ? 'center' : separators;
+    const separatorAlignment = separators === true ? "center" : separators;
     const flexLayoutStyles = {
       ...style,
       "--align": align,
       "--direction": direction,
       "--gap-multiplier": gap,
       "--justify": justify,
-      "--wrap": wrap ? 'wrap' : 'no-wrap',
+      "--wrap": wrap ? "wrap" : "no-wrap",
     };
 
     return (
       <div
         className={cx(className, withBaseName(), {
           [withBaseName("separator")]: separatorAlignment,
-          [withBaseName(`separator-${direction || "row"}-${separatorAlignment}`)]:
-          separatorAlignment,
+          [withBaseName(
+            `separator-${direction || "row"}-${separatorAlignment}`
+          )]: separatorAlignment,
           [withBaseName(`separator-${direction || "row"}`)]: separatorAlignment,
         })}
         ref={ref}

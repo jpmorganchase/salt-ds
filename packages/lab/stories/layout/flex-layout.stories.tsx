@@ -35,7 +35,7 @@ ToolkitFlexLayout.argTypes = {
     control: { type: "radio" },
   },
   gap: {
-    type: "number"
+    type: "number",
   },
   justify: {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
@@ -46,6 +46,6 @@ ToolkitFlexLayout.argTypes = {
     control: { type: "select" },
   },
   wrap: {
-    type: "boolean"
+    type: "boolean",
   },
 };
