@@ -102,7 +102,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   },
   ref
 ) {
-  const [contentRef, setContentRef] = useState<HTMLElement>();
+  const [element, setContentRef] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setContentRef);
 
   const [size, setSize] = useState<{ width: number; height: number }>();
@@ -135,14 +135,14 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       threshold: 0,
     });
 
-    if (contentRef) {
-      scrollObserver.observe(contentRef);
+    if (element) {
+      scrollObserver.observe(element);
     }
 
     return () => {
       scrollObserver.disconnect();
     };
-  }, [contentRef, debounceScrolling]);
+  }, [element, debounceScrolling]);
 
   // Resizing
 
@@ -168,18 +168,18 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   });
 
   useIsomorphicLayoutEffect(() => {
-    if (contentRef && isIntersecting) {
-      resizeObserver.observe(contentRef);
+    if (element && isIntersecting) {
+      resizeObserver.observe(element);
     }
 
     return () => {
       resizeObserver.disconnect();
     };
-  }, [contentRef, isIntersecting]);
+  }, [element, isIntersecting]);
 
   // Styling
   const componentStyle = useMemo(() => {
-    if (contentRef) {
+    if (element) {
       const styles: StylesType = {};
 
       if (maxRows) {
@@ -197,12 +197,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         styles["--text-max-rows"] = 0;
       } else if (truncate && !rows.current) {
         const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
-          contentRef;
-        const { lineHeight } = getComputedStyles(contentRef);
+          element;
+        const { lineHeight } = getComputedStyles(element);
 
-        const parent = contentRef.parentElement;
+        const parent = element.parentElement;
 
-        if (parent && !contentRef.nextSibling && !contentRef.previousSibling) {
+        if (parent && !element.nextSibling && !element.previousSibling) {
           const { width: widthParent, height: heightParent } =
             getComputedStyles(parent);
 
@@ -226,10 +226,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   }, [elementType, maxRows, expanded, truncate, density, size]);
 
   const isOverflowed = useMemo(() => {
-    if (contentRef && truncate) {
-      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
-        contentRef;
-      const { lineHeight } = getComputedStyles(contentRef);
+    if (element && truncate) {
+      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = element;
+      const { lineHeight } = getComputedStyles(element);
 
       if (rows.current) {
         const maxRowsHeight = rows.current * lineHeight;
@@ -239,9 +238,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         }
       }
 
-      const parent = contentRef.parentElement;
+      const parent = element.parentElement;
 
-      if (parent && !contentRef.nextSibling && !contentRef.previousSibling) {
+      if (parent && !element.nextSibling && !element.previousSibling) {
         const { width: widthParent, height: heightParent } =
           getComputedStyles(parent);
 
@@ -268,7 +267,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   // Tooltip
   const hasTooltip = useMemo(() => {
     let shouldHaveTooltip = false;
-    if (contentRef) {
+    if (element) {
       if (isOverflowed && truncate && showTooltip && expanded === undefined) {
         shouldHaveTooltip = true;
       }
@@ -294,7 +293,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   );
 
   const tooltipTitle =
-    typeof children === "string" ? children : contentRef?.textContent || "";
+    typeof children === "string" ? children : element?.textContent || "";
 
   return hasTooltip ? (
     <Tooltip
