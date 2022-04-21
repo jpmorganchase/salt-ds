@@ -117,6 +117,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     onMouseDown,
     onDoubleClick,
   };
+
   if (isRangeSelectionInProgress) {
     tbodyProps.onMouseMove = onMouseMove;
     tbodyProps.onMouseUp = onMouseUp;

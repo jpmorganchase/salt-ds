@@ -1,5 +1,4 @@
 import { BehaviorSubject } from "rxjs";
-import { useObservable } from "./useObservable";
 import { createHook } from "./utils";
 
 export interface IEditMode {
@@ -16,14 +15,11 @@ export class EditMode implements IEditMode {
   public readonly inputValue$ = new BehaviorSubject<string>("");
 
   public readonly useIsActive = createHook(this.isActive$);
+  public readonly useInputValue = createHook(this.inputValue$);
 
   public setInputValue(value: string) {
     console.log(`setInputValue("${value}")`);
     this.inputValue$.next(value);
-  }
-
-  public useInputValue() {
-    return useObservable(this.inputValue$);
   }
 
   public start() {

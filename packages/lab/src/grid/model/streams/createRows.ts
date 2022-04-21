@@ -1,11 +1,18 @@
-import { BehaviorSubject, combineLatest, map } from "rxjs";
+import {
+  BehaviorSubject,
+  combineLatest,
+  distinctUntilChanged,
+  filter,
+  map,
+  take,
+} from "rxjs";
 import { Row } from "../Row";
 import { Rng } from "../Rng";
 import { RowSelection } from "../RowSelection";
 import { CellPosition } from "../GridModel";
 import { RowKeyGetter } from "../../Grid";
 import { CellSelection } from "../CellSelection";
-import { prevNextPairs } from "../utils";
+import { EditMode } from "../EditMode";
 
 export function createRows<T>(
   getKey: RowKeyGetter<T>,
@@ -14,6 +21,7 @@ export function createRows<T>(
   rowSelection$: RowSelection<T>,
   cellSelection$: CellSelection<T>,
   cursorPosition$: BehaviorSubject<CellPosition | undefined>,
+  editMode: EditMode,
   isZebra$: BehaviorSubject<boolean | undefined>
 ) {
   const rows$ = new BehaviorSubject<Row<T>[]>([]);
@@ -74,6 +82,29 @@ export function createRows<T>(
       const rowSelectedCells = selectedCells.get(row.key);
       row.selectedCells$.next(rowSelectedCells);
     });
+  });
+
+  editMode.isActive$.pipe(distinctUntilChanged()).subscribe((isActive) => {
+    if (isActive) {
+      const rows = rows$.getValue();
+      const cursorPosition = cursorPosition$.getValue();
+      if (cursorPosition) {
+        const row = rows.find(
+          (r) => cursorPosition?.rowIndex === r.index$.getValue()
+        );
+        if (row) {
+          row.isEditMode$.next(true);
+          editMode.isActive$
+            .pipe(
+              filter((isActive) => !isActive),
+              take(1)
+            )
+            .subscribe(() => {
+              row.isEditMode$.next(false);
+            });
+        }
+      }
+    }
   });
 
   return rows$;

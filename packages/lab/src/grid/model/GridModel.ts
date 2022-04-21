@@ -443,6 +443,12 @@ export class GridModel<T = any> implements IGridModel<T> {
       columns$
     );
 
+    // TODO
+    this.editMode = new EditMode();
+    cursorPosition$.pipe(distinctUntilChanged()).subscribe((cursorPosition) => {
+      this.editMode.isActive$.next(false);
+    });
+
     const rows$ = createRows<T>(
       getKey,
       data$,
@@ -450,6 +456,7 @@ export class GridModel<T = any> implements IGridModel<T> {
       this.rowSelection,
       this.cellSelection,
       cursorPosition$,
+      this.editMode,
       isZebra$
     );
 
@@ -495,7 +502,6 @@ export class GridModel<T = any> implements IGridModel<T> {
     this.useBottomHeight = createHook(bottomHeight$);
     this.useTotalHeight = createHook(totalHeight$);
     this.useTotalWidth = createHook(totalWidth$);
-    this.editMode = new EditMode();
     this.useLeftColumns = createHook(leftColumns$);
     this.useRightColumns = createHook(rightColumns$);
     this.useBodyVisibleColumns = createHook(bodyVisibleColumns$);
