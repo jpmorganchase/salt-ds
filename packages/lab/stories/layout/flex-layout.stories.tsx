@@ -34,20 +34,18 @@ ToolkitFlexLayout.argTypes = {
     options: ["row", "column"],
     control: { type: "radio" },
   },
-  gapMultiplier: {
-    options: [1, 2, 3, 4],
-    control: { type: "select" },
+  gap: {
+    type: "number"
   },
   justify: {
     options: FLEX_CONTENT_ALIGNMENT_BASE,
     control: { type: "select" },
   },
-  separator: {
-    options: ["start", "center", "end"],
+  separators: {
+    options: ["start", "center", "end", true],
     control: { type: "select" },
   },
   wrap: {
-    options: ["wrap", "nowrap"],
-    control: { type: "select" },
+    type: "boolean"
   },
 };

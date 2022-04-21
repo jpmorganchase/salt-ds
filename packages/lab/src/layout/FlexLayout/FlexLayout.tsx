@@ -23,8 +23,6 @@ export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 type Direction = "row" | "column";
 
 type Separator = "start" | "center" | "end";
-type Wrap = "nowrap" | "wrap";
-type DensityMultiplier = 1 | 2 | 3 | 4;
 
 export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -39,7 +37,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the space between items.
    */
-  gapMultiplier?: DensityMultiplier | number;
+  gap?: number;
   /**
    * Defines the alignment along the main axis.
    */
@@ -47,12 +45,12 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Adds a separator between elements.
    */
-  separator?: Separator;
+  separators?: Separator | true;
   /**
    * Allow the items to wrap as needed.
    * Value can be "nowrap", "wrap", or an array of values for each breakpoint e.g. ["wrap", "nowrap", "wrap", "nowrap"]
    */
-  wrap?: Wrap;
+  wrap?: boolean;
 }
 
 export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
@@ -62,31 +60,32 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       children,
       className,
       direction,
-      gapMultiplier,
+      gap,
       justify,
-      separator,
+      separators,
       style,
-      wrap,
+      wrap= true,
       ...rest
     },
     ref
   ) {
+    const separatorAlignment = separators === true ? 'center' : separators;
     const flexLayoutStyles = {
       ...style,
       "--align": align,
       "--direction": direction,
-      "--gap-multiplier": gapMultiplier,
+      "--gap-multiplier": gap,
       "--justify": justify,
-      "--wrap": wrap,
+      "--wrap": wrap ? 'wrap' : 'no-wrap',
     };
 
     return (
       <div
         className={cx(className, withBaseName(), {
-          [withBaseName("separator")]: separator,
-          [withBaseName(`separator-${direction || "row"}-${separator}`)]:
-            separator,
-          [withBaseName(`separator-${direction || "row"}`)]: separator,
+          [withBaseName("separator")]: separatorAlignment,
+          [withBaseName(`separator-${direction || "row"}-${separatorAlignment}`)]:
+          separatorAlignment,
+          [withBaseName(`separator-${direction || "row"}`)]: separatorAlignment,
         })}
         ref={ref}
         style={flexLayoutStyles}
