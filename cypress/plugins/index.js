@@ -41,11 +41,11 @@ module.exports = (on, config) => {
           ),
           "@jpmorganchase/lab": path.resolve(
             __dirname,
-            "../../dist/jpmorganchase-lab"
+            "../../dist/jpmorganchase-uitk-lab"
           ),
           "@jpmorganchase/icons": path.resolve(
             __dirname,
-            "../../dist/jpmorganchase-icons"
+            "../../dist/jpmorganchase-uitk-icons"
           ),
         },
       };
