@@ -188,6 +188,63 @@ ToolkitGridLayoutCustomBreakpoints.args = {
   columnGap: 1,
 };
 
+const customBreakpoints = {
+  mobile: 500,
+  tablet: 860,
+  desktop: 1180,
+} as any;
+
+const CustomBreakpointNames: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <ToolkitProvider breakpoints={customBreakpoints}>
+      <div style={gridLayoutStyle}>
+        <GridLayout {...args}>
+          <GridItem
+            colSpan={{ mobile: 1, tablet: 6, desktop: 3 } as any}
+            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 } as any}
+          >
+            <div style={responsiveGridItemStyles}>
+              <p>GridItem 1</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ mobile: 1, tablet: 3, desktop: 3 } as any}
+            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 } as any}
+          >
+            <div style={responsiveGridItemStyles}>
+              <p>GridItem 2</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ mobile: 1, tablet: 3, desktop: 3 } as any}
+            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 } as any}
+          >
+            <div style={responsiveGridItemStyles}>
+              <p>GridItem 3</p>
+            </div>
+          </GridItem>
+          <GridItem
+            colSpan={{ mobile: 1, tablet: 6, desktop: 3 } as any}
+            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 } as any}
+          >
+            <div style={responsiveGridItemStyles}>
+              <p>GridItem 4</p>
+            </div>
+          </GridItem>
+        </GridLayout>
+      </div>
+    </ToolkitProvider>
+  );
+};
+export const ToolkitGridLayoutCustomBreakpointNames =
+  CustomBreakpointNames.bind({});
+ToolkitGridLayoutCustomBreakpointNames.args = {
+  columns: { mobile: 2, tablet: 12, desktop: 12 },
+  rows: { mobile: 2, tablet: 4, desktop: 1 },
+  rowGap: 1,
+  columnGap: 1,
+} as any;
+
 const Border: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div style={gridLayoutStyle}>

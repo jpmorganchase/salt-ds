@@ -44,7 +44,6 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
     },
     ref
   ) {
-    console.log("columnGap", columnGap);
     const gridColumns = useResponsiveProp(columns, 12);
 
     const gridRows = useResponsiveProp(rows, 1);
