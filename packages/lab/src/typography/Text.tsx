@@ -102,8 +102,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   },
   ref
 ) {
-  const [element, setContentRef] = useState<HTMLElement>();
-  const setContainerRef = useForkRef(ref, setContentRef);
+  const [element, setElement] = useState<HTMLElement>();
+  const setContainerRef = useForkRef(ref, setElement);
 
   const [size, setSize] = useState<{ width: number; height: number }>();
   const [isIntersecting, setIsIntersecting] = useState(false);
