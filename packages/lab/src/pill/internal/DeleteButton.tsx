@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import cn from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@brandname/core";
-import { CloseSmallIcon } from "@brandname/icons";
+import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { CloseSmallIcon } from "@jpmorganchase/icons";
 
 import { pillBaseName } from "../constants";
 

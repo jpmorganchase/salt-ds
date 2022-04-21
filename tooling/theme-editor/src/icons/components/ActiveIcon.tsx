@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Icon, IconProps } from "@brandname/core";
+import { Icon, IconProps } from "@jpmorganchase/uitk-core";
 
 function SvgComponent(
   props: React.SVGProps<SVGSVGElement>,

@@ -1,4 +1,4 @@
-import { TokenizedInput } from "@brandname/lab";
+import { TokenizedInput } from "@jpmorganchase/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

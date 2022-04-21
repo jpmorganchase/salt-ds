@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import "./RadioIcon.css";
 

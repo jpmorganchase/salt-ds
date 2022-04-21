@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import classnames from "classnames";
-import { makePrefixer, IconProps } from "@brandname/core";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import { Tooltip, TooltipProps } from "../tooltip";
 import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
 import { useOverflowDetection } from "../utils";

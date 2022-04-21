@@ -6,8 +6,8 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { makePrefixer } from "@brandname/core";
-import { ChevronRightIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChevronRightIcon } from "@jpmorganchase/icons";
 import { ListItem } from "../../list";
 import { QueryInputCategory } from "../QueryInput";
 import { useCategoryListContext } from "./CategoryListContext";

@@ -1,5 +1,5 @@
 import { ReactElement, useMemo, useState } from "react";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   CloneIcon,
   DownloadIcon,
@@ -8,14 +8,14 @@ import {
   RefreshIcon,
   UndoIcon,
   UploadIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/icons";
 import {
   CascadingMenu,
   Dropdown,
   itemToString,
   ListChangeHandler,
   MenuDescriptor,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { handleThemeUpload } from "./handleThemeUpload";
 import { JSONByScope } from "../helpers/parseToJson";
 import "./ThemeHeader.css";

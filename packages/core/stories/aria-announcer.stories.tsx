@@ -1,5 +1,8 @@
 import { ChangeEvent, useCallback, useState, CSSProperties } from "react";
-import { AriaAnnouncerProvider, useAriaAnnouncer } from "@brandname/core";
+import {
+  AriaAnnouncerProvider,
+  useAriaAnnouncer,
+} from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

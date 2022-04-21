@@ -1,4 +1,4 @@
-import { JSONByScope, JSONObj } from "@brandname/theme-editor";
+import { JSONByScope, JSONObj } from "@jpmorganchase/theme-editor";
 import { Reducer } from "react";
 import { Action, ActionType } from "./Action";
 

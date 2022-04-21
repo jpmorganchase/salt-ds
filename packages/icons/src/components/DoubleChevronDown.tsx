@@ -1,4 +1,4 @@
-import { createIcon } from "@brandname/core";
+import { createIcon } from "@jpmorganchase/uitk-core";
 
 export const DoubleChevronDownIcon = createIcon(
   <svg

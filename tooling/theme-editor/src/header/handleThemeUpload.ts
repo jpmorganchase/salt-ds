@@ -1,4 +1,4 @@
-import { isElectron } from "@brandname/lab/src/window/electron-utils";
+import { isElectron } from "@jpmorganchase/lab/src/window/electron-utils";
 import { parseCSStoJSON, tidyUp, JSONByScope } from "../helpers/parseToJson";
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 

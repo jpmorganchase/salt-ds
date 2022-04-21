@@ -1,4 +1,4 @@
-import { Panel } from "@brandname/lab";
+import { Panel } from "@jpmorganchase/lab";
 
 describe("GIVEN a Panel", () => {
   it("SHOULD have no a11y violations on load", () => {

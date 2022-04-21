@@ -1,3 +1,3 @@
-import { ThemeEditorApp } from "@brandname/theme-editor-app/src/ThemeEditorApp";
+import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 
 export default ThemeEditorApp;

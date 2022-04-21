@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import cx from "classnames";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { usePaginationContext } from "./usePaginationContext";
 import { useForkRef, useId } from "../utils";
 import { withBaseName } from "./utils";

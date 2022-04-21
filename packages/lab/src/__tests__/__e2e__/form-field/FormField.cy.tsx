@@ -1,4 +1,4 @@
-import { FormField, Input } from "@brandname/lab";
+import { FormField, Input } from "@jpmorganchase/lab";
 
 describe("GIVEN an Input", () => {
   describe("WHEN validation state is warning", () => {

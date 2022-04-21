@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
 import { isMarkAtMax } from "./utils";

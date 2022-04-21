@@ -13,7 +13,11 @@ import {
   useRef,
   ReactElement,
 } from "react";
-import { makePrefixer, useAriaAnnouncer, IconProps } from "@brandname/core";
+import {
+  makePrefixer,
+  useAriaAnnouncer,
+  IconProps,
+} from "@jpmorganchase/uitk-core";
 import { arrow, flip, limitShift, offset, shift } from "@floating-ui/react-dom";
 
 import { useFloatingUI, UseFloatingUIProps } from "../popper";

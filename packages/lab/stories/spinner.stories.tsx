@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button } from "@brandname/core";
-import { Spinner } from "@brandname/lab";
+import { Button } from "@jpmorganchase/uitk-core";
+import { Spinner } from "@jpmorganchase/lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
 export default {

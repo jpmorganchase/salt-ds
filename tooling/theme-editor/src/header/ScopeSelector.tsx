@@ -1,4 +1,4 @@
-import { Tab, Tabstrip } from "@brandname/lab";
+import { Tab, Tabstrip } from "@jpmorganchase/lab";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useTabsWithRouting } from "../utils/useTabsWithRouting";

@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   AccordionSection,
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { getShadowParts } from "./getShadowParts";
 import { ShadowPatternProps } from "./ShadowPatternProps";

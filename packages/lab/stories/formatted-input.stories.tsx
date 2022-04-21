@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { FormattedInput, FormattedInputProps, FormField } from "@brandname/lab";
+import {
+  FormattedInput,
+  FormattedInputProps,
+  FormField,
+} from "@jpmorganchase/lab";
 import { Story } from "@storybook/react";
 
 const parseDigits = (string: string) => (string.match(/(\d+)/g) || []).join("");

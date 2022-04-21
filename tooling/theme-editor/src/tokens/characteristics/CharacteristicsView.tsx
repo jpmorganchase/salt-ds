@@ -1,6 +1,6 @@
 import { ReactElement, useMemo, useCallback } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { LightDarkToggle } from "../toggles/LightDarkToggle";
 import { ThemeMode } from "../../header/ScopeSelector";

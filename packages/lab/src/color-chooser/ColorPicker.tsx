@@ -1,6 +1,6 @@
 import { SketchPicker, ColorResult } from "react-color";
 import cn from "classnames";
-import { Button, makePrefixer } from "@brandname/core";
+import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
 import { Color, RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
 import { HexInput } from "./HexInput";

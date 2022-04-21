@@ -1,6 +1,6 @@
 import { ComponentType, forwardRef, ComponentPropsWithoutRef } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import { LogoTitle, LogoTitleProps } from "./internal/LogoTitle";
 import "./Logo.css";

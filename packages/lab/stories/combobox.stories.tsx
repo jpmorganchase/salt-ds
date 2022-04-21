@@ -1,11 +1,11 @@
 import { ChangeEventHandler, useState } from "react";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   ComboBox,
   FormField,
   ListChangeHandler,
   ListSelectHandler,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {

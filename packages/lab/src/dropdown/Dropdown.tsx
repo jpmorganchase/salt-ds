@@ -12,8 +12,8 @@ import {
   MouseEventHandler,
   useState,
 } from "react";
-import { makePrefixer, IconProps } from "@brandname/core";
-import { ChevronDownIcon } from "@brandname/icons";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon } from "@jpmorganchase/icons";
 import {
   ListBase,
   ListChangeHandler,

@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Avatar, AvatarProps } from "../avatar";
 import { useContactDetailsContext } from "./internal";
 import cn from "classnames";

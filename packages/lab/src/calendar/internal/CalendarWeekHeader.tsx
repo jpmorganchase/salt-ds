@@ -1,6 +1,6 @@
 import { forwardRef, ComponentPropsWithRef } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import dayjs from "./dayjs";
 
 import "./CalendarWeekHeader.css";

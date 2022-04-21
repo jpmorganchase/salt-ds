@@ -1,5 +1,5 @@
 import { useState, useRef, Ref, DependencyList, useCallback } from "react";
-import { debounce, useIsomorphicLayoutEffect } from "@brandname/core";
+import { debounce, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { ownerWindow } from "./ownerWindow";
 
 export function useOverflowDetection<Element extends HTMLElement>(

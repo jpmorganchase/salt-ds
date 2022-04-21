@@ -1,5 +1,5 @@
-import { ButtonBar, OrderedButton } from "@brandname/lab";
-import { ExportIcon, ImportIcon } from "@brandname/icons";
+import { ButtonBar, OrderedButton } from "@jpmorganchase/lab";
+import { ExportIcon, ImportIcon } from "@jpmorganchase/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

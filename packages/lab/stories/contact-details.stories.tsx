@@ -1,11 +1,11 @@
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   CallIcon,
   ChatIcon,
   CopyIcon,
   ExportIcon,
   MessageIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/icons";
 import {
   Card,
   ComboBox,
@@ -22,14 +22,14 @@ import {
   FormField,
   Overlay,
   Tooltip,
-} from "@brandname/lab";
-import { ValueComponentProps } from "@brandname/lab/src/contact-details/internal";
+} from "@jpmorganchase/lab";
+import { ValueComponentProps } from "@jpmorganchase/lab/src/contact-details/internal";
 import {
   IndexedListItemProps,
   useListItem,
-} from "@brandname/lab/src/list/useListItem";
-import { ListItemBase } from "@brandname/lab/src/list";
-import { ListChangeHandler } from "@brandname/lab/src/list/ListProps";
+} from "@jpmorganchase/lab/src/list/useListItem";
+import { ListItemBase } from "@jpmorganchase/lab/src/list";
+import { ListChangeHandler } from "@jpmorganchase/lab/src/list/ListProps";
 import { Story } from "@storybook/react";
 
 import "./contact-details.stories.css";

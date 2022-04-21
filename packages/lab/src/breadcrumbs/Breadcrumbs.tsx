@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import warning from "warning";
 import classnames from "classnames";
-import { makePrefixer, IconProps } from "@brandname/core";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";

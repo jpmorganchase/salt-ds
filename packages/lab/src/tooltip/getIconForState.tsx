@@ -1,5 +1,5 @@
-import { ErrorIcon, SuccessTickIcon, WarningIcon } from "@brandname/icons";
-import { IconProps } from "@brandname/core";
+import { ErrorIcon, SuccessTickIcon, WarningIcon } from "@jpmorganchase/icons";
+import { IconProps } from "@jpmorganchase/uitk-core";
 import { TooltipState } from "./Tooltip";
 
 export const State = {

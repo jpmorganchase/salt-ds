@@ -1,7 +1,7 @@
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { makePrefixer, IconProps } from "@brandname/core";
-import { ArrowUpIcon, ArrowDownIcon } from "@brandname/icons";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/icons";
 import { useMetricContext, capitalise } from "./internal";
 
 import "./MetricContent.css";

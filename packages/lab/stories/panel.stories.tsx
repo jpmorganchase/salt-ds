@@ -1,4 +1,4 @@
-import { Panel } from "@brandname/lab";
+import { Panel } from "@jpmorganchase/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 

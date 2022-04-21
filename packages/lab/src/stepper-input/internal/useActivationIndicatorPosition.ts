@@ -1,5 +1,8 @@
 import { MutableRefObject } from "react";
-import { useDensity, useIsomorphicLayoutEffect } from "@brandname/core";
+import {
+  useDensity,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { useFormFieldProps } from "../../form-field-context";
 
 const refreshButtonWidth = {

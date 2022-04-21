@@ -1,6 +1,6 @@
 import React from "react";
 import { JSONObj } from "theme-editor/src/ThemeEditor";
-import "@brandname/theme/index.css";
+import "@jpmorganchase/theme/index.css";
 import "./App.css";
 export declare type JSONByScope = {
   scope: string;

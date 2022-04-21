@@ -1783,168 +1783,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brandname/core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@brandname/core@workspace:packages/core"
-  peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  languageName: unknown
-  linkType: soft
-
-"@brandname/icons@workspace:packages/icons":
-  version: 0.0.0-use.local
-  resolution: "@brandname/icons@workspace:packages/icons"
-  dependencies:
-    dom-serializer: ^1.3.2
-    htmlparser2: ^7.2.0
-    mustache: ^4.2.0
-  peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  languageName: unknown
-  linkType: soft
-
-"@brandname/lab@workspace:packages/lab":
-  version: 0.0.0-use.local
-  resolution: "@brandname/lab@workspace:packages/lab"
-  peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  languageName: unknown
-  linkType: soft
-
-"@brandname/root@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@brandname/root@workspace:."
-  dependencies:
-    "@babel/core": ^7.16.0
-    "@changesets/cli": ^2.19.0
-    "@cypress/code-coverage": ^3.9.11
-    "@cypress/react": ^5.10.3
-    "@cypress/vite-dev-server": ^2.2.2
-    "@floating-ui/core": ^0.6.1
-    "@floating-ui/react-dom": ^0.6.0
-    "@storybook/addon-a11y": ^6.4.18
-    "@storybook/addon-actions": ^6.4.18
-    "@storybook/addon-docs": ^6.4.18
-    "@storybook/addon-essentials": ^6.4.18
-    "@storybook/addon-links": ^6.4.18
-    "@storybook/builder-vite": ^0.1.24
-    "@storybook/node-logger": ^6.4.18
-    "@storybook/react": ^6.4.18
-    "@storybook/testing-react": ^1.2.2
-    "@testing-library/cypress": ^8.0.2
-    "@testing-library/dom": ^8.5.0
-    "@testing-library/jest-dom": ^5.14.1
-    "@testing-library/react": ^12.1.0
-    "@testing-library/user-event": ^13.2.1
-    "@types/classnames": ^2.2.11
-    "@types/jest": ^26.0.20
-    "@types/no-scroll": ^2.1.0
-    "@types/node": ^14.14.20
-    "@types/react": ^17.0.0
-    "@types/react-color": ^3.0.6
-    "@types/react-dom": ^17.0.0
-    "@types/react-window": ^1.8.2
-    "@types/tinycolor2": ^1.4.3
-    "@types/warning": ^3.0.0
-    "@vitejs/plugin-react": ^1.3.0
-    ag-grid-community: ^25.0.0
-    ag-grid-enterprise: ^25.0.0
-    ag-grid-react: ^25.0.0
-    aria-hidden: ^1.1.1
-    attr-accept: ^2.0.0
-    axe-core: ^4.3.5
-    classnames: ^2.2.6
-    clipboard-copy: ^4.0.1
-    compute-scroll-into-view: ^1.0.16
-    css-validator: ^0.10.0
-    csstree-validator: ^3.0.0
-    cypress: ^9.4.1
-    cypress-axe: ^0.14.0
-    cypress-image-snapshot: ^4.0.1
-    cypress-real-events: ^1.6.0
-    dayjs: 1.10.6
-    deepmerge: ^4.2.2
-    del: ^6.0.0
-    dom-accessibility-api: ^0.5.10
-    eslint-config-modular-app: 2.0.3
-    eslint-plugin-cypress: ^2.12.1
-    eslint-plugin-storybook: ^0.5.5
-    glob: ^7.1.6
-    is-ci: ^3.0.0
-    modular-scripts: "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch"
-    no-scroll: ^2.1.1
-    prettier: ^2.2.1
-    prop-types: ^15.7.2
-    react: ^17.0.1
-    react-color: ^2.19.3
-    react-dom: ^17.0.1
-    react-fast-compare: ^3.2.0
-    react-router-dom: ^6.2.1
-    react-window: ^1.8.6
-    rifm: ^0.12.0
-    svgo: ^2.3.0
-    tinycolor2: ^1.4.2
-    ts-node: ^10.4.0
-    typescript: 4.6.2
-    vite: ^2.9.0
-    vite-plugin-istanbul: ^2.5.1
-    vite-plugin-optimize-persist: ^0.1.2
-    vite-plugin-package-config: ^0.1.1
-    vite-tsconfig-paths: ^3.4.1
-    warning: ^4.0.3
-  languageName: unknown
-  linkType: soft
-
-"@brandname/theme-editor-app@>=0.1.0, @brandname/theme-editor-app@workspace:playground/theme-editor-app":
-  version: 0.0.0-use.local
-  resolution: "@brandname/theme-editor-app@workspace:playground/theme-editor-app"
-  dependencies:
-    "@brandname/theme-editor": ">=1.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@brandname/theme-editor-showcase@workspace:playground/theme-editor-showcase":
-  version: 0.0.0-use.local
-  resolution: "@brandname/theme-editor-showcase@workspace:playground/theme-editor-showcase"
-  dependencies:
-    "@brandname/theme-editor": ">=1.0.0"
-    "@brandname/theme-editor-app": ">=0.1.0"
-    concurrently: ^6.4.0
-    electron: ^16.0.1
-    electron-is-dev: ^2.0.0
-  languageName: unknown
-  linkType: soft
-
-"@brandname/theme-editor@>=1.0.0, @brandname/theme-editor@workspace:tooling/theme-editor":
-  version: 0.0.0-use.local
-  resolution: "@brandname/theme-editor@workspace:tooling/theme-editor"
-  dependencies:
-    js-beautify: 1.14.0
-    tinycolor2: 1.4.2
-  languageName: unknown
-  linkType: soft
-
-"@brandname/theme@workspace:packages/theme":
-  version: 0.0.0-use.local
-  resolution: "@brandname/theme@workspace:packages/theme"
-  languageName: unknown
-  linkType: soft
-
 "@changesets/apply-release-plan@npm:^5.0.4":
   version: 5.0.4
   resolution: "@changesets/apply-release-plan@npm:5.0.4"
@@ -3297,6 +3135,168 @@ __metadata:
   checksum: 068050e6b3ae92a30ac3777043fcb4d29b57d9cc5ab992eb7de65a1dc3d5898416670469a3bb4099c970f2d4702c96bfd13fd04687c886988d85b9d53f6d5175
   languageName: node
   linkType: hard
+
+"@jpmorganchase/icons@workspace:packages/icons":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/icons@workspace:packages/icons"
+  dependencies:
+    dom-serializer: ^1.3.2
+    htmlparser2: ^7.2.0
+    mustache: ^4.2.0
+  peerDependencies:
+    "@types/react": ^16.8.6 || ^17.0.0
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/lab@workspace:packages/lab":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/lab@workspace:packages/lab"
+  peerDependencies:
+    "@types/react": ^16.8.6 || ^17.0.0
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/root@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/root@workspace:."
+  dependencies:
+    "@babel/core": ^7.16.0
+    "@changesets/cli": ^2.19.0
+    "@cypress/code-coverage": ^3.9.11
+    "@cypress/react": ^5.10.3
+    "@cypress/vite-dev-server": ^2.2.2
+    "@floating-ui/core": ^0.6.1
+    "@floating-ui/react-dom": ^0.6.0
+    "@storybook/addon-a11y": ^6.4.18
+    "@storybook/addon-actions": ^6.4.18
+    "@storybook/addon-docs": ^6.4.18
+    "@storybook/addon-essentials": ^6.4.18
+    "@storybook/addon-links": ^6.4.18
+    "@storybook/builder-vite": ^0.1.24
+    "@storybook/node-logger": ^6.4.18
+    "@storybook/react": ^6.4.18
+    "@storybook/testing-react": ^1.2.2
+    "@testing-library/cypress": ^8.0.2
+    "@testing-library/dom": ^8.5.0
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.0
+    "@testing-library/user-event": ^13.2.1
+    "@types/classnames": ^2.2.11
+    "@types/jest": ^26.0.20
+    "@types/no-scroll": ^2.1.0
+    "@types/node": ^14.14.20
+    "@types/react": ^17.0.0
+    "@types/react-color": ^3.0.6
+    "@types/react-dom": ^17.0.0
+    "@types/react-window": ^1.8.2
+    "@types/tinycolor2": ^1.4.3
+    "@types/warning": ^3.0.0
+    "@vitejs/plugin-react": ^1.3.0
+    ag-grid-community: ^25.0.0
+    ag-grid-enterprise: ^25.0.0
+    ag-grid-react: ^25.0.0
+    aria-hidden: ^1.1.1
+    attr-accept: ^2.0.0
+    axe-core: ^4.3.5
+    classnames: ^2.2.6
+    clipboard-copy: ^4.0.1
+    compute-scroll-into-view: ^1.0.16
+    css-validator: ^0.10.0
+    csstree-validator: ^3.0.0
+    cypress: ^9.4.1
+    cypress-axe: ^0.14.0
+    cypress-image-snapshot: ^4.0.1
+    cypress-real-events: ^1.6.0
+    dayjs: 1.10.6
+    deepmerge: ^4.2.2
+    del: ^6.0.0
+    dom-accessibility-api: ^0.5.10
+    eslint-config-modular-app: 2.0.3
+    eslint-plugin-cypress: ^2.12.1
+    eslint-plugin-storybook: ^0.5.5
+    glob: ^7.1.6
+    is-ci: ^3.0.0
+    modular-scripts: "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch"
+    no-scroll: ^2.1.1
+    prettier: ^2.2.1
+    prop-types: ^15.7.2
+    react: ^17.0.1
+    react-color: ^2.19.3
+    react-dom: ^17.0.1
+    react-fast-compare: ^3.2.0
+    react-router-dom: ^6.2.1
+    react-window: ^1.8.6
+    rifm: ^0.12.0
+    svgo: ^2.3.0
+    tinycolor2: ^1.4.2
+    ts-node: ^10.4.0
+    typescript: 4.6.2
+    vite: ^2.9.0
+    vite-plugin-istanbul: ^2.5.1
+    vite-plugin-optimize-persist: ^0.1.2
+    vite-plugin-package-config: ^0.1.1
+    vite-tsconfig-paths: ^3.4.1
+    warning: ^4.0.3
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/theme-editor-app@>=0.1.0, @jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app"
+  dependencies:
+    "@jpmorganchase/theme-editor": ">=1.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase"
+  dependencies:
+    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/theme-editor-app": ">=0.1.0"
+    concurrently: ^6.4.0
+    electron: ^16.0.1
+    electron-is-dev: ^2.0.0
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
+  dependencies:
+    js-beautify: 1.14.0
+    tinycolor2: 1.4.2
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/theme@workspace:packages/theme":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/theme@workspace:packages/theme"
+  languageName: unknown
+  linkType: soft
+
+"@jpmorganchase/uitk-core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@jpmorganchase/uitk-core@workspace:packages/core"
+  peerDependencies:
+    "@types/react": ^16.8.6 || ^17.0.0
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
 
 "@jridgewell/resolve-uri@npm:^3.0.3":
   version: 3.0.5
@@ -11718,14 +11718,14 @@ __metadata:
   dependencies:
     "@babel/core": ^7.16.12
     "@babel/preset-react": ^7.16.7
-    "@brandname/theme-editor": ">=1.0.0"
-    "@brandname/theme-editor-app": ">=0.1.0"
     "@electron-forge/cli": ^6.0.0-beta.63
     "@electron-forge/maker-deb": ^6.0.0-beta.63
     "@electron-forge/maker-rpm": ^6.0.0-beta.63
     "@electron-forge/maker-squirrel": ^6.0.0-beta.63
     "@electron-forge/maker-zip": ^6.0.0-beta.63
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
+    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/theme-editor-app": ">=0.1.0"
     "@types/react": ^17.0.38
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^4.0.0
@@ -18589,9 +18589,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"modular-scripts@patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch::locator=%40brandname%2Froot%40workspace%3A.":
+"modular-scripts@patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch::locator=%40jpmorganchase%2Froot%40workspace%3A.":
   version: 2.3.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch::version=2.3.0&hash=1379c4&locator=%40brandname%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch::version=2.3.0&hash=1379c4&locator=%40jpmorganchase%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.16.7
     "@rollup/plugin-babel": 5.3.1

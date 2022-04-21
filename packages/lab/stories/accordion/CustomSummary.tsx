@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import "./CustomSummary.css";
-import { useAccordionSectionContext } from "@brandname/lab";
+import { useAccordionSectionContext } from "@jpmorganchase/lab";
 
 const PlusIcon = () => (
   <div className="plus icon">

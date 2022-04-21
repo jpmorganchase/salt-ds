@@ -1,6 +1,6 @@
 import React, { forwardRef, HTMLAttributes } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { StarIcon } from "./StarIcon";
 
 const withBaseName = makePrefixer("uitkContactFavoriteToggle");

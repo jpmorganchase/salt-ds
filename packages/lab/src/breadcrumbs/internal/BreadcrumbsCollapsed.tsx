@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useCallback,
 } from "react";
-import { OverflowMenuIcon } from "@brandname/icons";
+import { OverflowMenuIcon } from "@jpmorganchase/icons";
 import { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
 import { useFocusMenuRemount } from "./useFocusMenuRemount";
 import { MenuButton } from "../../menu-button";

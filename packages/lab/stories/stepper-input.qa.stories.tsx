@@ -1,4 +1,4 @@
-import { StepperInput } from "@brandname/lab";
+import { StepperInput } from "@jpmorganchase/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./stepper-input.qa.stories.css";

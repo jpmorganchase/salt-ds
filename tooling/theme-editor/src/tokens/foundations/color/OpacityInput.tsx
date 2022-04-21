@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Input } from "@brandname/lab";
+import { Input } from "@jpmorganchase/lab";
 
 export const OpacityInput = (props: {
   alphaValue: string;

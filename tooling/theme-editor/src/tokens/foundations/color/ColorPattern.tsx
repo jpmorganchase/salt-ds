@@ -5,7 +5,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ChildrenValues } from "../../ChildrenValues";
 export interface ColorPatternProps {

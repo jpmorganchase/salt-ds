@@ -1,5 +1,5 @@
 import { ComponentType, forwardRef } from "react";
-import { IconProps, Button, ButtonProps } from "@brandname/core";
+import { IconProps, Button, ButtonProps } from "@jpmorganchase/uitk-core";
 
 import { Tooltip, TooltipProps } from "../tooltip";
 

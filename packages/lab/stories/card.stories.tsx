@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-import { Card, Link, Panel } from "@brandname/lab";
-import { ToolkitProvider } from "@brandname/core";
+import { Card, Link, Panel } from "@jpmorganchase/lab";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,

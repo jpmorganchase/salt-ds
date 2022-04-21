@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Portal } from "../portal";
 import { Scrim, ScrimProps } from "../scrim";
 import { useWindow } from "../window";

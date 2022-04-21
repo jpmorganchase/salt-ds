@@ -8,7 +8,7 @@ import React, {
   KeyboardEvent,
 } from "react";
 import classnames from "classnames";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import { FormField, FormFieldProps } from "../../form-field";
 import { Tooltip } from "../../tooltip";
 

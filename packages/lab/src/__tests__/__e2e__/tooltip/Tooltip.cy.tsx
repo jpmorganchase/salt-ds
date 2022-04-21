@@ -1,4 +1,4 @@
-import { Tooltip } from "@brandname/lab";
+import { Tooltip } from "@jpmorganchase/lab";
 
 describe("GIVEN a Tooltip", () => {
   it('should not have the aria role "tooltip"', () => {

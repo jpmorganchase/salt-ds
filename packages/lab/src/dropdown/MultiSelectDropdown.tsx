@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { ForwardedRef, forwardRef, ReactElement, useState } from "react";
-import { makePrefixer } from "@brandname/core";
-import { ChevronDownIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon } from "@jpmorganchase/icons";
 import { ListBase, ListStateContext } from "../list";
 import { useFloatingUI } from "../popper";
 import { useForkRef } from "../utils";

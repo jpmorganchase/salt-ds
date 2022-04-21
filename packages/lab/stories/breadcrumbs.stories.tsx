@@ -1,6 +1,6 @@
 import { Story } from "@storybook/react";
-import { Breadcrumb, Breadcrumbs } from "@brandname/lab";
-import { HomeIcon, TreeIcon } from "@brandname/icons";
+import { Breadcrumb, Breadcrumbs } from "@jpmorganchase/lab";
+import { HomeIcon, TreeIcon } from "@jpmorganchase/icons";
 
 export default {
   title: "Lab/Breadcrumbs",

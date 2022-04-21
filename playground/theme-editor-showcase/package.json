@@ -1,10 +1,10 @@
 {
-  "name": "@brandname/theme-editor-showcase",
+  "name": "@jpmorganchase/theme-editor-showcase",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@brandname/theme-editor": ">=1.0.0",
-    "@brandname/theme-editor-app": ">=0.1.0"
+    "@jpmorganchase/theme-editor": ">=1.0.0",
+    "@jpmorganchase/theme-editor-app": ">=0.1.0"
   },
   "modular": {
     "type": "app"

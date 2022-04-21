@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, ButtonProps } from "@brandname/core";
+import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   ExportIcon,
@@ -14,8 +14,8 @@ import {
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
-} from "@brandname/icons";
-import { Toolbar, ToolbarProps, Tooltray } from "@brandname/lab";
+} from "@jpmorganchase/icons";
+import { Toolbar, ToolbarProps, Tooltray } from "@jpmorganchase/lab";
 import { ComponentStory } from "@storybook/react";
 
 import { AdjustableFlexbox, FlexboxProps } from "./story-components";

@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useControlled } from "../utils";
 import "./Accordion.css";
 import cn from "classnames";

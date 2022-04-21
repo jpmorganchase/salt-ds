@@ -2,7 +2,7 @@ import { ComponentType, forwardRef, Ref, useRef } from "react";
 
 import classnames from "classnames";
 import warning from "warning";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import {
   DefaultComboBox,

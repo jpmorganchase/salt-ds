@@ -1,4 +1,4 @@
-import { Card } from "@brandname/lab";
+import { Card } from "@jpmorganchase/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./card.qa.stories.css";

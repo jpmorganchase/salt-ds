@@ -4,7 +4,7 @@ import {
   PaginationProps,
   Paginator,
   PaginatorProps,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { Meta, Story } from "@storybook/react";
 import { useState } from "react";
 

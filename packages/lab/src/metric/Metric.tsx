@@ -6,7 +6,7 @@ import {
   cloneElement,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { MetricHeader } from "./MetricHeader";
 import { MetricContent } from "./MetricContent";
 
