@@ -12,7 +12,7 @@ import React, {
 } from "react";
 import cx from "classnames";
 import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/icons";
+import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/uitk-icons";
 import { TabProps } from "./TabstripProps";
 import { useForkRef } from "../utils";
 import { EditableLabel, EditableLabelProps } from "../editable-label";

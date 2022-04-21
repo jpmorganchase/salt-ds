@@ -8,14 +8,14 @@ import {
   RefreshIcon,
   UndoIcon,
   UploadIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   CascadingMenu,
   Dropdown,
   itemToString,
   ListChangeHandler,
   MenuDescriptor,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { handleThemeUpload } from "./handleThemeUpload";
 import { JSONByScope } from "../helpers/parseToJson";
 import "./ThemeHeader.css";

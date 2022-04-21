@@ -5,7 +5,7 @@ import {
   RefreshIcon,
   TriangleDownIcon,
   TriangleUpIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 
 import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";

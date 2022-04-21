@@ -3,7 +3,7 @@ import {
   FormattedInput,
   FormattedInputProps,
   FormField,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
 
 const parseDigits = (string: string) => (string.match(/(\d+)/g) || []).join("");

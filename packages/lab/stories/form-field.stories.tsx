@@ -1,5 +1,10 @@
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Input, FormField, FormFieldProps, Dropdown } from "@jpmorganchase/lab";
+import {
+  Input,
+  FormField,
+  FormFieldProps,
+  Dropdown,
+} from "@jpmorganchase/uitk-lab";
 import { useState } from "react";
 import { usStateExampleData } from "./exampleData";
 import { ComponentMeta, ComponentStory } from "@storybook/react";

@@ -17,8 +17,13 @@ import {
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
-} from "@jpmorganchase/icons";
-import { Dropdown, FormField, Toolbar, Tooltray } from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-icons";
+import {
+  Dropdown,
+  FormField,
+  Toolbar,
+  Tooltray,
+} from "@jpmorganchase/uitk-lab";
 import { AdjustableFlexbox } from "./story-components";
 import "./toolbar.stories.css";
 

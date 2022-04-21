@@ -1,4 +1,4 @@
-import { RadioButton, RadioButtonGroup } from "@jpmorganchase/lab";
+import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./radio-button.qa.stories.css";

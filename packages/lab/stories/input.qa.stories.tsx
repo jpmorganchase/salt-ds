@@ -1,5 +1,5 @@
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Input } from "@jpmorganchase/lab";
+import { Input } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";

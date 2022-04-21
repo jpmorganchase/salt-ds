@@ -4,7 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ReactElement } from "react";
 import { JSONObj } from "../../../helpers/parseToJson";

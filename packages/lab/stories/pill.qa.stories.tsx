@@ -1,4 +1,4 @@
-import { Pill } from "@jpmorganchase/lab";
+import { Pill } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./pill.qa.stories.css";

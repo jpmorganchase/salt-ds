@@ -1,6 +1,6 @@
 /* eslint-disable */
 //@ts-nocheck
-import { capitalize } from "@jpmorganchase/lab";
+import { capitalize } from "@jpmorganchase/uitk-lab";
 import { JSONByScope } from "./parseToJson";
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 

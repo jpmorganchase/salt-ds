@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { Button } from "@jpmorganchase/uitk-core";
-import { Overlay } from "@jpmorganchase/lab";
+import { Overlay } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import "./overlay.stories.css";

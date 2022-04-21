@@ -9,7 +9,7 @@ import {
   Tabstrip,
   TabstripProps,
   Tooltray /*, Toolbar */,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { Button } from "@jpmorganchase/uitk-core";
 import {
   FilterIcon,
@@ -17,7 +17,7 @@ import {
   SearchIcon,
   UserGroupIcon,
   UserIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 

@@ -39,11 +39,11 @@ module.exports = (on, config) => {
             __dirname,
             "../../dist/jpmorganchase-uitk-core"
           ),
-          "@jpmorganchase/lab": path.resolve(
+          "@jpmorganchase/uitk-lab": path.resolve(
             __dirname,
             "../../dist/jpmorganchase-uitk-lab"
           ),
-          "@jpmorganchase/icons": path.resolve(
+          "@jpmorganchase/uitk-icons": path.resolve(
             __dirname,
             "../../dist/jpmorganchase-uitk-icons"
           ),
@@ -52,8 +52,8 @@ module.exports = (on, config) => {
       viteConfig.optimizeDeps = {
         include: [
           "@jpmorganchase/uitk-core",
-          "@jpmorganchase/lab",
-          "@jpmorganchase/icons",
+          "@jpmorganchase/uitk-lab",
+          "@jpmorganchase/uitk-icons",
         ],
       };
     }

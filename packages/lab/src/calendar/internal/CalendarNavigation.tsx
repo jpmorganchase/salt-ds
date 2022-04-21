@@ -7,7 +7,7 @@ import {
 import cx from "classnames";
 import dayjs from "./dayjs";
 import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { useId } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";

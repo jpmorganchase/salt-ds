@@ -8,7 +8,7 @@ import {
   DialogProps,
   DialogTitle,
   OrderedButton,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { QAContainer } from "docs/components";
 import "./dialog.qa.stories.css";

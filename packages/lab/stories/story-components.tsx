@@ -1,5 +1,5 @@
 import { FC, CSSProperties, useRef, useState, useReducer } from "react";
-import { Input, InputProps } from "@jpmorganchase/lab";
+import { Input, InputProps } from "@jpmorganchase/uitk-lab";
 import { Button } from "@jpmorganchase/uitk-core";
 
 export interface FlexboxProps {

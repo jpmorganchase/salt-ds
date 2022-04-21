@@ -7,7 +7,7 @@ import {
   AccordionSection,
   AccordionSummary,
   capitalize,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import { ChildrenValuesWithinSection } from "../ChildrenValues";
 import { ScopeLabel } from "../labels/ScopeLabel";

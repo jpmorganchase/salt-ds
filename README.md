@@ -5,13 +5,13 @@ React UI components built with a focus on accessibility, customisation and ease-
 ## Installation
 
 ```sh
-npm install @jpmorganchase/uitk-core @jpmorganchase/lab @jpmorganchase/theme
+npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-lab @jpmorganchase/theme
 ```
 
 or
 
 ```sh
-yarn add @jpmorganchase/uitk-core @jpmorganchase/lab @jpmorganchase/theme
+yarn add @jpmorganchase/uitk-core @jpmorganchase/uitk-lab @jpmorganchase/theme
 ```
 
 ## Usage

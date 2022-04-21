@@ -5,7 +5,7 @@ import {
   MessageIcon,
   SettingsIcon,
   UserIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   ContactAction,
   ContactActions,
@@ -19,8 +19,8 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   Slider,
-} from "@jpmorganchase/lab";
-import { SliderValue } from "@jpmorganchase/lab/src/slider/internal/utils";
+} from "@jpmorganchase/uitk-lab";
+import { SliderValue } from "@jpmorganchase/uitk-lab/src/slider/internal/utils";
 import { Story } from "@storybook/react";
 
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import { FormattedInput } from "@jpmorganchase/lab";
+import { FormattedInput } from "@jpmorganchase/uitk-lab";
 import { useState } from "react";
 
 describe("GIVEN FormattedInput", () => {

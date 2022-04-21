@@ -6,7 +6,7 @@ import {
   Button,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/icons";
+import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import { FocusManager } from "../focus-manager";
 import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import { useClickOutside, useForkRef, useId } from "../utils";

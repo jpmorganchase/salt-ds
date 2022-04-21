@@ -9,7 +9,7 @@ import {
   FilesAcceptedEventHandler,
   FilesRejectedEventHandler,
   FilesValidator,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { AllRenderer } from "docs/components";
 
 export default {

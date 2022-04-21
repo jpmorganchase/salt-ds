@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { AdjustableFlexbox } from "./story-components";
 
 import "docs/story.css";

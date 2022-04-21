@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { capitalize, Tooltip } from "@jpmorganchase/lab";
+import { capitalize, Tooltip } from "@jpmorganchase/uitk-lab";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./ScopeLabel.css";
 

@@ -7,7 +7,7 @@ import {
   useRef,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/icons";
+import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import { ListItem } from "../../list";
 import { QueryInputCategory } from "../QueryInput";
 import { useCategoryListContext } from "./CategoryListContext";

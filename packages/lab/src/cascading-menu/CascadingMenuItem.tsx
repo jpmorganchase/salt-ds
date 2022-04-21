@@ -9,7 +9,7 @@ import {
 } from "react";
 import classnames from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/icons";
+import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 
 import { MenuDescriptor } from "./CascadingMenuProps";
 import { ListItem, ListItemProps } from "../list";

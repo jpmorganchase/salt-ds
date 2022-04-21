@@ -13,7 +13,7 @@ import {
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import {
   CSSByPattern,
   JSONByScope,
@@ -21,7 +21,7 @@ import {
   ThemeEditor,
   uitkTheme,
 } from "@jpmorganchase/theme-editor";
-import { isElectron } from "@jpmorganchase/lab/src/window/electron-utils";
+import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";

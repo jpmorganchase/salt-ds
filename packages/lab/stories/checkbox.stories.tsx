@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Checkbox, CheckboxGroup } from "@jpmorganchase/lab";
+import { Checkbox, CheckboxGroup } from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {

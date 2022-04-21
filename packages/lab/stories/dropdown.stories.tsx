@@ -2,7 +2,7 @@ import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   Dropdown,
   DropdownButton,
@@ -14,7 +14,7 @@ import {
   MultiSelectDropdown,
   Tooltip,
   useListItem,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { useState, FC, ChangeEvent } from "react";
 
 import {

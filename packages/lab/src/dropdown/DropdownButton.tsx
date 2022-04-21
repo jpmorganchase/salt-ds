@@ -6,7 +6,7 @@ import {
   ButtonProps,
   IconProps,
 } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/icons";
+import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 
 import { useFormFieldProps } from "../form-field-context";
 

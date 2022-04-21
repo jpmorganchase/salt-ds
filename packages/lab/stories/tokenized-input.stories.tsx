@@ -1,4 +1,4 @@
-import { TokenizedInput } from "@jpmorganchase/lab";
+import { TokenizedInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

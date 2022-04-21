@@ -1,4 +1,4 @@
-import { Logo } from "@jpmorganchase/lab";
+import { Logo } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";

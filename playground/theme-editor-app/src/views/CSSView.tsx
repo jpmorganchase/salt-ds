@@ -4,7 +4,7 @@ import {
   AccordionDetails,
   AccordionSection,
   AccordionSummary,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { CSSByPattern } from "@jpmorganchase/theme-editor/src/helpers/parseToCss";
 
 interface CSSViewProps {

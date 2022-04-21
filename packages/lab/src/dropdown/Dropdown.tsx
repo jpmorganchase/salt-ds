@@ -13,7 +13,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/icons";
+import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import {
   ListBase,
   ListChangeHandler,

@@ -14,8 +14,8 @@ import {
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
-} from "@jpmorganchase/icons";
-import { Toolbar, ToolbarProps, Tooltray } from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-icons";
+import { Toolbar, ToolbarProps, Tooltray } from "@jpmorganchase/uitk-lab";
 import { ComponentStory } from "@storybook/react";
 
 import { AdjustableFlexbox, FlexboxProps } from "./story-components";

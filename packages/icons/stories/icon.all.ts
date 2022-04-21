@@ -146,7 +146,7 @@ import {
   WarningIcon,
   WarningSecondaryIcon,
   XlsIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 
 export const allIcons = [
   AddIcon,

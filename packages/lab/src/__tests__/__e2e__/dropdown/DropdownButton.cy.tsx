@@ -1,4 +1,4 @@
-import { DropdownButton } from "@jpmorganchase/lab";
+import { DropdownButton } from "@jpmorganchase/uitk-lab";
 
 describe("GIVEN a DropdownButton component", () => {
   describe("WHEN the button renders", () => {

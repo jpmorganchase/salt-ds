@@ -7,7 +7,7 @@ import {
   ColorChooser,
   getColorNameByHexValue,
   Tooltip,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";

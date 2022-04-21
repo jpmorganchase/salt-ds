@@ -5,7 +5,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 
 import "docs/story.css";
 

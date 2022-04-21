@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState, FC } from "react";
 
-import { FormField, Panel, StepperInput } from "@jpmorganchase/lab";
+import { FormField, Panel, StepperInput } from "@jpmorganchase/uitk-lab";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ColumnLayoutContainer,

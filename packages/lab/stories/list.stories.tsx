@@ -5,7 +5,7 @@ import type {
   Story,
 } from "@storybook/react";
 import { Button, useDensity } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 import {
   FormField,
   Input,
@@ -18,7 +18,7 @@ import {
   ListScrollHandles,
   useListItem,
   useListItemContext,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import {
   ChangeEventHandler,
   ComponentPropsWithoutRef,
@@ -32,7 +32,7 @@ import {
 } from "react";
 import { usStateExampleData as listExampleData } from "./exampleData";
 import "./list.stories.css";
-import { IndexedListItemProps } from "@jpmorganchase/lab/src/list";
+import { IndexedListItemProps } from "@jpmorganchase/uitk-lab/src/list";
 
 const containerStyle = {
   display: "flex",

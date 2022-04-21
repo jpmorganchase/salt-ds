@@ -5,7 +5,7 @@ import {
   CopyIcon,
   ExportIcon,
   MessageIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   Card,
   ComboBox,
@@ -22,14 +22,14 @@ import {
   FormField,
   Overlay,
   Tooltip,
-} from "@jpmorganchase/lab";
-import { ValueComponentProps } from "@jpmorganchase/lab/src/contact-details/internal";
+} from "@jpmorganchase/uitk-lab";
+import { ValueComponentProps } from "@jpmorganchase/uitk-lab/src/contact-details/internal";
 import {
   IndexedListItemProps,
   useListItem,
-} from "@jpmorganchase/lab/src/list/useListItem";
-import { ListItemBase } from "@jpmorganchase/lab/src/list";
-import { ListChangeHandler } from "@jpmorganchase/lab/src/list/ListProps";
+} from "@jpmorganchase/uitk-lab/src/list/useListItem";
+import { ListItemBase } from "@jpmorganchase/uitk-lab/src/list";
+import { ListChangeHandler } from "@jpmorganchase/uitk-lab/src/list/ListProps";
 import { Story } from "@storybook/react";
 
 import "./contact-details.stories.css";

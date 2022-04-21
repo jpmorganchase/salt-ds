@@ -7,13 +7,13 @@ import {
   CallIcon,
   SendIcon,
   UserIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   Input,
   FormField,
   StaticInputAdornment,
   Dropdown,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./input.qa.stories.css";
 

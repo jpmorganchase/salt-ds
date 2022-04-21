@@ -1,12 +1,12 @@
 import { Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { SuccessTickIcon } from "@jpmorganchase/icons";
+import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
 import {
   FormField,
   makeRadioIcon,
   Panel,
   RadioButton,
   RadioButtonGroup,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,

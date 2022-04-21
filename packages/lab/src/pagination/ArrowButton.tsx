@@ -5,7 +5,7 @@ import {
   MouseEventHandler,
 } from "react";
 import { Button, ButtonProps, IconProps } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { withBaseName } from "./utils";
 

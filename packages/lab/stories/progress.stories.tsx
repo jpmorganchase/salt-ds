@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { CircularProgress, LinearProgress, Panel } from "@jpmorganchase/lab";
+import {
+  CircularProgress,
+  LinearProgress,
+  Panel,
+} from "@jpmorganchase/uitk-lab";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";

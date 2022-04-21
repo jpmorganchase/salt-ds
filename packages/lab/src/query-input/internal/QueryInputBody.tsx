@@ -8,7 +8,7 @@ import {
   useMemo,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { FilterIcon } from "@jpmorganchase/icons";
+import { FilterIcon } from "@jpmorganchase/uitk-icons";
 
 import {
   ChangeHandler,

@@ -1,4 +1,4 @@
-import { Pill } from "@jpmorganchase/lab";
+import { Pill } from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied to the tests after copy over

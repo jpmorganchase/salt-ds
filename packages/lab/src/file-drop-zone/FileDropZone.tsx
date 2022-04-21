@@ -15,7 +15,7 @@ import {
 } from "react";
 import cx from "classnames";
 import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
-import { ErrorIcon, UploadIcon } from "@jpmorganchase/icons";
+import { ErrorIcon, UploadIcon } from "@jpmorganchase/uitk-icons";
 
 import { useId } from "../utils";
 

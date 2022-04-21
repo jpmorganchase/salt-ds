@@ -8,7 +8,7 @@
 
 import { useState, SyntheticEvent } from "react";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Pill } from "@jpmorganchase/lab";
+import { Pill } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { StarIcon } from "../src/contact-details/internal/StarIcon";
 

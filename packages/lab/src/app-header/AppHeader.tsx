@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { Toolbar } from "../toolbar";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { MenuIcon } from "@jpmorganchase/icons";
+import { MenuIcon } from "@jpmorganchase/uitk-icons";
 
 import "./AppHeader.css";
 import { forwardRef, HTMLAttributes } from "react";

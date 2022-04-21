@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
-import { AddDocumentIcon } from "@jpmorganchase/icons";
+import { AddDocumentIcon } from "@jpmorganchase/uitk-icons";
 
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../../utils/uitkValues";
 import "../foundations/color/ColorValueEditor.css";

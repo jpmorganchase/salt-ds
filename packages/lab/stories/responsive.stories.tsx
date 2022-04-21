@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-import { OverflowLayoutContainer } from "@jpmorganchase/lab";
+import { OverflowLayoutContainer } from "@jpmorganchase/uitk-lab";
 import { AdjustableFlexbox } from "./story-components";
 
 export default {

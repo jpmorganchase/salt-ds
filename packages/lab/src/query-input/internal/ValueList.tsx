@@ -7,7 +7,7 @@ import {
   SetStateAction,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon } from "@jpmorganchase/icons";
+import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import { List, ListItem } from "../../list";
 
 const withBaseName = makePrefixer("uitkQueryInputValueList");

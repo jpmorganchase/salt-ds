@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   OrderedButton,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 
 import "./dialog.stories.css";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

@@ -5,7 +5,7 @@ import {
   FormField,
   ListChangeHandler,
   ListSelectHandler,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {

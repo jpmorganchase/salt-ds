@@ -15,7 +15,7 @@ import {
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { AddIcon } from "@jpmorganchase/icons";
+import { AddIcon } from "@jpmorganchase/uitk-icons";
 import { Tab } from "./Tab";
 import {
   responsiveDataAttributes,

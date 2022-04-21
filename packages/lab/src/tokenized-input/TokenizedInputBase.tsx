@@ -25,7 +25,7 @@ import {
   useDensity,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon, CloseIcon } from "@jpmorganchase/icons";
+import { OverflowMenuIcon, CloseIcon } from "@jpmorganchase/uitk-icons";
 import { useForkRef, useId } from "../utils";
 import { Input, InputProps } from "../input";
 

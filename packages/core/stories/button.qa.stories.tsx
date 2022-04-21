@@ -1,5 +1,5 @@
 import { Button, ButtonVariantValues } from "@jpmorganchase/uitk-core";
-import { SearchIcon } from "@jpmorganchase/icons";
+import { SearchIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 

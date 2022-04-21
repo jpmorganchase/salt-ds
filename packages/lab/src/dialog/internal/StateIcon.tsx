@@ -6,7 +6,7 @@ import {
   InfoIcon,
   SuccessTickIcon,
   WarningIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 
 import { State } from "../State";
 

@@ -1,4 +1,8 @@
-import { ErrorIcon, SuccessTickIcon, WarningIcon } from "@jpmorganchase/icons";
+import {
+  ErrorIcon,
+  SuccessTickIcon,
+  WarningIcon,
+} from "@jpmorganchase/uitk-icons";
 import { IconProps } from "@jpmorganchase/uitk-core";
 import { TooltipState } from "./Tooltip";
 

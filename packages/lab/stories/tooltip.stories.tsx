@@ -1,5 +1,5 @@
 import { Button } from "@jpmorganchase/uitk-core";
-import { Tooltip } from "@jpmorganchase/lab";
+import { Tooltip } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useCallback } from "react";
 

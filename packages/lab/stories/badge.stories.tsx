@@ -1,9 +1,9 @@
-import { Badge } from "@jpmorganchase/lab";
+import { Badge } from "@jpmorganchase/uitk-lab";
 import {
   ClockIcon,
   SettingsSolidIcon,
   UserBadgeIcon,
-} from "@jpmorganchase/icons";
+} from "@jpmorganchase/uitk-icons";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

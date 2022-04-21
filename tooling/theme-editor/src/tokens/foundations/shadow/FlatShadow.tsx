@@ -6,7 +6,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@jpmorganchase/lab";
+} from "@jpmorganchase/uitk-lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { getShadowParts } from "./getShadowParts";
 import { ShadowPatternProps } from "./ShadowPatternProps";
