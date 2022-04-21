@@ -1,5 +1,10 @@
 import { Column, Row } from "../model";
-import { MouseEventHandler, useCallback, useState } from "react";
+import {
+  HTMLAttributes,
+  MouseEventHandler,
+  useCallback,
+  useState,
+} from "react";
 import { TableRow } from "./TableRow";
 import { useGridContext } from "../GridContext";
 import { getCellPosition, getRowKey } from "../features/getAttribute";
@@ -17,7 +22,8 @@ export function TableBody<T>(props: TableBodyProps<T>) {
   const { model } = useGridContext();
   const rowSelectionMode = model.useRowSelectionMode();
   const cellSelectionMode = model.useCellSelectionMode();
-  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const isRangeSelectionInProgress =
+    model.cellSelection.useIsRangeSelectionInProgress();
 
   const onMouseEnter: MouseEventHandler<HTMLTableRowElement> = useCallback(
     (event) => {
@@ -62,7 +68,6 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             rowIndex: cell.rowIndex,
           },
         });
-        setIsMouseDown(true);
         event.preventDefault();
       }
       model.moveCursor(cell);
@@ -72,7 +77,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
 
   const onMouseMove: MouseEventHandler = useCallback(
     (event) => {
-      if (isMouseDown) {
+      if (isRangeSelectionInProgress) {
         const cell = getCellPosition(event.target as HTMLElement);
         const rowKey = getRowKey(event.target as HTMLElement);
         model.cellSelection.selectionMove({
@@ -84,29 +89,41 @@ export function TableBody<T>(props: TableBodyProps<T>) {
         });
       }
     },
-    [rowSelectionMode, cellSelectionMode, isMouseDown]
+    [rowSelectionMode, cellSelectionMode, isRangeSelectionInProgress]
   );
 
   const onMouseUp: MouseEventHandler = useCallback(
     (event) => {
-      if (isMouseDown) {
-        setIsMouseDown(false);
+      if (isRangeSelectionInProgress) {
+        const cell = getCellPosition(event.target as HTMLElement);
+        const rowKey = getRowKey(event.target as HTMLElement);
+        model.cellSelection.selectionEnd({
+          cellKey: {
+            rowKey,
+            columnIndex: cell.columnIndex,
+            rowIndex: cell.rowIndex,
+          },
+        });
       }
     },
-    [isMouseDown]
+    [isRangeSelectionInProgress]
   );
 
   const onDoubleClick: MouseEventHandler = useCallback((event) => {
     model.editMode.start();
   }, []);
 
+  const tbodyProps: HTMLAttributes<HTMLElement> = {
+    onMouseDown,
+    onDoubleClick,
+  };
+  if (isRangeSelectionInProgress) {
+    tbodyProps.onMouseMove = onMouseMove;
+    tbodyProps.onMouseUp = onMouseUp;
+  }
+
   return (
-    <tbody
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
-      onDoubleClick={onDoubleClick}
-    >
+    <tbody {...tbodyProps} onMouseDown={onMouseDown}>
       {rows.map((row) => {
         return (
           <TableRow

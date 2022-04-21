@@ -2,7 +2,7 @@ import { BehaviorSubject, distinctUntilChanged, Subject } from "rxjs";
 import { RowKeyGetter } from "../Grid";
 import { CellSelectionMode } from "./GridModel";
 import { Column } from "./Column";
-import { createHandler } from "./utils";
+import { createHandler, createHook } from "./utils";
 
 export interface CellKey {
   rowKey: string;
@@ -25,6 +25,7 @@ export interface ICellSelection<T> {
   readonly selectionStart: (event: RangeSelectEvent) => void;
   readonly selectionMove: (event: RangeSelectEvent) => void;
   readonly selectionEnd: (event: RangeSelectEvent) => void;
+  readonly useIsRangeSelectionInProgress: () => boolean;
 }
 
 export class CellSelection<T> implements ICellSelection<T> {
@@ -38,6 +39,9 @@ export class CellSelection<T> implements ICellSelection<T> {
   private lastRangeSelectionStart?: CellKey;
   public readonly rangeSelectionMove$ = new Subject<RangeSelectEvent>();
   public readonly rangeSelectionEnd$ = new Subject<RangeSelectEvent>();
+  public readonly isRangeSelectionInProgress$ = new BehaviorSubject<boolean>(
+    false
+  );
 
   public selectCells(event: SelectCellsEvent) {
     this.selectCellsEvents$.next(event);
@@ -46,6 +50,9 @@ export class CellSelection<T> implements ICellSelection<T> {
   public readonly selectionStart = createHandler(this.rangeSelectionStart$);
   public readonly selectionMove = createHandler(this.rangeSelectionMove$);
   public readonly selectionEnd = createHandler(this.rangeSelectionEnd$);
+  public readonly useIsRangeSelectionInProgress = createHook(
+    this.isRangeSelectionInProgress$
+  );
 
   public constructor(
     data$: BehaviorSubject<T[]>,
@@ -97,6 +104,12 @@ export class CellSelection<T> implements ICellSelection<T> {
       newSelectedCells.set(rowKey, new Set<string>([columnKey]));
       this.selectedCells$.next(newSelectedCells);
       this.lastRangeSelectionStart = cellKey;
+      this.isRangeSelectionInProgress$.next(true);
+    });
+
+    this.rangeSelectionEnd$.subscribe((event) => {
+      this.isRangeSelectionInProgress$.next(false);
+      this.lastRangeSelectionStart = undefined;
     });
 
     this.rangeSelectionMove$

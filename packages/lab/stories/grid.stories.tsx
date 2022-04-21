@@ -70,6 +70,10 @@ const columnGroups: ColumnGroupDefinition<BlotterRecord>[] = [
 const columnDefinitions: ColumnDefinition<BlotterRecord>[] = [
   createTextColumn("identifier", "Identifier", "identifier", 100),
   createTextColumn("client", "Client", "client", 100),
+  createTextColumn("side", "Side", "side", 100),
+  createTextColumn("deskOwner", "Desk Owner", "deskOwner", 100),
+  createTextColumn("status", "Status", "status", 100),
+  createNumericColumn("quantity", "Quantity", "quantity", 80),
 ];
 
 const allEditableColumnGroups = columnGroups.map((columnGroup) => ({
