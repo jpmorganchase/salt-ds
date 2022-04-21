@@ -1,8 +1,8 @@
 import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
-import "@jpmorganchase/theme/index.css";
+import "@jpmorganchase/uitk-/theme/index.css";
 // TODO: Discuss what shall we do with global css, which we currently offer a little bit in TK1
-import "@jpmorganchase/theme/global.css";
+import "@jpmorganchase/uitk-/theme/global.css";
 
 import { withThemeBackground } from "./theme-switch/helpers";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";

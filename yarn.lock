@@ -3220,29 +3220,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor-app@>=0.1.0, @jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app":
+"@jpmorganchase/uitk-/theme-editor-app@>=0.1.0, @jpmorganchase/uitk-/theme-editor-app@workspace:playground/theme-editor-app":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app"
+  resolution: "@jpmorganchase/uitk-/theme-editor-app@workspace:playground/theme-editor-app"
   dependencies:
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/uitk-/theme-editor": ">=1.0.0"
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase":
+"@jpmorganchase/uitk-/theme-editor-showcase@workspace:playground/theme-editor-showcase":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase"
+  resolution: "@jpmorganchase/uitk-/theme-editor-showcase@workspace:playground/theme-editor-showcase"
   dependencies:
-    "@jpmorganchase/theme-editor": ">=1.0.0"
-    "@jpmorganchase/theme-editor-app": ">=0.1.0"
+    "@jpmorganchase/uitk-/theme-editor": ">=1.0.0"
+    "@jpmorganchase/uitk-/theme-editor-app": ">=0.1.0"
     concurrently: ^6.4.0
     electron: ^16.0.1
     electron-is-dev: ^2.0.0
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+"@jpmorganchase/uitk-/theme-editor@>=1.0.0, @jpmorganchase/uitk-/theme-editor@workspace:tooling/theme-editor":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
+  resolution: "@jpmorganchase/uitk-/theme-editor@workspace:tooling/theme-editor"
   dependencies:
     js-beautify: 1.14.0
     tinycolor2: 1.4.2
@@ -11724,8 +11724,8 @@ __metadata:
     "@electron-forge/maker-squirrel": ^6.0.0-beta.63
     "@electron-forge/maker-zip": ^6.0.0-beta.63
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
-    "@jpmorganchase/theme-editor": ">=1.0.0"
-    "@jpmorganchase/theme-editor-app": ">=0.1.0"
+    "@jpmorganchase/uitk-/theme-editor": ">=1.0.0"
+    "@jpmorganchase/uitk-/theme-editor-app": ">=0.1.0"
     "@types/react": ^17.0.38
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^4.0.0

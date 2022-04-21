@@ -2,17 +2,17 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
+import { ThemeEditorApp } from "@jpmorganchase/uitk-/theme-editor-app/src/ThemeEditorApp";
 import {
   WindowContext,
   ElectronWindow,
 } from "@jpmorganchase/uitk-lab/src/window";
 import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
-import { CSSByPattern } from "@jpmorganchase/theme-editor";
+import { CSSByPattern } from "@jpmorganchase/uitk-/theme-editor";
 
 import "./App.css";
-import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
+import { ThemeMode } from "@jpmorganchase/uitk-/theme-editor/src/header/ScopeSelector";
 
 export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>();

@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { CSSByPattern } from "@jpmorganchase/theme-editor/src/helpers/parseToCss";
+import { CSSByPattern } from "@jpmorganchase/uitk-/theme-editor/src/helpers/parseToCss";
 import {
   UITK_CHARACTERISTICS,
   UITK_FOUNDATIONS,
-} from "@jpmorganchase/theme-editor/src/utils/uitkValues";
+} from "@jpmorganchase/uitk-/theme-editor/src/utils/uitkValues";
 
 declare const window: any;
 

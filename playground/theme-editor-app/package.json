@@ -1,11 +1,11 @@
 {
-  "name": "@jpmorganchase/theme-editor-app",
+  "name": "@jpmorganchase/uitk-/theme-editor-app",
   "version": "0.1.0",
   "private": true,
   "modular": {
     "type": "app"
   },
   "dependencies": {
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/uitk-/theme-editor": ">=1.0.0"
   }
 }
