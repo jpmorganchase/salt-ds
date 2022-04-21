@@ -1,33 +1,4 @@
-import { useEffect, useState } from "react";
-
-import { Breakpoints, useBreakpoints } from "@brandname/core";
-
-export const useViewport = () => {
-  const breakpoints = useBreakpoints();
-
-  const [viewport, setViewport] = useState<keyof Breakpoints>(() =>
-    getCurrentBreakpoint(breakpoints, window.innerWidth)
-  );
-
-  useEffect(() => {
-    const observer = new ResizeObserver(
-      (observerEntries: ResizeObserverEntry[]) => {
-        setViewport(
-          getCurrentBreakpoint(
-            breakpoints,
-            observerEntries[0].contentRect.width
-          )
-        );
-      }
-    );
-    observer.observe(document.body);
-    return () => {
-      observer.disconnect();
-    };
-  }, [breakpoints]);
-
-  return viewport;
-};
+import { Breakpoints, useBreakpoints, useViewport } from "@brandname/core";
 
 type BreakpointProp<T> = {
   [K in keyof Breakpoints]?: T;
@@ -106,8 +77,15 @@ export const useResponsiveProp = <T extends any>(
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
 
+  const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
+
   if (hasBreakpointValues(value, breakpoints)) {
-    return getResponsiveValue(value, breakpoints, viewport, defaultValue);
+    return getResponsiveValue(
+      value,
+      breakpoints,
+      currentViewport,
+      defaultValue
+    );
   }
   return value;
 };
