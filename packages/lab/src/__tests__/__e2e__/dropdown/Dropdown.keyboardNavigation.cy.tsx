@@ -1,6 +1,6 @@
 import { ComponentType } from "react";
 
-import { Dropdown, MultiSelectDropdown } from "@brandname/lab";
+import { Dropdown, MultiSelectDropdown } from "@jpmorganchase/lab";
 
 /**
  * Changes applied

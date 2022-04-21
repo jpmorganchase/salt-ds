@@ -6,7 +6,7 @@ import {
   Ref,
   useState,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useFormFieldProps } from "../form-field-context";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { useControlled, useForkRef, useIsFocusVisible } from "../utils";

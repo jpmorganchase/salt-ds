@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
 import "./Swatches.css";

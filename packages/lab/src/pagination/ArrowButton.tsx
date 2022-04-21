@@ -4,8 +4,8 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { Button, ButtonProps, IconProps } from "@brandname/core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@brandname/icons";
+import { Button, ButtonProps, IconProps } from "@jpmorganchase/uitk-core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/icons";
 import cn from "classnames";
 import { withBaseName } from "./utils";
 

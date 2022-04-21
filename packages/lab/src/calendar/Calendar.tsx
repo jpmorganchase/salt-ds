@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   CalendarNavigation,
   CalendarNavigationProps,

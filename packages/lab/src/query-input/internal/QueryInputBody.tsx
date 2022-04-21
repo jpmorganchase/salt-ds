@@ -7,8 +7,8 @@ import {
   SyntheticEvent,
   useMemo,
 } from "react";
-import { makePrefixer } from "@brandname/core";
-import { FilterIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FilterIcon } from "@jpmorganchase/icons";
 
 import {
   ChangeHandler,

@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { Tab, Tabstrip, capitalize } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Tab, Tabstrip, capitalize } from "@jpmorganchase/lab";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
 import { UITK_FOUNDATIONS, UITK_COLOURS } from "../../utils/uitkValues";

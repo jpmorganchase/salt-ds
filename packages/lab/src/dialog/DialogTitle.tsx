@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import classnames from "classnames";
-import { Button, makePrefixer } from "@brandname/core";
-import { CloseIcon } from "@brandname/icons";
+import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
+import { CloseIcon } from "@jpmorganchase/icons";
 
 import { StateIcon } from "./internal/StateIcon";
 import { DialogContext } from "./internal/DialogContext";

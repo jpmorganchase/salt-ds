@@ -5,13 +5,13 @@ import {
   ToggleButtonToggleEventHandler,
   ToggleButtonGroup,
   ToggleButton,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import {
   NotificationIcon,
   HomeIcon,
   SearchIcon,
   PrintIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

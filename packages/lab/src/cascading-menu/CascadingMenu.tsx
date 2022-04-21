@@ -17,7 +17,7 @@ import {
   useForkRef,
   usePrevious,
 } from "../utils";
-import { useDensity } from "@brandname/core";
+import { useDensity } from "@jpmorganchase/uitk-core";
 import { CascadingMenuProps } from "./CascadingMenuProps";
 
 import { deriveFlatStateFromTree } from "./internal/stateUtils";

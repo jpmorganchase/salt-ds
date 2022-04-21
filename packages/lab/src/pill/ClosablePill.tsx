@@ -1,7 +1,7 @@
 import { KeyboardEvent } from "react";
 import cn from "classnames";
 import { ForwardedRef, forwardRef, useCallback, useState } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import { DeleteButton } from "./internal/DeleteButton";
 import { PillBase, PillBaseProps } from "./internal/PillBase";

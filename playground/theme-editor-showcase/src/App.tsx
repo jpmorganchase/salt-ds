@@ -2,11 +2,11 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { ThemeEditorApp } from "@brandname/theme-editor-app/src/ThemeEditorApp";
-import { WindowContext, ElectronWindow } from "@brandname/lab/src/window";
-import { isElectron } from "@brandname/lab/src/window/electron-utils";
+import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
+import { WindowContext, ElectronWindow } from "@jpmorganchase/lab/src/window";
+import { isElectron } from "@jpmorganchase/lab/src/window/electron-utils";
 
-import { CSSByPattern } from "@brandname/theme-editor";
+import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
 import "./App.css";
 

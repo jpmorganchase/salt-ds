@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { capitalize } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize } from "@jpmorganchase/lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import { UITK_COLOURS } from "../../utils/uitkValues";
 import "./InnerFieldLabel.css";

@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState, useMemo } from "react";
 import classnames from "classnames";
-import { useCharacteristic, useIsomorphicLayoutEffect } from "@brandname/core";
+import { useCharacteristic, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { List, ListProps } from "../list";
 import { useForkRef } from "../utils";
 import { useFloatingUI, UseFloatingUIProps } from "../popper";

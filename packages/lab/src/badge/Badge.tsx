@@ -7,8 +7,8 @@ import {
   ReactText,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { MessageIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { MessageIcon } from "@jpmorganchase/icons";
 
 import "./Badge.css";
 import { useId } from "../utils";

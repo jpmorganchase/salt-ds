@@ -17,7 +17,7 @@ import {
   makePrefixer,
   Button,
   useIsomorphicLayoutEffect,
-} from "@brandname/core";
+} from "@jpmorganchase/uitk-core";
 
 import { useTooltipContext } from "../../tooltip";
 import { DeleteButton } from "./DeleteButton";

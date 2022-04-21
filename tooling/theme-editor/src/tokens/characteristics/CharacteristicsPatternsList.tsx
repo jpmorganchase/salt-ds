@@ -1,7 +1,7 @@
 import { ReactElement, useMemo, useState, useEffect } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { Accordion } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Accordion } from "@jpmorganchase/lab";
 import { CharacteristicPattern } from "./CharacteristicPattern";
 import { JSONByScope, JSONObj } from "../../helpers/parseToJson";
 import { useSearchParams } from "react-router-dom";

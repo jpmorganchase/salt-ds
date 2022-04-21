@@ -1,6 +1,6 @@
 import { useState } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Color } from "./Color";
 
 const withBaseName = makePrefixer("uitkColorChooserSwatch");

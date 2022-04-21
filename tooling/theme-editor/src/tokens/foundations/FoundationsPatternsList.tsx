@@ -1,7 +1,7 @@
 import { useMemo, useCallback, ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { Accordion } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Accordion } from "@jpmorganchase/lab";
 import { createColorMap } from "../../helpers/createColorMap";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";

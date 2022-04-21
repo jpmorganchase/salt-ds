@@ -8,7 +8,7 @@ import cx from "classnames";
 import dayjs from "./dayjs";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
 import { generateVisibleDays } from "./calendarUtils";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import "./CalendarMonth.css";
 import { useCalendarContext } from "./CalendarContext";

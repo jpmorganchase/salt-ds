@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { UITK_COLOURS } from "../../../utils/uitkValues";

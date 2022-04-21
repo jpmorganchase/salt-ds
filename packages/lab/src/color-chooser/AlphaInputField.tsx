@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Input } from "../input";
 
 import "./RGBAInput.css";

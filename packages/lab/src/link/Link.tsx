@@ -5,7 +5,7 @@ import {
   useCallback,
 } from "react";
 import cx from "classnames";
-import { TearOutIcon } from "@brandname/icons";
+import { TearOutIcon } from "@jpmorganchase/icons";
 
 import "./Link.css";
 

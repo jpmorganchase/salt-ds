@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Switch } from "@brandname/lab";
+import { Switch } from "@jpmorganchase/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

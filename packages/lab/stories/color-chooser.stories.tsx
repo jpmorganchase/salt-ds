@@ -1,4 +1,4 @@
-import { ColorChooser, Color } from "@brandname/lab";
+import { ColorChooser, Color } from "@jpmorganchase/lab";
 import { useState, useCallback } from "react";
 import { customColorMap } from "./custom-color-map";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

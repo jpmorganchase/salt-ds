@@ -1,5 +1,5 @@
 import { cloneElement, Fragment, ReactElement } from "react";
-import { DensityValues, ToolkitProvider } from "@brandname/core";
+import { DensityValues, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { DocGrid } from "./DocGrid";
 import { BackgroundBlock } from "./BackgroundBlock";
 

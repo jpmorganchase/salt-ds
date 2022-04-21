@@ -14,8 +14,8 @@ import {
   KeyboardEvent,
 } from "react";
 import cx from "classnames";
-import { makePrefixer, Button } from "@brandname/core";
-import { ErrorIcon, UploadIcon } from "@brandname/icons";
+import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
+import { ErrorIcon, UploadIcon } from "@jpmorganchase/icons";
 
 import { useId } from "../utils";
 

@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { ownerDocument } from "../utils";
 import { findAllTabbableElements } from "./internal/findAllTabbableElements";
 import { useReturnFocus, UseReturnFocusProps } from "./internal/useReturnFocus";

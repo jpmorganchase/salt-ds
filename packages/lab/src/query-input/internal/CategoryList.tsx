@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { QueryInputCategory } from "../QueryInput";
 import { List, ListSelectHandler } from "../../list";
 import { CategoryListItem } from "./CategoryListItem";

@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { useSearchParams } from "react-router-dom";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   AccordionDetails,
   AccordionSection,
   AccordionSummary,
   capitalize,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import { ChildrenValues } from "../ChildrenValues";
 import { ScopeLabel } from "../labels/ScopeLabel";

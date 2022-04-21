@@ -16,8 +16,8 @@ import {
 } from "react";
 import classnames from "classnames";
 import { FixedSizeList, VariableSizeList, areEqual } from "react-window";
-import { makePrefixer, useCharacteristic } from "@brandname/core";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { makePrefixer, useCharacteristic } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useForkRef, useId } from "../utils";
 import { ListItemBase } from "./ListItemBase";
 import { ListBaseProps } from "./ListProps";

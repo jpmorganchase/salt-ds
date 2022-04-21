@@ -1,4 +1,4 @@
-import { Overlay, OverlayProps } from "@brandname/lab";
+import { Overlay, OverlayProps } from "@jpmorganchase/lab";
 import { useCallback, useState } from "react";
 
 export const FeatureOverlay = (props: OverlayProps) => {

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { ToolkitProvider } from "@brandname/core";
-import { Panel, Tabstrip, TabstripProps } from "@brandname/lab";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Panel, Tabstrip, TabstripProps } from "@jpmorganchase/lab";
 import { Story } from "@storybook/react";
 import { QAContainer } from "docs/components";
 

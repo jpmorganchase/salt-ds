@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useMemo, useState, MouseEvent } from "react";
-import { Button } from "@brandname/core";
-import { UserIcon, CallIcon } from "@brandname/icons";
-import { CascadingMenu, MenuDescriptor } from "@brandname/lab";
+import { Button } from "@jpmorganchase/uitk-core";
+import { UserIcon, CallIcon } from "@jpmorganchase/icons";
+import { CascadingMenu, MenuDescriptor } from "@jpmorganchase/lab";
 
 import "./cascading-menu.stories.css";
 

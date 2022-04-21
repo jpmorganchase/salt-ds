@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import { HomeIcon } from "@brandname/icons";
+import { HomeIcon } from "@jpmorganchase/icons";
 import { ToggleButton, ToggleButtonProps } from "../../toggle-button";
 
 function renderToggleButton(initialProps: ToggleButtonProps = {}) {

@@ -5,7 +5,7 @@ import {
   StepperInput,
   ToggleButton,
   ToggleButtonGroup,
-} from "@brandname/lab";
+} from "@jpmorganchase/lab";
 
 export const ResponsiveContainer: FC = ({ children }) => {
   const [containerWidth, setWidth] = useState(90);

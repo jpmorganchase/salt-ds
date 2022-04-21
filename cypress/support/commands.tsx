@@ -5,7 +5,7 @@ import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
 import { MountOptions, MountReturn } from "@cypress/react/dist/mount";
-import { ToolkitProvider } from "@brandname/core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { AnnouncementListener } from "./AnnouncementListener";
 
 const SupportedThemeValues = ["light", "dark"] as const;

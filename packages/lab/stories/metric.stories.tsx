@@ -1,5 +1,5 @@
-import { DoubleChevronDownIcon, FavoriteIcon } from "@brandname/icons";
-import { Metric, MetricHeader, MetricContent } from "@brandname/lab";
+import { DoubleChevronDownIcon, FavoriteIcon } from "@jpmorganchase/icons";
+import { Metric, MetricHeader, MetricContent } from "@jpmorganchase/lab";
 import "./metric.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

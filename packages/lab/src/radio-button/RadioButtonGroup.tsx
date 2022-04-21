@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useFormFieldProps } from "../form-field-context";
 import { useId } from "../utils";
 import { FormLabel } from "../form-field";

@@ -5,7 +5,7 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Slider.css";
 import { useControlled } from "../utils";
 import cn from "classnames";

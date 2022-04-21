@@ -1,6 +1,6 @@
 import { FC, HTMLAttributes } from "react";
 import "./QueryResultTable.css";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 
 const withBaseName = makePrefixer("uitkQueryResultTable");

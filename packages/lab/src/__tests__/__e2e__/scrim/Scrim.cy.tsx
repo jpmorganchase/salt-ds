@@ -1,4 +1,4 @@
-import { Scrim } from "@brandname/lab";
+import { Scrim } from "@jpmorganchase/lab";
 import { useRef, useState } from "react";
 
 // TODO lighter variant test

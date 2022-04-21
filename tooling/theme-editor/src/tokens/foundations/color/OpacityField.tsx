@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { FormField } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FormField } from "@jpmorganchase/lab";
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import {
   UITK_FOUNDATIONS,

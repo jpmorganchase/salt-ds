@@ -12,8 +12,8 @@ import { ComboBox } from "../../combo-box";
 
 const mockAnnounce = jest.fn();
 
-jest.mock("@brandname/core", () => ({
-  ...jest.requireActual("@brandname/core"),
+jest.mock("@jpmorganchase/uitk-core", () => ({
+  ...jest.requireActual("@jpmorganchase/uitk-core"),
   useAriaAnnouncer: () => ({
     announce: mockAnnounce,
   }),

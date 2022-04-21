@@ -6,8 +6,8 @@ import {
   ButtonProps,
   ToolkitProvider,
   makePrefixer,
-} from "@brandname/core";
-import { RefreshIcon } from "@brandname/icons";
+} from "@jpmorganchase/uitk-core";
+import { RefreshIcon } from "@jpmorganchase/icons";
 import { Color } from "./Color";
 
 import {

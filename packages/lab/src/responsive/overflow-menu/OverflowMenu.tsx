@@ -8,8 +8,8 @@ import React, {
   useState,
 } from "react";
 import classnames from "classnames";
-import { Button, ButtonProps } from "@brandname/core";
-import { OverflowMenuIcon } from "@brandname/icons";
+import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/icons";
 import {
   OverflowPanel,
   OverflowPanelProps,

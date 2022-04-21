@@ -6,7 +6,7 @@ import { EditorView } from "./tokens/TokenEditorView";
 import { ThemeHeader } from "./header/ThemeHeader";
 import { foundationPathnames } from "./tokens/foundations/FoundationsView";
 import { useTabsWithRouting } from "./utils/useTabsWithRouting";
-import "@brandname/theme/index.css";
+import "@jpmorganchase/theme/index.css";
 import "./ThemeEditor.css";
 
 export type ScopeAndJSON = {

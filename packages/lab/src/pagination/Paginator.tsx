@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import cn from "classnames";
-import { ChevronLeftIcon, ChevronRightIcon } from "@brandname/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/icons";
 import "./Pagination.css";
 import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";

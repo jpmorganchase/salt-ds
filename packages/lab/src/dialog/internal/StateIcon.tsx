@@ -1,12 +1,12 @@
 import { ForwardedRef, forwardRef } from "react";
 import classnames from "classnames";
-import { IconProps, makePrefixer } from "@brandname/core";
+import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   ErrorIcon,
   InfoIcon,
   SuccessTickIcon,
   WarningIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/icons";
 
 import { State } from "../State";
 

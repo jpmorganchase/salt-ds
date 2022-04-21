@@ -4,7 +4,7 @@ import {
   useAriaAnnouncer,
   ToolkitContext,
   ToolkitProvider,
-} from "@brandname/core";
+} from "@jpmorganchase/uitk-core";
 
 const TestComponent = ({
   id = "test-1",

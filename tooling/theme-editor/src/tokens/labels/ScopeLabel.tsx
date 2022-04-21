@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { capitalize, Tooltip } from "@brandname/lab";
-import { makePrefixer } from "@brandname/core";
+import { capitalize, Tooltip } from "@jpmorganchase/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./ScopeLabel.css";
 
 const withBaseName = makePrefixer("uitkThemeScopeLabel");

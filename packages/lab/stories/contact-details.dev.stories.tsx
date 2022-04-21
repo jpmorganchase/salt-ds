@@ -5,7 +5,7 @@ import {
   MessageIcon,
   SettingsIcon,
   UserIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/icons";
 import {
   ContactAction,
   ContactActions,
@@ -19,8 +19,8 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   Slider,
-} from "@brandname/lab";
-import { SliderValue } from "@brandname/lab/src/slider/internal/utils";
+} from "@jpmorganchase/lab";
+import { SliderValue } from "@jpmorganchase/lab/src/slider/internal/utils";
 import { Story } from "@storybook/react";
 
 import { useState } from "react";

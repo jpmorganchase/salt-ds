@@ -7,7 +7,7 @@ import {
   ReactElement,
 } from "react";
 import * as ReactDOM from "react-dom";
-import { ToolkitProvider, useIsomorphicLayoutEffect } from "@brandname/core";
+import { ToolkitProvider, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { setRef, useForkRef } from "../utils";
 
 export interface PortalProps {

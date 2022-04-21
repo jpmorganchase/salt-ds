@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 import { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
