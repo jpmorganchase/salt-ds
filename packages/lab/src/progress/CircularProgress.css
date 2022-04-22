@@ -18,11 +18,23 @@
   stroke-width: 2px;
 }
 
+.uitkCircularProgress-small {
+  font-size: 11px;
+}
+
+.uitkCircularProgress-medium {
+  font-size: 14px;
+}
+
+.uitkCircularProgress-large {
+  font-size: 16px;
+}
+
 .uitkCircularProgress-progressValue {
   align-items: center;
   color: inherit;
   display: flex;
-  font-size: var(--uitk-measured-font-size);
+  /* font-size: var(--uitk-measured-font-size); This is by emphasis now - check */
   height: 100%;
   justify-content: center;
   left: 0;

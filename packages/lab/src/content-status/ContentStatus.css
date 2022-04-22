@@ -1,0 +1,62 @@
+.uitkContentStatus {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  letter-spacing: normal;
+}
+
+.uitkContentStatus-content {
+  color: var(--uitk-container-text-color);
+  letter-spacing: 0;
+  line-height: var(--uitk-typography-line-height);
+  font-size: var(--uitk-text-font-size);
+  min-height: 0px; /* TODO: Merge min height into text characteristic */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.uitkContentStatus-title {
+  color: var(--uitk-container-text-color);
+  letter-spacing: 0;
+  font-weight: var(--uitk-typography-font-weight-semiBold);
+  line-height: var(--uitk-typography-line-height);
+  font-size: var(--uitk-text-font-size);
+  min-height: 0px; /* TODO: Merge min height into text characteristic */
+  margin-top: var(--uitk-spacing-unit);
+}
+
+.uitkContentStatus-message {
+  margin-top: var(--uitk-spacing-unit);
+  width: 100%;
+}
+
+.uitkContentStatus-actions {
+  margin-top: calc(2 * var(--uitk-spacing-unit));
+}
+
+.uitkContentStatus-error {
+  fill: var(--uitk-status-error-icon-color);
+  border: var(--uitk-status-error-border);
+}
+
+.uitkContentStatus-success {
+  fill: var(--uitk-status-success-icon-color);
+  border: var(--uitk-status-success-border);
+}
+
+.uitkContentStatus-warning {
+  fill: var(--uitk-status-warning-icon-color);
+  border: var(--uitk-status-warning-border);
+}
+
+.uitkContentStatus-info {
+  fill: var(--uitk-status-info-icon-color);
+  border: var(--uitk-status-info-border);
+}
