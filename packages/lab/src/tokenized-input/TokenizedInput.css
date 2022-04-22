@@ -59,7 +59,7 @@
 
 .uitkTokenizedInput-expanded {
   height: auto;
-  --uitkPill-max-width: 91px;
+  --uitkPill-max-width: calc(100px - var(--uitk-spacing-unit));
 }
 
 .uitkTokenizedInput-hidden {
