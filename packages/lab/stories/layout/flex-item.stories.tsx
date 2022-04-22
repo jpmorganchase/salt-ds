@@ -53,7 +53,7 @@ const InsideFlexbox: ComponentStory<typeof FlexItem> = (args) => {
 export const ToolkitFlexItemInFlexLayout = InsideFlexbox.bind({});
 ToolkitFlexItemInFlexLayout.args = {
   shrink: 0,
-  stretch: 0,
+  grow: 0,
 };
 
 ToolkitFlexItemInFlexLayout.argTypes = {
@@ -62,5 +62,5 @@ ToolkitFlexItemInFlexLayout.argTypes = {
     control: { type: "select" },
   },
   shrink: { control: { type: "number" } },
-  stretch: { control: { type: "number" } },
+  grow: { control: { type: "number" } },
 };

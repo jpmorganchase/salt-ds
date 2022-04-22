@@ -5,11 +5,7 @@ import "./FlexLayout.css";
 
 const withBaseName = makePrefixer("uitkFlexLayout");
 
-export const FLEX_ALIGNMENT_BASE = [
-  "flex-start",
-  "flex-end",
-  "center",
-] as const;
+export const FLEX_ALIGNMENT_BASE = ["start", "end", "center"] as const;
 export const FLEX_CONTENT_ALIGNMENT_BASE = [
   ...FLEX_ALIGNMENT_BASE,
   "space-between",
@@ -31,7 +27,6 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   align?: FlexAlignment | "stretch" | "baseline";
   /**
    * Establishes the main-axis, defining the direction children are placed.
-   * Value can be "row", "column" or an array of values for each breakpoint e.g. ["column", "row", "column", "column", "row"]
    */
   direction?: Direction;
   /**
@@ -69,13 +64,16 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
     ref
   ) {
     const separatorAlignment = separators === true ? "center" : separators;
+    const addPrefix = (style: string) => {
+      return style === "start" || style === "end" ? `flex-${style}` : style;
+    };
     const flexLayoutStyles = {
       ...style,
-      "--align": align,
-      "--direction": direction,
-      "--gap-multiplier": gap,
-      "--justify": justify,
-      "--wrap": wrap ? "wrap" : "no-wrap",
+      "--uitkFlexLayout-align": align && addPrefix(align),
+      "--uitkFlexLayout-direction": direction,
+      "--uitkFlexLayout-gap-multiplier": gap,
+      "--uitkFlexLayout-justify": justify && addPrefix(justify),
+      "--uitkFlexLayout-wrap": wrap ? "wrap" : "no-wrap",
     };
 
     return (

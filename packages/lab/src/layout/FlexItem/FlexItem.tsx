@@ -22,18 +22,18 @@ export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the ability for an item to grow x times more compared to it's siblings,
    * default is 0
    */
-  stretch?: number;
+  grow?: number;
 }
 
 export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
   function FlexItem(
-    { align, children, className, shrink, stretch, style, ...rest },
+    { align, children, className, shrink, grow, style, ...rest },
     ref
   ) {
     const itemStyle = {
-      "--item-alignment": align,
-      "--shrink": shrink,
-      "--stretch": stretch,
+      "--uitkFlexItem-item-alignment": align,
+      "--uitkFlexItem-shrink": shrink,
+      "--uitkFlexItem-grow": grow,
       ...style,
     };
     return (

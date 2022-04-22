@@ -1,21 +1,21 @@
 /* VARIABLES */
 .uitkFlexLayout {
-  --gap-multiplier: 1;
-  --layout-display: flex;
-  --direction: row;
-  --wrap: wrap;
-  --justify: flex-start;
-  --align: stretch;
-  --separatorSize: var(--uitk-separable-border-width);
-  --gap: calc(var(--uitk-spacing-unit) * var(--gap-multiplier) + var(--separatorSize));
+  --uitkFlexLayout-gap-multiplier: 1;
+  --uitkFlexLayout-layout-display: flex;
+  --uitkFlexLayout-direction: row;
+  --uitkFlexLayout-wrap: wrap;
+  --uitkFlexLayout-justify: flex-start;
+  --uitkFlexLayout-align: stretch;
+  --uitkFlexLayout-separator: var(--uitk-separable-border-width);
+  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
 
 .uitkFlexLayout {
-  gap: var(--gap);
-  display: var(--layout-display);
-  flex-flow: var(--direction) var(--wrap);
-  justify-content: var(--justify);
-  align-items: var(--align);
+  gap: var(--uitkFlexLayout-gap);
+  display: var(--uitkFlexLayout-layout-display);
+  flex-flow: var(--uitkFlexLayout-direction) var(--uitkFlexLayout-wrap);
+  justify-content: var(--uitkFlexLayout-justify);
+  align-items: var(--uitkFlexLayout-align);
   overflow: hidden;
 }
 
@@ -26,30 +26,30 @@
 }
 
 .uitkFlexLayout-separator-row > *:not(:last-child)::after {
-  width: var(--separatorSize);
+  width: var(--uitkFlexLayout-separator);
   top: 0;
   height: 100%;
 }
 .uitkFlexLayout-separator-row-start > *:not(:last-child)::after {
-  right: calc(var(--separatorSize) * -1);
+  right: calc(var(--uitkFlexLayout-separator) * -1);
 }
 .uitkFlexLayout-separator-row-center > *:not(:last-child)::after {
-  right: calc(var(--separatorSize) * -1 + var(--gap) / 2 * -1);
+  right: calc(var(--uitkFlexLayout-separator) * -1 + var(--uitkFlexLayout-gap) / 2 * -1);
 }
 .uitkFlexLayout-separator-row-end > *:not(:last-child)::after {
-  right: calc(var(--gap) * -1);
+  right: calc(var(--uitkFlexLayout-gap) * -1);
 }
 
 .uitkFlexLayout-separator-column > *:not(:last-child)::after {
-  height: var(--separatorSize);
+  height: var(--uitkFlexLayout-separator);
   width: 100%;
 }
 .uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
-  bottom: calc(var(--separatorSize) * -1);
+  bottom: calc(var(--uitkFlexLayout-separator) * -1);
 }
 .uitkFlexLayout-separator-column-center > *:not(:last-child)::after {
-  bottom: calc(var(--separatorSize) * -1 + var(--gap) / 2 * -1);
+  bottom: calc(var(--uitkFlexLayout-separator) * -1 + var(--uitkFlexLayout-gap) / 2 * -1);
 }
 .uitkFlexLayout-separator-column-end > *:not(:last-child)::after {
-  bottom: calc(var(--gap) * -1);
+  bottom: calc(var(--uitkFlexLayout-gap) * -1);
 }
