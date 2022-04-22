@@ -25,7 +25,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        width: "30vw",
+        width: "70vw",
       }}
     >
       <div style={box}>
@@ -83,11 +83,13 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>expandable</strong>
       </div>
       <div style={{ ...box, display: "flex" }}>
-        <P maxRows={2} expanded={expanded} style={{ marginRight: 20 }}>
-          The step-mother and the two sisters were horrified and became pale
-          with rage, he, however, took Cinderella on his horse and rode away
-          with her.
-        </P>
+        <div>
+          <P maxRows={2} expanded={expanded} style={{ marginRight: 20 }}>
+            The step-mother and the two sisters were horrified and became pale
+            with rage, he, however, took Cinderella on his horse and rode away
+            with her.
+          </P>
+        </div>
         <Button
           variant="secondary"
           aria-expanded={expanded}

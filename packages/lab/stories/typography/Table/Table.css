@@ -10,13 +10,14 @@
   width: 100%;
 }
 .table-cell {
-  display: flex;
   border: 1px solid #ccc;
   padding: 10px;
   flex: 1;
+  width: 10%;
   height: 18px;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .uitk-density-touch .table-cell {

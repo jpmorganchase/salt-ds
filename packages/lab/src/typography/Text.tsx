@@ -1,18 +1,13 @@
 import {
   ElementType,
   HTMLAttributes,
-  useEffect,
   useState,
-  useRef,
   ReactNode,
   CSSProperties,
   forwardRef,
-  useMemo,
-  useCallback,
 } from "react";
 import cx from "classnames";
 import {
-  useDensity,
   makePrefixer,
   useIsomorphicLayoutEffect,
   debounce,
@@ -78,10 +73,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   marginBottom?: number;
 }
 
-interface StylesType {
-  "--text-max-rows"?: number;
-}
-
 const TOOLTIP_DELAY = 150;
 
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
@@ -104,32 +95,31 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 ) {
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
+  const [rows, setRows] = useState<number | undefined>();
 
-  const [size, setSize] = useState<{ width: number; height: number }>();
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const rows = useRef(maxRows);
-  const density = useDensity();
+  // Observers
+  useIsomorphicLayoutEffect(() => {
+    const onResize = debounce((entry) => {
+      setRows(getRows());
+    });
 
-  // Scrolling
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries.length > 0 && entries[0].target.isConnected) {
+        onResize(entries[0]);
+      }
+    });
 
-  const scrollingCallback = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
+    const onScroll = debounce((entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.target.isConnected) {
-          setIsIntersecting(entry.isIntersecting);
+        if (element && entry.isIntersecting) {
+          resizeObserver.observe(element);
+        } else {
+          resizeObserver.disconnect();
         }
       });
-    },
-    []
-  );
+    });
 
-  const debounceScrolling = useMemo(
-    () => debounce(scrollingCallback),
-    [scrollingCallback]
-  );
-
-  useIsomorphicLayoutEffect(() => {
-    const scrollObserver = new IntersectionObserver(debounceScrolling, {
+    const scrollObserver = new IntersectionObserver(onScroll, {
       root: null,
       rootMargin: "0px",
       threshold: 0,
@@ -142,64 +132,23 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     return () => {
       scrollObserver.disconnect();
     };
-  }, [element, debounceScrolling]);
+  }, [element]);
 
-  // Resizing
+  // Oveflow
+  const getRows = () => {
+    let textRows;
 
-  const debounceResize = useMemo(
-    () =>
-      debounce((entries) => {
-        for (const entry of entries) {
-          const { width, height } = entry.contentRect;
-          if (entry.target.isConnected) {
-            setSize({ width, height });
-          }
-        }
-      }),
-    []
-  );
+    if (element && truncate) {
+      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = element;
+      const { lineHeight } = getComputedStyles(element);
 
-  const [resizeObserver] = useState(() => {
-    return new ResizeObserver((entries) => {
-      if (entries.length > 0 && entries[0].contentRect) {
-        debounceResize(entries);
-      }
-    });
-  });
-
-  useIsomorphicLayoutEffect(() => {
-    if (element && isIntersecting) {
-      resizeObserver.observe(element);
-    }
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [element, isIntersecting]);
-
-  // Styling
-  const componentStyle = useMemo(() => {
-    if (element) {
-      const styles: StylesType = {};
-
-      if (maxRows) {
-        rows.current = maxRows;
-        styles["--text-max-rows"] = maxRows;
+      if (maxRows === 0 || expanded) {
+        textRows = 0;
+      } else if (maxRows) {
+        textRows = maxRows;
       } else if (expanded !== undefined) {
-        rows.current = 1;
-        styles["--text-max-rows"] = 1;
-      } else if (maxRows === 0) {
-        // accommodating reset maxRows in stories
-        return {};
-      }
-
-      if (expanded) {
-        styles["--text-max-rows"] = 0;
-      } else if (truncate && !rows.current) {
-        const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } =
-          element;
-        const { lineHeight } = getComputedStyles(element);
-
+        textRows = 1;
+      } else {
         const parent = element.parentElement;
 
         if (parent && !element.nextSibling && !element.previousSibling) {
@@ -212,81 +161,43 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
             offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
           ) {
-            const newRows = Math.floor(heightParent / lineHeight);
-
-            styles["--text-max-rows"] = newRows;
+            textRows = Math.floor(heightParent / lineHeight);
           }
         }
       }
 
-      if (Object.keys(styles).length > 0) {
-        return styles;
+      if (textRows) {
+        const rowsHeight = textRows * lineHeight;
+        const isOverflowed =
+          rowsHeight < offsetHeight || rowsHeight < scrollHeight;
+
+        onOverflow && onOverflow(isOverflowed);
       }
     }
-  }, [elementType, maxRows, expanded, truncate, density, size]);
-
-  const isOverflowed = useMemo(() => {
-    if (element && truncate) {
-      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = element;
-      const { lineHeight } = getComputedStyles(element);
-
-      if (rows.current) {
-        const maxRowsHeight = rows.current * lineHeight;
-
-        if (maxRowsHeight < scrollHeight || maxRowsHeight < offsetHeight) {
-          return true;
-        }
-      }
-
-      const parent = element.parentElement;
-
-      if (parent && !element.nextSibling && !element.previousSibling) {
-        const { width: widthParent, height: heightParent } =
-          getComputedStyles(parent);
-
-        if (
-          heightParent < scrollHeight ||
-          heightParent < offsetHeight ||
-          offsetWidth < scrollWidth ||
-          Math.ceil(widthParent) < scrollWidth
-        ) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }, [componentStyle]);
-
-  useEffect(() => {
-    if (onOverflow) {
-      onOverflow(isOverflowed);
-    }
-  }, [isOverflowed]);
+    return textRows;
+  };
 
   // Tooltip
-  const hasTooltip = useMemo(() => {
-    let shouldHaveTooltip = false;
-    if (element) {
-      if (isOverflowed && truncate && showTooltip && expanded === undefined) {
-        shouldHaveTooltip = true;
-      }
-    }
-    return shouldHaveTooltip;
-  }, [isOverflowed, showTooltip, truncate, expanded]);
+  const hasTooltip =
+    element && rows && truncate && showTooltip && expanded === undefined;
 
   // Rendering
   const Component: ElementType = elementType;
   const content = (
     <Component
       className={cx(withBaseName(), className, {
-        [withBaseName("lineClamp")]: isOverflowed,
+        [withBaseName("lineClamp")]: rows,
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
       tabIndex={hasTooltip ? 0 : -1}
       ref={setContainerRef}
-      style={{ marginTop, marginBottom, ...componentStyle, ...style }}
+      style={{
+        marginTop,
+        marginBottom,
+        ...style,
+        "--text-max-rows": rows,
+      }}
     >
       {children}
     </Component>
