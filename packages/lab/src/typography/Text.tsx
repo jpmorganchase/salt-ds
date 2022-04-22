@@ -186,7 +186,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const content = (
     <Component
       className={cx(withBaseName(), className, {
-        [withBaseName("lineClamp")]: rows,
+        [withBaseName("lineClamp")]: rows && !expanded,
         [withBaseName("overflow")]: !truncate,
       })}
       {...restProps}
