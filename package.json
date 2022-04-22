@@ -93,6 +93,7 @@
     "@types/tinycolor2": "^1.4.3",
     "@types/warning": "^3.0.0",
     "@vitejs/plugin-react": "^1.3.0",
+    "@vuu-ui/data-remote": "^0.0.17",
     "ag-grid-community": "^25.0.0",
     "ag-grid-enterprise": "^25.0.0",
     "ag-grid-react": "^25.0.0",
