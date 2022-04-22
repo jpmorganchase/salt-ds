@@ -99,13 +99,13 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Observers
   useIsomorphicLayoutEffect(() => {
-    const onResize = debounce((entry) => {
+    const onResize = debounce(() => {
       setRows(getRows());
     });
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0 && entries[0].target.isConnected) {
-        onResize(entries[0]);
+        onResize();
       }
     });
 

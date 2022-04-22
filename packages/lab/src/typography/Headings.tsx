@@ -15,7 +15,7 @@ export interface HeadingProps extends Omit<TextProps, "elementType"> {
   /**
    * Match styling to a specified heading
    */
-  styleAs?: ElementType & ("h1" | "h2" | "h3" | "h4");
+  styleAs?: "h1" | "h2" | "h3" | "h4";
 }
 
 export const H1 = forwardRef<HTMLHeadingElement, HeadingProps>(function H1(
