@@ -1,6 +1,7 @@
 // @ts-ignore
 import { RemoteDataSource, Servers, useViewserver } from "@vuu-ui/data-remote";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState } from "react";
+import { ColumnDefinition, Grid } from "../../../src";
 
 const vuuTableMeta = {
   instruments: {
@@ -28,6 +29,14 @@ const vuuTableMeta = {
 
 const { columns, dataTypes } = vuuTableMeta.instruments;
 
+// TODO How to get a unique key for a row?
+function getKey(row: any, index: number) {
+  return "unique_key";
+}
+
+// TODO define columns
+const columnDefinitions: ColumnDefinition[] = [];
+
 export const VuuGridExample = () => {
   const [dataConfig, dataSource] = useMemo(() => {
     const dataConfig = {
@@ -53,4 +62,21 @@ export const VuuGridExample = () => {
     dataSource,
     onRpcResponse,
   });
+
+  // TODO how to get data from dataSource?
+  const [data, setData] = useState<any[]>([]);
+
+  const onVisibleRangeChanged = (range: [number, number]) => {
+    const [start, end] = range;
+    // TODO how to inform Vuu that it needs to provide rows [start, end]?
+  };
+
+  return (
+    <Grid
+      getKey={getKey}
+      columnDefinitions={columnDefinitions}
+      data={data}
+      onVisibleRowRangeChanged={onVisibleRangeChanged}
+    />
+  );
 };
