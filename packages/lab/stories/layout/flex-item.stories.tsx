@@ -1,6 +1,7 @@
 import { FlexItem, FLEX_ITEM_ALIGNMENTS, FlexLayout } from "@brandname/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
+import { ReactNode } from "react";
 
 export default {
   title: "Layout/FlexItem",
@@ -8,15 +9,17 @@ export default {
 } as ComponentMeta<typeof FlexItem>;
 
 interface FlexContentProps {
+  children?: ReactNode;
   caption?: string;
   classname?: string;
 }
 
-export const FlexContent = ({ caption, classname }: FlexContentProps) => (
+export const FlexContent = ({ children, classname }: FlexContentProps) => (
   <div className={classname || "layout-content"}>
-    <p>{caption || "Flex Item"}</p>
+    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
   </div>
 );
+
 const Template: ComponentStory<typeof FlexItem> = () => {
   return (
     <FlexItem>
@@ -33,17 +36,23 @@ const InsideFlexbox: ComponentStory<typeof FlexItem> = (args) => {
         <FlexContent classname={"layout-active-content"} />
       </FlexItem>
       <FlexItem>
-        <FlexContent />
+        <FlexContent>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        </FlexContent>
       </FlexItem>
       <FlexItem>
-        <FlexContent />
+        <FlexContent>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        </FlexContent>
       </FlexItem>
     </FlexLayout>
   );
 };
 export const ToolkitFlexItemInFlexLayout = InsideFlexbox.bind({});
 ToolkitFlexItemInFlexLayout.args = {
-  shrink: 1,
+  shrink: 0,
   stretch: 0,
 };
 

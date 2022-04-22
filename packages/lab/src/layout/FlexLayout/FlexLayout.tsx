@@ -48,7 +48,6 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   separators?: Separator | true;
   /**
    * Allow the items to wrap as needed.
-   * Value can be "nowrap", "wrap", or an array of values for each breakpoint e.g. ["wrap", "nowrap", "wrap", "nowrap"]
    */
   wrap?: boolean;
 }

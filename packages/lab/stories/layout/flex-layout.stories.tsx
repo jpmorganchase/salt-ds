@@ -20,6 +20,10 @@ const Template: ComponentStory<typeof FlexLayout> = (args) => {
           <FlexContent />
         </FlexItem>
       ))}
+      <FlexContent>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+      </FlexContent>
     </FlexLayout>
   );
 };
