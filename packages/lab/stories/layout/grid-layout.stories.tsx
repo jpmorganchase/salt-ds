@@ -1,6 +1,13 @@
-import { CSSProperties } from "react";
-import { GridLayout, GridItem, Logo, Avatar, Card } from "@brandname/lab";
-import { ToolkitProvider, Breakpoints } from "@brandname/core";
+import { CSSProperties, ForwardedRef, ReactElement } from "react";
+import {
+  GridLayout,
+  GridItem,
+  Logo,
+  Avatar,
+  Card,
+  GridLayoutProps,
+} from "@brandname/lab";
+import { ToolkitProvider } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
@@ -120,17 +127,7 @@ ToolkitGridLayoutResponsiveView.args = {
   columnGap: 1,
 };
 
-declare global {
-  interface BreakpointsType {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-  }
-}
-
-const breakpoints: Breakpoints = {
+const breakpoints = {
   xs: 0,
   sm: 500,
   md: 860,
@@ -192,40 +189,49 @@ const customBreakpoints = {
   mobile: 500,
   tablet: 860,
   desktop: 1180,
-} as any;
+};
 
-const CustomBreakpointNames: ComponentStory<typeof GridLayout> = (args) => {
+type CustomBreakpointType = typeof customBreakpoints;
+
+const CustomBreakpointNames: ComponentStory<
+  (
+    props: GridLayoutProps<CustomBreakpointType> & {
+      ref?: ForwardedRef<HTMLDivElement>;
+    }
+  ) => ReactElement<GridLayoutProps<CustomBreakpointType>>
+> = (args: GridLayoutProps<CustomBreakpointType>) => {
   return (
     <ToolkitProvider breakpoints={customBreakpoints}>
       <div style={gridLayoutStyle}>
-        <GridLayout {...args}>
-          <GridItem
-            colSpan={{ mobile: 1, tablet: 6, desktop: 3 } as any}
-            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 } as any}
+        <GridLayout<CustomBreakpointType> {...args}>
+          <GridItem<CustomBreakpointType>
+            // {{sm:1}} here will give TS error
+            colSpan={{ mobile: 1, tablet: 6, desktop: 3 }}
+            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 }}
           >
             <div style={responsiveGridItemStyles}>
               <p>GridItem 1</p>
             </div>
           </GridItem>
-          <GridItem
-            colSpan={{ mobile: 1, tablet: 3, desktop: 3 } as any}
-            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 } as any}
+          <GridItem<CustomBreakpointType>
+            colSpan={{ mobile: 1, tablet: 3, desktop: 3 }}
+            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 }}
           >
             <div style={responsiveGridItemStyles}>
               <p>GridItem 2</p>
             </div>
           </GridItem>
-          <GridItem
-            colSpan={{ mobile: 1, tablet: 3, desktop: 3 } as any}
-            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 } as any}
+          <GridItem<CustomBreakpointType>
+            colSpan={{ mobile: 1, tablet: 3, desktop: 3 }}
+            rowSpan={{ mobile: 1, tablet: 4, desktop: 1 }}
           >
             <div style={responsiveGridItemStyles}>
               <p>GridItem 3</p>
             </div>
           </GridItem>
-          <GridItem
-            colSpan={{ mobile: 1, tablet: 6, desktop: 3 } as any}
-            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 } as any}
+          <GridItem<CustomBreakpointType>
+            colSpan={{ mobile: 1, tablet: 6, desktop: 3 }}
+            rowSpan={{ mobile: 1, tablet: 2, desktop: 1 }}
           >
             <div style={responsiveGridItemStyles}>
               <p>GridItem 4</p>
@@ -243,7 +249,7 @@ ToolkitGridLayoutCustomBreakpointNames.args = {
   rows: { mobile: 2, tablet: 4, desktop: 1 },
   rowGap: 1,
   columnGap: 1,
-} as any;
+};
 
 const Border: ComponentStory<typeof GridLayout> = (args) => {
   return (
@@ -398,6 +404,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
         <img
           src="https://via.placeholder.com/1305x555?text=Blog+Image"
           style={{ width: "100%" }}
+          alt="placeholder"
         />
       </GridItem>
       <GridItem colSpan={2}>

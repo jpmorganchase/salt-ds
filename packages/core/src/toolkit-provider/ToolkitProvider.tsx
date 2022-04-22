@@ -1,6 +1,5 @@
 import React, {
   createContext,
-  FC,
   DetailedHTMLProps,
   DOMAttributes,
   HTMLAttributes,
@@ -22,17 +21,22 @@ import {
 } from "../theme";
 
 import { AriaAnnouncerProvider } from "../aria-announcer";
-import { DEFAULT_BREAKPOINTS, Breakpoints } from "../breakpoints";
+import {
+  DEFAULT_BREAKPOINTS,
+  DefaultBreakpointType,
+  RelaxedBreakpointsType,
+} from "../breakpoints";
 import { ViewportProvider } from "../viewport";
+
 export type { Breakpoints } from "../breakpoints";
 export const DEFAULT_DENSITY = "medium";
 
-// TODDO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
+// TODO: this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
 // needs more thought
 export interface ToolkitContextProps {
   density?: Density;
   themes?: Theme[];
-  breakpoints: Breakpoints;
+  breakpoints: unknown;
 }
 
 const DEFAULT_THEME_NAME = "light";
@@ -52,7 +56,7 @@ declare global {
 export const ToolkitContext = createContext<ToolkitContextProps>({
   density: undefined,
   themes: [],
-  breakpoints: {} as Breakpoints,
+  breakpoints: {},
 });
 
 const createThemedChildren = (
@@ -93,26 +97,26 @@ const createThemedChildren = (
   }
 };
 
-interface ToolkitProviderThatAppliesClassesToChild {
+interface ToolkitProviderThatAppliesClassesToChild<B = DefaultBreakpointType> {
   children: ReactElement;
   density?: Density;
   theme?: ThemeNameType;
   applyClassesToChild?: true;
-  breakpoints?: Breakpoints;
+  breakpoints?: B;
 }
 
 type ThemeNameType = string | Array<string>;
-interface ToolkitProviderThatInjectsThemeElement {
+interface ToolkitProviderThatInjectsThemeElement<B = DefaultBreakpointType> {
   children: ReactNode;
   density?: Density;
   theme?: ThemeNameType;
   applyClassesToChild?: false;
-  breakpoints?: Breakpoints;
+  breakpoints?: B;
 }
 
-type toolkitProvider =
-  | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement;
+type ToolkitProviderPropType<B = DefaultBreakpointType> =
+  | ToolkitProviderThatAppliesClassesToChild<B>
+  | ToolkitProviderThatInjectsThemeElement<B>;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
@@ -127,13 +131,15 @@ const getThemeName = (
   }
 };
 
-export const ToolkitProvider: FC<toolkitProvider> = ({
+export const ToolkitProvider = <
+  B extends Record<string, number> = DefaultBreakpointType
+>({
   applyClassesToChild = false,
   children,
   density: densityProp,
   theme: themesProp,
   breakpoints: breakpointsProp,
-}) => {
+}: ToolkitProviderPropType<B>) => {
   const { themes: inheritedThemes, density: inheritedDensity } =
     useContext(ToolkitContext);
 
@@ -180,7 +186,7 @@ export function useDensity(density?: Density): Density {
 
 export const useBreakpoints = () => {
   const { breakpoints } = useContext(ToolkitContext);
-  return breakpoints;
+  return breakpoints as RelaxedBreakpointsType;
 };
 
 type HTMLElementRef = RefObject<HTMLElement>;

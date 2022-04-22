@@ -1,62 +1,69 @@
-import { Breakpoints, useBreakpoints, useViewport } from "@brandname/core";
+import {
+  RelaxedBreakpointsType,
+  useBreakpoints,
+  useViewport,
+} from "@brandname/core";
 
-type BreakpointProp<T> = {
-  [K in keyof Breakpoints]?: T;
+type BreakpointValue<T, B> = {
+  [K in keyof B]: T;
 };
 
-export type ResponsiveProp<T> = T | BreakpointProp<T>;
+export type ResponsiveProp<T, B> = T | BreakpointValue<T, B>;
 
-const getCurrentBreakpoint = (breakpoints: Breakpoints, width: number) => {
+const getCurrentBreakpoint = (
+  breakpoints: RelaxedBreakpointsType,
+  width: number
+) => {
   const breakpointList = Object.entries(breakpoints);
 
-  const [currentBreakpoint] = (
-    breakpointList as [keyof Breakpoints, number][]
-  ).reduce((acc, val) => {
+  const [currentBreakpoint] = breakpointList.reduce((acc, val) => {
     const [_, accWidth] = acc;
     const [breakpoint, breakpointWidth] = val;
     if (breakpointWidth < width && breakpointWidth > accWidth) {
       return [breakpoint, breakpointWidth];
     }
     return [...acc];
-  }, breakpointList[0] as [keyof Breakpoints, number]);
+  }, breakpointList[0]);
 
   return currentBreakpoint;
 };
 
-const isObject = <T extends any>(
-  value: T
+const isObject = (
+  value: unknown
 ): value is Record<string | number | symbol, any> => {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");
 };
 
-const hasBreakpointValues = <T extends any>(
-  value: ResponsiveProp<T>,
-  breakpoints: Breakpoints
-): value is BreakpointProp<T> => {
+const hasBreakpointValues = <T, B>(
+  value: ResponsiveProp<T, B>,
+  breakpoints: RelaxedBreakpointsType
+): value is BreakpointValue<T, B> => {
   return (
     isObject(value) && Object.keys(value).every((key) => key in breakpoints)
   );
 };
 
-const getResponsiveValue = <T extends any>(
-  breakpointValues: BreakpointProp<T>,
-  breakpoints: Breakpoints,
-  viewport: keyof Breakpoints,
+export const getResponsiveValue = <T, B>(
+  breakpointValues: BreakpointValue<T, B>,
+  breakpoints: RelaxedBreakpointsType,
+  viewport: string,
   defaultValue: T
-) => {
+): T => {
   const value = Object.entries(breakpointValues).reduce<
-    [number, T] | [never, unknown]
+    [number, unknown] | [never, unknown]
   >(
     (acc, val) => {
       const [accWidth] = acc;
-      const [breakpoint, breakpointValue] = val;
+      const [breakpointName, breakpointValue] = val;
 
-      const breakpointWidth =
-        breakpoints[breakpoint as keyof typeof breakpoints];
+      // TODO: Do some thorough check around typeof breakpoints being object
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const breakpointWidth = breakpoints[breakpointName];
 
       if (
         breakpointWidth >= accWidth &&
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         breakpointWidth <= breakpoints[viewport]
       ) {
         return [breakpointWidth, breakpointValue];
@@ -67,11 +74,11 @@ const getResponsiveValue = <T extends any>(
     [0, defaultValue]
   )[1];
 
-  return value;
+  return value as T;
 };
 
-export const useResponsiveProp = <T extends any>(
-  value: ResponsiveProp<T>,
+export const useResponsiveProp = <T, B>(
+  value: ResponsiveProp<T, B>,
   defaultValue: T
 ) => {
   const breakpoints = useBreakpoints();
