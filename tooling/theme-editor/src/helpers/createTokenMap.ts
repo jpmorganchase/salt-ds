@@ -51,6 +51,9 @@ export function createTokenMap(toCreate: any): TokenMap[] {
           // reset back to end of selector path
           var tokenPath = selectorPath;
 
+          // Some can be comment
+          if (declaration.type !== 'declaration') continue;
+
           var token = declaration.property.replace("--", "");
           var tokenParts: Array<string> = token.split("-");
           var cssValue = declaration.value;

@@ -117,7 +117,7 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
         if (
           (tp.children.length === 0 || comma) &&
           tp.label !==
-            token[Object.keys(token)[Object.keys(token).length - 1]].label
+          token[Object.keys(token)[Object.keys(token).length - 1]].label
         ) {
           stringJSON += "},";
         } else {
