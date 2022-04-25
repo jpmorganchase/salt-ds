@@ -1,1 +1,1 @@
-export * from "./useViewport";
+export * from "./ViewportProvider";

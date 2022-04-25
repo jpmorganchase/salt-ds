@@ -23,7 +23,7 @@ import {
 
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { DEFAULT_BREAKPOINTS, Breakpoints } from "../breakpoints";
-import { useViewport as useViewportHook } from "../viewport";
+import { ViewportProvider } from "../viewport";
 export type { Breakpoints } from "../breakpoints";
 export const DEFAULT_DENSITY = "medium";
 
@@ -33,7 +33,6 @@ export interface ToolkitContextProps {
   density?: Density;
   themes?: Theme[];
   breakpoints: Breakpoints;
-  viewport: number;
 }
 
 const DEFAULT_THEME_NAME = "light";
@@ -54,7 +53,6 @@ export const ToolkitContext = createContext<ToolkitContextProps>({
   density: undefined,
   themes: [],
   breakpoints: {} as Breakpoints,
-  viewport: 0,
 });
 
 const createThemedChildren = (
@@ -154,11 +152,9 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
     applyClassesToChild
   );
 
-  const viewport = useViewportHook();
-
   const toolkitProvider = (
-    <ToolkitContext.Provider value={{ density, themes, breakpoints, viewport }}>
-      {themedChildren}
+    <ToolkitContext.Provider value={{ density, themes, breakpoints }}>
+      <ViewportProvider>{themedChildren}</ViewportProvider>
     </ToolkitContext.Provider>
   );
 
@@ -185,11 +181,6 @@ export function useDensity(density?: Density): Density {
 export const useBreakpoints = () => {
   const { breakpoints } = useContext(ToolkitContext);
   return breakpoints;
-};
-
-export const useViewport = () => {
-  const { viewport } = useContext(ToolkitContext);
-  return viewport;
 };
 
 type HTMLElementRef = RefObject<HTMLElement>;
