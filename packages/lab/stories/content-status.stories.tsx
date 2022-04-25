@@ -52,20 +52,13 @@ export const Error: ComponentStory<typeof ContentStatus> = () => {
   };
 
   const contentStatusProps = isLoading ? loadingProps : errorProps;
-  return (
-    <ContentStatus
-      {...contentStatusProps}
-      // ref={buttonRef}
-      data-jpmui-test="content-status-example"
-    />
-  );
+  return <ContentStatus {...contentStatusProps} buttonRef={buttonRef} />;
 };
 
 export const IndeterminateLoading: ComponentStory<
   typeof ContentStatus
 > = () => (
   <ContentStatus
-    data-jpmui-test="content-status-example"
     message="Supplementary content can go here if required."
     status="loading"
   />
@@ -73,7 +66,6 @@ export const IndeterminateLoading: ComponentStory<
 
 export const DeterminateLoading: ComponentStory<typeof ContentStatus> = () => (
   <ContentStatus
-    data-jpmui-test="content-status-example"
     message="Supplementary content can go here if required."
     status="loading"
     value={38}
@@ -83,7 +75,6 @@ export const DeterminateLoading: ComponentStory<typeof ContentStatus> = () => (
 export const Information: ComponentStory<typeof ContentStatus> = () => (
   <ContentStatus
     actionLabel="[CUSTOM ACTION]"
-    data-jpmui-test="content-status-example"
     message="Supplementary content can go here if required."
     onActionClick={() => console.log("Custom action")}
     title="No [content] available"
@@ -92,7 +83,6 @@ export const Information: ComponentStory<typeof ContentStatus> = () => (
 
 export const Success: ComponentStory<typeof ContentStatus> = () => (
   <ContentStatus
-    data-jpmui-test="content-status-example"
     message="Supplementary content can go here if required."
     status="success"
   />
@@ -101,7 +91,6 @@ export const Success: ComponentStory<typeof ContentStatus> = () => (
 export const Warning: ComponentStory<typeof ContentStatus> = () => (
   <ContentStatus
     actionLabel="[CUSTOM ACTION]"
-    data-jpmui-test="content-status-example"
     message="Supplementary content can go here if required."
     onActionClick={() => console.log("Custom action")}
     status="warning"
@@ -172,10 +161,7 @@ export const CardContent: ComponentStory<typeof ContentStatus> = () => {
         {loadingCount % 4 === 2 ? (
           <>
             {renderRealContent()}
-            <Button
-              // buttonRef={buttonRef}
-              style={{ marginRight: 16 }}
-            >
+            <Button ref={buttonRef} style={{ marginRight: 16 }}>
               Action 1
             </Button>
             <Button style={{ marginRight: 16 }}>Action 2</Button>
@@ -183,10 +169,7 @@ export const CardContent: ComponentStory<typeof ContentStatus> = () => {
             <Button onClick={startLoading}>Refresh</Button>
           </>
         ) : (
-          <ContentStatus
-            {...contentStatusProps}
-            //buttonRef={buttonRef}
-          />
+          <ContentStatus {...contentStatusProps} buttonRef={buttonRef} />
         )}
       </Card>
     </AriaAnnouncerProvider>

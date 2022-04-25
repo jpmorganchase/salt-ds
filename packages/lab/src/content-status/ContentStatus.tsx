@@ -4,7 +4,7 @@ import {
   HTMLAttributes,
   useEffect,
   MouseEvent,
-  useRef,
+  Ref,
 } from "react";
 import cx from "classnames";
 import { Button, makePrefixer, useAriaAnnouncer } from "@brandname/core";
@@ -43,6 +43,7 @@ export interface ContentStatusProps extends HTMLAttributes<HTMLDivElement> {
   CircularProgressProps?: Partial<CircularProgressProps>;
   SpinnerProps?: Partial<SpinnerProps>;
   actionLabel?: string;
+  buttonRef?: Ref<any>;
   disableAnnouncer?: boolean;
   message?: string;
   onActionClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
@@ -57,6 +58,7 @@ export const ContentStatus = forwardRef(function ContentStatus(
     CircularProgressProps,
     SpinnerProps,
     actionLabel,
+    buttonRef,
     className,
     children,
     disableAnnouncer,
@@ -76,7 +78,6 @@ export const ContentStatus = forwardRef(function ContentStatus(
   const hasActions = children || hasDefaultActionContent;
   const hasContent = title || message || hasActions;
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const { announce } = useAriaAnnouncer();
 
   useEffect(() => {

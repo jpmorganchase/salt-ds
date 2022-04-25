@@ -16,7 +16,7 @@ export function getIndeterminateLoadingComponent({
       className={cx(withBaseName("indeterminateLoading"), className)}
       // Announcement of the content status is more useful than completion announcement from spinner
       completionAnnouncement={null}
-      data-jpmui-test={`spinner-${id!}`}
+      data-testid={`spinner-${id!}`}
       disableAnnouncer={disableAnnouncer}
       {...rest}
     />
