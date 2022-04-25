@@ -16,7 +16,6 @@ describe("Given a Button", () => {
   it("should be focusable when disabled and focusableWhenDisabled", () => {
     cy.mount(<FocusableWhenDisabled />);
     cy.findByRole("button").should("have.attr", "aria-disabled", "true");
-    cy.window().focus();
     cy.realPress("Tab");
     cy.findByRole("button").should("be.focused");
   });
