@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import { makePrefixer } from "@brandname/core";
 import "./GridItem.css";
-import { ResponsiveProp, useResponsiveProp } from "../internal/ResponsiveProps";
+import { ResponsiveProp, useResponsiveProp } from "../../utils";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",

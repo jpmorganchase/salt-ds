@@ -39,7 +39,7 @@ const hasBreakpointValues = <T extends any>(
   );
 };
 
-export const getResponsiveValue = <T extends any>(
+const getResponsiveValue = <T extends any>(
   breakpointValues: BreakpointProp<T>,
   breakpoints: Breakpoints,
   viewport: keyof Breakpoints,
