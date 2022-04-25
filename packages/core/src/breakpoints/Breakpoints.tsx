@@ -6,14 +6,6 @@ const breakpoints = {
   xl: 1920,
 };
 
-// Consider custom namespace..? declare namespace UITK
-declare global {
-  type BreakpointsType = {
-    // This is slightly better than {}, but doesn't address the requirement of passing {a:1;} would trigger a TS error
-    [name in string]: number;
-  };
-}
-
 export type DefaultBreakpointType = typeof breakpoints;
 
 /**
@@ -29,6 +21,6 @@ export type StrictBreakpoints<T = DefaultBreakpointType> = {
   [name in keyof T]: number;
 };
 
-export type Breakpoints = BreakpointsType;
+export type Breakpoints = RelaxedBreakpointsType;
 
 export const DEFAULT_BREAKPOINTS = breakpoints;

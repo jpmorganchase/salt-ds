@@ -7,7 +7,7 @@ import {
   Card,
   GridLayoutProps,
 } from "@brandname/lab";
-import { ToolkitProvider } from "@brandname/core";
+import { Breakpoints, ToolkitProvider } from "@brandname/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
@@ -127,7 +127,7 @@ ToolkitGridLayoutResponsiveView.args = {
   columnGap: 1,
 };
 
-const breakpoints = {
+const breakpoints: Breakpoints = {
   xs: 0,
   sm: 500,
   md: 860,
