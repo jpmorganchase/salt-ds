@@ -209,8 +209,8 @@ test("Opens the tooltip", async () => {
   );
 
   // Catches an issue where the window starts off with the default size and then corrects itself
-  expect(childWindowSize).toStrictEqual([92, 35]);
-  expect(childWindowPosition).toStrictEqual([76, 33]);
+  expect(childWindowSize).toStrictEqual([108, 51]);
+  expect(childWindowPosition).toStrictEqual([68, 25]);
 
   // Hover on something else
   await page.locator("data-testid=cascading-menu-trigger").hover();

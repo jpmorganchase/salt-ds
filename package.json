@@ -140,7 +140,8 @@
   },
   "resolutions": {
     "esbuild": "0.14.22",
-    "colors": "1.4.0"
+    "colors": "1.4.0",
+    "modular-scripts@3.0.0-alpha-webpack5.0": "patch:modular-scripts@npm:3.0.0-alpha-webpack5.0#.yarn/patches/modular-scripts-npm-3.0.0-alpha-webpack5.0-9bbea642d6.patch"
   },
   "browserslist": {
     "production": [

@@ -18372,7 +18372,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.0.0-alpha-webpack5.0#.yarn/patches/modular-scripts-npm-3.0.0-alpha-webpack5.0-9bbea642d6::locator=%40brandname%2Froot%40workspace%3A.":
   version: 3.0.0-alpha-webpack5.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.0.0-alpha-webpack5.0#.yarn/patches/modular-scripts-npm-3.0.0-alpha-webpack5.0-9bbea642d6::version=3.0.0-alpha-webpack5.0&hash=680c12&locator=%40brandname%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.0.0-alpha-webpack5.0#.yarn/patches/modular-scripts-npm-3.0.0-alpha-webpack5.0-9bbea642d6::version=3.0.0-alpha-webpack5.0&hash=31e694&locator=%40brandname%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.16.7
     "@rollup/plugin-babel": 5.3.1
@@ -18474,7 +18474,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: 5ad4b199f48957f9ccedd69a9b613b4387cda29be27373ed3b17cc95f51e0adea3bed643604a8f5a0488bdbaef8ee15fb7b40eb7b8fff20d06218a26490310dd
+  checksum: 06297203472177658627fb721e33587c918734e39621f79bb05512813bbbd25aaf8b1f65173b731a48959611111aed4edeb442588d4a53f6798f676ae74888ea
   languageName: node
   linkType: hard
 

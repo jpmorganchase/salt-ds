@@ -7,8 +7,7 @@ import {
 } from "@floating-ui/react-dom";
 import type { Placement, Strategy, Middleware } from "@floating-ui/core";
 import { useEffect } from "react";
-
-import { isElectron } from "@brandname/lab";
+import {isElectron} from "../window";
 
 export interface UseFloatingUIProps {
   middleware?: Middleware[];
