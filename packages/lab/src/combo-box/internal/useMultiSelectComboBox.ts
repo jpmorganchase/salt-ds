@@ -53,10 +53,11 @@ export const useMultiSelectComboBox = <Item>(
     onInputSelect,
     id: idProp,
     source: sourceProp,
+    selectedItem: selectedItemProp,
     inputValue: inputValueProp,
     initialOpen,
     initialSelectedItem: initialSelectedItems,
-    ["aria-labelledby"]: ariaLabelledBy,
+    "aria-labelledby": ariaLabelledBy,
     getFilterRegex = getDefaultFilterRegex,
     itemToString = defaultItemToString,
     stringToItem: stringToItemProp = (_: any, value: string) => value.trim(),
@@ -133,7 +134,8 @@ export const useMultiSelectComboBox = <Item>(
     disableMouseDown: true,
     selectionVariant: "multiple",
     initialSelectedItem: initialSelectedItems,
-    ["aria-labelledby"]: ariaLabelledBy,
+    selectedItem: selectedItemProp,
+    "aria-labelledby": ariaLabelledBy,
   });
 
   const { "aria-activedescendant": ariaActiveDescendant, ...restListProps } =

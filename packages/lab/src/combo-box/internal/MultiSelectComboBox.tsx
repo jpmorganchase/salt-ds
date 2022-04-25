@@ -28,6 +28,7 @@ export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   > & {
     InputProps?: Partial<TokenizedInputProps<Item>>;
     initialSelectedItem?: Item[];
+    selectedItem?: Item[];
     multiSelect: true;
     delimiter?: string | string[];
   };
