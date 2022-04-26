@@ -12,5 +12,6 @@ export const useLayoutEffectSkipFirst = (
     } else {
       goodToGo.current = true;
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, dependencies);
 };
