@@ -5,6 +5,7 @@ import {
   ReactNode,
   CSSProperties,
   forwardRef,
+  useCallback,
 } from "react";
 import cx from "classnames";
 import {
@@ -97,45 +98,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
 
-  // Observers
-  useIsomorphicLayoutEffect(() => {
-    const onResize = debounce(() => {
-      setRows(getRows());
-    });
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries.length > 0 && entries[0].target.isConnected) {
-        onResize();
-      }
-    });
-
-    const onScroll = debounce((entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (element && entry.isIntersecting) {
-          resizeObserver.observe(element);
-        } else {
-          resizeObserver.disconnect();
-        }
-      });
-    });
-
-    const scrollObserver = new IntersectionObserver(onScroll, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    });
-
-    if (element) {
-      scrollObserver.observe(element);
-    }
-
-    return () => {
-      scrollObserver.disconnect();
-    };
-  }, [element]);
-
   // Overflow
-  const getRows = () => {
+  const getRows = useCallback(() => {
     let textRows;
 
     if (element && truncate) {
@@ -175,7 +139,44 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       }
     }
     return textRows;
-  };
+  }, [element, expanded, truncate, maxRows, onOverflow]);
+
+  // Observers
+  useIsomorphicLayoutEffect(() => {
+    const onResize = debounce(() => {
+      setRows(getRows());
+    });
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries.length > 0 && entries[0].target.isConnected) {
+        onResize();
+      }
+    });
+
+    const onScroll = debounce((entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (element && entry.isIntersecting) {
+          resizeObserver.observe(element);
+        } else {
+          resizeObserver.disconnect();
+        }
+      });
+    });
+
+    const scrollObserver = new IntersectionObserver(onScroll, {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0,
+    });
+
+    if (element) {
+      scrollObserver.observe(element);
+    }
+
+    return () => {
+      scrollObserver.disconnect();
+    };
+  }, [element, getRows]);
 
   // Tooltip
   const hasTooltip =
