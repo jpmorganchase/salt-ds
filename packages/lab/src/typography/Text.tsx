@@ -134,7 +134,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     };
   }, [element]);
 
-  // Oveflow
+  // Overflow
   const getRows = () => {
     let textRows;
 
