@@ -1,6 +1,9 @@
 import { QueryInputCategory, QueryInputItem } from "../QueryInput";
 import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
+import {
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { ValueList } from "./ValueList";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import cn from "classnames";
-import { makePrefixer, ToolkitProvider } from "@brandname/core";
+import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
   Tooltip,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";

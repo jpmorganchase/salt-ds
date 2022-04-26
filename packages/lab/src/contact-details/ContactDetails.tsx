@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes, useState } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useForkRef } from "../utils";
 import { ContactDetailsContext, useComponentSize } from "./internal";
 import cn from "classnames";

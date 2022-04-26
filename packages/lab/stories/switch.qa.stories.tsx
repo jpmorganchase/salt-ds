@@ -1,4 +1,4 @@
-import { Switch } from "@brandname/lab";
+import { Switch } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./switch.qa.stories.css";

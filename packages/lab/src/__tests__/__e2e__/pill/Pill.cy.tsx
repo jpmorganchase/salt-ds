@@ -1,5 +1,5 @@
-import { CallIcon } from "@brandname/icons";
-import { Pill } from "@brandname/lab";
+import { CallIcon } from "@jpmorganchase/uitk-icons";
+import { Pill } from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied to the tests after copy over

@@ -7,8 +7,8 @@ import {
 import cx from "classnames";
 import dayjs from "./dayjs";
 import { useCalendarDay, DayStatus } from "../useCalendarDay";
-import { makePrefixer } from "@brandname/core";
-import { CloseIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import { useForkRef } from "../../utils";
 
 import "./CalendarDay.css";

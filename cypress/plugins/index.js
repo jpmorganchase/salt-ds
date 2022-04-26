@@ -35,19 +35,26 @@ module.exports = (on, config) => {
     if (isCi) {
       viteConfig.resolve = {
         alias: {
-          "@brandname/core": path.resolve(
+          "@jpmorganchase/uitk-core": path.resolve(
             __dirname,
-            "../../dist/brandname-core"
+            "../../dist/jpmorganchase-uitk-core"
           ),
-          "@brandname/lab": path.resolve(__dirname, "../../dist/brandname-lab"),
-          "@brandname/icons": path.resolve(
+          "@jpmorganchase/uitk-lab": path.resolve(
             __dirname,
-            "../../dist/brandname-icons"
+            "../../dist/jpmorganchase-uitk-lab"
+          ),
+          "@jpmorganchase/uitk-icons": path.resolve(
+            __dirname,
+            "../../dist/jpmorganchase-uitk-icons"
           ),
         },
       };
       viteConfig.optimizeDeps = {
-        include: ["@brandname/core", "@brandname/lab", "@brandname/icons"],
+        include: [
+          "@jpmorganchase/uitk-core",
+          "@jpmorganchase/uitk-lab",
+          "@jpmorganchase/uitk-icons",
+        ],
       };
     }
 

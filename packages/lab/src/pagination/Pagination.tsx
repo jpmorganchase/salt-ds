@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAriaAnnouncer } from "@brandname/core";
+import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 import { PaginationContext, paginationContext } from "./PaginationContext";
 import { useControlled } from "../utils";
 import { withBaseName } from "./utils";

@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import cx from "classnames";
-import { Button } from "@brandname/core";
-import { OverflowMenuIcon } from "@brandname/icons";
+import { Button } from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import { ListSingleSelectionVariant } from "../list";
 import { Dropdown, DropdownProps } from "../dropdown";
 import { ManagedItem } from "./overflowTypes";

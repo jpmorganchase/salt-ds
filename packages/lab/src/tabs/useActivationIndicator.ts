@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 import { useResizeObserver, orientationType, WidthOnly } from "../responsive";
 

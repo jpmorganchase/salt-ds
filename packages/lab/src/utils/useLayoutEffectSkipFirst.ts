@@ -1,5 +1,5 @@
 import { DependencyList, EffectCallback, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 export const useLayoutEffectSkipFirst = (
   callback: EffectCallback,

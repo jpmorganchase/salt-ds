@@ -4,8 +4,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@brandname/lab";
-import { makePrefixer } from "@brandname/core";
+} from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ReactElement } from "react";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ShadowInnerPattern } from "./ShadowInnerPattern";

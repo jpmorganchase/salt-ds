@@ -1,4 +1,4 @@
-import { JSONByScope } from "@brandname/theme-editor";
+import { JSONByScope } from "@jpmorganchase/theme-editor";
 import { Dispatch, useState, useRef, useEffect } from "react";
 import { Action, ActionType } from "./Action";
 

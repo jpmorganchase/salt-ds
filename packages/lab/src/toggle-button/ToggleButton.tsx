@@ -8,7 +8,12 @@ import {
   useRef,
 } from "react";
 import cx from "classnames";
-import { makePrefixer, Button, ButtonProps, Icon } from "@brandname/core";
+import {
+  makePrefixer,
+  Button,
+  ButtonProps,
+  Icon,
+} from "@jpmorganchase/uitk-core";
 
 import { useForkRef } from "../utils";
 import { Tooltip } from "../tooltip";

@@ -1,11 +1,15 @@
-import { QueryInput, QueryInputCategory, QueryInputItem } from "@brandname/lab";
+import {
+  QueryInput,
+  QueryInputCategory,
+  QueryInputItem,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import {
   QueryResultRow,
   QueryResultTable,
 } from "./query-input/QueryResultTable";
 import { useMemo, useState } from "react";
-import { BooleanOperator } from "@brandname/lab/src/query-input/internal";
+import { BooleanOperator } from "@jpmorganchase/uitk-lab/src/query-input/internal";
 import "./query-input.stories.css";
 
 export default {

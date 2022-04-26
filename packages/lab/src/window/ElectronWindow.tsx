@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import ReactDOM from "react-dom";
-import { ToolkitProvider } from "@brandname/core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { windowType, Window as ToolkitWindow } from "./WindowContext";
 import { useForkRef } from "../utils";
 import { isElectron, useProxyRef } from "./electron-utils";

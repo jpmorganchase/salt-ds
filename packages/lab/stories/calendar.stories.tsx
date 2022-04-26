@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Calendar, CalendarProps } from "@brandname/lab";
+import { Calendar, CalendarProps } from "@jpmorganchase/uitk-lab";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import "./calendar.stories.css";
-import { UseRangeSelectionCalendarProps } from "@brandname/lab/src/calendar/internal/useSelection";
+import { UseRangeSelectionCalendarProps } from "@jpmorganchase/uitk-lab/src/calendar/internal/useSelection";
 
 dayjs.extend(isoWeek);
 

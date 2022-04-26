@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, ReactChildren, ReactElement, Ref } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { FormField } from "../../form-field";
 import {
   isCollapsedOrCollapsing,

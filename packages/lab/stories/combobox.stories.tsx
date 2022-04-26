@@ -1,5 +1,6 @@
 import { ChangeEvent, ComponentProps, memo, useRef, useState } from "react";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
+
 import {
   ComboBox,
   escapeRegExp,
@@ -10,11 +11,11 @@ import {
   ListItemBase,
   ListItemProps,
   useListItem,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
 import { Highlighter } from "../src/list/internal/Highlighter";
 import { IndexedListItemProps } from "../src/list";
-import { CloseIcon } from "@brandname/icons";
+import { CloseIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
   title: "Lab/ComboBox",

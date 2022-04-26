@@ -13,7 +13,7 @@ import {
 } from "./overflowUtils";
 import { ManagedItem, overflowHookProps } from "./overflowTypes";
 import { partition } from "../utils";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 const NO_OVERFLOW_INDICATOR = { size: 0 };
 

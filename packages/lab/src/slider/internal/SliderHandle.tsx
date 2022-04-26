@@ -1,5 +1,5 @@
 import { CSSProperties, HTMLAttributes } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { getSliderAriaLabel } from "./utils";
 import { Tooltip } from "../../tooltip";

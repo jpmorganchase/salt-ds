@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 // //////////////////////////////////////////////////////////////////////////////
 // SUPER HACKS AHEAD: The React team will hate this enough to hopefully give us

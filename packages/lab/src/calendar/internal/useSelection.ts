@@ -1,5 +1,5 @@
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useCalendarContext } from "./CalendarContext";
 import { isPlainObject, useControlled } from "../../utils";
 import dayjs from "./dayjs";

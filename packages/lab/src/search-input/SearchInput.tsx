@@ -7,8 +7,8 @@ import {
   ComponentType,
 } from "react";
 import cx from "classnames";
-import { Button } from "@brandname/core";
-import { CloseIcon, SearchIcon } from "@brandname/icons";
+import { Button } from "@jpmorganchase/uitk-core";
+import { CloseIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
 import { Input, InputProps, StaticInputAdornment } from "../input";
 
 import { useControlled, useForkRef } from "../utils";

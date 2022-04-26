@@ -1,17 +1,15 @@
-# BRANDNAME
-
 React UI components built with a focus on accessibility, customisation and ease-of-use.
 
 ## Installation
 
 ```sh
-npm install @brandname/core @brandname/lab @brandname/theme
+npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-lab @jpmorganchase/uitk-icons
 ```
 
 or
 
 ```sh
-yarn add @brandname/core @brandname/lab @brandname/theme
+yarn add @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-lab @jpmorganchase/uitk-icons
 ```
 
 ## Usage
@@ -20,7 +18,9 @@ Here's a quick example to get you started:
 
 ```javascript
 import ReactDOM from "react-dom";
-import { Button } from "@brandname/core";
+import "@jpmorganchase/uitk-theme/index.css";
+import "@jpmorganchase/uitk-theme/global.css";
+import { Button } from "@jpmorganchase/uitk-core";
 
 function App() {
   return <Button variant="cta">CTA Button</Button>;

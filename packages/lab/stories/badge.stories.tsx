@@ -1,5 +1,9 @@
-import { Badge } from "@brandname/lab";
-import { ClockIcon, SettingsSolidIcon, UserBadgeIcon } from "@brandname/icons";
+import { Badge } from "@jpmorganchase/uitk-lab";
+import {
+  ClockIcon,
+  SettingsSolidIcon,
+  UserBadgeIcon,
+} from "@jpmorganchase/uitk-icons";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

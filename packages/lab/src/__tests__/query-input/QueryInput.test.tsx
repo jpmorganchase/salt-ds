@@ -6,7 +6,7 @@ import {
   within,
 } from "@testing-library/react";
 import { QueryInput, QueryInputCategory } from "../../query-input";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import userEvent from "@testing-library/user-event";
 
 const fakeCategories: QueryInputCategory[] = [

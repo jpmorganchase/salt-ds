@@ -1,5 +1,5 @@
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
-import { makePrefixer, IconProps } from "@brandname/core";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { useId } from "../utils";
 import {

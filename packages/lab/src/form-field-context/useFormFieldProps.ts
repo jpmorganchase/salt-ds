@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FormFieldContext, FormFieldContextValue } from "./FormFieldContext";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 interface useFormFieldPropsProps {
   focusVisible?: boolean;

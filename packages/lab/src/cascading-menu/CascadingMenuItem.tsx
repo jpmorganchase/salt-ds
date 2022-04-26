@@ -8,8 +8,8 @@ import {
   KeyboardEvent,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { ChevronRightIcon } from "@brandname/icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 
 import { MenuDescriptor } from "./CascadingMenuProps";
 import { ListItem, ListItemProps } from "../list";

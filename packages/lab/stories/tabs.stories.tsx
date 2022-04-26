@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   EditableLabel,
   Link,
@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import { AdjustableFlexbox } from "./story-components";
 
 import "docs/story.css";

@@ -1,4 +1,4 @@
-import { Link } from "@brandname/lab";
+import { Link } from "@jpmorganchase/uitk-lab";
 
 import "./link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";

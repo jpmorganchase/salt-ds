@@ -1,3 +1,3 @@
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 export const withBaseName = makePrefixer("uitkPagination");

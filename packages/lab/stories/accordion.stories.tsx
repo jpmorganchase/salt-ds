@@ -8,8 +8,8 @@ import {
   AccordionSectionProps,
   AccordionSummary,
   AccordionSummaryProps,
-} from "@brandname/lab";
-import { TriangleUpIcon } from "@brandname/icons";
+} from "@jpmorganchase/uitk-lab";
+import { TriangleUpIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 

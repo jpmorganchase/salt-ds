@@ -1,7 +1,7 @@
 import { ReactElement, useCallback, useState } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { ToggleButton, ToggleButtonGroup } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ToggleButton, ToggleButtonGroup } from "@jpmorganchase/uitk-lab";
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 

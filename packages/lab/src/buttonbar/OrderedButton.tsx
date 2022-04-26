@@ -1,7 +1,7 @@
 import { forwardRef, useContext } from "react";
 import cn from "classnames";
 
-import { Button, ButtonProps, makePrefixer } from "@brandname/core";
+import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { useDescendant } from "./internal/useDescendant";
 import { capitalize } from "../utils";
