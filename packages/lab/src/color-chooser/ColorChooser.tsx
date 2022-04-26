@@ -1,14 +1,10 @@
 import { useState, useCallback } from "react";
 import cn from "classnames";
 import { Overlay } from "../overlay";
-import {
-  Button,
-  ButtonProps,
-  ToolkitProvider,
-  makePrefixer,
-} from "@brandname/core";
+import { Button, ButtonProps, makePrefixer } from "@brandname/core";
 import { RefreshIcon } from "@brandname/icons";
 import { Color } from "./Color";
+import { isTransparent } from "./color-utils";
 
 import {
   hexValueWithoutAlpha,
@@ -17,9 +13,9 @@ import {
   getHexValue,
 } from "./ColorHelpers";
 import { uitkColorMap } from "./colorMap";
-import { createTabsMapping } from "./createTabsMapping";
-import { getColorPalettes } from "./GetColorPalettes";
 import { ColorChooserTabs, DictTabs } from "./DictTabs";
+import { getColorPalettes } from "./GetColorPalettes";
+import { createTabsMapping } from "./createTabsMapping";
 
 import "./ColorChooser.css";
 
@@ -53,6 +49,7 @@ export interface ColorChooserProps {
   defaultAlpha?: number;
   disableAlphaChooser?: boolean;
   displayHexOnly?: boolean;
+  hideLabel?: boolean;
   onClear: () => void; // called when user clicks "default" button
   onSelect: (
     color: Color | undefined,
@@ -75,6 +72,7 @@ export const ColorChooser = ({
   showColorPicker = true,
   defaultAlpha = 1,
   disableAlphaChooser = false,
+  hideLabel = false,
   placeholder,
   buttonProps,
   UITKColorOverrides,
@@ -105,7 +103,10 @@ export const ColorChooser = ({
   };
   const handleClose = (): void => setOpen(false);
 
-  const alphaForTabs = color?.rgba?.a ?? defaultAlpha;
+  const alphaForTabs = isTransparent(color?.hex)
+    ? defaultAlpha
+    : color?.rgba?.a ?? defaultAlpha;
+
   const tabsMapping = createTabsMapping({
     swatches: showSwatches,
     colorPicker: showColorPicker,
@@ -137,9 +138,11 @@ export const ColorChooser = ({
   };
 
   return (
-    <ToolkitProvider density="high">
+    <>
       <Button
-        className={cn(withBaseName("overlayButton"))}
+        className={cn(withBaseName("overlayButton"), {
+          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+        })}
         data-testid="color-chooser-overlay-button"
         disabled={readOnly}
         ref={setRef}
@@ -151,15 +154,20 @@ export const ColorChooser = ({
             className={cn(withBaseName("overlayButtonSwatch"), {
               [withBaseName("overlayButtonSwatchWithBorder")]:
                 color?.hex.startsWith("#ffffff"),
+              [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
+                color?.hex
+              ),
             })}
             style={{
               backgroundColor: color?.hex,
             }}
           />
         )}
-        <div className={cn(withBaseName("overlayButtonText"))}>
-          {displayColorName ?? placeholder ?? "No color selected"}
-        </div>
+        {!hideLabel && (
+          <div className={withBaseName("overlayButtonText")}>
+            {displayColorName ?? placeholder ?? "No color selected"}
+          </div>
+        )}
       </Button>
       <Overlay
         adaExceptions={{ showClose: false }}
@@ -192,6 +200,6 @@ export const ColorChooser = ({
           />
         </div>
       </Overlay>
-    </ToolkitProvider>
+    </>
   );
 };

@@ -29,9 +29,11 @@ export const EditorView = (props: EditorViewProps): React.ReactElement => {
           "DENSITY-HIGH",
         ].includes(s.scope.toUpperCase()) ||
         s.scope.toUpperCase() === "DENSITY-ALL" ||
-        s.scope.toUpperCase() === "MODE-ALL"
+        s.scope.toUpperCase() === "MODE-ALL" ||
+        s.scope.toUpperCase().includes("EMPHASIS")
     );
   }, [props.jsonByScope, mode]);
+
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/foundations/color");

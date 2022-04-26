@@ -1,37 +1,62 @@
-.uitk-light .uitkControlLabel {
-  --control-label-color: var(--uitk-color-grey-900);
-}
-
-.uitk-dark .uitkControlLabel {
-  --control-label-color: var(--uitk-color-white);
-}
-
 .uitkControlLabel {
   align-items: center;
   cursor: pointer;
   display: inline-flex;
-  margin-top: var(--label-margin-top, 0);
+  /* margin-top: var(--label-margin-top, 0);*/
+}
 
+.uitkControlLabel-label,
+.uitkControlLabel-labelRight {
+  color: var(--uitkControlLabel-color, var(--uitk-text-primary-color));
   font-family: var(--uitk-typography-font-family);
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-regular);
-
-  margin-right: var(--label-margin-right, 4px);
+  line-height: var(--uitk-typography-line-height);
+  margin-right: calc(var(--uitk-spacing-unit) / 1.5);
+  display: block;
 }
 
-.uitkControlLabel-label {
-  color: var(--control-label-color);
-  line-height: var(--uitk-text-line-height);
-
-  /* the default should be density aware. This can wait until density is avaiable via theme */
-  margin-left: var(--label-margin-left, 4px);
-}
-
-.uitkControlLabel-disabled {
+.uitkControlLabel-disabled,
+.uitkFormField-disabled .uitkControlLabel {
   cursor: var(--uitk-disabled-cursor);
 }
 
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
+}
+
+.uitk-density-medium .uitkControlLabel-labelRight {
+  margin-left: 6px;
+  margin-right: 0px;
+}
+.uitk-density-high .uitkControlLabel-labelRight {
+  margin-left: 3px;
+  margin-right: 0px;
+}
+.uitk-density-low .uitkControlLabel-labelRight {
+  margin-left: 9px;
+  margin-right: 0px;
+}
+.uitk-density-touch .uitkControlLabel-labelRight {
+  margin-left: 12px;
+  margin-right: 0px;
+}
+
+/* Backwards compatable styling for TK1 */
+.uitk-density-medium .backwardsCompat .uitkControlLabel-label {
+  margin-right: 6px;
+}
+.uitk-density-high .backwardsCompat .uitkControlLabel-label {
+  margin-right: 4px;
+}
+.uitk-density-low .backwardsCompat .uitkControlLabel-label {
+  margin-right: 9px;
+}
+.uitk-density-touch .backwardsCompat .uitkControlLabel-label {
+  margin-right: 12px;
+}
+
+.backwardsCompat .uitkControlLabel-label {
+  line-height: 1.3;
 }

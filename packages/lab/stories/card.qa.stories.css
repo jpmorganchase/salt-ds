@@ -2,3 +2,8 @@
   --uitkDocGrid-width: 600px;
   --uitkDocGrid-gap: 8px;
 }
+
+.uitkCardQA .uitkDocGrid {
+  --uitkDocGrid-width: 600px;
+  --uitkDocGrid-height: 616px;
+}

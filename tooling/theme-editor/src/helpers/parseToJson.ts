@@ -136,7 +136,6 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
     }
     recurse(scopeAndJSON.children, comma);
     stringJSON += "}";
-    console.log(scopeAndJSON, stringJSON);
     scopeToJSONMap.push({
       scope: scopeAndJSON.label,
       jsonObj: JSON.parse(stringJSON),

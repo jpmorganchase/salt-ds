@@ -98,8 +98,6 @@
 
   --uitk-text-font-size-high: 11px;
   --uitk-text-line-height-high: 14px;
-
-  --uitk-text-font-size: var(--uitk-text-font-size-medium);
 }
 
 .uitk-light {

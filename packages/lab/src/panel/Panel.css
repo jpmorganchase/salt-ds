@@ -5,20 +5,13 @@
   --panel-padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
 }
 
-/* Styles applied to the root element with default (medium) emphasis */
+/* Styles applied to the root element */
 .uitkPanel {
   background: var(--uitkPanel-background, var(--uitk-container-background));
   box-sizing: border-box;
+  color: var(--uitkPanel-color, var(--uitk-text-primary-color));
   height: var(--panel-height);
   overflow: auto;
   padding: var(--panel-padding);
   width: var(--panel-width);
-
-  /* Default medium emphasis values */
-  color: var(--uitkPanel-color, var(--uitk-text-secondary-color));
-}
-
-/* Override values when high emphasis applied */
-.uitkEmphasisHigh {
-  color: var(--uitkPanel-color, var(--uitk-text-primary-color));
 }

@@ -15,8 +15,9 @@ import { FormLabel } from "../form-field";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { FormGroup } from "../form-group";
 import { RadioButton } from "./RadioButton";
-import "./RadioButtonGroup.css";
 import { RadioIconProps } from "./RadioIcon";
+
+import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("uitkRadioButtonGroup");
 

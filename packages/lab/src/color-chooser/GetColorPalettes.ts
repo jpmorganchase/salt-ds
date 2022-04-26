@@ -67,6 +67,7 @@ export function getColorPalettes(
           ? UITKColorOverrides["uitkblack"]
           : "rgb(0, 0, 0)"
         : uitkColorMap["uitkblack"],
+      "rgba(0, 0, 0, 0)",
     ],
   ];
 }

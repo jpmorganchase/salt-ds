@@ -1,6 +1,7 @@
 import { Color } from "./Color";
 import { Swatch } from "./Swatch";
 import { convertColorMapValueToHex } from "./ColorHelpers";
+import { isTransparent } from "./color-utils";
 
 import "./Swatch.css";
 
@@ -52,6 +53,7 @@ const SwatchesGroup = ({
       isBlackOrWhite(color)
     );
   };
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {swatchGroup
@@ -66,6 +68,7 @@ const SwatchesGroup = ({
             onClick={onClick}
             onDialogClosed={onDialogClosed}
             alpha={alpha}
+            transparent={isTransparent(color)}
           />
         ))}
     </div>

@@ -2,8 +2,9 @@ import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
 import classnames from "classnames";
 import { makePrefixer } from "@brandname/core";
 import { Radio } from "./Radio";
-import "./RadioButton.css";
 import { RadioIconProps } from "./RadioIcon";
+import { ControlLabel, ControlLabelProps } from "../control-label";
+import "./RadioButton.css";
 
 const withBaseName = makePrefixer("uitkRadioButton");
 
@@ -19,13 +20,14 @@ export interface RadioButtonProps
   /**
    * The label to be shown next to the radio
    */
-  label?: string;
+  label?: ControlLabelProps["label"];
+  LabelProps?: Partial<ControlLabelProps>;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
 }
 
-export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
+export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
       checked,
@@ -33,33 +35,47 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
       icon,
       disabled,
       label,
+      LabelProps,
       value,
       onChange,
       ...rest
     } = props;
 
     return (
-      <div
-        className={classnames(
-          withBaseName(),
-          {
-            [withBaseName("disabled")]: disabled,
-          },
-          className
-        )}
-        ref={ref}
-        {...rest}
-      >
-        <label className={withBaseName("label")}>
-          <Radio
-            checked={checked}
-            disabled={disabled}
-            value={value}
-            onChange={onChange}
-            icon={icon}
-          />
-          <span className={withBaseName("labelText")}>{label}</span>
-        </label>
+      <div className={classnames(withBaseName())}>
+        <ControlLabel
+          {...LabelProps}
+          className={classnames(
+            withBaseName("labelContainer"),
+            {
+              [withBaseName("disabled")]: disabled,
+            },
+            className
+          )}
+          disabled={disabled}
+          label={label}
+          labelPlacement="right"
+          ref={ref}
+        >
+          <div
+            className={classnames(
+              withBaseName(),
+              {
+                [withBaseName("disabled")]: disabled,
+              },
+              className
+            )}
+            {...rest}
+          >
+            <Radio
+              checked={checked}
+              disabled={disabled}
+              value={value}
+              onChange={onChange}
+              icon={icon}
+            />
+          </div>
+        </ControlLabel>
       </div>
     );
   }

@@ -53,6 +53,7 @@
   min-width: var(--input-min-width);
   padding: var(--input-padding);
   position: var(--input-position);
+  width: 100%;
 }
 
 /* Reset in the next class */

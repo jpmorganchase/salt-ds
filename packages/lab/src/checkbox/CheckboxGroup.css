@@ -1,3 +1,4 @@
+/* Styles applied to root component */
 .uitkCheckboxGroup {
   border: 0;
   margin: 0;
@@ -7,6 +8,7 @@
   vertical-align: top;
 }
 
+/* Styles applied to root component if `row={true}` */
 .uitkCheckboxGroup-horizontal {
   display: block;
 }

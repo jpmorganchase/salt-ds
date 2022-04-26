@@ -11,7 +11,6 @@ function isValid(syntaxErrors: any[]) {
 }
 
 export function validateTokenInput(tokenPath: string, input: string): boolean {
-  console.log(input, tokenPath);
   if (!input.length) {
     return false;
   }

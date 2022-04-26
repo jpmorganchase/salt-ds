@@ -6,12 +6,13 @@ import {
   AccordionDetails,
 } from "@brandname/lab";
 import { makePrefixer } from "@brandname/core";
-import { ChildrenValues } from "../ChildrenValues";
-import { JSONObj } from "../../helpers/parseToJson";
-import "./Foundations.css";
+import { ChildrenValues } from "../../ChildrenValues";
+import { JSONObj } from "../../../helpers/parseToJson";
+import "../Foundations.css";
 
 const withBaseName = makePrefixer("uitkFoundationPattern");
-export interface FoundationPatternProps {
+
+export interface FoundationPatternByDensityProps {
   uitkColorOverrides?: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
@@ -33,13 +34,17 @@ function getScopeName(scope: string): string {
       return "MD";
     case "density-all":
       return "All densities";
+    case "emphasis-low-light" || "emphasis-low-dark":
+      return "Low emphasis";
+    case "emphasis-high-light" || "emphasis-high-dark":
+      return "High emphasis";
     default:
       return scope;
   }
 }
 
-export const FoundationPattern = (
-  props: FoundationPatternProps
+export const FoundationPatternByDensity = (
+  props: FoundationPatternByDensityProps
 ): ReactElement => {
   return (
     <AccordionSection key={`${props.themeName}-${props.patternName}-accordion`}>

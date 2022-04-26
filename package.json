@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn build:core && yarn build:lab && yarn build:icons",
+    "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:theme",
     "build:core": "modular build @brandname/core",
     "build:icons": "modular build @brandname/icons",
     "build:lab": "modular build @brandname/lab",

@@ -6,8 +6,20 @@
 
 .uitk-light .uitkColorChooser-rgbaInput {
   width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-color-black);
+  border-bottom: 1px solid var(--uitk-color-grey-900);
   padding-top: var(--uitk-spacing-unit);
+}
+
+.uitkColorChooser-opacityInput {
+  min-width: 40px !important;
+  width: 40px !important;
+  min-height: unset !important;
+}
+.uitk-light .uitkColorChooser-opacityInput {
+  border-bottom: 1px solid var(--uitk-color-grey-900);
+}
+.uitk-dark .uitkColorChooser-opacityInput {
+  border-bottom: 1px solid var(--uitk-color-white);
 }
 
 .uitkColorChooser-rgbaText {

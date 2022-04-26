@@ -226,6 +226,7 @@ var UITK_CHARACTERISTICS = [
 
 var UITK_FOUNDATIONS = [
   "color",
+  "fade",
   "icon",
   "shadow",
   "size",
