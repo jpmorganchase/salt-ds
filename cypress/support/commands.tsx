@@ -51,6 +51,7 @@ declare global {
       mount: (jsx: ReactNode, options?: MountOptions) => Chainable<MountReturn>;
       getRenderCount(): Chainable<number>;
       getRenderTime(): Chainable<number>;
+      paste(string: string): Chainable<void>;
     }
   }
 }
@@ -127,6 +128,26 @@ Cypress.Commands.add("getRenderTime", function () {
 Cypress.Commands.add("getRenderCount", function () {
   // @ts-ignore
   return cy.state("performanceResult").renderCount;
+});
+
+Cypress.Commands.add("paste", { prevSubject: "element" }, (input, value) => {
+  // taken from https://stackoverflow.com/a/69552958/11217233
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    "value"
+  )?.set;
+
+  if (nativeInputValueSetter) {
+    cy.wrap(input).then((input) => {
+      nativeInputValueSetter.call(input[0], value);
+      input[0].dispatchEvent(
+        new Event("input", {
+          bubbles: true,
+          composed: true,
+        })
+      );
+    });
+  }
 });
 
 // Workaround for an issue in Cypress, where ResizeObserver fails with the message

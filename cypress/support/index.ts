@@ -6,3 +6,7 @@ import "./assertions";
 import "./commands";
 
 setGlobalConfig(globalStorybookConfig);
+
+beforeEach(() => {
+  cy.window().focus();
+});

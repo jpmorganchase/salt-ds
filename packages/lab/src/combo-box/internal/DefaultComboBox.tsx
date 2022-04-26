@@ -71,6 +71,7 @@ export interface DefaultComboBoxProps<Item>
     Pick<InputProps, "onFocus" | "onBlur"> {
   InputProps?: InputProps;
   initialSelectedItem?: Item;
+  selectedItem?: Item;
   multiSelect?: false;
   onInputFocus?: InputProps["onFocus"];
   onInputBlur?: InputProps["onBlur"];
