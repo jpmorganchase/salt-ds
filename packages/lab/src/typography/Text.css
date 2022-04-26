@@ -130,21 +130,21 @@ label.uitkText {
 
 /* Figure 1 */
 .uitkText-figure1.uitkText {
-  font-size: 56px;
-  line-height: 74px;
+  font-size: var(--uitk-text-figure-1-font-size);
+  line-height: var(--uitk-text-figure-1-line-height);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 /* Figure 2 */
 .uitkText-figure2.uitkText {
-  font-size: 36px;
-  line-height: 48px;
+  font-size: var(--uitk-text-figure-2-font-size);
+  line-height: var(--uitk-text-figure-2-line-height);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 /* Figure 3 */
 .uitkText-figure3.uitkText {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: var(--uitk-text-figure-3-font-size);
+  line-height: var(--uitk-text-figure-3-line-height);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
