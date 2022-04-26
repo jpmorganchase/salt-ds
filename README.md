@@ -3,13 +3,13 @@ React UI components built with a focus on accessibility, customisation and ease-
 ## Installation
 
 ```sh
-npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-lab @jpmorganchase/uitk-theme
+npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-lab @jpmorganchase/uitk-icons
 ```
 
 or
 
 ```sh
-yarn add @jpmorganchase/uitk-core @jpmorganchase/uitk-lab @jpmorganchase/uitk-theme
+yarn add @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-lab @jpmorganchase/uitk-icons
 ```
 
 ## Usage
@@ -18,6 +18,8 @@ Here's a quick example to get you started:
 
 ```javascript
 import ReactDOM from "react-dom";
+import "@brandname/theme/index.css";
+import "@brandname/theme/global.css";
 import { Button } from "@jpmorganchase/uitk-core";
 
 function App() {
