@@ -22,7 +22,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
   forwardedRef
 ) {
   const { top, left, position, ...styleRest } = style;
-  console.log(styleRest);
+
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [windowRef, setWindowRef] = useState<Window | null>(null);
   const windowRoot = useRef<HTMLDivElement>(null);
@@ -35,6 +35,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
   const test = ReactDOMServer.renderToStaticMarkup(<>{children}</>);
 
   const dummyEl = document.createElement("html");
+
   dummyEl.innerHTML = test;
 
   dummyEl.querySelectorAll("[class]").forEach((element) =>

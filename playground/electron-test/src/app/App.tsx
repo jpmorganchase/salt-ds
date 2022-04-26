@@ -31,6 +31,7 @@ import {
 
 import { usStateExampleData } from "./exampleData";
 import { ToolbarAnchor } from "./ToolbarAnchor";
+import {ListChangeHandler} from "@brandname/lab";
 
 const densityDialogWidths = {
   touch: 640,
@@ -158,8 +159,9 @@ export const App = () => {
     setOpen(false);
   };
 
-  const handleChange = (_: any, selectedItem: any) => {
-    console.log("selection changed", selectedItem);
+  const handleChange: ListChangeHandler<string> = (e, item) => {
+    console.log(e);
+    setSelectedItem(item as string);
   };
 
   const density = useDensity();
@@ -183,6 +185,9 @@ export const App = () => {
   const [openToolbarPopper, setOpenToolbarPopper] = useState(false);
   const anchorEl = useRef(null);
   const toolbarAnchorEl = useRef(null);
+
+  const [selectedItem, setSelectedItem] = useState("Alabama");
+
 
   return (
     // <PopperContext.Provider value={ElectronPopper}>
@@ -226,7 +231,7 @@ export const App = () => {
         </Dialog>
       </>
       <Dropdown
-        initialSelectedItem={usStateExampleData[0]}
+        selectedItem={selectedItem}
         source={usStateExampleData}
         onChange={handleChange}
       />
