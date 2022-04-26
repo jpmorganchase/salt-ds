@@ -24,7 +24,6 @@ import {
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { DEFAULT_BREAKPOINTS, Breakpoints } from "../breakpoints";
 import { ViewportProvider } from "../viewport";
-export type { Breakpoints } from "../breakpoints";
 export const DEFAULT_DENSITY = "medium";
 
 // TODDO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
