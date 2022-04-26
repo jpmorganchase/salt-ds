@@ -31,7 +31,7 @@ import {
 
 import { usStateExampleData } from "./exampleData";
 import { ToolbarAnchor } from "./ToolbarAnchor";
-import {ListChangeHandler} from "@brandname/lab";
+import { ListChangeHandler } from "@brandname/lab";
 
 const densityDialogWidths = {
   touch: 640,
@@ -187,7 +187,6 @@ export const App = () => {
   const toolbarAnchorEl = useRef(null);
 
   const [selectedItem, setSelectedItem] = useState("Alabama");
-
 
   return (
     // <PopperContext.Provider value={ElectronPopper}>
