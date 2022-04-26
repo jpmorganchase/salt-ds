@@ -1,4 +1,3 @@
-
 React UI components built with a focus on accessibility, customisation and ease-of-use.
 
 ## Installation
