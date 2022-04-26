@@ -18,8 +18,8 @@ Here's a quick example to get you started:
 
 ```javascript
 import ReactDOM from "react-dom";
-import "@brandname/theme/index.css";
-import "@brandname/theme/global.css";
+import "@jpmorganchase/uitk-theme/index.css";
+import "@jpmorganchase/uitk-theme/global.css";
 import { Button } from "@jpmorganchase/uitk-core";
 
 function App() {
