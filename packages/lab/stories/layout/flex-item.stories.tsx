@@ -1,4 +1,8 @@
-import { FlexItem, FLEX_ITEM_ALIGNMENTS, FlexLayout } from "@brandname/lab";
+import {
+  FlexItem,
+  FLEX_ITEM_ALIGNMENTS,
+  FlexLayout,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
 import { ReactNode } from "react";

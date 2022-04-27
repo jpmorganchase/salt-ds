@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import "./FlexLayout.css";
 

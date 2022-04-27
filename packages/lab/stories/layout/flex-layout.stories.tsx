@@ -3,7 +3,7 @@ import {
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
   FlexLayout,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 

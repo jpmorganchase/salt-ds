@@ -1,25 +1,21 @@
 .uitk-density-high {
   --pill-icon-offset: 1px;
   --pill-checkbox-size: var(--uitkPill-checkbox-size, var(--uitk-size-icon-small));
-  --pill-min-height: 14px;
 }
 
 .uitk-density-medium {
   --pill-icon-offset: 2px;
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 2px));
-  --pill-min-height: 16px;
 }
 
 .uitk-density-low {
   --pill-icon-offset: 3px;
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 4px));
-  --pill-min-height: 18px;
 }
 
 .uitk-density-touch {
   --pill-icon-offset: 4px;
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 6px));
-  --pill-min-height: 20px;
 }
 
 .uitkPill {
@@ -62,7 +58,7 @@
   line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
   max-width: var(--uitkPill-max-width, 160px);
   min-width: var(--uitkPill-min-width, 40px);
-  min-height: var(--uitkPill-min-height, var(--pill-min-height));
+  min-height: var(--uitkPill-min-height, var(--uitk-text-min-height));
   outline: var(--uitkPill-outline, 0);
   position: relative;
 }
@@ -130,7 +126,7 @@
 .uitkPill-deleteButton {
   flex-shrink: 0;
   height: calc(var(--pill-checkbox-size) + 2px);
-  min-height: var(--uitkPill-min-height, var(--pill-min-height));
+  min-height: var(--uitkPill-min-height, var(--uitk-text-min-height));
 }
 
 .uitkPill-deletable .uitkPill-deleteButton {

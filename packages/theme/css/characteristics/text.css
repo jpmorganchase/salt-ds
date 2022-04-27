@@ -98,15 +98,19 @@
   **/
   --uitk-text-font-size-touch: 16px;
   --uitk-text-line-height-touch: 22px;
+  --uitk-text-min-height-touch: 20px;
 
   --uitk-text-font-size-low: 14px;
   --uitk-text-line-height-low: 18px;
+  --uitk-text-min-height-low: 18px;
 
   --uitk-text-font-size-medium: 12px;
   --uitk-text-line-height-medium: 16px;
+  --uitk-text-min-height-medium: 16px;
 
   --uitk-text-font-size-high: 11px;
   --uitk-text-line-height-high: 14px;
+  --uitk-text-min-height-high: 14px;
 }
 
 .uitk-light {
@@ -167,6 +171,7 @@
 
   --uitk-text-font-size: var(--uitk-text-font-size-touch);
   --uitk-text-line-height: var(--uitk-text-line-height-touch);
+  --uitk-text-min-height: var(--uitk-text-min-height-touch);
 }
 .uitk-density-low {
   --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-low);
@@ -189,6 +194,7 @@
 
   --uitk-text-font-size: var(--uitk-text-font-size-low);
   --uitk-text-line-height: var(--uitk-text-line-height-low);
+  --uitk-text-min-height: var(--uitk-text-min-height-low);
 }
 .uitk-density-medium {
   --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-medium);
@@ -211,6 +217,7 @@
 
   --uitk-text-font-size: var(--uitk-text-font-size-medium);
   --uitk-text-line-height: var(--uitk-text-line-height-medium);
+  --uitk-text-min-height: var(--uitk-text-min-height-medium);
 }
 .uitk-density-high {
   --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-high);
@@ -233,4 +240,5 @@
 
   --uitk-text-font-size: var(--uitk-text-font-size-high);
   --uitk-text-line-height: var(--uitk-text-line-height-high);
+  --uitk-text-min-height: var(--uitk-text-min-height-high);
 }
