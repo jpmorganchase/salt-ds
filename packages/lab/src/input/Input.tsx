@@ -124,7 +124,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     className: classNameProp,
     cursorPositionOnFocus,
-    defaultValue: defaultValueProp,
     disabled,
     emptyReadOnlyMarker = "—",
     endAdornment,
@@ -134,6 +133,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     inputProps: inputPropsProp,
     style,
     value: valueProp,
+    // If we leave both value and defaultValue undefined, we will get a React warning on first edit
+    // (uncontrolled to controlled warning) from the React input
+    defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
     onBlur,
     onChange,
     onFocus,
