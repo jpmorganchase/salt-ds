@@ -42,9 +42,9 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
             expanded={expanded1}
             id="content1"
             aria-hidden={!expanded1}
-            onOverflow={(isOverflowed: boolean) => {
+            onOverflowChange={(isOverflowed: boolean) => {
               setHidden1(!isOverflowed && !expanded1);
-              console.log("onOverflow was called on 1st Text component");
+              console.log("onOverflowChange was called on 1st Text component");
             }}
           >
             The European <i>languages</i> are members of the same family. Their
@@ -83,9 +83,9 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
             expanded={expanded2}
             id="content2"
             aria-hidden={!expanded2}
-            onOverflow={(isOverflowed: boolean) => {
+            onOverflowChange={(isOverflowed: boolean) => {
               setHidden2(!isOverflowed && !expanded2);
-              console.log("onOverflow was called on 2nd Text component");
+              console.log("onOverflowChange was called on 2nd Text component");
             }}
           >
             Notice how the chevrons will appear on the right when this text
@@ -117,9 +117,9 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
             expanded={expanded3}
             id="content3"
             aria-hidden={!expanded3}
-            onOverflow={(isOverflowed: boolean) => {
+            onOverflowChange={(isOverflowed: boolean) => {
               setHidden3(!isOverflowed && !expanded3);
-              console.log("onOverflow was called on 3rd Text component");
+              console.log("onOverflowChange was called on 3rd Text component");
             }}
           >
             maxRows=2. Notice how the chevrons will appear on the right when
@@ -151,9 +151,9 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
             maxRows={2}
             id="content4"
             aria-hidden={!expanded4}
-            onOverflow={(isOverflowed: boolean) => {
+            onOverflowChange={(isOverflowed: boolean) => {
               setHidden4(!isOverflowed && !expanded4);
-              console.log("onOverflow was called on 4th Text component");
+              console.log("onOverflowChange was called on 4th Text component");
             }}
           >
             maxRows=2. A wonderful serenity has taken possession of my entire
@@ -206,7 +206,7 @@ MessagesExample.parameters = {
       "truncate",
       "expanded",
       "style",
-      "onOverflow",
+      "onOverflowChange",
       "marginTop",
       "marginBottom",
     ],

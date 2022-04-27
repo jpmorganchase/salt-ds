@@ -64,7 +64,7 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * Callback function triggered when overflow state changes.
    * @params [boolean] isOverflowed
    */
-  onOverflow?: (isOverflowed: boolean) => unknown;
+  onOverflowChange?: (isOverflowed: boolean) => unknown;
   /**
    * Override style for margin-top
    */
@@ -86,7 +86,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     showTooltip = true,
     truncate = true,
     expanded,
-    onOverflow,
+    onOverflowChange,
     tooltipProps,
     style,
     marginTop,
@@ -137,13 +137,13 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         const isOverflowed =
           rowsHeight < offsetHeight || rowsHeight < scrollHeight;
         if (isOverflowedRef.current !== isOverflowed) {
-          onOverflow && onOverflow(isOverflowed);
+          onOverflowChange && onOverflowChange(isOverflowed);
           isOverflowedRef.current = isOverflowed;
         }
       }
     }
     return textRows;
-  }, [element, expanded, truncate, maxRows, onOverflow]);
+  }, [element, expanded, truncate, maxRows, onOverflowChange]);
 
   // Observers
   useIsomorphicLayoutEffect(() => {
