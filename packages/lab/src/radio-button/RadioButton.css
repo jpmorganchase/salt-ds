@@ -1,26 +1,22 @@
 /* Styles applied to root component (RadioButton) */
 .uitk-density-medium .uitkRadioButton {
-  --label-margin-left: 6px;
-  --label-margin-top: 6px;
-  --label-min-height: 16px;
+  --radio-button-label-margin-left: 6px;
+  --radio-button-label-margin-top: 6px;
 }
 
 .uitk-density-high .uitkRadioButton {
-  --label-margin-left: 3px;
-  --label-margin-top: 3px;
-  --label-min-height: 14px;
+  --radio-button-label-margin-left: 3px;
+  --radio-button-label-margin-top: 3px;
 }
 
 .uitk-density-low .uitkRadioButton {
-  --label-margin-left: 9px;
-  --label-margin-top: 9px;
-  --label-min-height: 18px;
+  --radio-button-label-margin-left: 9px;
+  --radio-button-label-margin-top: 9px;
 }
 
 .uitk-density-touch .uitkRadioButton {
-  --label-margin-left: 12px;
-  --label-margin-top: 12px;
-  --label-min-height: 20px;
+  --radio-button-label-margin-left: 12px;
+  --radio-button-label-margin-top: 12px;
 }
 
 .uitkRadioButton {
@@ -55,7 +51,7 @@
   align-items: flex-start;
   margin-left: 0;
   margin-right: 0;
-  margin-top: var(--uitkRadioButton-label-margin-top, var(--label-margin-top));
+  margin-top: var(--uitkRadioButton-radio-label-margin-top, var(--radio-button-label-margin-top));
   vertical-align: baseline;
 }
 
@@ -90,6 +86,6 @@
   font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-font-size));
   letter-spacing: 0;
   line-height: var(--uitkRadioButton-label-line-height, var(--uitk-typography-line-height));
-  margin-left: var(--uitkRadioButton-label-margin-left, var(--label-margin-left));
-  min-height: var(--uitkRadioButton-label-min-height, var(--label-text-min-height));
+  margin-left: var(--uitkRadioButton-radio-label-margin-left, var(--radio-button-label-margin-left));
+  min-height: var(--uitkRadioButton-label-min-height, var(--uitk-text-min-height));
 }

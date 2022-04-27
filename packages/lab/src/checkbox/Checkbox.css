@@ -19,28 +19,24 @@
   --label-margin-left: 6px;
   --label-margin-right: calc(var(--uitk-spacing-medium) * var(--checkbox-space-multiplier));
   --label-margin-top: calc(var(--uitk-spacing-medium) * var(--checkbox-top-multiplier));
-  --label-min-height: 16px;
 }
 .uitk-density-touch .uitkCheckbox {
   --checkbox-font-size: 16px;
   --label-margin-left: 12px;
   --label-margin-right: calc(var(--uitk-spacing-touch) * var(--checkbox-space-multiplier));
   --label-margin-top: calc(var(--uitk-spacing-touch) * var(--checkbox-top-multiplier));
-  --label-min-height: 20px;
 }
 .uitk-density-low .uitkCheckbox {
   --checkbox-font-size: 14px;
   --label-margin-left: 9px;
   --label-margin-right: calc(var(--uitk-spacing-low) * var(--checkbox-space-multiplier));
   --label-margin-top: calc(var(--uitk-spacing-low) * var(--checkbox-top-multiplier));
-  --label-min-height: 18px;
 }
 .uitk-density-high .uitkCheckbox {
   --checkbox-font-size: 11px;
   --label-margin-left: 3px;
   --label-margin-right: calc(var(--uitk-spacing-high) * var(--checkbox-space-multiplier));
   --label-margin-top: calc(var(--uitk-spacing-high) * var(--checkbox-top-multiplier));
-  --label-min-height: 14px;
 }
 
 .uitkCheckbox {
@@ -60,7 +56,7 @@
 
 .uitkCheckbox .uitkControlLabel-label {
   vertical-align: baseline;
-  min-height: var(--uitkCheckbox-label-min-height, var(--label-min-height));
+  min-height: var(--uitkCheckbox-label-min-height, var(--uitk-text-min-height));
 }
 
 /* Styles applied to icon on hover state */
