@@ -26,14 +26,14 @@
 
 /* Icon API in "CTA" variant @ignore */
 .uitkButton-cta {
-  --uitkIcon-color: var(--uitk-actionable-cta-icon-color);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-icon-color));
 }
 .uitkButton-cta:hover:not(:active) {
-  --uitkIcon-color: var(--uitk-actionable-cta-icon-color-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-icon-color-hover));
 }
 .uitkButton-cta:active,
 .uitkButton-cta.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-cta-icon-color-active);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-icon-color-active));
 }
 .uitkButton-cta.uitkButton-disabled {
   --uitkIcon-color: var(--uitk-actionable-cta-icon-color-disabled);
@@ -49,6 +49,7 @@
   --button-text-color-active: var(--uitk-actionable-primary-text-color-active);
   --button-text-color-disabled: var(--uitk-actionable-primary-text-color-disabled);
   --button-text-color-hover: var(--uitk-actionable-primary-text-color-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-icon-color));
 }
 
 /* Icon API in "primary" variant @ignore */
@@ -56,14 +57,14 @@
   --uitkIcon-color: var(--uitk-actionable-primary-icon-color);
 }
 .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled) {
-  --uitkIcon-color: var(--uitk-actionable-primary-icon-color-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-icon-color-hover));
 }
 .uitkButton-primary:active,
 .uitkButton-primary.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-primary-icon-color-active);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-icon-color-active));
 }
 .uitkButton-primary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-primary-icon-color-disabled);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-icon-color-disabled));
 }
 
 /* Styles applied to the root element if variant="secondary" */
@@ -76,6 +77,8 @@
   --button-text-color-active: var(--uitk-actionable-secondary-text-color-active);
   --button-text-color-disabled: var(--uitk-actionable-secondary-text-color-disabled);
   --button-text-color-hover: var(--uitk-actionable-secondary-text-color-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-icon-color));
+
   /* UITK specific decision to override default bold on secondary variant, unless explicitly overridden */
   --button-font-weight: var(--uitkButton-font-weight, --uitk-typography-weight-semiBold);
 }
@@ -86,14 +89,14 @@
 }
 
 .uitkButton-secondary:hover:not(:active) {
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-icon-color-hover));
 }
 .uitkButton-secondary:active,
 .uitkButton-secondary.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-active);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-icon-color-active));
 }
 .uitkButton-secondary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-disabled);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-icon-color-disabled));
 }
 
 .uitkButton {
@@ -125,6 +128,7 @@
   transition: none;
   user-select: none;
   vertical-align: middle;
+  width: var(--uitkButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }

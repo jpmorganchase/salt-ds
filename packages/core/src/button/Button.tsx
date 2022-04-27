@@ -19,7 +19,8 @@ const withBaseName = makePrefixer("uitkButton");
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export type ButtonVariant = typeof ButtonVariantValues[number];
 
-interface Props<T extends ElementType> {
+// I had to export this to avoid a typescript error when extending ButtonProps in labs module
+export interface Props<T extends ElementType> {
   /**
    * By default, root element of Button will be a `button` HTMLElement. This behaviour
    * can be changed by passing a value to elementType. This can be a string
