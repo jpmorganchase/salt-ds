@@ -1,4 +1,4 @@
-import { GridItem, GridLayout } from "@brandname/lab";
+import { GridItem, GridLayout } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

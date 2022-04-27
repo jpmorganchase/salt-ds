@@ -1,6 +1,12 @@
 import { CSSProperties } from "react";
-import { GridLayout, GridItem, Logo, Avatar, Card } from "@brandname/lab";
-import { ToolkitProvider } from "@brandname/core";
+import {
+  GridLayout,
+  GridItem,
+  Logo,
+  Avatar,
+  Card,
+} from "@jpmorganchase/uitk-lab";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
