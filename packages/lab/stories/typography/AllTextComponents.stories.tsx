@@ -15,7 +15,7 @@ import {
   H4,
   HelpText as HelpTextComp,
   LabelCaption as LabelCaptionText,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 
 export default {
   title: "Lab/Typography",

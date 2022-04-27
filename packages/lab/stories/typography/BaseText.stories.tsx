@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Text, TextProps } from "@brandname/lab";
+import { Text, TextProps } from "@jpmorganchase/uitk-lab";
 import { useEffect, useState } from "react";
 
 export default {
@@ -10,6 +10,7 @@ export default {
     children: {
       description:
         "Amend text. We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home!",
+      control: { type: "text" },
     },
     elementType: {
       options: ["h1", "h2", "h3", "h4", "p", "div", "span", "label"],
@@ -37,7 +38,13 @@ export default {
   },
 } as ComponentMeta<typeof Text>;
 
-const BaseComponent: Story = (args) => {
+interface BaseComponentStoryProps extends TextProps {
+  children: string;
+  parentWidth?: string;
+  parentHeight?: string;
+}
+
+const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
   const {
     children,
     elementType,
@@ -51,10 +58,10 @@ const BaseComponent: Story = (args) => {
     parentHeight,
   } = args;
 
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
+  const [width, setWidth] = useState<string>();
+  const [height, setHeight] = useState<string>();
 
-  const mappedProps: TextProps = {
+  const mappedProps = {
     elementType,
     expanded,
     maxRows,

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import { Text, TextProps } from "./Text";
 

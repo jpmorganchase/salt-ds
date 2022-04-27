@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Text, Div } from "@brandname/lab";
+import { Text, Div } from "@jpmorganchase/uitk-lab";
 import { transactions } from "./transactions";
 import "./Table.css";
 
@@ -19,7 +19,12 @@ export default {
   },
 } as ComponentMeta<typeof Text>;
 
-const TextComponent: Story = (props) => {
+interface TableExampleStoryProps {
+  wrapperWidth?: string;
+  wrapperHeight?: string;
+}
+
+const TextComponent: Story<TableExampleStoryProps> = (props) => {
   const { wrapperWidth, wrapperHeight } = props;
 
   return (

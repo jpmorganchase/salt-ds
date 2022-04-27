@@ -6,14 +6,15 @@ import {
   CSSProperties,
   forwardRef,
   useCallback,
+  useRef,
 } from "react";
 import cx from "classnames";
 import {
   makePrefixer,
   useIsomorphicLayoutEffect,
   debounce,
-} from "@brandname/core";
-import { Tooltip, TooltipProps } from "@brandname/lab";
+} from "@jpmorganchase/uitk-core";
+import { Tooltip, TooltipProps } from "@jpmorganchase/uitk-lab";
 
 import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
@@ -97,6 +98,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
+  const isOverflowedRef = useRef(false);
 
   // Overflow
   const getRows = useCallback(() => {
@@ -134,8 +136,10 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         const rowsHeight = textRows * lineHeight;
         const isOverflowed =
           rowsHeight < offsetHeight || rowsHeight < scrollHeight;
-
-        onOverflow && onOverflow(isOverflowed);
+        if (isOverflowedRef.current !== isOverflowed) {
+          onOverflow && onOverflow(isOverflowed);
+          isOverflowedRef.current = isOverflowed;
+        }
       }
     }
     return textRows;

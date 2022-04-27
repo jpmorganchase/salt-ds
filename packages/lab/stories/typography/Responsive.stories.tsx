@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Button } from "@brandname/core";
+import { Button } from "@jpmorganchase/uitk-core";
 
-import { DoubleChevronUpIcon, DoubleChevronDownIcon } from "@brandname/icons";
+import {
+  DoubleChevronUpIcon,
+  DoubleChevronDownIcon,
+} from "@jpmorganchase/uitk-icons";
 
-import { Text, P, Span, Div } from "@brandname/lab";
+import { Text, P, Span, Div } from "@jpmorganchase/uitk-lab";
 
 export default {
   title: "Lab/Typography",
