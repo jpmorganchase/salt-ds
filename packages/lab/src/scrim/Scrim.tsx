@@ -9,7 +9,7 @@ import {
 } from "react";
 import classnames from "classnames";
 import noScroll from "no-scroll";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useForkRef, ownerDocument, useId } from "../utils";
 
 import { hideOthers } from "aria-hidden";

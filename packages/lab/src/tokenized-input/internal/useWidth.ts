@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Density, useIsomorphicLayoutEffect } from "@brandname/core";
+import { Density, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 const safeParseFloat = (target?: string) => parseFloat(target || "0");
 

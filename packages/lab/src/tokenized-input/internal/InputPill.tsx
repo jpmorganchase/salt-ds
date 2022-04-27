@@ -1,6 +1,9 @@
 import { CSSProperties, memo, MutableRefObject, useMemo, useRef } from "react";
 import classnames from "classnames";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
+import {
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { Pill, PillProps } from "../../pill";
 
 import { getWidth } from "./useWidth";

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ButtonVariant } from "@brandname/core";
+import { ButtonVariant } from "@jpmorganchase/uitk-core";
 
 export type Orientation = "horizontal" | "vertical";
 

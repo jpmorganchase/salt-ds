@@ -1,4 +1,4 @@
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   CheckboxIcon as CheckboxUncheckedIcon,
   CheckboxCheckedIcon,

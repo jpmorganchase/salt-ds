@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { classBase } from "./constants";
 
 const withBaseName = makePrefixer(classBase);

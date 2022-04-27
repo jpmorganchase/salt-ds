@@ -7,22 +7,22 @@ import {
   useRef,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToolkitProvider } from "@brandname/core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import {
   CSSByPattern,
   JSONByScope,
   parseJSONtoCSS,
   ThemeEditor,
   uitkTheme,
-} from "@brandname/theme-editor";
-import { isElectron } from "@brandname/lab/src/window/electron-utils";
-import { ThemeMode } from "@brandname/theme-editor/src/header/ScopeSelector";
+} from "@jpmorganchase/theme-editor";
+import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";
 import { useTheme } from "./helpers/useTheme";
@@ -30,7 +30,7 @@ import { DefaultView } from "./views/DefaultView";
 import { CSSView } from "./views/CSSView";
 import { saveToDirectory } from "./views/FileHandler";
 
-import "@brandname/theme/index.css";
+import "@jpmorganchase/uitk-theme/index.css";
 import "./ThemeEditorApp.css";
 
 interface JSONHistory {

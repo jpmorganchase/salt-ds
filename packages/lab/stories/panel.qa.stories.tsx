@@ -1,4 +1,4 @@
-import { Panel } from "@brandname/lab";
+import { Panel } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./panel.qa.stories.css";

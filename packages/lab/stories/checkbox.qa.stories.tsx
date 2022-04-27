@@ -1,4 +1,4 @@
-import { Checkbox } from "@brandname/lab";
+import { Checkbox } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./checkbox.qa.stories.css";

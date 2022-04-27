@@ -1,7 +1,10 @@
 import { forwardRef, useRef, useEffect, useState } from "react";
 import dayjs from "./dayjs";
 import { CalendarMonth, CalendarMonthProps } from "./CalendarMonth";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@brandname/core";
+import {
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { usePrevious } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";
 

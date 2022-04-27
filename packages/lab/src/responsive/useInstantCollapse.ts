@@ -1,4 +1,4 @@
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useCallback, useMemo } from "react";
 import { ManagedItem, overflowHookProps } from "./overflowTypes";
 import {

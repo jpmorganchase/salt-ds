@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React, { ForwardedRef, forwardRef, useCallback } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useControlled } from "../utils";
 import { PillBase, PillBaseProps } from "./internal/PillBase";
 import { PillCheckbox } from "./internal/PillCheckbox";

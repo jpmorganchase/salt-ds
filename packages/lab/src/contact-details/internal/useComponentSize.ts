@@ -1,5 +1,5 @@
 import { MutableRefObject, useCallback, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 export interface ComponentSize {
   height?: number;

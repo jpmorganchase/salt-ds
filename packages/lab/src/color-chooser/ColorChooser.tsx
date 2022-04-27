@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import cn from "classnames";
 import { Overlay } from "../overlay";
-import { Button, ButtonProps, makePrefixer } from "@brandname/core";
-import { RefreshIcon } from "@brandname/icons";
+import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { RefreshIcon } from "@jpmorganchase/uitk-icons";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 

@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useControlled, useForkRef } from "../utils";
 import { useFormFieldProps } from "../form-field-context";
 import { useCursorOnFocus } from "./useCursorOnFocus";

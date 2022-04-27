@@ -1,6 +1,6 @@
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import cn from "classnames";
-import { makePrefixer, IconProps } from "@brandname/core";
+import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import { TruncatableValue, useContactDetailsContext } from "./internal";
 import { useId } from "../utils";
 

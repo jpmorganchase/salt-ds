@@ -1,7 +1,7 @@
 import { useState, ReactElement, useCallback, useMemo, useEffect } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { capitalize, FormField, Input } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize, FormField, Input } from "@jpmorganchase/uitk-lab";
 import {
   ColorValueEditor,
   isColor,

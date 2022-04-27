@@ -10,7 +10,7 @@ import cn from "classnames";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
-import { makePrefixer, ButtonVariant } from "@brandname/core";
+import { makePrefixer, ButtonVariant } from "@jpmorganchase/uitk-core";
 
 import "./ButtonBar.css";
 

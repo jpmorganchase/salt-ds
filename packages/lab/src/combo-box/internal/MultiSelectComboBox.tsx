@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useAriaAnnouncer } from "@brandname/core";
+import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { BaseComboBoxProps } from "./DefaultComboBox";
@@ -28,6 +28,7 @@ export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   > & {
     InputProps?: Partial<TokenizedInputProps<Item>>;
     initialSelectedItem?: Item[];
+    selectedItem?: Item[];
     multiSelect: true;
     delimiter?: string | string[];
   };

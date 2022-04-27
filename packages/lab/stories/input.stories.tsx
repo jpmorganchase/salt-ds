@@ -1,19 +1,19 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
-import { Button, ToolkitProvider } from "@brandname/core";
+import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   CalendarIcon,
   CloseIcon,
   CallIcon,
   SendIcon,
   UserIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   Input,
   FormField,
   StaticInputAdornment,
   Dropdown,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./input.qa.stories.css";
 

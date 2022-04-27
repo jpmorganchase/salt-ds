@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
-import { capitalize } from "@brandname/lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize } from "@jpmorganchase/uitk-lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";

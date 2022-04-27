@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAriaAnnouncer } from "@brandname/core";
+import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 
 import { useComboBox } from "./useComboBox";
 import { getAnnouncement } from "./getAnnouncement";
@@ -71,6 +71,7 @@ export interface DefaultComboBoxProps<Item>
     Pick<InputProps, "onFocus" | "onBlur"> {
   InputProps?: InputProps;
   initialSelectedItem?: Item;
+  selectedItem?: Item;
   multiSelect?: false;
   onInputFocus?: InputProps["onFocus"];
   onInputBlur?: InputProps["onBlur"];

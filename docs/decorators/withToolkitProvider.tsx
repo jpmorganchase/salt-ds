@@ -1,5 +1,5 @@
 import { DecoratorFn } from "@storybook/react";
-import { ToolkitProvider } from "@brandname/core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 export const withToolkitProvider: DecoratorFn = (Story, context) => {
   const { density, theme } = context.globals;

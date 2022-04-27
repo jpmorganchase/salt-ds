@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { forwardRef, ReactElement } from "react";
 import cx from "classnames";
-import { makePrefixer, Button } from "@brandname/core";
+import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
 
 import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
 import OverflowPanelItem from "./OverflowPanelItem";

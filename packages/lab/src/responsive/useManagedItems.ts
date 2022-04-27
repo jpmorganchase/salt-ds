@@ -1,4 +1,4 @@
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useCallback, useReducer } from "react";
 import {
   ElementRef,

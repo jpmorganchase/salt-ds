@@ -6,7 +6,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   List,
   ListChangeHandler,

@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Radio } from "./Radio";
 import { RadioIconProps } from "./RadioIcon";
 import { ControlLabel, ControlLabelProps } from "../control-label";

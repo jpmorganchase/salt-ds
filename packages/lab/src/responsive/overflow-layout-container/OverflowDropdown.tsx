@@ -5,8 +5,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, Button } from "@brandname/core";
-import { OverflowMenuIcon } from "@brandname/icons";
+import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 
 import { useForkRef } from "../../utils";
 import { useOverflowDropdown } from "./useOverflowDropdown";

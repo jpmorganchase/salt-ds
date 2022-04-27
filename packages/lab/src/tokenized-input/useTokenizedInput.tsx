@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useDensity } from "@brandname/core";
+import { useDensity } from "@jpmorganchase/uitk-core";
 
 import {
   escapeRegExp,

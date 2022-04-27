@@ -21,6 +21,7 @@ export * from "./form-field-context";
 export * from "./form-group";
 export * from "./formatted-input";
 export * from "./input";
+export * from "./layout";
 export * from "./link";
 export * from "./list";
 export * from "./logo";

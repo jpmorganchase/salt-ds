@@ -2,8 +2,8 @@
 //  - multiline is implemented for Input
 
 import { SyntheticEvent, useState } from "react";
-import { NotificationIcon } from "@brandname/icons";
-import { SearchInput, FormField } from "@brandname/lab";
+import { NotificationIcon } from "@jpmorganchase/uitk-icons";
+import { SearchInput, FormField } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

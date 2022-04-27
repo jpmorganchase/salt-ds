@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { useIsomorphicLayoutEffect } from "@brandname/core";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useCallback, useRef, RefObject } from "react";
 export const WidthHeight = ["height", "width"];
 export const WidthOnly = ["width"];

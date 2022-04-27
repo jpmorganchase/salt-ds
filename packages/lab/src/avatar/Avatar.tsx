@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, ImgHTMLAttributes } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useId } from "../utils";
 import { useLoaded } from "./internal/useLoaded";
 import { DefaultAvatar } from "./internal/DefaultAvatar";

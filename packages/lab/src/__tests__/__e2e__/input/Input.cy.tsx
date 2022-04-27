@@ -1,4 +1,4 @@
-import { Input } from "@brandname/lab";
+import { Input } from "@jpmorganchase/uitk-lab";
 import { ChangeEvent, useState } from "react";
 
 describe("GIVEN an Input", () => {

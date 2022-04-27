@@ -6,8 +6,8 @@ import {
 } from "react";
 import cx from "classnames";
 import dayjs from "./dayjs";
-import { Button, ButtonProps, makePrefixer } from "@brandname/core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@brandname/icons";
+import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { useId } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";

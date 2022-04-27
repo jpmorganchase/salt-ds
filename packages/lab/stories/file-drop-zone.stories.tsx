@@ -1,7 +1,7 @@
 import { useState, useCallback, FC } from "react";
 
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { useDensity } from "@brandname/core";
+import { useDensity } from "@jpmorganchase/uitk-core";
 import {
   createFileTypeValidator,
   createTotalSizeValidator,
@@ -9,7 +9,7 @@ import {
   FilesAcceptedEventHandler,
   FilesRejectedEventHandler,
   FilesValidator,
-} from "@brandname/lab";
+} from "@jpmorganchase/uitk-lab";
 import { AllRenderer } from "docs/components";
 
 export default {

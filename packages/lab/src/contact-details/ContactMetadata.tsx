@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, useState } from "react";
-import { makePrefixer, Button } from "@brandname/core";
-import { ChevronDownIcon, ChevronUpIcon } from "@brandname/icons";
+import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { useId } from "../utils";
 import { useContactDetailsContext } from "./internal";

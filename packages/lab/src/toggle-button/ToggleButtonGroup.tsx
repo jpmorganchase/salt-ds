@@ -13,7 +13,7 @@ import {
   cloneElement,
 } from "react";
 import cx from "classnames";
-import { makePrefixer, ButtonVariant } from "@brandname/core";
+import { makePrefixer, ButtonVariant } from "@jpmorganchase/uitk-core";
 import { useControlled } from "../utils";
 
 import {

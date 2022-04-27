@@ -14,8 +14,8 @@ import {
   ButtonProps,
   makePrefixer,
   useIsomorphicLayoutEffect,
-} from "@brandname/core";
-import { AddIcon } from "@brandname/icons";
+} from "@jpmorganchase/uitk-core";
+import { AddIcon } from "@jpmorganchase/uitk-icons";
 import { Tab } from "./Tab";
 import {
   responsiveDataAttributes,

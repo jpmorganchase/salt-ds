@@ -2,7 +2,7 @@ import { ComponentType, forwardRef, Ref, useRef } from "react";
 
 import classnames from "classnames";
 import warning from "warning";
-import { makePrefixer } from "@brandname/core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import {
   DefaultComboBox,
@@ -22,11 +22,17 @@ const withBaseName = makePrefixer("uitkComboBox");
 function getMultiSelect<Item>({
   multiSelect,
   initialSelectedItem,
+  selectedItem,
 }: {
   multiSelect?: boolean;
   initialSelectedItem?: Item | Item[];
+  selectedItem?: Item | Item[];
 }) {
-  return multiSelect || Array.isArray(initialSelectedItem);
+  return (
+    multiSelect ||
+    Array.isArray(initialSelectedItem) ||
+    Array.isArray(selectedItem)
+  );
 }
 
 const validateProps = ({
@@ -74,6 +80,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
       source = [],
       multiSelect,
       initialSelectedItem,
+      selectedItem,
       width,
       listWidth,
       id: idProp,
@@ -116,6 +123,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
             listRef,
             listWidth,
             initialSelectedItem,
+            selectedItem,
             "aria-label": classnames(ariaLabel),
             "aria-labelledby": ariaLabelledBy,
             "aria-required": ariaRequired,
