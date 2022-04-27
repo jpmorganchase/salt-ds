@@ -1,13 +1,13 @@
 import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { AriaAnnouncerProvider } from "@brandname/core";
+import { AriaAnnouncerProvider } from "@jpmorganchase/uitk-core";
 import { ContentStatus } from "../../content-status";
 
 // Mock aria announcer to avoid the warnings
 const mockAnnounce = jest.fn();
 
-jest.mock("@brandname/core", () => ({
-  ...jest.requireActual("@brandname/core"),
+jest.mock("@jpmorganchase/uitk-core", () => ({
+  ...jest.requireActual("@jpmorganchase/uitk-core"),
   useAriaAnnouncer: () => ({
     announce: mockAnnounce,
   }),

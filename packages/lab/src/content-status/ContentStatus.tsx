@@ -7,8 +7,16 @@ import {
   Ref,
 } from "react";
 import cx from "classnames";
-import { Button, makePrefixer, useAriaAnnouncer } from "@brandname/core";
-import { CircularProgressProps, SpinnerProps, useId } from "@brandname/lab";
+import {
+  Button,
+  makePrefixer,
+  useAriaAnnouncer,
+} from "@jpmorganchase/uitk-core";
+import {
+  CircularProgressProps,
+  SpinnerProps,
+  useId,
+} from "@jpmorganchase/uitk-lab";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
 
 import "./ContentStatus.css";

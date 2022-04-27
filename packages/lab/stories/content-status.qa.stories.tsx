@@ -1,4 +1,4 @@
-import { ContentStatus } from "@brandname/lab";
+import { ContentStatus } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./content-status.qa.stories.css";

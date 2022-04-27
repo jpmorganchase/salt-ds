@@ -1,12 +1,12 @@
 import { ComponentType, ReactElement } from "react";
-import { IconProps, makePrefixer } from "@brandname/core";
+import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   ErrorIcon,
   InfoIcon,
   LoaderIcon,
   SuccessIcon,
   WarningIcon,
-} from "@brandname/icons";
+} from "@jpmorganchase/uitk-icons";
 import {
   ContentStatusProps,
   ContentStatusStatus,

@@ -1,12 +1,15 @@
 import { useCallback, useState } from "react";
-import { Card } from "@brandname/lab";
+import {
+  Card,
+  ContentStatus,
+  ContentStatusProps,
+} from "@jpmorganchase/uitk-lab";
 import {
   AriaAnnouncerProvider,
   Button,
   useAriaAnnouncer,
-} from "@brandname/core";
+} from "@jpmorganchase/uitk-core";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { ContentStatus, ContentStatusProps } from "@brandname/lab";
 
 export default {
   title: "Lab/Content Status",

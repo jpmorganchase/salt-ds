@@ -1,20 +1,3 @@
-/* TODO: Move min heights to text characteristic */
-.uitk-density-high {
-  --content-status-min-height: 14px;
-}
-
-.uitk-density-medium {
-  --content-status-min-height: 16px;
-}
-
-.uitk-density-low {
-  --content-status-min-height: 18px;
-}
-
-.uitk-density-touch {
-  --content-status-min-height: 20px;
-}
-
 /* Styles applied to root component (ContentStatus) */
 .uitkContentStatus {
   display: flex;
@@ -32,7 +15,7 @@
   letter-spacing: var(--uitkContentStatus-letter-spacing, 0);
   line-height: var(--uitkContentStatus-line-height, var(--uitk-typography-line-height));
   font-size: var(--uitkContentStatus-font-size, var(--uitk-text-font-size));
-  min-height: var(--uitkContentStatus-min-height, var(--content-status-min-height));
+  min-height: var(--uitkContentStatus-min-height, var(--uitk-text-min-height));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,7 +31,7 @@
   font-weight: var(--uitkContentStatus-title-font-weight, var(--uitk-typography-weight-semiBold));
   line-height: var(--uitkContentStatus-title-line-height, var(--uitk-typography-line-height));
   font-size: var(--uitkContentStatus-title-font-size, var(--uitk-text-font-size));
-  min-height: var(--uitkContentStatus-title-min-height, var(--content-status-min-height));
+  min-height: var(--uitkContentStatus-title-min-height, var(--uitk-text-min-height));
   margin-top: var(--uitkContentStatus-title-margin-top, var(--uitk-spacing-unit));
 }
 
