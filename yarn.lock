@@ -2990,6 +2990,7 @@ __metadata:
     glob: ^7.1.6
     modular-scripts: "patch:modular-scripts@npm:3.1.2#.yarn/patches/modular-scripts-npm-3.1.0-5a349ac39e.patch"
     no-scroll: ^2.1.1
+    nyse-holidays: ^1.2.0
     prettier: ^2.6.2
     prop-types: ^15.7.2
     react: ^17.0.1
@@ -10350,6 +10351,13 @@ __metadata:
   version: 1.10.7
   resolution: "dayjs@npm:1.10.7"
   checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.1":
+  version: 1.11.5
+  resolution: "dayjs@npm:1.11.5"
+  checksum: e3bbaa7b4883b31be4bf75a181f1447fbb19800c29b332852125aab96baeff3ac232dcba8b88c4ea17d3b636c99dac5fb9d1af4bb6ae26615698bbc4a852dffb
   languageName: node
   linkType: hard
 
@@ -18864,6 +18872,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nyse-holidays@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "nyse-holidays@npm:1.2.0"
+  dependencies:
+    dayjs: ^1.11.1
+  checksum: d96eaf5714961004372b06f59c48e774da6e84de866fee38db4bc3bbceb8d0599f87708c75954a82b377d300eae57abf91493796248112e8d61ba97059212350
+  languageName: node
+  linkType: hard
+
 "oauth-sign@npm:~0.9.0":
   version: 0.9.0
   resolution: "oauth-sign@npm:0.9.0"
@@ -22601,15 +22618,15 @@ __metadata:
   linkType: hard
 
 "sass@npm:^1.51.0, sass@npm:^1.52.3":
-  version: 1.54.0
-  resolution: "sass@npm:1.54.0"
+  version: 1.54.4
+  resolution: "sass@npm:1.54.4"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 7d3acf124d771e8811fce876ad37f786faafa9edce64b20dcf32bf6aed5116802c863d3311fd79e7e7682fcccc4dc684960be1365cffa7dad045be7251c40d70
+  checksum: bb6aead09764de450a02b9a66e4ee538f0ba6bc8f2fc3905c71b2c302b5f47e089b510b86cfa7ef2d4139c210c8abf99fe157e7a5bd356c057f10d29e6c4b44c
   languageName: node
   linkType: hard
 
