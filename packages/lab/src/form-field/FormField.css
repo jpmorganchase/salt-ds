@@ -72,7 +72,7 @@
 .uitkFormField-focused,
 .uitkFormField-lowFocused {
   --uitkFormActivationIndicator-color: var(--uitk-editable-border-color-active);
-  --uitkFormActivationIndicator-size: var(--uitk-editable-border-size-active);
+  --uitkFormActivationIndicator-size: var(--uitk-editable-border-width-active);
 }
 
 /* Class applied to the root element when helper text is provided */

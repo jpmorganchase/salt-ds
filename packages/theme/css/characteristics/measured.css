@@ -15,33 +15,33 @@
 /* Default medium emphasis values */
 
 .uitk-light {
-  --uitk-measured-background-color: var(--uitk-color-grey-70);
+  --uitk-measured-background: var(--uitk-color-grey-70);
   --uitk-measured-font-size: 14px;
 }
 
 .uitk-dark {
-  --uitk-measured-background-color: var(--uitk-color-grey-300);
+  --uitk-measured-background: var(--uitk-color-grey-300);
   --uitk-measured-font-size: 14px;
 }
 
 /* High and low emphasis values */
 
 .uitk-light .uitkEmphasisLow {
-  --uitk-measured-background-color: var(--uitk-color-grey-40);
+  --uitk-measured-background: var(--uitk-color-grey-40);
   --uitk-measured-font-size: 11px;
 }
 
 .uitk-dark .uitkEmphasisLow {
-  --uitk-measured-background-color: var(--uitk-color-grey-500);
+  --uitk-measured-background: var(--uitk-color-grey-500);
   --uitk-measured-font-size: 11px;
 }
 
 .uitk-light .uitkEmphasisHigh {
-  --uitk-measured-background-color: var(--uitk-color-grey-90);
+  --uitk-measured-background: var(--uitk-color-grey-90);
   --uitk-measured-font-size: 16px;
 }
 
 .uitk-dark .uitkEmphasisHigh {
-  --uitk-measured-background-color: var(--uitk-color-grey-100);
+  --uitk-measured-background: var(--uitk-color-grey-100);
   --uitk-measured-font-size: 16px;
 }

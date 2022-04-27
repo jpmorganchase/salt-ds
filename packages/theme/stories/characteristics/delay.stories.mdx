@@ -1,0 +1,43 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { NumberBlock } from "docs/components/NumberBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Delay" />
+
+# Delay
+
+Components which may have a standard time duration between the moment a user performs an action
+and the moment feedback is given by the system.
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <NumberBlock number="100" cssVariable="--uitk-delay-instant" />
+      <NumberBlock number="300" cssVariable="--uitk-delay-perceptible" />
+      <NumberBlock number="1000" cssVariable="--uitk-delay-notable" />
+      <NumberBlock number="1000" cssVariable="--uitk-delay-cutoff" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Breadcrumbs`
+- `Carousel`
+- `Cascading Menu`
+- `Combo Box`
+- `Comments`
+- `Dialog`
+- `Drawer`
+- `Pagination`
+- `Stepper Input`
+- `Switch`
+- `Tabs`
+- `Toolbar (Next)`
+- `Tooltip`
+- `Tree`
+- `Vertical Nav`

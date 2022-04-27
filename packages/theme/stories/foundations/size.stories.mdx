@@ -2,11 +2,33 @@ import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { SpacingBlock } from "docs/components/SpacingBlock";
 import { DocGrid } from "docs/components/DocGrid";
 
-<Meta title="Documentation/Styles and Theming/Foundation/Size" />
+<Meta title="Documentation/Styles and Theming/Foundations/Size" />
 
 # Base Values
 
 All size values are based on 4px.
+
+## Basis
+
+<Canvas>
+  <Story name="Basis">
+    <DocGrid>
+      <SpacingBlock spacingVar="--uitk-size-basis-unit" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Icon
+
+<Canvas>
+  <Story name="Icon">
+    <DocGrid>
+      <SpacingBlock spacingVar="--uitk-size-icon-small" />
+      <SpacingBlock spacingVar="--uitk-size-icon-medium" />
+      <SpacingBlock spacingVar="--uitk-size-icon-large" />
+    </DocGrid>
+  </Story>
+</Canvas>
 
 ## Density Aware
 
@@ -15,6 +37,7 @@ All size values are based on 4px.
     <DocGrid>
       <SpacingBlock spacingVar="--uitk-size-regular-unit" />
       <SpacingBlock spacingVar="--uitk-size-stackable-unit" />
+      <SpacingBlock spacingVar="--uitk-size-toolbar-unit" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -23,21 +46,41 @@ All size values are based on 4px.
 
 Avoid using these values directly in code, use density aware ones above.
 
+### Regular
+
 <Canvas>
-  <Story name="Density Invariant">
+  <Story name="Regular Invariants">
     <DocGrid>
-      <SpacingBlock spacingVar="--uitk-size-basis-unit" />
-      <SpacingBlock spacingVar="--uitk-size-icon-small" />
-      <SpacingBlock spacingVar="--uitk-size-icon-medium" />
-      <SpacingBlock spacingVar="--uitk-size-icon-large" />
       <SpacingBlock spacingVar="--uitk-size-regular-high" />
       <SpacingBlock spacingVar="--uitk-size-regular-medium" />
       <SpacingBlock spacingVar="--uitk-size-regular-low" />
       <SpacingBlock spacingVar="--uitk-size-regular-touch" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Stackable
+
+<Canvas>
+  <Story name="Stackable Invariants">
+    <DocGrid>
       <SpacingBlock spacingVar="--uitk-size-stackable-high" />
       <SpacingBlock spacingVar="--uitk-size-stackable-medium" />
       <SpacingBlock spacingVar="--uitk-size-stackable-low" />
       <SpacingBlock spacingVar="--uitk-size-stackable-touch" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Toolbar
+
+<Canvas>
+  <Story name="Toolbar Invariants">
+    <DocGrid>
+      <SpacingBlock spacingVar="--uitk-size-toolbar-high" />
+      <SpacingBlock spacingVar="--uitk-size-toolbar-medium" />
+      <SpacingBlock spacingVar="--uitk-size-toolbar-low" />
+      <SpacingBlock spacingVar="--uitk-size-toolbar-touch" />
     </DocGrid>
   </Story>
 </Canvas>

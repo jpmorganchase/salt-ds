@@ -32,3 +32,51 @@ export const LineBlock = ({ lineWidth }: { lineWidth: string }) => {
     </>
   );
 };
+
+export const LineBlockDashed = ({
+  lineWidth,
+  lineStyle,
+}: {
+  lineWidth: string;
+  lineStyle: string;
+}) => {
+  return (
+    <>
+      <div className="LineBlock-cell">
+        <svg viewBox="0 0 16 16" className="LineBlock-svg">
+          <path
+            d="M 0,8 L 16,8"
+            vectorEffect="non-scaling-stroke"
+            strokeWidth={`var(${lineWidth})`}
+            stroke-dasharray="10,10"
+          />
+        </svg>
+      </div>
+      <code className="DocGrid-code">{lineStyle}</code>
+    </>
+  );
+};
+
+export const LineBlockDotted = ({
+  lineWidth,
+  lineStyle,
+}: {
+  lineWidth: string;
+  lineStyle: string;
+}) => {
+  return (
+    <>
+      <div className="LineBlock-cell">
+        <svg viewBox="0 0 16 16" className="LineBlock-svg">
+          <path
+            d="M 0,8 L 16,8"
+            vectorEffect="non-scaling-stroke"
+            strokeWidth={`var(${lineWidth})`}
+            stroke-dasharray="3,3"
+          />
+        </svg>
+      </div>
+      <code className="DocGrid-code">{lineStyle}</code>
+    </>
+  );
+};

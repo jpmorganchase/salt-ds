@@ -1,0 +1,67 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { CursorBlock } from "docs/components/CursorBlock";
+import { NumberBlock } from "docs/components/NumberBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Disabled" />
+
+# Disabled
+
+Group of components used to contain and separate different types of content and allow hierarchical organisation.
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-disabled-cursor" />
+      <NumberBlock
+        number="0.4"
+        cssVariable="--uitk-disabled-background-opacity"
+      />
+      <NumberBlock number="0.4" cssVariable="--uitk-disabled-border-opacity" />
+      <NumberBlock
+        number="0.4"
+        cssVariable="--uitk-disabled-graphical-opacity"
+      />
+      <NumberBlock number="0.7" cssVariable="--uitk-disabled-text-opacity" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Accordion`
+- `Button`
+- `Calendar`
+- `Card`
+- `Checkbox`
+- `Combo Box`
+- `Date Picker` (inherited)
+- `Dropdown`
+- `File Drop Zone`
+- `Filterable List`
+- `Form Field`
+- `Form Label`
+- `Formatted Input` (inherited)
+- `Input`
+- `Link`
+- `List`
+- `Menu Button`
+- `Pagination`
+- `Pill`
+- `Progress`
+- `Radio Button`
+- `Rating`
+- `Search` (inherited)
+- `Selectable Card`
+- `Split Button`
+- `Stepper Input` (inherited)
+- `Switch`
+- `Tabs`
+- `Toggle Button`
+- `Tokenized Input` (inherited)
+- `Tree`
+- `Vertical Nav`

@@ -1,0 +1,197 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+  LineBlockDotted,
+} from "docs/components/LineBlock";
+import { CornerBlock } from "docs/components/CornerBlock";
+import LinkTo from "@storybook/addon-links/react";
+
+<Meta title="Documentation/Styles and Theming/Introduction" />
+
+## UI Toolkit styling
+
+You can use styling attributes from the UITK theme to style many elements of your application - native HTML used for structural and layout purposes, your own custom components, etc.
+
+#### Why Vanilla CSS? (skip if you're not interested)
+
+For the Toolkit, our design system is built simply from vanilla CSS. There are a number of factors for this decision. Since we use no third party dependencies, including Material UI, we have been completely free in our approach to styling. At the same time, we have taken the decision to drop support for Internet Explorer 11, whose lack of support for many newer browser features prevented their adoption. Most prominently, CSS custom properties are one of these features. There has been a lot of innovation in the CSS world over the last few years and CSS custom properties are one of the most powerful of the new features. Our theming mechanism is built 100% on CSS custom properties. Embracing vanilla CSS offers performance advantages over CSS-in-JS solutions (these have improved but most still involve some runtime overhead). More importantly, with vanilla CSS making up the foundation of a Toolkit theme, the theme itself can be published and consumed independently from the component libraries. It can be used in contexts where Toolkit components are not even used, e.g. static code deployment in CMS type systems. Separation of styling into CSS files also reduces the tie-in with React, which might not be important in the short term, but longer term opens up the possibility that we could share styling assets with non-react components.
+
+#### Theme CSS + Component CSS
+
+The pattern adopted by the UI Toolkit for styling provides not only the mechanism by which Toolkit components
+themselves are styled, it also provides a consistent approach for styling all elements of your application. Most
+applications will probably contain some mix of Toolkit components, plain HTML infrastructure, often for layout purposes,
+custom components you build yourself, and maybe some third party components. You should be able to make use of the
+styling primitives offered by the Toolkit theme to help style all of these. The goal is to make it as easy as possible to
+achieve consistency of styling across the entire application.
+
+The entire solution is built around vanilla CSS (in other words, this is not a `CSS-in-JS` solution). The CSS comprises
+two kinds of declarations:
+
+- CSS Custom Properties declarations a.k.a. CSS Variables
+- traditional CSS selector rules with values assigned to CSS attributes.
+
+CSS Variables allow us to declare CSS attribute values in a way that allows them to be re-used across multiple selector rules. This
+is just one feature of CSS Variables which makes them very useful. There are many powerful features, described in more detail below.
+A simple example will help to illustrate some of the key concepts:
+
+```css
+:root {
+  --property-my-color: red;
+}
+
+.Button {
+  background-color: var(--property-my-color);
+}
+```
+
+The styling of our UI Toolkit componentry is defined in two places, which operate together at runtime:
+
+1. Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes
+2. Component styles - each component contributes its own stylesheet. Many of the CSS declarations in here will reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
+
+### Theme styles
+
+A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into two categories, <LinkTo kind="documentation-styles-and-theming-foundations-introduction--page">foundations</LinkTo> and <LinkTo kind="documentation-styles-and-theming-characteristics--introduction">characteristics</LinkTo>. Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application. Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
+
+Foundational tokens can broken into the following groups:
+
+| Foundation name | Description                                             | Example token                                             |
+| --------------- | ------------------------------------------------------- | --------------------------------------------------------- |
+| Color           | The core set of colors available                        | `-uitk-color-grey-800: rgb(36, 37, 38);`                  |
+| Shadow          | Shadows conveying elevation or hierarchy of components  | `--uitk-shadow-black-4: 0 6px 10px 0 rgba(0, 0, 0, 0.2);` |
+| Size            | Sizes in px to be used for general styling              | `--uitk-size-basis-unit: 4px;`                            |
+| Spacing         | Sizes in px used for calculating margins, paddings, etc | spacing units are influenced by `density`, examples below |
+| Typography      | General tokens relating to typography styles            | `--uitk-typography-weight-regular: 400;`                  |
+| Z-index\*       | Number indicating appropriate z-index of components     | `--uitk-zindex-tooltip: 1500;`                            |
+
+\* z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
+
+The full set of <LinkTo kind="documentation-styles-and-theming-characteristics--introduction">characteristics</LinkTo> is currently defined is as follows:
+
+| Characteristic name | Appropriate usage                                                               | Example token                                                              |
+| ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-color-blue-300);`                    |
+| Actionable          | components on which the user can perform an action                              | `--uitk-actionable-primary-text-color: var(--uitk-color-grey-900);`        |
+| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                      |
+| Delay               | components which have a delay before some form of transition                    | `--uitk-delay-instant: 100;`                                               |
+| Disabled            | components which can be disabled                                                | `--uitk-disabled-cursor: not-allowed;`                                     |
+| Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                     |
+| Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                  |
+| Editable            | components that have mutable input                                              | `--uitk-editable-selection-background: var(--uitk-color-blue-30-fade-99);` |
+| Focused             | components that have a focused state                                            | `--uitk-focused-med-emphasis-outline-style: dotted;`                       |
+| Measured            | components which have some form of scale or progress                            | `--uitk-measured-border-color: var(--uitk-color-grey-100);`                |
+| Navigable           | components that change data sets or view contexts                               | `--uitk-navigable-link-text-decoration: underline;`                        |
+| Overlayable         | components that form hierarchys in layout                                       | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                  |
+| Ratable             | components which can be rated                                                   | `--uitk-ratable-background-hover: var(--uitk-color-orange-700);`           |
+| Selectable          | components that have a selected state                                           | `--uitk-selectable-default-text-align: left;`                              |
+| Separable           | components containing elements which should be separated into different divions | `--uitk-separator-section-color: var(--uitk-color-grey-60);`               |
+| Status              | components indicating an informational, warning, error or success state         | `--uitk-status-info-color: var(--uitk-color-blue-500);`                    |
+| Taggable            | components which allow data to be organized                                     | `--uitk-taggable-background: var(--uitk-color-grey-40);`                   |
+| Text                | all text components or HTML elements                                            | `--uitk-text-primary-color: var(--uitk-color-grey-900);`                   |
+
+#### Token Naming Conventions
+
+A few things should be immediately apparent from the examples above.
+
+1. CSS variables in the UI Toolkit theme are prefixed `--uitk-`. This is a rule with no exceptions.
+2. Foundation tokens all use CSS constant values.
+3. Characteristic tokens use a mixture of CSS values and references to foundation tokens. It is possible for characteristic tokens to also reference other characteristic tokens.
+4. Foundation and characteristic token names all begin `--uitk-_<foundation/characteristic name>-`. This again is a rule with no exceptions.
+
+#### Theme scoping - how CSS variables work
+
+CSS variables have a concept of scoping - they may be global to an entire HTML page, or constrained to a subset of that page.
+In the example from the beginning of this article, we have this example:
+
+```css
+:root {
+  --property-my-color: red;
+}
+
+.Button {
+  background-color: var(--property-my-color);
+}
+```
+
+In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
+
+```css
+.uitk-light {
+  --property-my-color: red;
+}
+```
+
+In this case, the CSS selector `.uitk-light` constrains the scope of variable `--property-my-color`. This variable will only be availble to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-light` or `.uitk-dark` (more on the distiction between these later). If, at the top level of your application, you have a structure something like this:
+
+```html
+<div class="MyApplication uitk-light">
+  <rest-of-my-application />
+</div>
+```
+
+Then the UI Toolkit theme variables will be available throughout the app and component that consume theme variables (all the UI Toolkit Odyssey components) will be styled appropriately.
+
+The UI Toolkit provides a component `ToolkitProvider` for React users that takes care of injecting the appropriate CSS class names into the HTML. Usage would be something like the following:
+
+```jsx
+<ToolkitProvider density="high" theme="light">
+  <RestOfMyApplication />
+</ToolkitProvider>
+```
+
+See <a aria-label="Toolkitprovider docs" href="http://localhost:6006/?path=/docs/Toolkit-released-Toolkit-provider-docs--nested-Toolkit-provider">ToolkitProvider Docs</a>.
+
+#### Theme variants - Light/Dark, Density
+
+The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. Out of the box, UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the availble options from each of these variants by using the appropriate scope selector class. In the example above, using the `ToolkitProvider` the application is using the light and high density variants. The HTML for this app will look like this:
+
+```html
+<uitk-theme class="uitk-light uitk-density-high">
+  <rest-of-my-application />
+</uitk-theme>
+```
+
+In the CSS where the theme variables are declared, there are sections declared as follows:
+
+```css
+.uitk-light {
+  --uitk-actionable-primary-text-color: var(--uitk-grey-900);
+}
+.uitk-dark {
+  --uitk-actionable-primary-text-color: var(--uitk-white);
+}
+```
+
+Note that the CSS variable is the same - the values associated with it differ between the light and dark `scopes`. When this variable is used by a Button to style the button text, the color applied will be appropriate to the theme variant in effect for the page. Because CSS variable scopes can be nested, there is great flexibility for combining regions having different styling variants within the same app. If a page with a light theme requires that a smaller region of that page be styled with a dark or even custom theme, that is straightforward.
+
+### Component styles
+
+Component styles work with theme styles to give a complete theme-based styling solution. At the component level, we specify exactly which HTML elements have particular styles applied to them. By generalising these styles across the application, which is what the theme variables allow us to do, we achieve consistency of design across the our applicationm and across applications. This is the Design System concept in operation.
+We have already mentioned that components will reference Theme variables, the example below is from Button. It shows just a single style declaration but illustrates some important concepts:
+
+```css
+.uitkButton {
+  font-size: var(
+    --uitkButton-font-size,
+    var(--uitk-typography-size-regular-unit)
+  );
+}
+```
+
+1. All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
+2. The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
+3. A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
+   var(--primary-variable-value, var(--fallback-value))
+4. The fallback value can equally be a simple constant CSS value
+   var(--uitk-typography-font-size, 12px);
+
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-font-size`. If this variable has not been defined, _or is not in scope at the point where this Button element is rendered_, then the fallback value will be taken from `--uitk-typography-size-regular-unit`. This will have a value providing that a UI Toolkit theme is in scope at this point. If that were not the case, and neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+
+Note the naming convention for the first variable `--uitkButton-font-size`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a `CSS API variable`. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
+
+TODO include link to button example, once we have landmark ids in the Button docs.

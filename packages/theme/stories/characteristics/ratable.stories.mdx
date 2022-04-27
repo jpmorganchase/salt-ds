@@ -1,0 +1,36 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Ratable" />
+
+# Ratable
+
+Components that can be rated.
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <CursorBlock cursor="--uitk-ratable-cursor-active" />
+      <CursorBlock cursor="--uitk-ratable-cursor-hover" />
+      <ColorBlock colorVar="--uitk-ratable-background" />
+      <ColorBlock colorVar="--uitk-ratable-background-active" />
+      <ColorBlock colorVar="--uitk-ratable-background-hover" />
+      <ColorBlock colorVar="--uitk-ratable-background-undo" />
+      <ColorBlock colorVar="--uitk-ratable-border" />
+      <ColorBlock colorVar="--uitk-ratable-border-active" />
+      <ColorBlock colorVar="--uitk-ratable-border-hover" />
+      <ColorBlock colorVar="--uitk-ratable-border-undo" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Rating`
+- `Stepper Tracker`

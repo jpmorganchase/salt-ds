@@ -1,0 +1,60 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+  LineBlockDotted,
+} from "docs/components/LineBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Separable" />
+
+# Separable
+
+Group of attributes to separate information/elements.
+Connected to Container
+
+- Level 1 - used when subtle division is needed/to divide similar items e.g. options within a list, individual comments
+- Level 2 - used to divide related areas e.g. heading and body text
+- Level 3 - used to separate areas of content that are not closely related e.g. app header from main content
+
+## CSS Variables
+
+### Misc
+
+<Canvas>
+  <Story name="Separable">
+    <DocGrid>
+      <LineBlock lineWidth="--uitk-separable-border-width" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-separable-border-style</LineBlockCode>
+      <ColorBlock colorVar="--uitk-separable-border-color-1" />
+      <ColorBlock colorVar="--uitk-separable-border-color-2" />
+      <ColorBlock colorVar="--uitk-separable-border-color-3" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Accordion`
+- `Announcement Dialog`
+- `App Header`
+- `Calendar`
+- `Cascading Menu`
+- `Comments`
+- `Contact Details`
+- `Context Menu` (inherited)
+- `Date Picker`
+- `Drawer`
+- `ECW`
+- `List Builder`
+- `Logo`
+- `Mega Menu`
+- `Preferences Dialog`
+- `Reorderable List`
+- `Selectable Card`
+- `Split Button`
+- `Toolbar (Next)`
+- `Wizard`
