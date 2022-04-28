@@ -25,7 +25,7 @@
     "test:lab-components": "cypress run-ct --browser chrome --headless --config-file lab-cypress.json",
     "test:core-components:local": "cypress open-ct --browser chrome --config-file core-cypress.json",
     "test:lab-components:local": "cypress open-ct --browser chrome --config-file lab-cypress.json",
-    "publish": "yarn publish:core && yarn publish:lab && yarn publish:icons && yarn publish:theme",
+    "release": "yarn publish:core && yarn publish:lab && yarn publish:icons && yarn publish:theme",
     "publish:core": "npm publish ./dist/jpmorganchase-uitk-core --dry-run",
     "publish:lab": "npm publish ./dist/jpmorganchase-uitk-lab --dry-run",
     "publish:icons": "npm publish ./dist/jpmorganchase-uitk-icons --dry-run",
