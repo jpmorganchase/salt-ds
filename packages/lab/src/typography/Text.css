@@ -1,0 +1,150 @@
+/* Body emphasis */
+.uitkText strong {
+  font-weight: var(--uitk-typography-weight-bold);
+}
+.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-typography-weight-light);
+}
+
+/* Main css class */
+.uitkText {
+  display: -webkit-box;
+  line-height: var(--uitk-text-line-height);
+  font-size: var(--uitk-text-font-size);
+}
+
+.uitkText-overflow {
+  height: 100%;
+  overflow: auto;
+}
+
+.uitkText-lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--text-max-rows);
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.uitkText-lazy {
+  transition: opacity 0.1s ease-in-out;
+  opacity: 0;
+}
+
+/* Heading 1 */
+
+h1.uitkText,
+.uitkText-h1.uitkText {
+  margin: 0;
+  font-size: var(--uitk-text-h1-font-size);
+  line-height: var(--uitk-text-h1-line-height);
+  font-weight: var(--uitk-text-h1-font-weight);
+}
+
+/* H1 emphasis */
+h1.uitkText strong,
+.uitkText-h1.uitkText strong {
+  font-weight: var(--uitk-text-h1-font-weight-strong);
+}
+h1.uitkText small,
+.uitkText-h1.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h1-font-weight-small);
+}
+
+/* Heading 2 */
+
+h2.uitkText,
+.uitkText-h2.uitkText {
+  margin: 0;
+  font-size: var(--uitk-text-h2-font-size);
+  line-height: var(--uitk-text-h2-line-height);
+  font-weight: var(--uitk-text-h2-font-weight);
+}
+
+/* H2 emphasis */
+h2.uitkText strong,
+.uitkText-h2.uitkText strong {
+  font-weight: var(--uitk-text-h2-font-weight-strong);
+}
+h2.uitkText small,
+.uitkText-h2.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h2-font-weight-small);
+}
+
+/* Heading 3 */
+h3.uitkText,
+.uitkText-h3.uitkText {
+  margin: 0;
+  font-size: var(--uitk-text-h3-font-size);
+  line-height: var(--uitk-text-h3-line-height);
+  font-weight: var(--uitk-text-h3-font-weight);
+}
+
+/* H3 emphasis */
+h3.uitkText strong,
+.uitkText-h3.uitkText strong {
+  font-weight: var(--uitk-text-h3-font-weight-strong);
+}
+h3.uitkText small,
+.uitkText-h3.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h3-font-weight-small);
+}
+
+/* Heading 4 */
+h4.uitkText,
+.uitkText-h4.uitkText {
+  margin: 0;
+  font-size: var(--uitk-text-h4-font-size);
+  line-height: var(--uitk-text-h4-line-height);
+  font-weight: var(--uitk-text-h4-font-weight);
+}
+
+/* H4 emphasis */
+h4.uitkText strong,
+.uitkText-h4.uitkText strong {
+  font-weight: var(--uitk-text-h4-font-weight-strong);
+}
+h4.uitkText small,
+.uitkText-h4.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h4-font-weight-small);
+}
+
+/* Label-Caption */
+label.uitkText {
+  font-size: var(--uitk-text-caption-font-size);
+  line-height: var(--uitk-text-caption-line-height);
+}
+
+/* Help text */
+.uitkText-helpText.uitkText {
+  font-style: italic;
+  color: var(--uitk-text-secondary-color);
+  font-size: var(--uitk-text-help-font-size);
+  line-height: var(--uitk-text-help-line-height);
+}
+
+/* Figure 1 */
+.uitkText-figure1.uitkText {
+  font-size: var(--uitk-text-figure-1-font-size);
+  line-height: var(--uitk-text-figure-1-line-height);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 2 */
+.uitkText-figure2.uitkText {
+  font-size: var(--uitk-text-figure-2-font-size);
+  line-height: var(--uitk-text-figure-2-line-height);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
+/* Figure 3 */
+.uitkText-figure3.uitkText {
+  font-size: var(--uitk-text-figure-3-font-size);
+  line-height: var(--uitk-text-figure-3-line-height);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}

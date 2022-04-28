@@ -13,9 +13,9 @@
 
   --uitk-typography-line-height: 1.3;
 
-  /** 
+  /**
     The below size values are now deprecated.
-    Use appropriate -text size from characteristic instead 
+    Use appropriate -text size from characteristic instead
   **/
 
   --uitk-typography-size-10: 8px;

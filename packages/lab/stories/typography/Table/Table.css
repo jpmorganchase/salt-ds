@@ -1,0 +1,25 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: calc(100% - 2rem);
+  height: 100%;
+}
+.row {
+  display: flex;
+  width: 100%;
+}
+.table-cell {
+  border: 1px solid #ccc;
+  padding: 10px;
+  flex: 1;
+  width: 10%;
+  height: 18px;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.uitk-density-touch .table-cell {
+  height: 22px;
+}
