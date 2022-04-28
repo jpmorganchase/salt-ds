@@ -83,7 +83,6 @@ const HorizontalAlignmentInsideGrid: ComponentStory<typeof GridItem> = (
               background: "lightcoral",
             }}
           >
-            {" "}
             <p>Item</p>
           </div>
         </GridItem>
