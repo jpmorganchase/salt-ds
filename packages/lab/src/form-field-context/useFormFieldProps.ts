@@ -9,7 +9,7 @@ interface useFormFieldPropsProps {
 export function useFormFieldProps({
   focusVisible,
 }: useFormFieldPropsProps = {}): Partial<FormFieldContextValue> {
-  // TODO shouel this be a separate value for FocusVisible
+  // TODO should this be a separate value for FocusVisible
   const { setFocused, ...formFieldProps } = useContext(FormFieldContext) || {};
 
   useIsomorphicLayoutEffect(() => {

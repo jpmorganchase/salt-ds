@@ -1,6 +1,6 @@
 .uitkFormActivationIndicator {
   border-color: var(--uitkFormActivationIndicator-color, var(--uitk-editable-border-color));
-  border-bottom-width: var(--uitkFormFieldActivationIndicator-size, 1px);
+  border-bottom-width: var(--uitkFormActivationIndicator-size, 1px);
   border-bottom-style: solid;
   height: auto;
   opacity: var(--uitkFormActivationIndicator-opacity, 1);

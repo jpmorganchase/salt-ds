@@ -34,6 +34,9 @@
 .uitkFormField {
   --form-field-background: var(--uitk-editable-background);
   --form-field-focus-outline-color: var(--uitk-focused-color);
+  --form-field-focus-outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outline-offset));
+  --form-field-focus-outline-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outline-style));
+  --form-field-focus-outline-width: var(--uitkFormField-focused-outline-width, var(--uitk-focused-line-width));
   --form-field-label-root-padding-left: 0;
   --form-field-label-root-padding-right: 0;
 
@@ -136,6 +139,10 @@
   grid-column-end: 1;
 }
 
+.uitkFormLabel ~ * {
+  z-index: 1;
+}
+
 .uitkFormField-labelLeft > .uitkFormLabel ~ * {
   grid-column-start: 2;
   grid-column-end: 2;
@@ -143,7 +150,6 @@
 
 .uitkFormField-labelLeft {
   grid-template-columns: auto 1fr;
-  transform: translate(0px, var(--uitk-spacing-unit));
 }
 
 /* Class applied to the root element if `fillWidth={true}` */
@@ -152,55 +158,26 @@
 }
 
 /* Class applied to the root element when control has focus` */
-.uitkFormField-focused:after {
-  box-sizing: border-box;
-  content: " ";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: calc(var(--uitkFormFieldHelperText-height) - var(--uitkFormActivationIndicator-size, 0px) + 1px);
-  border-color: var(--uitkFormField-focused-outline-color, var(--form-field-focus-outline-color));
-  border-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outline-style));
-  border-width: var(--uitkFormField-focused-outline-width, var(--uitk-focused-line-width));
-  outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outline-offset)); /* TODO: Needed? */
+.uitkFormField-focused {
+  outline-color: var(--form-field-focus-outline-color);
+  outline-style: var(--form-field-focus-outline-style);
+  outline-width: var(--form-field-focus-outline-width);
+  outline-offset: var(--form-field-focus-outlineout-offset);
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused:after {
+.uitkFormField-labelLeft.uitkFormField-focused {
+  outline: none;
+}
+
+.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormField-activationIndicator, .uitkFormField-helperText, .uitkFormLabel):after {
   content: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormActivationIndicator, .uitkFormFieldHelperText, .uitkFormLabel):after {
-  content: none;
-}
-
-.uitkFormField-labelLeft.uitkFormField-focused > *:after {
-  box-sizing: border-box;
-  content: " ";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: calc(1px - var(--uitkFormActivationIndicator-size, 0px));
-  border-color: #2670a9;
-  border-style: dotted;
-  border-width: 2px;
-}
-
-.uitkFormField-labelContainer {
-  padding-left: var(--form-field-label-root-padding-left);
-  padding-right: var(--form-field-label-root-padding-right);
-}
-
-.uitkFormField-controlArea {
-  position: relative;
-  line-height: 1;
-}
-
-.uitkFormField-labelLeft .uitkFormField-labelContainer {
-  display: inline-block;
-  flex: 0 auto;
-  padding-right: calc(0.75 * var(--uitk-spacing-unit));
+.uitkFormField-labelLeft.uitkFormField-focused .uitkFormLabel + * {
+  outline-color: var(--form-field-focus-outline-color);
+  outline-style: var(--form-field-focus-outline-style);
+  outline-width: var(--form-field-focus-outline-width);
+  outline-offset: var(--form-field-focus-outlineout-offset);
 }
 
 .uitkFormField-labelTop {

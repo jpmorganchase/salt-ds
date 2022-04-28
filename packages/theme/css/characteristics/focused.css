@@ -29,17 +29,13 @@
   --uitk-focused-border-error: var(--uitk-focused-border-style) var(--uitk-focused-line-width) var(--uitk-focused-color-error);
 }
 
-/* TODO where do we use the className focused */
-.uitkFocusVisible {
-  outline: none;
-}
 .uitkFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
   inset: var(--uitkFocusVisible-inset, var(--uitk-focused-outline-inset));
   position: absolute;
-  outline-style: var(--uitk-focused-line-width);
+  outline-style: var(--uitk-focused-outline-style);
   outline-width: var(--uitk-focused-line-width);
   outline-offset: var(--uitk-focused-outline-offset);
   outline-color: var(--uitk-focused-color);

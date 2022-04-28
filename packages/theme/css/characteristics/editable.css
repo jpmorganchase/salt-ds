@@ -49,7 +49,15 @@
   --uitk-editable-background: var(--uitk-color-grey-800);
 }
 
-/* High and low emphasis values */
+/* Explicit emphasis values */
+
+.uitk-light .uitkEmphasisMedium {
+  --uitk-editable-background: var(--uitk-color-white);
+}
+
+.uitk-dark .uitkEmphasisMedium {
+  --uitk-editable-background: var(--uitk-color-grey-800);
+}
 
 .uitk-light .uitkEmphasisLow {
   --uitk-editable-background: transparent;
