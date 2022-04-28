@@ -221,10 +221,16 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                 comments[this.selector.loc.start.line - 1]
               ) {
                 const name = generate(node);
-                classNames[name] = {
-                  name,
-                  description: comments[this.selector.loc.start.line - 1],
-                };
+                if (
+                  !comments[this.selector.loc.start.line - 1].includes(
+                    "@ignore"
+                  )
+                ) {
+                  classNames[name] = {
+                    name,
+                    description: comments[this.selector.loc.start.line - 1],
+                  };
+                }
               }
             },
           });

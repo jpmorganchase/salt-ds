@@ -7,7 +7,7 @@
   --button-focused-outline-offset: var(--uitk-focused-outline-offset);
 }
 
-/* Icon API */
+/* Icon API @ignore */
 .uitkButton {
   --uitkIcon-letter-spacing: 0;
 }
@@ -24,7 +24,7 @@
   --button-text-color-hover: var(--uitk-actionable-cta-text-color-hover);
 }
 
-/* Icon API in "CTA" variant */
+/* Icon API in "CTA" variant @ignore */
 .uitkButton-cta {
   --uitkIcon-color: var(--uitk-actionable-cta-icon-color);
 }
@@ -51,7 +51,7 @@
   --button-text-color-hover: var(--uitk-actionable-primary-text-color-hover);
 }
 
-/* Icon API in "primary" variant */
+/* Icon API in "primary" variant @ignore */
 .uitkButton-primary {
   --uitkIcon-color: var(--uitk-actionable-primary-icon-color);
 }
@@ -80,7 +80,7 @@
   --button-font-weight: var(--uitkButton-font-weight, --uitk-typography-weight-semiBold);
 }
 
-/* Icon API in "secondary" variant */
+/* Icon API in "secondary" variant @ignore */
 .uitkButton-secondary {
   --uitkIcon-color: var(--uitk-actionable-secondary-icon-color);
 }
