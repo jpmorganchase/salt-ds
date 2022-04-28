@@ -40,7 +40,7 @@
   left: 0;
   margin: 0;
   padding: 0;
-  z-index: 1;
+  z-index: var(--uitk-zindex-default);
 }
 
 /* Styles applied to root component when state `focusVisible={true}` */

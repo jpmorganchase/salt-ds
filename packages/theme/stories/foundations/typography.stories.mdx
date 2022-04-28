@@ -1,0 +1,41 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { BlankBlockCode, BlankBlockCell } from "docs/components/BlankBlock";
+import { FontWeightBlock } from "docs/components/FontWeightBlock";
+import { TextBlock } from "docs/components/TextBlock";
+
+<Meta title="Documentation/Styles and Theming/Foundations/Typography" />
+
+# Typography
+
+## Misc
+
+<Canvas>
+  <Story name="Misc">
+    <TextBlock
+      lineHeight="--uitk-text-line-height"
+      fontFamily="--uitk-text-font-family"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-typography-font-family</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-typography-line-height</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Weights
+
+<Canvas>
+  <Story name="Weights">
+    <DocGrid>
+      <FontWeightBlock fontWeight="--uitk-typography-weight-light" />
+      <FontWeightBlock fontWeight="--uitk-typography-weight-regular" />
+      <FontWeightBlock fontWeight="--uitk-typography-weight-medium" />
+      <FontWeightBlock fontWeight="--uitk-typography-weight-semiBold" />
+      <FontWeightBlock fontWeight="--uitk-typography-weight-bold" />
+      <FontWeightBlock fontWeight="--uitk-typography-weight-extraBold" />
+    </DocGrid>
+  </Story>
+</Canvas>

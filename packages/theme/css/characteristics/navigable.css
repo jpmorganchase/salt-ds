@@ -41,7 +41,7 @@
 
 /* High and low emphasis values */
 
-.uitkEmphasisLow .uitk-light .uitkEmphasisLow {
+.uitk-light .uitkEmphasisLow {
   --uitk-navigable-border: solid 1px transparent;
   --uitk-navigable-background-active: none;
   --uitk-navigable-background: none;

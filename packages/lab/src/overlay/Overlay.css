@@ -29,7 +29,7 @@
 
   border: 1px solid var(--overlay-border-color);
   position: relative;
-  box-shadow: var(--uitk-overlayable-elevation-4);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
   line-height: var(--uitk-text-line-height);
   background: var(--overlay-background-color);
   color: var(--overlay-text-color);
@@ -105,5 +105,5 @@
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  z-index: var(--uitk-zindex-default);
 }

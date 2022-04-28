@@ -1,0 +1,123 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+  LineBlockDotted,
+} from "docs/components/LineBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Status" />
+
+# Status
+
+Components which have attributes that denote Status and it's severity.
+
+## CSS Variables
+
+### Status colors
+
+<Canvas>
+  <Story name="Status">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-status-info-color" />
+      <ColorBlock colorVar="--uitk-status-error-color" />
+      <ColorBlock colorVar="--uitk-status-warning-color" />
+      <ColorBlock colorVar="--uitk-status-success-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Misc
+
+<Canvas>
+  <Story name="Misc">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-status-info-background" />
+      <ColorBlock colorVar="--uitk-status-error-background" />
+      <ColorBlock colorVar="--uitk-status-warning-background" />
+      <ColorBlock colorVar="--uitk-status-success-background" />
+      <ColorBlock colorVar="--uitk-status-info-icon-color" />
+      <ColorBlock colorVar="--uitk-status-error-icon-color" />
+      <ColorBlock colorVar="--uitk-status-warning-icon-color" />
+      <ColorBlock colorVar="--uitk-status-success-icon-color" />
+      <ColorBlock colorVar="--uitk-status-info-border-color" />
+      <ColorBlock colorVar="--uitk-status-error-border-color" />
+      <ColorBlock colorVar="--uitk-status-warning-border-color" />
+      <ColorBlock colorVar="--uitk-status-success-border-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### High emphasis overrides
+
+<Canvas>
+  <Story name="High Emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-status-info-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-status-error-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-status-warning-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisHigh"
+        colorVar="--uitk-status-success-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Low emphasis overrides
+
+<Canvas>
+  <Story name="Low Emphasis">
+    <DocGrid>
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-status-info-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-status-error-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-status-warning-background"
+      />
+      <ColorBlock
+        className="uitkEmphasisLow"
+        colorVar="--uitk-status-success-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Badge`
+- `Banner`
+- `Calendar`
+- `Content Status`
+- `Dialog`
+- `File Drop Zone`
+- `Filterable List` (inherited)
+- `Form Field`
+- `Form Label`
+- `Formatted Input` (inherited)
+- `Input` (inherited)
+- `List Builder`
+- `Mega Menu`
+- `Stepper Input` (inherited)
+- `Toast`
+- `Tokenized Input` (inherited)
+- `Tooltip`
+- `Tree`
+- `Vertical Nav`

@@ -1,12 +1,12 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-overlayable-elevation-0: var(--uitk-shadow-0);
-  --uitk-overlayable-elevation-1: var(--uitk-shadow-1);
-  --uitk-overlayable-elevation-2: var(--uitk-shadow-2);
-  --uitk-overlayable-elevation-3: var(--uitk-shadow-3);
-  --uitk-overlayable-elevation-4: var(--uitk-shadow-4);
-  --uitk-overlayable-elevation-5: var(--uitk-shadow-5);
-  --uitk-overlayable-elevation-6: var(--uitk-shadow-6);
+  --uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);
+  --uitk-overlayable-shadow-border-region: var(--uitk-shadow-2);
+  --uitk-overlayable-shadow-default: var(--uitk-shadow-2);
+  --uitk-overlayable-shadow-hover: var(--uitk-shadow-3);
+  --uitk-overlayable-shadow-popout: var(--uitk-shadow-4);
+  --uitk-overlayable-shadow-drag: var(--uitk-shadow-4);
+  --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
 }
 
 /* Default medium emphasis */
@@ -20,6 +20,7 @@
   --uitk-overlayable-scrim-background: rgba(36, 37, 38, 0.8);
 }
 
+/* High emphasis overrides */
 .uitk-light .uitkEmphasisHigh {
   /* Black fade 80 */
   --uitk-overlayable-scrim-background: rgba(0, 0, 0, 0.8);

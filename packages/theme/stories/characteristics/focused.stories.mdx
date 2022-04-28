@@ -1,0 +1,113 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+  LineBlockDotted,
+} from "docs/components/LineBlock";
+import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
+import { OutlineBlock } from "docs/components/OutlineBlock";
+import { BorderBlock } from "docs/components/BorderBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Focused" />
+
+# Focused
+
+Components which can be focused using the mouse or keyboard.
+
+## CSS Variables
+
+### Misc
+
+The following variables can be used on their own, but make up parts of the more commonly used borders and outlines below.
+
+<Canvas>
+  <Story name="Misc">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-focused-color" />
+      <ColorBlock colorVar="--uitk-focused-color-warning" />
+      <ColorBlock colorVar="--uitk-focused-color-error" />
+      <LineBlock lineWidth="--uitk-focused-line-width" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-focused-border-style</LineBlockCode>
+      <LineBlockDotted
+        lineWidth="--uitk-focused-outline-width"
+        lineStyle="--uitk-focused-outline-style"
+      />
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-focused-outline-offset</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-focused-outline-inset</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Outlines
+
+<Canvas>
+  <Story name="Outlines">
+    <DocGrid>
+      <OutlineBlock outline="--uitk-focused-outline" />
+      <BlankBlockCode>--uitk-focused-outline</BlankBlockCode>
+      <OutlineBlock outline="--uitk-focused-outline-warning" />
+      <BlankBlockCode>--uitk-focused-outline-warning</BlankBlockCode>
+      <OutlineBlock outline="--uitk-focused-outline-error" />
+      <BlankBlockCode>--uitk-focused-outline-error</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Borders
+
+<Canvas>
+  <Story name="Borders">
+    <DocGrid>
+      <BorderBlock borderBottom="--uitk-focused-border" />
+      <BlankBlockCode>--uitk-focused-border</BlankBlockCode>
+      <BorderBlock borderBottom="--uitk-focused-border-warning" />
+      <BlankBlockCode>--uitk-focused-border-warning</BlankBlockCode>
+      <BorderBlock borderBottom="--uitk-focused-border-error" />
+      <BlankBlockCode>--uitk-focused-border-error</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Usages
+
+- `Accordion`
+- `Button`
+- `Calendar`
+- `Card`
+- `Cascading Menu`
+- `Checkbox`
+- `Combo Box`
+- `Context Menu` (inherited)
+- `Data Grid`
+- `Date Picker` (inherited)
+- `Dropdown`
+- `Filterable List` (inherited)
+- `Form Field`
+- `Formatted Input` (inherited)
+- `Input`
+- `Link`
+- `List`
+- `Mega Menu`
+- `Menu Button`
+- `Pagination`
+- `Pill`
+- `Radio Button`
+- `Rating`
+- `Search` (inherited)
+- `Selectable Card`
+- `Skip Link`
+- `Slider`
+- `Split Button` (inherited)
+- `Stepper Input` (inherited)
+- `Switch`
+- `Tabs`
+- `Toggle Button`
+- `Tokenized Input` (inherited)
+- `Tree`
+- `Vertical Nav`

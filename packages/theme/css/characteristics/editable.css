@@ -3,10 +3,10 @@
   --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
 
-  --uitk-editable-border-size: 1px;
-  --uitk-editable-border-size-hover: 1px;
-  --uitk-editable-border-size-active: 2px;
-  --uitk-editable-border-size-readonly: 1px;
+  --uitk-editable-border-width: 1px;
+  --uitk-editable-border-width-hover: 1px;
+  --uitk-editable-border-width-active: 2px;
+  --uitk-editable-border-width-readonly: 1px;
 }
 
 .uitk-light {
