@@ -159,11 +159,6 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     INITIAL_INPUT_WIDTH +
     (expanded ? clearButtonWidth : expandButtonWidth);
 
-  const pillMaxWidth =
-    expanded && pillGroupWidth !== null
-      ? pillGroupWidth - INITIAL_INPUT_WIDTH - lastVisiblePillMargin
-      : 100;
-
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
       ([{ contentRect }]) => {
@@ -277,15 +272,6 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
 
   const mergedInputProps = deepmerge(
     {
-      //  TODO: Convert to css nested override approach
-      // classes: {
-      //   field: withBaseName("inputField"),
-      //   multiline: withBaseName("inputMultiline"),
-      //   root: classnames(withBaseName("inputRoot"), {
-      //     [withBaseName("hidden")]: showExpandButton,
-      //   }),
-      //   input: withBaseName("input"),
-      // },
       inputProps: {
         style: {
           width: inputWidth,
@@ -337,10 +323,8 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
           return (
             <InputPill
               active={activeIndices.indexOf(index) !== -1}
-              // TODO: Covert to css
-              // classes={classes}
               disabled={disabled}
-              hidden={showExpandButton && index >= (firstHiddenIndex || 0)}
+              hidden={showExpandButton && index >= firstHiddenIndex}
               highlighted={index === highlightedIndex}
               id={`${id}-pill-${index}`}
               index={index}
@@ -349,7 +333,6 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
               lastVisible={
                 !showExpandButton && index === selectedItems.length - 1
               }
-              maxWidth={pillMaxWidth}
               onDelete={expanded ? onRemoveItem : undefined}
               pillsRef={pillsRef}
             />
@@ -382,7 +365,13 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
         </Button>
         <Input
           {...mergedInputProps}
-          className={withBaseName("input")}
+          className={classnames(
+            withBaseName("input"),
+            withBaseName("inputField"),
+            {
+              [withBaseName("hidden")]: showExpandButton,
+            }
+          )}
           disabled={disabled}
           id={inputId}
           // TODO: Use multi line input when available
