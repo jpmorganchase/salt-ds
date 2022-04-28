@@ -21,69 +21,21 @@ Components that allow a user to navigate across UI sections or data sets and cha
     <DocGrid>
       <CursorBlock cursor="--uitk-navigable-cursor-active" />
       <CursorBlock cursor="--uitk-navigable-cursor-hover" />
+      <FontWeightBlock fontWeight="--uitk-navigable-font-weight" />
       <FontWeightBlock fontWeight="--uitk-navigable-font-weight-active" />
-      <ColorBlock colorVar="--uitk-navigable-indicator-color-active" />
-      <ColorBlock colorVar="--uitk-navigable-indicator-color-hover" />
-      <ColorBlock colorVar="--uitk-navigable-link-color" />
-      <ColorBlock colorVar="--uitk-navigable-link-active" />
-      <ColorBlock colorVar="--uitk-navigable-link-hover" />
-      <ColorBlock colorVar="--uitk-navigable-background" />
-      <ColorBlock colorVar="--uitk-navigable-background-active" />
-      <ColorBlock colorVar="--uitk-navigable-background-hover" />
-      <BorderBlock borderBottom="--uitk-navigable-border" />
-      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### High emphasis overrides
-
-<Canvas>
-  <Story name="High emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-navigable-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-navigable-background-active"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-navigable-background-hover"
-      />
-      <BorderBlock
-        className="uitkEmphasisHigh"
-        borderBottom="--uitk-navigable-border"
-      />
-      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Low emphasis overrides
-
-<Canvas>
-  <Story name="Low emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-navigable-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-navigable-background-active"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-navigable-background-hover"
-      />
-      <BorderBlock
-        className="uitkEmphasisLow"
-        borderBottom="--uitk-navigable-border"
-      />
-      <BlankBlockCode>--uitk-navigable-border</BlankBlockCode>
+      <FontWeightBlock fontWeight="--uitk-navigable-font-weight-hover" />
+      <ColorBlock colorVar="--uitk-navigable-indicator" />
+      <ColorBlock colorVar="--uitk-navigable-indicator-active" />
+      <ColorBlock colorVar="--uitk-navigable-indicator-hover" />
+      <ColorBlock colorVar="--uitk-navigable-background-medium" />
+      <ColorBlock colorVar="--uitk-navigable-background-active-medium" />
+      <ColorBlock colorVar="--uitk-navigable-background-hover-medium" />
+      <ColorBlock colorVar="--uitk-navigable-background-low" />
+      <ColorBlock colorVar="--uitk-navigable-background-active-low" />
+      <ColorBlock colorVar="--uitk-navigable-background-hover-low" />
+      <ColorBlock colorVar="--uitk-navigable-background-high" />
+      <ColorBlock colorVar="--uitk-navigable-background-active-high" />
+      <ColorBlock colorVar="--uitk-navigable-background-hover-high" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -1,71 +1,27 @@
-.uitk-light {
-  --uitk-status-info-color: var(--uitk-color-blue-500);
-  --uitk-status-success-color: var(--uitk-color-green-500);
-  --uitk-status-warning-color: var(--uitk-color-orange-700);
-  --uitk-status-error-color: var(--uitk-color-red-500);
-}
-
-.uitk-dark {
-  --uitk-status-info-color: var(--uitk-color-blue-500);
-  --uitk-status-success-color: var(--uitk-color-green-500);
-  --uitk-status-warning-color: var(--uitk-color-orange-700);
-  --uitk-status-error-color: var(--uitk-color-red-500);
-}
-
 .uitk-dark,
 .uitk-light {
-  --uitk-status-info-icon-color: var(--uitk-status-info-color);
-  --uitk-status-success-icon-color: var(--uitk-status-success-color);
-  --uitk-status-warning-icon-color: var(--uitk-status-warning-color);
-  --uitk-status-error-icon-color: var(--uitk-status-error-color);
+  --uitk-status-info-icon-color: var(--uitk-palette-info-icon);
+  --uitk-status-success-icon-color: var(--uitk-palette-success-icon);
+  --uitk-status-warning-icon-color: var(--uitk-palette-warning-icon);
+  --uitk-status-error-icon-color: var(--uitk-palette-error-icon);
 
-  --uitk-status-info-border-color: var(--uitk-status-info-color);
-  --uitk-status-success-border-color: var(--uitk-status-success-color);
-  --uitk-status-warning-border-color: var(--uitk-status-warning-color);
-  --uitk-status-error-border-color: var(--uitk-status-error-color);
-}
+  --uitk-status-info-border-color: var(--uitk-palette-info-border);
+  --uitk-status-success-border-color: var(--uitk-palette-success-border);
+  --uitk-status-warning-border-color: var(--uitk-palette-warning-border);
+  --uitk-status-error-border-color: var(--uitk-palette-error-border);
 
-.uitk-light {
-  /* Default medium emphasis background */
-  --uitk-status-info-background: var(--uitk-color-white);
-  --uitk-status-success-background: var(--uitk-color-white);
-  --uitk-status-warning-background: var(--uitk-color-white);
-  --uitk-status-error-background: var(--uitk-color-white);
-}
+  --uitk-status-info-background-low: none; /* Not in Figma */
+  --uitk-status-success-background-low: none; /* Not in Figma */
+  --uitk-status-warning-background-low: none; /* Not in Figma */
+  --uitk-status-error-background-low: none; /* Not in Figma */
 
-.uitk-dark {
-  /* Default medium emphasis background */
-  --uitk-status-info-background: var(--uitk-color-grey-800);
-  --uitk-status-success-background: var(--uitk-color-grey-800);
-  --uitk-status-warning-background: var(--uitk-color-grey-800);
-  --uitk-status-error-background: var(--uitk-color-grey-800);
-}
+  --uitk-status-info-background-medium: none; /* Not in Figma */
+  --uitk-status-success-background-medium: none; /* Not in Figma */
+  --uitk-status-warning-background-medium: none; /* Not in Figma */
+  --uitk-status-error-background-medium: none; /* Not in Figma */
 
-.uitk-light .uitkEmphasisLow {
-  --uitk-status-info-background: none;
-  --uitk-status-success-background: none;
-  --uitk-status-warning-background: none;
-  --uitk-status-error-background: none;
-}
-
-.uitk-dark .uitkEmphasisLow {
-  --uitk-status-info-background: none;
-  --uitk-status-success-background: none;
-  --uitk-status-warning-background: none;
-  --uitk-status-error-background: none;
-}
-
-.uitk-light .uitkEmphasisHigh {
-  --uitk-status-info-background: var(--uitk-color-blue-10);
-  --uitk-status-success-background: var(--uitk-color-green-10);
-  --uitk-status-warning-background: var(--uitk-color-orange-10);
-  --uitk-status-error-background: var(--uitk-color-red-10);
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  /* TODO: Replace blue with -800 and other colors -900 when palette updated */
-  --uitk-status-info-background: var(--uitk-color-blue-1000);
-  --uitk-status-success-background: var(--uitk-color-green-1000);
-  --uitk-status-warning-background: var(--uitk-color-orange-1000);
-  --uitk-status-error-background: var(--uitk-color-red-1000);
+  --uitk-status-info-background-high: var(--uitk-palette-info-background-high);
+  --uitk-status-success-background-high: var(--uitk-palette-success-background-high);
+  --uitk-status-warning-background-high: var(--uitk-palette-warning-background-high);
+  --uitk-status-error-background-high: var(--uitk-palette-error-background-high);
 }

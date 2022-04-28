@@ -32,7 +32,7 @@
 
 /* Style applied to the root element */
 .uitkFormField {
-  --form-field-background: var(--uitk-editable-background);
+  --form-field-background: var(--uitk-editable-background-medium);
   --form-field-focus-outline-color: var(--uitk-focused-color);
   --form-field-focus-outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outline-offset));
   --form-field-focus-outline-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outline-style));
@@ -49,6 +49,14 @@
   /* Setting Activation Indicator API */
   --uitkFormActivationIndicator-color: var(--uitk-editable-border-color);
   --uitkFormActivationIndicator-icon-size: var(--form-field-activation-indicator-icon-size);
+}
+
+.uitkEmphasisLow .uitkFormField {
+  --form-field-background: var(--uitk-editable-background-low);
+}
+
+.uitkEmphasisHigh .uitkFormField {
+  --form-field-background: var(--uitk-editable-background-high);
 }
 
 .uitkFormField {
@@ -114,11 +122,11 @@
 
 /* As above when `emphasis="high"` */
 .uitkEmphasisHigh.uitkFormField-error {
-  --form-field-background: var(--uitk-status-error-background);
+  --form-field-background: var(--uitk-status-error-background-high);
 }
 
 .uitkEmphasisHigh.uitkFormField-warning {
-  --form-field-background: var(--uitk-status-warning-background);
+  --form-field-background: var(--uitk-status-warning-background-high);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */

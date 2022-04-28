@@ -1,5 +1,5 @@
 .uitkOverflowMenu [aria-expanded="true"] {
-  --uitk-actionable-secondary-default-background: var(--uitk-actionable-secondary-background-active);
+  --uitk-actionable-secondary-default-background: var(--uitk-actionable-background-secondary-active);
   --uitk-actionable-secondary-default-icon: var(--uitk-actionable-secondary-active-icon);
 }
 

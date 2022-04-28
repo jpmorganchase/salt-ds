@@ -44,7 +44,7 @@
 
 .uitkPagination-pageButtonSelected {
   background-color: var(--uitk-selectable-background-active);
-  color: var(--uitk-selectable-text-color-active);
+  color: var(--uitk-selectable-foreground-active);
 }
 
 .uitkPagination-pageButtonFixed {

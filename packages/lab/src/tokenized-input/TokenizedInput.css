@@ -146,11 +146,11 @@
 
 /* Styles applied to a Pills delete icon */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
-  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-cta-icon-color-hover));
+  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-foreground-cta-hover));
 }
 
 /* Styles applied to a Pills delete button */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
-  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-cta-text-color-hover));
-  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-cta-background-hover));
+  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-foreground-cta-hover));
+  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-background-cta-hover));
 }

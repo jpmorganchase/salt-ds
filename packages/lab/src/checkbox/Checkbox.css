@@ -1,17 +1,9 @@
 /* Styles applied to root component */
-.uitk-light .uitkCheckbox {
-  --checkbox-outline-color: var(--uitk-color-grey-90);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
-}
-
-.uitk-dark .uitkCheckbox {
-  --checkbox-outline-color: var(--uitk-color-grey-100);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
-}
-
 .uitkCheckbox {
   --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
+  --checkbox-outline-color: var(--uitk-selectable-stroke);
+  --checkbox-outline-color-hover: var(--uitk-selectable-stroke-selecting);
 }
 
 .uitk-density-medium .uitkCheckbox {

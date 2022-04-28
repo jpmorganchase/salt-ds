@@ -8,87 +8,87 @@
 
 .uitk-light.uitk-newapp {
   /* CTA */
-  --uitk-actionable-cta-text-color: var(--uitk-color-white);
-  --uitk-actionable-cta-background: linear-gradient(to bottom, var(--uitk-color-blue-500), var(--uitk-color-blue-600));
-  --uitk-actionable-cta-icon-color: var(--uitk-color-white);
+  --uitk-actionable-foreground-cta: var(--uitk-color-white);
+  --uitk-actionable-background-cta: linear-gradient(to bottom, var(--uitk-color-blue-500), var(--uitk-color-blue-600));
+  --uitk-actionable-foreground-cta: var(--uitk-color-white);
   --uitk-actionable-cta-topline-color: var(--uitk-color-blue-100);
   --uitk-actionable-cta-baseline-color: var(--uitk-color-grey-900);
 
-  --uitk-actionable-cta-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-cta-background-hover: var(--uitk-color-blue-100);
-  --uitk-actionable-cta-icon-color-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-cta-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-background-cta-hover: var(--uitk-color-blue-100);
+  --uitk-actionable-foreground-cta-hover: var(--uitk-color-grey-900);
   --uitk-actionable-cta-topline-color-hover: var(--uitk-color-white);
   --uitk-actionable-cta-baseline-color-hover: var(--uitk-color-grey-90);
 
-  --uitk-actionable-cta-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-cta-background-active: var(--uitk-color-blue-600);
-  --uitk-actionable-cta-icon-color-active: var(--uitk-color-white);
+  --uitk-actionable-foreground-cta-active: var(--uitk-color-white);
+  --uitk-actionable-background-cta-active: var(--uitk-color-blue-600);
+  --uitk-actionable-foreground-cta-active: var(--uitk-color-white);
   --uitk-actionable-cta-topline-color-active: var(--uitk-color-blue-100);
   --uitk-actionable-cta-baseline-color-active: var(--uitk-color-grey-90);
 
-  --uitk-actionable-cta-text-color-disabled: var(--uitk-actionable-cta-text-color);
-  --uitk-actionable-cta-icon-color-disabled: var(--uitk-actionable-cta-icon-color);
-  --uitk-actionable-cta-background-disabled: var(--uitk-actionable-cta-background);
+  --uitk-actionable-foreground-cta-disabled: var(--uitk-actionable-foreground-cta);
+  --uitk-actionable-foreground-cta-disabled: var(--uitk-actionable-foreground-cta);
+  --uitk-actionable-background-cta-disabled: var(--uitk-actionable-background-cta);
   --uitk-actionable-cta-topline-color-disabled: var(--uitk-actionable-cta-topline-color);
   --uitk-actionable-cta-baseline-color-disabled: var(--uitk-actionable-cta-baseline-color);
 
   /* Primary */
-  --uitk-actionable-primary-text-color: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-background: linear-gradient(to bottom, var(--uitk-color-grey-60), var(--uitk-color-grey-70));
-  --uitk-actionable-primary-icon-color: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-primary: var(--uitk-color-grey-900);
+  --uitk-actionable-background-primary: linear-gradient(to bottom, var(--uitk-color-grey-60), var(--uitk-color-grey-70));
+  --uitk-actionable-foreground-primary: var(--uitk-color-grey-900);
   --uitk-actionable-primary-topline-color: var(--uitk-color-white);
   --uitk-actionable-primary-baseline-color: var(--uitk-color-grey-90);
 
-  --uitk-actionable-primary-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-background-hover: var(--uitk-color-blue-100);
-  --uitk-actionable-primary-icon-color-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-primary-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-background-primary-hover: var(--uitk-color-blue-100);
+  --uitk-actionable-foreground-primary-hover: var(--uitk-color-grey-900);
   --uitk-actionable-primary-topline-color-hover: var(--uitk-color-white);
   --uitk-actionable-primary-baseline-color-hover: var(--uitk-color-grey-90);
 
-  --uitk-actionable-primary-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-primary-background-active: var(--uitk-color-blue-600);
-  --uitk-actionable-primary-icon-color-active: var(--uitk-color-white);
+  --uitk-actionable-foreground-primary-active: var(--uitk-color-white);
+  --uitk-actionable-background-primary-active: var(--uitk-color-blue-600);
+  --uitk-actionable-foreground-primary-active: var(--uitk-color-white);
   --uitk-actionable-primary-topline-color-active: transparent;
   --uitk-actionable-primary-baseline-color-active: transparent;
 
-  --uitk-actionable-primary-text-color-disabled: var(--uitk-actionable-primary-text-color);
-  --uitk-actionable-primary-icon-color-disabled: var(--uitk-actionable-primary-icon-color);
-  --uitk-actionable-primary-background-disabled: var(--uitk-actionable-primary-background);
+  --uitk-actionable-foreground-primary-disabled: var(--uitk-actionable-foreground-primary);
+  --uitk-actionable-foreground-primary-disabled: var(--uitk-actionable-foreground-primary);
+  --uitk-actionable-background-primary-disabled: var(--uitk-actionable-background-primary);
   --uitk-actionable-primary-topline-color-disabled: var(--uitk-actionable-primary-topline-color);
   --uitk-actionable-primary-baseline-color-disabled: var(--uitk-actionable-primary-baseline-color);
 
-  --uitk-actionable-primary-text-color-readonly: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-background-readonly: transparent none;
-  --uitk-actionable-primary-icon-color-readonly: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-primary-readonly: var(--uitk-color-grey-900);
+  --uitk-actionable-background-primary-readonly: transparent none;
+  --uitk-actionable-foreground-primary-readonly: var(--uitk-color-grey-900);
   --uitk-actionable-primary-topline-color-readonly: transparent;
   --uitk-actionable-primary-baseline-color-readonly: var(--uitk-color-grey-40);
 
   /* Secondary */
 
-  --uitk-actionable-secondary-text-color: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-background: transparent;
-  --uitk-actionable-secondary-icon-color: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-secondary: var(--uitk-color-grey-900);
+  --uitk-actionable-background-secondary: transparent;
+  --uitk-actionable-foreground-secondary: var(--uitk-color-grey-900);
   --uitk-actionable-secondary-topline-color: transparent;
   --uitk-actionable-secondary-baseline-color: transparent;
 
-  --uitk-actionable-secondary-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-background-hover: var(--uitk-color-blue-100);
-  --uitk-actionable-secondary-icon-color-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-background-secondary-hover: var(--uitk-color-blue-100);
+  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-grey-900);
   --uitk-actionable-secondary-topline-color-hover: transparent;
   --uitk-actionable-secondary-baseline-color-hover: transparent;
 
-  --uitk-actionable-secondary-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-secondary-background-active: var(--uitk-color-blue-600);
-  --uitk-actionable-secondary-icon-color-active: var(--uitk-color-white);
+  --uitk-actionable-foreground-secondary-active: var(--uitk-color-white);
+  --uitk-actionable-background-secondary-active: var(--uitk-color-blue-600);
+  --uitk-actionable-foreground-secondary-active: var(--uitk-color-white);
   --uitk-actionable-secondary-topline-color-active: transparent;
   --uitk-actionable-secondary-baseline-color-active: transparent;
 
-  --uitk-actionable-secondary-text-color-disabled: var(--uitk-color-grey-300);
-  --uitk-actionable-secondary-icon-color-disabled: var(--uitk-color-grey-300);
+  --uitk-actionable-foreground-secondary-disabled: var(--uitk-color-grey-300);
+  --uitk-actionable-foreground-secondary-disabled: var(--uitk-color-grey-300);
 
-  --uitk-actionable-secondary-text-color-readonly: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-background-readonly: transparent none;
-  --uitk-actionable-secondary-icon-color-readonly: var(--uitk-color-grey-900);
+  --uitk-actionable-foreground-secondary-readonly: var(--uitk-color-grey-900);
+  --uitk-actionable-background-secondary-readonly: transparent none;
+  --uitk-actionable-foreground-secondary-readonly: var(--uitk-color-grey-900);
   --uitk-actionable-secondary-topline-color-readonly: transparent;
   --uitk-actionable-secondary-baseline-color-readonly: transparent;
 

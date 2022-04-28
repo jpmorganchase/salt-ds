@@ -31,8 +31,8 @@ When defining characteristic design tokens, they should generally be in the form
 1. Always begin with `--uitk-`
 2. Follow this by the foundation name, e.g. `---uitk-actionable-`, `---uitk-text-`, `--uitk-focused-`
 3. Append the variant if applicable, e.g. `--uitk-actionable-cta-`, `--uitk-text-h2-`
-4. Append the attribute, e.g. `--uitk-actionable-cta-background`, `--uitk-text-h2-font-size`, `--uitk-focused-color`
-5. Append the state if applicable, e.g. `--uitk-actionable-cta-background-hover`, `--uitk-focused-color-warning`
+4. Append the attribute, e.g. `--uitk-actionable-background-cta`, `--uitk-text-h2-font-size`, `--uitk-focused-color`
+5. Append the state if applicable, e.g. `--uitk-actionable-background-cta-hover`, `--uitk-focused-color-warning`
 6. For tokens that are scoped by density\* the suffix should be the suitable density for the defined value, e.g. `--uitk-text-h2-font-size-high`
 
 \* Here, it is best practice to avoid directly using the density invariant values, and skip this step in actual usage - i.e., discard the `-<density>` suffix to get the appropriate value in practice e.g. `--uitk-text-h2-font-size`.
@@ -45,13 +45,13 @@ For example, a Button is a component that a user can perform an action on, so we
 
 ```css
 .uitkButton {
-  background: var(--uitk-actionable-primary-background);
+  background: var(--uitk-actionable-background-primary);
   font-weight: var(--uitk-actionable-font-weight);
 }
 ```
 
 Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest ToolkitProvider. Considering the above, we would get that in light
-theme, --uitk-actionable-primary-background resolves to `var(--uitk-color-grey-60)`, and in dark theme resolves to `var(--uitk-color-grey-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
+theme, --uitk-actionable-background-primary resolves to `var(--uitk-color-grey-60)`, and in dark theme resolves to `var(--uitk-color-grey-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
 
 ## How do I know which characteristics to apply?
 

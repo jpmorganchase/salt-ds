@@ -9,24 +9,17 @@
   --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
 }
 
-/* Default medium emphasis */
 .uitk-light {
-  /* White fade 80 */
-  --uitk-overlayable-scrim-background: rgba(255, 255, 255, 0.8);
+  /* neutral-scrim-medium opacity 80% */
+  --uitk-overlayable-scrim-background-medium: rgba(255, 255, 255, 0.8);
+  /* neutral-scrim-high opacity 80% */
+  --uitk-overlayable-scrim-background-high: rgba(0, 0, 0, 0.8);
 }
 
+/* Medium and high emphasis values */
 .uitk-dark {
-  /* Grey 800 fade 80 */
-  --uitk-overlayable-scrim-background: rgba(36, 37, 38, 0.8);
-}
-
-/* High emphasis overrides */
-.uitk-light .uitkEmphasisHigh {
-  /* Black fade 80 */
-  --uitk-overlayable-scrim-background: rgba(0, 0, 0, 0.8);
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  /* Black fade 70 */
-  --uitk-overlayable-scrim-background: rgba(0, 0, 0, 0.7);
+  /* neutral-scrim-medium opacity 80% */
+  --uitk-overlayable-scrim-background-medium: rgba(36, 37, 38, 0.8);
+  /* neutral-scrim-high opacity 80% */
+  --uitk-overlayable-scrim-background-high: rgba(0, 0, 0, 0.8);
 }

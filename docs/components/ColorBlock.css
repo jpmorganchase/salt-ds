@@ -2,7 +2,7 @@
 .ColorBlock-cell {
   --color-block-cell-size: var(--uitk-size-regular-unit);
 
-  --color-block-cell-border-color: var(--uitk-container-border-color);
+  --color-block-cell-border-color: var(--uitk-container-border-color-medium);
   --color-block-cell-border-style: var(--uitk-container-border-style);
   --color-block-cell-border-width: var(--uitk-container-border-width);
   --color-block-cell-border-radius: var(--uitk-container-border-radius);

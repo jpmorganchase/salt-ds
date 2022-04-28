@@ -21,12 +21,12 @@
 .uitkPill {
   --pill-background: var(--uitk-taggable-background);
   --pill-background-active: var(--uitk-taggable-background-active);
-  --pill-icon-color: var(--uitk-taggable-icon);
-  --pill-icon-color-hover: var(--uitk-taggable-icon-hover);
-  --pill-icon-color-active: var(--uitk-taggable-icon-active);
-  --pill-text-color: var(--uitk-taggable-text-color);
-  --pill-text-color-hover: var(--uitk-taggable-text-color-hover);
-  --pill-text-color-active: var(--uitk-taggable-text-color-active);
+  --pill-icon-color: var(--uitk-taggable-foreground);
+  --pill-icon-color-hover: var(--uitk-taggable-foreground-hover);
+  --pill-icon-color-active: var(--uitk-taggable-foreground-active);
+  --pill-text-color: var(--uitk-taggable-foreground);
+  --pill-text-color-hover: var(--uitk-taggable-foreground-hover);
+  --pill-text-color-active: var(--uitk-taggable-foreground-active);
 }
 
 /* Button Component API - reset to default state so they don't interfere with Pill styling */
@@ -43,7 +43,7 @@
 
 .uitkPill-deleteButton {
   --uitkButton-cursor: pointer;
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color);
+  --uitkIcon-color: var(--uitk-actionable-foreground-secondary);
 }
 
 .uitkPill {

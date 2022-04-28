@@ -1,7 +1,7 @@
 .uitkBreadcrumb {
-  --color: var(--uitkBreadcrumb-color, var(--uitk-actionable-primary-text-color));
-  --color-hover: var(--uitkBreadcrumb-color-hover, var(--uitk-actionable-primary-text-color-hover));
-  --color-active: var(--uitkBreadcrumb-color-active, var(--uitk-actionable-primary-text-color-active));
+  --color: var(--uitkBreadcrumb-color, var(--uitk-actionable-foreground-primary));
+  --color-hover: var(--uitkBreadcrumb-color-hover, var(--uitk-actionable-foreground-primary-hover));
+  --color-active: var(--uitkBreadcrumb-color-active, var(--uitk-actionable-foreground-primary-active));
   --icon-color: var(--uitkBreadcrumb-icon-color, var(--color));
   --icon-margin-right: var(--uitkBreadcrumb-margin-right, calc(var(--uitk-spacing-unit) * 0.5));
 }

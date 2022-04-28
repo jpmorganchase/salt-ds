@@ -1,18 +1,4 @@
 /* Styles applied to root component */
-.uitk-light .uitkCheckboxBase {
-  --checkbox-outline-color: var(--uitk-color-grey-90);
-  --checkbox-solid-color: var(--uitk-color-blue-500);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
-  --checkbox-tick-color: var(--uitk-color-white);
-}
-
-.uitk-dark .uitkCheckboxBase {
-  --checkbox-outline-color: var(--uitk-color-grey-100);
-  --checkbox-solid-color: var(--uitk-color-blue-400);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
-  --checkbox-tick-color: var(--uitk-color-grey-800);
-}
-
 .uitk-density-medium .uitkCheckboxBase {
   --checkbox-indeterminate-bar-y: 6;
   --checkbox-indeterminate-bar-height: 2px;
@@ -38,6 +24,11 @@
 }
 
 .uitkCheckboxBase {
+  --checkbox-solid-color: var(--uitk-palette-action-fill-selected);
+  --checkbox-tick-color: var(--uitk-actionable-foreground-primary-active);
+  --checkbox-outline-color: var(--uitk-palette-action-stroke);
+  --checkbox-outline-color-hover: var(--uitk-palette-action-stroke-hover);
+
   background: var(--uitkCheckbox-background, none);
   padding-top: 1px;
   padding-bottom: 1px;
