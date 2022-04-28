@@ -27,14 +27,14 @@ const getCurrentBreakpoint = (breakpoints: Breakpoints, width: number) => {
   return currentBreakpoint;
 };
 
-const isObject = <T extends any>(
+const isObject = <T>(
   value: T
 ): value is Record<string | number | symbol, any> => {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");
 };
 
-const hasBreakpointValues = <T extends any>(
+const hasBreakpointValues = <T>(
   value: ResponsiveProp<T>,
   breakpoints: Breakpoints
 ): value is BreakpointProp<T> => {
@@ -43,7 +43,7 @@ const hasBreakpointValues = <T extends any>(
   );
 };
 
-const getResponsiveValue = <T extends any>(
+const getResponsiveValue = <T>(
   breakpointValues: BreakpointProp<T>,
   breakpoints: Breakpoints,
   viewport: keyof Breakpoints,
@@ -74,7 +74,7 @@ const getResponsiveValue = <T extends any>(
   return value;
 };
 
-export const useResponsiveProp = <T extends any>(
+export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,
   defaultValue: T
 ) => {
