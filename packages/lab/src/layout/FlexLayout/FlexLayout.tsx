@@ -1,6 +1,8 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
+
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ResponsiveProp, useResponsiveProp } from "../../utils";
 import "./FlexLayout.css";
 
 const withBaseName = makePrefixer("uitkFlexLayout");
@@ -28,11 +30,11 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Establishes the main-axis, defining the direction children are placed.
    */
-  direction?: Direction;
+  direction?: ResponsiveProp<Direction>;
   /**
    * Controls the space between items.
    */
-  gap?: number;
+  gap?: ResponsiveProp<number>;
   /**
    * Defines the alignment along the main axis.
    */
@@ -44,7 +46,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Allow the items to wrap as needed.
    */
-  wrap?: boolean;
+  wrap?: ResponsiveProp<boolean>;
 }
 
 export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
@@ -67,13 +69,18 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
     const addPrefix = (style: string) => {
       return style === "start" || style === "end" ? `flex-${style}` : style;
     };
+
+    const flexGap = useResponsiveProp(gap, 1);
+    const flexDirection = useResponsiveProp(direction, "row");
+    const flexWrap = useResponsiveProp(wrap, true);
+
     const flexLayoutStyles = {
       ...style,
       "--uitkFlexLayout-align": align && addPrefix(align),
-      "--uitkFlexLayout-direction": direction,
-      "--uitkFlexLayout-gap-multiplier": gap,
+      "--uitkFlexLayout-direction": flexDirection,
+      "--uitkFlexLayout-gap-multiplier": flexGap,
       "--uitkFlexLayout-justify": justify && addPrefix(justify),
-      "--uitkFlexLayout-wrap": wrap ? "wrap" : "no-wrap",
+      "--uitkFlexLayout-wrap": flexWrap ? "wrap" : "no-wrap",
     };
 
     return (
@@ -81,9 +88,10 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
         className={cx(className, withBaseName(), {
           [withBaseName("separator")]: separatorAlignment,
           [withBaseName(
-            `separator-${direction || "row"}-${separatorAlignment}`
+            `separator-${flexDirection || "row"}-${separatorAlignment}`
           )]: separatorAlignment,
-          [withBaseName(`separator-${direction || "row"}`)]: separatorAlignment,
+          [withBaseName(`separator-${flexDirection || "row"}`)]:
+            separatorAlignment,
         })}
         ref={ref}
         style={flexLayoutStyles}

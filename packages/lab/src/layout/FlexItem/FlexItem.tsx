@@ -3,6 +3,8 @@ import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./FlexItem.css";
 import cx from "classnames";
 
+import { ResponsiveProp, useResponsiveProp } from "../../utils";
+
 const withBaseName = makePrefixer("uitkFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = ["start", "end", "center", "stretch"];
 
@@ -17,12 +19,12 @@ export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the ability for an item to shrink x times more compared to it's siblings,
    *default is 1
    */
-  shrink?: number;
+  shrink?: ResponsiveProp<number>;
   /**
    * Defines the ability for an item to grow x times more compared to it's siblings,
    * default is 0
    */
-  grow?: number;
+  grow?: ResponsiveProp<number>;
 }
 
 export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
@@ -30,10 +32,13 @@ export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
     { align, children, className, shrink, grow, style, ...rest },
     ref
   ) {
+    const flexItemShrink = useResponsiveProp(shrink, 1);
+    const flexItemGrow = useResponsiveProp(grow, 0);
+
     const itemStyle = {
       "--uitkFlexItem-item-alignment": align,
-      "--uitkFlexItem-shrink": shrink,
-      "--uitkFlexItem-grow": grow,
+      "--uitkFlexItem-shrink": flexItemShrink,
+      "--uitkFlexItem-grow": flexItemGrow,
       ...style,
     };
     return (
