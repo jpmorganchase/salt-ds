@@ -14,6 +14,8 @@
 @import url(foundations/zindex.css);
 /* Other palettes, Typography, Spacing, Sizes, etc.  */
 
+@import url(foundations/palette.css);
+
 /* Each characteristics files would reference values comes from different palettes above */
 @import url(characteristics/accent.css);
 @import url(characteristics/actionable.css);

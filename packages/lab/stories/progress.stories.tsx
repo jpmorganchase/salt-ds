@@ -97,7 +97,7 @@ export const CircularDefault: ComponentStory<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
-      <CircularProgress aria-label="Download" size="small" value={38} />
+      <CircularProgress aria-label="Download" size="small" value={100} />
     </div>
     <div style={{ marginLeft: 100 }}>
       <h3>size=medium</h3>

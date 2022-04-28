@@ -1,5 +1,5 @@
 .themeEditorFileHandler {
-  background-color: var(--uitk-container-background);
+  background-color: var(--uitk-container-background-medium);
   color: var(--uitk-text-primary-color);
   display: flex;
   flex-direction: column;

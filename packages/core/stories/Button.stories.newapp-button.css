@@ -12,7 +12,7 @@
   --uitkButton-border-color: var(--uitk-actionable-cta-topline-color-active) transparent var(--uitk-actionable-cta-baseline-color-active) transparent;
 }
 .uitk-newapp .uitkButton-cta.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-cta-icon-color-disabled);
+  --uitkIcon-color: var(--uitk-actionable-foreground-cta-disabled);
 }
 
 .uitk-newapp .uitkButton-primary {
@@ -26,16 +26,16 @@
 }
 
 .uitk-newapp .uitkButton-primary[data-readonly] {
-  --uitkButton-primary-text-color: var(--uitk-actionable-primary-text-color-readonly);
-  --uitkButton-primary-background: var(--uitk-actionable-primary-background-readonly);
-  --uitkIcon-color: var(--uitk-actionable-primary-icon-color-readonly);
+  --uitkButton-primary-text-color: var(--uitk-actionable-foreground-primary-readonly);
+  --uitkButton-primary-background: var(--uitk-actionable-background-primary-readonly);
+  --uitkIcon-color: var(--uitk-actionable-foreground-primary-readonly);
   --uitkButton-border-color: var(--uitk-actionable-primary-topline-color-readonly) transparent var(--uitk-actionable-primary-baseline-color-readonly) transparent;
 }
 
 .uitk-newapp .uitkButton-secondary[data-readonly] {
-  --uitkButton-secondary-text-color: var(--uitk-actionable-secondary-text-color-readonly);
-  --uitkButton-secondary-background: var(--uitk-actionable-secondary-background-readonly);
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-readonly);
+  --uitkButton-secondary-text-color: var(--uitk-actionable-foreground-secondary-readonly);
+  --uitkButton-secondary-background: var(--uitk-actionable-background-secondary-readonly);
+  --uitkIcon-color: var(--uitk-actionable-foreground-secondary-readonly);
   --uitkButton-border-color: var(--uitk-actionable-secondary-topline-color-readonly) transparent var(--uitk-actionable-secondary-baseline-color-readonly) transparent;
 }
 

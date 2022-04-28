@@ -6,7 +6,7 @@
 }
 
 .uitkAppHeader {
-  --appheader-background: var(--uitk-container-background);
+  --appheader-background: var(--uitk-container-background-medium);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
   --appheader-border-bottom-width: 1px;
   --uitk-toolbar-width: auto;
@@ -21,7 +21,7 @@
 .uitkAppHeader {
   align-items: flex-start;
   background-color: var(--appheader-background);
-  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-color-grey-60);
+  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-container-border-color-medium);
   box-shadow: var(--appheader-shadow);
   box-sizing: content-box;
   display: flex;

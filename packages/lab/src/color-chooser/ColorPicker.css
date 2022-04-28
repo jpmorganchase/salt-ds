@@ -86,6 +86,6 @@
   margin-top: 0px !important;
   width: 4px !important;
   height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
-  background: var(--uitk-container-background) !important;
+  background: var(--uitk-container-background-medium) !important;
   border: 1px solid var(--uitk-color-grey-900);
 }

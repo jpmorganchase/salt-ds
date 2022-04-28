@@ -1,6 +1,9 @@
 .uitk-light,
 .uitk-dark {
-  /* Used in container */
+  --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99);
+  --uitk-color-blue-600-fade-40: rgba(21, 92, 147, 0.4); /* see Editable characteristic for explanation of this value */
+  --uitk-color-blue-700-fade-99: rgba(0, 71, 123, 0.99); /* see Editable characteristic for explanation of this value */
+
   --uitk-color-grey-20-fade-40: rgba(234, 237, 239, 0.4);
   --uitk-color-grey-600-fade-40: rgba(47, 49, 54, 0.4);
   --uitk-color-grey-60-fade-40: rgba(197, 201, 208, 0.4);
@@ -9,14 +12,8 @@
   --uitk-color-grey-500-fade-40: rgba(59, 63, 70, 0.4);
   --uitk-color-grey-90-fade-20: rgba(132, 135, 142, 0.2);
   --uitk-color-grey-100-fade-20: rgba(116, 119, 127, 0.2);
-}
+  --uitk-color-grey-900-fade-70: rgba(22, 22, 22, 0.7);
+  --uitk-color-grey-300-fade-40: rgba(76, 80, 91, 0.4);
 
-.uitk-light {
-  /* see Editable characteristic for explanation of this value */
-  --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99);
-}
-
-.uitk-dark {
-  /* see Editable characteristic for explanation of next value */
-  --uitk-color-blue-700-fade-99: rgba(0, 71, 123, 0.99);
+  --uitk-color-white-fade-70: rgba(255, 255, 255, 0.7);
 }

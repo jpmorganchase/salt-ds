@@ -2,48 +2,17 @@
 .uitk-dark {
   --uitk-container-border-width: 1px;
   --uitk-container-border-style: solid;
-  /* Below not in Figma */
-  --uitk-container-border-radius: 0;
-}
+  --uitk-container-border-radius: 0; /* Not in Figma */
 
-/* Default medium emphasis values */
+  --uitk-container-background-low: transparent;
+  --uitk-container-border-color-low: transparent; /* Not in Figma */
+  --uitk-container-border-color-disabled-low: transparent;
 
-.uitk-light {
-  --uitk-container-background: var(--uitk-color-white);
-  --uitk-container-border-color: var(--uitk-color-grey-60);
-  /* Below not in Figma */
-  --uitk-container-border-color-disabled: var(--uitk-color-grey-20-fade-40);
-}
+  --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
+  --uitk-container-border-color-medium: var(--uitk-palette-neutral-border-medium);
+  --uitk-container-border-color-disabled-medium: var(--uitk-color-grey-20-fade-40); /* TODO: Is this needed? Not in Figma */
 
-.uitk-dark {
-  --uitk-container-background: var(--uitk-color-grey-800);
-  --uitk-container-border-color: var(--uitk-color-grey-400);
-  /* Below not in Figma */
-  --uitk-container-border-color-disabled: var(--uitk-color-grey-600-fade-40);
-}
-
-/* Low and high emphasis values */
-
-.uitk-light .uitkEmphasisLow {
-  --uitk-container-background: transparent;
-  --uitk-container-border-color: transparent;
-  /* Below not in Figma */
-  --uitk-container-border-color-disabled: var(--uitk-color-grey-60-fade-40);
-}
-
-.uitk-dark .uitkEmphasisLow {
-  --uitk-container-background: transparent;
-  --uitk-container-border-color: transparent;
-  /* Below not in Figma */
-  --uitk-container-border-color-disabled: var(--uitk-color-grey-400-fade-40);
-}
-
-.uitk-light .uitkEmphasisHigh {
-  --uitk-container-background: var(--uitk-color-grey-20);
-  --uitk-container-border-color: transparent;
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  --uitk-container-background: var(--uitk-color-grey-600);
-  --uitk-container-border-color: transparent;
+  --uitk-container-background-high: var(--uitk-palette-neutral-background-medium);
+  --uitk-container-border-color-high: var(--uitk-palette-neutral-border-medium);
+  --uitk-container-border-color-disabled-high: var(--uitk-color-grey-20-fade-40); /* TODO: Is this needed? Not in Figma */
 }

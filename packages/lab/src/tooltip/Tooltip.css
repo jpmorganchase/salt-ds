@@ -15,7 +15,7 @@
 }
 
 .uitkTooltip {
-  --tooltip-background: var(--uitk-container-background);
+  --tooltip-background: var(--uitk-container-background-medium);
   --tooltip-font-size: var(--uitk-text-font-size);
   --tooltip-color: var(--uitk-text-primary-color);
   --tooltip-padding: var(--uitk-spacing-unit);
@@ -125,15 +125,15 @@
 }
 
 .uitkTooltip-info {
-  --tooltip-status-color: var(--uitk-status-info-color);
+  --tooltip-status-color: var(--uitk-palette-info-icon);
   box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
-  --tooltip-status-color: var(--uitk-status-error-color);
+  --tooltip-status-color: var(--uitk-palette-error-icon);
 }
 .uitkTooltip-warning {
-  --tooltip-status-color: var(--uitk-status-warning-color);
+  --tooltip-status-color: var(--uitk-palette-warning-icon);
 }
 .uitkTooltip-success {
-  --tooltip-status-color: var(--uitk-status-success-color);
+  --tooltip-status-color: var(--uitk-palette-success-icon);
 }

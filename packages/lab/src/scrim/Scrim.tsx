@@ -237,7 +237,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
       aria-modal={!containerFix}
       className={classnames(
         {
-          [`uitkEmphasisHigh`]: emphasis !== "medium",
+          [`uitkEmphasisMedium`]: emphasis === "medium",
         },
         className,
         withBaseName(),

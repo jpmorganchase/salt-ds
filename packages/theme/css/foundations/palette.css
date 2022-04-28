@@ -1,169 +1,199 @@
-.uitk-light,
-.uitk-dark {
-  /* Greens */
-  --uitk-palette-success-border: var(--uitk-color-green-500);
-  --uitk-palette-success-icon: var(--uitk-color-green-500);
-
-  /* Oranges */
-  --uitk-palette-warning-border: var(--uitk-color-orange-500);
-  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
-
-  /* Greyscales */
-  --uitk-palette-action-border: var(--uitk-color-grey-90);
+.uitk-light {
+  --uitk-palette-accent-background: var(--uitk-color-blue-500);
+  --uitk-palette-accent-border: var(--uitk-color-blue-500);
   --uitk-palette-accent-foreground: var(--uitk-color-white);
-  --uitk-palette-action-stroke: var(--uitk-color-grey-90);
-  --uitk-palette-action-foreground-cta: var(--uitk-color-white);
-  --uitk-palette-action-foreground-cta-hover: var(--uitk-color-white);
-  --uitk-palette-action-foreground-cta-active: var(--uitk-color-white);
-  --uitk-palette-action-foreground-cta-selected: var(--uitk-color-white);
-  --uitk-palette-navigate-underline-hover: var(--uitk-color-grey-90); /* check vs medium emphasis navigate hover background with design */
-  --uitk-palette-neutral-measured-border: var(--uitk-color-grey-90); /* check vs medium emphasis neutral border with design */
 
-  /* Reds */
+  --uitk-palette-action-background-bluractive: var(--uitk-color-grey-30);
+  --uitk-palette-action-background-cta: var(--uitk-color-blue-600);
+  --uitk-palette-action-background-cta-active: var(--uitk-color-blue-700);
+  --uitk-palette-action-background-cta-disabled: var(--uitk-color-blue-600-fade-40);
+  --uitk-palette-action-background-cta-hover: var(--uitk-color-blue-500);
+  --uitk-palette-action-background-hover: var(--uitk-color-blue-20);
+  --uitk-palette-action-background-primary: var(--uitk-color-grey-60);
+  --uitk-palette-action-background-primary-active: var(--uitk-color-grey-200);
+  --uitk-palette-action-background-primary-disabled: var(--uitk-color-grey-60-fade-40);
+  --uitk-palette-action-background-primary-hover: var(--uitk-color-grey-40);
+  --uitk-palette-action-background-secondary: transparent; /* not in Figma */
+  --uitk-palette-action-background-secondary-active: var(--uitk-color-grey-200);
+  --uitk-palette-action-background-secondary-disabled: transparent;
+  --uitk-palette-action-background-secondary-hover: var(--uitk-color-grey-40);
+  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
+  --uitk-palette-action-border-selected: var(--uitk-color-blue-600);
+  --uitk-palette-action-border: var(--uitk-color-grey-90);
+  --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
+  --uitk-palette-action-fill-selected: var(--uitk-color-blue-600);
+  --uitk-palette-action-foreground: var(--uitk-color-grey-900);
+  --uitk-palette-action-foreground-active: var(--uitk-color-grey-900);
+  --uitk-palette-action-foreground-bluractive: var(--uitk-color-grey-900);
+  --uitk-palette-action-foreground-cta: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-disabled: var(--uitk-color-white-fade-70);
+  --uitk-palette-action-foreground-cta-hover: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-selected: var(--uitk-color-white);
+  --uitk-palette-action-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-palette-action-foreground-primary-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-primary-disabled: var(--uitk-color-grey-900-fade-70); /* TODO: Currently assuming default foreground is foreground-primary here */
+  --uitk-palette-action-foreground-secondary-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-secondary-disabled: var(--uitk-color-grey-900-fade-70); /* TODO: Check what default foreground-secondary is */
+  --uitk-palette-action-foreground-secondary-hover: var(--uitk-color-grey-900);
+  --uitk-palette-action-stroke: var(--uitk-color-grey-90);
+  --uitk-palette-action-stroke-hover: var(--uitk-color-blue-500);
+
   --uitk-palette-error-border: var(--uitk-color-red-500);
   --uitk-palette-error-icon: var(--uitk-color-red-500);
 
-  /* Blues */
-  --uitk-palette-accent-background: var(--uitk-color-blue-500);
-  --uitk-palette-accent-border: var(--uitk-color-blue-500);
-  --uitk-palette-action-background-cta: var(--uitk-color-blue-600);
-  --uitk-palette-action-background-cta-active: var(--uitk-color-blue-700);
-  --uitk-palette-action-background-cta-hover: var(--uitk-color-blue-500);
-  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
-  --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
-  --uitk-palette-action-stroke-hover: var(--uitk-color-blue-500);
+  --uitk-palette-info-background: var(--uitk-color-blue-10);
   --uitk-palette-info-border: var(--uitk-color-blue-500);
   --uitk-palette-info-icon: var(--uitk-color-blue-500);
-}
 
-.uitk-light {
-  /* Greens */
-  --uitk-palette-positive-foreground: var(--uitk-color-green-700);
+  /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
+  --uitk-palette-measure-background-gradient-start-color: var(--uitk-color-teal-500);
+  --uitk-palette-measure-background-gradient-stop-color: var(--uitk-color-blue-500);
+  --uitk-palette-measure-background: linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%);
 
-  /* Oranges */
-  --uitk-palette-navigate-background-active: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-600);
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-600);
-  --uitk-palette-warning-background: var(--uitk-color-orange-10);
-
-  /* Greyscales */
-  --uitk-action-background: var(--uitk-color-white);
-  --uitk-action-background-bluractive: var(--uitk-color-grey-30);
-  --uitk-action-background-primary: var(--uitk-color-grey-60);
-  --uitk-action-background-primary-active: var(--uitk-color-grey-200);
-  --uitk-action-background-primary-hover: var(--uitk-color-grey-40);
-  --uitk-action-background-secondary-active: var(--uitk-color-grey-200);
-  --uitk-action-background-secondary-hover: var(--uitk-color-grey-40);
-  --uitk-action-foreground: var(--uitk-color-grey-900);
-  --uitk-action-foreground-active: var(--uitk-color-grey-900);
-  --uitk-action-foreground-bluractive: var(--uitk-color-grey-900);
-  --uitk-action-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-action-foreground-primary-active: var(--uitk-color-white);
-  --uitk-action-foreground-secondary-active: var(--uitk-color-white);
-  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-20);
+  --uitk-palette-navigate-background: transparent; /* not in Figma */
+  --uitk-palette-navigate-background-active: transparent;
   --uitk-palette-navigate-foreground: var(--uitk-color-grey-400);
+  --uitk-palette-navigate-foreground-active: transparent; /* not in Figma */
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-grey-400);
-  --uitk-palette-neutral-background: var(--uitk-color-white);
-  --uitk-palette-neutral-border: var(--uitk-color-grey-60);
-  --uitk-palette-neutral-scrim: var(--uitk-color-white);
+  --uitk-palette-navigate-indicator: transparent; /* not in Figma */
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400); /* not in Figma */
+  --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
 
-  /* Reds */
   --uitk-palette-negative-foreground: var(--uitk-color-red-700);
 
-  /* Blues */
-  --uitk-palette-action-background-hover: var(--uitk-color-blue-20);
-  --uitk-palette-action-border-selected: var(--uitk-color-blue-600);
-  --uitk-palette-action-fill-selected: var(--uitk-color-blue-600);
-  --uitk-palette-info-background: var(--uitk-color-blue-10);
-  --uitk-palette-info-gradient-end: var(--uitk-color-blue-500);
+  --uitk-palette-neutral-endpoint: var(--uitk-color-grey-90);
 
-  /* Teals */
-  --uitk-palette-info-gradient-start: var(--uitk-color-teal-500);
+  --uitk-palette-positive-foreground: var(--uitk-color-green-700);
+
+  --uitk-palette-rate-background-active: var(--uitk-color-orange-600);
+  --uitk-palette-rate-background-hover: var(--uitk-color-orange-600);
+  --uitk-palette-rate-border: var(--uitk-color-grey-90);
+  --uitk-palette-rate-border-undo: var(--uitk-color-orange-600);
+
+  --uitk-palette-success-border: var(--uitk-color-green-500);
+  --uitk-palette-success-icon: var(--uitk-color-green-500);
+
+  --uitk-palette-warning-background: var(--uitk-color-orange-10);
+  --uitk-palette-warning-border: var(--uitk-color-orange-500);
+  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
+
+  /* Emphasis values */
+  --uitk-palette-action-background-medium: var(--uitk-color-white);
+  --uitk-palette-action-background-high: var(--uitk-color-grey-20);
+
+  --uitk-palette-error-background-high: var(--uitk-color-red-10);
+
+  --uitk-palette-navigate-background-low-hover: var(--uitk-color-grey-20);
+  --uitk-palette-navigate-background-medium-hover: var(--uitk-color-grey-20);
+  --uitk-palette-navigate-background-high-hover: var(--uitk-color-grey-30);
+
+  --uitk-palette-neutral-background-medium: var(--uitk-color-white);
+  --uitk-palette-neutral-background-high: var(--uitk-color-grey-20);
+  --uitk-palette-neutral-border-low: var(--uitk-color-grey-90);
+  --uitk-palette-neutral-border-medium: var(--uitk-color-grey-60);
+  --uitk-palette-neutral-scrim-medium: var(--uitk-color-white);
+  --uitk-palette-neutral-scrim-high: var(--uitk-color-black);
+
+  --uitk-palette-success-background-high: var(--uitk-color-green-10);
 }
 
 .uitk-dark {
-  /* Greens */
-  --uitk-palette-positive-foreground: var(--uitk-color-green-300);
+  --uitk-palette-accent-background: var(--uitk-color-blue-500);
+  --uitk-palette-accent-border: var(--uitk-color-blue-500);
+  --uitk-palette-accent-foreground: var(--uitk-color-white);
 
-  /* Oranges */
-  --uitk-palette-navigate-background-active: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-400);
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-400);
-  --uitk-palette-warning-background: var(--uitk-color-orange-900);
-
-  /* Greyscales */
-  --uitk-action-background: var(--uitk-color-grey-800);
-  --uitk-action-background-bluractive: var(--uitk-color-grey-600);
-  --uitk-action-background-primary: var(--uitk-color-grey-300);
-  --uitk-action-background-primary-active: var(--uitk-color-grey-70);
-  --uitk-action-background-primary-hover: var(--uitk-color-grey-200);
-  --uitk-action-background-secondary-active: var(--uitk-color-grey-70);
-  --uitk-action-background-secondary-hover: var(--uitk-color-grey-200);
-  --uitk-action-foreground: var(--uitk-color-white);
-  --uitk-action-foreground-active: var(--uitk-color-white);
-  --uitk-action-foreground-bluractive: var(--uitk-color-white);
-  --uitk-action-foreground-hover: var(--uitk-color-white);
-  --uitk-action-foreground-primary-active: var(--uitk-color-grey-800);
-  --uitk-action-foreground-secondary-active: var(--uitk-color-grey-800);
-  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-700);
-  --uitk-palette-navigate-foreground: var(--uitk-color-grey-50);
-  --uitk-palette-navigate-foreground-hover: var(--uitk-color-grey-50);
-  --uitk-palette-neutral-background: var(--uitk-color-grey-800);
-  --uitk-palette-neutral-border: var(--uitk-color-grey-300);
-  --uitk-palette-neutral-scrim: var(--uitk-color-grey-800);
-
-  /* Reds */
-  --uitk-palette-negative-foreground: var(--uitk-color-red-300);
-
-  /* Blues */
+  --uitk-palette-action-background-bluractive: var(--uitk-color-grey-600);
+  --uitk-palette-action-background-cta: var(--uitk-color-blue-600);
+  --uitk-palette-action-background-cta-active: var(--uitk-color-blue-700);
+  --uitk-palette-action-background-cta-disabled: var(--uitk-color-blue-600-fade-40);
+  --uitk-palette-action-background-cta-hover: var(--uitk-color-blue-500);
   --uitk-palette-action-background-hover: var(--uitk-color-blue-800);
+  --uitk-palette-action-background-primary: var(--uitk-color-grey-300);
+  --uitk-palette-action-background-primary-active: var(--uitk-color-grey-70);
+  --uitk-palette-action-background-primary-disabled: var(--uitk-color-grey-300-fade-40);
+  --uitk-palette-action-background-primary-hover: var(--uitk-color-grey-200);
+  --uitk-palette-action-background-secondary: transparent;
+  --uitk-palette-action-background-secondary-active: var(--uitk-color-grey-70);
+  --uitk-palette-action-background-secondary-disabled: transparent;
+  --uitk-palette-action-background-secondary-hover: var(--uitk-color-grey-200);
+  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
+  --uitk-palette-action-border: var(--uitk-color-grey-90);
+  --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-action-border-selected: var(--uitk-color-blue-400);
   --uitk-palette-action-fill-selected: var(--uitk-color-blue-400);
+  --uitk-palette-action-foreground: var(--uitk-color-white);
+  --uitk-palette-action-foreground-hover: var(--uitk-color-white);
+  --uitk-palette-action-foreground-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-bluractive: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-active: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-disabled: var(--uitk-color-white-fade-70);
+  --uitk-palette-action-foreground-cta-hover: var(--uitk-color-white);
+  --uitk-palette-action-foreground-cta-selected: var(--uitk-color-white);
+  --uitk-palette-action-foreground-primary-active: var(--uitk-color-grey-800);
+  --uitk-palette-action-foreground-primary-disabled: var(--uitk-color-grey-900-fade-70); /* TODO: Check what default primary-foreground (if same as default foreground, this is white-fade-70) */
+  --uitk-palette-action-foreground-secondary-active: var(--uitk-color-grey-800);
+  --uitk-palette-action-foreground-secondary-disabled: var(--uitk-color-grey-900-fade-70); /* TODO: Check what default foreground-secondary */
+  --uitk-palette-action-foreground-secondary-hover: var(--uitk-color-white);
+  --uitk-palette-action-stroke: var(--uitk-color-grey-90);
+  --uitk-palette-action-stroke-hover: var(--uitk-color-blue-500);
+
+  --uitk-palette-error-border: var(--uitk-color-red-500);
+  --uitk-palette-error-icon: var(--uitk-color-red-500);
+
   --uitk-palette-info-background: var(--uitk-color-blue-900);
-  --uitk-palette-info-gradient-end: var(--uitk-color-blue-300);
+  --uitk-palette-info-border: var(--uitk-color-blue-500);
+  --uitk-palette-info-icon: var(--uitk-color-blue-500);
 
-  /* Teals */
-  --uitk-palette-info-gradient-start: var(--uitk-color-teal-300);
-}
+  /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
+  --uitk-palette-measure-background-gradient-start-color: var(--uitk-color-teal-300);
+  --uitk-palette-measure-background-gradient-stop-color: var(--uitk-color-blue-300);
+  --uitk-palette-measure-background: linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%);
 
-.uitkEmphasisHigh .uitk-light {
-  /* Greens */
-  --uitk-palette-success-border: var(--uitk-color-green-10);
+  --uitk-palette-navigate-background: transparent; /* not in Figma */
+  --uitk-palette-navigate-background-active: transparent;
+  --uitk-palette-navigate-foreground: var(--uitk-color-grey-50);
+  --uitk-palette-navigate-foreground-active: transparent; /* not in Figma */
+  --uitk-palette-navigate-foreground-hover: var(--uitk-color-grey-50);
+  --uitk-palette-navigate-indicator: transparent; /* not in Figma */
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400); /* not in Figma */
+  --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90); /* check vs medium emphasis navigate hover background with design */
 
-  /* Greyscales */
-  --uitk-palette-action-background: var(--uitk-color-grey-20);
-  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-30);
-  --uitk-palette-neutral-background: var(--uitk-color-grey-20);
-  --uitk-palette-neutral-border: var(--uitk-color-grey-90);
-  --uitk-palette-neutral-scrim: var(--uitk-color-black);
+  --uitk-palette-negative-foreground: var(--uitk-color-red-300);
 
-  /* Reds */
-  --uitk-palette-error-background: var(--uitk-color-red-10);
-}
+  --uitk-palette-neutral-endpoint: var(--uitk-color-grey-90);
 
-.uitkEmphasisHigh .uitk-dark {
-  /* Greens */
-  --uitk-palette-success-border: var(--uitk-color-green-900);
+  --uitk-palette-positive-foreground: var(--uitk-color-green-300);
 
-  /* Greyscales */
-  --uitk-palette-action-background: var(--uitk-color-grey-700);
-  --uitk-palette-navigate-background-hover: var(--uitk-color-grey-600);
-  --uitk-palette-neutral-background: var(--uitk-color-grey-700);
-  --uitk-palette-neutral-border: var(--uitk-color-grey-90);
-  --uitk-palette-neutral-scrim: var(--uitk-color-black);
+  --uitk-palette-rate-background-active: var(--uitk-color-orange-400);
+  --uitk-palette-rate-background-hover: var(--uitk-color-orange-400);
+  --uitk-palette-rate-border: var(--uitk-color-grey-90);
+  --uitk-palette-rate-border-undo: var(--uitk-color-orange-400);
 
-  /* Reds */
-  --uitk-palette-error-background: var(--uitk-color-red-900);
-}
+  --uitk-palette-success-border: var(--uitk-color-green-500);
+  --uitk-palette-success-icon: var(--uitk-color-green-500);
 
-.uitkEmphasisLow .uitk-light {
-  /* Greyscales */
-  --uitk-palette-neutral-border: var(--uitk-color-grey-30);
-}
+  --uitk-palette-warning-background: var(--uitk-color-orange-900);
+  --uitk-palette-warning-border: var(--uitk-color-orange-500);
+  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
 
-.uitkEmphasisLow .uitk-light {
-  /* Greyscales */
-  --uitk-palette-neutral-border: var(--uitk-color-grey-600);
+  /* Emphasis values */
+  --uitk-palette-action-background-medium: var(--uitk-color-grey-800);
+  --uitk-palette-action-background-high: var(--uitk-color-grey-700);
+
+  --uitk-palette-error-background-high: var(--uitk-color-red-900);
+
+  --uitk-palette-navigate-background-low-hover: var(--uitk-color-grey-700);
+  --uitk-palette-navigate-background-medium-hover: var(--uitk-color-grey-700);
+  --uitk-palette-navigate-background-high-hover: var(--uitk-color-grey-600);
+
+  --uitk-palette-neutral-background-high: var(--uitk-color-grey-700);
+  --uitk-palette-neutral-background-medium: var(--uitk-color-grey-800);
+  --uitk-palette-neutral-border-low: var(--uitk-color-grey-90);
+  --uitk-palette-neutral-border-medium: var(--uitk-color-grey-300);
+  --uitk-palette-neutral-scrim-medium: var(--uitk-color-grey-800);
+  --uitk-palette-neutral-scrim-high: var(--uitk-color-black);
+
+  --uitk-palette-success-background-high: var(--uitk-color-green-900);
 }
