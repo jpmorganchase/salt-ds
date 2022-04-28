@@ -189,12 +189,24 @@ const Border: ComponentStory<typeof GridLayout> = (args) => {
     <div style={gridLayoutStyle}>
       <GridLayout {...args}>
         <GridItem colSpan={4}>
-          <div style={{ ...gridItemStyles, backgroundColor: "#c5afa4" }}>
+          <div
+            style={{
+              ...gridItemStyles,
+              backgroundColor: "#c5afa4",
+              color: "#000",
+            }}
+          >
             <p>Header</p>
           </div>
         </GridItem>
         <GridItem colSpan={1}>
-          <div style={{ ...gridItemStyles, backgroundColor: "#cc7e85" }}>
+          <div
+            style={{
+              ...gridItemStyles,
+              backgroundColor: "#cc7e85",
+              color: "#000",
+            }}
+          >
             <p>Left</p>
           </div>
         </GridItem>
@@ -204,18 +216,31 @@ const Border: ComponentStory<typeof GridLayout> = (args) => {
               ...gridItemStyles,
               backgroundColor: "#cf4d6f",
               minWidth: 100,
+              color: "#000",
             }}
           >
             <p>Main</p>
           </div>
         </GridItem>
         <GridItem colSpan={1}>
-          <div style={{ ...gridItemStyles, backgroundColor: "#a36d90" }}>
+          <div
+            style={{
+              ...gridItemStyles,
+              backgroundColor: "#a36d90",
+              color: "#000",
+            }}
+          >
             <p>Right</p>
           </div>
         </GridItem>
         <GridItem colSpan={4}>
-          <div style={{ ...gridItemStyles, backgroundColor: "#76818e" }}>
+          <div
+            style={{
+              ...gridItemStyles,
+              backgroundColor: "#76818e",
+              color: "#000",
+            }}
+          >
             <p>Bottom</p>
           </div>
         </GridItem>
@@ -227,19 +252,18 @@ export const ToolkitGridLayoutBorder = Border.bind({});
 ToolkitGridLayoutBorder.args = {
   columns: 4,
   rows: 3,
-  rowGap: 0,
-  columnGap: 0,
+  gap: 0,
 };
 
 const headerStyles: CSSProperties = {
-  color: "#84878E",
+  color: "#70737A",
   fontWeight: 600,
   letterSpacing: "0.2em",
   textTransform: "uppercase",
 };
-const textStyles = { color: "#74777F" };
+const textStyles = { color: "#707279" };
 const copyrightStyles: CSSProperties = {
-  color: "#84878E",
+  color: "#70737A",
   borderTop: "1px solid #D9DDE3",
   textAlign: "center",
 };
@@ -336,6 +360,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
         <h1>Lorem Ipsum</h1>
         <img
           src="https://via.placeholder.com/1305x555?text=Blog+Image"
+          alt="placeholder"
           style={{ width: "100%" }}
         />
       </GridItem>
