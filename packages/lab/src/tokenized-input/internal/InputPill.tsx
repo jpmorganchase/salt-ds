@@ -35,10 +35,6 @@ export type InputPillProps = Omit<
    */
   active?: boolean;
   /**
-   * Max width of the pill to be applied to `style`.
-   */
-  maxWidth?: CSSProperties["maxWidth"];
-  /**
    * Callback when pill is deleted.
    */
   onDelete?: (index: number) => void;
@@ -56,8 +52,6 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     onDelete,
     pillsRef,
     tabIndex: tabIndexProp,
-    // TODO: Style API. Shall we remove this API in favor of directly use `style`
-    maxWidth,
     ...restProps
   } = props;
 
@@ -98,7 +92,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
       onDelete={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
-      style={useMemo(() => ({ maxWidth }), [maxWidth])}
+      //  style={useMemo(() => ({ maxWidth }), [maxWidth])}
       tabIndex={undefined}
       variant={isRemovable ? "closable" : "basic"}
       {...restProps}

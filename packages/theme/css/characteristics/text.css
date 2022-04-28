@@ -82,9 +82,16 @@
   --uitk-text-help-line-height-medium: 14px;
   --uitk-text-help-line-height-high: 13px;
 
-  --uitk-text-help-font-style: italic;
+  /* Figure text */
+  --uitk-text-figure-1-font-size: 56px;
+  --uitk-text-figure-2-font-size: 36px;
+  --uitk-text-figure-3-font-size: 24px;
 
-  /** 
+  --uitk-text-figure-1-line-height: 74px;
+  --uitk-text-figure-2-line-height: 48px;
+  --uitk-text-figure-3-line-height: 32px;
+
+  /**
     Body text (default)
     Avoid using these directly. Instead, use --uitk-text-font-size, --uitk-text-line-height values
     below, which scope to density, unless strong reason applicable

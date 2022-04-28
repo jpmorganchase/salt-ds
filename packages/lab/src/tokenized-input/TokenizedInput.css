@@ -1,3 +1,9 @@
+/* Styles applied to root component (TokenizedInput) */
+.uitk-density-medium .uitkTokenizedInput {
+  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
+  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-medium) / 2);
+  --tokenized-input-last-pill-margin: var(--uitk-spacing-medium);
+}
 .uitk-density-touch .uitkTokenizedInput {
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-touch) / 2 + 2px);
@@ -8,12 +14,6 @@
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-low) / 2 + 1px);
   --tokenized-input-last-pill-margin: calc(var(--uitk-spacing-low) / 2);
-}
-
-.uitk-density-medium .uitkTokenizedInput {
-  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-spacing-medium) / 2);
-  --tokenized-input-last-pill-margin: var(--uitk-spacing-medium);
 }
 
 .uitk-density-high .uitkTokenizedInput {
@@ -31,38 +31,57 @@
 .uitkTokenizedInput {
   display: inline-flex;
   justify-content: space-between;
-  /* same min-width as the Input component */
-  min-width: 8em;
+  min-width: 8em; /* same min-width as Input component */
   width: 100%;
-
-  /* TODO: Check whether we should define font family here or rely on theme */
-  font-family: var(--uitk-typography-font-family);
 }
 
-.uitkTokenizedInput-disabled {
-  /* TODO: When shared disabled styles are ready */
-  cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-disabled-text-opacity);
-}
-
+/* Styles applied to root component on hover state when `disabled={false}` */
 .uitkTokenizedInput:hover:not(.uitkTokenizedInput-disabled) {
   cursor: pointer;
 }
 
-.uitkTokenizedInput-focused {
-  outline: var(--tokenized-input-focused-outline);
+/* Styles applied to container of pills */
+.uitkTokenizedInput-pillGroup {
+  align-content: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  min-height: var(--tokenized-input-height);
+  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
 }
 
+/* Styles applied to root component if `disabled={true}` */
+.uitkTokenizedInput-disabled {
+  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitkTokenizedInput-disabled-opacity, var(--uitk-disabled-text-opacity));
+}
+
+/* Styles applied to root component if `focused={true}` */
+.uitkTokenizedInput-focused {
+  outline: var(--uitkTokenizedInput-focused-outline, var(--tokenized-input-focused-outline));
+}
+
+/* Styles applied to root component if `expanded={true}` */
 .uitkTokenizedInput-expanded {
   height: auto;
+
+  /* Pill CSS API */
+  --uitkPill-max-width: calc(100px - var(--uitk-spacing-unit));
 }
 
+/* Styles applied to Input and Clear Button if `expanded={false}` */
 .uitkTokenizedInput-hidden {
   display: none;
 }
 
-/* Used to be .inputRoot */
+/** 
+  Styles applied to inner Input component
+  Used to be .inputRoot 
+**/
 .uitkTokenizedInput-input {
+  align-items: flex-start;
+  cursor: text;
   flex-grow: 1;
   padding: 0;
   outline: none;
@@ -72,32 +91,25 @@
   min-height: 0;
 }
 
+/* Styles applied to Clear Button  */
 .uitkTokenizedInput-clearButton {
   flex: none;
   align-self: flex-end;
 }
 
+/* Styles applied to Expand Button  */
 .uitkTokenizedInput-expandButton {
   padding: 0 calc(var(--tokenized-input-spacing) / 4);
 }
 
-.uitkTokenizedInput-pillGroup {
-  min-height: var(--tokenized-input-height);
-  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
-
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  box-sizing: border-box;
-}
-
+/* Styles applied to root component and pill container if `expanded={true}` */
 .uitkTokenizedInput-expanded,
 .uitkTokenizedInput-expanded .uitkTokenizedInput-pillGroup {
   height: auto;
 }
 
-/* TODO: Adjust specificity of .InputPill depending on styling solution. This is an example of internal sub-component naming convension. */
+/* TODO: Adjust specificity of .InputPill depending on styling solution. 
+  This is an example of internal sub-component naming convension. */
 .uitkTokenizedInput .uitkInputPill,
 .uitkTokenizedInput-expandButton,
 .uitkTokenizedInput-input,
@@ -106,32 +118,39 @@
   height: calc(var(--tokenized-input-height) - var(--tokenized-input-spacing) * 1.5);
 }
 
+/* Styles applied to inner Pills */
 .uitkTokenizedInput .uitkInputPill {
   min-width: 0;
   margin-right: var(--tokenized-input-gutter-size);
+  --uitkPill-max-width: 100px;
 }
 
 .uitkTokenizedInput .uitkInputPill > * {
   min-width: 0;
 }
 
+/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
 .uitkTokenizedInput .uitkInputPill.uitkInputPill-hidden {
   display: none;
 }
 
+/* Styles applied to the last visible Pill when all visible */
 .uitkTokenizedInput .uitkInputPill-pillLastVisible {
-  margin-right: var(--tokenized-input-last-pill-margin);
+  margin-right: var(--uitkTokenizedInput-pill-last-visible-margin-right, var(--tokenized-input-last-pill-margin));
 }
 
+/* Styles applied to a Pill when active */
 .uitkTokenizedInput .uitkInputPill-pillActive {
-  background: var(--uitk-selectable-background-hover);
+  background: var(--uitkTokenizedInput-pill-background-active, var(--uitk-selectable-background-hover));
 }
 
+/* Styles applied to a Pills delete icon */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
-  color: var(--uitk-actionable-cta-icon-color-hover);
+  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-cta-icon-color-hover));
 }
 
+/* Styles applied to a Pills delete button */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
-  color: var(--uitk-actionable-cta-icon-color-hover);
-  background: var(--uitk-actionable-cta-background-hover);
+  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-cta-text-color-hover));
+  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-cta-background-hover));
 }

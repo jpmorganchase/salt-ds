@@ -147,7 +147,7 @@
 }
 
 .uitkPill-deleteButton:active:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled):not(.uitkPill-selectable) {
-  background: var(--uitkPill-delete-button-background-hover, var(--pill-background));
+  background: var(--uitkPill-delete-button-background-hover, var(--pill-background-active));
 }
 
 .uitkPill-deleteButton:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled) .uitkPill-deleteIcon {
