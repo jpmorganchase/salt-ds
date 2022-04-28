@@ -7,23 +7,23 @@ import "./GridLayout.css";
 
 export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Number of columns to be displayed
+   * Number of columns to be displayed. Defaults to 12
    */
   columns?: ResponsiveProp<number>;
   /**
-   * Number of rows to be displayed
+   * Number of rows to be displayed. Defaults to 1
    */
   rows?: ResponsiveProp<number>;
   /**
-   * Defines the size of the gutter between the columns and the rows by setting a density multiplier.
+   * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 1
    */
   gap?: ResponsiveProp<number>;
   /**
-   * Defines the size of the gutter between the columns by setting a density multiplier.
+   * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
    */
   columnGap?: ResponsiveProp<number>;
   /**
-   * Defines the size of the gutter between the rows by setting a density multiplier
+   * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
    */
   rowGap?: ResponsiveProp<number>;
 }

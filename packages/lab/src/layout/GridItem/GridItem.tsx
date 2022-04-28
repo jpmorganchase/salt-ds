@@ -17,19 +17,19 @@ type GridAlignment = typeof GRID_ALIGNMENT_BASE[number];
 type GridProperty = number | "auto";
 export interface GridItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The item will span across the provided number of grid columns
+   * The item will span across the provided number of grid columns. Defaults to "auto"
    */
   colSpan?: ResponsiveProp<GridProperty>;
   /**
-   * The item will span across the provided number of grid rows
+   * The item will span across the provided number of grid rows. Defaults to "auto"
    */
   rowSpan?: ResponsiveProp<GridProperty>;
   /**
-   * Aligns a grid item inside a cell along the inline (row) axis
+   * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch"
    */
   horizontalAlignment?: GridAlignment;
   /**
-   * Aligns a grid item inside a cell along the block (column) axis
+   * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch"
    */
   verticalAlignment?: GridAlignment;
 }
