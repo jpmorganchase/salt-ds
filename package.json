@@ -40,28 +40,6 @@
     "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
     "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json"
   },
-  "eslintConfig": {
-    "extends": [
-      "modular-app",
-      "plugin:storybook/recommended"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "stories/**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ],
-    "plugins": [
-      "cypress"
-    ],
-    "env": {
-      "cypress/globals": true
-    }
-  },
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@changesets/cli": "^2.19.0",
