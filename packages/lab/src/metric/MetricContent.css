@@ -4,7 +4,7 @@
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
 }
 
-.uitkMetricContent-value-container{
+.uitkMetricContent-value-container {
   display: flex;
   flex-direction: row;
   align-items: baseline;

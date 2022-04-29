@@ -41,12 +41,12 @@
   text-align: right;
 }
 
-.uitkMetric-emphasis-high .uitkMetricHeader{
+.uitkMetric-emphasis-high .uitkMetricHeader {
   margin-top: 14px;
 }
-.uitkMetric-emphasis-medium .uitkMetricHeader{
+.uitkMetric-emphasis-medium .uitkMetricHeader {
   margin-top: 8px;
 }
-.uitkMetric-emphasis-low .uitkMetricHeader{
+.uitkMetric-emphasis-low .uitkMetricHeader {
   margin-top: 4px;
 }
