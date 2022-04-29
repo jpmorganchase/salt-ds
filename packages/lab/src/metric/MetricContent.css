@@ -4,14 +4,10 @@
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
 }
 
-.uitkMetricContent {
-  white-space: nowrap;
-  line-height: var(--metric-line-height);
-}
-
-.uitkMetricContent-value {
-  font-weight: var(--uitk-typography-weight-semiBold);
-  color: var(--uitk-text-primary-color);
+.uitkMetricContent-value-container{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 .uitkMetricContent-indicator {
@@ -31,30 +27,6 @@
 }
 .uitkMetricContent-directionDown .uitkMetricContent-subvalue {
   color: var(--metric-direction-down-color);
-}
-
-.uitkEmphasisHigh .uitkMetricContent-value {
-  font-size: 56px;
-}
-
-.uitkEmphasisMedium .uitkMetricContent-value {
-  font-size: 36px;
-}
-
-.uitkEmphasisLow .uitkMetricContent-value {
-  font-size: 24px;
-}
-
-.uitkMetricContent-horizontal.uitkEmphasisHigh .uitkMetricContent-value {
-  line-height: 0.75;
-}
-
-.uitkMetricContent-horizontal.uitkEmphasisMedium .uitkMetricContent-value {
-  line-height: 0.85;
-}
-
-.uitkMetricContent-horizontal.uitkEmphasisLow .uitkMetricContent-value {
-  line-height: 0.95;
 }
 
 .uitkMetricContent-alignLeft {

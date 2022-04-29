@@ -48,4 +48,5 @@ const MetricContext = createContext<
 >({});
 
 export const { Provider: MetricContextProvider } = MetricContext;
-export const useMetricContext = () => useContext(MetricContext);
+export const useMetricContext = (): MetricContextValue &
+  MetricContextComponentIds => useContext(MetricContext);

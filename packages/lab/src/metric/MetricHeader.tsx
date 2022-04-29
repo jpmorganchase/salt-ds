@@ -1,10 +1,10 @@
 import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Link, LinkProps, H4 } from "@jpmorganchase/uitk-lab";
 import warning from "warning";
 
 import { useMetricContext, capitalise } from "./internal";
-import { Link, LinkProps } from "../link";
 
 import "./MetricHeader.css";
 
@@ -15,17 +15,6 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
    * @see `Link` for a list of valid props.
    */
   SubtitleLinkProps?: Partial<LinkProps>;
-  /**
-   * @ignore - this is passed from the parent <Metric/> component
-   *
-   * The ARIA props to be applied to the title if the component is considered as a `heading`,
-   * i.e. it is the first component inside the metric.
-   */
-  headingAriaProps?: {
-    role: string;
-    "aria-level": number;
-    "aria-labelledby": string;
-  };
   /**
    * Subtitle of the Metric Header
    */
@@ -40,14 +29,7 @@ const withBaseName = makePrefixer("uitkMetricHeader");
 
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(
-    {
-      SubtitleLinkProps,
-      className,
-      title,
-      subtitle,
-      headingAriaProps,
-      ...restProps
-    },
+    { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
     const { align, titleId, subtitleId, direction, orientation } =
@@ -58,6 +40,8 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
       className?: string;
       "data-testid": string;
     }) => {
+      if (!subtitle) return;
+
       if (SubtitleLinkProps) {
         const { children, href = "", ...restLinkProps } = SubtitleLinkProps;
 
@@ -69,17 +53,12 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
         }
 
         return (
-          <Link
-            href={href}
-            {...props}
-            {...restLinkProps}
-            aria-labelledby={[titleId, subtitleId].join(" ")}
-          >
-            {subtitle}
+          <Link href={href} {...restLinkProps}>
+            <H4 {...props}>{subtitle}</H4>
           </Link>
         );
       }
-      return <div {...props}>{subtitle}</div>;
+      return <H4 {...props}>{subtitle}</H4>;
     };
 
     return (
@@ -96,20 +75,18 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
         )}
         ref={ref}
       >
-        <div
+        <H4
           className={withBaseName("title")}
           data-testid="metric-title"
           id={titleId}
-          {...headingAriaProps}
         >
           {title}
-        </div>
-        {subtitle &&
-          renderSubtitle({
-            id: subtitleId,
-            className: withBaseName("subtitle"),
-            "data-testid": "metric-subtitle",
-          })}
+        </H4>
+        {renderSubtitle({
+          id: subtitleId,
+          className: withBaseName("subtitle"),
+          "data-testid": "metric-subtitle",
+        })}
       </div>
     );
   }

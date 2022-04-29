@@ -1,14 +1,6 @@
-import {
-  forwardRef,
-  HTMLAttributes,
-  useMemo,
-  Children,
-  cloneElement,
-} from "react";
+import { forwardRef, HTMLAttributes, useMemo } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { MetricHeader } from "./MetricHeader";
-import { MetricContent } from "./MetricContent";
 
 import {
   capitalise,
@@ -18,6 +10,8 @@ import {
 import { useId } from "../utils";
 
 import "./Metric.css";
+
+const withBaseName = makePrefixer("uitkMetric");
 
 export interface MetricProps
   extends MetricContextValue,
@@ -35,11 +29,6 @@ export interface MetricProps
    */
   id?: string;
 }
-
-const isMetricChild = (child: any) =>
-  child.type === MetricHeader || child.type === MetricContent;
-
-const withBaseName = makePrefixer("uitkMetric");
 
 export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
   {
@@ -61,8 +50,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
   const titleId = `metric-title-${id}`;
   const subtitleId = `metric-subtitle-${id}`;
   const valueId = `metric-value-${id}`;
-
-  let isHeadingApplied = false;
 
   const value = useMemo(
     () => ({
@@ -89,16 +76,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
     ]
   );
 
-  const getHeadingAriaProps = (child: any) => ({
-    role: "heading",
-    "aria-level": headingAriaLevel,
-    // FIXME: content should be labelledby header, not header labelledby content
-    "aria-labelledby": (child.type === MetricHeader
-      ? [titleId, valueId]
-      : [valueId, titleId]
-    ).join(" "),
-  });
-
   return (
     <MetricContextProvider value={value}>
       <div
@@ -108,29 +85,14 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
           {
             [withBaseName(`direction${capitalise(direction)}`)]: direction,
             [withBaseName(orientation)]: orientation,
+            [withBaseName(`emphasis-${emphasis}`)]: emphasis,
           },
           className
         )}
         id={id}
         ref={ref}
       >
-        {Children.toArray(children).map((child) => {
-          // As a part of the ADA requirement, we need to add heading role to the first valid child component for metric
-          // FIXME: There are fundamental flaws about this approach
-          // - `aria-labelledby` problem above
-          // - What if `headingAriaProps` is actually passed by the user, with custom ids
-          // - What is really the benefit letting the user to pass in 2 different kinds of children,
-          //   where really only one each makes sense, so value/subvalue/title/subtitle can drive the main component
-          // Keeping current approach to support Demo Sep 2021
-          if (!isHeadingApplied && isMetricChild(child)) {
-            isHeadingApplied = true;
-
-            return cloneElement(child as any, {
-              headingAriaProps: getHeadingAriaProps(child),
-            });
-          }
-          return child;
-        })}
+        {children}
       </div>
     </MetricContextProvider>
   );

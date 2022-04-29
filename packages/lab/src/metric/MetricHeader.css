@@ -1,18 +1,18 @@
 .uitkMetricHeader {
-  --metric-header-font-size: var(--uitk-text-font-size);
+  /* --metric-header-font-size: var(--uitk-text-font-size); */
 
   --metric-title-color: var(--uitk-text-primary-color);
   --metric-subtitle-color: var(--uitk-text-secondary-color);
 
-  --metric-title-font-weight: var(--uitk-typography-weight-semiBold);
+  /* --metric-title-font-weight: var(--uitk-typography-weight-semiBold); */
 
   --metric-header-gap: calc(var(--uitk-spacing-unit) * 0.25);
 }
 
 .uitkMetricHeader {
   white-space: nowrap;
-  line-height: var(--metric-line-height);
-  font-size: var(--metric-header-font-size);
+  /* line-height: var(--metric-line-height); */
+  /* font-size: var(--metric-header-font-size); */
 }
 
 .uitkMetricHeader > :not(:last-child) {
@@ -21,11 +21,12 @@
 
 .uitkMetricHeader-title {
   color: var(--metric-title-color);
-  font-weight: var(--metric-title-font-weight);
+  /* font-weight: var(--metric-title-font-weight); */
 }
 
 .uitkMetricHeader-subtitle {
   color: var(--metric-subtitle-color);
+  font-weight: var(--uitk-typography-weight-regular);
 }
 
 .uitkMetricHeader-alignLeft {
@@ -38,4 +39,14 @@
 
 .uitkMetricHeader-alignRight {
   text-align: right;
+}
+
+.uitkMetric-emphasis-high .uitkMetricHeader{
+  margin-top: 14px;
+}
+.uitkMetric-emphasis-medium .uitkMetricHeader{
+  margin-top: 8px;
+}
+.uitkMetric-emphasis-low .uitkMetricHeader{
+  margin-top: 4px;
 }

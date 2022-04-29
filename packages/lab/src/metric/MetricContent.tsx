@@ -1,6 +1,7 @@
-import { ComponentType, forwardRef, HTMLAttributes } from "react";
+import { ComponentType, forwardRef, HTMLAttributes, useMemo } from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
 import { useMetricContext, capitalise } from "./internal";
 
@@ -18,17 +19,7 @@ export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
    * Replace the default Icon component
    */
   IndicatorIconComponent?: ComponentType<IconProps>;
-  /**
-   * @ignore - this is passed from the parent <Metric/> component
-   *
-   * The ARIA props to be applied to the main value if the component is considered as a `heading`,
-   * i.e. it is the first component inside the metric.
-   */
-  headingAriaProps?: {
-    role: string;
-    "aria-level": number;
-    "aria-labelledby": string;
-  };
+
   /**
    * Other data that may serve as additional information to the main value
    */
@@ -49,7 +40,6 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       className,
       value,
       subvalue,
-      headingAriaProps,
       ...restProps
     },
     ref
@@ -62,6 +52,8 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       showIndicator,
       indicatorPosition,
       valueId,
+      titleId,
+      subtitleId,
     } = useMetricContext();
 
     const iconSize = emphasis === "low" ? 12 : 24;
@@ -70,7 +62,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       "aria-label": direction,
       className: withBaseName("indicator"),
       "data-testid": "metric-indicator",
-      name: `movement-${direction}`,
+      name: direction ? `movement-${direction}` : "",
       size: iconSize,
       ...IndicatorIconProps,
     };
@@ -86,15 +78,27 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
 
+    const renderValue = useMemo(() => {
+      const Component =
+        emphasis === "high"
+          ? Figure1
+          : emphasis === "medium"
+          ? Figure2
+          : Figure3;
+
+      return (
+        <Component data-testid="metric-value" id={valueId}>
+          {value}
+        </Component>
+      );
+    }, [emphasis, value, valueId]);
+
     return (
       <div
         {...restProps}
         className={cx(
           withBaseName(),
           {
-            [`uitkEmphasisLow`]: emphasis === "low",
-            [`uitkEmphasisMedium`]: emphasis === "medium",
-            [`uitkEmphasisHigh`]: emphasis === "high",
             [withBaseName(`direction${capitalise(direction)}`)]: direction,
             [withBaseName(orientation as string)]: orientation,
             [withBaseName(`align${capitalise(align)}`)]: align,
@@ -102,17 +106,11 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
           className
         )}
         ref={ref}
+        aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
       >
-        <div>
+        <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          <span
-            className={withBaseName("value")}
-            data-testid="metric-value"
-            id={valueId}
-            {...headingAriaProps}
-          >
-            {value}
-          </span>
+          {renderValue}
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
