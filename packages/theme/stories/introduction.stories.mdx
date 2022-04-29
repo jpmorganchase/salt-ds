@@ -8,7 +8,6 @@ import {
   LineBlockDotted,
 } from "docs/components/LineBlock";
 import { CornerBlock } from "docs/components/CornerBlock";
-import LinkTo from "@storybook/addon-links/react";
 
 <Meta title="Documentation/Styles and Theming/Introduction" />
 
@@ -56,7 +55,7 @@ The styling of our UI Toolkit componentry is defined in two places, which operat
 
 ### Theme styles
 
-A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into two categories, <LinkTo kind="documentation-styles-and-theming-foundations-introduction--page">foundations</LinkTo> and <LinkTo kind="documentation-styles-and-theming-characteristics--introduction">characteristics</LinkTo>. Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application. Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
+A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into two categories, foundations and characteristics. Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application. Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
 
 Foundational tokens can broken into the following groups:
 
@@ -71,7 +70,7 @@ Foundational tokens can broken into the following groups:
 
 \* z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
 
-The full set of <LinkTo kind="documentation-styles-and-theming-characteristics--introduction">characteristics</LinkTo> is currently defined is as follows:
+The full set of characteristics< is currently defined is as follows:
 
 | Characteristic name | Appropriate usage                                                               | Example token                                                              |
 | ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
