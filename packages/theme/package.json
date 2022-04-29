@@ -5,7 +5,6 @@
   "style": "index.css",
   "files": [
     "/index.css",
-    "/global.css",
     "/css"
   ],
   "scripts": {
