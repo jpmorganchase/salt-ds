@@ -472,21 +472,21 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
       },
       "actionable": {
         "cta": {
-          "text": {
+          "text-color": {
             "value": "{uitk.color.white}",
             "type": "color"
           },
           "background": {
-            "value": "{uitk.color.red.500}",
+            "value": "{uitk.color.blue.600}",
             "type": "color"
           },
-          "icon": {
+          "icon-color": {
             "value": "{uitk.color.white}",
             "type": "color"
           }
         },
         "primary": {
-          "text": {
+          "text-color": {
             "value": "{uitk.color.grey.900}",
             "type": "color"
           },
@@ -494,13 +494,13 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
             "value": "{uitk.color.grey.60}",
             "type": "color"
           },
-          "icon": {
+          "icon-color": {
             "value": "{uitk.color.grey.900}",
             "type": "color"
           }
         },
         "secondary": {
-          "text": {
+          "text-color": {
             "value": "{uitk.color.grey.900}",
             "type": "color"
           },
@@ -508,7 +508,7 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
             "value": "{uitk.color.transparent}",
             "type": "color"
           },
-          "icon": {
+          "icon-color": {
             "value": "{uitk.color.grey.300}",
             "type": "color"
           }
@@ -525,6 +525,10 @@ const buttonCtaJson: JSONObj = JSON.parse(
     "button" : {
       "background": {
         "value": "{uitk.actionable.cta.background}",
+        "type": "color"
+      },
+      "text-color": {
+        "value": "{uitk.actionable.cta.text-color}",
         "type": "color"
       }
     }

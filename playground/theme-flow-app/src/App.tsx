@@ -15,6 +15,7 @@ import { PreviewView } from "./views/PreviewView";
 import ReactFlow, { Node, Edge } from "react-flow-renderer";
 import { getIdFromPropertyName } from "./utils/getIdFromPropertyName";
 import { group } from "console";
+import { UITK_COMPONENTS } from "@jpmorganchase/theme-editor/src/utils/uitkValues";
 
 function joinCssByPattern(cssByPatterns: CSSByPattern[]) {
   let result = "";
@@ -38,11 +39,16 @@ function declarationDataToFlowNodes(data: DeclarationData): {
   const nodes: Node<Declaration>[] = [];
   const edges: Edge[] = [];
   const groupIdSet: Set<string> = new Set();
-  let lastHeight = 0;
+  // let lastHeight = 0;
   for (let i = 0; i < data.length; i++) {
     const d = data[i];
     // Group
-    const groupId = getIdFromPropertyName(d.declarations[0].property);
+    const idFromPropertyName = getIdFromPropertyName(
+      d.declarations[0].property
+    );
+    const groupId = UITK_COMPONENTS.includes(idFromPropertyName)
+      ? d.groupName
+      : idFromPropertyName;
     // Only add group once
     if (!groupIdSet.has(groupId)) {
       groupIdSet.add(groupId);
@@ -60,16 +66,17 @@ function declarationDataToFlowNodes(data: DeclarationData): {
           height: d.declarations.length * cssVarNodeHeight + 20,
         },
       });
-    } else {
-      const height = nodes.find((n) => n.id === groupId)?.style?.height;
-      if (height) {
-        lastHeight =
-          typeof height === "number" ? height : Number.parseInt(height);
-
-        nodes.find((n) => n.id === groupId)!.style!.height =
-          lastHeight + d.declarations.length * cssVarNodeHeight;
-      }
     }
+    //  else {
+    //   const height = nodes.find((n) => n.id === groupId)?.style?.height;
+    //   if (height) {
+    //     lastHeight =
+    //       typeof height === "number" ? height : Number.parseInt(height);
+
+    //     nodes.find((n) => n.id === groupId)!.style!.height =
+    //       lastHeight + d.declarations.length * cssVarNodeHeight;
+    //   }
+    // }
 
     // Children declarations
     // eslint-disable-next-line no-loop-func
@@ -83,14 +90,14 @@ function declarationDataToFlowNodes(data: DeclarationData): {
         id: nodeId,
         data: declaration,
         // Each one gap
-        position: { x: 10, y: dIndex * cssVarNodeHeight + lastHeight ?? 10 },
+        position: { x: 10, y: dIndex * cssVarNodeHeight + 10 },
         // set the child extent to 'parent' so that we can't move them out of the parent node
         extent: "parent",
       });
       if (declaration.value.startsWith("var")) {
-        console.log("declaration value", declaration.value);
+        // console.log("declaration value", declaration.value);
         edges.push({
-          id: "edge-" + edges.length.toString(),
+          id: "edge-" + nodeId,
           target: nodeId,
           // from "var(" ---- to ")"
           source: declaration.value.substring(4, declaration.value.length - 1),
@@ -100,6 +107,24 @@ function declarationDataToFlowNodes(data: DeclarationData): {
   }
 
   return { nodes, edges };
+}
+
+function updateStyle(
+  patterns: CSSByPattern[],
+  property: string,
+  newValue: string
+): CSSByPattern[] {
+  return patterns.map((p) => {
+    if (p.cssObj.includes(property)) {
+      p.cssObj = p.cssObj.replace(
+        new RegExp(`${property}.*;`, "g"),
+        `${property}: ${newValue};`
+      );
+      return p;
+    } else {
+      return p;
+    }
+  });
 }
 
 function App(): JSX.Element {
@@ -116,13 +141,22 @@ function App(): JSX.Element {
   const { nodes, edges } = declarationDataToFlowNodes(data);
   console.log({ data, nodes, edges });
 
+  const handleFlowViewValueChange = (property: string, newValue: string) => {
+    console.log({ property, newValue });
+    setOverrideStyle((oldStyle) => updateStyle(oldStyle, property, newValue));
+  };
+
   return (
     <ToolkitProvider>
       <div className="App">
         <div className="App-flow">
-          <FlowView initialNodes={nodes} initialEdges={edges} />
+          <FlowView
+            initialNodes={nodes}
+            initialEdges={edges}
+            onValueChange={handleFlowViewValueChange}
+          />
         </div>
-        <PreviewView />
+        <PreviewView className="App-preview" />
         <div className="App-debug">
           <code>{JSON.stringify(overrideStyle)}</code>
         </div>

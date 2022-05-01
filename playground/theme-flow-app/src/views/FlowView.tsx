@@ -11,6 +11,7 @@ import ReactFlow, {
   EdgeChange,
   Connection,
 } from "react-flow-renderer";
+import { Declaration } from "../utils/parseCssToFlowData";
 import { FlowCssVarNode } from "./FlowCssVarNode";
 
 // const initialNodes: Node[] = [
@@ -24,21 +25,27 @@ const fitViewOptions: FitViewOptions = {
   padding: 0.2,
 };
 
+// The component is currently operating as an uncontrolled component
 export function FlowView({
   initialNodes,
   initialEdges,
+  onValueChange,
 }: {
-  initialNodes?: Node[];
+  initialNodes?: Node<Declaration>[];
   initialEdges?: Edge[];
+  onValueChange?: (property: string, newValue: string) => void;
 }) {
   const nodeTypes = useMemo(() => ({ flowCssVarNode: FlowCssVarNode }), []);
 
-  const [nodes, setNodes] = useState<Node[]>(initialNodes ?? []);
+  const [nodes, setNodes] = useState<Node<Declaration>[]>(initialNodes ?? []);
   const [edges, setEdges] = useState<Edge[]>(initialEdges ?? []);
 
   const onNodesChange = useCallback(
-    (changes: NodeChange[]) =>
-      setNodes((nds) => applyNodeChanges(changes, nds)),
+    (changes: NodeChange[]) => {
+      console.log({ changes });
+
+      setNodes((nds) => applyNodeChanges(changes, nds));
+    },
     [setNodes]
   );
   const onEdgesChange = useCallback(
@@ -51,9 +58,35 @@ export function FlowView({
   const onEdgeUpdate = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       console.log({ oldEdge, newConnection });
-      setEdges((els) => updateEdge(oldEdge, newConnection, els));
+      // FIXME: We will only support updating left edge for now
+      // find the target node
+      const targetId = newConnection.target;
+      if (targetId) {
+        const oldTargetNode = nodes.find((n) => n.id === targetId)!;
+        const newValue = "var(" + newConnection.source! + ")";
+        // FIXME: go down the chain to update all nodes reference this one
+        const changes: NodeChange[] = [
+          {
+            id: targetId,
+            type: "remove",
+          },
+          {
+            item: {
+              ...oldTargetNode,
+              data: {
+                ...oldTargetNode.data,
+                value: newValue,
+              } as Declaration,
+            },
+            type: "add",
+          },
+        ];
+        onValueChange?.(targetId, newValue);
+        setNodes((nds) => applyNodeChanges(changes, nds));
+        setEdges((els) => updateEdge(oldEdge, newConnection, els));
+      }
     },
-    []
+    [nodes]
   );
 
   const onConnect = useCallback(
