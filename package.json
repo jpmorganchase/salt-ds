@@ -43,7 +43,8 @@
     "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
     "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
     "chromatic": "chromatic",
-    "start:theme-editor-app": "modular start @brandname/theme-editor-app",
+    "start:theme-editor-app": "modular start @jpmorganchase/theme-editor-app",
+    "start:theme-flow-app": "modular start @jpmorganchase/theme-flow-app",
     "css-to-json": "ts-node --project tsconfig.json tooling/theme-editor/src/helpers/run.ts"
   },
   "dependencies": {

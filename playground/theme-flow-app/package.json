@@ -1,0 +1,8 @@
+{
+  "name": "@jpmorganchase/theme-flow-app",
+  "version": "0.1.0",
+  "private": true,
+  "modular": {
+    "type": "app"
+  }
+}
