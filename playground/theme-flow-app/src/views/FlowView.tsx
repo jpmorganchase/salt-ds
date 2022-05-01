@@ -4,6 +4,7 @@ import ReactFlow, {
   FitViewOptions,
   applyNodeChanges,
   applyEdgeChanges,
+  updateEdge,
   Node,
   Edge,
   NodeChange,
@@ -41,10 +42,20 @@ export function FlowView({
     [setNodes]
   );
   const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) =>
-      setEdges((eds) => applyEdgeChanges(changes, eds)),
+    (changes: EdgeChange[]) => {
+      setEdges((eds) => applyEdgeChanges(changes, eds));
+    },
     [setEdges]
   );
+  // gets called after end of edge gets dragged to another source or target
+  const onEdgeUpdate = useCallback(
+    (oldEdge: Edge, newConnection: Connection) => {
+      console.log({ oldEdge, newConnection });
+      setEdges((els) => updateEdge(oldEdge, newConnection, els));
+    },
+    []
+  );
+
   const onConnect = useCallback(
     (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges]
@@ -57,6 +68,7 @@ export function FlowView({
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      onEdgeUpdate={onEdgeUpdate}
       onConnect={onConnect}
       fitView
       fitViewOptions={fitViewOptions}

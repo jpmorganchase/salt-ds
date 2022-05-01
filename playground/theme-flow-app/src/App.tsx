@@ -56,7 +56,7 @@ function declarationDataToFlowNodes(data: DeclarationData): {
         // Each group apart
         position: { x: i * cssVarGroupWidth, y: 0 },
         style: {
-          width: cssVarGroupWidth - 10,
+          width: cssVarGroupWidth - 30,
           height: d.declarations.length * cssVarNodeHeight + 20,
         },
       });
