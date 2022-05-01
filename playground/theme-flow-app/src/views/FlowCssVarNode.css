@@ -1,0 +1,14 @@
+.FlowCssVarNode {
+    padding-inline: 10px;
+    border: 1px solid var(--uitk-container-border-color);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.FlowCssVarNode-preview {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--uitk-container-border-color);
+}
