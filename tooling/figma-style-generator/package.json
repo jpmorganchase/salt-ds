@@ -1,0 +1,18 @@
+{
+  "name": "figma-style-generator",
+  "version": "1.0.0",
+  "description": "Figma Style Generator",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@jpmorganchase/theme-editor": "*"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "typescript": "*"
+  }
+}

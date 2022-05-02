@@ -2896,6 +2896,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@figma/plugin-typings@npm:*":
+  version: 1.55.1
+  resolution: "@figma/plugin-typings@npm:1.55.1"
+  checksum: 86040561a4017cf4b66f4cd54890ce60db302fd58adfac8b1164cc32145f01e4af4dc233694db7b21bbd2817711ceff84bc6622eb7f39553f37f3788c83a9d4f
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^0.7.0":
   version: 0.7.0
   resolution: "@floating-ui/core@npm:0.7.0"
@@ -12966,6 +12973,16 @@ __metadata:
   checksum: 4090bd66193693dcda605e44d6b8715d8fb5c92a67acd57826e55cf816a342f550d57e5638f822b39366e1b2fdb244e99b3068a37213aa1d6c1bf602b8fde5ae
   languageName: node
   linkType: hard
+
+"figma-style-generator@workspace:tooling/figma-style-generator":
+  version: 0.0.0-use.local
+  resolution: "figma-style-generator@workspace:tooling/figma-style-generator"
+  dependencies:
+    "@figma/plugin-typings": "*"
+    "@jpmorganchase/theme-editor": "*"
+    typescript: "*"
+  languageName: unknown
+  linkType: soft
 
 "figures@npm:^3.2.0":
   version: 3.2.0
@@ -24679,7 +24696,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.4":
+"typescript@npm:*, typescript@npm:4.6.4":
   version: 4.6.4
   resolution: "typescript@npm:4.6.4"
   bin:
@@ -24689,7 +24706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.6.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@*#~builtin<compat/typescript>, typescript@patch:typescript@4.6.4#~builtin<compat/typescript>":
   version: 4.6.4
   resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"
   bin:
