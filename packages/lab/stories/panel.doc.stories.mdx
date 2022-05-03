@@ -78,7 +78,7 @@ The default styling values for most Panel attributes are provided by the theme v
 use hard-coded values local to Panel. Both of these can be overridden, see Theme documentation for detailed usage guidance.
 
 The CSS custom properties below are consumed by Panel, but not defined by Panel. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+a custom class name to override card styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Panel} />
@@ -90,9 +90,7 @@ tweak the look of a Panel. The CSS variables above have been defined in the `new
 
 <Canvas>
   <Story name="Custom Panel Styling" decorators={[withFlexGap]}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <CustomStyling />
-    </ToolkitProvider>
+    <CustomStyling />
   </Story>
 </Canvas>
 
