@@ -1,4 +1,8 @@
 .uitkBorderItem {
+  --border-item-grid-area: none;
+}
+
+.uitkBorderItem {
   grid-area: var(--border-item-grid-area);
 }
 
