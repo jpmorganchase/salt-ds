@@ -7,6 +7,7 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ToolkitGridLayout } from "./grid-layout.stories.tsx";
 import { ToolkitBorderLayout } from "./border-layout.stories.tsx";
+import { ToolkitParentChildLayout } from "./parent-child-layout.stories.tsx";
 
 <Meta title="Layout/Doc" component={GridLayout} />
 
@@ -55,7 +56,7 @@ It defaults to a twelve column grid but you can customise it using the `columns`
 ## API
 
 ```
-import {GridLayout, GridItem} from "@jpmuitk/toolkit-odyssey";
+import {GridLayout, GridItem} from "@jpmorganchase/uitk-lab";
 ```
 
 ## Props
@@ -69,6 +70,24 @@ import {GridLayout, GridItem} from "@jpmuitk/toolkit-odyssey";
 ### Grid Item
 
 <ArgsTable of={GridItem} />
+
+## Parent Child Layout
+
+Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
+
+<Canvas>
+  <Story name="Parent Child Layout">{ToolkitParentChildLayout.bind({})}</Story>
+</Canvas>
+
+## API
+
+```
+import {ParentChildLayout} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable story="Parent Child Layout" />
 
 ## Styling layout components
 
