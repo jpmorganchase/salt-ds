@@ -34,7 +34,13 @@ const Template: ComponentStory<typeof Input> = (args) => {
   //  text= "Value"
   // }
 
-  return <Input defaultValue={"Value"} style={{ width: "292px" }} {...args} />;
+  return (
+    <Input
+      defaultValue={args.defaultValue ?? "Value"}
+      style={{ width: "292px" }}
+      {...args}
+    />
+  );
 };
 
 export const FeatureInput = Template.bind({});
@@ -278,12 +284,12 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
 };
 
 export const CustomStyling: ComponentStory<typeof Input> = () => (
-  <>
+  <div style={{ display: "flex" }}>
     <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <FeatureInput />
+      <FeatureInput defaultValue="High density input" />
     </ToolkitProvider>
     <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <FeatureInput />
+      <FeatureInput defaultValue="Medium density input" />
     </ToolkitProvider>
-  </>
+  </div>
 );

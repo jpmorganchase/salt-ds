@@ -24,6 +24,7 @@
   display: inline-flex;
   font-family: var(--uitkInput-font-family, var(--uitk-typography-font-family));
   font-size: var(--uitkInput-font-size, var(--uitk-text-font-size));
+  height: var(--uitkInput-height, var(--uitk-size-regular-unit));
   letter-spacing: var(--uitkInput-letter-spacing, 0);
   line-height: var(--uitk-typography-line-height);
   min-height: var(--uitkInput-min-height, var(--uitk-size-regular-unit));
@@ -69,7 +70,7 @@
   width: 100%;
 }
 
-/* Style applied to input when disabled={true} */
+/* Style applied to input if `disabled={true}` */
 .uitkInput-disabled .uitkInput-input {
   cursor: var(--uitk-disabled-cursor);
   opacity: var(--uitk-disabled-text-opacity);
@@ -110,18 +111,22 @@
   padding: 0 calc(var(--uitk-spacing-unit) - var(--input-button-inset));
 }
 
+/* Style applied if `textAlign={"left"}` */
 .uitkInput-leftTextAlign .uitkInput-input {
   text-align: left;
 }
 
+/* Style applied if `textAlign={"center"}` */
 .uitkInput-centerTextAlign .uitkInput-input {
   text-align: center;
 }
 
+/* Style applied if `textAlign={"right"}` */
 .uitkInput-rightTextAlign .uitkInput-input {
   text-align: right;
 }
 
+/* Style applied if `inFormField={true}` */
 .uitkInput-formField {
   width: 100%;
 }
