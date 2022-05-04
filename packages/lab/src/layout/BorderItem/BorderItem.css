@@ -6,7 +6,7 @@
   grid-area: var(--border-item-grid-area);
 }
 
-.uitkBorderItem.uitkBorderItem-sticky {
+.uitkBorderItem-sticky {
   position: sticky;
   overflow: auto;
   top: 0;
