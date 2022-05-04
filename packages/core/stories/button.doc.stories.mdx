@@ -188,7 +188,7 @@ Below is an illustration of some of the buttons used in a new application. Compa
   </Story>
 </Canvas>
 
-We will assume the name `New App` for our application and we will use the identifier `mewapp` to label custom stylesheets and theme.
+We will assume the name `New App` for our application and we will use the identifier `newapp` to label custom stylesheets and theme.
 
 When customising components, the approach taken will depend on whether the customisation is targetted at a specific component instance, or all components of a similar kind across an application. In this case, we will assume the latter and organise our changes into stylesheets accordingly. We will follow UI Toolkit design system conventions and divide our style overrides between theme and component parts.
 
@@ -232,7 +232,7 @@ Note that we scope these variables to the combined class name `.uitk-light.uitk-
   --uitk-actionable-bid-baseline-color: var(--uitk-color-blue-300);
 ```
 
-Following toolkit conventions, we have implemented the Buttom component styles in a separate stylesheet, extract below. Note: we only have to provide styling for the new custom variants, plus the new state `readonly`. All the existing variants will be handled already, they are characteristic-driven and we have provided new values for the characteristics. If it were not for the fact that we have these new custom vartiants, we might not need a custom component css stylesheet at all.
+Following toolkit conventions, we have implemented the Button component styles in a separate stylesheet, extract below. Note: we only have to provide styling for the new custom variants, plus the new state `readonly`. All the existing variants will be handled already, they are characteristic-driven and we have provided new values for the characteristics. If it were not for the fact that we have these new custom vartiants, we might not need a custom component css stylesheet at all.
 
 ```css
 /* from the file Button.stories.newapp-button.css */
