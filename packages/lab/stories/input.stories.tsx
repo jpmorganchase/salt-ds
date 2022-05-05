@@ -17,23 +17,30 @@ import {
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./input.qa.stories.css";
 
+import "./Input.stories.newapp-input.css";
+
 export default {
   title: "Lab/Input",
   component: Input,
 } as ComponentMeta<typeof Input>;
 
 const Template: ComponentStory<typeof Input> = (args) => {
-  let text;
+  // let text;
   // @ts-ignore
   // if (args.multiline) {
   //   text =
   //     "This is a Multiline Input with text which wraps onto more than one line.";
   // } else {
+  //  text= "Value"
   // }
-  // TODO: Are we providing multiline?
-  text = "Value";
 
-  return <Input defaultValue={text} style={{ width: "292px" }} {...args} />;
+  return (
+    <Input
+      defaultValue={args.defaultValue ?? "Value"}
+      style={{ width: "292px" }}
+      {...args}
+    />
+  );
 };
 
 export const FeatureInput = Template.bind({});
@@ -91,7 +98,6 @@ export const Spellcheck: ComponentStory<typeof Input> = () => {
       defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
       style={{ width: "292px" }}
       inputProps={{ spellCheck: true }}
-      // multiline
     />
   );
 };
@@ -274,6 +280,16 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
     </>
-    // TODO: Are we allowing for multiline?
   );
 };
+
+export const CustomStyling: ComponentStory<typeof Input> = () => (
+  <div style={{ display: "flex" }}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <FeatureInput defaultValue="High density input" />
+    </ToolkitProvider>
+    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
+      <FeatureInput defaultValue="Medium density input" />
+    </ToolkitProvider>
+  </div>
+);
