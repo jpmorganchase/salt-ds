@@ -21,7 +21,7 @@ export interface StackLayoutProps {
 export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
   function StackLayout({ children, ...rest }, ref) {
     return (
-      <FlexLayout direction="column" wrap="false" ref={ref} {...rest}>
+      <FlexLayout direction="column" wrap={false} ref={ref} {...rest}>
         {children}
       </FlexLayout>
     );

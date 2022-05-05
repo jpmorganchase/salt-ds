@@ -1,6 +1,16 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { GridLayout, GridItem } from "@jpmorganchase/uitk-lab";
+import {
+  GridLayout,
+  GridItem,
+  FlexLayout,
+  FlexItem,
+  FlowLayout,
+  StackLayout,
+} from "@jpmorganchase/uitk-lab";
 import { ToolkitGridLayout } from "./grid-layout.stories.tsx";
+import { ToolkitFlexLayout } from "./flex-layout.stories.tsx";
+import { ToolkitFlowLayout } from "./flow-layout.stories.tsx";
+import { ToolkitStackLayout } from "./stack-layout.stories.tsx";
 
 <Meta title="Layout/Doc" component={GridLayout} />
 
@@ -18,13 +28,15 @@ It defaults to a twelve column grid but you can customise it using the `columns`
   <Story name="Grid Layout">{ToolkitGridLayout.bind({})}</Story>
 </Canvas>
 
-## API
+### API
+
+<!--  -->
 
 ```
-import {GridLayout, GridItem} from "@jpmuitk/toolkit-odyssey";
+import {GridLayout, GridItem} from "@jpmorganchase/uitk-lab";
 ```
 
-## Props
+### Props
 
 <br />
 
@@ -35,3 +47,61 @@ import {GridLayout, GridItem} from "@jpmuitk/toolkit-odyssey";
 ### Grid Item
 
 <ArgsTable of={GridItem} />
+
+## Flex layout
+
+Flex layout is the internal base for all layout components that build from a container using Flexbox.
+
+<Canvas>
+  <Story name="Flex layout">{ToolkitFlexLayout.bind({})}</Story>
+</Canvas>
+
+### API
+
+```
+import {FlexLayout, FlexItem} from "@jpmorganchase/uitk-lab";
+```
+
+### Props
+
+#### Flex layout
+
+<ArgsTable of={FlexLayout} />
+#### Flex item
+<ArgsTable of={FlexItem} />
+
+## Flow layout
+
+Dictates a horizontal order and direction for UI elements.
+
+<Canvas>
+  <Story name="Flow Layout">{ToolkitFlowLayout.bind({})}</Story>
+</Canvas>
+
+### API
+
+```
+import {FlowLayout} from "@jpmorganchase/uitk-lab";
+```
+
+### Props
+
+<ArgsTable of={FlowLayout} />
+
+## Stack layout
+
+Defines left and right regions for UI elements within a span, such as a button bar.
+
+<Canvas>
+  <Story name="Stack Layout">{ToolkitStackLayout.bind({})}</Story>
+</Canvas>
+
+### API
+
+```
+import {StackLayout} from "@jpmorganchase/uitk-lab";
+```
+
+### Props
+
+<ArgsTable of={StackLayout} />
