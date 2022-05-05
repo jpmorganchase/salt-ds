@@ -44,11 +44,11 @@ jobs:
         run: yarn
       - run: yarn run test --watchAll=false
   cypress-tests:
-    continue-on-error: ${{ matrix.react != '17' }}
+    continue-on-error: ${{ matrix.react == '18' }}
     strategy:
       fail-fast: false
       matrix:
-        react: [17, 18]
+        react: [16, 17, 18]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
