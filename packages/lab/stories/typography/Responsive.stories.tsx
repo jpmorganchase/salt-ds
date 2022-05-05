@@ -43,7 +43,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>Wraps</strong>
       </div>
       <div style={{ ...box }}>
-        <Div>
+        <Div truncate={true}>
           The king's son said he was to send her up to him, but the mother
           answered, oh, no, she is much too dirty, she cannot show herself. But
           he absolutely insisted on it, and Cinderella had to be called.
@@ -52,6 +52,8 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
 
       <div style={box}>
         elementType - div
+        <br />
+        truncate - true
         <br />
         truncate - true
         <br />
