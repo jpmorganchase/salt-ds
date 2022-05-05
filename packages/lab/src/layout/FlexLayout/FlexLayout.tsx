@@ -4,6 +4,7 @@ import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ResponsiveProp, useResponsiveProp } from "../../utils";
 import "./FlexLayout.css";
+import { LayoutDirection, LayoutSeparator } from "../types";
 
 const withBaseName = makePrefixer("uitkFlexLayout");
 
@@ -18,10 +19,6 @@ export const FLEX_CONTENT_ALIGNMENT_BASE = [
 export type FlexAlignment = typeof FLEX_ALIGNMENT_BASE[number];
 export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
-type Direction = "row" | "column";
-
-type Separator = "start" | "center" | "end";
-
 export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
@@ -30,7 +27,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Establishes the main-axis, defining the direction children are placed.
    */
-  direction?: ResponsiveProp<Direction>;
+  direction?: ResponsiveProp<LayoutDirection>;
   /**
    * Controls the space between items.
    */
@@ -42,7 +39,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Adds a separator between elements.
    */
-  separators?: Separator | true;
+  separators?: LayoutSeparator | true;
   /**
    * Allow the items to wrap as needed.
    */
