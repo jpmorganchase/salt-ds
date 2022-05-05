@@ -1,23 +1,16 @@
 import {
   ElementType,
   HTMLAttributes,
-  useState,
   ReactNode,
   CSSProperties,
   forwardRef,
   useCallback,
-  useRef,
 } from "react";
 import cx from "classnames";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-  debounce,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Tooltip, TooltipProps } from "@jpmorganchase/uitk-lab";
 
-import { useForkRef } from "../utils";
-import { getComputedStyles } from "./getComputedStyles";
+import { useTruncation } from "./useTruncation";
 
 import "./Text.css";
 
@@ -35,13 +28,13 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   maxRows?: number;
   /**
-   * If 'false' then text will be displayed at 100% height and will show scrollbar if the parent restricts it's height.
-   * Defaults to 'true'
+   * If 'true', component will apply the logic for truncation. If 'false' then text will be displayed at 100% height and will show scrollbar if the parent restricts it's height.
+   * Defaults to 'false'
    */
   truncate?: boolean;
   /**
    * If 'true' it will show the Tooltip only if the text is truncated.
-   * Defaults to 'true'
+   * Defaults to 'false'
    */
   showTooltip?: boolean;
   /**
@@ -78,13 +71,15 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 const TOOLTIP_DELAY = 150;
 
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
-  {
+  { truncate = false, ...props },
+  ref
+) {
+  const {
     children,
     className,
     elementType = "div",
     maxRows,
-    showTooltip = true,
-    truncate = true,
+    showTooltip,
     expanded,
     onOverflowChange,
     tooltipProps,
@@ -92,135 +87,71 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     marginTop,
     marginBottom,
     ...restProps
-  },
-  ref
-) {
-  const [element, setElement] = useState<HTMLElement>();
-  const setContainerRef = useForkRef(ref, setElement);
-  const [rows, setRows] = useState<number | undefined>();
-  const isOverflowedRef = useRef(false);
-
-  // Overflow
-  const getRows = useCallback(() => {
-    let textRows;
-
-    if (element && truncate) {
-      const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = element;
-      const { lineHeight } = getComputedStyles(element);
-
-      if (maxRows === 0 || expanded) {
-        textRows = 0;
-      } else if (maxRows) {
-        textRows = maxRows;
-      } else if (expanded !== undefined) {
-        textRows = 1;
-      } else {
-        const parent = element.parentElement;
-
-        if (parent && !element.nextSibling && !element.previousSibling) {
-          const { width: widthParent, height: heightParent } =
-            getComputedStyles(parent);
-
-          if (
-            heightParent < scrollHeight ||
-            heightParent < offsetHeight ||
-            offsetWidth < scrollWidth ||
-            Math.ceil(widthParent) < scrollWidth
-          ) {
-            textRows = Math.floor(heightParent / lineHeight);
-          }
-        }
-      }
-
-      if (textRows) {
-        const rowsHeight = textRows * lineHeight;
-        const isOverflowed =
-          rowsHeight < offsetHeight || rowsHeight < scrollHeight;
-        if (isOverflowedRef.current !== isOverflowed) {
-          onOverflowChange && onOverflowChange(isOverflowed);
-          isOverflowedRef.current = isOverflowed;
-        }
-      }
-    }
-    return textRows;
-  }, [element, expanded, truncate, maxRows, onOverflowChange]);
-
-  // Observers
-  useIsomorphicLayoutEffect(() => {
-    const onResize = debounce(() => {
-      setRows(getRows());
-    });
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries.length > 0 && entries[0].target.isConnected) {
-        onResize();
-      }
-    });
-
-    const onScroll = debounce((entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (element && entry.isIntersecting) {
-          resizeObserver.observe(element);
-        } else {
-          resizeObserver.disconnect();
-        }
-      });
-    });
-
-    const scrollObserver = new IntersectionObserver(onScroll, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    });
-
-    if (element) {
-      scrollObserver.observe(element);
-    }
-
-    return () => {
-      scrollObserver.disconnect();
-    };
-  }, [element, getRows]);
-
-  // Tooltip
-  const hasTooltip =
-    element && rows && truncate && showTooltip && expanded === undefined;
+  } = props;
 
   // Rendering
   const Component: ElementType = elementType;
-  const content = (
+
+  const getTruncatingComponent = useCallback(() => {
+    const { element, hasTooltip, setContainerRef, rows } = useTruncation(
+      { maxRows, showTooltip, expanded, onOverflowChange },
+      ref
+    );
+
+    const truncatingComponent = (
+      <Component
+        className={cx(withBaseName(), className, {
+          [withBaseName("lineClamp")]: rows && !expanded,
+        })}
+        {...restProps}
+        tabIndex={hasTooltip ? 0 : -1}
+        ref={setContainerRef}
+        style={{
+          marginTop,
+          marginBottom,
+          ...style,
+          "--text-max-rows": rows,
+        }}
+      >
+        {children}
+      </Component>
+    );
+
+    // With Tooltip
+    if (hasTooltip) {
+      const tooltipTitle =
+        (typeof children === "string" ? children : element?.textContent) || "";
+
+      return (
+        <Tooltip
+          enterNextDelay={TOOLTIP_DELAY}
+          placement="top"
+          title={tooltipTitle}
+          {...tooltipProps}
+        >
+          {truncatingComponent}
+        </Tooltip>
+      );
+    }
+    return truncatingComponent;
+  }, [maxRows, showTooltip, expanded, onOverflowChange]);
+
+  const content = truncate ? (
+    getTruncatingComponent()
+  ) : (
     <Component
-      className={cx(withBaseName(), className, {
-        [withBaseName("lineClamp")]: rows && !expanded,
-        [withBaseName("overflow")]: !truncate,
-      })}
+      className={cx(withBaseName(), withBaseName("overflow"), className, {})}
       {...restProps}
-      tabIndex={hasTooltip ? 0 : -1}
-      ref={setContainerRef}
+      ref={ref}
       style={{
         marginTop,
         marginBottom,
         ...style,
-        "--text-max-rows": rows,
       }}
     >
       {children}
     </Component>
   );
 
-  const tooltipTitle =
-    typeof children === "string" ? children : element?.textContent || "";
-
-  return hasTooltip ? (
-    <Tooltip
-      enterNextDelay={TOOLTIP_DELAY}
-      placement="top"
-      title={tooltipTitle}
-      {...tooltipProps}
-    >
-      {content}
-    </Tooltip>
-  ) : (
-    content
-  );
+  return content;
 });

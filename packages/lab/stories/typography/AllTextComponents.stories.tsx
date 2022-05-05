@@ -31,14 +31,14 @@ const excludeProps = [
   "truncate",
   "expanded",
   "style",
-  "onOverflow",
+  "onOverflowChange",
   "marginTop",
   "marginBottom",
 ];
 
 //********** Body Text ***********/
 
-const BasicTextComponent: ComponentStory<typeof Text> = (props) => {
+const DefaultTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <Text>
@@ -56,8 +56,8 @@ const BasicTextComponent: ComponentStory<typeof Text> = (props) => {
   );
 };
 
-export const BasicText = BasicTextComponent.bind({});
-BasicText.parameters = {
+export const DefaultText = DefaultTextComponent.bind({});
+DefaultText.parameters = {
   controls: {
     exclude: excludeProps,
   },
@@ -65,7 +65,7 @@ BasicText.parameters = {
 
 //********** Div ***********/
 
-const DivTextComponent: ComponentStory<typeof Text> = (props) => {
+const DivTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <DivText>
@@ -92,7 +92,7 @@ Div.parameters = {
 
 //********** Span ***********/
 
-const SpanTextComponent: ComponentStory<typeof Text> = (props) => {
+const SpanTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <SpanText>
@@ -121,7 +121,7 @@ Span.parameters = {
 
 //********** Paragraph - P ***********/
 
-const PTextComponent: ComponentStory<typeof Text> = (props) => {
+const PTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <PText>
@@ -149,7 +149,7 @@ P.parameters = {
 
 //********** Code ***********/
 
-const CodeTextComponent: ComponentStory<typeof Text> = (props) => {
+const CodeTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <CodeText>
@@ -178,7 +178,7 @@ Code.parameters = {
 
 //********** Figure 1,2 and 3 ***********/
 
-const FigureTextComponent: ComponentStory<typeof Text> = (props) => {
+const FigureTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <Figure1>Figure 1</Figure1>
@@ -197,7 +197,7 @@ Figure.parameters = {
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 
-const HeadingsComponent: ComponentStory<typeof Text> = (args) => (
+const HeadingsComponent: ComponentStory<typeof Text> = () => (
   <>
     <div
       style={{
@@ -259,7 +259,7 @@ Headings.parameters = {
 
 //********** HelpText ***********/
 
-const HelpTextComponent: ComponentStory<typeof Text> = (props) => {
+const HelpTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <HelpTextComp>
@@ -286,7 +286,7 @@ HelpText.parameters = {
 
 //********** LabelCaption ***********/
 
-const LabelCaptionTextComponent: ComponentStory<typeof Text> = (props) => {
+const LabelCaptionTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <LabelCaptionText>
