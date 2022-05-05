@@ -16,8 +16,13 @@ describe("GIVEN an Input", () => {
     describe("WHEN the input is updated", () => {
       it("THEN should call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
+        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          changeSpy(event);
+        };
         cy.mount(
-          <Input defaultValue="The default value" onChange={changeSpy} />
+          <Input defaultValue="The default value" onChange={onChange} />
         );
         cy.findByRole("textbox").click().clear().type("new value");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
@@ -40,6 +45,8 @@ describe("GIVEN an Input", () => {
         function ControlledInput() {
           const [value, setValue] = useState("text value");
           const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+            // React 16 backwards compatibility
+            event.persist();
             setValue(event.target.value);
             changeSpy(event);
           };
