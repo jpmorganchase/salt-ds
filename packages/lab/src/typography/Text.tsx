@@ -79,7 +79,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     className,
     elementType = "div",
     maxRows,
-    showTooltip,
+    showTooltip = true,
     expanded,
     onOverflowChange,
     tooltipProps,
@@ -93,12 +93,12 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const Component: ElementType = elementType;
 
   const getTruncatingComponent = useCallback(() => {
-    const { element, hasTooltip, setContainerRef, rows } = useTruncation(
-      { maxRows, showTooltip, expanded, onOverflowChange },
+    const { setContainerRef, hasTooltip, tooltipTitle, rows } = useTruncation(
+      props,
       ref
     );
 
-    const truncatingComponent = (
+    const component = (
       <Component
         className={cx(withBaseName(), className, {
           [withBaseName("lineClamp")]: rows && !expanded,
@@ -117,24 +117,19 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       </Component>
     );
 
-    // With Tooltip
-    if (hasTooltip) {
-      const tooltipTitle =
-        (typeof children === "string" ? children : element?.textContent) || "";
-
-      return (
-        <Tooltip
-          enterNextDelay={TOOLTIP_DELAY}
-          placement="top"
-          title={tooltipTitle}
-          {...tooltipProps}
-        >
-          {truncatingComponent}
-        </Tooltip>
-      );
-    }
-    return truncatingComponent;
-  }, [maxRows, showTooltip, expanded, onOverflowChange]);
+    return hasTooltip ? (
+      <Tooltip
+        enterNextDelay={TOOLTIP_DELAY}
+        placement="top"
+        title={tooltipTitle}
+        {...tooltipProps}
+      >
+        {component}
+      </Tooltip>
+    ) : (
+      component
+    );
+  }, []);
 
   const content = truncate ? (
     getTruncatingComponent()

@@ -9,12 +9,25 @@ export const useTruncation = (
   props: TextProps,
   ref: ForwardedRef<HTMLElement>
 ) => {
-  const { maxRows, showTooltip, expanded, onOverflowChange } = props;
+  const {
+    children,
+    className,
+    elementType = "div",
+    maxRows,
+    showTooltip = true,
+    expanded,
+    onOverflowChange,
+    tooltipProps,
+    style,
+    marginTop,
+    marginBottom,
+    ...restProps
+  } = props;
 
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
-  const isOverflowedRef = useRef(false);
+  const isOverflowed = useRef(false);
 
   // Calculating Rows
   const getRows = useCallback(() => {
@@ -50,11 +63,11 @@ export const useTruncation = (
 
       if (textRows) {
         const rowsHeight = textRows * lineHeight;
-        const isOverflowed =
+        const hasOverflowed =
           rowsHeight < offsetHeight || rowsHeight < scrollHeight;
-        if (isOverflowedRef.current !== isOverflowed) {
-          onOverflowChange && onOverflowChange(isOverflowed);
-          isOverflowedRef.current = isOverflowed;
+        if (isOverflowed.current !== hasOverflowed) {
+          onOverflowChange && onOverflowChange(hasOverflowed);
+          isOverflowed.current = hasOverflowed;
         }
       }
     }
@@ -100,7 +113,13 @@ export const useTruncation = (
   }, [element, getRows]);
 
   // Has Tooltip
-  const hasTooltip = element && rows && showTooltip && expanded === undefined;
+  const hasTooltip =
+    rows && showTooltip && isOverflowed.current && expanded === undefined;
 
-  return { element, hasTooltip, setContainerRef, rows };
+  const tooltipTitle =
+    (hasTooltip &&
+      (typeof children === "string" ? children : element?.textContent)) ||
+    "";
+
+  return { setContainerRef, hasTooltip, tooltipTitle, rows };
 };
