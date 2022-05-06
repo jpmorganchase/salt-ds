@@ -30,7 +30,7 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <FlexContent style={{ ...parentChildItemStyles, minWidth: 200 }}>
+  <FlexContent style={{ ...parentChildItemStyles, minWidth: 150 }}>
     Parent
   </FlexContent>
 );
@@ -39,7 +39,7 @@ const child = <FlexContent style={parentChildItemStyles}>Child</FlexContent>;
 
 const Template: ComponentStory<typeof ParentChildLayout> = (args) => {
   return (
-    <div style={{ width: "90vw" }}>
+    <div style={{ width: "90vw", maxWidth: 800 }}>
       <ParentChildLayout {...args} parent={parent} child={child} />
     </div>
   );
@@ -68,7 +68,7 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
       <Button onClick={handleChild} disabled={currentView === "child"}>
         Show child
       </Button>
-      <div style={{ width: "50vw" }}>
+      <div style={{ width: "50vw", maxWidth: 800 }}>
         <ParentChildLayout
           {...args}
           stackedViewElement={currentView}
@@ -105,7 +105,7 @@ const cardStyles = { height: "100%" };
 const containerStyles = {
   border: "solid 1px lightgrey",
   padding: 16,
-  minWidth: "70vw",
+  minWidth: "60vw",
 };
 
 const stackedAtBreakpoint = "sm";
