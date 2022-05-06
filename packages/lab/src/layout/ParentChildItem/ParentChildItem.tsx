@@ -39,7 +39,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
       <FlexItem
         className={cx(className, withBaseName(), {
           [withBaseName(`slide-${direction}`)]: !disableAnimations,
-          [withBaseName("stacked")]: isStacked,
+          "uitkFlexItem-stacked ": isStacked,
         })}
         ref={ref}
         {...rest}

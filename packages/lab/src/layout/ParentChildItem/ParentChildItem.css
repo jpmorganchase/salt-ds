@@ -10,7 +10,3 @@
 .uitkParentChildItem-slide-right {
   animation: var(--uitk-animation-slide-in-right);
 }
-
-.uitkParentChildItem-stacked {
-  flex-grow: 2;
-}
