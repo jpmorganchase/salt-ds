@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
-import { capitalize, Tooltip } from "@jpmorganchase/uitk-lab";
+import { capitalize, Tooltip, useTooltip } from "@jpmorganchase/uitk-lab";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./ScopeLabel.css";
 
@@ -21,20 +20,28 @@ export const ScopeLabel = (props: ScopeLabelProps): ReactElement => {
   } else {
     label = props.scope + " mode";
   }
+
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "top-start",
+  });
+
   return (
-    <Tooltip
-      title={
-        label === "All modes"
-          ? "The below tokens apply to light and dark mode."
-          : label.includes("emphasis")
-          ? `The below tokens apply to ${props.scope.split("-")[2]} mode in ${
-              props.scope.split("-")[1]
-            } emphasis only.`
-          : `The below tokens apply to ${props.scope.toLowerCase()} mode only.`
-      }
-      placement="top-start"
-    >
-      <div className={cn(withBaseName())}>{capitalize(label) as string}</div>
-    </Tooltip>
+    <>
+      <Tooltip
+        {...getTooltipProps({
+          title:
+            label === "All modes"
+              ? "The below tokens apply to light and dark mode."
+              : label.includes("emphasis")
+              ? `The below tokens apply to ${
+                  props.scope.split("-")[2]
+                } mode in ${props.scope.split("-")[1]} emphasis only.`
+              : `The below tokens apply to ${props.scope.toLowerCase()} mode only.`,
+        })}
+      />
+      <div {...getTriggerProps({ className: withBaseName() })}>
+        {capitalize(label)}
+      </div>
+    </>
   );
 };

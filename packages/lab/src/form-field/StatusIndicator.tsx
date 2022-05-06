@@ -1,7 +1,7 @@
 import React, { ElementType } from "react";
 import cx from "classnames";
 import { IconProps } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps } from "../tooltip";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 // TODO: temporarily import from dialog internal before finding a better home
 import { StateIcon } from "../dialog/internal/StateIcon";
 
@@ -30,30 +30,34 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
     ...restProps
   } = props;
 
-  const icon = (
-    <StateIcon
-      state={state}
-      size={12}
-      {...restProps}
-      {...IconProps}
-      className={cx(
-        "uitkStatusIndicator-stateIcon",
-        className,
-        IconProps?.className
-      )}
-    />
-  );
-  return hasTooltip ? (
-    <TooltipComponent
-      hideIcon
-      placement="top"
-      state={state}
-      title={tooltipText}
-      {...TooltipProps}
-    >
-      {icon}
-    </TooltipComponent>
-  ) : (
-    icon
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "top",
+    disabled: !hasTooltip,
+  });
+
+  return (
+    <>
+      <TooltipComponent
+        {...getTooltipProps({
+          hideIcon: true,
+          state,
+          title: tooltipText,
+          ...TooltipProps,
+        })}
+      />
+      <StateIcon
+        {...getTriggerProps<typeof StateIcon>({
+          state,
+          size: 12,
+          ...restProps,
+          ...IconProps,
+          className: cx(
+            "uitkStatusIndicator-stateIcon",
+            className,
+            IconProps?.className
+          ),
+        })}
+      />
+    </>
   );
 };

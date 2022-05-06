@@ -12,7 +12,12 @@ import { useDropdown } from "./useDropdown";
 import "./Dropdown.css";
 import { Portal } from "../portal";
 import { useWindow } from "../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type MultiSelectDropdownProps<Item = string> = DropdownProps<
   Item,

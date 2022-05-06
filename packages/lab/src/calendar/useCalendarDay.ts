@@ -5,6 +5,7 @@ import {
   MouseEventHandler,
   FocusEventHandler,
   ComponentPropsWithoutRef,
+  useCallback,
 } from "react";
 import { useSelectionDay } from "./internal/useSelection";
 import { useFocusManagement } from "./internal/useFocusManagement";
@@ -61,11 +62,14 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
   const tabIndex = focused && !outOfRange ? 0 : -1;
   const today = dayjs().isSame(date, "day");
 
-  const registerDay = (day: Date, element: HTMLElement) => {
-    if (!outOfRange) {
-      registerDayRef(date, element);
-    }
-  };
+  const registerDay = useCallback(
+    (day: Date, element: HTMLElement) => {
+      if (!outOfRange) {
+        registerDayRef(date, element);
+      }
+    },
+    [date, outOfRange, registerDayRef]
+  );
 
   const unselectableResult =
     isDayUnselectable(date) || (outOfRange && !isDateNavigable(date, "month"));

@@ -4,14 +4,15 @@ import {
   useState,
   isValidElement,
   cloneElement,
+  useRef,
   ReactElement,
 } from "react";
-import * as ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import {
   ToolkitProvider,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { setRef, useForkRef } from "../utils";
+import { ownerDocument, useForkRef } from "../utils";
 
 export interface PortalProps {
   /**
@@ -19,52 +20,71 @@ export interface PortalProps {
    */
   children?: ReactNode;
   /**
-   * A HTML element, component instance, or function that returns either.
+   * An HTML element, component instance, or function that returns either.
    * The `container` will have the portal children appended to it.
    *
    * By default, it uses the body of the top-level document object,
    * so it's simply `document.body` most of the time.
    */
-  container?: Element;
-
+  container?: Element | (() => Element | null) | null;
   /**
    * Disable the portal behavior.
    * The children stay within it's parent DOM hierarchy.
    */
   disablePortal?: boolean;
+  /**
+   * If this node does not exist on the document, it will be created for you.
+   */
+  id?: string;
 }
+
+function getContainer(container: PortalProps["container"]) {
+  return typeof container === "function" ? container() : container;
+}
+
+const DEFAULT_ID = "portal-root";
 
 /**
  * Portals provide a first-class way to render children into a DOM node
  * that exists outside the DOM hierarchy of the parent component.
  */
-export const Portal = forwardRef(function Portal(
-  { children, container = document.body, disablePortal = false }: PortalProps,
+export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
+  {
+    children,
+    container: containerProp = document.body,
+    disablePortal = false,
+    id = DEFAULT_ID,
+  },
   ref
 ) {
-  const [mountNode, setMountNode] = useState<Element | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const portalRef = useRef<HTMLElement | null>(null);
   const handleRef = useForkRef(
     // @ts-ignore
     isValidElement(children) ? children.ref : null,
     ref
   );
 
-  useIsomorphicLayoutEffect(() => {
-    if (!disablePortal) {
-      setMountNode(container);
-    }
-  }, [container, disablePortal]);
+  const container = getContainer(containerProp) ?? document.body;
 
   useIsomorphicLayoutEffect(() => {
-    if (mountNode && !disablePortal) {
-      setRef(ref, mountNode);
-      return () => {
-        setRef(ref, null);
-      };
+    const root = ownerDocument(container).getElementById(id);
+
+    if (root) {
+      portalRef.current = root;
+    } else {
+      portalRef.current = ownerDocument(container).createElement("div");
+      portalRef.current.id = id;
     }
 
-    return undefined;
-  }, [ref, mountNode, disablePortal]);
+    const el = portalRef.current;
+
+    if (!container.contains(el)) {
+      container.appendChild(el);
+    }
+
+    setMounted(true);
+  }, [id, container]);
 
   if (disablePortal) {
     if (isValidElement(children)) {
@@ -75,10 +95,12 @@ export const Portal = forwardRef(function Portal(
     return children as ReactElement;
   }
 
-  return mountNode
-    ? ReactDOM.createPortal(
-        <ToolkitProvider>{children}</ToolkitProvider>,
-        mountNode
-      )
-    : mountNode;
+  if (mounted && portalRef.current && children) {
+    return createPortal(
+      <ToolkitProvider>{children}</ToolkitProvider>,
+      portalRef.current
+    );
+  }
+
+  return null;
 });

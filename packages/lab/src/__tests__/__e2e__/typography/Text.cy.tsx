@@ -72,10 +72,9 @@ describe("GIVEN a Text component with maxRows=2 and truncate=false", () => {
           {textExample}
         </Component>
       );
-      const textComponent = cy.get(".uitkText");
-      textComponent
+      cy.get(".uitkText")
         .should("not.have.class", "uitkText-lineClamp")
-        .should("not.have.css", "-webkit-line-clamp", "2");
+        .and("not.have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -87,16 +86,17 @@ describe("GIVEN a Text component with maxRows=2", () => {
       const Component = component;
 
       cy.mount(<Component maxRows={2}>{textExample}</Component>);
-      const textComponent = cy.get(".uitkText");
-      textComponent
+      cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
 
-      textComponent.focus();
-      cy.get('[role="tooltip"]').should("be.visible");
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
 
-      textComponent.trigger("mouseenter");
-      cy.get('[role="tooltip"]').should("be.visible");
+      cy.realPress("Escape");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("be.visible");
     });
   });
 });
@@ -112,13 +112,12 @@ describe("GIVEN a Text component with maxRows=2 and showTooltip=false ", () => {
           {textExample}
         </Component>
       );
-      const textComponent = cy.get(".uitkText");
-      textComponent
+      cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
 
-      textComponent.focus();
-      cy.get('[role="tooltip"]').should("not.exist");
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("not.exist");
     });
   });
 });
@@ -136,7 +135,7 @@ describe("GIVEN Text component with expanded=true and maxRows=2", () => {
       );
       cy.get(".uitkText")
         .should("not.have.class", "uitkText-lineClamp")
-        .should("not.have.css", "-webkit-line-clamp", "2");
+        .and("not.have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -154,7 +153,7 @@ describe("GIVEN Text component with expanded=false and maxRows=2", () => {
       );
       cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -168,7 +167,7 @@ describe("GIVEN Text component with expanded=true", () => {
       cy.mount(<Component expanded={false}>{textExample}</Component>);
       cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "1");
+        .and("have.css", "-webkit-line-clamp", "1");
     });
   });
 });

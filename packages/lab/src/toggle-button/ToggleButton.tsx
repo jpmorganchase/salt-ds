@@ -1,22 +1,17 @@
 import {
-  Children,
   forwardRef,
-  ReactElement,
   SyntheticEvent,
+  useCallback,
   useContext,
   useEffect,
+  useState,
   useRef,
 } from "react";
 import cx from "classnames";
-import {
-  makePrefixer,
-  Button,
-  ButtonProps,
-  Icon,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
 
 import { useForkRef } from "../utils";
-import { Tooltip } from "../tooltip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
@@ -38,8 +33,6 @@ export interface ToggleButtonProps extends ButtonProps {
   onToggle?: ToggleButtonToggleEventHandler;
 }
 
-const iconType = (<Icon />).type;
-
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   (props, ref) => {
     const {
@@ -56,9 +49,19 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       ...restProps
     } = props;
 
+    const [iconOnly, setIconOnly] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const setRef = useForkRef(ref, buttonRef);
     const groupContext = useContext(ToggleButtonGroupContext);
+
+    const handleIconOnlyButton = useCallback(
+      (button: HTMLButtonElement | null) => {
+        setIconOnly(
+          button?.querySelector(".uitkIcon") != null &&
+            button?.childElementCount === 1
+        );
+      },
+      [setIconOnly]
+    );
 
     const {
       register,
@@ -91,27 +94,19 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       }
     };
 
-    const getButtonWithTooltip = (button: ReactElement) =>
-      disableTooltip || (disabled && !focusableWhenDisabled) ? (
-        button
-      ) : (
-        <Tooltip
-          placement={orientation === "horizontal" ? "bottom" : "right"}
-          title={tooltipText}
-        >
-          {button}
-        </Tooltip>
-      );
-
     const tabIndex = toggled && !disabled ? 0 : -1;
 
-    return getButtonWithTooltip(
-      <Button
-        {...restProps}
-        aria-checked={toggled}
-        aria-label={ariaLabel}
-        aria-posinset={index !== undefined ? index + 1 : undefined}
-        className={cx(
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      disabled: disableTooltip,
+      placement: orientation === "horizontal" ? "bottom" : "right",
+    });
+
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
+      {
+        "aria-checked": toggled,
+        "aria-label": ariaLabel,
+        "aria-posinset": index !== undefined ? index + 1 : undefined,
+        className: cx(
           withBaseName(),
           withBaseName(orientation),
           {
@@ -119,20 +114,32 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
             [withBaseName("secondary")]: variant === "secondary",
             [withBaseName("toggled")]: toggled,
             [withBaseName("disabled")]: disabled,
-            [withBaseName("iconOnly")]:
-              Children.count(props.children) === 1 &&
-              (props.children as any)?.type === iconType,
+            [withBaseName("iconOnly")]: iconOnly,
           },
           className
-        )}
-        disabled={disabled}
-        focusableWhenDisabled={focusableWhenDisabled}
-        onClick={handleToggle}
-        ref={setRef}
-        role={groupContext ? "radio" : "checkbox"}
-        tabIndex={groupContext ? tabIndex : undefined}
-        variant={variant}
-      />
+        ),
+        onClick: handleToggle,
+        disabled,
+        focusableWhenDisabled,
+        role: groupContext ? "radio" : "checkbox",
+        tabIndex: groupContext ? tabIndex : undefined,
+        variant,
+        ...restProps,
+      }
+    );
+
+    const handleButtonRef = useForkRef(ref, buttonRef);
+    const handleIconOnlyButtonRef = useForkRef(
+      handleIconOnlyButton,
+      handleButtonRef
+    );
+    const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
+
+    return (
+      <>
+        <Tooltip {...getTooltipProps({ title: tooltipText })} />
+        <Button {...triggerProps} ref={handleRef} />
+      </>
     );
   }
 );
