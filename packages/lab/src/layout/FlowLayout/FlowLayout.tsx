@@ -21,7 +21,7 @@ export interface FlowLayoutProps {
    */
   separators?: LayoutSeparator | true;
   /**
-   * Allow the items to wrap as needed.
+   * Allow the items to wrap as needed, default is true.
    */
   wrap?: ResponsiveProp<boolean>;
 }
