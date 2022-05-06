@@ -9,7 +9,7 @@ export const useIsStacked = (stackedAtBreakpoint: keyof Breakpoints) => {
   const viewport = useViewport();
 
   const breakpoints = useBreakpoints();
-  const breakpointsKeys = Object.keys(useBreakpoints());
+  const breakpointsKeys = Object.keys(breakpoints);
 
   const index = breakpointsKeys.indexOf(stackedAtBreakpoint);
   const allPreviousBreakpoints = breakpointsKeys.slice(0, index + 1);
