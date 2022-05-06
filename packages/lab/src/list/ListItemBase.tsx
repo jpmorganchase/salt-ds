@@ -7,12 +7,12 @@ import {
   ForwardedRef,
   HTMLAttributes,
 } from "react";
-import classnames from "classnames";
+import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useForkRef, useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
 
-import { useTooltipContext } from "../tooltip";
+import { useTooltip, useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 
@@ -69,48 +69,53 @@ export const ListItemBase = memo(
       }
     }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
 
-    const renderItem = (): JSX.Element => (
-      <div
-        aria-label={typeof children === "string" ? children : undefined}
-        {...restProps}
-        className={classnames(
-          withBaseName(),
-          {
-            [withBaseName("deselectable")]: deselectable,
-            [withBaseName("highlighted")]: highlighted,
-            [withBaseName("selected")]: selected,
-            [withBaseName("focusVisible")]: focusVisible,
-            [withBaseName("disabled")]: disabled,
-          },
-          className
-        )}
-        ref={detectTruncation ? ref : setItemRef}
-      >
-        {detectTruncation ? (
-          <span className={withBaseName("textWrapper")} ref={overflowRef}>
-            {itemTextHighlightPattern == null ? (
-              children
-            ) : (
-              <Highlighter
-                matchPattern={itemTextHighlightPattern}
-                text={children}
-              />
-            )}
-          </span>
-        ) : (
-          children
-        )}
-      </div>
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      placement,
+      open: openTooltip,
+      disabled: !isOverflowed,
+    });
+
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+      "aria-label": typeof children === "string" ? children : undefined,
+      ...restProps,
+      className: cn(
+        withBaseName(),
+        {
+          [withBaseName("deselectable")]: deselectable,
+          [withBaseName("highlighted")]: highlighted,
+          [withBaseName("selected")]: selected,
+          [withBaseName("focusVisible")]: focusVisible,
+          [withBaseName("disabled")]: disabled,
+        },
+        className
+      ),
+    });
+
+    const handleRef = useForkRef(
+      triggerRef,
+      detectTruncation ? ref : setItemRef
     );
 
-    return isOverflowed ? (
+    return (
       <>
-        <Tooltip open={openTooltip} placement={placement} title={tooltipText}>
-          {renderItem()}
-        </Tooltip>
+        <Tooltip {...getTooltipProps({ title: tooltipText })} />
+        <div ref={handleRef} {...triggerProps}>
+          {detectTruncation ? (
+            <span className={withBaseName("textWrapper")} ref={overflowRef}>
+              {itemTextHighlightPattern == null ? (
+                children
+              ) : (
+                <Highlighter
+                  matchPattern={itemTextHighlightPattern}
+                  text={children}
+                />
+              )}
+            </span>
+          ) : (
+            children
+          )}
+        </div>
       </>
-    ) : (
-      renderItem()
     );
   })
 );

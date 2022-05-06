@@ -1,17 +1,10 @@
-/* Local CSS variables for Panel */
-.uitkPanel {
-  --panel-width: var(--uitkPanel-width, 100%);
-  --panel-height: var(--uitkPanel-height, auto);
-  --panel-padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
-}
-
 /* Styles applied to the root element */
 .uitkPanel {
   background: var(--uitkPanel-background, var(--uitk-container-background));
   box-sizing: border-box;
   color: var(--uitkPanel-color, var(--uitk-text-primary-color));
-  height: var(--panel-height);
+  height: var(--uitkPanel-height, auto);
   overflow: auto;
-  padding: var(--panel-padding);
-  width: var(--panel-width);
+  padding: var(--uitkPanel-padding, calc(var(--uitk-spacing-unit) * 3));
+  width: var(--uitkPanel-width, 100%);
 }

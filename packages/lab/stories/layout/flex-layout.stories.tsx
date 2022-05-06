@@ -10,6 +10,7 @@ import { FlexContent } from "./flex-item.stories";
 export default {
   title: "Layout/FlexLayout",
   component: FlexLayout,
+  subcomponents: { FlexItem },
 } as ComponentMeta<typeof FlexLayout>;
 
 const Template: ComponentStory<typeof FlexLayout> = (args) => {
@@ -53,3 +54,28 @@ ToolkitFlexLayout.argTypes = {
     type: "boolean",
   },
 };
+
+const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout
+      direction={{
+        xs: "column",
+        sm: "column",
+        md: "row",
+        lg: "row",
+        xl: "row",
+      }}
+      {...args}
+    >
+      {Array.from({ length: 12 }, (_, index) => (
+        <FlexItem grow={1} key={index}>
+          <FlexContent />
+        </FlexItem>
+      ))}
+    </FlexLayout>
+  );
+};
+export const ToolkitFlexLayoutResponsive = Responsive.bind({});
+ToolkitFlexLayoutResponsive.args = {};
+
+ToolkitFlexLayoutResponsive.argTypes = {};

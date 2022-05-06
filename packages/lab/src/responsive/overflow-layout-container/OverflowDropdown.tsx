@@ -15,7 +15,12 @@ import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
 import { useFloatingUI } from "../../popper";
 import { useWindow } from "../../window";
 import { Portal } from "../../portal";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export interface OverflowDropdownProps extends HTMLAttributes<HTMLDivElement> {}
 

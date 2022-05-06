@@ -11,18 +11,18 @@ export function checkAccessibility(stories: StoriesWithPartialProps<unknown>) {
         Component.parameters?.axe?.disabledRules ?? [];
       const shouldSkip: boolean = Component.parameters?.axe?.skip;
 
-      if (!shouldSkip) {
-        it(`Story "${name}", should not have an axe violations`, () => {
-          cy.mount(<Component />);
+      const testFunction = shouldSkip ? it.skip : it;
 
-          const rules = disabledRules.reduce((acc, rule) => {
-            acc[rule] = { enabled: false };
-            return acc;
-          }, {} as Required<Options>["rules"]);
+      testFunction(`Story "${name}", should not have an axe violations`, () => {
+        cy.mount(<Component />);
 
-          cy.checkAxeComponent({ rules }, true);
-        });
-      }
+        const rules = disabledRules.reduce((acc, rule) => {
+          acc[rule] = { enabled: false };
+          return acc;
+        }, {} as Required<Options>["rules"]);
+
+        cy.checkAxeComponent({ rules }, true);
+      });
     });
   });
 }

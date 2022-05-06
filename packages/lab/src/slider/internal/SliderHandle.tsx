@@ -1,8 +1,8 @@
-import { CSSProperties, HTMLAttributes } from "react";
+import { CSSProperties } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { getSliderAriaLabel } from "./utils";
-import { Tooltip } from "../../tooltip";
+import { Tooltip, useTooltip } from "../../tooltip";
 import "../Slider.css";
 
 const withBaseName = makePrefixer("uitkSliderHandle");
@@ -17,16 +17,10 @@ export interface SliderHandleProps {
   style: CSSProperties;
 }
 
-export function SliderHandle(props: SliderHandleProps) {
+export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { min, max, value, disabled, valueLength, index, style } = props;
 
-  const ariaAttributes: HTMLAttributes<HTMLDivElement> = {
-    "aria-valuemin": min,
-    "aria-valuemax": max,
-    "aria-valuenow": value,
-    "aria-disabled": disabled,
-    "aria-label": getSliderAriaLabel(valueLength, index),
-  };
+  const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
 
   return (
     <div
@@ -38,11 +32,21 @@ export function SliderHandle(props: SliderHandleProps) {
       style={style}
       role="slider"
       data-handle-index={index}
-      {...ariaAttributes}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={value}
+      aria-disabled={disabled}
+      aria-label={getSliderAriaLabel(valueLength, index)}
     >
-      <Tooltip placement="top" title={`${value}`} disablePortal>
-        <div className={cn(withBaseName("box"))} tabIndex={0} />
-      </Tooltip>
+      <Tooltip
+        {...getTooltipProps({ title: `${value}`, disablePortal: true })}
+      />
+      <div
+        {...getTriggerProps<"div">({
+          className: withBaseName("box"),
+          tabIndex: 0,
+        })}
+      />
     </div>
   );
 }

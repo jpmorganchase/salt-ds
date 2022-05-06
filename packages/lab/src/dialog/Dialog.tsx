@@ -80,7 +80,11 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     contentElementRef.current = node;
   }, []);
 
-  return open ? (
+  if (!open) {
+    return null;
+  }
+
+  return (
     <DialogContext.Provider value={{ state, dialogId, setContentElement }}>
       <Portal disablePortal={disablePortal}>
         <Scrim
@@ -108,5 +112,5 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
         </Scrim>
       </Portal>
     </DialogContext.Provider>
-  ) : null;
+  );
 });

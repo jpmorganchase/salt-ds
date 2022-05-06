@@ -7,6 +7,8 @@ import {
 } from "./story-layout/ColumnLayout";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
+import "./Card.stories.newapp-card.css";
+
 export default {
   title: "Lab/Card",
   component: Card,
@@ -98,4 +100,15 @@ export const All: ComponentStory<typeof Card> = () => (
       <Examples />
     </ToolkitProvider>
   </div>
+);
+
+export const CustomStyling: ComponentStory<typeof Card> = () => (
+  <>
+    <ToolkitProvider density="low" theme={["light", "newapp"]}>
+      <DefaultCard />
+    </ToolkitProvider>
+    <ToolkitProvider density="touch" theme={["dark", "newapp"]}>
+      <DefaultCard />
+    </ToolkitProvider>
+  </>
 );

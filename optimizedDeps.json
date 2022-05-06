@@ -4,8 +4,7 @@
       "include": [
         "@cypress/code-coverage/support",
         "@cypress/react",
-        "@floating-ui/core",
-        "@floating-ui/react-dom",
+        "@floating-ui/react-dom-interactions",
         "@storybook/addon-docs",
         "@storybook/addon-links/react",
         "@storybook/components",

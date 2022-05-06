@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, {
+import {
   useState,
   useRef,
   useCallback,
   useEffect,
   KeyboardEvent,
+  FC,
+  cloneElement,
+  ReactElement,
 } from "react";
 import classnames from "classnames";
 import { Button } from "@jpmorganchase/uitk-core";
@@ -81,7 +84,7 @@ function useControlledTooltip(
 }
 
 const renderToolbarField = (
-  tool: React.ReactElement,
+  tool: ReactElement,
   toolbarItemProps: any,
   tooltrayFieldProps: Partial<FormFieldProps>
 ) => {
@@ -117,7 +120,7 @@ const renderToolbarField = (
           {...tooltrayFieldProps}
           fullWidth={false}
         >
-          {React.cloneElement(visibleChild, {
+          {cloneElement(visibleChild, {
             ...itemProps,
             ...buttonProps,
             ...visibleChild.props,
@@ -136,13 +139,13 @@ const renderToolbarField = (
           ActivationIndicatorComponent={() => null}
           className={isButton ? "uitkToolbarButton" : undefined}
         >
-          {React.cloneElement(tool, { ...itemProps, ...buttonProps, ...props })}
+          {cloneElement(tool, { ...itemProps, ...buttonProps, ...props })}
         </FormField>
       );
   }
 };
 
-const OverflowPanelItem: React.FC<OverflowPanelItemProps> = (props) => {
+const OverflowPanelItem: FC<OverflowPanelItemProps> = (props) => {
   const {
     sourceItem,
     onKeyDown,
@@ -181,45 +184,26 @@ const OverflowPanelItem: React.FC<OverflowPanelItemProps> = (props) => {
         "uitkOverflowPanel-menuItemHover": !disabled && !blurSelected,
       };
 
-  const content = (contentProps: any = {}) => {
-    const toolbarButtonProps = {
-      className: classnames({
-        "uitkOverflowPanel-menuItemBlurSelected": blurSelected,
-        "uitkOverflowPanel-menuItemSelected": !disabled && isInteracted,
-        ...interactionClasses,
-      }),
-    };
-    const fieldItemProps = {
-      className: classnames("uitkOverflowPanel-fieldMenuItem"),
-    };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const toolbarItemProps = {
-      ...toolbarButtonProps,
-      ...fieldItemProps,
-      ...contentProps,
-    };
-    const tooltrayFieldProps = {
-      onClick: handleOnClick,
-      onKeyDown: handleOnKeyDown,
-    };
-    return renderToolbarField(sourceItem, toolbarItemProps, tooltrayFieldProps);
+  const toolbarButtonProps = {
+    className: classnames({
+      "uitkOverflowPanel-menuItemBlurSelected": blurSelected,
+      "uitkOverflowPanel-menuItemSelected": !disabled && isInteracted,
+      ...interactionClasses,
+    }),
   };
-
-  return hasToolTip ? (
-    <Tooltip
-      disableFocusListener
-      disableHoverListener
-      enterDelay={tooltipEnterDelay}
-      leaveDelay={tooltipLeaveDelay}
-      open={open}
-      placement="top"
-      // title={sourceItem.tooltip}
-    >
-      {content(tooltipMouseListeners)}
-    </Tooltip>
-  ) : (
-    content()
-  );
+  const fieldItemProps = {
+    className: classnames("uitkOverflowPanel-fieldMenuItem"),
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const toolbarItemProps = {
+    ...toolbarButtonProps,
+    ...fieldItemProps,
+  };
+  const tooltrayFieldProps = {
+    onClick: handleOnClick,
+    onKeyDown: handleOnKeyDown,
+  };
+  return renderToolbarField(sourceItem, toolbarItemProps, tooltrayFieldProps);
 };
 
 export default OverflowPanelItem;

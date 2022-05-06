@@ -11,9 +11,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip } from "../tooltip";
+import { Tooltip, useTooltip } from "../tooltip";
 import { useForkRef, useId } from "../utils";
 import {
   FormActivationIndicator,
@@ -187,6 +188,8 @@ export const useFormField = ({
   ];
 };
 
+const withBaseName = makePrefixer(classBase);
+
 export const FormField = forwardRef(
   (
     {
@@ -248,72 +251,81 @@ export const FormField = forwardRef(
       helperTextPlacement === "tooltip" &&
       !hasStatusIndicator;
 
-    const formField = (
-      <div
-        className={cx(classBase, className, {
-          [`uitkEmphasisLow`]: emphasis === "low",
-          [`uitkEmphasisMedium`]: emphasis === "medium",
-          [`uitkEmphasisHigh`]: emphasis === "high",
-          [`${classBase}-disabled`]: disabled,
-          [`${classBase}-readOnly`]: readOnly,
-          [`${classBase}-warning`]: isWarning,
-          [`${classBase}-error`]: isError,
-          [`${classBase}-fullWidth`]: fullWidth,
-          [`${classBase}-${focusClass}`]: states.focused,
-          [`${classBase}-labelTop`]: labelTop,
-          [`${classBase}-labelLeft`]: labelLeft,
-          [`${classBase}-withHelperText`]: inlineHelperText,
-        })}
-        {...eventHandlers}
-        {...restProps}
-        ref={useForkRef(ref, rootRef)}
-      >
-        <FormFieldContext.Provider
-          value={{
-            ...states,
-            ...dispatchers,
-            ...eventHandlers,
-            a11yProps: a11yValue,
-            inFormField: true,
-            ref: rootRef,
-          }}
-        >
-          {!!label && (
-            <LabelComponent
-              {...LabelProps}
-              validationState={validationState}
-              hasStatusIndicator={hasStatusIndicator}
-              StatusIndicatorProps={StatusIndicatorProps}
-              className={LabelProps.className}
-              label={label}
-              disabled={disabled}
-              readOnly={readOnly}
-              required={required}
-              tooltipText={helperText}
-              id={labelId}
-            />
-          )}
-          {children}
-          <ActivationIndicatorComponent
-            hasIcon={!hasStatusIndicator}
-            validationState={validationState}
-          />
-          {renderHelperText && (
-            <HelperTextComponent
-              helperText={helperText}
-              helperTextPlacement={helperTextPlacement}
-              {...HelperTextProps}
-              id={helperTextId}
-            />
-          )}
-        </FormFieldContext.Provider>
-      </div>
-    );
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      disabled: !tooltipHelperText,
+    });
 
-    if (tooltipHelperText) {
-      return <Tooltip title={helperText}>{formField}</Tooltip>;
-    } else {
-      return formField;
-    }
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+      className: cx(
+        withBaseName(),
+        {
+          uitkEmphasisLow: emphasis === "low",
+          uitkEmphasisMedium: emphasis === "medium",
+          uitkEmphasisHigh: emphasis === "high",
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("readOnly")]: readOnly,
+          [withBaseName("warning")]: isWarning,
+          [withBaseName("error")]: isError,
+          [withBaseName("fullWidth")]: fullWidth,
+          [withBaseName(focusClass)]: states.focused,
+          [withBaseName("labelTop")]: labelTop,
+          [withBaseName("labelLeft")]: labelLeft,
+          [withBaseName(`withHelperText`)]: inlineHelperText,
+        },
+        className
+      ),
+      ...eventHandlers,
+      ...restProps,
+    });
+
+    const handleTriggerRef = useForkRef(triggerRef, rootRef);
+    const handleRef = useForkRef(handleTriggerRef, ref);
+
+    return (
+      <>
+        <div ref={handleRef} {...triggerProps}>
+          <FormFieldContext.Provider
+            value={{
+              ...states,
+              ...dispatchers,
+              ...eventHandlers,
+              a11yProps: a11yValue,
+              inFormField: true,
+              ref: rootRef,
+            }}
+          >
+            {!!label && (
+              <LabelComponent
+                {...LabelProps}
+                validationState={validationState}
+                hasStatusIndicator={hasStatusIndicator}
+                StatusIndicatorProps={StatusIndicatorProps}
+                className={LabelProps.className}
+                label={label}
+                disabled={disabled}
+                readOnly={readOnly}
+                required={required}
+                tooltipText={helperText}
+                id={labelId}
+              />
+            )}
+            {children}
+            <ActivationIndicatorComponent
+              hasIcon={!hasStatusIndicator}
+              validationState={validationState}
+            />
+            {renderHelperText && (
+              <HelperTextComponent
+                helperText={helperText}
+                helperTextPlacement={helperTextPlacement}
+                {...HelperTextProps}
+                id={helperTextId}
+              />
+            )}
+          </FormFieldContext.Provider>
+        </div>
+        <Tooltip {...getTooltipProps({ title: helperText })} />
+      </>
+    );
   }
 );

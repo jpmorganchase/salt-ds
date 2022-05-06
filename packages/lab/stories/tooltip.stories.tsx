@@ -1,6 +1,12 @@
 import { Button } from "@jpmorganchase/uitk-core";
-import { Tooltip } from "@jpmorganchase/uitk-lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {
+  Tooltip,
+  TooltipProps,
+  useForkRef,
+  useTooltip,
+  UseTooltipProps,
+} from "@jpmorganchase/uitk-lab";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
@@ -8,11 +14,17 @@ export default {
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
-const Template: ComponentStory<typeof Tooltip> = (props) => (
-  <Tooltip {...props}>
-    <Button>Hover</Button>
-  </Tooltip>
-);
+const Template: Story<TooltipProps & UseTooltipProps> = (props) => {
+  const { title, state, ...rest } = props;
+  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+
+  return (
+    <>
+      <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
+      <Tooltip {...getTooltipProps({ title, state })} />
+    </>
+  );
+};
 
 export const Default = Template.bind({});
 Default.args = {
@@ -25,10 +37,19 @@ OpenTooltip.args = {
   open: true,
 };
 
-export const ScrollTooltip: ComponentStory<typeof Tooltip> = (props) => {
-  const handleScrollButton = useCallback((node) => {
+export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+  const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
+
+  const { title, ...rest } = props;
+  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+
+  const { ref, ...triggerProps } = getTriggerProps<typeof Button>({
+    style: { marginTop: "100vh", marginLeft: "100vw" },
+  });
+
+  const handleButtonRef = useForkRef(handleScrollButton, ref);
 
   return (
     <div
@@ -39,14 +60,10 @@ export const ScrollTooltip: ComponentStory<typeof Tooltip> = (props) => {
         width: "300vw",
       }}
     >
-      <Tooltip {...props}>
-        <Button
-          ref={handleScrollButton}
-          style={{ marginTop: "100vh", marginLeft: "100vw" }}
-        >
-          Hover
-        </Button>
-      </Tooltip>
+      <Button ref={handleButtonRef} {...triggerProps}>
+        Hover
+      </Button>
+      <Tooltip {...getTooltipProps({ title })} />
     </div>
   );
 };
@@ -56,191 +73,20 @@ ScrollTooltip.args = {
   placement: "top",
 };
 
-export const DefaultComposite: ComponentStory<typeof Tooltip> = () => {
-  return (
-    <span>
-      <p>`Regular` Tooltips displayed on different sides:</p>
+export const ErrorTooltip: ComponentStory<typeof Tooltip> = Template.bind({});
+ErrorTooltip.args = {
+  title: "We found an issue",
+  state: "error",
+};
 
-      <Tooltip placement="right" title="I am a tooltip">
-        <Button>Hover</Button>
-      </Tooltip>
+export const WarningTooltip: ComponentStory<typeof Tooltip> = Template.bind({});
+WarningTooltip.args = {
+  title: "Are you sure?",
+  state: "warning",
+};
 
-      <Tooltip placement="top" title="I am a tooltip">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="bottom" title="I am a tooltip">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="left" title="I am a tooltip">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <br />
-      <p>`Error` Tooltips displayed on different sides:</p>
-      <Tooltip state="error" title="We found an issue">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="top" state="error" title="We found an issue">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="bottom" state="error" title="We found an issue">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="left" state="error" title="We found an issue">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <br />
-      <p>`Warning` Tooltips displayed on different sides:</p>
-
-      <Tooltip state="warning" title="Are you sure?">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="top" state="warning" title="Are you sure?">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="bottom" state="warning" title="Are you sure?">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="left" state="warning" title="Are you sure?">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <br />
-      <p>`Success` Tooltips displayed on different sides:</p>
-
-      <Tooltip state="success" title="Well done">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="top" state="success" title="Well done">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="bottom" state="success" title="Well done">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <Tooltip placement="left" state="success" title="Well done">
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <br />
-      <p>Tooltips with titles displayed on different sides:</p>
-
-      <Tooltip
-        render={({ getTitleProps }) => (
-          <div>
-            <div {...getTitleProps()}>Hello, world</div>
-            This is a custom tooltip
-          </div>
-        )}
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="top"
-        render={({ getTitleProps }) => (
-          <div>
-            <div {...getTitleProps()}>Hello, world</div>
-            This is a custom tooltip
-          </div>
-        )}
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="bottom"
-        render={({ getTitleProps }) => (
-          <div>
-            <div {...getTitleProps()}>Hello, world</div>
-            This is a custom tooltip
-          </div>
-        )}
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="left"
-        render={({ getTitleProps }) => (
-          <div>
-            <div {...getTitleProps()}>Hello, world</div>
-            This is a custom tooltip
-          </div>
-        )}
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-
-      <br />
-      <p>Tooltips with titles &amp; states displayed on different sides:</p>
-
-      <Tooltip
-        render={({ getTitleProps, getIconProps, Icon }) => (
-          <>
-            <Icon {...getIconProps()} />
-            <div>
-              <div {...getTitleProps()}>Hello, world</div>
-              This is a custom tooltip
-            </div>
-          </>
-        )}
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="top"
-        render={({ getTitleProps, getIconProps, Icon }) => (
-          <>
-            <Icon {...getIconProps()} />
-            <div>
-              <div {...getTitleProps()}>Hello, world</div>
-              This is a custom tooltip
-            </div>
-          </>
-        )}
-        state="error"
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="bottom"
-        render={({ getTitleProps, getIconProps, Icon }) => (
-          <>
-            <Icon {...getIconProps()} />
-            <div>
-              <div {...getTitleProps()}>Hello, world</div>
-              This is a custom tooltip
-            </div>
-          </>
-        )}
-        state="success"
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-      <Tooltip
-        placement="left"
-        render={({ getTitleProps, getIconProps, Icon }) => (
-          <>
-            <Icon {...getIconProps()} />
-            <div>
-              <div {...getTitleProps()}>Hello, world</div>
-              This is a custom tooltip
-            </div>
-          </>
-        )}
-        state="warning"
-      >
-        <Button>Hover</Button>
-      </Tooltip>
-    </span>
-  );
+export const SuccessTooltip: ComponentStory<typeof Tooltip> = Template.bind({});
+SuccessTooltip.args = {
+  title: "Well done",
+  state: "success",
 };

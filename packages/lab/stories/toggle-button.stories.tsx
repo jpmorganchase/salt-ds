@@ -49,7 +49,7 @@ const ToggleButtonTemplate: ComponentStory<typeof ToggleButton> = ({
 export const DefaultButton = ToggleButtonTemplate.bind({});
 
 export const DisabledButton = ToggleButtonTemplate.bind({});
-DefaultButton.args = {
+DisabledButton.args = {
   disabled: true,
 };
 

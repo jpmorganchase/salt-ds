@@ -12,3 +12,9 @@
   grid-auto-columns: auto;
   grid-auto-rows: auto;
 }
+
+.uitkGridLayout-area {
+  grid-template: var(--grid-layout-grid-template);
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
+}

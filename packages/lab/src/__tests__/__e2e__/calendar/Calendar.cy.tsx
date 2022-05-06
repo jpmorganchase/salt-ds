@@ -209,7 +209,7 @@ describe("GIVEN a Calendar component", () => {
         name: formatDate(testDate),
       }).should("have.class", "uitkCalendarDay-hovered");
 
-      cy.get("body").realHover();
+      cy.get("body").realHover({ position: "topLeft" });
       cy.get(".uitkCalendarDay-hovered").should("not.exist");
     });
     it("SHOULD only allow one date to be selected at a time", () => {

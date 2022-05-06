@@ -1,55 +1,63 @@
+import { useEffect } from "react";
 import {
   autoUpdate,
   flip,
   limitShift,
   shift,
   useFloating,
-} from "@floating-ui/react-dom";
-import type { Placement, Strategy, Middleware } from "@floating-ui/core";
-import { useEffect } from "react";
+} from "@floating-ui/react-dom-interactions";
+import type { Props } from "@floating-ui/react-dom-interactions";
 
-export interface UseFloatingUIProps {
-  middleware?: Middleware[];
-  /**
-   * Controls placement of the popper.
-   */
-  placement: Placement;
-  strategy?: Strategy;
-}
+export type UseFloatingUIProps = Partial<
+  Pick<Props, "placement" | "strategy" | "middleware" | "open" | "onOpenChange">
+>;
 
 export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
   flip(),
   shift({ limiter: limitShift() }),
 ];
 
-export function useFloatingUI(props: UseFloatingUIProps) {
+export function useFloatingUI(
+  props: UseFloatingUIProps
+): ReturnType<typeof useFloating> {
   const {
     placement: placementProp,
     strategy: strategyProp,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
+    open,
+    onOpenChange,
   } = props;
 
   const { reference, floating, refs, update, ...rest } = useFloating({
     placement: placementProp,
     strategy: strategyProp,
     middleware,
+    open,
+    onOpenChange,
   });
 
   // Update on scroll and resize for all relevant nodes
   useEffect(() => {
-    if (!refs.reference.current || !refs.floating.current) {
-      return;
-    }
+    let cleanup;
 
-    return autoUpdate(refs.reference.current, refs.floating.current, update);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refs.reference.current, refs.floating.current, update]);
+    requestAnimationFrame(() => {
+      if (refs.reference.current && refs.floating.current && open) {
+        cleanup = autoUpdate(
+          refs.reference.current,
+          refs.floating.current,
+          update
+        );
+      }
+    });
+
+    return cleanup;
+  }, [refs.reference, refs.floating, update, open]);
 
   return {
     reference,
     floating,
-    update,
     refs,
+    update,
     ...rest,
   };
 }
