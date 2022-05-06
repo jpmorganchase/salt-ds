@@ -87,6 +87,49 @@ ToolkitParentChildLayoutStacked.args = {
 
 ToolkitParentChildLayoutStacked.argTypes = {};
 
+const ReducedMotion: ComponentStory<typeof ParentChildLayout> = (args) => {
+  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+
+  const handleParent = () => {
+    setCurrentView("parent");
+  };
+  const handleChild = () => {
+    setCurrentView("child");
+  };
+
+  return (
+    <>
+      <p>In order to test this on MacOS, follow these steps: </p>
+      <p>
+        Go to System Preferences, select the Accessibility category, select the
+        Display tab, and enable the Reduce Motion option.
+      </p>
+      <Button onClick={handleParent} disabled={currentView === "parent"}>
+        Show parent
+      </Button>
+      <Button onClick={handleChild} disabled={currentView === "child"}>
+        Show child
+      </Button>
+      <div style={{ width: "50vw", maxWidth: 800 }}>
+        <ParentChildLayout
+          {...args}
+          className="reduced-motion"
+          stackedViewElement={currentView}
+          parent={parent}
+          child={child}
+        />
+      </div>
+    </>
+  );
+};
+
+export const ToolkitParentChildLayoutReducedMotion = ReducedMotion.bind({});
+ToolkitParentChildLayoutReducedMotion.args = {
+  stackedAtBreakpoint: "xl",
+};
+
+ToolkitParentChildLayoutReducedMotion.argTypes = {};
+
 const useTabSelection = (initialValue?: any) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
   const handleTabSelection = (tabIndex: number) => {
