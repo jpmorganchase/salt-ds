@@ -1,9 +1,9 @@
 {
   "name": "@jpmorganchase/root",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
   "license": "MIT",
-  "private": true,
   "workspaces": [
     "packages/**",
     "tooling/**",
@@ -25,11 +25,6 @@
     "test:lab-components": "cypress run-ct --browser chrome --headless --config-file lab-cypress.json",
     "test:core-components:local": "cypress open-ct --browser chrome --config-file core-cypress.json",
     "test:lab-components:local": "cypress open-ct --browser chrome --config-file lab-cypress.json",
-    "release": "yarn publish:core && yarn publish:lab && yarn publish:icons && yarn publish:theme",
-    "publish:core": "npm publish ./dist/jpmorganchase-uitk-core",
-    "publish:lab": "npm publish ./dist/jpmorganchase-uitk-lab",
-    "publish:icons": "npm publish ./dist/jpmorganchase-uitk-icons",
-    "publish:theme": "npm publish ./dist/jpmorganchase-uitk-theme",
     "lint": "modular lint",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
