@@ -16,5 +16,8 @@
     "@types/react": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "directory": "../../dist/jpmorganchase-uitk-lab"
   }
 }

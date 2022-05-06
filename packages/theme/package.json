@@ -9,5 +9,8 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js"
+  },
+  "publishConfig": {
+    "directory": "../../dist/jpmorganchase-uitk-theme"
   }
 }
