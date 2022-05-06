@@ -62,7 +62,7 @@ describe("ColorChooser", () => {
     );
     cy.findByTestId("color-picker").should("be.visible");
   });
-  it("Sets hex inputs and rgb value inputs as undefined if rendered with undefined value", async () => {
+  it("Sets hex inputs and rgb value inputs as undefined if rendered with undefined value", () => {
     cy.mount(
       <ColorChooser
         color={undefined}
@@ -78,7 +78,7 @@ describe("ColorChooser", () => {
     cy.findAllByRole("g-input").should("have.value", undefined);
     cy.findAllByRole("b-input").should("have.value", undefined);
   });
-  it("Dismisses the overlay if Swatches tab is selected and Default is pressed", async () => {
+  it("Dismisses the overlay if Swatches tab is selected and Default is pressed", () => {
     cy.mount(
       <ColorChooser
         color={uitkColor}
@@ -93,7 +93,7 @@ describe("ColorChooser", () => {
     cy.findByTestId("swatches-picker").should("be.visible");
   });
 
-  it("ColorPicker should default to 0 if users leave alpha value empty", async () => {
+  it("ColorPicker should default to 0 if users leave alpha value empty", () => {
     cy.mount(
       <ColorChooser
         color={uitkColor}
@@ -107,7 +107,7 @@ describe("ColorChooser", () => {
     cy.findAllByRole("a-input").realType(" ");
     cy.findByRole("a-input").blur().should("have.value", "0");
   });
-  it("ColorPicker should default to 0 if users leave r/g/b value empty", async () => {
+  it("ColorPicker should default to 0 if users leave r/g/b value empty", () => {
     cy.mount(
       <ColorChooser
         color={uitkColor}
@@ -121,7 +121,7 @@ describe("ColorChooser", () => {
     cy.findByDisplayValue("209").realType(" ");
     cy.findByDisplayValue("209").blur().should("have.value", "0");
   });
-  it("Sets hex inputs and rgb value inputs correctly on the color picker panel after Default button is pressed with specific color value", async () => {
+  it("Sets hex inputs and rgb value inputs correctly on the color picker panel after Default button is pressed with specific color value", () => {
     cy.mount(
       <ColorChooser
         color={uitkColor}

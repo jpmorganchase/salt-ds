@@ -2146,7 +2146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:^3.9.11":
+"@cypress/code-coverage@npm:^3.9.12":
   version: 3.9.12
   resolution: "@cypress/code-coverage@npm:3.9.12"
   dependencies:
@@ -3144,7 +3144,7 @@ __metadata:
   resolution: "@jpmorganchase/root@workspace:."
   dependencies:
     "@changesets/cli": ^2.19.0
-    "@cypress/code-coverage": ^3.9.11
+    "@cypress/code-coverage": ^3.9.12
     "@cypress/react": ^5.10.3
     "@cypress/vite-dev-server": ^2.2.2
     "@floating-ui/react-dom-interactions": ^0.5.0
@@ -3163,6 +3163,7 @@ __metadata:
     "@testing-library/react": ^12.1.0
     "@testing-library/user-event": ^13.2.1
     "@types/classnames": ^2.2.11
+    "@types/cypress-image-snapshot": ^3.1.6
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
     "@types/node": ^14.14.20
@@ -3213,7 +3214,7 @@ __metadata:
     ts-node: ^10.4.0
     typescript: 4.6.4
     vite: ^2.9.0
-    vite-plugin-istanbul: ^2.5.1
+    vite-plugin-istanbul: ^2.7.3
     vite-plugin-optimize-persist: ^0.1.2
     vite-plugin-package-config: ^0.1.1
     vite-tsconfig-paths: ^3.4.1
@@ -5805,6 +5806,13 @@ __metadata:
   version: 1.0.7
   resolution: "@types/css-tree@npm:1.0.7"
   checksum: 65aa89e5c8c6f01374272373e783c42d91faf534dfff0c9959cada9916d8435e16805320ebe08559c4a458e034925455147770ad411423b6c1e3c0c2adb36fca
+  languageName: node
+  linkType: hard
+
+"@types/cypress-image-snapshot@npm:^3.1.6":
+  version: 3.1.6
+  resolution: "@types/cypress-image-snapshot@npm:3.1.6"
+  checksum: cd0128d330233702095dac1d2b4524c8bab9f9bc4070e27942e3e26e7701ec2f1d90faa7901bf335523160e4b9689eff9f6c192f30c0e90b9b846b8dde310ebc
   languageName: node
   linkType: hard
 
@@ -9271,7 +9279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.1":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -16532,6 +16540,19 @@ __metadata:
     istanbul-lib-coverage: ^3.2.0
     semver: ^6.3.0
   checksum: 8b82e733c69fe9f94d2e21f3e5760c9bedb110329aa75df4bd40df95f1cac3bf38767e43f35b125cc547ceca7376b72ce7d95cc5238b7e9088345c7b589233d3
+  languageName: node
+  linkType: hard
+
+"istanbul-lib-instrument@npm:^5.1.0":
+  version: 5.2.0
+  resolution: "istanbul-lib-instrument@npm:5.2.0"
+  dependencies:
+    "@babel/core": ^7.12.3
+    "@babel/parser": ^7.14.7
+    "@istanbuljs/schema": ^0.1.2
+    istanbul-lib-coverage: ^3.2.0
+    semver: ^6.3.0
+  checksum: 7c242ed782b6bf7b655656576afae8b6bd23dcc020e5fdc1472cca3dfb6ddb196a478385206d0df5219b9babf46ac4f21fea5d8ea9a431848b6cca6007012353
   languageName: node
   linkType: hard
 
@@ -26696,14 +26717,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-istanbul@npm:^2.5.1":
-  version: 2.5.1
-  resolution: "vite-plugin-istanbul@npm:2.5.1"
+"vite-plugin-istanbul@npm:^2.7.3":
+  version: 2.7.3
+  resolution: "vite-plugin-istanbul@npm:2.7.3"
   dependencies:
-    chalk: ^4.1.2
-    istanbul-lib-instrument: ^4.0.3
+    istanbul-lib-instrument: ^5.1.0
+    picocolors: ^1.0.0
     test-exclude: ^6.0.0
-  checksum: e49c7a2821a6e4b75f72454c671589fa9d88f5beb8ad547a1b2cbece3c5ce8171e67317f60c05bd398e760d27c73d7debef12b1d897bc634a5b23bdd21e2ff85
+  checksum: eda98bea4dd5df8b021f63351e4860356ef8a549211c2bf47e32bea45390714e0dd2f24cd9d989e3555df496325ff05a7ce0f7ccc86feda6e1e6b4170c58ff43
   languageName: node
   linkType: hard
 
