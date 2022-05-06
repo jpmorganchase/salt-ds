@@ -26,7 +26,7 @@ const withBaseName = makePrefixer("uitkParentChildItem");
 export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem(
     {
-      disableAnimations = true,
+      disableAnimations = false,
       direction,
       isStacked,
       children,
