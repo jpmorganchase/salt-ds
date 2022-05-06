@@ -100,8 +100,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
       ) : (
         <DropdownButton {...buttonProps} />
       )}
-      <Portal disablePortal={disablePortal} container={container}>
-        {rootRef.current && isOpen && (
+      {rootRef.current && isOpen && (
+        <Portal disablePortal={disablePortal} container={container}>
           <Window
             className={withBaseName("popper")}
             style={{
@@ -120,8 +120,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
               />
             </ListStateContext.Provider>
           </Window>
-        )}
-      </Portal>
+        </Portal>
+      )}
     </div>
   );
 }) as <Item = string>(

@@ -90,32 +90,35 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     );
 
     const Window = useWindow();
+
+    if (!open) {
+      return null;
+    }
+
     return (
       <Portal disablePortal={disablePortal} container={container}>
-        {open && (
-          <Window
-            className={cn(withBaseName(), withBaseName(state))}
-            ref={ref}
-            {...rest}
-          >
-            <div className={withBaseName("content")}>
-              {render ? (
-                render({
-                  Icon: (passedProps: IconProps) => getIcon(passedProps),
-                  getIconProps: () => defaultIconProps,
-                })
-              ) : (
-                <>
-                  {getIcon({})}
-                  <span className={withBaseName("body")}>{title}</span>
-                </>
-              )}
-            </div>
-            {!hideArrow && (
-              <div className={withBaseName("arrow")} {...arrowProps} />
+        <Window
+          className={cn(withBaseName(), withBaseName(state))}
+          ref={ref}
+          {...rest}
+        >
+          <div className={withBaseName("content")}>
+            {render ? (
+              render({
+                Icon: (passedProps: IconProps) => getIcon(passedProps),
+                getIconProps: () => defaultIconProps,
+              })
+            ) : (
+              <>
+                {getIcon({})}
+                <span className={withBaseName("body")}>{title}</span>
+              </>
             )}
-          </Window>
-        )}
+          </div>
+          {!hideArrow && (
+            <div className={withBaseName("arrow")} {...arrowProps} />
+          )}
+        </Window>
       </Portal>
     );
   }

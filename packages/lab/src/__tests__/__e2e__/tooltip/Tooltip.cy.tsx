@@ -14,12 +14,6 @@ describe("GIVEN a Tooltip", () => {
     cy.findByRole("tooltip").should("exist");
   });
 
-  // it("should not display if a title is not supplied", () => {
-  //   cy.mount(<OpenTooltip title="" />);
-  //
-  //   cy.findByRole("tooltip").should("not.exist");
-  // });
-
   describe("When the tooltip is shown by focus", () => {
     it("should be dismissible with Escape", () => {
       cy.mount(<Default />);

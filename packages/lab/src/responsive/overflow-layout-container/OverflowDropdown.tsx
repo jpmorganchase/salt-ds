@@ -60,8 +60,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
       <Button {...triggerProps}>
         <OverflowMenuIcon />
       </Button>
-      <Portal>
-        {isOpen ? (
+      {isOpen ? (
+        <Portal>
           <Window
             style={{
               top: y ?? "",
@@ -75,8 +75,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
               {children}
             </OverflowLayoutPanel>
           </Window>
-        ) : null}
-      </Portal>
+        </Portal>
+      ) : null}
     </div>
   );
 });

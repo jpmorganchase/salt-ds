@@ -177,8 +177,8 @@ export function DefaultComboBox<Item>(
         value={value}
         {...restInputProps}
       />
-      <Portal>
-        {rootRef.current && isListOpen && (
+      {rootRef.current && isListOpen && (
+        <Portal>
           <Window
             style={{
               top: y ?? "",
@@ -206,8 +206,8 @@ export function DefaultComboBox<Item>(
               </ListStateContext.Provider>
             </TooltipContext.Provider>
           </Window>
-        )}
-      </Portal>
+        </Portal>
+      )}
     </>
   );
 }

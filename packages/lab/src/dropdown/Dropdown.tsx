@@ -274,8 +274,8 @@ export const Dropdown = forwardRef(function Dropdown<
           ref={buttonRef}
         />
       )}
-      <Portal disablePortal={disablePortal} container={container}>
-        {rootRef.current && isOpen && (
+      {rootRef.current && isOpen && (
+        <Portal disablePortal={disablePortal} container={container}>
           <Window
             id={id}
             style={{
@@ -295,8 +295,8 @@ export const Dropdown = forwardRef(function Dropdown<
               />
             </ListStateContext.Provider>
           </Window>
-        )}
-      </Portal>
+        </Portal>
+      )}
     </div>
   );
 }) as <Item = string, Variant extends ListSingleSelectionVariant = "default">(

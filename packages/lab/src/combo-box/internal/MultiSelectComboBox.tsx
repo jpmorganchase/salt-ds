@@ -133,8 +133,8 @@ export function MultiSelectComboBox<Item>(
           {...restInputProps}
         />
       </TooltipContext.Provider>
-      <Portal>
-        {rootRef.current && isListOpen && (
+      {rootRef.current && isListOpen && (
+        <Portal>
           <Window
             ref={floating}
             style={{
@@ -162,8 +162,8 @@ export function MultiSelectComboBox<Item>(
               </ListStateContext.Provider>
             </TooltipContext.Provider>
           </Window>
-        )}
-      </Portal>
+        </Portal>
+      )}
     </>
   );
 }
