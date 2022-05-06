@@ -80,12 +80,12 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
 
     const borderLayoutStyles = {
       ...style,
-      "--border-layout-grid-template": gridTemplateAreas,
+      "--grid-layout-grid-template": gridTemplateAreas,
     };
 
     return (
       <GridLayout
-        className={cx(withBaseName(), className)}
+        className={cx(withBaseName(), className, "uitkGridLayout-area")}
         columns={numberOfColumns}
         gap={gap}
         style={borderLayoutStyles}

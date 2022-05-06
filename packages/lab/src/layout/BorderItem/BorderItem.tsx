@@ -45,13 +45,13 @@ export const BorderItem = forwardRef<HTMLDivElement, BorderItemProps>(
   ) {
     const gridItemStyles = {
       ...style,
-      "--border-item-grid-area": position,
+      "--grid-item-grid-area": position,
     };
 
     return (
       <GridItem
         ref={ref}
-        className={cx(withBaseName(), className, {
+        className={cx(withBaseName(), className, "uitkGridItem-area", {
           [withBaseName("sticky")]: sticky,
         })}
         style={gridItemStyles}

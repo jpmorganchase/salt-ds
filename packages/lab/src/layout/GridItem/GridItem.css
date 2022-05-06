@@ -6,3 +6,7 @@
   grid-row-end: var(--grid-item-row-end);
   grid-column-end: var(--grid-item-column-end);
 }
+
+.uitkGridItem-area {
+  grid-area: var(--grid-item-grid-area);
+}

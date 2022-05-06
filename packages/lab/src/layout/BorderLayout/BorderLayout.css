@@ -1,9 +1,2 @@
 .uitkBorderLayout {
-  --border-layout-grid-template: none;
-}
-
-.uitkBorderLayout {
-  grid-template: var(--border-layout-grid-template);
-  grid-template-columns: min-content 1fr min-content;
-  grid-template-rows: min-content 1fr min-content;
 }
