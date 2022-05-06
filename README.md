@@ -1,15 +1,12 @@
----
-title: Readme
----
 UITK provides you with a suite of UI components and a flexible theming system. With no customisation, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities. 
 We have included a theming system which allows you to easily create theme variations, or in fact substitute alternate themes. 
 
 The UITK has been developed with the following design goals:
 - Providing a comprehensive set of commonly-used UI controls
 - Complying with WCAG 2.1 accessibility guidelines
-- To be lighweight and performant
+- To be lightweight and performant
 - Offering flexible styling and theming support
-- Minimising dependencies on third-party libraries
+- Minimizing dependencies on third-party libraries
 
 # Installation
 
@@ -49,7 +46,7 @@ function App() {
 
 # Accessibility
 
-The UI toolkit is a complete, high-quality, and fully-conformant solution for building great, accessible experiences for your users.
+The UI toolkit is a high-quality, WCAG 2.1 compliant solution for building great, accessible experiences for your users.
 
 ## Screen reader support & compatibility
 
@@ -67,5 +64,5 @@ browsers, outlined in the table below.
 | Web Browser | Version |
 |-------------|---------|
 | Firefox | 38+ |
-| Chrome | 40+ |
+| Chrome, Edge | last 2 versions |
 
