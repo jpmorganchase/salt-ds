@@ -1,9 +1,6 @@
 /** Size */
 /* Think twice if you're using these directly. It's better to use density invariant ones below, e.g. `--uitk-size-regular-unit` */
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+:root {
   /* Do we need this? if so, does this name makes sense? */
   --uitk-size-basis-unit: 4px;
 

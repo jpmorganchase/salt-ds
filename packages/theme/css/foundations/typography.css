@@ -1,7 +1,4 @@
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+:root {
   --uitk-typography-font-family: uitk-sans;
 
   --uitk-typography-weight-light: 300;

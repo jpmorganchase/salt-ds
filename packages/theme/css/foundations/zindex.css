@@ -1,7 +1,4 @@
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+:root {
   --uitk-zindex-default: 1;
   --uitk-zindex-popout: 1000;
   --uitk-zindex-docked: 1050;

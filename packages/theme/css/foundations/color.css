@@ -1,11 +1,9 @@
-.uitk-light,
-.uitk-dark {
+:root {
   --uitk-color-white: rgb(255, 255, 255);
   --uitk-color-black: rgb(0, 0, 0);
 }
 
-.uitk-light,
-.uitk-dark {
+:root {
   /* Color palette will stay the same no matter of theming */
   --uitk-color-white: rgb(255, 255, 255);
   --uitk-color-black: rgb(0, 0, 0);

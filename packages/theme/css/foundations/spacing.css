@@ -1,8 +1,5 @@
 /** Spacing */
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+:root {
   --uitk-spacing-touch: 16px;
   --uitk-spacing-low: 12px;
   --uitk-spacing-medium: 8px;

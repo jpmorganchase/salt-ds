@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+:root {
   /* Used in container */
   --uitk-color-grey-20-fade-40: rgba(234, 237, 239, 0.4);
   --uitk-color-grey-600-fade-40: rgba(47, 49, 54, 0.4);
