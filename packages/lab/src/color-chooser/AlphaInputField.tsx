@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import {
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  useState,
+  useEffect,
+} from "react";
 import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Input } from "../input";
@@ -8,13 +14,15 @@ import "./RGBAInput.css";
 const withBaseName = makePrefixer("uitkColorChooser");
 
 interface AlphaInputProps {
+  "aria-label"?: string;
   alphaValue: number;
   showAsOpacity?: boolean;
-  onSubmit: (alpha: number, e?: React.ChangeEvent) => void;
+  onSubmit: (alpha: number, e?: ChangeEvent) => void;
 }
 
 export const AlphaInput = ({
   alphaValue,
+  "aria-label": ariaLabel,
   onSubmit,
   showAsOpacity = false,
 }: AlphaInputProps): JSX.Element => {
@@ -27,7 +35,7 @@ export const AlphaInput = ({
   }, [alphaValue]);
 
   const handleAlphaInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     value: string
   ): void => {
     value = value.replace("%", "");
@@ -48,9 +56,7 @@ export const AlphaInput = ({
     setAlphaInputValue(alpha);
   };
 
-  const handleKeyDownAlpha = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
+  const handleKeyDownAlpha = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const alpha =
         alphaInputValue.trim().replace("%", "") !== ""
@@ -62,7 +68,7 @@ export const AlphaInput = ({
     }
   };
 
-  const handleOnBlurAlpha = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurAlpha = (e: FocusEvent<HTMLInputElement>): void => {
     // Guard against parseFloat('') becoming NaN
     const alpha =
       alphaInputValue.trim() !== "" ? parseFloat(alphaInputValue) : 0;
@@ -74,7 +80,10 @@ export const AlphaInput = ({
 
   return (
     <Input
-      data-testid="a-input"
+      inputProps={{
+        // @ts-ignore
+        "aria-label": ariaLabel,
+      }}
       className={cn({
         [withBaseName("rgbaInput")]: !showAsOpacity,
         [withBaseName("opacityInput")]: showAsOpacity,

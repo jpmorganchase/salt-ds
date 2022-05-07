@@ -115,7 +115,7 @@ export const ColorChooserWithAlphaDisabled: ComponentStory<
     <ToolkitProvider density="high">
       <ColorChooser
         color={selectedColor}
-        disableAlphaChooser={true}
+        disableAlphaChooser
         onSelect={onSelect}
         onClear={onClear}
       />

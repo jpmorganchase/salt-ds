@@ -88,7 +88,9 @@ describe("ColorPicker", () => {
         onDialogClosed={onDialogClosedSpy}
       />
     );
-    expect(element.queryByTestId("a-input")).not.toBeInTheDocument();
+    expect(
+      element.queryByRole("textbox", { name: "Alpha" })
+    ).not.toBeInTheDocument();
   });
 
   it("ColorPicker should display the hex input without alpha if disableAlphaChooser is true", () => {
@@ -157,7 +159,9 @@ describe("ColorPicker", () => {
         onDialogClosed={onDialogClosedSpy}
       />
     );
-    expect(element.queryByTestId("a-input")).toBeInTheDocument();
+    expect(
+      element.queryByRole("textbox", { name: "Alpha" })
+    ).toBeInTheDocument();
   });
 
   it("ColorPicker should default alpha channel to 1 if user enters 6 digit hex value and alpha is enabled", () => {

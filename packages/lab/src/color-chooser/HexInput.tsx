@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import {
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  useState,
+  useEffect,
+} from "react";
 import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Input } from "../input";
@@ -11,7 +17,7 @@ const withBaseName = makePrefixer("uitkColorChooserHexInput");
 interface HexInputProps {
   hexValue: string | undefined;
   disableAlphaChooser: boolean;
-  onSubmit: (hex: string | undefined, e?: React.ChangeEvent) => void;
+  onSubmit: (hex: string | undefined, e?: ChangeEvent) => void;
 }
 
 export const HexInput = ({
@@ -28,7 +34,7 @@ export const HexInput = ({
   }, [hexValue]);
 
   const handleHexInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
     value: string
   ): void => {
     if (disableAlphaChooser && value.length < 7) {
@@ -39,13 +45,13 @@ export const HexInput = ({
     }
   };
 
-  const handleKeyDownHex = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDownHex = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       isValidHex(hexInputValue) && onSubmit(hexInputValue);
     }
   };
 
-  const handleOnBlurHex = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurHex = (e: FocusEvent<HTMLInputElement>): void => {
     isValidHex(hexInputValue) && onSubmit(hexInputValue, e);
   };
 
@@ -53,7 +59,9 @@ export const HexInput = ({
     <div className={cn(withBaseName())}>
       <span className={cn(withBaseName("hashSign"))}>#</span>
       <Input
-        data-testid="hex-input"
+        inputProps={{
+          "aria-label": "Hex",
+        }}
         className={cn(withBaseName("input"))}
         value={hexInputValue?.toString().replace("#", "").toUpperCase() ?? ""}
         onChange={handleHexInputChange}

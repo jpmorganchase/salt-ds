@@ -187,7 +187,10 @@ export const ColorChooser = ({
             className={cn(withBaseName("defaultButton"))}
             onClick={onDefaultSelected}
           >
-            <RefreshIcon className={cn(withBaseName("refreshIcon"))} />
+            <RefreshIcon
+              aria-hidden
+              className={cn(withBaseName("refreshIcon"))}
+            />
             Default
           </Button>
           <DictTabs

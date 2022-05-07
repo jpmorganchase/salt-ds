@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { AlphaInput } from "./AlphaInputField";
@@ -48,9 +49,10 @@ export const Swatches = ({
       <div>
         <span className={cn(withBaseName("alphaTextDiv"))}>Opacity:</span>
         <AlphaInput
+          aria-label="Opacity"
           alphaValue={color?.rgba.a === 0 ? 0 : alpha}
           showAsOpacity={true}
-          onSubmit={(alpha: number, e?: React.ChangeEvent): void => {
+          onSubmit={(alpha: number, e?: ChangeEvent): void => {
             const newColor = color?.setAlpha(alpha);
             handleColorChange(newColor, false, e);
           }}

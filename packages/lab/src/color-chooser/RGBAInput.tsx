@@ -31,7 +31,7 @@ export const RGBAInput = ({
     <>
       <span className={cn(withBaseName("textDivOverrides"))}>{rgbaText}</span>
       {["r", "g", "b"].map((value) => (
-        <div className={withBaseName("rgbaInputDiv")}>
+        <div key={value} className={withBaseName("rgbaInputDiv")}>
           <span className={withBaseName("rgbaText")}>
             {value.toUpperCase()}
           </span>
@@ -46,6 +46,7 @@ export const RGBAInput = ({
         <div className={cn(withBaseName("rgbaInputDiv"))}>
           <span className={cn(withBaseName("rgbaText"))}>A</span>
           <AlphaInput
+            aria-label="Alpha"
             alphaValue={parseFloat(rgbaValue.a.toFixed(2))}
             onSubmit={onSubmitAlpha}
           />

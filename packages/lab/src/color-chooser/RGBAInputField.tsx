@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  FocusEvent,
+  useState,
+  useEffect,
+} from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Input } from "../input";
 import { RGBAValue } from "./Color";
@@ -6,11 +12,18 @@ import { RGBAValue } from "./Color";
 import "./RGBAInput.css";
 
 const withBaseName = makePrefixer("uitkColorChooser");
+
 interface RGBInputProps {
   rgbaValue: RGBAValue;
   value: "r" | "g" | "b";
-  onSubmit: (rgb: RGBAValue, e?: React.ChangeEvent) => void;
+  onSubmit: (rgb: RGBAValue, e?: ChangeEvent) => void;
 }
+
+const nameMapping: Record<RGBInputProps["value"], string> = {
+  r: "Red",
+  g: "Green",
+  b: "Blue",
+};
 
 export const RGBInput = ({
   rgbaValue,
@@ -26,7 +39,7 @@ export const RGBInput = ({
   }, [rgbaValue, value]);
 
   const handleRGBInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     value: string
   ): void => {
     let rgb: string | number;
@@ -40,7 +53,7 @@ export const RGBInput = ({
     setRgbaInputValue(rgb);
   };
 
-  const handleKeyDownRGB = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDownRGB = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const newRgb = { ...rgbaValue, [value]: e.currentTarget.value };
       const validatedRgb = {
@@ -54,7 +67,7 @@ export const RGBInput = ({
     }
   };
 
-  const handleOnBlurRGB = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurRGB = (e: FocusEvent<HTMLInputElement>): void => {
     const newRgb = { ...rgbaValue, [value]: e.target.value };
     const validatedRgb = {
       r: Math.max(0, Math.min(newRgb.r, 255)),
@@ -68,7 +81,10 @@ export const RGBInput = ({
 
   return (
     <Input
-      data-testid={`${value}-input`}
+      inputProps={{
+        // @ts-ignore
+        "aria-label": nameMapping[value],
+      }}
       className={withBaseName("rgbaInput")}
       value={rgbaInputValue.toString()}
       onChange={handleRGBInputChange}
