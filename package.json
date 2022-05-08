@@ -93,7 +93,7 @@
     "is-ci": "^3.0.0",
     "modular-scripts": "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch",
     "no-scroll": "^2.1.1",
-    "prettier": "^2.2.1",
+    "prettier": "^2.6.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-color": "^2.19.3",
