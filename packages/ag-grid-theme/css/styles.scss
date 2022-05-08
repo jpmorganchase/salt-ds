@@ -1,0 +1,93 @@
+@import "~ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+// ag-grid.scss defines structural styles and should be imported first
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+
+// .uitk-light .ag-theme-uitk
+.ag-theme-uitk-light {
+  @include ag-theme-alpine(
+    (
+      foreground-color: var(--uitk-text-primary-color),
+      disabled-foreground-color: var(--uitk-text-primary-color-disabled),
+
+      background-color: var(--uitk-container-background),
+
+      header-background-color: null,
+
+      selected-row-background-color: var(--uitk-color-blue-20),
+
+      odd-row-background-color: null,
+      // Background color of the overlay shown over the grid when it is covered by an overlay, e.g. a data loading indicator.
+      modal-overlay-background-color: var(--uitk-overlayable-scrim-background),
+
+      // Colour for the "chip" that repersents a column that has been dragged onto a drop zone
+      chip-background-color: null,
+
+      /// BORDERS
+
+      border-color: var(--uitk-container-border-color),
+
+      // Visible marker for resizeable columns. Displays in the same position as the column separator, but only when the column is resizeable. For best UX, use either this or header-column-separator but not both
+
+      header-column-resize-handle-color: var(--uitk-color-grey-30),
+
+      /// INPUT
+
+      input-disabled-background-color: var(--uitk-color-grey-20),
+      // --uitk-editable-border-color
+      input-disabled-border-color:
+        rgba(132, 135, 142, var(--uitk-disabled-graphical-opacity)),
+
+      // FIXME: definately not the right way to do, but suspecting .uitk-density-xyz would suffer the same problem of theme
+      // Also can't use variable, ag theme `height` would throw exception
+      row-height: 24,
+
+      font-family: var(--uitk-typography-font-family)
+    )
+  );
+}
+
+// .uitk-dark .ag-theme-uitk {
+.ag-theme-uitk-dark {
+  @include ag-theme-alpine(
+    (
+      foreground-color: var(--uitk-text-primary-color),
+      disabled-foreground-color: var(--uitk-text-primary-color-disabled),
+
+      header-background-color: null,
+
+      selected-row-background-color: var(--uitk-color-blue-600),
+
+      background-color: var(--uitk-container-background),
+
+      odd-row-background-color: null,
+      // Background color of the overlay shown over the grid when it is covered by an overlay, e.g. a data loading indicator.
+      modal-overlay-background-color: var(--uitk-overlayable-scrim-background),
+
+      // Colour for the "chip" that repersents a column that has been dragged onto a drop zone
+      chip-background-color: null,
+
+      /// BORDERS
+
+      border-color: var(--uitk-container-border-color),
+
+      // Visible marker for resizeable columns. Displays in the same position as the column separator, but only when the column is resizeable. For best UX, use either this or header-column-separator but not both
+
+      header-column-resize-handle-color: var(--uitk-color-grey-400),
+
+      /// INPUT
+
+      input-disabled-background-color:  var(--uitk-color-grey-900),
+      // --uitk-editable-border-color
+      input-disabled-border-color:
+        rgba(116, 119, 127, var(--uitk-disabled-graphical-opacity)),
+
+      // FIXME: definately not the right way to do, but suspecting .uitk-density-xyz would suffer the same problem of theme
+      // Also can't use variable, ag theme `height` would throw exception
+      row-height: 24,
+
+      font-family: var(--uitk-typography-font-family),
+    )
+  );
+}

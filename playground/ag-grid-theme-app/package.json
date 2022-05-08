@@ -1,0 +1,11 @@
+{
+  "name": "@jpmorganchase/ag-grid-theme-app",
+  "version": "0.1.0",
+  "private": true,
+  "modular": {
+    "type": "app"
+  },
+  "dependencies": {
+    "@jpmorganchase/uitk-ag-grid-theme": ">=0.1.0"
+  }
+}
