@@ -3065,7 +3065,7 @@ __metadata:
     is-ci: ^3.0.0
     modular-scripts: "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch"
     no-scroll: ^2.1.1
-    prettier: ^2.2.1
+    prettier: ^2.6.2
     prop-types: ^15.7.2
     react: ^17.0.1
     react-color: ^2.19.3
@@ -20954,12 +20954,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.2.1":
-  version: 2.5.1
-  resolution: "prettier@npm:2.5.1"
+"prettier@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "prettier@npm:2.6.2"
   bin:
     prettier: bin-prettier.js
-  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
+  checksum: 48d08dde8e9fb1f5bccdd205baa7f192e9fc8bc98f86e1b97d919de804e28c806b0e6cc685e4a88211aa7987fa9668f30baae19580d87ced3ed0f2ec6572106f
   languageName: node
   linkType: hard
 
