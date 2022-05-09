@@ -417,8 +417,8 @@ const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldProps>) => {
       // statusIndicatorContent={['Message 1', 'Message 2']}
       StatusIndicatorProps={{
         TooltipProps: {
-          render: ({ getTitleProps }) => (
-            <div {...getTitleProps()}>
+          render: () => (
+            <div>
               <div>Message 1</div>
               <div>Message 2</div>
             </div>

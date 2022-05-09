@@ -25,7 +25,12 @@ import { useForkRef } from "../../utils";
 import { TooltipContext, TooltipContextProps } from "../../tooltip";
 import { Portal } from "../../portal";
 import { Window } from "../../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type BaseComboBoxProps<
   Item,

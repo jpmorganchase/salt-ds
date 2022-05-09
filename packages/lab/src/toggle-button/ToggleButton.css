@@ -46,19 +46,19 @@
   --uitk-actionable-cta-background: var(--uitk-color-blue-600);
 }
 
-.uitk-touch-density .uitkToggleButton {
+.uitk-density-touch .uitkToggleButton {
   --toggle-button-icon-padding: 11px;
 }
 
-.uitk-low-density .uitkToggleButton {
+.uitk-density-low .uitkToggleButton {
   --toggle-button-icon-padding: 7px;
 }
 
-.uitk-medium-density .uitkToggleButton {
+.uitk-density-medium .uitkToggleButton {
   --toggle-button-icon-padding: 5px;
 }
 
-.uitk-high-density .uitkToggleButtonGroup {
+.uitk-density-high .uitkToggleButton {
   --toggle-button-icon-padding: 1px;
 }
 

@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, ChangeEvent } from "react";
 import cn from "classnames";
-import { Overlay } from "../overlay";
+import { Overlay, useOverlay } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import { RefreshIcon } from "@jpmorganchase/uitk-icons";
 import { Color } from "./Color";
@@ -54,7 +54,7 @@ export interface ColorChooserProps {
   onSelect: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    event?: ChangeEvent
   ) => void;
   placeholder?: string;
   buttonProps?: Partial<ButtonProps>;
@@ -80,12 +80,6 @@ export const ColorChooser = ({
   displayHexOnly = false,
 }: ColorChooserProps): JSX.Element => {
   const [open, setOpen] = useState(false);
-  const [node, setNode] = useState();
-  const setRef = useCallback((node) => {
-    if (node) {
-      setNode(node);
-    }
-  }, []);
 
   const allColors: string[][] = UITKColorOverrides
     ? getColorPalettes(UITKColorOverrides)
@@ -98,10 +92,7 @@ export const ColorChooser = ({
         UITKColorOverrides
       );
 
-  const handleClickButton = (): void => {
-    setOpen(true);
-  };
-  const handleClose = (): void => setOpen(false);
+  const handleOpenChange = (open: boolean) => setOpen(open);
 
   const alphaForTabs = isTransparent(color?.hex)
     ? defaultAlpha
@@ -128,7 +119,7 @@ export const ColorChooser = ({
   const onDefaultSelected = (): void => {
     if (activeTab === 0 && showSwatches) {
       onClear();
-      handleClose();
+      handleOpenChange(false);
     } else {
       onClear();
     }
@@ -137,17 +128,24 @@ export const ColorChooser = ({
     setActiveTab(index);
   };
 
+  const { getTriggerProps, getOverlayProps } = useOverlay({
+    placement: "bottom",
+    open,
+    onOpenChange: handleOpenChange,
+  });
+
   return (
     <>
       <Button
-        className={cn(withBaseName("overlayButton"), {
-          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+        {...getTriggerProps<typeof Button>({
+          className: cn(withBaseName("overlayButton"), {
+            [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+          }),
+          // @ts-ignore
+          "data-testid": "color-chooser-overlay-button",
+          disabled: readOnly,
+          ...buttonProps,
         })}
-        data-testid="color-chooser-overlay-button"
-        disabled={readOnly}
-        ref={setRef}
-        onClick={handleClickButton}
-        {...buttonProps}
       >
         {color && (
           <div
@@ -170,14 +168,14 @@ export const ColorChooser = ({
         )}
       </Button>
       <Overlay
-        adaExceptions={{ showClose: false }}
-        data-testid="color-chooser-overlay"
-        className={cn(withBaseName("overlayButtonClose"))}
-        anchorEl={node}
-        onClose={handleClose}
-        // onBackdropClick={(e): void => onSelect(initialColor, true, e)}
-        open={open}
-        placement={"bottom"}
+        {...getOverlayProps({
+          adaExceptions: {
+            showClose: false,
+          },
+          // @ts-ignore
+          "data-testid": "color-chooser-overlay",
+          className: cn(withBaseName("overlayButtonClose")),
+        })}
       >
         <div
           className={cn(withBaseName("overlayContent"))}

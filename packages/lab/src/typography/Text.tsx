@@ -14,7 +14,7 @@ import {
   useIsomorphicLayoutEffect,
   debounce,
 } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps } from "@jpmorganchase/uitk-lab";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
@@ -74,8 +74,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   marginBottom?: number;
 }
-
-const TOOLTIP_DELAY = 150;
 
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   {
@@ -188,39 +186,48 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 
   // Rendering
   const Component: ElementType = elementType;
-  const content = (
-    <Component
-      className={cx(withBaseName(), className, {
-        [withBaseName("lineClamp")]: rows && !expanded,
-        [withBaseName("overflow")]: !truncate,
-      })}
-      {...restProps}
-      tabIndex={hasTooltip ? 0 : -1}
-      ref={setContainerRef}
-      style={{
-        marginTop,
-        marginBottom,
-        ...style,
-        "--text-max-rows": rows,
-      }}
-    >
-      {children}
-    </Component>
-  );
 
   const tooltipTitle =
     typeof children === "string" ? children : element?.textContent || "";
 
-  return hasTooltip ? (
-    <Tooltip
-      enterNextDelay={TOOLTIP_DELAY}
-      placement="top"
-      title={tooltipTitle}
-      {...tooltipProps}
-    >
-      {content}
-    </Tooltip>
-  ) : (
-    content
+  const { getTooltipProps, getTriggerProps } = useTooltip({
+    enterDelay: 150,
+    placement: "top",
+    disabled: !hasTooltip,
+  });
+
+  const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+    className: cx(
+      withBaseName(),
+      {
+        [withBaseName("lineClamp")]: rows && !expanded,
+        [withBaseName("overflow")]: !truncate,
+      },
+      className
+    ),
+    ...restProps,
+    tabIndex: hasTooltip ? 0 : -1,
+    style: {
+      marginTop,
+      marginBottom,
+      ...style,
+      "--text-max-rows": rows,
+    } as CSSProperties,
+  });
+
+  const handleRef = useForkRef(triggerRef, setContainerRef);
+
+  return (
+    <>
+      <Component {...triggerProps} ref={handleRef}>
+        {children}
+      </Component>
+      <Tooltip
+        {...getTooltipProps({
+          title: tooltipTitle,
+          ...tooltipProps,
+        })}
+      />
+    </>
   );
 });

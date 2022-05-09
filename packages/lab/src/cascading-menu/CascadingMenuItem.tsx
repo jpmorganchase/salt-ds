@@ -3,7 +3,6 @@ import {
   useRef,
   useState,
   useEffect,
-  useCallback,
   MouseEvent,
   KeyboardEvent,
 } from "react";
@@ -13,9 +12,10 @@ import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 
 import { MenuDescriptor } from "./CascadingMenuProps";
 import { ListItem, ListItemProps } from "../list";
-import { Tooltip } from "../tooltip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./CascadingMenuItem.css";
+import { useForkRef } from "../utils";
 
 const noop = () => undefined;
 const withBaseName = makePrefixer("uitkMenuItem");
@@ -35,72 +35,6 @@ const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
     return null;
   }
 };
-
-function useControlledTooltip(
-  predicate: () => boolean,
-  isNavigatingWithKeyboard: boolean,
-  tooltipEnterDelay: number,
-  tooltipLeaveDelay: number
-) {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-
-  const tooltipKeyboardTimer = useRef<number>();
-  const tooltipMouseHoverTimer = useRef<number>();
-  const tooltipMouseLeaveTimer = useRef<number>();
-  const clearTimeouts = () => {
-    clearTimeout(tooltipKeyboardTimer.current);
-    clearTimeout(tooltipMouseHoverTimer.current);
-    clearTimeout(tooltipMouseLeaveTimer.current);
-  };
-  useEffect(() => () => clearTimeouts(), []);
-
-  // TODO This is not concurrent mode safe due to writing to a ref during render.
-  if (isNavigatingWithKeyboard) {
-    if (predicate()) {
-      clearTimeouts();
-      if (tooltipEnterDelay) {
-        tooltipKeyboardTimer.current = window.setTimeout(() => {
-          setTooltipOpen(true);
-        }, tooltipEnterDelay);
-      } else {
-        setTooltipOpen(true);
-      }
-    } else {
-      clearTimeouts();
-      if (tooltipOpen) {
-        setTooltipOpen(false);
-      }
-    }
-  }
-
-  const onMouseOver = useCallback(() => {
-    clearTimeouts();
-    if (tooltipEnterDelay) {
-      tooltipMouseHoverTimer.current = window.setTimeout(() => {
-        setTooltipOpen(true);
-      }, tooltipEnterDelay);
-    } else {
-      setTooltipOpen(true);
-    }
-  }, [tooltipEnterDelay]);
-
-  const onMouseLeave = useCallback(() => {
-    clearTimeouts();
-    if (tooltipLeaveDelay) {
-      tooltipMouseLeaveTimer.current = window.setTimeout(() => {
-        setTooltipOpen(false);
-      }, tooltipLeaveDelay);
-    } else {
-      setTooltipOpen(false);
-    }
-  }, [tooltipLeaveDelay]);
-
-  return {
-    open: tooltipOpen,
-    onMouseOver,
-    onMouseLeave,
-  };
-}
 
 export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
   blurSelected: boolean;
@@ -122,74 +56,76 @@ export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
   tooltipLeaveDelay: number;
 }
 
-export const DefaultMenuItem = forwardRef<HTMLElement, MenuItemProps>(function (
-  props,
-  ref
-) {
-  const {
-    blurSelected,
-    className,
-    hasEndAdornment,
-    hasScrollbar,
-    hasStartAdornment,
-    onItemClick,
-    itemToString,
-    isInteracted,
-    isNavigatingWithKeyboard,
-    isChildMenuOpen,
-    hasSubMenu,
-    sourceItem,
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    ...restProps
-  } = props;
+export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
+  function (props, ref) {
+    const {
+      blurSelected,
+      className,
+      hasEndAdornment,
+      hasScrollbar,
+      hasStartAdornment,
+      onItemClick,
+      itemToString,
+      isInteracted,
+      isNavigatingWithKeyboard,
+      isChildMenuOpen,
+      hasSubMenu,
+      sourceItem,
+      tooltipEnterDelay,
+      tooltipLeaveDelay,
+      ...restProps
+    } = props;
 
-  const menuTextRef = useRef<HTMLDivElement>(null);
-  const [hasTooltip, setHasTooltip] = useState(false);
-  const menuText = itemToString(sourceItem);
+    const menuTextRef = useRef<HTMLDivElement>(null);
+    const [hasTooltip, setHasTooltip] = useState(false);
+    const menuText = itemToString(sourceItem);
 
-  useEffect(() => {
-    const element = menuTextRef.current;
-    if (element) {
-      if (element.offsetWidth < element.scrollWidth) {
-        setHasTooltip(true);
+    useEffect(() => {
+      const element = menuTextRef.current;
+      if (element) {
+        if (element.offsetWidth < element.scrollWidth) {
+          setHasTooltip(true);
+        }
       }
-    }
-  }, [menuText]);
+    }, [menuText]);
 
-  const { open, ...tooltipMouseListeners } = useControlledTooltip(
-    () => isInteracted && !isChildMenuOpen,
-    isNavigatingWithKeyboard,
-    tooltipEnterDelay,
-    tooltipLeaveDelay
-  );
-  const isDisabled = sourceItem.disabled;
-  const divider = sourceItem.divider;
+    const isDisabled = sourceItem.disabled;
+    const divider = sourceItem.divider;
 
-  const onClick = isDisabled || hasSubMenu ? noop : onItemClick;
+    const onClick = isDisabled || hasSubMenu ? noop : onItemClick;
 
-  const handleOnClick = (event: MouseEvent) => {
-    if (!isDisabled && !hasSubMenu) {
-      onClick?.(sourceItem, event);
-    }
-  };
-  const interactionClasses = isNavigatingWithKeyboard
-    ? {
-        [withBaseName(`menuItemKeyboardActive`)]:
-          !isDisabled && isInteracted && !blurSelected,
-        [withBaseName(`menuItemKeyboardDisabled`)]: isDisabled && isInteracted,
+    const handleOnClick = (event: MouseEvent) => {
+      if (!isDisabled && !hasSubMenu) {
+        onClick?.(sourceItem, event);
       }
-    : {
-        [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
-      };
+    };
+    const interactionClasses = isNavigatingWithKeyboard
+      ? {
+          [withBaseName(`menuItemKeyboardActive`)]:
+            !isDisabled && isInteracted && !blurSelected,
+          [withBaseName(`menuItemKeyboardDisabled`)]:
+            isDisabled && isInteracted,
+        }
+      : {
+          [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
+        };
 
-  const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
+    const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
+    const tooltipTitle = sourceItem.tooltip || menuText;
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      disableFocusListener: true,
+      disableHoverListener: true,
+      enterDelay: tooltipEnterDelay,
+      leaveDelay: tooltipLeaveDelay,
+      placement: "top",
+      disabled: !tooltipTitle || !hasTooltip || isChildMenuOpen,
+    });
 
-  const content = (contentProps: any) => (
-    <ListItem
-      {...restProps}
-      aria-expanded={isChildMenuOpen || undefined}
-      className={classnames(
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<
+      typeof ListItem
+    >({
+      "aria-expanded": isChildMenuOpen || undefined,
+      className: classnames(
         withBaseName(),
         {
           [withBaseName("menuItemDivider")]: divider,
@@ -200,58 +136,58 @@ export const DefaultMenuItem = forwardRef<HTMLElement, MenuItemProps>(function (
           [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
         },
         className
-      )}
-      disabled={isDisabled}
-      item={sourceItem}
+      ),
+      disabled: isDisabled,
+      role: "menuitem",
+      onClick: handleOnClick,
+      item: sourceItem,
       // TODO highlightProps - see original code?
-      {...contentProps}
-      onClick={handleOnClick}
-      ref={ref}
-      role="menuitem"
-    >
-      {hasStartAdornment && (
-        <div className={withBaseName("menuItemStartAdornmentContainer")}>
-          {icon}
-        </div>
-      )}
-      <div
-        className={classnames(withBaseName("menuItemText"), {
-          [withBaseName("menuItemDisabled")]: isDisabled,
-        })}
-        ref={menuTextRef}
-      >
-        {menuText}
-      </div>
-      {hasEndAdornment && (
-        <div
-          className={classnames(withBaseName("menuItemEndAdornmentContainer"), {
-            [withBaseName("menuItemAdornmentHidden")]: !hasSubMenu,
+      ...restProps,
+    });
+
+    const handleRef = useForkRef<HTMLDivElement>(triggerRef, ref);
+
+    return (
+      <>
+        <Tooltip
+          {...getTooltipProps({
+            title: tooltipTitle,
           })}
-        >
-          <ChevronRightIcon
-            className={classnames(withBaseName("menuItemEndAdornment"), {
+        />
+        <ListItem {...triggerProps} ref={handleRef}>
+          {hasStartAdornment && (
+            <div className={withBaseName("menuItemStartAdornmentContainer")}>
+              {icon}
+            </div>
+          )}
+          <div
+            className={classnames(withBaseName("menuItemText"), {
               [withBaseName("menuItemDisabled")]: isDisabled,
             })}
-            size={12}
-          />
-        </div>
-      )}
-      {divider && <div role="separator" />}
-    </ListItem>
-  );
-  return hasTooltip ? (
-    <Tooltip
-      disableFocusListener
-      disableHoverListener
-      enterDelay={tooltipEnterDelay}
-      leaveDelay={tooltipLeaveDelay}
-      open={open}
-      placement="top"
-      title={sourceItem.tooltip || menuText}
-    >
-      {content(tooltipMouseListeners)}
-    </Tooltip>
-  ) : (
-    content({})
-  );
-});
+            ref={menuTextRef}
+          >
+            {menuText}
+          </div>
+          {hasEndAdornment && (
+            <div
+              className={classnames(
+                withBaseName("menuItemEndAdornmentContainer"),
+                {
+                  [withBaseName("menuItemAdornmentHidden")]: !hasSubMenu,
+                }
+              )}
+            >
+              <ChevronRightIcon
+                className={classnames(withBaseName("menuItemEndAdornment"), {
+                  [withBaseName("menuItemDisabled")]: isDisabled,
+                })}
+                size={12}
+              />
+            </div>
+          )}
+          {divider && <div role="separator" />}
+        </ListItem>
+      </>
+    );
+  }
+);

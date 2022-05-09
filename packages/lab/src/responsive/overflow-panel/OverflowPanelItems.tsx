@@ -7,7 +7,7 @@ import React, {
   ReactElement,
 } from "react";
 import classnames from "classnames";
-import { limitShift, shift } from "@floating-ui/react-dom";
+import { limitShift, shift } from "@floating-ui/react-dom-interactions";
 import { Button, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 import { useFloatingUI } from "../../popper";

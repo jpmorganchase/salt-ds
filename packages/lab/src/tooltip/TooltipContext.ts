@@ -1,5 +1,6 @@
 import { createContext, ComponentType, useContext, useDebugValue } from "react";
 import { Tooltip as UITKTooltip, TooltipProps } from "./Tooltip";
+import { UseTooltipProps } from "./useTooltip";
 
 // TODO see also below. what is the intention od the context.toolTip - that users can supply
 // a component or an element
@@ -8,7 +9,7 @@ export interface TooltipContextProps {
   Tooltip?: ComponentType<TooltipProps>;
   enterDelay?: number;
   leaveDelay?: number;
-  placement?: TooltipProps["placement"];
+  placement?: UseTooltipProps["placement"];
 }
 
 export const TooltipContext = createContext<TooltipContextProps | undefined>(
