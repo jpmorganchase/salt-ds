@@ -5,21 +5,25 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
-import { ReactNode } from "react";
+import { ReactNode, HTMLAttributes } from "react";
 
 export default {
   title: "Layout/FlexItem",
   component: FlexItem,
 } as ComponentMeta<typeof FlexItem>;
 
-interface FlexContentProps {
+interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   caption?: string;
   classname?: string;
 }
 
-export const FlexContent = ({ children, classname }: FlexContentProps) => (
-  <div className={classname || "layout-content"}>
+export const FlexContent = ({
+  children,
+  classname,
+  ...rest
+}: FlexContentProps) => (
+  <div className={classname || "layout-content"} {...rest}>
     {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
   </div>
 );

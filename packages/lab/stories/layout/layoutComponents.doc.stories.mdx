@@ -14,8 +14,10 @@ import { ToolkitBorderLayout } from "./border-layout.stories.tsx";
 import { ToolkitFlexLayout } from "./flex-layout.stories.tsx";
 import { ToolkitFlowLayout } from "./flow-layout.stories.tsx";
 import { ToolkitGridLayout } from "./grid-layout.stories.tsx";
+import { ToolkitParentChildLayout } from "./parent-child-layout.stories.tsx";
 import { ButtonBarInSplitLayout } from "./split-layout.stories.tsx";
 import { ToolkitStackLayout } from "./stack-layout.stories.tsx";
+
 
 <Meta title="Layout/Doc" component={GridLayout} />
 
@@ -78,6 +80,24 @@ import {GridLayout, GridItem} from "@jpmorganchase/uitk-lab";
 ### Grid Item
 
 <ArgsTable of={GridItem} />
+
+## Parent Child Layout
+
+Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
+
+<Canvas>
+  <Story name="Parent Child Layout">{ToolkitParentChildLayout.bind({})}</Story>
+</Canvas>
+
+## API
+
+```
+import {ParentChildLayout} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable story="Parent Child Layout" />
 
 ## Flex layout
 
@@ -154,6 +174,7 @@ import {SplitLayout} from "@jpmorganchase/uitk-lab";
 ### Props
 
 <ArgsTable of={SplitLayout} />
+
 
 ## Styling layout components
 

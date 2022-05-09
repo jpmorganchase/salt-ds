@@ -10,7 +10,10 @@ type BreakpointProp<T> = {
 
 export type ResponsiveProp<T> = T | BreakpointProp<T>;
 
-const getCurrentBreakpoint = (breakpoints: Breakpoints, width: number) => {
+export const getCurrentBreakpoint = (
+  breakpoints: Breakpoints,
+  width: number
+) => {
   const breakpointList = Object.entries(breakpoints);
 
   const [currentBreakpoint] = (

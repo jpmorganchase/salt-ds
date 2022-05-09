@@ -3,6 +3,7 @@
  * scripts to massage them into one. Or even split them to theme specific ones.
  */
 
+@import url(foundations/animation.css);
 @import url(foundations/color.css);
 @import url(foundations/fade.css);
 @import url(foundations/icon.css);
