@@ -1,13 +1,12 @@
-import {Children, forwardRef, ReactElement} from "react";
-import {FlexAlignment, FlexLayout} from "../FlexLayout";
-import {ResponsiveProp} from "../../utils";
-import {LayoutSeparator} from "../types";
-import {FlexItem} from "../FlexItem";
+import { Children, forwardRef } from "react";
+import { FlexAlignment, FlexLayout } from "../FlexLayout";
+import { ResponsiveProp } from "../../utils";
+import { LayoutSeparator } from "../types";
+import { FlexItem } from "../FlexItem";
 import "./SplitLayout.css";
-import {makePrefixer} from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
-export interface FlowLayoutProps {
-  children: ReactElement[]
+export interface SplitLayoutProps {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
@@ -32,25 +31,43 @@ export interface FlowLayoutProps {
 
 const withBaseName = makePrefixer("uitkSplitLayout");
 
-export const SplitLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
-  function SplitLayout({align, children, gap, separators, wrap = true, pushRight, ...rest}, ref) {
+export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
+  function SplitLayout(
+    { align, children, gap, separators, wrap = true, pushRight, ...rest },
+    ref
+  ) {
+    const divideFromItem =
+      pushRight || Math.floor(Children.count(children) / 2);
 
-    const divideFromItem = pushRight || Math.floor(Children.count(children) / 2);
-
-    const SideSplit = side => {
-      const splitter = side === 'left' ? i => i <= divideFromItem - 1 : i => i > divideFromItem - 1;
-      return <FlexLayout align={align} gap={gap} separators={separators} className={withBaseName(`${side}-split`)}>
-        {Children.map(children, (child, index) => {
-          return splitter(index) ? <FlexItem>{child}</FlexItem> : null;
-        })}
-      </FlexLayout>;
-    }
+    const SideSplit = (side: "left" | "right") => {
+      const splitter =
+        side === "left"
+          ? (i: number) => i <= divideFromItem - 1
+          : (i: number) => i > divideFromItem - 1;
+      return (
+        <FlexLayout
+          align={align}
+          gap={gap}
+          separators={separators}
+          className={withBaseName(`${side}-split`)}
+        >
+          {Children.map(children, (child, index) => {
+            return splitter(index) ? <FlexItem>{child}</FlexItem> : null;
+          })}
+        </FlexLayout>
+      );
+    };
 
     return (
-      <FlexLayout direction="row" ref={ref} wrap={wrap} {...rest}
-                  className={withBaseName()}>
-        {SideSplit('left')}
-        {SideSplit('right')}
+      <FlexLayout
+        direction="row"
+        ref={ref}
+        wrap={wrap}
+        {...rest}
+        className={withBaseName()}
+      >
+        {SideSplit("left")}
+        {SideSplit("right")}
       </FlexLayout>
     );
   }

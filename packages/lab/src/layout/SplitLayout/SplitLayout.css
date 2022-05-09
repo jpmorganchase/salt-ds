@@ -1,5 +1,7 @@
-.uitkSplitLayout {}
-.uitkSplitLayout-right-split {}
+.uitkSplitLayout {
+}
+.uitkSplitLayout-right-split {
+}
 .uitkSplitLayout-left-split {
   margin-right: auto;
 }
