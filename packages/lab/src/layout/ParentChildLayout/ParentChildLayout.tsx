@@ -114,10 +114,10 @@ export const ParentChildLayout = forwardRef<
         stackedViewChildren[stackedViewElement]
       ) : (
         <>
-          <ParentChildItem grow={0} disableAnimations>
+          <ParentChildItem grow={0} disableAnimations={disableAnimations}>
             {parent}
           </ParentChildItem>
-          <ParentChildItem grow={2} disableAnimations>
+          <ParentChildItem grow={2} disableAnimations={disableAnimations}>
             {child}
           </ParentChildItem>
         </>
