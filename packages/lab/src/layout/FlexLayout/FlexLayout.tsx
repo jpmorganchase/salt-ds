@@ -77,7 +77,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       "--uitkFlexLayout-direction": flexDirection,
       "--uitkFlexLayout-gap-multiplier": flexGap,
       "--uitkFlexLayout-justify": justify && addPrefix(justify),
-      "--uitkFlexLayout-wrap": flexWrap ? "wrap" : "no-wrap",
+      "--uitkFlexLayout-wrap": flexWrap ? "wrap" : "nowrap",
     };
 
     return (

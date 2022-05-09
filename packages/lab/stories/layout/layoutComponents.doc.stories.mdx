@@ -7,12 +7,14 @@ import {
   FlexLayout,
   FlexItem,
   FlowLayout,
+  SplitLayout,
   StackLayout,
 } from "@jpmorganchase/uitk-lab";
 import { ToolkitBorderLayout } from "./border-layout.stories.tsx";
 import { ToolkitFlexLayout } from "./flex-layout.stories.tsx";
 import { ToolkitFlowLayout } from "./flow-layout.stories.tsx";
 import { ToolkitGridLayout } from "./grid-layout.stories.tsx";
+import { ButtonBarInSplitLayout } from "./split-layout.stories.tsx";
 import { ToolkitStackLayout } from "./stack-layout.stories.tsx";
 
 <Meta title="Layout/Doc" component={GridLayout} />
@@ -134,6 +136,24 @@ import {StackLayout} from "@jpmorganchase/uitk-lab";
 ### Props
 
 <ArgsTable of={StackLayout} />
+
+## Split layout
+
+Defines left and right regions for UI elements within a span, such as a button bar
+
+<Canvas>
+  <Story name="Split Layout">{ButtonBarInSplitLayout.bind({})}</Story>
+</Canvas>
+
+### API
+
+```
+import {SplitLayout} from "@jpmorganchase/uitk-lab";
+```
+
+### Props
+
+<ArgsTable of={SplitLayout} />
 
 ## Styling layout components
 

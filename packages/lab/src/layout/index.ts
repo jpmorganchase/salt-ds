@@ -5,4 +5,5 @@ export * from "./FlexLayout";
 export * from "./FlowLayout";
 export * from "./GridItem";
 export * from "./GridLayout";
+export * from "./SplitLayout";
 export * from "./StackLayout";
