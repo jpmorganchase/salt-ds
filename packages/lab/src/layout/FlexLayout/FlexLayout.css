@@ -13,7 +13,8 @@
 .uitkFlexLayout {
   gap: var(--uitkFlexLayout-gap);
   display: var(--uitkFlexLayout-layout-display);
-  flex-flow: var(--uitkFlexLayout-direction) var(--uitkFlexLayout-wrap);
+  flex-direction: var(--uitkFlexLayout-direction);
+  flex-wrap: var(--uitkFlexLayout-wrap);
   justify-content: var(--uitkFlexLayout-justify);
   align-items: var(--uitkFlexLayout-align);
   overflow: hidden;
