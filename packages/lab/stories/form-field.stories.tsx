@@ -33,36 +33,15 @@ export const Default: ComponentStory<typeof FormField> = (props) => {
 };
 
 export const LowEmphasis: ComponentStory<typeof FormField> = () => (
-  <div
-    style={{
-      display: "grid",
-      rowGap: "20px",
-      columnGap: "20px",
-      gridTemplateColumns: "auto auto",
-      padding: "20px 20px",
-    }}
-  >
-    <div style={{ width: "200px" }}>
-      <h3>Low emphasis</h3>
-      <FormField
-        label="Low emphasis form field"
-        helperText="Helper text value"
-        className="uitkEmphasisLow"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
-      <h3>Low emphasis with disabled outer ring</h3>
-      <FormField
-        label="Low emphasis form field"
-        helperText="Helper text value"
-        disableFocusRing
-        className="uitkEmphasisLow"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
+  <div style={{ width: "200px" }}>
+    <h3>Low emphasis</h3>
+    <FormField
+      label="Low emphasis form field"
+      helperText="Helper text value"
+      className="uitkEmphasisLow"
+    >
+      <Input defaultValue="Value" />
+    </FormField>
   </div>
 );
 
@@ -114,11 +93,7 @@ export const Disabled: ComponentStory<typeof FormField> = () => (
 
 export const Readonly: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
-    <FormField
-      label="Default Form Field description label"
-      helperText="Helper text value"
-      readOnly
-    >
+    <FormField label="Read Only Form Field" readOnly>
       <Input defaultValue="Value" />
     </FormField>
   </div>
@@ -232,7 +207,14 @@ const renderFormField = (props?: Partial<FormFieldProps>) => (
 );
 
 const renderAllDensities = (props?: Partial<FormFieldProps>) => (
-  <div style={{ display: "grid", rowGap: "20px", padding: "20px 20px" }}>
+  <div
+    style={{
+      display: "grid",
+      rowGap: "20px",
+      padding: "20px 20px",
+      background: "var(--uitk-container-background-medium)",
+    }}
+  >
     <ToolkitProvider density="touch">{renderFormField(props)}</ToolkitProvider>
     <ToolkitProvider density="low"> {renderFormField(props)}</ToolkitProvider>
     <ToolkitProvider density="medium">{renderFormField(props)}</ToolkitProvider>
@@ -257,7 +239,6 @@ export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
       <ToolkitProvider theme="light">{renderAllDensities()}</ToolkitProvider>
-
       <ToolkitProvider theme="dark">{renderAllDensities()}</ToolkitProvider>
     </div>
   );
@@ -470,7 +451,7 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
         display: "grid",
         flexDirection: "row",
         gap: 24,
-        gridTemplateColumns: "400px",
+        gridTemplateColumns: "300px 300px",
         marginTop: 24,
         width: 800,
       }}
@@ -503,18 +484,24 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
     }}
   >
     <style>{`
-      .carbon{
-        --uitk-focused-outline-style: none;
-        --helper-text-font-style: normal;
+      .carbon {
+        --uitkFormField-focused-outline-style: none;
+        --uitkFormFieldHelperText-font-style: normal;
+        --uitkFormActivationIndicator-color: var(--uitk-color-purple-400);
+        --uitkFormLabel-margin-bottom: 6px;
+        --uitkFormLabel-text-color: var(--uitk-color-purple-800);
       }
       .carbon .uitkFormField-focused {
-        --uitkFormActivationIndicator-size: 0;
+        --uitkFormActivationIndicator-width: 3px;
+        --uitkFormActivationIndicator-color: var(--uitk-color-purple-200);
+        --uitkFormActivationIndicator-style: dotted;
       }
-      .carbon .uitkFormField-controlContainer {
-        --form-field-label-margin-bottom: 6px;
+      .carbon.uitkFormField:not(.uitkFormField-readOnly):not(.uitkFormField-disabled):hover {
+        --uitkFormActivationIndicator-color: var(--uitk-color-purple-200);
+        --uitkFormActivationIndicator-style: dashed;
       }
-      .carbon .uitkFormField-focused .uitkFormField-controlAreaWrapper {
-        outline: solid 2px #0f62fe;
+      .carbon.uitkFormField-focused {
+        outline: solid 2px var(--uitk-color-purple-50);
       }
     `}</style>
     <div style={{ width: "200px" }}>

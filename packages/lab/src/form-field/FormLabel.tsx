@@ -1,15 +1,17 @@
 import cx from "classnames";
 import { ElementType, HTMLAttributes } from "react";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   NecessityIndicatorOptions,
 } from "./NecessityIndicator";
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
+import { FormFieldLabelPlacement, FormFieldValidationState } from "./FormField";
 
 import "./FormLabel.css";
-import { FormFieldValidationState } from "./FormField";
 
 const classBase = "uitkFormLabel";
+const withBaseName = makePrefixer(classBase);
 export interface FormLabelProps
   extends HTMLAttributes<HTMLLabelElement>,
     NecessityIndicatorOptions {
@@ -25,6 +27,10 @@ export interface FormLabelProps
    * The label value for the FormLabel
    */
   label?: string;
+  /**
+   * Location of label
+   */
+  labelPlacement?: FormFieldLabelPlacement;
   /**
    * An optional renderer function used to customize the necessity adornment
    */
@@ -53,6 +59,7 @@ export const FormLabel = ({
   required,
   displayedNecessity,
   hasStatusIndicator = false,
+  labelPlacement = "top",
   StatusIndicatorProps,
   validationState,
   necessityText,
@@ -64,22 +71,22 @@ export const FormLabel = ({
 }: FormLabelProps) => (
   <label
     className={cx(className, classBase, {
-      [`${classBase}-disabled`]: disabled,
-      [`${classBase}-readOnly`]: readOnly,
+      [withBaseName("disabled")]: disabled,
+      [withBaseName("readOnly")]: readOnly,
+      [withBaseName("labelLeft")]: labelPlacement === "left",
     })}
     {...restProps}
   >
     {label}
-
     <NecessityIndicator
       required={required}
       displayedNecessity={displayedNecessity}
       necessityText={necessityText}
-      className={`${classBase}-necessityIndicator`}
+      className={withBaseName("necessityIndicator")}
     />
     {hasStatusIndicator && (
       <StatusIndicator
-        className={`${classBase}-statusIndicator`}
+        className={withBaseName("statusIndicator")}
         state={validationState}
         tooltipText={tooltipText}
         hasTooltip

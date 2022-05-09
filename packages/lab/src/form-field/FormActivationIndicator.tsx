@@ -1,6 +1,5 @@
 import { SVGAttributes } from "react";
 import { FormFieldProps } from "./FormField";
-import { classBase } from "./constant";
 
 import "./FormActivationIndicator.css";
 

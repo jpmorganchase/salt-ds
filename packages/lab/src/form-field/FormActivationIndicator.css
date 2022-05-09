@@ -1,25 +1,41 @@
+/* Styles applied to the root element dependent on density */
+.uitk-density-touch {
+  --form-activation-indicator-icon-size: 7px;
+}
+.uitk-density-low {
+  --form-activation-indicator-icon-size: 5px;
+}
+.uitk-density-medium {
+  --form-activation-indicator-icon-size: 5px;
+}
+.uitk-density-high {
+  --form-activation-indicator-icon-size: 3px;
+}
+
 .uitkFormActivationIndicator {
   border-color: var(--uitkFormActivationIndicator-color, var(--uitk-editable-border-color));
-  border-bottom-width: var(--uitkFormActivationIndicator-size, 1px);
-  border-bottom-style: solid;
+  border-bottom-width: var(--uitkFormActivationIndicator-width, var(--uitk-editable-border-width));
+  border-bottom-style: var(--uitkFormActivationIndicator-style, var(--uitk-editable-border-style));
   height: auto;
   opacity: var(--uitkFormActivationIndicator-opacity, 1);
   width: 100%;
+
   /* We don't want the activation indicator to increase height of it's container */
-  position: absolute;
-  bottom: calc(var(--uitkFormFieldHelperText-height, 0px) + 1px);
+  bottom: var(--uitkFormFieldHelperText-line-height, 0px);
+  position: var(--uitkFormActivationIndicator-position, absolute);
 }
 
 .uitkFormActivationIndicator-icon {
-  width: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
-  height: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
-  fill: var(--uitkFormActivationIndicator-color);
+  bottom: var(--uitkFormActivationIndicator-icon-bottom, 3px);
+  fill: var(--uitkFormActivationIndicator-icon-color);
+  width: var(--uitkFormActivationIndicator-icon-size, var(--form-activation-indicator-icon-size));
+  height: var(--uitkFormActivationIndicator-icon-size, var(--form-activation-indicator-icon-size));
   /** 
- * It's only a solid icon showing different color for validation states. 
- * Applying opacity instead of re-defining all colors.
- */
+  * It's only a solid icon showing different color for validation states. 
+  * Applying opacity instead of re-defining all colors.
+  */
   opacity: var(--uitkFormActivationIndicator-icon-opacity, 1);
-  position: absolute;
-  bottom: 3px;
-  right: 2px;
+  position: var(--uitkFormActivationIndicator-icon-position, absolute);
+  right: var(--uitkFormActivationIndicator-icon-right, 2px);
+  width: var(--uitkFormActivationIndicator-icon-size, var(--form-activation-indicator-icon-size));
 }
