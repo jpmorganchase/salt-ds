@@ -36,7 +36,6 @@
     "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json"
   },
   "dependencies": {
-    "@babel/core": "^7.16.0",
     "@changesets/cli": "^2.19.0",
     "@cypress/code-coverage": "^3.9.11",
     "@cypress/react": "^5.10.3",
@@ -86,12 +85,12 @@
     "deepmerge": "^4.2.2",
     "del": "^6.0.0",
     "dom-accessibility-api": "^0.5.10",
-    "eslint-config-modular-app": "2.0.3",
+    "eslint-config-modular-app": "3.0.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-storybook": "^0.5.5",
     "glob": "^7.1.6",
     "is-ci": "^3.0.0",
-    "modular-scripts": "patch:modular-scripts@npm:2.3.0#.yarn/patches/modular-scripts-npm-2.3.0-465a9ac751.patch",
+    "modular-scripts": "patch:modular-scripts@npm:3.0.0#.yarn/patches/modular-scripts-npm-3.0.0-465a9ac751.patch",
     "no-scroll": "^2.1.1",
     "prettier": "^2.6.2",
     "prop-types": "^15.7.2",
@@ -105,17 +104,17 @@
     "svgo": "^2.3.0",
     "tinycolor2": "^1.4.2",
     "ts-node": "^10.4.0",
-    "typescript": "4.6.2",
+    "typescript": "4.6.4",
     "vite": "^2.9.0",
     "vite-plugin-istanbul": "^2.5.1",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
     "vite-tsconfig-paths": "^3.4.1",
-    "warning": "^4.0.3"
+    "warning": "^4.0.3",
+    "webpack": "5"
   },
   "resolutions": {
-    "esbuild": "0.14.22",
-    "colors": "1.4.0"
+    "esbuild": "0.14.38"
   },
   "browserslist": {
     "production": [
