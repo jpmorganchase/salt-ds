@@ -38,12 +38,16 @@ You will then need to import the css files into your application, along with any
 Here’s a quick example of a Call-to-Action (CTA) button for your reference:
 
 ```JSX
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 import "@jpmorganchase/uitk-theme/index.css";
 
 function App() {
-  return <Button variant="cta">CTA Button</Button>;
+  return (
+    <ToolkitProvider>
+      <Button variant="cta">CTA Button</Button>
+    </ToolkitProvider>
+  );
 }
 ```
 
