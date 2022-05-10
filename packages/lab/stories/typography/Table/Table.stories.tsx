@@ -7,6 +7,24 @@ import "./Table.css";
 export default {
   title: "Lab/Typography",
   component: Text,
+  parameters: {
+    controls: {
+      exclude: [
+        "children",
+        "elementType",
+        "maxRows",
+        "showTooltip",
+        "tooltipProps",
+        "truncate",
+        "expanded",
+        "style",
+        "styleAs",
+        "onOverflowChange",
+        "marginTop",
+        "marginBottom",
+      ],
+    },
+  },
   argTypes: {
     wrapperWidth: {
       description: "For this demo only",
@@ -38,37 +56,37 @@ const TextComponent: Story<TableExampleStoryProps> = (props) => {
       <div className="table">
         <div className="row">
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Date</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Amount paid</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Activity name</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Status</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Reference</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Payment method</strong>
             </Div>
           </div>
           <div className="table-cell">
-            <Div>
+            <Div truncate={true}>
               <strong>Payment type</strong>
             </Div>
           </div>
@@ -88,25 +106,25 @@ const TextComponent: Story<TableExampleStoryProps> = (props) => {
           return (
             <div className="row" key={id}>
               <div className="table-cell">
-                <Div>{date}</Div>
+                <Div truncate={true}>{date}</Div>
               </div>
               <div className="table-cell">
-                <Div>{amount_paid}</Div>
+                <Div truncate={true}>{amount_paid}</Div>
               </div>
               <div className="table-cell">
-                <Div>{activity_name}</Div>
+                <Div truncate={true}>{activity_name}</Div>
               </div>
               <div className="table-cell">
-                <Div>{status}</Div>
+                <Div truncate={true}>{status}</Div>
               </div>
               <div className="table-cell">
-                <Div>{reference}</Div>
+                <Div truncate={true}>{reference}</Div>
               </div>
               <div className="table-cell">
-                <Div>{name}</Div>
+                <Div truncate={true}>{name}</Div>
               </div>
               <div className="table-cell">
-                <Div>{payment_type}</Div>
+                <Div truncate={true}>{payment_type}</Div>
               </div>
             </div>
           );
@@ -117,23 +135,6 @@ const TextComponent: Story<TableExampleStoryProps> = (props) => {
 };
 
 export const TableExample = TextComponent.bind({});
-TableExample.parameters = {
-  controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflow",
-      "marginTop",
-      "marginBottom",
-    ],
-  },
-};
 TableExample.args = {
   wrapperWidth: undefined,
   wrapperHeight: undefined,

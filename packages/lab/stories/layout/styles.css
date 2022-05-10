@@ -32,3 +32,13 @@
 .border-bottom {
   background-color: var(--uitk-color-grey-90);
 }
+
+@media (prefers-reduced-motion) {
+  .reduced-motion .uitkParentChildItem-slide-left {
+    animation: none;
+  }
+
+  .reduced-motion .uitkParentChildItem-slide-right {
+    animation: none;
+  }
+}

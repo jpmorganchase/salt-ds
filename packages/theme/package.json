@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/uitk-theme",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "Apache-2.0",
   "style": "index.css",
   "files": [
@@ -9,5 +9,8 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js"
+  },
+  "publishConfig": {
+    "directory": "../../dist/jpmorganchase-uitk-theme"
   }
 }
