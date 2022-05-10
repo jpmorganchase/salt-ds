@@ -1,8 +1,11 @@
-import { Breakpoints, useBreakpoints } from "@jpmorganchase/uitk-core";
-import { useCurrentBreakpoint } from "@jpmorganchase/uitk-lab";
+import { Breakpoints } from "@jpmorganchase/uitk-core";
+import {
+  useCurrentBreakpoint,
+  useOrderedBreakpoints,
+} from "@jpmorganchase/uitk-lab";
 
 export const useIsStacked = (stackedAtBreakpoint: keyof Breakpoints) => {
-  const breakpointsKeys = Object.keys(useBreakpoints());
+  const breakpointsKeys = Object.keys(useOrderedBreakpoints());
 
   const index = breakpointsKeys.indexOf(stackedAtBreakpoint);
   const allPreviousBreakpoints = breakpointsKeys.slice(0, index + 1);
