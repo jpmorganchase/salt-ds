@@ -35,7 +35,7 @@ interface TextPropsBase<E extends ElementType> {
   truncate?: boolean;
   /**
    * If 'true' it will show the Tooltip only if the text is truncated.
-   * Defaults to 'false'
+   * Defaults to 'true'
    */
   showTooltip?: boolean;
   /**
