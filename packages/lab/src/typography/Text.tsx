@@ -34,7 +34,7 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   truncate?: boolean;
   /**
    * If 'true' it will show the Tooltip only if the text is truncated.
-   * Defaults to 'false'
+   * Defaults to 'true'
    */
   showTooltip?: boolean;
   /**
@@ -73,22 +73,23 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 }
 
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
-  { truncate = false, ...props },
+  props,
   ref
 ) {
   const {
     children,
     className,
     elementType = "div",
-    maxRows,
-    showTooltip = true,
     expanded,
-    onOverflowChange,
-    tooltipProps,
-    style,
-    marginTop,
     marginBottom,
+    marginTop,
+    maxRows,
+    onOverflowChange,
+    showTooltip,
+    style,
     styleAs,
+    tooltipProps,
+    truncate = false,
     ...restProps
   } = props;
 
@@ -142,9 +143,11 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     );
   };
 
-  const content = truncate ? (
-    getTruncatingComponent()
-  ) : (
+  if (truncate) {
+    return getTruncatingComponent();
+  }
+
+  return (
     <Component
       className={cx(withBaseName(), withBaseName("overflow"), className, {
         [withBaseName(styleAs || "")]: styleAs,
@@ -160,6 +163,4 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       {children}
     </Component>
   );
-
-  return content;
 });
