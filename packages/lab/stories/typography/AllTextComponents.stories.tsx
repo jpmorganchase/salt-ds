@@ -20,21 +20,24 @@ import {
 export default {
   title: "Lab/Typography",
   component: Text,
+  parameters: {
+    controls: {
+      hideNoControlsWarning: true,
+      exclude: [
+        "elementType",
+        "maxRows",
+        "showTooltip",
+        "tooltipProps",
+        "truncate",
+        "expanded",
+        "style",
+        "onOverflowChange",
+        "marginTop",
+        "marginBottom",
+      ],
+    },
+  },
 } as ComponentMeta<typeof Text>;
-
-const excludeProps = [
-  "children",
-  "elementType",
-  "maxRows",
-  "showTooltip",
-  "tooltipProps",
-  "truncate",
-  "expanded",
-  "style",
-  "onOverflowChange",
-  "marginTop",
-  "marginBottom",
-];
 
 //********** Body Text ***********/
 
@@ -57,11 +60,6 @@ const DefaultTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const DefaultText = DefaultTextComponent.bind({});
-DefaultText.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Div ***********/
 
@@ -84,11 +82,6 @@ const DivTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const Div = DivTextComponent.bind({});
-Div.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Span ***********/
 
@@ -113,11 +106,6 @@ const SpanTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const Span = SpanTextComponent.bind({});
-Span.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Paragraph - P ***********/
 
@@ -141,11 +129,6 @@ const PTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const P = PTextComponent.bind({});
-P.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Code ***********/
 
@@ -170,11 +153,6 @@ const CodeTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const Code = CodeTextComponent.bind({});
-Code.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Figure 1,2 and 3 ***********/
 
@@ -189,11 +167,6 @@ const FigureTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const Figure = FigureTextComponent.bind({});
-Figure.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 
@@ -251,11 +224,6 @@ const HeadingsComponent: ComponentStory<typeof Text> = () => (
   </>
 );
 export const Headings = HeadingsComponent.bind({});
-Headings.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** HelpText ***********/
 
@@ -278,11 +246,6 @@ const HelpTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const HelpText = HelpTextComponent.bind({});
-HelpText.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** LabelCaption ***********/
 
@@ -308,8 +271,3 @@ const LabelCaptionTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const LabelCaption = LabelCaptionTextComponent.bind({});
-LabelCaption.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};

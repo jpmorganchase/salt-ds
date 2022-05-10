@@ -7,6 +7,24 @@ import "./Table.css";
 export default {
   title: "Lab/Typography",
   component: Text,
+  parameters: {
+    controls: {
+      exclude: [
+        "children",
+        "elementType",
+        "maxRows",
+        "showTooltip",
+        "tooltipProps",
+        "truncate",
+        "expanded",
+        "style",
+        "styleAs",
+        "onOverflowChange",
+        "marginTop",
+        "marginBottom",
+      ],
+    },
+  },
   argTypes: {
     wrapperWidth: {
       description: "For this demo only",
@@ -117,23 +135,6 @@ const TextComponent: Story<TableExampleStoryProps> = (props) => {
 };
 
 export const TableExample = TextComponent.bind({});
-TableExample.parameters = {
-  controls: {
-    exclude: [
-      "children",
-      "elementType",
-      "maxRows",
-      "showTooltip",
-      "tooltipProps",
-      "truncate",
-      "expanded",
-      "style",
-      "onOverflowChange",
-      "marginTop",
-      "marginBottom",
-    ],
-  },
-};
 TableExample.args = {
   wrapperWidth: undefined,
   wrapperHeight: undefined,

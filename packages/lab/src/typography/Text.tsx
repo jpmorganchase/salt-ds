@@ -66,6 +66,10 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * Override style for margin-bottom
    */
   marginBottom?: number;
+  /**
+   * Match styling to a specified heading
+   */
+  styleAs?: "h1" | "h2" | "h3" | "h4";
 }
 
 const TOOLTIP_DELAY = 150;
@@ -86,13 +90,14 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     style,
     marginTop,
     marginBottom,
+    styleAs,
     ...restProps
   } = props;
 
   // Rendering
   const Component: ElementType = elementType;
 
-  const getTruncatingComponent = useCallback(() => {
+  const getTruncatingComponent = () => {
     const { setContainerRef, hasTooltip, tooltipTitle, rows } = useTruncation(
       props,
       ref
@@ -102,6 +107,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       <Component
         className={cx(withBaseName(), className, {
           [withBaseName("lineClamp")]: rows && !expanded,
+          [withBaseName(styleAs || "")]: styleAs,
         })}
         {...restProps}
         tabIndex={hasTooltip ? 0 : -1}
@@ -129,13 +135,15 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     ) : (
       component
     );
-  }, []);
+  };
 
   const content = truncate ? (
     getTruncatingComponent()
   ) : (
     <Component
-      className={cx(withBaseName(), withBaseName("overflow"), className, {})}
+      className={cx(withBaseName(), withBaseName("overflow"), className, {
+        [withBaseName(styleAs || "")]: styleAs,
+      })}
       {...restProps}
       ref={ref}
       style={{

@@ -26,6 +26,10 @@ export default {
     marginBottom: { control: { type: "number" } },
     expanded: { control: { type: "boolean" } },
     showTooltip: { control: { type: "boolean" } },
+    styleAs: {
+      options: ["h1", "h2", "h3", "h4"],
+      control: { type: "select" },
+    },
     truncate: { control: { type: "boolean" } },
     parentWidth: {
       description: "For this demo only. Set '0' for 100% width",
@@ -56,6 +60,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     marginBottom,
     parentWidth,
     parentHeight,
+    styleAs,
   } = args;
 
   const [width, setWidth] = useState<string>();
@@ -69,6 +74,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     showTooltip,
     marginTop,
     marginBottom,
+    styleAs,
   };
 
   useEffect(() => {
@@ -97,7 +103,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
 export const BaseTextComponent = BaseComponent.bind({});
 BaseTextComponent.parameters = {
   controls: {
-    exclude: ["styleAs", "tooltipProps", "style", "onOverflow"],
+    exclude: ["tooltipProps", "style", "onOverflowChange"],
   },
 };
 BaseTextComponent.args = {
