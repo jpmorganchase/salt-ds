@@ -62,16 +62,12 @@ describe("GIVEN a Text Component with elementType", () => {
 });
 
 // No Truncation
-describe("GIVEN a Text component with maxRows=2 and truncate=false by default", () => {
+describe("GIVEN a Text component with maxRows=2 ", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should not be truncated`, () => {
       const Component = component;
 
-      cy.mount(
-        <Component maxRows={2} truncate={false}>
-          {textExample}
-        </Component>
-      );
+      cy.mount(<Component maxRows={2}>{textExample}</Component>);
       cy.get(".uitkText")
         .should("not.have.class", "uitkText-lineClamp")
         .and("not.have.css", "-webkit-line-clamp", "2");
@@ -80,7 +76,7 @@ describe("GIVEN a Text component with maxRows=2 and truncate=false by default", 
 });
 
 // Truncation + Tooltip
-describe("GIVEN a Text component with maxRows=2", () => {
+describe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should display only 2 rows and show Tooltip on focus and hover`, () => {
       const Component = component;
@@ -107,7 +103,7 @@ describe("GIVEN a Text component with maxRows=2", () => {
 });
 
 // Truncation + No Tooltip
-describe("GIVEN a Text component with maxRows=2 and showTooltip=false ", () => {
+describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=false ", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should display only 2 rows but should not show Tooltip on focus`, () => {
       const Component = component;
@@ -128,7 +124,7 @@ describe("GIVEN a Text component with maxRows=2 and showTooltip=false ", () => {
 });
 
 // Expanded
-describe("GIVEN Text component with truncate=true, expanded=true and maxRows=2", () => {
+describe("GIVEN Text component with truncate=true, maxRows=2 and expanded=true", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should not be truncated`, () => {
       const Component = component;
@@ -146,7 +142,7 @@ describe("GIVEN Text component with truncate=true, expanded=true and maxRows=2",
 });
 
 // Collapsed with maxRows
-describe("GIVEN Text component with truncate=true, expanded=false and maxRows=2", () => {
+describe("GIVEN Text component with truncate=true, maxRows=2 and expanded=false", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should display only 2 rows`, () => {
       const Component = component;
@@ -164,9 +160,9 @@ describe("GIVEN Text component with truncate=true, expanded=false and maxRows=2"
 });
 
 // Collapsed without maxRows
-describe("GIVEN Text component with truncate=true and  expanded=true", () => {
+describe("GIVEN Text component with truncate=true and expanded=true", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should not be truncated and display 1 row`, () => {
+    it(`${name} should be truncated and display 1 row`, () => {
       const Component = component;
 
       cy.mount(
@@ -181,8 +177,24 @@ describe("GIVEN Text component with truncate=true and  expanded=true", () => {
   });
 });
 
+// Scrollable
+describe("GIVEN Text component with parent height 100px", () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} should be scrollable`, () => {
+      const Component = component;
+
+      cy.mount(
+        <div style={{ width: 200, height: 100 }}>
+          <Component>{textExample}</Component>
+        </div>
+      );
+      cy.get(".uitkText").should("have.class", "uitkText-overflow");
+    });
+  });
+});
+
 // Size restricted by parent container
-describe("GIVEN Text component with truncate=true and parent height 80px", () => {
+describe("GIVEN Text component with parent height 100px and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should be truncated`, () => {
       const Component = component;
@@ -197,18 +209,44 @@ describe("GIVEN Text component with truncate=true and parent height 80px", () =>
   });
 });
 
-// Scrollable
-describe("GIVEN Text component with parent height 80px and truncate=false", () => {
+// styleAs
+describe("GIVEN Text component with styleAs=h1", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should be scrollable`, () => {
+    it(`${name} should be styled as h1`, () => {
       const Component = component;
 
-      cy.mount(
-        <div style={{ width: 200, height: 100 }}>
-          <Component>{textExample}</Component>
-        </div>
-      );
-      cy.get(".uitkText").should("have.class", "uitkText-overflow");
+      cy.mount(<Component styleAs="h1">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-h1");
+    });
+  });
+});
+describe("GIVEN Text component with styleAs=h2", () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} should be styled as h2`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="h2">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-h2");
+    });
+  });
+});
+describe("GIVEN Text component with styleAs=h3", () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} should be styled as h3`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="h3">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-h3");
+    });
+  });
+});
+describe("GIVEN Text component with styleAs=h4", () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} should be styled as h4`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="h4">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-h4");
     });
   });
 });
