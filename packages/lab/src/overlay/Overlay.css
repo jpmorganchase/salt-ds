@@ -9,95 +9,82 @@
   --overlay-spacing: var(--uitk-spacing-unit);
   --overlay-font-size: var(--uitk-text-font-size);
   /* TODO: Which emphasis should this be? */
-  --overlay-background-color: var(--uitk-container-background);
+  --overlay-background: var(--uitk-container-background);
   --overlay-border-color: var(--uitk-container-border-color);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
-
-  /* Arrow */
-  --overlay-arrow-size: 8px;
-  /* We need some placement invariant naming, block/inline taken from CSS's padding-block/inline naming  */
-  --overlay-arrow-placement-block: calc(50% - var(--overlay-arrow-size));
-  --overlay-arrow-placement-inline: calc(var(--overlay-arrow-size) * -2);
 }
 
 .uitkOverlay-content {
   display: flex;
-  margin: calc(var(--overlay-spacing) * 3);
   padding: calc(var(--overlay-spacing) * 2);
   font-size: var(--overlay-font-size);
 
   border: 1px solid var(--overlay-border-color);
-  position: relative;
   box-shadow: var(--uitk-overlayable-shadow-popout);
   line-height: var(--uitk-text-line-height);
-  background: var(--overlay-background-color);
+  background: var(--overlay-background);
   color: var(--overlay-text-color);
-
+  position: relative;
   font-family: var(--uitk-typography-font-family);
   opacity: 1;
   overflow: visible;
   z-index: var(--overlay-zindex);
 }
 
-/* Arrow */
-.uitkOverlay-content:before,
-.uitkOverlay-content:after {
-  border: var(--overlay-arrow-size) solid transparent;
-  content: "";
+.uitkOverlay-arrow,
+.uitkOverlay-arrow::after {
+  border: 8px solid transparent;
   position: absolute;
+  box-sizing: border-box;
 }
 
-.uitkOverlay-top:before,
-.uitkOverlay-top:after {
-  left: var(--overlay-arrow-placement-block);
-  bottom: var(--overlay-arrow-placement-inline);
+.uitkOverlay-arrow::after {
+  content: "";
+}
+
+.uitkOverlay[data-placement^="top"] .uitkOverlay-arrow {
   border-top-color: var(--overlay-border-color);
+  bottom: -17px;
 }
 
-/*
-  White bits of the arrow.
-  '+1px' is a trick to show grey border for the arrow, which doesn't need to be on the API.
-*/
-.uitkOverlay-top:after {
-  border-top-color: var(--overlay-background-color);
-  border-bottom-width: calc(var(--overlay-arrow-size) + 1px);
-}
-
-.uitkOverlay-right:before,
-.uitkOverlay-right:after {
-  top: var(--overlay-arrow-placement-block);
-  left: var(--overlay-arrow-placement-inline);
-  border-right-color: var(--overlay-border-color);
-}
-
-.uitkOverlay-right:after {
-  border-right-color: var(--overlay-background-color);
-  border-left-width: calc(var(--overlay-arrow-size) + 1px);
-}
-
-.uitkOverlay-left:before,
-.uitkOverlay-left:after {
-  top: var(--overlay-arrow-placement-block);
-  right: var(--overlay-arrow-placement-inline);
-  border-left-color: var(--overlay-border-color);
-}
-
-.uitkOverlay-left:after {
-  border-left-color: var(--overlay-background-color);
-  border-right-width: calc(var(--overlay-arrow-size) + 1px);
-}
-
-.uitkOverlay-bottom:before,
-.uitkOverlay-bottom:after {
-  left: var(--overlay-arrow-placement-block);
-  top: var(--overlay-arrow-placement-inline);
+.uitkOverlay[data-placement^="bottom"] .uitkOverlay-arrow {
   border-bottom-color: var(--overlay-border-color);
+  top: -17px;
 }
 
-.uitkOverlay-bottom:after {
-  border-bottom-color: var(--overlay-background-color);
-  border-top-width: calc(var(--overlay-arrow-size) + 1px);
+.uitkOverlay[data-placement^="left"] .uitkOverlay-arrow {
+  border-left-color: var(--overlay-border-color);
+  right: -17px;
+}
+
+.uitkOverlay[data-placement^="right"] .uitkOverlay-arrow {
+  border-right-color: var(--overlay-border-color);
+  left: -17px;
+}
+
+.uitkOverlay[data-placement^="top"] .uitkOverlay-arrow::after {
+  border-top-color: var(--overlay-background);
+  bottom: -7px;
+  left: calc(100% - 8px);
+}
+
+.uitkOverlay[data-placement^="bottom"] .uitkOverlay-arrow::after {
+  border-bottom-color: var(--overlay-background);
+  top: -7px;
+  left: calc(100% - 8px);
+}
+
+.uitkOverlay[data-placement^="left"] .uitkOverlay-arrow::after {
+  border-left-color: var(--overlay-background);
+  right: -7px;
+  top: calc(100% - 8px);
+}
+
+.uitkOverlay[data-placement^="right"] .uitkOverlay-arrow::after {
+  border-right-color: var(--overlay-background);
+  left: -7px;
+  top: calc(100% - 8px);
 }
 
 /* Close Button */

@@ -4,13 +4,13 @@ import {
   ReactNode,
   CSSProperties,
   forwardRef,
-  useCallback,
 } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps } from "@jpmorganchase/uitk-lab";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 import { useTruncation } from "./useTruncation";
+import { useForkRef } from "../utils";
 
 import "./Text.css";
 
@@ -72,8 +72,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   styleAs?: "h1" | "h2" | "h3" | "h4";
 }
 
-const TOOLTIP_DELAY = 150;
-
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   { truncate = false, ...props },
   ref
@@ -103,37 +101,44 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       ref
     );
 
-    const component = (
-      <Component
-        className={cx(withBaseName(), className, {
-          [withBaseName("lineClamp")]: !expanded,
-          [withBaseName(styleAs || "")]: styleAs,
-        })}
-        {...restProps}
-        tabIndex={hasTooltip ? 0 : -1}
-        ref={setContainerRef}
-        style={{
-          marginTop,
-          marginBottom,
-          ...style,
-          "--text-max-rows": rows,
-        }}
-      >
-        {children}
-      </Component>
-    );
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      enterDelay: 150,
+      placement: "top",
+      disabled: !hasTooltip,
+    });
 
-    return hasTooltip ? (
-      <Tooltip
-        enterNextDelay={TOOLTIP_DELAY}
-        placement="top"
-        title={tooltipTitle}
-        {...tooltipProps}
-      >
-        {component}
-      </Tooltip>
-    ) : (
-      component
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+      className: cx(withBaseName(), className, {
+        [withBaseName("lineClamp")]: !expanded,
+        [withBaseName(styleAs || "")]: styleAs,
+      }),
+      ...restProps,
+      tabIndex: hasTooltip ? 0 : -1,
+    });
+
+    const handleRef = useForkRef(triggerRef, setContainerRef);
+
+    return (
+      <>
+        <Component
+          {...triggerProps}
+          ref={handleRef}
+          style={{
+            marginTop,
+            marginBottom,
+            ...style,
+            "--text-max-rows": rows,
+          }}
+        >
+          {children}
+        </Component>
+        <Tooltip
+          {...getTooltipProps({
+            title: tooltipTitle,
+            ...tooltipProps,
+          })}
+        />
+      </>
     );
   };
 

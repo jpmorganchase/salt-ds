@@ -1,7 +1,7 @@
 {
   "name": "css-variable-docgen-components",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "main": "src/index.tsx",
   "files": [
     "README.md"

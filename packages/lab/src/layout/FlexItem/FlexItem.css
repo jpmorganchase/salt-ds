@@ -11,3 +11,7 @@
   flex-grow: var(--uitkFlexItem-grow);
   flex-shrink: var(--uitkFlexItem-shrink);
 }
+
+.uitkFlexItem-stacked {
+  flex-grow: 2;
+}

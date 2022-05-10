@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from "react";
+import { forwardRef } from "react";
 import classnames from "classnames";
 import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import {
@@ -25,8 +25,8 @@ export interface StateIconProps extends IconProps {
 
 const withBaseName = makePrefixer("uitkStateIcon");
 
-export const StateIcon = forwardRef(
-  (props: StateIconProps, ref: ForwardedRef<HTMLSpanElement>) => {
+export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
+  (props, ref) => {
     const { className, state, ...restProps } = props;
     const IconComponent = icons[state];
 

@@ -7,6 +7,7 @@ import {
   ColorChooser,
   getColorNameByHexValue,
   Tooltip,
+  useTooltip,
 } from "@jpmorganchase/uitk-lab";
 
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
@@ -106,9 +107,7 @@ export const ColorValueEditor = (
 
   const formFieldLabel: string = useMemo(() => {
     return props.pathToUpdate.includes("fade")
-      ? `${capitalize(props.pathToUpdate.split("-")[0]) as string} ${
-          props.label
-        }`
+      ? `${capitalize(props.pathToUpdate.split("-")[0])} ${props.label}`
       : `${capitalize(props.label)}` ?? "Color";
   }, [props.pathToUpdate, props.label]);
 
@@ -161,6 +160,10 @@ export const ColorValueEditor = (
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "top-start",
+  });
+
   return (
     <div
       className={cn(withBaseName("input"), {
@@ -190,19 +193,23 @@ export const ColorValueEditor = (
               </div>
             )}
             {props.isStateValue && (
-              <Tooltip
-                title={
-                  formFieldLabel === "Color" || formFieldLabel === "Background"
-                    ? "Regular"
-                    : formFieldLabel
-                }
-                placement="top-start"
-              >
+              <>
+                <Tooltip
+                  {...getTooltipProps({
+                    title:
+                      formFieldLabel === "Color" ||
+                      formFieldLabel === "Background"
+                        ? "Regular"
+                        : formFieldLabel,
+                  })}
+                />
                 <div
-                  className={cn(
-                    "uitkFormLabel",
-                    withBaseName("colorStatesField")
-                  )}
+                  {...getTriggerProps({
+                    className: cn(
+                      "uitkFormLabel",
+                      withBaseName("colorStatesField")
+                    ),
+                  })}
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
@@ -215,7 +222,7 @@ export const ColorValueEditor = (
                     <RegularIcon />
                   )}
                 </div>
-              </Tooltip>
+              </>
             )}
             <div
               className={cn({

@@ -21,7 +21,9 @@ import {
   ContactTertiaryInfo,
   FormField,
   Overlay,
+  useOverlay,
   Tooltip,
+  useTooltip,
 } from "@jpmorganchase/uitk-lab";
 import { ValueComponentProps } from "@jpmorganchase/uitk-lab/src/contact-details/internal";
 import {
@@ -33,7 +35,7 @@ import { ListChangeHandler } from "@jpmorganchase/uitk-lab/src/list/ListProps";
 import { Story } from "@storybook/react";
 
 import "./contact-details.stories.css";
-import { FC, forwardRef, Fragment, useRef, useState } from "react";
+import { FC, forwardRef, Fragment } from "react";
 
 export default {
   title: "Lab/ContactDetails",
@@ -477,27 +479,20 @@ const WithinTileTemplate: Story = () => {
 };
 
 const WithinOverlayTemplate: Story = () => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState(false);
-
-  const handleClickButton = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { getOverlayProps, getTriggerProps } = useOverlay({
+    placement: "bottom",
+  });
   return (
     <div>
       <Button
-        aria-label="This triggers a popover with contact details"
-        ref={buttonRef}
-        onClick={handleClickButton}
+        {...getTriggerProps<typeof Button>({
+          "aria-label": "This triggers a popover with contact details",
+        })}
       >
         View Contact Details
       </Button>
 
-      <Overlay
-        anchorEl={buttonRef.current}
-        onClose={handleClose}
-        open={open}
-        placement="bottom"
-      >
+      <Overlay {...getOverlayProps()}>
         <ContactDetails className={"withinOverlay"} embedded={true}>
           <ContactFavoriteToggle />
           <ContactAvatar />
@@ -542,44 +537,45 @@ interface NameEmail {
 const ItemWithContactDetailsTooltip: FC<IndexedListItemProps<NameEmail>> = (
   props
 ) => {
-  const containerRef = useRef(null);
-
   const { item, itemProps } = useListItem<NameEmail>(props);
   const itemLabel = contactToString(item);
+  const { getTriggerProps, getTooltipProps } = useTooltip({ enterDelay: 500 });
 
   return (
-    <Tooltip
-      enterDelay={500}
-      id="tooltip-right"
-      className={"withinComboboxTooltip"}
-      render={() => (
-        <ContactDetails
-          className={"withinComboBoxTooltip-contactDetails"}
-          embedded={true}
-          stackAtBreakpoint={250}
-        >
-          <ContactPrimaryInfo text={item.name} />
-          <ContactSecondaryInfo text={item.email} />
-          <ContactMetadata>
-            <ContactMetadataItem value={"Position"} label="Role" />
-            <ContactMetadataItem value={"City, Country"} label="Location" />
-            <ContactMetadataItem value={"+44 2012 123456"} label="Office" />
-            <ContactMetadataItem
-              value={"NAME@bloomberg.net"}
-              label="Bloomberg"
-            />
-            <ContactMetadataItem
-              value={"first.last@domain.com"}
-              label="Email"
-            />
-          </ContactMetadata>
-        </ContactDetails>
-      )}
-    >
-      <ListItemBase {...itemProps} ref={containerRef}>
+    <>
+      <Tooltip
+        {...getTooltipProps({
+          id: "tooltip-right",
+          className: "withinComboboxTooltip",
+          render: () => (
+            <ContactDetails
+              className="withinComboBoxTooltip-contactDetails"
+              embedded
+              stackAtBreakpoint={250}
+            >
+              <ContactPrimaryInfo text={item.name} />
+              <ContactSecondaryInfo text={item.email} />
+              <ContactMetadata>
+                <ContactMetadataItem value="Position" label="Role" />
+                <ContactMetadataItem value="City, Country" label="Location" />
+                <ContactMetadataItem value="+44 2012 123456" label="Office" />
+                <ContactMetadataItem
+                  value="NAME@bloomberg.net"
+                  label="Bloomberg"
+                />
+                <ContactMetadataItem
+                  value="first.last@domain.com"
+                  label="Email"
+                />
+              </ContactMetadata>
+            </ContactDetails>
+          ),
+        })}
+      />
+      <ListItemBase {...getTriggerProps<typeof ListItemBase>(itemProps)}>
         <label>{itemLabel}</label>
       </ListItemBase>
-    </Tooltip>
+    </>
   );
 };
 
@@ -644,8 +640,7 @@ const ExportToFileTemplate: Story = () => {
 
   const copyToClipboard = () => {
     // Check browser support caniuse.com/#search=clipboard
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator as any).clipboard.writeText(generateCopyText()).then(
+    navigator.clipboard.writeText(generateCopyText()).then(
       () => {
         console.log("Wrote contact detail to clipboard");
       },

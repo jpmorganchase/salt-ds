@@ -67,11 +67,14 @@ describe("GIVEN a Text component with maxRows=2 and truncate=false by default", 
     it(`${name} should not be truncated`, () => {
       const Component = component;
 
-      cy.mount(<Component maxRows={2}>{textExample}</Component>);
-      const textComponent = cy.get(".uitkText");
-      textComponent
+      cy.mount(
+        <Component maxRows={2} truncate={false}>
+          {textExample}
+        </Component>
+      );
+      cy.get(".uitkText")
         .should("not.have.class", "uitkText-lineClamp")
-        .should("not.have.css", "-webkit-line-clamp", "2");
+        .and("not.have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -90,13 +93,15 @@ describe("GIVEN a Text component with maxRows=2", () => {
       const textComponent = cy.get(".uitkText");
       textComponent
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
 
-      textComponent.focus();
-      cy.get('[role="tooltip"]').should("be.visible");
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
 
-      textComponent.trigger("mouseenter");
-      cy.get('[role="tooltip"]').should("be.visible");
+      cy.realPress("Escape");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("be.visible");
     });
   });
 });
@@ -112,13 +117,12 @@ describe("GIVEN a Text component with maxRows=2 and showTooltip=false ", () => {
           {textExample}
         </Component>
       );
-      const textComponent = cy.get(".uitkText");
-      textComponent
+      cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
 
-      textComponent.focus();
-      cy.get('[role="tooltip"]').should("not.exist");
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("not.exist");
     });
   });
 });
@@ -136,7 +140,7 @@ describe("GIVEN Text component with truncate=true, expanded=true and maxRows=2",
       );
       cy.get(".uitkText")
         .should("not.have.class", "uitkText-lineClamp")
-        .should("not.have.css", "-webkit-line-clamp", "2");
+        .and("not.have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -154,7 +158,7 @@ describe("GIVEN Text component with truncate=true, expanded=false and maxRows=2"
       );
       cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "2");
+        .and("have.css", "-webkit-line-clamp", "2");
     });
   });
 });
@@ -172,7 +176,7 @@ describe("GIVEN Text component with truncate=true and  expanded=true", () => {
       );
       cy.get(".uitkText")
         .should("have.class", "uitkText-lineClamp")
-        .should("have.css", "-webkit-line-clamp", "1");
+        .and("have.css", "-webkit-line-clamp", "1");
     });
   });
 });

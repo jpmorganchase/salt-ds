@@ -33,7 +33,12 @@ import "./Dropdown.css";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
 import { Portal, PortalProps } from "../portal";
 import { useWindow } from "../window";
-import { flip, limitShift, shift, size } from "@floating-ui/react-dom";
+import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,

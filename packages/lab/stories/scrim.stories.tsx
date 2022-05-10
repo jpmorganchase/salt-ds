@@ -6,9 +6,6 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 export default {
   title: "Lab/Scrim",
   component: Scrim,
-  parameters: {
-    layout: "centered",
-  },
 } as ComponentMeta<typeof Scrim>;
 
 export const DefaultScrim: ComponentStory<typeof Scrim> = () => {

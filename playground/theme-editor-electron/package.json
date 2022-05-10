@@ -2,6 +2,7 @@
   "name": "electron-test-app",
   "productName": "theme-editor-electron",
   "version": "1.0.0",
+  "private": true,
   "description": "Theme editor",
   "main": ".webpack/main",
   "scripts": {

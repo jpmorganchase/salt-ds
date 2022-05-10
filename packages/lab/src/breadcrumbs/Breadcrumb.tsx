@@ -1,9 +1,9 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import classnames from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps } from "../tooltip";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
-import { useOverflowDetection } from "../utils";
+import { useForkRef, useOverflowDetection } from "../utils";
 import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";
@@ -85,31 +85,38 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
 
     const content = getDefaultBreadcrumb();
 
-    const { style: styleProp } = ContainerProps;
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      enterDelay: 1500,
+      placement: "top",
+    });
+
+    const {
+      style: containerStyle,
+      className: containerClassName,
+      ...containerPropsRest
+    } = ContainerProps;
+
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<"li">({
+      style: {
+        ...containerStyle,
+        minWidth: minWidth != null ? minWidth : itemsMinWidth,
+        maxWidth: maxWidth != null ? maxWidth : itemsMaxWidth,
+      },
+      className: classnames(liClass, containerClassName),
+      ...containerPropsRest,
+    });
+
+    const handleRef = useForkRef(triggerRef, ref);
+
     return (
-      <li
-        style={{
-          ...styleProp,
-          minWidth: minWidth != null ? minWidth : itemsMinWidth,
-          maxWidth: maxWidth != null ? maxWidth : itemsMaxWidth,
-        }}
-        {...ContainerProps}
-        className={classnames(liClass, ContainerProps.className)}
-        ref={ref}
-      >
-        {isOverflowed ? (
-          <Tooltip
-            enterDelay={1500}
-            placement="top"
-            title={tooltipTitle}
-            {...tooltipProps}
-          >
-            {content}
-          </Tooltip>
-        ) : (
-          content
-        )}
-      </li>
+      <>
+        <li {...triggerProps} ref={handleRef}>
+          {content}
+        </li>
+        <Tooltip
+          {...getTooltipProps({ title: tooltipTitle, ...tooltipProps })}
+        />
+      </>
     );
   }
 );

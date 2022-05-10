@@ -12,8 +12,10 @@ export const useTheme = (initialTheme: {
     dispatch: Dispatch<Action>
   ) => void
 ] => {
-  const [currentTheme, setTheme] =
-    useState<{ themeName: string; jsonByScope: JSONByScope[] }>(initialTheme);
+  const [currentTheme, setTheme] = useState<{
+    themeName: string;
+    jsonByScope: JSONByScope[];
+  }>(initialTheme);
 
   const dispatchRef = useRef<Dispatch<Action> | null>(null);
 

@@ -9,7 +9,7 @@ import dayjs from "./dayjs";
 import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import { Dropdown, DropdownProps } from "../../dropdown";
-import { useId } from "../../utils";
+import { useForkRef, useId } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";
 
 import "./CalendarNavigation.css";
@@ -18,6 +18,7 @@ import {
   ListItemBase,
   Tooltip,
   useListItem,
+  useTooltip,
 } from "../../index";
 
 type DropdownItem = {
@@ -116,12 +117,19 @@ const ListItemWithTooltip = forwardRef<
 >((props, ref) => {
   const { item, itemProps, itemToString } = useListItem<DropdownItem>(props);
 
+  const { getTooltipProps, getTriggerProps } = useTooltip({
+    placement: "right",
+    disabled: !item.disabled,
+  });
+
+  const { ref: triggerRef, ...triggerProps } =
+    getTriggerProps<typeof ListItemBase>(itemProps);
+
+  const handleRef = useForkRef(triggerRef, ref);
+
   return (
-    <ListItemBase ref={ref} {...itemProps}>
-      <Tooltip
-        placement="right"
-        title={itemProps.disabled ? "Out of range" : ""}
-      >
+    <>
+      <ListItemBase ref={handleRef} {...triggerProps}>
         <label
           style={{
             width: "100%",
@@ -132,8 +140,13 @@ const ListItemWithTooltip = forwardRef<
         >
           {itemToString(item)}
         </label>
-      </Tooltip>
-    </ListItemBase>
+      </ListItemBase>
+      <Tooltip
+        {...getTooltipProps({
+          title: "Out of range",
+        })}
+      />
+    </>
   );
 });
 
