@@ -30,6 +30,14 @@ export const getCurrentBreakpoint = (
   return currentBreakpoint;
 };
 
+export const useCurrentBreakpoint = () => {
+  const viewport = useViewport();
+
+  const breakpoints = useBreakpoints();
+
+  return getCurrentBreakpoint(breakpoints, viewport);
+};
+
 const isObject = <T>(
   value: T
 ): value is Record<string | number | symbol, any> => {
