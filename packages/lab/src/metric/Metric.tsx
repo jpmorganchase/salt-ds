@@ -1,12 +1,8 @@
-import { forwardRef, HTMLAttributes, useMemo } from "react";
+import { forwardRef, HTMLAttributes, useMemo, ReactChildren } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
-import {
-  capitalise,
-  MetricContextProvider,
-  MetricContextValue,
-} from "./internal";
+import { MetricContextProvider, MetricContextValue } from "./internal";
 import { useId } from "../utils";
 
 import "./Metric.css";
@@ -16,6 +12,7 @@ const withBaseName = makePrefixer("uitkMetric");
 export interface MetricProps
   extends MetricContextValue,
     HTMLAttributes<HTMLDivElement> {
+  children: ReactChildren;
   /**
    * The aria-level attribute to be applied to the heading component. The default is 2.
    *
@@ -83,9 +80,10 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
         className={cx(
           withBaseName(),
           {
-            [withBaseName(`direction${capitalise(direction)}`)]: direction,
-            [withBaseName(orientation)]: orientation,
+            [withBaseName(`direction-${direction}`)]: direction,
+            [withBaseName(`orientation-${orientation}`)]: orientation,
             [withBaseName(`emphasis-${emphasis}`)]: emphasis,
+            [withBaseName(`align-${align}`)]: align,
           },
           className
         )}

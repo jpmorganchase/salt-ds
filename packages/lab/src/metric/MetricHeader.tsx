@@ -1,10 +1,10 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, useCallback } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Link, LinkProps, H4 } from "@jpmorganchase/uitk-lab";
 import warning from "warning";
 
-import { useMetricContext, capitalise } from "./internal";
+import { useMetricContext } from "./internal";
 
 import "./MetricHeader.css";
 
@@ -32,15 +32,20 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
-    const { align, titleId, subtitleId, direction, orientation } =
-      useMetricContext();
+    const { titleId, subtitleId } = useMetricContext();
 
-    const renderSubtitle = (props: {
-      id?: string;
-      className?: string;
-      "data-testid": string;
-    }) => {
+    const renderSubtitle = useCallback(() => {
       if (!subtitle) return;
+
+      const subtitleComponent = (
+        <H4
+          id={subtitleId}
+          className={withBaseName("subtitle")}
+          data-testid="metric-subtitle"
+        >
+          {subtitle}
+        </H4>
+      );
 
       if (SubtitleLinkProps) {
         const { children, href = "", ...restLinkProps } = SubtitleLinkProps;
@@ -54,27 +59,16 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
 
         return (
           <Link href={href} {...restLinkProps}>
-            <H4 {...props}>{subtitle}</H4>
+            {subtitleComponent}
           </Link>
         );
       }
-      return <H4 {...props}>{subtitle}</H4>;
-    };
+
+      return subtitleComponent;
+    }, [subtitle]);
 
     return (
-      <div
-        {...restProps}
-        className={cx(
-          withBaseName(),
-          {
-            [withBaseName(orientation as string)]: orientation,
-            [withBaseName(`align${capitalise(align)}`)]: align,
-            [withBaseName(`direction${capitalise(direction)}`)]: direction,
-          },
-          className
-        )}
-        ref={ref}
-      >
+      <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
         <H4
           className={withBaseName("title")}
           data-testid="metric-title"
@@ -82,11 +76,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
         >
           {title}
         </H4>
-        {renderSubtitle({
-          id: subtitleId,
-          className: withBaseName("subtitle"),
-          "data-testid": "metric-subtitle",
-        })}
+        {renderSubtitle()}
       </div>
     );
   }

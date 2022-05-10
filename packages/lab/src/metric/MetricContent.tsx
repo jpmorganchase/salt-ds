@@ -45,10 +45,8 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     ref
   ) {
     const {
-      align,
       emphasis,
       direction,
-      orientation,
       showIndicator,
       indicatorPosition,
       valueId,
@@ -78,7 +76,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
 
-    const renderValue = useMemo(() => {
+    const valueComponent = useMemo(() => {
       const Component =
         emphasis === "high"
           ? Figure1
@@ -96,21 +94,13 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     return (
       <div
         {...restProps}
-        className={cx(
-          withBaseName(),
-          {
-            [withBaseName(`direction${capitalise(direction)}`)]: direction,
-            [withBaseName(orientation as string)]: orientation,
-            [withBaseName(`align${capitalise(align)}`)]: align,
-          },
-          className
-        )}
+        className={cx(withBaseName(), className)}
         ref={ref}
         aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
       >
         <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          {renderValue}
+          {valueComponent}
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (

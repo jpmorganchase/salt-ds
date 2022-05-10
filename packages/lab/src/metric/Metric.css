@@ -16,20 +16,32 @@
   color: var(--metric-text-color);
 }
 
-.uitkMetric-horizontal {
+.uitkMetric-orientation-horizontal {
   flex-direction: row;
   align-items: flex-start;
 }
 
-.uitkMetric-horizontal > :not(:last-child) {
+.uitkMetric-orientation-horizontal > :not(:last-child) {
   margin-right: var(--metric-horizontal-gap);
 }
 
-.uitkMetric-vertical {
+.uitkMetric-orientation-vertical {
   flex-direction: column;
   justify-content: center;
 }
 
-.uitkMetric-vertical > :not(:last-child) {
+.uitkMetric-orientation-vertical > :not(:last-child) {
   margin-bottom: var(--metric-vertical-gap);
+}
+
+.uitkMetric-align-left {
+  text-align: left;
+}
+
+.uitkMetric-align-center {
+  text-align: center;
+}
+
+.uitkMetric-align-right {
+  text-align: right;
 }

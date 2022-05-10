@@ -15,28 +15,16 @@
   bottom: 2px;
 }
 
-.uitkMetricContent-directionUp .uitkMetricContent-indicator {
+.uitkMetric-direction-up .uitkMetricContent-indicator {
   fill: var(--metric-direction-up-color);
 }
-.uitkMetricContent-directionUp .uitkMetricContent-subvalue {
+.uitkMetric-direction-up .uitkMetricContent-subvalue {
   color: var(--metric-direction-up-color);
 }
 
-.uitkMetricContent-directionDown .uitkMetricContent-indicator {
+.uitkMetric-direction-down .uitkMetricContent-indicator {
   fill: var(--metric-direction-down-color);
 }
-.uitkMetricContent-directionDown .uitkMetricContent-subvalue {
+.uitkMetric-direction-down .uitkMetricContent-subvalue {
   color: var(--metric-direction-down-color);
-}
-
-.uitkMetricContent-alignLeft {
-  text-align: left;
-}
-
-.uitkMetricContent-alignCenter {
-  text-align: center;
-}
-
-.uitkMetricContent-alignRight {
-  text-align: right;
 }
