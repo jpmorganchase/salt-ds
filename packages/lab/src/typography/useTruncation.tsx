@@ -102,6 +102,7 @@ export const useTruncation = (
 
     return () => {
       scrollObserver.disconnect();
+      onResize.clear();
     };
   }, [element, getRows]);
 
