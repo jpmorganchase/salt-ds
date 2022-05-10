@@ -106,7 +106,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     const component = (
       <Component
         className={cx(withBaseName(), className, {
-          [withBaseName("lineClamp")]: rows && !expanded,
+          [withBaseName("lineClamp")]: !expanded,
           [withBaseName(styleAs || "")]: styleAs,
         })}
         {...restProps}

@@ -11,17 +11,10 @@ export const useTruncation = (
 ) => {
   const {
     children,
-    className,
-    elementType = "div",
     maxRows,
     showTooltip = true,
     expanded,
     onOverflowChange,
-    tooltipProps,
-    style,
-    marginTop,
-    marginBottom,
-    ...restProps
   } = props;
 
   const [element, setElement] = useState<HTMLElement>();
@@ -39,7 +32,7 @@ export const useTruncation = (
 
       if (maxRows === 0 || expanded) {
         textRows = 0;
-      } else if (maxRows) {
+      } else if (maxRows && !expanded) {
         textRows = maxRows;
       } else if (expanded !== undefined) {
         textRows = 1;
