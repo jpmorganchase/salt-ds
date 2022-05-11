@@ -32,7 +32,7 @@ ToolkitSplitLayout.argTypes = {
   gap: {
     type: "number",
   },
-  pushRight: {
+  splitAfterN: {
     type: "number",
   },
   separators: {
@@ -70,7 +70,7 @@ ButtonBarInSplitLayout.argTypes = {
   gap: {
     type: "number",
   },
-  pushRight: {
+  splitAfterN: {
     type: "number",
   },
   separators: {

@@ -1,43 +1,42 @@
-import { Children, forwardRef } from "react";
-import { FlexAlignment, FlexLayout } from "../FlexLayout";
-import { ResponsiveProp } from "../../utils";
-import { LayoutSeparator } from "../types";
-import { FlexItem } from "../FlexItem";
+import {Children, forwardRef} from "react";
+import {FlexLayout} from "../FlexLayout";
+import {FlexLayoutProps} from "../types";
+import {FlexItem} from "../FlexItem";
 import "./SplitLayout.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {makePrefixer} from "@jpmorganchase/uitk-core";
 
 export interface SplitLayoutProps {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  align?: FlexAlignment | "stretch" | "baseline";
+  align?: FlexLayoutProps['align'];
   /**
    * Controls the space between items.
    */
-  gap?: ResponsiveProp<number>;
+  gap?: FlexLayoutProps['gap'];
   /**
-   * Index of the first item to push right on the split layout.
+   * Item after which elements will be placed on the right hand split area.
    */
-  pushRight?: number;
+  splitAfterN?: number;
   /**
    * Adds a separator between elements.
    */
-  separators?: LayoutSeparator | true;
+  separators?: FlexLayoutProps['separators'];
   /**
    * Allow the items to wrap as needed, default is true.
    */
-  wrap?: ResponsiveProp<boolean>;
+  wrap?: FlexLayoutProps['wrap'];
 }
 
 const withBaseName = makePrefixer("uitkSplitLayout");
 
 export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
-    { align, children, gap, separators, wrap = true, pushRight, ...rest },
+    {align, children, gap, separators, wrap = true, splitAfterN, ...rest},
     ref
   ) {
     const divideFromItem =
-      pushRight || Math.floor(Children.count(children) / 2);
+      splitAfterN || Math.ceil(Children.count(children) / 2);
 
     const SideSplit = (side: "left" | "right") => {
       const splitter =
