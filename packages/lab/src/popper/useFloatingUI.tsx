@@ -7,12 +7,13 @@ import {
   useFloating,
 } from "@floating-ui/react-dom-interactions";
 import type { Props } from "@floating-ui/react-dom-interactions";
+import {isDesktop} from "../window";
 
 export type UseFloatingUIProps = Partial<
   Pick<Props, "placement" | "strategy" | "middleware" | "open" | "onOpenChange">
 >;
 
-export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
+export const DEFAULT_FLOATING_UI_MIDDLEWARE = isDesktop ? [] : [
   flip(),
   shift({ limiter: limitShift() }),
 ];

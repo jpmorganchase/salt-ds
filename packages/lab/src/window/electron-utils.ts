@@ -1,51 +1,41 @@
-import { Ref, useMemo } from "react";
-import { setRef } from "../utils";
+import {
+  ReactChild,
+  ReactFragment,
+  ReactPortal,
+  Children,
+  isValidElement,
+} from "react";
 
 const globalObject = typeof global === "undefined" ? window : global;
-export const isElectron: boolean = (globalObject as any).isElectron;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+export const isDesktop: boolean = (globalObject as any).isElectron;
 
-const forwardedProperties = new Set([
-  "ownerDocument",
-  "document",
-  "nodeName",
-  "offsetWidth",
-  "offsetHeight",
-  "parentNode",
-]);
-
-export function useProxyRef<Instance>(
-  ref: Ref<Instance>
-): Ref<Instance> | null {
-  return useMemo(() => {
-    return (refValue) => {
-      const target = {
-        element: refValue,
-      };
-      const handler = {
+export function getChildrenNames(
+  children:
+    | boolean
+    | ReactChild
+    | ReactFragment
+    | ReactPortal
+    | null
+    | undefined,
+  components: Set<any>
+) {
+  Children.forEach(children, (child) => {
+    if (!isValidElement(child)) {
+      return;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (child.props.children) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      getChildrenNames(child.props.children, components);
+    }
+    if (typeof child.type !== "string") {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (child.type.render?.name)
         // @ts-ignore
-        get: (target, prop) => {
-          if (forwardedProperties.has(prop)) {
-            // @ts-ignore
-            return refValue[prop];
-          } else if (prop === "toString") {
-            if (target.element && target.element.toString) {
-              return () => target.element.toString();
-            } else {
-              return () => undefined;
-            }
-          } else if (prop === "assignedSlot" || prop === "contextElement") {
-            return undefined;
-          } else {
-            throw `unexpected property access: ${prop}`;
-          }
-        },
-      };
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const proxy = new Proxy(target, handler);
-      if (refValue == null) {
-        return null;
-      }
-      setRef(ref, proxy as unknown as Instance);
-    };
-  }, [ref]);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        components.add(child.type.render.name);
+    }
+  });
 }

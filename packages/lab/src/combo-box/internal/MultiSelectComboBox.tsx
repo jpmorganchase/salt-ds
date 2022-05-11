@@ -9,7 +9,7 @@ import { TooltipContext } from "../../tooltip";
 import { ListBase, ListStateContext } from "../../list";
 import { useForkRef } from "../../utils";
 import { Portal } from "../../portal";
-import { useWindow } from "../../window";
+import {isDesktop, useWindow} from "../../window";
 import {
   flip,
   limitShift,
@@ -98,19 +98,20 @@ export function MultiSelectComboBox<Item>(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
+  const middleware = isDesktop ? [] : [
+    flip({
+      fallbackPlacements: ["bottom-start", "top-start"],
+    }),
+    shift({ limiter: limitShift() }),
+    size({
+      apply({ height }) {
+        setMaxListHeight(height);
+      },
+    }),
+  ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ height }) {
-          setMaxListHeight(height);
-        },
-      }),
-    ],
+    middleware: middleware,
   });
 
   useEffect(() => {

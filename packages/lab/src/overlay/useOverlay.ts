@@ -19,6 +19,8 @@ import {
   useCallback,
   useRef,
 } from "react";
+import {isDesktop} from "../window";
+import {margin} from "../utils/marginMiddleware";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
@@ -39,6 +41,12 @@ export function useOverlay(props: UseOverlayProps) {
     setOpen(newOpen);
     onOpenChange?.(newOpen);
   };
+  const middleware = isDesktop ? [margin(24),arrow({ element: arrowRef })] : [
+    offset(24),
+    flip(),
+    shift({ limiter: limitShift() }),
+    arrow({ element: arrowRef }),
+  ];
   const {
     reference,
     floating,
@@ -52,12 +60,7 @@ export function useOverlay(props: UseOverlayProps) {
     open,
     onOpenChange: handleOpenChange,
     placement,
-    middleware: [
-      offset(24),
-      flip(),
-      shift({ limiter: limitShift() }),
-      arrow({ element: arrowRef }),
-    ],
+    middleware: middleware,
   });
 
   const handleArrowRef = useCallback(

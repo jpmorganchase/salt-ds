@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {BrowserRouter} from "react-router-dom";
 
-import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 import {
-  WindowContext,
+  ThemeEditorApp
+} from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
+import {
   ElectronWindow,
+  WindowContext,
 } from "@jpmorganchase/uitk-lab/src/window";
-import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import {isDesktop} from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
-import { CSSByPattern } from "@jpmorganchase/theme-editor";
+import {CSSByPattern} from "@jpmorganchase/theme-editor";
 
 import "./App.css";
-import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
+import {ThemeMode} from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 
 export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>();
@@ -20,12 +22,11 @@ export const App = () => {
   const [initialClassNames, setInitialClassNames] = useState<string>();
 
   useEffect(() => {
-    if (isElectron) {
+    if (isDesktop) {
       const getClassNames = async () => {
-        const browserViewTheme = await (window as any).ipcRenderer.invoke(
+        return await (window as any).ipcRenderer.invoke(
           "get-browser-view-theme"
         );
-        return browserViewTheme;
       };
       getClassNames()
         .catch((err) => console.log(err))
@@ -37,7 +38,7 @@ export const App = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    if (isElectron) {
+    if (isDesktop) {
       let cssString = "";
       cssByPattern?.forEach((element) => {
         cssString += element.cssObj;
@@ -51,14 +52,14 @@ export const App = () => {
   }, [cssByPattern]);
 
   const saveCSS = () => {
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       (window as any).ipcRenderer.send("save-styles", cssByPattern);
     }
   };
 
   const setBrowserViewURL = (url: string) => {
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       (window as any).ipcRenderer.send("update-view-url", url);
       setIsLoading(true);
@@ -66,7 +67,7 @@ export const App = () => {
   };
 
   const switchBrowserViewMode = (mode: string) => {
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       (window as any).ipcRenderer.send("change-mode", mode);
     }

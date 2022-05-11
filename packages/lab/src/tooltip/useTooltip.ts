@@ -22,6 +22,8 @@ import {
   useRef,
 } from "react";
 import { TooltipProps } from "./Tooltip";
+import {isDesktop} from "../window";
+import {margin} from "../utils/marginMiddleware";
 
 export interface UseTooltipProps
   extends Partial<
@@ -73,6 +75,20 @@ export function useTooltip(props?: UseTooltipProps) {
     onOpenChange?.(open);
   };
 
+  const middleware = isDesktop ? [margin(8), arrow({ element: arrowRef })] : [
+    offset(8),
+    flip(),
+    shift({
+      limiter: limitShift({
+        offset: () =>
+          Math.max(
+            arrowRef.current?.offsetWidth ?? 0,
+            arrowRef.current?.offsetHeight ?? 0
+          ),
+      }),
+    }),
+    arrow({ element: arrowRef }),
+  ];
   const {
     floating,
     reference,
@@ -87,20 +103,7 @@ export function useTooltip(props?: UseTooltipProps) {
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
-    middleware: [
-      offset(8),
-      flip(),
-      shift({
-        limiter: limitShift({
-          offset: () =>
-            Math.max(
-              arrowRef.current?.offsetWidth ?? 0,
-              arrowRef.current?.offsetHeight ?? 0
-            ),
-        }),
-      }),
-      arrow({ element: arrowRef }),
-    ],
+    middleware: middleware,
   });
 
   const handleArrowRef = useCallback(

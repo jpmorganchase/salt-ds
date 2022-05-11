@@ -7,7 +7,7 @@ import {
   WindowContext,
   ElectronWindow,
 } from "@jpmorganchase/uitk-lab/src/window";
-import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
@@ -17,7 +17,7 @@ export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>([]);
 
   useEffect(() => {
-    if (isElectron) {
+    if (isDesktop) {
       let cssString = "";
       cssByPattern?.forEach((element) => {
         cssString += element.cssObj;
@@ -31,7 +31,7 @@ export const App = () => {
   }, [cssByPattern]);
 
   const saveCSS = () => {
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       (window as any).ipcRenderer.send("save-styles", cssByPattern);
     }
