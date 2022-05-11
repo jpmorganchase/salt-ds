@@ -1,6 +1,6 @@
 .CornerBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
   border-color: var(--uitk-container-border-color-medium);
@@ -19,8 +19,8 @@
   bottom: 0;
   left: 0;
 
-  width: calc(var(--uitk-size-regular-unit) * 3 / 4);
-  height: calc(var(--uitk-size-regular-unit) * 3 / 4);
+  width: calc(var(--uitk-size-base) * 3 / 4);
+  height: calc(var(--uitk-size-base) * 3 / 4);
 
   border-color: var(--uitk-container-border-color-medium);
   border-style: var(--uitk-container-border-style);

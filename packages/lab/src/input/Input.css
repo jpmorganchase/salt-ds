@@ -24,12 +24,12 @@
   display: inline-flex;
   font-family: var(--uitkInput-font-family, var(--uitk-typography-font-family));
   font-size: var(--uitkInput-font-size, var(--uitk-text-font-size));
-  height: var(--uitkInput-height, var(--uitk-size-regular-unit));
+  height: var(--uitkInput-height, var(--uitk-size-base));
   letter-spacing: var(--uitkInput-letter-spacing, 0);
   line-height: var(--uitk-typography-line-height);
-  min-height: var(--uitkInput-min-height, var(--uitk-size-regular-unit));
+  min-height: var(--uitkInput-min-height, var(--uitk-size-base));
   min-width: var(--uitkInput-min-width, 8em);
-  padding: var(--uitkInput-padding, 0 var(--uitk-spacing-unit));
+  padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
   position: var(--uitkInput-position, relative);
   width: 100%;
 }
@@ -73,7 +73,7 @@
 /* Style applied to input if `disabled={true}` */
 .uitkInput-disabled .uitkInput-input {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-opacity-text);
+  opacity: var(--uitk-opacity-foreground);
 }
 
 /* Style applied to adornment containers */
@@ -90,7 +90,7 @@
 
 /* Style applied to inner input element with start adornment */
 .uitkInput-inputAdornedStart .uitkInput-input {
-  padding-left: var(--uitkInput-adorned-start-input-padding, var(--uitk-spacing-unit));
+  padding-left: var(--uitkInput-adorned-start-input-padding, var(--uitk-size-unit));
 }
 
 /* Style applied to root element with end adornment */
@@ -100,15 +100,15 @@
 
 /* Style applied to inner input element with end adornment */
 .uitkInput-inputAdornedEnd .uitkInput-input {
-  padding-right: var(--uitkInput-adorned-end-input-padding, var(--uitk-spacing-unit));
+  padding-right: var(--uitkInput-adorned-end-input-padding, var(--uitk-size-unit));
 }
 
 /* Style applied to uitk Button used within Input component adornments */
 .uitkInput .uitkInput-suffixContainer > .uitkButton,
 .uitkInput .uitkInput-prefixContainer > .uitkButton {
-  height: calc(var(--uitkButton-height, var(--uitk-size-regular-unit)) - (var(--input-button-inset) * 2));
+  height: calc(var(--uitkButton-height, var(--uitk-size-base)) - (var(--input-button-inset) * 2));
   margin: var(--input-button-inset);
-  padding: 0 calc(var(--uitk-spacing-unit) - var(--input-button-inset));
+  padding: 0 calc(var(--uitk-size-unit) - var(--input-button-inset));
 }
 
 /* Style applied if `textAlign={"left"}` */

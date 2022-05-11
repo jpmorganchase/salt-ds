@@ -1,7 +1,7 @@
 .uitkToolbar {
   --toolbar-background: var(--uitk-container-background-medium);
   --toolbar-font-size: var(--uitk-text-font-size);
-  --toolbar-size: var(--uitk-size-toolbar-unit);
+  --toolbar-size: var(--uitk-size-toolbar);
   /* --uitkFormActivationIndicator-size: 0; */
 }
 
@@ -49,12 +49,12 @@
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > * {
-  padding-top: var(--uitk-spacing-unit);
-  padding-right: var(--uitk-spacing-unit);
+  padding-top: var(--uitk-size-unit);
+  padding-right: var(--uitk-size-unit);
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > *:first-child {
-  padding-left: var(--uitk-spacing-unit);
+  padding-left: var(--uitk-size-unit);
 }
 
 .uitkToolbar[aria-orientation="vertical"] {

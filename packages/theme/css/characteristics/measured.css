@@ -8,4 +8,8 @@
   --uitk-measured-background: var(--uitk-palette-neutral-background);
   --uitk-measured-background-active: var(--uitk-palette-measure-background);
   --uitk-measured-border-color: var(--uitk-palette-neutral-endpoint);
+
+  /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
+  --uitk-measured-gradient-start: var(--uitk-palette-measure-background-gradient-start-color);
+  --uitk-measured-gradient-stop: var(--uitk-palette-measure-background-gradient-stop-color);
 }

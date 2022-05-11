@@ -14,7 +14,7 @@
   --list-item-line-height: var(--uitk-text-line-height);
 
   /* Spacing */
-  --list-item-padding: 0 var(--uitk-spacing-unit);
+  --list-item-padding: 0 var(--uitk-size-unit);
 
   /* Misc. */
 
@@ -29,7 +29,7 @@
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--uitk-disabled-cursor);
-  --list-item-disabled-regular-opacity: var(--uitk-opacity-text);
+  --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
 }
 
 .uitkListItem {

@@ -2,7 +2,7 @@
   --uitkDialog-margin: 0;
   --uitkDialog-box-shadow: none;
   --overlay-text-color: var(--uitk-text-primary-color);
-  --overlay-spacing: var(--uitk-spacing-unit);
+  --overlay-spacing: var(--uitk-size-unit);
   --overlay-font-size: var(--uitk-text-font-size);
   --overlay-background-color: var(--uitk-container-background-medium);
   --overlay-border-color: var(--uitk-container-border-color-medium);

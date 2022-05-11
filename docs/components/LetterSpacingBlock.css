@@ -1,6 +1,6 @@
 .LetterSpacingBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
   color: var(--uitk-text-primary-color);

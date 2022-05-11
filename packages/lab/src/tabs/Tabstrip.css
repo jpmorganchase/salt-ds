@@ -37,7 +37,7 @@
 
 .uitkTabstrip-addButton,
 .uitkTabstrip-overflowMenu {
-  margin-left: var(--uitk-spacing-unit);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkTabstrip-inner {

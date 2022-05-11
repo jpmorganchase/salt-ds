@@ -1,6 +1,6 @@
 /* TODO: Add chess board background to show transparency color */
 .ColorBlock-cell {
-  --color-block-cell-size: var(--uitk-size-regular-unit);
+  --color-block-cell-size: var(--uitk-size-base);
 
   --color-block-cell-border-color: var(--uitk-container-border-color-medium);
   --color-block-cell-border-style: var(--uitk-container-border-style);

@@ -1,8 +1,8 @@
 .ShadowBlock {
   grid-column: 1 / 2;
 
-  margin: var(--uitk-spacing-unit);
-  padding: var(--uitk-spacing-unit);
+  margin: var(--uitk-size-unit);
+  padding: var(--uitk-size-unit);
 
   color: var(--uitk-text-primary-color);
 
@@ -13,8 +13,8 @@
 }
 
 .ShadowBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
   border-color: var(--uitk-container-border-color-medium);

@@ -7,9 +7,9 @@
 @import url(foundations/color.css);
 @import url(foundations/fade.css);
 @import url(foundations/icon.css);
+@import url(foundations/opacity.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
-@import url(foundations/spacing.css);
 @import url(foundations/typography.css);
 @import url(foundations/zindex.css);
 /* Other palettes, Typography, Spacing, Sizes, etc.  */
@@ -21,6 +21,7 @@
 @import url(characteristics/actionable.css);
 @import url(characteristics/container.css);
 @import url(characteristics/delay.css);
+@import url(characteristics/differential.css);
 @import url(characteristics/disabled.css);
 @import url(characteristics/draggable.css);
 @import url(characteristics/droptarget.css);

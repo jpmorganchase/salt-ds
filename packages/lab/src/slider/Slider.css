@@ -35,7 +35,7 @@
 
   --selection-height: var(--uitkSlider-selection-height, 2px);
 
-  --handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-regular-unit) * 0.5));
+  --handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-base) * 0.5));
   --handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-outline-style));
   --handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-outline-width));
   --handle-outline-color: var(--uitkSlider-handle-outline-color, var(--uitk-focused-color));
@@ -50,15 +50,15 @@
   --slider-border-color: var(--uitkSlider-border-color, transparent);
   --slider-width: var(--uitkSlider-width, 300px);
 
-  --clickable-padding-left: var(--uitkSlider-clickable-padding-left, calc(var(--uitk-size-regular-unit) * 0.5));
-  --clickable-padding-right: var(--uitkSlider-clickable-padding-right, calc(var(--uitk-size-regular-unit) * 0.5));
+  --clickable-padding-left: var(--uitkSlider-clickable-padding-left, calc(var(--uitk-size-base) * 0.5));
+  --clickable-padding-right: var(--uitkSlider-clickable-padding-right, calc(var(--uitk-size-base) * 0.5));
 
   --label-padding-left: var(--uitlSlider-label-padding-left, 0);
   --label-padding-right: var(--uitkSlider-label-padding-right, 0);
 }
 
 .uitkSlider {
-  --selection-color: var(--uitkSlider-selection-color, var(--uitk-palette-measured-background-gradient-stop-color));
+  --selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-gradient-stop));
 }
 
 .uitkSlider {

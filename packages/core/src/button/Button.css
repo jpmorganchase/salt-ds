@@ -116,9 +116,9 @@
   line-height: var(--uitkButton-line-height, var(--uitk-typography-line-height));
   letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing));
   text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-text-transform));
-  padding: 0 var(--uitkButton-padding, var(--uitk-spacing-unit));
+  padding: 0 var(--uitkButton-padding, var(--uitk-size-unit));
   margin: 0;
-  height: var(--uitkButton-height, var(--uitk-size-regular-unit));
+  height: var(--uitkButton-height, var(--uitk-size-base));
   min-width: var(--uitkButton-min-width, unset);
   min-height: 0;
   position: relative;

@@ -1,7 +1,7 @@
 .uitkDocGrid {
-  --doc-grid-gap: var(--uitk-spacing-unit);
-  --doc-grid-padding-block-start: var(--uitk-spacing-unit);
-  --doc-grid-padding-block-end: var(--uitk-spacing-unit);
+  --doc-grid-gap: var(--uitk-size-unit);
+  --doc-grid-padding-block-start: var(--uitk-size-unit);
+  --doc-grid-padding-block-end: var(--uitk-size-unit);
 
   --doc-grid-code-font-size: var(--uitk-text-font-size);
   --doc-grid-code-text-color: var(--uitk-text-primary-color);

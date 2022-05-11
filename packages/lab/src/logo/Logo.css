@@ -9,13 +9,13 @@
   --logo-font-size: var(--uitk-text-font-size);
   --logo-line-height: var(--uitk-text-line-height);
   --logo-pipe-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color-2));
-  --logo-height: var(--uitkLogo-logo-height, calc(var(--logo-font-size) + var(--uitk-spacing-unit)));
-  --logo-pipe-height: var(--uitkLogo-title-height, calc(var(--uitk-size-regular-unit) - calc(0.75 * var(--uitk-spacing-unit) * 2)));
-  --logo-pipe-margin: 0 calc(var(--uitk-spacing-unit) * 2);
+  --logo-height: var(--uitkLogo-logo-height, calc(var(--logo-font-size) + var(--uitk-size-unit)));
+  --logo-pipe-height: var(--uitkLogo-title-height, calc(var(--uitk-size-base) - calc(0.75 * var(--uitk-size-unit) * 2)));
+  --logo-pipe-margin: 0 calc(var(--uitk-size-unit) * 2);
 }
 
 .uitkLogo-compact {
-  --logo-pipe-margin: 0 calc(var(--uitk-spacing-unit) * 1.5);
+  --logo-pipe-margin: 0 calc(var(--uitk-size-unit) * 1.5);
 }
 
 .uitkLogo {

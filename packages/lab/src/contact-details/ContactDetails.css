@@ -21,7 +21,7 @@
   --default-secondary-font-size: 16px;
   --metadata-font-size: 16px;
   --label-width: 80px;
-  --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 1.5);
+  --title-element-no-avatar-left-spacing: calc(var(--uitk-size-unit) * 1.5);
   --icon-size: 18px;
 }
 
@@ -32,7 +32,7 @@
   --default-secondary-font-size: 14px;
   --metadata-font-size: 14px;
   --label-width: 70px;
-  --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 1.5);
+  --title-element-no-avatar-left-spacing: calc(var(--uitk-size-unit) * 1.5);
   --icon-size: 16px;
 }
 
@@ -43,7 +43,7 @@
   --default-secondary-font-size: 12px;
   --metadata-font-size: 12px;
   --label-width: 60px;
-  --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 2);
+  --title-element-no-avatar-left-spacing: calc(var(--uitk-size-unit) * 2);
   --icon-size: 14px;
 }
 
@@ -54,7 +54,7 @@
   --default-secondary-font-size: 11px;
   --metadata-font-size: 11px;
   --label-width: 60px;
-  --title-element-no-avatar-left-spacing: calc(var(--uitk-spacing-unit) * 2);
+  --title-element-no-avatar-left-spacing: calc(var(--uitk-size-unit) * 2);
   --icon-size: 12px;
 }
 
@@ -66,7 +66,7 @@
 .uitkContactDetails {
   box-sizing: border-box;
   display: grid;
-  padding: var(--uitk-spacing-unit);
+  padding: var(--uitk-size-unit);
 }
 
 .uitkContactDetails.uitkContactDetails-noAvatar {
@@ -154,23 +154,23 @@
   grid-area: noAvatar;
   width: var(--no-avatar-indicator-width);
   background-color: var(--no-avatar-color);
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkContactAvatar {
   grid-area: avatar;
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkContactAvatar-stacked {
-  margin-bottom: var(--uitk-spacing-unit);
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .uitkContactActions {
   grid-area: actions;
   display: flex;
-  margin-top: var(--uitk-spacing-unit);
-  margin-left: calc(var(--uitk-spacing-unit) * -1);
+  margin-top: var(--uitk-size-unit);
+  margin-left: calc(var(--uitk-size-unit) * -1);
 }
 
 .uitkContactMetadata {
@@ -203,16 +203,16 @@
 }
 
 .uitkContactDetails-mini .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-spacing-unit) * 2);
+  margin-left: calc(var(--uitk-size-unit) * 2);
 }
 
 /* TODO Mini-stacked does not really look "stacked". Is it a bug? */
 .uitkContactDetails-mini-stacked .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-spacing-unit) * 2);
+  margin-left: calc(var(--uitk-size-unit) * 2);
 }
 
 .uitkContactSecondaryInfo-icon {
-  margin-right: calc(var(--uitk-spacing-unit) * 0.5);
+  margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
 .uitkContactSecondaryInfo-value {
@@ -236,11 +236,11 @@
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
-  margin-left: calc(var(--uitk-spacing-unit) * 2);
+  margin-left: calc(var(--uitk-size-unit) * 2);
 }
 
 .uitkContactTertiaryInfo-icon {
-  margin-right: calc(var(--uitk-spacing-unit) * 0.5);
+  margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
 .uitkContactTertiaryInfo-value {
@@ -252,8 +252,8 @@
   grid-area: metadata;
   display: flex;
   flex-direction: column;
-  padding-top: var(--uitk-spacing-unit);
-  padding-bottom: var(--uitk-spacing-unit);
+  padding-top: var(--uitk-size-unit);
+  padding-bottom: var(--uitk-size-unit);
 }
 
 .uitkContactMetadata-default {
@@ -261,21 +261,21 @@
 
 .uitkContactMetadata-expander {
   grid-area: metadataExpander;
-  margin-top: var(--uitk-spacing-unit);
+  margin-top: var(--uitk-size-unit);
 }
 
 .uitkContactMetadata-separator {
   width: 100%;
   height: 1px;
   background: var(--separator-color);
-  margin-bottom: var(--uitk-spacing-unit);
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .uitkContactMetadataItem {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: calc(var(--uitk-spacing-unit) * 0.5);
+  margin-bottom: calc(var(--uitk-size-unit) * 0.5);
 }
 
 .uitkContactMetadataItem:last-child {
@@ -288,7 +288,7 @@
 }
 
 .uitkContactMetadataItem-icon {
-  margin-right: calc(var(--uitk-spacing-unit) * 2);
+  margin-right: calc(var(--uitk-size-unit) * 2);
   padding-left: 1px;
 }
 
@@ -297,7 +297,7 @@
   flex-shrink: 0;
   color: var(--label-color);
   font-size: var(--metadata-font-size);
-  margin-right: calc(var(--uitk-spacing-unit) * 2);
+  margin-right: calc(var(--uitk-size-unit) * 2);
   width: var(--label-width);
 }
 

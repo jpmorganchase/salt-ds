@@ -9,7 +9,7 @@
 }
 
 .uitkMenuTrigger {
-  --icon-margin-left: var(--uitkMenuTrigger-icon-margin-left, var(--uitk-spacing-unit));
+  --icon-margin-left: var(--uitkMenuTrigger-icon-margin-left, var(--uitk-size-unit));
 }
 
 .uitkMenuTrigger {

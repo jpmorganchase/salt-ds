@@ -77,7 +77,7 @@
   flex-grow: 1;
   font-weight: var(--uitkPill-font-weight, var(--uitk-typography-weight-regular));
   overflow: hidden;
-  padding-left: var(--uitkPill-label-padding-left, calc(var(--uitk-spacing-unit) * 0.75));
+  padding-left: var(--uitkPill-label-padding-left, calc(var(--uitk-size-unit) * 0.75));
   pointer-events: none;
   text-align: center;
   text-overflow: ellipsis;
@@ -89,7 +89,7 @@
 }
 
 .uitkPill:not(.uitkPill-deletable) .uitkPill-label {
-  padding-right: var(--uitkPill-label-padding-right, calc(var(--uitk-spacing-unit) * 0.75));
+  padding-right: var(--uitkPill-label-padding-right, calc(var(--uitk-size-unit) * 0.75));
 }
 
 .uitkPill-disabled {
@@ -102,7 +102,7 @@
 .uitkPill-disabled .uitkPill-label,
 .uitkPill-disabled .uitkIcon {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-opacity-text);
+  opacity: var(--uitk-opacity-foreground);
 
   --uitkIcon-color: var(--pill-icon-color);
   --uitkIcon-color-hover: var(--pill-icon-color);
@@ -130,8 +130,8 @@
 }
 
 .uitkPill-deletable .uitkPill-deleteButton {
-  margin-left: calc(var(--uitk-spacing-unit) / 2);
-  padding-right: calc(var(--uitk-spacing-unit) / 2);
+  margin-left: calc(var(--uitk-size-unit) / 2);
+  padding-right: calc(var(--uitk-size-unit) / 2);
 }
 
 .uitkPill-disabled .uitkPill-deleteButton {
@@ -159,8 +159,8 @@
 .uitkPill .uitkPill-icon {
   fill: var(--pill-icon-color);
   height: var(--uitk-size-icon-small);
-  margin-left: calc(var(--uitk-spacing-unit) * 0.75);
-  margin-right: calc(var(--uitk-spacing-unit) * 0.5);
+  margin-left: calc(var(--uitk-size-unit) * 0.75);
+  margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
 .uitkPill .uitkPill-icon:hover {

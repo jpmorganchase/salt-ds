@@ -1,6 +1,6 @@
 .OutlineBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
   border-radius: var(--uitk-container-border-radius);

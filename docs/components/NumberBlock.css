@@ -1,7 +1,7 @@
 .NumberBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
-  line-height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
+  line-height: var(--uitk-size-base);
   justify-self: end;
 
   border-color: var(--uitk-container-border-color-medium);

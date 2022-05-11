@@ -1,8 +1,10 @@
 .uitk-light,
 .uitk-dark {
   --uitk-actionable-cursor-hover: pointer;
-  --uitk-acitonable-cursor-active: pointer;
+  --uitk-actionable-cursor-active: pointer;
 
+  --uitk-actionable-border-width: 1px; /* Not in Figma */
+  --uitk-actionable-border-style: solid; /* Not in Figma */
   --uitk-actionable-border-radius: 0; /* Not in Figma */
   --uitk-actionable-letter-spacing: 0.6px; /* Not in Figma */
   --uitk-actionable-text-transform: uppercase; /* Not in Figma */

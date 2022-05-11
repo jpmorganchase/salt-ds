@@ -13,7 +13,7 @@
 
 .uitkColorChooserSwatches-colorTextDiv {
   font-size: var(--uitk-text-font-size);
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitk-light .uitkColorChooserSwatches-colorTextDiv {
@@ -26,7 +26,7 @@
 
 .uitkColorChooserSwatches-alphaTextDiv {
   font-size: var(--uitk-typography-size-regular-unit);
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitk-light .uitkColorChooserSwatches-alphaTextDiv {
@@ -44,5 +44,5 @@
 }
 
 .uitkColorChooserSwatches-pickerDiv {
-  padding-top: calc(2 * var(--uitk-spacing-unit));
+  padding-top: calc(2 * var(--uitk-size-unit));
 }

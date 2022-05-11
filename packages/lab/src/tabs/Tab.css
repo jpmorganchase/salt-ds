@@ -23,7 +23,7 @@
   --uitk-focused-outline-bottom: 2px;
   --tab-bar-color: var(--uitk-color-grey-90);
   --tab-cursor: pointer;
-  --tab-spacing: var(--uitk-spacing-unit);
+  --tab-spacing: var(--uitk-size-unit);
   --tab-font-weight-selected: var(--uitk-typography-weight-semiBold);
 
   align-items: center;
@@ -124,7 +124,7 @@
 }
 
 .uitkTab-closeable .uitkTab-main {
-  border-right: solid transparent var(--uitk-spacing-unit);
+  border-right: solid transparent var(--uitk-size-unit);
 }
 
 .uitkTab .uitkTab-closeButton {
