@@ -42,7 +42,7 @@
 /* Pseudo-class applied to the root element when focused */
 .uitkInput-focused {
   outline-style: var(--uitkInput-focused-outline-style, var(--uitk-focused-outline-style));
-  outline-width: var(--uitkInput-focused-outline-width, var(--uitk-focused-line-width));
+  outline-width: var(--uitkInput-focused-outline-width, var(--uitk-focused-outline-width));
   outline-color: var(--uitkInput-focused-outline-color, var(--uitk-focused-color));
   outline-offset: var(--uitkInput-focused-outline-offset, var(--uitk-focused-outline-offset));
 }
@@ -73,7 +73,7 @@
 /* Style applied to input if `disabled={true}` */
 .uitkInput-disabled .uitkInput-input {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-disabled-text-opacity);
+  opacity: var(--uitk-opacity-text);
 }
 
 /* Style applied to adornment containers */

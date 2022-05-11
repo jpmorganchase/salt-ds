@@ -54,7 +54,7 @@
 /* Styles applied to root component if `disabled={true}` */
 .uitkTokenizedInput-disabled {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitkTokenizedInput-disabled-opacity, var(--uitk-disabled-text-opacity));
+  opacity: var(--uitkTokenizedInput-disabled-opacity, var(--uitk-opacity-text));
 }
 
 /* Styles applied to root component if `focused={true}` */

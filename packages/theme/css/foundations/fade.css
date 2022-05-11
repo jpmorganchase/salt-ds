@@ -1,19 +1,21 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99);
-  --uitk-color-blue-600-fade-40: rgba(21, 92, 147, 0.4); /* see Editable characteristic for explanation of this value */
+  --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99); /* see Editable characteristic for explanation of this value */
   --uitk-color-blue-700-fade-99: rgba(0, 71, 123, 0.99); /* see Editable characteristic for explanation of this value */
 
-  --uitk-color-grey-20-fade-40: rgba(234, 237, 239, 0.4);
-  --uitk-color-grey-600-fade-40: rgba(47, 49, 54, 0.4);
-  --uitk-color-grey-60-fade-40: rgba(197, 201, 208, 0.4);
-  --uitk-color-grey-40-fade-40: rgba(217, 221, 227, 0.4);
-  --uitk-color-grey-400-fade-40: rgba(68, 72, 79, 0.4);
-  --uitk-color-grey-500-fade-40: rgba(59, 63, 70, 0.4);
-  --uitk-color-grey-90-fade-20: rgba(132, 135, 142, 0.2);
-  --uitk-color-grey-100-fade-20: rgba(116, 119, 127, 0.2);
-  --uitk-color-grey-900-fade-70: rgba(22, 22, 22, 0.7);
-  --uitk-color-grey-300-fade-40: rgba(76, 80, 91, 0.4);
+  --uitk-color-grey-60-fade-border: rgba(197, 201, 208, , var(--uitk-opacity-border));
+  --uitk-color-grey-300-fade-border: rgba(76, 80, 91, var(--uitk-opacity-border));
 
-  --uitk-color-white-fade-70: rgba(255, 255, 255, 0.7);
+  --uitk-color-grey-60-fade-background: rgba(197, 201, 208, , var(--uitk-opacity-background));
+  --uitk-color-grey-300-fade-background: rgba(76, 80, 91, var(--uitk-opacity-background));
+  --uitk-color-blue-600-fade-background: rgba(21, 92, 147, var(--uitk-opacity-background));
+
+  --uitk-color-white-fade-text: rgba(255, 255, 255, var(--uitk-opacity-text));
+  --uitk-color-grey-900-fade-text: rgba(22, 22, 22, var(--uitk-opacity-text));
+
+  --uitk-color-grey-90-fade-readonly: rgba(132, 135, 142, var(--uitk-opacity-readonly));
+
+  --uitk-color-white-fade-scrim: rgba(255, 255, 255, var(--uitk-opacity-scrim));
+  --uitk-color-black-fade-scrim: rgba(0, 0, 0, var(--uitk-opacity-scrim));
+  --uitk-color-grey-800-fade-scrim: rgba(36, 37, 38, var(--uitk-opacity-scrim));
 }

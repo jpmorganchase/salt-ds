@@ -67,7 +67,7 @@
 }
 
 .uitkToggleButton.uitkToggleButton-disabled {
-  opacity: var(--uitk-disabled-text-opacity);
+  opacity: var(--uitk-opacity-text);
 }
 
 .uitk-light .uitkToggleButton.uitkToggleButton-toggled.uitkToggleButton-disabled {

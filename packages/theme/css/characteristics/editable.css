@@ -3,6 +3,8 @@
   --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
 
+  --uitk-editable-border-style: solid;
+
   --uitk-editable-border-width: 1px;
   --uitk-editable-border-width-hover: 1px;
   --uitk-editable-border-width-active: 2px;
@@ -16,7 +18,7 @@
   --uitk-editable-border-color: var(--uitk-palette-action-border);
   --uitk-editable-border-color-active: var(--uitk-palette-action-border-active);
   --uitk-editable-border-color-hover: var(--uitk-palette-action-border-hover);
-  --uitk-editable-border-color-readonly: var(--uitk-color-grey-90-fade-20); /* --uitk-palette-action-border opacity 20% */
+  --uitk-editable-border-color-readonly: var(--uitk-palette-action-border-readonly);
 
   --uitk-editable-background-low: transparent;
   --uitk-editable-background-hover-low: transparent;

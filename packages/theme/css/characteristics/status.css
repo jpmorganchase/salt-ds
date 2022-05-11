@@ -10,16 +10,6 @@
   --uitk-status-warning-border-color: var(--uitk-palette-warning-border);
   --uitk-status-error-border-color: var(--uitk-palette-error-border);
 
-  --uitk-status-info-background-low: none; /* Not in Figma */
-  --uitk-status-success-background-low: none; /* Not in Figma */
-  --uitk-status-warning-background-low: none; /* Not in Figma */
-  --uitk-status-error-background-low: none; /* Not in Figma */
-
-  --uitk-status-info-background-medium: none; /* Not in Figma */
-  --uitk-status-success-background-medium: none; /* Not in Figma */
-  --uitk-status-warning-background-medium: none; /* Not in Figma */
-  --uitk-status-error-background-medium: none; /* Not in Figma */
-
   --uitk-status-info-background-high: var(--uitk-palette-info-background-high);
   --uitk-status-success-background-high: var(--uitk-palette-success-background-high);
   --uitk-status-warning-background-high: var(--uitk-palette-warning-background-high);

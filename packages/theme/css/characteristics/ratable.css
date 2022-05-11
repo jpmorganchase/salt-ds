@@ -11,5 +11,5 @@
   --uitk-ratable-border: var(--uitk-palette-rate-border);
   --uitk-ratable-border-active: transparent;
   --uitk-ratable-border-hover: transparent;
-  --uitk-ratable-border: var(--uitk-palette-neutral-border-undo);
+  --uitk-ratable-border: var(--uitk-palette-rate-border-undo);
 }

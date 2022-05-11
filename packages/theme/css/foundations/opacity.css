@@ -1,0 +1,9 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-opacity-text: 0.7;
+  --uitk-opacity-border: 0.4;
+  --uitk-opacity-background: 0.4;
+  --uitk-opacity-graphical: 0.4;
+  --uitk-opacity-readonly: 0.2;
+  --uitk-opacity-scrim: 0.8;
+}

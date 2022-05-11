@@ -102,5 +102,5 @@
 }
 
 .uitk-newapp .uitkButton-disabled {
-  opacity: var(--uitk-disabled-graphical-opacity);
+  opacity: var(--uitk-opacity-graphical);
 }

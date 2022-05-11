@@ -68,7 +68,7 @@
   outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-color));
   outline-style: var(--uitkPill-focused-outline-style, var(--uitk-focused-outline-style));
   outline-style: dotted;
-  outline-width: var(--uitk-focused-line-width);
+  outline-width: var(--uitk-focused-outline-width);
   outline-offset: var(--uitk-focused-outline-offset);
 }
 
@@ -102,7 +102,7 @@
 .uitkPill-disabled .uitkPill-label,
 .uitkPill-disabled .uitkIcon {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-disabled-text-opacity);
+  opacity: var(--uitk-opacity-text);
 
   --uitkIcon-color: var(--pill-icon-color);
   --uitkIcon-color-hover: var(--pill-icon-color);

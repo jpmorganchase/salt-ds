@@ -1,3 +1,4 @@
+/*TODO: colors once defined in Figma */
 .uitk-light,
 .uitk-dark {
   /* H1 */
@@ -117,10 +118,10 @@
 
 .uitk-light {
   --uitk-text-primary-color: var(--uitk-color-grey-900);
-  --uitk-text-primary-color-disabled: rgba(22, 22, 22, var(--uitk-disabled-text-opacity));
+  --uitk-text-primary-color-disabled: rgba(22, 22, 22, var(--uitk-opacity-text));
 
   --uitk-text-secondary-color: var(--uitk-color-grey-200);
-  --uitk-text-secondary-color-disabled: rgba(97, 101, 110, var(--uitk-disabled-text-opacity));
+  --uitk-text-secondary-color-disabled: rgba(97, 101, 110, var(--uitk-opacity-text));
 
   --uitk-text-growth-indicator-up-color: var(--uitk-color-green-500);
   --uitk-text-growth-indicator-down-color: var(--uitk-color-red-500);
@@ -135,10 +136,10 @@
 
 .uitk-dark {
   --uitk-text-primary-color: var(--uitk-color-white);
-  --uitk-text-primary-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-text-opacity));
+  --uitk-text-primary-color-disabled: rgba(255, 255, 255, var(--uitk-opacity-text));
 
   --uitk-text-secondary-color: var(--uitk-color-grey-70);
-  --uitk-text-secondary-color-disabled: rgba(180, 183, 190, var(--uitk-disabled-text-opacity));
+  --uitk-text-secondary-color-disabled: rgba(180, 183, 190, var(--uitk-opacity-text));
 
   --uitk-text-growth-indicator-up-color: var(--uitk-color-green-400);
   --uitk-text-growth-indicator-down-color: var(--uitk-color-red-400);
