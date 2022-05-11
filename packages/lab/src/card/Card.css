@@ -70,7 +70,7 @@
 /* Styles applied on hover if `interactable={true}` */
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
-  border-color: var(--uitkCard-border-color-hover, var(--uitk-color-blue-500)); /* TODO: change to characteristic */
+  border-color: var(--uitkCard-border-color-hover, var(--uitk-action-border-color-hover));
   cursor: pointer;
   position: relative;
   box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-shadow-4));

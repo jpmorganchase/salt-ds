@@ -1,7 +1,7 @@
 .uitkBadge {
   /* Colors */
-  --badge-content-text-color: var(--uitk-color-white);
-  --badge-content-background: var(--uitk-status-info-background-medium);
+  --badge-content-text-color: var(--uitk-text-primary-color);
+  --badge-content-icon-color: var(--uitk-status-info-icon-color);
   /* Font, Typography */
   --badge-children-font-family: var(--uitk-typography-font-family);
   --badge-children-line-height: var(--uitk-text-line-height);
@@ -58,7 +58,7 @@
   margin-right: var(--badge-offset-inline);
 
   padding: var(--badge-content-padding);
-  background: var(--badge-content-background);
+  background: var(--badge-content-icon-color);
 
   position: relative;
 
@@ -70,17 +70,17 @@
 }
 
 .uitkBadge-info {
-  --badge-content-background: var(--uitk-palette-info-icon);
+  --badge-content-icon-color: var(--uitk-status-info-icon-color);
 }
 
 .uitkBadge-warning {
-  --badge-content-background: var(--uitk-palette-warning-icon);
+  --badge-content-icon-color: var(--uitk-status-warning-icon-color);
 }
 
 .uitkBadge-error {
-  --badge-content-background: var(--uitk-palette-error-icon);
+  --badge-content-icon-color: var(--uitk-status-error-icon-color);
 }
 
 .uitkBadge-success {
-  --badge-content-background: var(--uitk-palette-success-icon);
+  --badge-content-icon-color: var(--uitk-status-success-icon-color);
 }

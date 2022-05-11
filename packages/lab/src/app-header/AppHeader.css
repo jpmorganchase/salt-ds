@@ -1,14 +1,8 @@
-.uitk-light {
-  --appheader-separable: var(--uitk-color-grey-40);
-}
-.uitk-dark {
-  --appheader-separable: var(--uitk-color-grey-400);
-}
-
 .uitkAppHeader {
   --appheader-background: var(--uitk-container-background-medium);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
   --appheader-border-bottom-width: 1px;
+  --appheader-separable: var(--uitk-separable-border-color-3);
   --uitk-toolbar-width: auto;
   --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-2));
   --tabstrip-align-self: flex-end;

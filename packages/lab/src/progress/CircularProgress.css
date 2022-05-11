@@ -5,12 +5,12 @@
 }
 
 .uitkCircularProgress-disabled .uitkCircularProgress-progressValue {
-  opacity: var(--uitk-disabled-border-opacity);
+  opacity: var(--uitk-opacity-border);
   cursor: var(--uitk-disabled-cursor);
 }
 
 .uitkCircularProgress-disabled circle {
-  opacity: var(--uitk-disabled-border-opacity);
+  opacity: var(--uitk-opacity-border);
 }
 
 .uitkCircularProgress-circle {

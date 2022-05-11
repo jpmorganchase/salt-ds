@@ -1,6 +1,6 @@
 .uitkAvatar {
-  --avatar-background-color: var(--uitk-color-blue-500);
-  --avatar-foreground-color: var(--uitk-color-white);
+  --avatar-background-color: var(--uitk-status-info-icon-color);
+  --avatar-foreground-color: var(--uitk-text-primary-color);
   --avatar-font-family: var(--uitk-typography-font-family);
 }
 

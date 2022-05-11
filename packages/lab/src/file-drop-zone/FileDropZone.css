@@ -96,5 +96,5 @@
 
 .uitkFileDropZone-disabled .uitkFileDropZone-icon,
 .uitkFileDropZone-disabled .uitkFileDropZone-title {
-  opacity: var(--uitk-disabled-graphical-opacity);
+  opacity: var(--uitk-opacity-graphical);
 }

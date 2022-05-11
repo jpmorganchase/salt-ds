@@ -63,7 +63,7 @@
 
 .uitkCalendarDay:focus-visible {
   outline: var(--calendar-day-focused-outline);
-  outline-offset: calc(0px - var(--uitk-focused-line-width));
+  outline-offset: calc(0px - var(--uitk-focused-outline-width));
 }
 
 .uitkCalendarDay-outOfRange {

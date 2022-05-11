@@ -7,19 +7,7 @@
   --uitk-overlayable-shadow-popout: var(--uitk-shadow-4);
   --uitk-overlayable-shadow-drag: var(--uitk-shadow-4);
   --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
-}
 
-.uitk-light {
-  /* neutral-scrim-medium opacity 80% */
-  --uitk-overlayable-scrim-background-medium: rgba(255, 255, 255, 0.8);
-  /* neutral-scrim-high opacity 80% */
-  --uitk-overlayable-scrim-background-high: rgba(0, 0, 0, 0.8);
-}
-
-/* Medium and high emphasis values */
-.uitk-dark {
-  /* neutral-scrim-medium opacity 80% */
-  --uitk-overlayable-scrim-background-medium: rgba(36, 37, 38, 0.8);
-  /* neutral-scrim-high opacity 80% */
-  --uitk-overlayable-scrim-background-high: rgba(0, 0, 0, 0.8);
+  --uitk-overlayable-scrim-background-medium: var(--uitk-palette-neutral-scrim-medium);
+  --uitk-overlayable-scrim-background-high: var(--uitk-palette-neutral-scrim-high);
 }

@@ -3,6 +3,11 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+} from "docs/components/LineBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Selectable" />
 
@@ -20,7 +25,10 @@ trigger actions.
     <DocGrid>
       <CursorBlock cursor="--uitk-selectable-cursor-active" />
       <CursorBlock cursor="--uitk-selectable-cursor-active" />
-      <TextAlignBlock textAlign="--uitk-selectable-default-text-align" />
+      <TextAlignBlock textAlign="--uitk-selectable-text-align" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-selectable-border-style</LineBlockCode>
+      <LineBlock lineWidth="--uitk-selectable-border-width" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -34,24 +42,17 @@ trigger actions.
       <ColorBlock colorVar="--uitk-selectable-background-hover" />
       <ColorBlock colorVar="--uitk-selectable-background-active" />
       <ColorBlock colorVar="--uitk-selectable-background-blur-active" />
-      <ColorBlock colorVar="--uitk-selectable-border" />
-      <ColorBlock colorVar="--uitk-selectable-border-hover" />
-      <ColorBlock colorVar="--uitk-selectable-border-active" />
-      <ColorBlock colorVar="--uitk-selectable-border-blur-active" />
+      <ColorBlock colorVar="--uitk-selectable-border-color" />
+      <ColorBlock colorVar="--uitk-selectable-border-color-hover" />
+      <ColorBlock colorVar="--uitk-selectable-border-color-active" />
       <ColorBlock colorVar="--uitk-selectable-fill" />
       <ColorBlock colorVar="--uitk-selectable-fill-partial" />
       <ColorBlock colorVar="--uitk-selectable-fill-hover" />
       <ColorBlock colorVar="--uitk-selectable-fill-selected" />
-      <ColorBlock colorVar="--uitk-selectable-fill-bluractive" />
-      <ColorBlock colorVar="--uitk-selectable-foreground" />
-      <ColorBlock colorVar="--uitk-selectable-foreground-hover" />
-      <ColorBlock colorVar="--uitk-selectable-foreground-active" />
-      <ColorBlock colorVar="--uitk-selectable-foreground-blur-active" />
       <ColorBlock colorVar="--uitk-selectable-stroke" />
       <ColorBlock colorVar="--uitk-selectable-stroke-selected" />
       <ColorBlock colorVar="--uitk-selectable-stroke-partial" />
       <ColorBlock colorVar="--uitk-selectable-stroke-hover" />
-      <ColorBlock colorVar="--uitk-selectable-stroke-bluractive" />
       <ColorBlock colorVar="--uitk-selectable-foreground" />
       <ColorBlock colorVar="--uitk-selectable-foreground-hover" />
       <ColorBlock colorVar="--uitk-selectable-foreground-active" />

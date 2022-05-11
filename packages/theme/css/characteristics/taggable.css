@@ -6,13 +6,13 @@
   --uitk-taggable-background: var(--uitk-palette-action-background-primary);
   --uitk-taggable-background-hover: var(--uitk-palette-action-background-primary-hover);
   --uitk-taggable-background-active: var(--uitk-palette-action-background-primary-active);
-  --uitk-taggable-background-disabled: var(--uitk-color-grey-40-fade-40); /* Not in Figma */
+  --uitk-taggable-background-disabled: var(--uitk-palette-action-background-primary-disabled);
 
   --uitk-taggable-foreground: var(--uitk-palette-action-foreground-primary);
   --uitk-taggable-foreground-hover: var(--uitk-palette-action-foreground-primary-hover);
   --uitk-taggable-foreground-active: var(--uitk-palette-action-foreground-primary-active);
 
-  --uitk-taggable-stroke: var(--uitk-palette-action-stroke-default);
-  --uitk-taggable-stroke-hover: var(--uitk-palette-action-stroke-default);
-  --uitk-taggable-stroke-active: var(--uitk-palette-action-stroke-default);
+  --uitk-taggable-stroke: var(--uitk-palette-action-stroke);
+  --uitk-taggable-stroke-hover: var(--uitk-palette-action-stroke);
+  --uitk-taggable-stroke-active: var(--uitk-palette-action-stroke);
 }

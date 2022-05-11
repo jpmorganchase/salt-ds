@@ -25,7 +25,7 @@
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-disabled-text-opacity);
+  opacity: var(--uitk-opacity-text);
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */

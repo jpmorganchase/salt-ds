@@ -1,5 +1,5 @@
 .uitk-newapp {
-  --uitk-disabled-background-opacity: 0.4;
+  --uitk-opacity-background: 0.4;
 }
 
 .uitk-newapp.uitk-density-medium {
