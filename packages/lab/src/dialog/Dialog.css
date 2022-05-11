@@ -13,9 +13,9 @@
   --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-border-width));
   --dialog-border-bottom-width: var(--uitkDialog-border-bottom-width, 2px);
   --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-typography-font-family));
-  --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-spacing-unit)));
+  --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
   --dialog-border-style: var(--uitkDialog-border-style, var(--uitk-container-border-style));
-  --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-spacing-unit)));
+  --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
 }
 
 .uitkDialog {

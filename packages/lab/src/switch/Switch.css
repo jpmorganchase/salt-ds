@@ -176,7 +176,7 @@
 
 /* Styles applied to icon tick shown when `checked={true}` and `disabled={true}` */
 .uitkSwitch-disabled .uitkSwitch-iconTick {
-  opacity: var(--uitk-opacity-graphical);
+  opacity: var(--uitk-opacity-foreground);
 }
 
 /* Styles applied when `focusVisible={true}` */
@@ -200,5 +200,5 @@
 /* Styles applied to track if `disabled={true}` generally and on hover */
 .uitkSwitch-disabled .uitkSwitch-track,
 .uitkSwitch-disabled:hover .uitkSwitch-track {
-  opacity: var(--uitk-opacity-graphical);
+  opacity: var(--uitk-opacity-foreground);
 }

@@ -41,7 +41,7 @@
 }
 
 .uitkRadioButton-disabled {
-  opacity: var(--uitk-opacity-text);
+  opacity: var(--uitk-opacity-foreground);
   pointer-events: visible;
 }
 

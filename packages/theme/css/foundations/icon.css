@@ -1,13 +1,5 @@
-/* TODO: These should probably be moved into the palette once defined */
-
-.uitk-light {
-  --uitk-icon-primary-color: var(--uitk-color-grey-200);
-  /* Grey 200 */
-  --uitk-icon-primary-color-disabled: rgba(97, 101, 110, var(--uitk-opacity-graphical));
-}
-
+.uitk-light,
 .uitk-dark {
-  --uitk-icon-primary-color: var(--uitk-color-grey-60);
-  /* Grey 60 */
-  --uitk-icon-primary-color-disabled: rgba(197, 201, 208, var(--uitk-opacity-graphical));
+  --uitk-icon-color: var(--uitk-palette-neutral-icon);
+  --uitk-icon-color-disabled: var(--uitk-palette-neutral-icon-disabled);
 }

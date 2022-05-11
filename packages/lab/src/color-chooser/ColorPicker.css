@@ -11,7 +11,7 @@
 }
 
 .uitkColorChooserPicker-applyButtonDiv {
-  padding: var(--uitk-spacing-unit) calc(2 * var(--uitk-spacing-unit)) 0px calc(1.5 * var(--uitk-spacing-unit));
+  padding: var(--uitk-size-unit) calc(2 * var(--uitk-size-unit)) 0px calc(1.5 * var(--uitk-size-unit));
   align-self: center;
 }
 
@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: column;
   align-content: stretch;
-  padding: var(--uitk-spacing-unit) 0px 0px var(--uitk-spacing-unit);
+  padding: var(--uitk-size-unit) 0px 0px var(--uitk-size-unit);
 }
 
 /**
@@ -77,8 +77,8 @@
 }
 
 .uitkColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
-  width: calc(var(--uitk-size-regular-unit) / 4) !important;
-  height: calc(var(--uitk-size-regular-unit) / 4) !important;
+  width: calc(var(--uitk-size-base) / 4) !important;
+  height: calc(var(--uitk-size-base) / 4) !important;
 }
 /* Cursor on hue slider */
 .rootDisabledAlpha .hue-horizontal > div > div {
@@ -87,5 +87,5 @@
   width: 4px !important;
   height: calc(var(--uitk-size-stackable-unit) / 2 - 2px) !important;
   background: var(--uitk-container-background-medium) !important;
-  border: 1px solid var(--uitk-color-grey-900);
+  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
 }

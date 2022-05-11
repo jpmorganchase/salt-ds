@@ -16,7 +16,7 @@
   /* Same as content padding in x */
   --badge-offset-inline: -4px;
 
-  --badge-sequence-gap: var(--uitk-spacing-unit);
+  --badge-sequence-gap: var(--uitk-size-unit);
 }
 
 .uitkBadge {

@@ -12,7 +12,7 @@
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-regular);
   line-height: var(--uitk-typography-line-height);
-  margin-right: calc(var(--uitk-spacing-unit) / 1.5);
+  margin-right: calc(var(--uitk-size-unit) / 1.5);
   display: block;
 }
 
@@ -23,7 +23,7 @@
 
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-disabled-cursor);
-  opacity: var(--uitk-opacity-text);
+  opacity: var(--uitk-opacity-foreground);
 }
 
 .uitk-density-medium .uitkControlLabel-labelRight {

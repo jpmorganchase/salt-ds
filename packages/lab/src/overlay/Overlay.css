@@ -6,13 +6,16 @@
 /* Experimental - Overlay css variable API */
 .uitkOverlay {
   --overlay-text-color: var(--uitk-text-primary-color);
-  --overlay-spacing: var(--uitk-spacing-unit);
+  --overlay-spacing: var(--uitk-size-unit);
   --overlay-font-size: var(--uitk-text-font-size);
-  /* TODO: Which emphasis should this be? */
-  --overlay-background: var(--uitk-container-background);
+  --overlay-background: var(--uitk-container-background-medium);
   --overlay-border-color: var(--uitk-container-border-color);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
+}
+
+.uitkEmphasisHigh .uitkOverlay {
+  --overlay-background: var(--uitk-container-background-high);
 }
 
 .uitkOverlay-content {

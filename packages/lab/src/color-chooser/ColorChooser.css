@@ -1,21 +1,21 @@
 .uitkColorChooser-overlayButtonSwatch {
   margin-right: 10px;
-  height: calc(2 * var(--uitk-spacing-unit));
-  width: calc(2 * var(--uitk-spacing-unit));
+  height: calc(2 * var(--uitk-size-unit));
+  width: calc(2 * var(--uitk-size-unit));
 }
 .uitk-density-high .uitkColorChooser-overlayButtonSwatch {
-  height: calc(3 * var(--uitk-spacing-unit));
-  width: calc(3 * var(--uitk-spacing-unit));
+  height: calc(3 * var(--uitk-size-unit));
+  width: calc(3 * var(--uitk-size-unit));
 }
 
 .uitkColorChooser-overlayButtonSwatchWithBorder {
-  border: 0.2px solid var(--uitk-palette-neutral-border-medium);
+  border: 0.2px solid var(--uitk-editable-border-color);
 }
 
 .uitkColorChooser-overlayButtonSwatchTransparent {
-  height: calc(3 * var(--uitk-spacing-unit) - 2px) !important;
-  width: calc(3 * var(--uitk-spacing-unit) - 2px) !important;
-  border: 1px solid var(--uitk-palette-negative-foreground);
+  height: calc(3 * var(--uitk-size-unit) - 2px) !important;
+  width: calc(3 * var(--uitk-size-unit) - 2px) !important;
+  border: 1px solid var(--uitk-differential-foreground-negative);
   /* RGBA using red-700 */
   background: linear-gradient(
     to top left,
@@ -43,7 +43,7 @@
 }
 
 .uitkColorChooser-overlayButtonHiddenLabel {
-  width: calc(var(--uitk-spacing-unit) * 3);
+  width: calc(var(--uitk-size-unit) * 3);
   display: contents;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .uitkColorChooser-defaultButton {
-  border-bottom: 1px solid var(--uitk-palette-neutral-border-medium);
+  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
 }
 
 .uitkColorChooser-overlayContent {

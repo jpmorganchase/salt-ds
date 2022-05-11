@@ -6,8 +6,8 @@
 }
 
 .uitkOverflowPanel {
-  --uitkFormField-margin: 0 var(--uitk-spacing-unit);
-  --large-spacing: calc(1.5 * var(--uitk-spacing-unit));
+  --uitkFormField-margin: 0 var(--uitk-size-unit);
+  --large-spacing: calc(1.5 * var(--uitk-size-unit));
   align-items: stretch;
   background-color: var(--overflow-menu-background-color);
   border: 1px solid var(--uitk-color-blue-500);
@@ -19,7 +19,7 @@
 }
 
 .uitkOverflowPanel > .uitkFormField {
-  --uitkFormField-margin: 0 var(--large-spacing) var(--uitk-spacing-unit) var(--large-spacing);
+  --uitkFormField-margin: 0 var(--large-spacing) var(--uitk-size-unit) var(--large-spacing);
 }
 
 .uitkOverflowPanel > .uitkToolbarButton {
@@ -27,7 +27,7 @@
 }
 
 .uitkOverflowPanel > .uitkFormField:first-child {
-  --uitkFormField-margin: var(--large-spacing) var(--large-spacing) var(--uitk-spacing-unit) var(--large-spacing);
+  --uitkFormField-margin: var(--large-spacing) var(--large-spacing) var(--uitk-size-unit) var(--large-spacing);
 }
 
 .uitkOverflowPanel > .uitkFormField:last-child {

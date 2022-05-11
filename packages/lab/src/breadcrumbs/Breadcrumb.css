@@ -3,7 +3,7 @@
   --color-hover: var(--uitkBreadcrumb-color-hover, var(--uitk-actionable-foreground-primary-hover));
   --color-active: var(--uitkBreadcrumb-color-active, var(--uitk-actionable-foreground-primary-active));
   --icon-color: var(--uitkBreadcrumb-icon-color, var(--color));
-  --icon-margin-right: var(--uitkBreadcrumb-margin-right, calc(var(--uitk-spacing-unit) * 0.5));
+  --icon-margin-right: var(--uitkBreadcrumb-margin-right, calc(var(--uitk-size-unit) * 0.5));
 }
 
 .uitkBreadcrumb {

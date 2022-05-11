@@ -18,7 +18,7 @@
   --tooltip-background: var(--uitk-container-background-medium);
   --tooltip-font-size: var(--uitk-text-font-size);
   --tooltip-color: var(--uitk-text-primary-color);
-  --tooltip-padding: var(--uitk-spacing-unit);
+  --tooltip-padding: var(--uitk-size-unit);
 }
 
 .uitkTooltip {
@@ -125,15 +125,15 @@
 }
 
 .uitkTooltip-info {
-  --tooltip-status-color: var(--uitk-palette-info-icon);
+  --tooltip-status-color: var(--uitk-status-info-icon-color);
   box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
-  --tooltip-status-color: var(--uitk-palette-error-icon);
+  --tooltip-status-color: var(--uitk-status-error-icon-color);
 }
 .uitkTooltip-warning {
-  --tooltip-status-color: var(--uitk-palette-warning-icon);
+  --tooltip-status-color: var(--uitk-status-warning-icon-color);
 }
 .uitkTooltip-success {
-  --tooltip-status-color: var(--uitk-palette-success-icon);
+  --tooltip-status-color: var(--uitk-status-success-icon-color);
 }

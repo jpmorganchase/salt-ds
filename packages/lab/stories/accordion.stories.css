@@ -2,7 +2,7 @@
   height: 600px;
   overflow-y: auto;
   border: solid 1px var(--uitk-container-border-color-medium);
-  padding: var(--uitk-size-regular-unit);
+  padding: var(--uitk-size-base);
 }
 
 .accordion {
@@ -10,7 +10,7 @@
 }
 
 .accordion-story-details {
-  padding: var(--uitk-size-regular-unit);
+  padding: var(--uitk-size-base);
   border: solid 1px var(--uitk-text-primary-color);
   box-sizing: border-box;
 }

@@ -1,6 +1,6 @@
 .BorderBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
   border-style: var(--uitk-container-border-style);

@@ -46,5 +46,5 @@
 .uitkLink-disabled:hover {
   cursor: var(--uitk-disabled-cursor);
   color: var(--link-color-disabled);
-  opacity: var(--uitk-opacity-text);
+  opacity: var(--uitk-opacity-foreground);
 }

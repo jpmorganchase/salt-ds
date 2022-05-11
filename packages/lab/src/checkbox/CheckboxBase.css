@@ -24,10 +24,10 @@
 }
 
 .uitkCheckboxBase {
-  --checkbox-solid-color: var(--uitk-palette-action-fill-selected);
-  --checkbox-tick-color: var(--uitk-actionable-foreground-primary-active);
-  --checkbox-outline-color: var(--uitk-palette-action-stroke);
-  --checkbox-outline-color-hover: var(--uitk-palette-action-stroke-hover);
+  --checkbox-solid-color: var(--uitk-selectable-fill-selected);
+  --checkbox-tick-color: var(--uitk-selectable-foreground-primary-active);
+  --checkbox-outline-color: var(--uitk-selectable-stroke);
+  --checkbox-outline-color-hover: var(--uitk-selectable-stroke-hover);
 
   background: var(--uitkCheckbox-background, none);
   padding-top: 1px;

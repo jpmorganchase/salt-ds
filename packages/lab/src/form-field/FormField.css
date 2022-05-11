@@ -97,11 +97,11 @@
   cursor: var(--uitk-disabled-cursor);
 
   /* Setting Helper Text API */
-  --uitkFormFieldHelperText-opacity: var(--uitk-opacity-text);
+  --uitkFormFieldHelperText-opacity: var(--uitk-opacity-foreground);
 
   /* Setting Activation Indicator API */
-  --uitkFormActivationIndicator-opacity: var(--uitk-opacity-graphical);
-  --uitkFormActivationIndicator-icon-opacity: var(--uitk-opacity-graphical);
+  --uitkFormActivationIndicator-opacity: var(--uitk-opacity-foreground);
+  --uitkFormActivationIndicator-icon-opacity: var(--uitk-opacity-foreground);
 }
 
 /* Class applied to the root element on warning state */
@@ -120,7 +120,7 @@
   --uitkFormActivationIndicator-color: var(--uitk-status-error-color);
 }
 
-/* As above when `emphasis="high"` */
+/* As above when `uitkEmphasisHigh` className passed */
 .uitkEmphasisHigh.uitkFormField-error {
   --form-field-background: var(--uitk-status-error-background-high);
 }
@@ -131,14 +131,14 @@
 
 /* Class applied to the root element if `labelPlacement="left"` */
 .uitkFormField-labelLeft {
-  --uitkFormLabel-margin-top: var(--uitk-spacing-unit);
-  --uitkFormLabel-padding-right: calc(0.75 * var(--uitk-spacing-unit));
+  --uitkFormLabel-margin-top: var(--uitk-size-unit);
+  --uitkFormLabel-padding-right: calc(0.75 * var(--uitk-size-unit));
 }
 
 /* Class applied to the root element if `labelPlacement="top"` or labelPlacement omitted (default is 'top') */
 .uitkFormField-labelTop {
-  --form-field-label-root-padding-left: var(--uitk-spacing-unit);
-  --form-field-label-root-padding-right: var(--uitk-spacing-unit);
+  --form-field-label-root-padding-left: var(--uitk-size-unit);
+  --form-field-label-root-padding-right: var(--uitk-size-unit);
   --form-field-label-margin-top: 0;
 }
 

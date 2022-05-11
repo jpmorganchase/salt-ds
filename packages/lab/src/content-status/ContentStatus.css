@@ -32,18 +32,18 @@
   line-height: var(--uitkContentStatus-title-line-height, var(--uitk-typography-line-height));
   font-size: var(--uitkContentStatus-title-font-size, var(--uitk-text-font-size));
   min-height: var(--uitkContentStatus-title-min-height, var(--uitk-text-min-height));
-  margin-top: var(--uitkContentStatus-title-margin-top, var(--uitk-spacing-unit));
+  margin-top: var(--uitkContentStatus-title-margin-top, var(--uitk-size-unit));
 }
 
 /* Styles applied to status message */
 .uitkContentStatus-message {
-  margin-top: var(--uitkContentStatus-message-margin-top, var(--uitk-spacing-unit));
+  margin-top: var(--uitkContentStatus-message-margin-top, var(--uitk-size-unit));
   width: var(--uitkContentStatus-message-width, 100%);
 }
 
 /* Styles applied to status actions */
 .uitkContentStatus-actions {
-  margin-top: var(--uitkContentStatus-actions-margin-top, calc(2 * var(--uitk-spacing-unit)));
+  margin-top: var(--uitkContentStatus-actions-margin-top, calc(2 * var(--uitk-size-unit)));
 }
 
 /* Styles applied if `status="error"` */

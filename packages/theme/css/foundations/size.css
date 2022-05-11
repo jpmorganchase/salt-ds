@@ -1,50 +1,83 @@
 /** Size */
-/* Think twice if you're using these directly. It's better to use density invariant ones below, e.g. `--uitk-size-regular-unit` */
 .uitk-density-touch,
 .uitk-density-low,
 .uitk-density-medium,
 .uitk-density-high {
-  /* Do we need this? if so, does this name makes sense? */
   --uitk-size-basis-unit: 4px;
 
   --uitk-size-icon-small: 12px;
   --uitk-size-icon-medium: 24px;
   --uitk-size-icon-large: 48px;
 
-  --uitk-size-regular-high: 20px;
-  --uitk-size-regular-medium: 28px;
-  --uitk-size-regular-low: 36px;
-  --uitk-size-regular-touch: 44px;
-
-  --uitk-size-stackable-high: 24px;
-  --uitk-size-stackable-medium: 36px;
-  --uitk-size-stackable-low: 48px;
-  --uitk-size-stackable-touch: 60px;
-
-  /* Contentious adding these here. If not here, then where. */
-  --uitk-size-toolbar-high: 28px;
-  --uitk-size-toolbar-medium: 44px;
-  --uitk-size-toolbar-low: 60px;
-  --uitk-size-toolbar-touch: 76px;
+  --uitk-size-sharktooth-height: 5px;
+  --uitk-size-sharktooth-width: 10px;
 }
 
 .uitk-density-touch {
-  --uitk-size-regular-unit: var(--uitk-size-regular-touch);
-  --uitk-size-stackable-unit: var(--uitk-size-stackable-touch);
-  --uitk-size-toolbar-unit: var(--uitk-size-toolbar-touch);
+  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 4);
+  --uitk-size-base: 44px;
+  --uitk-size-adornment: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
+  --uitk-size-appheader: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --uitk-size-bottom-border: 2px;
+  --uitk-size-brandbar: calc(var(--uitk-size-unit) * 0.25);
+  --uitk-size-formfield-top: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 1.5);
+  --uitk-size-inline-divider: calc(var(--uitk-size-base) - 26px);
+  --uitk-size-logo: 32px;
+  --uitk-size-pill: calc(var(--uitk-size-base) - var(--uitk-size-unit) * 1.25);
+  --uitk-size-selection: 26px;
+  --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --uitk-size-switch: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 6px);
+  --uitk-size-toggle-group-button: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
+  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 }
 .uitk-density-low {
-  --uitk-size-regular-unit: var(--uitk-size-regular-low);
-  --uitk-size-stackable-unit: var(--uitk-size-stackable-low);
-  --uitk-size-toolbar-unit: var(--uitk-size-toolbar-low);
+  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 3);
+  --uitk-size-base: 36px;
+  --uitk-size-adornment: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2 / 3);
+  --uitk-size-appheader: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --uitk-size-bottom-border: 2px;
+  --uitk-size-brandbar: calc(var(--uitk-size-unit) / 3);
+  --uitk-size-formfield-top: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 1.5);
+  --uitk-size-inline-divider: calc(var(--uitk-size-base) - 20px);
+  --uitk-size-logo: 26px;
+  --uitk-size-pill: calc(var(--uitk-size-base) - var(--uitk-size-unit) * 1.25);
+  --uitk-size-selection: 20px;
+  --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --uitk-size-switch: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 4px);
+  --uitk-size-toggle-group-button: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 2 / 3) + 2px);
+  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 }
 .uitk-density-medium {
-  --uitk-size-regular-unit: var(--uitk-size-regular-medium);
-  --uitk-size-stackable-unit: var(--uitk-size-stackable-medium);
-  --uitk-size-toolbar-unit: var(--uitk-size-toolbar-medium);
+  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 2);
+  --uitk-size-base: 28px;
+  --uitk-size-adornment: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
+  --uitk-size-appheader: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --uitk-size-bottom-border: 2px;
+  --uitk-size-brandbar: calc(var(--uitk-size-unit) * 0.5);
+  --uitk-size-formfield-top: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --uitk-size-inline-divider: calc(var(--uitk-size-base) - 14px);
+  --uitk-size-logo: 20px;
+  --uitk-size-pill: calc(var(--uitk-size-base) - var(--uitk-size-unit) * 1.25);
+  --uitk-size-selection: 14px;
+  --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --uitk-size-switch: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 4px);
+  --uitk-size-toggle-group-button: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
+  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 }
 .uitk-density-high {
-  --uitk-size-regular-unit: var(--uitk-size-regular-high);
-  --uitk-size-stackable-unit: var(--uitk-size-stackable-high);
-  --uitk-size-toolbar-unit: var(--uitk-size-toolbar-unit);
+  --uitk-size-unit: var(--uitk-size-basis-unit);
+  --uitk-size-base: 20px;
+  --uitk-size-adornment: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --uitk-size-appheader: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 3);
+  --uitk-size-bottom-border: 2px;
+  --uitk-size-brandbar: var(--uitk-size-unit);
+  --uitk-size-formfield-top: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 4);
+  --uitk-size-inline-divider: calc(var(--uitk-size-base) - 8px);
+  --uitk-size-logo: 14px;
+  --uitk-size-pill: calc(var(--uitk-size-base) - var(--uitk-size-unit) * 1.25);
+  --uitk-size-selection: 8px;
+  --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --uitk-size-switch: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 4px);
+  --uitk-size-toggle-group-button: calc(var(--uitk-size-base) - var(--uitk-size-unit) + 2px);
+  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 }
