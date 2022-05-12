@@ -9,7 +9,7 @@
   --overlay-spacing: var(--uitk-size-unit);
   --overlay-font-size: var(--uitk-text-font-size);
   --overlay-background: var(--uitk-container-background-medium);
-  --overlay-border-color: var(--uitk-container-border-color);
+  --overlay-border-color: var(--uitk-container-border-color-medium);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
 }

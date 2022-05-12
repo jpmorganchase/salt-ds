@@ -3,7 +3,7 @@
   background-color: var(--uitkCard-background-color, var(--uitk-container-background));
   border-width: var(--uitkCard-border-width, var(--uitk-container-border-width));
   border-style: var(--uitkCard-border-style, var(--uitk-container-border-style));
-  border-color: var(--uitkCard-border-color, var(--uitk-container-border-color));
+  border-color: var(--uitkCard-border-color, var(--uitk-container-border-color-medium));
   border-radius: var(--uitkCard-border-radius, var(--uitk-container-border-radius));
   box-shadow: var(--uitkCard-box-shadow, var(--uitk-shadow-2));
   box-sizing: border-box;
@@ -29,25 +29,25 @@
 .uitkCard-content h1 {
   line-height: var(--uitkCard-content-h1-line-height, var(--uitk-text-h1-line-height));
   font-size: var(--uitkCard-content-h1-font-size, var(--uitk-text-h1-font-size));
-  font-weight: var(--uitkCard-content-h1-line-height, var(--uitk-text-h1-font-weight));
+  font-weight: var(--uitkCard-content-h1-font-weight, var(--uitk-text-h1-font-weight));
 }
 
 .uitkCard-content h2 {
   line-height: var(--uitkCard-content-h2-line-height, var(--uitk-text-h2-line-height));
   font-size: var(--uitkCard-content-h2-font-size, var(--uitk-text-h2-font-size));
-  font-weight: var(--uitkCard-content-h2-line-height, var(--uitk-text-h2-font-weight));
+  font-weight: var(--uitkCard-content-h2-font-weight, var(--uitk-text-h2-font-weight));
 }
 
 .uitkCard-content h3 {
   line-height: var(--uitkCard-content-h3-line-height, var(--uitk-text-h3-line-height));
   font-size: var(--uitkCard-content-h3-font-size, var(--uitk-text-h3-font-size));
-  font-weight: var(--uitkCard-content-h3-line-height, var(--uitk-text-h3-font-weight));
+  font-weight: var(--uitkCard-content-h3-font-weight, var(--uitk-text-h3-font-weight));
 }
 
 .uitkCard-content h4 {
   line-height: var(--uitkCard-content-h4-line-height, var(--uitk-text-hh41-line-height));
   font-size: var(--uitkCard-content-h4-font-size, var(--uitk-text-h4-font-size));
-  font-weight: var(--uitkCard-content-h4-line-height, var(--uitk-text-h4-font-weight));
+  font-weight: var(--uitkCard-content-h4-font-weight, var(--uitk-text-h4-font-weight));
 }
 
 /* Styles applied if `disabled={true}` */
