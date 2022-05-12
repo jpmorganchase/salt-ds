@@ -11,10 +11,9 @@ import ReactDOM from "react-dom";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { windowType, Window as ToolkitWindow } from "./WindowContext";
 import { useForkRef } from "../utils";
-import { getChildrenNames, isDesktop } from "./electron-utils";
+import { isDesktop } from "./electron-utils";
 
 import "./ElectronWindow.css";
-import ReactDOMServer from "react-dom/server";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
 
 const Window: windowType = forwardRef(function ElectronWindow(
@@ -29,37 +28,6 @@ const Window: windowType = forwardRef(function ElectronWindow(
 
   const forkedRef = useForkRef(forwardedRef, windowRoot);
 
-  const components = new Set();
-  getChildrenNames(children, components);
-
-  const test = ReactDOMServer.renderToStaticMarkup(<>{children}</>);
-
-  const dummyEl = document.createElement("html");
-
-  dummyEl.innerHTML = test;
-
-  dummyEl.querySelectorAll("[class]").forEach((element) =>
-    element.classList
-      .toString()
-      .split(" ")
-      .forEach((classname) => components.add(classname))
-  );
-  //Need to manually add styles to the list
-
-  //Window Styles
-  components.add(".uitkWindow");
-  //Theme
-  components.add(".uitk-light");
-  components.add(".uitk-density");
-  //Fonts
-  components.add("@font-face");
-
-  //Overflow menu is added post initial render
-  components.add(".uitkOverflowMenu");
-
-  if (className)
-    className.split(" ").forEach((classname) => components.add(classname));
-
   if (!mountNode) {
     const win = window.open("", id);
     (win as Window).document.write(
@@ -67,14 +35,7 @@ const Window: windowType = forwardRef(function ElectronWindow(
       `<html lang="en"><head><title>${id}</title><base href="${location.origin}"><style>body {margin: 0;}</style></head><body></body></html>`
     );
     document.head.querySelectorAll("style").forEach((htmlElement) => {
-      if (
-        Array.from(components).some((v) =>
-          // @ts-ignore
-          htmlElement.textContent.includes(v)
-        )
-      ) {
-        (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
-      }
+      (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
     });
     const bodyElement = (win as Window).document.body;
     setMountNode(bodyElement);

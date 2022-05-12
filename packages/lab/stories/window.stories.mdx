@@ -1,0 +1,213 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Lab/Window/StyleInsertion" />
+
+# Window Style injection
+
+The window component is an abstraction layer created to allow developers
+using desktop platforms to inject their own "window" components for use
+in components that are rendered to their own layer such as the Dialog and
+Tooltip.
+
+One of the key issues with the window abstraction is the use of style injection.
+This depends on how the window abstraction is carried out, if the portal opened,
+is itself a React application, then that application will handle styling in the
+window. If the window's content is being written to by React's Portal API then style injection
+will be required to add the CSS to the opened window's document.
+
+###### Copying styles to the child window
+
+One method of style injection would be to copy over the styles present in the parent window,
+This would ensure that all component styles loaded in the parent window are loaded into the
+child window. Those styles can be optimised by querying the children of the window
+via ReactDOMServer to figure out which styles to add.
+
+This method of optimising will not work for child components that are rendered later such
+as the OverflowMenu, where the component is rendered into the child window following a measurement
+after the initial render. The dependency of ReactDOMServer also produces multiple warning messages
+regarding useLayoutEffect having no effect on server side rendering.
+
+Without any optimising, this method works because all the component's CSS is injected into the
+main application window, even if it isn't being rendered initially.
+
+```ts
+document.head.querySelectorAll("style").forEach((htmlElement) => {
+  console.log(htmlElement);
+  (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
+});
+```
+
+###### Delegating style injection to the components
+
+Another method style injection is to delegate responsibility of style injection to the components
+themselves. This process is normally carried out by webpack or rollup, both use the global document
+object to append the styles.
+
+This method will not work with external windows that are rendered to by the React portal API. This
+is due to how the styles are inserted into the document.
+
+One way of overcoming the issue of injecting the style into the correct document is to use context
+to pass the document to the toolkit components. The components will then inject the style into the
+given document.
+
+```ts
+const documentToApplyStyleTo = useCurrentDocument();
+useStyleInsertionEffect(() => {
+  injectStyleIntoGivenDocument(style, documentToApplyStyleTo);
+}, []);
+```
+
+This technique works for components that are completely enclosed within the context such as the
+example below.
+
+```tsx
+<Portal>
+  <Window id={"example"}>
+    <Button />
+  </Window>
+</Portal>
+```
+
+Components that import a style, render a window, but are not encased in a ToolkitProvider such as Tooltip
+won't work properly because they themselves render a window while importing their own CSS. The CSS would
+be injected into the parent document context instead of the components own window.
+
+```tsx
+// Tooltip.tsx
+
+// Attempting to get the context from this scope will result in the parent document context
+// being fetched instead of the context within the window
+
+const Window = useWindow();
+
+return (
+  <Portal disablePortal={disablePortal} container={container}>
+    {open && (
+      <Window
+        className={cn(withBaseName(), withBaseName(state))}
+        ref={ref}
+        {...rest}
+      >
+        <div className={withBaseName("content")}>
+          {render ? (
+            render({
+              Icon: (passedProps: IconProps) => getIcon(passedProps),
+              getIconProps: () => defaultIconProps,
+            })
+          ) : (
+            <>
+              {getIcon({})}
+              <span className={withBaseName("body")}>{title}</span>
+            </>
+          )}
+        </div>
+        {!hideArrow && (
+          <div className={withBaseName("arrow")} {...arrowProps} />
+        )}
+      </Window>
+    )}
+  </Portal>
+);
+```
+
+It would be impractical to refactor components like Tooltip into subcomponents just to make them suitable for style injection. One solution to this
+problem is to create a functional component to inject the style into the window. It
+
+```tsx
+export const StyleInsertion = ({ style }: { style: string }): null => {
+  const documentToApplyStyleTo = useCurrentDocument();
+  useLayoutEffectOnce(
+    true,
+    () => {
+      injectStyleIntoGivenDocument(style, documentToApplyStyleTo);
+    },
+    []
+  );
+
+  return null;
+};
+```
+
+```tsx
+import style from "./Tooltip.css";
+
+// Tooltip.tsx
+
+const Window = useWindow();
+
+return (
+  <Portal disablePortal={disablePortal} container={container}>
+    {open && (
+      <Window
+        className={cn(withBaseName(), withBaseName(state))}
+        ref={ref}
+        {...rest}
+      >
+        <StyleInsertion style={style} />
+        <div className={withBaseName("content")}>
+          {render ? (
+            render({
+              Icon: (passedProps: IconProps) => getIcon(passedProps),
+              getIconProps: () => defaultIconProps,
+            })
+          ) : (
+            <>
+              {getIcon({})}
+              <span className={withBaseName("body")}>{title}</span>
+            </>
+          )}
+        </div>
+        {!hideArrow && (
+          <div className={withBaseName("arrow")} {...arrowProps} />
+        )}
+      </Window>
+    )}
+  </Portal>
+);
+```
+
+Another solution would be to add an optional prop to the window abstraction that allows
+CSS to be passed down and injected into that window's document object. This would also
+overcome the issue of injecting the styles into the window. This bespoke prop would only
+server one purpose
+
+```tsx
+import style from "./Tooltip.css";
+
+// Tooltip.tsx
+
+const Window = useWindow();
+
+return (
+  <Portal disablePortal={disablePortal} container={container}>
+    {open && (
+      <Window
+        className={cn(withBaseName(), withBaseName(state))}
+        ref={ref}
+        cssInject={style}
+        {...rest}
+      >
+        <div className={withBaseName("content")}>
+          {render ? (
+            render({
+              Icon: (passedProps: IconProps) => getIcon(passedProps),
+              getIconProps: () => defaultIconProps,
+            })
+          ) : (
+            <>
+              {getIcon({})}
+              <span className={withBaseName("body")}>{title}</span>
+            </>
+          )}
+        </div>
+        {!hideArrow && (
+          <div className={withBaseName("arrow")} {...arrowProps} />
+        )}
+      </Window>
+    )}
+  </Portal>
+);
+```
+
+Delegating the responsibility of style injection to the components would require each component to call
+the `injectStyleIntoGivenDocument` function in an insertionEffect.

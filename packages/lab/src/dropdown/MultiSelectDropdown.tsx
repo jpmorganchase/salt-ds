@@ -11,7 +11,7 @@ import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
 import { Portal } from "../portal";
-import {isDesktop, useWindow} from "../window";
+import { isDesktop, useWindow } from "../window";
 import {
   flip,
   limitShift,
@@ -51,17 +51,19 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const middleware = isDesktop ? [] : [
-    flip({
-      fallbackPlacements: ["bottom-start", "top-start"],
-    }),
-    shift({ limiter: limitShift() }),
-    size({
-      apply({ height }) {
-        setMaxListHeight(height);
-      },
-    }),
-  ];
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ height }) {
+            setMaxListHeight(height);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware: middleware,

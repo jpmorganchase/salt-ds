@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import {useEffect, useState} from "react";
-import {BrowserRouter} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 
-import {
-  ThemeEditorApp
-} from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
+import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 import {
   ElectronWindow,
   WindowContext,
 } from "@jpmorganchase/uitk-lab/src/window";
-import {isDesktop} from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
-import {CSSByPattern} from "@jpmorganchase/theme-editor";
+import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
 import "./App.css";
-import {ThemeMode} from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
+import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 
 export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>();

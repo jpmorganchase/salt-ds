@@ -191,6 +191,7 @@ export const CascadingMenuList = forwardRef<
     <Portal>
       <Window
         className={`${baseClass}-popper`}
+        id={menuId}
         style={{
           top: y ?? "",
           left: x ?? "",

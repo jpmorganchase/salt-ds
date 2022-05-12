@@ -50,15 +50,3 @@ export const usStateExampleData = [
   "Wisconsin",
   "Wyoming",
 ];
-
-export interface objectOptionType {
-  value: number;
-  text: string;
-  id: number;
-}
-export const objectOptionsExampleData: objectOptionType[] = [
-  { value: 10, text: "A Option", id: 1 },
-  { value: 20, text: "B Option", id: 2 },
-  { value: 30, text: "C Option", id: 3 },
-  { value: 40, text: "D Option", id: 4 },
-];

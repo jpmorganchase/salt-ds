@@ -24,7 +24,7 @@ import { Input, InputProps } from "../../input";
 import { useForkRef } from "../../utils";
 import { TooltipContext, TooltipContextProps } from "../../tooltip";
 import { Portal } from "../../portal";
-import {isDesktop, Window} from "../../window";
+import { isDesktop, Window } from "../../window";
 import {
   flip,
   limitShift,
@@ -148,17 +148,19 @@ export function DefaultComboBox<Item>(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const middleware = isDesktop ? [] : [
-    flip({
-      fallbackPlacements: ["bottom-start", "top-start"],
-    }),
-    shift({limiter: limitShift()}),
-    size({
-      apply({height}) {
-        setMaxListHeight(height);
-      },
-    }),
-  ];
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ height }) {
+            setMaxListHeight(height);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware: middleware,

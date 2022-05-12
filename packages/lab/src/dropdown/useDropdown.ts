@@ -235,6 +235,7 @@ export function useDropdown<Item, Variant extends ListSelectionVariant>(
 
   const handleButtonBlur = (event: FocusEvent<HTMLDivElement>) => {
     // Next line causes an issue for DesktopWindows. Need to consider how we fix.
+    console.log("blur");
     setIsOpen(false);
     onListBlur?.(event);
     onBlurProp?.(event);

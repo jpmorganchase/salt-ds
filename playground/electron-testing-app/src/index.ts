@@ -106,7 +106,7 @@ const createWindow = (): void => {
           frame: false,
           parent: mainWindow,
           roundedCorners: false,
-          // resizable:false,
+          focusable: false,
           transparent: true,
         },
 
@@ -126,7 +126,6 @@ const createWindow = (): void => {
     BrowserWindow.getAllWindows().find((w) => w.title === title);
 
   ipcMain.on("window-size", (event, { id, height, width }) => {
-    console.log(id, width, height);
     const targetWindow = windowByTitle(id);
     resizeWindow(targetWindow, width, height);
   });

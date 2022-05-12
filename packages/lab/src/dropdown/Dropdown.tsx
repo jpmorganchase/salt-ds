@@ -32,7 +32,7 @@ import { useDropdown } from "./useDropdown";
 import "./Dropdown.css";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
 import { Portal, PortalProps } from "../portal";
-import {isDesktop, useWindow} from "../window";
+import { isDesktop, useWindow } from "../window";
 import {
   flip,
   limitShift,
@@ -220,17 +220,19 @@ export const Dropdown = forwardRef(function Dropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
-  const middleware = isDesktop ? [] : [
-    flip({
-      fallbackPlacements: ["bottom-start", "top-start"],
-    }),
-    shift({ limiter: limitShift() }),
-    size({
-      apply({ height }) {
-        setMaxListHeight(height);
-      },
-    }),
-  ];
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ height }) {
+            setMaxListHeight(height);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware: middleware,
