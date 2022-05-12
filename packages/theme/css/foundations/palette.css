@@ -5,6 +5,7 @@
 
   --uitk-palette-action-background-bluractive: var(--uitk-color-grey-30);
   --uitk-palette-action-background-hover: var(--uitk-color-blue-20);
+  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
   --uitk-palette-action-cta-background: var(--uitk-color-blue-600);
   --uitk-palette-action-cta-background-active: var(--uitk-color-blue-700);
   --uitk-palette-action-cta-background-disabled: var(--uitk-color-blue-600-fade-background);
@@ -15,7 +16,6 @@
   --uitk-palette-action-primary-background-hover: var(--uitk-color-grey-40);
   --uitk-palette-action-secondary-background-active: var(--uitk-color-grey-200);
   --uitk-palette-action-secondary-background-hover: var(--uitk-color-grey-40);
-  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
   --uitk-palette-action-border: var(--uitk-color-grey-90);
   --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-action-border-readonly: var(--uitk-color-grey-90-fade-border-readonly);
@@ -163,8 +163,8 @@
   --uitk-palette-negative-foreground: var(--uitk-color-red-300);
 
   --uitk-palette-neutral-endpoint: var(--uitk-color-grey-90);
-  --uitk-palette-neutral-secondary-foreground: var(--uitk-color-white);
-  --uitk-palette-neutral-secondary-foreground-disabled: var(--uitk-color-white-fade-foreground);
+  --uitk-palette-neutral-primary-foreground: var(--uitk-color-white);
+  --uitk-palette-neutral-primary-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-neutral-secondary-foreground: var(--uitk-color-grey-70);
   --uitk-palette-neutral-secondary-foreground-disabled: var(--uitk-color-grey-70-fade-foreground);
 

@@ -53,6 +53,8 @@
   margin-top: var(--uitkStepperInput-secondary-button-margin-top, var(--stepper-button-margin));
   margin-right: var(--uitkStepperInput-secondary-button-margin-right, var(--stepper-secondary-button-margin-right));
   width: var(--uitkStepperInput-secondary-button-width, var(--stepper-secondary-button-width));
+
+  --uitkIcon-color: var(--uitk-icon-color);
 }
 
 .uitkStepperInput-hideSecondaryButton {
