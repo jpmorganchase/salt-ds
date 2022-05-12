@@ -34,7 +34,7 @@
 
 .uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
   opacity: var(--uitk-opacity-border);
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkLinearProgress-barContainer {

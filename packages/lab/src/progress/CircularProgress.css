@@ -6,7 +6,7 @@
 
 .uitkCircularProgress-disabled .uitkCircularProgress-progressValue {
   opacity: var(--uitk-opacity-border);
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkCircularProgress-disabled circle {

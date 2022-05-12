@@ -72,7 +72,7 @@
 
 /* Style applied to input if `disabled={true}` */
 .uitkInput-disabled .uitkInput-input {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-editable-cursor)-disabled;
   opacity: var(--uitk-opacity-foreground);
 }
 

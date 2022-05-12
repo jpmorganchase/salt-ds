@@ -1,7 +1,8 @@
 .uitk-dark,
 .uitk-light {
-  --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
+  --uitk-editable-cursor-disabled: not-allowed;
+  --uitk-editable-cursor-hover: text;
 
   --uitk-editable-border-style: solid;
 

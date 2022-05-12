@@ -15,7 +15,7 @@
   /* Misc. */
   --list-box-shadow: none;
   --list-content-box: border-box;
-  --list-disabled-cursor: var(--uitk-disabled-cursor);
+  --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
 }
 
 .uitkList-wrapper {

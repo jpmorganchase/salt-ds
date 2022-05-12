@@ -1,7 +1,8 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-actionable-cursor-hover: pointer;
   --uitk-actionable-cursor-active: pointer;
+  --uitk-actionable-cursor-disabled: not-allowed;
+  --uitk-actionable-cursor-hover: pointer;
 
   --uitk-actionable-border-width: 1px; /* Not in Figma */
   --uitk-actionable-border-style: solid; /* Not in Figma */
@@ -13,33 +14,33 @@
   /* Note: 'disabled' design tokens not in Figma */
 
   /* Primary variant */
-  --uitk-actionable-foreground-primary: var(--uitk-palette-action-foreground-primary);
-  --uitk-actionable-foreground-primary-active: var(--uitk-palette-action-foreground-primary-active);
-  --uitk-actionable-foreground-primary-disabled: var(--uitk-palette-action-foreground-primary-disabled);
-  --uitk-actionable-foreground-primary-hover: var(--uitk-palette-action-foreground-primary-hover);
-  --uitk-actionable-background-primary: var(--uitk-palette-action-background-primary);
-  --uitk-actionable-background-primary-active: var(--uitk-palette-action-background-primary-active);
-  --uitk-actionable-background-primary-disabled: var(--uitk-palette-action-background-primary-disabled);
-  --uitk-actionable-background-primary-hover: var(--uitk-palette-action-background-primary-hover);
-  --uitk-actionable-font-weight-primary: var(--uitk-typography-weight-bold);
+  --uitk-actionable-primary-foreground: var(--uitk-palette-action-primary-foreground);
+  --uitk-actionable-primary-foreground-active: var(--uitk-palette-action-primary-foreground-active);
+  --uitk-actionable-primary-foreground-disabled: var(--uitk-palette-action-primary-foreground-disabled);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-palette-action-primary-foreground-hover);
+  --uitk-actionable-primary-background: var(--uitk-palette-action-primary-background);
+  --uitk-actionable-primary-background-active: var(--uitk-palette-action-primary-background-active);
+  --uitk-actionable-primary-background-disabled: var(--uitk-palette-action-primary-background-disabled);
+  --uitk-actionable-primary-background-hover: var(--uitk-palette-action-primary-background-hover);
+  --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
 
   /* CTA variant */
-  --uitk-actionable-foreground-cta: var(--uitk-palette-action-foreground-cta);
-  --uitk-actionable-foreground-cta-active: var(--uitk-palette-action-foreground-cta-active);
-  --uitk-actionable-foreground-cta-disabled: var(--uitk-palette-action-foreground-cta-disabled);
-  --uitk-actionable-foreground-cta-hover: var(--uitk-palette-action-foreground-cta-hover);
-  --uitk-actionable-background-cta: var(--uitk-palette-action-background-cta);
-  --uitk-actionable-background-cta-active: var(--uitk-palette-action-background-cta-active);
-  --uitk-actionable-background-cta-disabled: var(--uitk-palette-action-background-cta-disabled);
-  --uitk-actionable-background-cta-hover: var(--uitk-palette-action-background-cta-hover);
-  --uitk-actionable-font-weight-cta: var(--uitk-typography-weight-bold);
+  --uitk-actionable-cta-foreground: var(--uitk-palette-action-cta-foreground);
+  --uitk-actionable-cta-foreground-active: var(--uitk-palette-action-cta-foreground-active);
+  --uitk-actionable-cta-foreground-disabled: var(--uitk-palette-action-cta-foreground-disabled);
+  --uitk-actionable-cta-foreground-hover: var(--uitk-palette-action-cta-foreground-hover);
+  --uitk-actionable-cta-background: var(--uitk-palette-action-cta-background);
+  --uitk-actionable-cta-background-active: var(--uitk-palette-action-cta-background-active);
+  --uitk-actionable-cta-background-disabled: var(--uitk-palette-action-cta-background-disabled);
+  --uitk-actionable-cta-background-hover: var(--uitk-palette-action-cta-background-hover);
+  --uitk-actionable-cta-font-weight: var(--uitk-typography-weight-bold);
 
   /* Secondary variant */
-  --uitk-actionable-foreground-secondary: var(--uitk-palette-action-foreground-secondary);
-  --uitk-actionable-foreground-secondary-active: var(--uitk-palette-action-foreground-secondary-active);
-  --uitk-actionable-foreground-secondary-disabled: var(--uitk-palette-action-foreground-secondary-disabled);
-  --uitk-actionable-foreground-secondary-hover: var(--uitk-palette-action-foreground-secondary-hover);
-  --uitk-actionable-background-secondary-active: var(--uitk-palette-action-background-secondary-active);
-  --uitk-actionable-background-secondary-hover: var(--uitk-palette-action-background-secondary-hover);
-  --uitk-actionable-font-weight-secondary: var(--uitk-typography-weight-semiBold);
+  --uitk-actionable-secondary-foreground: var(--uitk-palette-action-secondary-foreground);
+  --uitk-actionable-secondary-foreground-active: var(--uitk-palette-action-secondary-foreground-active);
+  --uitk-actionable-secondary-foreground-disabled: var(--uitk-palette-action-secondary-foreground-disabled);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-action-secondary-foreground-hover);
+  --uitk-actionable-secondary-background-active: var(--uitk-palette-action-secondary-background-active);
+  --uitk-actionable-secondary-background-hover: var(--uitk-palette-action-secondary-background-hover);
+  --uitk-actionable-secondary-font-weight: var(--uitk-typography-weight-semiBold);
 }

@@ -25,7 +25,7 @@
 
 .uitkCheckboxBase {
   --checkbox-solid-color: var(--uitk-selectable-fill-selected);
-  --checkbox-tick-color: var(--uitk-selectable-foreground-primary-active);
+  --checkbox-tick-color: var(--uitk-selectable-primary-foreground-active);
   --checkbox-outline-color: var(--uitk-selectable-stroke);
   --checkbox-outline-color-hover: var(--uitk-selectable-stroke-hover);
 
@@ -42,7 +42,7 @@
 
 /* Styles applied if `disabled={true}` */
 .uitkCheckboxBase-disabled {
-  cursor: var(--uitkCheckbox-disabled-cursor, var(--uitk-disabled-cursor));
+  cursor: var(--uitkCheckbox-cursor-disabled, var(--uitk-selectable-cursor-disabled));
 }
 
 /* Styles applied on focus state */

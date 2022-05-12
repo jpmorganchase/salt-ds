@@ -13,89 +13,89 @@
 
 /* Styles applied to the root element if variant="cta" */
 .uitkButton-cta {
-  --button-background: var(--uitk-actionable-background-cta);
-  --button-background-active: var(--uitk-actionable-background-cta-active);
-  --button-background-disabled: var(--uitk-actionable-background-cta-disabled);
-  --button-background-hover: var(--uitk-actionable-background-cta-hover);
-  --button-font-weight: var(--uitkButton-font-weight-cta, var(--uitk-actionable-font-weight-cta));
-  --button-text-color: var(--uitk-actionable-foreground-cta);
-  --button-text-color-active: var(--uitk-actionable-foreground-cta-active);
-  --button-text-color-disabled: var(--uitk-actionable-foreground-cta-disabled);
-  --button-text-color-hover: var(--uitk-actionable-foreground-cta-hover);
+  --button-background: var(--uitk-actionable-cta-background);
+  --button-background-active: var(--uitk-actionable-cta-background-active);
+  --button-background-disabled: var(--uitk-actionable-cta-background-disabled);
+  --button-background-hover: var(--uitk-actionable-cta-background-hover);
+  --button-font-weight: var(--uitkButton-cta-font-weight, var(--uitk-actionable-cta-font-weight));
+  --button-text-color: var(--uitk-actionable-cta-foreground);
+  --button-text-color-active: var(--uitk-actionable-cta-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-cta-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-cta-foreground-hover);
 }
 
 /* Icon API in "CTA" variant @ignore */
 .uitkButton-cta {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-cta));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-foreground));
 }
 .uitkButton-cta:hover:not(:active) {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-cta-hover));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-foreground-hover));
 }
 .uitkButton-cta:active,
 .uitkButton-cta.uitkButton-active {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-cta-active));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-cta-foreground-active));
 }
 .uitkButton-cta.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-foreground-cta-disabled);
+  --uitkIcon-color: var(--uitk-actionable-cta-foreground-disabled);
 }
 
 /* Styles applied to the root element if variant="primary" (or no variant specified) */
 .uitkButton-primary {
-  --button-background: var(--uitk-actionable-background-primary);
-  --button-background-active: var(--uitk-actionable-background-primary-active);
-  --button-background-disabled: var(--uitk-actionable-background-primary-disabled);
-  --button-background-hover: var(--uitk-actionable-background-primary-hover);
-  --button-font-weight: var(--uitkButton-font-weight-primary, var(--uitk-actionable-font-weight-primary));
-  --button-text-color: var(--uitk-actionable-foreground-primary);
-  --button-text-color-active: var(--uitk-actionable-foreground-primary-active);
-  --button-text-color-disabled: var(--uitk-actionable-foreground-primary-disabled);
-  --button-text-color-hover: var(--uitk-actionable-foreground-primary-hover);
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-primary));
+  --button-background: var(--uitk-actionable-primary-background);
+  --button-background-active: var(--uitk-actionable-primary-background-active);
+  --button-background-disabled: var(--uitk-actionable-primary-background-disabled);
+  --button-background-hover: var(--uitk-actionable-primary-background-hover);
+  --button-font-weight: var(--uitkButton-primary-font-weight, var(--uitk-actionable-primary-font-weight));
+  --button-text-color: var(--uitk-actionable-primary-foreground);
+  --button-text-color-active: var(--uitk-actionable-primary-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-primary-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-primary-foreground-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-foreground));
 }
 
 /* Icon API in "primary" variant @ignore */
 .uitkButton-primary {
-  --uitkIcon-color: var(--uitk-actionable-foreground-primary);
+  --uitkIcon-color: var(--uitk-actionable-primary-foreground);
 }
 .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled) {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-primary-hover));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-foreground-hover));
 }
 .uitkButton-primary:active,
 .uitkButton-primary.uitkButton-active {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-primary-active));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-foreground-active));
 }
 .uitkButton-primary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-primary-disabled));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-foreground-disabled));
 }
 
 /* Styles applied to the root element if variant="secondary" */
 .uitkButton-secondary {
-  --button-background: var(--uitk-actionable-background-secondary);
-  --button-background-active: var(--uitk-actionable-background-secondary-active);
-  --button-background-disabled: var(--uitk-actionable-background-secondary-disabled);
-  --button-background-hover: var(--uitk-actionable-background-secondary-hover);
-  --button-font-weight: var(--uitkButton-font-weight-secondary, var(--uitk-actionable-font-weight-secondary));
-  --button-text-color: var(--uitk-actionable-foreground-secondary);
-  --button-text-color-active: var(--uitk-actionable-foreground-secondary-active);
-  --button-text-color-disabled: var(--uitk-actionable-foreground-secondary-disabled);
-  --button-text-color-hover: var(--uitk-actionable-foreground-secondary-hover);
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-secondary));
+  --button-background: var(--uitk-actionable-secondary-background);
+  --button-background-active: var(--uitk-actionable-secondary-background-active);
+  --button-background-disabled: var(--uitk-actionable-secondary-background-disabled);
+  --button-background-hover: var(--uitk-actionable-secondary-background-hover);
+  --button-font-weight: var(--uitkButton-secondary-font-weight, var(--uitk-actionable-secondary-font-weight));
+  --button-text-color: var(--uitk-actionable-secondary-foreground);
+  --button-text-color-active: var(--uitk-actionable-secondary-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-secondary-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-secondary-foreground-hover);
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-foreground));
 }
 
 /* Icon API in "secondary" variant @ignore */
 .uitkButton-secondary {
-  --uitkIcon-color: var(--uitk-actionable-foreground-secondary);
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
 }
 
 .uitkButton-secondary:hover:not(:active) {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-secondary-hover));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-foreground-hover));
 }
 .uitkButton-secondary:active,
 .uitkButton-secondary.uitkButton-active {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-secondary-active));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-foreground-active));
 }
 .uitkButton-secondary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-foreground-secondary-disabled));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-foreground-disabled));
 }
 
 .uitkButton {
@@ -186,7 +186,7 @@
 .uitkButton-disabled {
   background: var(--uitkButton-background-disabled, var(--button-background-disabled));
   color: var(--uitkButton-text-color-disabled, var(--button-text-color-disabled));
-  cursor: var(--uitkButton-disabled-cursor, var(--uitk-disabled-cursor));
+  cursor: var(--uitkButton-cursor-disabled, var(--uitk-actionable-cursor-disabled));
 }
 
 .uitkButton[href] {

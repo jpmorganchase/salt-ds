@@ -52,7 +52,7 @@
 
 /* Styles applied if `disabled={true}` */
 .uitkCard-disabled {
-  cursor: var(--uitkCard-cursor-disabled, var(--uitk-disabled-cursor));
+  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
   border-color: var(--uitkCard-border-color-disabled, var(--uitk-container-border-color-disabled));
 }
 

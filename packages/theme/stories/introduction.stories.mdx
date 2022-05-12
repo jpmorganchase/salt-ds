@@ -73,12 +73,10 @@ Foundational tokens can broken into the following groups:
 The full set of characteristics is currently defined is as follows:
 
 | Characteristic name | Appropriate usage                                                               | Example token                                                              |
-| ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --- |
 | Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-color-blue-300);`                    |
-| Actionable          | components on which the user can perform an action                              | `--uitk-actionable-foreground-primary: var(--uitk-color-grey-900);`        |
-| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                      |
-| Delay               | components which have a delay before some form of transition                    | `--uitk-delay-duration-instant: 100;`                                      |
-| Disabled            | components which can be disabled                                                | `--uitk-disabled-cursor: not-allowed;`                                     |
+| Actionable          | components on which the user can perform an action                              | `--uitk-actionable-primary-foreground: var(--uitk-color-grey-900);`        |
+| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                      |     |
 | Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                     |
 | Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                  |
 | Editable            | components that have mutable input                                              | `--uitk-editable-selection-background: var(--uitk-color-blue-30-fade-99);` |
@@ -159,10 +157,10 @@ In the CSS where the theme variables are declared, there are sections declared a
 
 ```css
 .uitk-light {
-  --uitk-actionable-foreground-primary: var(--uitk-grey-900);
+  --uitk-actionable-primary-foreground: var(--uitk-grey-900);
 }
 .uitk-dark {
-  --uitk-actionable-foreground-primary: var(--uitk-white);
+  --uitk-actionable-primary-foreground: var(--uitk-white);
 }
 ```
 
