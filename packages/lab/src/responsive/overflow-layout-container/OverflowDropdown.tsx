@@ -46,8 +46,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
       }),
       shift({ limiter: limitShift() }),
       size({
-        apply({ height }) {
-          setMaxListHeight(height);
+        apply({ availableHeight }) {
+          setMaxListHeight(availableHeight);
         },
       }),
     ],
