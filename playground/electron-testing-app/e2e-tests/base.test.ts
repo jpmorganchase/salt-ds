@@ -209,7 +209,7 @@ test("Opens the tooltip", async () => {
   );
 
   // Catches an issue where the window starts off with the default size and then corrects itself
-  expect(childWindowSize).toStrictEqual([108, 51]);
+  expect(childWindowSize).toStrictEqual([109, 51]);
   expect(childWindowPosition).toStrictEqual([68, 25]);
 
   // Hover on something else
