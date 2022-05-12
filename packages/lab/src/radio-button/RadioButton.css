@@ -26,12 +26,12 @@
 
 /* Styles applied to root component on hover */
 .uitkRadioButton:hover {
-  background-color: var(--uitkRadioButton-background-hover, transparent);
+  background: var(--uitkRadioButton-background-hover, var(--uitk-selectable-background));
 }
 
 /* Styles applied to root component on hover if `checked={true}` */
 .uitkRadioButton-checked:hover {
-  background-color: var(--uitkRadioButton-checked-background-hover, transparent);
+  background: var(--uitkRadioButton-checked-background-hover, var(--uitk-selectable-background));
 }
 
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
@@ -41,7 +41,7 @@
 }
 
 .uitkRadioButton-disabled {
-  opacity: var(--uitk-opacity-foreground);
+  opacity: var(--uitkRadioButton-disabled-opacity, var(--uitk-opacity-foreground));
   pointer-events: visible;
 }
 

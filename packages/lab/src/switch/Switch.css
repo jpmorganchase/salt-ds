@@ -49,19 +49,19 @@
 
 /* Styles applied to outer ControlLabel component */
 .uitk-light .uitkSwitch-label {
-  --switch-checked-icon-color: var(--uitk-color-blue-500); /* TODO: Characteristic here? */
+  --switch-checked-icon-color: var(--uitk-selectable-background-selected);
 }
 
 .uitk-dark .uitkSwitch-label {
-  --switch-checked-icon-color: var(--uitk-color-white);
+  --switch-checked-icon-color: var(--uitk-selectable-background);
 }
 
 .uitkSwitch-label {
-  --switch-checked-track-color: var(--uitk-editable-border-color-active);
+  --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-label-color: var(--uitk-text-secondary-color);
-  --switch-thumb-background: var(--uitk-editable-background-medium);
-  --switch-track-color: var(--uitk-editable-border-color);
-  --switch-track-color-hover: var(--uitk-editable-border-color-hover);
+  --switch-thumb-background: var(--uitk-container-background-medium);
+  --switch-track-color: var(--uitk-selectable-foreground);
+  --switch-track-color-hover: var(--uitk-selectable-background-hover);
 }
 
 .uitkSwitch-label {

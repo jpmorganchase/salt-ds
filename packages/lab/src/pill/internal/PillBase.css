@@ -19,14 +19,15 @@
 }
 
 .uitkPill {
-  --pill-background: var(--uitk-taggable-background);
-  --pill-background-active: var(--uitk-taggable-background-active);
-  --pill-icon-color: var(--uitk-taggable-foreground);
-  --pill-icon-color-hover: var(--uitk-taggable-foreground-hover);
-  --pill-icon-color-active: var(--uitk-taggable-foreground-active);
-  --pill-text-color: var(--uitk-taggable-foreground);
-  --pill-text-color-hover: var(--uitk-taggable-foreground-hover);
-  --pill-text-color-active: var(--uitk-taggable-foreground-active);
+  --pill-background: var(--uitkPill-background, var(--uitk-taggable-background));
+  --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
+  --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background));
+  --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
+  --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
+  --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
+  --pill-text-color: var(--uitkPill-text-color, var(--uitk-taggable-foreground));
+  --pill-text-color-active: var(--uitkPill-text-color-active, var(--uitk-taggable-foreground-active));
+  --pill-text-color-hover: var(--uitkPill-text-color-hover, var(--uitk-taggable-foreground-hover));
 }
 
 /* Button Component API - reset to default state so they don't interfere with Pill styling */
@@ -48,9 +49,9 @@
 
 .uitkPill {
   align-items: center;
-  background: var(--uitkPill-background, var(--pill-background));
+  background: var(--pill-background);
   border-radius: var(--uitkPill-border-radius, 0);
-  color: var(--uitkPill-text-color, var(--pill-text-color));
+  color: var(--pill-text-color);
   display: inline-flex;
   font-size: var(--uitkPill-font-size, var(--uitk-text-help-font-size));
   height: var(--uitkPill-height, calc(var(--pill-checkbox-size) + 2px));
@@ -109,14 +110,14 @@
 }
 
 .uitkPill:hover:not(:active) {
-  background: var(--uitkPill-background-hover, var(--pill-background));
-  color: var(--uitkPill-text-color-hover, var(--pill-text-color-hover));
+  background: var(--pill-background-hover);
+  color: var(--pill-text-color-hover);
 }
 
 .uitkPill:active,
 .uitkPill.uitkPill-active {
-  background: var(--uitkPill-background-active, var(--pill-background-active));
-  color: var(--uitkPill-text-color-active, var(--pill-text-color-active));
+  background: var(--pill-background-active);
+  color: var(--pill-text-color-active);
 }
 
 .uitkPill-noShadow:active {
@@ -147,12 +148,12 @@
 }
 
 .uitkPill-deleteButton:active:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled):not(.uitkPill-selectable) {
-  background: var(--uitkPill-delete-button-background-hover, var(--pill-background-active));
+  background: var(--uitkPill-delete-button-background-active, var(--pill-background-active));
 }
 
 .uitkPill-deleteButton:not(.uitkPill-deleteButton-disabled):not(.uitkPill-disabled) .uitkPill-deleteIcon {
-  color: var(--uitkPill-delete-icon-content, var(--pill-background-active));
-  left: var(--uitkPill-delete-icon-offset, var(--pill-icon-offset));
+  color: var(--uitkPill-delete-button-color, var(--pill-background));
+  left: var(--uitkPill-delete-button-left, var(--pill-icon-offset));
   position: relative;
 }
 
