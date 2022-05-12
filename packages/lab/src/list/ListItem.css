@@ -28,7 +28,7 @@
   --list-item-selectable-cursor: pointer;
   --list-item-cursor: default;
 
-  --list-item-disabled-cursor: var(--uitk-disabled-cursor);
+  --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
   --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
 }
 

@@ -1,49 +1,49 @@
 .uitk-light .uitkToggleButton {
-  --uitk-actionable-background-primary: transparent;
-  --uitk-actionable-foreground-primary: var(--uitk-color-grey-300);
-  --uitk-actionable-foreground-cta: var(--uitk-color-grey-900);
-  --uitk-actionable-background-cta: transparent;
-  --uitk-actionable-foreground-cta: var(--uitk-color-grey-300);
+  --uitk-actionable-primary-background: transparent;
+  --uitk-actionable-primary-foreground: var(--uitk-color-grey-300);
+  --uitk-actionable-cta-foreground: var(--uitk-color-grey-900);
+  --uitk-actionable-cta-background: transparent;
+  --uitk-actionable-cta-foreground: var(--uitk-color-grey-300);
 }
 
 .uitk-light .uitkToggleButton.uitkToggleButton-toggled {
-  --uitk-actionable-foreground-primary: var(--uitk-color-white);
-  --uitk-actionable-background-primary: var(--uitk-color-grey-200);
-  --uitk-actionable-foreground-primary: var(--uitk-color-white);
-  --uitk-actionable-foreground-primary-hover: var(--uitk-color-white);
-  --uitk-actionable-background-primary-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-foreground-primary-hover: var(--uitk-color-white);
-  --uitk-actionable-foreground-secondary: var(--uitk-color-white);
-  --uitk-actionable-background-secondary: var(--uitk-color-grey-200);
-  --uitk-actionable-foreground-secondary: var(--uitk-color-white);
-  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-white);
-  --uitk-actionable-background-secondary-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-white);
-  --uitk-actionable-foreground-cta: var(--uitk-color-white);
-  --uitk-actionable-background-cta: var(--uitk-color-blue-600);
-  --uitk-actionable-foreground-cta: var(--uitk-color-white);
+  --uitk-actionable-primary-foreground: var(--uitk-color-white);
+  --uitk-actionable-primary-background: var(--uitk-color-grey-200);
+  --uitk-actionable-primary-foreground: var(--uitk-color-white);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-color-white);
+  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-200);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-color-white);
+  --uitk-actionable-secondary-foreground: var(--uitk-color-white);
+  --uitk-actionable-secondary-background: var(--uitk-color-grey-200);
+  --uitk-actionable-secondary-foreground: var(--uitk-color-white);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-white);
+  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-200);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-white);
+  --uitk-actionable-cta-foreground: var(--uitk-color-white);
+  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
+  --uitk-actionable-cta-foreground: var(--uitk-color-white);
 }
 
 .uitk-dark .uitkToggleButton {
-  --uitk-actionable-background-primary: transparent;
-  --uitk-actionable-background-cta: transparent;
+  --uitk-actionable-primary-background: transparent;
+  --uitk-actionable-cta-background: transparent;
 }
 
 .uitk-dark .uitkToggleButton.uitkToggleButton-toggled {
-  --uitk-actionable-foreground-primary: var(--uitk-color-grey-900);
-  --uitk-actionable-background-primary: var(--uitk-color-grey-80);
-  --uitk-actionable-foreground-primary: var(--uitk-color-grey-900);
-  --uitk-actionable-foreground-primary-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-background-primary-hover: var(--uitk-color-grey-80);
-  --uitk-actionable-foreground-primary-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-foreground-secondary: var(--uitk-color-grey-900);
-  --uitk-actionable-background-secondary: var(--uitk-color-grey-80);
-  --uitk-actionable-foreground-secondary: var(--uitk-color-grey-900);
-  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-background-secondary-hover: var(--uitk-color-grey-80);
-  --uitk-actionable-foreground-secondary-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-foreground-cta: var(--uitk-color-white);
-  --uitk-actionable-background-cta: var(--uitk-color-blue-600);
+  --uitk-actionable-primary-foreground: var(--uitk-color-grey-900);
+  --uitk-actionable-primary-background: var(--uitk-color-grey-80);
+  --uitk-actionable-primary-foreground: var(--uitk-color-grey-900);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-80);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-secondary-foreground: var(--uitk-color-grey-900);
+  --uitk-actionable-secondary-background: var(--uitk-color-grey-80);
+  --uitk-actionable-secondary-foreground: var(--uitk-color-grey-900);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-80);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-actionable-cta-foreground: var(--uitk-color-white);
+  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
 }
 
 .uitk-density-touch .uitkToggleButton {

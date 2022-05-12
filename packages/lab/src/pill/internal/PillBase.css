@@ -43,7 +43,7 @@
 
 .uitkPill-deleteButton {
   --uitkButton-cursor: pointer;
-  --uitkIcon-color: var(--uitk-actionable-foreground-secondary);
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
 }
 
 .uitkPill {
@@ -96,12 +96,12 @@
   --uitkButton-background-hover: var(--uitk-taggable-background-disabled);
 
   background: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkPill-disabled .uitkPill-label,
 .uitkPill-disabled .uitkIcon {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
   opacity: var(--uitk-opacity-foreground);
 
   --uitkIcon-color: var(--pill-icon-color);

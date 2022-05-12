@@ -24,7 +24,7 @@
 
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-editable-cursor-disabled);
   opacity: var(--uitk-opacity-foreground);
 }
 

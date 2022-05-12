@@ -18,11 +18,11 @@
 
 .uitkControlLabel-disabled,
 .uitkFormField-disabled .uitkControlLabel {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkControlLabel-disabled .uitkControlLabel-label {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-selectable-cursor-disabled);
   opacity: var(--uitk-opacity-foreground);
 }
 

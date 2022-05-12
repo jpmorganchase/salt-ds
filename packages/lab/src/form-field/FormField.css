@@ -94,7 +94,7 @@
 
 /* Class applied to the root element if `disabled={true}` */
 .uitkFormField-disabled {
-  cursor: var(--uitk-disabled-cursor);
+  cursor: var(--uitk-editable-cursor-disabled);
 
   /* Setting Helper Text API */
   --uitkFormFieldHelperText-opacity: var(--uitk-opacity-foreground);
