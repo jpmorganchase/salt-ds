@@ -44,20 +44,14 @@
 }
 
 /* Styles applied to outer ControlLabel component */
-.uitk-light .uitkSwitch-label {
-  --switch-checked-icon-color: var(--uitk-selectable-background-selected);
-}
-
-.uitk-dark .uitkSwitch-label {
-  --switch-checked-icon-color: var(--uitk-selectable-background);
-}
 
 .uitkSwitch-label {
+  --switch-checked-icon-color: var(--uitk-palette-neutral-primary-foreground);
   --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-label-color: var(--uitk-text-secondary-color);
   --switch-thumb-background: var(--uitk-container-background-medium);
-  --switch-track-color: var(--uitk-selectable-foreground);
-  --switch-track-color-hover: var(--uitk-selectable-background-hover);
+  --switch-track-color: var(--uitk-editable-border-color);
+  --switch-track-color-hover: var(--uitk-editable-border-color-hover);
 }
 
 .uitkSwitch-label {
@@ -82,7 +76,6 @@
 /* Styles applied to base */
 .uitkSwitch-base {
   background: transparent;
-  color: var(--uitkSwitch-base-color, var(--uitk-color-grey-10));
   display: inline-flex;
   flex: 0 0 auto;
   height: var(--uitkSwitch-base-height, var(--switch-thumb-size));
@@ -102,7 +95,7 @@
   background: var(--uitkSwitch-track-color, var(--switch-track-color));
   border-radius: 0;
   box-sizing: border-box;
-  height: var(--uitkSwitch-track-height, var(--switch-height));
+  height: var(--uitkSwitch-track-height, var(--uitk-size-switch));
   min-height: 16px;
   margin-top: 0;
   margin-left: 0;
@@ -180,7 +173,7 @@
   background: transparent;
   content: "";
   display: block;
-  height: var(--uitkSwitch-height, var(--switch-height));
+  height: var(--uitkSwitch-height, var(--uitk-size-switch));
   left: -2px;
   outline: var(--uitkSwitch-focused-outline, var(--uitk-focused-outline));
   position: absolute;

@@ -1,3 +1,4 @@
+/*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatch-swatch,
 .uitkColorChooserSwatch-greySwatch {
   margin-bottom: 1px;
@@ -41,7 +42,7 @@
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch {
-  border: 1px solid var(--uitk-color-grey-50);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch,
@@ -61,12 +62,12 @@
 }
 
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  border: 1px solid var(--uitk-color-grey-90);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
 }
 
 .uitkColorChooserSwatch-active {
-  outline: 1px solid var(--uitk-color-grey-800);
-  border: 2px solid var(--uitk-color-white) !important;
+  outline: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
+  border: var(--uitk-focused-outline-width) var(--uitk-actionable-border-style) var(--uitk-actionable-cta-foreground-active) !important;
   width: calc(var(--swatch-size-unit) - 4px) !important;
   height: calc(var(--swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;
@@ -75,7 +76,7 @@
 }
 
 .uitkColorChooserSwatch-transparent {
-  border: 1px solid var(--uitk-color-red-700) !important;
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-negative-foreground) !important;
   width: calc(var(--swatch-size-unit) - 2px) !important;
   height: calc(var(--swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;

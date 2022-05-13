@@ -5,15 +5,8 @@
 
   color: var(--uitk-text-primary-color);
 
+  border-color: var(--uitk-container-border-color-medium);
   border-style: var(--uitk-container-border-style);
   border-width: var(--uitk-container-border-width);
   border-radius: var(--uitk-container-border-radius);
-}
-
-.uitk-light .FontBlock-cell {
-  border-color: var(--uitk-color-grey-60);
-}
-
-.uitk-dark .FontBlock-cell {
-  border-color: var(--uitk-color-grey-400);
 }

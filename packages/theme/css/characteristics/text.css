@@ -118,13 +118,13 @@
 
   --uitk-text-secondary-color: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-text-secondary-color-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
+
+  --uitk-text-growth-indicator-down-color: var(--uitk-palette-negative-foreground);
+  --uitk-text-growth-indicator-up-color: var(--uitk-palette-positive-foreground);
 }
 
 /* TODO: Move colors here to palette */
 .uitk-light {
-  --uitk-text-growth-indicator-up-color: var(--uitk-color-green-500);
-  --uitk-text-growth-indicator-down-color: var(--uitk-color-red-500);
-
   --uitk-text-link-color: var(--uitk-color-grey-900);
   --uitk-text-link-color-hover: var(--uitk-color-blue-500);
   --uitk-text-link-color-active: var(--uitk-color-blue-500);
@@ -134,9 +134,6 @@
 }
 
 .uitk-dark {
-  --uitk-text-growth-indicator-up-color: var(--uitk-color-green-400);
-  --uitk-text-growth-indicator-down-color: var(--uitk-color-red-400);
-
   --uitk-text-link-color: var(--uitk-color-white);
   --uitk-text-link-color-hover: var(--uitk-color-blue-200);
   --uitk-text-link-color-active: var(--uitk-color-blue-200);

@@ -89,8 +89,8 @@
   --uitk-palette-neutral-border-medium: var(--uitk-color-grey-60);
   --uitk-palette-neutral-border-disabled-medium: var(--uitk-color-grey-60-fade-border);
   --uitk-palette-neutral-border-high: var(--uitk-color-grey-90);
-  --uitk-palette-neutral-scrim-medium: var(--uitk-color-white-fade-scrim);
-  --uitk-palette-neutral-scrim-high: var(--uitk-color-black-fade-scrim);
+  --uitk-palette-neutral-scrim-medium: var(--uitk-color-white-fade-scrim-medium);
+  --uitk-palette-neutral-scrim-high: var(--uitk-color-black-fade-scrim-high);
 
   --uitk-palette-error-background-high: var(--uitk-color-red-10);
   --uitk-palette-info-background-high: var(--uitk-color-blue-10);
@@ -189,8 +189,8 @@
   --uitk-palette-neutral-border-medium: var(--uitk-color-grey-300);
   --uitk-palette-neutral-border-disabled-medium: var(--uitk-color-grey-300-fade-border);
   --uitk-palette-neutral-border-high: var(--uitk-color-grey-90);
-  --uitk-palette-neutral-scrim-medium: var(--uitk-color-grey-800-fade-scrim);
-  --uitk-palette-neutral-scrim-high: var(--uitk-color-black-fade-scrim);
+  --uitk-palette-neutral-scrim-medium: var(--uitk-color-grey-800-fade-scrim-medium);
+  --uitk-palette-neutral-scrim-high: var(--uitk-color-black-fade-scrim-high);
 
   --uitk-palette-error-background-high: var(--uitk-color-red-900);
   --uitk-palette-info-background-high: var(--uitk-color-blue-900);

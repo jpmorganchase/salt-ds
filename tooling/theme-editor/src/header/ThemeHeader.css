@@ -21,7 +21,7 @@
 }
 
 .themeSelector {
-  border-bottom: 1px solid var(--uitk-color-grey-70); /* TODO: Change to Editable regular colors? */
+  border-bottom: 1px solid var(--uitk-editable-border-color);
 }
 
 .ThemeHeaderMicroMenu {

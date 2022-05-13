@@ -7,7 +7,7 @@
   --file-drop-zone-border-color: var(--uitk-container-border-color-medium);
   --file-drop-zone-background-disabled: var(--uitk-container-background-disabled-medium);
   /* TODO: Design, light mode used to be grey 200 */
-  --file-drop-zone-icon-color: var(--uitk-icon-color);
+  --file-drop-zone-icon-color: var(--uitk-palette-neutral-secondary-foreground);
 
   --file-drop-zone-border-width: var(--uitk-container-border-width);
   /* Overriding containable characteristics */

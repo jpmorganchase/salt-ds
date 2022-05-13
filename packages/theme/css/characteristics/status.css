@@ -1,9 +1,9 @@
 .uitk-dark,
 .uitk-light {
-  --uitk-status-info-icon-color: var(--uitk-palette-info-icon);
-  --uitk-status-success-icon-color: var(--uitk-palette-success-icon);
-  --uitk-status-warning-icon-color: var(--uitk-palette-warning-icon);
-  --uitk-status-error-icon-color: var(--uitk-palette-error-icon);
+  --uitk-status-info-foreground: var(--uitk-palette-info-icon);
+  --uitk-status-success-foreground: var(--uitk-palette-success-icon);
+  --uitk-status-warning-foreground: var(--uitk-palette-warning-icon);
+  --uitk-status-error-foreground: var(--uitk-palette-error-icon);
 
   --uitk-status-info-border-color: var(--uitk-palette-info-border);
   --uitk-status-success-border-color: var(--uitk-palette-success-border);

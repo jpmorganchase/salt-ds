@@ -1,7 +1,7 @@
 .uitkBadge {
   /* Colors */
   --badge-content-text-color: var(--uitk-text-primary-color);
-  --badge-content-icon-color: var(--uitk-status-info-icon-color);
+  --badge-content-icon-color: var(--uitk-status-info-foreground);
   /* Font, Typography */
   --badge-children-font-family: var(--uitk-typography-font-family);
   --badge-children-line-height: var(--uitk-text-line-height);
@@ -70,17 +70,17 @@
 }
 
 .uitkBadge-info {
-  --badge-content-icon-color: var(--uitk-status-info-icon-color);
+  --badge-content-icon-color: var(--uitk-status-info-foreground);
 }
 
 .uitkBadge-warning {
-  --badge-content-icon-color: var(--uitk-status-warning-icon-color);
+  --badge-content-icon-color: var(--uitk-status-warning-foreground);
 }
 
 .uitkBadge-error {
-  --badge-content-icon-color: var(--uitk-status-error-icon-color);
+  --badge-content-icon-color: var(--uitk-status-error-foreground);
 }
 
 .uitkBadge-success {
-  --badge-content-icon-color: var(--uitk-status-success-icon-color);
+  --badge-content-icon-color: var(--uitk-status-success-foreground);
 }
