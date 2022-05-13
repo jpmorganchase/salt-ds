@@ -20,7 +20,8 @@
       odd-row-background-color: null,
       // Background color of the overlay shown over the grid when it is covered by an overlay, e.g. a data loading indicator.
       modal-overlay-background-color: var(--uitk-overlayable-scrim-background),
-
+      // Background color when hovering over rows in the grid and in dropdown menus, or null for no rollover effect (note - if you want a rollover on one but not the other, set to null and use CSS to achieve the rollover)
+      row-hover-color: var(--uitk-color-blue-30),
       // Colour for the "chip" that repersents a column that has been dragged onto a drop zone
       chip-background-color: null,
 
@@ -64,6 +65,8 @@
       odd-row-background-color: null,
       // Background color of the overlay shown over the grid when it is covered by an overlay, e.g. a data loading indicator.
       modal-overlay-background-color: var(--uitk-overlayable-scrim-background),
+      // Background color when hovering over rows in the grid and in dropdown menus, or null for no rollover effect (note - if you want a rollover on one but not the other, set to null and use CSS to achieve the rollover)
+      row-hover-color: var(--uitk-color-blue-700),
 
       // Colour for the "chip" that repersents a column that has been dragged onto a drop zone
       chip-background-color: null,

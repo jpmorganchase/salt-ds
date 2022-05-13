@@ -3525,8 +3525,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   text-overflow: ellipsis;
 }
 .ag-theme-uitk-light .ag-list-item.ag-active-item {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-30);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-30));
 }
 .ag-theme-uitk-light .ag-select-list-item {
   padding-left: 4px;
@@ -3588,8 +3588,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   height: 24px;
 }
 .ag-theme-uitk-light .ag-rich-select-virtual-list-item:hover {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-30);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-30));
 }
 .ag-theme-uitk-light .ag-rich-select-row {
   padding-left: 18px;
@@ -6460,8 +6460,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   border-left-color: var(--ag-border-color, var(--uitk-container-border-color));
 }
 .ag-theme-uitk-light .ag-row-hover {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-30);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-30));
 }
 .ag-theme-uitk-light .ag-column-hover {
   background-color: rgba(33, 150, 243, 0.1);
@@ -6770,8 +6770,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   border-top-color: var(--ag-border-color, var(--uitk-container-border-color));
 }
 .ag-theme-uitk-light .ag-menu-option-active, .ag-theme-uitk-light .ag-compact-menu-option-active {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-30);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-30));
 }
 .ag-theme-uitk-light .ag-menu-option-part, .ag-theme-uitk-light .ag-compact-menu-option-part {
   line-height: 16px;
@@ -8293,8 +8293,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ag-theme-uitk-light .ag-standard-button:hover {
   border-color: #2196f3;
   border-color: var(--ag-alpine-active-color, #2196f3);
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-30);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-30));
 }
 .ag-theme-uitk-light .ag-standard-button:active {
   border-color: #2196f3;
@@ -8723,8 +8723,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   text-overflow: ellipsis;
 }
 .ag-theme-uitk-dark .ag-list-item.ag-active-item {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-700);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-700));
 }
 .ag-theme-uitk-dark .ag-select-list-item {
   padding-left: 4px;
@@ -8786,8 +8786,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   height: 24px;
 }
 .ag-theme-uitk-dark .ag-rich-select-virtual-list-item:hover {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-700);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-700));
 }
 .ag-theme-uitk-dark .ag-rich-select-row {
   padding-left: 18px;
@@ -11658,8 +11658,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   border-left-color: var(--ag-border-color, var(--uitk-container-border-color));
 }
 .ag-theme-uitk-dark .ag-row-hover {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-700);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-700));
 }
 .ag-theme-uitk-dark .ag-column-hover {
   background-color: rgba(33, 150, 243, 0.1);
@@ -11968,8 +11968,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
   border-top-color: var(--ag-border-color, var(--uitk-container-border-color));
 }
 .ag-theme-uitk-dark .ag-menu-option-active, .ag-theme-uitk-dark .ag-compact-menu-option-active {
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-700);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-700));
 }
 .ag-theme-uitk-dark .ag-menu-option-part, .ag-theme-uitk-dark .ag-compact-menu-option-part {
   line-height: 16px;
@@ -13491,8 +13491,8 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
 .ag-theme-uitk-dark .ag-standard-button:hover {
   border-color: #2196f3;
   border-color: var(--ag-alpine-active-color, #2196f3);
-  background-color: rgba(33, 150, 243, 0.1);
-  background-color: var(--ag-row-hover-color, rgba(33, 150, 243, 0.1));
+  background-color: var(--uitk-color-blue-700);
+  background-color: var(--ag-row-hover-color, var(--uitk-color-blue-700));
 }
 .ag-theme-uitk-dark .ag-standard-button:active {
   border-color: #2196f3;
