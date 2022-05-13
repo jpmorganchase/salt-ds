@@ -19,7 +19,7 @@ export enum ThemeMode {
   DARK,
 }
 
-export const ScopeSelector = (): React.ReactElement => {
+export const ScopeSelector = (): JSX.Element => {
   const [selectedTabIndex, handleTabSelection] = useTabsWithRouting(
     ["/foundations", "/characteristics"],
     true

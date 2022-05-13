@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import cn from "classnames";
 import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
@@ -98,9 +98,7 @@ const StateIcon = (iconInitial: string) => {
   }
 };
 
-export const ColorValueEditor = (
-  props: ColorValueEditorProps
-): React.ReactElement => {
+export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
     undefined
   );
