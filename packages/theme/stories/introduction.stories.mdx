@@ -72,24 +72,25 @@ Foundational tokens can broken into the following groups:
 
 The full set of characteristics is currently defined is as follows:
 
-| Characteristic name | Appropriate usage                                                               | Example token                                                              |
-| ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | --- |
-| Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-color-blue-300);`                    |
-| Actionable          | components on which the user can perform an action                              | `--uitk-actionable-primary-foreground: var(--uitk-color-grey-900);`        |
-| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                      |     |
-| Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                     |
-| Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                  |
-| Editable            | components that have mutable input                                              | `--uitk-editable-selection-background: var(--uitk-color-blue-30-fade-99);` |
-| Focused             | components that have a focused state                                            | `--uitk-focused-med-emphasis-outline-style: dotted;`                       |
-| Measured            | components which have some form of scale or progress                            | `--uitk-measured-border-color: var(--uitk-color-grey-100);`                |
-| Navigable           | components that change data sets or view contexts                               | `--uitk-navigable-link-text-decoration: underline;`                        |
-| Overlayable         | components that form hierarchys in layout                                       | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                  |
-| Ratable             | components which can be rated                                                   | `--uitk-ratable-background-hover: var(--uitk-color-orange-700);`           |
-| Selectable          | components that have a selected state                                           | `--uitk-selectable-text-align: left;`                                      |
-| Separable           | components containing elements which should be separated into different divions | `--uitk-separator-section-color: var(--uitk-color-grey-60);`               |
-| Status              | components indicating an informational, warning, error or success state         | `--uitk-status-info-color: var(--uitk-color-blue-500);`                    |
-| Taggable            | components which allow data to be organized                                     | `--uitk-taggable-background: var(--uitk-color-grey-40);`                   |
-| Text                | all text components or HTML elements                                            | `--uitk-text-primary-color: var(--uitk-color-grey-900);`                   |
+| Characteristic name | Appropriate usage                                                               | Example token                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --- |
+| Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-palette-accent-background);`                                  |
+| Actionable          | components on which the user can perform an action                              | ` --uitk-actionable-primary-background-hover: var(--uitk-palette-action-primary-background-hover);` |
+| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                                               |
+| Differential        | components indicating a positive or negative change                             | `--uitk-differential-foreground-positive: var(--uitk-palette-positive-foreground);`                 |     |
+| Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                                              |
+| Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                                           |
+| Editable            | components that have mutable input                                              | `--uitk-editable-foreground: var(--uitk-palette-action-foreground);;`                               |
+| Focused             | components that have a focused state                                            | ` --uitk-focused-outline-style: dotted;`                                                            |
+| Measured            | components which have some form of scale or progress                            | `--uitk-measured-border-color: var(--uitk-palette-neutral-endpoint);`                               |
+| Navigable           | components that change data sets or view contexts                               | `--uitk-navigable-link-text-decoration: underline;`                                                 |
+| Overlayable         | components that form hierarchys in layout                                       | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                                           |
+| Ratable             | components which can be rated                                                   | `--uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);`                       |
+| Selectable          | components that have a selected state                                           | `--uitk-selectable-text-align: left;`                                                               |
+| Separable           | components containing elements which should be separated into different divions | `--uitk-separable-border-color-1: var(--uitk-palette-neutral-border-low);`                          |
+| Status              | components indicating an informational, warning, error or success state         | `--uitk-status-info-border-color: var(--uitk-palette-info-border);`                                 |
+| Taggable            | components which allow data to be organized                                     | `--uitk-taggable-background: var(--uitk-palette-action-primary-background);`                        |
+| Text                | all text components or HTML elements                                            | `--uitk-text-primary-color: var(--uitk-palette-neutral-primary-foreground);`                        |
 
 #### Token Naming Conventions
 

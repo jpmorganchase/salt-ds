@@ -1,11 +1,5 @@
-.uitk-light .uitkLogo {
-  --logo-color: var(--uitk-color-grey-300);
-}
-.uitk-dark .uitkLogo {
-  --logo-color: var(--uitk-color-grey-70);
-}
-
 .uitkLogo {
+  --logo-color: var(--uitkLogo-color, var(--uitk-palette-neutral-secondary-foreground));
   --logo-divider-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color-2));
   --logo-divider-height: var(--uitkLogo-title-height, var(--uitk-size-inline-divider));
   --logo-divider-margin: 0 calc(var(--uitk-size-unit) * 2);

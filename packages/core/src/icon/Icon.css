@@ -1,5 +1,5 @@
 .uitkIcon {
-  --icon-color: var(--uitkIcon-color, var(--uitk-icon-color));
+  --icon-color: var(--uitkIcon-color, var(--uitk-palette-neutral-secondary-foreground));
   --icon-size: var(--uitkIcon-size, var(--uitk-size-graphic-small));
 }
 
@@ -15,12 +15,12 @@
 }
 
 .uitkIcon:hover:not(:active) {
-  --icon-color: var(--uitkIcon-color-hover, var(--uitk-icon-color));
+  --icon-color: var(--uitkIcon-color-hover, var(--uitk-palette-neutral-secondary-foreground));
 }
 
 .uitkIcon:active,
 .uitkIcon.uitkIcon-active {
-  --icon-color: var(--uitkIcon-color-active, var(--uitk-icon-color));
+  --icon-color: var(--uitkIcon-color-active, var(--uitk-palette-neutral-secondary-foreground));
 }
 
 .uitkIcon-content {

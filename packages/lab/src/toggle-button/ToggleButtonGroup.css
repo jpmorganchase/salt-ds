@@ -1,20 +1,10 @@
-.uitk-light .uitkToggleButtonGroup {
-  --toggle-button-group-border-color: var(--uitk-color-grey-60);
-}
-
-.uitk-light .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggle-button-group-border-color: var(--uitk-color-blue-300);
-}
-
-.uitk-dark .uitkToggleButtonGroup {
-  --toggle-button-group-border-color: var(--uitk-color-grey-400);
-}
-
-.uitk-dark .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggle-button-group-border-color: var(--uitk-color-blue-600);
+.uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
+  --toggle-button-group-border-color: var(--uitk-accent-border-color); /* TODO: Check token */
 }
 
 .uitkToggleButtonGroup {
+  --toggle-button-group-border-color: var(--uitk-container-border-color-medium); /* TODO: Check token */
+
   display: inline-flex;
   box-sizing: border-box;
   overflow: hidden;

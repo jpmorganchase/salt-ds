@@ -1,14 +1,5 @@
-.uitk-dark .uitkMenuTrigger {
-  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-color-grey-40));
-  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-color-grey-900));
-}
-
-.uitk-light .uitkMenuTrigger {
-  --button-open-background: var(--uitkMenuTrigger-button-open-background, var(--uitk-color-grey-200));
-  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-color-white));
-}
-
 .uitkMenuTrigger {
+  --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-actionable-primary-foreground-active));
   --icon-margin-left: var(--uitkMenuTrigger-icon-margin-left, var(--uitk-size-unit));
 }
 
@@ -18,7 +9,7 @@
 }
 
 .uitkMenuTrigger-buttonOpen {
-  background: var(--button-open-background);
+  background: var(--uitkMenuTrigger-button-open-background, var(--uitk-actionable-primary-background-active));
   color: var(--button-open-color);
 }
 

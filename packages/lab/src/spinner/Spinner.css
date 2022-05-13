@@ -1,5 +1,5 @@
 .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-measured-gradient-start);
+  stop-color: var(--uitk-measured-gradient-stop);
 }
 .uitkSvgSpinner-gradientStop2 {
   stop-color: var(--uitk-measured-gradient-stop);
@@ -14,16 +14,16 @@
 /* Not yet sure about procedure for implementing themes */
 
 /* .uitk-dark .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-color-blue-500);
+  stop-color: var(--uitk-measured-gradient-stop);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop2 {
-  stop-color: var(--uitk-color-teal-500);
+   stop-color: var(--uitk-measured-gradient-start);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--uitk-color-teal-500);
+ stop-color: var(--uitk-measured-gradient-stop);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitk-color-teal-500);
+stop-color: var(--uitk-measured-gradient-start);
 } */
 
 .uitkSvgSpinner {

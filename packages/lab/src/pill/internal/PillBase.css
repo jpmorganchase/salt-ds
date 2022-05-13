@@ -51,7 +51,7 @@
   color: var(--pill-text-color);
   display: inline-flex;
   font-size: var(--uitkPill-font-size, var(--uitk-text-help-font-size));
-  height: var(--uitkPill-height, calc(var(--pill-checkbox-size) + 2px));
+  height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letter-spacing, 0);
   line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
   max-width: var(--uitkPill-max-width, 160px);
@@ -123,7 +123,7 @@
 
 .uitkPill-deleteButton {
   flex-shrink: 0;
-  height: calc(var(--pill-checkbox-size) + 2px);
+  height: var(--pill-checkbox-size);
   min-height: var(--uitkPill-min-height, var(--uitk-text-min-height));
 }
 

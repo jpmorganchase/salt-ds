@@ -48,24 +48,24 @@
 
 /* Styles applied if `status="error"` */
 .uitkContentStatus-error {
-  fill: var(--uitkContentStatus-error-fill, var(--uitk-status-error-icon-color));
+  fill: var(--uitkContentStatus-error-fill, var(--uitk-status-error-foreground));
   border: var(--uitkContentStatus-error-border, var(--uitk-status-error-border));
 }
 
 /* Styles applied if `status="success"` */
 .uitkContentStatus-success {
-  fill: var(--uitkContentStatus-success-fill, var(--uitk-status-success-icon-color));
+  fill: var(--uitkContentStatus-success-fill, var(--uitk-status-success-foreground));
   border: var(--uitkContentStatus-success-border, var(--uitk-status-success-border));
 }
 
 /* Styles applied if `status="warning"` */
 .uitkContentStatus-warning {
-  fill: var(--uitkContentStatus-warning-fill, var(--uitk-status-warning-icon-color));
+  fill: var(--uitkContentStatus-warning-fill, var(--uitk-status-warning-foreground));
   border: var(--uitkContentStatus-warning-border, var(--uitk-status-warning-border));
 }
 
 /* Styles applied if `status="info"` */
 .uitkContentStatus-info {
-  fill: var(--uitkContentStatus-info-fill, var(--uitk-status-info-icon-color));
+  fill: var(--uitkContentStatus-info-fill, var(--uitk-status-info-foreground));
   border: var(--uitkContentStatus-info-border, var(--uitk-status-info-border));
 }

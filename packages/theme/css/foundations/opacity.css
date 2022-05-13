@@ -1,14 +1,16 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-opacity-foreground: 0.7;
-  --uitk-opacity-border: 0.4;
   --uitk-opacity-background: 0.4;
+  --uitk-opacity-border: 0.4;
   --uitk-opacity-border-readonly: 0.2;
+  --uitk-opacity-foreground: 0.7;
+  --uitk-opacity-scrim-high: 0.8;
 }
 
 .uitk-light {
-  --uitk-opacity-scrim: 0.8;
+  --uitk-opacity-scrim-medium: 0.8;
 }
+
 .uitk-dark {
-  --uitk-opacity-scrim: 0.7;
+  --uitk-opacity-scrim-medium: 0.7;
 }

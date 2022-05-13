@@ -21,7 +21,7 @@
   --uitk-focused-outline-offset: -2px;
   --uitk-focused-outline-top: 0px;
   --uitk-focused-outline-bottom: 2px;
-  --tab-bar-color: var(--uitk-color-grey-90);
+  --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-size-unit);
   --tab-font-weight-selected: var(--uitk-typography-weight-semiBold);
@@ -63,7 +63,7 @@
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
-  background-color: var(--uitkTab-hover-background, var(--tab-hover-background));
+  background-color: var(--uitkTab-background-hover, var(--tab-hover-background));
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before,

@@ -125,15 +125,15 @@
 }
 
 .uitkTooltip-info {
-  --tooltip-status-color: var(--uitk-status-info-icon-color);
+  --tooltip-status-color: var(--uitk-status-info-foreground);
   box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
-  --tooltip-status-color: var(--uitk-status-error-icon-color);
+  --tooltip-status-color: var(--uitk-status-error-foreground);
 }
 .uitkTooltip-warning {
-  --tooltip-status-color: var(--uitk-status-warning-icon-color);
+  --tooltip-status-color: var(--uitk-status-warning-foreground);
 }
 .uitkTooltip-success {
-  --tooltip-status-color: var(--uitk-status-success-icon-color);
+  --tooltip-status-color: var(--uitk-status-success-foreground);
 }

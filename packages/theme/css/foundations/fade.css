@@ -18,7 +18,7 @@
   --uitk-color-grey-300-fade-background: rgba(76, 80, 91, var(--uitk-opacity-background));
   --uitk-color-blue-600-fade-background: rgba(21, 92, 147, var(--uitk-opacity-background));
 
-  --uitk-color-white-fade-scrim: rgba(255, 255, 255, var(--uitk-opacity-scrim));
-  --uitk-color-black-fade-scrim: rgba(0, 0, 0, var(--uitk-opacity-scrim));
-  --uitk-color-grey-800-fade-scrim: rgba(36, 37, 38, var(--uitk-opacity-scrim));
+  --uitk-color-white-fade-scrim-medium: rgba(255, 255, 255, var(--uitk-opacity-scrim-medium));
+  --uitk-color-grey-800-fade-scrim-medium: rgba(36, 37, 38, var(--uitk-opacity-scrim-medium));
+  --uitk-color-black-fade-scrim-high: rgba(0, 0, 0, var(--uitk-opacity-scrim-high));
 }

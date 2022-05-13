@@ -54,12 +54,14 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     name: "Switch",
     state: "checked",
   });
+  /* TODO: Controlled version does not work */
 
   const [focusVisible, setFocusVisible] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.checked;
     setChecked(value);
+    console.log(value);
     onChange?.(event, value);
   };
 
