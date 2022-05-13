@@ -37,7 +37,7 @@
 }
 
 .uitkAccordionSection {
-  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable-unit));
+  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
   --summary-font-weight: var(--uitkAccordionSummary-font-weight, var(--uitk-typography-weight-regular));
 
   --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));

@@ -64,6 +64,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       valueId,
     } = useMetricContext();
 
+    /* TODO: Consider if emphasis should be in context or not */
     const iconSize = emphasis === "low" ? 12 : 24;
 
     const iconProps = {

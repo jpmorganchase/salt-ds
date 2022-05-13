@@ -55,7 +55,7 @@
   float: right;
   background-color: transparent;
   padding: 6px 2px 6px 2px;
-  height: var(--uitk-size-stackable-unit);
+  height: var(--uitk-size-stackable);
 }
 
 .uitkColorChooser-defaultButton {

@@ -1,6 +1,6 @@
 .uitkIcon {
   --icon-color: var(--uitkIcon-color, var(--uitk-icon-color));
-  --icon-size: var(--uitkIcon-size, var(--uitk-size-icon-small));
+  --icon-size: var(--uitkIcon-size, var(--uitk-size-graphic-small));
 }
 
 .uitkIcon {
@@ -28,15 +28,15 @@
 }
 
 .uitkIcon-small {
-  --icon-size: var(--uitk-size-icon-small);
+  --icon-size: var(--uitk-size-graphic-small);
 }
 
 .uitkIcon-medium {
-  --icon-size: var(--uitk-size-icon-medium);
+  --icon-size: var(--uitk-size-graphic-medium);
 }
 
 .uitkIcon-large {
-  --icon-size: var(--uitk-size-icon-large);
+  --icon-size: var(--uitk-size-graphic-large);
 }
 
 .uitkIcon .uitkIcon-content {

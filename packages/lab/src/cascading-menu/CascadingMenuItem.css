@@ -1,13 +1,3 @@
-.uitk-light {
-  --menuitem-blur-selected-bg: var(--uitk-color-grey-30);
-  --menu-divider-bg: var(--uitk-color-grey-60);
-}
-
-.uitk-dark {
-  --menuitem-blur-selected-bg: var(--uitk-color-grey-500);
-  --menu-divider-bg: var(--uitk-color-grey-300);
-}
-
 .uitkMenuItem {
   background: var(--menu-item-background);
   border-bottom: var(--menu-item-border-bottom);
@@ -45,7 +35,7 @@
 }
 
 .uitkMenuItem.uitkMenuItem-menuItemDivider {
-  border-bottom: 1px solid var(--menu-divider-bg);
+  border-bottom: var(--uitk-separable-border-width) var(--uitk-separable-border-style) var(--uitk-separable-border-color-2);
 }
 
 .uitkMenuItem-menuItemHover:hover {
@@ -54,5 +44,5 @@
 
 /* extra specificity requred to override ListItem selected */
 .uitkMenuItem.uitkMenuItem-menuItemBlurSelected {
-  background: var(--menuitem-blur-selected-bg) !important;
+  background: var(--uitk-selectable-background-bluractive) !important;
 }

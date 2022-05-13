@@ -1,27 +1,24 @@
 .uitk-density-high {
   --pill-icon-offset: 1px;
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, var(--uitk-size-icon-small));
 }
 
 .uitk-density-medium {
   --pill-icon-offset: 2px;
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 2px));
 }
 
 .uitk-density-low {
   --pill-icon-offset: 3px;
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 4px));
 }
 
 .uitk-density-touch {
   --pill-icon-offset: 4px;
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-icon-small) + 6px));
 }
 
 .uitkPill {
   --pill-background: var(--uitkPill-background, var(--uitk-taggable-background));
   --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background));
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, var(--uitk-size-pill));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
@@ -159,7 +156,7 @@
 
 .uitkPill .uitkPill-icon {
   fill: var(--pill-icon-color);
-  height: var(--uitk-size-icon-small);
+  height: var(--uitk-size-graphic-small);
   margin-left: calc(var(--uitk-size-unit) * 0.75);
   margin-right: calc(var(--uitk-size-unit) * 0.5);
 }

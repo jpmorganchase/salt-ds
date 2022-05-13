@@ -25,7 +25,7 @@
 }
 
 .uitkColorChooserSwatches-alphaTextDiv {
-  font-size: var(--uitk-typography-size-regular-unit);
+  font-size: var(--uitk-typography-size-regular);
   margin-right: var(--uitk-size-unit);
 }
 

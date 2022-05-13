@@ -3,7 +3,6 @@
 /* Styles applied to root element */
 .uitk-density-touch {
   --switch-width: 44px;
-  --switch-height: 24px;
   --switch-thumb-margin: 3px 0 0 3px;
   --switch-thumb-size: 18px;
   --switch-thumb-translate: 20px;
@@ -11,7 +10,6 @@
 
 .uitk-density-low {
   --switch-width: 38px;
-  --switch-height: 20px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 16px;
   --switch-thumb-translate: 18px;
@@ -19,7 +17,6 @@
 
 .uitk-density-medium {
   --switch-width: 34px;
-  --switch-height: 18px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 14px;
   --switch-thumb-translate: 16px;
@@ -27,7 +24,6 @@
 
 .uitk-density-high {
   --switch-width: 30px;
-  --switch-height: 16px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 12px;
   --switch-thumb-translate: 14px;
@@ -37,7 +33,7 @@
   box-sizing: content-box;
   display: inline-flex;
   flex-shrink: 0;
-  height: var(--uitkSwitch-height, var(--switch-height));
+  height: var(--uitkSwitch-height, var(--uitk-size-switch));
   margin-left: 0;
   overflow: visible;
   padding: 0;

@@ -81,6 +81,8 @@
 .uitkInput-prefixContainer {
   display: flex;
   align-items: center;
+
+  height: var(--uitk-size-adornment);
 }
 
 /* Style applied to root element with start adornment */

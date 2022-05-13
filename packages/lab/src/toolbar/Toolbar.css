@@ -1,7 +1,6 @@
 .uitkToolbar {
   --toolbar-background: var(--uitk-container-background-medium);
   --toolbar-font-size: var(--uitk-text-font-size);
-  --toolbar-size: var(--uitk-size-toolbar);
   /* --uitkFormActivationIndicator-size: 0; */
 }
 
@@ -35,7 +34,7 @@
 
 .uitkToolbar[aria-orientation="horizontal"] {
   display: flex;
-  height: var(--toolbar-size);
+  height: var(--uitkToolbar-height, var(--uitk-size-toolbar));
   line-height: normal;
   min-width: 0;
   white-space: nowrap;
