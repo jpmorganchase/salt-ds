@@ -1,5 +1,5 @@
-import {ComponentPropsWithoutRef} from "react";
-import {FlexLayout} from "./FlexLayout";
+import { ComponentPropsWithoutRef } from "react";
+import { FlexLayout } from "./FlexLayout";
 
 export type LayoutDirection = "row" | "column";
 
