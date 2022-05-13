@@ -16,7 +16,7 @@ interface EditorViewProps {
   onModeChange: (mode: ThemeMode) => void;
 }
 
-export const EditorView = (props: EditorViewProps): React.ReactElement => {
+export const EditorView = (props: EditorViewProps): JSX.Element => {
   const mode = props.currentMode === ThemeMode.LIGHT ? "LIGHT" : "DARK";
   const jsonInCurrentScope = useMemo<JSONByScope[]>(() => {
     return props.jsonByScope.filter(
