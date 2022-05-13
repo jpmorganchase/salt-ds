@@ -47,15 +47,15 @@
 
 .uitkAvatar-small {
   --avatar-font-size: 8px;
-  --avatar-container-size: var(--uitk-size-icon-small);
+  --avatar-container-size: var(--uitk-size-graphic-small);
 }
 
 .uitkAvatar-medium {
   --avatar-font-size: 11px;
-  --avatar-container-size: var(--uitk-size-icon-medium);
+  --avatar-container-size: var(--uitk-size-graphic-medium);
 }
 
 .uitkAvatar-large {
   --avatar-font-size: 14px;
-  --avatar-container-size: var(--uitk-size-icon-large);
+  --avatar-container-size: var(--uitk-size-graphic-large);
 }

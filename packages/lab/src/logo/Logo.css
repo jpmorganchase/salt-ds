@@ -6,12 +6,12 @@
 }
 
 .uitkLogo {
+  --logo-divider-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color-2));
+  --logo-divider-height: var(--uitkLogo-title-height, var(--uitk-size-inline-divider));
+  --logo-divider-margin: 0 calc(var(--uitk-size-unit) * 2);
   --logo-font-size: var(--uitk-text-font-size);
+  --logo-height: var(--uitkLogo-logo-height, var(--uitk-size-logo));
   --logo-line-height: var(--uitk-text-line-height);
-  --logo-pipe-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color-2));
-  --logo-height: var(--uitkLogo-logo-height, calc(var(--logo-font-size) + var(--uitk-size-unit)));
-  --logo-pipe-height: var(--uitkLogo-title-height, calc(var(--uitk-size-base) - calc(0.75 * var(--uitk-size-unit) * 2)));
-  --logo-pipe-margin: 0 calc(var(--uitk-size-unit) * 2);
 }
 
 .uitkLogo-compact {
@@ -52,7 +52,7 @@
 }
 
 .uitkLogo-titlePipe {
-  border-right: 1px solid var(--logo-pipe-color);
-  margin: var(--logo-pipe-margin);
-  height: var(--logo-pipe-height);
+  border-right: 1px solid var(--logo-divider-color);
+  margin: var(--logo-divider-margin);
+  height: var(--logo-divider-height);
 }

@@ -105,7 +105,7 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  height: var(--uitk-size-stackable-unit);
+  height: var(--uitk-size-stackable);
   outline: none;
   padding: 0 var(--tab-spacing);
   position: relative;

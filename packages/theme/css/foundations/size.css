@@ -5,9 +5,9 @@
 .uitk-density-high {
   --uitk-size-basis-unit: 4px;
 
-  --uitk-size-icon-small: 12px;
-  --uitk-size-icon-medium: 24px;
-  --uitk-size-icon-large: 48px;
+  --uitk-size-graphic-small: 12px;
+  --uitk-size-graphic-medium: 24px;
+  --uitk-size-graphic-large: 48px;
 
   --uitk-size-sharktooth-height: 5px;
   --uitk-size-sharktooth-width: 10px;

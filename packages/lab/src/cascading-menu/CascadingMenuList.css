@@ -1,5 +1,7 @@
 .uitkCascadingMenuList-popper {
+  /* TODO: Is this the correct thing to do here? */
   --uitk-container-border-color-medium: var(--uitk-color-blue-500);
+
   background: var(--uitk-container-background-medium);
 }
 

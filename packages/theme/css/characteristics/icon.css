@@ -2,4 +2,5 @@
 .uitk-dark {
   --uitk-icon-color: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-icon-color-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
+  --uitk-icon-size: var(--uitk-size-graphic);
 }

@@ -40,6 +40,7 @@
   --uitk-actionable-secondary-foreground-active: var(--uitk-palette-action-secondary-foreground-active);
   --uitk-actionable-secondary-foreground-disabled: var(--uitk-palette-action-secondary-foreground-disabled);
   --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-action-secondary-foreground-hover);
+  --uitk-actionable-secondary-background: transparent;
   --uitk-actionable-secondary-background-active: var(--uitk-palette-action-secondary-background-active);
   --uitk-actionable-secondary-background-hover: var(--uitk-palette-action-secondary-background-hover);
   --uitk-actionable-secondary-font-weight: var(--uitk-typography-weight-semiBold);

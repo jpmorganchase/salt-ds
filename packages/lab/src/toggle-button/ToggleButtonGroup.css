@@ -14,22 +14,6 @@
   --toggle-button-group-border-color: var(--uitk-color-blue-600);
 }
 
-.uitk-density-touch .uitkToggleButtonGroup {
-  --toggle-button-height: 34px;
-}
-
-.uitk-density-low .uitkToggleButtonGroup {
-  --toggle-button-height: 26px;
-}
-
-.uitk-density-medium .uitkToggleButtonGroup {
-  --toggle-button-height: 22px;
-}
-
-.uitk-density-high .uitkToggleButtonGroup {
-  --toggle-button-height: 14px;
-}
-
 .uitkToggleButtonGroup {
   display: inline-flex;
   box-sizing: border-box;
@@ -43,7 +27,7 @@
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton {
-  height: var(--toggle-button-height);
+  height: var(--uitk-size-toggle-button);
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {

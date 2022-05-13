@@ -71,7 +71,7 @@
 
 .uitkTooltip-arrow,
 .uitkTooltip-arrow::after {
-  border: 5px solid transparent;
+  border: var(--uitk-size-sharktooth-height) solid transparent;
   position: absolute;
   box-sizing: border-box;
 }
@@ -103,25 +103,25 @@
 .uitkTooltip[data-placement^="top"] .uitkTooltip-arrow::after {
   border-top-color: var(--tooltip-background);
   bottom: -4px;
-  left: calc(100% - 5px);
+  left: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow::after {
   border-bottom-color: var(--tooltip-background);
   top: -4px;
-  left: calc(100% - 5px);
+  left: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="left"] .uitkTooltip-arrow::after {
   border-left-color: var(--tooltip-background);
   right: -4px;
-  top: calc(100% - 5px);
+  top: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="right"] .uitkTooltip-arrow::after {
   border-right-color: var(--tooltip-background);
   left: -4px;
-  top: calc(100% - 5px);
+  top: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip-info {

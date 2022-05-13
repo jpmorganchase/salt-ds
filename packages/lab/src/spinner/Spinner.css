@@ -1,14 +1,14 @@
 .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-color-blue-300);
+  stop-color: var(--uitk-measured-gradient-start);
 }
 .uitkSvgSpinner-gradientStop2 {
-  stop-color: var(--uitk-color-blue-300);
+  stop-color: var(--uitk-measured-gradient-stop);
 }
 .uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--uitk-color-teal-300);
+  stop-color: var(--uitk-measured-gradient-start);
 }
 .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitk-color-teal-300);
+  stop-color: var(--uitk-measured-gradient-start);
 }
 
 /* Not yet sure about procedure for implementing themes */
@@ -31,18 +31,18 @@
 }
 
 .uitkSvgSpinner-small {
-  height: var(--uitk-size-icon-small);
-  width: var(--uitk-size-icon-small);
+  height: var(--uitk-size-graphic-small);
+  width: var(--uitk-size-graphic-small);
 }
 
 .uitkSvgSpinner-medium {
-  height: var(--uitk-size-icon-medium);
-  width: var(--uitk-size-icon-medium);
+  height: var(--uitk-size-graphic-medium);
+  width: var(--uitk-size-graphic-medium);
 }
 
 .uitkSvgSpinner-large {
-  height: var(--uitk-size-icon-large);
-  width: var(--uitk-size-icon-large);
+  height: var(--uitk-size-graphic-large);
+  width: var(--uitk-size-graphic-large);
 }
 
 .uitkSvgSpinner-spinner {
