@@ -16,6 +16,7 @@ node_modules
 /.yarn/plugins/** binary
 
 # testing
+/cypress/screenshots/__tests__
 /coverage
 .nyc_output
 
