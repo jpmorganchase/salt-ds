@@ -228,8 +228,8 @@ export const Dropdown = forwardRef(function Dropdown<
       }),
       shift({ limiter: limitShift() }),
       size({
-        apply({ height }) {
-          setMaxListHeight(height);
+        apply({ availableHeight }) {
+          setMaxListHeight(availableHeight);
         },
       }),
     ],
