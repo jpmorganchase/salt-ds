@@ -12,7 +12,6 @@ const withBaseName = makePrefixer("uitkMetric");
 export interface MetricProps
   extends MetricContextValue,
     HTMLAttributes<HTMLDivElement> {
-  children: ReactChildren;
   /**
    * The aria-level attribute to be applied to the heading component. The default is 2.
    *
@@ -56,6 +55,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
       orientation,
       showIndicator,
       indicatorPosition,
+      headingAriaLevel,
       titleId,
       subtitleId,
       valueId,
@@ -67,6 +67,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
       orientation,
       showIndicator,
       indicatorPosition,
+      headingAriaLevel,
       titleId,
       subtitleId,
       valueId,

@@ -1,9 +1,9 @@
 import { ComponentType, forwardRef, HTMLAttributes, useMemo } from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
+import { Figure1, Figure2, Figure3, Div } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
-import { useMetricContext, capitalise } from "./internal";
+import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
 
@@ -85,7 +85,11 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
           : Figure3;
 
       return (
-        <Component data-testid="metric-value" id={valueId}>
+        <Component
+          data-testid="metric-value"
+          id={valueId}
+          className={withBaseName("value")}
+        >
           {value}
         </Component>
       );
@@ -104,12 +108,12 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
-          <div
+          <Div
             className={withBaseName("subvalue")}
             data-testid="metric-subvalue"
           >
             {subvalue}
-          </div>
+          </Div>
         )}
       </div>
     );

@@ -26,6 +26,7 @@ export interface MetricContextValue {
    * If 'true', an indicator will be displayed which shows the direction of the main value
    */
   showIndicator?: boolean;
+  headingAriaLevel?: number;
 }
 
 export interface MetricContextComponentIds {

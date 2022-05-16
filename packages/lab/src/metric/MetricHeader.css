@@ -6,28 +6,23 @@
 }
 
 .uitkMetricHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   white-space: nowrap;
 }
 
-.uitkMetricHeader > :not(:last-child) {
-  margin-bottom: var(--metric-header-gap);
+.uitkMetric-orientation-vertical .uitkMetricHeader {
+  margin-bottom: calc(var(--uitk-spacing-unit) / 4);
 }
 
 .uitkMetricHeader-title {
   color: var(--metric-title-color);
+  line-height: 1.2;
 }
 
 .uitkMetricHeader-subtitle {
   color: var(--metric-subtitle-color);
   font-weight: var(--uitk-typography-weight-regular);
-}
-
-.uitkMetric-emphasis-high .uitkMetricHeader {
-  margin-top: 14px;
-}
-.uitkMetric-emphasis-medium .uitkMetricHeader {
-  margin-top: 8px;
-}
-.uitkMetric-emphasis-low .uitkMetricHeader {
-  margin-top: 4px;
+  line-height: 1.17;
 }

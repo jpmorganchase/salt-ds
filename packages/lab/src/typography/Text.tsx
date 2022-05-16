@@ -18,6 +18,7 @@ const withBaseName = makePrefixer("uitkText");
 
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   children?: string | ReactNode;
+  className?: string;
   /**
    * Represents the semantic element tag name as a string.
    * Defaults to 'div'

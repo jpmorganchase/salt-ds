@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Link, LinkProps, H4 } from "@jpmorganchase/uitk-lab";
+import { Link, LinkProps, H4, Div } from "@jpmorganchase/uitk-lab";
 import warning from "warning";
 
 import { useMetricContext } from "./internal";
@@ -32,19 +32,19 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
-    const { titleId, subtitleId } = useMetricContext();
+    const { titleId, subtitleId, headingAriaLevel } = useMetricContext();
 
     const renderSubtitle = useCallback(() => {
       if (!subtitle) return;
 
       const subtitleComponent = (
-        <H4
+        <Div
           id={subtitleId}
           className={withBaseName("subtitle")}
           data-testid="metric-subtitle"
         >
           {subtitle}
-        </H4>
+        </Div>
       );
 
       if (SubtitleLinkProps) {
@@ -69,13 +69,16 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
 
     return (
       <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
-        <H4
+        <Div
+          styleAs="h4"
           className={withBaseName("title")}
           data-testid="metric-title"
           id={titleId}
+          role="heading"
+          aria-level={headingAriaLevel}
         >
           {title}
-        </H4>
+        </Div>
         {renderSubtitle()}
       </div>
     );
