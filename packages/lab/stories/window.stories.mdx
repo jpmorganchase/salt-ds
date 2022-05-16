@@ -15,7 +15,7 @@ is itself a React application, then that application will handle styling in the
 window. If the window's content is being written to by React's Portal API then style injection
 will be required to add the CSS to the opened window's document.
 
-###### Copying styles to the child window
+## Copying styles to the child window
 
 One method of style injection would be to copy over the styles present in the parent window,
 This would ensure that all component styles loaded in the parent window are loaded into the
@@ -28,7 +28,7 @@ after the initial render. The dependency of ReactDOMServer also produces multipl
 regarding useLayoutEffect having no effect on server side rendering.
 
 Without any optimising, this method works because all the component's CSS is injected into the
-main application window, even if it isn't being rendered initially.
+main application window, even if it is not being rendered initially.
 
 ```ts
 document.head.querySelectorAll("style").forEach((htmlElement) => {
@@ -37,13 +37,11 @@ document.head.querySelectorAll("style").forEach((htmlElement) => {
 });
 ```
 
-###### Delegating style injection to the components
+## Delegating style injection to the components
 
 Another method style injection is to delegate responsibility of style injection to the components
 themselves. This process is normally carried out by webpack or rollup, both use the global document
-object to append the styles.
-
-This method will not work with external windows that are rendered to by the React portal API. This
+object to append the styles. This method will not work with external windows that are rendered to by the React portal API. This
 is due to how the styles are inserted into the document.
 
 One way of overcoming the issue of injecting the style into the correct document is to use context
@@ -51,6 +49,9 @@ to pass the document to the toolkit components. The components will then inject 
 given document.
 
 ```ts
+// useStyleInsertionEffect is a wrapper around useInsertionEffect if using React 18
+// which falls back to useLayoutEffect in React 17 and below
+
 const documentToApplyStyleTo = useCurrentDocument();
 useStyleInsertionEffect(() => {
   injectStyleIntoGivenDocument(style, documentToApplyStyleTo);
@@ -210,4 +211,23 @@ return (
 ```
 
 Delegating the responsibility of style injection to the components would require each component to call
-the `injectStyleIntoGivenDocument` function in an insertionEffect.
+the `injectStyleIntoGivenDocument` function.
+
+### Theme insertion
+
+Theme insertion could be handled by using a form of selectively copying styles. Themes have an id and name that could
+be used to get the style tags containing the theme CSS. The theme can be fetched using the toolkit provider and theme context.
+It would not account for any extra global CSS that a user would import at the top level of their application that is not
+part of their theme.
+
+```ts
+const themes = useTheme()
+  
+const themeIDs = new Set<string>();
+  
+for(const theme of themes){
+  themeIDs.add(theme.id);
+}
+
+// The query selector could use these ids to filter out the style tags with the theme ids
+```
