@@ -66,21 +66,6 @@ const metricExamples = (
   </div>
 );
 
-export const Example: ComponentStory<typeof Metric> = () => {
-  return (
-    <div style={{ width: 600, display: "flex", flex: 1 }}>
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock style={{ background: "white" }}>
-          {metricExamples}
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>{metricExamples}</BackgroundBlock>
-      </ToolkitProvider>
-    </div>
-  );
-};
-
 export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
   return (
     <QAContainer
