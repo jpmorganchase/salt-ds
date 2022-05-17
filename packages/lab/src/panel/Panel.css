@@ -9,6 +9,6 @@
   width: var(--uitkPanel-width, 100%);
 }
 
-.uitkEmphasisHigh .uitkPanel {
+.uitkEmphasisHigh.uitkPanel {
   background: var(--uitkPanel-background, var(--uitk-container-background-high));
 }

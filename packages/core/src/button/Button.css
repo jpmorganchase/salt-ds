@@ -2,7 +2,7 @@
 .uitkButton {
   --button-focused-outline-style: var(--uitk-focused-outline-style);
   --button-focused-outline-width: var(--uitk-focused-outline-width);
-  --button-focused-outline-color: var(--uitk-focused-color);
+  --button-focused-outline-color: var(--uitk-focused-outline-color);
   --button-focused-outline-offset: var(--uitk-focused-outline-offset);
 }
 

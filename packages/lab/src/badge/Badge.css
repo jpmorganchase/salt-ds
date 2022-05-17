@@ -1,6 +1,6 @@
 .uitkBadge {
   /* Colors */
-  --badge-content-text-color: var(--uitk-text-primary-color);
+  --badge-content-text-color: var(--uitk-accent-foreground);
   --badge-content-icon-color: var(--uitk-status-info-foreground);
   /* Font, Typography */
   --badge-children-font-family: var(--uitk-typography-font-family);

@@ -63,17 +63,16 @@
   stroke: var(--uitkRadioIcon-border-stroke, var(--radio-icon-border-stroke));
 }
 
-/* Styles applied to RadioIcon border when `emphasis="high"` */
-.uitk-light .uitkEmphasisHigh .uitkRadioIcon-border {
+/* Styles applied to RadioIcon border with `uitkEmphasisHigh` class */
+.uitk-light .uitkEmphasisHigh.uitkRadioIcon-border {
   fill: var(--uitkRadioIcon-border-fill, var(--uitk-color-grey-20));
 }
 
-/* Styles applied to RadioIcon border when `emphasis="high"` */
-.uitk-dark .uitkEmphasisHigh .uitkRadioIcon-border {
+.uitk-dark .uitkEmphasisHigh.uitkRadioIcon-border {
   fill: var(--uitkRadioIcon-border-fill, var(--uitk-color-grey-900));
 }
 
-/* Styles applied to RadioIcon border when `emphasis="low"` */
+/* Styles applied to RadioIcon border with `uitkEmphasisLow` class */
 .uitkEmphasisLow.uitkRadioIcon-border {
   fill: var(--uitkRadioIcon-border-fill, transparent);
 }

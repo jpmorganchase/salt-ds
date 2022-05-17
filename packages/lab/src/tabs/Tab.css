@@ -188,7 +188,7 @@
   outline-width: var(--uitk-focused-outline-width);
   outline-offset: -2px;
   /* outline-offset: var(--uitk-focused-outline-offset); */
-  outline-color: var(--uitk-focused-color);
+  outline-color: var(--uitk-focused-outline-color);
 }
 
 .uitkTab-vertical.uitkTab-editing:after {

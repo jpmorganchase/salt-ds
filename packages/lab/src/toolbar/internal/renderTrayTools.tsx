@@ -23,7 +23,11 @@ export const renderTrayTools = (
 
   return items.map((tool) => {
     index += 1;
-    const className = classnames("tooltray-item", tool.props.className);
+    const className = classnames(
+      "tooltray-item",
+      tool.props.className,
+      "uitkEmphasisLow"
+    );
     if (!React.isValidElement(tool)) return null;
     const overflowed =
       overflowedItems.findIndex((item) => item.index === index) === -1
@@ -51,7 +55,6 @@ export const renderTrayTools = (
           <FormField
             {...toolbarProps}
             {...fieldProps}
-            emphasis="low"
             className={className}
             data-index={index}
             data-priority={2}

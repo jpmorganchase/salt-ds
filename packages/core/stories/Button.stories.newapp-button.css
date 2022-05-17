@@ -44,11 +44,11 @@
   --button-background-active: var(--uitk-actionable-final-background-active);
   --button-background-disabled: var(--uitk-actionable-final-background-disabled);
   --button-background-hover: var(--uitk-actionable-final-background-hover);
-  --button-text-color: var(--uitk-actionable-final-text-color);
-  --button-text-color-active: var(--uitk-actionable-final-text-color-active);
-  --button-text-color-disabled: var(--uitk-actionable-final-text-color-disabled);
-  --button-text-color-hover: var(--uitk-actionable-final-text-color-hover);
-  --uitkIcon-color: var(--uitk-actionable-final-icon-color);
+  --button-text-color: var(--uitk-actionable-final-foreground);
+  --button-text-color-active: var(--uitk-actionable-final-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-final-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-final-foreground-hover);
+  --uitkIcon-color: var(--uitk-actionable-final-foreground);
   --uitkButton-border-color: var(--uitk-actionable-final-topline-color) transparent var(--uitk-actionable-final-baseline-color) transparent;
 }
 
@@ -57,23 +57,23 @@
   --button-background-active: var(--uitk-actionable-bid-background-active);
   --button-background-disabled: var(--uitk-actionable-bid-background-disabled);
   --button-background-hover: var(--uitk-actionable-bid-background-hover);
-  --button-text-color: var(--uitk-actionable-bid-text-color);
-  --button-text-color-active: var(--uitk-actionable-bid-text-color-active);
-  --button-text-color-disabled: var(--uitk-actionable-bid-text-color-disabled);
-  --button-text-color-hover: var(--uitk-actionable-bid-text-color-hover);
-  --uitkIcon-color: var(--uitk-actionable-bid-icon-color);
+  --button-text-color: var(--uitk-actionable-bid-foreground);
+  --button-text-color-active: var(--uitk-actionable-bid-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-bid-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-bid-foreground-hover);
+  --uitkIcon-color: var(--uitk-actionable-bid-foreground);
   --uitkButton-border-color: var(--uitk-actionable-bid-topline-color) transparent var(--uitk-actionable-bid-baseline-color) transparent;
 }
 
 .uitk-newapp .uitkButton-primary.uitkButton-bid[data-readonly] {
-  --uitkButton-text-color: var(--uitk-actionable-bid-text-color-readonly);
+  --uitkButton-text-color: var(--uitk-actionable-bid-foreground-readonly);
   --uitkButton-primary-background: var(--uitk-actionable-bid-background-readonly);
-  --uitkIcon-color: var(--uitk-actionable-bid-icon-color-readonly);
+  --uitkIcon-color: var(--uitk-actionable-bid-foreground-readonly);
   --uitkButton-border-color: var(--uitk-actionable-bid-topline-color-readonly) transparent var(--uitk-actionable-bid-baseline-color-readonly) transparent;
 }
 
 .uitkButton-primary.uitkButton-bid:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
-  --uitkIcon-color: var(--uitk-actionable-bid-icon-color-hover);
+  --uitkIcon-color: var(--uitk-actionable-bid-foreground-hover);
 }
 
 .uitk-newapp .uitkButton-primary.uitkButton-ask {

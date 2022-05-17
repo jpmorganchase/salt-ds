@@ -1,11 +1,12 @@
-import React, {
+import {
   ChangeEventHandler,
   FC,
   KeyboardEventHandler,
   useEffect,
   useState,
 } from "react";
-import { FormField } from "../form-field";
+
+import { FormField, FormFieldProps } from "../form-field";
 import { withBaseName } from "./utils";
 import { Input } from "../input";
 import cn from "classnames";
@@ -14,14 +15,14 @@ export interface CompactInputProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  emphasis: "low" | "medium" | "high";
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const CompactInput: FC<CompactInputProps> = ({
   page,
   count,
   onPageChange,
-  emphasis,
+  FormFieldProps: { className, ...restFormFieldProps } = {},
 }) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -51,9 +52,9 @@ export const CompactInput: FC<CompactInputProps> = ({
   return (
     <span>
       <FormField
-        className={withBaseName("compactInputField")}
+        className={cn(withBaseName("compactInputField"), className)}
         fullWidth={false}
-        emphasis={emphasis}
+        {...restFormFieldProps}
       >
         <Input
           className={cn(withBaseName("compactInput"), {

@@ -33,7 +33,7 @@
 /* Style applied to the root element */
 .uitkFormField {
   --form-field-background: var(--uitk-editable-background-medium);
-  --form-field-focus-outline-color: var(--uitk-focused-color);
+  --form-field-focus-outline-color: var(--uitk-focused-outline-color);
   --form-field-focus-outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outline-offset));
   --form-field-focus-outline-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outline-style));
   --form-field-focus-outline-width: var(--uitkFormField-focused-outline-width, var(--uitk-focused-outline-width));

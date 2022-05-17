@@ -157,11 +157,22 @@ The combination of CSS variables with CSS selector scoping is very flexible. It 
 In the CSS where the theme variables are declared, there are sections declared as follows:
 
 ```css
+.uitk-light,
+.uitk-dark {
+  --uitk-actionable-primary-foreground: var(
+    --uitk-palette-action-primary-foreground
+  );
+}
+```
+
+The palette token then resolves down to:
+
+```css
 .uitk-light {
-  --uitk-actionable-primary-foreground: var(--uitk-grey-900);
+  --uitk-palette-action-primary-foreground: var(--uitk-grey-900);
 }
 .uitk-dark {
-  --uitk-actionable-primary-foreground: var(--uitk-white);
+  --uitk-palette-action-primary-foreground: var(--uitk-white);
 }
 ```
 

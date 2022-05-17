@@ -26,7 +26,7 @@
 
 /* Styles applied to status title */
 .uitkContentStatus-title {
-  color: var(--uitkContentStatus-title-color, var(--uitk-container-text-color));
+  color: var(--uitkContentStatus-title-color, var(--uitk-text-primary-color));
   letter-spacing: var(--uitkContentStatus-title-letter-spacing, 0);
   font-weight: var(--uitkContentStatus-title-font-weight, var(--uitk-typography-weight-semiBold));
   line-height: var(--uitkContentStatus-title-line-height, var(--uitk-typography-line-height));

@@ -2,19 +2,20 @@ import { FC } from "react";
 import { CompactInput } from "./CompactInput";
 import { withBaseName } from "./utils";
 import { PageButton } from "./PageButton";
+import { FormFieldProps } from "../form-field";
 
 export interface CompactControlsProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  emphasis: "low" | "medium" | "high";
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const CompactControls: FC<CompactControlsProps> = ({
   page,
   count,
   onPageChange,
-  emphasis,
+  FormFieldProps,
 }) => {
   return (
     <>
@@ -22,7 +23,7 @@ export const CompactControls: FC<CompactControlsProps> = ({
         page={page}
         count={count}
         onPageChange={onPageChange}
-        emphasis={emphasis}
+        FormFieldProps={FormFieldProps}
       />
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton

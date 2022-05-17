@@ -10,12 +10,12 @@
 
   --uitk-selectable-foreground: var(--uitk-palette-action-foreground);
   --uitk-selectable-foreground-hover: var(--uitk-palette-action-foreground-hover);
-  --uitk-selectable-foreground-selected: var(--uitk-palette-action-foreground-selected);
+  --uitk-selectable-foreground-selected: var(--uitk-palette-action-foreground-active);
   --uitk-selectable-foreground-bluractive: var(--uitk-palette-action-foreground-bluractive);
 
   --uitk-selectable-background: transparent;
   --uitk-selectable-background-hover: var(--uitk-palette-action-background-hover);
-  --uitk-selectable-background-selected: var(--uitk-palette-action-background-selected);
+  --uitk-selectable-background-selected: var(--uitk-palette-action-background-active);
   --uitk-selectable-background-bluractive: var(--uitk-palette-action-background-bluractive);
 
   --uitk-selectable-border-color: var(--uitk-palette-action-border);
