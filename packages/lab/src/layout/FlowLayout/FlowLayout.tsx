@@ -28,7 +28,7 @@ export interface FlowLayoutProps {
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout({ children, wrap = true, ...rest }, ref) {
     return (
-      <FlexLayout direction="row" ref={ref} {...rest}>
+      <FlexLayout direction="row" ref={ref} wrap={wrap} {...rest}>
         {children}
       </FlexLayout>
     );
