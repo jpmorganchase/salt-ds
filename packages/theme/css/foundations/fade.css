@@ -20,5 +20,5 @@
 
   --uitk-color-white-fade-scrim-medium: rgba(255, 255, 255, var(--uitk-opacity-scrim-medium));
   --uitk-color-grey-800-fade-scrim-medium: rgba(36, 37, 38, var(--uitk-opacity-scrim-medium));
-  --uitk-color-black-fade-scrim-high: rgba(0, 0, 0, var(--uitk-opacity-scrim-high));
+  --uitk-color-black-fade-scrim-low: rgba(0, 0, 0, var(--uitk-opacity-scrim-low));
 }

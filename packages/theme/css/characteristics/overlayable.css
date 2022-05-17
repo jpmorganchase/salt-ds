@@ -9,5 +9,5 @@
   --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
 
   --uitk-overlayable-scrim-background-medium: var(--uitk-palette-neutral-scrim-medium);
-  --uitk-overlayable-scrim-background-high: var(--uitk-palette-neutral-scrim-high);
+  --uitk-overlayable-scrim-background-low: var(--uitk-palette-neutral-scrim-low);
 }
