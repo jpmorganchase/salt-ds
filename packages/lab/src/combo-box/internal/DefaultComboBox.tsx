@@ -68,7 +68,6 @@ export type BaseComboBoxProps<
     rootWidth?: string | number;
     rootRef: RefObject<HTMLElement>;
     disabledPortal?: boolean;
-    source: Item[];
   };
 
 export interface DefaultComboBoxProps<Item>
