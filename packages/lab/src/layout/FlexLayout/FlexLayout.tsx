@@ -57,7 +57,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       justify,
       separators,
       style,
-      wrap = true,
+      wrap,
       ...rest
     },
     ref
@@ -69,7 +69,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
 
     const flexGap = useResponsiveProp(gap, 1);
     const flexDirection = useResponsiveProp(direction, "row");
-    const flexWrap = useResponsiveProp(wrap, true);
+    const flexWrap = useResponsiveProp(wrap, false);
 
     const flexLayoutStyles = {
       ...style,
