@@ -51,11 +51,11 @@
   --uitkFormActivationIndicator-icon-size: var(--form-field-activation-indicator-icon-size);
 }
 
-.uitkEmphasisLow .uitkFormField {
+.uitkEmphasisLow.uitkFormField {
   --form-field-background: var(--uitk-editable-background-low);
 }
 
-.uitkEmphasisHigh .uitkFormField {
+.uitkEmphasisHigh.uitkFormField {
   --form-field-background: var(--uitk-editable-background-high);
 }
 
