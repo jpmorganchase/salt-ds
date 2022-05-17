@@ -2,7 +2,7 @@
   --scrim-bg: var(--uitk-overlayable-scrim-background-high);
 }
 
-.uitkEmphasisMedium .uitkScrim {
+.uitkEmphasisMedium.uitkScrim {
   --scrim-bg: var(--uitk-overlayable-scrim-background-medium);
 }
 

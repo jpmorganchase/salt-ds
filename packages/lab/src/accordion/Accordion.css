@@ -64,7 +64,7 @@
 
   --summary-focus-outline-style: var(--uitk-focused-outline-style);
   --summary-focus-outline-width: var(--uitk-focused-outline-width);
-  --summary-focus-outline-color: var(--uitk-focused-color);
+  --summary-focus-outline-color: var(--uitk-focused-outline-color);
   --summary-focus-outline-offset: var(--uitk-focused-outline-offset);
 
   --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);

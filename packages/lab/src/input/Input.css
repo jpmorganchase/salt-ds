@@ -43,7 +43,7 @@
 .uitkInput-focused {
   outline-style: var(--uitkInput-focused-outline-style, var(--uitk-focused-outline-style));
   outline-width: var(--uitkInput-focused-outline-width, var(--uitk-focused-outline-width));
-  outline-color: var(--uitkInput-focused-outline-color, var(--uitk-focused-color));
+  outline-color: var(--uitkInput-focused-outline-color, var(--uitk-focused-outline-color));
   outline-offset: var(--uitkInput-focused-outline-offset, var(--uitk-focused-outline-offset));
 }
 

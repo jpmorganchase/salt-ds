@@ -99,7 +99,7 @@ export const OverflowLayoutContainer: React.FC<
       {overflowedItems.length > 0 ? (
         <FormField
           ActivationIndicatorComponent={() => null}
-          className={cx("uitkToolbarField", "toolbar-item", {
+          className={cx("uitkToolbarField", "toolbar-item", "uitkEmphasisLow", {
             "uitkToolbarField-start": OverflowButtonProps?.align === "start",
           })}
           data-index={layoutItems.length}
@@ -108,7 +108,6 @@ export const OverflowLayoutContainer: React.FC<
           data-orientation={orientation}
           data-priority={1}
           fullWidth={false}
-          emphasis="low"
         >
           <OverflowDropdown aria-haspopup aria-label="toolbar overflow">
             {overflowMenuItems}

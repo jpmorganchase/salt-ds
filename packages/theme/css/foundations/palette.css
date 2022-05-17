@@ -5,7 +5,7 @@
 
   --uitk-palette-action-background-bluractive: var(--uitk-color-grey-30);
   --uitk-palette-action-background-hover: var(--uitk-color-blue-20);
-  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
+  --uitk-palette-action-background-active: var(--uitk-color-blue-500);
   --uitk-palette-action-cta-background: var(--uitk-color-blue-600);
   --uitk-palette-action-cta-background-active: var(--uitk-color-blue-700);
   --uitk-palette-action-cta-background-disabled: var(--uitk-color-blue-600-fade-background);
@@ -29,7 +29,7 @@
   --uitk-palette-action-cta-foreground-active: var(--uitk-color-white);
   --uitk-palette-action-cta-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-action-cta-foreground-hover: var(--uitk-color-white);
-  --uitk-palette-action-cta-foreground-selected: var(--uitk-color-white);
+  --uitk-palette-action-cta-foreground-active: var(--uitk-color-white);
   --uitk-palette-action-primary-foreground: var(--uitk-color-grey-900);
   --uitk-palette-action-primary-foreground-active: var(--uitk-color-white);
   --uitk-palette-action-primary-foreground-disabled: var(--uitk-color-grey-900-fade-foreground);
@@ -115,7 +115,7 @@
   --uitk-palette-action-primary-background-hover: var(--uitk-color-grey-200);
   --uitk-palette-action-secondary-background-active: var(--uitk-color-grey-70);
   --uitk-palette-action-secondary-background-hover: var(--uitk-color-grey-200);
-  --uitk-palette-action-background-selected: var(--uitk-color-blue-500);
+  --uitk-palette-action-background-active: var(--uitk-color-blue-500);
   --uitk-palette-action-border: var(--uitk-color-grey-90);
   --uitk-palette-action-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-action-border-readonly: var(--uitk-color-grey-90-fade-border-readonly);
@@ -129,7 +129,7 @@
   --uitk-palette-action-cta-foreground-active: var(--uitk-color-white);
   --uitk-palette-action-cta-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-action-cta-foreground-hover: var(--uitk-color-white);
-  --uitk-palette-action-cta-foreground-selected: var(--uitk-color-white);
+  --uitk-palette-action-cta-foreground-active: var(--uitk-color-white);
   --uitk-palette-action-primary-foreground: var(--uitk-color-white);
   --uitk-palette-action-primary-foreground-active: var(--uitk-color-grey-800);
   --uitk-palette-action-primary-foreground-disabled: var(--uitk-color-white-fade-foreground);

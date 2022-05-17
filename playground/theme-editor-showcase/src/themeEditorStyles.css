@@ -20,11 +20,6 @@ h1 {
   --uitk-actionable-primary-background-active: var(--uitk-color-grey-200);
   --uitk-actionable-primary-background-hover: var(--uitk-color-grey-40);
   --uitk-actionable-primary-background-disabled: rgba(197, 201, 208, var(--uitk-opacity-background));
-  --uitk-actionable-primary-foreground: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-foreground-active: var(--uitk-color-white);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-foreground-disabled: rgba(22, 22, 22, var(--uitk-opacity-foreground));
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-active: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-hover: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
@@ -32,10 +27,6 @@ h1 {
   --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
   --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
   --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-opacity-background));
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-active: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
   --uitk-actionable-secondary-foreground: var(--uitk-color-grey-900);
   --uitk-actionable-secondary-foreground-active: var(--uitk-color-white);
   --uitk-actionable-secondary-foreground-hover: var(--uitk-color-grey-900);
@@ -43,10 +34,6 @@ h1 {
   --uitk-actionable-secondary-background: transparent;
   --uitk-actionable-secondary-background-active: var(--uitk-color-grey-200);
   --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-40);
-  --uitk-actionable-secondary-foreground: var(--uitk-color-grey-300);
-  --uitk-actionable-secondary-foreground-active: var(--uitk-color-white);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-foreground-disabled: rgba(22, 22, 22, var(--uitk-opacity-foreground));
 }
 
 .uitk-dark {
@@ -58,11 +45,6 @@ h1 {
   --uitk-actionable-primary-background-active: var(--uitk-color-grey-80);
   --uitk-actionable-primary-background-hover: var(--uitk-color-grey-200);
   --uitk-actionable-primary-background-disabled: rgba(76, 80, 91, var(--uitk-opacity-background));
-  --uitk-actionable-primary-foreground: var(--uitk-color-white);
-  --uitk-actionable-primary-foreground-active: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-primary-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-active: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-hover: var(--uitk-color-white);
   --uitk-actionable-cta-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
@@ -70,10 +52,6 @@ h1 {
   --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
   --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
   --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-opacity-background));
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-active: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
   --uitk-actionable-secondary-foreground: var(--uitk-color-white);
   --uitk-actionable-secondary-foreground-active: var(--uitk-color-grey-900);
   --uitk-actionable-secondary-foreground-hover: var(--uitk-color-white);
@@ -81,8 +59,4 @@ h1 {
   --uitk-actionable-secondary-background: transparent;
   --uitk-actionable-secondary-background-active: var(--uitk-color-grey-80);
   --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-secondary-foreground: var(--uitk-color-grey-60);
-  --uitk-actionable-secondary-foreground-active: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-secondary-foreground-disabled: rgba(255, 255, 255, var(--uitk-opacity-foreground));
 }

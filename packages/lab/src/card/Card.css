@@ -1,6 +1,6 @@
 /* Styles applied to the root element */
 .uitkCard {
-  background-color: var(--uitkCard-background-color, var(--uitk-container-background));
+  background-color: var(--uitkCard-background-color, var(--uitk-container-background-medium));
   border-width: var(--uitkCard-border-width, var(--uitk-container-border-width));
   border-style: var(--uitkCard-border-style, var(--uitk-container-border-style));
   border-color: var(--uitkCard-border-color, var(--uitk-container-border-color-medium));

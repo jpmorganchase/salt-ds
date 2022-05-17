@@ -18,7 +18,7 @@
   --pill-background: var(--uitkPill-background, var(--uitk-taggable-background));
   --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background));
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, var(--uitk-size-pill));
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-pill) - 2px));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
@@ -63,7 +63,7 @@
 
 /* Check against TK1 */
 .uitkPill:focus {
-  outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-color));
+  outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-outline-color));
   outline-style: var(--uitkPill-focused-outline-style, var(--uitk-focused-outline-style));
   outline-style: dotted;
   outline-width: var(--uitk-focused-outline-width);

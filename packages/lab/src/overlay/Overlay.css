@@ -9,7 +9,7 @@
   --overlay-zindex: var(--uitk-zindex-tooltip);
 }
 
-.uitkEmphasisHigh .uitkOverlay {
+.uitkEmphasisHigh.uitkOverlay {
   --overlay-background: var(--uitk-container-background-high);
   --overlay-border-color: var(--uitk-container-border-color-high);
 }
