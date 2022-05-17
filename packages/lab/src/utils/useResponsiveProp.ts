@@ -45,7 +45,7 @@ export const useOrderedBreakpoints = () => {
     Object.entries(breakpoints).sort(([, a], [, b]) => a - b)
   );
 
-  return orderedBreakpoints;
+  return Object.keys(orderedBreakpoints);
 };
 
 const isObject = <T>(
