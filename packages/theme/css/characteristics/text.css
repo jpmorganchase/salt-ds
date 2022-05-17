@@ -111,6 +111,8 @@
   --uitk-text-font-size-high: 11px;
   --uitk-text-line-height-high: 14px;
   --uitk-text-min-height-high: 14px;
+  
+  --uitk-text-link-text-decoration: underline;
 }
 
 .uitk-light {
@@ -145,7 +147,6 @@
   --uitk-text-link-color-hover: var(--uitk-color-blue-200);
   --uitk-text-link-color-active: var(--uitk-color-blue-200);
   --uitk-text-link-color-disabled: var(--uitk-color-white);
-  --uitk-text-link-text-decoration: underline;
 
   --uitk-text-highlight-color: var(--uitk-color-blue-700);
 }
