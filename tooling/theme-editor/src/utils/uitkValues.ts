@@ -29,4 +29,14 @@ export const UITK_FOUNDATIONS = [
   "zindex",
 ];
 
+export const UITK_PALETTES = [
+  "success",
+  "positive",
+  "warning",
+  "navigate",
+  "rate",
+  "error",
+  "negative",
+];
+
 export const UITK_COMPONENTS = ["button"];

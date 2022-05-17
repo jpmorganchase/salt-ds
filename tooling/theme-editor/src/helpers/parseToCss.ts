@@ -6,6 +6,7 @@ import {
   UITK_CHARACTERISTICS,
   UITK_FOUNDATIONS,
   UITK_COMPONENTS,
+  UITK_PALETTES,
 } from "../utils/uitkValues";
 
 export type CSSByPattern = {
@@ -100,7 +101,10 @@ function transformToCSS(patternJsonByScope) {
 export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
   let cssByPattern = [];
 
-  for (var patternName of UITK_FOUNDATIONS.concat(UITK_CHARACTERISTICS).concat(
+  // TODO: Back to drawing board to figure out the best way to not need to do patterns in this generic layer of code
+  for (var patternName of UITK_FOUNDATIONS.concat(
+    UITK_PALETTES,
+    UITK_CHARACTERISTICS,
     UITK_COMPONENTS
   )) {
     const patternJsonByScope = jsonByScope

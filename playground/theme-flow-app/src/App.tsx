@@ -12,10 +12,13 @@ import {
 } from "./utils/parseCssToFlowData";
 import { FlowView } from "./views/FlowView";
 import { PreviewView } from "./views/PreviewView";
-import ReactFlow, { Node, Edge } from "react-flow-renderer";
+import { Node, Edge } from "react-flow-renderer";
 import { getIdFromPropertyName } from "./utils/getIdFromPropertyName";
-import { group } from "console";
-import { UITK_COMPONENTS } from "@jpmorganchase/theme-editor/src/utils/uitkValues";
+import {
+  UITK_CHARACTERISTICS,
+  UITK_COMPONENTS,
+  UITK_PALETTES,
+} from "@jpmorganchase/theme-editor/src/utils/uitkValues";
 
 function joinCssByPattern(cssByPatterns: CSSByPattern[]) {
   let result = "";
@@ -36,6 +39,7 @@ function declarationDataToFlowNodes(data: DeclarationData): {
   nodes: Node<Declaration>[];
   edges: Edge[];
 } {
+  console.log({ data });
   const nodes: Node<Declaration>[] = [];
   const edges: Edge[] = [];
   const groupIdSet: Set<string> = new Set();
@@ -48,8 +52,13 @@ function declarationDataToFlowNodes(data: DeclarationData): {
     );
     const groupId = UITK_COMPONENTS.includes(idFromPropertyName)
       ? d.groupName
+      : UITK_PALETTES.includes(idFromPropertyName)
+      ? "PaletteGroup"
+      : UITK_CHARACTERISTICS.includes(idFromPropertyName)
+      ? "CharateristicsGroup"
       : idFromPropertyName;
     // Only add group once
+    console.log({ groupId, d });
     if (!groupIdSet.has(groupId)) {
       groupIdSet.add(groupId);
       nodes.push({
