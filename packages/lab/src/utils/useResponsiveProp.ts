@@ -41,11 +41,11 @@ export const useCurrentBreakpoint = () => {
 export const useOrderedBreakpoints = () => {
   const breakpoints = useBreakpoints();
 
-  const orderedBreakpoints = Object.fromEntries(
-    Object.entries(breakpoints).sort(([, a], [, b]) => a - b)
-  );
+  const orderedBreakpoints = Object.entries(breakpoints)
+    .sort(([, a], [, b]) => a - b)
+    .map(([key]) => key);
 
-  return Object.keys(orderedBreakpoints);
+  return orderedBreakpoints;
 };
 
 const isObject = <T>(
