@@ -566,22 +566,240 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
           }
         },
         "border": {
-          "value": "{uitk.color.grey-90}",
+          "value": "{uitk.color.grey.90}",
           "type": "color"
         }
       },
       "error": {
         "border": {
-          "value": "{uitk.color.red-500}",
+          "value": "{uitk.color.red.500}",
           "type": "color"
         },
         "icon": {
-          "value": "{uitk.color.red-500}",
+          "value": "{uitk.color.red.500}",
           "type": "color"
         },
         "background": {
           "high" : {
-            "value": "{uitk.color.red-10}",
+            "value": "{uitk.color.red.10}",
+            "type": "color"
+          }
+        }
+      },
+      "info": {
+        "border": {
+          "value": "{uitk.color.blue.500}",
+          "type": "color"
+        },
+        "icon": {
+          "value": "{uitk.color.blue.500}",
+          "type": "color"
+        },
+        "background": {
+          "high" : {
+            "value": "{uitk.color.blue.10}",
+            "type": "color"
+          }
+        }
+      },
+      "measure": {
+        "background": {
+          "value": "{uitk.color.teal.500}",
+          "type": "color"
+        }
+      },
+      "accent": {
+        "background": {
+          "value": "{uitk.color.blue.500}",
+          "type": "color"
+        },
+        "border": {
+          "value": "{uitk.color.blue.500}",
+          "type": "color"
+        },
+        "foreground": {
+          "value": "{uitk.color.white}",
+          "type": "color"
+        }
+      },
+      "neutral": {
+        "background": {
+          "medium" : {
+            "value": "{uitk.color.white}",
+            "type": "color"
+          },
+          "high" : {
+            "value": "{uitk.color.grey.20}",
+            "type": "color"
+          }
+        },
+        "scrim": {
+          "medium" : {
+            "value": "{uitk.color.white}",
+            "type": "color"
+          },
+          "hight" : {
+            "value": "{uitk.color.black}",
+            "type": "color"
+          }
+        },
+        "border": {
+          "low": {
+            "value": "{uitk.color.grey.30}",
+            "type": "color"
+          },
+          "medium": {
+            "value": "{uitk.color.grey.60}",
+            "type": "color"
+          },
+          "high": {
+            "value": "{uitk.color.grey.90}",
+            "type": "color"
+          }
+        },
+        "endpoint": {
+          "value": "{uitk.color.grey.90}",
+          "type": "color"
+        }
+      },
+      "action": {
+        "cta": {
+          "foreground": {
+            "default": {
+              "value": "{uitk.color.white}",
+              "type": "color"
+            },
+            "hover": {
+              "value": "{uitk.color.white}",
+              "type": "color"
+            },
+            "active": {
+              "value": "{uitk.color.white}",
+              "type": "color"
+            }
+          },
+          "background": {
+            "default": {
+              "value": "{uitk.color.blue.600}",
+              "type": "color"
+            },
+            "hover": {
+              "value": "{uitk.color.blue.500}",
+              "type": "color"
+            },
+            "active": {
+              "value": "{uitk.color.blue.700}",
+              "type": "color"
+            }
+          }
+        },
+        "primary": {
+          "foreground": {
+            "default": {
+              "value": "{uitk.color.grey.900}",
+              "type": "color"
+            },
+            "active": {
+              "value": "{uitk.color.white}",
+              "type": "color"
+            }
+          },
+          "background": {
+            "default": {
+              "value": "{uitk.color.grey.60}",
+              "type": "color"
+            },
+            "hover": {
+              "value": "{uitk.color.grey.40}",
+              "type": "color"
+            },
+            "active": {
+              "value": "{uitk.color.grey.200}",
+              "type": "color"
+            }
+          }
+        },
+        "secondary": {
+          "foreground": {
+            "default": {
+              "value": "{uitk.color.grey.900}",
+              "type": "color"
+            },
+            "hover": {
+              "value": "{uitk.color.grey.900}",
+              "type": "color"
+            },
+            "active": {
+              "value": "{uitk.color.white}",
+              "type": "color"
+            }
+          },
+          "background": {
+            "active": {
+              "value": "{uitk.color.grey.200}",
+              "type": "color"
+            },
+            "hover": {
+              "value": "{uitk.color.grey.40}",
+              "type": "color"
+            }
+          }
+        },
+        "background": {
+          "selected": {
+            "value": "{uitk.color.blue.500}",
+            "type": "color"
+          },
+          "hover": {
+            "value": "{uitk.color.blue.20}",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "active": {
+            "value": "{uitk.color.grey.900}",
+            "type": "color"
+          },
+          "bluractive": {
+            "value": "{uitk.color.grey.900}",
+            "type": "color"
+          },
+          "hover": {
+            "value": "{uitk.color.grey.900}",
+            "type": "color"
+          },
+          "selected": {
+            "value": "{uitk.color.white}",
+            "type": "color"
+          }
+        },
+        "border": {
+          "default": {
+            "value": "{uitk.color.grey.90}",
+            "type": "color"
+          },
+          "hover": {
+            "value": "{uitk.color.blue.500}",
+            "type": "color"
+          },
+          "selected": {
+            "value": "{uitk.color.blue.600}",
+            "type": "color"
+          }
+        },
+        "stroke": {
+          "default": {
+            "value": "{uitk.color.grey.90}",
+            "type": "color"
+          },
+          "hover": {
+            "value": "{uitk.color.blue.500}",
+            "type": "color"
+          }
+        },
+        "fill": {
+          "selected": {
+            "value": "{uitk.color.blue.600}",
             "type": "color"
           }
         }
@@ -589,43 +807,43 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
       "actionable": {
         "cta": {
           "text-color": {
-            "value": "{uitk.color.white}",
+            "value": "{uitk.action.cta.foreground.default}",
             "type": "color"
           },
           "background": {
-            "value": "{uitk.color.blue.600}",
+            "value": "{uitk.action.cta.background.default}",
             "type": "color"
           },
           "icon-color": {
-            "value": "{uitk.color.white}",
+            "value": "{uitk.action.cta.foreground.default}",
             "type": "color"
           }
         },
         "primary": {
           "text-color": {
-            "value": "{uitk.color.grey.900}",
+            "value": "{uitk.action.primary.foreground.default}",
             "type": "color"
           },
           "background": {
-            "value": "{uitk.color.grey.60}",
+            "value": "{uitk.action.primary.background.default}",
             "type": "color"
           },
           "icon-color": {
-            "value": "{uitk.color.grey.900}",
+            "value": "{uitk.action.primary.foreground.default}",
             "type": "color"
           }
         },
         "secondary": {
           "text-color": {
-            "value": "{uitk.color.grey.900}",
+            "value": "{uitk.action.secondary.foreground.default}",
             "type": "color"
           },
           "background": {
-            "value": "{uitk.color.transparent}",
+            "value": "{uitk.action.secondary.background.default}",
             "type": "color"
           },
           "icon-color": {
-            "value": "{uitk.color.grey.300}",
+            "value": "{uitk.action.secondary.foreground.default}",
             "type": "color"
           }
         }
