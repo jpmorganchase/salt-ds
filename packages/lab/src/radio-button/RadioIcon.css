@@ -74,7 +74,7 @@
 }
 
 /* Styles applied to RadioIcon border when `emphasis="low"` */
-.uitkEmphasisLow .uitkRadioIcon-border {
+.uitkEmphasisLow.uitkRadioIcon-border {
   fill: var(--uitkRadioIcon-border-fill, transparent);
 }
 
