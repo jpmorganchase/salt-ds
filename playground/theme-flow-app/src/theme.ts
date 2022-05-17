@@ -735,6 +735,10 @@ const themeWithCharacteristics: JSONObj = JSON.parse(
             }
           },
           "background": {
+            "default": {
+              "value": "{uitk.color.transparent}",
+              "type": "color"
+            },
             "active": {
               "value": "{uitk.color.grey.200}",
               "type": "color"

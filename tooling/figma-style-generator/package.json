@@ -4,7 +4,8 @@
   "description": "Figma Style Generator",
   "main": "code.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc --watch -p tsconfig.json"
   },
   "author": "",
   "license": "",

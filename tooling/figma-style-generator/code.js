@@ -8,6 +8,7 @@
 // This file holds the main code for the plugins. It has access to the *document*.
 // You can access browser APIs in the <script> tag inside "ui.html" which has a
 // full browser environment (see documentation).
+const ITERATION_THRESHOLD = 10;
 // This shows the HTML page in "ui.html".
 figma.showUI(__html__, { width: 436, height: 495 });
 // Calls to "parent.postMessage" from within the HTML page will trigger this
@@ -36,26 +37,41 @@ figma.ui.onmessage = (msg) => {
                         const name = key;
                         let value = node[path];
                         let description = "";
-                        if (value.startsWith("{")) {
+                        let referencePointer = "";
+                        let iterationCount = 0;
+                        while (value.startsWith("{")) {
                             // get the real value from inputJson
-                            description = value.replace(/[\{\}]/g, "");
-                            const keys = description.split(".");
+                            referencePointer = value.replace(/[\{\}]/g, "");
+                            const keys = referencePointer.split(".");
+                            if (iterationCount === 0) {
+                                // description should be the reference name
+                                // We want keep the description to the immediate resolved value
+                                description = referencePointer;
+                            }
                             value = getValueFromObj(inputJsonObj, keys);
-                            // console.log(value);
-                            // description should be the reference name
+                            iterationCount++;
+                            // console.log(referencePointer, value);
+                            if (iterationCount > ITERATION_THRESHOLD) {
+                                figma.notify(`Can not find value with {${referencePointer}}`, {
+                                    error: true,
+                                });
+                                break;
+                            }
                         }
-                        const newPaintStyle = figma.createPaintStyle();
-                        newPaintStyle.name = name;
-                        newPaintStyle.description = description;
-                        const transparent = value === "transparent";
-                        newPaintStyle.paints = [
-                            {
-                                type: "SOLID",
-                                color: transparent ? { r: 0, g: 0, b: 0 } : extractRgb(value),
-                                opacity: transparent ? 0 : 1,
-                            },
-                        ];
-                        newStyleCounter++;
+                        if (iterationCount < ITERATION_THRESHOLD) {
+                            const newPaintStyle = figma.createPaintStyle();
+                            newPaintStyle.name = name;
+                            newPaintStyle.description = description;
+                            const transparent = value === "transparent";
+                            newPaintStyle.paints = [
+                                {
+                                    type: "SOLID",
+                                    color: transparent ? { r: 0, g: 0, b: 0 } : extractRgb(value),
+                                    opacity: transparent ? 0 : 1,
+                                },
+                            ];
+                            newStyleCounter++;
+                        }
                     }
                 });
             }
