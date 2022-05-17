@@ -17,6 +17,28 @@ describe("GIVEN a Parent and Child", () => {
     });
   });
 
+  describe("WHEN passing an array as a parent", () => {
+    const parent = ["a", "b", "c", "d", "e"];
+
+    it("THEN it should render as expected", () => {
+      cy.mount(<ToolkitParentChildLayout parent={parent} />);
+
+      cy.get(".uitkParentChildItem")
+        .first()
+        .should("have.text", parent.join(""));
+    });
+  });
+
+  describe("WHEN passing an array as a child", () => {
+    const child = ["a", "b", "c", "d", "e"];
+
+    it("THEN it should render as expected", () => {
+      cy.mount(<ToolkitParentChildLayout child={child} />);
+
+      cy.get(".uitkParentChildItem").eq(1).should("have.text", child.join(""));
+    });
+  });
+
   describe("WHEN no stackedAtBreakpoint value is provided", () => {
     it(
       "THEN it should render both components on larger viewports",

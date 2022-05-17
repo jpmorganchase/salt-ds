@@ -30,40 +30,33 @@ export default {
   },
 } as ComponentMeta<typeof SplitLayout>;
 
+const leftItem = (
+  <FlowLayout>
+    {Array.from({ length: 3 }, (_, index) => (
+      <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
+    ))}
+  </FlowLayout>
+);
+
+const rightItem = (
+  <FlowLayout>
+    <FlexContent>item 4</FlexContent>
+    <FlexContent>
+      Item
+      <br />5
+    </FlexContent>
+  </FlowLayout>
+);
+
 const Template: ComponentStory<typeof SplitLayout> = (args) => {
-  const leftItem = useMemo(
-    () => (
-      <FlowLayout>
-        {Array.from({ length: 3 }, (_, index) => (
-          <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
-        ))}
-      </FlowLayout>
-    ),
-    []
-  );
-
-  const rightItem = useMemo(
-    () => (
-      <FlowLayout>
-        <FlexContent>item 4</FlexContent>
-        <FlexContent>
-          Item
-          <br />5
-        </FlexContent>
-      </FlowLayout>
-    ),
-    []
-  );
-
-  return (
-    <SplitLayout
-      {...args}
-      leftSplitItem={leftItem}
-      rightSplitItem={rightItem}
-    />
-  );
+  return <SplitLayout {...args} />;
 };
 export const ToolkitSplitLayout = Template.bind({});
+
+ToolkitSplitLayout.args = {
+  leftSplitItem: leftItem,
+  rightSplitItem: rightItem,
+};
 
 const ButtonBarExample: ComponentStory<typeof SplitLayout> = (args) => {
   const leftItem = useMemo(

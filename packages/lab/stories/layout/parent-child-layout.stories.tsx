@@ -40,13 +40,13 @@ const child = <FlexContent style={parentChildItemStyles}>Child</FlexContent>;
 const Template: ComponentStory<typeof ParentChildLayout> = (args) => {
   return (
     <div style={{ width: "90vw", maxWidth: 800 }}>
-      <ParentChildLayout {...args} parent={parent} child={child} />
+      <ParentChildLayout {...args} />
     </div>
   );
 };
 
 export const ToolkitParentChildLayout = Template.bind({});
-ToolkitParentChildLayout.args = {};
+ToolkitParentChildLayout.args = { parent, child };
 
 ToolkitParentChildLayout.argTypes = {};
 
