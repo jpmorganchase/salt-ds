@@ -1,7 +1,32 @@
 .uitkSplitLayout {
+  justify-content: space-between;
 }
-.uitkSplitLayout-right-split {
+
+.uitkSplitLayout-separator {
+  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
-.uitkSplitLayout-left-split {
-  margin-right: auto;
+
+.uitkSplitLayout-separator > *:first-child::after, *:last-child::before, .uitkSplitLayout-separator-center::after {
+  background-color: var(--uitk-separable-border-color-2);
+  width: var(--uitkFlexLayout-separator);
+  top: 0;
+  height: 100%;
+}
+
+.uitkSplitLayout-separator-start > *:first-child::after {
+  content: "";
+  right: calc(var(--uitkFlexLayout-separator) * -1);
+}
+
+.uitkSplitLayout-separator-end > *:last-child::before {
+  content: "";
+  right: calc(var(--uitkFlexLayout-separator) * -1);
+}
+.uitkSplitLayout-separator-center {
+  position: relative;
+}
+.uitkSplitLayout-separator-center::after {
+  position: absolute;
+  content: "";
+  right: calc(var(--uitkFlexLayout-separator) * -1);
 }

@@ -1,30 +1,15 @@
-import { forwardRef, ReactNode } from "react";
-import { FlexLayout } from "../FlexLayout";
-import { FlexLayoutProps } from "../types";
+import {forwardRef, ReactNode} from "react";
+import {FlexLayout} from "../FlexLayout";
+import {FlexLayoutProps} from "../types";
 import "./SplitLayout.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
 
 export interface SplitItemProps {
-  /**
-   * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
-   */
-  align?: FlexLayoutProps["align"];
   /**
    * A list of items. Required to have some children.
    */
   children: ReactNode;
-  /**
-   * Controls the space between items.
-   */
-  gap?: FlexLayoutProps["gap"];
-  /**
-   * Adds a separator between elements.
-   */
-  separators?: FlexLayoutProps["separators"];
-  /**
-   * Determins the side of the SplitItem.
-   */
-  side: "left" | "right";
 }
 
 export interface SplitLayoutProps {
@@ -32,10 +17,6 @@ export interface SplitLayoutProps {
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
   align?: FlexLayoutProps["align"];
-  /**
-   * Controls the space between items.
-   */
-  gap?: FlexLayoutProps["gap"];
   /**
    * Adds a separator between elements.
    */
@@ -57,20 +38,13 @@ export interface SplitLayoutProps {
 const withBaseName = makePrefixer("uitkSplitLayout");
 
 const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
-  { align, gap, separators, children, side, ...rest },
+  {children, ...rest},
   ref
 ) {
   return (
-    <FlexLayout
-      align={align}
-      gap={gap}
-      separators={separators}
-      className={withBaseName(`${side}-split`)}
-      ref={ref}
-      {...rest}
-    >
+    <div {...rest} ref={ref}>
       {children}
-    </FlexLayout>
+    </div>
   );
 });
 
@@ -78,7 +52,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
     {
       align,
-      gap,
       leftSplitItem,
       rightSplitItem,
       separators,
@@ -87,20 +60,26 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
     },
     ref
   ) {
-    const sideProps = { align, gap, separators };
-
+    const separatorAlignment = separators === true ? "center" : separators;
     return (
       <FlexLayout
         direction="row"
         ref={ref}
         wrap={wrap}
         {...rest}
-        className={withBaseName()}
+        className={cx(withBaseName(), {
+          [withBaseName("separator")]: separatorAlignment,
+          [withBaseName(
+            `separator-${separatorAlignment}`
+          )]: separatorAlignment !== "center"
+        })}
       >
-        <SplitItem side="left" {...sideProps}>
+        <SplitItem>
           {leftSplitItem}
         </SplitItem>
-        <SplitItem side="right" {...sideProps}>
+        {separatorAlignment === "center" &&
+        <span className={withBaseName("separator-center")}/>}
+        <SplitItem>
           {rightSplitItem}
         </SplitItem>
       </FlexLayout>
