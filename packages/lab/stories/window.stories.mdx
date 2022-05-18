@@ -190,7 +190,7 @@ return (
 Another solution would be to add an optional prop to the window abstraction that allows
 CSS to be passed down and injected into that window's document object. This would also
 overcome the issue of injecting the styles into the window. This bespoke prop would only
-server one purpose
+serve that one purpose.
 
 ```tsx
 import style from "./Tooltip.css";
@@ -232,7 +232,8 @@ return (
 
 Delegating the responsibility of style injection to the components would require each component to call
 the `injectStyleIntoGivenDocument` function. Developers of the toolkit will have to remember to do this.
-One could draw parallels to MUI's styled components API which requires users to wrap their components 
+One could draw parallels to MUI's styled components API which requires users to used the `styled` function
+and pass in their components. The function returns a styled component.
 
 ### Theme insertion
 
