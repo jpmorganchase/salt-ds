@@ -3,7 +3,7 @@ import {
   FlexItem,
   StackLayout,
 } from "@jpmorganchase/uitk-core";
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel, FormField, Input } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
@@ -53,3 +53,35 @@ const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
 };
 export const StackLayoutSimpleUsage = StackLayoutStorySimpleUsage.bind({});
 StackLayoutSimpleUsage.args = {};
+
+const Form: ComponentStory<typeof StackLayout> = (args) => {
+  return (
+    <StackLayout {...args}>
+      {Array.from({ length: 2 }, (_, index) => (
+        <FormField
+          labelPlacement="left"
+          label="Quis qui nisi"
+          key={index}
+          className="uitkEmphasisHigh"
+        >
+          <Input defaultValue="Lorem ipsum" />
+        </FormField>
+      ))}
+      <FormField labelPlacement="left" label="Consectetur sint">
+        <Input defaultValue="Nulla id Lorem Lorem" />
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        label="Quis qui nisi"
+        className="uitkEmphasisHigh"
+      >
+        <Input defaultValue="Lorem ipsum" />
+      </FormField>
+      <FormField labelPlacement="left" label="Quis qui nisi">
+        <Input defaultValue="Lorem ipsum" />
+      </FormField>
+    </StackLayout>
+  );
+};
+export const StackLayoutComposite = Form.bind({});
+StackLayoutComposite.args = {};
