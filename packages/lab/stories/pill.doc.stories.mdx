@@ -1,17 +1,25 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { UserBadgeIcon } from "@jpmorganchase/uitk-icons";
 import { Pill, SelectablePill } from "@jpmorganchase/uitk-lab";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { CustomStyling } from "./pill.stories";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
 
 <Meta title="Lab/Pill/Doc" component={Pill} />
 
 # Pill
 
-**AKA:** Chip, Lozenge, Tag, Token
-
 Pill components provide multiple ways to label, tag or categorize content to
 allow users to trigger actions, make selections or filter results.
 
-**Related components**  
+**AKA:** Chip, Lozenge, Tag, Token
+
+**Related components**
+
 **Similar to:** [Badge](/?path=/docs/toolkit-2-0-badge),
 [Checkbox](/?path=/docs/toolkit-2-0-checkbox),
 [Link](/?path=/docs/toolkit-2-0-link),
@@ -53,11 +61,11 @@ Pill is a versatile, interactive and stand-alone component. It is often used to:
 - Display multiple Pills that are related to the same content alongside each
   other in a Pill group.
 
-## Default
+## Basic Pill
 
 The default Pill is often used for tagging purposes, or to filter or change the
 page view. It can also be used to trigger an action that is subject to change as
-a result of user inputs or other factors. This Pill, for example, may be used to
+a result of user Pills or other factors. This Pill, for example, may be used to
 send an auto-generated quick response to a message.
 
 **Navigating to another page**  
@@ -75,7 +83,7 @@ page, the ‘role’ prop must be changed from ‘button’ (the default attribu
   [Button](/?path=/docs/toolkit-2-0-button) instead.
 
 <Canvas>
-  <Story name="Default">
+  <Story name="Basic Pill">
     <Pill label="Basic Pill" />
   </Story>
 </Canvas>
@@ -84,7 +92,7 @@ page, the ‘role’ prop must be changed from ‘button’ (the default attribu
 
 The Closable Pill represents a value that was selected via another mechanism,
 and which can be removed within the Pill. It can appear on its own, for example,
-alongside a complex filter panel—or within an input control such as
+alongside a complex filter panel—or within an Pill control such as
 [Auto Complete](/components/autocomplete) or [Combo Box](/components/combobox).
 
 The close button is persistent for improved accessibility and usability.
@@ -208,14 +216,78 @@ ensure it provides an accurate role to screen readers.
 
 ## API
 
-### Default
+```
+import { Pill } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
 
 When `variant` is `'basic'` or '`closable`'
 
 <ArgsTable of={Pill} />
 
-### Selectable Pill
-
 When `variant` is `'selectable'`
 
 <ArgsTable of={SelectablePill} />
+
+## HTML Anatomy of Pill component
+
+<Canvas>
+  <Story name="Pill Anatomy">
+    <ComponentAnatomy showLegend>
+      <Pill label="Basic Pill" />
+    </ComponentAnatomy>
+    <ComponentAnatomy showLegend>
+      <Pill label="Closable Pill" variant="closable" />
+    </ComponentAnatomy>
+    <ComponentAnatomy showLegend>
+      <Pill label="Disabled Pill" disabled variant="closable" />
+    </ComponentAnatomy>
+    <ComponentAnatomy showLegend>
+      <Pill label="Disabled Pill" disabled variant="closable" />
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Pill} />
+
+## Characteristics Used
+
+- [Actionable](/docs/documentation-styles-and-theming-characteristics-actionable--misc)
+  - --uitk-actionable-secondary-icon-color
+- [Focused](/docs/documentation-styles-and-theming-characteristics-focused--misc)
+  - --uitk-focused-line-width
+  - --uitk-focused-outline-offset
+- [Taggable](/docs/documentation-styles-and-theming-characteristics-taggable--misc)
+  - --uitk-taggable-background
+  - --uitk-taggable-background-active
+  - --uitk-taggable-icon
+  - --uitk-taggable-icon-hover
+  - --uitk-taggable-icon-active
+  - --uitk-taggable-text-color
+  - --uitk-taggable-text-color-hover
+  - --uitk-taggable-text-color-active
+- [Text](/docs/documentation-styles-and-theming-characteristics-text--colors)
+  - --uitk-text-help-font-size
+  - --uitk-text-min-height
+
+## --uitkPill CSS Custom Property API
+
+The default styling values for most Pill attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Pill. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Pill, but not defined by Pill. They can be defined via a container or
+a custom class name to override Pill styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Pill} />
+
+## Customising Pill styles
+
+<Canvas>
+  <Story name="Custom Pill Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
