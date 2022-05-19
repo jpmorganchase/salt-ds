@@ -1,22 +1,18 @@
+import { Breakpoints } from "@jpmorganchase/uitk-core";
 import {
-  Breakpoints,
-  useViewport,
-  useBreakpoints,
-} from "@jpmorganchase/uitk-core";
-import { getCurrentBreakpoint } from "@jpmorganchase/uitk-lab";
+  useCurrentBreakpoint,
+  useOrderedBreakpoints,
+} from "@jpmorganchase/uitk-lab";
 
 export const useIsStacked = (stackedAtBreakpoint: keyof Breakpoints) => {
-  const viewport = useViewport();
+  const orderedBreakpoints = useOrderedBreakpoints();
 
-  const breakpoints = useBreakpoints();
-  const breakpointsKeys = Object.keys(breakpoints);
+  const index = orderedBreakpoints.indexOf(stackedAtBreakpoint);
+  const allPreviousBreakpoints = orderedBreakpoints.slice(0, index + 1);
 
-  const index = breakpointsKeys.indexOf(stackedAtBreakpoint);
-  const allPreviousBreakpoints = breakpointsKeys.slice(0, index + 1);
+  const currentBreakpoint = useCurrentBreakpoint();
 
-  const stackedView = allPreviousBreakpoints.includes(
-    getCurrentBreakpoint(breakpoints, viewport)
-  );
+  const stackedView = allPreviousBreakpoints.includes(currentBreakpoint);
 
   return stackedView;
 };
