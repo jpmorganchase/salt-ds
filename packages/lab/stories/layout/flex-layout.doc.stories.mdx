@@ -1,0 +1,84 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Layout/Docs/FlexLayout" component={FlexLayout} />
+
+# Flex Layout
+
+Lorem Ipsum
+
+<Canvas>
+  <Story id="layout-flexlayout--default-flex-layout" />
+</Canvas>
+
+## API
+
+```
+import {FlexLayout, FlexItem} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+### Flex Layout Props
+
+<ArgsTable of={FlexLayout} />
+
+### Flex Item Props
+
+<ArgsTable of={FlexItem} />
+
+## Usage Examples
+
+### Flex Item inside default flex layout
+
+<Canvas>
+  <Story id="layout-flexlayout-flexitem--flex-item-wrapper" />
+</Canvas>
+
+### Responsive
+
+<Canvas>
+  <Story id="layout-flexlayout--toolkit-flex-layout-responsive" />
+</Canvas>
+
+### Simple Usage
+
+<Canvas>
+  <Story id="layout-flexlayout--flex-layout-simple-usage" />
+</Canvas>
+
+## Used in
+
+The flex layout is used in the following components
+
+- []()
+
+## Anatomy
+
+<Canvas>
+  <Story name="Flex Layout Anatomy">
+    <ComponentAnatomy showLegend>
+      <FlexLayout>
+        <FlexItem></FlexItem>
+      </FlexLayout>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## classes
+
+### Layout
+
+<CSSClassTable of={FlexLayout} />
+
+### Item
+
+<CSSClassTable of={FlexItem} />
+
+<!-- ### characteristics -->
+<!-- - []() -->
