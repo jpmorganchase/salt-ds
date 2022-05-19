@@ -34,7 +34,7 @@ Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_**
 Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>-<emphasis>`
 
 1. Always begin with `--uitk-palette-`
-2. Follow this by the **\_semantic meaning**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
+2. Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
 3. Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
 4. Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
 5. Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
@@ -83,8 +83,9 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Interact">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-interact-background-medium" />
       <ColorBlock colorVar="--uitk-palette-interact-background-high" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-low" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-medium" />
       <ColorBlock colorVar="--uitk-palette-interact-background-active" />
       <ColorBlock colorVar="--uitk-palette-interact-background-bluractive" />
       <ColorBlock colorVar="--uitk-palette-interact-background-hover" />
@@ -92,12 +93,16 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-interact-border-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-border-readonly" />
       <ColorBlock colorVar="--uitk-palette-interact-border-selected" />
+      <ColorBlock colorVar="--uitk-palette-interact-fill" />
+      <ColorBlock colorVar="--uitk-palette-interact-fill-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-fill-partial" />
       <ColorBlock colorVar="--uitk-palette-interact-fill-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-active" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-bluractive" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-stroke-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-stroke-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background-active" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background-disabled" />
@@ -114,7 +119,9 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-active" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-background" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-background-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-active" />
@@ -189,6 +196,12 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Navigate">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-palette-navigate-background-low" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-medium" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-high" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-low" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-medium" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-high" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-low" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-medium" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-high" />
@@ -215,8 +228,9 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Neutral">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-neutral-background-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-background-high" />
+      <ColorBlock colorVar="--uitk-palette-neutral-background-low" />
+      <ColorBlock colorVar="--uitk-palette-neutral-background-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-high" />
@@ -247,9 +261,13 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Rate">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-palette-rate-background" />
       <ColorBlock colorVar="--uitk-palette-rate-background-active" />
       <ColorBlock colorVar="--uitk-palette-rate-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-rate-background-undo" />
       <ColorBlock colorVar="--uitk-palette-rate-border" />
+      <ColorBlock colorVar="--uitk-palette-rate-border-active" />
+      <ColorBlock colorVar="--uitk-palette-rate-border-hover" />
       <ColorBlock colorVar="--uitk-palette-rate-border-undo" />
     </DocGrid>
   </Story>

@@ -28,9 +28,9 @@
 }
 
 .uitkRadioIcon {
-  --radio-icon-border-stroke: var(--uitk-selectable-stroke);
-  --radio-icon-border-stroke-checked: var(--uitk-selectable-stroke-hover);
-  --radio-icon-border-stroke-hover: var(--uitk-selectable-stroke-hover);
+  --radio-icon-border-stroke: var(--uitk-selectable-border-color);
+  --radio-icon-border-stroke-checked: var(--uitk-selectable-border-color-hover);
+  --radio-icon-border-stroke-hover: var(--uitk-selectable-border-color-hover);
   --radio-icon-border-stroke-width: var(--uitk-selectable-border-width);
   --radio-icon-border-fill: var(--uitk-editable-background-medium);
   --radio-icon-check-stroke: var(--uitk-editable-border-color-active);
