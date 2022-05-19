@@ -1,12 +1,13 @@
 import { Button } from "@jpmorganchase/uitk-core";
 import {
   FLEX_ALIGNMENT_BASE,
-  FlexLayout,
-  SplitLayout
+  FlowLayout,
+  SplitLayout,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 import { ExportIcon, ImportIcon } from "@jpmorganchase/uitk-icons";
+import { useMemo } from "react";
 
 export default {
   title: "Layout/SplitLayout",
@@ -26,64 +27,73 @@ export default {
     wrap: {
       type: "boolean",
     },
-  }
+  },
 } as ComponentMeta<typeof SplitLayout>;
 
 const Template: ComponentStory<typeof SplitLayout> = (args) => {
-  const LeftItem = () => {
-    return (
-      <FlexLayout>
+  const leftItem = useMemo(
+    () => (
+      <FlowLayout>
         {Array.from({ length: 3 }, (_, index) => (
           <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
         ))}
-      </FlexLayout>
-    );
-  };
-  const RightItem = () => {
-    return (
-      <FlexLayout>
+      </FlowLayout>
+    ),
+    []
+  );
+
+  const rightItem = useMemo(
+    () => (
+      <FlowLayout>
         <FlexContent>item 4</FlexContent>
         <FlexContent>
           Item
           <br />5
         </FlexContent>
-      </FlexLayout>
-    );
-  };
+      </FlowLayout>
+    ),
+    []
+  );
 
   return (
     <SplitLayout
       {...args}
-      leftSplitItem={<LeftItem />}
-      rightSplitItem={<RightItem />}
+      leftSplitItem={leftItem}
+      rightSplitItem={rightItem}
     />
   );
 };
 export const ToolkitSplitLayout = Template.bind({});
 
 const ButtonBarExample: ComponentStory<typeof SplitLayout> = (args) => {
-  const LeftItem = () => (
-    <>
-      <Button variant="secondary">
-        <ExportIcon style={{ marginRight: 5 }} />
-        Export
-      </Button>
-      <Button variant="secondary">
-        <ImportIcon style={{ marginRight: 5 }} />
-        Import
-      </Button>
-    </>
+  const leftItem = useMemo(
+    () => (
+      <FlowLayout>
+        <Button variant="secondary">
+          <ExportIcon style={{ marginRight: 5 }} />
+          Export
+        </Button>
+        <Button variant="secondary">
+          <ImportIcon style={{ marginRight: 5 }} />
+          Import
+        </Button>
+      </FlowLayout>
+    ),
+    []
   );
-  const RightItem = () => (
-    <>
-      <Button variant="cta">Save</Button> <Button>Cancel</Button>
-    </>
+  const rightItem = useMemo(
+    () => (
+      <FlowLayout>
+        <Button variant="cta">Save</Button> <Button>Cancel</Button>
+      </FlowLayout>
+    ),
+    []
   );
   return (
     <SplitLayout
       {...args}
-      leftSplitItem={<LeftItem />}
-      rightSplitItem={<RightItem />}
+      leftSplitItem={leftItem}
+      rightSplitItem={rightItem}
     />
   );
 };

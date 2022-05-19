@@ -6,7 +6,9 @@
   --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
 
-.uitkSplitLayout-separator > *:first-child::after, *:last-child::before, .uitkSplitLayout-separator-center::after {
+.uitkSplitLayout-separator > *:first-child::after,
+*:last-child::before,
+.uitkSplitLayout-separator-center::after {
   background-color: var(--uitk-separable-border-color-2);
   width: var(--uitkFlexLayout-separator);
   top: 0;

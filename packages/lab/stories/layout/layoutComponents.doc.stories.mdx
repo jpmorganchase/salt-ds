@@ -10,13 +10,6 @@ import {
   SplitLayout,
   StackLayout,
 } from "@jpmorganchase/uitk-lab";
-import { ToolkitBorderLayout } from "./border-layout.stories.tsx";
-import { ToolkitFlexLayout } from "./flex-layout.stories.tsx";
-import { ToolkitFlowLayout } from "./flow-layout.stories.tsx";
-import { ToolkitGridLayout } from "./grid-layout.stories.tsx";
-import { ToolkitParentChildLayout } from "./parent-child-layout.stories.tsx";
-import { ButtonBarInSplitLayout } from "./split-layout.stories.tsx";
-import { ToolkitStackLayout } from "./stack-layout.stories.tsx";
 
 <Meta title="Layout/Doc" component={GridLayout} />
 
@@ -31,7 +24,7 @@ Defines the main content regions of an application, region or widget, such as a 
 The region is defined by the `position` prop.
 
 <Canvas>
-  <Story name="Border Layout">{ToolkitBorderLayout.bind({})}</Story>
+  <Story id="layout-borderlayout--toolkit-border-layout" />
 </Canvas>
 
 ## API
@@ -59,7 +52,7 @@ Defines an equally distributed layout system using columns and rows.
 It defaults to a twelve column grid but you can customise it using the `columns` and `rows` props.
 
 <Canvas>
-  <Story name="Grid Layout">{ToolkitGridLayout.bind({})}</Story>
+  <Story id="layout-gridlayout--toolkit-grid-layout" />
 </Canvas>
 
 ### API
@@ -85,7 +78,7 @@ import {GridLayout, GridItem} from "@jpmorganchase/uitk-lab";
 Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
 
 <Canvas>
-  <Story name="Parent Child Layout">{ToolkitParentChildLayout.bind({})}</Story>
+  <Story id="layout-parentchildlayout--toolkit-parent-child-layout" />
 </Canvas>
 
 ## API
@@ -103,7 +96,7 @@ import {ParentChildLayout} from "@jpmorganchase/uitk-lab";
 Flex layout is the internal base for all layout components that build from a container using Flexbox.
 
 <Canvas>
-  <Story name="Flex layout">{ToolkitFlexLayout.bind({})}</Story>
+  <Story id="layout-flexlayout--toolkit-flex-layout" />
 </Canvas>
 
 ### API
@@ -125,7 +118,7 @@ import {FlexLayout, FlexItem} from "@jpmorganchase/uitk-lab";
 Dictates a horizontal order and direction for UI elements.
 
 <Canvas>
-  <Story name="Flow Layout">{ToolkitFlowLayout.bind({})}</Story>
+  <Story id="layout-flowlayout--toolkit-flow-layout" />
 </Canvas>
 
 ### API
@@ -143,7 +136,7 @@ import {FlowLayout} from "@jpmorganchase/uitk-lab";
 Defines left and right regions for UI elements within a span, such as a button bar.
 
 <Canvas>
-  <Story name="Stack Layout">{ToolkitStackLayout.bind({})}</Story>
+  <Story id="layout-stacklayout--toolkit-stack-layout" />
 </Canvas>
 
 ### API
@@ -161,7 +154,7 @@ import {StackLayout} from "@jpmorganchase/uitk-lab";
 Defines left and right regions for UI elements within a span, such as a button bar
 
 <Canvas>
-  <Story name="Split Layout">{ButtonBarInSplitLayout.bind({})}</Story>
+  <Story id="layout-splitlayout--button-bar-in-split-layout" />
 </Canvas>
 
 ### API

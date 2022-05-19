@@ -1,6 +1,6 @@
-import {forwardRef, ReactNode} from "react";
-import {FlexLayout} from "../FlexLayout";
-import {FlexLayoutProps} from "../types";
+import { forwardRef, ReactNode } from "react";
+import { FlexLayout } from "../FlexLayout";
+import { FlexLayoutProps } from "../types";
 import "./SplitLayout.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
@@ -38,7 +38,7 @@ export interface SplitLayoutProps {
 const withBaseName = makePrefixer("uitkSplitLayout");
 
 const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
-  {children, ...rest},
+  { children, ...rest },
   ref
 ) {
   return (
@@ -50,14 +50,7 @@ const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
 
 export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
-    {
-      align,
-      leftSplitItem,
-      rightSplitItem,
-      separators,
-      wrap = true,
-      ...rest
-    },
+    { align, leftSplitItem, rightSplitItem, separators, wrap = true, ...rest },
     ref
   ) {
     const separatorAlignment = separators === true ? "center" : separators;
@@ -69,19 +62,15 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         {...rest}
         className={cx(withBaseName(), {
           [withBaseName("separator")]: separatorAlignment,
-          [withBaseName(
-            `separator-${separatorAlignment}`
-          )]: separatorAlignment !== "center"
+          [withBaseName(`separator-${separatorAlignment}`)]:
+            separatorAlignment && separatorAlignment !== "center",
         })}
       >
-        <SplitItem>
-          {leftSplitItem}
-        </SplitItem>
-        {separatorAlignment === "center" &&
-        <span className={withBaseName("separator-center")}/>}
-        <SplitItem>
-          {rightSplitItem}
-        </SplitItem>
+        <SplitItem>{leftSplitItem}</SplitItem>
+        {separatorAlignment === "center" && (
+          <span className={withBaseName("separator", separatorAlignment)} />
+        )}
+        <SplitItem>{rightSplitItem}</SplitItem>
       </FlexLayout>
     );
   }
