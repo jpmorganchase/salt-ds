@@ -16,10 +16,10 @@
   --uitk-editable-border-color-hover: var(--uitk-palette-interact-border-hover);
   --uitk-editable-border-color-readonly: var(--uitk-palette-interact-border-readonly);
 
-  --uitk-editable-background-low: transparent;
-  --uitk-editable-background-hover-low: transparent;
-  --uitk-editable-background-active-low: transparent;
-  --uitk-editable-background-readonly-low: transparent;
+  --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-hover-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-readonly-low: var(--uitk-palette-interact-background-low);
 
   --uitk-editable-background-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-hover-medium: var(--uitk-palette-interact-background-medium);

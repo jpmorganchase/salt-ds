@@ -24,13 +24,13 @@
 
   --uitk-selectable-stroke: var(--uitk-palette-interact-stroke);
   --uitk-selectable-stroke-hover: var(--uitk-palette-interact-stroke-hover);
-  --uitk-selectable-stroke-selected: transparent;
+  --uitk-selectable-stroke-selected: var(--uitk-palette-interact-stroke-selected);
   --uitk-selectable-stroke-partial: var(--uitk-palette-interact-stroke);
 
-  --uitk-selectable-fill: transparent;
-  --uitk-selectable-fill-hover: transparent;
+  --uitk-selectable-fill: var(--uitk-palette-interact-fill);
+  --uitk-selectable-fill-hover: var(--uitk-palette-interact-fill-hover);
   --uitk-selectable-fill-selected: var(--uitk-palette-interact-fill-selected);
-  --uitk-selectable-fill-partial: var(--uitk-palette-interact-fill-selected);
+  --uitk-selectable-fill-partial: var(--uitk-palette-interact-fill-partial);
 
   --uitk-selectable-cta-foreground: var(--uitk-palette-interact-foreground);
   --uitk-selectable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
@@ -49,7 +49,7 @@
   --uitk-selectable-secondary-foreground: var(--uitk-palette-interact-foreground);
   --uitk-selectable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
   --uitk-selectable-secondary-foreground-active: var(--uitk-palette-interact-secondary-foreground-active);
-  --uitk-selectable-secondary-background: transparent;
+  --uitk-selectable-secondary-background: var(--uitk-palette-interact-secondary-background);
   --uitk-selectable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
   --uitk-selectable-secondary-background-active: var(--uitk-palette-interact-secondary-background-active);
 }

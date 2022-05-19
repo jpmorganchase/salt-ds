@@ -10,19 +10,18 @@
   --uitk-navigable-foreground: var(--uitk-palette-navigate-foreground);
   --uitk-navigable-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
 
-  --uitk-navigable-indicator: transparent;
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
 
-  --uitk-navigable-background-low: transparent;
+  --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
   --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);
-  --uitk-navigable-background-active-low: transparent;
+  --uitk-navigable-background-active-low: var(--uitk-palette-navigate-background-active-low);
 
-  --uitk-navigable-background-medium: transparent;
+  --uitk-navigable-background-medium: var(--uitk-palette-navigate-background-medium);
   --uitk-navigable-background-hover-medium: var(--uitk-palette-navigate-background-hover-medium);
-  --uitk-navigable-background-active-medium: transparent;
+  --uitk-navigable-background-active-medium: var(--uitk-palette-navigate-background-active-medium);
 
-  --uitk-navigable-background-high: transparent;
+  --uitk-navigable-background-high: var(--uitk-palette-navigate-background-high);
   --uitk-navigable-background-hover-high: var(--uitk-palette-navigate-background-hover-high);
-  --uitk-navigable-background-active-high: transparent;
+  --uitk-navigable-background-active-high: var(--uitk-palette-navigate-background-active-high);
 }

@@ -4,7 +4,7 @@
   --uitk-container-border-style: solid;
   --uitk-container-border-radius: 0; /* Note: design token not in Figma */
 
-  --uitk-container-background-low: transparent;
+  --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
   --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
   --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
 
