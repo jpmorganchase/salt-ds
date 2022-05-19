@@ -15,6 +15,30 @@ export default {
   title: "Layout/FlexLayout",
   component: FlexLayout,
   subcomponents: { FlexItem },
+  argTypes: {
+    align: {
+      options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
+      control: { type: "select" },
+    },
+    direction: {
+      options: ["row", "column"],
+      control: { type: "radio" },
+    },
+    gap: {
+      type: "number",
+    },
+    justify: {
+      options: FLEX_CONTENT_ALIGNMENT_BASE,
+      control: { type: "select" },
+    },
+    separators: {
+      options: ["start", "center", "end", true],
+      control: { type: "select" },
+    },
+    wrap: {
+      type: "boolean",
+    },
+  },
 } as ComponentMeta<typeof FlexLayout>;
 
 const Template: ComponentStory<typeof FlexLayout> = (args) => {
@@ -33,31 +57,7 @@ const Template: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const ToolkitFlexLayout = Template.bind({});
-
-ToolkitFlexLayout.argTypes = {
-  align: {
-    options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
-    control: { type: "select" },
-  },
-  direction: {
-    options: ["row", "column"],
-    control: { type: "radio" },
-  },
-  gap: {
-    type: "number",
-  },
-  justify: {
-    options: FLEX_CONTENT_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  separators: {
-    options: ["start", "center", "end", true],
-    control: { type: "select" },
-  },
-  wrap: {
-    type: "boolean",
-  },
-};
+ToolkitFlexLayout.args = {};
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
@@ -90,8 +90,7 @@ ToolkitFlexLayoutResponsive.args = {
     lg: false,
   },
 };
-
-ToolkitFlexLayoutResponsive.argTypes = {};
+ToolkitFlexLayoutResponsive.args = {};
 
 const colorFormats = ["Hex", "HSV"];
 
@@ -127,5 +126,3 @@ ToolkitFormInFlexLayout.args = {
     sm: false,
   },
 };
-
-ToolkitFormInFlexLayout.argTypes = {};
