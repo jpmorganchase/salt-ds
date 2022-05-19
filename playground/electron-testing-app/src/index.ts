@@ -37,8 +37,8 @@ function moveWindowRelativeToParent(
       }
       return;
     }
-    const targetX = parseInt(left + mainBounds.x);
-    const targetY = parseInt(top + mainBounds.y);
+    const targetX = parseInt(left) + mainBounds.x;
+    const targetY = parseInt(top) + mainBounds.y;
     try {
       targetWindow.setPosition(targetX, targetY);
       // @ts-ignore
