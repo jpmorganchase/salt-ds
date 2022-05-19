@@ -3,11 +3,11 @@
   --uitkFlexLayout-gap-multiplier: 1;
   --uitkFlexLayout-layout-display: flex;
   --uitkFlexLayout-direction: row;
-  --uitkFlexLayout-wrap: wrap;
+  --uitkFlexLayout-wrap: nowrap;
   --uitkFlexLayout-justify: flex-start;
   --uitkFlexLayout-align: stretch;
   --uitkFlexLayout-separator: var(--uitk-separable-border-width);
-  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
+  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier));
 }
 
 .uitkFlexLayout {
@@ -17,7 +17,10 @@
   flex-wrap: var(--uitkFlexLayout-wrap);
   justify-content: var(--uitkFlexLayout-justify);
   align-items: var(--uitkFlexLayout-align);
-  overflow: hidden;
+}
+
+.uitkFlexLayout-separator {
+  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
 
 .uitkFlexLayout-separator > *:not(:last-child)::after {
