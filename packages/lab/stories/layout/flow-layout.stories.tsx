@@ -1,8 +1,10 @@
 import {
   FLEX_ALIGNMENT_BASE,
-  FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
   FlowLayout,
+  Metric,
+  MetricContent,
+  MetricHeader,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
@@ -10,9 +12,15 @@ import { FlexContent } from "./flex-item.stories";
 export default {
   title: "Layout/FlowLayout",
   component: FlowLayout,
+  argTypes: {
+    align: {
+      options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
+      control: { type: "select" },
+    },
+  },
 } as ComponentMeta<typeof FlowLayout>;
 
-const Template: ComponentStory<typeof FlowLayout> = (args) => {
+const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
   return (
     <FlowLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
@@ -27,25 +35,47 @@ const Template: ComponentStory<typeof FlowLayout> = (args) => {
     </FlowLayout>
   );
 };
-export const ToolkitFlowLayout = Template.bind({});
+export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
+DefaultFlowLayout.args = {};
 
-ToolkitFlowLayout.argTypes = {
-  align: {
-    options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
-    control: { type: "select" },
-  },
-  gap: {
-    type: "number",
-  },
-  justify: {
-    options: FLEX_CONTENT_ALIGNMENT_BASE,
-    control: { type: "select" },
-  },
-  separators: {
-    options: ["start", "center", "end", true],
-    control: { type: "select" },
-  },
-  wrap: {
-    type: "boolean",
-  },
+const Responsive: ComponentStory<typeof FlowLayout> = (args) => {
+  return (
+    <FlowLayout {...args}>
+      {Array.from({ length: 6 }, (_, index) => (
+        <FlexItem grow={1} key={index}>
+          <FlexContent />
+        </FlexItem>
+      ))}
+    </FlowLayout>
+  );
+};
+export const ToolkitFlowLayoutResponsive = Responsive.bind({});
+ToolkitFlowLayoutResponsive.args = {
+  wrap: {},
+};
+
+const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
+  args
+) => {
+  return (
+    <div style={{ background: "#EAEDEF", padding: 24 }}>
+      <FlowLayout {...args}>
+        {Array.from({ length: 5 }, (_, index) => (
+          <Metric key={index}>
+            <MetricHeader title={`Form Stage ${index + 1}`} />
+            <MetricContent value="Complete" />
+          </Metric>
+        ))}
+        <Metric>
+          <MetricHeader title="Form Stage 6" />
+          <MetricContent value="Pending" />
+        </Metric>
+      </FlowLayout>
+    </div>
+  );
+};
+export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
+FlowLayoutSimpleUsage.args = {
+  gap: 3,
+  wrap: true,
 };

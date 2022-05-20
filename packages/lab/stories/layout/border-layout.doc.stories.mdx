@@ -1,0 +1,82 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Layout/Docs/BorderLayout" component={BorderLayout} />
+
+# Border Layout
+
+Lorem Ipsum
+
+<Canvas>
+  <Story id="layout-borderlayout--toolkit-border-layout" />
+</Canvas>
+
+## API
+
+```
+import {BorderLayout, BorderItem} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+### Border Layout Props
+
+<ArgsTable of={BorderLayout} />
+
+### Border Item Props
+
+<ArgsTable of={BorderItem} />
+
+## Usage Examples
+
+### Border Item inside default border layout
+
+<Canvas>
+  <Story id="layout-borderlayout-borderitem--toolkit-border-item" />
+</Canvas>
+
+### Fixed panels
+
+<Canvas>
+  <Story id="layout-borderlayout--toolkit-border-layout-fixed-panels" />
+</Canvas>
+
+### Simple Usage
+
+<!-- TODO -->
+
+## Used in
+
+The border layout is used in the following components
+
+- []()
+
+## Anatomy
+
+<Canvas>
+  <Story name="Border Layout Anatomy">
+    <ComponentAnatomy showLegend>
+      <BorderLayout>
+        <BorderItem></BorderItem>
+      </BorderLayout>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## classes
+
+### Layout
+
+<CSSClassTable of={BorderLayout} />
+
+### Item
+
+<CSSClassTable of={BorderItem} />
+
+<!-- ### characteristics -->
+<!-- - []() -->
