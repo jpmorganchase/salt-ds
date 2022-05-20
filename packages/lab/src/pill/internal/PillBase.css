@@ -112,8 +112,8 @@
   color: var(--pill-text-color-hover);
 }
 
-.uitkPill:not(.uitkPill-disabled):active,
-.uitkPill:not(.uitkPill-disabled).uitkPill-active {
+.uitkPill:not(.uitkPill-selectable):active,
+.uitkPill:not(.uitkPill-selectable).uitkPill-active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
 }
