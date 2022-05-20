@@ -14,11 +14,16 @@ export default {
 
 const SwitchExamples = [
   <Switch className="backwardsCompat" key="Default" label="Default" />,
-  <Switch className="backwardsCompat" checked key="Default" label="Default" />,
+  <Switch
+    className="backwardsCompat"
+    defaultChecked
+    key="Default"
+    label="Default"
+  />,
   <Switch className="backwardsCompat" disabled key="Default" label="Default" />,
   <Switch
     className="backwardsCompat"
-    checked
+    defaultChecked
     disabled
     key="Default"
     label="Default"
