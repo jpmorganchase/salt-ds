@@ -56,7 +56,6 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
   ) {
     const {
       align,
-      emphasis,
       direction,
       orientation,
       showIndicator,
@@ -64,7 +63,8 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       valueId,
     } = useMetricContext();
 
-    const iconSize = emphasis === "low" ? 12 : 24;
+    /* TODO: does this work? */
+    const iconSize = className?.includes("uitkEmphasisLow") ? 12 : 24;
 
     const iconProps = {
       "aria-label": direction,
@@ -92,9 +92,6 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
         className={cx(
           withBaseName(),
           {
-            [`uitkEmphasisLow`]: emphasis === "low",
-            [`uitkEmphasisMedium`]: emphasis === "medium",
-            [`uitkEmphasisHigh`]: emphasis === "high",
             [withBaseName(`direction${capitalise(direction)}`)]: direction,
             [withBaseName(orientation as string)]: orientation,
             [withBaseName(`align${capitalise(align)}`)]: align,

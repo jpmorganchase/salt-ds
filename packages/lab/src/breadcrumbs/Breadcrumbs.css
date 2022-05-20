@@ -25,7 +25,7 @@
 
 .uitkBreadcrumbs-li,
 .uitkBreadcrumbs-separator {
-  margin-right: calc(var(--uitk-spacing-unit) - 2px);
+  margin-right: calc(var(--uitk-size-unit) - 2px);
 }
 
 .uitkBreadcrumbs-separator {
@@ -38,7 +38,7 @@
 }
 
 .uitkBreadcrumbs-ol-wrap li:not(:last-child) {
-  margin-bottom: calc(var(--uitk-spacing-unit) * 0.5 - 2px);
+  margin-bottom: calc(var(--uitk-size-unit) * 0.5 - 2px);
 }
 
 .uitkBreadcrumbs-overflowButton {

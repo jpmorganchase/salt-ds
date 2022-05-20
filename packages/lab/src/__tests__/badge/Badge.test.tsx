@@ -40,21 +40,6 @@ describe("GIVEN a Badge", () => {
     expect(screen.getByText("1")).toBeInTheDocument();
   });
 
-  it("THEN can render a badge with the default info variant", () => {
-    render(<Badge data-testid="badge" />);
-    expect(screen.getByTestId("badge")).toHaveClass("uitkBadge-info");
-  });
-
-  it("THEN can render a badge with the success variant", () => {
-    render(<Badge data-testid="badge" variant="success" />);
-    expect(screen.getByTestId("badge")).toHaveClass("uitkBadge-success");
-  });
-
-  it("THEN can render a badge with the error variant", () => {
-    render(<Badge data-testid="badge" variant="error" />);
-    expect(screen.getByTestId("badge")).toHaveClass("uitkBadge-error");
-  });
-
   describe("Accessibility", () => {
     it("SHOULD reference the child and badge content with aria-labelledby", () => {
       render(

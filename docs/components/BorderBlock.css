@@ -1,17 +1,10 @@
 .BorderBlock-cell {
-  width: var(--uitk-size-regular-unit);
-  height: var(--uitk-size-regular-unit);
+  width: var(--uitk-size-base);
+  height: var(--uitk-size-base);
   justify-self: end;
 
+  border-color: var(--uitk-container-border-color-medium);
   border-style: var(--uitk-container-border-style);
   border-width: var(--uitk-container-border-width);
   border-radius: var(--uitk-container-border-radius);
-}
-
-.uitk-light .BorderBlock-cell {
-  border-color: var(--uitk-color-grey-60);
-}
-
-.uitk-dark .BorderBlock-cell {
-  border-color: var(--uitk-color-grey-400);
 }

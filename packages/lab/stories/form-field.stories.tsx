@@ -47,7 +47,7 @@ export const LowEmphasis: ComponentStory<typeof FormField> = () => (
       <FormField
         label="Low emphasis form field"
         helperText="Helper text value"
-        emphasis="low"
+        className="uitkEmphasisLow"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -58,7 +58,7 @@ export const LowEmphasis: ComponentStory<typeof FormField> = () => (
         label="Low emphasis form field"
         helperText="Helper text value"
         disableFocusRing
-        emphasis="low"
+        className="uitkEmphasisLow"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -81,7 +81,7 @@ export const HighEmphasis: ComponentStory<typeof FormField> = () => (
       <FormField
         label="High emphasis form field"
         helperText="Helper text value"
-        emphasis="high"
+        className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -92,7 +92,7 @@ export const HighEmphasis: ComponentStory<typeof FormField> = () => (
         label="Low emphasis form field"
         helperText="Helper text value"
         disableFocusRing
-        emphasis="high"
+        className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -151,7 +151,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
       <FormField
         label="No validation state"
         helperText="Helper text value"
-        emphasis="high"
+        className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -170,7 +170,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
         label="Warning validation state"
         helperText="Helper text value"
         validationState="warning"
-        emphasis="high"
+        className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -189,7 +189,7 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
         label="Error validation state"
         helperText="Helper text value"
         validationState="error"
-        emphasis="high"
+        className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -450,17 +450,17 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       }}
     >
       <ErrorState />
-      <ErrorState emphasis="high" />
+      <ErrorState className="uitkEmphasisHigh" />
       <ErrorState hasStatusIndicator />
-      <ErrorState hasStatusIndicator emphasis="high" />
+      <ErrorState hasStatusIndicator className="uitkEmphasisHigh" />
       <WarningState />
-      <WarningState emphasis="high" />
+      <WarningState className="uitkEmphasisHigh" />
       <WarningState hasStatusIndicator />
-      <WarningState hasStatusIndicator emphasis="high" />
+      <WarningState hasStatusIndicator className="uitkEmphasisHigh" />
       <DefaultState />
-      <DefaultState emphasis="high" />
+      <DefaultState className="uitkEmphasisHigh" />
       <DefaultState hasStatusIndicator />
-      <DefaultState hasStatusIndicator emphasis="high" />
+      <DefaultState hasStatusIndicator className="uitkEmphasisHigh" />
       <HelperTextAsTooltip hasStatusIndicator />
       <HelperTextAsTooltip />
       <MultipleMessagesStatusIndicator />
@@ -480,11 +480,14 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       <DefaultState labelPlacement="left" />
       <HelperTextAsTooltip labelPlacement="left" />
       <MultipleMessagesStatusIndicator labelPlacement="left" />
-      <ErrorState labelPlacement="left" emphasis="high" />
-      <WarningState labelPlacement="left" emphasis="high" />
-      <DefaultState labelPlacement="left" emphasis="high" />
-      <HelperTextAsTooltip labelPlacement="left" emphasis="high" />
-      <MultipleMessagesStatusIndicator labelPlacement="left" emphasis="high" />
+      <ErrorState labelPlacement="left" className="uitkEmphasisHigh" />
+      <WarningState labelPlacement="left" className="uitkEmphasisHigh" />
+      <DefaultState labelPlacement="left" className="uitkEmphasisHigh" />
+      <HelperTextAsTooltip labelPlacement="left" className="uitkEmphasisHigh" />
+      <MultipleMessagesStatusIndicator
+        labelPlacement="left"
+        className="uitkEmphasisHigh"
+      />
     </div>
   </>
 );
@@ -530,7 +533,6 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
         className="carbon"
         label="Carbon form field"
         helperText="Helper text value"
-        emphasis="high"
       >
         <Input defaultValue="Value" />
       </FormField>
@@ -549,13 +551,16 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>High emphasis</h3>
-        <FormField label="Default Form Field label" emphasis="high">
+        <FormField
+          label="Default Form Field label"
+          className="uitkEmphasisHigh"
+        >
           <Input defaultValue="Value" />
         </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Low emphasis</h3>
-        <FormField label="Default Form Field label" emphasis="low">
+        <FormField label="Default Form Field label" className="uitkEmphasisLow">
           <Input defaultValue="Value" />
         </FormField>
       </div>
@@ -572,7 +577,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           label="Form Field label with helper text"
-          emphasis="high"
+          className="uitkEmphasisHigh"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
@@ -581,7 +586,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           label="Form Field label with helper text"
-          emphasis="low"
+          className="uitkEmphasisLow"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
@@ -601,7 +606,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           disableFocusRing
-          emphasis="high"
+          className="uitkEmphasisHigh"
           label="Form field with disabled outer ring"
           helperText="some helper text"
         >
@@ -611,7 +616,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       <div style={{ width: "250px", marginLeft: 16 }}>
         <FormField
           disableFocusRing
-          emphasis="low"
+          className="uitkEmphasisLow"
           helperText="some helper text"
           label="Form field with disabled outer ring"
         >
@@ -631,7 +636,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
-          emphasis="high"
+          className="uitkEmphasisHigh"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -641,7 +646,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
-          emphasis="low"
+          className="uitkEmphasisLow"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -662,7 +667,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
-          emphasis="high"
+          className="uitkEmphasisHigh"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -672,7 +677,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
-          emphasis="low"
+          className="uitkEmphasisLow"
         >
           <Input defaultValue="Value" />
         </FormField>
@@ -692,7 +697,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
         <FormField
           label="Disabled outer ring"
           labelPlacement="left"
-          emphasis="high"
+          className="uitkEmphasisHigh"
           disableFocusRing
         >
           <Input defaultValue="Value" />
@@ -702,7 +707,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
         <FormField
           label="Disabled outer ring"
           labelPlacement="left"
-          emphasis="low"
+          className="uitkEmphasisLow"
           disableFocusRing
         >
           <Input defaultValue="Value" />

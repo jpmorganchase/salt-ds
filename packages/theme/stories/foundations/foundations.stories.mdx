@@ -14,12 +14,9 @@ Foundations are our collection of design tokens which make up the building block
 Foundation design tokens should generally be in the format `--uitk-<foundation name>-<variant>-<scale>-<density>`
 
 1. Always begin with `--uitk-`
-2. Follow this by the foundation name, e.g. `---uitk-color-`, `---uitk-shadow-`, `--uitk-spacing-`
-3. Append the variant if applicable, e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-spacing-toolbar-`
-4. The suffix of the token is usually the scale or rank, e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`
-5. For tokens that are scoped by density\* the suffix should be the suitable density for the defined value, e.g. `--uitk-spacing-toolbar-touch`
-
-\* Here, it is best practice to avoid directly using the density invariant values, and instead use the -unit token. Replace the `-<density>` suffix with `-unit`, e.g. `--uitk-spacing-toolbar-unit` to get the appropriate value in actual usage.
+2. Follow this by the **_foundation name_**, e.g. `---uitk-color-`, `---uitk-shadow-`, `--uitk-size-`, --uitk-typography-`
+3. Append the **_intent_**, if applicable: e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-size-toggle-group-button`, `--uitk-typography-weight-`
+4. Append the **_scale_** or **_rank_**, if applicable: e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`, `--uitk-typography-weight-light`
 
 ## Using Foundations
 
@@ -28,11 +25,11 @@ Wrap the foundation you wish to use inside a `var()` function. Most commonly, fo
 ```css
 .uitk-light,
 .uitk-dark {
-  --uitk-actionable-font-weight: var(--uitk-typography-weight-bold);
+  --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
 }
 ```
 
-where the **actionable characteristic** `--uitk-actionable-font-weight` references the variable `--uitk-typography-weight-bold` from the **typography foundation**.
+where the **actionable characteristic** `--uitk-actionable-primary-font-weight` references the variable `--uitk-typography-weight-bold` from the **typography foundation**.
 
 However, foundations can also be used directly if there is no appropriate characteristic provided for your use case. For example, you could color your headings green:
 
@@ -52,6 +49,6 @@ For size and spacing foundations, it is highly common to use these within a calc
 
 ```css
 .uitkLogo {
-  height: calc(1.5 * var(--uitk-spacing-unit)));
+  height: calc(1.5 * var(--uitk-size-unit)));
 }
 ```
