@@ -11,6 +11,7 @@
 
   --uitk-color-grey-60-fade-border: rgba(197, 201, 208, var(--uitk-opacity-border));
   --uitk-color-grey-300-fade-border: rgba(76, 80, 91, var(--uitk-opacity-border));
+  --uitk-color-grey-90-fade-border: rgba(132, 135, 142, var(--uitk-opacity-border));
 
   --uitk-color-grey-90-fade-border-readonly: rgba(132, 135, 142, var(--uitk-opacity-border-readonly));
 
