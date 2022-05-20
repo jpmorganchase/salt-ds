@@ -138,7 +138,6 @@
   --uitk-text-link-color-hover: var(--uitk-color-blue-200);
   --uitk-text-link-color-active: var(--uitk-color-blue-200);
   --uitk-text-link-color-disabled: var(--uitk-color-white);
-  --uitk-text-link-text-decoration: underline;
 
   --uitk-text-highlight-color: var(--uitk-color-blue-700);
 }

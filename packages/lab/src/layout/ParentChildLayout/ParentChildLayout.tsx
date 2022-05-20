@@ -2,8 +2,6 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactNode,
-  useEffect,
-  useState,
   ComponentPropsWithoutRef,
 } from "react";
 import cx from "classnames";
@@ -17,6 +15,8 @@ import { useIsStacked } from "./";
 type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 
 export type StackedViewElement = "parent" | "child";
+
+type Orientation = "horizontal" | "vertical";
 
 export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -34,7 +34,7 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Orientation for slide animations.
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: Orientation;
   /**
    * Controls the space between columns.
    */
@@ -50,6 +50,30 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("uitkParentChildLayout");
+
+const getDirection = (
+  orientation: Orientation,
+  stackedViewElement: StackedViewElement
+) => {
+  let direction: SlideDirection = "right";
+
+  if (orientation === "horizontal") {
+    if (stackedViewElement === "parent") {
+      direction = "left";
+    } else {
+      direction = "right";
+    }
+  } else {
+    if (stackedViewElement === "parent") {
+      direction = "bottom";
+    } else {
+      direction = "top";
+    }
+  }
+
+  return direction;
+};
+
 export const ParentChildLayout = forwardRef<
   HTMLDivElement,
   ParentChildLayoutProps
@@ -66,27 +90,15 @@ export const ParentChildLayout = forwardRef<
   },
   ref
 ) {
-  const [direction, setDirection] = useState<SlideDirection>("right");
-
-  useEffect(() => {
-    if (orientation === "horizontal") {
-      stackedViewElement === "parent"
-        ? setDirection("left")
-        : setDirection("right");
-    } else {
-      stackedViewElement === "parent"
-        ? setDirection("bottom")
-        : setDirection("top");
-    }
-  }, [orientation, stackedViewElement]);
-
   const stackedView = useIsStacked(stackedAtBreakpoint);
+
+  const parentChildDirection = getDirection(orientation, stackedViewElement);
 
   const stackedViewChildren = {
     parent: (
       <ParentChildItem
         disableAnimations={disableAnimations}
-        direction={direction}
+        direction={parentChildDirection}
         isStacked={stackedView}
       >
         {parent}
@@ -95,7 +107,7 @@ export const ParentChildLayout = forwardRef<
     child: (
       <ParentChildItem
         disableAnimations={disableAnimations}
-        direction={direction}
+        direction={parentChildDirection}
         isStacked={stackedView}
       >
         {child}
