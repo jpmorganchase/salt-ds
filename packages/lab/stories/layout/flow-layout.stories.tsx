@@ -45,7 +45,4 @@ ToolkitFlowLayout.argTypes = {
     options: ["start", "center", "end", true],
     control: { type: "select" },
   },
-  wrap: {
-    type: "boolean",
-  },
 };
