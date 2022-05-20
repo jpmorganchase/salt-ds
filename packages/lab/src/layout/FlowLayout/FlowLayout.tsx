@@ -1,15 +1,35 @@
-import { forwardRef } from "react";
+import { forwardRef, ReactNode } from "react";
 import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 
-export type FlowLayoutProps = Omit<FlexLayoutProps, "direction" | "wrap">;
-
+export interface FlowLayoutProps {
+  /**
+   * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+   */
+  align?: FlexLayoutProps["align"];
+  /**
+   * The children to render into the `container`.
+   */
+  children?: ReactNode;
+  /**
+   * Controls the space between items.
+   */
+  gap?: FlexLayoutProps["gap"];
+  /**
+   * Defines the alignment along the main axis.
+   */
+  justify?: FlexLayoutProps["justify"];
+  /**
+   * Adds a separator between elements.
+   */
+  separators?: FlexLayoutProps["separators"];
+  /**
+   * Allow the items to wrap as needed, default is true.
+   */
+  wrap?: FlexLayoutProps["wrap"];
+}
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
-  function FlowLayout({ children, ...rest }, ref) {
-    return (
-      <FlexLayout direction="row" ref={ref} wrap={true} {...rest}>
-        {children}
-      </FlexLayout>
-    );
+  function FlowLayout({ wrap = true, ...rest }, ref) {
+    return <FlexLayout direction="row" ref={ref} wrap={wrap} {...rest} />;
   }
 );

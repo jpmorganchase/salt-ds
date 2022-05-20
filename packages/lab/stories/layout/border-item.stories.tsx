@@ -18,7 +18,11 @@ export default {
   },
 } as ComponentMeta<typeof BorderItem>;
 
-type ItemProps = { width?: number | string; height?: number | string };
+type ItemProps = {
+  width?: number | string;
+  height?: number | string;
+  position?: string;
+};
 
 const HeaderItem = ({ width, height }: ItemProps) => (
   <div className="border-item layout-content" style={{ width, height }}>
