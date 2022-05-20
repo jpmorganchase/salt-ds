@@ -46,7 +46,8 @@
 /* Styles applied to outer ControlLabel component */
 
 .uitkSwitch-label {
-  --switch-checked-icon-color: var(--uitk-palette-neutral-primary-foreground);
+  /* TODO: design to confirm correct checked icon color */
+  --switch-checked-icon-color: var(--uitk-selectable-background-selected);
   --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-label-color: var(--uitk-text-secondary-color);
   --switch-thumb-background: var(--uitk-container-background-medium);
