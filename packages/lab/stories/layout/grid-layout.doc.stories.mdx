@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { ToolkitGridLayout } from "./grid-layout.stories";
 
 <Meta title="Layout/Docs/GridLayout" component={GridLayout} />
 
@@ -15,7 +16,9 @@ Defines an equally distributed layout system using columns and rows.
 It defaults to a twelve column grid but you can customise it using the `columns` and `rows` props.
 
 <Canvas>
-  <Story id="layout-gridlayout--toolkit-grid-layout" />
+  <Story name="Default Grid Layout">
+    <ToolkitGridLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -52,7 +55,7 @@ import {GridLayout, GridItem} from "@jpmorganchase/uitk-lab";
 
 The grid layout is used in the following components
 
-- []()
+- [Border Layout](/docs/layout-docs-borderlayout--default-border-layout)
 
 ## Anatomy
 
@@ -65,16 +68,3 @@ The grid layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-### Layout
-
-<CSSClassTable of={GridLayout} />
-
-### Item
-
-<CSSClassTable of={GridItem} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

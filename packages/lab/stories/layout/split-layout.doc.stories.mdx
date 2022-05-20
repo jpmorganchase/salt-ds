@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { DefaultSplitLayout } from "./split-layout.stories";
 
 <Meta title="Layout/Docs/SplitLayout" component={SplitLayout} />
 
@@ -13,7 +14,9 @@ import {
 Defines left and right regions for UI elements within a span, such as a button bar
 
 <Canvas>
-  <Story id="layout-splitlayout--default-split-layout" />
+  <Story name="Default Split Layout">
+    <DefaultSplitLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -34,12 +37,6 @@ import {SplitLayout} from "@jpmorganchase/uitk-lab";
   <Story id="layout-splitlayout--button-bar-in-split-layout" />
 </Canvas>
 
-## Used in
-
-The flex layout is used in the following components
-
-- []()
-
 ## Anatomy
 
 <Canvas>
@@ -51,10 +48,3 @@ The flex layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-<CSSClassTable of={SplitLayout} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { DefaultStackLayout } from "./stack-layout.stories";
 
 <Meta title="Layout/Docs/StackLayout" component={StackLayout} />
 
@@ -13,7 +14,9 @@ import {
 Dictates a vertical order and direction for UI elements.
 
 <Canvas>
-  <Story id="layout-stacklayout--default-stack-layout" />
+  <Story name="Default Stack Layout">
+    <DefaultStackLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -34,16 +37,10 @@ import {StackLayout} from "@jpmorganchase/uitk-lab";
   <Story id="layout-stacklayout--stack-layout-simple-usage" />
 </Canvas>
 
-## Used in
-
-The flex layout is used in the following components
-
-- []()
-
 ## Anatomy
 
 <Canvas>
-  <Story name="Flex Layout Anatomy">
+  <Story name="Stack Layout Anatomy">
     <ComponentAnatomy showLegend>
       <StackLayout>
         <FlexItem></FlexItem>
@@ -51,10 +48,3 @@ The flex layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-<CSSClassTable of={StackLayout} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

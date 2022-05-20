@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { DefaultFlowLayout } from "./flow-layout.stories";
 
 <Meta title="Layout/Docs/FlowLayout" component={FlowLayout} />
 
@@ -13,7 +14,9 @@ import {
 Dictates a horizontal order and direction for UI elements.
 
 <Canvas>
-  <Story id="layout-flowlayout--default-flow-layout" />
+  <Story name="Default Flow Layout">
+    <DefaultFlowLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -40,12 +43,6 @@ import {FlowLayout} from "@jpmorganchase/uitk-lab";
   <Story id="layout-flowlayout--flow-layout-simple-usage" />
 </Canvas>
 
-## Used in
-
-The flow layout is used in the following components
-
-- []()
-
 ## Anatomy
 
 <Canvas>
@@ -57,10 +54,3 @@ The flow layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-<CSSClassTable of={FlowLayout} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

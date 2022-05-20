@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { DefaultParentChildLayout } from "./parent-child-layout.stories";
 
 <Meta title="Layout/Docs/ParentChildLayout" component={ParentChildLayout} />
 
@@ -13,7 +14,9 @@ import {
 Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
 
 <Canvas>
-  <Story id="layout-parentchildlayout--default-parent-child-layout" />
+  <Story name="Default Parent Child Layout">
+    <DefaultParentChildLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -46,12 +49,6 @@ import {ParentChildLayout} from "@jpmorganchase/uitk-lab";
   <Story id="layout-parentchildlayout--toolkit-parent-child-layout-responsive" />
 </Canvas>
 
-## Used in
-
-The parent-child layout is used in the following components
-
-- []()
-
 ## Anatomy
 
 <Canvas>
@@ -63,10 +60,3 @@ The parent-child layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-<CSSClassTable of={ParentChildLayout} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

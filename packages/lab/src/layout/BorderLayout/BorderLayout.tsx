@@ -48,7 +48,7 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
           children,
           (child: ReactElement<BorderItemProps>) => child.props.position
         ),
-      []
+      [children]
     );
 
     const topSection = borderAreas.includes("header")

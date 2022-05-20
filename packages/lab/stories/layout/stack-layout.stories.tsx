@@ -1,6 +1,7 @@
 import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
+  Panel,
   StackLayout,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -42,8 +43,13 @@ DefaultStackLayout.args = {};
 const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
   args
 ) => {
-  //  TODO: add example
-  return <StackLayout {...args}></StackLayout>;
+  return (
+    <StackLayout {...args}>
+      {Array.from({ length: 4 }, (_, index) => (
+        <Panel emphasis="high">{`Panel ${index + 1} stack`}</Panel>
+      ))}
+    </StackLayout>
+  );
 };
 export const StackLayoutSimpleUsage = StackLayoutStorySimpleUsage.bind({});
 StackLayoutSimpleUsage.args = {};

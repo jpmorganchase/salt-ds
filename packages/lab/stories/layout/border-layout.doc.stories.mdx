@@ -5,15 +5,18 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { ToolkitBorderLayout } from "./border-layout.stories";
 
 <Meta title="Layout/Docs/BorderLayout" component={BorderLayout} />
 
 # Border Layout
 
-Lorem Ipsum
+Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
 
 <Canvas>
-  <Story id="layout-borderlayout--toolkit-border-layout" />
+  <Story name="Default Border Layout">
+    <ToolkitBorderLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -46,16 +49,6 @@ import {BorderLayout, BorderItem} from "@jpmorganchase/uitk-lab";
   <Story id="layout-borderlayout--toolkit-border-layout-fixed-panels" />
 </Canvas>
 
-### Simple Usage
-
-<!-- TODO -->
-
-## Used in
-
-The border layout is used in the following components
-
-- []()
-
 ## Anatomy
 
 <Canvas>
@@ -67,16 +60,3 @@ The border layout is used in the following components
     </ComponentAnatomy>
   </Story>
 </Canvas>
-
-## classes
-
-### Layout
-
-<CSSClassTable of={BorderLayout} />
-
-### Item
-
-<CSSClassTable of={BorderItem} />
-
-<!-- ### characteristics -->
-<!-- - []() -->

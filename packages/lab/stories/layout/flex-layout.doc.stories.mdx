@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import { DefaultFlexLayout } from "./flex-layout.stories";
 
 <Meta title="Layout/Docs/FlexLayout" component={FlexLayout} />
 
@@ -13,10 +14,9 @@ import {
 Dictates a horizontal order and direction for UI elements.
 
 <Canvas>
-  <Story
-    name="Default Flex Layout"
-    id="layout-flexlayout--default-flex-layout"
-  />
+  <Story name="Default Flex Layout">
+    <DefaultFlexLayout />
+  </Story>
 </Canvas>
 
 ## API
@@ -59,7 +59,10 @@ import {FlexLayout, FlexItem} from "@jpmorganchase/uitk-lab";
 
 The flex layout is used in the following components
 
-- []()
+- [Split layout](docs/layout-docs-splitlayout--default-split-layout)
+- [Stack layout](docs/layout-docs-stacklayout--default-stack-layout)
+- [Flow layout](docs/layout-flowlayout--default-flow-layout)
+- [Parent and Child layout](/docs/layout-docs-parentchildlayout--default-parent-child-layout)
 
 ## Anatomy
 
@@ -82,6 +85,3 @@ The flex layout is used in the following components
 ### Item
 
 <CSSClassTable of={FlexItem} />
-
-<!-- ### characteristics -->
-<!-- - []() -->
