@@ -4,9 +4,9 @@
   --uitk-palette-accent-foreground: var(--uitk-color-white);
 
   --uitk-palette-interact-background: transparent;
-  --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
   --uitk-palette-interact-background-bluractive: var(--uitk-color-grey-30);
   --uitk-palette-interact-background-hover: var(--uitk-color-blue-20);
+  --uitk-palette-interact-background-selected: var(--uitk-color-blue-500);
   --uitk-palette-interact-border: var(--uitk-color-grey-90);
   --uitk-palette-interact-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-border-readonly: var(--uitk-color-grey-90-fade-border-readonly);
@@ -44,6 +44,7 @@
   --uitk-palette-interact-foreground-active: var(--uitk-color-grey-900);
   --uitk-palette-interact-foreground-bluractive: var(--uitk-color-grey-900);
   --uitk-palette-interact-foreground-hover: var(--uitk-color-grey-900);
+  --uitk-palette-interact-foreground-selected: var(--uitk-color-white);
   --uitk-palette-interact-stroke-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-stroke-selected: transparent;
 
