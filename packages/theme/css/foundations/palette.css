@@ -3,8 +3,7 @@
   --uitk-palette-accent-border: var(--uitk-color-blue-500);
   --uitk-palette-accent-foreground: var(--uitk-color-white);
 
-  --uitk-palette-interact-background: transparent;
-  --uitk-palette-interact-background-bluractive: var(--uitk-color-grey-30);
+  --uitk-palette-interact-background-blurselected: var(--uitk-color-grey-30);
   --uitk-palette-interact-background-hover: var(--uitk-color-blue-20);
   --uitk-palette-interact-background-selected: var(--uitk-color-blue-500);
   --uitk-palette-interact-border: var(--uitk-color-grey-90);
@@ -35,18 +34,19 @@
   --uitk-palette-interact-secondary-foreground-active: var(--uitk-color-white);
   --uitk-palette-interact-secondary-foreground-disabled: var(--uitk-color-grey-900-fade-foreground);
   --uitk-palette-interact-secondary-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-palette-interact-stroke: var(--uitk-color-grey-90);
   --uitk-palette-interact-fill: transparent;
   --uitk-palette-interact-fill-hover: transparent;
   --uitk-palette-interact-fill-partial: var(--uitk-color-blue-600);
   --uitk-palette-interact-fill-selected: var(--uitk-color-blue-600);
   --uitk-palette-interact-foreground: var(--uitk-color-grey-900);
   --uitk-palette-interact-foreground-active: var(--uitk-color-grey-900);
-  --uitk-palette-interact-foreground-bluractive: var(--uitk-color-grey-900);
+  --uitk-palette-interact-foreground-blurselected: var(--uitk-color-grey-900);
   --uitk-palette-interact-foreground-hover: var(--uitk-color-grey-900);
   --uitk-palette-interact-foreground-selected: var(--uitk-color-white);
+  --uitk-palette-interact-stroke: var(--uitk-color-grey-90);
   --uitk-palette-interact-stroke-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-stroke-selected: transparent;
+  --uitk-palette-interact-stroke-disabled: var(--uitk-color-grey-90-fade-stroke);
 
   --uitk-palette-error-border: var(--uitk-color-red-500);
   --uitk-palette-error-icon: var(--uitk-color-red-500);
@@ -90,8 +90,10 @@
 
   /* Emphasis values */
   --uitk-palette-interact-background-high: var(--uitk-color-grey-20);
+  --uitk-palette-interact-background-disabled-high: var(--uitk-color-grey-20-fade-background);
   --uitk-palette-interact-background-low: transparent;
   --uitk-palette-interact-background-medium: var(--uitk-color-white);
+  --uitk-palette-interact-background-disabled-medium: var(--uitk-color-white-fade-background);
 
   --uitk-palette-navigate-background-low: transparent;
   --uitk-palette-navigate-background-active-low: transparent;
@@ -125,10 +127,9 @@
   --uitk-palette-accent-border: var(--uitk-color-blue-500);
   --uitk-palette-accent-foreground: var(--uitk-color-white);
 
-  --uitk-palette-interact-background: transparent;
-  --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
-  --uitk-palette-interact-background-bluractive: var(--uitk-color-grey-600);
+  --uitk-palette-interact-background-blurselected: var(--uitk-color-grey-600);
   --uitk-palette-interact-background-hover: var(--uitk-color-blue-800);
+  --uitk-palette-interact-background-selected: var(--uitk-color-blue-500);
   --uitk-palette-interact-border: var(--uitk-color-grey-90);
   --uitk-palette-interact-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-border-readonly: var(--uitk-color-grey-90-fade-border-readonly);
@@ -139,8 +140,9 @@
   --uitk-palette-interact-fill-selected: var(--uitk-color-blue-600);
   --uitk-palette-interact-foreground: var(--uitk-color-white);
   --uitk-palette-interact-foreground-active: var(--uitk-color-white);
-  --uitk-palette-interact-foreground-bluractive: var(--uitk-color-white);
+  --uitk-palette-interact-foreground-blurselected: var(--uitk-color-white);
   --uitk-palette-interact-foreground-hover: var(--uitk-color-white);
+  --uitk-palette-interact-foreground-selected: var(--uitk-color-white);
   --uitk-palette-interact-cta-background: var(--uitk-color-blue-600);
   --uitk-palette-interact-cta-background-active: var(--uitk-color-blue-700);
   --uitk-palette-interact-cta-background-disabled: var(--uitk-color-blue-600-fade-background);
@@ -169,6 +171,7 @@
   --uitk-palette-interact-stroke: var(--uitk-color-grey-90);
   --uitk-palette-interact-stroke-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-stroke-selected: transparent;
+  --uitk-palette-interact-stroke-disabled: var(--uitk-color-grey-90-fade-stroke);
 
   --uitk-palette-error-border: var(--uitk-color-red-500);
   --uitk-palette-error-icon: var(--uitk-color-red-500);
@@ -210,8 +213,10 @@
 
   /* Emphasis values */
   --uitk-palette-interact-background-high: var(--uitk-color-grey-700);
+  --uitk-palette-interact-background-disabled-high: var(--uitk-color-grey-700-fade-background);
   --uitk-palette-interact-background-low: transparent;
   --uitk-palette-interact-background-medium: var(--uitk-color-grey-800);
+  --uitk-palette-interact-background-disabled-medium: var(--uitk-color-white-fade-background);
 
   --uitk-palette-navigate-background-low: transparent;
   --uitk-palette-navigate-background-active-low: transparent;

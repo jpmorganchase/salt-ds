@@ -1,12 +1,12 @@
 .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-actionable-stroke);
-  --pill-checkbox-tick: var(--uitk-palette-neutral-secondary-foreground); /* TODO: Check token with design */
+  --pill-checkbox-stroke: var(--uitkPill-checkbox-stroke, var(--uitk-selectable-stroke));
+  --pill-checkbox-tick: var(--uitkPill-checkbox-tick, var(--uitk-selectable-stroke)); /* TODO: Check token with design */
 }
 
 .uitkPill-checkbox-icon {
   fill: none;
   stroke: var(--pill-checkbox-stroke);
-  stroke-width: 1px;
+  stroke-width: var(--uitk-selectable-border-width);
 }
 
 .uitkPill-checkbox-icon-checked {
@@ -17,6 +17,16 @@
 
 .uitkPill-checkbox-icon-checked-tick {
   fill: var(--pill-checkbox-tick);
+  stroke-width: 0;
+}
+
+.uitkPill-disabled .uitkPill-checkbox,
+.uitkPill-disabled .uitkPill-checkbox-icon {
+  stroke: var(--uitkPill-checkbox-stroke-disabled, var(--uitk-selectable-stroke-disabled));
+}
+
+.uitkPill-disabled .uitkPill-checkbox-icon-checked-tick {
+  fill: var(--uitkPill-checkbox-tick-disabled, var(--uitk-selectable-stroke-disabled));
   stroke-width: 0;
 }
 

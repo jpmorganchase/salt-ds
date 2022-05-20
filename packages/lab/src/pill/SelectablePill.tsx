@@ -33,6 +33,7 @@ export const SelectablePill = forwardRef(function SelectablePill(
     checked: checkedProp,
     className,
     onChange = noop,
+    disabled = false,
     ...rest
   }: SelectablePillProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -46,8 +47,10 @@ export const SelectablePill = forwardRef(function SelectablePill(
 
   const handleClick = useCallback(
     (event) => {
-      setChecked(!checked);
-      onChange(event, !checked);
+      if (!disabled) {
+        setChecked(!checked);
+        onChange(event, !checked);
+      }
     },
     [checked, onChange, setChecked]
   );
@@ -57,6 +60,7 @@ export const SelectablePill = forwardRef(function SelectablePill(
       aria-checked={checked}
       aria-roledescription="Selectable Pill"
       clickable
+      disabled
       className={classnames(withBaseName(`selectable`), className)}
       icon={<PillCheckbox checked={checked} />}
       role="checkbox"
