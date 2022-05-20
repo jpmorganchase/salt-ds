@@ -42,6 +42,10 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   tooltipProps?: Partial<TooltipProps>;
   /**
+   * Customize the Tooltip text
+   */
+  tooltipText?: string;
+  /**
    * If 'true' the text will expand to 100% height, if 'false' text will collapse to 'maxRows'.
    *
    * When set, maxRows defaults to 1.
@@ -89,6 +93,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     style,
     styleAs,
     tooltipProps,
+    tooltipText,
     truncate = false,
     ...restProps
   } = props;
@@ -97,10 +102,8 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
   const Component: ElementType = elementType;
 
   const getTruncatingComponent = () => {
-    const { setContainerRef, hasTooltip, tooltipTitle, rows } = useTruncation(
-      props,
-      ref
-    );
+    const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
+      useTruncation(props, ref);
 
     const { getTooltipProps, getTriggerProps } = useTooltip({
       enterDelay: 150,
@@ -135,7 +138,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
         </Component>
         <Tooltip
           {...getTooltipProps({
-            title: tooltipTitle,
+            title: tooltipText || tooltipTextDefault,
             ...tooltipProps,
           })}
         />

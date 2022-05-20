@@ -110,10 +110,15 @@ export const useTruncation = (
   const hasTooltip =
     rows && showTooltip && isOverflowed.current && expanded === undefined;
 
-  const tooltipTitle =
+  const tooltipTextDefault =
     (hasTooltip &&
       (typeof children === "string" ? children : element?.textContent)) ||
     "";
 
-  return { setContainerRef, hasTooltip, tooltipTitle, rows };
+  return {
+    setContainerRef,
+    hasTooltip,
+    tooltipTextDefault,
+    rows,
+  };
 };
