@@ -70,13 +70,14 @@
 /* Styles applied on hover if `interactable={true}` */
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
-  border-color: var(--uitkCard-border-color-hover, var(--uitk-action-border-color-hover));
+  border: var(--uitkCard-border-hover, var(--uitk-selectable-border-hover));
   cursor: pointer;
   position: relative;
-  box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-overlayable-shadow-popout));
+  box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-overlayable-shadow-hover));
 }
 
 /* Styles applied on active state if `interactable={true}` */
 .uitkCard-interactable:active {
-  box-shadow: var(--uitkCard-box-shadow-active, var(--uitk-overlayable-shadow-default));
+  border: var(--uitkCard-border-hover, var(--uitk-selectable-border-hover));
+  box-shadow: var(--uitkCard-box-shadow-active, var(--uitk-overlayable-shadow-hover));
 }
