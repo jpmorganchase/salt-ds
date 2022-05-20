@@ -15,10 +15,10 @@
 }
 
 .uitkTooltip {
-  --tooltip-background: var(--uitk-container-background);
+  --tooltip-background: var(--uitk-container-background-medium);
   --tooltip-font-size: var(--uitk-text-font-size);
   --tooltip-color: var(--uitk-text-primary-color);
-  --tooltip-padding: var(--uitk-spacing-unit);
+  --tooltip-padding: var(--uitk-size-unit);
 }
 
 .uitkTooltip {
@@ -71,7 +71,7 @@
 
 .uitkTooltip-arrow,
 .uitkTooltip-arrow::after {
-  border: 5px solid transparent;
+  border: var(--uitk-size-sharktooth-height) solid transparent;
   position: absolute;
   box-sizing: border-box;
 }
@@ -103,37 +103,37 @@
 .uitkTooltip[data-placement^="top"] .uitkTooltip-arrow::after {
   border-top-color: var(--tooltip-background);
   bottom: -4px;
-  left: calc(100% - 5px);
+  left: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow::after {
   border-bottom-color: var(--tooltip-background);
   top: -4px;
-  left: calc(100% - 5px);
+  left: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="left"] .uitkTooltip-arrow::after {
   border-left-color: var(--tooltip-background);
   right: -4px;
-  top: calc(100% - 5px);
+  top: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip[data-placement^="right"] .uitkTooltip-arrow::after {
   border-right-color: var(--tooltip-background);
   left: -4px;
-  top: calc(100% - 5px);
+  top: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
 .uitkTooltip-info {
-  --tooltip-status-color: var(--uitk-status-info-color);
+  --tooltip-status-color: var(--uitk-status-info-foreground);
   box-shadow: var(--uitk-shadow-4);
 }
 .uitkTooltip-error {
-  --tooltip-status-color: var(--uitk-status-error-color);
+  --tooltip-status-color: var(--uitk-status-error-foreground);
 }
 .uitkTooltip-warning {
-  --tooltip-status-color: var(--uitk-status-warning-color);
+  --tooltip-status-color: var(--uitk-status-warning-foreground);
 }
 .uitkTooltip-success {
-  --tooltip-status-color: var(--uitk-status-success-color);
+  --tooltip-status-color: var(--uitk-status-success-foreground);
 }

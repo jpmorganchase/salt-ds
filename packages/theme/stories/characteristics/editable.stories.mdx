@@ -1,12 +1,12 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
 import {
   LineBlock,
   LineBlockCell,
-  LineBlockDashed,
+  LineBlockCode,
 } from "docs/components/LineBlock";
-import { CursorBlock } from "docs/components/CursorBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Editable" />
 
@@ -23,6 +23,8 @@ Components that hold mutable data and allow for data entry.
     <DocGrid>
       <CursorBlock cursor="--uitk-editable-cursor-active" />
       <CursorBlock cursor="--uitk-editable-cursor-hover" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-editable-border-style</LineBlockCode>
       <LineBlock lineWidth="--uitk-editable-border-width" />
       <LineBlock lineWidth="--uitk-editable-border-width-hover" />
       <LineBlock lineWidth="--uitk-editable-border-width-active" />
@@ -36,43 +38,40 @@ Components that hold mutable data and allow for data entry.
 <Canvas>
   <Story name="Colors">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-editable-background" />
       <ColorBlock colorVar="--uitk-editable-border-color" />
       <ColorBlock colorVar="--uitk-editable-border-color-active" />
       <ColorBlock colorVar="--uitk-editable-border-color-hover" />
       <ColorBlock colorVar="--uitk-editable-border-color-readonly" />
-      <ColorBlock colorVar="--uitk-editable-icon-color" />
-      <ColorBlock colorVar="--uitk-editable-icon-color-active" />
-      <ColorBlock colorVar="--uitk-editable-icon-color-hover" />
-      <ColorBlock colorVar="--uitk-editable-icon-color-readonly" />
-      <ColorBlock colorVar="--uitk-editable-text-primary" />
-      <ColorBlock colorVar="--uitk-editable-text-secondary" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### High emphasis overrides
+### Medium emphasis values
+
+<Canvas>
+  <Story name="Medium emphasis">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-editable-background-medium" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### High emphasis values
 
 <Canvas>
   <Story name="High emphasis">
     <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-editable-background"
-      />
+      <ColorBlock colorVar="--uitk-editable-background-high" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### Low emphasis overrides
+### Low emphasis values
 
 <Canvas>
   <Story name="Low emphasis">
     <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-editable-background"
-      />
+      <ColorBlock colorVar="--uitk-editable-background-low" />
     </DocGrid>
   </Story>
 </Canvas>

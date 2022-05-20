@@ -6,7 +6,7 @@
 
   --metric-title-font-weight: var(--uitk-typography-weight-semiBold);
 
-  --metric-header-gap: calc(var(--uitk-spacing-unit) * 0.25);
+  --metric-header-gap: calc(var(--uitk-size-unit) * 0.25);
 }
 
 .uitkMetricHeader {

@@ -47,21 +47,6 @@ describe("GIVEN a Badge", () => {
     });
   });
 
-  // TODO visual regression?
-  it("THEN can render a badge with the default info variant", () => {
-    cy.mount(<Badge />);
-    cy.get(".uitkBadge").should("have.class", "uitkBadge-info");
-  });
-
-  it("THEN can render a badge with the success variant", () => {
-    cy.mount(<Badge variant="success" />);
-    cy.get(".uitkBadge").should("have.class", "uitkBadge-success");
-  });
-
-  it("THEN can render a badge with the error variant", () => {
-    cy.mount(<Badge variant="error" />);
-    cy.get(".uitkBadge").should("have.class", "uitkBadge-error");
-  });
   it("SHOULD have no a11y violations on load", () => {
     cy.mount(<Badge />);
     cy.checkAxeComponent();

@@ -5,12 +5,12 @@
 }
 
 .uitkCircularProgress-disabled .uitkCircularProgress-progressValue {
-  opacity: var(--uitk-disabled-border-opacity);
-  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-opacity-border);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkCircularProgress-disabled circle {
-  opacity: var(--uitk-disabled-border-opacity);
+  opacity: var(--uitk-opacity-border);
 }
 
 .uitkCircularProgress-circle {
@@ -32,9 +32,8 @@
 
 .uitkCircularProgress-progressValue {
   align-items: center;
-  color: inherit;
+  color: var(--uitk-measured-background);
   display: flex;
-  /* font-size: var(--uitk-measured-font-size); This is by emphasis now - check */
   height: 100%;
   justify-content: center;
   left: 0;
@@ -54,11 +53,11 @@
 }
 
 .uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-measured-color-active-start);
+  stop-color: var(--uitk-measured-gradient-start);
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-color-active-end);
+  stop-color: var(--uitk-measured-gradient-stop);
 }
 
 .uitkCircularProgress-container {
@@ -74,6 +73,7 @@
 }
 
 .uitkCircularProgress-svg {
+  fill: var(--uitk-measured-background);
   display: block;
 }
 

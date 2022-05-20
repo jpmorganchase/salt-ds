@@ -94,7 +94,7 @@ export const CascadingMenuList = forwardRef<
     [refsManager, menuId]
   );
 
-  const sizeStackable = useCharacteristic("size", "stackable-unit", menuRef);
+  const sizeStackable = useCharacteristic("size", "stackable", menuRef);
   const defaultRowHeight =
     sizeStackable === null ? 36 : parseInt(sizeStackable, 10);
 

@@ -7,7 +7,7 @@
   --uitkFlexLayout-justify: flex-start;
   --uitkFlexLayout-align: stretch;
   --uitkFlexLayout-separator: var(--uitk-separable-border-width);
-  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier));
+  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier));
 }
 
 .uitkFlexLayout {
