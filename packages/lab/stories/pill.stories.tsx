@@ -81,6 +81,7 @@ export const IconPill: ComponentStory<typeof Pill> = () => {
 export const SelectablePill: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
+      className="backwardsCompat"
       label="Selectable Pill"
       onChange={() => console.log("changed")}
       variant="selectable"

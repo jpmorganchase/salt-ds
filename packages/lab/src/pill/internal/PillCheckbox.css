@@ -29,3 +29,14 @@
   fill: var(--uitkPill-checkbox-tick-disabled, var(--uitk-taggable-foreground-disabled));
   stroke-width: 0;
 }
+
+/* Backwards compat styling to match TK1 */
+.uitk-light .backwardsCompat .uitkPill-checkbox {
+  --pill-checkbox-stroke: var(--uitk-color-grey-100);
+  --pill-checkbox-tick: var(--uitk-color-grey-300);
+}
+
+.uitk-dark .backwardsCompat .uitkPill-checkbox {
+  --pill-checkbox-stroke: var(--uitk-color-grey-80);
+  --pill-checkbox-tick: var(--uitk-color-grey-60);
+}
