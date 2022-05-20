@@ -2,38 +2,17 @@
 .uitk-dark {
   --uitk-taggable-cursor-hover: grab;
   --uitk-taggable-cursor-active: pointer;
-}
 
-.uitk-light {
-  --uitk-taggable-background: var(--uitk-color-grey-40);
-  --uitk-taggable-background-hover: var(--uitk-color-grey-30);
-  --uitk-taggable-background-active: var(--uitk-color-grey-200);
-  --uitk-taggable-background-disabled: var(--uitk-color-grey-40-fade-40);
+  --uitk-taggable-background: var(--uitk-palette-interact-primary-background);
+  --uitk-taggable-background-hover: var(--uitk-palette-interact-primary-background-hover);
+  --uitk-taggable-background-active: var(--uitk-palette-interact-primary-background-active);
+  --uitk-taggable-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
 
-  --uitk-taggable-text-color: var(--uitk-color-grey-900);
-  --uitk-taggable-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-taggable-text-color-active: var(--uitk-color-white);
+  --uitk-taggable-foreground: var(--uitk-palette-interact-primary-foreground);
+  --uitk-taggable-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
+  --uitk-taggable-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
 
-  --uitk-taggable-icon: var(--uitk-color-grey-300);
-  --uitk-taggable-icon-hover: var(--uitk-color-grey-300);
-  --uitk-taggable-icon-active: var(--uitk-color-white);
-
-  --uitk-taggable-stroke: var(--uitk-color-grey-100);
-}
-
-.uitk-dark {
-  --uitk-taggable-background: var(--uitk-color-grey-500);
-  --uitk-taggable-background-hover: var(--uitk-color-grey-200);
-  --uitk-taggable-background-active: var(--uitk-color-grey-80);
-  --uitk-taggable-background-disabled: var(--uitk-color-grey-500-fade-40);
-
-  --uitk-taggable-text-color: var(--uitk-color-white);
-  --uitk-taggable-text-color-hover: var(--uitk-color-white);
-  --uitk-taggable-text-color-active: var(--uitk-color-grey-900);
-
-  --uitk-taggable-icon: var(--uitk-color-grey-60);
-  --uitk-taggable-icon-hover: var(--uitk-color-grey-60);
-  --uitk-taggable-icon-active: var(--uitk-color-grey-900);
-
-  --uitk-taggable-stroke: var(--uitk-color-grey-80);
+  --uitk-taggable-stroke: var(--uitk-palette-interact-stroke);
+  --uitk-taggable-stroke-hover: var(--uitk-palette-interact-stroke);
+  --uitk-taggable-stroke-active: var(--uitk-palette-interact-stroke);
 }

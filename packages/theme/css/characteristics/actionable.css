@@ -1,106 +1,48 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-actionable-font-weight: var(--uitk-typography-weight-bold);
-  --uitk-actionable-letter-spacing: 0.6px;
-  --uitk-actionable-text-transform: uppercase;
-  --uitk-actionable-cursor-hover: pointer;
   --uitk-actionable-cursor-active: pointer;
+  --uitk-actionable-cursor-disabled: not-allowed;
+  --uitk-actionable-cursor-hover: pointer;
 
-  /* Below are not in Figma */
-  --uitk-actionable-text-align: center;
-  --uitk-actionable-border-radius: 0;
-}
+  --uitk-actionable-border-width: 1px; /* Not in Figma */
+  --uitk-actionable-border-style: solid; /* Not in Figma */
+  --uitk-actionable-border-radius: 0; /* Not in Figma */
+  --uitk-actionable-letter-spacing: 0.6px; /* Not in Figma */
+  --uitk-actionable-text-transform: uppercase; /* Not in Figma */
+  --uitk-actionable-text-align: center; /* Not in Figma */
 
-/*
-  Color naming convention
-  - Prefix with --uitk
-  - Characteristics name, e.g. -actionable
-  - The 'variant', e.g. -primary,
-  - The 'property' to apply on, e.g. -text, -background
-  - The 'category', e.g. -color (omitted for -background property)
-  - The 'state', e.g. -regular, -hover, -active, -disabled. Mapped to CSS Dynamic pseudo-classes
+  /* Note: 'disabled' design tokens not in Figma */
 
-  Figma Style example: Actionable/CTA/Background/Regular
-  Disabled values are not in Figma - they come from applying the appropriate
-  disabled opacity to the regular background color
- */
+  /* Primary variant */
+  --uitk-actionable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
+  --uitk-actionable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
+  --uitk-actionable-primary-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
+  --uitk-actionable-primary-background: var(--uitk-palette-interact-primary-background);
+  --uitk-actionable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
+  --uitk-actionable-primary-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
+  --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
+  --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
 
-.uitk-light {
-  --uitk-actionable-primary-text-color: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-primary-text-color-disabled: rgba(22, 22, 22, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-primary-background: var(--uitk-color-grey-60);
-  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-40);
-  --uitk-actionable-primary-background-active: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-background-disabled: rgba(197, 201, 208, var(--uitk-disabled-background-opacity));
-  --uitk-actionable-primary-icon-color-active: var(--uitk-color-white);
-  --uitk-actionable-primary-icon-color: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-icon-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-icon-color-disabled: rgba(22, 22, 22, var(--uitk-disabled-graphical-opacity));
+  /* CTA variant */
+  --uitk-actionable-cta-foreground: var(--uitk-palette-interact-cta-foreground);
+  --uitk-actionable-cta-foreground-active: var(--uitk-palette-interact-cta-foreground-active);
+  --uitk-actionable-cta-foreground-disabled: var(--uitk-palette-interact-cta-foreground-disabled);
+  --uitk-actionable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
+  --uitk-actionable-cta-background: var(--uitk-palette-interact-cta-background);
+  --uitk-actionable-cta-background-active: var(--uitk-palette-interact-cta-background-active);
+  --uitk-actionable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
+  --uitk-actionable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
+  --uitk-actionable-cta-font-weight: var(--uitk-typography-weight-bold);
 
-  --uitk-actionable-cta-text-color: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
-  --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
-  --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
-  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-background-opacity));
-  --uitk-actionable-cta-icon-color: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-active: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-graphical-opacity));
-
-  --uitk-actionable-secondary-text-color: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-secondary-text-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-text-color-disabled: rgba(22, 22, 22, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-secondary-background: transparent;
-  --uitk-actionable-secondary-background-active: var(--uitk-color-grey-200);
-  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-40);
-  --uitk-actionable-secondary-background-disabled: transparent;
-  --uitk-actionable-secondary-icon-color-active: var(--uitk-color-white);
-  --uitk-actionable-secondary-icon-color: var(--uitk-color-grey-300);
-  --uitk-actionable-secondary-icon-color-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-icon-color-disabled: rgba(22, 22, 22, var(--uitk-disabled-graphical-opacity));
-}
-.uitk-dark {
-  --uitk-actionable-primary-text-color: var(--uitk-color-white);
-  --uitk-actionable-primary-text-color-active: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-text-color-hover: var(--uitk-color-white);
-  --uitk-actionable-primary-text-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-primary-background: var(--uitk-color-grey-300);
-  --uitk-actionable-primary-background-active: var(--uitk-color-grey-80);
-  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-background-disabled: rgba(76, 80, 91, var(--uitk-disabled-background-opacity));
-  --uitk-actionable-primary-icon-color: var(--uitk-color-white);
-  --uitk-actionable-primary-icon-color-active: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-icon-color-hover: var(--uitk-color-white);
-  --uitk-actionable-primary-icon-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-graphical-opacity));
-
-  --uitk-actionable-cta-text-color: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-active: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-text-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
-  --uitk-actionable-cta-background-active: var(--uitk-color-blue-700);
-  --uitk-actionable-cta-background-hover: var(--uitk-color-blue-500);
-  --uitk-actionable-cta-background-disabled: rgba(21, 92, 147, var(--uitk-disabled-background-opacity));
-  --uitk-actionable-cta-icon-color: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-active: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-icon-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-graphical-opacity));
-
-  --uitk-actionable-secondary-text-color: var(--uitk-color-white);
-  --uitk-actionable-secondary-text-color-active: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-text-color-hover: var(--uitk-color-white);
-  --uitk-actionable-secondary-text-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-text-opacity));
-  --uitk-actionable-secondary-background: transparent;
-  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-secondary-background-active: var(--uitk-color-grey-80);
-  --uitk-actionable-secondary-icon-color: var(--uitk-color-grey-60);
-  --uitk-actionable-secondary-icon-color-active: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-icon-color-hover: var(--uitk-color-white);
-  --uitk-actionable-secondary-icon-color-disabled: rgba(255, 255, 255, var(--uitk-disabled-graphical-opacity));
+  /* Secondary variant */
+  --uitk-actionable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
+  --uitk-actionable-secondary-foreground-active: var(--uitk-palette-interact-secondary-foreground-active);
+  --uitk-actionable-secondary-foreground-disabled: var(--uitk-palette-interact-secondary-foreground-disabled);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
+  --uitk-actionable-secondary-background: var(--uitk-palette-interact-secondary-background);
+  --uitk-actionable-secondary-background-active: var(--uitk-palette-interact-secondary-background-active);
+  --uitk-actionable-secondary-background-disabled: var(--uitk-palette-interact-secondary-background-disabled);
+  --uitk-actionable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
+  --uitk-actionable-secondary-font-weight: var(--uitk-typography-weight-semiBold);
 }

@@ -17,45 +17,11 @@ Components which have the ability to visually indicate progress, scale, or range
   <Story name="All">
     <DocGrid>
       <ColorBlock colorVar="--uitk-measured-background" />
+      <ColorBlock colorVar="--uitk-measured-background-active" />
       <ColorBlock colorVar="--uitk-measured-border-color" />
-      <ColorBlock colorVar="--uitk-measured-color-active-start" />
-      <ColorBlock colorVar="--uitk-measured-color-active-end" />
-      <ColorBlock colorVar="--uitk-measured-color-active" />
-      <FontSizeBlock fontSize="--uitk-measured-font-size" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### High emphasis overrides
-
-<Canvas>
-  <Story name="High emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-measured-background"
-      />
-      <FontSizeBlock
-        className="uitkEmphasisHigh"
-        fontSize="--uitk-measured-font-size"
-      />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Low emphasis overrides
-
-<Canvas>
-  <Story name="Low emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-measured-background"
-      />
-      <FontSizeBlock
-        className="uitkEmphasisLow"
-        fontSize="--uitk-measured-font-size"
-      />
+      <FontSizeBlock fontSize="--uitk-measured-font-size-low" />
+      <FontSizeBlock fontSize="--uitk-measured-font-size-medium" />
+      <FontSizeBlock fontSize="--uitk-measured-font-size-high" />
     </DocGrid>
   </Story>
 </Canvas>

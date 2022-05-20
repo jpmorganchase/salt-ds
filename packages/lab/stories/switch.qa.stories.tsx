@@ -55,6 +55,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
   return (
     <QAContainer
       width={948}
+      className="uitkSwitchQA"
       imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
     >
       <AllExamplesGrid />

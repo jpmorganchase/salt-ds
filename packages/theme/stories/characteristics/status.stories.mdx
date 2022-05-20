@@ -21,27 +21,10 @@ Components which have attributes that denote Status and it's severity.
 <Canvas>
   <Story name="Status">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-status-info-color" />
-      <ColorBlock colorVar="--uitk-status-error-color" />
-      <ColorBlock colorVar="--uitk-status-warning-color" />
-      <ColorBlock colorVar="--uitk-status-success-color" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Misc
-
-<Canvas>
-  <Story name="Misc">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-status-info-background" />
-      <ColorBlock colorVar="--uitk-status-error-background" />
-      <ColorBlock colorVar="--uitk-status-warning-background" />
-      <ColorBlock colorVar="--uitk-status-success-background" />
-      <ColorBlock colorVar="--uitk-status-info-icon-color" />
-      <ColorBlock colorVar="--uitk-status-error-icon-color" />
-      <ColorBlock colorVar="--uitk-status-warning-icon-color" />
-      <ColorBlock colorVar="--uitk-status-success-icon-color" />
+      <ColorBlock colorVar="--uitk-status-info-foreground" />
+      <ColorBlock colorVar="--uitk-status-error-foreground" />
+      <ColorBlock colorVar="--uitk-status-warning-foreground" />
+      <ColorBlock colorVar="--uitk-status-success-foreground" />
       <ColorBlock colorVar="--uitk-status-info-border-color" />
       <ColorBlock colorVar="--uitk-status-error-border-color" />
       <ColorBlock colorVar="--uitk-status-warning-border-color" />
@@ -50,52 +33,15 @@ Components which have attributes that denote Status and it's severity.
   </Story>
 </Canvas>
 
-### High emphasis overrides
+### High emphasis values
 
 <Canvas>
-  <Story name="High Emphasis">
+  <Story name="High emphasis">
     <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-status-info-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-status-error-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-status-warning-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-status-success-background"
-      />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Low emphasis overrides
-
-<Canvas>
-  <Story name="Low Emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-status-info-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-status-error-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-status-warning-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-status-success-background"
-      />
+      <ColorBlock colorVar="--uitk-status-info-background-high" />
+      <ColorBlock colorVar="--uitk-status-error-background-high" />
+      <ColorBlock colorVar="--uitk-status-warning-background-high" />
+      <ColorBlock colorVar="--uitk-status-success-background-high" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -114,10 +114,6 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   tabEnabledSelectors?: string;
   /**
-   * Emphasis - Can be one of "medium" or "high".
-   */
-  emphasis?: "medium" | "high";
-  /**
    * Prop to pass z-index for Scrim.
    */
   zIndex?: number;
@@ -143,7 +139,6 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     parentRef,
     returnFocus = true,
     tabEnabledSelectors = defaultSelector,
-    emphasis = "high",
     zIndex,
     ...rest
   } = props;
@@ -235,16 +230,9 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   return (
     <div
       aria-modal={!containerFix}
-      className={classnames(
-        {
-          [`uitkEmphasisHigh`]: emphasis !== "medium",
-        },
-        className,
-        withBaseName(),
-        {
-          [withBaseName(`containerFix`)]: containerFix,
-        }
-      )}
+      className={classnames(className, withBaseName(), {
+        [withBaseName(`containerFix`)]: containerFix,
+      })}
       data-testid="scrim"
       onClick={handleClick}
       ref={setWrapperRef}

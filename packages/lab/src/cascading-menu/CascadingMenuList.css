@@ -1,6 +1,5 @@
 .uitkCascadingMenuList-popper {
-  --uitk-container-border-color: var(--uitk-color-blue-500);
-  background: var(--uitk-container-background);
+  background: var(--uitk-container-background-medium);
 }
 
 .uitkCascadingMenuList-popper {
@@ -10,5 +9,4 @@
 
 .uitkCascadingMenuList {
   --menu-item-background: var(--uitk-selectable-background);
-  --menu-item-border-bottom: solid 1px var(--uitk-color-white);
 }

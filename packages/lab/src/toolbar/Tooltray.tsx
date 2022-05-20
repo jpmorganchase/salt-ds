@@ -107,13 +107,12 @@ const Tooltray: React.FC<TooltrayProps> = (props) => {
 
   const renderOverflow = (menuItems: React.ReactElement[]) => (
     <FormField
-      className="toolbar-item"
+      className={cx("toolbar-item", "uitkEmphasisLow")}
       data-index={visibleItems.current.length}
       data-overflow-indicator
       data-pad-start
       data-priority={1}
       fullWidth={false}
-      emphasis="low"
     >
       <OverflowMenu
         {...OverflowButtonProps}

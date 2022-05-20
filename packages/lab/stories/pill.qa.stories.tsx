@@ -17,6 +17,7 @@ export const ExamplesGrid: ComponentStory<typeof Pill> = (props) => {
           display: "inline-grid",
           gridTemplate: "auto / repeat(4,auto)",
           gap: "4px",
+          verticalAlign: "top",
         }}
       >
         <Pill label="Default Pill" />
@@ -41,7 +42,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Pill> = (
   return (
     <QAContainer
       width={951}
-      height={176}
+      height={172}
       className="uitkPillQA"
       imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png"
     >

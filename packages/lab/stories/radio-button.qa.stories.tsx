@@ -14,7 +14,7 @@ export default {
 
 export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
   return (
-    <>
+    <div className="backwardsCompat">
       <AllRenderer>
         <>
           <div
@@ -57,7 +57,7 @@ export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
           </RadioButtonGroup>
         </>
       </AllRenderer>
-    </>
+    </div>
   );
 };
 
