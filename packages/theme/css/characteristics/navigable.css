@@ -1,70 +1,27 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
-  --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-active: pointer;
-}
+  --uitk-navigable-cursor-hover: pointer;
 
-.uitk-light {
-  --uitk-navigable-indicator-color-hover: var(--uitk-color-grey-90);
-  --uitk-navigable-indicator-color-active: var(--uitk-color-orange-700);
+  --uitk-navigable-font-weight: var(--uitk-typography-weight-regular);
+  --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
+  --uitk-navigable-font-weight-hover: var(--uitk-typography-weight-regular);
 
-  --uitk-navigable-link-color: var(--uitk-color-grey-400);
-  --uitk-navigable-link-color-hover: var(--uitk-color-grey-400);
-  --uitk-navigable-link-color-active: var(--uitk-color-grey-900);
-}
+  --uitk-navigable-foreground: var(--uitk-palette-navigate-foreground);
+  --uitk-navigable-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
 
-.uitk-dark {
-  --uitk-navigable-indicator-color-hover: var(--uitk-color-grey-90);
-  --uitk-navigable-indicator-color-active: var(--uitk-color-orange-500);
+  --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
+  --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
 
-  --uitk-navigable-link-color: var(--uitk-color-grey-40);
-  --uitk-navigable-link-color-hover: var(--uitk-color-grey-40);
-  --uitk-navigable-link-color-active: var(--uitk-color-white);
-}
+  --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
+  --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);
+  --uitk-navigable-background-active-low: var(--uitk-palette-navigate-background-active-low);
 
-/* Default medium emphasis values */
+  --uitk-navigable-background-medium: var(--uitk-palette-navigate-background-medium);
+  --uitk-navigable-background-hover-medium: var(--uitk-palette-navigate-background-hover-medium);
+  --uitk-navigable-background-active-medium: var(--uitk-palette-navigate-background-active-medium);
 
-.uitk-light {
-  --uitk-navigable-border: solid 1px var(--uitk-color-grey-60);
-  --uitk-navigable-background: none;
-  --uitk-navigable-background-hover: var(--uitk-color-grey-20);
-  --uitk-navigable-background-active: none;
-}
-
-.uitk-dark {
-  --uitk-navigable-border: solid 1px var(--uitk-color-grey-400);
-  --uitk-navigable-background: none;
-  --uitk-navigable-background-hover: var(--uitk-color-grey-600);
-  --uitk-navigable-background-active: none;
-}
-
-/* High and low emphasis values */
-
-.uitk-light .uitkEmphasisLow {
-  --uitk-navigable-border: solid 1px transparent;
-  --uitk-navigable-background-active: none;
-  --uitk-navigable-background: none;
-  --uitk-navigable-background-hover: var(--uitk-color-grey-20);
-}
-
-.uitk-dark .uitkEmphasisLow {
-  --uitk-navigable-border: none;
-  --uitk-navigable-background: none;
-  --uitk-navigable-background-hover: var(--uitk-color-grey-600);
-  --uitk-navigable-background-active: none;
-}
-
-.uitk-light .uitkEmphasisHigh {
-  --uitk-navigable-border: solid 1px var(--uitk-color-grey-60);
-  --uitk-navigable-background: var(--uitk-color-grey-20);
-  --uitk-navigable-background-hover: var(--uitk-color-grey-30);
-  --uitk-navigable-background-active: var(--uitk-color-grey-20);
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  --uitk-navigable-border: solid 1px var(--uitk-color-grey-400);
-  --uitk-navigable-background: var(--uitk-color-grey-600);
-  --uitk-navigable-background-hover: var(--uitk-color-grey-600);
-  --uitk-navigable-background-active: var(--uitk-color-grey-600);
+  --uitk-navigable-background-high: var(--uitk-palette-navigate-background-high);
+  --uitk-navigable-background-hover-high: var(--uitk-palette-navigate-background-hover-high);
+  --uitk-navigable-background-active-high: var(--uitk-palette-navigate-background-active-high);
 }

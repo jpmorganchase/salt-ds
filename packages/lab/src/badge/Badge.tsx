@@ -38,11 +38,6 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
    * The max number to display on the badge.
    */
   max?: number;
-  /**
-   * Determines the variant of the component. Must be one of: 'error', 'info', 'success'.
-   * Defaults to 'info'.
-   */
-  variant?: "error" | "info" | "success";
 }
 
 const withBaseName = makePrefixer("uitkBadge");
@@ -56,7 +51,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     max = 1000,
     className,
     children = <MessageIcon size={12} />,
-    variant = "info",
     ...rest
   } = props;
 
@@ -74,7 +68,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 
   return (
     <span
-      className={cx(withBaseName(), withBaseName(variant), className)}
+      className={cx(withBaseName(), className)}
       ref={ref}
       role="img"
       aria-labelledby={cx(childId, badgeId)}

@@ -72,26 +72,25 @@ Foundational tokens can broken into the following groups:
 
 The full set of characteristics is currently defined is as follows:
 
-| Characteristic name | Appropriate usage                                                               | Example token                                                              |
-| ------------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-color-blue-300);`                    |
-| Actionable          | components on which the user can perform an action                              | `--uitk-actionable-primary-text-color: var(--uitk-color-grey-900);`        |
-| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                      |
-| Delay               | components which have a delay before some form of transition                    | `--uitk-delay-instant: 100;`                                               |
-| Disabled            | components which can be disabled                                                | `--uitk-disabled-cursor: not-allowed;`                                     |
-| Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                     |
-| Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                  |
-| Editable            | components that have mutable input                                              | `--uitk-editable-selection-background: var(--uitk-color-blue-30-fade-99);` |
-| Focused             | components that have a focused state                                            | `--uitk-focused-med-emphasis-outline-style: dotted;`                       |
-| Measured            | components which have some form of scale or progress                            | `--uitk-measured-border-color: var(--uitk-color-grey-100);`                |
-| Navigable           | components that change data sets or view contexts                               | `--uitk-navigable-link-text-decoration: underline;`                        |
-| Overlayable         | components that form hierarchys in layout                                       | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                  |
-| Ratable             | components which can be rated                                                   | `--uitk-ratable-background-hover: var(--uitk-color-orange-700);`           |
-| Selectable          | components that have a selected state                                           | `--uitk-selectable-default-text-align: left;`                              |
-| Separable           | components containing elements which should be separated into different divions | `--uitk-separator-section-color: var(--uitk-color-grey-60);`               |
-| Status              | components indicating an informational, warning, error or success state         | `--uitk-status-info-color: var(--uitk-color-blue-500);`                    |
-| Taggable            | components which allow data to be organized                                     | `--uitk-taggable-background: var(--uitk-color-grey-40);`                   |
-| Text                | all text components or HTML elements                                            | `--uitk-text-primary-color: var(--uitk-color-grey-900);`                   |
+| Characteristic name | Appropriate usage                                                               | Example token                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --- |
+| Accent              | components that needs to be emphasized                                          | `--uitk-accent-background: var(--uitk-palette-accent-background);`                                    |
+| Actionable          | components on which the user can perform an action                              | ` --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);` |
+| Container           | components that may encapsulate others                                          | `--uitk-container-border-width: 1px;`                                                                 |
+| Differential        | components indicating a positive or negative change                             | `--uitk-differential-foreground-positive: var(--uitk-palette-positive-foreground);`                   |     |
+| Draggable           | components that can be dragged                                                  | `--uitk-draggable-cursor-hover: grab;`                                                                |
+| Drop Target         | components that form a target for draggable components                          | `--uitk-droptarget-border-style: dashed;`                                                             |
+| Editable            | components that have mutable input                                              | `--uitk-editable-border-style: solid;`                                                                |
+| Focused             | components that have a focused state                                            | ` --uitk-focused-outline-style: dotted;`                                                              |
+| Measured            | components which have some form of scale or progress                            | `--uitk-measured-border-color: var(--uitk-palette-neutral-endpoint);`                                 |
+| Navigable           | components that change data sets or view contexts                               | `--uitk-navigable-link-text-decoration: underline;`                                                   |
+| Overlayable         | components that form hierarchys in layout                                       | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                                             |
+| Ratable             | components which can be rated                                                   | `--uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);`                         |
+| Selectable          | components that have a selected state                                           | `--uitk-selectable-text-align: left;`                                                                 |
+| Separable           | components containing elements which should be separated into different divions | `--uitk-separable-border-color-1: var(--uitk-palette-neutral-border-low);`                            |
+| Status              | components indicating an informational, warning, error or success state         | `--uitk-status-info-border-color: var(--uitk-palette-info-border);`                                   |
+| Taggable            | components which allow data to be organized                                     | `--uitk-taggable-background: var(--uitk-palette-interact-primary-background);`                        |
+| Text                | all text components or HTML elements                                            | `--uitk-text-primary-color: var(--uitk-palette-neutral-primary-foreground);`                          |
 
 #### Token Naming Conventions
 
@@ -158,11 +157,22 @@ The combination of CSS variables with CSS selector scoping is very flexible. It 
 In the CSS where the theme variables are declared, there are sections declared as follows:
 
 ```css
+.uitk-light,
+.uitk-dark {
+  --uitk-actionable-primary-foreground: var(
+    --uitk-palette-interact-primary-foreground
+  );
+}
+```
+
+The palette token then resolves down to:
+
+```css
 .uitk-light {
-  --uitk-actionable-primary-text-color: var(--uitk-grey-900);
+  --uitk-palette-interact-primary-foreground: var(--uitk-grey-900);
 }
 .uitk-dark {
-  --uitk-actionable-primary-text-color: var(--uitk-white);
+  --uitk-palette-interact-primary-foreground: var(--uitk-white);
 }
 ```
 
@@ -175,10 +185,7 @@ We have already mentioned that components will reference Theme variables, the ex
 
 ```css
 .uitkButton {
-  font-size: var(
-    --uitkButton-font-size,
-    var(--uitk-typography-size-regular-unit)
-  );
+  font-size: var(--uitkButton-font-size, var(--uitk-typography-size-regular));
 }
 ```
 
@@ -189,7 +196,7 @@ We have already mentioned that components will reference Theme variables, the ex
 4. The fallback value can equally be a simple constant CSS value
    var(--uitk-typography-font-size, 12px);
 
-In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-font-size`. If this variable has not been defined, _or is not in scope at the point where this Button element is rendered_, then the fallback value will be taken from `--uitk-typography-size-regular-unit`. This will have a value providing that a UI Toolkit theme is in scope at this point. If that were not the case, and neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-font-size`. If this variable has not been defined, _or is not in scope at the point where this Button element is rendered_, then the fallback value will be taken from `--uitk-typography-size-regular`. This will have a value providing that a UI Toolkit theme is in scope at this point. If that were not the case, and neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
 Note the naming convention for the first variable `--uitkButton-font-size`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a `CSS API variable`. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
 

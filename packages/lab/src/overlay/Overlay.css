@@ -1,18 +1,17 @@
-.uitk-dark .uitkOverlay {
-  /* TODO: Design, whether this is intentional */
-  --overlay-border-color: var(--uitk-color-grey-400);
-}
-
 /* Experimental - Overlay css variable API */
 .uitkOverlay {
   --overlay-text-color: var(--uitk-text-primary-color);
-  --overlay-spacing: var(--uitk-spacing-unit);
+  --overlay-spacing: var(--uitk-size-unit);
   --overlay-font-size: var(--uitk-text-font-size);
-  /* TODO: Which emphasis should this be? */
-  --overlay-background: var(--uitk-container-background);
-  --overlay-border-color: var(--uitk-container-border-color);
+  --overlay-background: var(--uitk-container-background-medium);
+  --overlay-border-color: var(--uitk-container-border-color-medium);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
+}
+
+.uitkEmphasisHigh.uitkOverlay {
+  --overlay-background: var(--uitk-container-background-high);
+  --overlay-border-color: var(--uitk-container-border-color-high);
 }
 
 .uitkOverlay-content {

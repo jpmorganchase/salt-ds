@@ -77,6 +77,7 @@ export const parameters: Parameters = {
             "Introduction",
             "Foundations",
             ["Introduction", "*"],
+            "Palette",
             "Characteristics",
             ["Introduction", "*"],
           ],

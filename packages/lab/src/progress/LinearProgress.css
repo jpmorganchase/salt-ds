@@ -2,7 +2,7 @@
   align-items: center;
   color: var(--uitk-text-primary-color);
   display: flex;
-  font-size: var(--uitk-measured-font-size);
+  font-size: var(--uitk-measured-font-size-medium);
   min-width: 200px;
 }
 
@@ -25,16 +25,16 @@
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-bar {
-  opacity: var(--uitk-disabled-graphical-opacity);
+  opacity: var(--uitk-opacity-foreground);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-barContainer :after {
-  opacity: var(--uitk-disabled-graphical-opacity);
+  opacity: var(--uitk-opacity-foreground);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
-  opacity: var(--uitk-disabled-border-opacity);
-  cursor: var(--uitk-disabled-cursor);
+  opacity: var(--uitk-opacity-border);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkLinearProgress-barContainer {
@@ -75,7 +75,7 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--uitk-measured-color-active);
+  background: var(--uitk-measured-background-active);
   z-index: 2;
 }
 
