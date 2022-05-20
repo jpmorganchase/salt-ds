@@ -1,16 +1,12 @@
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 
-export interface FlowLayoutProps {
+export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement>  {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
   align?: FlexLayoutProps["align"];
-  /**
-   * The children to render into the `container`.
-   */
-  children?: ReactNode;
   /**
    * Controls the space between items.
    */

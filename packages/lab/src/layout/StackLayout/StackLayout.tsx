@@ -1,8 +1,8 @@
-import { forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 
-export interface StackLayoutProps {
+export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
