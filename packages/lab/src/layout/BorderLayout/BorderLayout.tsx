@@ -4,7 +4,6 @@ import {
   HTMLAttributes,
   ReactElement,
   useEffect,
-  useMemo,
   ComponentPropsWithoutRef,
 } from "react";
 import cx from "classnames";
@@ -42,13 +41,9 @@ const numberOfColumns = 3;
 
 export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
   function BorderLayout({ children, className, gap = 0, style, ...rest }, ref) {
-    const borderAreas = useMemo(
-      () =>
-        Children.map(
-          children,
-          (child: ReactElement<BorderItemProps>) => child.props.position
-        ),
-      [children]
+    const borderAreas = Children.map(
+      children,
+      (child: ReactElement<BorderItemProps>) => child.props.position
     );
 
     const topSection = borderAreas.includes("header")

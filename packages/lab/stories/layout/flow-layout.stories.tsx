@@ -50,9 +50,7 @@ const Responsive: ComponentStory<typeof FlowLayout> = (args) => {
   );
 };
 export const ToolkitFlowLayoutResponsive = Responsive.bind({});
-ToolkitFlowLayoutResponsive.args = {
-  wrap: {},
-};
+ToolkitFlowLayoutResponsive.args = {};
 
 const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
   args
@@ -77,5 +75,4 @@ const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
 export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
 FlowLayoutSimpleUsage.args = {
   gap: 3,
-  wrap: true,
 };

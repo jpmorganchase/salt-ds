@@ -46,7 +46,7 @@ const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
   return (
     <StackLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
-        <Panel emphasis="high">{`Panel ${index + 1} stack`}</Panel>
+        <Panel className="uitkEmphasisHigh">{`Panel ${index + 1} stack`}</Panel>
       ))}
     </StackLayout>
   );
