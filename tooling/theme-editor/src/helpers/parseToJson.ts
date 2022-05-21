@@ -9,6 +9,7 @@ export type JSONByScope = {
   jsonObj: JSONObj;
 };
 export interface JSONObj {
+  // TODO: fix TS error, string from value/type is incompatible with JSONObj
   [key: string]: JSONObj;
   value?: string;
   type?: string;
