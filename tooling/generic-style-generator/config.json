@@ -18,12 +18,20 @@
       "prefix": "uitk",
       "files": [
         {
-          "format": "uitk/css/themes",
-          "destination": "colors.css",
+          "format": "uitk/css/themes/all",
+          "destination": "colors-all.css",
           "options": {
             "outputReferences": true
           },
-          "filter": "uitk/filter/colors"
+          "filter": "uitk/filter/colors/all"
+        },
+        {
+          "format": "uitk/css/themes/light",
+          "destination": "colors-light.css",
+          "options": {
+            "outputReferences": true
+          },
+          "filter": "uitk/filter/colors/light"
         },
         {
           "format": "uitk/css/density/all",

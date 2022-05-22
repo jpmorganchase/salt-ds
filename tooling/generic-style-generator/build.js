@@ -8,12 +8,25 @@ console.log("\n==============================================");
 const { fileHeader, formattedVariables } = StyleDictionary.formatHelpers;
 
 StyleDictionary.registerFormat({
-  name: "uitk/css/themes",
+  name: "uitk/css/themes/all",
   formatter: function ({ dictionary, file, options }) {
     const { outputReferences } = options;
     return (
       fileHeader({ file }) +
       ".uitk-light, .uitk-dark {\n" +
+      formattedVariables({ format: "css", dictionary, outputReferences }) +
+      "\n}\n"
+    );
+  },
+});
+
+StyleDictionary.registerFormat({
+  name: "uitk/css/themes/light",
+  formatter: function ({ dictionary, file, options }) {
+    const { outputReferences } = options;
+    return (
+      fileHeader({ file }) +
+      ".uitk-light {\n" +
       formattedVariables({ format: "css", dictionary, outputReferences }) +
       "\n}\n"
     );
@@ -88,13 +101,22 @@ const UITK_CHARACTERISTICS = [
 ];
 
 StyleDictionary.registerFilter({
-  name: "uitk/filter/colors",
+  name: "uitk/filter/colors/all",
   matcher: function (token) {
     return (
       //   token.group === "color" ||
-      token.attributes.category === "color" ||
-      token.attributes.category === "palette" ||
-      UITK_CHARACTERISTICS.includes(token.attributes.category)
+      token.attributes.category === "color"
+    );
+  },
+});
+
+StyleDictionary.registerFilter({
+  name: "uitk/filter/colors/light",
+  matcher: function (token) {
+    return (
+      /light/i.test(token.filePath) &&
+      (token.attributes.category === "palette" ||
+        UITK_CHARACTERISTICS.includes(token.attributes.category))
     );
   },
 });
