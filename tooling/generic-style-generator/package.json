@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "style-dictionary build"
+    "build": "node ./build.js",
+    "clean": "rm -rf build"
   },
   "devDependencies": {
     "style-dictionary": "^3.7.0"

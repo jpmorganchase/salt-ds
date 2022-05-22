@@ -13,15 +13,28 @@
       ]
     },
     "css": {
-      "transformGroup": "css",
+      "transformGroup": "uitk/css",
       "buildPath": "build/css/",
       "prefix": "uitk",
       "files": [
         {
-          "format": "css/variables",
-          "destination": "variables.css",
+          "format": "uitk/css/themes",
+          "destination": "colors.css",
           "options": {
             "outputReferences": true
+          },
+          "filter": "uitk/colors"
+        },
+        {
+          "format": "uitk/css/densities",
+          "destination": "sizes.css",
+          "options": {
+            "outputReferences": true
+          },
+          "filter": {
+            "attributes": {
+              "category": "size"
+            }
           }
         }
       ]

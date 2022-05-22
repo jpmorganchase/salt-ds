@@ -1,0 +1,17 @@
+/**
+ * Do not edit directly
+ * Generated on Sun, 22 May 2022 20:27:44 GMT
+ */
+
+.uitk-density-touch, .uitk-density-low, .uitk-density-medium, .uitk-density-high {
+  --uitk-size-sharktooth-width: 10px;
+  --uitk-size-sharktooth-height: 5px;
+  --uitk-size-graphic-large: 48px;
+  --uitk-size-graphic-medium: 24px;
+  --uitk-size-graphic-small: 12px;
+  --uitk-size-basis-unit: 4px;
+  --uitk-size-appheader: 44px;
+  --uitk-size-adornment: 32px;
+  --uitk-size-base: 28px;
+  --uitk-size-unit: 8px;
+}
