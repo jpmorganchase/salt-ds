@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "node ./scripts/generateIconComponent.mjs '*.svg' && node ./scripts/generateIconIndex.js",
-    "generateIconAll": "node ./scripts/generateIconAll.js"
+    "generateIconAll": "node ./scripts/generateIconAll.js",
+    "build:figma": "node ./scripts/generateIconHtml.js '*.svg'"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.6",
