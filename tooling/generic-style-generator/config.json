@@ -23,19 +23,23 @@
           "options": {
             "outputReferences": true
           },
-          "filter": "uitk/colors"
+          "filter": "uitk/filter/colors"
         },
         {
-          "format": "uitk/css/densities",
-          "destination": "sizes.css",
+          "format": "uitk/css/density/all",
+          "destination": "sizes_all.css",
           "options": {
             "outputReferences": true
           },
-          "filter": {
-            "attributes": {
-              "category": "size"
-            }
-          }
+          "filter": "uitk/filter/sizes/density/all"
+        },
+        {
+          "format": "uitk/css/density/medium",
+          "destination": "sizes_medium.css",
+          "options": {
+            "outputReferences": true
+          },
+          "filter": "uitk/filter/sizes/density/medium"
         }
       ]
     },

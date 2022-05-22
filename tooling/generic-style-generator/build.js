@@ -21,12 +21,25 @@ StyleDictionary.registerFormat({
 });
 
 StyleDictionary.registerFormat({
-  name: "uitk/css/densities",
+  name: "uitk/css/density/all",
   formatter: function ({ dictionary, file, options }) {
     const { outputReferences } = options;
     return (
       fileHeader({ file }) +
       ".uitk-density-touch, .uitk-density-low, .uitk-density-medium, .uitk-density-high {\n" +
+      formattedVariables({ format: "css", dictionary, outputReferences }) +
+      "\n}\n"
+    );
+  },
+});
+
+StyleDictionary.registerFormat({
+  name: "uitk/css/density/medium",
+  formatter: function ({ dictionary, file, options }) {
+    const { outputReferences } = options;
+    return (
+      fileHeader({ file }) +
+      ".uitk-density-medium {\n" +
       formattedVariables({ format: "css", dictionary, outputReferences }) +
       "\n}\n"
     );
@@ -75,7 +88,7 @@ const UITK_CHARACTERISTICS = [
 ];
 
 StyleDictionary.registerFilter({
-  name: "uitk/colors",
+  name: "uitk/filter/colors",
   matcher: function (token) {
     return (
       //   token.group === "color" ||
@@ -86,12 +99,33 @@ StyleDictionary.registerFilter({
   },
 });
 
+StyleDictionary.registerFilter({
+  name: "uitk/filter/sizes/density/all",
+  matcher: function (token) {
+    return (
+      token.attributes.category === "size" &&
+      !/low|medium|high|touch/i.test(token.filePath)
+    );
+  },
+});
+
+StyleDictionary.registerFilter({
+  name: "uitk/filter/sizes/density/medium",
+  matcher: function (token) {
+    return (
+      token.attributes.category === "size" && token.filePath.includes("medium")
+    );
+  },
+});
+
 // APPLY THE CONFIGURATION
 // IMPORTANT: the registration of custom transforms
 // needs to be done _before_ applying the configuration
 const StyleDictionaryExtended = StyleDictionary.extend(
   __dirname + "/config.json"
 );
+
+StyleDictionaryExtended.cleanAllPlatforms();
 
 // FINALLY, BUILD ALL THE PLATFORMS
 StyleDictionaryExtended.buildAllPlatforms();
