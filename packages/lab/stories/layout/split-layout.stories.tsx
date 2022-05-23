@@ -30,42 +30,37 @@ export default {
   },
 } as ComponentMeta<typeof SplitLayout>;
 
+const leftItem = (
+  <FlowLayout>
+    {Array.from({ length: 3 }, (_, index) => (
+      <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
+    ))}
+  </FlowLayout>
+);
+
+const rightItem = (
+  <FlowLayout>
+    <FlexContent>item 4</FlexContent>
+    <FlexContent>
+      Item
+      <br />5
+    </FlexContent>
+  </FlowLayout>
+);
+
 const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => {
-  const leftItem = useMemo(
-    () => (
-      <FlowLayout>
-        {Array.from({ length: 3 }, (_, index) => (
-          <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
-        ))}
-      </FlowLayout>
-    ),
-    []
-  );
-
-  const rightItem = useMemo(
-    () => (
-      <FlowLayout>
-        <FlexContent>item 4</FlexContent>
-        <FlexContent>
-          Item
-          <br />5
-        </FlexContent>
-      </FlowLayout>
-    ),
-    []
-  );
-
   return (
     <div style={{ minWidth: 850 }}>
-      <SplitLayout
-        {...args}
-        leftSplitItem={leftItem}
-        rightSplitItem={rightItem}
-      />
+      <SplitLayout {...args} />
     </div>
   );
 };
 export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
+
+DefaultSplitLayout.args = {
+  leftSplitItem: leftItem,
+  rightSplitItem: rightItem,
+};
 
 const ButtonBarExample: ComponentStory<typeof SplitLayout> = (args) => {
   const leftItem = useMemo(
