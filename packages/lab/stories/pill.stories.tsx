@@ -91,6 +91,18 @@ export const SelectablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
+export const SelectableDisabledPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      disabled={true}
+      label="Selectable Pill"
+      onChange={() => console.log("changed")}
+      variant="selectable"
+      defaultChecked
+    />
+  );
+};
+
 export const MaxWidthPill: ComponentStory<typeof Pill> = () => {
   return (
     <>

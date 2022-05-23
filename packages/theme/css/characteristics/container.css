@@ -4,6 +4,9 @@
   --uitk-container-border-style: solid;
   --uitk-container-border-radius: 0; /* Note: design token not in Figma */
 
+  --uitk-container-cta-border-color: var(--uitk-palette-neutral-cta-border);
+  --uitk-container-primary-border-color: var(--uitk-palette-neutral-primary-border);
+
   --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
   --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
   --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
@@ -12,7 +15,6 @@
   --uitk-container-border-color-medium: var(--uitk-palette-neutral-border-medium);
   --uitk-container-border-color-high: var(--uitk-palette-neutral-border-high);
 
-  /* Note: Below 'disabled' design token not in Figma */
   --uitk-container-border-color-disabled-low: var(--uitk-palette-neutral-border-disabled-low);
   --uitk-container-border-color-disabled-medium: var(--uitk-palette-neutral-border-disabled-medium);
   --uitk-container-border-color-disabled-high: var(--uitk-palette-neutral-border-disabled-high);

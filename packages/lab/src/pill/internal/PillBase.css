@@ -92,6 +92,7 @@
 
 .uitkPill-disabled {
   --uitkButton-background-hover: var(--uitk-taggable-background-disabled);
+  --uitkButton-background-active: var(--uitk-taggable-background-disabled);
 
   background: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
   cursor: var(--uitk-selectable-cursor-disabled);
@@ -111,8 +112,8 @@
   color: var(--pill-text-color-hover);
 }
 
-.uitkPill:active,
-.uitkPill.uitkPill-active {
+.uitkPill:not(.uitkPill-selectable):active,
+.uitkPill:not(.uitkPill-selectable).uitkPill-active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
 }
@@ -179,8 +180,8 @@
   user-select: none;
 }
 
-.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable):active,
-.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable).uitkPill-active {
+.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable):not(.uitkPill-disabled):active,
+.uitkPill:not(.uitkPill-deletable):not(.uitkPill-selectable):not(.uitkPill-disabled).uitkPill-active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
 }

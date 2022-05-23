@@ -43,5 +43,5 @@
 
 /* extra specificity requred to override ListItem selected */
 .uitkMenuItem.uitkMenuItem-menuItemBlurSelected {
-  background: var(--uitk-selectable-background-bluractive) !important;
+  background: var(--uitk-selectable-background-blurselected) !important;
 }

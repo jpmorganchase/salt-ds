@@ -48,7 +48,7 @@
 /* Horizontal line under the progress indicator bar */
 .uitkLinearProgress-barContainer:after {
   top: var(--linear-progress-after-top);
-  background: var(--uitk-measured-background);
+  background: var(--uitk-measured-fill);
   content: "";
   display: block;
   height: 1px;
@@ -75,7 +75,7 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--uitk-measured-background-active);
+  background: var(--uitk-measured-background);
   z-index: 2;
 }
 
