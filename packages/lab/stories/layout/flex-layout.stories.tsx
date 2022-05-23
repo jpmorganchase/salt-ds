@@ -1,15 +1,14 @@
 import {
-  Checkbox,
-  Dropdown,
-  FlexItem,
-  FlexLayout,
-  FormField,
   FLEX_ALIGNMENT_BASE,
   FLEX_CONTENT_ALIGNMENT_BASE,
+  FlexItem,
+  FlexLayout,
+  Metric,
+  MetricContent,
+  MetricHeader,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
-import { useState } from "react";
 
 export default {
   title: "Layout/FlexLayout",
@@ -20,13 +19,6 @@ export default {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
     },
-    direction: {
-      options: ["row", "column"],
-      control: { type: "radio" },
-    },
-    gap: {
-      type: "number",
-    },
     justify: {
       options: FLEX_CONTENT_ALIGNMENT_BASE,
       control: { type: "select" },
@@ -35,13 +27,10 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
-    wrap: {
-      type: "boolean",
-    },
   },
 } as ComponentMeta<typeof FlexLayout>;
 
-const Template: ComponentStory<typeof FlexLayout> = (args) => {
+const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
@@ -56,21 +45,12 @@ const Template: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const ToolkitFlexLayout = Template.bind({});
-ToolkitFlexLayout.args = {};
+export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
+DefaultFlexLayout.args = {};
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
-    <FlexLayout
-      wrap={{
-        xs: true,
-        sm: true,
-        md: true,
-        lg: false,
-        xl: false,
-      }}
-      {...args}
-    >
+    <FlexLayout {...args}>
       {Array.from({ length: 12 }, (_, index) => (
         <FlexItem grow={1} key={index}>
           <FlexContent />
@@ -90,39 +70,29 @@ ToolkitFlexLayoutResponsive.args = {
     lg: false,
   },
 };
-ToolkitFlexLayoutResponsive.args = {};
 
-const colorFormats = ["Hex", "HSV"];
-
-const Forms: ComponentStory<typeof FlexLayout> = (args) => {
-  const [showMode, setShowMode] = useState(colorFormats[0]);
-  const [showContrast, setShowContrast] = useState(false);
+const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
+  args
+) => {
   return (
-    <FlexLayout {...args}>
-      <FormField
-        label="Show as"
-        labelPlacement="left"
-        className="ColorInpsector-preferences-showAs"
-      >
-        <Dropdown
-          source={colorFormats}
-          selectedItem={showMode}
-          onChange={(_, item) => setShowMode(item || "")}
-        />
-      </FormField>
-      <Checkbox
-        label="Contrast"
-        checked={showContrast}
-        onChange={(_, checked) => setShowContrast(checked)}
-      />
-    </FlexLayout>
+    <div style={{ background: "#EAEDEF", padding: 24 }}>
+      <FlexLayout {...args}>
+        {Array.from({ length: 5 }, (_, index) => (
+          <Metric key={index}>
+            <MetricHeader title={`Form Stage ${index + 1}`} />
+            <MetricContent value="Complete" />
+          </Metric>
+        ))}
+        <Metric>
+          <MetricHeader title="Form Stage 6" />
+          <MetricContent value="Pending" />
+        </Metric>
+      </FlexLayout>
+    </div>
   );
 };
-export const ToolkitFormInFlexLayout = Forms.bind({});
-ToolkitFormInFlexLayout.args = {
-  gap: 1,
-  wrap: {
-    xs: true,
-    sm: false,
-  },
+export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
+FlexLayoutSimpleUsage.args = {
+  gap: 3,
+  wrap: true,
 };

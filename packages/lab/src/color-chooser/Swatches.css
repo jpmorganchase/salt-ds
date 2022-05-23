@@ -1,40 +1,23 @@
+/*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatches-colorNameTextDiv {
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-bold);
 }
 
-.uitk-light .uitkColorChooserSwatches-colorNameTextDiv {
-  color: var(--uitk-color-grey-200);
-}
-
-.uitk-dark .uitkColorChooserSwatches-colorNameTextDiv {
-  color: var(--uitk-color-white);
+.uitkColorChooserSwatches-colorNameTextDiv,
+.uitkColorChooserSwatches-colorTextDiv,
+.uitkColorChooserSwatches-alphaTextDiv {
+  color: var(--uitk-text-secondary-color);
 }
 
 .uitkColorChooserSwatches-colorTextDiv {
   font-size: var(--uitk-text-font-size);
-  margin-right: var(--uitk-spacing-unit);
-}
-
-.uitk-light .uitkColorChooserSwatches-colorTextDiv {
-  color: var(--uitk-color-grey-200);
-}
-
-.uitk-dark .uitkColorChooserSwatches-colorTextDiv {
-  color: var(--uitk-color-grey-70);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkColorChooserSwatches-alphaTextDiv {
-  font-size: var(--uitk-typography-size-regular-unit);
-  margin-right: var(--uitk-spacing-unit);
-}
-
-.uitk-light .uitkColorChooserSwatches-alphaTextDiv {
-  color: var(--uitk-color-grey-200);
-}
-
-.uitk-dark .uitkColorChooserSwatches-alphaTextDiv {
-  color: var(--uitk-color-grey-70);
+  font-size: var(--uitk-typography-size-regular);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkColorChooserSwatches-textDiv {
@@ -44,5 +27,5 @@
 }
 
 .uitkColorChooserSwatches-pickerDiv {
-  padding-top: calc(2 * var(--uitk-spacing-unit));
+  padding-top: calc(2 * var(--uitk-size-unit));
 }

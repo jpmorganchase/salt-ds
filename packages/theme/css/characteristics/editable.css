@@ -1,76 +1,33 @@
 .uitk-dark,
 .uitk-light {
-  --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
+  --uitk-editable-cursor-disabled: not-allowed;
+  --uitk-editable-cursor-hover: text;
+
+  --uitk-editable-border-style: solid;
 
   --uitk-editable-border-width: 1px;
   --uitk-editable-border-width-hover: 1px;
   --uitk-editable-border-width-active: 2px;
   --uitk-editable-border-width-readonly: 1px;
-}
 
-.uitk-light {
-  --uitk-editable-text-primary: var(--uitk-color-grey-900);
-  --uitk-editable-text-secondary: var(--uitk-color-grey-200);
+  --uitk-editable-border-color: var(--uitk-palette-interact-border);
+  --uitk-editable-border-color-active: var(--uitk-palette-interact-border-selected);
+  --uitk-editable-border-color-hover: var(--uitk-palette-interact-border-hover);
+  --uitk-editable-border-color-readonly: var(--uitk-palette-interact-border-readonly);
 
-  --uitk-editable-icon-color: var(--uitk-color-grey-600);
-  --uitk-editable-icon-color-hover: var(--uitk-color-grey-600);
-  --uitk-editable-icon-color-active: var(--uitk-color-grey-600);
-  --uitk-editable-icon-color-readonly: transparent;
+  --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-hover-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-readonly-low: var(--uitk-palette-interact-background-low);
 
-  --uitk-editable-border-color: var(--uitk-color-grey-90);
-  --uitk-editable-border-color-hover: var(--uitk-color-blue-400);
-  --uitk-editable-border-color-active: var(--uitk-color-blue-500);
-  --uitk-editable-border-color-readonly: var(--uitk-color-grey-90-fade-20);
-}
+  --uitk-editable-background-medium: var(--uitk-palette-interact-background-medium);
+  --uitk-editable-background-hover-medium: var(--uitk-palette-interact-background-medium);
+  --uitk-editable-background-active-medium: var(--uitk-palette-interact-background-medium);
+  --uitk-editable-background-readonly-medium: var(--uitk-palette-interact-background-medium);
 
-.uitk-dark {
-  --uitk-editable-text-primary: var(--uitk-color-white);
-  --uitk-editable-text-secondary: var(--uitk-color-grey-70);
-
-  --uitk-editable-icon-color: var(--uitk-color-grey-60);
-  --uitk-editable-icon-color-hover: var(--uitk-color-grey-60);
-  --uitk-editable-icon-color-active: var(--uitk-color-grey-60);
-  --uitk-editable-icon-color-readonly: transparent;
-
-  --uitk-editable-border-color: var(--uitk-color-grey-100);
-  --uitk-editable-border-color-hover: var(--uitk-color-blue-300);
-  --uitk-editable-border-color-active: var(--uitk-color-blue-400);
-  --uitk-editable-border-color-readonly: var(--uitk-color-grey-100-fade-20);
-}
-
-/* Default medium emphasis values */
-
-.uitk-light {
-  --uitk-editable-background: var(--uitk-color-white);
-}
-
-.uitk-dark {
-  --uitk-editable-background: var(--uitk-color-grey-800);
-}
-
-/* Explicit emphasis values */
-
-.uitk-light .uitkEmphasisMedium {
-  --uitk-editable-background: var(--uitk-color-white);
-}
-
-.uitk-dark .uitkEmphasisMedium {
-  --uitk-editable-background: var(--uitk-color-grey-800);
-}
-
-.uitk-light .uitkEmphasisLow {
-  --uitk-editable-background: transparent;
-}
-
-.uitk-dark .uitkEmphasisLow {
-  --uitk-editable-background: transparent;
-}
-
-.uitk-light .uitkEmphasisHigh {
-  --uitk-editable-background: var(--uitk-color-grey-20);
-}
-
-.uitk-dark .uitkEmphasisHigh {
-  --uitk-editable-background: var(--uitk-color-grey-900);
+  --uitk-editable-background-high: var(--uitk-palette-interact-background-high);
+  --uitk-editable-background-hover-high: var(--uitk-palette-interact-background-high);
+  --uitk-editable-background-active-high: var(--uitk-palette-interact-background-high);
+  --uitk-editable-background-readonly-high: var(--uitk-palette-interact-background-high);
 }

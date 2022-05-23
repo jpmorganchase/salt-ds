@@ -1,8 +1,8 @@
-import { forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 
-export interface FlowLayoutProps {
+export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
@@ -19,18 +19,9 @@ export interface FlowLayoutProps {
    * Adds a separator between elements.
    */
   separators?: FlexLayoutProps["separators"];
-  /**
-   * Allow the items to wrap as needed, default is true.
-   */
-  wrap?: FlexLayoutProps["wrap"];
 }
-
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
-  function FlowLayout({ children, wrap = true, ...rest }, ref) {
-    return (
-      <FlexLayout direction="row" ref={ref} wrap={wrap} {...rest}>
-        {children}
-      </FlexLayout>
-    );
+  function FlowLayout({ ...rest }, ref) {
+    return <FlexLayout direction="row" ref={ref} wrap={true} {...rest} />;
   }
 );

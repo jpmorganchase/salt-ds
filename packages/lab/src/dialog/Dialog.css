@@ -1,22 +1,13 @@
-.uitk-dark .uitkDialog {
-  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-color-grey-400));
-  --dialog-box-shadow: var(--uitkDialog-box-shadow, rgba(0, 0, 0, 0.65) 0px 12px 40px 5px);
-}
-
-.uitk-light .uitkDialog {
-  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-container-border-color));
-  --dialog-box-shadow: var(--uitkDialog-box-shadow, rgba(0, 0, 0, 0.3) 0 12px 40px 5px);
-}
-
 .uitkDialog {
-  /* TODO: Which emphasis should this be? */
-  --dialog-background-color: var(--uitkDialog-background-color, var(--uitk-container-background));
-  --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-border-width));
+  --dialog-background-color: var(--uitkDialog-background-color, var(--uitk-container-background-medium));
   --dialog-border-bottom-width: var(--uitkDialog-border-bottom-width, 2px);
-  --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-typography-font-family));
-  --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-spacing-unit)));
+  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-container-border-color-medium));
   --dialog-border-style: var(--uitkDialog-border-style, var(--uitk-container-border-style));
-  --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-spacing-unit)));
+  --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-border-width));
+  --dialog-box-shadow: var(--uitkDialog-box-shadow, var(--uitk-overlayable-shadow-modal)); /* TODO: Check token w design */
+  --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-typography-font-family));
+  --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
+  --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
 }
 
 .uitkDialog {

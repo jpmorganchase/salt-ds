@@ -1,5 +1,5 @@
 .uitkGridLayout {
-  --grid-layout-gap: var(--uitk-spacing-unit);
+  --grid-layout-gap: var(--uitk-size-unit);
   --grid-layout-space: 1fr;
 }
 

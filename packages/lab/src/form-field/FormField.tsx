@@ -61,10 +61,6 @@ export interface FormFieldProps
    */
   ActivationIndicatorComponent?: ElementType<FormActivationIndicatorProps>;
   /**
-   * In low emphasis mode, background is transparent. In high emphasis mode, background is filled. Defaults to medium - standard background color.
-   */
-  emphasis?: "low" | "medium" | "high";
-  /**
    * Outer focus ring focus will not be applied. Defaults to false.
    */
   disableFocusRing?: boolean;
@@ -198,7 +194,6 @@ export const FormField = forwardRef(
       className,
       disabled,
       disableFocusRing = false,
-      emphasis = "medium",
       fullWidth = true,
       hasStatusIndicator,
       HelperTextComponent = FormHelperText,
@@ -259,9 +254,6 @@ export const FormField = forwardRef(
       className: cx(
         withBaseName(),
         {
-          uitkEmphasisLow: emphasis === "low",
-          uitkEmphasisMedium: emphasis === "medium",
-          uitkEmphasisHigh: emphasis === "high",
           [withBaseName("disabled")]: disabled,
           [withBaseName("readOnly")]: readOnly,
           [withBaseName("warning")]: isWarning,

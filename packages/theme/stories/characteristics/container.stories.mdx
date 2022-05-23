@@ -22,9 +22,6 @@ allow hierarchical organization.
 <Canvas>
   <Story name="All">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-container-background" />
-      <ColorBlock colorVar="--uitk-container-border-color" />
-      <ColorBlock colorVar="--uitk-container-border-color-disabled" />
       <CornerBlock cornerRadius="--uitk-container-border-radius" />
       <LineBlockCell />
       <LineBlockCode>--uitk-container-border-style</LineBlockCode>
@@ -33,40 +30,36 @@ allow hierarchical organization.
   </Story>
 </Canvas>
 
-### High emphasis overrides
+### Medium emphasis values
 
 <Canvas>
-  <Story name="High emphasis">
+  <Story name="Medium emphasis">
     <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-container-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisHigh"
-        colorVar="--uitk-container-border-color"
-      />
+      <ColorBlock colorVar="--uitk-container-background-medium" />
+      <ColorBlock colorVar="--uitk-container-border-color-medium" />
+      <ColorBlock colorVar="--uitk-container-border-color-disabled-medium" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### Low emphasis overrides
+### High emphasis values
+
+<Canvas>
+  <Story name="High emphasis">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-container-background-high" />
+      <ColorBlock colorVar="--uitk-container-border-color-high" />
+      <ColorBlock colorVar="--uitk-container-border-color-disabled-high" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Low emphasis values
 
 <Canvas>
   <Story name="Low emphasis">
     <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-container-background"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-container-border-color"
-      />
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-container-border-color-disabled"
-      />
+      <ColorBlock colorVar="--uitk-container-background-low" />
     </DocGrid>
   </Story>
 </Canvas>
