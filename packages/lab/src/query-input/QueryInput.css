@@ -8,21 +8,21 @@
 }
 
 .uitkQueryInputBody > .uitkIcon {
-  padding: var(--uitk-spacing-unit);
+  padding: var(--uitk-size-unit);
   align-self: start;
 }
 
 .uitkQueryInputBody-separator {
   width: 1px;
   background-color: var(--uitk-separable-border-color-2);
-  margin: 0 var(--uitk-spacing-unit);
+  margin: 0 var(--uitk-size-unit);
   align-self: stretch;
 }
 
 .uitkQueryInputBody-buttonGroup {
   flex-shrink: 0;
   align-self: start;
-  margin-bottom: var(--uitk-spacing-unit);
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .uitkQueryInputBody-input {
@@ -51,7 +51,7 @@
 
 .uitkCategoryListItem-text {
   flex-shrink: 0;
-  margin-right: calc(var(--uitk-spacing-unit) * 1.5);
+  margin-right: calc(var(--uitk-size-unit) * 1.5);
 }
 
 .uitkCategoryListItem-valuesContainer {
@@ -70,7 +70,7 @@
 
 .uitkCategoryListItem-chevron {
   flex-shrink: 0;
-  margin-left: var(--uitk-spacing-unit);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkListItem-selected .uitkIcon {
@@ -78,7 +78,7 @@
 }
 
 .uitkQueryInputValueList {
-  border: solid 1px var(--uitk-container-border-color);
+  border: solid 1px var(--uitk-container-border-color-medium);
 }
 
 .uitkQueryInputValueList-back {
@@ -90,7 +90,7 @@
 }
 
 .uitkQueryInputValueList-back .uitkIcon {
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkQueryInputValueList-category {
@@ -110,12 +110,12 @@
 
 .uitkQueryInputSearchList-categoryTitle {
   color: var(--uitk-text-primary-color);
-  background: var(--uitk-container-background);
+  background: var(--uitk-container-background-medium);
   font-size: var(--uitk-text-font-size);
   font-weight: var(--uitk-typography-weight-bold);
   display: flex;
   align-items: center;
-  padding: 0 var(--uitk-spacing-unit);
+  padding: 0 var(--uitk-size-unit);
   position: sticky;
   top: 0;
   z-index: var(--uitk-zindex-default);

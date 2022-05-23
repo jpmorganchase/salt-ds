@@ -2,15 +2,15 @@
   --uitkButton-text-transform: none;
   --uitkButton-secondary-background-hover: var(--uitk-actionable-secondary-background);
   --uitkButton-secondary-background-active: var(--uitk-actionable-secondary-background);
-  --uitkButton-secondary-text-color-active: var(--uitk-actionable-secondary-text-color);
+  --uitkButton-secondary-text-color-active: var(--uitk-actionable-secondary-foreground);
 
   /* Fonts, Text */
-  --uitkButton-font-weight: var(--uitk-typography-weight-regular);
+  --uitkButton-secondary-font-weight: var(--uitk-typography-weight-medium);
   --uitkButton-text-align: left;
 }
 
 .uitkDropdownButton:active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-text-color);
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
 }
 
 .uitkDropdownButton-fullwidth {

@@ -45,7 +45,6 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     ref
   ) {
     const {
-      emphasis,
       direction,
       showIndicator,
       indicatorPosition,
@@ -54,7 +53,8 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       subtitleId,
     } = useMetricContext();
 
-    const iconSize = emphasis === "low" ? 12 : 24;
+    /* TODO: does this work? */
+    const iconSize = className?.includes("uitkEmphasisLow") ? 12 : 24;
 
     const iconProps = {
       "aria-label": direction,
@@ -76,24 +76,24 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
 
-    const valueComponent = useMemo(() => {
-      const Component =
-        emphasis === "high"
-          ? Figure1
-          : emphasis === "medium"
-          ? Figure2
-          : Figure3;
+    // const valueComponent = useMemo(() => {
+    //   const Component = Figure1;
+    //   // emphasis === "high"
+    //   //   ? Figure1
+    //   //   : emphasis === "medium"
+    //   //   ? Figure2
+    //   //   : Figure3;
 
-      return (
-        <Component
-          data-testid="metric-value"
-          id={valueId}
-          className={withBaseName("value")}
-        >
-          {value}
-        </Component>
-      );
-    }, [emphasis, value, valueId]);
+    //   return (
+    //     <Component
+    //       data-testid="metric-value"
+    //       id={valueId}
+    //       className={withBaseName("value")}
+    //     >
+    //       {value}
+    //     </Component>
+    //   );
+    // }, [value, valueId]);
 
     return (
       <div
@@ -104,7 +104,13 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       >
         <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          {valueComponent}
+          <Div
+            data-testid="metric-value"
+            id={valueId}
+            className={withBaseName("value")}
+          >
+            {value}
+          </Div>
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (

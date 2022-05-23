@@ -157,8 +157,8 @@ export const Link = ({ children, to, ...props }) => (
   - all Actionable characteristics used
 - [Focused](/docs/themes-toolkit-characteristics--focused)
   - --uitk-focused-outline-style
-  - --uitk-focused-line-width
-  - --uitk-focused-color
+  - --uitk-focused-outline-width
+  - --uitk-focused-outline-color
   - --uitk-focused-outline-offset
 
 ## --uitkButton CSS Custom Property API
@@ -218,16 +218,15 @@ Note that we scope these variables to the combined class name `.uitk-light.uitk-
 .uitk-light.uitk-newapp {
 
   /* CTA */
-  --uitk-actionable-cta-text-color: var(--uitk-color-white);
   --uitk-actionable-cta-background: linear-gradient(to bottom, var(--uitk-color-blue-500), var(--uitk-color-blue-600));
-  --uitk-actionable-cta-icon-color: var(--uitk-color-white);
+  --uitk-actionable-cta-foreground: var(--uitk-color-white);
   --uitk-actionable-cta-topline-color: var(--uitk-color-blue-100);
   --uitk-actionable-cta-baseline-color: var(--uitk-color-grey-900);
 
   /* Bid / Buy */
-  --uitk-actionable-bid-text-color: var(--uitk-color-grey-900);
+  --uitk-actionable-bid-foreground: var(--uitk-color-grey-900);
   --uitk-actionable-bid-background: linear-gradient(to bottom, var(--uitk-color-blue-50), var(--uitk-color-blue-100));
-  --uitk-actionable-bid-icon-color: var(--uitk-color-grey-900);
+  --uitk-actionable-bid-foreground: var(--uitk-color-grey-900);
   --uitk-actionable-bid-topline-color: var(--uitk-color-white);
   --uitk-actionable-bid-baseline-color: var(--uitk-color-blue-300);
 ```
@@ -244,13 +243,13 @@ Following toolkit conventions, we have implemented the Button component styles i
     --uitk-actionable-final-background-disabled
   );
   --button-background-hover: var(--uitk-actionable-final-background-hover);
-  --button-text-color: var(--uitk-actionable-final-text-color);
-  --button-text-color-active: var(--uitk-actionable-final-text-color-active);
+  --button-text-color: var(--uitk-actionable-final-foreground);
+  --button-text-color-active: var(--uitk-actionable-final-foreground-active);
   --button-text-color-disabled: var(
-    --uitk-actionable-final-text-color-disabled
+    --uitk-actionable-final-foreground-disabled
   );
-  --button-text-color-hover: var(--uitk-actionable-final-text-color-hover);
-  --uitkIcon-color: var(--uitk-actionable-final-icon-color);
+  --button-text-color-hover: var(--uitk-actionable-final-foreground-hover);
+  --uitkIcon-color: var(--uitk-actionable-final-foreground);
   --uitkButton-border-color: var(--uitk-actionable-final-topline-color) transparent
     var(--uitk-actionable-final-baseline-color) transparent;
 }

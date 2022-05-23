@@ -69,6 +69,7 @@ const metricExamples = (
 export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
   return (
     <QAContainer
+      width={700}
       className="uitkMetricQA"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
     >

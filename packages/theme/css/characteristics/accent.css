@@ -1,11 +1,6 @@
-.uitk-light {
-  --uitk-accent-border-color: var(--uitk-color-blue-300);
-  --uitk-accent-background: var(--uitk-color-blue-500);
-  --uitk-accent-text-color: var(--uitk-color-white);
-}
-
+.uitk-light,
 .uitk-dark {
-  --uitk-accent-border-color: var(--uitk-color-blue-300);
-  --uitk-accent-background: var(--uitk-color-blue-500);
-  --uitk-accent-text-color: var(--uitk-color-white);
+  --uitk-accent-border-color: var(--uitk-palette-accent-border);
+  --uitk-accent-background: var(--uitk-palette-accent-background);
+  --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
 }

@@ -1,42 +1,23 @@
 /* Styles applied to root component */
-.uitk-light .uitkCheckbox {
-  --checkbox-outline-color: var(--uitk-color-grey-90);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-400);
-}
-
-.uitk-dark .uitkCheckbox {
-  --checkbox-outline-color: var(--uitk-color-grey-100);
-  --checkbox-outline-color-hover: var(--uitk-color-blue-300);
-}
-
-.uitkCheckbox {
-  --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
-  --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
-}
-
 .uitk-density-medium .uitkCheckbox {
   --checkbox-font-size: 12px;
-  --label-margin-left: 6px;
-  --label-margin-right: calc(var(--uitk-spacing-medium) * var(--checkbox-space-multiplier));
-  --label-margin-top: calc(var(--uitk-spacing-medium) * var(--checkbox-top-multiplier));
 }
 .uitk-density-touch .uitkCheckbox {
   --checkbox-font-size: 16px;
-  --label-margin-left: 12px;
-  --label-margin-right: calc(var(--uitk-spacing-touch) * var(--checkbox-space-multiplier));
-  --label-margin-top: calc(var(--uitk-spacing-touch) * var(--checkbox-top-multiplier));
 }
 .uitk-density-low .uitkCheckbox {
   --checkbox-font-size: 14px;
-  --label-margin-left: 9px;
-  --label-margin-right: calc(var(--uitk-spacing-low) * var(--checkbox-space-multiplier));
-  --label-margin-top: calc(var(--uitk-spacing-low) * var(--checkbox-top-multiplier));
 }
 .uitk-density-high .uitkCheckbox {
   --checkbox-font-size: 11px;
-  --label-margin-left: 3px;
-  --label-margin-right: calc(var(--uitk-spacing-high) * var(--checkbox-space-multiplier));
-  --label-margin-top: calc(var(--uitk-spacing-high) * var(--checkbox-top-multiplier));
+}
+
+.uitkCheckbox {
+  --checkbox-label-margin-top: calc(var(--uitk-size-unit) * var(--checkbox-top-multiplier));
+  --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
+  --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
+  --checkbox-outline-color: var(--uitk-selectable-stroke);
+  --checkbox-outline-color-hover: var(--uitk-selectable-stroke-selecting);
 }
 
 .uitkCheckbox {
@@ -51,7 +32,7 @@
 /* Styles applied to label element */
 .uitkCheckbox-label {
   align-items: flex-start;
-  margin-top: var(--label-margin-top);
+  margin-top: var(--checkbox-label-margin-top);
 }
 
 .uitkCheckbox .uitkControlLabel-label {

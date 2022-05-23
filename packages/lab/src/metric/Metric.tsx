@@ -33,7 +33,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
     direction,
     showIndicator,
     align = "left",
-    emphasis = "medium",
     orientation = "vertical",
     indicatorPosition = "end",
     headingAriaLevel = 2,
@@ -50,7 +49,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
   const value = useMemo(
     () => ({
       align,
-      emphasis,
       direction,
       orientation,
       showIndicator,
@@ -62,7 +60,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
     }),
     [
       align,
-      emphasis,
       direction,
       orientation,
       showIndicator,
@@ -83,7 +80,6 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
           {
             [withBaseName(`direction-${direction}`)]: direction,
             [withBaseName(`orientation-${orientation}`)]: orientation,
-            [withBaseName(`emphasis-${emphasis}`)]: emphasis,
             [withBaseName(`align-${align}`)]: align,
           },
           className

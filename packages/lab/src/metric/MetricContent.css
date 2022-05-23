@@ -38,14 +38,23 @@
   align-items: flex-end;
 }
 
-.uitkMetric-orientation-horizontal.uitkMetric-emphasis-high .uitkMetricContent-value {
+.uitkEmphasisHigh.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.75;
   overflow: unset;
   height: unset;
+  font-size: var(--uitk-text-figure-1-font-size);
+  /* line-height: var(--uitk-text-figure-1-line-height); */
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
-.uitkMetric-orientation-horizontal.uitkMetric-emphasis-medium .uitkMetricContent-value {
+.uitkEmphasisMedium.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.85;
+  font-size: var(--uitk-text-figure-2-font-size);
+  /* line-height: var(--uitk-text-figure-2-line-height); */
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
-.uitkMetric-orientation-horizontal.uitkMetric-emphasis-low .uitkMetricContent-value {
+.uitkEmphasisLow.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.95;
+  font-size: var(--uitk-text-figure-3-font-size);
+  /* line-height: var(--uitk-text-figure-3-line-height); */
+  font-weight: var(--uitk-typography-weight-semiBold);
 }

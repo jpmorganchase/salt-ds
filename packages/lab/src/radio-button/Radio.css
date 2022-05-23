@@ -44,7 +44,8 @@
 }
 
 /* Styles applied to root component when state `focusVisible={true}` */
-.uitkRadio-focusVisible {
+.uitkRadio-focusVisible,
+.uitkRadio:focus {
   outline: var(--uitk-focused-outline);
   outline-offset: var(--uitk-focused-outline-offset);
 }

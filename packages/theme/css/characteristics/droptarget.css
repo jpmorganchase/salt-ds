@@ -1,5 +1,7 @@
+/* TODO: Use palette once tokens defined in Figma */
 .uitk-light,
 .uitk-dark {
+  --uitk-droptarget-cursor-disabled: not-allowed;
   --uitk-droptarget-border-style: dashed;
   --uitk-droptarget-border-width: 1px;
 }

@@ -1,3 +1,4 @@
+/*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatch-swatch,
 .uitkColorChooserSwatch-greySwatch {
   margin-bottom: 1px;
@@ -9,29 +10,29 @@
 .uitk-density-low,
 .uitk-density-medium,
 .uitk-density-high {
-  --uitk-color-swatch-density-high-size: calc(5 * var(--uitk-spacing-unit));
-  --uitk-color-swatch-density-medium-size: calc(3 * var(--uitk-spacing-unit));
-  --uitk-color-swatch-density-low-size: calc(3 * var(--uitk-spacing-unit));
-  --uitk-color-swatch-density-touch-size: calc(2 * var(--uitk-spacing-unit));
+  --swatch-density-high-size: calc(5 * var(--uitk-size-unit));
+  --swatch-density-medium-size: calc(3 * var(--uitk-size-unit));
+  --swatch-density-low-size: calc(3 * var(--uitk-size-unit));
+  --swatch-density-touch-size: calc(2 * var(--uitk-size-unit));
 }
 
 .uitk-density-touch {
-  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-touch-size);
+  --swatch-size-unit: var(--swatch-density-touch-size);
 }
 .uitk-density-low {
-  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-low-size);
+  --swatch-size-unit: var(--swatch-density-low-size);
 }
 .uitk-density-medium {
-  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-medium-size);
+  --swatch-size-unit: var(--swatch-density-medium-size);
 }
 .uitk-density-high {
-  --uitk-color-swatch-size-unit: var(--uitk-color-swatch-density-high-size);
+  --swatch-size-unit: var(--swatch-density-high-size);
 }
 
 .uitkColorChooserSwatch-swatch,
 .uitk-light .uitkColorChooserSwatch-greySwatch {
-  width: var(--uitk-color-swatch-size-unit);
-  height: var(--uitk-color-swatch-size-unit);
+  width: var(--swatch-size-unit);
+  height: var(--swatch-size-unit);
 }
 
 .uitkColorChooserSwatch-whiteSwatch {
@@ -41,13 +42,13 @@
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch {
-  border: 1px solid var(--uitk-color-grey-50);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch,
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  width: calc(var(--uitk-color-swatch-size-unit) - 2);
-  height: calc(var(--uitk-color-swatch-size-unit) - 2);
+  width: calc(var(--swatch-size-unit) - 2);
+  height: calc(var(--swatch-size-unit) - 2);
 }
 
 .uitk-dark .uitkColorChooserSwatch-whiteSwatch,
@@ -56,28 +57,28 @@
 }
 
 .uitk-dark .uitkColorChooserSwatch-whiteSwatch {
-  width: calc(var(--uitk-color-swatch-size-unit) - 2);
-  height: calc(var(--uitk-color-swatch-size-unit) - 2);
+  width: calc(var(--swatch-size-unit) - 2);
+  height: calc(var(--swatch-size-unit) - 2);
 }
 
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  border: 1px solid var(--uitk-color-grey-90);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
 }
 
 .uitkColorChooserSwatch-active {
-  outline: 1px solid var(--uitk-color-grey-800);
-  border: 2px solid var(--uitk-color-white) !important;
-  width: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
-  height: calc(var(--uitk-color-swatch-size-unit) - 4px) !important;
+  outline: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
+  border: var(--uitk-focused-outline-width) var(--uitk-actionable-border-style) var(--uitk-actionable-cta-foreground-active) !important;
+  width: calc(var(--swatch-size-unit) - 4px) !important;
+  height: calc(var(--swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
 }
 
 .uitkColorChooserSwatch-transparent {
-  border: 1px solid var(--uitk-color-red-700) !important;
-  width: calc(var(--uitk-color-swatch-size-unit) - 2px) !important;
-  height: calc(var(--uitk-color-swatch-size-unit) - 2px) !important;
+  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-negative-foreground) !important;
+  width: calc(var(--swatch-size-unit) - 2px) !important;
+  height: calc(var(--swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   background: linear-gradient(

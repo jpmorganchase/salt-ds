@@ -10,11 +10,6 @@ export interface MetricContextValue {
    */
   direction?: "up" | "down";
   /**
-   * The amount of emphasis on the main value. A higher emphasis means a larger, more prominent font.
-   * It defaults to 'low'.
-   */
-  emphasis?: "high" | "medium" | "low";
-  /**
    * The position of the indicator with regards to the main value.
    */
   indicatorPosition?: "start" | "end";

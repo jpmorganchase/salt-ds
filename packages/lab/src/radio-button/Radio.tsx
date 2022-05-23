@@ -46,7 +46,6 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
     name: nameProp,
     className,
     disabled: disabledProp,
-    emphasis = "medium",
     icon: iconProp,
     value,
     onFocus,
@@ -147,9 +146,6 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
       className={classnames(
         withBaseName(),
         {
-          [withBaseName("filled")]: inFormField && emphasis === "high",
-          [withBaseName("theme")]: inFormField && emphasis === "medium",
-          [withBaseName("transparent")]: inFormField && emphasis === "low",
           [withBaseName("disabled")]: disabled,
           [withBaseName("focusVisible")]: focusVisible,
         },
