@@ -15,13 +15,13 @@ const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 export const Medium = Template.bind({});
 Medium.args = {
   children: "Lorem Ipsum",
-  emphasis: "medium",
+  className: "uitkEmphasisMedium",
 };
 
 export const High = Template.bind({});
 High.args = {
   children: "Lorem Ipsum",
-  emphasis: "high",
+  className: "uitkEmphasisHigh",
 };
 
 export const All: ComponentStory<typeof Panel> = (props) => {
@@ -33,7 +33,7 @@ export const All: ComponentStory<typeof Panel> = (props) => {
       </AllRenderer>
       <h1>High emphasis</h1>
       <AllRenderer>
-        <Panel emphasis="high" {...props} />
+        <Panel className="uitkEmphasisHigh" {...props} />
       </AllRenderer>
     </>
   );

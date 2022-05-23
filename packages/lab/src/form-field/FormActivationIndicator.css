@@ -11,8 +11,8 @@
 }
 
 .uitkFormActivationIndicator-icon {
-  width: var(--uitkFormActivationIndicator-icon-size, var(--uitk-spacing-unit));
-  height: var(--uitkFormActivationIndicator-icon-size, var(--uitk-spacing-unit));
+  width: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
+  height: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
   fill: var(--uitkFormActivationIndicator-color);
   /** 
  * It's only a solid icon showing different color for validation states. 

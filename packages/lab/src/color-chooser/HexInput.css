@@ -1,7 +1,7 @@
 .uitkColorChooserHexInput {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px calc(3 * var(--uitk-spacing-unit)) 0px;
+  padding: 0px 0px calc(3 * var(--uitk-size-unit)) 0px;
 }
 
 .uitkColorChooserHexInput-hashSign {
@@ -13,13 +13,6 @@
 }
 
 .uitkColorChooserHexInput-input {
-  width: var(--uitk-spacing-unit);
-}
-
-.uitk-light .uitkColorChooserHexInput-input {
-  border-bottom: 1px solid var(--uitk-color-grey-900);
-}
-
-.uitk-dark .uitkColorChooserHexInput-input {
-  border-bottom: 1px solid var(--uitk-color-white);
+  width: var(--uitk-size-unit);
+  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
 }

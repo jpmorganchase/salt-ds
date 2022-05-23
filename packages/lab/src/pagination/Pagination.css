@@ -29,11 +29,11 @@
 }
 
 .uitkPagination-previousButton {
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkPagination-nextButton {
-  margin-left: var(--uitk-spacing-unit);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkPagination-pageButton {
@@ -43,8 +43,8 @@
 }
 
 .uitkPagination-pageButtonSelected {
-  background-color: var(--uitk-selectable-background-active);
-  color: var(--uitk-selectable-text-color-active);
+  background-color: var(--uitk-selectable-background-selected);
+  color: var(--uitk-selectable-cta-foreground-active);
 }
 
 .uitkPagination-pageButtonFixed {
@@ -93,11 +93,11 @@
 }
 
 .uitkPagination-leftGoToInput {
-  margin-right: var(--uitk-spacing-unit);
+  margin-right: var(--uitk-size-unit);
 }
 
 .uitkPagination-rightGoToInput {
-  margin-left: var(--uitk-spacing-unit);
+  margin-left: var(--uitk-size-unit);
   min-width: unset;
 }
 

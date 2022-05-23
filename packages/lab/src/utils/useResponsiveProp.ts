@@ -30,6 +30,24 @@ export const getCurrentBreakpoint = (
   return currentBreakpoint;
 };
 
+export const useCurrentBreakpoint = () => {
+  const viewport = useViewport();
+
+  const breakpoints = useBreakpoints();
+
+  return getCurrentBreakpoint(breakpoints, viewport);
+};
+
+export const useOrderedBreakpoints = () => {
+  const breakpoints = useBreakpoints();
+
+  const orderedBreakpoints = Object.entries(breakpoints)
+    .sort(([, a], [, b]) => a - b)
+    .map(([key]) => key);
+
+  return orderedBreakpoints;
+};
+
 const isObject = <T>(
   value: T
 ): value is Record<string | number | symbol, any> => {

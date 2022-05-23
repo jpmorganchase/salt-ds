@@ -1,0 +1,22 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+
+<Meta title="Documentation/Styles and Theming/Characteristics/Differential" />
+
+# Differential
+
+Indicates a positive or negative change within a value or object.
+
+## CSS Variables
+
+### All
+
+<Canvas>
+  <Story name="All">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-differential-foreground-positive" />
+      <ColorBlock colorVar="--uitk-differential-foreground-negative" />
+    </DocGrid>
+  </Story>
+</Canvas>

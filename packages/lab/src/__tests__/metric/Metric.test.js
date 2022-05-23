@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
 import { Metric, MetricHeader, MetricContent } from "../../metric";
 
@@ -42,29 +42,16 @@ describe("Metric", () => {
     );
   });
 
-  it("should render with medium emphasis style by default", () => {
-    const { container } = render(
-      <Metric>
-        <MetricHeader title="Revenue YTD" />
-        <MetricContent value="$801.9B" />
-      </Metric>
-    );
-
-    expect(container.querySelector(".uitkMetricContent")).toHaveClass(
-      "uitkEmphasisMedium"
-    );
-  });
-
-  ["high", "medium", "low"].forEach((emphasis) =>
+  ["High", "Medium", "Low"].forEach((emphasis) =>
     it(`should render with correct classes for "${emphasis}" emphasis`, () => {
-      const { container } = render(
-        <Metric emphasis={emphasis}>
+      render(
+        <Metric data-testid="metric" className={`uitkEmphasis${emphasis}`}>
           <MetricContent value="$801.9B" />
         </Metric>
       );
 
-      expect(container.querySelector(".uitkMetricContent")).toHaveClass(
-        `uitkEmphasis${emphasis[0].toUpperCase()}${emphasis.slice(1)}`
+      expect(screen.getByTestId("metric")).toHaveClass(
+        `uitkEmphasis${emphasis}`
       );
     })
   );

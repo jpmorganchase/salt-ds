@@ -238,17 +238,21 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
           {overflowedItems.length > 0 ? (
             <FormField
               ActivationIndicatorComponent={() => null}
-              className={cx("uitkToolbarField", "toolbar-item", {
-                "uitkToolbarField-start":
-                  OverflowButtonProps?.align === "start",
-              })}
+              className={cx(
+                "uitkToolbarField",
+                "toolbar-item",
+                "uitkEmphasisLow",
+                {
+                  "uitkToolbarField-start":
+                    OverflowButtonProps?.align === "start",
+                }
+              )}
               data-index={tools.length}
               data-overflow-indicator
               data-pad-start={alignedItemsInBar}
               data-orientation={orientation}
               data-priority={1}
               fullWidth={false}
-              emphasis="low"
             >
               <OverflowMenu
                 OverflowPanelProps={OverflowPanelProps}

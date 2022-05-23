@@ -2,16 +2,8 @@
 .uitk-dark {
   --uitk-separable-border-width: 1px;
   --uitk-separable-border-style: solid;
-}
 
-.uitk-light {
-  --uitk-separable-border-color-1: var(--uitk-color-grey-20);
-  --uitk-separable-border-color-2: var(--uitk-color-grey-40);
-  --uitk-separable-border-color-3: var(--uitk-color-grey-60);
-}
-
-.uitk-dark {
-  --uitk-separable-border-color-1: var(--uitk-color-grey-400);
-  --uitk-separable-border-color-2: var(--uitk-color-grey-500);
-  --uitk-separable-border-color-3: var(--uitk-color-grey-600);
+  --uitk-separable-border-color-1: var(--uitk-palette-neutral-border-low);
+  --uitk-separable-border-color-2: var(--uitk-palette-neutral-border-medium);
+  --uitk-separable-border-color-3: var(--uitk-palette-neutral-border-high);
 }

@@ -1,15 +1,15 @@
 /* Styles applied to the root element */
 .uitkCard {
-  background-color: var(--uitkCard-background-color, var(--uitk-container-background));
+  background-color: var(--uitkCard-background-color, var(--uitk-container-background-medium));
   border-width: var(--uitkCard-border-width, var(--uitk-container-border-width));
   border-style: var(--uitkCard-border-style, var(--uitk-container-border-style));
-  border-color: var(--uitkCard-border-color, var(--uitk-container-border-color));
+  border-color: var(--uitkCard-border-color, var(--uitk-container-border-color-medium));
   border-radius: var(--uitkCard-border-radius, var(--uitk-container-border-radius));
   box-shadow: var(--uitkCard-box-shadow, var(--uitk-shadow-2));
   box-sizing: border-box;
   color: var(--uitkCard-color, var(--uitk-text-primary-color));
   overflow: hidden;
-  padding: var(--uitkCard-padding, calc(var(--uitk-spacing-unit) * 3));
+  padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -29,30 +29,30 @@
 .uitkCard-content h1 {
   line-height: var(--uitkCard-content-h1-line-height, var(--uitk-text-h1-line-height));
   font-size: var(--uitkCard-content-h1-font-size, var(--uitk-text-h1-font-size));
-  font-weight: var(--uitkCard-content-h1-line-height, var(--uitk-text-h1-font-weight));
+  font-weight: var(--uitkCard-content-h1-font-weight, var(--uitk-text-h1-font-weight));
 }
 
 .uitkCard-content h2 {
   line-height: var(--uitkCard-content-h2-line-height, var(--uitk-text-h2-line-height));
   font-size: var(--uitkCard-content-h2-font-size, var(--uitk-text-h2-font-size));
-  font-weight: var(--uitkCard-content-h2-line-height, var(--uitk-text-h2-font-weight));
+  font-weight: var(--uitkCard-content-h2-font-weight, var(--uitk-text-h2-font-weight));
 }
 
 .uitkCard-content h3 {
   line-height: var(--uitkCard-content-h3-line-height, var(--uitk-text-h3-line-height));
   font-size: var(--uitkCard-content-h3-font-size, var(--uitk-text-h3-font-size));
-  font-weight: var(--uitkCard-content-h3-line-height, var(--uitk-text-h3-font-weight));
+  font-weight: var(--uitkCard-content-h3-font-weight, var(--uitk-text-h3-font-weight));
 }
 
 .uitkCard-content h4 {
   line-height: var(--uitkCard-content-h4-line-height, var(--uitk-text-hh41-line-height));
   font-size: var(--uitkCard-content-h4-font-size, var(--uitk-text-h4-font-size));
-  font-weight: var(--uitkCard-content-h4-line-height, var(--uitk-text-h4-font-weight));
+  font-weight: var(--uitkCard-content-h4-font-weight, var(--uitk-text-h4-font-weight));
 }
 
 /* Styles applied if `disabled={true}` */
 .uitkCard-disabled {
-  cursor: var(--uitkCard-cursor-disabled, var(--uitk-disabled-cursor));
+  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
   border-color: var(--uitkCard-border-color-disabled, var(--uitk-container-border-color-disabled));
 }
 
@@ -70,7 +70,7 @@
 /* Styles applied on hover if `interactable={true}` */
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
-  border-color: var(--uitkCard-border-color-hover, var(--uitk-color-blue-500)); /* TODO: change to characteristic */
+  border-color: var(--uitkCard-border-color-hover, var(--uitk-action-border-color-hover));
   cursor: pointer;
   position: relative;
   box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-shadow-4));

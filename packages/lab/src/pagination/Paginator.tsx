@@ -8,11 +8,13 @@ import { RegularControls } from "./RegularControls";
 import { ArrowButton } from "./ArrowButton";
 import { CompactControls } from "./CompactControls";
 import { useForkRef } from "../utils";
+import { FormFieldProps } from "../form-field";
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;
   siblingCount?: number;
   showPreviousNext?: boolean;
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
@@ -22,18 +24,13 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       boundaryCount,
       siblingCount,
       showPreviousNext = true,
+      FormFieldProps,
       ...restProps
     },
     forwardedRef
   ) => {
-    const {
-      count,
-      page,
-      onPageChange,
-      emphasis,
-      compact,
-      setPaginatorElement,
-    } = usePaginationContext();
+    const { count, page, onPageChange, compact, setPaginatorElement } =
+      usePaginationContext();
 
     const ref = useForkRef(setPaginatorElement, forwardedRef);
 
@@ -64,7 +61,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             count={count}
             page={page}
             onPageChange={onPageChange}
-            emphasis={emphasis}
+            FormFieldProps={FormFieldProps}
           />
         ) : (
           <RegularControls

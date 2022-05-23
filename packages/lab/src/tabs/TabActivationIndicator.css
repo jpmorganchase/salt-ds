@@ -1,18 +1,11 @@
-.uitk-light .uitkTabActivationIndicator {
-  --activation-indicator-bg: var(--uitk-color-grey-60);
-  --activation-indicator-thumb-bg: var(--uitk-color-orange-700);
-}
-
-.uitk-dark .uitkTabActivationIndicator {
-  --activation-indicator-bg: var(--uitk-color-grey-400);
-  --activation-indicator-thumb-bg: var(--uitk-color-orange-500);
-}
-
 .uitkTabActivationIndicator-no-background {
   --activation-indicator-bg: transparent !important;
 }
 
 .uitkTabActivationIndicator {
+  --activation-indicator-bg: var(--uitk-container-background-medium); /* TODO: Check token */
+  --activation-indicator-thumb-bg: var(--uitk-navigable-indicator-active); /* TODO: Check token */
+
   background-color: var(--uitkTabActivationIndicator-bg, var(--activation-indicator-bg));
   bottom: 0;
   box-sizing: border-box;

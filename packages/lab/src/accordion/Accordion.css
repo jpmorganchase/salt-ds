@@ -37,12 +37,12 @@
 }
 
 .uitkAccordionSection {
-  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable-unit));
+  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
   --summary-font-weight: var(--uitkAccordionSummary-font-weight, var(--uitk-typography-weight-regular));
 
-  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background));
-  --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background));
-  --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background));
+  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
+  --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
+  --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
   --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
 
   --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-color));
@@ -63,8 +63,8 @@
   --section-margin-left: var(--uitkAccordionSection-margin-left, 0);
 
   --summary-focus-outline-style: var(--uitk-focused-outline-style);
-  --summary-focus-outline-width: var(--uitk-focused-line-width);
-  --summary-focus-outline-color: var(--uitk-focused-color);
+  --summary-focus-outline-width: var(--uitk-focused-outline-width);
+  --summary-focus-outline-color: var(--uitk-focused-outline-color);
   --summary-focus-outline-offset: var(--uitk-focused-outline-offset);
 
   --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);

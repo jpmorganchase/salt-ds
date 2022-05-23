@@ -13,16 +13,27 @@ import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { usePaginationContext } from "./usePaginationContext";
 import { useForkRef, useId } from "../utils";
 import { withBaseName } from "./utils";
-import { FormField } from "../form-field";
+import { FormField, FormFieldProps } from "../form-field";
 import { Input } from "../input";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
-  ({ className, id: idProp, label = "Go to", ...restProps }, forwardedRef) => {
-    const { compact, count, onPageChange, emphasis, paginatorElement } =
+  (
+    {
+      className,
+      id: idProp,
+      label = "Go to",
+      FormFieldProps: { ...restFormFieldProps } = {},
+      ...restProps
+    },
+
+    forwardedRef
+  ) => {
+    const { compact, count, onPageChange, paginatorElement } =
       usePaginationContext();
 
     const id = useId(idProp);
@@ -87,7 +98,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       <span
         className={cx(
           withBaseName("goToInputWrapper"),
-          { [withBaseName(`${position}GoToInput`)]: position },
+          { [withBaseName(`${position!}GoToInput`)]: position },
           className
         )}
         ref={forkedRef}
@@ -97,7 +108,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           fullWidth={false}
           label={label}
           labelPlacement="left"
-          emphasis={emphasis}
+          {...restFormFieldProps}
         >
           <Input
             className={cx(withBaseName("goToInput"), {
