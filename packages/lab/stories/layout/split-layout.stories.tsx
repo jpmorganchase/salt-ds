@@ -30,7 +30,7 @@ export default {
   },
 } as ComponentMeta<typeof SplitLayout>;
 
-const Template: ComponentStory<typeof SplitLayout> = (args) => {
+const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => {
   const leftItem = useMemo(
     () => (
       <FlowLayout>
@@ -56,14 +56,16 @@ const Template: ComponentStory<typeof SplitLayout> = (args) => {
   );
 
   return (
-    <SplitLayout
-      {...args}
-      leftSplitItem={leftItem}
-      rightSplitItem={rightItem}
-    />
+    <div style={{ minWidth: 850 }}>
+      <SplitLayout
+        {...args}
+        leftSplitItem={leftItem}
+        rightSplitItem={rightItem}
+      />
+    </div>
   );
 };
-export const ToolkitSplitLayout = Template.bind({});
+export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
 
 const ButtonBarExample: ComponentStory<typeof SplitLayout> = (args) => {
   const leftItem = useMemo(

@@ -85,6 +85,7 @@ export const parameters: Parameters = {
         "Core",
         "Icons",
         "Layout",
+        ["Docs", ["Introduction", "*"], "*"],
         "Lab",
       ],
     },
