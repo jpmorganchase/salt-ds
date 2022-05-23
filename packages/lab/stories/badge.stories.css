@@ -1,0 +1,7 @@
+.uitkBadge.errorBackwardsCompat {
+  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
+}
+
+.uitkBadge.successBackwardsCompat {
+  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
+}

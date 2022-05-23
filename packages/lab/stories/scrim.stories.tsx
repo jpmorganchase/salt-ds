@@ -47,13 +47,13 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
         closeWithEscape
-        emphasis="medium"
+        className="uitkEmphasisMedium"
         onBackDropClick={handleClose}
         onClose={handleClose}
         open={open}
         returnFocus
       >
-        <p style={{ color: "#fff" }}>
+        <p style={{ color: "#000" }}>
           Click or press Escape to close the Scrim
         </p>
       </Scrim>
@@ -125,7 +125,7 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         onClose={handleClose}
         open={open}
         parentRef={parentRef}
-        emphasis="medium"
+        className="uitkEmphasisMedium"
         zIndex={2}
       >
         <Button onClick={handleClose}>CLOSE SCRIM</Button>

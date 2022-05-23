@@ -1,0 +1,87 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { DefaultFlexLayout } from "./flex-layout.stories";
+
+<Meta title="Layout/Docs/FlexLayout" component={FlexLayout} />
+
+# Flex Layout
+
+Dictates a horizontal order and direction for UI elements.
+
+<Canvas>
+  <Story name="Default Flex Layout">
+    <DefaultFlexLayout />
+  </Story>
+</Canvas>
+
+## API
+
+```
+import {FlexLayout, FlexItem} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+### Flex Layout Props
+
+<ArgsTable of={FlexLayout} />
+
+### Flex Item Props
+
+<ArgsTable of={FlexItem} />
+
+## Usage Examples
+
+### Flex Item inside default flex layout
+
+<Canvas>
+  <Story id="layout-flexlayout-flexitem--flex-item-wrapper" />
+</Canvas>
+
+### Responsive
+
+<Canvas>
+  <Story id="layout-flexlayout--toolkit-flex-layout-responsive" />
+</Canvas>
+
+### Simple Usage
+
+<Canvas>
+  <Story id="layout-flexlayout--flex-layout-simple-usage" />
+</Canvas>
+
+## Used in
+
+The flex layout is used in the following components
+
+- [Split layout](?path=/docs/layout-docs-splitlayout--default-split-layout)
+- [Stack layout](?path=/docs/layout-docs-stacklayout--default-stack-layout)
+- [Flow layout](?path=/docs/layout-flowlayout--default-flow-layout)
+- [Parent Child layout](?path=/docs/layout-docs-parentchildlayout--default-parent-child-layout)
+
+## Anatomy
+
+<Canvas>
+  <Story name="Flex Layout Anatomy">
+    <ComponentAnatomy showLegend>
+      <FlexLayout>
+        <FlexItem></FlexItem>
+      </FlexLayout>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## classes
+
+### Layout
+
+<CSSClassTable of={FlexLayout} />
+
+### Item
+
+<CSSClassTable of={FlexItem} />

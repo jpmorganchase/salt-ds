@@ -8,11 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
+import cn from "classnames";
 import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 import { PaginationContext, paginationContext } from "./PaginationContext";
 import { useControlled } from "../utils";
 import { withBaseName } from "./utils";
-import cn from "classnames";
 
 const { Provider } = paginationContext;
 
@@ -21,7 +21,6 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   page?: number;
   initialPage?: number;
   onPageChange?: (page: number) => void;
-  emphasis?: "low" | "medium" | "high";
   compact?: boolean;
 }
 
@@ -34,7 +33,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       initialPage = 1,
       page: pageProp,
       onPageChange: onPageChangeProp,
-      emphasis = "high",
       compact = false,
       ...restProps
     },
@@ -61,13 +59,12 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       () => ({
         page: pageState,
         count,
-        emphasis,
         compact,
         onPageChange,
         paginatorElement,
         setPaginatorElement,
       }),
-      [pageState, count, emphasis, onPageChange]
+      [pageState, count, onPageChange]
     );
 
     const onKeyDown: KeyboardEventHandler = useCallback(

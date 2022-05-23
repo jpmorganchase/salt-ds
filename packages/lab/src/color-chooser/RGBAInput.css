@@ -1,25 +1,14 @@
-.uitk-dark .uitkColorChooser-rgbaInput {
-  width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-color-white);
-  padding-top: 4px;
-}
-
-.uitk-light .uitkColorChooser-rgbaInput {
-  width: var(--uitk-spacing-unit);
-  border-bottom: 1px solid var(--uitk-color-grey-900);
-  padding-top: var(--uitk-spacing-unit);
+.uitkColorChooser-rgbaInput {
+  width: var(--uitk-size-unit);
+  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
+  padding-top: var(--uitk-size-unit);
 }
 
 .uitkColorChooser-opacityInput {
   min-width: 40px !important;
   width: 40px !important;
   min-height: unset !important;
-}
-.uitk-light .uitkColorChooser-opacityInput {
-  border-bottom: 1px solid var(--uitk-color-grey-900);
-}
-.uitk-dark .uitkColorChooser-opacityInput {
-  border-bottom: 1px solid var(--uitk-color-white);
+  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
 }
 
 .uitkColorChooser-rgbaText {
@@ -34,7 +23,7 @@
 .uitkColorChooser-rgbaInputDiv {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px var(--uitk-spacing-unit) 0px;
+  padding: 0px 0px var(--uitk-size-unit) 0px;
 }
 
 .uitkColorChooser-overrideInput {

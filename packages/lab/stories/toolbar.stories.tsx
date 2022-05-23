@@ -167,7 +167,7 @@ export const DefaultToolbar = ({ initialWidth = 315 }) => {
           data-close-on-click={false}
           label="Range"
           data-activation-indicator
-          emphasis="medium"
+          className="uitkEmphasisMedium"
         >
           <Dropdown
             initialSelectedItem={range}
@@ -180,7 +180,7 @@ export const DefaultToolbar = ({ initialWidth = 315 }) => {
           data-close-on-click={false}
           label="Type"
           data-activation-indicator
-          emphasis="medium"
+          className="uitkEmphasisMedium"
         >
           <Dropdown
             initialSelectedItem={type}

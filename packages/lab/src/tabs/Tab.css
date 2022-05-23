@@ -21,9 +21,9 @@
   --uitk-focused-outline-offset: -2px;
   --uitk-focused-outline-top: 0px;
   --uitk-focused-outline-bottom: 2px;
-  --tab-bar-color: var(--uitk-color-grey-90);
+  --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
   --tab-cursor: pointer;
-  --tab-spacing: var(--uitk-spacing-unit);
+  --tab-spacing: var(--uitk-size-unit);
   --tab-font-weight-selected: var(--uitk-typography-weight-semiBold);
 
   align-items: center;
@@ -63,7 +63,7 @@
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
-  background-color: var(--uitkTab-hover-background, var(--tab-hover-background));
+  background-color: var(--uitkTab-background-hover, var(--tab-hover-background));
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before,
@@ -105,7 +105,7 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  height: var(--uitk-size-stackable-unit);
+  height: var(--uitk-size-stackable);
   outline: none;
   padding: 0 var(--tab-spacing);
   position: relative;
@@ -124,7 +124,7 @@
 }
 
 .uitkTab-closeable .uitkTab-main {
-  border-right: solid transparent var(--uitk-spacing-unit);
+  border-right: solid transparent var(--uitk-size-unit);
 }
 
 .uitkTab .uitkTab-closeButton {
@@ -185,10 +185,10 @@
   /* border: dotted cornflowerblue 2px;
    */
   outline-style: var(--uitk-focused-outline-style);
-  outline-width: var(--uitk-focused-line-width);
+  outline-width: var(--uitk-focused-outline-width);
   outline-offset: -2px;
   /* outline-offset: var(--uitk-focused-outline-offset); */
-  outline-color: var(--uitk-focused-color);
+  outline-color: var(--uitk-focused-outline-color);
 }
 
 .uitkTab-vertical.uitkTab-editing:after {

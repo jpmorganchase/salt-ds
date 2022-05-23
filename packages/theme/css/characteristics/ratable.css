@@ -1,29 +1,15 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-ratable-cursor-hover: grab;
+  --uitk-ratable-cursor-hover: pointer;
   --uitk-ratable-cursor-active: pointer;
-}
 
-.uitk-light {
-  --uitk-ratable-background: transparent;
-  --uitk-ratable-background-hover: var(--uitk-color-orange-700);
-  --uitk-ratable-background-active: var(--uitk-color-orange-700);
-  --uitk-ratable-background-undo: transparent;
+  --uitk-ratable-background: var(--uitk-palette-rate-background);
+  --uitk-ratable-background-active: var(--uitk-palette-rate-background-active);
+  --uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);
+  --uitk-ratable-background-undo: var(--uitk-palette-rate-background-undo);
 
-  --uitk-ratable-border: var(--uitk-color-grey-90);
-  --uitk-ratable-border-hover: transparent;
-  --uitk-ratable-border-active: transparent;
-  --uitk-ratable-border-undo: var(--uitk-color-orange-700);
-}
-
-.uitk-dark {
-  --uitk-ratable-background: transparent;
-  --uitk-ratable-background-hover: var(--uitk-color-orange-500);
-  --uitk-ratable-background-active: var(--uitk-color-orange-500);
-  --uitk-ratable-background-undo: transparent;
-
-  --uitk-ratable-border: var(--uitk-color-grey-100);
-  --uitk-ratable-border-hover: transparent;
-  --uitk-ratable-border-active: transparent;
-  --uitk-ratable-border-undo: var(--uitk-color-orange-500);
+  --uitk-ratable-border: var(--uitk-palette-rate-border);
+  --uitk-ratable-border-active: var(--uitk-palette-rate-border-active);
+  --uitk-ratable-border-hover: var(--uitk-palette-rate-border-hover);
+  --uitk-ratable-border: var(--uitk-palette-rate-border-undo);
 }

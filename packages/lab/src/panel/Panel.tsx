@@ -16,32 +16,14 @@ import "./Panel.css";
  *
  */
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Determines the emphasis of the component. Must be one of: 'medium', 'high'.
-   */
-  emphasis?: "medium" | "high";
-}
-
 const withBaseName = makePrefixer("uitkPanel");
 
-export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { className, children, emphasis = "medium", ...restProps },
-  ref
-) {
-  return (
-    <div
-      className={cx(
-        withBaseName(),
-        {
-          [`uitkEmphasisHigh`]: emphasis !== "medium",
-        },
-        className
-      )}
-      ref={ref}
-      {...restProps}
-    >
-      {children}
-    </div>
-  );
-});
+export const Panel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  function Panel({ className, children, ...restProps }, ref) {
+    return (
+      <div className={cx(withBaseName(), className)} ref={ref} {...restProps}>
+        {children}
+      </div>
+    );
+  }
+);

@@ -48,12 +48,16 @@ const rightItem = (
   </FlowLayout>
 );
 
-const Template: ComponentStory<typeof SplitLayout> = (args) => {
-  return <SplitLayout {...args} />;
+const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => {
+  return (
+    <div style={{ minWidth: 850 }}>
+      <SplitLayout {...args} />
+    </div>
+  );
 };
-export const ToolkitSplitLayout = Template.bind({});
+export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
 
-ToolkitSplitLayout.args = {
+DefaultSplitLayout.args = {
   leftSplitItem: leftItem,
   rightSplitItem: rightItem,
 };

@@ -1,0 +1,26 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { NumberBlock } from "docs/components/NumberBlock";
+import { DocGrid } from "docs/components/DocGrid";
+
+<Meta title="Documentation/Styles and Theming/Foundations/Opacity" />
+
+# Opacity
+
+Opacity values to adjust different attributes.
+
+## Opacities
+
+<Canvas>
+  <Story name="Basis">
+    <DocGrid>
+      <NumberBlock number="0.4" cssVariable="--uitk-opacity-background" />
+      <NumberBlock number="0.4" cssVariable="--uitk-opacity-border" />
+      <NumberBlock number="0.2" cssVariable="--uitk-opacity-border-readonly" />
+      <NumberBlock number="0.4" cssVariable="--uitk-opacity-foreground" />
+      <NumberBlock number="0.8" cssVariable="--uitk-opacity-scrim-medium" />
+      <NumberBlock number="0.8" cssVariable="--uitk-opacity-scrim-low" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+- Note: `--uitk-opacity-scrim-medium` is 0.7 in dark mode
