@@ -133,25 +133,9 @@
 
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
-  --uitk-text-background-selected: var(--uitk-palette-interact-background-hover);
+  --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
 
-  --uitk-text-link-color-hover: var(--uitk-palette-navigate-foreground-hover);
-  --uitk-text-highlight-color: var(--uitk-palette-neutral-highlight);
-}
-
-/* TODO: Move colors here to palette */
-.uitk-light {
-  --uitk-text-link-color: var(--uitk-color-grey-900);
-  --uitk-text-link-color-hover: var(--uitk-color-blue-500);
-  --uitk-text-link-color-active: var(--uitk-color-blue-500);
-  --uitk-text-link-color-disabled: var(--uitk-color-grey-900);
-}
-
-.uitk-dark {
-  --uitk-text-link-color: var(--uitk-color-white);
-  --uitk-text-link-color-hover: var(--uitk-color-blue-200);
-  --uitk-text-link-color-active: var(--uitk-color-blue-200);
-  --uitk-text-link-color-disabled: var(--uitk-color-white);
+  --uitk-text-link-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
 }
 
 .uitk-density-touch {

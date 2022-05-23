@@ -49,7 +49,7 @@
 
 /* Style applied to selected input */
 .uitkInput-input::selection {
-  background-color: var(--uitkInput-highlight-color, var(--uitk-text-highlight-color));
+  background-color: var(--uitkInput-highlight-color, var(--uitk-text-background-selected));
 }
 
 /* Style applied to inner input component */
