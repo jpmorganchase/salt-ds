@@ -20,14 +20,17 @@
   --uitk-editable-background-hover-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-readonly-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-background-disabled-low: var(--uitk-palette-interact-background-low);
 
   --uitk-editable-background-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-hover-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-active-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-readonly-medium: var(--uitk-palette-interact-background-medium);
+  --uitk-editable-background-disabled-medium: var(--uitk-palette-interact-background-disabled-medium);
 
   --uitk-editable-background-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-hover-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-active-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-readonly-high: var(--uitk-palette-interact-background-high);
+  --uitk-editable-background-disabled-high: var(--uitk-palette-interact-background-disabled-high);
 }
