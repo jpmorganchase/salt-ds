@@ -32,7 +32,9 @@ const Template: ComponentStory<typeof GridLayout> = (args) => {
       <GridLayout {...args}>
         {Array.from({ length: 12 }, (_, index) => (
           <GridItem key={index}>
-            <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+            <div
+              style={{ ...gridItemStyles, background: "lightcyan", width: 70 }}
+            >
               <p>{`GridItem ${index + 1}`}</p>
             </div>
           </GridItem>
@@ -55,7 +57,9 @@ const MultipleRows: ComponentStory<typeof GridLayout> = (args) => {
       <GridLayout {...args}>
         {Array.from({ length: 12 }, (_, index) => (
           <GridItem key={index}>
-            <div style={{ ...gridItemStyles, background: "lightcyan" }}>
+            <div
+              style={{ ...gridItemStyles, background: "lightcyan", width: 70 }}
+            >
               <p>{`GridItem ${index + 1}`}</p>
             </div>
           </GridItem>

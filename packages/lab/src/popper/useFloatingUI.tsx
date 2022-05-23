@@ -34,24 +34,8 @@ export function useFloatingUI(
     middleware,
     open,
     onOpenChange,
+    whileElementsMounted: autoUpdate,
   });
-
-  // Update on scroll and resize for all relevant nodes
-  useEffect(() => {
-    let cleanup;
-
-    requestAnimationFrame(() => {
-      if (refs.reference.current && refs.floating.current && open) {
-        cleanup = autoUpdate(
-          refs.reference.current,
-          refs.floating.current,
-          update
-        );
-      }
-    });
-
-    return cleanup;
-  }, [refs.reference, refs.floating, update, open]);
 
   return {
     reference,
