@@ -32,7 +32,7 @@
 
 .uitkCircularProgress-progressValue {
   align-items: center;
-  color: var(--uitk-measured-fill);
+  color: var(--uitk-measured-background);
   display: flex;
   height: 100%;
   justify-content: center;
@@ -48,7 +48,7 @@
 }
 
 .uitkCircularProgress-railCircle {
-  stroke: var(--uitk-measured-fill);
+  stroke: var(--uitk-measured-background);
   stroke-width: 1px;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .uitkCircularProgress-svg {
-  fill: var(--uitk-measured-fill);
+  fill: var(--uitk-measured-background);
   display: block;
 }
 

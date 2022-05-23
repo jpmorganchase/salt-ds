@@ -114,15 +114,29 @@
   --uitk-text-min-height-high: 14px;
 
   --uitk-text-link-text-decoration: underline;
+  --uitk-text-link-text-decoration-hover: none;
+  --uitk-text-link-text-decoration-selected: underline;
 
+  /* Colors */
   --uitk-text-primary-color: var(--uitk-palette-neutral-primary-foreground);
   --uitk-text-primary-color-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
+  --uitk-text-primary-color-hover: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-color-selected: var(--uitk-palette-neutral-primary-foreground);
 
   --uitk-text-secondary-color: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-text-secondary-color-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
+  --uitk-text-secondary-color-hover: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-color-selected: var(--uitk-palette-neutral-secondary-foreground);
 
   --uitk-text-growth-indicator-down-color: var(--uitk-palette-negative-foreground);
   --uitk-text-growth-indicator-up-color: var(--uitk-palette-positive-foreground);
+
+  --uitk-text-background: transparent;
+  --uitk-text-background-hover: transparent;
+  --uitk-text-background-selected: var(--uitk-palette-interact-background-hover);
+
+  --uitk-text-link-color-hover: var(--uitk-palette-navigate-foreground-hover);
+  --uitk-text-highlight-cover: var(--uitk-palette-neutral-highlight);
 }
 
 /* TODO: Move colors here to palette */
@@ -131,8 +145,6 @@
   --uitk-text-link-color-hover: var(--uitk-color-blue-500);
   --uitk-text-link-color-active: var(--uitk-color-blue-500);
   --uitk-text-link-color-disabled: var(--uitk-color-grey-900);
-
-  --uitk-text-highlight-color: var(--uitk-color-blue-30);
 }
 
 .uitk-dark {
@@ -140,8 +152,6 @@
   --uitk-text-link-color-hover: var(--uitk-color-blue-200);
   --uitk-text-link-color-active: var(--uitk-color-blue-200);
   --uitk-text-link-color-disabled: var(--uitk-color-white);
-
-  --uitk-text-highlight-color: var(--uitk-color-blue-700);
 }
 
 .uitk-density-touch {
