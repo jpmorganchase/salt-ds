@@ -2,7 +2,7 @@
   --metric-title-color: var(--uitk-text-primary-color);
   --metric-subtitle-color: var(--uitk-text-secondary-color);
 
-  --metric-header-gap: calc(var(--uitk-spacing-unit) * 0.25);
+  --metric-header-gap: calc(var(--uitk-size-unit) * 0.25);
 }
 
 .uitkMetricHeader {
@@ -13,7 +13,7 @@
 }
 
 .uitkMetric-orientation-vertical .uitkMetricHeader {
-  margin-bottom: calc(var(--uitk-spacing-unit) / 4);
+  margin-bottom: calc(var(--uitk-size-unit) / 4);
 }
 
 .uitkMetricHeader-title {

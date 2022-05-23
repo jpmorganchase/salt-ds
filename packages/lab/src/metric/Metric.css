@@ -9,14 +9,12 @@
 }
 
 .uitkMetric {
-  display: inline-flex;
-  white-space: nowrap;
-  line-height: var(--metric-line-height);
   font-family: var(--metric-font-family);
   color: var(--metric-text-color);
 }
 
 .uitkMetric-orientation-horizontal {
+  display: inline-flex;
   flex-direction: row;
   align-items: flex-start;
 }

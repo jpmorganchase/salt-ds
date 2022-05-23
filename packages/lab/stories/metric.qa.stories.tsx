@@ -16,14 +16,14 @@ const metricExamples = (
     style={{
       display: "flex",
       flexDirection: "column",
-      width: 284,
+      width: 334,
       padding: 0,
     }}
   >
     <Metric
       align="left"
       direction="up"
-      emphasis="low"
+      className="uitkEmphasisLow"
       orientation="horizontal"
       showIndicator
     >
@@ -33,7 +33,7 @@ const metricExamples = (
     <Metric
       align="center"
       direction="down"
-      emphasis="medium"
+      className="uitkEmphasisMedium"
       orientation="horizontal"
       showIndicator
       indicatorPosition="start"
@@ -41,22 +41,39 @@ const metricExamples = (
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
-    <Metric align="right" emphasis="high" orientation="horizontal">
+    <Metric
+      align="right"
+      className="uitkEmphasisHigh"
+      orientation="horizontal"
+      direction="up"
+      showIndicator
+      indicatorPosition="end"
+    >
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
-    <Metric align="left" direction="up" emphasis="low" showIndicator>
+    <Metric
+      align="left"
+      direction="up"
+      className="uitkEmphasisLow"
+      showIndicator
+    >
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
-    <Metric align="center" direction="up" emphasis="medium" showIndicator>
+    <Metric
+      align="center"
+      direction="up"
+      className="uitkEmphasisMedium"
+      showIndicator
+    >
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
     <Metric
       align="right"
       direction="down"
-      emphasis="high"
+      className="uitkEmphasisHigh"
       indicatorPosition="start"
       showIndicator
     >
@@ -73,7 +90,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
       className="uitkMetricQA"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
     >
-      <div style={{ width: 600, display: "flex", flex: 1 }}>
+      <div style={{ width: 700, display: "flex", flex: 1 }}>
         <ToolkitProvider theme={"light"}>
           <BackgroundBlock style={{ background: "white" }}>
             {metricExamples}

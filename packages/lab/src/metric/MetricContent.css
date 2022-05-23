@@ -4,8 +4,8 @@
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
 }
 
-.uitkMetricContent :not(:last-child) {
-  margin-bottom: calc(var(--uitk-spacing-unit) / 4);
+.uitkMetric-orientation-horizontal .uitkMetricContent :not(:last-child) {
+  margin-bottom: calc(var(--uitk-size-unit) / 4);
 }
 
 .uitkMetricContent-value-container :not(:last-child) {
@@ -38,23 +38,29 @@
   align-items: flex-end;
 }
 
+.uitkMetricContent-value {
+  line-height: 1.3;
+}
+
+.uitkEmphasisHigh .uitkMetricContent-value {
+  font-size: var(--uitk-text-figure-1-font-size);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitkEmphasisMedium .uitkMetricContent-value {
+  font-size: var(--uitk-text-figure-2-font-size);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+.uitkEmphasisLow .uitkMetricContent-value {
+  font-size: var(--uitk-text-figure-3-font-size);
+  font-weight: var(--uitk-typography-weight-semiBold);
+}
+
 .uitkEmphasisHigh.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.75;
-  overflow: unset;
-  height: unset;
-  font-size: var(--uitk-text-figure-1-font-size);
-  /* line-height: var(--uitk-text-figure-1-line-height); */
-  font-weight: var(--uitk-typography-weight-semiBold);
 }
 .uitkEmphasisMedium.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.85;
-  font-size: var(--uitk-text-figure-2-font-size);
-  /* line-height: var(--uitk-text-figure-2-line-height); */
-  font-weight: var(--uitk-typography-weight-semiBold);
 }
 .uitkEmphasisLow.uitkMetric-orientation-horizontal .uitkMetricContent-value {
   line-height: 0.95;
-  font-size: var(--uitk-text-figure-3-font-size);
-  /* line-height: var(--uitk-text-figure-3-line-height); */
-  font-weight: var(--uitk-typography-weight-semiBold);
 }

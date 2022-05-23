@@ -1,8 +1,15 @@
-import { ComponentType, forwardRef, HTMLAttributes, useMemo } from "react";
+import {
+  ComponentType,
+  forwardRef,
+  HTMLAttributes,
+  useCallback,
+  useRef,
+} from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Figure1, Figure2, Figure3, Div } from "@jpmorganchase/uitk-lab";
+import { Div } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
+import { useForkRef } from "../utils";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
@@ -53,15 +60,27 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       subtitleId,
     } = useMetricContext();
 
-    /* TODO: does this work? */
-    const iconSize = className?.includes("uitkEmphasisLow") ? 12 : 24;
+    const contentRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef<HTMLDivElement>(ref, contentRef);
+
+    const getIconSize = useCallback(() => {
+      let size = 24;
+      if (contentRef.current) {
+        const parent = contentRef.current.closest(".uitkMetric");
+        if (parent?.classList.contains("uitkEmphasisLow")) {
+          size = 12;
+        }
+      }
+
+      return size;
+    }, [contentRef]);
 
     const iconProps = {
       "aria-label": direction,
       className: withBaseName("indicator"),
       "data-testid": "metric-indicator",
       name: direction ? `movement-${direction}` : "",
-      size: iconSize,
+      size: getIconSize(),
       ...IndicatorIconProps,
     };
 
@@ -76,41 +95,22 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
 
-    // const valueComponent = useMemo(() => {
-    //   const Component = Figure1;
-    //   // emphasis === "high"
-    //   //   ? Figure1
-    //   //   : emphasis === "medium"
-    //   //   ? Figure2
-    //   //   : Figure3;
-
-    //   return (
-    //     <Component
-    //       data-testid="metric-value"
-    //       id={valueId}
-    //       className={withBaseName("value")}
-    //     >
-    //       {value}
-    //     </Component>
-    //   );
-    // }, [value, valueId]);
-
     return (
       <div
         {...restProps}
         className={cx(withBaseName(), className)}
-        ref={ref}
+        ref={handleRef}
         aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
       >
         <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          <Div
+          <span
             data-testid="metric-value"
             id={valueId}
             className={withBaseName("value")}
           >
             {value}
-          </Div>
+          </span>
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
