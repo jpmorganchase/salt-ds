@@ -136,7 +136,7 @@
   --uitk-text-background-selected: var(--uitk-palette-interact-background-hover);
 
   --uitk-text-link-color-hover: var(--uitk-palette-navigate-foreground-hover);
-  --uitk-text-highlight-cover: var(--uitk-palette-neutral-highlight);
+  --uitk-text-highlight-color: var(--uitk-palette-neutral-highlight);
 }
 
 /* TODO: Move colors here to palette */
