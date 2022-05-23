@@ -47,7 +47,6 @@ export type BaseComboBoxProps<
     | "onChange"
     | "onSelect"
     | "overscanCount"
-    | "source"
     | "tooltipEnterDelay"
     | "tooltipLeaveDelay"
     | "tooltipPlacement"
@@ -68,6 +67,7 @@ export type BaseComboBoxProps<
     rootWidth?: string | number;
     rootRef: RefObject<HTMLElement>;
     disabledPortal?: boolean;
+    source: ReadonlyArray<Item>;
   };
 
 export interface DefaultComboBoxProps<Item>
