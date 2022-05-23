@@ -1,6 +1,7 @@
 import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
+  Panel,
   StackLayout,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -9,9 +10,19 @@ import { FlexContent } from "./flex-item.stories";
 export default {
   title: "Layout/StackLayout",
   component: StackLayout,
+  argTypes: {
+    align: {
+      options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
+      control: { type: "select" },
+    },
+    separators: {
+      options: ["start", "center", "end", true],
+      control: { type: "select" },
+    },
+  },
 } as ComponentMeta<typeof StackLayout>;
 
-const Template: ComponentStory<typeof StackLayout> = (args) => {
+const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
   return (
     <StackLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
@@ -26,18 +37,19 @@ const Template: ComponentStory<typeof StackLayout> = (args) => {
     </StackLayout>
   );
 };
-export const ToolkitStackLayout = Template.bind({});
+export const DefaultStackLayout = DefaultStackLayoutStory.bind({});
+DefaultStackLayout.args = {};
 
-ToolkitStackLayout.argTypes = {
-  align: {
-    options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
-    control: { type: "select" },
-  },
-  gap: {
-    type: "number",
-  },
-  separators: {
-    options: ["start", "center", "end", true],
-    control: { type: "select" },
-  },
+const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
+  args
+) => {
+  return (
+    <StackLayout {...args}>
+      {Array.from({ length: 4 }, (_, index) => (
+        <Panel className="uitkEmphasisHigh">{`Panel ${index + 1} stack`}</Panel>
+      ))}
+    </StackLayout>
+  );
 };
+export const StackLayoutSimpleUsage = StackLayoutStorySimpleUsage.bind({});
+StackLayoutSimpleUsage.args = {};
