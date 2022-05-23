@@ -68,7 +68,7 @@
   --uitk-color-teal-600: rgb(27, 107, 133);
   --uitk-color-teal-700: rgb(0, 85, 113);
   --uitk-color-teal-800: rgb(1, 65, 86);
-  --uitk-color-teal-900: rgb(28, 55, 60);
+  --uitk-color-teal-900: rgb(0, 49, 76);
 
   --uitk-color-blue-10: rgb(203, 231, 249);
   --uitk-color-blue-20: rgb(183, 222, 246);
@@ -98,7 +98,7 @@
   --uitk-color-purple-600: rgb(129, 60, 141);
   --uitk-color-purple-700: rgb(103, 46, 122);
   --uitk-color-purple-800: rgb(83, 37, 109);
-  --uitk-color-purple-900: rgb(58, 45, 62);
+  --uitk-color-purple-900: rgb(59, 16, 84);
 
   --uitk-color-grey-10: rgb(242, 244, 246);
   --uitk-color-grey-20: rgb(234, 237, 239);
@@ -118,13 +118,4 @@
   --uitk-color-grey-700: rgb(42, 44, 47);
   --uitk-color-grey-800: rgb(36, 37, 38);
   --uitk-color-grey-900: rgb(22, 22, 22);
-
-  /* Deprecated values (+ with -color removed from token). Remove when approved by design */
-  --uitk-red-900: rgb(106, 0, 0);
-  --uitk-orange-900: rgb(194, 52, 7);
-  --uitk-green-900: rgb(0, 57, 18);
-  --uitk-teal-900: rgb(0, 49, 76);
-  --uitk-purple-900: rgb(59, 16, 84);
-  --uitk-blue-800: rgb(12, 53, 102);
-  --uitk-blue-900: rgb(0, 40, 88);
 }
