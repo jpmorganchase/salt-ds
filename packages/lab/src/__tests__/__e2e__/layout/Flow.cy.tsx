@@ -3,20 +3,21 @@ import * as flowStories from "@stories/layout/flow-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(flowStories);
-const { ToolkitFlowLayout } = composedStories;
+const { DefaultFlowLayout } = composedStories;
 
 describe("GIVEN a Flow", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
     it("THEN it should wrap by default", () => {
-      cy.mount(<ToolkitFlowLayout />);
+      cy.mount(<DefaultFlowLayout />);
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
+    ``;
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<ToolkitFlowLayout />);
+      cy.mount(<DefaultFlowLayout />);
 
       cy.get(".uitkFlexLayout").should("have.css", "column-gap", "8px");
 
@@ -26,7 +27,7 @@ describe("GIVEN a Flow", () => {
 
   describe("WHEN a separator value is provided", () => {
     it("THEN it should render a separator", () => {
-      cy.mount(<ToolkitFlowLayout separators />);
+      cy.mount(<DefaultFlowLayout separators />);
 
       cy.get(".uitkFlexLayout").should(
         "have.class",

@@ -3,20 +3,20 @@ import * as stackStories from "@stories/layout/split-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(stackStories);
-const { ToolkitSplitLayout } = composedStories;
+const { DefaultSplitLayout } = composedStories;
 
 describe("GIVEN a Split", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
     it("THEN it should wrap by default", () => {
-      cy.mount(<ToolkitSplitLayout />);
+      cy.mount(<DefaultSplitLayout />);
 
       cy.get(".uitkSplitLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<ToolkitSplitLayout />);
+      cy.mount(<DefaultSplitLayout />);
 
       cy.get(".uitkSplitLayout").should("have.css", "column-gap", "8px");
 
@@ -44,7 +44,7 @@ describe("GIVEN a Split", () => {
 
     it("THEN it should render as expected", () => {
       cy.mount(
-        <ToolkitSplitLayout
+        <DefaultSplitLayout
           leftSplitItem={leftItem}
           rightSplitItem={rightItem}
         />
@@ -66,7 +66,7 @@ describe("GIVEN a Split", () => {
     const leftItem = ["Item 1", "Item 2"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<ToolkitSplitLayout leftSplitItem={leftItem} />);
+      cy.mount(<DefaultSplitLayout leftSplitItem={leftItem} />);
 
       cy.get(".uitkSplitLayout")
         .children()
@@ -79,7 +79,7 @@ describe("GIVEN a Split", () => {
     const rightItem = ["Item 3", "Item 4"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<ToolkitSplitLayout rightSplitItem={rightItem} />);
+      cy.mount(<DefaultSplitLayout rightSplitItem={rightItem} />);
 
       cy.get(".uitkSplitLayout")
         .children()

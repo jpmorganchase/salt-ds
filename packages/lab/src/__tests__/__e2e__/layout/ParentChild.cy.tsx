@@ -3,13 +3,13 @@ import * as parentChildStories from "@stories/layout/parent-child-layout.stories
 
 const composedStories = composeStories(parentChildStories);
 
-const { ToolkitParentChildLayout, ToolkitParentChildLayoutStacked } =
+const { DefaultParentChildLayout, ToolkitParentChildLayoutStacked } =
   composedStories;
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {
     it("THEN it should display a gap by default", () => {
-      cy.mount(<ToolkitParentChildLayout />);
+      cy.mount(<DefaultParentChildLayout />);
 
       cy.get(".uitkParentChildLayout").should("have.css", "column-gap", "8px");
 
@@ -21,7 +21,7 @@ describe("GIVEN a Parent and Child", () => {
     const parent = ["a", "b", "c", "d", "e"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<ToolkitParentChildLayout parent={parent} />);
+      cy.mount(<DefaultParentChildLayout parent={parent} />);
 
       cy.get(".uitkParentChildItem")
         .first()
@@ -33,7 +33,7 @@ describe("GIVEN a Parent and Child", () => {
     const child = ["a", "b", "c", "d", "e"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<ToolkitParentChildLayout child={child} />);
+      cy.mount(<DefaultParentChildLayout child={child} />);
 
       cy.get(".uitkParentChildItem").eq(1).should("have.text", child.join(""));
     });
@@ -47,7 +47,7 @@ describe("GIVEN a Parent and Child", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<ToolkitParentChildLayout />);
+        cy.mount(<DefaultParentChildLayout />);
         cy.get(".uitkParentChildItem").should("have.length", 2);
       }
     );
@@ -59,7 +59,7 @@ describe("GIVEN a Parent and Child", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<ToolkitParentChildLayout />);
+        cy.mount(<DefaultParentChildLayout />);
         cy.get(".uitkParentChildItem").should("have.length", 1);
       }
     );

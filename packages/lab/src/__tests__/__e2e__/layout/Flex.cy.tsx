@@ -4,26 +4,26 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 const composedStories = composeStories(flexStories);
-const { ToolkitFlexLayout, ToolkitFlexLayoutResponsive } = composedStories;
+const { DefaultFlexLayout, ToolkitFlexLayoutResponsive } = composedStories;
 
 describe("GIVEN a Flex", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
     it("THEN it should render with flex direction row", () => {
-      cy.mount(<ToolkitFlexLayout />);
+      cy.mount(<DefaultFlexLayout />);
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-direction", "row");
     });
 
     it("THEN it should render with no flex wrap", () => {
-      cy.mount(<ToolkitFlexLayout />);
+      cy.mount(<DefaultFlexLayout />);
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
     });
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<ToolkitFlexLayout />);
+      cy.mount(<DefaultFlexLayout />);
 
       cy.get(".uitkFlexLayout").should("have.css", "column-gap", "8px");
 
@@ -33,7 +33,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN a separator value is provided", () => {
     it("THEN it should render a separator", () => {
-      cy.mount(<ToolkitFlexLayout separators />);
+      cy.mount(<DefaultFlexLayout separators />);
 
       cy.get(".uitkFlexLayout").should(
         "have.class",
