@@ -2,14 +2,15 @@ import {
   ReactElement,
   useCallback,
   useEffect,
-  useState,
   useReducer,
   useRef,
+  useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
+  isDesktop,
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
@@ -21,7 +22,6 @@ import {
   ThemeEditor,
   uitkTheme,
 } from "@jpmorganchase/theme-editor";
-import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";

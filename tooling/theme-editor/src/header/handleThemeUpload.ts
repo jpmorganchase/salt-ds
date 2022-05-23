@@ -1,5 +1,5 @@
-import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
-import { parseCSStoJSON, tidyUp, JSONByScope } from "../helpers/parseToJson";
+import { isDesktop } from "@jpmorganchase/uitk-lab";
+import { JSONByScope, parseCSStoJSON, tidyUp } from "../helpers/parseToJson";
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 
 export const handleThemeUpload = async (

@@ -1,21 +1,15 @@
 import { Middleware } from "@floating-ui/core";
+import { MiddlewareArguments } from "@floating-ui/react-dom-interactions";
 
 export const margin = (value = 0): Middleware => ({
   name: "margin",
   options: value,
-  fn(middlewareArguments) {
+  fn(middlewareArguments: MiddlewareArguments) {
     const { x, y, elements } = middlewareArguments;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (elements.floating.children.length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      elements.floating.children[0].style.setProperty(
-        "margin",
-        value.toString()
-      );
-      // const marginBottom = value+1;
-      // // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-      // elements.floating.children[0].style.setProperty("margin-bottom", marginBottom.toString());
+      const rootChildElement = elements.floating.children[0] as HTMLElement;
+      rootChildElement.style.setProperty("margin", value.toString());
     }
     return {
       x: x,

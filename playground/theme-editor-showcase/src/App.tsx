@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 import {
-  WindowContext,
   ElectronWindow,
+  WindowContext,
 } from "@jpmorganchase/uitk-lab/src/window";
-import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { isDesktop } from "@jpmorganchase/uitk-lab";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
 

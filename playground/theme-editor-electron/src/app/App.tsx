@@ -7,7 +7,7 @@ import {
   ElectronWindow,
   WindowContext,
 } from "@jpmorganchase/uitk-lab/src/window";
-import { isDesktop } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { isDesktop } from "@jpmorganchase/uitk-lab";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
