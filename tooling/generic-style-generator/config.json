@@ -19,10 +19,7 @@
       "files": [
         {
           "format": "uitk/css/themes/all",
-          "destination": "colors-all.css",
-          "options": {
-            "outputReferences": true
-          },
+          "destination": "colors.css",
           "filter": "uitk/filter/colors/all"
         },
         {
