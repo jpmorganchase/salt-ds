@@ -35,6 +35,8 @@ describe("GIVEN a Parent and Child", () => {
     it("THEN it should render as expected", () => {
       cy.mount(<DefaultParentChildLayout child={child} />);
 
+      // Make sure both child and parent are rendered before running next test `eq`
+      cy.get(".uitkParentChildItem").should("have.length", 2);
       cy.get(".uitkParentChildItem").eq(1).should("have.text", child.join(""));
     });
   });
