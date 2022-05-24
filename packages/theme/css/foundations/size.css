@@ -62,7 +62,7 @@
   --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
   --uitk-size-switch: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 4px);
   --uitk-size-toggle-group-button: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
-  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --uitk-size-toolbar: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 }
 .uitk-density-high {
   --uitk-size-unit: var(--uitk-size-basis-unit);
