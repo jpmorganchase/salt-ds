@@ -60,7 +60,7 @@ filesArg.forEach((inputFile) => {
     fs.mkdirSync(outputFileDir, { recursive: true });
   } else if (fs.existsSync(outputFilePath)) {
     // delete existing file
-    log("Removed existing file", outputFilePath);
+    // log("Removed existing file", outputFilePath);
     fs.rmSync(outputFilePath);
   }
 
