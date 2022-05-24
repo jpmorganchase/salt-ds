@@ -8,7 +8,7 @@ import { Span, TextProps } from "./";
 const withBaseName = makePrefixer("uitkText");
 
 export const Figure1 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure1({ children, className, ...rest }, ref) {
   return (
@@ -23,7 +23,7 @@ export const Figure1 = forwardRef<
 });
 
 export const Figure2 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure2({ children, className, ...rest }, ref) {
   return (
@@ -38,7 +38,7 @@ export const Figure2 = forwardRef<
 });
 
 export const Figure3 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure3({ children, className, ...rest }, ref) {
   return (
