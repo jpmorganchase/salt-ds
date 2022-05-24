@@ -9,7 +9,6 @@
 
 /* Main css class */
 .uitkText {
-  display: -webkit-box;
   line-height: var(--uitk-text-line-height);
   font-size: var(--uitk-text-font-size);
 }
