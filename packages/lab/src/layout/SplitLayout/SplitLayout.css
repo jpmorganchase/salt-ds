@@ -3,7 +3,7 @@
 }
 
 .uitkSplitLayout-separator {
-  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
+  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
 
 .uitkSplitLayout-separator > *:first-child::after,

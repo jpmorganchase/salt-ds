@@ -20,25 +20,28 @@ import {
 export default {
   title: "Lab/Typography",
   component: Text,
+  parameters: {
+    controls: {
+      hideNoControlsWarning: true,
+      exclude: [
+        "elementType",
+        "maxRows",
+        "showTooltip",
+        "tooltipProps",
+        "truncate",
+        "expanded",
+        "style",
+        "onOverflowChange",
+        "marginTop",
+        "marginBottom",
+      ],
+    },
+  },
 } as ComponentMeta<typeof Text>;
-
-const excludeProps = [
-  "children",
-  "elementType",
-  "maxRows",
-  "showTooltip",
-  "tooltipProps",
-  "truncate",
-  "expanded",
-  "style",
-  "onOverflow",
-  "marginTop",
-  "marginBottom",
-];
 
 //********** Body Text ***********/
 
-const BasicTextComponent: ComponentStory<typeof Text> = (props) => {
+const DefaultTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <Text>
@@ -56,16 +59,11 @@ const BasicTextComponent: ComponentStory<typeof Text> = (props) => {
   );
 };
 
-export const BasicText = BasicTextComponent.bind({});
-BasicText.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
+export const DefaultText = DefaultTextComponent.bind({});
 
 //********** Div ***********/
 
-const DivTextComponent: ComponentStory<typeof Text> = (props) => {
+const DivTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <DivText>
@@ -84,15 +82,10 @@ const DivTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const Div = DivTextComponent.bind({});
-Div.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Span ***********/
 
-const SpanTextComponent: ComponentStory<typeof Text> = (props) => {
+const SpanTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <SpanText>
@@ -113,15 +106,10 @@ const SpanTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const Span = SpanTextComponent.bind({});
-Span.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Paragraph - P ***********/
 
-const PTextComponent: ComponentStory<typeof Text> = (props) => {
+const PTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <PText>
@@ -141,15 +129,10 @@ const PTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const P = PTextComponent.bind({});
-P.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Code ***********/
 
-const CodeTextComponent: ComponentStory<typeof Text> = (props) => {
+const CodeTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <CodeText>
@@ -170,15 +153,10 @@ const CodeTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const Code = CodeTextComponent.bind({});
-Code.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Figure 1,2 and 3 ***********/
 
-const FigureTextComponent: ComponentStory<typeof Text> = (props) => {
+const FigureTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <Figure1>Figure 1</Figure1>
@@ -189,15 +167,10 @@ const FigureTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const Figure = FigureTextComponent.bind({});
-Figure.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 
-const HeadingsComponent: ComponentStory<typeof Text> = (args) => (
+const HeadingsComponent: ComponentStory<typeof Text> = () => (
   <>
     <div
       style={{
@@ -251,15 +224,10 @@ const HeadingsComponent: ComponentStory<typeof Text> = (args) => (
   </>
 );
 export const Headings = HeadingsComponent.bind({});
-Headings.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** HelpText ***********/
 
-const HelpTextComponent: ComponentStory<typeof Text> = (props) => {
+const HelpTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <HelpTextComp>
@@ -278,15 +246,10 @@ const HelpTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const HelpText = HelpTextComponent.bind({});
-HelpText.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
 
 //********** LabelCaption ***********/
 
-const LabelCaptionTextComponent: ComponentStory<typeof Text> = (props) => {
+const LabelCaptionTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <LabelCaptionText>
@@ -308,8 +271,3 @@ const LabelCaptionTextComponent: ComponentStory<typeof Text> = (props) => {
 };
 
 export const LabelCaption = LabelCaptionTextComponent.bind({});
-LabelCaption.parameters = {
-  controls: {
-    exclude: excludeProps,
-  },
-};
