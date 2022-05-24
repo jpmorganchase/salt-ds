@@ -1,0 +1,17 @@
+{
+  "name": "modular-template-uitk-app",
+  "version": "0.0.9",
+  "license": "Apache-2.0",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "modular": {
+    "type": "template",
+    "templateType": "app"
+  },
+  "files": [
+    "README.md",
+    "public",
+    "src"
+  ]
+}

@@ -1,0 +1,11 @@
+@import "@jpmorganchase/uitk-theme/index.css";
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+div#root {
+  height: 100vh;
+}
