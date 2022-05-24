@@ -1,6 +1,7 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import classnames from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { Div } from "@jpmorganchase/uitk-lab";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
 import { useForkRef, useOverflowDetection } from "../utils";
@@ -45,25 +46,25 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
   ) {
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
-    const [contentRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
-
     const tooltipTitle = tooltipText || overflowLabel || String(children);
     const hasChildren = React.Children.count(children) !== 0;
     const hasOnlyIcon = Icon && !hasChildren;
 
     const getDefaultBreadcrumb = () =>
       isCurrentLevel ? (
-        <DefaultCurrentBreadcrumb
-          aria-disabled={isOverflowed}
+        <Div
+          truncate
+          maxRows={1}
+          tooltipText={tooltipTitle}
           className={withBaseName("currentLevel")}
-          ref={contentRef}
-          role={isOverflowed ? "link" : undefined}
-          tabIndex={isOverflowed ? 0 : undefined}
         >
           {children}
-        </DefaultCurrentBreadcrumb>
+        </Div>
       ) : (
         <Link
+          truncate
+          maxRows={1}
+          tooltipText={tooltipTitle}
           {...props}
           className={classnames(
             withBaseName(),
@@ -75,20 +76,11 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           )}
         >
           {Icon && <Icon className={withBaseName("icon")} />}
-          {hasChildren && (
-            <span className={withBaseName("text")} ref={contentRef}>
-              {children}
-            </span>
-          )}
+          {hasChildren && children}
         </Link>
       );
 
     const content = getDefaultBreadcrumb();
-
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      enterDelay: 1500,
-      placement: "top",
-    });
 
     const {
       style: containerStyle,
@@ -96,26 +88,20 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
       ...containerPropsRest
     } = ContainerProps;
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<"li">({
-      style: {
-        ...containerStyle,
-        minWidth: minWidth != null ? minWidth : itemsMinWidth,
-        maxWidth: maxWidth != null ? maxWidth : itemsMaxWidth,
-      },
-      className: classnames(liClass, containerClassName),
-      ...containerPropsRest,
-    });
-
-    const handleRef = useForkRef(triggerRef, ref);
-
     return (
       <>
-        <li {...triggerProps} ref={handleRef}>
+        <li
+          ref={ref}
+          style={{
+            ...containerStyle,
+            minWidth: minWidth != null ? minWidth : itemsMinWidth,
+            maxWidth: maxWidth != null ? maxWidth : itemsMaxWidth,
+          }}
+          className={classnames(liClass, containerClassName)}
+          {...containerPropsRest}
+        >
           {content}
         </li>
-        <Tooltip
-          {...getTooltipProps({ title: tooltipTitle, ...tooltipProps })}
-        />
       </>
     );
   }

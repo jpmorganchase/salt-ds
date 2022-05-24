@@ -7,10 +7,10 @@
 }
 
 .uitkBreadcrumb {
-  overflow: hidden;
+  /* overflow: hidden; */
   text-decoration: underline;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* text-overflow: ellipsis;
+  white-space: nowrap; */
 }
 
 .uitkBreadcrumb-regular {
@@ -53,9 +53,9 @@
 }
 
 .uitkBreadcrumb-currentLevel {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  /* white-space: nowrap; */
   text-decoration: none;
 }
 
@@ -77,8 +77,8 @@
 }
 
 .uitkBreadcrumb-text {
-  overflow: hidden;
+  /* overflow: hidden; */
   text-decoration: underline;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* text-overflow: ellipsis;
+  white-space: nowrap; */
 }

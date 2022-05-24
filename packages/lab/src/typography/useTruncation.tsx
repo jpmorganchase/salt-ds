@@ -56,8 +56,13 @@ export const useTruncation = (
 
       if (textRows) {
         const rowsHeight = textRows * lineHeight;
+
+        console.log("offsetWidth < scrollWidth", offsetWidth, scrollWidth);
+
         const hasOverflowed =
-          rowsHeight < offsetHeight || rowsHeight < scrollHeight;
+          rowsHeight < offsetHeight ||
+          rowsHeight < scrollHeight ||
+          offsetWidth < scrollWidth;
         if (isOverflowed.current !== hasOverflowed) {
           onOverflowChange && onOverflowChange(hasOverflowed);
           isOverflowed.current = hasOverflowed;
@@ -109,6 +114,7 @@ export const useTruncation = (
   // Has Tooltip
   const hasTooltip =
     rows && showTooltip && isOverflowed.current && expanded === undefined;
+  console.log("hasTooltip", hasTooltip, isOverflowed.current);
 
   const tooltipTextDefault =
     (hasTooltip &&

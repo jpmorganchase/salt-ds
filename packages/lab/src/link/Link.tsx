@@ -6,6 +6,7 @@ import {
 } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
+import { Text, TextProps } from "@jpmorganchase/uitk-lab";
 
 import "./Link.css";
 
@@ -16,7 +17,7 @@ import "./Link.css";
  * <LinkExample to="#link">Action</LinkExample>
  */
 
-export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface LinkProps extends TextProps {
   /**
    * The content of the link.
    */
@@ -47,7 +48,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   const stopPropagation = useCallback((evt) => evt.stopPropagation(), []);
   const clxPrefix = "uitk";
   return (
-    <a
+    <Text
+      elementType="a"
       className={cx(className, clxPrefix + "Link", {
         [clxPrefix + "Link-disabled"]: disabled,
       })}
@@ -64,6 +66,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
           className={clxPrefix + "Link-icon"}
         />
       )}
-    </a>
+    </Text>
   );
 });

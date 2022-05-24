@@ -74,6 +74,15 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    * Match styling to a specified heading
    */
   styleAs?: "h1" | "h2" | "h3" | "h4";
+  /**
+   * A string to indicate the link url
+   */
+  href?: string;
+  /**
+   * A string to indicate the link target
+   * Creates an Icon to the right of link if '_blank'
+   */
+  target?: string;
 }
 
 export const Text = forwardRef<HTMLElement, TextProps>(function Text(
@@ -132,6 +141,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
             marginBottom,
             ...style,
             "--text-max-rows": rows,
+            // whiteSpace: rows === 1 ? "nowrap" : "initial",
+            // textOverflow: rows === 1 ? "ellipsis" : "none",
+            // overflow: "hidden",
           }}
         >
           {children}
