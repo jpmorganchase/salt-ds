@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   AppHeader,
   Logo,
@@ -9,29 +9,29 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
   Tooltray,
-} from '@jpmorganchase/uitk-lab';
-import PlaceholderLogo from '../logo.svg';
+} from "@jpmorganchase/uitk-lab";
+import PlaceholderLogo from "../logo.svg";
 
-type ResponsiveItem = { 'data-collapsed'?: boolean };
+type ResponsiveItem = { "data-collapsed"?: boolean };
 
 const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} compact={props['data-collapsed']} />
+  <Logo {...props} compact={props["data-collapsed"]} />
 );
-const tabs = ['Home', 'About'];
+const tabs = ["Home", "About"];
 
 export const Nav = ({
   onThemeChange,
-  theme = 'light',
+  theme = "light",
 }: {
-  onThemeChange?: (theme: 'light' | 'dark') => void;
-  theme?: 'light' | 'dark';
+  onThemeChange?: (theme: "light" | "dark") => void;
+  theme?: "light" | "dark";
 }): JSX.Element => {
   const handleChange: ToggleButtonGroupChangeEventHandler = (
     event,
     index,
-    toggled,
+    toggled
   ) => {
-    onThemeChange?.(index === 1 ? 'dark' : 'light');
+    onThemeChange?.(index === 1 ? "dark" : "light");
   };
   return (
     <AppHeader>
@@ -47,7 +47,7 @@ export const Nav = ({
         data-index={1}
         data-priority={2}
         onChange={(tabIndex: number) => {
-          console.log('Tab selected', tabIndex);
+          console.log("Tab selected", tabIndex);
         }}
       >
         {tabs.map((label, i) => (
@@ -62,7 +62,7 @@ export const Nav = ({
       >
         <ToggleButtonGroup
           onChange={handleChange}
-          selectedIndex={theme === 'light' ? 0 : 1}
+          selectedIndex={theme === "light" ? 0 : 1}
         >
           <ToggleButton tooltipText="Light theme">Light</ToggleButton>
           <ToggleButton tooltipText="Dark theme">Dark</ToggleButton>

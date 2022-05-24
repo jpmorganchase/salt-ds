@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Card, Panel, Link } from '@jpmorganchase/uitk-lab';
-import { Button, ToolkitProvider } from '@jpmorganchase/uitk-core';
-import { AddIcon, RemoveIcon } from '@jpmorganchase/uitk-icons';
-import { Nav } from './components/Nav';
+import * as React from "react";
+import { Card, Panel, Link } from "@jpmorganchase/uitk-lab";
+import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { AddIcon, RemoveIcon } from "@jpmorganchase/uitk-icons";
+import { Nav } from "./components/Nav";
 
-import './App.css';
+import "./App.css";
 
 const App = (): JSX.Element => {
-  const [selectedTheme, setSelectedTheme] = React.useState<'light' | 'dark'>(
-    'light',
+  const [selectedTheme, setSelectedTheme] = React.useState<"light" | "dark">(
+    "light"
   );
 
   const [count, setCount] = React.useState(0);
@@ -27,14 +27,14 @@ const App = (): JSX.Element => {
         <Panel>
           <Card>
             <h2>
-              Check UITK's{' '}
+              Check UITK's{" "}
               <Link
                 href="https://ui-toolkit-staging.pages.dev/"
                 target="_blank"
               >
                 storybook
-              </Link>{' '}
-              and{' '}
+              </Link>{" "}
+              and{" "}
               <Link
                 href="https://github.com/jpmorganchase/uitk"
                 target="_blank"
@@ -49,8 +49,8 @@ const App = (): JSX.Element => {
             <h1>
               <Button onClick={() => setCount((x) => x - 1)}>
                 <RemoveIcon />
-              </Button>{' '}
-              Counter {count}{' '}
+              </Button>{" "}
+              Counter {count}{" "}
               <Button onClick={() => setCount((x) => x + 1)}>
                 <AddIcon />
               </Button>
