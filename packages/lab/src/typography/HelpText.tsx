@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import cx from "classnames";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
@@ -9,9 +10,13 @@ const withBaseName = makePrefixer("uitkText");
 export const HelpText = forwardRef<
   HTMLDivElement,
   Omit<TextProps, "elementType">
->(function HelpText({ children, ...rest }, ref) {
+>(function HelpText({ children, className, ...rest }, ref) {
   return (
-    <Text className={withBaseName(`helpText`)} ref={ref} {...rest}>
+    <Text
+      className={cx(className, withBaseName(`helpText`))}
+      ref={ref}
+      {...rest}
+    >
       {children}
     </Text>
   );
