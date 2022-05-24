@@ -18,22 +18,6 @@ describe("MetricContent", () => {
   });
 
   describe("When the indicator is required", () => {
-    it("should render as an icon", () => {
-      cy.mount(
-        <MetricContextProvider
-          value={{
-            showIndicator: true,
-            indicatorPosition: "end",
-            direction: "down",
-          }}
-        >
-          <MetricContent value="$801.9B" />
-        </MetricContextProvider>
-      );
-
-      cy.findByTestId(/Icon/i).should("exist");
-    });
-
     it(`should display correct icon for UP direction`, () => {
       cy.mount(
         <MetricContextProvider
@@ -47,7 +31,7 @@ describe("MetricContent", () => {
         </MetricContextProvider>
       );
 
-      cy.findByTestId(/ArrowUpIcon/i).should("exist");
+      cy.findByTestId("ArrowUpIcon").should("exist");
     });
 
     it(`should display correct icon for DOWN direction`, () => {
@@ -63,7 +47,7 @@ describe("MetricContent", () => {
         </MetricContextProvider>
       );
 
-      cy.findByTestId(/ArrowDownIcon/i).should("exist");
+      cy.findByTestId("ArrowDownIcon").should("exist");
     });
   });
 });
