@@ -141,9 +141,6 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
             marginBottom,
             ...style,
             "--text-max-rows": rows,
-            // whiteSpace: rows === 1 ? "nowrap" : "initial",
-            // textOverflow: rows === 1 ? "ellipsis" : "none",
-            // overflow: "hidden",
           }}
         >
           {children}

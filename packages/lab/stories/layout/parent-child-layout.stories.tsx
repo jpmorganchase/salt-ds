@@ -47,13 +47,13 @@ const DefaultParentChildLayoutStory: ComponentStory<
 > = (args) => {
   return (
     <div style={{ width: "90vw", maxWidth: 800 }}>
-      <ParentChildLayout {...args} parent={parent} child={child} />
+      <ParentChildLayout {...args} />
     </div>
   );
 };
 
 export const DefaultParentChildLayout = DefaultParentChildLayoutStory.bind({});
-DefaultParentChildLayout.args = {};
+DefaultParentChildLayout.args = { parent, child };
 
 const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");

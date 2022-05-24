@@ -114,7 +114,6 @@ export const useTruncation = (
   // Has Tooltip
   const hasTooltip =
     rows && showTooltip && isOverflowed.current && expanded === undefined;
-  console.log("hasTooltip", hasTooltip, isOverflowed.current);
 
   const tooltipTextDefault =
     (hasTooltip &&
