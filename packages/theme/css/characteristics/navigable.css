@@ -2,6 +2,7 @@
 .uitk-dark {
   --uitk-navigable-cursor-active: pointer;
   --uitk-navigable-cursor-hover: pointer;
+  --uitk-navigable-cursor-disabled: not-allowed;
 
   --uitk-navigable-font-weight: var(--uitk-typography-weight-regular);
   --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);

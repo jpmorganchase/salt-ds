@@ -2,14 +2,13 @@
 .uitk-light {
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;
+  --uitk-editable-cursor-readonly: not-allowed;
   --uitk-editable-cursor-hover: text;
 
   --uitk-editable-border-style: solid;
 
   --uitk-editable-border-width: 1px;
-  --uitk-editable-border-width-hover: 1px;
   --uitk-editable-border-width-active: 2px;
-  --uitk-editable-border-width-readonly: 1px;
 
   --uitk-editable-border-color: var(--uitk-palette-interact-border);
   --uitk-editable-border-color-active: var(--uitk-palette-interact-border-active);

@@ -99,7 +99,7 @@
   --uitk-palette-navigate-background-hover-low: var(--uitk-color-grey-20);
   --uitk-palette-navigate-background-hover-medium: var(--uitk-color-grey-20);
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
-  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400); /* not in Figma */
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
 
   /* Negative */
@@ -234,9 +234,9 @@
   --uitk-palette-navigate-background-hover-high: var(--uitk-color-grey-600);
   --uitk-palette-navigate-background-hover-low: var(--uitk-color-grey-700);
   --uitk-palette-navigate-background-hover-medium: var(--uitk-color-grey-700);
-  --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
-  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400); /* not in Figma */
-  --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90); /* check vs medium emphasis navigate hover background with design */
+  --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-200);
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
+  --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-300);

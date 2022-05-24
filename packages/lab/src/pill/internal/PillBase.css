@@ -18,10 +18,13 @@
   --pill-background: var(--uitkPill-background, var(--uitk-taggable-background));
   --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background));
+
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-pill) - 2px));
+
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
-  --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
+  --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
+
   --pill-text-color: var(--uitkPill-text-color, var(--uitk-taggable-foreground));
   --pill-text-color-active: var(--uitkPill-text-color-active, var(--uitk-taggable-foreground-active));
   --pill-text-color-hover: var(--uitkPill-text-color-hover, var(--uitk-taggable-foreground-hover));
@@ -110,12 +113,14 @@
 .uitkPill:hover:not(:active) {
   background: var(--pill-background-hover);
   color: var(--pill-text-color-hover);
+  cursor: var(--uitk-selectable-cursor-hover);
 }
 
-.uitkPill:not(.uitkPill-selectable):active,
-.uitkPill:not(.uitkPill-selectable).uitkPill-active {
+.uitkPill:active,
+.uitkPill.uitkPill-active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
+  cursor: var(--uitk-selectable-cursor-active);
 }
 
 .uitkPill-noShadow:active {

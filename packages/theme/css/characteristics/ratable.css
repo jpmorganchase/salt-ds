@@ -2,6 +2,10 @@
 .uitk-dark {
   --uitk-ratable-cursor-hover: pointer;
   --uitk-ratable-cursor-active: pointer;
+  --uitk-ratable-cursor-undo: pointer;
+
+  --uitk-ratable-border-width: 1px;
+  --uitk-ratable-border-style: solid;
 
   --uitk-ratable-background: var(--uitk-palette-rate-background);
   --uitk-ratable-background-active: var(--uitk-palette-rate-background-active);

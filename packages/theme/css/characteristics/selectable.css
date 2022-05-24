@@ -1,8 +1,10 @@
 .uitk-light,
 .uitk-dark {
   --uitk-selectable-cursor-active: pointer;
+  --uitk-selectable-cursor-blurselected: pointer;
   --uitk-selectable-cursor-disabled: not-allowed;
   --uitk-selectable-cursor-hover: pointer;
+
   --uitk-selectable-text-align: left; /* Not in Figma */
 
   --uitk-selectable-border-width: 1px;

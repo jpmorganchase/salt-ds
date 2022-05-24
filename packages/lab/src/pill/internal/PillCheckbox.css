@@ -15,6 +15,16 @@
   stroke-width: 2px;
 }
 
+.uitkPill-checkbox-icon-checked:hover {
+  stroke: var(--uitkPill-checkbox-strok-hovere, var(--uitk-taggable-stroke-hover));
+}
+
+.uitkPill:active .uitkPill-checkbox-icon-checked,
+.uitkPill.uitkPill-active .uitkPill-checkbox-icon-checked,
+.uitkPill-checkbox-icon-checked:active {
+  stroke: var(--uitkPill-checkbox-strok-hovere, var(--uitk-taggable-stroke-active));
+}
+
 .uitkPill-checkbox-icon-checked-tick {
   fill: var(--pill-checkbox-tick);
   stroke-width: 0;

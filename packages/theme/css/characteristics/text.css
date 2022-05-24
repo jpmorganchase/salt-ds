@@ -128,9 +128,6 @@
   --uitk-text-secondary-color-hover: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-text-secondary-color-selected: var(--uitk-palette-neutral-secondary-foreground);
 
-  --uitk-text-growth-indicator-down-color: var(--uitk-palette-negative-foreground);
-  --uitk-text-growth-indicator-up-color: var(--uitk-palette-positive-foreground);
-
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
   --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);

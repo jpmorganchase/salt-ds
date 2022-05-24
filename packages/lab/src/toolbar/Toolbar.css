@@ -38,7 +38,7 @@
   line-height: normal;
   min-width: 0;
   white-space: nowrap;
-  width: var(--uitk-toolbar-width, 100%);
+  width: var(--uitkToolbar-width, 100%);
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner {

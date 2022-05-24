@@ -53,7 +53,7 @@
 /* Styles applied if `disabled={true}` */
 .uitkCard-disabled {
   cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-  border-color: var(--uitkCard-border-color-disabled, var(--uitk-container-border-color-disabled));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-color-disabled));
 }
 
 /* Styles applied to nested divs if `disabled={true}` */
@@ -70,14 +70,24 @@
 /* Styles applied on hover if `interactable={true}` */
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
-  border: var(--uitkCard-border-hover, var(--uitk-selectable-border-hover));
-  cursor: pointer;
+  border-color: var(--uitkCard-border-color-hover, var(--uitk-selectable-border-color-hover));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-color-hover));
+  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
   position: relative;
   box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-overlayable-shadow-hover));
 }
 
 /* Styles applied on active state if `interactable={true}` */
 .uitkCard-interactable:active {
-  border: var(--uitkCard-border-hover, var(--uitk-selectable-border-hover));
+  border-color: var(--uitkCard-border-color-hover, var(--uitk-selectable-border-color-selected));
   box-shadow: var(--uitkCard-box-shadow-active, var(--uitk-overlayable-shadow-hover));
+  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-active));
+}
+
+/* Styles applied on focus-visible */
+.uitkCard:focus-visible {
+  outline-style: var(--uitk-focused-outlinestyle);
+  outline-width: var(--uitk-focused-outline-width);
+  outline-color: var(--uitk-focused-outline-color);
+  outline-offset: var(--uitk-focused-outline-offset);
 }

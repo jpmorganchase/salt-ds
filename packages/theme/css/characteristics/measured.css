@@ -5,6 +5,9 @@
   --uitk-measured-font-size-medium: 14px;
   --uitk-measured-font-size-high: 16px;
 
+  --uitk-measured-border-style: solid;
+  --uitk-measured-border-width: 1px;
+
   --uitk-measured-background: var(--uitk-palette-measure-background);
   --uitk-measured-color: var(--uitk-palette-measure-stroke);
   --uitk-measured-fill: var(--uitk-palette-measure-fill);

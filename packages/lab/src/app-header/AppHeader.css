@@ -1,21 +1,20 @@
 .uitkAppHeader {
   --appheader-background: var(--uitk-container-background-medium);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar));
-  --appheader-border-bottom-width: 1px;
-  --appheader-separable: var(--uitk-separable-border-color-3);
-  --uitk-toolbar-width: auto;
-  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-2));
-  --tabstrip-align-self: flex-end;
+  --appheader-separable-bar: var(--uitk-separable-border-color-2);
+  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-overlayable-shadow-border-region));
   --appheader-padding: calc(var(--uitk-size-unit) * 3);
   --appheader-padding-left: 8px;
   --appheader-padding-right: var(--appheader-padding);
+
   --uitkTabstrip-height: var(--appheader-height);
+  --uitkToolbar-width: auto;
 }
 
 .uitkAppHeader {
   align-items: flex-start;
   background-color: var(--appheader-background);
-  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-container-border-color-medium);
+  border-bottom: var(--uitk-container-border-style) var(--uitk-container-border-width) var(--uitk-container-border-color-medium);
   box-shadow: var(--appheader-shadow);
   box-sizing: content-box;
   display: flex;
@@ -50,11 +49,11 @@
 .uitkAppHeader-navMenu::after {
   top: 0;
   right: 0;
-  width: 1px;
+  width: var(--uitk-separable-border-width);
   bottom: 0;
   content: "";
   position: absolute;
-  background: var(--appheader-separable);
+  background: var(--appheader-separable-bar);
 }
 
 .uitkAppHeader .uitkLogo:not(.uitkLogo-compact) {
