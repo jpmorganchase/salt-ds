@@ -18,11 +18,9 @@
 
 .uitkMetricHeader-title {
   color: var(--metric-title-color);
-  line-height: 1.2;
 }
 
 .uitkMetricHeader-subtitle {
   color: var(--metric-subtitle-color);
   font-weight: var(--uitk-typography-weight-regular);
-  line-height: 1.17;
 }
