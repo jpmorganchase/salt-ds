@@ -18284,6 +18284,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"modular-template-uitk-app@workspace:packages/modular-template-uitk-app":
+  version: 0.0.0-use.local
+  resolution: "modular-template-uitk-app@workspace:packages/modular-template-uitk-app"
+  languageName: unknown
+  linkType: soft
+
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"

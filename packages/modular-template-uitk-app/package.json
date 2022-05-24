@@ -2,6 +2,9 @@
   "name": "modular-template-uitk-app",
   "version": "0.0.9",
   "license": "Apache-2.0",
+  "scripts": {
+    "build": "mkdir ../../dist/modular-template-uitk-app && cp -R ./public ./src README.md ../../dist/modular-template-uitk-app/"
+  },
   "exports": {
     "./package.json": "./package.json"
   },
