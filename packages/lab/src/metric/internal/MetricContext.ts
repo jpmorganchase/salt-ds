@@ -22,6 +22,7 @@ export interface MetricContextValue {
    */
   showIndicator?: boolean;
   headingAriaLevel?: number;
+  size?: "small" | "medium" | "large";
 }
 
 export interface MetricContextComponentIds {

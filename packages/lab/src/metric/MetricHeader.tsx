@@ -35,7 +35,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     const { titleId, subtitleId, headingAriaLevel } = useMetricContext();
 
     const renderSubtitle = useCallback(() => {
-      if (!subtitle) return;
+      if (!subtitle) return null;
 
       const subtitleComponent = (
         <Div
@@ -65,7 +65,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
       }
 
       return subtitleComponent;
-    }, [subtitle]);
+    }, [subtitle, subtitleId, SubtitleLinkProps]);
 
     return (
       <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>

@@ -38,25 +38,41 @@ describe("Metric", () => {
     );
 
     expect(container.querySelector(".uitkMetric")).toHaveClass(
-      "uitkMetric-vertical"
+      "uitkMetric-orientation-vertical"
     );
   });
 
-  ["High", "Medium", "Low"].forEach((emphasis) =>
-    it(`should render with correct classes for "${emphasis}" emphasis`, () => {
-      render(
-        <Metric data-testid="metric" className={`uitkEmphasis${emphasis}`}>
-          <MetricContent value="$801.9B" />
-        </Metric>
-      );
+  it(`should render with correct text component for size SMALL`, () => {
+    const { container } = render(
+      <Metric data-testid="metric" size="small">
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
 
-      expect(screen.getByTestId("metric")).toHaveClass(
-        `uitkEmphasis${emphasis}`
-      );
-    })
-  );
+    expect(container.querySelector(".uitkText-figure3")).toBeDefined();
+  });
 
-  ["horizontal", "vertical"].forEach((orientation) =>
+  it(`should render with correct text component for size MEDIUM by default`, () => {
+    const { container } = render(
+      <Metric data-testid="metric">
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
+
+    expect(container.querySelector(".uitkText-figure2")).toBeDefined();
+  });
+
+  it(`should render with correct text component for size LARGE`, () => {
+    const { container } = render(
+      <Metric data-testid="metric" size="large">
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
+
+    expect(container.querySelector(".uitkText-figure1")).toBeDefined();
+  });
+
+  [("horizontal", "vertical")].forEach((orientation) =>
     it(`should render with correct classes for "${orientation}" orientation`, () => {
       const { container } = render(
         <Metric orientation={orientation}>
@@ -66,7 +82,7 @@ describe("Metric", () => {
       );
 
       expect(container.querySelector(".uitkMetric")).toHaveClass(
-        `uitkMetric-${orientation}`
+        `uitkMetric-orientation-${orientation}`
       );
     })
   );
@@ -86,78 +102,24 @@ describe("Metric", () => {
     })
   );
 
-  describe("When applying aria attributes", () => {
-    it("should add heading role to the first valid child component", () => {
-      const { getByTestId, rerender } = render(
-        <Metric>
-          <div>Some text</div>
-          <MetricHeader title="Revenue YTD" />
-          <MetricContent value="$801.9B" />
-        </Metric>
-      );
-
-      expect(getByTestId("metric-title")).toHaveAttribute("role", "heading");
-      expect(getByTestId("metric-value")).not.toHaveAttribute(
-        "role",
-        "heading"
-      );
-
-      rerender(
-        <Metric>
-          Some text
-          <MetricContent value="$801.9B" />
-          <MetricHeader title="Revenue YTD" />
-        </Metric>
-      );
-
-      expect(getByTestId("metric-value")).toHaveAttribute("role", "heading");
-      expect(getByTestId("metric-title")).not.toHaveAttribute(
-        "role",
-        "heading"
-      );
-    });
-  });
-
-  it("should add correct aria props to the title if 'MetricHeader' is the first valid child component", () => {
-    const { getByTestId } = render(
+  it("should add correct aria props to the 'MetricContent'", () => {
+    const { getByTestId, container } = render(
       <Metric>
-        <MetricHeader title="Revenue YTD" />
+        <MetricHeader title="Revenue YTD" subtitle="Total" />
         <MetricContent value="$801.9B" />
       </Metric>
     );
 
     const title = getByTestId("metric-title");
-    const value = getByTestId("metric-value");
+    const subtitle = getByTestId("metric-subtitle");
+    const content = container.querySelector(".uitkMetricContent");
 
+    console.log("subtitle", subtitle.id);
     expect(title).toHaveAttribute("aria-level", "2");
-    expect(title).toHaveAttribute(
+    expect(content).toHaveAttribute(
       "aria-labelledby",
-      [title.id, value.id].join(" ")
+      `${title.id} ${subtitle.id}`
     );
-
-    expect(value).not.toHaveAttribute("aria-level");
-    expect(value).not.toHaveAttribute("aria-labelledby");
-  });
-
-  it("should add correct aria props to the value if 'MetricContent' is the first valid child component", () => {
-    const { getByTestId } = render(
-      <Metric>
-        <MetricContent value="$801.9B" />
-        <MetricHeader title="Revenue YTD" />
-      </Metric>
-    );
-
-    const title = getByTestId("metric-title");
-    const value = getByTestId("metric-value");
-
-    expect(value).toHaveAttribute("aria-level", "2");
-    expect(value).toHaveAttribute(
-      "aria-labelledby",
-      [value.id, title.id].join(" ")
-    );
-
-    expect(title).not.toHaveAttribute("aria-level");
-    expect(title).not.toHaveAttribute("aria-labelledby");
   });
 
   it("should set correct 'aria-level' to the heading if required", () => {

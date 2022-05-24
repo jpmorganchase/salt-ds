@@ -7,7 +7,7 @@ import {
 } from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Div } from "@jpmorganchase/uitk-lab";
+import { Div, Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
 import { useForkRef } from "../utils";
 import { useMetricContext } from "./internal";
@@ -55,6 +55,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       direction,
       showIndicator,
       indicatorPosition,
+      size,
       valueId,
       titleId,
       subtitleId,
@@ -63,24 +64,16 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const contentRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef<HTMLDivElement>(ref, contentRef);
 
-    const getIconSize = useCallback(() => {
-      let size = 24;
-      if (contentRef.current) {
-        const parent = contentRef.current.closest(".uitkMetric");
-        if (parent?.classList.contains("uitkEmphasisLow")) {
-          size = 12;
-        }
-      }
-
-      return size;
-    }, [contentRef]);
+    const iconSize = size === "small" ? 12 : 24;
+    const ValueComponent =
+      size === "small" ? Figure3 : size === "large" ? Figure1 : Figure2;
 
     const iconProps = {
       "aria-label": direction,
       className: withBaseName("indicator"),
       "data-testid": "metric-indicator",
       name: direction ? `movement-${direction}` : "",
-      size: getIconSize(),
+      size: iconSize,
       ...IndicatorIconProps,
     };
 
@@ -104,13 +97,13 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       >
         <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          <span
+          <ValueComponent
             data-testid="metric-value"
             id={valueId}
             className={withBaseName("value")}
           >
             {value}
-          </span>
+          </ValueComponent>
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (

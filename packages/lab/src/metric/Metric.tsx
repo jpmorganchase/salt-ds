@@ -37,6 +37,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
     indicatorPosition = "end",
     headingAriaLevel = 2,
     id: idProp,
+    size = "medium",
     ...restProps
   },
   ref
@@ -54,6 +55,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
       showIndicator,
       indicatorPosition,
       headingAriaLevel,
+      size,
       titleId,
       subtitleId,
       valueId,
@@ -65,6 +67,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
       showIndicator,
       indicatorPosition,
       headingAriaLevel,
+      size,
       titleId,
       subtitleId,
       valueId,
