@@ -23,7 +23,7 @@ const metricExamples = (
     <Metric
       align="left"
       direction="up"
-      className="uitkEmphasisLow"
+      size="small"
       orientation="horizontal"
       showIndicator
     >
@@ -33,7 +33,7 @@ const metricExamples = (
     <Metric
       align="center"
       direction="down"
-      className="uitkEmphasisMedium"
+      size="medium"
       orientation="horizontal"
       showIndicator
       indicatorPosition="start"
@@ -43,7 +43,7 @@ const metricExamples = (
     </Metric>
     <Metric
       align="right"
-      className="uitkEmphasisHigh"
+      size="large"
       orientation="horizontal"
       direction="up"
       showIndicator
@@ -52,28 +52,18 @@ const metricExamples = (
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
-    <Metric
-      align="left"
-      direction="up"
-      className="uitkEmphasisLow"
-      showIndicator
-    >
+    <Metric align="left" direction="up" size="small" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
-    <Metric
-      align="center"
-      direction="up"
-      className="uitkEmphasisMedium"
-      showIndicator
-    >
+    <Metric align="center" direction="up" size="medium" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
     </Metric>
     <Metric
       align="right"
       direction="down"
-      className="uitkEmphasisHigh"
+      size="large"
       indicatorPosition="start"
       showIndicator
     >
