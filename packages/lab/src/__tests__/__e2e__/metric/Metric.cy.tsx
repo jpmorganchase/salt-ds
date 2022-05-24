@@ -196,3 +196,72 @@ describe("Metric - Accessibility", () => {
     cy.get(".uitkMetricContent").should("have.attr", "aria-labelledby");
   });
 });
+
+describe("Metric Header - Alignment", () => {
+  it(`should render with correct style for LEFT align`, () => {
+    cy.mount(
+      <Metric align="left">
+        <MetricHeader title="Revenue YTD" />
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
+    cy.get(".uitkMetricHeader").should("have.css", "text-align", "left");
+  });
+  it(`should render with correct style for CENTER align`, () => {
+    cy.mount(
+      <Metric align="center">
+        <MetricHeader title="Revenue YTD" />
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
+    cy.get(".uitkMetricHeader").should("have.css", "text-align", "center");
+  });
+  it(`should render with correct style for RIGHT align`, () => {
+    cy.mount(
+      <Metric align="right">
+        <MetricHeader title="Revenue YTD" />
+        <MetricContent value="$801.9B" />
+      </Metric>
+    );
+    cy.get(".uitkMetricHeader").should("have.css", "text-align", "right");
+  });
+});
+
+describe("MetricContent", () => {
+  it("should display value", () => {
+    cy.mount(<MetricContent value="$801.9B" />);
+    cy.findByTestId("metric-value").should("exist");
+    cy.contains("$801.9B");
+
+    cy.findByTestId("metric-subvalue").should("not.exist");
+  });
+
+  it("should display subvalue if provided", () => {
+    cy.mount(<MetricContent value="$801.9B" subvalue="-10.1 (-1.23%)" />);
+
+    cy.findByTestId("metric-subvalue").should("exist");
+    cy.contains("-10.1 (-1.23%)");
+  });
+
+  describe("When the indicator is required", () => {
+    it(`should display correct icon for UP direction`, () => {
+      cy.mount(
+        <Metric direction="up" showIndicator={true} indicatorPosition="end">
+          <MetricContent value="$801.9B" />
+        </Metric>
+      );
+
+      cy.findByTestId("ArrowUpIcon").should("exist");
+    });
+
+    it(`should display correct icon for DOWN direction`, () => {
+      cy.mount(
+        <Metric direction="down" showIndicator={true} indicatorPosition="end">
+          <MetricContent value="$801.9B" />
+        </Metric>
+      );
+
+      cy.findByTestId("ArrowDownIcon").should("exist");
+    });
+  });
+});
