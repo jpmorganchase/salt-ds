@@ -18,17 +18,20 @@ describe("Metric - by default", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", "uitkMetric-vertical");
+    cy.get(".uitkMetric").should(
+      "have.class",
+      "uitkMetric-orientation-vertical"
+    );
   });
 
-  it("should render with medium emphasis style", () => {
+  it("should render with medium size style", () => {
     cy.mount(
       <Metric>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", "uitkMetric-emphasis-medium");
+    cy.get(".uitkText-figure2").should("exist");
   });
 });
 
@@ -113,32 +116,32 @@ describe("Metric - Indicator Position", () => {
 });
 
 describe("Metric - Emphasis", () => {
-  it(`should render with correct classes for HIGH emphasis`, () => {
+  it(`should render with correct text component for size LARGE`, () => {
     cy.mount(
-      <Metric emphasis="high">
+      <Metric size="large">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", `uitkMetric-emphasis-high`);
+    cy.get(".uitkText-figure1").should("exist");
   });
-  it(`should render with correct classes for MEDIUM emphasis`, () => {
+  it(`should render with correct text component for size MEDIUM`, () => {
     cy.mount(
-      <Metric emphasis="medium">
+      <Metric size="medium">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", `uitkMetric-emphasis-medium`);
+    cy.get(".uitkText-figure2").should("exist");
   });
-  it(`should render with correct classes for LOW emphasis`, () => {
+  it(`should render with correct text component for size SMALL`, () => {
     cy.mount(
-      <Metric emphasis="low">
+      <Metric size="small">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", `uitkMetric-emphasis-low`);
+    cy.get(".uitkText-figure3").should("exist");
   });
 });
 
@@ -150,7 +153,10 @@ describe("Metric - Orientation", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", `uitkMetric-horizontal`);
+    cy.get(".uitkMetric").should(
+      "have.class",
+      `uitkMetric-orientation-horizontal`
+    );
   });
   it(`should render with correct classes for VERTICAL orientation`, () => {
     cy.mount(
@@ -159,7 +165,10 @@ describe("Metric - Orientation", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetric").should("have.class", `uitkMetric-vertical`);
+    cy.get(".uitkMetric").should(
+      "have.class",
+      `uitkMetric-orientation-vertical`
+    );
   });
 });
 
