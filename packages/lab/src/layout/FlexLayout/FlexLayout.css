@@ -20,7 +20,7 @@
 }
 
 .uitkFlexLayout-separator {
-  --uitkFlexLayout-gap: calc(var(--uitk-spacing-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
+  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }
 
 .uitkFlexLayout-separator > *:not(:last-child)::after {
