@@ -24183,6 +24183,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"theme-css-to-json@workspace:tooling/theme-css-to-json":
+  version: 0.0.0-use.local
+  resolution: "theme-css-to-json@workspace:tooling/theme-css-to-json"
+  dependencies:
+    "@types/css-tree": ^1.0.7
+    "@types/node": ^14.14.20
+    css-tree: ^2.0.4
+  languageName: unknown
+  linkType: soft
+
 "throat@npm:^5.0.0":
   version: 5.0.0
   resolution: "throat@npm:5.0.0"
