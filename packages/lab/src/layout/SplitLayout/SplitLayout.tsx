@@ -1,18 +1,18 @@
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, ReactNode, HTMLAttributes } from "react";
 import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 import "./SplitLayout.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 
-export interface SplitItemProps {
+export interface SplitItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * A list of items. Required to have some children.
    */
   children: ReactNode;
 }
 
-export interface SplitLayoutProps {
+export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
