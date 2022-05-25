@@ -3217,6 +3217,7 @@ __metadata:
     vite-plugin-istanbul: ^2.5.1
     vite-plugin-optimize-persist: ^0.1.2
     vite-plugin-package-config: ^0.1.1
+    vite-plugin-turbosnap: ^1.0.1
     vite-tsconfig-paths: ^3.4.1
     warning: ^4.0.3
     webpack: 5
@@ -26755,6 +26756,13 @@ __metadata:
   peerDependencies:
     vite: ^2.0.0
   checksum: 7d9524c1371d5aed97ffef4069abd63dd714dfdb115500a5f05af785dd393aba519e2d1c21992588aa663afbddbd3a57b0cf3c20fc69d082cc02fdbd355b913b
+  languageName: node
+  linkType: hard
+
+"vite-plugin-turbosnap@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "vite-plugin-turbosnap@npm:1.0.1"
+  checksum: 1f182feb737bcb16822d067f6e0cab4b712ab6f3a60f2de0229f18217b86417c52315bb6c1868a6caedea9094c6e2a03c3fe6d949322796ac3cf947c2fd898c7
   languageName: node
   linkType: hard
 
