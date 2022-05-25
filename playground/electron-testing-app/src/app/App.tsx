@@ -1,24 +1,25 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
+  ButtonBar,
   CascadingMenu,
-  Dialog,
-  Dropdown,
-  MenuDescriptor,
-  Tooltip,
-  WindowContext,
-  ElectronWindow,
-  ColorChooser,
   Color,
+  ColorChooser,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  OrderedButton,
-  ButtonBar,
-  Toolbar,
+  Dropdown,
+  ElectronWindow,
   FormField,
+  ListChangeHandler,
+  MenuDescriptor,
+  OrderedButton,
   Portal,
-  useWindow,
+  Toolbar,
+  Tooltip,
   useTooltip,
+  useWindow,
+  WindowContext,
 } from "@jpmorganchase/uitk-lab";
 
 import { Button, useDensity } from "@jpmorganchase/uitk-core";
@@ -32,7 +33,6 @@ import {
 
 import { usStateExampleData } from "./exampleData";
 import { ToolbarAnchor } from "./ToolbarAnchor";
-import { ListChangeHandler } from "@jpmorganchase/uitk-lab";
 
 const densityDialogWidths = {
   touch: 640,
@@ -201,7 +201,7 @@ export const App = () => {
         <Dialog
           className="Dialog-alignTop"
           disablePortal={true}
-          id="steve-1"
+          id="example-1"
           open={open}
           onClose={handleClose}
           width={densityDialogWidths[density]}

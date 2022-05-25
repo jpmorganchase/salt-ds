@@ -59,8 +59,8 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
         }),
         shift({ limiter: limitShift() }),
         size({
-          apply({ height }) {
-            setMaxListHeight(height);
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
           },
         }),
       ];

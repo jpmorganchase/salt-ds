@@ -156,8 +156,8 @@ export function DefaultComboBox<Item>(
         }),
         shift({ limiter: limitShift() }),
         size({
-          apply({ height }) {
-            setMaxListHeight(height);
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
           },
         }),
       ];

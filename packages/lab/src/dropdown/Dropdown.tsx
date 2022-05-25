@@ -1,18 +1,18 @@
 import classnames from "classnames";
 import {
   ComponentType,
+  FocusEvent,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
   Ref,
   useRef,
-  FocusEvent,
-  MouseEventHandler,
   useState,
 } from "react";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import {
   ListBase,
@@ -228,8 +228,8 @@ export const Dropdown = forwardRef(function Dropdown<
         }),
         shift({ limiter: limitShift() }),
         size({
-          apply({ height }) {
-            setMaxListHeight(height);
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
           },
         }),
       ];

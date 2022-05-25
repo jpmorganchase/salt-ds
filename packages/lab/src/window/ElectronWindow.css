@@ -1,5 +1,4 @@
 .uitkWindow {
-  --uitkDialog-margin: 0;
   --uitkDialog-box-shadow: none;
   width: max-content;
   height: max-content;

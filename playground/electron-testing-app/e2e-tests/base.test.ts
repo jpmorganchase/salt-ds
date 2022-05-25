@@ -60,12 +60,14 @@ test("Opens the cascading menu in a new child window", async () => {
   // Open Cascading Menu
   await page.locator("data-testid=cascading-menu-trigger").click();
   expect(electronApp.windows().length).toBe(2);
-  const newPage = electronApp.windows()[1];
-  expect(newPage).toBeTruthy();
+  const cascadingMenuPage = electronApp.windows()[1];
+  expect(cascadingMenuPage).toBeTruthy();
 
   await page.waitForTimeout(200);
 
-  const cascadingMenuHandle = await electronApp.browserWindow(newPage);
+  const cascadingMenuHandle = await electronApp.browserWindow(
+    cascadingMenuPage
+  );
   const mainWindowHandle = await electronApp.browserWindow(page);
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
     cascadingMenuHandle,
@@ -75,7 +77,7 @@ test("Opens the cascading menu in a new child window", async () => {
   expect(childWindowSize).toStrictEqual([201, 112]);
   expect(childWindowPosition).toStrictEqual([355, 36]);
 
-  await newPage
+  await cascadingMenuPage
     .locator("#UITK-cascading-menu-item-1 >> text=Level 1 Menu Item")
     .click();
   expect(electronApp.windows().length).toBe(1);
@@ -86,9 +88,9 @@ test.skip("Opens multiple cascading menu windows", async () => {
   // Open Cascading Menu
   await page.locator("data-testid=cascading-menu-trigger").click();
   expect(electronApp.windows().length).toBe(2);
-  const newPage = electronApp.windows()[1];
-  expect(newPage).toBeTruthy();
-  await newPage
+  const cascadingMenuPage = electronApp.windows()[1];
+  expect(cascadingMenuPage).toBeTruthy();
+  await cascadingMenuPage
     .locator("#UITK-cascading-menu-item-0 >> text=Level 1 Menu Item 2")
     .hover();
   await page.waitForTimeout(200);
@@ -116,7 +118,7 @@ test("Opens the dialog in a new child window", async () => {
 
   expect(
     await dialogWindowHandle.evaluate((bw: BrowserWindow) => bw.title)
-  ).toBe("steve-1");
+  ).toBe("example-1");
 
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
     dialogWindowHandle,
@@ -134,7 +136,7 @@ test("Opens the dialog in a new child window", async () => {
 
 test("Opens the colour chooser in a new child window", async () => {
   page = await electronApp.firstWindow();
-  // Open Dialog
+  // Open ColourChooser
   await page.locator("data-testid=color-chooser-overlay-button").click();
   expect(electronApp.windows().length).toBe(2);
   const colourPickerPage = electronApp.windows()[1];

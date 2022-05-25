@@ -1,11 +1,11 @@
 import {
   ForwardedRef,
-  HTMLAttributes,
   forwardRef,
+  HTMLAttributes,
   useRef,
   useState,
 } from "react";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
 import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 
 import { useForkRef } from "../../utils";
@@ -46,8 +46,8 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
         }),
         shift({ limiter: limitShift() }),
         size({
-          apply({ height }) {
-            setMaxListHeight(height);
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
           },
         }),
       ];
