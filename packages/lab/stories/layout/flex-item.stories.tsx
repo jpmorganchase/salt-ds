@@ -8,8 +8,17 @@ import "./styles.css";
 import { ReactNode, HTMLAttributes } from "react";
 
 export default {
-  title: "Layout/FlexItem",
+  title: "Layout/FlexLayout/FlexItem",
   component: FlexItem,
+  argTypes: {
+    align: {
+      options: FLEX_ITEM_ALIGNMENTS,
+      control: { type: "select" },
+    },
+    shrink: { control: { type: "number" } },
+    grow: { control: { type: "number" } },
+  },
+  excludeStories: ["FlexContent"],
 } as ComponentMeta<typeof FlexItem>;
 
 interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
@@ -28,16 +37,7 @@ export const FlexContent = ({
   </div>
 );
 
-const Template: ComponentStory<typeof FlexItem> = () => {
-  return (
-    <FlexItem>
-      <FlexContent />
-    </FlexItem>
-  );
-};
-export const ToolkitFlexItem = Template.bind({});
-
-const InsideFlexbox: ComponentStory<typeof FlexItem> = (args) => {
+const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
     <FlexLayout>
       <FlexItem {...args}>
@@ -58,17 +58,8 @@ const InsideFlexbox: ComponentStory<typeof FlexItem> = (args) => {
     </FlexLayout>
   );
 };
-export const ToolkitFlexItemInFlexLayout = InsideFlexbox.bind({});
-ToolkitFlexItemInFlexLayout.args = {
+export const FlexItemWrapper = FlexItemStory.bind({});
+FlexItemWrapper.args = {
   shrink: 0,
   grow: 0,
-};
-
-ToolkitFlexItemInFlexLayout.argTypes = {
-  align: {
-    options: FLEX_ITEM_ALIGNMENTS,
-    control: { type: "select" },
-  },
-  shrink: { control: { type: "number" } },
-  grow: { control: { type: "number" } },
 };

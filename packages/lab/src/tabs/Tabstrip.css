@@ -1,5 +1,5 @@
 .uitkTabstrip {
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable-unit, 36px));
+  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
   --tabstrip-tag-dragging-display: none;
   --tabstrip-tab-display: inline-flex;
   --tabstrip-tab-background: transparent;
@@ -37,7 +37,7 @@
 
 .uitkTabstrip-addButton,
 .uitkTabstrip-overflowMenu {
-  margin-left: var(--uitk-spacing-unit);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkTabstrip-inner {

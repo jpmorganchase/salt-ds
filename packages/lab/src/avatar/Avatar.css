@@ -1,6 +1,6 @@
 .uitkAvatar {
-  --avatar-background-color: var(--uitk-color-blue-500);
-  --avatar-foreground-color: var(--uitk-color-white);
+  --avatar-background-color: var(--uitk-accent-background);
+  --avatar-foreground-color: var(--uitk-accent-foreground);
   --avatar-font-family: var(--uitk-typography-font-family);
 }
 
@@ -47,15 +47,15 @@
 
 .uitkAvatar-small {
   --avatar-font-size: 8px;
-  --avatar-container-size: var(--uitk-size-regular-high);
+  --avatar-container-size: var(--uitk-size-graphic-small);
 }
 
 .uitkAvatar-medium {
   --avatar-font-size: 11px;
-  --avatar-container-size: var(--uitk-size-regular-medium);
+  --avatar-container-size: var(--uitk-size-graphic-medium);
 }
 
 .uitkAvatar-large {
   --avatar-font-size: 14px;
-  --avatar-container-size: var(--uitk-size-regular-touch);
+  --avatar-container-size: var(--uitk-size-graphic-large);
 }

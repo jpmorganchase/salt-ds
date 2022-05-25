@@ -33,27 +33,28 @@
   color: var(--metric-direction-down-color);
 }
 
-.uitkEmphasisHigh .uitkMetricContent-value {
+.uitkEmphasisHigh.uitkMetricContent-value {
   font-size: 56px;
 }
 
-.uitkEmphasisMedium .uitkMetricContent-value {
+.uitkEmphasisMedium.uitkMetricContent-value {
   font-size: 36px;
 }
 
-.uitkEmphasisLow .uitkMetricContent-value {
+.uitkEmphasisLow.uitkMetricContent-value {
   font-size: 24px;
 }
 
-.uitkMetricContent-horizontal.uitkEmphasisHigh .uitkMetricContent-value {
-  line-height: 0.75;
-}
-
-.uitkMetricContent-horizontal.uitkEmphasisMedium .uitkMetricContent-value {
+.uitkMetricContent-horizontal .uitkMetricContent-value,
+.uitkMetricContent-horizontal .uitkEmphasisMedium.uitkMetricContent-value {
   line-height: 0.85;
 }
 
-.uitkMetricContent-horizontal.uitkEmphasisLow .uitkMetricContent-value {
+.uitkMetricContent-horizontal .uitkEmphasisHigh.uitkMetricContent-value {
+  line-height: 0.75;
+}
+
+.uitkMetricContent-horizontal .uitkEmphasisLow.uitkMetricContent-value {
   line-height: 0.95;
 }
 

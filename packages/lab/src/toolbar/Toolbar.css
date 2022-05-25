@@ -1,7 +1,6 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-container-background);
+  --toolbar-background: var(--uitk-container-background-medium);
   --toolbar-font-size: var(--uitk-text-font-size);
-  --toolbar-size: var(--uitk-size-toolbar-unit);
   /* --uitkFormActivationIndicator-size: 0; */
 }
 
@@ -35,7 +34,7 @@
 
 .uitkToolbar[aria-orientation="horizontal"] {
   display: flex;
-  height: var(--toolbar-size);
+  height: var(--uitkToolbar-height, var(--uitk-size-toolbar));
   line-height: normal;
   min-width: 0;
   white-space: nowrap;
@@ -49,12 +48,12 @@
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > * {
-  padding-top: var(--uitk-spacing-unit);
-  padding-right: var(--uitk-spacing-unit);
+  padding-top: var(--uitk-size-unit);
+  padding-right: var(--uitk-size-unit);
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > *:first-child {
-  padding-left: var(--uitk-spacing-unit);
+  padding-left: var(--uitk-size-unit);
 }
 
 .uitkToolbar[aria-orientation="vertical"] {

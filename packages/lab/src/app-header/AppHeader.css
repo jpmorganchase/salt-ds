@@ -1,18 +1,12 @@
-.uitk-light {
-  --appheader-separable: var(--uitk-color-grey-40);
-}
-.uitk-dark {
-  --appheader-separable: var(--uitk-color-grey-400);
-}
-
 .uitkAppHeader {
-  --appheader-background: var(--uitk-container-background);
-  --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar-unit));
+  --appheader-background: var(--uitk-container-background-medium);
+  --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar));
   --appheader-border-bottom-width: 1px;
+  --appheader-separable: var(--uitk-separable-border-color-3);
   --uitk-toolbar-width: auto;
   --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-shadow-2));
   --tabstrip-align-self: flex-end;
-  --appheader-padding: calc(var(--uitk-spacing-unit) * 3);
+  --appheader-padding: calc(var(--uitk-size-unit) * 3);
   --appheader-padding-left: 8px;
   --appheader-padding-right: var(--appheader-padding);
   --uitkTabstrip-height: var(--appheader-height);
@@ -21,7 +15,7 @@
 .uitkAppHeader {
   align-items: flex-start;
   background-color: var(--appheader-background);
-  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-color-grey-60);
+  border-bottom: solid var(--appheader-border-bottom-width) var(--uitk-container-border-color-medium);
   box-shadow: var(--appheader-shadow);
   box-sizing: content-box;
   display: flex;

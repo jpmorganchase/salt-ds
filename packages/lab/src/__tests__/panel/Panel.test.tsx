@@ -26,7 +26,9 @@ describe("GIVEN a Panel", () => {
   describe("emphasis prop", () => {
     describe('WHEN the "high" emphasis is selected', () => {
       it('THEN should display "high" emphasis', () => {
-        const { getByText } = render(<Panel emphasis="high">{text}</Panel>);
+        const { getByText } = render(
+          <Panel className="uitkEmphasisHigh">{text}</Panel>
+        );
         expect(getByText(text)).toHaveClass("uitkEmphasisHigh");
       });
     });

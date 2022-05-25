@@ -4,6 +4,7 @@ import {
   SettingsSolidIcon,
   UserBadgeIcon,
 } from "@jpmorganchase/uitk-icons";
+import "./badge.stories.css";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -31,10 +32,10 @@ export const AllBadges: ComponentStory<typeof Badge> = () => {
         <Badge badgeContent={1}>Lorem Ipsum</Badge>
         <Badge badgeContent={10}>Lorem Ipsum</Badge>
         <Badge badgeContent={100}>Lorem Ipsum</Badge>
-        <Badge badgeContent={2000} variant="error">
+        <Badge badgeContent={2000} className="errorBackwardsCompat">
           Lorem Ipsum
         </Badge>
-        <Badge badgeContent={2000} max={99} variant="success">
+        <Badge badgeContent={2000} max={99} className="successBackwardsCompat">
           Lorem Ipsum
         </Badge>
       </div>

@@ -1,5 +1,5 @@
 .uitkTooltray {
-  --tooltray-height: var(--uitk-size-toolbar-unit);
+  --tooltray-height: var(--uitk-size-toolbar);
 }
 
 .uitkTooltray {
@@ -26,15 +26,15 @@
 }
 
 .uitkTooltray-horizontal:first-child {
-  padding-left: var(--uitk-spacing-unit);
+  padding-left: var(--uitk-size-unit);
 }
 .uitkTooltray-horizontal:last-child {
-  padding-right: var(--uitk-spacing-unit);
+  padding-right: var(--uitk-size-unit);
 }
 
 .uitkTooltray-horizontal:not(:first-child) {
-  margin-left: var(--uitk-spacing-unit);
-  padding-left: calc(var(--uitk-spacing-unit) * 2);
+  margin-left: var(--uitk-size-unit);
+  padding-left: calc(var(--uitk-size-unit) * 2);
 }
 .uitkTooltray-horizontal:not(:first-child):before {
   content: "";

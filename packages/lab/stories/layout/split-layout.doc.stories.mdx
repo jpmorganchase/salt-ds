@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { SplitLayout, FlexItem } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { DefaultSplitLayout } from "./split-layout.stories";
+
+<Meta title="Layout/Docs/SplitLayout" component={SplitLayout} />
+
+# Split Layout
+
+Defines left and right regions for UI elements within a span, such as a button bar
+
+<Canvas>
+  <Story name="Default Split Layout">
+    <DefaultSplitLayout />
+  </Story>
+</Canvas>
+
+## API
+
+```
+import {SplitLayout} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={SplitLayout} />
+
+## Usage Examples
+
+### Simple Usage
+
+<Canvas>
+  <Story id="layout-splitlayout--button-bar-in-split-layout" />
+</Canvas>
+
+## Anatomy
+
+<Canvas>
+  <Story name="Split Layout Anatomy">
+    <ComponentAnatomy showLegend>
+      <SplitLayout>
+        <FlexItem></FlexItem>
+      </SplitLayout>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
