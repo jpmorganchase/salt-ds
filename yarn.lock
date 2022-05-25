@@ -3179,6 +3179,7 @@ __metadata:
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
     axe-core: ^4.3.5
+    chromatic: ^6.5.4
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
@@ -9437,6 +9438,17 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: c57cf9dd0791e2f18a5ee9c1a299ae6e801ff58fee96dc8bfd0dcb4738a6ce58dd252a3605b1c93c6418fe4f9d5093b28ffbf4d66648cb2a9c67eaef9679be2f
+  languageName: node
+  linkType: hard
+
+"chromatic@npm:^6.5.4":
+  version: 6.5.4
+  resolution: "chromatic@npm:6.5.4"
+  bin:
+    chroma: bin/main.cjs
+    chromatic: bin/main.cjs
+    chromatic-cli: bin/main.cjs
+  checksum: 79e036b305407115ca1bcd62f4b754f945dcf6c8392ba2369bb34998493dc0c32c1336663f9c46da742d8ee90720edd143d41df0a6ffd6563703a794c6817929
   languageName: node
   linkType: hard
 
