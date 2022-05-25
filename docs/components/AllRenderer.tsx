@@ -8,8 +8,8 @@ import { BackgroundBlock } from "./BackgroundBlock";
  *
  * Sample usage:
  * ```
- * <AllRenderer Component={Panel} props={{ emphasis: "low", ...props }} >
- *    <Panel emphasis="low" {...props}>
+ * <AllRenderer Component={Panel} props={{ ...props }} >
+ *    <Panel className="uitkEmphasisLow" {...props}>
  *       Lorem Ipsum
  *    </Panel>
  * </AllRenderer>

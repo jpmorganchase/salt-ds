@@ -15,7 +15,7 @@
 }
 
 .uitkDialogTitle {
-  --dialog-close-button-padding: var(--uitkDialogTitle-close-button-padding, var(--uitk-spacing-unit));
+  --dialog-close-button-padding: var(--uitkDialogTitle-close-button-padding, var(--uitk-size-unit));
   --dialog-close-button-offset: var(--uitkDialogTitle-close-button-offset, calc(var(--dialog-padding) * -1));
   --dialog-title-line-height: var(--uitkDialogTitle-line-height, var(--uitk-text-line-height));
   --dialog-title-font-weight: var(--uitkDialogTitle-font-weight, var(--uitk-typography-weight-semiBold));

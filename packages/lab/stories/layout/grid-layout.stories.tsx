@@ -51,7 +51,7 @@ ToolkitGridLayout.args = {
   columnGap: 1,
 };
 
-const MultipleRows: ComponentStory<typeof GridLayout> = (args) => {
+const DefaultFlexLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div style={gridLayoutStyle}>
       <GridLayout {...args}>
@@ -68,7 +68,7 @@ const MultipleRows: ComponentStory<typeof GridLayout> = (args) => {
     </div>
   );
 };
-export const ToolkitGridLayoutMultipleRows = MultipleRows.bind({});
+export const ToolkitGridLayoutMultipleRows = DefaultFlexLayoutStory.bind({});
 ToolkitGridLayoutMultipleRows.args = {
   columns: 4,
   rows: 3,

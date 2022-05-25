@@ -14,7 +14,7 @@
 }
 
 .withoutAvatar-firstColumn {
-  margin-right: calc(var(--uitk-spacing-unit) * 2);
+  margin-right: calc(var(--uitk-size-unit) * 2);
   width: 400px;
 }
 
@@ -24,7 +24,7 @@
 
 .withoutAvatar-heading {
   color: var(--heading-color);
-  margin-bottom: calc(var(--uitk-spacing-unit) * 2);
+  margin-bottom: calc(var(--uitk-size-unit) * 2);
   font-size: 16px;
   font-weight: var(--uitk-typography-weight-semiBold);
 }
@@ -74,8 +74,8 @@
 
 .withinTile-tile {
   width: 320px;
-  padding: var(--uitk-spacing-unit);
-  border: solid 1px var(--uitk-container-border-color);
+  padding: var(--uitk-size-unit);
+  border: solid 1px var(--uitk-container-border-color-medium);
 }
 
 .withinOverlay {

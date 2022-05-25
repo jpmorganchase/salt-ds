@@ -94,6 +94,3 @@ export const Swatch = ({
     />
   );
 };
-
-// export default withHandleFocus(Swatch);
-export default Swatch;

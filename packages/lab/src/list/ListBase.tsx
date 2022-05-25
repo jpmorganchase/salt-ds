@@ -147,7 +147,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   const generatedId = useId(props.id);
   const defaultId = state.id ?? generatedId;
 
-  const sizeStackable = useCharacteristic("size", "stackable-unit");
+  const sizeStackable = useCharacteristic("size", "stackable");
   const defaultItemHeight =
     sizeStackable === null ? 36 : parseInt(sizeStackable, 10);
 

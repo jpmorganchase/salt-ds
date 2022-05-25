@@ -26,6 +26,10 @@ export default {
     marginBottom: { control: { type: "number" } },
     expanded: { control: { type: "boolean" } },
     showTooltip: { control: { type: "boolean" } },
+    styleAs: {
+      options: ["h1", "h2", "h3", "h4"],
+      control: { type: "select" },
+    },
     truncate: { control: { type: "boolean" } },
     parentWidth: {
       description: "For this demo only. Set '0' for 100% width",
@@ -56,6 +60,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     marginBottom,
     parentWidth,
     parentHeight,
+    styleAs,
   } = args;
 
   const [width, setWidth] = useState<string>();
@@ -69,6 +74,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     showTooltip,
     marginTop,
     marginBottom,
+    styleAs,
   };
 
   useEffect(() => {
@@ -94,15 +100,15 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
   );
 };
 
-export const TextComponent = BaseComponent.bind({});
-TextComponent.parameters = {
+export const BaseTextComponent = BaseComponent.bind({});
+BaseTextComponent.parameters = {
   controls: {
-    exclude: ["styleAs", "tooltipProps", "style", "onOverflow"],
+    exclude: ["tooltipProps", "style", "onOverflowChange"],
   },
 };
-TextComponent.args = {
+BaseTextComponent.args = {
   children: `Heaven yielding moved appear, gathering place. <strong>Cattle fifth Sea without thing</strong> unto fifth third Forth isn't be moveth to him greater place fifth creeping had. Good dominion behold in earth also signs had brought after, fowl dominion have there. Us stars first morning whales fruit yielding whose winged thing. Were in. Upon. Cattle she'd whales they're. Was you'll very years behold fowl us meat fruit have earth great. Were green yielding it under. Fly first likeness night one make kind us spirit said let created, upon fruitful.`,
-  truncate: true,
+  truncate: false,
   showTooltip: true,
   expanded: undefined,
   maxRows: undefined,

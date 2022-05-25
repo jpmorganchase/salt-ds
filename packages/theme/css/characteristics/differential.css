@@ -1,0 +1,5 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-differential-foreground-positive: var(--uitk-palette-positive-foreground);
+  --uitk-differential-foreground-negative: var(--uitk-palette-negative-foreground);
+}

@@ -7,6 +7,6 @@
   margin-bottom: 0;
   margin-top: var(--uitkFormFieldHelperText-margin-top, var(--form-field-helper-text-margin-top));
   opacity: var(--uitkFormFieldHelperText-opacity, 1);
-  padding-left: var(--uitkFormFieldHelperText-padding-left, var(--uitk-spacing-unit));
-  padding-right: var(--uitkFormFieldHelperText-padding-right, var(--uitk-spacing-unit));
+  padding-left: var(--uitkFormFieldHelperText-padding-left, var(--uitk-size-unit));
+  padding-right: var(--uitkFormFieldHelperText-padding-right, var(--uitk-size-unit));
 }

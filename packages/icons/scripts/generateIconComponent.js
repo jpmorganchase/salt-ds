@@ -38,7 +38,7 @@ const template = fs.readFileSync(
   "utf-8"
 );
 const globPath = path.join(basePath, `./SVG/+(${fileArg})`);
-console.log(globPath);
+console.log("globPath", globPath);
 glob(globPath, options, function (error, filenames) {
   filenames.forEach((fileName) => {
     fs.readFile(fileName, "utf-8", (error, svgString) => {
@@ -72,6 +72,10 @@ glob(globPath, options, function (error, filenames) {
         document.children,
         true
       );
+
+      // It is unnecessary for inner svg elements or inside HTML documents.
+      // https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg
+      svg.attribs["xmlns"] = undefined;
       svg.attribs["data-testid"] = `${componentName}Icon`;
       const svgOutput = render(document);
 
