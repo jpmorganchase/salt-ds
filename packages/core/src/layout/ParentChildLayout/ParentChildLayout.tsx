@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
-import { useIsStacked } from "./useIsStacked";
+import { useChangeView } from "../utils";
 
 import "./ParentChildLayout.css";
 import { FlexLayout } from "../FlexLayout";
@@ -92,7 +92,7 @@ export const ParentChildLayout = forwardRef<
   },
   ref
 ) {
-  const stackedView = useIsStacked(stackedAtBreakpoint);
+  const stackedView = useChangeView(stackedAtBreakpoint);
 
   const parentChildDirection = getDirection(orientation, stackedViewElement);
 

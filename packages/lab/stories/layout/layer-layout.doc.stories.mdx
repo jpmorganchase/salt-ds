@@ -1,0 +1,68 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { LayerLayout } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { DefaultLayerLayout } from "./layer-layout.stories";
+
+<Meta title="Layout/Docs/LayerLayout" component={LayerLayout} />
+
+# Layer Layout
+
+Defines a layer above the existing layout structure for UI elements to be displayed in.
+
+It can be used to build dialog or drawer components and it can be positioned in different parts of the screen.
+
+<Canvas>
+  <Story name="Default Layer Layout">
+    <DefaultLayerLayout />
+  </Story>
+</Canvas>
+
+## API
+
+```
+import {LayerLayout} from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={LayerLayout} />
+
+## Usage Examples
+
+### Top positioned
+
+<Canvas>
+  <Story id="layout-layerlayout--toolkit-layer-layout-top" />
+</Canvas>
+
+### Right positioned
+
+<Canvas>
+  <Story id="layout-layerlayout--toolkit-layer-layout-right" />
+</Canvas>
+
+### Left positioned
+
+<Canvas>
+  <Story id="layout-layerlayout--toolkit-layer-layout-left" />
+</Canvas>
+
+### Bottom positioned
+
+<Canvas>
+  <Story id="layout-layerlayout--toolkit-layer-layout-bottom" />
+</Canvas>
+
+## Anatomy
+
+<Canvas>
+  <Story name="Layer Layout Anatomy" inline={false} height={500}>
+    <ComponentAnatomy showLegend>
+      <LayerLayout open={false} />
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
