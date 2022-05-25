@@ -29,30 +29,36 @@
   --uitk-selectable-border-color-selected: var(--uitk-palette-interact-border-active);
   --uitk-selectable-border-color-selected-disabled: var(--uitk-palette-interact-border-active-disabled);
 
-  --uitk-selectable-cta-foreground: var(--uitk-palette-interact-foreground);
+  --uitk-selectable-cta-foreground: var(--uitk-palette-interact-primary-foreground);
   --uitk-selectable-cta-foreground-selected: var(--uitk-palette-interact-cta-foreground-active);
-  --uitk-selectable-cta-foreground-disabled: var(--uitk-palette-interact-cta-foreground-disabled);
+  --uitk-selectable-cta-foreground-selected-disabled: var(--uitk-palette-interact-cta-foreground-active-disabled);
+  --uitk-selectable-cta-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
   --uitk-selectable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
   --uitk-selectable-cta-background: transparent;
-  --uitk-selectable-cta-background-selected: var(--uitk-palette-interact-cta-background-active);
-  --uitk-selectable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
+  --uitk-selectable-cta-background-disabled: transparent;
   --uitk-selectable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
+  --uitk-selectable-cta-background-selected: var(--uitk-palette-interact-cta-background-active);
+  --uitk-selectable-cta-background-selected-disabled: var(--uitk-palette-interact-cta-background-active-disabled);
 
-  --uitk-selectable-primary-foreground: var(--uitk-palette-interact-foreground);
+  --uitk-selectable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
   --uitk-selectable-primary-foreground-selected: var(--uitk-palette-interact-primary-foreground-active);
+  --uitk-selectable-primary-foreground-selected-disabled: var(--uitk-palette-interact-primary-foreground-active-disabled);
   --uitk-selectable-primary-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
   --uitk-selectable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
   --uitk-selectable-primary-background: transparent;
-  --uitk-selectable-primary-background-selected: var(--uitk-palette-interact-primary-background-active);
-  --uitk-selectable-primary-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
+  --uitk-selectable-primary-background-disabled: transparent;
   --uitk-selectable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
+  --uitk-selectable-primary-background-selected: var(--uitk-palette-interact-primary-background-active);
+  --uitk-selectable-primary-background-selected-disabled: var(--uitk-palette-interact-primary-background-active-disabled);
 
-  --uitk-selectable-secondary-foreground: var(--uitk-palette-interact-foreground);
+  --uitk-selectable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
   --uitk-selectable-secondary-foreground-selected: var(--uitk-palette-interact-secondary-foreground-active);
+  --uitk-selectable-secondary-foreground-selected-disabled: var(--uitk-palette-interact-secondary-foreground-active-disabled);
   --uitk-selectable-secondary-foreground-disabled: var(--uitk-palette-interact-secondary-foreground-disabled);
   --uitk-selectable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
-  --uitk-selectable-secondary-background: var(--uitk-palette-interact-secondary-background);
-  --uitk-selectable-secondary-background-selected: var(--uitk-palette-interact-secondary-background-active);
-  --uitk-selectable-secondary-background-disabled: var(--uitk-palette-interact-secondary-background-disabled);
+  --uitk-selectable-secondary-background: transparent;
+  --uitk-selectable-secondary-background-disabled: transparent;
   --uitk-selectable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
+  --uitk-selectable-secondary-background-selected: var(--uitk-palette-interact-secondary-background-active);
+  --uitk-selectable-secondary-background-selected-disabled: var(--uitk-palette-interact-secondary-background-active-disabled);
 }

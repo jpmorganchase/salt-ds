@@ -53,11 +53,11 @@
 }
 
 .uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-measured-gradient-start);
+  stop-color: var(--uitk-measured-start-color);
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-gradient-stop);
+  stop-color: var(--uitk-measured-stop-color);
 }
 
 .uitkCircularProgress-container {

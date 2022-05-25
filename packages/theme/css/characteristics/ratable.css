@@ -9,11 +9,13 @@
 
   --uitk-ratable-background: var(--uitk-palette-rate-background);
   --uitk-ratable-background-active: var(--uitk-palette-rate-background-active);
+  --uitk-ratable-background-active-disabled: var(--uitk-palette-rate-background-active-disabled);
   --uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);
   --uitk-ratable-background-undo: var(--uitk-palette-rate-background-undo);
 
   --uitk-ratable-border: var(--uitk-palette-rate-border);
   --uitk-ratable-border-active: var(--uitk-palette-rate-border-active);
+  --uitk-ratable-border-disabled: var(--uitk-palette-rate-border-disabled);
   --uitk-ratable-border-hover: var(--uitk-palette-rate-border-hover);
   --uitk-ratable-border: var(--uitk-palette-rate-border-undo);
 }

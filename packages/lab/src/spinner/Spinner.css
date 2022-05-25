@@ -1,29 +1,29 @@
 .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-measured-gradient-stop);
+  stop-color: var(--uitk-measured-stop-color);
 }
 .uitkSvgSpinner-gradientStop2 {
-  stop-color: var(--uitk-measured-gradient-stop);
+  stop-color: var(--uitk-measured-stop-color);
 }
 .uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--uitk-measured-gradient-start);
+  stop-color: var(--uitk-measured-start-color);
 }
 .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitk-measured-gradient-start);
+  stop-color: var(--uitk-measured-start-color);
 }
 
 /* Not yet sure about procedure for implementing themes */
 
 /* .uitk-dark .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-measured-gradient-stop);
+  stop-color: var(--uitk-measured-stop-color);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop2 {
-   stop-color: var(--uitk-measured-gradient-start);
+   stop-color: var(--uitk-measured-start-color);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop3 {
- stop-color: var(--uitk-measured-gradient-stop);
+ stop-color: var(--uitk-measured-stop-color);
 }
 .uitk-dark .uitkSvgSpinner-gradientStop4 {
-stop-color: var(--uitk-measured-gradient-start);
+stop-color: var(--uitk-measured-start-color);
 } */
 
 .uitkSvgSpinner {

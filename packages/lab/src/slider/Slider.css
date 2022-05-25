@@ -58,7 +58,7 @@
 }
 
 .uitkSlider {
-  --selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-gradient-stop));
+  --selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-stop-color));
 }
 
 .uitkSlider {

@@ -13,6 +13,6 @@
   --uitk-measured-fill: var(--uitk-palette-measure-fill);
 
   /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
-  --uitk-measured-gradient-start: var(--uitk-palette-measure-gradient-start-color);
-  --uitk-measured-gradient-stop: var(--uitk-palette-measure-gradient-stop-color);
+  --uitk-measured-start-color: var(--uitk-palette-measure-fill-start-color);
+  --uitk-measured-stop-color: var(--uitk-palette-measure-fill-stop-color);
 }

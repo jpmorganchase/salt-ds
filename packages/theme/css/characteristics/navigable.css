@@ -8,6 +8,7 @@
   --uitk-navigable-font-weight-active: var(--uitk-typography-weight-semiBold);
   --uitk-navigable-font-weight-hover: var(--uitk-typography-weight-regular);
 
+  --uitk-navigable-foreground: var(--uitk-palette-navigate-foreground);
   --uitk-navigable-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
 
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
