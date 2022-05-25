@@ -4,7 +4,7 @@ import {
   JSHandle,
   Page,
 } from "playwright";
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { glob } from "glob";
 import { BrowserWindow } from "electron";
 
@@ -125,7 +125,7 @@ test("Opens the dialog in a new child window", async () => {
     mainWindowHandle
   );
 
-  expect(childWindowPosition).toStrictEqual([99, 144]);
+  expect(childWindowPosition).toStrictEqual([75, 120]);
   // catches an issue where the window starts off with the default size and then corrects itself
   expect(childWindowSize).toStrictEqual([501, 212]);
 
