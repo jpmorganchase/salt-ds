@@ -9,7 +9,7 @@
   --uitk-measured-border-width: 1px;
 
   --uitk-measured-background: var(--uitk-palette-measure-background);
-  --uitk-measured-color: var(--uitk-palette-measure-stroke);
+  --uitk-measured-border-color: var(--uitk-palette-measure-border);
   --uitk-measured-fill: var(--uitk-palette-measure-fill);
 
   /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */

@@ -50,7 +50,7 @@
   --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-color-disabled));
   --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-color));
 
-  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-border-color-2));
+  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-border-color));
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-border-style));
   --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
   --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);

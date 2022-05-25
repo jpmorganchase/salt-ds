@@ -34,7 +34,7 @@
 }
 
 .uitkMenuItem.uitkMenuItem-menuItemDivider {
-  border-bottom: var(--uitk-separable-border-width) var(--uitk-separable-border-style) var(--uitk-separable-border-color-2);
+  border-bottom: var(--uitk-separable-border-width) var(--uitk-separable-border-style) var(--uitk-separable-secondary-border-color);
 }
 
 .uitkMenuItem-menuItemHover:hover {

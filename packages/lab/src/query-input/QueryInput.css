@@ -14,7 +14,7 @@
 
 .uitkQueryInputBody-separator {
   width: 1px;
-  background-color: var(--uitk-separable-border-color-2);
+  background-color: var(--uitk-separable-secondary-border-color);
   margin: 0 var(--uitk-size-unit);
   align-self: stretch;
 }
@@ -85,7 +85,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom: solid 1px var(--uitk-separable-border-color-2);
+  border-bottom: solid 1px var(--uitk-separable-secondary-border-color);
   cursor: pointer;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .uitkQueryInputSearchList-addKeyword {
-  border-top: solid 1px var(--uitk-separable-border-color-2);
+  border-top: solid 1px var(--uitk-separable-secondary-border-color);
 }
 
 .uitkQueryInputSearchList-categoryTitle {

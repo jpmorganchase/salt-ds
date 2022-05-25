@@ -1,6 +1,6 @@
 .uitkLogo {
   --logo-color: var(--uitkLogo-color, var(--uitk-palette-neutral-secondary-foreground));
-  --logo-divider-color: var(--uitkLogo-pipe-color, var(--uitk-separable-border-color-2));
+  --logo-divider-color: var(--uitkLogo-pipe-color, var(--uitk-separable-secondary-border-color));
   --logo-divider-height: var(--uitkLogo-title-height, var(--uitk-size-inline-divider));
   --logo-divider-margin: 0 calc(var(--uitk-size-unit) * 2);
   --logo-font-size: var(--uitk-text-font-size);

@@ -1,7 +1,7 @@
 .uitkAppHeader {
   --appheader-background: var(--uitk-container-background-medium);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar));
-  --appheader-separable-bar: var(--uitk-separable-border-color-2);
+  --appheader-separable-bar: var(--uitk-separable-secondary-border-color);
   --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-overlayable-shadow-border-region));
   --appheader-padding: calc(var(--uitk-size-unit) * 3);
   --appheader-padding-left: 8px;
