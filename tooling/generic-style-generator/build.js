@@ -34,6 +34,19 @@ StyleDictionary.registerFormat({
 });
 
 StyleDictionary.registerFormat({
+  name: "uitk/css/themes/dark",
+  formatter: function ({ dictionary, file, options }) {
+    const { outputReferences } = options;
+    return (
+      fileHeader({ file }) +
+      ".uitk-dark {\n" +
+      formattedVariables({ format: "css", dictionary, outputReferences }) +
+      "\n}\n"
+    );
+  },
+});
+
+StyleDictionary.registerFormat({
   name: "uitk/css/density/all",
   formatter: function ({ dictionary, file, options }) {
     const { outputReferences } = options;
@@ -111,13 +124,27 @@ StyleDictionary.registerFilter({
 });
 
 StyleDictionary.registerFilter({
-  name: "uitk/filter/colors/light",
+  name: "uitk/filter/colors/palette-light",
   matcher: function (token) {
     return (
-      /light/i.test(token.filePath) &&
-      (token.attributes.category === "palette" ||
-        UITK_CHARACTERISTICS.includes(token.attributes.category))
+      /light/i.test(token.filePath) && token.attributes.category === "palette"
     );
+  },
+});
+
+StyleDictionary.registerFilter({
+  name: "uitk/filter/colors/palette-dark",
+  matcher: function (token) {
+    return (
+      /dark/i.test(token.filePath) && token.attributes.category === "palette"
+    );
+  },
+});
+
+StyleDictionary.registerFilter({
+  name: "uitk/filter/colors/characteristics",
+  matcher: function (token) {
+    return UITK_CHARACTERISTICS.includes(token.attributes.category);
   },
 });
 

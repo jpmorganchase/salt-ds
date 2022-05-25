@@ -1,0 +1,13 @@
+/**
+ * Do not edit directly
+ * Generated on Wed, 25 May 2022 13:44:09 GMT
+ */
+
+.uitk-light, .uitk-dark {
+  --uitk-actionable-secondary-background: var(--uitk-palette-interact-secondary-background);
+  --uitk-actionable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
+  --uitk-actionable-cta-background: var(--uitk-palette-interact-cta-background);
+  --uitk-actionable-cta-foreground: var(--uitk-palette-interact-cta-foreground);
+  --uitk-actionable-primary-background: var(--uitk-palette-interact-primary-background);
+  --uitk-actionable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
+}

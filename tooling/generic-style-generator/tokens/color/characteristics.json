@@ -1,0 +1,82 @@
+{
+  "actionable": {
+    "primary": {
+      "foreground": {
+        "value": "{palette.interact.primary.foreground}",
+        "active": {
+          "value": "{palette.interact.primary.foreground.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.primary.foreground.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.primary.foreground.hover}"
+        }
+      },
+      "background": {
+        "value": "{palette.interact.primary.background}",
+        "active": {
+          "value": "{palette.interact.primary.background.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.primary.background.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.primary.background.hover}"
+        }
+      }
+    },
+    "cta": {
+      "foreground": {
+        "value": "{palette.interact.cta.foreground}",
+        "active": {
+          "value": "{palette.interact.cta.foreground.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.cta.foreground.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.cta.foreground.hover}"
+        }
+      },
+      "background": {
+        "value": "{palette.interact.cta.background}",
+        "active": {
+          "value": "{palette.interact.cta.background.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.cta.background.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.cta.background.hover}"
+        }
+      }
+    },
+    "secondary": {
+      "foreground": {
+        "value": "{palette.interact.secondary.foreground}",
+        "active": {
+          "value": "{palette.interact.secondary.foreground.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.secondary.foreground.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.secondary.foreground.hover}"
+        }
+      },
+      "background": {
+        "value": "{palette.interact.secondary.background}",
+        "active": {
+          "value": "{palette.interact.secondary.background.active}"
+        },
+        "disabled": {
+          "value": "{palette.interact.secondary.background.disabled}"
+        },
+        "hover": {
+          "value": "{palette.interact.secondary.background.hover}"
+        }
+      }
+    }
+  }
+}

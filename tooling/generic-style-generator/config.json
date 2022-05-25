@@ -24,11 +24,27 @@
         },
         {
           "format": "uitk/css/themes/light",
-          "destination": "colors-light.css",
+          "destination": "palettes-light.css",
           "options": {
             "outputReferences": true
           },
-          "filter": "uitk/filter/colors/light"
+          "filter": "uitk/filter/colors/palette-light"
+        },
+        {
+          "format": "uitk/css/themes/dark",
+          "destination": "palettes-dark.css",
+          "options": {
+            "outputReferences": true
+          },
+          "filter": "uitk/filter/colors/palette-dark"
+        },
+        {
+          "format": "uitk/css/themes/all",
+          "destination": "characteristics.css",
+          "options": {
+            "outputReferences": true
+          },
+          "filter": "uitk/filter/colors/characteristics"
         },
         {
           "format": "uitk/css/density/all",
