@@ -4,21 +4,18 @@
 //
 
 // Do not edit directly
-// Generated on Tue, 24 May 2022 20:16:59 GMT
+// Generated on Wed, 25 May 2022 13:51:01 GMT
 
 
 import UIKit
 
 public enum StyleDictionaryEnum {
     public static let uitkActionableCtaBackground = UIColor(red: 0.082, green: 0.361, blue: 0.576, alpha: 1)
-    public static let uitkActionableCtaIconColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkActionableCtaTextColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
+    public static let uitkActionableCtaForeground = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
     public static let uitkActionablePrimaryBackground = UIColor(red: 0.773, green: 0.788, blue: 0.816, alpha: 1)
-    public static let uitkActionablePrimaryIconColor = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkActionablePrimaryTextColor = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkActionableSecondaryBackground = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0)
-    public static let uitkActionableSecondaryIconColor = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkActionableSecondaryTextColor = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkActionablePrimaryForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkActionableSecondaryBackground = transparent
+    public static let uitkActionableSecondaryForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
     public static let uitkColorBlack = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1)
     public static let uitkColorBlue10 = UIColor(red: 0.796, green: 0.906, blue: 0.976, alpha: 1)
     public static let uitkColorBlue100 = UIColor(red: 0.392, green: 0.694, blue: 0.894, alpha: 1)
@@ -134,58 +131,54 @@ public enum StyleDictionaryEnum {
     public static let uitkPaletteAccentBackground = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
     public static let uitkPaletteAccentBorder = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
     public static let uitkPaletteAccentForeground = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionBackgroundHover = UIColor(red: 0.718, green: 0.871, blue: 0.965, alpha: 1)
-    public static let uitkPaletteActionBackgroundSelected = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
-    public static let uitkPaletteActionBorderDefault = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
-    public static let uitkPaletteActionBorderHover = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
-    public static let uitkPaletteActionBorderSelected = UIColor(red: 0.082, green: 0.361, blue: 0.576, alpha: 1)
-    public static let uitkPaletteActionCtaBackgroundActive = UIColor(red: 0.000, green: 0.278, blue: 0.482, alpha: 1)
-    public static let uitkPaletteActionCtaBackgroundDefault = UIColor(red: 0.082, green: 0.361, blue: 0.576, alpha: 1)
-    public static let uitkPaletteActionCtaBackgroundHover = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
-    public static let uitkPaletteActionCtaForegroundActive = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionCtaForegroundDefault = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionCtaForegroundHover = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionFillSelected = UIColor(red: 0.082, green: 0.361, blue: 0.576, alpha: 1)
-    public static let uitkPaletteActionForegroundActive = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionForegroundBluractive = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionForegroundHover = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionForegroundSelected = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionPrimaryBackgroundActive = UIColor(red: 0.380, green: 0.396, blue: 0.431, alpha: 1)
-    public static let uitkPaletteActionPrimaryBackgroundDefault = UIColor(red: 0.773, green: 0.788, blue: 0.816, alpha: 1)
-    public static let uitkPaletteActionPrimaryBackgroundHover = UIColor(red: 0.851, green: 0.867, blue: 0.890, alpha: 1)
-    public static let uitkPaletteActionPrimaryForegroundActive = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionPrimaryForegroundDefault = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionSecondaryBackgroundActive = UIColor(red: 0.380, green: 0.396, blue: 0.431, alpha: 1)
-    public static let uitkPaletteActionSecondaryBackgroundDefault = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 0)
-    public static let uitkPaletteActionSecondaryBackgroundHover = UIColor(red: 0.851, green: 0.867, blue: 0.890, alpha: 1)
-    public static let uitkPaletteActionSecondaryForegroundActive = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
-    public static let uitkPaletteActionSecondaryForegroundDefault = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionSecondaryForegroundHover = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
-    public static let uitkPaletteActionStrokeDefault = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
-    public static let uitkPaletteActionStrokeHover = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
     public static let uitkPaletteErrorBackgroundHigh = UIColor(red: 1.000, green: 0.890, blue: 0.878, alpha: 1)
     public static let uitkPaletteErrorBorder = UIColor(red: 0.890, green: 0.169, blue: 0.086, alpha: 1)
     public static let uitkPaletteErrorIcon = UIColor(red: 0.890, green: 0.169, blue: 0.086, alpha: 1)
     public static let uitkPaletteInfoBackgroundHigh = UIColor(red: 0.796, green: 0.906, blue: 0.976, alpha: 1)
     public static let uitkPaletteInfoBorder = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
     public static let uitkPaletteInfoIcon = UIColor(red: 0.149, green: 0.439, blue: 0.663, alpha: 1)
-    public static let uitkPaletteMeasureBackground = UIColor(red: 0.000, green: 0.510, blue: 0.592, alpha: 1)
+    public static let uitkPaletteInteractBackground = transparent
+    public static let uitkPaletteInteractBorder = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
+    public static let uitkPaletteInteractCtaBackground = UIColor(red: 0.082, green: 0.361, blue: 0.576, alpha: 1)
+    public static let uitkPaletteInteractCtaForeground = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
+    public static let uitkPaletteInteractFill = transparent
+    public static let uitkPaletteInteractForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkPaletteInteractPrimaryBackground = UIColor(red: 0.773, green: 0.788, blue: 0.816, alpha: 1)
+    public static let uitkPaletteInteractPrimaryForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkPaletteInteractSecondaryBackground = transparent
+    public static let uitkPaletteInteractSecondaryForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkPaletteInteractStroke = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
+    public static let uitkPaletteMeasureBackground = linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%)
+    public static let uitkPaletteNavigateBackgroundActiveHigh = transparent
+    public static let uitkPaletteNavigateBackgroundActiveLow = transparent
+    public static let uitkPaletteNavigateBackgroundActiveMedium = transparent
+    public static let uitkPaletteNavigateBackgroundHigh = transparent
     public static let uitkPaletteNavigateBackgroundHoverHigh = UIColor(red: 0.878, green: 0.894, blue: 0.914, alpha: 1)
     public static let uitkPaletteNavigateBackgroundHoverLow = UIColor(red: 0.918, green: 0.929, blue: 0.937, alpha: 1)
     public static let uitkPaletteNavigateBackgroundHoverMedium = UIColor(red: 0.918, green: 0.929, blue: 0.937, alpha: 1)
-    public static let uitkPaletteNavigateForegroundHover = UIColor(red: 0.267, green: 0.282, blue: 0.310, alpha: 1)
+    public static let uitkPaletteNavigateBackgroundLow = transparent
+    public static let uitkPaletteNavigateBackgroundMedium = transparent
+    public static let uitkPaletteNavigateForeground = UIColor(red: 0.267, green: 0.282, blue: 0.310, alpha: 1)
+    public static let uitkPaletteNavigateIndicatorActive = UIColor(red: 0.933, green: 0.522, blue: 0.169, alpha: 1)
     public static let uitkPaletteNavigateIndicatorHover = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
+    public static let uitkPaletteNegativeForeground = UIColor(red: 0.651, green: 0.082, blue: 0.043, alpha: 1)
     public static let uitkPaletteNeutralBackgroundHigh = UIColor(red: 0.918, green: 0.929, blue: 0.937, alpha: 1)
+    public static let uitkPaletteNeutralBackgroundLow = transparent
     public static let uitkPaletteNeutralBackgroundMedium = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
+    public static let uitkPaletteNeutralBorderDisabledHigh = rgba(132, 135, 142, var(--uitk-opacity-border))
+    public static let uitkPaletteNeutralBorderDisabledMedium = rgba(197, 201, 208, var(--uitk-opacity-border))
     public static let uitkPaletteNeutralBorderHigh = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
     public static let uitkPaletteNeutralBorderLow = UIColor(red: 0.878, green: 0.894, blue: 0.914, alpha: 1)
     public static let uitkPaletteNeutralBorderMedium = UIColor(red: 0.773, green: 0.788, blue: 0.816, alpha: 1)
+    public static let uitkPaletteNeutralCtaBorder = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
     public static let uitkPaletteNeutralEndpoint = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
-    public static let uitkPaletteNeutralScrimHight = UIColor(red: 0.000, green: 0.000, blue: 0.000, alpha: 1)
-    public static let uitkPaletteNeutralScrimMedium = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1)
+    public static let uitkPaletteNeutralPrimaryBorder = UIColor(red: 0.773, green: 0.788, blue: 0.816, alpha: 1)
+    public static let uitkPaletteNeutralPrimaryForeground = UIColor(red: 0.086, green: 0.086, blue: 0.086, alpha: 1)
+    public static let uitkPaletteNeutralScrimLow = rgba(255, 255, 255, var(--uitk-opacity-scrim-medium))
+    public static let uitkPaletteNeutralScrimMedium = rgba(0, 0, 0, var(--uitk-opacity-scrim-low))
+    public static let uitkPaletteNeutralSecondaryForeground = UIColor(red: 0.380, green: 0.396, blue: 0.431, alpha: 1)
     public static let uitkPalettePositiveForeground = UIColor(red: 0.047, green: 0.365, blue: 0.180, alpha: 1)
-    public static let uitkPaletteRateBackgroundActive = UIColor(red: 0.878, green: 0.396, blue: 0.098, alpha: 1)
-    public static let uitkPaletteRateBackgroundHover = UIColor(red: 0.878, green: 0.396, blue: 0.098, alpha: 1)
+    public static let uitkPaletteRateBackground = transparent
     public static let uitkPaletteRateBorder = UIColor(red: 0.518, green: 0.529, blue: 0.557, alpha: 1)
     public static let uitkPaletteSuccessBackgroundHigh = UIColor(red: 0.820, green: 0.957, blue: 0.788, alpha: 1)
     public static let uitkPaletteSuccessBorder = UIColor(red: 0.141, green: 0.529, blue: 0.294, alpha: 1)
