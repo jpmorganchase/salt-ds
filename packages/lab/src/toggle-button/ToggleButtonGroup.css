@@ -4,9 +4,6 @@
 .uitkToggleButtonGroup.uitkToggleButtonGroup-primary {
   --toggle-button-group-border-color: var(--uitkToggleButtonGroup-primary-border-color, var(--uitk-container-primary-border-color));
 }
-.uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
-  --toggle-button-group-border-color: var(--uitkToggleButtonGroup-secondary-border-color, var(--uitk-container-secondary-border-color));
-}
 
 .uitkToggleButtonGroup {
   --toggle-button-group-border-width: var(--uitkToggleButtonGroup-border-width, var(--uitk-container-border-width));

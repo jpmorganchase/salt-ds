@@ -47,10 +47,8 @@ export const SelectablePill = forwardRef(function SelectablePill(
 
   const handleClick = useCallback(
     (event) => {
-      if (!disabled) {
-        setChecked(!checked);
-        onChange(event, !checked);
-      }
+      setChecked(!checked);
+      onChange(event, !checked);
     },
     [checked, onChange, setChecked]
   );

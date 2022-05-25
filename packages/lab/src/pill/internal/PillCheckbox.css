@@ -1,52 +1,36 @@
-.uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitkPill-checkbox-stroke, var(--uitk-taggable-stroke));
-  --pill-checkbox-tick: var(--uitkPill-checkbox-tick, var(--uitk-taggable-foreground));
-}
-
+/* Styles applied to the Pill checkbox icon */
 .uitkPill-checkbox-icon {
   fill: none;
   stroke: var(--pill-checkbox-stroke);
   stroke-width: 1px;
 }
 
+/* Styles applied to the Pill checkbox if `checked={true}` */
 .uitkPill-checkbox-icon-checked {
   fill: none;
   stroke: var(--pill-checkbox-stroke);
   stroke-width: 2px;
 }
 
-.uitkPill-checkbox-icon-checked:hover {
-  stroke: var(--uitkPill-checkbox-strok-hovere, var(--uitk-taggable-stroke-hover));
+/* Styles applied to the Pill checkbox if `checked={true}` and `disabled={false}` on hover */
+.uitkPill:not(.uitkPill-disabled) .uitkPill-checkbox-icon-checked:hover {
+  stroke: var(--uitkPill-checkbox-stroke-hover, var(--uitk-selectable-border-color-hover));
 }
 
-.uitkPill:active .uitkPill-checkbox-icon-checked,
-.uitkPill.uitkPill-active .uitkPill-checkbox-icon-checked,
-.uitkPill-checkbox-icon-checked:active {
-  stroke: var(--uitkPill-checkbox-strok-hovere, var(--uitk-taggable-stroke-active));
-}
-
+/* Styles applied to the Pill Checkbox component when ticked */
 .uitkPill-checkbox-icon-checked-tick {
   fill: var(--pill-checkbox-tick);
   stroke-width: 0;
 }
 
+/* Styles applied to the Pill checkbox and icon if `disabled={false}` */
 .uitkPill-disabled .uitkPill-checkbox,
 .uitkPill-disabled .uitkPill-checkbox-icon {
-  stroke: var(--uitkPill-checkbox-stroke-disabled, var(--uitk-taggable-stroke-disabled));
+  stroke: var(--uitkPill-checkbox-stroke-disabled, var(--uitk-selectable-border-color-disabled));
 }
 
+/* Styles applied to the Pill Checkbox component when ticked if `disabled={true}` */
 .uitkPill-disabled .uitkPill-checkbox-icon-checked-tick {
   fill: var(--uitkPill-checkbox-tick-disabled, var(--uitk-taggable-foreground-disabled));
   stroke-width: 0;
-}
-
-/* Backwards compat styling to match TK1 */
-.uitk-light .backwardsCompat .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-color-grey-100);
-  --pill-checkbox-tick: var(--uitk-color-grey-300);
-}
-
-.uitk-dark .backwardsCompat .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-color-grey-80);
-  --pill-checkbox-tick: var(--uitk-color-grey-60);
 }

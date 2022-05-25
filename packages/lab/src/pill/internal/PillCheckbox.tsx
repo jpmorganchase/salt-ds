@@ -7,8 +7,6 @@ import { pillBaseName } from "../constants";
 
 import "./PillCheckbox.css";
 
-// TODO check if can be replaced with CheckboxBase
-
 const withBaseName = makePrefixer(`${pillBaseName}-checkbox`);
 
 export const PillCheckbox = (props: { checked?: boolean }) => {

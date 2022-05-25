@@ -13,9 +13,4 @@
   --uitk-taggable-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
   --uitk-taggable-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
   --uitk-taggable-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
-
-  --uitk-taggable-stroke: var(--uitk-palette-interact-stroke);
-  --uitk-taggable-stroke-hover: var(--uitk-palette-interact-stroke);
-  --uitk-taggable-stroke-active: var(--uitk-palette-interact-stroke);
-  --uitk-taggable-stroke-disabled: var(--uitk-palette-interact-stroke-disabled);
 }

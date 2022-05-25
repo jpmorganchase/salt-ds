@@ -44,15 +44,13 @@
 }
 
 /* Styles applied to outer ControlLabel component */
-
 .uitkSwitch-label {
-  /* TODO: design to confirm correct checked icon color */
-  --switch-checked-icon-color: var(--uitk-selectable-background-selected);
-  --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-label-color: var(--uitk-text-secondary-color);
-  --switch-thumb-background: var(--uitk-container-background-medium);
-  --switch-track-color: var(--uitk-editable-border-color);
-  --switch-track-color-hover: var(--uitk-editable-border-color-hover);
+  --switch-checked-track-color: var(--uitk-selectable-background-selected);
+  --switch-thumb-background: var(--uitk-selectable-primary-foreground-selected);
+  --switch-track-color: var(--uitk-selectable-border-color);
+  --switch-track-color-hover: var(--uitk-selectable-border-color-hover);
+  --switch-checked-icon-color: var(--uitk-selectable-background-selected);
 }
 
 .uitkSwitch-label {
