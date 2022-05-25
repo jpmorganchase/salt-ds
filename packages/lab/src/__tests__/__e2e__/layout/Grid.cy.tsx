@@ -81,11 +81,9 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-columns").should(
-          "match", /^(\d*\.?\d*px *){12}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", /^(\d*\.?\d*px *){12}$/);
 
         cy.get(".uitkGridLayout").should(
           "have.css",
@@ -106,17 +104,13 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-columns").should(
-          "match", /^(\d*\.?\d*px *){12}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", /^(\d*\.?\d*px *){12}$/);
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-rows").should(
-          "match", /^(\d*\.?\d*px *){4}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", /^(\d*\.?\d*px *){4}$/);
       }
     );
 
@@ -131,17 +125,13 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-columns").should(
-          "match", /^(\d*\.?\d*px *){2}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", /^(\d*\.?\d*px *){2}$/);
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-rows").should(
-          "match", /^(\d*\.?\d*px *){2}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", /^(\d*\.?\d*px *){2}$/);
       }
     );
 
@@ -162,11 +152,9 @@ describe("GIVEN a Grid", () => {
           "232px"
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-rows").should(
-          "match", /^(\d*\.?\d*px *){4}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", /^(\d*\.?\d*px *){4}$/);
       }
     );
   });
@@ -196,11 +184,9 @@ describe("GIVEN a Grid", () => {
           </ToolkitProvider>
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-columns").should(
-          "match", /^(\d*\.?\d*px *){12}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", /^(\d*\.?\d*px *){12}$/);
 
         cy.get(".uitkGridLayout").should(
           "have.css",
@@ -223,17 +209,13 @@ describe("GIVEN a Grid", () => {
           </ToolkitProvider>
         );
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-columns").should(
-          "match", /^(\d*\.?\d*px *){12}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", /^(\d*\.?\d*px *){12}$/);
 
-        cy.get(".uitkGridLayout").invoke(
-          "css",
-          "grid-template-rows").should(
-          "match", /^(\d*\.?\d*px *){4}$/
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", /^(\d*\.?\d*px *){4}$/);
       }
     );
 
