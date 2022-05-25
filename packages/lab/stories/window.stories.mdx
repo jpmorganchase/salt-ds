@@ -1,6 +1,4 @@
-import {
-  Meta
-} from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 
 <Meta title="Lab/Window/StyleInsertion" />
 
@@ -244,11 +242,11 @@ part of their theme. This would also require app developers to mark their theme 
 insertion code can search for the style tags and insert them.
 
 ```ts
-const themes = useTheme()
-  
+const themes = useTheme();
+
 const themeIDs = new Set<string>();
-  
-for(const theme of themes){
+
+for (const theme of themes) {
   themeIDs.add(theme.id);
 }
 
