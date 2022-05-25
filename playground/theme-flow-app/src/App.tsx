@@ -125,10 +125,12 @@ function updateStyle(
 ): CSSByPattern[] {
   return patterns.map((p) => {
     if (p.cssObj.includes(property)) {
+      console.log("update", p.cssObj);
       p.cssObj = p.cssObj.replace(
-        new RegExp(`${property}.*;`, "g"),
+        new RegExp(`${property}:.*;`, "g"),
         `${property}: ${newValue};`
       );
+      console.log("update", p.cssObj);
       return p;
     } else {
       return p;
