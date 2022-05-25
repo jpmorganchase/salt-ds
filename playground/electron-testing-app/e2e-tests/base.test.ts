@@ -125,7 +125,7 @@ test("Opens the dialog in a new child window", async () => {
     mainWindowHandle
   );
 
-  expect(childWindowPosition).toStrictEqual([75, 120]);
+  expect(childWindowPosition).toStrictEqual([99, 144]);
   // catches an issue where the window starts off with the default size and then corrects itself
   expect(childWindowSize).toStrictEqual([501, 212]);
 
