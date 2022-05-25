@@ -19,9 +19,9 @@ describe("GIVEN a Flow", () => {
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultFlowLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "8px");
+      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "8px");
+      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
     });
   });
 

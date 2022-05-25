@@ -1,3 +1,16 @@
+.uitk-density-touch {
+  --uitkFlexLayout-gap-density-multiplier: 2;
+}
+.uitk-density-low {
+  --uitkFlexLayout-gap-density-multiplier: 3;
+}
+.uitk-density-medium {
+  --uitkFlexLayout-gap-density-multiplier: 3;
+}
+.uitk-density-high {
+  --uitkFlexLayout-gap-density-multiplier: 3;
+}
+
 /* VARIABLES */
 .uitkFlexLayout {
   --uitkFlexLayout-gap-multiplier: 1;
@@ -7,7 +20,7 @@
   --uitkFlexLayout-justify: flex-start;
   --uitkFlexLayout-align: stretch;
   --uitkFlexLayout-separator: var(--uitk-separable-border-width);
-  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier));
+  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) * var(--uitkFlexLayout-gap-density-multiplier));
 }
 
 .uitkFlexLayout {
@@ -20,7 +33,7 @@
 }
 
 .uitkFlexLayout-separator {
-  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
+  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) * var(--uitkFlexLayout-gap-density-multiplier) * 2 + var(--uitkFlexLayout-separator));
 }
 
 .uitkFlexLayout-separator > *:not(:last-child)::after {

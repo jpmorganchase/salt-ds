@@ -39,9 +39,9 @@ describe("GIVEN a Grid", () => {
     it("THEN it should render with a default gap", () => {
       cy.mount(<ToolkitGridLayout />);
 
-      cy.get(".uitkGridLayout").should("have.css", "column-gap", "8px");
+      cy.get(".uitkGridLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkGridLayout").should("have.css", "row-gap", "8px");
+      cy.get(".uitkGridLayout").should("have.css", "row-gap", "24px");
     });
   });
 
@@ -81,10 +81,10 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-columns").should(
+          "match", /^(\d*\.?\d*px *){12}$/
         );
 
         cy.get(".uitkGridLayout").should(
@@ -106,16 +106,16 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-columns").should(
+          "match", /^(\d*\.?\d*px *){12}$/
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "112px 112px 112px 112px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-rows").should(
+          "match", /^(\d*\.?\d*px *){4}$/
         );
       }
     );
@@ -131,16 +131,16 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "232px 232px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-columns").should(
+          "match", /^(\d*\.?\d*px *){2}$/
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "232px 232px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-rows").should(
+          "match", /^(\d*\.?\d*px *){2}$/
         );
       }
     );
@@ -162,10 +162,10 @@ describe("GIVEN a Grid", () => {
           "232px"
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "232px 232px 232px 232px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-rows").should(
+          "match", /^(\d*\.?\d*px *){4}$/
         );
       }
     );
@@ -196,10 +196,10 @@ describe("GIVEN a Grid", () => {
           </ToolkitProvider>
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-columns").should(
+          "match", /^(\d*\.?\d*px *){12}$/
         );
 
         cy.get(".uitkGridLayout").should(
@@ -223,16 +223,16 @@ describe("GIVEN a Grid", () => {
           </ToolkitProvider>
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px 72px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-columns").should(
+          "match", /^(\d*\.?\d*px *){12}$/
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "112px 112px 112px 112px"
+        cy.get(".uitkGridLayout").invoke(
+          "css",
+          "grid-template-rows").should(
+          "match", /^(\d*\.?\d*px *){4}$/
         );
       }
     );
