@@ -4,6 +4,7 @@ import { mergeConfig } from "vite";
 import PkgConfig from "vite-plugin-package-config";
 import OptimizationPersist from "vite-plugin-optimize-persist";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
+import turbosnap from "vite-plugin-turbosnap";
 
 type ViteFinalOptions = {
   configType: "DEVELOPMENT" | "PRODUCTION";
@@ -45,7 +46,7 @@ const config: ExtendedConfig = {
     buildStoriesJson: true,
     // babelModeV7: true,
   },
-  async viteFinal(config) {
+  async viteFinal(config, { configType }) {
     // customize the Vite config here
 
     const customConfig: UserConfig = {
@@ -57,6 +58,10 @@ const config: ExtendedConfig = {
         cssVariableDocgen(),
       ],
     };
+
+    if (configType === "PRODUCTION") {
+      customConfig.plugins!.push(turbosnap({ rootDir: config.root! }));
+    }
 
     return mergeConfig(customConfig, config);
   },
