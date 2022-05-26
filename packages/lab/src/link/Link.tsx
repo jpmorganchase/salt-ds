@@ -1,14 +1,12 @@
-import {
-  forwardRef,
-  AnchorHTMLAttributes,
-  ReactNode,
-  useCallback,
-} from "react";
+import { forwardRef, ReactNode, useCallback } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
 import { Text, TextProps } from "@jpmorganchase/uitk-lab";
 
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Link.css";
+
+const withBaseName = makePrefixer("uitkLink");
 
 /**
  * Links are a fundamental navigation element. When clicked, they take the user to an entirely different page.
@@ -63,7 +61,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {target && target === "_blank" && (
         <TearOutIcon
           aria-label="External Link"
-          className={clxPrefix + "Link-icon"}
+          className={withBaseName("icon")}
         />
       )}
     </Text>

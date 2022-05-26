@@ -1,4 +1,5 @@
 import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
+import { waitFor } from "@testing-library/dom";
 
 describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN Breadcrumbs are passed as children", () => {
@@ -169,6 +170,27 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.get("#Test1").should("have.css", "max-width", "20px");
+    });
+  });
+
+  describe("WHEN providing the itemsMaxWidth prop", () => {
+    it("THEN correctly display Tooltip on hover and focus when truncating", () => {
+      cy.mount(
+        <Breadcrumbs itemsMaxWidth={10}>
+          <Breadcrumb href="#">Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
+          <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
+        </Breadcrumbs>
+      );
+      cy.wait(400);
+
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
+
+      cy.realPress("Escape");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("be.visible");
     });
   });
 

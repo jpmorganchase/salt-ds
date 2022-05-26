@@ -75,12 +75,14 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   styleAs?: "h1" | "h2" | "h3" | "h4";
   /**
-   * A string to indicate the link url
+   * A string to indicate the link url.
+   * To be used when elementType="a"
    */
   href?: string;
   /**
    * A string to indicate the link target
-   * Creates an Icon to the right of link if '_blank'
+   * Creates an Icon to the right of link if '_blank'.
+   * To be used when elementType="a"
    */
   target?: string;
 }
