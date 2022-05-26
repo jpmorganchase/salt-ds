@@ -7,10 +7,7 @@
 }
 
 .uitkBreadcrumb {
-  /* overflow: hidden; */
   text-decoration: underline;
-  /* text-overflow: ellipsis;
-  white-space: nowrap; */
 }
 
 .uitkBreadcrumb-regular {
@@ -26,10 +23,6 @@
 
 .uitkBreadcrumb-regular:visited .uitkBreadcrumb-icon {
   color: currentColor;
-}
-
-.uitkBreadcrumb-regular:focus {
-  /*TODO getFocused()*/
 }
 
 .uitkBreadcrumb-regular:hover {
@@ -53,14 +46,7 @@
 }
 
 .uitkBreadcrumb-currentLevel {
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-  /* white-space: nowrap; */
   text-decoration: none;
-}
-
-.uitkBreadcrumb-currentLevel:focus {
-  /* TODO getFocused */
 }
 
 .uitkBreadcrumb-icon {
@@ -77,8 +63,5 @@
 }
 
 .uitkBreadcrumb-text {
-  /* overflow: hidden; */
   text-decoration: underline;
-  /* text-overflow: ellipsis;
-  white-space: nowrap; */
 }
