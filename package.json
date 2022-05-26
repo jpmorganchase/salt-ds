@@ -33,7 +33,8 @@
     "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
     "typecheck:modular": "modular typecheck",
     "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
-    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json"
+    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
+    "chromatic": "chromatic"
   },
   "dependencies": {
     "@changesets/cli": "^2.19.0",
@@ -72,6 +73,7 @@
     "aria-hidden": "^1.1.1",
     "attr-accept": "^2.0.0",
     "axe-core": "^4.3.5",
+    "chromatic": "^6.5.4",
     "classnames": "^2.2.6",
     "clipboard-copy": "^4.0.1",
     "compute-scroll-into-view": "^1.0.16",
@@ -109,6 +111,7 @@
     "vite-plugin-istanbul": "^2.5.1",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
+    "vite-plugin-turbosnap": "^1.0.1",
     "vite-tsconfig-paths": "^3.4.1",
     "warning": "^4.0.3",
     "webpack": "5"
