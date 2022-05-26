@@ -1,4 +1,5 @@
 import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
+import { waitFor } from "@testing-library/dom";
 
 describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN Breadcrumbs are passed as children", () => {
