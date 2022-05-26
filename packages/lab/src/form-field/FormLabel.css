@@ -8,7 +8,7 @@
   box-sizing: border-box;
   color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-color));
   display: flex;
-  font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-font-size));
+  font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-fontSize));
   margin-bottom: var(--uitkFormLabel-margin-bottom, 2px);
   margin-top: var(--uitkFormLabel-margin-top, var(--form-label-margin-top));
   line-height: var(--uitkFormLabel-line-height, var(--uitk-typography-line-height));

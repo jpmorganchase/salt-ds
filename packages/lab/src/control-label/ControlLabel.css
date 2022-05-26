@@ -8,8 +8,8 @@
 .uitkControlLabel-label,
 .uitkControlLabel-labelRight {
   color: var(--uitkControlLabel-color, var(--uitk-text-primary-color));
-  font-family: var(--uitk-typography-font-family);
-  font-size: var(--uitk-text-font-size);
+  font-family: var(--uitk-typography-fontFamily);
+  font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-regular);
   line-height: var(--uitk-typography-line-height);
   margin-right: calc(var(--uitk-size-unit) / 1.5);

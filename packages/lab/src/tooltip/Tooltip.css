@@ -16,7 +16,7 @@
 
 .uitkTooltip {
   --tooltip-background: var(--uitk-container-background-medium);
-  --tooltip-font-size: var(--uitk-text-font-size);
+  --tooltip-font-size: var(--uitk-text-fontSize);
   --tooltip-color: var(--uitk-text-primary-color);
   --tooltip-padding: var(--uitk-size-unit);
 }
@@ -28,8 +28,8 @@
   box-shadow: var(--uitk-overlayable-shadow-popout);
   color: var(--tooltip-color);
   font-size: var(--tooltip-font-size);
-  line-height: var(--uitk-text-line-height);
-  min-height: calc(var(--tooltip-font-size) * var(--uitk-text-line-height));
+  line-height: var(--uitk-text-lineHeight);
+  min-height: calc(var(--tooltip-font-size) * var(--uitk-text-lineHeight));
   padding: var(--tooltip-padding);
   position: relative;
   max-width: 230px;

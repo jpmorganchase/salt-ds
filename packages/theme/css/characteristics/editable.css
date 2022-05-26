@@ -5,16 +5,16 @@
   --uitk-editable-cursor-readonly: not-allowed;
   --uitk-editable-cursor-hover: text;
 
-  --uitk-editable-border-style: solid;
+  --uitk-editable-borderStyle: solid;
 
-  --uitk-editable-border-width: 1px;
-  --uitk-editable-border-width-active: 2px;
+  --uitk-editable-borderWidth: 1px;
+  --uitk-editable-borderWidth-active: 2px;
 
-  --uitk-editable-border-color: var(--uitk-palette-interact-border);
-  --uitk-editable-border-color-active: var(--uitk-palette-interact-border-active);
-  --uitk-editable-border-color-disabled: var(--uitk-palette-interact-border-disabled);
-  --uitk-editable-border-color-hover: var(--uitk-palette-interact-border-hover);
-  --uitk-editable-border-color-readonly: var(--uitk-palette-interact-border-readonly);
+  --uitk-editable-borderColor: var(--uitk-palette-interact-border);
+  --uitk-editable-borderColor-active: var(--uitk-palette-interact-border-active);
+  --uitk-editable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
+  --uitk-editable-borderColor-hover: var(--uitk-palette-interact-border-hover);
+  --uitk-editable-borderColor-readonly: var(--uitk-palette-interact-border-readonly);
 
   --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);

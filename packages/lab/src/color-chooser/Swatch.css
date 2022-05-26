@@ -42,7 +42,7 @@
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch {
-  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
 }
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch,
@@ -62,12 +62,12 @@
 }
 
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
 }
 
 .uitkColorChooserSwatch-active {
-  outline: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-container-border-color-medium);
-  border: var(--uitk-focused-outline-width) var(--uitk-actionable-border-style) var(--uitk-actionable-cta-foreground-active) !important;
+  outline: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
+  border: var(--uitk-focused-outlineWidth) var(--uitk-actionable-borderStyle) var(--uitk-actionable-cta-foreground-active) !important;
   width: calc(var(--swatch-size-unit) - 4px) !important;
   height: calc(var(--swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;
@@ -76,7 +76,7 @@
 }
 
 .uitkColorChooserSwatch-transparent {
-  border: var(--uitk-container-border-width) var(--uitk-container-border-color-style) var(--uitk-negative-foreground) !important;
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-negative-foreground) !important;
   width: calc(var(--swatch-size-unit) - 2px) !important;
   height: calc(var(--swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;

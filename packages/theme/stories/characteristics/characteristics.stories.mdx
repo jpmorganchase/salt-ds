@@ -31,11 +31,11 @@ When defining characteristic design tokens, they should generally be in the form
 1. Always begin with `--uitk-`
 2. Follow this by the foundation name, e.g. `---uitk-actionable-`, `---uitk-text-`, `--uitk-focused-`
 3. Append the variant if applicable, e.g. `--uitk-actionable-cta-`, `--uitk-text-h2-`
-4. Append the attribute, e.g. `--uitk-actionable-cta-background`, `--uitk-text-h2-font-size`, `--uitk-focused-outline-color`
-5. Append the state if applicable, e.g. `--uitk-actionable-cta-background-hover`, `--uitk-focused-outline-color-warning`
-6. For tokens that are scoped by density\* the suffix should be the suitable density for the defined value, e.g. `--uitk-text-h2-font-size-high`
+4. Append the attribute, e.g. `--uitk-actionable-cta-background`, `--uitk-text-h2-fontSize`, `--uitk-focused-outlineColor`
+5. Append the state if applicable, e.g. `--uitk-actionable-cta-background-hover`, `--uitk-focused-outlineColor-warning`
+6. For tokens that are scoped by density\* the suffix should be the suitable density for the defined value, e.g. `--uitk-text-h2-fontSize-high`
 
-\* Here, it is best practice to avoid directly using the density invariant values, and skip this step in actual usage - i.e., discard the `-<density>` suffix to get the appropriate value in practice e.g. `--uitk-text-h2-font-size`.
+\* Here, it is best practice to avoid directly using the density invariant values, and skip this step in actual usage - i.e., discard the `-<density>` suffix to get the appropriate value in practice e.g. `--uitk-text-h2-fontSize`.
 
 ## Styling with Characteristics
 
@@ -62,7 +62,7 @@ Generally, the characteristics appropriate for the component should be given by 
 - What is the purpose of this component? Will it contain other elements, lead me to a new page, etc?
 - Should this component give feedback? Can it be submitted, does it have a success state, etc?
 
-It is important to note that just because you have assigned a component to a characteristic, does not mean it consumes _all_ of those characteristics. We can freely pick which characteristics we want. A good example of this may be to notice that the `focused` characteristic offers both a border and outline style. From this you would probably want to use an outline if you're setting the outline attribute, and of course border for the border attribute. Yet, there is nothing stopping you from writing `border-style: var(--uitk-focused-outline-style)` instead!
+It is important to note that just because you have assigned a component to a characteristic, does not mean it consumes _all_ of those characteristics. We can freely pick which characteristics we want. A good example of this may be to notice that the `focused` characteristic offers both a border and outline style. From this you would probably want to use an outline if you're setting the outline attribute, and of course border for the border attribute. Yet, there is nothing stopping you from writing `border-style: var(--uitk-focused-outlineStyle)` instead!
 
 Think carefully when deciding which characteristics to use. It's up to you to choose which characteristic is most appropriate - for example, should the background color of your component be coming from container, because that's its general purpose, or should it be coming from selectable, since it can be selected? Many characteristics offer the same attribute (like background color), and it's up to you to decide what part of your component you are styling as to which characteristic it should come from. Taking time to consider this will ensure you have the most consistent styling possible across your app.
 

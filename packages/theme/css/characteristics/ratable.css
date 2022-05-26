@@ -4,12 +4,12 @@
   --uitk-ratable-cursor-active: pointer;
   --uitk-ratable-cursor-undo: pointer;
 
-  --uitk-ratable-border-width: 1px;
-  --uitk-ratable-border-style: solid;
+  --uitk-ratable-borderWidth: 1px;
+  --uitk-ratable-borderStyle: solid;
 
   --uitk-ratable-background: var(--uitk-palette-rate-background);
   --uitk-ratable-background-active: var(--uitk-palette-rate-background-active);
-  --uitk-ratable-background-active-disabled: var(--uitk-palette-rate-background-active-disabled);
+  --uitk-ratable-background-activeDisabled: var(--uitk-palette-rate-background-activeDisabled);
   --uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);
   --uitk-ratable-background-undo: var(--uitk-palette-rate-background-undo);
 

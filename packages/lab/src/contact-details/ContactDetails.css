@@ -44,7 +44,7 @@
 
 .uitkContactDetails {
   --contact-details-label-color: var(--uitk-text-secondary-color);
-  --contact-details-line-height: var(--uitk-text-line-height);
+  --contact-details-line-height: var(--uitk-text-lineHeight);
   --contact-details-no-avatar-color: var(--uitk-accent-background);
   --contact-details-no-avatar-indicator-width: 4px;
 

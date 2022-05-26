@@ -1,6 +1,7 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
+import { CSSCharacteristicsUsages } from "tooling/css-variable-docgen-components/CSSCharacteristicsUsages";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Accent" />
 
@@ -16,7 +17,7 @@ Components which can or should be emphasized against others in close proximity.
   <Story name="Colors">
     <DocGrid>
       <ColorBlock colorVar="--uitk-accent-background" />
-      <ColorBlock colorVar="--uitk-accent-border-color" />
+      <ColorBlock colorVar="--uitk-accent-borderColor" />
       <ColorBlock colorVar="--uitk-accent-foreground" />
     </DocGrid>
   </Story>
@@ -24,7 +25,4 @@ Components which can or should be emphasized against others in close proximity.
 
 ## Usages
 
-- `Avatar`
-- `Contact Details`
-- `ECW`
-- `Wizard`
+<CSSCharacteristicsUsages of="accent" />

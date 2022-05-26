@@ -16,8 +16,8 @@
   --checkbox-label-margin-top: calc(var(--uitk-size-unit) * var(--checkbox-top-multiplier));
   --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
-  --checkbox-outline-color: var(--uitk-selectable-border-color);
-  --checkbox-outline-color-hover: var(--uitk-selectable-border-color-hover);
+  --checkbox-outline-color: var(--uitk-selectable-borderColor);
+  --checkbox-outline-color-hover: var(--uitk-selectable-borderColor-hover);
 }
 
 .uitkCheckbox {
@@ -37,7 +37,7 @@
 
 .uitkCheckbox .uitkControlLabel-label {
   vertical-align: baseline;
-  min-height: var(--uitkCheckbox-label-min-height, var(--uitk-text-min-height));
+  min-height: var(--uitkCheckbox-label-min-height, var(--uitk-text-minHeight));
 }
 
 /* Styles applied to icon on hover state */

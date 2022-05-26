@@ -3,9 +3,9 @@
   --uitkDialog-box-shadow: none;
   --overlay-text-color: var(--uitk-text-primary-color);
   --overlay-spacing: var(--uitk-size-unit);
-  --overlay-font-size: var(--uitk-text-font-size);
+  --overlay-font-size: var(--uitk-text-fontSize);
   --overlay-background-color: var(--uitk-container-background-medium);
-  --overlay-border-color: var(--uitk-container-border-color-medium);
+  --overlay-border-color: var(--uitk-container-borderColor-medium);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zindex-tooltip);
 

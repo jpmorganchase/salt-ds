@@ -2,7 +2,7 @@
   align-items: center;
   color: var(--uitk-text-primary-color);
   display: flex;
-  font-size: var(--uitk-measured-font-size-medium);
+  font-size: var(--uitk-measured-fontSize-medium);
   min-width: 200px;
 }
 

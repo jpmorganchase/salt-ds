@@ -3,7 +3,7 @@
   --uitk-separable-border-width: 1px;
   --uitk-separable-border-style: solid;
 
-  --uitk-separable-primary-border-color: var(--uitk-palette-neutral-border-high);
+  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-high);
 
   --uitk-separable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
   --uitk-separable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
@@ -14,5 +14,5 @@
   --uitk-separable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
 
   --uitk-separable-tertiary-border-color: var(--uitk-palette-neutral-border-low);
-  --uitk-separable-secondary-border-color: var(--uitk-palette-neutral-border-medium);
+  --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-border-medium);
 }

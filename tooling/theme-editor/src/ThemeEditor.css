@@ -1,5 +1,5 @@
 .uitkThemeEditor {
-  border-right: 1px solid var(--uitk-container-border-color-medium);
+  border-right: 1px solid var(--uitk-container-borderColor-medium);
   background-color: var(--uitk-container-background-medium);
   display: flex;
   flex-direction: column;

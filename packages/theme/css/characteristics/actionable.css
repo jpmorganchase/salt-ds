@@ -4,11 +4,11 @@
   --uitk-actionable-cursor-disabled: not-allowed;
   --uitk-actionable-cursor-hover: pointer;
 
-  --uitk-actionable-border-width: 1px; /* Not in Figma */
-  --uitk-actionable-border-style: solid; /* Not in Figma */
-  --uitk-actionable-border-radius: 0; /* Not in Figma */
-  --uitk-actionable-letter-spacing: 0.6px; /* Not in Figma */
-  --uitk-actionable-text-transform: uppercase; /* Not in Figma */
+  --uitk-actionable-borderWidth: 1px; /* Not in Figma */
+  --uitk-actionable-borderStyle: solid; /* Not in Figma */
+  --uitk-actionable-borderRadius: 0; /* Not in Figma */
+  --uitk-actionable-letterSpacing: 0.6px; /* Not in Figma */
+  --uitk-actionable-textTransform: uppercase; /* Not in Figma */
   --uitk-actionable-text-align: center; /* Not in Figma */
 
   /* Note: 'disabled' design tokens not in Figma */

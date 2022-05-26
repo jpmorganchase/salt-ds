@@ -36,18 +36,18 @@
   /* height: 24px; */
 }
 
-.uitkMetric-direction-up .uitkMetricContent-indicator {
-  fill: var(--uitkMetricContent-indicator-up-fill, var(--uitk-differential-foreground-positive));
+.uitkMetricContent-direction-up .uitkMetricContent-indicator {
+  fill: var(--uitkMetricContent-indicator-up-fill, var(--uitk-differential-positive-foreground));
 }
-.uitkMetric-direction-up .uitkMetricContent-subvalue {
-  color: var(--uitkMetricContent-indicator-up-color, var(--uitk-differential-foreground-positive));
+.uitkMetricContent-direction-up .uitkMetricContent-subvalue {
+  color: var(--uitkMetricContent-indicator-up-color, var(--uitk-differential-positive-foreground));
 }
 
-.uitkMetric-direction-down .uitkMetricContent-indicator {
-  fill: var(--uitkMetricContent-indicator-down-fill, var(--uitk-differential-foreground-negative));
+.uitkMetricContent-direction-down .uitkMetricContent-indicator {
+  fill: var(--uitkMetricContent-indicator-down-fill, var(--uitk-differential-negative-foreground));
 }
-.uitkMetric-direction-down .uitkMetricContent-subvalue {
-  color: var(--uitkMetricContent-indicator-down-color, var(--uitk-differential-foreground-negative));
+.uitkMetricContent-direction-down .uitkMetricContent-subvalue {
+  color: var(--uitkMetricContent-indicator-down-color, var(--uitk-differential-negative-foreground));
 }
 
 .uitkMetric-align-left .uitkMetricContent {

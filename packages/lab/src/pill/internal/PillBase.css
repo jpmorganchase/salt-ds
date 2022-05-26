@@ -47,23 +47,23 @@
   border-radius: var(--uitkPill-border-radius, 0);
   color: var(--pill-text-color);
   display: inline-flex;
-  font-size: var(--uitkPill-font-size, var(--uitk-text-help-font-size));
+  font-size: var(--uitkPill-font-size, var(--uitk-text-help-fontSize));
   height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letter-spacing, 0);
   line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
   max-width: var(--uitkPill-max-width, 160px);
   min-width: var(--uitkPill-min-width, 40px);
-  min-height: var(--uitkPill-min-height, var(--uitk-text-min-height));
+  min-height: var(--uitkPill-min-height, var(--uitk-text-minHeight));
   outline: var(--uitkPill-outline, 0);
   position: relative;
 }
 
 .uitkPill:focus {
-  outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-outline-color));
-  outline-style: var(--uitkPill-focused-outline-style, var(--uitk-focused-outline-style));
+  outline-color: var(--uitkPill-focused-outline-color, var(--uitk-focused-outlineColor));
+  outline-style: var(--uitkPill-focused-outline-style, var(--uitk-focused-outlineStyle));
   outline-style: dotted;
-  outline-width: var(--uitk-focused-outline-width);
-  outline-offset: var(--uitk-focused-outline-offset);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 /* Style applied to Pill label */
@@ -126,7 +126,7 @@
   flex-shrink: 0;
   height: var(--pill-checkbox-size);
   margin-left: calc(var(--uitk-size-unit) / 2);
-  min-height: var(--uitkPill-min-height, var(--uitk-text-min-height));
+  min-height: var(--uitkPill-min-height, var(--uitk-text-minHeight));
   padding-right: calc(var(--uitk-size-unit) / 2);
 }
 
@@ -191,7 +191,7 @@
 
 /* Styles applied to the Pill checkbox */
 .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitkPill-checkbox-stroke, var(--uitk-selectable-border-color));
+  --pill-checkbox-stroke: var(--uitkPill-checkbox-stroke, var(--uitk-selectable-borderColor));
   --pill-checkbox-tick: var(--uitkPill-checkbox-tick, var(--uitk-taggable-foreground));
 
   height: var(--pill-checkbox-size);

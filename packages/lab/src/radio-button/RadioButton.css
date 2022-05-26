@@ -83,9 +83,9 @@
 .uitkRadioButton-labelText {
   color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-color));
   flex-grow: 1;
-  font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-font-size));
+  font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-fontSize));
   letter-spacing: 0;
   line-height: var(--uitkRadioButton-label-line-height, var(--uitk-typography-line-height));
   margin-left: var(--uitkRadioButton-radio-label-margin-left, var(--radio-button-label-margin-left));
-  min-height: var(--uitkRadioButton-label-min-height, var(--uitk-text-min-height));
+  min-height: var(--uitkRadioButton-label-min-height, var(--uitk-text-minHeight));
 }

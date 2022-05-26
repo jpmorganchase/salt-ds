@@ -1,7 +1,7 @@
 .story-root {
   height: 600px;
   overflow-y: auto;
-  border: solid 1px var(--uitk-container-border-color-medium);
+  border: solid 1px var(--uitk-container-borderColor-medium);
   padding: var(--uitk-size-base);
 }
 

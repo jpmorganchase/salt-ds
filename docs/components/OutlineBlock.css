@@ -3,5 +3,5 @@
   height: var(--uitk-size-base);
   justify-self: end;
 
-  border-radius: var(--uitk-container-border-radius);
+  border-radius: var(--uitk-container-borderRadius);
 }

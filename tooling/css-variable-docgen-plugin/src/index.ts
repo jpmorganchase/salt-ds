@@ -22,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-        matches.find(
-          (match) =>
-            path.normalize(filename) === path.join(process.cwd(), match)
-        )
+      matches.find(
+        (match) =>
+          path.normalize(filename) === path.join(process.cwd(), match)
+      )
     );
   };
 }
@@ -195,6 +195,8 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           )
         ).filter(Boolean);
 
+
+
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
         const identifierMap: Record<string, CSSVariable> = {};
@@ -257,7 +259,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                   }
                 }
               }
-            },
+            }
           });
 
           walk(ast, {
@@ -271,10 +273,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                          findLast(this.declaration, (node) =>
-                            valueTypes.includes(node.type)
-                          )
+                        findLast(this.declaration, (node) =>
+                          valueTypes.includes(node.type)
                         )
+                      )
                       : undefined,
                   };
                 } catch (e) {

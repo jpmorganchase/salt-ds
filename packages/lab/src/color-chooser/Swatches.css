@@ -1,6 +1,6 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatches-colorNameTextDiv {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-bold);
 }
 
@@ -11,7 +11,7 @@
 }
 
 .uitkColorChooserSwatches-colorTextDiv {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   margin-right: var(--uitk-size-unit);
 }
 

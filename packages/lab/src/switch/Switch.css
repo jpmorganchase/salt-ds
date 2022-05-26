@@ -48,8 +48,8 @@
   --switch-label-color: var(--uitk-text-secondary-color);
   --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-thumb-background: var(--uitk-selectable-primary-foreground-selected);
-  --switch-track-color: var(--uitk-selectable-border-color);
-  --switch-track-color-hover: var(--uitk-selectable-border-color-hover);
+  --switch-track-color: var(--uitk-selectable-borderColor);
+  --switch-track-color-hover: var(--uitk-selectable-borderColor-hover);
   --switch-checked-icon-color: var(--uitk-selectable-background-selected);
 }
 
@@ -62,7 +62,7 @@
 
 /* Styles applied to outer ControlLabel component's text */
 .uitkSwitch-label .uitkControlLabel-text {
-  line-height: var(--uitkSwitch-label-line-height, var(--uitk-text-line-height));
+  line-height: var(--uitkSwitch-label-line-height, var(--uitk-text-lineHeight));
   text-align: right;
   color: var(--uitkSwitch-label-color, var(--switch-label-color));
 }

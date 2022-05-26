@@ -1,10 +1,10 @@
 .uitk-light,
 .uitk-dark {
   --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
-  --uitk-actionable-letter-spacing: 0.6px;
-  --uitk-actionable-text-transform: uppercase;
+  --uitk-actionable-letterSpacing: 0.6px;
+  --uitk-actionable-textTransform: uppercase;
   --uitk-actionable-text-align: center;
-  --uitk-actionable-border-radius: 0;
+  --uitk-actionable-borderRadius: 0;
 }
 
 h1 {
