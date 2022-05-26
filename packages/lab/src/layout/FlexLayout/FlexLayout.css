@@ -1,39 +1,39 @@
 .uitk-density-touch {
-  --uitkFlexLayout-gap-density-multiplier: 2;
+  --flex-layout-gap-density-multiplier: 2;
 }
 .uitk-density-low {
-  --uitkFlexLayout-gap-density-multiplier: 3;
+  --flex-layout-gap-density-multiplier: 3;
 }
 .uitk-density-medium {
-  --uitkFlexLayout-gap-density-multiplier: 3;
+  --flex-layout-gap-density-multiplier: 3;
 }
 .uitk-density-high {
-  --uitkFlexLayout-gap-density-multiplier: 3;
+  --flex-layout-gap-density-multiplier: 3;
 }
 
 /* VARIABLES */
 .uitkFlexLayout {
-  --uitkFlexLayout-gap-multiplier: 1;
-  --uitkFlexLayout-layout-display: flex;
-  --uitkFlexLayout-direction: row;
-  --uitkFlexLayout-wrap: nowrap;
-  --uitkFlexLayout-justify: flex-start;
-  --uitkFlexLayout-align: stretch;
-  --uitkFlexLayout-separator: var(--uitk-separable-border-width);
-  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) * var(--uitkFlexLayout-gap-density-multiplier));
+  --flex-layout-gap-multiplier: 1;
+  --flex-layout-layout-display: flex;
+  --flex-layout-direction: row;
+  --flex-layout-wrap: nowrap;
+  --flex-layout-justify: flex-start;
+  --flex-layout-align: stretch;
+  --flex-layout-separator: var(--uitk-separable-border-width);
+  --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier) * var(--flex-layout-gap-density-multiplier));
 }
 
 .uitkFlexLayout {
-  gap: var(--uitkFlexLayout-gap);
-  display: var(--uitkFlexLayout-layout-display);
-  flex-direction: var(--uitkFlexLayout-direction);
-  flex-wrap: var(--uitkFlexLayout-wrap);
-  justify-content: var(--uitkFlexLayout-justify);
-  align-items: var(--uitkFlexLayout-align);
+  gap: var(--flex-layout-gap);
+  display: var(--flex-layout-layout-display);
+  flex-direction: var(--flex-layout-direction);
+  flex-wrap: var(--flex-layout-wrap);
+  justify-content: var(--flex-layout-justify);
+  align-items: var(--flex-layout-align);
 }
 
 .uitkFlexLayout-separator {
-  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) * var(--uitkFlexLayout-gap-density-multiplier) * 2 + var(--uitkFlexLayout-separator));
+  --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier) * var(--flex-layout-gap-density-multiplier) * 2 + var(--flex-layout-separator));
 }
 
 .uitkFlexLayout-separator > *:not(:last-child)::after {
@@ -43,30 +43,30 @@
 }
 
 .uitkFlexLayout-separator-row > *:not(:last-child)::after {
-  width: var(--uitkFlexLayout-separator);
+  width: var(--flex-layout-separator);
   top: 0;
   height: 100%;
 }
 .uitkFlexLayout-separator-row-start > *:not(:last-child)::after {
-  right: calc(var(--uitkFlexLayout-separator) * -1);
+  right: calc(var(--flex-layout-separator) * -1);
 }
 .uitkFlexLayout-separator-row-center > *:not(:last-child)::after {
-  right: calc(var(--uitkFlexLayout-separator) * -1 + var(--uitkFlexLayout-gap) / 2 * -1);
+  right: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
 }
 .uitkFlexLayout-separator-row-end > *:not(:last-child)::after {
-  right: calc(var(--uitkFlexLayout-gap) * -1);
+  right: calc(var(--flex-layout-gap) * -1);
 }
 
 .uitkFlexLayout-separator-column > *:not(:last-child)::after {
-  height: var(--uitkFlexLayout-separator);
+  height: var(--flex-layout-separator);
   width: 100%;
 }
 .uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
-  bottom: calc(var(--uitkFlexLayout-separator) * -1);
+  bottom: calc(var(--flex-layout-separator) * -1);
 }
 .uitkFlexLayout-separator-column-center > *:not(:last-child)::after {
-  bottom: calc(var(--uitkFlexLayout-separator) * -1 + var(--uitkFlexLayout-gap) / 2 * -1);
+  bottom: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
 }
 .uitkFlexLayout-separator-column-end > *:not(:last-child)::after {
-  bottom: calc(var(--uitkFlexLayout-gap) * -1);
+  bottom: calc(var(--flex-layout-gap) * -1);
 }

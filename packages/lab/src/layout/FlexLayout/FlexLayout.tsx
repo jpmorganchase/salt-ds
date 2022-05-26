@@ -73,11 +73,11 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
 
     const flexLayoutStyles = {
       ...style,
-      "--uitkFlexLayout-align": align && addPrefix(align),
-      "--uitkFlexLayout-direction": flexDirection,
-      "--uitkFlexLayout-gap-multiplier": flexGap,
-      "--uitkFlexLayout-justify": justify && addPrefix(justify),
-      "--uitkFlexLayout-wrap": flexWrap ? "wrap" : "nowrap",
+      "--flex-layout-align": align && addPrefix(align),
+      "--flex-layout-direction": flexDirection,
+      "--flex-layout-gap-multiplier": flexGap,
+      "--flex-layout-justify": justify && addPrefix(justify),
+      "--flex-layout-wrap": flexWrap ? "wrap" : "nowrap",
     };
 
     return (
