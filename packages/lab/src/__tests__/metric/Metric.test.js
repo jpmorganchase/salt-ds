@@ -114,7 +114,6 @@ describe("Metric", () => {
     const subtitle = getByTestId("metric-subtitle");
     const content = container.querySelector(".uitkMetricContent");
 
-    console.log("subtitle", subtitle.id);
     expect(title).toHaveAttribute("aria-level", "2");
     expect(content).toHaveAttribute(
       "aria-labelledby",
