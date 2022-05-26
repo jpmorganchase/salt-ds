@@ -11,9 +11,9 @@ describe("GIVEN a Parent and Child", () => {
     it("THEN it should display a gap by default", () => {
       cy.mount(<DefaultParentChildLayout />);
 
-      cy.get(".uitkParentChildLayout").should("have.css", "column-gap", "8px");
+      cy.get(".uitkParentChildLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkParentChildLayout").should("have.css", "row-gap", "8px");
+      cy.get(".uitkParentChildLayout").should("have.css", "row-gap", "24px");
     });
   });
 

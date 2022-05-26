@@ -18,9 +18,9 @@ describe("GIVEN a Split", () => {
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultSplitLayout />);
 
-      cy.get(".uitkSplitLayout").should("have.css", "column-gap", "8px");
+      cy.get(".uitkSplitLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkSplitLayout").should("have.css", "row-gap", "8px");
+      cy.get(".uitkSplitLayout").should("have.css", "row-gap", "24px");
     });
   });
 
