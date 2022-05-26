@@ -1,18 +1,18 @@
 .uitk-density-touch {
-  --uitkGridLayout-gap-density-multiplier: 2;
+  --grid-layout-gap-density-multiplier: 2;
 }
 .uitk-density-low {
-  --uitkGridLayout-gap-density-multiplier: 3;
+  --grid-layout-gap-density-multiplier: 3;
 }
 .uitk-density-medium {
-  --uitkGridLayout-gap-density-multiplier: 3;
+  --grid-layout-gap-density-multiplier: 3;
 }
 .uitk-density-high {
-  --uitkGridLayout-gap-density-multiplier: 3;
+  --grid-layout-gap-density-multiplier: 3;
 }
 
 .uitkGridLayout {
-  --grid-layout-gap: calc(var(--uitk-size-unit) * var(--uitkGridLayout-gap-density-multiplier));
+  --grid-layout-gap: calc(var(--uitk-size-unit) * var(--grid-layout-gap-density-multiplier));
   --grid-layout-space: 1fr;
 }
 
