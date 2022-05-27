@@ -1,15 +1,8 @@
-import {
-  ComponentType,
-  forwardRef,
-  HTMLAttributes,
-  useCallback,
-  useRef,
-} from "react";
+import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import { Div, Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
-import { useForkRef } from "../utils";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
@@ -55,18 +48,20 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       direction,
       showIndicator,
       indicatorPosition,
-      size,
+      size = "medium",
       valueId,
       titleId,
       subtitleId,
     } = useMetricContext();
 
-    const contentRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef<HTMLDivElement>(ref, contentRef);
-
     const iconSize = size === "small" ? 12 : 24;
-    const ValueComponent =
-      size === "small" ? Figure3 : size === "large" ? Figure1 : Figure2;
+
+    const valueComponentMap = {
+      small: Figure3,
+      medium: Figure2,
+      large: Figure1,
+    };
+    const ValueComponent = valueComponentMap[size];
 
     const iconProps = {
       "aria-label": direction,
@@ -77,13 +72,14 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       ...IndicatorIconProps,
     };
 
+    const iconComponentMap = {
+      down: ArrowDownIcon,
+      up: ArrowUpIcon,
+    };
+
     const IconComponent =
       IndicatorIconComponent ??
-      (direction === "down"
-        ? ArrowDownIcon
-        : direction === "up"
-        ? ArrowUpIcon
-        : undefined);
+      (direction ? iconComponentMap[direction] : undefined);
 
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
@@ -92,8 +88,8 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       <div
         {...restProps}
         className={cx(withBaseName(), className)}
-        ref={handleRef}
         aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
+        ref={ref}
       >
         <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}

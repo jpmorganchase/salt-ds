@@ -21,7 +21,13 @@ export interface MetricContextValue {
    * If 'true', an indicator will be displayed which shows the direction of the main value
    */
   showIndicator?: boolean;
+  /**
+   * Set title's heading level. Defaults to 2
+   */
   headingAriaLevel?: number;
+  /**
+   * Size of the metric value. Defaults to 'medium'
+   */
   size?: "small" | "medium" | "large";
 }
 
