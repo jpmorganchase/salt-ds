@@ -114,34 +114,32 @@ import { Input } from "@jpmorganchase/uitk-lab";
 ## HTML Anatomy of Input component
 
 <Canvas>
-  <Story name="Card Anatomy">
-    <ComponentAnatomy showLegend>
-      <Input defaultValue={"Default"} style={{ width: "292px" }} />
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Input
-        defaultValue={"Read Only Input"}
-        readOnly
-        style={{ width: "292px" }}
-      />
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Input
-        defaultValue="Prefix: Icon"
-        startAdornment={
-          <StaticInputAdornment>
-            <CallIcon />
-          </StaticInputAdornment>
-        }
-      />
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Input
-        defaultValue="Suffix: Text"
-        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
-      />
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showLegend>
+    <Input defaultValue={"Default"} style={{ width: "292px" }} />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Input
+      defaultValue={"Read Only Input"}
+      readOnly
+      style={{ width: "292px" }}
+    />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Input
+      defaultValue="Prefix: Icon"
+      startAdornment={
+        <StaticInputAdornment>
+          <CallIcon />
+        </StaticInputAdornment>
+      }
+    />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Input
+      defaultValue="Suffix: Text"
+      endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+    />
+  </ComponentAnatomy>
 </Canvas>
 
 ## CSS Class
