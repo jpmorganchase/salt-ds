@@ -57,8 +57,6 @@ export const useTruncation = (
       if (textRows) {
         const rowsHeight = textRows * lineHeight;
 
-        console.log("offsetWidth < scrollWidth", offsetWidth, scrollWidth);
-
         const hasOverflowed =
           rowsHeight < offsetHeight ||
           rowsHeight < scrollHeight ||
