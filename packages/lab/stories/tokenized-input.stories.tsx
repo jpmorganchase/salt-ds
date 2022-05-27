@@ -26,7 +26,7 @@ const getRandomNumber = () => Math.floor(Math.random() * 99 + 1);
 export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
-  const [option, setOption] = useState(getRandomNumber());
+  const [option, setOption] = useState(42);
   const [inputValue, setInputValue] = useState("");
   const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
 

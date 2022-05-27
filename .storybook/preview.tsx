@@ -2,12 +2,15 @@ import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@jpmorganchase/uitk-theme/index.css";
 
+import { ComponentProps } from "react";
 import { withThemeBackground } from "./theme-switch/helpers";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { withToolkitProvider } from "docs/decorators/withToolkitProvider";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -89,6 +92,18 @@ export const parameters: Parameters = {
         "Lab",
       ],
     },
+  },
+  docs: {
+    container: ({
+      children,
+      context,
+    }: ComponentProps<typeof DocsContainer>) => (
+      <DocsContainer context={context}>
+        <ToolkitProvider theme={context.globals?.theme}>
+          {children}
+        </ToolkitProvider>
+      </DocsContainer>
+    ),
   },
 };
 
