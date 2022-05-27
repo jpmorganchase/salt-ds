@@ -2,7 +2,15 @@ import type { Plugin } from "vite";
 import path from "path";
 import glob from "glob-promise";
 import { PathLike, promises } from "fs";
-import { Declaration, findAll, findLast, generate, Identifier, parse, walk } from "css-tree";
+import {
+  Declaration,
+  findAll,
+  findLast,
+  generate,
+  Identifier,
+  parse,
+  walk,
+} from "css-tree";
 import * as ts from "typescript";
 
 const { readFile } = promises;
@@ -93,7 +101,10 @@ function createClassNameDefinition(className: string, value: ClassName) {
  * @param name Characteristic or foundation name
  * @param value Characteristic or foundation definition
  */
-function createCharacteristicOrFoundationDefinition(name: string, value: CharacteristicOrFoundation) {
+function createCharacteristicOrFoundationDefinition(
+  name: string,
+  value: CharacteristicOrFoundation
+) {
   /** Set a property with a string value */
   const setStringLiteralField = (fieldName: string, fieldValue: string) =>
     ts.factory.createPropertyAssignment(
@@ -124,7 +135,12 @@ function createCharacteristicOrFoundationDefinition(name: string, value: Charact
    */
   const setTokens = (tokens?: string[]) =>
     tokens
-      ? ts.factory.createPropertyAssignment(ts.factory.createStringLiteral("tokens"), ts.factory.createArrayLiteralExpression(tokens.map(token => ts.factory.createStringLiteral(token))))
+      ? ts.factory.createPropertyAssignment(
+        ts.factory.createStringLiteral("tokens"),
+        ts.factory.createArrayLiteralExpression(
+          tokens.map((token) => ts.factory.createStringLiteral(token))
+        )
+      )
       : setNullField("tokens");
 
   return ts.factory.createPropertyAssignment(
@@ -247,35 +263,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           )
         ).filter(Boolean);
 
-
-
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
-        const characteristicFoundationTokenMap: Record<string, CharacteristicOrFoundation> = {};
+        const characteristicFoundationTokenMap: Record<
+          string,
+          CharacteristicOrFoundation
+        > = {};
         const identifierMap: Record<string, CSSVariable> = {};
 
-        const appendCharacteristicToken = (token: Identifier): void => {
-          const characteristicName = token.name.replace('--uitk-', '').split('-')[0];
-          if (characteristicName.length) {
-            const characteristicToken = token.name;
-            if (!characteristicFoundationTokenMap[characteristicName]) {
-              characteristicFoundationTokenMap[characteristicName] = {
-                name: characteristicName,
-                tokens: [characteristicToken]
-              }
-            }
-            if (!characteristicFoundationTokenMap[characteristicName].tokens?.includes(characteristicToken)) {
-              characteristicFoundationTokenMap[characteristicName].tokens?.push(characteristicToken)
-            }
-          }
-        }
-
-        const findTokens = (node: Declaration): void => {
-          const tokensUsed = findAll(node.value, (node => node.type === "Identifier" && node.name.includes('--uitk-')));
-          for (const token of tokensUsed) {
-            appendCharacteristicToken(token as Identifier);
-          }
-        }
 
         cssFiles.forEach(({ path, contents }) => {
           const comments: Record<number, string> = {};
@@ -316,10 +311,8 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           walk(ast, {
             visit: "Declaration",
             enter(node) {
-              if (
-                node.type === "Declaration") {
-                if (node.property.startsWith("--")
-                ) {
+              if (node.type === "Declaration") {
+                if (node.property.startsWith("--")) {
                   try {
                     privateVariableMap[node.property] = {
                       name: node.property,
@@ -329,23 +322,15 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                         )
                       ),
                     };
-                    findTokens(node);
                   } catch (e) {
-                    console.warn(e,
+                    console.warn(
+                      e,
                       `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
-                    );
-                  }
-                } else {
-                  try {
-                    findTokens(node);
-                  } catch (e) {
-                    console.warn(e,
-                      `Encountered issue parsing CSS declaration "${node.property}" in "${path}"`
                     );
                   }
                 }
               }
-            }
+            },
           });
 
           walk(ast, {
@@ -414,6 +399,32 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           );
         });
 
+
+        Object.keys(identifierMap).forEach((token) => {
+          if (token.startsWith('--uitk-')) {
+            const characteristicName = token
+              .replace("--uitk-", "")
+              .split("-")[0];
+            if (characteristicName.length) {
+              if (!characteristicFoundationTokenMap[characteristicName]) {
+                characteristicFoundationTokenMap[characteristicName] = {
+                  name: characteristicName,
+                  tokens: [token],
+                };
+              }
+              if (
+                !characteristicFoundationTokenMap[
+                  characteristicName
+                ].tokens?.includes(token)
+              ) {
+                characteristicFoundationTokenMap[characteristicName].tokens?.push(
+                  token
+                );
+              }
+            }
+          }
+        });
+
         const transformer = <T extends ts.Node>(
           context: ts.TransformationContext
         ) => {
@@ -449,10 +460,16 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       )
                     ),
                     ts.factory.createPropertyAssignment(
-                      ts.factory.createStringLiteral("characteristicFoundationTokenMap"),
+                      ts.factory.createStringLiteral(
+                        "characteristicFoundationTokenMap"
+                      ),
                       ts.factory.createObjectLiteralExpression(
-                        Object.entries(characteristicFoundationTokenMap).map(([charName, tokens]) =>
-                          createCharacteristicOrFoundationDefinition(charName, tokens)
+                        Object.entries(characteristicFoundationTokenMap).map(
+                          ([charName, tokens]) =>
+                            createCharacteristicOrFoundationDefinition(
+                              charName,
+                              tokens
+                            )
                         )
                       )
                     ),
