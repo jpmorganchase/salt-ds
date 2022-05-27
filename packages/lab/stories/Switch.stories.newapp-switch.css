@@ -1,0 +1,19 @@
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkSwitch-track-border-radius: 5px;
+  --uitkSwitch-thumb-border-radius: 3px;
+}
+
+.uitk-light.uitk-newapp {
+  --uitkSwitch-checked-track-color: var(--uitk-color-red-100);
+  --uitkSwitch-checked-icon-color: var(--uitk-color-red-50);
+  --uitkSwitch-thumb-background: var(--uitk-color-grey-20);
+  --uitkSwitch-track-color-hover: var(--uitk-color-red-200);
+}
+
+.uitk-dark.uitk-newapp {
+  --uitkSwitch-checked-track-color: var(--uitk-color-red-800);
+  --uitkSwitch-checked-icon-color: var(--uitk-color-grey-10);
+  --uitkSwitch-thumb-background: var(--uitk-color-grey-900);
+  --uitkSwitch-track-color-hover: var(--uitk-color-red-700);
+}

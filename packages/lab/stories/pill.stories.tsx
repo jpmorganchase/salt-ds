@@ -12,6 +12,8 @@ import { Pill } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { StarIcon } from "../src/contact-details/internal/StarIcon";
 
+import "./Pill.stories.newapp-pill.css";
+
 export default {
   title: "Lab/Pill",
   component: Pill,
@@ -124,3 +126,14 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
     </div>
   );
 };
+
+export const CustomStyling: ComponentStory<typeof Pill> = () => (
+  <div style={{ display: "flex" }}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <FeaturePill />
+    </ToolkitProvider>
+    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
+      <FeaturePill />
+    </ToolkitProvider>
+  </div>
+);
