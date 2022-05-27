@@ -1,6 +1,9 @@
 import { ChangeEvent, useState } from "react";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Panel, Switch } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+
+import "./Switch.stories.newapp-switch.css";
 
 export default {
   title: "Lab/Switch",
@@ -55,3 +58,18 @@ export const Controlled: ComponentStory<typeof Switch> = (args) => {
 Controlled.args = {
   label: "Controlled",
 };
+
+export const CustomStyling: ComponentStory<typeof Switch> = () => (
+  <div style={{ display: "flex" }}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <Panel>
+        <FeatureSwitch label="Custom styling" />
+      </Panel>
+    </ToolkitProvider>
+    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
+      <Panel>
+        <FeatureSwitch label="Custom styling" checked={true} />
+      </Panel>
+    </ToolkitProvider>
+  </div>
+);
