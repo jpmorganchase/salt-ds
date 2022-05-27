@@ -29,7 +29,7 @@
   --uitk-actionable-cta-foreground-active: var(--uitk-palette-interact-cta-foreground-active);
   --uitk-actionable-cta-foreground-disabled: var(--uitk-palette-interact-cta-foreground-disabled);
   --uitk-actionable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
-  --uitk-actionable-cta-background: var(--uitk-palette-interact-cta-background);
+  --uitk-actionable-cta-background: red;
   --uitk-actionable-cta-background-active: var(--uitk-palette-interact-cta-background-active);
   --uitk-actionable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
   --uitk-actionable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
