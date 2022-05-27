@@ -1,4 +1,7 @@
 import { Component } from "@storybook/addon-docs";
+import {
+  UITK_CHARACTERISTICS
+} from "@jpmorganchase/theme-editor/src/utils/uitkValues";
 
 export function hasDocgen(component: Component): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

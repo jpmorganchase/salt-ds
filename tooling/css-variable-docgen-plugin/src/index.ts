@@ -2,7 +2,7 @@ import type { Plugin } from "vite";
 import path from "path";
 import glob from "glob-promise";
 import { PathLike, promises } from "fs";
-import { findLast, generate, parse, walk } from "css-tree";
+import { Declaration, findAll, findLast, generate, Identifier, parse, walk } from "css-tree";
 import * as ts from "typescript";
 
 const { readFile } = promises;
@@ -22,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-        matches.find(
-          (match) =>
-            path.normalize(filename) === path.join(process.cwd(), match)
-        )
+      matches.find(
+        (match) =>
+          path.normalize(filename) === path.join(process.cwd(), match)
+      )
     );
   };
 }
@@ -38,6 +38,11 @@ export interface ClassName {
 interface PrivateVariable {
   name: string;
   value?: string;
+}
+
+interface CharacteristicOrFoundation {
+  name: string;
+  tokens?: string[];
 }
 
 export interface CSSVariable {
@@ -79,6 +84,53 @@ function createClassNameDefinition(className: string, value: ClassName) {
     ts.factory.createStringLiteral(className),
     ts.factory.createObjectLiteralExpression([
       setDescription(value.description),
+      setName(value.name),
+    ])
+  );
+}
+
+/**
+ * @param name Characteristic or foundation name
+ * @param value Characteristic or foundation definition
+ */
+function createCharacteristicOrFoundationDefinition(name: string, value: CharacteristicOrFoundation) {
+  /** Set a property with a string value */
+  const setStringLiteralField = (fieldName: string, fieldValue: string) =>
+    ts.factory.createPropertyAssignment(
+      ts.factory.createStringLiteral(fieldName),
+      ts.factory.createStringLiteral(fieldValue)
+    );
+
+  /** Set a property with a null value */
+  const setNullField = (fieldName: string) =>
+    ts.factory.createPropertyAssignment(
+      ts.factory.createStringLiteral(fieldName),
+      ts.factory.createNull()
+    );
+
+  /**
+   * ```
+   * SimpleComponent.__docgenInfo.characteristicFoundationTokenMap.someCharacteristic.name = "someCharacteristic";
+   * ```
+   * @param name Characteristic name.
+   */
+  const setName = (name: string) => setStringLiteralField("name", name);
+
+  /**
+   * ```
+   * SimpleComponent.__docgenInfo.characteristicFoundationTokenMap.someCharacteristic.tokens = ["token", "token2"];
+   * ```
+   * @param tokens Characteristic tokens.
+   */
+  const setTokens = (tokens?: string[]) =>
+    tokens
+      ? ts.factory.createPropertyAssignment(ts.factory.createStringLiteral("tokens"), ts.factory.createArrayLiteralExpression(tokens.map(token => ts.factory.createStringLiteral(token))))
+      : setNullField("tokens");
+
+  return ts.factory.createPropertyAssignment(
+    ts.factory.createStringLiteral(name),
+    ts.factory.createObjectLiteralExpression([
+      setTokens(value.tokens),
       setName(value.name),
     ])
   );
@@ -195,9 +247,35 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           )
         ).filter(Boolean);
 
+
+
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
+        const characteristicFoundationTokenMap: Record<string, CharacteristicOrFoundation> = {};
         const identifierMap: Record<string, CSSVariable> = {};
+
+        const appendCharacteristicToken = (token: Identifier): void => {
+          const characteristicName = token.name.replace('--uitk-', '').split('-')[0];
+          if (characteristicName.length) {
+            const characteristicToken = token.name;
+            if (!characteristicFoundationTokenMap[characteristicName]) {
+              characteristicFoundationTokenMap[characteristicName] = {
+                name: characteristicName,
+                tokens: [characteristicToken]
+              }
+            }
+            if (!characteristicFoundationTokenMap[characteristicName].tokens?.includes(characteristicToken)) {
+              characteristicFoundationTokenMap[characteristicName].tokens?.push(characteristicToken)
+            }
+          }
+        }
+
+        const findTokens = (node: Declaration): void => {
+          const tokensUsed = findAll(node.value, (node => node.type === "Identifier" && node.name.includes('--uitk-')));
+          for (const token of tokensUsed) {
+            appendCharacteristicToken(token as Identifier);
+          }
+        }
 
         cssFiles.forEach(({ path, contents }) => {
           const comments: Record<number, string> = {};
@@ -239,25 +317,35 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
             visit: "Declaration",
             enter(node) {
               if (
-                node.type === "Declaration" &&
-                node.property.startsWith("--")
-              ) {
-                try {
-                  privateVariableMap[node.property] = {
-                    name: node.property,
-                    value: generate(
-                      findLast(node.value, (node) =>
-                        valueTypes.includes(node.type)
-                      )
-                    ),
-                  };
-                } catch (e) {
-                  console.warn(
-                    `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
-                  );
+                node.type === "Declaration") {
+                if (node.property.startsWith("--")
+                ) {
+                  try {
+                    privateVariableMap[node.property] = {
+                      name: node.property,
+                      value: generate(
+                        findLast(node.value, (node) =>
+                          valueTypes.includes(node.type)
+                        )
+                      ),
+                    };
+                    findTokens(node);
+                  } catch (e) {
+                    console.warn(e,
+                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
+                    );
+                  }
+                } else {
+                  try {
+                    findTokens(node);
+                  } catch (e) {
+                    console.warn(e,
+                      `Encountered issue parsing CSS declaration "${node.property}" in "${path}"`
+                    );
+                  }
                 }
               }
-            },
+            }
           });
 
           walk(ast, {
@@ -271,10 +359,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                          findLast(this.declaration, (node) =>
-                            valueTypes.includes(node.type)
-                          )
+                        findLast(this.declaration, (node) =>
+                          valueTypes.includes(node.type)
                         )
+                      )
                       : undefined,
                   };
                 } catch (e) {
@@ -357,6 +445,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       ts.factory.createObjectLiteralExpression(
                         Object.entries(identifierMap).map(([name, value]) =>
                           createCSSVariablesApiDefinition(name, value)
+                        )
+                      )
+                    ),
+                    ts.factory.createPropertyAssignment(
+                      ts.factory.createStringLiteral("characteristicFoundationTokenMap"),
+                      ts.factory.createObjectLiteralExpression(
+                        Object.entries(characteristicFoundationTokenMap).map(([charName, tokens]) =>
+                          createCharacteristicOrFoundationDefinition(charName, tokens)
                         )
                       )
                     ),
