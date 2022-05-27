@@ -94,7 +94,7 @@
 /* Styles applied to track */
 .uitkSwitch-track {
   background: var(--uitkSwitch-track-color, var(--switch-track-color));
-  border-radius: 0;
+  border-radius: var(--uitkSwitch-track-border-radius, 0);
   box-sizing: border-box;
   height: var(--uitkSwitch-track-height, var(--uitk-size-switch));
   min-height: 16px;
@@ -135,7 +135,7 @@
 .uitkSwitch-thumb,
 .uitkSwitch-checked .uitkSwitch-icon {
   background: var(--uitkSwitch-thumb-background, var(--switch-thumb-background));
-  border-radius: 0;
+  border-radius: var(--uitkSwitch-thumb-border-radius, 0);
   box-shadow: none;
   width: var(--uitkSwitch-thumb-width, var(--switch-thumb-size));
   height: var(--uitkSwitch-thumb-height, var(--switch-thumb-size));
