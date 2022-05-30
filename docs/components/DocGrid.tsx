@@ -5,14 +5,16 @@ import "./DocGrid.css";
 
 export const DocGrid = ({
   children,
+  className,
   textExample,
 }: {
   children: ReactNode;
+  className?: string;
   textExample?: boolean;
 }) => {
   return (
     <div
-      className={cx("uitkDocGrid", {
+      className={cx("uitkDocGrid", className, {
         ["uitkDocGrid-textExample"]: textExample,
       })}
     >
