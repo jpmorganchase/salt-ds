@@ -56,5 +56,4 @@
 
   height: var(--uitkCheckboxIcon-indeterminate-bar-height, var(--checkbox-bar-height));
   y: var(--uitkCheckboxIcon-indeterminate-bar-y, var(--checkbox-bar-y));
-
 }
