@@ -1,10 +1,10 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, useCallback } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Link, LinkProps, H4, Div } from "@jpmorganchase/uitk-lab";
 import warning from "warning";
 
-import { useMetricContext, capitalise } from "./internal";
-import { Link, LinkProps } from "../link";
+import { useMetricContext } from "./internal";
 
 import "./MetricHeader.css";
 
@@ -15,17 +15,6 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
    * @see `Link` for a list of valid props.
    */
   SubtitleLinkProps?: Partial<LinkProps>;
-  /**
-   * @ignore - this is passed from the parent <Metric/> component
-   *
-   * The ARIA props to be applied to the title if the component is considered as a `heading`,
-   * i.e. it is the first component inside the metric.
-   */
-  headingAriaProps?: {
-    role: string;
-    "aria-level": number;
-    "aria-labelledby": string;
-  };
   /**
    * Subtitle of the Metric Header
    */
@@ -40,24 +29,24 @@ const withBaseName = makePrefixer("uitkMetricHeader");
 
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(
-    {
-      SubtitleLinkProps,
-      className,
-      title,
-      subtitle,
-      headingAriaProps,
-      ...restProps
-    },
+    { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
-    const { align, titleId, subtitleId, direction, orientation } =
-      useMetricContext();
+    const { titleId, subtitleId, headingAriaLevel } = useMetricContext();
 
-    const renderSubtitle = (props: {
-      id?: string;
-      className?: string;
-      "data-testid": string;
-    }) => {
+    const renderSubtitle = useCallback(() => {
+      if (!subtitle) return null;
+
+      const subtitleComponent = (
+        <Div
+          id={subtitleId}
+          className={withBaseName("subtitle")}
+          data-testid="metric-subtitle"
+        >
+          {subtitle}
+        </Div>
+      );
+
       if (SubtitleLinkProps) {
         const { children, href = "", ...restLinkProps } = SubtitleLinkProps;
 
@@ -69,47 +58,28 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
         }
 
         return (
-          <Link
-            href={href}
-            {...props}
-            {...restLinkProps}
-            aria-labelledby={[titleId, subtitleId].join(" ")}
-          >
-            {subtitle}
+          <Link href={href} {...restLinkProps}>
+            {subtitleComponent}
           </Link>
         );
       }
-      return <div {...props}>{subtitle}</div>;
-    };
+
+      return subtitleComponent;
+    }, [subtitle, subtitleId, SubtitleLinkProps]);
 
     return (
-      <div
-        {...restProps}
-        className={cx(
-          withBaseName(),
-          {
-            [withBaseName(orientation as string)]: orientation,
-            [withBaseName(`align${capitalise(align)}`)]: align,
-            [withBaseName(`direction${capitalise(direction)}`)]: direction,
-          },
-          className
-        )}
-        ref={ref}
-      >
-        <div
+      <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
+        <Div
+          styleAs="h4"
           className={withBaseName("title")}
           data-testid="metric-title"
           id={titleId}
-          {...headingAriaProps}
+          role="heading"
+          aria-level={headingAriaLevel}
         >
           {title}
-        </div>
-        {subtitle &&
-          renderSubtitle({
-            id: subtitleId,
-            className: withBaseName("subtitle"),
-            "data-testid": "metric-subtitle",
-          })}
+        </Div>
+        {renderSubtitle()}
       </div>
     );
   }

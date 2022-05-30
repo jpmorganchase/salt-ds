@@ -3,51 +3,51 @@ import cx from "classnames";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
-import { Text, TextProps } from "./Text";
+import { Span, TextProps } from "./";
 
 const withBaseName = makePrefixer("uitkText");
 
 export const Figure1 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure1({ children, className, ...rest }, ref) {
   return (
-    <Text
+    <Span
       className={cx(className, withBaseName(`figure1`))}
       ref={ref}
       {...rest}
     >
       {children}
-    </Text>
+    </Span>
   );
 });
 
 export const Figure2 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure2({ children, className, ...rest }, ref) {
   return (
-    <Text
+    <Span
       className={cx(className, withBaseName(`figure2`))}
       ref={ref}
       {...rest}
     >
       {children}
-    </Text>
+    </Span>
   );
 });
 
 export const Figure3 = forwardRef<
-  HTMLDivElement,
+  HTMLSpanElement,
   Omit<TextProps, "elementType">
 >(function Figure3({ children, className, ...rest }, ref) {
   return (
-    <Text
+    <Span
       className={cx(className, withBaseName(`figure3`))}
       ref={ref}
       {...rest}
     >
       {children}
-    </Text>
+    </Span>
   );
 });
