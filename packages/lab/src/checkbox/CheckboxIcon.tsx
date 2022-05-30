@@ -24,7 +24,6 @@ export const CheckboxIcon = ({
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
   const className = cx(withBaseName(), classNameProp, {
-    [withBaseName("checked")]: checked,
     [withBaseName("disabled")]: disabled,
   });
   return indeterminate ? (
@@ -32,7 +31,7 @@ export const CheckboxIcon = ({
       className={cx(className, withBaseName("indeterminate"))}
     />
   ) : checked ? (
-    <CheckboxCheckedIcon className={className} />
+    <CheckboxCheckedIcon className={cx(className, withBaseName("checked"))} />
   ) : (
     <CheckboxUncheckedIcon className={className} />
   );

@@ -5,16 +5,6 @@
   position: relative;
 }
 
-/* Styles applied to label element */
-.uitkCheckboxBase-label {
-  display: flex;
-}
-
-/* Styles applied if `disabled={true}` */
-.uitkCheckboxBase-disabled {
-  cursor: var(--uitkCheckbox-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-}
-
 /* Styles applied to input element */
 .uitkCheckboxBase-input {
   cursor: inherit;

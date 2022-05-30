@@ -1,4 +1,8 @@
-export function CheckboxCheckedIcon({ className }: { className: string }) {
+export function CheckboxCheckedIcon({
+  className,
+}: {
+  className: string;
+}): JSX.Element {
   return (
     <svg
       aria-hidden="true"
@@ -8,7 +12,7 @@ export function CheckboxCheckedIcon({ className }: { className: string }) {
       viewBox="0 0 14 14"
     >
       <g fillRule="evenodd">
-        <rect height="14" width="14" x="0" y="0" />
+        <rect className={`uitkCheckboxIcon-box`} />
         <polygon
           className={`uitkCheckboxIcon-tick`}
           fillRule="nonzero"

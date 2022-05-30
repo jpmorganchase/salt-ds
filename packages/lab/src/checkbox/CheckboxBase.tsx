@@ -107,7 +107,7 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
     });
     return (
       <span {...rest} className={className} ref={ref}>
-        <span className={withBaseName("label")}>
+        <span>
           <input
             aria-checked={indeterminate ? "mixed" : checked}
             name={name}
