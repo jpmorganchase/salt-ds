@@ -14,8 +14,8 @@
   height: var(--uitkDocGrid-height, unset);
   gap: var(--uitkDocGrid-gap, var(--doc-grid-gap));
   grid-template-columns: repeat(2, auto);
-  padding-block-start: var(--doc-grid-padding-block-start);
-  padding-block-end: var(--doc-grid-padding-block-end);
+  padding-block-start: var(--uitkDocGrid-gap-padding-block-start, var(--doc-grid-padding-block-start));
+  padding-block-end: var(--uitkDocGrid-gap-padding-block-end, var(--doc-grid-padding-block-end));
   line-height: 1;
   width: var(--uitkDocGrid-width, auto);
 }
