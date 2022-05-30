@@ -28,9 +28,9 @@ immediately (the component doesn’t stay selected).
 <Canvas>
   <Story name="Misc">
     <DocGrid>
-      <CornerBlock cornerRadius="--uitk-actionable-borderRadius" />
-      <CursorBlock cursor="--uitk-actionable-cursor-active" />
       <CursorBlock cursor="--uitk-actionable-cursor-hover" />
+      <CursorBlock cursor="--uitk-actionable-cursor-active" />
+      <CursorBlock cursor="--uitk-actionable-cursor-disabled" />
       <LetterSpacingBlock letterSpacing="--uitk-actionable-letterSpacing" />
       <TextAlignBlock textAlign="--uitk-actionable-text-align" />
       <BlankBlockCell />
@@ -45,14 +45,16 @@ immediately (the component doesn’t stay selected).
   <Story name="CTA Variant">
     <DocGrid>
       <ColorBlock colorVar="--uitk-actionable-cta-foreground" />
+      <ColorBlock colorVar="--uitk-actionable-cta-foreground-hover" />
       <ColorBlock colorVar="--uitk-actionable-cta-foreground-active" />
       <ColorBlock colorVar="--uitk-actionable-cta-foreground-disabled" />
-      <ColorBlock colorVar="--uitk-actionable-cta-foreground-hover" />
       <ColorBlock colorVar="--uitk-actionable-cta-background" />
+      <ColorBlock colorVar="--uitk-actionable-cta-background-hover" />
       <ColorBlock colorVar="--uitk-actionable-cta-background-active" />
       <ColorBlock colorVar="--uitk-actionable-cta-background-disabled" />
-      <ColorBlock colorVar="--uitk-actionable-cta-background-hover" />
       <FontWeightBlock fontWeight="--uitk-actionable-cta-font-weight" />
+      <FontWeightBlock fontWeight="--uitk-actionable-cta-font-weight-hover" />
+      <FontWeightBlock fontWeight="--uitk-actionable-cta-font-weight-active" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -63,14 +65,16 @@ immediately (the component doesn’t stay selected).
   <Story name="Primary Variant">
     <DocGrid>
       <ColorBlock colorVar="--uitk-actionable-primary-foreground" />
+      <ColorBlock colorVar="--uitk-actionable-primary-foreground-hover" />
       <ColorBlock colorVar="--uitk-actionable-primary-foreground-active" />
       <ColorBlock colorVar="--uitk-actionable-primary-foreground-disabled" />
-      <ColorBlock colorVar="--uitk-actionable-primary-foreground-hover" />
       <ColorBlock colorVar="--uitk-actionable-primary-background" />
+      <ColorBlock colorVar="--uitk-actionable-primary-background-hover" />
       <ColorBlock colorVar="--uitk-actionable-primary-background-active" />
       <ColorBlock colorVar="--uitk-actionable-primary-background-disabled" />
-      <ColorBlock colorVar="--uitk-actionable-primary-background-hover" />
       <FontWeightBlock fontWeight="--uitk-actionable-primary-font-weight" />
+      <FontWeightBlock fontWeight="--uitk-actionable-primary-font-weight-hover" />
+      <FontWeightBlock fontWeight="--uitk-actionable-primary-font-weight-active" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -81,12 +85,15 @@ immediately (the component doesn’t stay selected).
   <Story name="Secondary Variant">
     <DocGrid>
       <ColorBlock colorVar="--uitk-actionable-secondary-foreground" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-foreground-hover" />
       <ColorBlock colorVar="--uitk-actionable-secondary-foreground-active" />
       <ColorBlock colorVar="--uitk-actionable-secondary-foreground-disabled" />
-      <ColorBlock colorVar="--uitk-actionable-secondary-foreground-hover" />
-      <ColorBlock colorVar="--uitk-actionable-secondary-background-active" />
       <ColorBlock colorVar="--uitk-actionable-secondary-background-hover" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-actionable-secondary-background-disabled" />
       <FontWeightBlock fontWeight="--uitk-actionable-secondary-font-weight" />
+      <FontWeightBlock fontWeight="--uitk-actionable-secondary-font-weight-hover" />
+      <FontWeightBlock fontWeight="--uitk-actionable-secondary-font-weight-active" />
     </DocGrid>
   </Story>
 </Canvas>

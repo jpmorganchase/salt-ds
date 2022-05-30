@@ -18,7 +18,7 @@
   background-color: transparent;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-secondary-foreground);
 }
 
 /* Styles applied to container of Radio input and icon */

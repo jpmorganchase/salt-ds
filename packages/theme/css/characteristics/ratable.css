@@ -5,7 +5,10 @@
   --uitk-ratable-cursor-undo: pointer;
 
   --uitk-ratable-borderWidth: 1px;
+  --uitk-ratable-borderWidth-undo: 1px;
+
   --uitk-ratable-borderStyle: solid;
+  --uitk-ratable-borderStyle-undo: solid;
 
   --uitk-ratable-background: var(--uitk-palette-rate-background);
   --uitk-ratable-background-active: var(--uitk-palette-rate-background-active);

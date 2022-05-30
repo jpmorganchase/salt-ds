@@ -5,13 +5,13 @@
   --uitk-measured-fontSize-medium: 14px;
   --uitk-measured-fontSize-high: 16px;
 
+  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
   --uitk-measured-borderStyle: solid;
   --uitk-measured-borderWidth: 1px;
 
   --uitk-measured-background: var(--uitk-palette-measure-background);
-  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
-  --uitk-measured-fill: var(--uitk-palette-measure-fill);
 
+  --uitk-measured-fill: var(--uitk-palette-measure-fill);
   /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
   --uitk-measured-fill-startColor: var(--uitk-palette-measure-fill-startColor);
   --uitk-measured-fill-stopColor: var(--uitk-palette-measure-fill-stopColor);

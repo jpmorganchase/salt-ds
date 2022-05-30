@@ -7,7 +7,7 @@
 }
 
 .uitkThemeEditorAppOutputHeader {
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-primary-foreground);
   background-color: var(--uitk-container-background-medium);
   flex: 240 0;
 }

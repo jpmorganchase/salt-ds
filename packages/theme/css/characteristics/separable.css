@@ -1,18 +1,16 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-separable-border-width: 1px;
-  --uitk-separable-border-style: solid;
-
-  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-high);
-
-  --uitk-separable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
-  --uitk-separable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
-  --uitk-separable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
+  --uitk-separable-borderWidth: 1px;
+  --uitk-separable-borderStyle: solid;
 
   --uitk-separable-primary-background: var(--uitk-palette-interact-primary-background);
-  --uitk-separable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
   --uitk-separable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
+  --uitk-separable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
+  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-high);
+  --uitk-separable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
+  --uitk-separable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
+  --uitk-separable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
 
-  --uitk-separable-tertiary-border-color: var(--uitk-palette-neutral-border-low);
+  --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-border-low);
   --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-border-medium);
 }

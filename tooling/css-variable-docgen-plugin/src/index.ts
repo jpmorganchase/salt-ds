@@ -195,8 +195,6 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           )
         ).filter(Boolean);
 
-
-
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
         const identifierMap: Record<string, CSSVariable> = {};
@@ -259,7 +257,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                   }
                 }
               }
-            }
+            },
           });
 
           walk(ast, {

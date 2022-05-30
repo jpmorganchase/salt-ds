@@ -8,7 +8,7 @@
   margin-top: 5px;
   font-size: var(--uitk-text-caption-fontSize);
   padding-right: 6px;
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-secondary-foreground);
   padding-left: 6px;
 }
 

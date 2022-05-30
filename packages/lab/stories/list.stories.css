@@ -1,5 +1,5 @@
 .uitkListGroupHeader {
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-primary-foreground);
   background: var(--uitk-container-background-medium);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-bold);

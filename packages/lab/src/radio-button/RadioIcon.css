@@ -31,7 +31,7 @@
   --radio-icon-border-stroke: var(--uitk-selectable-borderColor);
   --radio-icon-border-stroke-checked: var(--uitk-selectable-borderColor-hover);
   --radio-icon-border-stroke-hover: var(--uitk-selectable-borderColor-hover);
-  --radio-icon-border-stroke-width: var(--uitk-selectable-border-width);
+  --radio-icon-border-stroke-width: var(--uitk-selectable-borderWidth);
   --radio-icon-border-fill: var(--uitk-editable-background-medium);
   --radio-icon-check-stroke: var(--uitk-editable-borderColor-active);
 

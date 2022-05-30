@@ -49,7 +49,7 @@
 .uitkAppHeader-navMenu::after {
   top: 0;
   right: 0;
-  width: var(--uitk-separable-border-width);
+  width: var(--uitk-separable-borderWidth);
   bottom: 0;
   content: "";
   position: absolute;

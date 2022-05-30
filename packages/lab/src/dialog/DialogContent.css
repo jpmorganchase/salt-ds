@@ -4,7 +4,7 @@
   --dialog-content-padding-top: var(--uitkDialogContent-padding-top, calc(var(--uitk-size-unit) * 2));
   --dialog-content-padding-bottom: var(--uitkDialogContent-padding-bottom, calc(var(--uitk-size-unit) * 3));
   --dialog-content-min-height: var(--uitkDialogContent-min-height, var(--dialog-content-font-size));
-  --dialog-content-color: var(--uitkDialogContent-color, var(--uitk-text-primary-color));
+  --dialog-content-color: var(--uitkDialogContent-color, var(--uitk-text-primary-foreground));
 }
 
 .uitkDialogContent {

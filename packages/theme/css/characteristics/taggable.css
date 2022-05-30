@@ -1,16 +1,16 @@
 .uitk-light,
 .uitk-dark {
+  --uitk-taggable-cursor-hover: pointer;
   --uitk-taggable-cursor-active: pointer;
   --uitk-taggable-cursor-disabled: not-allowed;
-  --uitk-taggable-cursor-hover: pointer;
 
   --uitk-taggable-background: var(--uitk-palette-interact-primary-background);
+  --uitk-taggable-background-hover: var(--uitk-palette-interact-primary-background-hover);
   --uitk-taggable-background-active: var(--uitk-palette-interact-primary-background-active);
   --uitk-taggable-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
-  --uitk-taggable-background-hover: var(--uitk-palette-interact-primary-background-hover);
 
   --uitk-taggable-foreground: var(--uitk-palette-interact-primary-foreground);
+  --uitk-taggable-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
   --uitk-taggable-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
   --uitk-taggable-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
-  --uitk-taggable-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
 }

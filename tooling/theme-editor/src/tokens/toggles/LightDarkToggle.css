@@ -2,6 +2,6 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-secondary-foreground);
   font-size: var(--uitk-text-fontSize);
 }

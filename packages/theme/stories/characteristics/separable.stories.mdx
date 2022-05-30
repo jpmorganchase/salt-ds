@@ -24,14 +24,47 @@ Connected to Container
 ### Misc
 
 <Canvas>
-  <Story name="Separable">
+  <Story name="Misc">
     <DocGrid>
-      <LineBlock lineWidth="--uitk-separable-border-width" />
+      <LineBlock lineWidth="--uitk-separable-borderWidth" />
       <LineBlockCell />
-      <LineBlockCode>--uitk-separable-border-style</LineBlockCode>
+      <LineBlockCode>--uitk-separable-borderStyle</LineBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Primary variant
+
+<Canvas>
+  <Story name="Primary">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-separable-primary-background" />
+      <ColorBlock colorVar="--uitk-separable-primary-background-hover" />
+      <ColorBlock colorVar="--uitk-separable-primary-background-active" />
+      <ColorBlock colorVar="--uitk-separable-primary-foreground" />
+      <ColorBlock colorVar="--uitk-separable-primary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-separable-primary-foreground-active" />
       <ColorBlock colorVar="--uitk-separable-primary-borderColor" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Secondary variant
+
+<Canvas>
+  <Story name="Secondary">
+    <DocGrid>
       <ColorBlock colorVar="--uitk-separable-secondary-borderColor" />
-      <ColorBlock colorVar="--uitk-separable-tertiary-border-color" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Tertiary variant
+
+<Canvas>
+  <Story name="Tertiary">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-separable-tertiary-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>

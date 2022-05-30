@@ -7,7 +7,7 @@
 .uitkColorChooserSwatches-colorNameTextDiv,
 .uitkColorChooserSwatches-colorTextDiv,
 .uitkColorChooserSwatches-alphaTextDiv {
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-secondary-foreground);
 }
 
 .uitkColorChooserSwatches-colorTextDiv {

@@ -81,7 +81,7 @@
 
 /* Styles applied to label */
 .uitkRadioButton-labelText {
-  color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-color));
+  color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-foreground));
   flex-grow: 1;
   font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-fontSize));
   letter-spacing: 0;

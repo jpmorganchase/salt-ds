@@ -17,7 +17,7 @@
 .ThemeTitle {
   font-weight: 600;
   font-size: var(--uitk-text-h3-fontSize);
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-primary-foreground);
 }
 
 .themeSelector {

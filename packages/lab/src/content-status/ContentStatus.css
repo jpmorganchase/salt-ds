@@ -11,7 +11,7 @@
 
 /* Styles applied to inner content */
 .uitkContentStatus-content {
-  color: var(--uitkContentStatus-content-color, var(--uitk-text-primary-color));
+  color: var(--uitkContentStatus-content-color, var(--uitk-text-primary-foreground));
   letter-spacing: var(--uitkContentStatus-letter-spacing, 0);
   line-height: var(--uitkContentStatus-line-height, var(--uitk-typography-line-height));
   font-size: var(--uitkContentStatus-font-size, var(--uitk-text-fontSize));
@@ -26,7 +26,7 @@
 
 /* Styles applied to status title */
 .uitkContentStatus-title {
-  color: var(--uitkContentStatus-title-color, var(--uitk-text-primary-color));
+  color: var(--uitkContentStatus-title-color, var(--uitk-text-primary-foreground));
   letter-spacing: var(--uitkContentStatus-title-letter-spacing, 0);
   font-weight: var(--uitkContentStatus-title-font-weight, var(--uitk-typography-weight-semiBold));
   line-height: var(--uitkContentStatus-title-line-height, var(--uitk-typography-line-height));

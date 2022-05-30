@@ -1,5 +1,5 @@
 .uitkCircularProgress {
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-primary-foreground);
   display: inline-flex;
   position: relative;
 }

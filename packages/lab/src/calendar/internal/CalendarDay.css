@@ -8,7 +8,7 @@
 
 /* TODO: Design need to align characteristics for CalendarDay */
 .uitkCalendarDay {
-  --calendar-day-text-color: var(--uitk-text-primary-color);
+  --calendar-day-text-color: var(--uitk-text-primary-foreground);
   --calendar-day-background: var(--uitk-selectable-background);
   --calendar-day-background-hover: var(--uitk-selectable-background-hover);
   --calendar-day-text-color-hover: var(--uitk-selectable-foreground-hover);
@@ -17,7 +17,7 @@
   --calendar-day-blocked-cursor: var(--uitk-selectable-cursor-disabled);
   --calendar-day-blocked-icon-color: var(--uitk-status-error-foreground);
   --calendar-day-blocked-background: var(--calendar-day-background);
-  --calendar-day-unselectable-text-color: var(--uitk-text-secondary-color-disabled);
+  --calendar-day-unselectable-text-color: var(--uitk-text-secondary-foreground-disabled);
   --calendar-day-unselectable-background: var(--calendar-day-background);
   --calendar-day-unselectable-cursor: var(--uitk-selectable-cursor-disabled);
 

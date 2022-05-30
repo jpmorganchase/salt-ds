@@ -2,6 +2,7 @@ import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { TextBlock } from "docs/components/TextBlock";
+import { TextDecorationBlock } from "docs/components/TextDecorationBlock";
 import {
   LineBlock,
   LineBlockCell,
@@ -15,23 +16,6 @@ import { TextAlignBlock } from "docs/components/TextAlignBlock";
 <Meta title="Documentation/Styles and Theming/Characteristics/Text" />
 
 # Text
-
-## Colors
-
-<Canvas>
-  <Story name="Colors">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-text-primary-color" />
-      <ColorBlock colorVar="--uitk-text-primary-color-disabled" />
-      <ColorBlock colorVar="--uitk-text-secondary-color" />
-      <ColorBlock colorVar="--uitk-text-secondary-color-disabled" />
-      <ColorBlock colorVar="--uitk-text-link-foreground-hover" />
-      <ColorBlock colorVar="--uitk-text-background" />
-      <ColorBlock colorVar="--uitk-text-background-hover" />
-      <ColorBlock colorVar="--uitk-text-background-selected" />
-    </DocGrid>
-  </Story>
-</Canvas>
 
 ## H1
 
@@ -152,10 +136,10 @@ import { TextAlignBlock } from "docs/components/TextAlignBlock";
   </Story>
 </Canvas>
 
-## Help
+## Help text
 
 <Canvas>
-  <Story name="Help">
+  <Story name="Help text">
     <TextBlock
       lineHeight="--uitk-text-help-lineHeight"
       fontSize="--uitk-text-help-fontSize"
@@ -171,6 +155,39 @@ import { TextAlignBlock } from "docs/components/TextAlignBlock";
       <BlankBlockCode>--uitk-text-help-font-weight</BlankBlockCode>
       <BlankBlockCell />
       <BlankBlockCode>--uitk-text-help-font-style</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Link
+
+<Canvas>
+  <Story name="Link">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-text-link-foreground-hover" />
+      <TextDecorationBlock textDecoration="--uitk-text-link-textDecoration" />
+      <TextDecorationBlock textDecoration="--uitk-text-link-textDecoration-hover" />
+      <TextDecorationBlock textDecoration="--uitk-text-link-textDecoration-selected" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Colors
+
+<Canvas>
+  <Story name="Colors">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-text-background" />
+      <ColorBlock colorVar="--uitk-text-background-hover" />
+      <ColorBlock colorVar="--uitk-text-background-selected" />
+      <ColorBlock colorVar="--uitk-text-primary-foreground" />
+      <ColorBlock colorVar="--uitk-text-primary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-text-primary-foreground-selected" />
+      <ColorBlock colorVar="--uitk-text-primary-foreground-disabled" />
+      <ColorBlock colorVar="--uitk-text-secondary-foreground" />
+      <ColorBlock colorVar="--uitk-text-secondary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-text-secondary-foreground-selected" />
+      <ColorBlock colorVar="--uitk-text-secondary-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>

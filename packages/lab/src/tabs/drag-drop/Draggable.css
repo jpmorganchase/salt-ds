@@ -54,7 +54,7 @@
   --uitkTab-background-hover: white;
   --uitkTab-height: 100%;
   --uitk-size-stackable: 100%;
-  border: var(--uitk-actionable-borderWidth) var(--uitk-actionable-borderStyle) var(--uitk-status-info-border-color);
+  border: 1px solid var(--uitk-status-info-borderColor);
 }
 .uitkDraggable-tooltip .uitkTab:hover:before,
 .uitkDraggable-tooltip .uitkTab:before {

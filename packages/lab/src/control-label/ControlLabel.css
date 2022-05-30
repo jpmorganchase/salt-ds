@@ -7,7 +7,7 @@
 
 .uitkControlLabel-label,
 .uitkControlLabel-labelRight {
-  color: var(--uitkControlLabel-color, var(--uitk-text-primary-color));
+  color: var(--uitkControlLabel-color, var(--uitk-text-primary-foreground));
   font-family: var(--uitk-typography-fontFamily);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-regular);

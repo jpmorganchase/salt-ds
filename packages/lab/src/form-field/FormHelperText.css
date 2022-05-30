@@ -1,6 +1,6 @@
 /* Class applied to the helper text container */
 .uitkFormFieldHelperText {
-  color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-color));
+  color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-foreground));
   font-size: var(--uitkFormFieldHelperText-font-size, var(--uitk-text-help-fontSize));
   font-style: var(--uitkFormFieldHelperText-font-style, italic);
   line-height: var(--uitkFormField-line-height, var(--uitk-text-lineHeight));

@@ -5,10 +5,10 @@
   --uitk-status-warning-foreground: var(--uitk-palette-warning-icon);
   --uitk-status-error-foreground: var(--uitk-palette-error-icon);
 
-  --uitk-status-info-border-color: var(--uitk-palette-info-border);
-  --uitk-status-success-border-color: var(--uitk-palette-success-border);
-  --uitk-status-warning-border-color: var(--uitk-palette-warning-border);
-  --uitk-status-error-border-color: var(--uitk-palette-error-border);
+  --uitk-status-info-borderColor: var(--uitk-palette-info-border);
+  --uitk-status-success-borderColor: var(--uitk-palette-success-border);
+  --uitk-status-warning-borderColor: var(--uitk-palette-warning-border);
+  --uitk-status-error-borderColor: var(--uitk-palette-error-border);
 
   --uitk-status-info-background-high: var(--uitk-palette-info-background-high);
   --uitk-status-success-background-high: var(--uitk-palette-success-background-high);

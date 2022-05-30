@@ -17,7 +17,7 @@
 .uitkTooltip {
   --tooltip-background: var(--uitk-container-background-medium);
   --tooltip-font-size: var(--uitk-text-fontSize);
-  --tooltip-color: var(--uitk-text-primary-color);
+  --tooltip-color: var(--uitk-text-primary-foreground);
   --tooltip-padding: var(--uitk-size-unit);
 }
 

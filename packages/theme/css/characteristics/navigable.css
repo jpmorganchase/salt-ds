@@ -6,15 +6,12 @@
   --uitk-navigable-cursor-edit: text;
 
   --uitk-navigable-fontWeight: var(--uitk-typography-weight-regular);
-  --uitk-navigable-fontWeight-active: var(--uitk-typography-weight-semiBold);
   --uitk-navigable-fontWeight-hover: var(--uitk-typography-weight-regular);
+  --uitk-navigable-fontWeight-active: var(--uitk-typography-weight-semiBold);
   --uitk-navigable-fontWeight-edit: var(--uitk-typography-weight-regular);
 
-  --uitk-navigable-foreground: var(--uitk-palette-navigate-foreground);
-  --uitk-navigable-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
-
-  --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
+  --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
 
   --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
   --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);

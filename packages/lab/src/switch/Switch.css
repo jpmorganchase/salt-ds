@@ -45,7 +45,7 @@
 
 /* Styles applied to outer ControlLabel component */
 .uitkSwitch-label {
-  --switch-label-color: var(--uitk-text-secondary-color);
+  --switch-label-color: var(--uitk-text-secondary-foreground);
   --switch-checked-track-color: var(--uitk-selectable-background-selected);
   --switch-thumb-background: var(--uitk-selectable-primary-foreground-selected);
   --switch-track-color: var(--uitk-selectable-borderColor);

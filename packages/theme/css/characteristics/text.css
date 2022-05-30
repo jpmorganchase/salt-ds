@@ -113,26 +113,26 @@
   --uitk-text-lineHeight-high: 14px;
   --uitk-text-minHeight-high: 14px;
 
-  --uitk-text-link-textDecoration: underline;
-  --uitk-text-link-textDecoration-hover: none;
-  --uitk-text-link-textDecoration-selected: underline;
-
   /* Colors */
-  --uitk-text-primary-color: var(--uitk-palette-neutral-primary-foreground);
-  --uitk-text-primary-color-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
-  --uitk-text-primary-color-hover: var(--uitk-palette-neutral-primary-foreground);
-  --uitk-text-primary-color-selected: var(--uitk-palette-neutral-primary-foreground);
-
-  --uitk-text-secondary-color: var(--uitk-palette-neutral-secondary-foreground);
-  --uitk-text-secondary-color-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
-  --uitk-text-secondary-color-hover: var(--uitk-palette-neutral-secondary-foreground);
-  --uitk-text-secondary-color-selected: var(--uitk-palette-neutral-secondary-foreground);
-
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
   --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
 
+  --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-hover: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-selected: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
+
+  --uitk-text-secondary-foreground: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-hover: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-selected: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
+
+  /* Links */
   --uitk-text-link-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
+  --uitk-text-link-textDecoration: underline;
+  --uitk-text-link-textDecoration-hover: none;
+  --uitk-text-link-textDecoration-selected: underline;
 }
 
 .uitk-density-touch {

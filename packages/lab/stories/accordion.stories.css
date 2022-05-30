@@ -11,7 +11,7 @@
 
 .accordion-story-details {
   padding: var(--uitk-size-base);
-  border: solid 1px var(--uitk-text-primary-color);
+  border: solid 1px var(--uitk-text-primary-foreground);
   box-sizing: border-box;
 }
 

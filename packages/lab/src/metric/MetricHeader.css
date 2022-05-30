@@ -1,6 +1,6 @@
 .uitkMetricHeader {
-  --metric-title-color: var(--uitk-text-primary-color);
-  --metric-subtitle-color: var(--uitk-text-secondary-color);
+  --metric-title-color: var(--uitk-text-primary-foreground);
+  --metric-subtitle-color: var(--uitk-text-secondary-foreground);
 
   --metric-header-gap: calc(var(--uitk-size-unit) * 0.25);
 }

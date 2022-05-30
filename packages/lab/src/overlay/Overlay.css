@@ -1,6 +1,6 @@
 /* Experimental - Overlay css variable API */
 .uitkOverlay {
-  --overlay-text-color: var(--uitk-text-primary-color);
+  --overlay-text-color: var(--uitk-text-primary-foreground);
   --overlay-spacing: var(--uitk-size-unit);
   --overlay-font-size: var(--uitk-text-fontSize);
   --overlay-background: var(--uitk-container-background-medium);

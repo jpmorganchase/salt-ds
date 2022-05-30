@@ -1,14 +1,21 @@
 .uitk-dark,
 .uitk-light {
+  --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;
   --uitk-editable-cursor-readonly: not-allowed;
-  --uitk-editable-cursor-hover: text;
 
   --uitk-editable-borderStyle: solid;
+  --uitk-editable-borderStyle-hover: solid;
+  --uitk-editable-borderStyle-active: solid;
+  --uitk-editable-borderStyle-disabled: solid;
+  --uitk-editable-borderStyle-readonly: solid;
 
   --uitk-editable-borderWidth: 1px;
+  --uitk-editable-borderWidth-hover: 1px;
   --uitk-editable-borderWidth-active: 2px;
+  --uitk-editable-borderWidth-disabled: 1px;
+  --uitk-editable-borderWidth-readonly: 1px;
 
   --uitk-editable-borderColor: var(--uitk-palette-interact-border);
   --uitk-editable-borderColor-active: var(--uitk-palette-interact-border-active);

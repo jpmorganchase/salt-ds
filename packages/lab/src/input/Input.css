@@ -19,7 +19,7 @@
   border: var(--uitkInput-border, none);
   border-radius: var(--uitkInput-border-radius, 0);
   box-sizing: border-box;
-  color: var(--uitkInput-text-color, var(--uitk-text-primary-color));
+  color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
   cursor: default;
   display: inline-flex;
   font-family: var(--uitkInput-font-family, var(--uitk-typography-fontFamily));

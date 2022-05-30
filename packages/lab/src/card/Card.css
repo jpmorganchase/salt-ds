@@ -5,9 +5,9 @@
   border-style: var(--uitkCard-border-style, var(--uitk-container-borderStyle));
   border-color: var(--uitkCard-border-color, var(--uitk-container-borderColor-medium));
   border-radius: var(--uitkCard-border-radius, var(--uitk-container-borderRadius));
-  box-shadow: var(--uitkCard-box-shadow, var(--uitk-overlayable-shadow-default));
+  box-shadow: var(--uitkCard-box-shadow, var(--uitk-overlayable-shadow));
   box-sizing: border-box;
-  color: var(--uitkCard-color, var(--uitk-text-primary-color));
+  color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
   overflow: hidden;
   padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -53,7 +53,7 @@
 /* Styles applied if `disabled={true}` */
 .uitkCard-disabled {
   cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-color-disabled));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
 }
 
 /* Styles applied to nested divs if `disabled={true}` */
@@ -71,7 +71,7 @@
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
   border-color: var(--uitkCard-border-color-hover, var(--uitk-selectable-borderColor-hover));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-color-hover));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-hover));
   cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
   position: relative;
   box-shadow: var(--uitkCard-box-shadow-hover, var(--uitk-overlayable-shadow-hover));
@@ -81,7 +81,7 @@ a:focus .uitkCard-interactable,
 .uitkCard-interactable:active {
   border-color: var(--uitkCard-border-color-hover, var(--uitk-selectable-borderColor-selected));
   box-shadow: var(--uitkCard-box-shadow-active, var(--uitk-overlayable-shadow-hover));
-  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-active));
+  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-selected));
 }
 
 /* Styles applied on focus-visible */

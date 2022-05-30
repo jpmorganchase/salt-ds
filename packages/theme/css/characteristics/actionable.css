@@ -4,45 +4,46 @@
   --uitk-actionable-cursor-disabled: not-allowed;
   --uitk-actionable-cursor-hover: pointer;
 
-  --uitk-actionable-borderWidth: 1px; /* Not in Figma */
-  --uitk-actionable-borderStyle: solid; /* Not in Figma */
-  --uitk-actionable-borderRadius: 0; /* Not in Figma */
-  --uitk-actionable-letterSpacing: 0.6px; /* Not in Figma */
-  --uitk-actionable-textTransform: uppercase; /* Not in Figma */
-  --uitk-actionable-text-align: center; /* Not in Figma */
-
-  /* Note: 'disabled' design tokens not in Figma */
+  --uitk-actionable-letterSpacing: 0.6px;
+  --uitk-actionable-textTransform: uppercase;
+  --uitk-actionable-text-align: center;
 
   /* Primary variant */
   --uitk-actionable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
+  --uitk-actionable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
   --uitk-actionable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
   --uitk-actionable-primary-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
   --uitk-actionable-primary-background: var(--uitk-palette-interact-primary-background);
+  --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
   --uitk-actionable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
   --uitk-actionable-primary-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
-  --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
   --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
+  --uitk-actionable-primary-font-weight-hover: var(--uitk-typography-weight-bold);
+  --uitk-actionable-primary-font-weight-active: var(--uitk-typography-weight-bold);
 
   /* CTA variant */
   --uitk-actionable-cta-foreground: var(--uitk-palette-interact-cta-foreground);
+  --uitk-actionable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
   --uitk-actionable-cta-foreground-active: var(--uitk-palette-interact-cta-foreground-active);
   --uitk-actionable-cta-foreground-disabled: var(--uitk-palette-interact-cta-foreground-disabled);
-  --uitk-actionable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
   --uitk-actionable-cta-background: var(--uitk-palette-interact-cta-background);
+  --uitk-actionable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
   --uitk-actionable-cta-background-active: var(--uitk-palette-interact-cta-background-active);
   --uitk-actionable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
-  --uitk-actionable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
   --uitk-actionable-cta-font-weight: var(--uitk-typography-weight-bold);
+  --uitk-actionable-cta-font-weight-hover: var(--uitk-typography-weight-bold);
+  --uitk-actionable-cta-font-weight-active: var(--uitk-typography-weight-bold);
 
   /* Secondary variant */
   --uitk-actionable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
+  --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
   --uitk-actionable-secondary-foreground-active: var(--uitk-palette-interact-secondary-foreground-active);
   --uitk-actionable-secondary-foreground-disabled: var(--uitk-palette-interact-secondary-foreground-disabled);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
   --uitk-actionable-secondary-background: var(--uitk-palette-interact-secondary-background);
+  --uitk-actionable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
   --uitk-actionable-secondary-background-active: var(--uitk-palette-interact-secondary-background-active);
   --uitk-actionable-secondary-background-disabled: var(--uitk-palette-interact-secondary-background-disabled);
-  --uitk-actionable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
   --uitk-actionable-secondary-font-weight: var(--uitk-typography-weight-semiBold);
+  --uitk-actionable-secondary-font-weight-hover: var(--uitk-typography-weight-semiBold);
+  --uitk-actionable-secondary-font-weight-active: var(--uitk-typography-weight-semiBold);
 }

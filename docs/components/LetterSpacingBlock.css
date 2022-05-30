@@ -3,7 +3,7 @@
   height: var(--uitk-size-base);
   justify-self: end;
 
-  color: var(--uitk-text-primary-color);
+  color: var(--uitk-text-primary-foreground);
   overflow: hidden;
 
   border-color: var(--uitk-container-borderColor-medium);
