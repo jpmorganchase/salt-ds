@@ -16,9 +16,15 @@ import { BackgroundBlock } from "./BackgroundBlock";
  * ```
  */
 
-export const AllRenderer = ({ children }: { children: ReactElement }) => {
+export const AllRenderer = ({
+  children,
+  className,
+}: {
+  children: ReactElement;
+  className?: string;
+}): JSX.Element => {
   return (
-    <DocGrid>
+    <DocGrid className={className}>
       {DensityValues.map((d, i) => {
         return (
           <Fragment key={i}>
