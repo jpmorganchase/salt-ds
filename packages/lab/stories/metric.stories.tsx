@@ -139,30 +139,15 @@ export const WithEmphasisHorizontal: ComponentStory<typeof Metric> = () => (
       height: 250,
     }}
   >
-    <Metric
-      direction="up"
-      className="uitkEmphasisLow"
-      orientation="horizontal"
-      showIndicator
-    >
+    <Metric direction="up" size="small" orientation="horizontal" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
-    <Metric
-      direction="up"
-      className="uitkEmphasisMedium"
-      orientation="horizontal"
-      showIndicator
-    >
+    <Metric direction="up" size="medium" orientation="horizontal" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
-    <Metric
-      direction="up"
-      className="uitkEmphasisHigh"
-      orientation="horizontal"
-      showIndicator
-    >
+    <Metric direction="up" size="large" orientation="horizontal" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
@@ -177,15 +162,15 @@ export const WithEmphasisVertical: ComponentStory<typeof Metric> = () => (
       width: 600,
     }}
   >
-    <Metric direction="up" className="uitkEmphasisLow" showIndicator>
+    <Metric direction="up" size="small" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
-    <Metric direction="up" className="uitkEmphasisMedium" showIndicator>
+    <Metric direction="up" size="medium" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
-    <Metric direction="up" className="uitkEmphasisHigh" showIndicator>
+    <Metric direction="up" size="large" showIndicator>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
       <MetricContent value="$801.9B" />
     </Metric>
