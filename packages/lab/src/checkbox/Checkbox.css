@@ -41,11 +41,15 @@
 }
 
 /* Styles applied to icon on hover state */
-.uitkCheckbox:hover .uitkCheckboxBase-icon {
-  stroke: var(--uitkCheckbox-outline-color-hover, var(--checkbox-outline-color-hover));
+.uitkCheckbox:hover {
+  --uitkCheckboxIcon-outline-color: var(--uitkCheckbox-outline-color-hover, var(--uitk-selectable-stroke-hover));
+}
+
+.uitkCheckbox:hover .uitkCheckboxIcon-indeterminate {
+  --uitkCheckboxIcon-outline-color: var(--uitkCheckbox-outline-color, var(--uitk-selectable-stroke));
 }
 
 /* Styles applied to icon on hover state if `disabled={true}` */
-.uitkCheckbox-disabled:hover .uitkCheckboxBase-icon {
-  stroke: var(--uitkCheckbox-outline-color, var(--checkbox-outline-color));
+.uitkCheckbox-disabled:hover {
+  --uitkCheckboxIcon-outline-color: var(--uitkCheckbox-outline-color, var(--uitk-selectable-stroke));
 }

@@ -1,4 +1,4 @@
-export function CheckboxIcon({ className }: { className: string }) {
+export function CheckboxUncheckedIcon({ className }: { className: string }) {
   return (
     <svg
       aria-hidden="true"

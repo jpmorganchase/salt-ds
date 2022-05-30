@@ -10,15 +10,13 @@ import {
   useState,
 } from "react";
 import classnames from "classnames";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useControlled } from "../utils";
+import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./CheckboxBase.css";
 
-import {
-  CheckboxIcon,
-  CheckboxCheckedIcon,
-  CheckboxIndeterminateIcon,
-} from "./assets";
+const withBaseName = makePrefixer("uitkCheckboxBase");
 
 export interface CheckboxBaseProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -36,8 +34,6 @@ export interface CheckboxBaseProps
   onFocus?: FocusEventHandler<HTMLInputElement>;
   value?: string;
 }
-
-const classBase = "uitkCheckboxBase";
 
 export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
   function CheckboxBase(
@@ -106,22 +102,19 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
       [onBlur]
     );
 
-    const className = classnames(classBase, classNameProp, {
-      [`${classBase}-checked`]: checked,
-      [`${classBase}-disabled`]: disabled,
-      [`${classBase}-focusVisible`]: focusVisible,
-      [`${classBase}-indeterminate`]: indeterminate,
+    const className = classnames(withBaseName(), classNameProp, {
+      uitkFocusVisible: focusVisible,
     });
     return (
       <span {...rest} className={className} ref={ref}>
-        <span className={`${classBase}-label`}>
+        <span className={withBaseName("label")}>
           <input
             aria-checked={indeterminate ? "mixed" : checked}
             name={name}
             value={value}
             {...inputProps}
             checked={checkedProp}
-            className={`${classBase}-input`}
+            className={withBaseName("input")}
             data-indeterminate={indeterminate}
             defaultChecked={defaultChecked}
             disabled={disabled}
@@ -131,13 +124,11 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
             ref={inputRef}
             type="checkbox"
           />
-          {indeterminate ? (
-            <CheckboxIndeterminateIcon className={`${classBase}-icon`} />
-          ) : checked ? (
-            <CheckboxCheckedIcon className={`${classBase}-icon`} />
-          ) : (
-            <CheckboxIcon className={`${classBase}-icon`} />
-          )}
+          <CheckboxIcon
+            checked={checked}
+            disabled={disabled}
+            indeterminate={indeterminate}
+          />
         </span>
       </span>
     );
