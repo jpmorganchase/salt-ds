@@ -17,7 +17,7 @@
 }
 
 .uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
-  border: none;
+  --toggle-button-group-border-color: var(--uitkToggleButtonGroup-secondary-borderColor, var(--uitk-container-secondary-borderColor));
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton {

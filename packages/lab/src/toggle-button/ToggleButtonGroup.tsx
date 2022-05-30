@@ -199,6 +199,7 @@ export const ToggleButtonGroup = forwardRef<
         {
           [withBaseName("cta")]: variant === "cta",
           [withBaseName("secondary")]: variant === "secondary",
+          [withBaseName("primary")]: variant === "primary",
         },
         className
       )}

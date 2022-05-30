@@ -36,18 +36,18 @@
   /* height: 24px; */
 }
 
-.uitkMetricContent-direction-up .uitkMetricContent-indicator {
-  fill: var(--uitkMetricContent-indicator-up-fill, var(--uitk-differential-positive-foreground));
+.uitkMetric-direction-up .uitkMetricContent-indicator {
+  fill: var(--uitk-differential-positive-foreground);
 }
-.uitkMetricContent-direction-up .uitkMetricContent-subvalue {
-  color: var(--uitkMetricContent-indicator-up-color, var(--uitk-differential-positive-foreground));
+.uitkMetric-direction-up .uitkMetricContent-subvalue {
+  color: var(--uitk-differential-positive-foreground);
 }
 
-.uitkMetricContent-direction-down .uitkMetricContent-indicator {
-  fill: var(--uitkMetricContent-indicator-down-fill, var(--uitk-differential-negative-foreground));
+.uitkMetric-direction-down .uitkMetricContent-indicator {
+  fill: var(--uitk-differential-negative-foreground);
 }
-.uitkMetricContent-direction-down .uitkMetricContent-subvalue {
-  color: var(--uitkMetricContent-indicator-down-color, var(--uitk-differential-negative-foreground));
+.uitkMetric-direction-down .uitkMetricContent-subvalue {
+  color: var(--uitk-differential-negative-foreground);
 }
 
 .uitkMetric-align-left .uitkMetricContent {

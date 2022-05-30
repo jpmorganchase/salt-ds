@@ -32,7 +32,7 @@
 
 .uitkCircularProgress-progressValue {
   align-items: center;
-  color: var(--uitk-measured-background);
+  color: var(--uitk-text-primary-foreground);
   display: flex;
   height: 100%;
   justify-content: center;
@@ -53,11 +53,11 @@
 }
 
 .uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-measured-startColor);
+  stop-color: var(--uitk-measured-fill-startColor);
 }
 
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-stopColor);
+  stop-color: var(--uitk-measured-fill-stopColor);
 }
 
 .uitkCircularProgress-container {
