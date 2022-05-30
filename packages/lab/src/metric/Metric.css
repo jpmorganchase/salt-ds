@@ -9,18 +9,16 @@
 }
 
 .uitkMetric {
-  display: inline-flex;
   font-family: var(--metric-font-family);
   color: var(--metric-text-color);
+  display: flex;
+  align-items: flex-start;
+  padding: 0px;
 }
 
 .uitkMetric-orientation-horizontal {
   flex-direction: row;
-  align-items: flex-start;
-}
-
-.uitkMetric-orientation-horizontal > :not(:last-child) {
-  margin-right: var(--metric-horizontal-gap);
+  gap: 16px;
 }
 
 .uitkMetric-orientation-vertical {
@@ -28,9 +26,9 @@
   justify-content: center;
 }
 
-.uitkMetric-orientation-vertical > :not(:last-child) {
+/* .uitkMetric-orientation-vertical > :not(:last-child) {
   margin-bottom: var(--metric-vertical-gap);
-}
+} */
 
 .uitkMetric-align-left {
   text-align: left;
@@ -39,7 +37,26 @@
 .uitkMetric-align-center {
   text-align: center;
 }
-
+.uitkMetric-orientation-vertical.uitkMetric-align-center {
+  align-items: center;
+}
 .uitkMetric-align-right {
   text-align: right;
+}
+.uitkMetric-orientation-vertical.uitkMetric-align-right {
+  align-items: flex-end;
+}
+
+.backwardsCompat .uitkMetric.uitkMetric-size-small {
+  margin-top: -5px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-medium {
+  margin-top: -9px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-large {
+  margin-top: -16px;
+}
+
+.backwardsCompat .uitkMetric-orientation-vertical.uitkMetric-size-large {
+  margin-top: -14px;
 }

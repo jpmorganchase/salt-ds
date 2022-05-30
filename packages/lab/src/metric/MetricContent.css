@@ -4,12 +4,42 @@
   --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
 }
 
-.uitkMetric-orientation-horizontal .uitkMetricContent :not(:last-child) {
+.uitkMetricContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0px;
+}
+/* .uitkMetric-orientation-horizontal .uitkMetricContent :not(:last-child) {
   margin-bottom: calc(var(--uitk-size-unit) / 4);
+} */
+
+.uitkMetricContent-value-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 4px;
+}
+/* .uitkMetricContent-value-container :not(:last-child) {
+  margin-right: 4px;
+} */
+
+.uitkMetricContent-indicator {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
 }
 
-.uitkMetricContent-value-container :not(:last-child) {
-  margin-right: 4px;
+.uitkMetric-size-large .uitkMetricContent-indicator {
+  padding: 0px 0px 16px;
+}
+.uitkMetric-size-medium .uitkMetricContent-indicator {
+  padding: 0px 0px 11px;
+}
+.uitkMetric-size-small .uitkMetricContent-indicator {
+  padding: 0px 0px 1px;
+  /* height: 24px; */
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
@@ -27,27 +57,40 @@
 }
 
 .uitkMetric-align-left .uitkMetricContent {
-  align-items: flex-start;
+  text-align: left;
 }
 
 .uitkMetric-align-center .uitkMetricContent {
   align-items: center;
+  text-align: center;
 }
 
 .uitkMetric-align-right .uitkMetricContent {
   align-items: flex-end;
+  text-align: right;
 }
 
-.uitkMetricContent-value {
-  line-height: 1.3;
+.backwardsCompat .uitkMetric.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: -2px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -4px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent {
+  margin-top: -1px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -10px;
 }
 
-.uitkMetric-orientation-horizontal .uitkMetricContent-value.uitkText-figure1 {
-  line-height: 0.75;
+.backwardsCompat .uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
+  margin-top: 0px;
 }
-.uitkMetric-orientation-horizontal .uitkMetricContent-value.uitkText-figure2 {
-  line-height: 0.85;
+
+.backwardsCompat .uitkMetric-size-small .uitkMetricContent-indicator {
+  padding: 0px 0px 8px;
 }
-.uitkMetric-orientation-horizontal .uitkMetricContent-value.uitkText-figure3 {
-  line-height: 0.95;
+
+.backwardsCompat .uitkMetricContent-value-container {
+  gap: 4px;
 }

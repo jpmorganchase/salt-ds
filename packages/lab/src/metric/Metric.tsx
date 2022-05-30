@@ -80,6 +80,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
         {...restProps}
         className={cx(
           withBaseName(),
+          withBaseName(`size-${size}`),
           {
             [withBaseName(`direction-${direction}`)]: direction,
             [withBaseName(`orientation-${orientation}`)]: orientation,

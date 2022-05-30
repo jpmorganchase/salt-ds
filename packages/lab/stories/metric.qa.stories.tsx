@@ -2,7 +2,8 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
-import { BackgroundBlock, QAContainer } from "docs/components";
+import { QAContainer } from "docs/components";
+import { BackgroundBlock } from "docs/components/BackgroundBlock";
 import "./card.qa.stories.css";
 
 export default {
@@ -80,7 +81,10 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
       className="uitkMetricQA"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
     >
-      <div style={{ width: 700, display: "flex", flex: 1 }}>
+      <div
+        className="backwardsCompat"
+        style={{ width: 700, display: "flex", flex: 1 }}
+      >
         <ToolkitProvider theme={"light"}>
           <BackgroundBlock style={{ background: "white" }}>
             {metricExamples}
