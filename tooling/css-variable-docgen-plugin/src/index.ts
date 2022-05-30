@@ -2,15 +2,7 @@ import type { Plugin } from "vite";
 import path from "path";
 import glob from "glob-promise";
 import { PathLike, promises } from "fs";
-import {
-  Declaration,
-  findAll,
-  findLast,
-  generate,
-  Identifier,
-  parse,
-  walk,
-} from "css-tree";
+import { findLast, generate, parse, walk } from "css-tree";
 import * as ts from "typescript";
 
 const { readFile } = promises;
@@ -30,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-      matches.find(
-        (match) =>
-          path.normalize(filename) === path.join(process.cwd(), match)
-      )
+        matches.find(
+          (match) =>
+            path.normalize(filename) === path.join(process.cwd(), match)
+        )
     );
   };
 }
@@ -136,11 +128,11 @@ function createCharacteristicOrFoundationDefinition(
   const setTokens = (tokens?: string[]) =>
     tokens
       ? ts.factory.createPropertyAssignment(
-        ts.factory.createStringLiteral("tokens"),
-        ts.factory.createArrayLiteralExpression(
-          tokens.map((token) => ts.factory.createStringLiteral(token))
+          ts.factory.createStringLiteral("tokens"),
+          ts.factory.createArrayLiteralExpression(
+            tokens.map((token) => ts.factory.createStringLiteral(token))
+          )
         )
-      )
       : setNullField("tokens");
 
   return ts.factory.createPropertyAssignment(
@@ -271,7 +263,6 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
         > = {};
         const identifierMap: Record<string, CSSVariable> = {};
 
-
         cssFiles.forEach(({ path, contents }) => {
           const comments: Record<number, string> = {};
 
@@ -344,10 +335,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                        findLast(this.declaration, (node) =>
-                          valueTypes.includes(node.type)
+                          findLast(this.declaration, (node) =>
+                            valueTypes.includes(node.type)
+                          )
                         )
-                      )
                       : undefined,
                   };
                 } catch (e) {
@@ -399,28 +390,25 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           );
         });
 
-
         Object.keys(identifierMap).forEach((token) => {
-          if (token.startsWith('--uitk-')) {
+          if (token.startsWith("--uitk-")) {
             const characteristicName = token
               .replace("--uitk-", "")
               .split("-")[0];
             if (characteristicName.length) {
-              if (!characteristicFoundationTokenMap[characteristicName]) {
+              if (!characteristicFoundationTokenMap[characteristicName])
                 characteristicFoundationTokenMap[characteristicName] = {
                   name: characteristicName,
                   tokens: [token],
                 };
-              }
               if (
                 !characteristicFoundationTokenMap[
                   characteristicName
                 ].tokens?.includes(token)
-              ) {
-                characteristicFoundationTokenMap[characteristicName].tokens?.push(
-                  token
-                );
-              }
+              )
+                characteristicFoundationTokenMap[
+                  characteristicName
+                ].tokens?.push(token);
             }
           }
         });
