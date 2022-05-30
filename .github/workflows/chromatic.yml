@@ -10,6 +10,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
       - name: Install dependencies
         run: yarn
         # 👇 Adds Chromatic as a step in the workflow
@@ -22,6 +27,7 @@ jobs:
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
           onlyChanged: "!(main)**"
+          externals: "packages/theme/**"
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
