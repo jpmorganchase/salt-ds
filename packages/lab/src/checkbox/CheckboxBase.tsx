@@ -107,29 +107,27 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
     });
     return (
       <span {...rest} className={className} ref={ref}>
-        <span>
-          <input
-            aria-checked={indeterminate ? "mixed" : checked}
-            name={name}
-            value={value}
-            {...inputProps}
-            checked={checkedProp}
-            className={withBaseName("input")}
-            data-indeterminate={indeterminate}
-            defaultChecked={defaultChecked}
-            disabled={disabled}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            ref={inputRef}
-            type="checkbox"
-          />
-          <CheckboxIcon
-            checked={checked}
-            disabled={disabled}
-            indeterminate={indeterminate}
-          />
-        </span>
+        <input
+          aria-checked={indeterminate ? "mixed" : checked}
+          name={name}
+          value={value}
+          {...inputProps}
+          checked={checkedProp}
+          className={withBaseName("input")}
+          data-indeterminate={indeterminate}
+          defaultChecked={defaultChecked}
+          disabled={disabled}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          ref={inputRef}
+          type="checkbox"
+        />
+        <CheckboxIcon
+          checked={checked}
+          disabled={disabled}
+          indeterminate={indeterminate}
+        />
       </span>
     );
   }
