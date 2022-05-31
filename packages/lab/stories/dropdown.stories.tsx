@@ -291,3 +291,10 @@ export const HighDensityDropdown: Story<DropdownProps> = ({
     </ToolkitProvider>
   );
 };
+
+const constArray = ["A", "B", "C"] as const;
+
+/** Illustration of using readonly source */
+export const ConstReadonlySource: ComponentStory<typeof Dropdown> = () => (
+  <Dropdown initialSelectedItem={constArray[0]} source={constArray} />
+);

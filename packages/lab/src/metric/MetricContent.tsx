@@ -1,8 +1,9 @@
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
+import { Div, Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
 import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
-import { useMetricContext, capitalise } from "./internal";
+import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
 
@@ -18,17 +19,7 @@ export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
    * Replace the default Icon component
    */
   IndicatorIconComponent?: ComponentType<IconProps>;
-  /**
-   * @ignore - this is passed from the parent <Metric/> component
-   *
-   * The ARIA props to be applied to the main value if the component is considered as a `heading`,
-   * i.e. it is the first component inside the metric.
-   */
-  headingAriaProps?: {
-    role: string;
-    "aria-level": number;
-    "aria-labelledby": string;
-  };
+
   /**
    * Other data that may serve as additional information to the main value
    */
@@ -49,39 +40,46 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       className,
       value,
       subvalue,
-      headingAriaProps,
       ...restProps
     },
     ref
   ) {
     const {
-      align,
       direction,
-      orientation,
       showIndicator,
       indicatorPosition,
+      size = "medium",
       valueId,
+      titleId,
+      subtitleId,
     } = useMetricContext();
 
-    /* TODO: does this work? */
-    const iconSize = className?.includes("uitkEmphasisLow") ? 12 : 24;
+    const iconSize = size === "small" ? 12 : 24;
+
+    const valueComponentMap = {
+      small: Figure3,
+      medium: Figure2,
+      large: Figure1,
+    };
+    const ValueComponent = valueComponentMap[size];
 
     const iconProps = {
       "aria-label": direction,
       className: withBaseName("indicator"),
       "data-testid": "metric-indicator",
-      name: `movement-${direction}`,
+      name: direction ? `movement-${direction}` : "",
       size: iconSize,
       ...IndicatorIconProps,
     };
 
+    const iconComponentMap = {
+      down: ArrowDownIcon,
+      up: ArrowUpIcon,
+    };
+
     const IconComponent =
       IndicatorIconComponent ??
-      (direction === "down"
-        ? ArrowDownIcon
-        : direction === "up"
-        ? ArrowUpIcon
-        : undefined);
+      (direction ? iconComponentMap[direction] : undefined);
 
     const icon =
       showIndicator && IconComponent ? <IconComponent {...iconProps} /> : null;
@@ -89,36 +87,28 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     return (
       <div
         {...restProps}
-        className={cx(
-          withBaseName(),
-          {
-            [withBaseName(`direction${capitalise(direction)}`)]: direction,
-            [withBaseName(orientation as string)]: orientation,
-            [withBaseName(`align${capitalise(align)}`)]: align,
-          },
-          className
-        )}
+        className={cx(withBaseName(), className)}
+        aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
         ref={ref}
       >
-        <div>
+        <div className={withBaseName("value-container")}>
           {indicatorPosition === "start" && icon}
-          <span
-            className={withBaseName("value")}
+          <ValueComponent
             data-testid="metric-value"
             id={valueId}
-            {...headingAriaProps}
+            className={withBaseName("value")}
           >
             {value}
-          </span>
+          </ValueComponent>
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
-          <div
+          <Div
             className={withBaseName("subvalue")}
             data-testid="metric-subvalue"
           >
             {subvalue}
-          </div>
+          </Div>
         )}
       </div>
     );

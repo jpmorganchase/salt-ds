@@ -1,41 +1,51 @@
 .uitkMetricHeader {
-  --metric-header-font-size: var(--uitk-text-font-size);
-
   --metric-title-color: var(--uitk-text-primary-color);
   --metric-subtitle-color: var(--uitk-text-secondary-color);
-
-  --metric-title-font-weight: var(--uitk-typography-weight-semiBold);
 
   --metric-header-gap: calc(var(--uitk-size-unit) * 0.25);
 }
 
 .uitkMetricHeader {
-  white-space: nowrap;
-  line-height: var(--metric-line-height);
-  font-size: var(--metric-header-font-size);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 0px 0px;
+  gap: 2px;
 }
 
-.uitkMetricHeader > :not(:last-child) {
-  margin-bottom: var(--metric-header-gap);
+.uitkMetric-size-large .uitkMetricHeader {
+  padding: 14px 0px 0px;
 }
+.uitkMetric-size-medium .uitkMetricHeader {
+  padding: 8px 0px 0px;
+}
+.uitkMetric-size-small .uitkMetricHeader {
+  padding: 4px 0px 0px;
+}
+
+/* .uitkMetric-orientation-vertical .uitkMetricHeader {
+  margin-bottom: calc(var(--uitk-size-unit) / 4);
+} */
 
 .uitkMetricHeader-title {
   color: var(--metric-title-color);
-  font-weight: var(--metric-title-font-weight);
 }
 
 .uitkMetricHeader-subtitle {
   color: var(--metric-subtitle-color);
+  font-weight: var(--uitk-typography-weight-regular);
 }
 
-.uitkMetricHeader-alignLeft {
+.uitkMetric-align-left .uitkMetricHeader {
   text-align: left;
 }
 
-.uitkMetricHeader-alignCenter {
+.uitkMetric-align-center .uitkMetricHeader {
+  align-items: center;
   text-align: center;
 }
 
-.uitkMetricHeader-alignRight {
+.uitkMetric-align-right .uitkMetricHeader {
+  align-items: flex-end;
   text-align: right;
 }

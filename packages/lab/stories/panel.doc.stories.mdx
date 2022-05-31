@@ -6,6 +6,7 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
+  CharacteristicUsage,
 } from "css-variable-docgen-components";
 import { CustomStyling } from "./panel.stories";
 
@@ -41,16 +42,14 @@ import { Panel } from "@jpmorganchase/uitk-lab";
 ## HTML Anatomy of a Panel
 
 <Canvas>
-  <Story name="Panel Anatomy">
-    <ComponentAnatomy showLegend>
-      <Panel aria-label="Default Panel">Default</Panel>
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Panel aria-label="Panel with high emphasis" className="uitkEmphasisHigh">
-        High emphasis
-      </Panel>
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showLegend>
+    <Panel aria-label="Default Panel">Default</Panel>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Panel aria-label="Panel with high emphasis" className="uitkEmphasisHigh">
+      High emphasis
+    </Panel>
+  </ComponentAnatomy>
 </Canvas>
 
 ## CSS Class
@@ -59,12 +58,7 @@ import { Panel } from "@jpmorganchase/uitk-lab";
 
 ## Characteristics Used
 
-- [Container](/docs/themes-toolkit-characteristics--container)
-  - --uitk-container-background
-- [Spacing](/docs/themes-toolkit-characteristics--spacing)
-  - --uitk-size-unit
-- [Text](/docs/themes-toolkit-characteristics--text)
-  - --uitk-text-primary-color
+<CharacteristicUsage of={Panel} />
 
 ## --uitkPanel CSS Custom Property API
 

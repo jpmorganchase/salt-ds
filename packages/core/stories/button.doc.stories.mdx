@@ -12,6 +12,7 @@ import { CustomStylingExample } from "./button.stories";
 import {
   CSSClassTable,
   CSSVariableTable,
+  CharacteristicUsage,
 } from "css-variable-docgen-components";
 
 <Meta title="Core/Button/Doc" component={Button} />
@@ -104,34 +105,32 @@ export const Link = ({ children, to, ...props }) => (
 );
 
 <Canvas>
-  <Story name="Button Anatomy">
-    <ComponentAnatomy showLegend>
-      <Button aria-label="Simple Button">Default</Button>
-    </ComponentAnatomy>
-    <br />
-    <ComponentAnatomy>
-      <Button elementType="div" aria-label="Button as Div" variant="secondary">
-        Secondary Div
-      </Button>
-    </ComponentAnatomy>
-    <br />
-    <ComponentAnatomy>
-      <Button variant="cta" aria-label="CTA with Icon">
-        CTA with Icon <SendIcon size={12} />
-      </Button>
-    </ComponentAnatomy>
-    <br />
-    <ComponentAnatomy>
-      <Button
-        elementType={Link}
-        to="/"
-        aria-label="Link as elementType"
-        role={null}
-      >
-        Custom Link
-      </Button>
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showLegend>
+    <Button aria-label="Simple Button">Default</Button>
+  </ComponentAnatomy>
+  <br />
+  <ComponentAnatomy>
+    <Button elementType="div" aria-label="Button as Div" variant="secondary">
+      Secondary Div
+    </Button>
+  </ComponentAnatomy>
+  <br />
+  <ComponentAnatomy>
+    <Button variant="cta" aria-label="CTA with Icon">
+      CTA with Icon <SendIcon size={12} />
+    </Button>
+  </ComponentAnatomy>
+  <br />
+  <ComponentAnatomy>
+    <Button
+      elementType={Link}
+      to="/"
+      aria-label="Link as elementType"
+      role={null}
+    >
+      Custom Link
+    </Button>
+  </ComponentAnatomy>
 </Canvas>
 
 The Custom Link example above uses a simplified `Link` component defined as below. In reality, this might be A
@@ -153,13 +152,7 @@ export const Link = ({ children, to, ...props }) => (
 
 ## Characteristics Used
 
-- [Actionable](/docs/themes-toolkit-characteristics--actionable-misc)
-  - all Actionable characteristics used
-- [Focused](/docs/themes-toolkit-characteristics--focused)
-  - --uitk-focused-outline-style
-  - --uitk-focused-outline-width
-  - --uitk-focused-outline-color
-  - --uitk-focused-outline-offset
+<CharacteristicUsage of={Button} />
 
 ## --uitkButton CSS Custom Property API
 

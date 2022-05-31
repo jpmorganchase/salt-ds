@@ -44,37 +44,24 @@ const selectedItems: QueryInputItem[] = [
   },
 ];
 
-const randomChar = () => {
-  const abc = "abcdefghijklmnopqrstuvwxyz";
-  return abc[Math.floor(Math.random() * abc.length)];
-};
-
-const randomName = () => {
-  const name: string[] = [];
-  const length = Math.floor(3 + 10 * Math.random());
-  name.push(randomChar().toUpperCase());
-  while (name.length < length) {
-    name.push(randomChar());
-  }
-  return name.join("");
-};
-
 const dataSet: QueryResultRow[] = [];
-for (let project of ["Project A", "Project B"]) {
-  for (let location of [
+for (const project of ["Project A", "Project B"]) {
+  for (const location of [
     "London",
     "New York",
     "Chicago",
     "Tokyo",
     "Singapore",
   ]) {
-    for (let role of ["Project Manager", "Developer", "QA", "Analyst"]) {
-      dataSet.push({
-        project,
-        role,
-        location,
-        name: randomName(),
-      });
+    for (const role of ["Project Manager", "Developer", "QA", "Analyst"]) {
+      for (const name of ["Person A", "Person B", "Person C"]) {
+        dataSet.push({
+          project,
+          role,
+          location,
+          name,
+        });
+      }
     }
   }
 }

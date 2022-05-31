@@ -3257,7 +3257,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-core@workspace:packages/core"
   peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
+    "@types/react": ">=16.8.6"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   peerDependenciesMeta:
@@ -3274,7 +3274,7 @@ __metadata:
     htmlparser2: ^7.2.0
     mustache: ^4.2.0
   peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
+    "@types/react": ">=16.8.6"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   peerDependenciesMeta:
@@ -3287,7 +3287,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-lab@workspace:packages/lab"
   peerDependencies:
-    "@types/react": ^16.8.6 || ^17.0.0
+    "@types/react": ">=16.8.6"
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   peerDependenciesMeta:

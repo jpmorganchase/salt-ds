@@ -1,0 +1,7 @@
+.uitk-light.uitk-newapp {
+  --uitkPill-background: var(--uitk-color-teal-10);
+}
+
+.uitk-dark.uitk-newapp {
+  --uitkPill-background: var(--uitk-color-teal-700);
+}

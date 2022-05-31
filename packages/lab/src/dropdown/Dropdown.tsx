@@ -173,7 +173,7 @@ export interface DropdownProps<
   /**
    * List of items when using a Dropdown.
    */
-  source: Array<Item>;
+  source: ReadonlyArray<Item>;
   /**
    Customize width of Dropdown. Also controls Dropdown List if `listWidth` prop is not set.
    */

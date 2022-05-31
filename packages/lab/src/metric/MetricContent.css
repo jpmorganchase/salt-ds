@@ -5,67 +5,92 @@
 }
 
 .uitkMetricContent {
-  white-space: nowrap;
-  line-height: var(--metric-line-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0px;
 }
+/* .uitkMetric-orientation-horizontal .uitkMetricContent :not(:last-child) {
+  margin-bottom: calc(var(--uitk-size-unit) / 4);
+} */
 
-.uitkMetricContent-value {
-  font-weight: var(--uitk-typography-weight-semiBold);
-  color: var(--uitk-text-primary-color);
+.uitkMetricContent-value-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 4px;
 }
+/* .uitkMetricContent-value-container :not(:last-child) {
+  margin-right: 4px;
+} */
 
 .uitkMetricContent-indicator {
-  line-height: 1;
-  bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
 }
 
-.uitkMetricContent-directionUp .uitkMetricContent-indicator {
+.uitkMetric-size-large .uitkMetricContent-indicator {
+  padding: 0px 0px 16px;
+}
+.uitkMetric-size-medium .uitkMetricContent-indicator {
+  padding: 0px 0px 11px;
+}
+.uitkMetric-size-small .uitkMetricContent-indicator {
+  padding: 0px 0px 1px;
+  /* height: 24px; */
+}
+
+.uitkMetric-direction-up .uitkMetricContent-indicator {
   fill: var(--metric-direction-up-color);
 }
-.uitkMetricContent-directionUp .uitkMetricContent-subvalue {
+.uitkMetric-direction-up .uitkMetricContent-subvalue {
   color: var(--metric-direction-up-color);
 }
 
-.uitkMetricContent-directionDown .uitkMetricContent-indicator {
+.uitkMetric-direction-down .uitkMetricContent-indicator {
   fill: var(--metric-direction-down-color);
 }
-.uitkMetricContent-directionDown .uitkMetricContent-subvalue {
+.uitkMetric-direction-down .uitkMetricContent-subvalue {
   color: var(--metric-direction-down-color);
 }
 
-.uitkEmphasisHigh.uitkMetricContent-value {
-  font-size: 56px;
-}
-
-.uitkEmphasisMedium.uitkMetricContent-value {
-  font-size: 36px;
-}
-
-.uitkEmphasisLow.uitkMetricContent-value {
-  font-size: 24px;
-}
-
-.uitkMetricContent-horizontal .uitkMetricContent-value,
-.uitkMetricContent-horizontal .uitkEmphasisMedium.uitkMetricContent-value {
-  line-height: 0.85;
-}
-
-.uitkMetricContent-horizontal .uitkEmphasisHigh.uitkMetricContent-value {
-  line-height: 0.75;
-}
-
-.uitkMetricContent-horizontal .uitkEmphasisLow.uitkMetricContent-value {
-  line-height: 0.95;
-}
-
-.uitkMetricContent-alignLeft {
+.uitkMetric-align-left .uitkMetricContent {
   text-align: left;
 }
 
-.uitkMetricContent-alignCenter {
+.uitkMetric-align-center .uitkMetricContent {
+  align-items: center;
   text-align: center;
 }
 
-.uitkMetricContent-alignRight {
+.uitkMetric-align-right .uitkMetricContent {
+  align-items: flex-end;
   text-align: right;
+}
+
+.backwardsCompat .uitkMetric.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: -2px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -4px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent {
+  margin-top: -1px;
+}
+.backwardsCompat .uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -10px;
+}
+
+.backwardsCompat .uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
+  margin-top: 0px;
+}
+
+.backwardsCompat .uitkMetric-size-small .uitkMetricContent-indicator {
+  padding: 0px 0px 8px;
+}
+
+.backwardsCompat .uitkMetricContent-value-container {
+  gap: 4px;
 }

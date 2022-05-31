@@ -6,6 +6,7 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
+  CharacteristicUsage,
 } from "css-variable-docgen-components";
 import {
   CustomStyling,
@@ -48,17 +49,15 @@ import { Card } from "@jpmorganchase/uitk-lab";
 ## HTML Anatomy of a Card
 
 <Canvas>
-  <Story name="Card Anatomy">
-    <ComponentAnatomy showLegend>
-      <DefaultCard />
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Disabled />
-    </ComponentAnatomy>
-    <ComponentAnatomy showLegend>
-      <Interactable />
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showLegend>
+    <DefaultCard />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Disabled />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Interactable />
+  </ComponentAnatomy>
 </Canvas>
 
 ## CSS Class
@@ -67,22 +66,7 @@ import { Card } from "@jpmorganchase/uitk-lab";
 
 ## Characteristics Used
 
-- [Container](/docs/themes-toolkit-characteristics--container)
-  - --uitk-container-background
-  - --uitk-container-border-color
-  - --uitk-container-border-color-disabled
-  - --uitk-container-border-radius
-  - --uitk-container-border-style
-  - --uitk-container-border-width
-- [Shadow](/docs/themes-toolkit-characteristics--shadow)
-  - --uitk-shadow-2
-  - --uitk-shadow-4
-- [Spacing](/docs/themes-toolkit-characteristics--spacing)
-  - --uitk-size-unit
-- [Text](/docs/themes-toolkit-characteristics--text)
-  - --uitk-text-primary-color
-  - --uitk-text-font-size
-  - --uitk-text-line-height
+<CharacteristicUsage of={Card} />
 
 ## --uitkCard CSS Custom Property API
 
