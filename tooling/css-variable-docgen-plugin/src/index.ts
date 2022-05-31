@@ -22,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-      matches.find(
-        (match) =>
-          path.normalize(filename) === path.join(process.cwd(), match)
-      )
+        matches.find(
+          (match) =>
+            path.normalize(filename) === path.join(process.cwd(), match)
+        )
     );
   };
 }
@@ -125,19 +125,16 @@ function createCharacteristicOrFoundationDefinition(
   const setTokens = (tokens?: TokenArray) =>
     tokens
       ? ts.factory.createPropertyAssignment(
-        ts.factory.createStringLiteral("tokens"),
-        ts.factory.createArrayLiteralExpression(
-          tokens.map((token) => ts.factory.createStringLiteral(token))
+          ts.factory.createStringLiteral("tokens"),
+          ts.factory.createArrayLiteralExpression(
+            tokens.map((token) => ts.factory.createStringLiteral(token))
+          )
         )
-      )
       : setNullField("tokens");
 
   return ts.factory.createPropertyAssignment(
     ts.factory.createStringLiteral(name),
-    ts.factory.createObjectLiteralExpression([
-      setTokens(tokens),
-      setName(name),
-    ])
+    ts.factory.createObjectLiteralExpression([setTokens(tokens), setName(name)])
   );
 }
 
@@ -254,10 +251,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
 
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
-        const characteristicFoundationTokenMap: Record<
-          string,
-          string[]
-        > = {};
+        const characteristicFoundationTokenMap: Record<string, string[]> = {};
         const identifierMap: Record<string, CSSVariable> = {};
 
         cssFiles.forEach(({ path, contents }) => {
@@ -332,10 +326,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                        findLast(this.declaration, (node) =>
-                          valueTypes.includes(node.type)
+                          findLast(this.declaration, (node) =>
+                            valueTypes.includes(node.type)
+                          )
                         )
-                      )
                       : undefined,
                   };
                 } catch (e) {
@@ -395,15 +389,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
             if (characteristicName.length) {
               if (!characteristicFoundationTokenMap[characteristicName]) {
                 characteristicFoundationTokenMap[characteristicName] = [token];
-              }
-              else if (
-                !characteristicFoundationTokenMap[
-                  characteristicName
-                ]?.includes(token)
+              } else if (
+                !characteristicFoundationTokenMap[characteristicName]?.includes(
+                  token
+                )
               ) {
-                characteristicFoundationTokenMap[
-                  characteristicName
-                ].push(token);
+                characteristicFoundationTokenMap[characteristicName].push(
+                  token
+                );
               }
             }
           }
