@@ -1,15 +1,18 @@
 .uitk-light,
 .uitk-dark {
   /* TODO: Font sizes not in Figma, need approving */
-  --uitk-measured-font-size-low: 11px;
-  --uitk-measured-font-size-medium: 14px;
-  --uitk-measured-font-size-high: 16px;
+  --uitk-measured-fontSize-low: 11px;
+  --uitk-measured-fontSize-medium: 14px;
+  --uitk-measured-fontSize-high: 16px;
 
-  --uitk-measured-background: var(--uitk-palette-neutral-background);
-  --uitk-measured-background-active: var(--uitk-palette-measure-background);
-  --uitk-measured-border-color: var(--uitk-palette-neutral-endpoint);
+  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
+  --uitk-measured-borderStyle: solid;
+  --uitk-measured-borderWidth: 1px;
 
+  --uitk-measured-background: var(--uitk-palette-measure-background);
+
+  --uitk-measured-fill: var(--uitk-palette-measure-fill);
   /** SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
-  --uitk-measured-gradient-start: var(--uitk-palette-measure-background-gradient-start-color);
-  --uitk-measured-gradient-stop: var(--uitk-palette-measure-background-gradient-stop-color);
+  --uitk-measured-fill-startColor: var(--uitk-palette-measure-fill-startColor);
+  --uitk-measured-fill-stopColor: var(--uitk-palette-measure-fill-stopColor);
 }

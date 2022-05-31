@@ -117,6 +117,7 @@ export const PillBase = forwardRef(function PillBase(
     // TODO: Not implemented. Consider to add `useImperativeHandle` like API to Tooltip?
     highlighted,
     icon,
+    onClick = noop,
     onDelete,
     onKeyDown = noop,
     onKeyUp = noop,
@@ -148,6 +149,10 @@ export const PillBase = forwardRef(function PillBase(
   const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyUp(event);
     setActive(false);
+  };
+
+  const handleClick = (event: SyntheticEvent<HTMLDivElement, Event>) => {
+    onClick(event);
   };
 
   const Component = deletable || clickable ? DivButton : "div";
@@ -192,6 +197,7 @@ export const PillBase = forwardRef(function PillBase(
     "data-testid": "pill",
     onKeyDown: disabled ? undefined : handleKeyDown,
     onKeyUp: disabled ? undefined : handleKeyUp,
+    onClick: disabled ? undefined : handleClick,
     role: "button",
     tabIndex: disabled ? -1 : 0,
     ...rest,

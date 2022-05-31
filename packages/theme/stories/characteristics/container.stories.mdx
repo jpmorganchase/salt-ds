@@ -22,10 +22,12 @@ allow hierarchical organization.
 <Canvas>
   <Story name="All">
     <DocGrid>
-      <CornerBlock cornerRadius="--uitk-container-border-radius" />
+      <CornerBlock cornerRadius="--uitk-container-borderRadius" />
       <LineBlockCell />
-      <LineBlockCode>--uitk-container-border-style</LineBlockCode>
-      <LineBlock lineWidth="--uitk-container-border-width" />
+      <LineBlockCode>--uitk-container-borderStyle</LineBlockCode>
+      <LineBlock lineWidth="--uitk-container-borderWidth" />
+      <ColorBlock colorVar="--uitk-container-primary-borderColor" />
+      <ColorBlock colorVar="--uitk-container-cta-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -36,8 +38,8 @@ allow hierarchical organization.
   <Story name="Medium emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-container-background-medium" />
-      <ColorBlock colorVar="--uitk-container-border-color-medium" />
-      <ColorBlock colorVar="--uitk-container-border-color-disabled-medium" />
+      <ColorBlock colorVar="--uitk-container-borderColor-medium" />
+      <ColorBlock colorVar="--uitk-container-borderColor-disabled-medium" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -48,8 +50,8 @@ allow hierarchical organization.
   <Story name="High emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-container-background-high" />
-      <ColorBlock colorVar="--uitk-container-border-color-high" />
-      <ColorBlock colorVar="--uitk-container-border-color-disabled-high" />
+      <ColorBlock colorVar="--uitk-container-borderColor-high" />
+      <ColorBlock colorVar="--uitk-container-borderColor-disabled-high" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -60,6 +62,20 @@ allow hierarchical organization.
   <Story name="Low emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-container-background-low" />
+      <ColorBlock colorVar="--uitk-container-borderColor-low" />
+      <ColorBlock colorVar="--uitk-container-borderColor-disabled-low" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Variants
+
+<Canvas>
+  <Story name="Variants">
+    <DocGrid>
+      <ColorBlock colorVar="--uitk-container-cta-borderColor" />
+      <ColorBlock colorVar="--uitk-container-primary-borderColor" />
+      <ColorBlock colorVar="--uitk-container-secondary-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>

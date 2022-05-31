@@ -2,7 +2,7 @@
 .uitk-density-low,
 .uitk-density-medium,
 .uitk-density-high {
-  --uitk-typography-font-family: uitk-sans;
+  --uitk-typography-fontFamily: uitk-sans;
 
   --uitk-typography-weight-light: 300;
   --uitk-typography-weight-regular: 400;
@@ -47,6 +47,6 @@
 /* TODO add uitk top-level identifier */
 .uitk-light,
 .uitk-dark {
-  font-family: var(--uitk-typography-font-family);
+  font-family: var(--uitk-typography-fontFamily);
   font-size: 14px;
 }

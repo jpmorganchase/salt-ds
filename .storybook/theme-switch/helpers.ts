@@ -29,7 +29,7 @@ export const withThemeBackground: DecoratorFn = (StoryFn, context) => {
   }, [theme]);
 
   const selectedTextColor = useMemo(() => {
-    // TODO: var(--uitk-text-primary-color)" can't be resolved
+    // TODO: var(--uitk-text-primary-foreground)" can't be resolved
     return theme === "light" ? "rgb(22, 22, 22)" : "rgb(255,255,255)";
   }, [theme]);
 

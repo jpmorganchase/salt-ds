@@ -2,14 +2,14 @@
 .uitkFileDropZone {
   /* Colors */
   --file-drop-zone-background: var(--uitk-container-background-medium);
-  --file-drop-zone-text-color: var(--uitk-text-primary-color);
+  --file-drop-zone-text-color: var(--uitk-text-primary-foreground);
   /* TODO: Design, dark mode used to be grey-400 */
-  --file-drop-zone-border-color: var(--uitk-container-border-color-medium);
+  --file-drop-zone-border-color: var(--uitk-container-borderColor-medium);
   --file-drop-zone-background-disabled: var(--uitk-container-background-disabled-medium);
   /* TODO: Design, light mode used to be grey 200 */
   --file-drop-zone-icon-color: var(--uitk-palette-neutral-secondary-foreground);
 
-  --file-drop-zone-border-width: var(--uitk-container-border-width);
+  --file-drop-zone-border-width: var(--uitk-container-borderWidth);
   /* Overriding containable characteristics */
   --file-drop-zone-border-style: dashed;
 
@@ -17,9 +17,9 @@
   --file-drop-zone-padding: calc(var(--uitk-size-unit) * 3);
 
   /* Font / Typography */
-  --file-drop-zone-font-family: var(--uitk-typography-font-family);
-  --file-drop-zone-font-size: var(--uitk-text-font-size);
-  --file-drop-zone-line-height: var(--uitk-text-line-height);
+  --file-drop-zone-font-family: var(--uitk-typography-fontFamily);
+  --file-drop-zone-font-size: var(--uitk-text-fontSize);
+  --file-drop-zone-line-height: var(--uitk-text-lineHeight);
 
   --file-drop-zone-title-font-weight: var(--uitk-typography-weight-semiBold);
 }

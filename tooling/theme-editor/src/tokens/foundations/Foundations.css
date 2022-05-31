@@ -3,6 +3,6 @@
 }
 
 .uitkFoundationsView-routingError {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   padding: 10px;
 }

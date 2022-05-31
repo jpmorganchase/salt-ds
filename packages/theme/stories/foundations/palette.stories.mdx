@@ -44,7 +44,7 @@ Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-
 
 Some tokens below have `-low`, `-medium`, or `-high` suffixes. This means that they are values which should change with emphasis. For example,
 
-The characteristic `--uitk-overlayable-scrim-background-medium` resolves to `--uitk-palette-neutral-scrim-medium` whilst the characteristic `--uitk-overlayable-scrim-background-low` resolves to `--uitk-palette-neutral-scrim-low`.
+The characteristic `--uitk-overlayable-background-medium` resolves to `--uitk-palette-neutral-scrim-medium` whilst the characteristic `--uitk-overlayable-background-low` resolves to `--uitk-palette-neutral-scrim-low`.
 
 The characteristic with the respective emphasis should be used within a `uitkEmphasisLow`, `uitkEmphasisMedium`, or `uitkEmphasisHigh` class. For example, if the default input in your app should have a medium emphasis background, but can be styled with low emphasis, your CSS will probably look something like this:
 
@@ -86,7 +86,7 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-interact-background-high" />
       <ColorBlock colorVar="--uitk-palette-interact-background-low" />
       <ColorBlock colorVar="--uitk-palette-interact-background-medium" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-bluractive" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-blurSelected" />
       <ColorBlock colorVar="--uitk-palette-interact-background-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-background-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-border" />
@@ -99,7 +99,7 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-interact-fill-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-bluractive" />
+      <ColorBlock colorVar="--uitk-palette-interact-foreground-blurSelected" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-stroke" />
@@ -189,6 +189,7 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-measure-background-gradient-start-color" />
       <ColorBlock colorVar="--uitk-palette-measure-background-gradient-stop-color" />
       <ColorBlock colorVar="--uitk-palette-measure-background" />
+      <ColorBlock colorVar="--uitk-palette-measure-border" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -207,7 +208,6 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-low" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-medium" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-high" />
-      <ColorBlock colorVar="--uitk-palette-navigate-foreground" />
       <ColorBlock colorVar="--uitk-palette-navigate-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-active" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-hover" />
@@ -230,6 +230,7 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Neutral">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-palette-neutral-background" />
       <ColorBlock colorVar="--uitk-palette-neutral-background-high" />
       <ColorBlock colorVar="--uitk-palette-neutral-background-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-background-medium" />
@@ -238,7 +239,6 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-neutral-border-high" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-high" />
-      <ColorBlock colorVar="--uitk-palette-neutral-endpoint" />
       <ColorBlock colorVar="--uitk-palette-neutral-scrim-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-scrim-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-border" />

@@ -1,9 +1,9 @@
 /* Style applied to the root element */
 .uitkButton {
-  --button-focused-outline-style: var(--uitk-focused-outline-style);
-  --button-focused-outline-width: var(--uitk-focused-outline-width);
-  --button-focused-outline-color: var(--uitk-focused-outline-color);
-  --button-focused-outline-offset: var(--uitk-focused-outline-offset);
+  --button-focused-outline-style: var(--uitk-focused-outlineStyle);
+  --button-focused-outline-width: var(--uitk-focused-outlineWidth);
+  --button-focused-outline-color: var(--uitk-focused-outlineColor);
+  --button-focused-outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 /* Icon API @ignore */
@@ -109,17 +109,17 @@
   border-color: var(--uitkButton-border-color, transparent);
   border-style: var(--uitkButton-border-style, solid);
   border-width: var(--uitkButton-border-width, 0);
-  border-radius: var(--uitkButton-border-radius, var(--uitk-actionable-border-radius));
+  border-radius: var(--uitkButton-border-radius, var(--uitk-container-borderRadius));
   box-sizing: border-box;
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
   display: inline-block;
   justify-content: center;
-  font-size: var(--uitkButton-font-size, var(--uitk-text-font-size));
-  font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
+  font-size: var(--uitkButton-font-size, var(--uitk-text-fontSize));
+  font-family: var(--uitkButton-font-family, var(--uitk-typography-fontFamily));
   line-height: var(--uitkButton-line-height, var(--uitk-typography-line-height));
-  letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letter-spacing));
-  text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-text-transform));
+  letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letterSpacing));
+  text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-textTransform));
   padding: 0 var(--uitkButton-padding, var(--uitk-size-unit));
   margin: 0;
   height: var(--uitkButton-height, var(--uitk-size-base));

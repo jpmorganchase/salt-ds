@@ -33,10 +33,10 @@
 /* Style applied to the root element */
 .uitkFormField {
   --form-field-background: var(--uitk-editable-background-medium);
-  --form-field-focus-outline-color: var(--uitk-focused-outline-color);
-  --form-field-focus-outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outline-offset));
-  --form-field-focus-outline-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outline-style));
-  --form-field-focus-outline-width: var(--uitkFormField-focused-outline-width, var(--uitk-focused-outline-width));
+  --form-field-focus-outline-color: var(--uitk-focused-outlineColor);
+  --form-field-focus-outline-offset: var(--uitkFormField-focused-outline-offset, var(--uitk-focused-outlineOffset));
+  --form-field-focus-outline-style: var(--uitkFormField-focused-outline-style, var(--uitk-focused-outlineStyle));
+  --form-field-focus-outline-width: var(--uitkFormField-focused-outline-width, var(--uitk-focused-outlineWidth));
   --form-field-label-root-padding-left: 0;
   --form-field-label-root-padding-right: 0;
 
@@ -47,7 +47,7 @@
   --uitkFormLabel-padding: 0 8px;
 
   /* Setting Activation Indicator API */
-  --uitkFormActivationIndicator-color: var(--uitk-editable-border-color);
+  --uitkFormActivationIndicator-color: var(--uitk-editable-borderColor);
   --uitkFormActivationIndicator-icon-size: var(--form-field-activation-indicator-icon-size);
 }
 
@@ -63,7 +63,7 @@
   box-sizing: border-box;
   border: 0;
   display: inline-grid;
-  font-size: var(--uitkFormField-font-size, var(--uitk-text-font-size));
+  font-size: var(--uitkFormField-font-size, var(--uitk-text-fontSize));
   margin: var(--uitkFormField-margin, 0);
   padding: 0;
   position: relative;
@@ -75,21 +75,21 @@
 /* Class applied to the root element on hover
   Setting Activation Indicator API */
 .uitkFormField:hover {
-  --uitkFormActivationIndicator-color: var(--uitk-editable-border-color-hover);
+  --uitkFormActivationIndicator-color: var(--uitk-editable-borderColor-hover);
 }
 
 /* Class applied to the root element on focus 
    Setting Activation Indicator API */
 .uitkFormField-focused,
 .uitkFormField-lowFocused {
-  --uitkFormActivationIndicator-color: var(--uitk-editable-border-color-active);
-  --uitkFormActivationIndicator-size: var(--uitk-editable-border-width-active);
+  --uitkFormActivationIndicator-color: var(--uitk-editable-borderColor-active);
+  --uitkFormActivationIndicator-size: var(--uitk-editable-borderWidth-active);
 }
 
 /* Class applied to the root element when helper text is provided */
 .uitkFormField-withHelperText {
   /* Setting Helper Text API */
-  --uitkFormFieldHelperText-height: var(--uitk-text-line-height);
+  --uitkFormFieldHelperText-height: var(--uitk-text-lineHeight);
 }
 
 /* Class applied to the root element if `disabled={true}` */

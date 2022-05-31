@@ -1,7 +1,9 @@
-.BorderBlock-cell {
+.TextDecorationBlock-cell {
   width: var(--uitk-size-base);
   height: var(--uitk-size-base);
   justify-self: end;
+
+  color: var(--uitk-text-primary-foreground);
 
   border-color: var(--uitk-container-borderColor-medium);
   border-style: var(--uitk-container-borderStyle);
