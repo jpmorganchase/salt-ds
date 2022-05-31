@@ -157,7 +157,7 @@ export interface ListBaseProps<Item = string>
   /**
    * Data source used. It should be an array of objects or strings.
    */
-  source?: Array<Item>;
+  source?: ReadonlyArray<Item>;
   /**
    * @external - react-window
    *
