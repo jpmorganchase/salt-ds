@@ -12,6 +12,7 @@ import { CustomStylingExample } from "./button.stories";
 import {
   CSSClassTable,
   CSSVariableTable,
+  CharacteristicUsage,
 } from "css-variable-docgen-components";
 
 <Meta title="Core/Button/Doc" component={Button} />
@@ -151,13 +152,7 @@ export const Link = ({ children, to, ...props }) => (
 
 ## Characteristics Used
 
-- [Actionable](/docs/themes-toolkit-characteristics--actionable-misc)
-  - all Actionable characteristics used
-- [Focused](/docs/themes-toolkit-characteristics--focused)
-  - --uitk-focused-outline-style
-  - --uitk-focused-outline-width
-  - --uitk-focused-outline-color
-  - --uitk-focused-outline-offset
+<CharacteristicUsage of={Button} />
 
 ## --uitkButton CSS Custom Property API
 
