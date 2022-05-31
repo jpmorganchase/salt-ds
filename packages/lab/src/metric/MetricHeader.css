@@ -23,10 +23,6 @@
   padding: 4px 0px 0px;
 }
 
-/* .uitkMetric-orientation-vertical .uitkMetricHeader {
-  margin-bottom: calc(var(--uitk-size-unit) / 4);
-} */
-
 .uitkMetricHeader-title {
   color: var(--metric-title-color);
 }
@@ -36,16 +32,10 @@
   font-weight: var(--uitk-typography-weight-regular);
 }
 
-.uitkMetric-align-left .uitkMetricHeader {
-  text-align: left;
-}
-
 .uitkMetric-align-center .uitkMetricHeader {
   align-items: center;
-  text-align: center;
 }
 
 .uitkMetric-align-right .uitkMetricHeader {
   align-items: flex-end;
-  text-align: right;
 }
