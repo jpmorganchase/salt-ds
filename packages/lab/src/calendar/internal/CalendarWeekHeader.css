@@ -1,8 +1,8 @@
 .uitkCalendarWeekHeader {
-  --calendar-week-header-underline-color: var(--uitk-separable-border-color-2);
-  --calendar-week-header-text-color: var(--uitk-text-secondary-color);
+  --calendar-week-header-underline-color: var(--uitk-separable-secondary-borderColor);
+  --calendar-week-header-text-color: var(--uitk-text-secondary-foreground);
   --calendar-week-header-size: var(--uitk-size-base);
-  --calendar-week-header-font-size: var(--uitk-text-caption-font-size);
+  --calendar-week-header-font-size: var(--uitk-text-caption-fontSize);
 }
 
 .uitkCalendarWeekHeader {

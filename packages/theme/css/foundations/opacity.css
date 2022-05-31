@@ -5,6 +5,8 @@
   --uitk-opacity-border-readonly: 0.2;
   --uitk-opacity-foreground: 0.7;
   --uitk-opacity-scrim-low: 0.8;
+  --uitk-opacity-fill: 0.5;
+  --uitk-opacity-stroke: 0.4;
 }
 
 .uitk-light {

@@ -26,16 +26,18 @@ The following variables can be used on their own, but make up parts of the more 
 <Canvas>
   <Story name="Misc">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-focused-outline-color" />
-      <LineBlock lineWidth="--uitk-focused-outline-width" />
+      <ColorBlock colorVar="--uitk-focused-outlineColor" />
+      <LineBlock lineWidth="--uitk-focused-outlineWidth" />
       <LineBlockDotted
-        lineWidth="--uitk-focused-outline-width"
-        lineStyle="--uitk-focused-outline-style"
+        lineWidth="--uitk-focused-outlineWidth"
+        lineStyle="--uitk-focused-outlineStyle"
       />
       <BlankBlockCell />
-      <BlankBlockCode>--uitk-focused-outline-offset</BlankBlockCode>
+      <BlankBlockCode>--uitk-focused-outlineOffset</BlankBlockCode>
       <BlankBlockCell />
-      <BlankBlockCode>--uitk-focused-outline-inset</BlankBlockCode>
+      <BlankBlockCode>--uitk-focused-outlineInset</BlankBlockCode>
+      <OutlineBlock outline="--uitk-focused-outline" />
+      <BlankBlockCode>--uitk-focused-outline</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>

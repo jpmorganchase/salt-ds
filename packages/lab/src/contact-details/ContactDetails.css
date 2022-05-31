@@ -1,4 +1,4 @@
-.uitk-density-touch .uitkContactDetails {
+.uitk-density-touch {
   --contact-details-compact-contact-details-secondary-font-size: 14px;
   --contact-details-compact-primary-font-size: 16px;
   --contact-details-default-primary-font-size: 30px;
@@ -9,7 +9,7 @@
   --contact-details-title-element-no-avatar-left-spacing: calc(var(--uitk-size-unit) * 1.5);
 }
 
-.uitk-density-low .uitkContactDetails {
+.uitk-density-low {
   --contact-details-compact-primary-font-size: 14px;
   --contact-details-default-primary-font-size: 24px;
   --contact-details-compact-contact-details-secondary-font-size: 14px;
@@ -20,7 +20,7 @@
   --contact-details-icon-size: 16px;
 }
 
-.uitk-density-medium .uitkContactDetails {
+.uitk-density-medium {
   --contact-details-compact-primary-font-size: 12px;
   --contact-details-default-primary-font-size: 18px;
   --contact-details-compact-contact-details-secondary-font-size: 12px;
@@ -31,7 +31,7 @@
   --contact-details-icon-size: 14px;
 }
 
-.uitk-density-high .uitkContactDetails {
+.uitk-density-high {
   --contact-details-compact-primary-font-size: 11px;
   --contact-details-default-primary-font-size: 14px;
   --contact-details-compact-contact-details-secondary-font-size: 11px;
@@ -43,8 +43,8 @@
 }
 
 .uitkContactDetails {
-  --contact-details-label-color: var(--uitk-text-secondary-color);
-  --contact-details-line-height: var(--uitk-text-line-height);
+  --contact-details-label-color: var(--uitk-text-secondary-foreground);
+  --contact-details-line-height: var(--uitk-text-lineHeight);
   --contact-details-no-avatar-color: var(--uitk-accent-background);
   --contact-details-no-avatar-indicator-width: 4px;
 

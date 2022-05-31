@@ -1,12 +1,12 @@
 .uitkLink {
-  --link-color: var(--uitk-text-link-color);
-  --link-color-hover: var(--uitk-text-link-color-hover);
-  --link-color-active: var(--uitk-text-link-color-active);
-  --link-color-disabled: var(--uitk-text-link-color-disabled);
+  --link-color: var(--uitk-text-link-foreground);
+  --link-color-hover: var(--uitk-text-link-foreground-hover);
+  --link-color-active: var(--uitk-text-link-foreground-active);
+  --link-color-disabled: var(--uitk-text-link-foreground-disabled);
 
-  --link-text-decoration: var(--uitk-text-link-text-decoration);
+  --link-text-decoration: var(--uitk-text-link-textDecoration);
 
-  --link-font-family: var(--uitk-typography-font-family);
+  --link-font-family: var(--uitk-typography-fontFamily);
   --link-focus-outline: var(--uitk-focused-outline);
 }
 

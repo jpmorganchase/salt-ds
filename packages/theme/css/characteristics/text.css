@@ -2,235 +2,228 @@
 .uitk-light,
 .uitk-dark {
   /* H1 */
-  --uitk-text-h1-font-size-touch: 36px;
-  --uitk-text-h1-font-size-low: 32px;
-  --uitk-text-h1-font-size-medium: 24px;
-  --uitk-text-h1-font-size-high: 18px;
+  --uitk-text-h1-fontSize-touch: 36px;
+  --uitk-text-h1-fontSize-low: 32px;
+  --uitk-text-h1-fontSize-medium: 24px;
+  --uitk-text-h1-fontSize-high: 18px;
 
-  --uitk-text-h1-line-height-touch: auto;
-  --uitk-text-h1-line-height-low: 42px;
-  --uitk-text-h1-line-height-medium: 31px;
-  --uitk-text-h1-line-height-high: 24px;
+  --uitk-text-h1-lineHeight-touch: auto;
+  --uitk-text-h1-lineHeight-low: 42px;
+  --uitk-text-h1-lineHeight-medium: 31px;
+  --uitk-text-h1-lineHeight-high: 24px;
 
-  --uitk-text-h1-font-weight: var(--uitk-typography-weight-bold);
-  --uitk-text-h1-font-weight-strong: var(--uitk-typography-weight-extraBold);
-  --uitk-text-h1-font-weight-small: var(--uitk-typography-weight-medium);
+  --uitk-text-h1-fontWeight: var(--uitk-typography-weight-bold);
+  --uitk-text-h1-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h1-fontWeight-small: var(--uitk-typography-weight-medium);
 
   /* H2 */
-  --uitk-text-h2-font-size-touch: 28px;
-  --uitk-text-h2-font-size-low: 24px;
-  --uitk-text-h2-font-size-medium: 18px;
-  --uitk-text-h2-font-size-high: 14px;
+  --uitk-text-h2-fontSize-touch: 28px;
+  --uitk-text-h2-fontSize-low: 24px;
+  --uitk-text-h2-fontSize-medium: 18px;
+  --uitk-text-h2-fontSize-high: 14px;
 
-  --uitk-text-h2-line-height-touch: 36px;
-  --uitk-text-h2-line-height-low: 32px;
-  --uitk-text-h2-line-height-medium: 24px;
-  --uitk-text-h2-line-height-high: 18px;
+  --uitk-text-h2-lineHeight-touch: 36px;
+  --uitk-text-h2-lineHeight-low: 32px;
+  --uitk-text-h2-lineHeight-medium: 24px;
+  --uitk-text-h2-lineHeight-high: 18px;
 
-  --uitk-text-h2-font-weight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h2-font-weight-strong: var(--uitk-typography-weight-extraBold);
-  --uitk-text-h2-font-weight-small: var(--uitk-typography-weight-regular);
+  --uitk-text-h2-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-h2-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h2-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* H3 */
-  --uitk-text-h3-font-size-touch: 18px;
-  --uitk-text-h3-font-size-low: 18px;
-  --uitk-text-h3-font-size-medium: 14px;
-  --uitk-text-h3-font-size-high: 12px;
+  --uitk-text-h3-fontSize-touch: 18px;
+  --uitk-text-h3-fontSize-low: 18px;
+  --uitk-text-h3-fontSize-medium: 14px;
+  --uitk-text-h3-fontSize-high: 12px;
 
-  --uitk-text-h3-line-height-touch: 26px;
-  --uitk-text-h3-line-height-low: 26px;
-  --uitk-text-h3-line-height-medium: 22px;
-  --uitk-text-h3-line-height-high: 16px;
+  --uitk-text-h3-lineHeight-touch: 26px;
+  --uitk-text-h3-lineHeight-low: 26px;
+  --uitk-text-h3-lineHeight-medium: 22px;
+  --uitk-text-h3-lineHeight-high: 16px;
 
-  --uitk-text-h3-font-weight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h3-font-weight-strong: var(--uitk-typography-weight-extraBold);
-  --uitk-text-h3-font-weight-small: var(--uitk-typography-weight-regular);
+  --uitk-text-h3-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h3-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* H4 */
-  --uitk-text-h4-font-size-touch: 16px;
-  --uitk-text-h4-font-size-low: 14px;
-  --uitk-text-h4-font-size-medium: 12px;
-  --uitk-text-h4-font-size-high: 11px;
+  --uitk-text-h4-fontSize-touch: 16px;
+  --uitk-text-h4-fontSize-low: 14px;
+  --uitk-text-h4-fontSize-medium: 12px;
+  --uitk-text-h4-fontSize-high: 11px;
 
-  --uitk-text-h4-line-height-touch: 22px;
-  --uitk-text-h4-line-height-low: 18px;
-  --uitk-text-h4-line-height-medium: 16px;
-  --uitk-text-h4-line-height-high: 14px;
+  --uitk-text-h4-lineHeight-touch: 22px;
+  --uitk-text-h4-lineHeight-low: 18px;
+  --uitk-text-h4-lineHeight-medium: 16px;
+  --uitk-text-h4-lineHeight-high: 14px;
 
-  --uitk-text-h4-font-weight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h4-font-weight-strong: var(--uitk-typography-weight-extraBold);
-  --uitk-text-h4-font-weight-small: var(--uitk-typography-weight-regular);
+  --uitk-text-h4-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h4-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* Caption */
-  --uitk-text-caption-font-size-touch: 12px;
-  --uitk-text-caption-font-size-low: 11px;
-  --uitk-text-caption-font-size-medium: 11px;
-  --uitk-text-caption-font-size-high: 10px;
+  --uitk-text-caption-fontSize-touch: 12px;
+  --uitk-text-caption-fontSize-low: 11px;
+  --uitk-text-caption-fontSize-medium: 11px;
+  --uitk-text-caption-fontSize-high: 10px;
 
-  --uitk-text-caption-line-height-touch: 16px;
-  --uitk-text-caption-line-height-low: 14px;
-  --uitk-text-caption-line-height-medium: 14px;
-  --uitk-text-caption-line-height-high: 14px;
+  --uitk-text-caption-lineHeight-touch: 16px;
+  --uitk-text-caption-lineHeight-low: 14px;
+  --uitk-text-caption-lineHeight-medium: 14px;
+  --uitk-text-caption-lineHeight-high: 14px;
 
   /* Help text */
-  --uitk-text-help-font-size-touch: 12px;
-  --uitk-text-help-font-size-low: 11px;
-  --uitk-text-help-font-size-medium: 11px;
-  --uitk-text-help-font-size-high: 10px;
+  --uitk-text-help-fontSize-touch: 12px;
+  --uitk-text-help-fontSize-low: 11px;
+  --uitk-text-help-fontSize-medium: 11px;
+  --uitk-text-help-fontSize-high: 10px;
 
-  --uitk-text-help-line-height-touch: 16px;
-  --uitk-text-help-line-height-low: 14px;
-  --uitk-text-help-line-height-medium: 14px;
-  --uitk-text-help-line-height-high: 13px;
+  --uitk-text-help-lineHeight-touch: 16px;
+  --uitk-text-help-lineHeight-low: 14px;
+  --uitk-text-help-lineHeight-medium: 14px;
+  --uitk-text-help-lineHeight-high: 13px;
 
   /* Figure text */
   --uitk-text-figure-1-font-size: 56px;
   --uitk-text-figure-2-font-size: 36px;
   --uitk-text-figure-3-font-size: 24px;
 
-  --uitk-text-figure-1-line-height: 74px;
-  --uitk-text-figure-2-line-height: 48px;
-  --uitk-text-figure-3-line-height: 32px;
+  --uitk-text-figure-1-lineHeight: 74px;
+  --uitk-text-figure-2-lineHeight: 48px;
+  --uitk-text-figure-3-lineHeight: 32px;
 
   /**
     Body text (default)
-    Avoid using these directly. Instead, use --uitk-text-font-size, --uitk-text-line-height values
+    Avoid using these directly. Instead, use --uitk-text-fontSize, --uitk-text-lineHeight values
     below, which scope to density, unless strong reason applicable
   **/
-  --uitk-text-font-size-touch: 16px;
-  --uitk-text-line-height-touch: 22px;
-  --uitk-text-min-height-touch: 20px;
+  --uitk-text-fontSize-touch: 16px;
+  --uitk-text-lineHeight-touch: 22px;
+  --uitk-text-minHeight-touch: 20px;
 
-  --uitk-text-font-size-low: 14px;
-  --uitk-text-line-height-low: 18px;
-  --uitk-text-min-height-low: 18px;
+  --uitk-text-fontSize-low: 14px;
+  --uitk-text-lineHeight-low: 18px;
+  --uitk-text-minHeight-low: 18px;
 
-  --uitk-text-font-size-medium: 12px;
-  --uitk-text-line-height-medium: 16px;
-  --uitk-text-min-height-medium: 16px;
+  --uitk-text-fontSize-medium: 12px;
+  --uitk-text-lineHeight-medium: 16px;
+  --uitk-text-minHeight-medium: 16px;
 
-  --uitk-text-font-size-high: 11px;
-  --uitk-text-line-height-high: 14px;
-  --uitk-text-min-height-high: 14px;
+  --uitk-text-fontSize-high: 11px;
+  --uitk-text-lineHeight-high: 14px;
+  --uitk-text-minHeight-high: 14px;
 
-  --uitk-text-primary-color: var(--uitk-palette-neutral-primary-foreground);
-  --uitk-text-primary-color-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
+  /* Colors */
+  --uitk-text-background: transparent;
+  --uitk-text-background-hover: transparent;
+  --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
 
-  --uitk-text-secondary-color: var(--uitk-palette-neutral-secondary-foreground);
-  --uitk-text-secondary-color-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
+  --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-hover: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-selected: var(--uitk-palette-neutral-primary-foreground);
+  --uitk-text-primary-foreground-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
 
-  --uitk-text-growth-indicator-down-color: var(--uitk-palette-negative-foreground);
-  --uitk-text-growth-indicator-up-color: var(--uitk-palette-positive-foreground);
-}
+  --uitk-text-secondary-foreground: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-hover: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-selected: var(--uitk-palette-neutral-secondary-foreground);
+  --uitk-text-secondary-foreground-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
 
-/* TODO: Move colors here to palette */
-.uitk-light {
-  --uitk-text-link-color: var(--uitk-color-grey-900);
-  --uitk-text-link-color-hover: var(--uitk-color-blue-500);
-  --uitk-text-link-color-active: var(--uitk-color-blue-500);
-  --uitk-text-link-color-disabled: var(--uitk-color-grey-900);
-
-  --uitk-text-highlight-color: var(--uitk-color-blue-30);
-}
-
-.uitk-dark {
-  --uitk-text-link-color: var(--uitk-color-white);
-  --uitk-text-link-color-hover: var(--uitk-color-blue-200);
-  --uitk-text-link-color-active: var(--uitk-color-blue-200);
-  --uitk-text-link-color-disabled: var(--uitk-color-white);
-
-  --uitk-text-highlight-color: var(--uitk-color-blue-700);
+  /* Links */
+  --uitk-text-link-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
+  --uitk-text-link-textDecoration: underline;
+  --uitk-text-link-textDecoration-hover: none;
+  --uitk-text-link-textDecoration-selected: underline;
 }
 
 .uitk-density-touch {
-  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-touch);
-  --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-touch);
+  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-touch);
+  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-touch);
 
-  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-touch);
-  --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-touch);
+  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-touch);
+  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-touch);
 
-  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-touch);
-  --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-touch);
+  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-touch);
+  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-touch);
 
-  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-touch);
-  --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-touch);
+  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-touch);
+  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-touch);
 
-  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-touch);
-  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-touch);
+  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-touch);
+  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-touch);
 
-  --uitk-text-help-font-size: var(--uitk-text-help-font-size-touch);
-  --uitk-text-help-line-height: var(--uitk-text-help-line-height-touch);
+  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-touch);
+  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-touch);
 
-  --uitk-text-font-size: var(--uitk-text-font-size-touch);
-  --uitk-text-line-height: var(--uitk-text-line-height-touch);
-  --uitk-text-min-height: var(--uitk-text-min-height-touch);
+  --uitk-text-fontSize: var(--uitk-text-fontSize-touch);
+  --uitk-text-lineHeight: var(--uitk-text-lineHeight-touch);
+  --uitk-text-minHeight: var(--uitk-text-minHeight-touch);
 }
 .uitk-density-low {
-  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-low);
-  --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-low);
+  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-low);
+  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-low);
 
-  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-low);
-  --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-low);
+  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-low);
+  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-low);
 
-  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-low);
-  --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-low);
+  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-low);
+  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-low);
 
-  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-low);
-  --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-low);
+  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-low);
+  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-low);
 
-  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-low);
-  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-low);
+  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-low);
+  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-low);
 
-  --uitk-text-help-font-size: var(--uitk-text-help-font-size-low);
-  --uitk-text-help-line-height: var(--uitk-text-help-line-height-low);
+  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-low);
+  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-low);
 
-  --uitk-text-font-size: var(--uitk-text-font-size-low);
-  --uitk-text-line-height: var(--uitk-text-line-height-low);
-  --uitk-text-min-height: var(--uitk-text-min-height-low);
+  --uitk-text-fontSize: var(--uitk-text-fontSize-low);
+  --uitk-text-lineHeight: var(--uitk-text-lineHeight-low);
+  --uitk-text-minHeight: var(--uitk-text-minHeight-low);
 }
 .uitk-density-medium {
-  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-medium);
-  --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-medium);
+  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-medium);
+  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-medium);
 
-  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-medium);
-  --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-medium);
+  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-medium);
+  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-medium);
 
-  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-medium);
-  --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-medium);
+  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-medium);
+  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-medium);
 
-  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-medium);
-  --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-medium);
+  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-medium);
+  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-medium);
 
-  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-medium);
-  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-medium);
+  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-medium);
+  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-medium);
 
-  --uitk-text-help-font-size: var(--uitk-text-help-font-size-medium);
-  --uitk-text-help-line-height: var(--uitk-text-help-line-height-medium);
+  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-medium);
+  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-medium);
 
-  --uitk-text-font-size: var(--uitk-text-font-size-medium);
-  --uitk-text-line-height: var(--uitk-text-line-height-medium);
-  --uitk-text-min-height: var(--uitk-text-min-height-medium);
+  --uitk-text-fontSize: var(--uitk-text-fontSize-medium);
+  --uitk-text-lineHeight: var(--uitk-text-lineHeight-medium);
+  --uitk-text-minHeight: var(--uitk-text-minHeight-medium);
 }
 .uitk-density-high {
-  --uitk-text-h1-font-size: var(--uitk-text-h1-font-size-high);
-  --uitk-text-h1-line-height: var(--uitk-text-h1-line-height-high);
+  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-high);
+  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-high);
 
-  --uitk-text-h2-font-size: var(--uitk-text-h2-font-size-high);
-  --uitk-text-h2-line-height: var(--uitk-text-h2-line-height-high);
+  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-high);
+  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-high);
 
-  --uitk-text-h3-font-size: var(--uitk-text-h3-font-size-high);
-  --uitk-text-h3-line-height: var(--uitk-text-h3-line-height-high);
+  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-high);
+  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-high);
 
-  --uitk-text-h4-font-size: var(--uitk-text-h4-font-size-high);
-  --uitk-text-h4-line-height: var(--uitk-text-h4-line-height-high);
+  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-high);
+  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-high);
 
-  --uitk-text-caption-font-size: var(--uitk-text-caption-font-size-high);
-  --uitk-text-caption-line-height: var(--uitk-text-caption-line-height-high);
+  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-high);
+  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-high);
 
-  --uitk-text-help-font-size: var(--uitk-text-help-font-size-high);
-  --uitk-text-help-line-height: var(--uitk-text-help-line-height-high);
+  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-high);
+  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-high);
 
-  --uitk-text-font-size: var(--uitk-text-font-size-high);
-  --uitk-text-line-height: var(--uitk-text-line-height-high);
-  --uitk-text-min-height: var(--uitk-text-min-height-high);
+  --uitk-text-fontSize: var(--uitk-text-fontSize-high);
+  --uitk-text-lineHeight: var(--uitk-text-lineHeight-high);
+  --uitk-text-minHeight: var(--uitk-text-minHeight-high);
 }

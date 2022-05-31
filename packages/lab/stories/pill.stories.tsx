@@ -40,7 +40,6 @@ export const ControlledPill: ComponentStory<typeof Pill> = () => {
 
   return (
     <Pill
-      className="backwardsCompat"
       label="Controlled Pill"
       variant="selectable"
       checked={checked}
@@ -83,10 +82,21 @@ export const IconPill: ComponentStory<typeof Pill> = () => {
 export const SelectablePill: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
-      className="backwardsCompat"
       label="Selectable Pill"
       onChange={() => console.log("changed")}
       variant="selectable"
+    />
+  );
+};
+
+export const SelectableDisabledPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      label="Selectable Pill"
+      onChange={() => console.log("changed")}
+      variant="selectable"
+      defaultChecked
+      disabled={true}
     />
   );
 };
