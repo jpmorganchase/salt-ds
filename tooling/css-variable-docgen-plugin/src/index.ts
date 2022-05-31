@@ -238,23 +238,23 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           walk(ast, {
             visit: "Declaration",
             enter(node) {
-              if (
-                node.type === "Declaration" &&
-                node.property.startsWith("--")
-              ) {
-                try {
-                  privateVariableMap[node.property] = {
-                    name: node.property,
-                    value: generate(
-                      findLast(node.value, (node) =>
-                        valueTypes.includes(node.type)
-                      )
-                    ),
-                  };
-                } catch (e) {
-                  console.warn(
-                    `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
-                  );
+              if (node.type === "Declaration") {
+                if (node.property.startsWith("--")) {
+                  try {
+                    privateVariableMap[node.property] = {
+                      name: node.property,
+                      value: generate(
+                        findLast(node.value, (node) =>
+                          valueTypes.includes(node.type)
+                        )
+                      ),
+                    };
+                  } catch (e) {
+                    console.warn(
+                      e,
+                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
+                    );
+                  }
                 }
               }
             },
