@@ -44,13 +44,16 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   ref
 ) {
   const stopPropagation = useCallback((evt) => evt.stopPropagation(), []);
-  const clxPrefix = "uitk";
   return (
     <Text
       elementType="a"
-      className={cx(className, clxPrefix + "Link", {
-        [clxPrefix + "Link-disabled"]: disabled,
-      })}
+      className={cx(
+        withBaseName(),
+        {
+          [withBaseName("disabled")]: disabled,
+        },
+        className
+      )}
       href={disabled ? undefined : href}
       onClick={stopPropagation}
       ref={ref}

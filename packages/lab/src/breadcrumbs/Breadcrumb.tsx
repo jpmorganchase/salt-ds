@@ -87,20 +87,18 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
     } = ContainerProps;
 
     return (
-      <>
-        <li
-          ref={ref}
-          style={{
-            ...containerStyle,
-            minWidth: minWidth != null ? minWidth : itemsMinWidth,
-            maxWidth: maxWidth != null ? maxWidth : itemsMaxWidth,
-          }}
-          className={classnames(liClass, containerClassName)}
-          {...containerPropsRest}
-        >
-          {content}
-        </li>
-      </>
+      <li
+        ref={ref}
+        style={{
+          ...containerStyle,
+          minWidth: minWidth ?? itemsMinWidth,
+          maxWidth: maxWidth ?? itemsMaxWidth,
+        }}
+        className={classnames(liClass, containerClassName)}
+        {...containerPropsRest}
+      >
+        {content}
+      </li>
     );
   }
 );
