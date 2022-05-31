@@ -22,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-        matches.find(
-          (match) =>
-            path.normalize(filename) === path.join(process.cwd(), match)
-        )
+      matches.find(
+        (match) =>
+          path.normalize(filename) === path.join(process.cwd(), match)
+      )
     );
   };
 }
@@ -40,10 +40,7 @@ interface PrivateVariable {
   value?: string;
 }
 
-interface CharacteristicOrFoundation {
-  name: string;
-  tokens?: string[];
-}
+type TokenArray = string[];
 
 export interface CSSVariable {
   name: string;
@@ -95,7 +92,7 @@ function createClassNameDefinition(className: string, value: ClassName) {
  */
 function createCharacteristicOrFoundationDefinition(
   name: string,
-  value: CharacteristicOrFoundation
+  tokens: TokenArray
 ) {
   /** Set a property with a string value */
   const setStringLiteralField = (fieldName: string, fieldValue: string) =>
@@ -125,21 +122,21 @@ function createCharacteristicOrFoundationDefinition(
    * ```
    * @param tokens Characteristic tokens.
    */
-  const setTokens = (tokens?: string[]) =>
+  const setTokens = (tokens?: TokenArray) =>
     tokens
       ? ts.factory.createPropertyAssignment(
-          ts.factory.createStringLiteral("tokens"),
-          ts.factory.createArrayLiteralExpression(
-            tokens.map((token) => ts.factory.createStringLiteral(token))
-          )
+        ts.factory.createStringLiteral("tokens"),
+        ts.factory.createArrayLiteralExpression(
+          tokens.map((token) => ts.factory.createStringLiteral(token))
         )
+      )
       : setNullField("tokens");
 
   return ts.factory.createPropertyAssignment(
     ts.factory.createStringLiteral(name),
     ts.factory.createObjectLiteralExpression([
-      setTokens(value.tokens),
-      setName(value.name),
+      setTokens(tokens),
+      setName(name),
     ])
   );
 }
@@ -259,7 +256,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
         const privateVariableMap: Record<string, PrivateVariable> = {};
         const characteristicFoundationTokenMap: Record<
           string,
-          CharacteristicOrFoundation
+          string[]
         > = {};
         const identifierMap: Record<string, CSSVariable> = {};
 
@@ -335,10 +332,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                          findLast(this.declaration, (node) =>
-                            valueTypes.includes(node.type)
-                          )
+                        findLast(this.declaration, (node) =>
+                          valueTypes.includes(node.type)
                         )
+                      )
                       : undefined,
                   };
                 } catch (e) {
@@ -396,19 +393,18 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
               .replace("--uitk-", "")
               .split("-")[0];
             if (characteristicName.length) {
-              if (!characteristicFoundationTokenMap[characteristicName])
-                characteristicFoundationTokenMap[characteristicName] = {
-                  name: characteristicName,
-                  tokens: [token],
-                };
-              if (
+              if (!characteristicFoundationTokenMap[characteristicName]) {
+                characteristicFoundationTokenMap[characteristicName] = [token];
+              }
+              else if (
                 !characteristicFoundationTokenMap[
                   characteristicName
-                ].tokens?.includes(token)
-              )
+                ]?.includes(token)
+              ) {
                 characteristicFoundationTokenMap[
                   characteristicName
-                ].tokens?.push(token);
+                ].push(token);
+              }
             }
           }
         });
