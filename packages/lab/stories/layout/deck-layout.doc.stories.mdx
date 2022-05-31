@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { DeckLayout } from "@jpmorganchase/uitk-lab";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { DefaultDeckLayout } from "./deck-layout.stories";
+
+<Meta title="Layout/Docs/DeckLayout" component={DeckLayout} />
+
+# Deck Layout
+
+Defines pages of content that appear within the same specified region, one at a time
+
+<Canvas>
+  <Story name="Default Deck Layout">
+    <DefaultDeckLayout />
+  </Story>
+</Canvas>
+
+## API
+
+```
+import { DeckLayout } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+### Border Layout Props
+
+<ArgsTable of={DeckLayout} />
+
+### Deck Item Props
+
+<ArgsTable of={DeckItem} />
+
+## Usage Examples
+
+## Anatomy
+
+<Canvas>
+  <Story name="Deck Layout Anatomy">
+    <ComponentAnatomy showLegend>
+      <DeckLayout>
+        <DeckItem></DeckItem>
+      </DeckLayout>
+    </ComponentAnatomy>
+  </Story>
+</Canvas>

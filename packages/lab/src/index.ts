@@ -5,6 +5,7 @@ export * from "./badge";
 export * from "./breadcrumbs";
 export * from "./buttonbar";
 export * from "./calendar";
+export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
