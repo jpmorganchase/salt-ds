@@ -40,6 +40,8 @@ interface PrivateVariable {
   value?: string;
 }
 
+type TokenArray = string[];
+
 export interface CSSVariable {
   name: string;
   property?: string;
@@ -81,6 +83,58 @@ function createClassNameDefinition(className: string, value: ClassName) {
       setDescription(value.description),
       setName(value.name),
     ])
+  );
+}
+
+/**
+ * @param name Characteristic or foundation name
+ * @param value Characteristic or foundation definition
+ */
+function createCharacteristicOrFoundationDefinition(
+  name: string,
+  tokens: TokenArray
+) {
+  /** Set a property with a string value */
+  const setStringLiteralField = (fieldName: string, fieldValue: string) =>
+    ts.factory.createPropertyAssignment(
+      ts.factory.createStringLiteral(fieldName),
+      ts.factory.createStringLiteral(fieldValue)
+    );
+
+  /** Set a property with a null value */
+  const setNullField = (fieldName: string) =>
+    ts.factory.createPropertyAssignment(
+      ts.factory.createStringLiteral(fieldName),
+      ts.factory.createNull()
+    );
+
+  /**
+   * ```
+   * SimpleComponent.__docgenInfo.characteristicFoundationTokenMap.someCharacteristic.name = "someCharacteristic";
+   * ```
+   * @param name Characteristic name.
+   */
+  const setName = (name: string) => setStringLiteralField("name", name);
+
+  /**
+   * ```
+   * SimpleComponent.__docgenInfo.characteristicFoundationTokenMap.someCharacteristic.tokens = ["token", "token2"];
+   * ```
+   * @param tokens Characteristic tokens.
+   */
+  const setTokens = (tokens?: TokenArray) =>
+    tokens
+      ? ts.factory.createPropertyAssignment(
+          ts.factory.createStringLiteral("tokens"),
+          ts.factory.createArrayLiteralExpression(
+            tokens.map((token) => ts.factory.createStringLiteral(token))
+          )
+        )
+      : setNullField("tokens");
+
+  return ts.factory.createPropertyAssignment(
+    ts.factory.createStringLiteral(name),
+    ts.factory.createObjectLiteralExpression([setTokens(tokens), setName(name)])
   );
 }
 
@@ -197,6 +251,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
 
         const classNames: Record<string, ClassName> = {};
         const privateVariableMap: Record<string, PrivateVariable> = {};
+        const characteristicFoundationTokenMap: Record<string, string[]> = {};
         const identifierMap: Record<string, CSSVariable> = {};
 
         cssFiles.forEach(({ path, contents }) => {
@@ -238,23 +293,23 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           walk(ast, {
             visit: "Declaration",
             enter(node) {
-              if (
-                node.type === "Declaration" &&
-                node.property.startsWith("--")
-              ) {
-                try {
-                  privateVariableMap[node.property] = {
-                    name: node.property,
-                    value: generate(
-                      findLast(node.value, (node) =>
-                        valueTypes.includes(node.type)
-                      )
-                    ),
-                  };
-                } catch (e) {
-                  console.warn(
-                    `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
-                  );
+              if (node.type === "Declaration") {
+                if (node.property.startsWith("--")) {
+                  try {
+                    privateVariableMap[node.property] = {
+                      name: node.property,
+                      value: generate(
+                        findLast(node.value, (node) =>
+                          valueTypes.includes(node.type)
+                        )
+                      ),
+                    };
+                  } catch (e) {
+                    console.warn(
+                      e,
+                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
+                    );
+                  }
                 }
               }
             },
@@ -326,6 +381,27 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           );
         });
 
+        Object.keys(identifierMap).forEach((token) => {
+          if (token.startsWith("--uitk-")) {
+            const characteristicName = token
+              .replace("--uitk-", "")
+              .split("-")[0];
+            if (characteristicName.length) {
+              if (!characteristicFoundationTokenMap[characteristicName]) {
+                characteristicFoundationTokenMap[characteristicName] = [token];
+              } else if (
+                !characteristicFoundationTokenMap[characteristicName]?.includes(
+                  token
+                )
+              ) {
+                characteristicFoundationTokenMap[characteristicName].push(
+                  token
+                );
+              }
+            }
+          }
+        });
+
         const transformer = <T extends ts.Node>(
           context: ts.TransformationContext
         ) => {
@@ -357,6 +433,20 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       ts.factory.createObjectLiteralExpression(
                         Object.entries(identifierMap).map(([name, value]) =>
                           createCSSVariablesApiDefinition(name, value)
+                        )
+                      )
+                    ),
+                    ts.factory.createPropertyAssignment(
+                      ts.factory.createStringLiteral(
+                        "characteristicFoundationTokenMap"
+                      ),
+                      ts.factory.createObjectLiteralExpression(
+                        Object.entries(characteristicFoundationTokenMap).map(
+                          ([charName, tokens]) =>
+                            createCharacteristicOrFoundationDefinition(
+                              charName,
+                              tokens
+                            )
                         )
                       )
                     ),
