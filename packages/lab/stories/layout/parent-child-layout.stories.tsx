@@ -6,16 +6,13 @@ import {
   useIsStacked,
   Tabstrip,
   Tab,
-  GridLayout,
-  GridItem,
   Card,
   Avatar,
 } from "@jpmorganchase/uitk-lab";
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { Button } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import "./styles.css";
-import { FlexContent } from "./flex-item.stories";
 
 export default {
   title: "Layout/ParentChildLayout",
@@ -35,12 +32,19 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <FlexContent style={{ ...parentChildItemStyles, minWidth: 150 }}>
+  <div
+    className="layout-content"
+    style={{ ...parentChildItemStyles, minWidth: 150 }}
+  >
     Parent
-  </FlexContent>
+  </div>
 );
 
-const child = <FlexContent style={parentChildItemStyles}>Child</FlexContent>;
+const child = (
+  <div className="layout-content" style={parentChildItemStyles}>
+    Child
+  </div>
+);
 
 const DefaultParentChildLayoutStory: ComponentStory<
   typeof ParentChildLayout

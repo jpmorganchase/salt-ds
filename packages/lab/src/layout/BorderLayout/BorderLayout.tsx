@@ -10,7 +10,7 @@ import cx from "classnames";
 import warning from "warning";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridLayout } from "../GridLayout";
+import { GridLayout } from "@jpmorganchase/uitk-core";
 import { BorderItemProps } from "../BorderItem";
 import "./BorderLayout.css";
 
