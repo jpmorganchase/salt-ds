@@ -57,7 +57,7 @@ describe("GIVEN a Pill", () => {
     cy.mount(<Pill label="Pill text" variant="selectable" />);
     cy.findByRole("checkbox").click();
 
-    cy.get(".uitkPill-checkbox-icon-checked").should("exist");
+    cy.get(".uitkPill-checkbox.uitkCheckboxIcon-checked").should("exist");
   });
 
   it("THEN is checked when defaultChecked is true", () => {

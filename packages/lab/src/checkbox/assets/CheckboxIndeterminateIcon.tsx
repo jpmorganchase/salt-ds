@@ -2,7 +2,7 @@ export function CheckboxIndeterminateIcon({
   className,
 }: {
   className: string;
-}) {
+}): JSX.Element {
   return (
     <svg
       aria-hidden="true"
@@ -12,9 +12,9 @@ export function CheckboxIndeterminateIcon({
       viewBox="0 0 14 14"
     >
       <g fillRule="evenodd" strokeWidth="1">
-        <rect height="13" width="13" x="0.5" y="0.5" />
+        <rect className={`uitkCheckboxIcon-box`} />
         <rect
-          className={`${className}-tick`}
+          className={`uitkCheckboxIcon-tick`}
           height="2"
           strokeWidth="0"
           width="8"

@@ -1,112 +1,21 @@
-/* Styles applied to root component */
-.uitk-density-medium .uitkCheckboxBase {
-  --checkbox-indeterminate-bar-y: 6;
-  --checkbox-indeterminate-bar-height: 2px;
-  --checkbox-icon-size: 14px;
-}
-
-.uitk-density-touch .uitkCheckboxBase {
-  --checkbox-indeterminate-bar-y: 6;
-  --checkbox-indeterminate-bar-height: 2px;
-  --checkbox-icon-size: 18px;
-}
-
-.uitk-density-low .uitkCheckboxBase {
-  --checkbox-indeterminate-bar-y: 6;
-  --checkbox-indeterminate-bar-height: 2px;
-  --checkbox-icon-size: 16px;
-}
-
-.uitk-density-high .uitkCheckboxBase {
-  --checkbox-indeterminate-bar-y: 5;
-  --checkbox-indeterminate-bar-height: 3px;
-  --checkbox-icon-size: 12px;
-}
-
 .uitkCheckboxBase {
-  --checkbox-solid-color: var(--uitk-selectable-borderColor-selected);
-  --checkbox-tick-color: var(--uitk-selectable-primary-foreground-selected);
-  --checkbox-outline-color: var(--uitk-selectable-borderColor);
-  --checkbox-outline-color-hover: var(--uitk-selectable-borderColor-hover);
-
   background: var(--uitkCheckbox-background, none);
+  line-height: 0;
   padding-top: 1px;
   padding-bottom: 1px;
   position: relative;
 }
 
-/* Styles applied to label element */
-.uitkCheckboxBase-label {
-  display: flex;
-}
-
-/* Styles applied if `disabled={true}` */
-.uitkCheckboxBase-disabled {
-  cursor: var(--uitkCheckbox-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-}
-
-/* Styles applied on focus state */
-.uitkCheckboxBase:focus-visible:before,
-.uitkCheckboxBase-focusVisible:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--uitkCheckbox-icon-size, var(--checkbox-icon-size));
-  height: var(--uitkCheckbox-icon-size, var(--checkbox-icon-size));
-  background: transparent;
-  outline: var(--uitkCheckbox-focused-outline, var(--uitk-focused-outline));
-}
-
-/* Styles applied to icon */
-.uitkCheckboxBase-icon {
-  fill: transparent;
-  flex-grow: 0;
-  height: var(--uitkCheckbox-icon-size, var(--checkbox-icon-size));
-  overflow: visible;
-  stroke: var(--uitkCheckbox-outline-color, var(--checkbox-outline-color));
-  width: var(--uitkCheckbox-icon-size, var(--checkbox-icon-size));
-}
-
-/* Styles applied to icon if `checked={true}` or `indeterminate={true}` */
-.uitkCheckboxBase-icon-tick {
-  fill: var(--uitkCheckbox-tick-color, var(--checkbox-tick-color));
-}
-
 /* Styles applied to input element */
 .uitkCheckboxBase-input {
   cursor: inherit;
-  height: 100%;
+  height: 10px;
   left: 0;
   margin: 0;
   opacity: 0;
   padding: 0;
   position: absolute;
   top: 0;
-  width: 100%;
+  width: 10px;
   z-index: var(--uitk-zindex-default);
-}
-
-/* Styles applied to icon if `checked={true}` */
-.uitkCheckboxBase-checked .uitkCheckboxBase-icon {
-  stroke-width: 0;
-  fill: var(--uitkCheckbox-solid-color, var(--checkbox-solid-color));
-}
-
-/* Styles applied to icon if `indeterminate={true}` */
-.uitkCheckboxBase-indeterminate .uitkCheckboxBase-icon {
-  fill: transparent;
-}
-
-/* Styles applied to icon tick if `checked={true}` or `indeterminate={true}` */
-.uitkCheckboxBase-indeterminate .uitkCheckboxBase-icon-tick {
-  fill: var(--uitkCheckbox-solid-color, var(--checkbox-solid-color));
-  height: var(--uitkCheckbox-indeterminate-bar-height, var(--checkbox-indeterminate-bar-height));
-  y: var(--uitkCheckbox-indeterminate-bar-y, var(--checkbox-indeterminate-bar-y));
-}
-
-/* Styles applied to icon on hover state` */
-.uitkCheckboxBase:hover .uitkCheckboxBase-icon {
-  stroke: var(--uitkCheckbox-outline-color-hover, var(--checkbox-outline-color-hover));
 }
