@@ -2,10 +2,8 @@ import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
   FlowLayout,
-  Metric,
-  MetricContent,
-  MetricHeader,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
+import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 

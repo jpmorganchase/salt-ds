@@ -7,7 +7,7 @@ import {
 import cx from "classnames";
 
 import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
-import { FlexLayout } from "../FlexLayout";
+import { FlexLayout } from "@jpmorganchase/uitk-core";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import "./ParentChildLayout.css";
 import { useIsStacked } from "./";
