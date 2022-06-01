@@ -32,12 +32,19 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <div className="layout-content" style={{ ...parentChildItemStyles, minWidth: 150 }}>
+  <div
+    className="layout-content"
+    style={{ ...parentChildItemStyles, minWidth: 150 }}
+  >
     Parent
   </div>
 );
 
-const child = <div className="layout-content" style={parentChildItemStyles}>Child</div>;
+const child = (
+  <div className="layout-content" style={parentChildItemStyles}>
+    Child
+  </div>
+);
 
 const DefaultParentChildLayoutStory: ComponentStory<
   typeof ParentChildLayout
