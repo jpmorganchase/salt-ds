@@ -15,15 +15,16 @@
   --checkbox-size: 18px;
 }
 
-.uitk-density-high .uitkCheckboxIcon-indeterminate {
+.uitk-density-high {
   --checkbox-density-bar-y: 5px;
   --checkbox-density-bar-height: 3px;
 }
 
 .uitkCheckboxIcon {
-  --checkbox-border-width: var(--uitk-selectable-border-width);
+  --checkbox-border-width: var(--uitk-selectable-borderWidth);
   --checkbox-solid-color: var(--uitk-selectable-background);
-  --checkbox-outline-color-hover: var(--uitk-selectable-border-color-hover);
+  --checkbox-outline-color: var(--uitk-selectable-borderColor);
+  --checkbox-outline-color-hover: var(--uitk-selectable-borderColor-hover);
   --checkbox-tick-fill: var(--uitkCheckboxIcon-tick-color, var(--uitk-selectable-foreground-selected));
   --checkbox-viewbox: 14px; /* do not change, matches value in svg viewBox */
   --checkbox-box-size: calc(var(--checkbox-viewbox) - var(--checkbox-border-width));
@@ -31,19 +32,27 @@
 
   fill: var(--uitkCheckboxIcon-solid-color, var(--checkbox-solid-color));
   height: var(--uitkCheckboxIcon-size, var(--checkbox-size));
-  stroke: var(--uitkCheckboxIcon-outline-color, var(--uitk-selectable-border-color));
+  stroke: var(--uitkCheckboxIcon-outline-color, var(--checkbox-outline-color));
   width: var(--uitkCheckboxIcon-size, var(--checkbox-size));
+}
+
+.uitkCheckboxIcon-disabled {
+  --checkbox-outline-color: var(--uitk-selectable-borderColor-disabled);
 }
 
 /* Styles applied to icon if `checked={true}` */
 .uitkCheckboxIcon-checked {
   --checkbox-border-width: var(--uitkCheckboxIcon-checked-border-width, 0px);
-  --checkbox-solid-color: var(--uitk-selectable-background-selected);
+  --checkbox-solid-color: var(--uitk-selectable-borderColor-selected);
+}
+
+.uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
+  --checkbox-solid-color: var(--uitk-selectable-borderColor-selectedDisabled);
 }
 
 /* Styles applied to icon if `indeterminate={true}` */
 .uitkCheckboxIcon-indeterminate {
-  --checkbox-tick-fill: var(--uitkCheckboxIcon-solid-color, var(--uitk-selectable-fill-partial));
+  --checkbox-tick-fill: var(--uitkCheckboxIcon-solid-color, var(--uitk-selectable-foreground-partial));
   --checkbox-bar-y: var(--checkbox-density-bar-y, 6px);
   --checkbox-bar-height: var(--checkbox-density-bar-height, 2px);
 }
