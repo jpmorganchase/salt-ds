@@ -5,7 +5,7 @@ import { makePrefixer } from "../../utils";
 import {
   ResponsiveProp,
   useResponsiveProp,
-} from "@jpmorganchase/uitk-lab/src/utils";
+} from "@jpmorganchase/uitk-lab";
 import "./FlexLayout.css";
 import { LayoutDirection, LayoutSeparator } from "../types";
 

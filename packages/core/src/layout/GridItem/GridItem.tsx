@@ -6,7 +6,7 @@ import "./GridItem.css";
 import {
   ResponsiveProp,
   useResponsiveProp,
-} from "@jpmorganchase/uitk-lab/src/utils";
+} from "@jpmorganchase/uitk-lab";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",

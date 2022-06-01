@@ -6,7 +6,7 @@ import cx from "classnames";
 import {
   ResponsiveProp,
   useResponsiveProp,
-} from "@jpmorganchase/uitk-lab/src/utils";
+} from "@jpmorganchase/uitk-lab";
 
 const withBaseName = makePrefixer("uitkFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = ["start", "end", "center", "stretch"];
