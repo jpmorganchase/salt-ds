@@ -1,17 +1,7 @@
+/* Styles applied to the Pill checkbox */
 .uitkPill-checkbox {
-  --uitkCheckboxIcon-stroke: var(--uitk-actionable-stroke);
+  --uitkCheckboxIcon-stroke: var(--pill-checkbox-stroke);
   --uitkCheckboxIcon-solid-color: none;
   --uitkCheckboxIcon-tick-color: var(--uitk-palette-neutral-secondary-foreground);
-  --uitkCheckboxIcon-checked-border-width: 1px;
-}
-
-/* Backwards compat styling to match TK1 */
-.uitk-light .backwardsCompat .uitkPill-checkbox {
-  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-100);
-  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-300);
-}
-
-.uitk-dark .backwardsCompat .uitkPill-checkbox {
-  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-80);
-  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-60);
+  --uitkCheckboxIcon-checked-border-width: var(--uitk-selectable-borderWidth);
 }
