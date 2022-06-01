@@ -29,7 +29,7 @@ const Checkboxes = () => (
 
 export const AllExamplesGrid: ComponentStory<typeof Checkbox> = () => {
   return (
-    <AllRenderer>
+    <AllRenderer className="uitkCheckboxQA">
       <Checkboxes />
     </AllRenderer>
   );
