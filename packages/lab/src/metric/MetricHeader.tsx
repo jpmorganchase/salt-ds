@@ -1,11 +1,10 @@
-import { forwardRef, HTMLAttributes, useCallback } from "react";
-import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Link, LinkProps, H4, Div } from "@jpmorganchase/uitk-lab";
+import cx from "classnames";
+import { forwardRef, HTMLAttributes, useCallback } from "react";
 import warning from "warning";
-
+import { Link, LinkProps } from "../link";
+import { Div } from "../typography";
 import { useMetricContext } from "./internal";
-
 import "./MetricHeader.css";
 
 export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
