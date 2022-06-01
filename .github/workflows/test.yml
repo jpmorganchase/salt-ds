@@ -31,12 +31,14 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
-      - name: Check chore build dependencies
+      - name: Check build core package.json dependencies
         run: |
           if grep -q "@jpmorganchase\/uitk-\(core\|lab\)\":" dist/jpmorganchase-uitk-core/package.json; then
               echo "Core package can not reference itself or lab package"
               exit 1;
           fi
+      - name: Check build lab package.json dependencies
+        run: |
           if grep -q "@jpmorganchase\/uitk-lab\":" dist/jpmorganchase-uitk-lab/package.json; then
               echo "Lab package can not reference itself"
               exit 1;
