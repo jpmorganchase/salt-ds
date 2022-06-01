@@ -10,7 +10,7 @@ const {
   ToolkitGridLayoutResponsiveView,
 } = composedStories;
 
-const testColumnsNumber = (columns) =>
+const testColumnsNumber = (columns: number) =>
   new RegExp(`^(\\d*\\.?\\d*px *){${columns}}$`);
 
 describe("GIVEN a Grid", () => {

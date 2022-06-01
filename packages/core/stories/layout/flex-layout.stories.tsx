@@ -3,10 +3,8 @@ import {
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
   FlexLayout,
-  Metric,
-  MetricContent,
-  MetricHeader,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
+import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
