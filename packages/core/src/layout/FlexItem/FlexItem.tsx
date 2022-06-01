@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../../utils";
 import "./FlexItem.css";
 import cx from "classnames";
 

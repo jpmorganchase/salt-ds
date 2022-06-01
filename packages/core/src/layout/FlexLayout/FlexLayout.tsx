@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../../utils";
 import {
   ResponsiveProp,
   useResponsiveProp,
