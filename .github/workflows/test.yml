@@ -17,6 +17,31 @@ jobs:
       # Enable lint when all errors are fixed
       # - run: yarn run lint
       - run: yarn run prettier:ci
+  dependency-check: 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Check chore build dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-\(core\|lab\)\":" dist/jpmorganchase-uitk-core/package.json; then
+              echo "Core package can not reference itself or lab package"
+              exit 1;
+          fi
+          if grep -q "@jpmorganchase\/uitk-lab\":" dist/jpmorganchase-uitk-lab/package.json; then
+              echo "Lab package can not reference itself"
+              exit 1;
+          fi
   type-checks:
     runs-on: ubuntu-latest
     steps:
