@@ -3,7 +3,7 @@ import { makePrefixer } from "../../utils";
 import "./FlexItem.css";
 import cx from "classnames";
 
-import { ResponsiveProp, useResponsiveProp } from "@jpmorganchase/uitk-lab";
+import { ResponsiveProp, useResponsiveProp } from "@jpmorganchase/uitk-core";
 
 const withBaseName = makePrefixer("uitkFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = ["start", "end", "center", "stretch"];
