@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "../FlexLayout";
 import { FlexLayoutProps } from "../types";
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
