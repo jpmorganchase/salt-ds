@@ -1,5 +1,7 @@
 import cx from "classnames";
 import { ElementType, HTMLAttributes } from "react";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FormFieldValidationState } from "./FormField";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   NecessityIndicatorOptions,
@@ -7,9 +9,8 @@ import {
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
 import "./FormLabel.css";
-import { FormFieldValidationState } from "./FormField";
 
-const classBase = "uitkFormLabel";
+const withBaseName = makePrefixer("uitkFormLabel");
 export interface FormLabelProps
   extends HTMLAttributes<HTMLLabelElement>,
     NecessityIndicatorOptions {
@@ -63,9 +64,8 @@ export const FormLabel = ({
   ...restProps
 }: FormLabelProps) => (
   <label
-    className={cx(className, classBase, {
-      [`${classBase}-disabled`]: disabled,
-      [`${classBase}-readOnly`]: readOnly,
+    className={cx(withBaseName(), className, {
+      [withBaseName("disabled")]: disabled,
     })}
     {...restProps}
   >
@@ -75,11 +75,11 @@ export const FormLabel = ({
       required={required}
       displayedNecessity={displayedNecessity}
       necessityText={necessityText}
-      className={`${classBase}-necessityIndicator`}
+      className={withBaseName("necessityIndicator")}
     />
     {hasStatusIndicator && (
       <StatusIndicator
-        className={`${classBase}-statusIndicator`}
+        className={withBaseName("statusIndicator")}
         state={validationState}
         tooltipText={tooltipText}
         hasTooltip

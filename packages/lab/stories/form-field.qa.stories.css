@@ -1,0 +1,7 @@
+.uitkFormFieldQA .uitkDocGrid {
+  --uitkDocGrid-height: 878px;
+  --uitkDocGrid-width: 1272px;
+}
+.uitkFormFieldQA.uitkQAContainer {
+  height: unset !important;
+}
