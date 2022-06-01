@@ -1,9 +1,8 @@
 import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
 import "./GridItem.css";
-import { ResponsiveProp, useResponsiveProp } from "../../utils";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
