@@ -42,3 +42,7 @@
 .uitkCheckbox:hover:not(.uitkCheckbox-disabled):not(.uitkCheckboxIcon-indeterminate) {
   --uitkCheckboxIcon-outline-color: var(--uitkCheckbox-outline-color-hover, var(--uitk-selectable-borderColor-hover));
 }
+
+.uitkCheckbox-disabled {
+  --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
+}
