@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode, useState } from "react";
+import { useState } from "react";
 
 import {
   ParentChildLayout,
@@ -13,18 +13,6 @@ import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { Button } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-
-interface ContentBlockProps extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode;
-  caption?: string;
-  classname?: string;
-}
-
-const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
-  <div className={classname || "layout-content"} {...rest}>
-    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
-  </div>
-);
 
 export default {
   title: "Layout/ParentChildLayout",
@@ -44,12 +32,12 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <ContentBlock style={{ ...parentChildItemStyles, minWidth: 150 }}>
+  <div className="layout-content" style={{ ...parentChildItemStyles, minWidth: 150 }}>
     Parent
-  </ContentBlock>
+  </div>
 );
 
-const child = <ContentBlock style={parentChildItemStyles}>Child</ContentBlock>;
+const child = <div className="layout-content" style={parentChildItemStyles}>Child</div>;
 
 const DefaultParentChildLayoutStory: ComponentStory<
   typeof ParentChildLayout

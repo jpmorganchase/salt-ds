@@ -6,39 +6,3 @@
   background: lightcyan;
   padding: 1rem;
 }
-
-.border-item {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.border-header {
-  background-color: var(--uitk-color-orange-100);
-}
-
-.border-left {
-  background-color: var(--uitk-color-purple-50);
-}
-.border-right {
-  background-color: var(--uitk-color-purple-300);
-}
-
-.border-main {
-  background-color: var(--uitk-color-red-300);
-}
-
-.border-bottom {
-  background-color: var(--uitk-color-grey-90);
-}
-
-@media (prefers-reduced-motion) {
-  .reduced-motion .uitkParentChildItem-slide-left {
-    animation: none;
-  }
-
-  .reduced-motion .uitkParentChildItem-slide-right {
-    animation: none;
-  }
-}
