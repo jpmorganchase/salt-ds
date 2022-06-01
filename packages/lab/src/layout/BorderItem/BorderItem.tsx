@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
 import cx from "classnames";
-import { GridItem } from "../GridItem";
+import { GridItem } from "@jpmorganchase/uitk-core";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./BorderItem.css";

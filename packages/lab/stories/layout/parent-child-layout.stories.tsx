@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { HTMLAttributes, ReactNode, useState } from "react";
 
 import {
   ParentChildLayout,
@@ -6,16 +6,25 @@ import {
   useIsStacked,
   Tabstrip,
   Tab,
-  GridLayout,
-  GridItem,
   Card,
   Avatar,
 } from "@jpmorganchase/uitk-lab";
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { Button } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import "./styles.css";
-import { FlexContent } from "./flex-item.stories";
+
+interface ContentBlockProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  caption?: string;
+  classname?: string;
+}
+
+const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
+  <div className={classname || "layout-content"} {...rest}>
+    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
+  </div>
+);
 
 export default {
   title: "Layout/ParentChildLayout",
@@ -35,12 +44,12 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <FlexContent style={{ ...parentChildItemStyles, minWidth: 150 }}>
+  <ContentBlock style={{ ...parentChildItemStyles, minWidth: 150 }}>
     Parent
-  </FlexContent>
+  </ContentBlock>
 );
 
-const child = <FlexContent style={parentChildItemStyles}>Child</FlexContent>;
+const child = <ContentBlock style={parentChildItemStyles}>Child</ContentBlock>;
 
 const DefaultParentChildLayoutStory: ComponentStory<
   typeof ParentChildLayout

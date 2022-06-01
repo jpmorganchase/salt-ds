@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import { FlexLayout } from "./FlexLayout";
+import { FlexLayout } from "@jpmorganchase/uitk-core";
 
 export type LayoutDirection = "row" | "column";
 

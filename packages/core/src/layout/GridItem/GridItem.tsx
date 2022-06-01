@@ -3,7 +3,10 @@ import cx from "classnames";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./GridItem.css";
-import { ResponsiveProp, useResponsiveProp } from "../../utils";
+import {
+  ResponsiveProp,
+  useResponsiveProp,
+} from "@jpmorganchase/uitk-lab/src/utils";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
