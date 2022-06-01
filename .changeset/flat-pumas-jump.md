@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-core": minor
 ---
 
-Added FlexItem, FlexLayout, FlowLayout, GridItem, GridLayout, and StackLayout components
+Moved FlexItem, FlexLayout, FlowLayout, GridItem, GridLayout, and StackLayout components from lab to core
