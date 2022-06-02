@@ -1,10 +1,13 @@
 import "@testing-library/cypress/add-commands";
-import { mount as cypressMount } from "@cypress/react";
+import {
+  mount as cypressMount,
+  MountReturn,
+  MountOptions,
+} from "cypress/react";
 import "cypress-axe";
 import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
-import { MountOptions, MountReturn } from "@cypress/react/dist/mount";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { AnnouncementListener } from "./AnnouncementListener";
 
@@ -78,7 +81,7 @@ Cypress.Commands.add(
     cy.injectAxe();
     cy.checkA11y(
       //So the region rule does not have to be disabled globally
-      "#__cy_root",
+      "[data-cy-root]",
       options,
       (a11yErrors) => {
         // Don't output the violations twice

@@ -3,7 +3,6 @@
     "optimizeDeps": {
       "include": [
         "@cypress/code-coverage/support",
-        "@cypress/react",
         "@floating-ui/react-dom-interactions",
         "@storybook/addon-docs",
         "@storybook/addon-links/react",
