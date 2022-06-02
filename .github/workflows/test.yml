@@ -90,13 +90,8 @@ jobs:
         run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
       - name: Build packages
         run: yarn run build
-      - name: Cypress Core Components
-        uses: cypress-io/github-action@v3
+      - name: Cypress Components
+        uses: cypress-io/github-action@v4
         with:
           install: false
-          command: yarn run test:core-components
-      - name: Cypress Lab Components
-        uses: cypress-io/github-action@v3
-        with:
-          install: false
-          command: yarn run test:lab-components
+          command: yarn run test:components
