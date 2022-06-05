@@ -7,6 +7,9 @@
     "**/*.css",
     "**/*.css.js"
   ],
+  "devDependencies": {
+    "@types/react-window": "^1.8.2"
+  },
   "peerDependencies": {
     "@types/react": ">=16.8.6",
     "react": ">=16.8.0",
