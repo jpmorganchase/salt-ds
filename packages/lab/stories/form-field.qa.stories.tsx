@@ -19,20 +19,28 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
           gap: "4px",
         }}
       >
-        <FormField label="Default Form Field description label">
+        <FormField
+          label="Default Form Field description label"
+          className="backwardsCompat"
+        >
           <Input value="Value" />
         </FormField>
 
         <FormField
           label="Default Form Field description label"
-          className="uitkEmphasisHigh"
+          className="uitkEmphasisHigh backwardsCompat"
         >
           <Input value="Value" />
         </FormField>
-        <FormField label="Label aligned left" labelPlacement="left">
+        <FormField
+          label="Label aligned left"
+          labelPlacement="left"
+          className="backwardsCompat"
+        >
           <Input value="Value" />
         </FormField>
         <FormField
+          className="backwardsCompat"
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="warning"
@@ -43,7 +51,7 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="warning"
-          className="uitkEmphasisHigh"
+          className="uitkEmphasisHigh backwardsCompat"
         >
           <Input />
         </FormField>
@@ -52,11 +60,12 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="warning"
-          className="uitkEmphasisLow"
+          className="uitkEmphasisLow backwardsCompat"
         >
           <Input />
         </FormField>
         <FormField
+          className="backwardsCompat"
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="error"
@@ -67,7 +76,7 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="error"
-          className="uitkEmphasisHigh"
+          className="uitkEmphasisHigh backwardsCompat"
         >
           <Input />
         </FormField>
@@ -76,7 +85,7 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
           helperText="Warning helper text"
           label="Warning Form Field"
           validationState="error"
-          className="uitkEmphasisLow"
+          className="uitkEmphasisLow backwardsCompat"
         >
           <Input />
         </FormField>

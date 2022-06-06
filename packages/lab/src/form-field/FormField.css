@@ -17,16 +17,16 @@
 }
 
 /* above, if `fillWidth={true}` */
-.uitk-density-touch .uitkFormField-fullWidth {
+.uitk-density-touch {
   --form-field-helper-text-margin-top: 5px;
 }
-.uitk-density-low .uitkFormField-fullWidth {
+.uitk-density-low {
   --form-field-helper-text-margin-top: 5px;
 }
-.uitk-density-medium .uitkFormField-fullWidth {
-  --form-field-helper-text-margin-top: 3px;
+.uitk-density-medium {
+  --form-field-helper-text-margin-top: 2px;
 }
-.uitk-density-high .uitkFormField-fullWidth {
+.uitk-density-high {
   --form-field-helper-text-margin-top: 3px;
 }
 
@@ -88,6 +88,7 @@
 .uitkFormField-withHelperText {
   /* Setting Helper Text API */
   --uitkFormFieldHelperText-height: var(--uitk-text-lineHeight);
+  --uitkFormActivationIndicator-offsetBottom: calc(var(--form-field-helper-text-margin-top) + var(--uitkFormFieldHelperText-height));
 }
 
 /* Class applied to the root element if `disabled={true}` */
@@ -158,7 +159,29 @@
 
 .uitkFormField > * {
   grid-column-start: 1;
-  grid-column-end: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.uitkFormField-labelLeft > * {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.uitkFormField > .uitkFormLabel {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.uitkFormField > .uitkFormActivationIndicator {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.uitkFormField > .uitkFormFieldHelperText {
+  grid-row-start: 4;
+  grid-row-end: 5;
 }
 
 .uitkFormLabel ~ * {
@@ -207,7 +230,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: calc(0px - var(--uitkFormActivationIndicator-size) + 1px);
+  bottom: calc(0px - var(--uitkFormActivationIndicator-size));
   border-color: var(--form-field-focus-outline-color);
   border-style: var(--form-field-focus-outline-style);
   border-width: var(--form-field-focus-outline-width);

@@ -1,13 +1,18 @@
 .uitkFormActivationIndicator {
+  height: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.uitkFormActivationIndicator-bar {
+  bottom: 0px;
   border-color: var(--uitkFormActivationIndicator-color, var(--uitk-editable-borderColor));
   border-bottom-width: var(--uitkFormActivationIndicator-size, var(--uitk-editable-borderWidth));
   border-bottom-style: var(--uitkFormActivationIndicator-style, var(--uitk-editable-borderStyle));
-  height: auto;
+  height: 0;
   opacity: var(--uitkFormActivationIndicator-opacity, 1);
-  width: 100%;
-  /* We don't want the activation indicator to increase height of it's container */
   position: absolute;
-  bottom: var(--uitkFormFieldHelperText-height, 0px);
+  width: 100%;
 }
 
 .uitkFormActivationIndicator-icon {
