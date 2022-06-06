@@ -89,7 +89,9 @@ interface AnchorTextProps extends TextPropsBase {
   target?: string;
 }
 
-export type TextProps<T> = T extends "a" ? AnchorTextProps : TextPropsBase;
+export type TextProps<T = "div"> = T extends "a"
+  ? AnchorTextProps
+  : TextPropsBase;
 
 export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
   function Text(props, ref) {
