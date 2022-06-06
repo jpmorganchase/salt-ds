@@ -1,8 +1,6 @@
-import {
-  Breakpoints,
-  useBreakpoints,
-  useViewport,
-} from "@jpmorganchase/uitk-core";
+import { Breakpoints } from "../breakpoints";
+import { useBreakpoints } from "../toolkit-provider";
+import { useViewport } from "../viewport";
 
 type BreakpointProp<T> = {
   [K in keyof Breakpoints]?: T;
