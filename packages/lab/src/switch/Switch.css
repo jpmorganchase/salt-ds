@@ -43,16 +43,16 @@
   z-index: 0;
 }
 
-/* Styles applied to outer ControlLabel component */
-.uitkSwitch-label {
+.uitkSwitch {
   --switch-label-color: var(--uitk-text-secondary-foreground);
   --switch-checked-track-color: var(--uitk-selectable-background-selected);
-  --switch-thumb-background: var(--uitk-selectable-primary-foreground-selected);
+  --switch-thumb-background: var(--uitk-selectable-foreground-selected);
   --switch-track-color: var(--uitk-selectable-borderColor);
   --switch-track-color-hover: var(--uitk-selectable-borderColor-hover);
   --switch-checked-icon-color: var(--uitk-selectable-background-selected);
 }
 
+/* Styles applied to outer ControlLabel component */
 .uitkSwitch-label {
   position: relative;
   margin-left: 0;
@@ -189,4 +189,9 @@
 .uitkSwitch-disabled .uitkSwitch-track,
 .uitkSwitch-disabled:hover .uitkSwitch-track {
   opacity: var(--uitk-opacity-foreground);
+}
+
+.uitkSwitch-disabled,
+.uitkSwitch-disabled:hover {
+  --switch-thumb-background: var(--uitk-selectable-foreground-selectedDisabled);
 }
