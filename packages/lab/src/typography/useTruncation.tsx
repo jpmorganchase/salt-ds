@@ -1,7 +1,6 @@
-import { useState, useCallback, useRef, ForwardedRef } from "react";
-import { useIsomorphicLayoutEffect, debounce } from "@jpmorganchase/uitk-core";
-import { TextProps } from "@jpmorganchase/uitk-lab";
-
+import { debounce, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { ForwardedRef, useCallback, useRef, useState } from "react";
+import { TextProps } from "../typography";
 import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
 

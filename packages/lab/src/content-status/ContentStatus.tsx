@@ -1,24 +1,19 @@
 import {
-  forwardRef,
-  ForwardedRef,
-  HTMLAttributes,
-  useEffect,
-  MouseEvent,
-  Ref,
-} from "react";
-import cx from "classnames";
-import {
   Button,
   makePrefixer,
   useAriaAnnouncer,
 } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
 import {
-  CircularProgressProps,
-  SpinnerProps,
-  useId,
-} from "@jpmorganchase/uitk-lab";
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  MouseEvent,
+  Ref,
+  useEffect,
+} from "react";
+import { CircularProgressProps, SpinnerProps, useId } from "../";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
-
 import "./ContentStatus.css";
 
 const withBaseName = makePrefixer("uitkContentStatus");
