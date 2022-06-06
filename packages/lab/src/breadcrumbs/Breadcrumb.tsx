@@ -1,7 +1,7 @@
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import classnames from "classnames";
 import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Div } from "@jpmorganchase/uitk-lab";
+import { Div } from "../typography";
 import { TooltipProps } from "../tooltip";
 import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
