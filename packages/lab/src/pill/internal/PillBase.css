@@ -50,7 +50,7 @@
   font-size: var(--uitkPill-font-size, var(--uitk-text-help-fontSize));
   height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letter-spacing, 0);
-  line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkPill-line-height, var(--uitk-typography-lineHeight));
   max-width: var(--uitkPill-max-width, 160px);
   min-width: var(--uitkPill-min-width, 40px);
   min-height: var(--uitkPill-min-height, var(--uitk-text-minHeight));

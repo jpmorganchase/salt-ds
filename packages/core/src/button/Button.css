@@ -111,7 +111,7 @@
   justify-content: center;
   font-size: var(--uitkButton-font-size, var(--uitk-text-fontSize));
   font-family: var(--uitkButton-font-family, var(--uitk-typography-fontFamily));
-  line-height: var(--uitkButton-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkButton-line-height, var(--uitk-typography-lineHeight));
   letter-spacing: var(--uitkButton-letter-spacing, var(--uitk-actionable-letterSpacing));
   text-transform: var(--uitkButton-text-transform, var(--uitk-actionable-textTransform));
   padding: 0 var(--uitkButton-padding, var(--uitk-size-unit));
