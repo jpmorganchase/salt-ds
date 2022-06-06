@@ -54,16 +54,17 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           truncate
           maxRows={1}
           tooltipText={tooltipTitle}
-          className={withBaseName("currentLevel")}
+          className={classnames(
+            withBaseName(),
+            className,
+            withBaseName("currentLevel")
+          )}
+          styleAs="label"
         >
           {children}
         </Div>
       ) : (
-        <Link
-          truncate
-          maxRows={1}
-          tooltipText={tooltipTitle}
-          {...props}
+        <div
           className={classnames(
             withBaseName(),
             className,
@@ -74,8 +75,18 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           )}
         >
           {Icon && <Icon className={withBaseName("icon")} />}
-          {hasChildren && children}
-        </Link>
+          {hasChildren && (
+            <Link
+              truncate
+              maxRows={1}
+              tooltipText={tooltipTitle}
+              styleAs="label"
+              {...props}
+            >
+              {children}
+            </Link>
+          )}
+        </div>
       );
 
     const content = getDefaultBreadcrumb();

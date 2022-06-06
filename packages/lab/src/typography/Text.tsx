@@ -72,7 +72,7 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
   /**
    * Match styling to a specified heading
    */
-  styleAs?: "h1" | "h2" | "h3" | "h4";
+  styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
   /**
    * A string to indicate the link url.
    * To be used when elementType="a"
