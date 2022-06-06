@@ -18,8 +18,8 @@
 }
 
 .uitkToolbarField:not([data-overflow-indicator]) {
-  --uitkButton-font-size: 0;
-  --uitkButton-letter-spacing: 0;
+  --uitkButton-fontSize: 0;
+  --uitkButton-letterSpacing: 0;
 }
 
 .uitkToolbar > .Responsive-inner {

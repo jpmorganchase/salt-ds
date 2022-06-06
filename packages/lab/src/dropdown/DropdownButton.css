@@ -1,12 +1,12 @@
 .uitkDropdownButton {
-  --uitkButton-text-transform: none;
+  --uitkButton-textTransform: none;
   --uitkButton-secondary-background-hover: var(--uitk-actionable-secondary-background);
   --uitkButton-secondary-background-active: var(--uitk-actionable-secondary-background);
   --uitkButton-secondary-text-color-active: var(--uitk-actionable-secondary-foreground);
 
   /* Fonts, Text */
   --uitkButton-secondary-font-weight: var(--uitk-typography-weight-medium);
-  --uitkButton-text-align: left;
+  --uitkButton-textAlign: left;
 }
 
 .uitkDropdownButton:active {
@@ -23,7 +23,7 @@
 }
 
 .uitkDropdownButton-content {
-  align-items: var(--uitkButton-align-items, center);
+  align-items: var(--uitkButton-alignItems, center);
   flex: 1;
   width: 100%;
   display: flex;
