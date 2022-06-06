@@ -3,11 +3,11 @@
   --badge-content-text-color: var(--uitkBadge-content-text-color, var(--uitk-accent-foreground));
   --badge-content-icon-color: var(--uitkBadge-content-icon-color, var(--uitk-accent-background));
   /* Font, Typography */
-  --badge-children-font-family: var(--uitk-typography-font-family);
-  --badge-children-line-height: var(--uitk-text-line-height);
-  --badge-children-font-size: var(--uitk-text-font-size);
+  --badge-children-font-family: var(--uitk-typography-fontFamily);
+  --badge-children-line-height: var(--uitk-text-lineHeight);
+  --badge-children-font-size: var(--uitk-text-fontSize);
   --badge-content-font-weight: var(--uitk-typography-weight-bold);
-  --badge-content-font-size: var(--uitk-text-caption-font-size);
+  --badge-content-font-size: var(--uitk-text-caption-fontSize);
   --badge-content-border-radius: 16px;
   --badge-content-line-height: 15px;
   --badge-content-padding: 0px 4px;

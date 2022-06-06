@@ -8,7 +8,7 @@
 
 /* TODO: Design need to align characteristics for CalendarDay */
 .uitkCalendarDay {
-  --calendar-day-text-color: var(--uitk-text-primary-color);
+  --calendar-day-text-color: var(--uitk-text-primary-foreground);
   --calendar-day-background: var(--uitk-selectable-background);
   --calendar-day-background-hover: var(--uitk-selectable-background-hover);
   --calendar-day-text-color-hover: var(--uitk-selectable-foreground-hover);
@@ -17,7 +17,7 @@
   --calendar-day-blocked-cursor: var(--uitk-selectable-cursor-disabled);
   --calendar-day-blocked-icon-color: var(--uitk-status-error-foreground);
   --calendar-day-blocked-background: var(--calendar-day-background);
-  --calendar-day-unselectable-text-color: var(--uitk-text-secondary-color-disabled);
+  --calendar-day-unselectable-text-color: var(--uitk-text-secondary-foreground-disabled);
   --calendar-day-unselectable-background: var(--calendar-day-background);
   --calendar-day-unselectable-cursor: var(--uitk-selectable-cursor-disabled);
 
@@ -45,7 +45,7 @@
   /* Focus */
   --calendar-day-focused-outline: var(--uitk-focused-outline);
   --calendar-day-size: var(--uitk-size-base);
-  --calendar-day-font-size: var(--uitk-text-font-size);
+  --calendar-day-font-size: var(--uitk-text-fontSize);
 }
 
 .uitkCalendarDay {
@@ -64,7 +64,7 @@
 
 .uitkCalendarDay:focus-visible {
   outline: var(--calendar-day-focused-outline);
-  outline-offset: calc(0px - var(--uitk-focused-outline-width));
+  outline-offset: calc(0px - var(--uitk-focused-outlineWidth));
 }
 
 .uitkCalendarDay-outOfRange {

@@ -1,32 +1,17 @@
 .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-actionable-stroke);
-  --pill-checkbox-tick: var(--uitk-palette-neutral-secondary-foreground); /* TODO: Check token with design */
-}
-
-.uitkPill-checkbox-icon {
-  fill: none;
-  stroke: var(--pill-checkbox-stroke);
-  stroke-width: 1px;
-}
-
-.uitkPill-checkbox-icon-checked {
-  fill: none;
-  stroke: var(--pill-checkbox-stroke);
-  stroke-width: 2px;
-}
-
-.uitkPill-checkbox-icon-checked-tick {
-  fill: var(--pill-checkbox-tick);
-  stroke-width: 0;
+  --uitkCheckboxIcon-stroke: var(--uitk-actionable-stroke);
+  --uitkCheckboxIcon-solid-color: none;
+  --uitkCheckboxIcon-tick-color: var(--uitk-palette-neutral-secondary-foreground);
+  --uitkCheckboxIcon-checked-border-width: 1px;
 }
 
 /* Backwards compat styling to match TK1 */
 .uitk-light .backwardsCompat .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-color-grey-100);
-  --pill-checkbox-tick: var(--uitk-color-grey-300);
+  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-100);
+  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-300);
 }
 
 .uitk-dark .backwardsCompat .uitkPill-checkbox {
-  --pill-checkbox-stroke: var(--uitk-color-grey-80);
-  --pill-checkbox-tick: var(--uitk-color-grey-60);
+  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-80);
+  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-60);
 }

@@ -2,7 +2,7 @@
 .uitkPanel {
   background: var(--uitkPanel-background, var(--uitk-container-background-medium));
   box-sizing: border-box;
-  color: var(--uitkPanel-color, var(--uitk-text-primary-color));
+  color: var(--uitkPanel-color, var(--uitk-text-primary-foreground));
   height: var(--uitkPanel-height, auto);
   overflow: auto;
   padding: var(--uitkPanel-padding, calc(var(--uitk-size-unit) * 3));

@@ -18,4 +18,3 @@ export * from "./useLayoutEffectOnce";
 export * from "./useLayoutEffectSkipFirst";
 export * from "./useOverflowDetection";
 export * from "./usePrevious";
-export * from "./useResponsiveProp";

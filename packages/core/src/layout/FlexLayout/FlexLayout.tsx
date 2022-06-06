@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ResponsiveProp, useResponsiveProp } from "../../utils";
+import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
+
 import "./FlexLayout.css";
 import { LayoutDirection, LayoutSeparator } from "../types";
 

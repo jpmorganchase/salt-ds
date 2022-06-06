@@ -1,5 +1,5 @@
 .uitkThemeScopeLabel {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   color: var(--uitk-status-info-foreground);
   padding: 2px 0px;
 }

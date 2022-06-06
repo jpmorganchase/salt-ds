@@ -2,6 +2,11 @@ import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+} from "docs/components/LineBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Ratable" />
 
@@ -16,16 +21,25 @@ Components that can be rated.
 <Canvas>
   <Story name="All">
     <DocGrid>
-      <CursorBlock cursor="--uitk-ratable-cursor-active" />
       <CursorBlock cursor="--uitk-ratable-cursor-hover" />
+      <CursorBlock cursor="--uitk-ratable-cursor-active" />
+      <CursorBlock cursor="--uitk-ratable-cursor-undo" />
+      <LineBlock lineWidth="--uitk-ratable-borderWidth" />
+      <LineBlock lineWidth="--uitk-ratable-borderWidth-undo" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-ratable-borderStyle</LineBlockCode>
+      <LineBlockCell />
+      <LineBlockCode>--uitk-ratable-borderStyle-undo</LineBlockCode>
       <ColorBlock colorVar="--uitk-ratable-background" />
-      <ColorBlock colorVar="--uitk-ratable-background-active" />
       <ColorBlock colorVar="--uitk-ratable-background-hover" />
+      <ColorBlock colorVar="--uitk-ratable-background-active" />
+      <ColorBlock colorVar="--uitk-ratable-background-activeDisabled" />
       <ColorBlock colorVar="--uitk-ratable-background-undo" />
       <ColorBlock colorVar="--uitk-ratable-border" />
-      <ColorBlock colorVar="--uitk-ratable-border-active" />
       <ColorBlock colorVar="--uitk-ratable-border-hover" />
+      <ColorBlock colorVar="--uitk-ratable-border-active" />
       <ColorBlock colorVar="--uitk-ratable-border-undo" />
+      <ColorBlock colorVar="--uitk-ratable-border-disabled" />
     </DocGrid>
   </Story>
 </Canvas>

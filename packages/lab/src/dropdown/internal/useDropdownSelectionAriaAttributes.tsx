@@ -10,7 +10,7 @@ function isMultiSelect<T>(selectedItem?: T | T[]): selectedItem is T[] {
  * **/
 export function useDropdownSelectionAriaAttributes<T>(
   selectedItem?: T | T[],
-  source?: T[]
+  source?: ReadonlyArray<T>
 ) {
   return useMemo(() => {
     const ariaAttributes: Pick<

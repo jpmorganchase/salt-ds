@@ -67,7 +67,8 @@ describe("GIVEN a Pill", () => {
     );
     fireEvent.click(getByRole("checkbox"));
     expect(
-      container.querySelectorAll(".uitkPill-checkbox-icon-checked").length
+      container.querySelectorAll(".uitkPill-checkbox.uitkCheckboxIcon-checked")
+        .length
     ).toEqual(1);
   });
 

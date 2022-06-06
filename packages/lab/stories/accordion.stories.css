@@ -1,7 +1,7 @@
 .story-root {
   height: 600px;
   overflow-y: auto;
-  border: solid 1px var(--uitk-container-border-color-medium);
+  border: solid 1px var(--uitk-container-borderColor-medium);
   padding: var(--uitk-size-base);
 }
 
@@ -11,7 +11,7 @@
 
 .accordion-story-details {
   padding: var(--uitk-size-base);
-  border: solid 1px var(--uitk-text-primary-color);
+  border: solid 1px var(--uitk-text-primary-foreground);
   box-sizing: border-box;
 }
 

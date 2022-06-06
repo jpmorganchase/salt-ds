@@ -1,7 +1,7 @@
 .uitkAvatar {
   --avatar-background-color: var(--uitk-accent-background);
   --avatar-foreground-color: var(--uitk-accent-foreground);
-  --avatar-font-family: var(--uitk-typography-font-family);
+  --avatar-font-family: var(--uitk-typography-fontFamily);
 }
 
 .uitkAvatar {

@@ -1,14 +1,8 @@
 import { CSSProperties } from "react";
-import {
-  GridLayout,
-  GridItem,
-  Logo,
-  Avatar,
-  Card,
-} from "@jpmorganchase/uitk-lab";
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
+import { Avatar, Card } from "@jpmorganchase/uitk-lab";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 export default {
   title: "Layout/GridLayout",
@@ -300,7 +294,9 @@ const Footer: ComponentStory<typeof GridLayout> = (args) => {
         horizontalAlignment="center"
         verticalAlignment="center"
       >
-        <Logo src={PlaceholderLogo} appTitle="Toolkit" />
+        <p>
+          <strong>LOGO</strong> | Toolkit
+        </p>
         <p style={textStyles}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>

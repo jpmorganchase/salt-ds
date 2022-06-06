@@ -1,10 +1,4 @@
 .uitkMetricContent {
-  /* TODO: Design, dark used to be green 300 for up */
-  --metric-direction-up-color: var(--uitk-text-growth-indicator-up-color);
-  --metric-direction-down-color: var(--uitk-text-growth-indicator-down-color);
-}
-
-.uitkMetricContent {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -30,17 +24,17 @@
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
-  fill: var(--metric-direction-up-color);
+  fill: var(--uitk-differential-positive-foreground);
 }
 .uitkMetric-direction-up .uitkMetricContent-subvalue {
-  color: var(--metric-direction-up-color);
+  color: var(--uitk-differential-positive-foreground);
 }
 
 .uitkMetric-direction-down .uitkMetricContent-indicator {
-  fill: var(--metric-direction-down-color);
+  fill: var(--uitk-differential-negative-foreground);
 }
 .uitkMetric-direction-down .uitkMetricContent-subvalue {
-  color: var(--metric-direction-down-color);
+  color: var(--uitk-differential-negative-foreground);
 }
 
 .uitkMetric-align-left .uitkMetricContent {

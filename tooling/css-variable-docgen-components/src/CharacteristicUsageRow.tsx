@@ -1,17 +1,16 @@
 import { FC } from "react";
 import Markdown from "markdown-to-jsx";
 import { Name, Description, StyledTd } from "./common";
-import { Characteristic } from "./CharacteristicUsage";
 
 interface CharacteristicUsageRowProps {
-  row: Characteristic;
+  name: string;
+  tokens: string[];
 }
 
 export const CharacteristicUsageRow: FC<CharacteristicUsageRowProps> = (
   props
 ) => {
-  const { row } = props;
-  const { name, tokens } = row;
+  const { name, tokens } = props;
 
   return (
     <tr>

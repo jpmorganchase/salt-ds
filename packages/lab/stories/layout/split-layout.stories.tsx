@@ -1,13 +1,21 @@
 import { Button } from "@jpmorganchase/uitk-core";
-import {
-  FLEX_ALIGNMENT_BASE,
-  FlowLayout,
-  SplitLayout,
-} from "@jpmorganchase/uitk-lab";
+import { SplitLayout } from "@jpmorganchase/uitk-lab";
+import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexContent } from "./flex-item.stories";
 import { ExportIcon, ImportIcon } from "@jpmorganchase/uitk-icons";
-import { useMemo } from "react";
+import { HTMLAttributes, ReactNode, useMemo } from "react";
+
+interface ContentBlockProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  caption?: string;
+  classname?: string;
+}
+
+const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
+  <div className={classname || "layout-content"} {...rest}>
+    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
+  </div>
+);
 
 export default {
   title: "Layout/SplitLayout",
@@ -33,18 +41,18 @@ export default {
 const leftItem = (
   <FlowLayout>
     {Array.from({ length: 3 }, (_, index) => (
-      <FlexContent key={index}>{`item ${index + 1}`}</FlexContent>
+      <ContentBlock key={index}>{`item ${index + 1}`}</ContentBlock>
     ))}
   </FlowLayout>
 );
 
 const rightItem = (
   <FlowLayout>
-    <FlexContent>item 4</FlexContent>
-    <FlexContent>
+    <ContentBlock>item 4</ContentBlock>
+    <ContentBlock>
       Item
       <br />5
-    </FlexContent>
+    </ContentBlock>
   </FlowLayout>
 );
 
