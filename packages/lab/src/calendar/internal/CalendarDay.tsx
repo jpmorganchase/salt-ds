@@ -61,6 +61,9 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         dayProps.className,
         className
       ),
+      // FIXME: Temporary workaround for Chromatic to ignore today's difference
+      // @ts-ignore
+      "data-chromatic": today ? "ignore" : undefined,
     });
 
     const registerDayRef = useCallback(
