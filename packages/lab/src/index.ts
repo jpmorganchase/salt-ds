@@ -30,7 +30,6 @@ export * from "./menu-button";
 export * from "./metric";
 export * from "./overlay";
 export * from "./pagination";
-export * from "./panel";
 export * from "./pill";
 export * from "./popper";
 export * from "./portal";

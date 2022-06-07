@@ -1,25 +1,24 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 import "./Panel.stories.newapp-panel.css";
 
 export default {
-  title: "Lab/Panel",
+  title: "Core/Panel",
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 
 const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 
-export const Medium = Template.bind({});
-Medium.args = {
+export const MediumEmphasis = Template.bind({});
+MediumEmphasis.args = {
   children: "Lorem Ipsum",
   className: "uitkEmphasisMedium",
 };
 
-export const High = Template.bind({});
-High.args = {
+export const HighEmphasis = Template.bind({});
+HighEmphasis.args = {
   children: "Lorem Ipsum",
   className: "uitkEmphasisHigh",
 };
