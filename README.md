@@ -72,3 +72,8 @@ browsers, outlined in the table below.
 | ------------ | --------------- |
 | Firefox      | 38+             |
 | Chrome, Edge | last 2 versions |
+
+<br/>
+<a href="https://www.chromatic.com/"><picture><source srcset="/chromatic-light.png" media="(prefers-color-scheme: dark)"><img src="/chromatic-light.png" width="153" height="30" alt="Chromatic" /></picture></a>
+
+Thanks to [Chromatic](https://www.chromatic.com/) for providing the visual testing platform that helps us review UI changes and catch visual regressions.
