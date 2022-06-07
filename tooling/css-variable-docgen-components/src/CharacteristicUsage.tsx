@@ -22,7 +22,6 @@ export function CharacteristicUsage(
     main,
     "cssVariablesApi"
   );
-  console.log(cssVariablesApi);
 
   const characteristicTokenMap =
     getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
