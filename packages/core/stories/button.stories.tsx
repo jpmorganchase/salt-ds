@@ -187,7 +187,9 @@ const ButtonSet = (props: ButtonProps) => (
   </div>
 );
 
-export const CustomStylingExample = (props: { density: Density }) => {
+export const CustomStylingExample = (props: {
+  density: Density;
+}): JSX.Element => {
   const handleClick = () => {
     console.log("clicked");
   };

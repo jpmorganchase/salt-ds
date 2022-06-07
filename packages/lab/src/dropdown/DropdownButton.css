@@ -2,7 +2,7 @@
   --uitkButton-textTransform: none;
   --uitkButton-background-hover: var(--uitk-actionable-secondary-background);
   --uitkButton-background-active: var(--uitk-actionable-secondary-background);
-  --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
+  --uitkButton-textColor-active: var(--uitk-actionable-secondary-foreground);
 
   /* Fonts, Text */
   --uitkButton-label-fontWeight: var(--uitk-typography-weight-medium);
