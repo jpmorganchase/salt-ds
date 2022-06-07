@@ -18,7 +18,7 @@ export function createColorMap(
   const colorMap: Record<string, string> = {};
 
   jsonByScope.forEach((element) => {
-    if (["mode-all", "light", "dark"].includes(element.scope)) {
+    if (["mode-all"].includes(element.scope)) {
       for (const color of UITK_COLORS) {
         if (element.jsonObj.uitk.color[color]) {
           Object.keys(element.jsonObj.uitk.color[color]).forEach((key) => {

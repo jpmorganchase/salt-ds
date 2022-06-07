@@ -75,18 +75,20 @@ async function recurseDirectory(fileContents: string, dirHandle: any) {
 
       if (importURL) {
         const url = importURL[1];
-        const importedContents = await getImportedContents(url, dirHandle);
-        if (
-          UITK_CHARACTERISTICS.concat(UITK_FOUNDATIONS).indexOf(
-            url.split("/")[1].replace(".css", "")
-          ) !== -1
-        ) {
-          allContents += importedContents;
-        } else {
-          const subDirHandle = await dirHandle.getDirectoryHandle(
-            url.split("/")[0]
-          );
-          allContents += await recurseDirectory(importedContents, subDirHandle);
+        if (url.split("/").length > 1) {
+          const importedContents = await getImportedContents(url, dirHandle);
+          if (
+            UITK_CHARACTERISTICS.concat(UITK_FOUNDATIONS).indexOf(
+              url.split("/")[1].replace(".css", "")
+            ) !== -1
+          ) {
+            allContents += importedContents;
+          } else {
+            const subDirHandle = await dirHandle.getDirectoryHandle(
+              url.split("/")[0]
+            );
+            allContents += await recurseDirectory(importedContents, subDirHandle);
+          }
         }
       }
     }

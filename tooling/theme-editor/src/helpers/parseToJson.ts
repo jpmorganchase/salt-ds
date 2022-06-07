@@ -117,7 +117,7 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
         if (
           (tp.children.length === 0 || comma) &&
           tp.label !==
-            token[Object.keys(token)[Object.keys(token).length - 1]].label
+          token[Object.keys(token)[Object.keys(token).length - 1]].label
         ) {
           stringJSON += "},";
         } else {
@@ -129,6 +129,7 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
 
   // for each css selector
   for (const [id, scopeAndJSON] of Object.entries(tokenTree)) {
+    console.log(scopeAndJSON)
     var stringJSON = "{";
     var comma = false;
     if (Object.keys(scopeAndJSON.children).length > 1) {
@@ -140,6 +141,7 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
       scope: scopeAndJSON.label,
       jsonObj: JSON.parse(stringJSON),
     });
+    console.log(stringJSON)
   }
   return scopeToJSONMap;
 }

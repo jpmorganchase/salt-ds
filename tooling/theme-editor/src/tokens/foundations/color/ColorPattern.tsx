@@ -53,7 +53,7 @@ export const ColorPattern = (props: ColorPatternProps): ReactElement => {
               colors ? setSearchParams({ open: colors }) : setSearchParams({});
             }}
           >
-            <AccordionSummary>{capitalize(color) as string}</AccordionSummary>
+            <AccordionSummary>{capitalize(color)}</AccordionSummary>
             <AccordionDetails>
               {Object.keys(props.values[color]).map(function (node) {
                 const [values, fieldName] =

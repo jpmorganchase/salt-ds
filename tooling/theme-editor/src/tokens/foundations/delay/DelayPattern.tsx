@@ -3,11 +3,11 @@ import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
-import "./IconPattern.css";
+import "./DelayPattern.css";
 
-const withBaseName = makePrefixer("uitkIconPattern");
+const withBaseName = makePrefixer("uitkDelayPattern");
 
-export interface IconPatternProps {
+export interface DelayPatternProps {
   uitkColorOverrides?: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
@@ -17,9 +17,10 @@ export interface IconPatternProps {
   values: JSONObj;
 }
 
-export const IconPattern = (props: IconPatternProps): ReactElement => {
+export const DelayPattern = (props: DelayPatternProps): ReactElement => {
   return (
     <div className={cn(withBaseName())}>
+      <div className={cn(withBaseName("label"))}>Durations</div>
       {props.values &&
         Object.keys(props.values).map(function (node) {
           const [values, fieldName] =

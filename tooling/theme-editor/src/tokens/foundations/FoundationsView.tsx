@@ -22,12 +22,13 @@ interface FoundationsViewProps {
 
 export const foundationPathnames = [
   "/foundations/color",
-  "/foundations/icon",
+  "/foundations/delay",
+  "/foundations/opacity",
   "/foundations/shadow",
   "/foundations/size",
-  "/foundations/spacing",
   "/foundations/typography",
   "/foundations/zindex",
+  "/foundations/palette",
 ];
 
 export const FoundationsView = (props: FoundationsViewProps): ReactElement => {

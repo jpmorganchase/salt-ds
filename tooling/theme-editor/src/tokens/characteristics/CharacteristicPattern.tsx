@@ -54,9 +54,7 @@ export const CharacteristicPattern = (
           : setSearchParams({});
       }}
     >
-      <AccordionSummary>
-        {capitalize(props.patternName) as string}
-      </AccordionSummary>
+      <AccordionSummary>{capitalize(props.patternName)}</AccordionSummary>
       <AccordionDetails>
         {props.values &&
           Object.keys(props.values).map((scope) => {

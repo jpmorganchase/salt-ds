@@ -1,0 +1,3 @@
+.uitkTypographyPattern {
+  padding: calc(2 * var(--uitk-size-unit));
+}

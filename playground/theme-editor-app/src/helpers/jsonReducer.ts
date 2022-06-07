@@ -52,7 +52,6 @@ const replaceJSONPaths = (
   positionInPath: number
 ): JSONObj => {
   const newJSON = {};
-
   Object.keys(jsonObj).forEach((path) => {
     if (pathToUpdate?.split("-")[positionInPath] === path) {
       if (pathToUpdate?.split("-").length - 1 === positionInPath) {

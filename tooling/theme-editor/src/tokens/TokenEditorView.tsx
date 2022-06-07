@@ -18,6 +18,7 @@ interface EditorViewProps {
 
 export const EditorView = (props: EditorViewProps): JSX.Element => {
   const mode = props.currentMode === ThemeMode.LIGHT ? "LIGHT" : "DARK";
+
   const jsonInCurrentScope = useMemo<JSONByScope[]>(() => {
     return props.jsonByScope.filter(
       (s) =>
@@ -29,8 +30,7 @@ export const EditorView = (props: EditorViewProps): JSX.Element => {
           "DENSITY-HIGH",
         ].includes(s.scope.toUpperCase()) ||
         s.scope.toUpperCase() === "DENSITY-ALL" ||
-        s.scope.toUpperCase() === "MODE-ALL" ||
-        s.scope.toUpperCase().includes("EMPHASIS")
+        s.scope.toUpperCase() === "MODE-ALL"
     );
   }, [props.jsonByScope, mode]);
 

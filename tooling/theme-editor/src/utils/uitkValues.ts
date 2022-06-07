@@ -2,8 +2,7 @@ export const UITK_CHARACTERISTICS = [
   "accent",
   "actionable",
   "container",
-  "delay",
-  "disabled",
+  "differential",
   "draggable",
   "dropTarget",
   "editable",
@@ -21,11 +20,11 @@ export const UITK_CHARACTERISTICS = [
 
 export const UITK_FOUNDATIONS = [
   "color",
-  "fade",
-  "icon",
+  "delay",
+  "opacity",
   "shadow",
   "size",
-  "spacing",
   "typography",
   "zindex",
+  "palette"
 ];

@@ -23,7 +23,11 @@ export const LightDarkToggle = (props: {
 
   return (
     <div className={cn(withBaseName())}>
-      <ToggleButtonGroup onChange={onModeChanged} selectedIndex={selectedIndex}>
+      <ToggleButtonGroup
+        disableTooltip
+        onChange={onModeChanged}
+        selectedIndex={selectedIndex}
+      >
         <ToggleButton>Light</ToggleButton>
         <ToggleButton>Dark</ToggleButton>
       </ToggleButtonGroup>

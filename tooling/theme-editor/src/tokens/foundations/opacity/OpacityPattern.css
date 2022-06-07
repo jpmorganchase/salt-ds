@@ -1,0 +1,10 @@
+.uitkOpacityPattern {
+  padding: calc(2 * var(--uitk-size-unit));
+}
+
+.uitkOpacityPattern-label {
+  color: var(--uitk-text-primary-color);
+  padding: 2px 0px;
+  font-size: 12px;
+  font-weight: var(--uitk-typography-weight-semiBold);
+}

@@ -35,7 +35,7 @@ export const InnerFieldLabel = ({
   isEmphasis = false,
 }: InnerFieldLabelProps): ReactElement => {
   const tokenPositionInPath = fieldName.split("-").length;
-  let label = getLabel(fieldName, isEmphasis);
+  const label = getLabel(fieldName, isEmphasis);
 
   if (
     (Object.keys(remainingJSON).length === 1 &&
@@ -58,7 +58,7 @@ export const InnerFieldLabel = ({
         [withBaseName("small")]: !size && tokenPositionInPath > 2,
       })}
     >
-      {label === "cta" ? "CTA" : (capitalize(label) as string)}
+      {label === "cta" ? "CTA" : capitalize(label)}
     </div>
   );
 };

@@ -237,8 +237,7 @@ var UITK_CHARACTERISTICS = [
   "accent",
   "actionable",
   "container",
-  "delay",
-  "disabled",
+  "differential",
   "draggable",
   "dropTarget",
   "editable",
@@ -256,13 +255,13 @@ var UITK_CHARACTERISTICS = [
 
 var UITK_FOUNDATIONS = [
   "color",
-  "fade",
-  "icon",
+  "delay",
+  "opacity",
   "shadow",
   "size",
-  "spacing",
   "typography",
   "zindex",
+  "palette"
 ];
 
 async function recurseDirectory(dirName: string, fileContents: string) {
