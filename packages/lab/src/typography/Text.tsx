@@ -16,7 +16,7 @@ import "./Text.css";
 
 const withBaseName = makePrefixer("uitkText");
 
-interface TextPropsBase extends HTMLAttributes<HTMLElement> {
+interface TextPropsBase<C extends ElementType> {
   /**
    * Represents the semantic element tag name as a string.
    * Defaults to 'div'
@@ -75,23 +75,8 @@ interface TextPropsBase extends HTMLAttributes<HTMLElement> {
   styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
 }
 
-interface AnchorTextProps extends TextPropsBase {
-  /**
-   * A string to indicate the link url.
-   * To be used when elementType="a"
-   */
-  href?: string;
-  /**
-   * A string to indicate the link target
-   * Creates an Icon to the right of link if '_blank'.
-   * To be used when elementType="a"
-   */
-  target?: string;
-}
-
-export type TextProps<T = "div"> = T extends "a"
-  ? AnchorTextProps
-  : TextPropsBase;
+export type TextProps<C extends React.ElementType> = TextPropsBase<C> &
+  Omit<React.ComponentPropsWithoutRef<C>, keyof TextPropsBase<C>>;
 
 export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
   function Text(props, ref) {

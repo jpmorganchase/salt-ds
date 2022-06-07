@@ -9,7 +9,7 @@ const withBaseName = makePrefixer("uitkText");
 
 export const HelpText = forwardRef<
   HTMLDivElement,
-  Omit<TextProps, "elementType">
+  Omit<TextProps<"div">, "elementType">
 >(function HelpText({ children, className, ...rest }, ref) {
   return (
     <Text
