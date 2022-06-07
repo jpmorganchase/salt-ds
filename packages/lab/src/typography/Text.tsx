@@ -1,4 +1,9 @@
-import { ElementType, CSSProperties, forwardRef } from "react";
+import {
+  ElementType,
+  ComponentPropsWithoutRef,
+  CSSProperties,
+  forwardRef,
+} from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
@@ -10,7 +15,7 @@ import "./Text.css";
 
 const withBaseName = makePrefixer("uitkText");
 
-interface TextPropsBase<C extends ElementType> {
+interface TextPropsBase<E extends ElementType> {
   /**
    * Represents the semantic element tag name as a string.
    * Defaults to 'div'
@@ -69,8 +74,8 @@ interface TextPropsBase<C extends ElementType> {
   styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
 }
 
-export type TextProps<C extends React.ElementType> = TextPropsBase<C> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof TextPropsBase<C>>;
+export type TextProps<E extends ElementType> = TextPropsBase<E> &
+  Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
 export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
   function Text(props, ref) {
