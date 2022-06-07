@@ -6,7 +6,7 @@
   --uitkCard-border-radius: 20px;
   --uitkCard-border-color: var(--uitk-color-white);
   --uitkCard-border-color-hover: var(--uitk-color-grey-900);
-  --uitkCard-box-shadow: var(--uitk-shadow-1);
+  --uitkCard-box-shadow: var(--uitk-overlayable-shadow-border-region);
 }
 
 .uitk-newapp.uitkPanel {

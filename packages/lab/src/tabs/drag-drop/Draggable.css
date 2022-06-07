@@ -1,6 +1,6 @@
 .uitkDraggable {
   background-color: transparent;
-  box-shadow: var(--uitk-shadow-4);
+  box-shadow: var(--uitk-overlayable-shadow-drag);
   cursor: move;
   position: absolute;
 }
