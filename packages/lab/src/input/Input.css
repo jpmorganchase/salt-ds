@@ -130,5 +130,6 @@
 
 /* Style applied if `inFormField={true}` */
 .uitkInput-formField {
+  min-width: var(--uitkFormField-input-min-width, 0px);
   width: 100%;
 }

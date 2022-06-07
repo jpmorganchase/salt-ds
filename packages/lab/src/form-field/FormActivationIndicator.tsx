@@ -1,6 +1,7 @@
 import { SVGAttributes } from "react";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+
 import { FormFieldProps } from "./FormField";
-import { classBase } from "./constant";
 
 import "./FormActivationIndicator.css";
 
@@ -30,6 +31,8 @@ const WarningIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   );
 };
 
+const withBaseName = makePrefixer("uitkFormActivationIndicator");
+
 const ActivationIndicatorIcon = ({
   validationState,
   ...restSvgProps
@@ -55,8 +58,8 @@ export const FormActivationIndicator: React.FC<
   const rootClass = "uitkFormActivationIndicator";
 
   return (
-    <>
-      <div className={rootClass}>
+    <div className={withBaseName()}>
+      <div className={withBaseName("bar")}>
         {hasIcon && validationState && (
           <ActivationIndicatorIcon
             className={`${rootClass}-icon`}
@@ -64,6 +67,6 @@ export const FormActivationIndicator: React.FC<
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
