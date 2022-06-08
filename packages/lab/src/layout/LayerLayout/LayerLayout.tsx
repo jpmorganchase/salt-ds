@@ -69,7 +69,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       if (open && !showComponent) {
         setShowComponent(true);
       }
-    }, [open, showComponent]);
+    }, [open, showComponent, disableAnimations]);
 
     const fullScreen = useChangeView(fullScreenAtBreakpoint);
 
