@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import cx from "classnames";
-import { Spinner } from "@jpmorganchase/uitk-lab";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import { ReactElement } from "react";
+import { Spinner } from "../../spinner";
 import { ContentStatusProps } from "../ContentStatus";
 
 const withBaseName = makePrefixer("uitkContentStatus");

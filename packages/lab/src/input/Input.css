@@ -26,7 +26,7 @@
   font-size: var(--uitkInput-font-size, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
   letter-spacing: var(--uitkInput-letter-spacing, 0);
-  line-height: var(--uitk-typography-line-height);
+  line-height: var(--uitk-typography-lineHeight);
   min-height: var(--uitkInput-min-height, var(--uitk-size-base));
   min-width: var(--uitkInput-min-width, 8em);
   padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
@@ -130,5 +130,6 @@
 
 /* Style applied if `inFormField={true}` */
 .uitkInput-formField {
+  min-width: var(--uitkFormField-input-min-width, 0px);
   width: 100%;
 }

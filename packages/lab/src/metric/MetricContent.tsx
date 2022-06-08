@@ -1,10 +1,9 @@
-import { ComponentType, forwardRef, HTMLAttributes } from "react";
+import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Div, Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
-import { ArrowUpIcon, ArrowDownIcon } from "@jpmorganchase/uitk-icons";
+import { ComponentType, forwardRef, HTMLAttributes } from "react";
+import { Div, Figure1, Figure2, Figure3 } from "../typography";
 import { useMetricContext } from "./internal";
-
 import "./MetricContent.css";
 
 export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {

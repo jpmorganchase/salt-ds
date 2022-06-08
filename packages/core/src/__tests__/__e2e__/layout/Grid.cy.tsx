@@ -10,33 +10,23 @@ const {
   ToolkitGridLayoutResponsiveView,
 } = composedStories;
 
-const testColumnsNumber = (columns: number) =>
-  new RegExp(`^(\\d*\\.?\\d*px *){${columns}}$`);
+const testElementsNumber = (elements: number) =>
+  new RegExp(`^(\\d*\\.?\\d*px *){${elements}}$`);
 
 describe("GIVEN a Grid", () => {
   checkAccessibility(composedStories);
 
-  const columnsWidth = "102px ";
-  const rowsHeight = "73px ";
-
   describe("WHEN no props are provided", () => {
-    const columns = 12;
-    const rows = 1;
-
     it("THEN it should render 12 columns and 1 row", () => {
       cy.mount(<ToolkitGridLayout />);
 
-      cy.get(".uitkGridLayout").should(
-        "have.css",
-        "grid-template-columns",
-        columnsWidth.repeat(columns).trim()
-      );
+      cy.get(".uitkGridLayout")
+        .invoke("css", "grid-template-columns")
+        .should("match", testElementsNumber(12));
 
-      cy.get(".uitkGridLayout").should(
-        "have.css",
-        "grid-template-rows",
-        rowsHeight.repeat(rows).trim()
-      );
+      cy.get(".uitkGridLayout")
+        .invoke("css", "grid-template-rows")
+        .should("match", testElementsNumber(1));
     });
 
     it("THEN it should render with a default gap", () => {
@@ -55,17 +45,13 @@ describe("GIVEN a Grid", () => {
     it("THEN it should render multiple columns and rows", () => {
       cy.mount(<ToolkitGridLayoutMultipleRows columns={columns} rows={rows} />);
 
-      cy.get(".uitkGridLayout").should(
-        "have.css",
-        "grid-template-columns",
-        columnsWidth.repeat(columns).trim()
-      );
+      cy.get(".uitkGridLayout")
+        .invoke("css", "grid-template-columns")
+        .should("match", testElementsNumber(columns));
 
-      cy.get(".uitkGridLayout").should(
-        "have.css",
-        "grid-template-rows",
-        rowsHeight.repeat(rows).trim()
-      );
+      cy.get(".uitkGridLayout")
+        .invoke("css", "grid-template-rows")
+        .should("match", testElementsNumber(rows));
     });
   });
 
@@ -86,13 +72,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(12));
+          .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "232px"
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", testElementsNumber(1));
       }
     );
 
@@ -109,11 +93,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(12));
+          .should("match", testElementsNumber(12));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(4));
+          .should("match", testElementsNumber(4));
       }
     );
 
@@ -130,11 +114,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(2));
+          .should("match", testElementsNumber(2));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(2));
+          .should("match", testElementsNumber(2));
       }
     );
 
@@ -149,15 +133,13 @@ describe("GIVEN a Grid", () => {
           <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "232px"
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", testElementsNumber(1));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(4));
+          .should("match", testElementsNumber(4));
       }
     );
   });
@@ -189,13 +171,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(12));
+          .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-rows",
-          "232px"
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-rows")
+          .should("match", testElementsNumber(1));
       }
     );
 
@@ -214,11 +194,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(12));
+          .should("match", testElementsNumber(12));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(4));
+          .should("match", testElementsNumber(4));
       }
     );
 
@@ -237,11 +217,11 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
-          .should("match", testColumnsNumber(2));
+          .should("match", testElementsNumber(2));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(2));
+          .should("match", testElementsNumber(2));
       }
     );
 
@@ -258,15 +238,13 @@ describe("GIVEN a Grid", () => {
           </ToolkitProvider>
         );
 
-        cy.get(".uitkGridLayout").should(
-          "have.css",
-          "grid-template-columns",
-          "232px"
-        );
+        cy.get(".uitkGridLayout")
+          .invoke("css", "grid-template-columns")
+          .should("match", testElementsNumber(1));
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testColumnsNumber(4));
+          .should("match", testElementsNumber(4));
       }
     );
   });

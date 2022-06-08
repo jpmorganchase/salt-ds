@@ -1,9 +1,9 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-actionable-primary-font-weight: var(--uitk-typography-weight-bold);
+  --uitk-actionable-primary-fontWeight: var(--uitk-typography-weight-bold);
   --uitk-actionable-letterSpacing: 0.6px;
   --uitk-actionable-textTransform: uppercase;
-  --uitk-actionable-text-align: center;
+  --uitk-actionable-textAlign: center;
 }
 
 h1 {

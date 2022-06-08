@@ -72,6 +72,11 @@
   --uitk-text-caption-lineHeight-medium: 14px;
   --uitk-text-caption-lineHeight-high: 14px;
 
+  --uitk-text-caption-minHeight-touch: 16px;
+  --uitk-text-caption-minHeight-low: 14px;
+  --uitk-text-caption-minHeight-medium: 14px;
+  --uitk-text-caption-minHeight-high: 14px;
+
   /* Help text */
   --uitk-text-help-fontSize-touch: 12px;
   --uitk-text-help-fontSize-low: 11px;
@@ -150,6 +155,7 @@
 
   --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-touch);
   --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-touch);
+  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-touch);
 
   --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-touch);
   --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-touch);
@@ -173,6 +179,7 @@
 
   --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-low);
   --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-low);
+  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-low);
 
   --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-low);
   --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-low);
@@ -196,6 +203,7 @@
 
   --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-medium);
   --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-medium);
+  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-medium);
 
   --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-medium);
   --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-medium);
@@ -219,6 +227,7 @@
 
   --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-high);
   --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-high);
+  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-high);
 
   --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-high);
   --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-high);

@@ -24,9 +24,9 @@ import { FormHelperText, FormHelperTextProps } from "./FormHelperText";
 import { FormLabel, FormLabelProps } from "./FormLabel";
 import { NecessityIndicatorOptions } from "./NecessityIndicator";
 import { StatusIndicatorProps } from "./StatusIndicator";
+import { classBase } from "./constant";
 
 import "./FormField.css";
-import { classBase } from "./constant";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
@@ -238,7 +238,9 @@ export const FormField = forwardRef(
     const labelLeft = labelPlacement === "left";
     const isWarning = validationState === "warning";
     const isError = validationState === "error";
-    const focusClass = disableFocusRing ? "lowFocused" : "focused";
+    const focusClass = disableFocusRing
+      ? "lowFocused"
+      : "focused"; /* Low emphasis will override this */
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =
