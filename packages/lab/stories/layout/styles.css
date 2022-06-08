@@ -45,7 +45,7 @@
 
 .border-layout-custom-form label {
   min-width: 150px;
-  justify-content: flex-end;
+  text-align: right;
 }
 
 .border-layout-custom-form .uitkFormField-labelLeft {
