@@ -3179,7 +3179,7 @@ __metadata:
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
     axe-core: ^4.3.5
-    chromatic: ^6.5.4
+    chromatic: next
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
@@ -6429,6 +6429,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/webpack-env@npm:^1.17.0":
+  version: 1.17.0
+  resolution: "@types/webpack-env@npm:1.17.0"
+  checksum: 9ad4d208c4429c9427191d1f4c92e4c43e530384c17a6bc298acb89003fc47fcde1d8372e50acefa3061e9100e57fd9d616e96def875afd06c0c2afe508f298e
+  languageName: node
+  linkType: hard
+
 "@types/webpack-sources@npm:*":
   version: 3.2.0
   resolution: "@types/webpack-sources@npm:3.2.0"
@@ -9442,14 +9449,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^6.5.4":
-  version: 6.5.4
-  resolution: "chromatic@npm:6.5.4"
+"chromatic@npm:next":
+  version: 6.6.0-next.5
+  resolution: "chromatic@npm:6.6.0-next.5"
+  dependencies:
+    "@types/webpack-env": ^1.17.0
   bin:
     chroma: bin/main.cjs
     chromatic: bin/main.cjs
     chromatic-cli: bin/main.cjs
-  checksum: 79e036b305407115ca1bcd62f4b754f945dcf6c8392ba2369bb34998493dc0c32c1336663f9c46da742d8ee90720edd143d41df0a6ffd6563703a794c6817929
+  checksum: a17dbd1ba2f1dd6e9099d5b0367fa4a298863eb41f07c977d79ed3354acccf5a5c88c6d5239e363e675d06cf27479858e8b69013b06dc5840d49027d8e05e736
   languageName: node
   linkType: hard
 
