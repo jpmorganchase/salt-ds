@@ -67,10 +67,9 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       return style === "start" || style === "end" ? `flex-${style}` : style;
     };
 
-    const flexGap = useResponsiveProp(gap, 1);
+    const flexGap = useResponsiveProp(gap, 3);
     const flexDirection = useResponsiveProp(direction, "row");
     const flexWrap = useResponsiveProp(wrap, false);
-
     const flexLayoutStyles = {
       ...style,
       "--flex-layout-align": align && addPrefix(align),

@@ -35,12 +35,7 @@ const Template: ComponentStory<typeof GridLayout> = (args) => {
   );
 };
 export const ToolkitGridLayout = Template.bind({});
-ToolkitGridLayout.args = {
-  columns: 12,
-  rows: 1,
-  rowGap: 1,
-  columnGap: 1,
-};
+ToolkitGridLayout.args = {};
 
 const DefaultGridLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
   return (
