@@ -8,10 +8,22 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof DeckLayout>;
 
+const deckCards = (slides) => Array.from({ length: slides }, (_, index) => (
+  <Card key={index}>
+    <h2>{`Deck Item ${index + 1}`}</h2>
+    <p>
+      We can implement your cross-border liquidity model in just a few
+      months, depending on the options, scope and complexity.
+    </p>
+  </Card>
+));
+
 const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
   const slides = 12;
   const [currentIndex, setCurrentIndex] = useState(10);
 
+  const storySlides = deckCards(slides);
+  console.log(storySlides)
   const handleIncrease = () => {
     if (currentIndex < slides - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -27,15 +39,7 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
       <button onClick={handleDecrease}>Previous</button>
       <button onClick={handleIncrease}>Next</button>
       <DeckLayout {...args} activeIndex={currentIndex}>
-        {Array.from({ length: slides }, (_, index) => (
-          <Card key={index}>
-            <h2>{`Deck Item ${index + 1}`}</h2>
-            <p>
-              We can implement your cross-border liquidity model in just a few
-              months, depending on the options, scope and complexity.
-            </p>
-          </Card>
-        ))}
+        {deckCards(slides)}
       </DeckLayout>
     </>
   );
