@@ -1,8 +1,19 @@
 import { CSSProperties } from "react";
-import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
+import {
+  GridLayout,
+  GridItem,
+  StackLayout,
+  FlowLayout,
+} from "@jpmorganchase/uitk-core";
 import { Avatar, Card } from "@jpmorganchase/uitk-lab";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  ToolkitProvider,
+  FlexLayout,
+  FlexItem,
+} from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ContactDetailsExample } from "./flex-layout.stories";
+import { MetricExample } from "../../../core/stories/layout/flow-layout.stories";
 
 export default {
   title: "Layout/GridLayout",
@@ -10,31 +21,17 @@ export default {
   subcomponents: { GridItem },
 } as ComponentMeta<typeof GridLayout>;
 
-const gridItemStyles = {
-  padding: 16,
-  height: "calc(100% - 32px)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-const gridLayoutStyle = {
-  background: "lightblue",
-};
 const Template: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <div style={gridLayoutStyle}>
-      <GridLayout {...args}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <GridItem key={index}>
-            <div
-              style={{ ...gridItemStyles, background: "lightcyan", width: 70 }}
-            >
-              <p>{`GridItem ${index + 1}`}</p>
-            </div>
-          </GridItem>
-        ))}
-      </GridLayout>
-    </div>
+    <GridLayout {...args}>
+      {Array.from({ length: 12 }, (_, index) => (
+        <GridItem key={index}>
+          <div className="layout-content">
+            <p>{`GridItem ${index + 1}`}</p>
+          </div>
+        </GridItem>
+      ))}
+    </GridLayout>
   );
 };
 export const ToolkitGridLayout = Template.bind({});
@@ -45,75 +42,65 @@ ToolkitGridLayout.args = {
   columnGap: 1,
 };
 
-const DefaultFlexLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
+const DefaultGridLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <div style={gridLayoutStyle}>
-      <GridLayout {...args}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <GridItem key={index}>
-            <div
-              style={{ ...gridItemStyles, background: "lightcyan", width: 70 }}
-            >
-              <p>{`GridItem ${index + 1}`}</p>
-            </div>
-          </GridItem>
-        ))}
-      </GridLayout>
-    </div>
+    <GridLayout {...args}>
+      {Array.from({ length: 12 }, (_, index) => (
+        <GridItem key={index}>
+          <div className="layout-content">
+            <p>{`GridItem ${index + 1}`}</p>
+          </div>
+        </GridItem>
+      ))}
+    </GridLayout>
   );
 };
-export const ToolkitGridLayoutMultipleRows = DefaultFlexLayoutStory.bind({});
+export const ToolkitGridLayoutMultipleRows = DefaultGridLayoutStory.bind({});
 ToolkitGridLayoutMultipleRows.args = {
   columns: 4,
   rows: 3,
-  gap: 2,
 };
 
-const responsiveGridItemStyles = {
-  ...gridItemStyles,
-  minHeight: 200,
-  minWidth: 200,
-  background: "lightcyan",
-};
+const ResponsiveItem = ({ text }: { text: string }) => (
+  <FlexLayout
+    className="layout-content responsive-grid-item"
+    align="center"
+    justify="center"
+  >
+    <FlexItem>
+      <p>{text}</p>
+    </FlexItem>
+  </FlexLayout>
+);
 
 const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <div style={gridLayoutStyle}>
-      <GridLayout {...args}>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-        >
-          <div style={responsiveGridItemStyles}>
-            <p>GridItem 1</p>
-          </div>
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-        >
-          <div style={responsiveGridItemStyles}>
-            <p>GridItem 2</p>
-          </div>
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-        >
-          <div style={responsiveGridItemStyles}>
-            <p>GridItem 3</p>
-          </div>
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-        >
-          <div style={responsiveGridItemStyles}>
-            <p>GridItem 4</p>
-          </div>
-        </GridItem>
-      </GridLayout>
-    </div>
+    <GridLayout {...args}>
+      <GridItem
+        colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+        rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+      >
+        <ResponsiveItem text="GridItem 1" />
+      </GridItem>
+      <GridItem
+        colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+        rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+      >
+        <ResponsiveItem text="GridItem 2" />
+      </GridItem>
+      <GridItem
+        colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+        rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+      >
+        <ResponsiveItem text="GridItem 3" />
+      </GridItem>
+      <GridItem
+        colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+        rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+      >
+        <ResponsiveItem text="GridItem 4" />
+      </GridItem>
+    </GridLayout>
   );
 };
 export const ToolkitGridLayoutResponsiveView = ResponsiveView.bind({});
@@ -135,42 +122,32 @@ const breakpoints = {
 const CustomBreakpoints: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <ToolkitProvider breakpoints={breakpoints}>
-      <div style={gridLayoutStyle}>
-        <GridLayout {...args}>
-          <GridItem
-            colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-            rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-          >
-            <div style={responsiveGridItemStyles}>
-              <p>GridItem 1</p>
-            </div>
-          </GridItem>
-          <GridItem
-            colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-            rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-          >
-            <div style={responsiveGridItemStyles}>
-              <p>GridItem 2</p>
-            </div>
-          </GridItem>
-          <GridItem
-            colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-            rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-          >
-            <div style={responsiveGridItemStyles}>
-              <p>GridItem 3</p>
-            </div>
-          </GridItem>
-          <GridItem
-            colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-            rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-          >
-            <div style={responsiveGridItemStyles}>
-              <p>GridItem 4</p>
-            </div>
-          </GridItem>
-        </GridLayout>
-      </div>
+      <GridLayout {...args}>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+        >
+          <ResponsiveItem text="GridItem 1" />
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+        >
+          <ResponsiveItem text="GridItem 2" />
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
+        >
+          <ResponsiveItem text="GridItem 3" />
+        </GridItem>
+        <GridItem
+          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
+          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
+        >
+          <ResponsiveItem text="GridItem 4" />
+        </GridItem>
+      </GridLayout>
     </ToolkitProvider>
   );
 };
@@ -184,66 +161,53 @@ ToolkitGridLayoutCustomBreakpoints.args = {
 
 const Border: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <div style={gridLayoutStyle}>
-      <GridLayout {...args}>
-        <GridItem colSpan={4}>
-          <div
-            style={{
-              ...gridItemStyles,
-              backgroundColor: "#c5afa4",
-              color: "#000",
-            }}
-          >
-            <p>Header</p>
-          </div>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <div
-            style={{
-              ...gridItemStyles,
-              backgroundColor: "#cc7e85",
-              color: "#000",
-            }}
-          >
-            <p>Left</p>
-          </div>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <div
-            style={{
-              ...gridItemStyles,
-              backgroundColor: "#cf4d6f",
-              minWidth: 100,
-              color: "#000",
-            }}
-          >
-            <p>Main</p>
-          </div>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <div
-            style={{
-              ...gridItemStyles,
-              backgroundColor: "#a36d90",
-              color: "#000",
-            }}
-          >
-            <p>Right</p>
-          </div>
-        </GridItem>
-        <GridItem colSpan={4}>
-          <div
-            style={{
-              ...gridItemStyles,
-              backgroundColor: "#76818e",
-              color: "#000",
-            }}
-          >
-            <p>Bottom</p>
-          </div>
-        </GridItem>
-      </GridLayout>
-    </div>
+    <GridLayout {...args}>
+      <GridItem colSpan={4}>
+        <FlexLayout
+          className="layout-content border-header"
+          align="center"
+          justify="center"
+        >
+          <p>Header</p>
+        </FlexLayout>
+      </GridItem>
+      <GridItem colSpan={1}>
+        <FlexLayout
+          className="layout-content border-left"
+          align="center"
+          justify="center"
+        >
+          <p>Left</p>
+        </FlexLayout>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <FlexLayout
+          className="layout-content border-main"
+          align="center"
+          justify="center"
+        >
+          <p>Main</p>
+        </FlexLayout>
+      </GridItem>
+      <GridItem colSpan={1}>
+        <FlexLayout
+          className="layout-content border-right"
+          align="center"
+          justify="center"
+        >
+          <p>Right</p>
+        </FlexLayout>
+      </GridItem>
+      <GridItem colSpan={4}>
+        <FlexLayout
+          className="layout-content border-bottom"
+          align="center"
+          justify="center"
+        >
+          <p>Bottom</p>
+        </FlexLayout>
+      </GridItem>
+    </GridLayout>
   );
 };
 export const ToolkitGridLayoutBorder = Border.bind({});
@@ -402,3 +366,46 @@ ToolkitGridLayoutBlog.args = {
   columnGap: 12,
   rowGap: 1,
 };
+
+const cardText =
+  "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, dicta impedit nemo nobis sed sunt. Consequuntur dignissimos, doloribus enim et hic incidunt, magnam mollitia nisi omnis quam rerum veniam veritatis?";
+
+const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <GridLayout rows={2} columns={3} className="grid-layout-container">
+      <GridItem rowSpan={2}>
+        <h2>My contacts</h2>
+        <Card>
+          <StackLayout>
+            {Array.from({ length: 6 }, (_, index) => (
+              <ContactDetailsExample key={index} index={index} />
+            ))}
+          </StackLayout>
+        </Card>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <h2>My preferences</h2>
+        <FlowLayout>
+          {Array.from({ length: 2 }, (_, index) => (
+            <Card interactable key={index}>
+              <Avatar />
+              <p>{cardText}</p>
+            </Card>
+          ))}
+        </FlowLayout>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <h2>My performance</h2>
+        <Card>
+          <FlowLayout gap={2}>
+            {Array.from({ length: 10 }, (_, index) => (
+              <MetricExample key={index} />
+            ))}
+          </FlowLayout>
+        </Card>
+      </GridItem>
+    </GridLayout>
+  );
+};
+export const GridLayoutComposite = Dashboard.bind({});
+GridLayoutComposite.args = {};
