@@ -14,7 +14,13 @@
   overflow: hidden;
 }
 
-.uitkThemeEditorApp-Spinner {
+.uitkThemeEditorApp-spinner {
   width: 100%;
   top: 30%;
+}
+
+.uitkThemeEditorApp-outputHeader {
+  color: var(--uitk-text-primary-color);
+  background-color: var(--uitk-container-background-medium);
+  flex: 240 0;
 }

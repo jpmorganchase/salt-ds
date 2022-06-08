@@ -8,7 +8,8 @@
 }
 
 .uitkColorValueEditor-colorInput {
-  display: flex;
+  display: inline-grid;
+  grid-template-columns: 30px auto;
   align-items: center;
   width: 100%;
 }
@@ -40,12 +41,6 @@
 .uitkColorValueEditor-jumpToFoundationNotColor {
   display: flex;
   align-items: flex-end;
-}
-
-.uitkColorValueEditor-field {
-  margin-right: 5px;
-  min-width: 20px;
-  width: auto;
 }
 
 .uitkFormField-labelContainer {

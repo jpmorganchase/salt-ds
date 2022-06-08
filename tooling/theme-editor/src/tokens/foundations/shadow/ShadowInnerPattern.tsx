@@ -3,6 +3,7 @@ import { JSONObj } from "../../../helpers/parseToJson";
 import { ValueEditor } from "../../editor/ValueEditor";
 
 interface ShadowInnerPatternProps {
+  className?: string;
   patternName: string;
   entireValue: string;
   uitkColorOverrides: Record<string, string>;
@@ -18,29 +19,43 @@ interface ShadowInnerPatternProps {
 export const ShadowInnerPattern = (
   props: ShadowInnerPatternProps
 ): ReactElement => {
-  const onUpdateJSON = (value: string, pathToUpdate: string, scope: string) => {
+  const {
+    className,
+    patternName,
+    entireValue,
+    uitkColorOverrides,
+    extractValue,
+    onUpdateJSON,
+    scope,
+    themeName,
+    values,
+    label,
+    value,
+  } = props;
+
+  const updateJson = (value: string, pathToUpdate: string, scope: string) => {
     let editedValue = "";
     let shadowParts: string[] = [];
-    if (props.entireValue.includes("rgba")) {
-      const shadowPartsAndColor = props.entireValue.split("rgba");
+    if (entireValue.includes("rgba")) {
+      const shadowPartsAndColor = entireValue.split("rgba");
       shadowParts = (
         shadowPartsAndColor[0] +
         "rgba" +
         shadowPartsAndColor[1].replaceAll(" ", "")
       ).split(" ");
-    } else if (props.entireValue.includes("rgb")) {
-      const shadowPartsAndColor = props.entireValue.split("rgb");
+    } else if (entireValue.includes("rgb")) {
+      const shadowPartsAndColor = entireValue.split("rgb");
       shadowParts = (
         shadowPartsAndColor[0] +
         "rgb" +
         shadowPartsAndColor[1].replaceAll(" ", "")
       ).split(" ");
     } else {
-      shadowParts = props.entireValue.split(" ");
+      shadowParts = entireValue.split(" ");
     }
 
     if (shadowParts.length === 5) {
-      switch (props.label) {
+      switch (label) {
         case "X":
           shadowParts.splice(0, 1, value);
           break;
@@ -58,21 +73,22 @@ export const ShadowInnerPattern = (
           break;
       }
       editedValue = shadowParts.join(" ");
-      props.onUpdateJSON(editedValue, props.patternName, scope);
+      onUpdateJSON(editedValue, patternName, scope);
     }
   };
 
   return (
     <ValueEditor
-      uitkColorOverrides={props.uitkColorOverrides}
-      extractValue={props.extractValue}
+      className={className}
+      uitkColorOverrides={uitkColorOverrides}
+      extractValue={extractValue}
       characteristicsView={false}
-      key={`${props.patternName}-editor`}
-      onUpdateJSON={onUpdateJSON}
-      patternName={props.patternName}
-      scope={props.scope}
-      value={props.value}
-      valueName={props.label}
+      key={`${patternName}-editor`}
+      onUpdateJSON={updateJson}
+      patternName={patternName}
+      scope={scope}
+      value={value}
+      valueName={label}
     />
   );
 };

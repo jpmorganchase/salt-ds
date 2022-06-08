@@ -6,14 +6,17 @@ import { createColorMap } from "../../helpers/createColorMap";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
 import { LightDarkToggle } from "../toggles/LightDarkToggle";
-import { FoundationPatternByDensity } from "./general/FoundationPatternByDensity";
+
 import { ColorPattern } from "./color/ColorPattern";
-import { ShadowPattern } from "./shadow/ShadowPattern";
-import "./Foundations.css";
 import { DelayPattern } from "./delay/DelayPattern";
 import { OpacityPattern } from "./opacity/OpacityPattern";
-import { TypographyPattern } from "./typography/TypographyPattern";
 import { PalettePattern } from "./palette/PalettePattern";
+import { ShadowPattern } from "./shadow/ShadowPattern";
+import { SizePattern } from "./size/SizePattern";
+import { TypographyPattern } from "./typography/TypographyPattern";
+import { ZIndexPattern } from "./zindex/ZIndexPattern";
+
+import "./Foundations.css";
 
 const withBaseName = makePrefixer("uitkFoundationsPatternsList");
 interface FoundationPatternsListProps {
@@ -65,23 +68,7 @@ export const FoundationPatternsList = (
           return Object.keys(s.jsonObj.uitk)
             .filter((pattern) => props.patternsInScope.includes(pattern))
             .map(function (pattern) {
-              return pattern !== "shadow" &&
-                pattern !== "color" &&
-                pattern !== "delay" &&
-                pattern !== "opacity" &&
-                pattern !== "typography" &&
-                pattern !== "palette" ? (
-                <FoundationPatternByDensity
-                  key={`${props.themeName}-${pattern}`}
-                  patternName={pattern}
-                  values={s.jsonObj.uitk[pattern]}
-                  themeName={props.themeName}
-                  onUpdateJSON={props.onUpdateJSON}
-                  extractValue={props.extractValue}
-                  scope={s.scope}
-                  uitkColorOverrides={uitkColorOverrides}
-                />
-              ) : pattern === "palette" ? (
+              return pattern === "palette" ? (
                 <PalettePattern
                   themeName={props.themeName}
                   onUpdateJSON={props.onUpdateJSON}
@@ -89,6 +76,15 @@ export const FoundationPatternsList = (
                   scope={s.scope}
                   patternName={pattern}
                   palette={s.jsonObj.uitk[pattern]}
+                />
+              ) : pattern === "size" ? (
+                <SizePattern
+                  themeName={props.themeName}
+                  onUpdateJSON={props.onUpdateJSON}
+                  extractValue={props.extractValue}
+                  scope={s.scope}
+                  patternName={pattern}
+                  values={s.jsonObj.uitk[pattern]}
                 />
               ) : pattern === "typography" ? (
                 <TypographyPattern
@@ -129,6 +125,16 @@ export const FoundationPatternsList = (
                   scope={s.scope}
                   pattern={pattern}
                   shadowPattern={s.jsonObj.uitk[pattern]}
+                />
+              ) : pattern === "zindex" ? (
+                <ZIndexPattern
+                  uitkColorOverrides={uitkColorOverrides}
+                  themeName={props.themeName}
+                  onUpdateJSON={props.onUpdateJSON}
+                  extractValue={props.extractValue}
+                  scope={s.scope}
+                  patternName={pattern}
+                  values={s.jsonObj.uitk[pattern]}
                 />
               ) : (
                 <ColorPattern

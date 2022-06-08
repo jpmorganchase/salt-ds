@@ -7,7 +7,11 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { isDesktop, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  isDesktop,
+  ToolkitProvider,
+  makePrefixer,
+} from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
   SearchInput,
@@ -32,31 +36,43 @@ import { saveToDirectory } from "./views/FileHandler";
 import "@jpmorganchase/uitk-theme/index.css";
 import "./ThemeEditorApp.css";
 
+const withBaseName = makePrefixer("uitkThemeEditorApp");
+
 interface JSONHistory {
   action: ActionType;
   jsonByScope: JSONByScope[];
 }
 
-export const ThemeEditorApp = (props: {
+type Theme = { themeName: string; jsonByScope: JSONByScope[] };
+
+interface ThemeEditorAppProps {
   initialTheme?: ThemeMode;
   isLoading?: boolean;
   loadPageinElectron?: (url: string) => void;
   sendCSStoElectron?: (cssByPattern: CSSByPattern[]) => void;
   saveCSSInElectron?: () => void;
   switchBrowserViewMode?: (mode: string) => void;
-}): ReactElement => {
+}
+
+const DEFAULT_THEME = { themeName: "UITK (Default)", jsonByScope: uitkTheme };
+
+export const ThemeEditorApp = (props: ThemeEditorAppProps): ReactElement => {
+  const {
+    initialTheme,
+    isLoading,
+    loadPageinElectron,
+    sendCSStoElectron,
+    saveCSSInElectron,
+    switchBrowserViewMode,
+  } = props;
+
   const [cssByPattern, saveCSS] = useState<CSSByPattern[]>();
   const [currentMode, setCurrentMode] = useState<ThemeMode>(
-    props.initialTheme ?? ThemeMode.LIGHT
+    initialTheme ?? ThemeMode.LIGHT
   );
-  const [currentTheme, setThemeWithCallback] = useTheme({
-    themeName: "UITK (Default)",
-    jsonByScope: uitkTheme,
-  });
+  const [currentTheme, setThemeWithCallback] = useTheme(DEFAULT_THEME);
+  const [themes, setThemes] = useState<Theme[]>([DEFAULT_THEME]);
   const [directoryName, saveDirectoryName] = useState<string>();
-  const [themes, setThemes] = useState<
-    { themeName: string; jsonByScope: JSONByScope[] }[]
-  >([{ themeName: "UITK (Default)", jsonByScope: uitkTheme }]);
 
   const [jsonByScope, dispatch] = useReducer(jsonReducer, []);
 
@@ -64,8 +80,8 @@ export const ThemeEditorApp = (props: {
   const positionInHistory = useRef<number>(0);
 
   useEffect(() => {
-    if (props.initialTheme !== undefined) setCurrentMode(props.initialTheme);
-  }, [props.initialTheme]);
+    if (initialTheme !== undefined) setCurrentMode(initialTheme);
+  }, [initialTheme]);
 
   const onFileUpload = useCallback(
     (jsonByScope: JSONByScope[], themeName: string) => {
@@ -86,17 +102,15 @@ export const ThemeEditorApp = (props: {
   }, [dispatch, setThemeWithCallback]);
 
   useEffect(() => {
-    if (isDesktop && props.sendCSStoElectron) {
+    if (isDesktop && sendCSStoElectron) {
       const cssByPattern = parseJSONtoCSS(jsonByScope);
-      props.sendCSStoElectron(cssByPattern);
+      sendCSStoElectron(cssByPattern);
     }
   }, [jsonByScope]);
 
   useLayoutEffectSkipFirst(() => {
-    if (isDesktop && props.switchBrowserViewMode) {
-      props.switchBrowserViewMode(
-        currentMode === ThemeMode.LIGHT ? "light" : "dark"
-      );
+    if (isDesktop && switchBrowserViewMode) {
+      switchBrowserViewMode(currentMode === ThemeMode.LIGHT ? "light" : "dark");
     }
   }, [currentMode]);
 
@@ -134,8 +148,8 @@ export const ThemeEditorApp = (props: {
       const directoryName = (await saveToDirectory(cssByPattern)) as string;
       saveDirectoryName(directoryName);
       saveCSS(cssByPattern);
-    } else if (props.saveCSSInElectron) {
-      props.saveCSSInElectron();
+    } else if (saveCSSInElectron) {
+      saveCSSInElectron();
     }
   };
 
@@ -209,7 +223,7 @@ export const ThemeEditorApp = (props: {
   useEffect(() => navigate("/"), []);
 
   const onUpdateURL = (url: string | undefined) => {
-    if (props.loadPageinElectron && url) props.loadPageinElectron(url);
+    if (loadPageinElectron && url) loadPageinElectron(url);
   };
 
   const onModeChange = useCallback((mode: ThemeMode) => {
@@ -218,10 +232,10 @@ export const ThemeEditorApp = (props: {
 
   return (
     <ToolkitProvider>
-      <div className="uitkThemeEditorApp">
-        <div className="uitkThemeEditorApp-leftPane">
-          {props.isLoading ? (
-            <Spinner className="uitkThemeEditorApp-Spinner" />
+      <div className={withBaseName()}>
+        <div className={withBaseName("leftPane")}>
+          {isLoading ? (
+            <Spinner className={withBaseName("spinner")} />
           ) : (
             <Routes>
               <Route

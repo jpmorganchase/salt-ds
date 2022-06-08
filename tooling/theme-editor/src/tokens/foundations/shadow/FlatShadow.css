@@ -1,7 +1,15 @@
-.uitkFlatShadow-ValueSection {
-  padding-bottom: 2px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-right: 5px;
+.uitkFlatShadow-valueSection {
+  display: inline-grid;
+  grid-template-columns: 50% 50%;
+  padding-bottom: var(--uitk-size-unit);
+}
+
+.uitkFlatShadow-valueSection .uitkFormField {
+  width: calc(3 * var(--uitk-size-base));
+}
+.uitkFlatShadow-valueSection .uitkInput {
+  min-width: var(--uitk-size-base);
+}
+.uitkFlatShadow-color {
+  padding-top: calc(var(--uitk-size-base) / 2);
 }

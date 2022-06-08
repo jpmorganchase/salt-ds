@@ -54,11 +54,9 @@ export const FlatShadow = (props: FlatShadowProps): ReactElement => {
           : props.setSearchParams({});
       }}
     >
-      <AccordionSummary>
-        {capitalize(props.innerPattern) as string}
-      </AccordionSummary>
+      <AccordionSummary>{capitalize(props.innerPattern)}</AccordionSummary>
       <AccordionDetails>
-        <div className={cn(withBaseName("ValueSection"))}>
+        <div className={cn(withBaseName("valueSection"))}>
           {patternParts.map((shadowPart: string, index) => {
             const jsonObj: JSONObj = {};
             jsonObj["value"] = shadowPart;
@@ -82,6 +80,7 @@ export const FlatShadow = (props: FlatShadowProps): ReactElement => {
             }
             return (
               <ShadowInnerPattern
+                className={cn({ [withBaseName("color")]: label === "Color" })}
                 uitkColorOverrides={props.uitkColorOverrides}
                 entireValue={patternParts.join(" ")}
                 key={`${props.themeName}-${props.pattern}-${props.innerPattern}-${label}`}

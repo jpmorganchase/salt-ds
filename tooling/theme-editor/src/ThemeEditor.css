@@ -6,12 +6,6 @@
   height: 100%;
 }
 
-.uitkThemeEditorAppOutputHeader {
-  color: var(--uitk-text-primary-foreground);
-  background-color: var(--uitk-container-background-medium);
-  flex: 240 0;
-}
-
 .uitkThemeEditor h1 {
   padding: 20px 20px 0px 20px;
 }

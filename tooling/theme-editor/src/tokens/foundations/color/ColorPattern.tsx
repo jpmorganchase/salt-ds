@@ -58,7 +58,7 @@ export const ColorPattern = (props: ColorPatternProps): ReactElement => {
               {Object.keys(props.values[color]).map(function (node) {
                 const [values, fieldName] =
                   node === "value"
-                    ? [props.values[color], props.patternName]
+                    ? [props.values[color], color]
                     : [props.values[color][node], node];
 
                 return (
