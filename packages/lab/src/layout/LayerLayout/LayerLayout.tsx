@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
 import cx from "classnames";
 
 import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
-import { Scrim, ScrimProps } from "@jpmorganchase/uitk-lab";
+import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
 import { useChangeView } from "../utils";
 
