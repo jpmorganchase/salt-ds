@@ -38,11 +38,13 @@
   margin: var(--uitkLayerLayout-margin, var(--layer-margin));
 }
 
-.uitkLayerLayout-center.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-center.uitkLayerLayout-enter-animation,
+.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-fade-in-center);
 }
 
-.uitkLayerLayout-center.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-center.uitkLayerLayout-exit-animation,
+.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-fade-out-back);
 }
 
