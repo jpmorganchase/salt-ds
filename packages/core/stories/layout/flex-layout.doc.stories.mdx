@@ -12,9 +12,9 @@ import { DefaultFlexLayout } from "./flex-layout.stories";
 # Flex Layout
 
 Dictates a horizontal or vertical order and direction for UI elements.
-it can be used for cases in which the direction needs complex customization that can't be acchieved by stack or flow layouts. 
+it can be used for cases in which the direction needs complex customization that can't be acchieved by stack or flow layouts.
 
-Height is driven by child items, 
+Height is driven by child items,
 Visual seperators can be turned on/off (default) between items
 
 <Canvas>
@@ -29,10 +29,12 @@ import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-lab";
 
 ## Props
 
-**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes 
+**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes
+
 ```
 direction={{ lg: "row", md: "column", sm: "column", xl: "row", xs: "row" }}
 ```
+
 ### Flex Layout Props
 
 <ArgsTable of={FlexLayout} />
@@ -45,7 +47,7 @@ direction={{ lg: "row", md: "column", sm: "column", xl: "row", xs: "row" }}
 
 ### Flex Item inside default flex layout
 
-A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and it's alignment  
+A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and it's alignment
 
 <Canvas>
   <Story id="layout-flexlayout-flexitem--flex-item-wrapper" />
@@ -53,7 +55,7 @@ A flex item allows more complex controls to the default behaviour of a flex chil
 
 ### Responsive
 
-The flex layout supports the use of responsive props, so you can defined different behaviours based on viewport size. 
+The flex layout supports the use of responsive props, so you can defined different behaviours based on viewport size.
 You can use the default breakpoints or pass in you own.
 
 <Canvas>
@@ -63,6 +65,7 @@ You can use the default breakpoints or pass in you own.
 ### Simple Usage
 
 the simple usage examples shows a group of elements inside a flex container with `wrap`
+
 <Canvas>
   <Story id="layout-flexlayout--flex-layout-simple-usage" />
 </Canvas>
