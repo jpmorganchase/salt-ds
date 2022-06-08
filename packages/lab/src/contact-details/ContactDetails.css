@@ -56,6 +56,10 @@
   --contact-details-selecting-icon-color: var(--uitk-ratable-background-hover);
 }
 
+.uitk-dark {
+  color: var(--uitk-color-white);
+}
+
 .uitkContactDetails {
   box-sizing: border-box;
   display: grid;
@@ -166,33 +170,12 @@
   margin-left: calc(var(--uitk-size-unit) * -1);
 }
 
-.uitkContactMetadata {
-}
-
-.uitkContactMetadataItem {
-}
-
 .uitkContactPrimaryInfo {
   grid-area: primary;
-  font-size: var(--contact-details-primary-font-size);
-  font-weight: var(--contact-details-primary-font-weight);
 }
 
 .uitkContactSecondaryInfo {
   grid-area: secondary;
-  font-size: var(--contact-details-secondary-font-size);
-  font-weight: var(--contact-details-secondary-font-weight);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.uitkContactDetails-default .uitkContactSecondaryInfo {
-  white-space: unset;
-}
-
-.uitkContactDetails-default-stacked .uitkContactSecondaryInfo {
-  white-space: unset;
 }
 
 .uitkContactDetails-mini .uitkContactSecondaryInfo {
@@ -208,24 +191,8 @@
   margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
-.uitkContactSecondaryInfo-value {
-}
-
 .uitkContactTertiaryInfo {
   grid-area: tertiary;
-  font-size: var(--contact-details-secondary-font-size);
-  font-weight: var(--contact-details-secondary-font-weight);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.uitkContactDetails-default .uitkContactSecondaryInfo {
-  white-space: unset;
-}
-
-.uitkContactDetails-default-stacked .uitkContactSecondaryInfo {
-  white-space: unset;
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
@@ -236,20 +203,12 @@
   margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
-.uitkContactTertiaryInfo-value {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .uitkContactMetadata {
   grid-area: metadata;
   display: flex;
   flex-direction: column;
   padding-top: var(--uitk-size-unit);
   padding-bottom: var(--uitk-size-unit);
-}
-
-.uitkContactMetadata-default {
 }
 
 .uitkContactMetadata-expander {
@@ -286,19 +245,14 @@
 }
 
 .uitkContactMetadataItem-label {
-  text-overflow: ellipsis;
   flex-shrink: 0;
   color: var(--contact-details-label-color);
-  font-size: var(--contact-details-metadata-font-size);
   margin-right: calc(var(--uitk-size-unit) * 2);
   width: var(--contact-details-label-width);
 }
 
 .uitkContactMetadataItem-value {
-  overflow: hidden;
   min-width: 0;
-  font-size: var(--contact-details-metadata-font-size);
-  white-space: nowrap;
 }
 
 .uitkContactFavoriteToggle {

@@ -2,8 +2,9 @@ import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
+import { Div } from "../typography";
 import { useId } from "../utils";
-import { TruncatableValue, useContactDetailsContext } from "./internal";
+import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("uitkContactTertiaryInfo");
 
@@ -35,15 +36,18 @@ export const ContactTertiaryInfo = forwardRef<
   }
 
   return (
-    <div
+    <Div
       {...restProps}
+      truncate
+      maxRows={1}
+      styleAs={variant === "default" ? "h4" : undefined}
       id={id}
       ref={ref}
       className={cn(withBaseName(), className)}
       data-testid="tertiary"
     >
       {Icon ? <Icon className={withBaseName("icon")} /> : null}
-      <TruncatableValue className={withBaseName("value")} value={text} />
-    </div>
+      {text}
+    </Div>
   );
 });
