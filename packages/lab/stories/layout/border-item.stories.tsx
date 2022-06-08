@@ -65,7 +65,7 @@ const BottomItem = ({ width, height }: ItemProps) => (
 
 const Template: ComponentStory<typeof BorderItem> = (args) => {
   return (
-    <BorderLayout>
+    <BorderLayout columnGap={1} rowGap={1}>
       <BorderItem position="header">
         <HeaderItem />
       </BorderItem>
