@@ -32,12 +32,12 @@
 /* Button Component API - reset to default state so they don't interfere with Pill styling */
 .uitkPill {
   --uitkButton-background-active: var(--pill-background);
-  --uitkButton-text-color-active: var(--pill-text-color);
+  --uitkButton-textColor-active: var(--pill-text-color);
   --uitkButton-background-hover: var(--pill-background);
-  --uitkButton-text-color-hover: var(--pill-text-color);
+  --uitkButton-textColor-hover: var(--pill-text-color);
   --uitkButton-font-weight: var(--uitkPill-button-font-weight, var(--uitk-typography-weight-regular));
   --uitkButton-padding: var(--uitkPill-button-padding, 0);
-  --uitkButton-text-transform: var(--uitkPill-button-text-transform, unset);
+  --uitkButton-textTransform: var(--uitkPill-button-text-transform, unset);
   --uitkButton-cursor: normal;
 }
 
@@ -50,7 +50,7 @@
   font-size: var(--uitkPill-font-size, var(--uitk-text-help-fontSize));
   height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letter-spacing, 0);
-  line-height: var(--uitkPill-line-height, var(--uitk-typography-line-height));
+  line-height: var(--uitkPill-line-height, var(--uitk-typography-lineHeight));
   max-width: var(--uitkPill-max-width, 160px);
   min-width: var(--uitkPill-min-width, 40px);
   min-height: var(--uitkPill-min-height, var(--uitk-text-minHeight));
