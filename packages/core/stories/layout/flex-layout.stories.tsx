@@ -104,7 +104,6 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
 };
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
 FlexLayoutSimpleUsage.args = {
-  gap: 3,
   wrap: true,
 };
 
