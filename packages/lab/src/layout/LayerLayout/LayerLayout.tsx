@@ -61,15 +61,17 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
 
     const [showComponent, setShowComponent] = useState(false);
 
+    const [hasAnimations, setHasAnimations] = useState(false);
+
     useEffect(() => {
-      if (!open && disableAnimations) {
+      if ((!open && disableAnimations) || (!open && !hasAnimations)) {
         setShowComponent(false);
       }
 
       if (open && !showComponent) {
         setShowComponent(true);
       }
-    }, [open, showComponent, disableAnimations]);
+    }, [open, showComponent, disableAnimations, hasAnimations]);
 
     const fullScreen = useChangeView(fullScreenAtBreakpoint);
 
@@ -85,6 +87,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
           [withBaseName("enter-animation")]: !disableAnimations && open,
           [withBaseName("exit-animation")]: !disableAnimations && !open,
         })}
+        onAnimationStart={() => setHasAnimations(true)}
         onAnimationEnd={() => {
           if (!open && showComponent) {
             setShowComponent(false);

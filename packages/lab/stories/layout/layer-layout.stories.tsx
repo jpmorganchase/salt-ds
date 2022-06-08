@@ -180,3 +180,29 @@ ToolkitLayerLayoutBottom.args = {
   position: "bottom",
   disableAnimations: false,
 };
+
+const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <>
+      <p>In order to test this on MacOS, follow these steps: </p>
+      <p>
+        Go to System Preferences, select the Accessibility category, select the
+        Display tab, and enable the Reduce Motion option.
+      </p>
+      <div className="layer-container">
+        <Button onClick={show}>Open Layer</Button>
+        <LayerLayout open={open} className="reduced-motion" {...args}>
+          <LayerContentExample onClick={hide} />
+        </LayerLayout>
+      </div>
+    </>
+  );
+};
+
+export const ToolkitLayerReducedMotion = ReducedMotion.bind({});

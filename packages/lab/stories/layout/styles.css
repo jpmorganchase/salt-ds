@@ -29,3 +29,9 @@
     animation: none;
   }
 }
+
+@media (prefers-reduced-motion) {
+  .reduced-motion.uitkLayerLayout {
+    animation: none;
+  }
+}
