@@ -73,7 +73,7 @@
     "aria-hidden": "^1.1.1",
     "attr-accept": "^2.0.0",
     "axe-core": "^4.3.5",
-    "chromatic": "^6.5.4",
+    "chromatic": "next",
     "classnames": "^2.2.6",
     "clipboard-copy": "^4.0.1",
     "compute-scroll-into-view": "^1.0.16",
