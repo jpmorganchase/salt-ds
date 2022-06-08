@@ -5,9 +5,6 @@ import {
   StackLayout,
 } from "@jpmorganchase/uitk-core";
 import {
-  FormField,
-  Input,
-  Dropdown,
   Accordion,
   AccordionSection,
   AccordionSummary,
@@ -18,8 +15,13 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
-import { StackLayoutComposite } from "../../../core/stories/layout/stack-layout.stories";
-import { SearchIcon } from "@jpmorganchase/uitk-icons";
+import {
+  StackLayoutComposite,
+  ComplexFormOne,
+  ComplexFormTwo,
+  ComplexFormThree,
+  ComplexFormFour,
+} from "../../../core/stories/layout/stack-layout.stories";
 
 export default {
   title: "Layout/FlowLayout",
@@ -74,8 +76,6 @@ const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
 
 export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
 
-const dropdownExampleData = ["No", "Yes"];
-
 const RightForm = () => (
   <Accordion>
     {Array.from({ length: 6 }, (_, index) => (
@@ -92,77 +92,16 @@ const RightForm = () => (
 const leftFormContent = (
   <>
     <FlexItem>
-      <StackLayout align="center">
-        <FormField labelPlacement="left" label="Lorem ipsum">
-          <Input defaultValue="Culpa nisi exercitation" />
-        </FormField>
-
-        <FormField labelPlacement="left" label="Cupidatat minim deserunt">
-          <Input defaultValue="Sunt exercitation" />
-        </FormField>
-        <FormField labelPlacement="left" label="Ullamco sunt sit occaecat">
-          <Input defaultValue="Pariatur occaecat ipsum" />
-        </FormField>
-        <FormField
-          label="Aperiam"
-          className="uitkEmphasisHigh"
-          labelPlacement="left"
-          LabelProps={{
-            displayedNecessity: "optional",
-          }}
-        >
-          <Dropdown
-            initialSelectedItem={dropdownExampleData[0]}
-            source={dropdownExampleData}
-          />
-        </FormField>
-      </StackLayout>
+      <ComplexFormOne />
     </FlexItem>
     <FlexItem>
-      <StackLayout align="center">
-        <FormField
-          labelPlacement="left"
-          label="Neque porro quisquam"
-          className="uitkEmphasisHigh"
-        >
-          <Input defaultValue="Duis aute irure" endAdornment={<SearchIcon />} />
-        </FormField>
-        {Array.from({ length: 2 }, (_, index) => (
-          <FormField labelPlacement="left" label="Quis qui nisi" key={index}>
-            <Input defaultValue="Lorem ipsum" />
-          </FormField>
-        ))}
-      </StackLayout>
+      <ComplexFormTwo />
     </FlexItem>
     <FlexItem>
-      <StackLayout align="center">
-        <FormField labelPlacement="left" label="Anim do consequat nostru">
-          <Input defaultValue="091839182893812893" />
-        </FormField>
-
-        <FormField labelPlacement="left" label="Dolore proident">
-          <Input defaultValue="Id aute sit" />
-        </FormField>
-      </StackLayout>
+      <ComplexFormThree />
     </FlexItem>
     <FlexItem>
-      <StackLayout align="center">
-        <FormField labelPlacement="left" label="Quis qui nisi">
-          <Input defaultValue="Lorem ipsum" />
-        </FormField>
-        <FormField
-          labelPlacement="left"
-          label="Exercitation veniam temp"
-          className="uitkEmphasisHigh"
-        >
-          <Input defaultValue="e.g. Esse velit sunt do" />
-        </FormField>
-        {Array.from({ length: 2 }, (_, index) => (
-          <FormField labelPlacement="left" label="Quis qui nisi" key={index}>
-            <Input defaultValue="Lorem ipsum" />
-          </FormField>
-        ))}
-      </StackLayout>
+      <ComplexFormFour />
     </FlexItem>
   </>
 );
