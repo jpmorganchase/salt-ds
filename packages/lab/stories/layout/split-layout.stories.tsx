@@ -74,7 +74,7 @@ DefaultSplitLayout.args = {
 };
 
 const leftButtons = (
-  <FlowLayout gap={1 / 3}>
+  <FlowLayout gap={1}>
     <Button variant="cta">Button 1</Button>
     <Button variant="primary">Button 2</Button>
     <Button variant="secondary">Button 3</Button>
@@ -82,7 +82,7 @@ const leftButtons = (
 );
 
 const rightButtons = (
-  <FlowLayout gap={1 / 3}>
+  <FlowLayout gap={1}>
     <Button variant="cta">Button 4</Button>
     <Button variant="primary">Button 5</Button>
   </FlowLayout>
