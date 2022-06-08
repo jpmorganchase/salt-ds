@@ -42,9 +42,9 @@ export default {
 };
 
 const personaA = {
-  name: "Persona A",
-  company: "Persona A Limited",
-  spn: "SPN 1234567",
+  name: "Persona A Persona A Persona A Persona A",
+  company: "Persona A Limited Persona A Limited Persona A Limited",
+  spn: "SPN 1234567 SPN 1234567 SPN 1234567 SPN 1234567 SPN 1234567",
   role: "Role A",
   location: "Location A",
   officePhone: "+00 1234 567890",
