@@ -74,7 +74,7 @@ interface TextPropsBase<E extends ElementType> {
   styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
 }
 
-export type TextProps<E extends ElementType> = TextPropsBase<E> &
+export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
   Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
 export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
