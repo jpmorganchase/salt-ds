@@ -7,7 +7,7 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultStackLayout } from "./stack-layout.stories";
 
-<Meta title="Layout/Docs/StackLayout" component={StackLayout} />
+<Meta title="Layout/Docs/Core/StackLayout" component={StackLayout} />
 
 # Stack Layout
 
@@ -17,7 +17,7 @@ Height is driven by child items,
 Visual seperators can be turned on/off (default) between items
 
 <Canvas>
-  <Story id="layout-stacklayout--default-stack-layout" />
+  <Story id="layout-core-stacklayout--default-stack-layout" />
 </Canvas>
 
 ## API
@@ -37,7 +37,13 @@ import { StackLayout } from "@jpmorganchase/uitk-lab";
 the simple usage example shows a group of panels stacked.
 
 <Canvas>
-  <Story id="layout-stacklayout--stack-layout-simple-usage" />
+  <Story id="layout-core-stacklayout--stack-layout-simple-usage" />
+</Canvas>
+
+### Composite Usage
+
+<Canvas>
+  <Story id="layout-core-stacklayout--stack-layout-composite" />
 </Canvas>
 
 ## Anatomy

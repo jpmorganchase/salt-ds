@@ -13,11 +13,10 @@ import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { Button } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import { GridLayoutComposite } from "../../../core/stories/layout/grid-layout.stories";
 import "./styles.css";
 
 export default {
-  title: "Layout/ParentChildLayout",
+  title: "Layout/Lab/ParentChildLayout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {

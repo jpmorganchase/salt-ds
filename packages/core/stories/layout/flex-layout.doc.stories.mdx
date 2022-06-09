@@ -7,18 +7,20 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultFlexLayout } from "./flex-layout.stories";
 
-<Meta title="Layout/Docs/FlexLayout" component={FlexLayout} />
+<Meta title="Layout/Docs/Core/FlexLayout" component={FlexLayout} />
 
-# Flex Layout
+# Flex layout
 
-Dictates a horizontal or vertical order and direction for UI elements.
-it can be used for cases in which the direction needs complex customization that can't be acchieved by stack or flow layouts.
+Flex layout dictates a horizontal or vertical order and direction for UI elements.
+The height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
 
-Height is driven by child items,
-Visual seperators can be turned on/off (default) between items
+it can be used for cases in which the direction needs complex customization that can't be achieved by stack or flow layouts.
+for example, in layouts where the direction needs to change depending on the viewport.
+
+Out of the box, flex layout will spread items horizontally disabling them to wrap unless responsive props are passed.
 
 <Canvas>
-  <Story id="layout-docs-flexlayout--default-flex-layout" />
+  <Story id="layout-core-flexlayout--default-flex-layout" />
 </Canvas>
 
 ## API
@@ -50,7 +52,7 @@ direction={{ lg: "row", md: "column", sm: "column", xl: "row", xs: "row" }}
 A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and it's alignment
 
 <Canvas>
-  <Story id="layout-flexlayout-flexitem--flex-item-wrapper" />
+  <Story id="layout-core-flexlayout-flexitem--flex-item-wrapper" />
 </Canvas>
 
 ### Responsive
@@ -59,7 +61,7 @@ The flex layout supports the use of responsive props, so you can defined differe
 You can use the default breakpoints or pass in you own.
 
 <Canvas>
-  <Story id="layout-flexlayout--toolkit-flex-layout-responsive" />
+  <Story id="layout-core-flexlayout--toolkit-flex-layout-responsive" />
 </Canvas>
 
 ### Simple Usage
@@ -67,17 +69,17 @@ You can use the default breakpoints or pass in you own.
 the simple usage examples shows a group of elements inside a flex container with `wrap`
 
 <Canvas>
-  <Story id="layout-flexlayout--flex-layout-simple-usage" />
+  <Story id="layout-core-flexlayout--flex-layout-simple-usage" />
 </Canvas>
 
 ## Used in
 
 The flex layout is used in the following components
 
-- [Split layout](?path=/docs/layout-docs-splitlayout--default-split-layout)
-- [Stack layout](?path=/docs/layout-docs-stacklayout--default-stack-layout)
-- [Flow layout](?path=/docs/layout-flowlayout--default-flow-layout)
-- [Parent Child layout](?path=/docs/layout-docs-parentchildlayout--default-parent-child-layout)
+- [Split layout](?path=/docs/layout-docs-lab-splitlayout--page)
+- [Stack layout](?path=/docs/layout-docs-core-stacklayout--page)
+- [Flow layout](?path=/docs/layout-docs-core-flowlayout--page)
+- [Parent Child layout](?path=/docs/layout-docs-lab-parentchildlayout--page)
 
 ## Anatomy
 
