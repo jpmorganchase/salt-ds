@@ -29,7 +29,7 @@
 
 .uitkColorChooser-overlayButtonText {
   font-weight: var(--uitk-typography-weight-regular);
-  font-family: var(--uitkButton-font-family, var(--uitk-typography-fontFamily));
+  font-family: var(--uitkButton-fontFamily, var(--uitk-typography-fontFamily));
   font-size: var(--uitk-text-fontSize);
   letter-spacing: normal;
 }

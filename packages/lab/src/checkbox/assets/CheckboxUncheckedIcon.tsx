@@ -8,7 +8,7 @@ export function CheckboxUncheckedIcon({
       aria-hidden="true"
       className={className}
       focusable="false"
-      shapeRendering="crispEdges"
+      shapeRendering="geometricPrecision"
       viewBox="0 0 14 14"
     >
       <g fillRule="evenodd">

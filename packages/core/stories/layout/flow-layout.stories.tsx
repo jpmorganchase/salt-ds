@@ -2,10 +2,26 @@ import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
   FlowLayout,
+  StackLayout,
 } from "@jpmorganchase/uitk-core";
-import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
+import {
+  Accordion,
+  AccordionSection,
+  AccordionSummary,
+  AccordionDetails,
+  Metric,
+  MetricHeader,
+  MetricContent,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
+import {
+  StackLayoutComposite,
+  ComplexFormOne,
+  ComplexFormTwo,
+  ComplexFormThree,
+  ComplexFormFour,
+} from "../../../core/stories/layout/stack-layout.stories";
 
 export default {
   title: "Layout/FlowLayout",
@@ -16,6 +32,7 @@ export default {
       control: { type: "select" },
     },
   },
+  excludeStories: ["MetricExample"],
 } as ComponentMeta<typeof FlowLayout>;
 
 const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
@@ -36,41 +53,89 @@ const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
 export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
 DefaultFlowLayout.args = {};
 
-const Responsive: ComponentStory<typeof FlowLayout> = (args) => {
-  return (
-    <FlowLayout {...args}>
-      {Array.from({ length: 6 }, (_, index) => (
-        <FlexItem grow={1} key={index}>
-          <FlexContent />
-        </FlexItem>
-      ))}
-    </FlowLayout>
-  );
-};
-export const ToolkitFlowLayoutResponsive = Responsive.bind({});
-ToolkitFlowLayoutResponsive.args = {};
+export const MetricExample = () => (
+  <Metric direction="up">
+    <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+    <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+  </Metric>
+);
 
 const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
   args
 ) => {
   return (
-    <div style={{ background: "#EAEDEF", padding: 24 }}>
-      <FlowLayout {...args}>
-        {Array.from({ length: 5 }, (_, index) => (
-          <Metric key={index}>
-            <MetricHeader title={`Form Stage ${index + 1}`} />
-            <MetricContent value="Complete" />
-          </Metric>
+    <div className="uitkEmphasisHigh flow-layout-container">
+      <FlowLayout gap={2} {...args}>
+        {Array.from({ length: 6 }, (_, index) => (
+          <MetricExample key={index} />
         ))}
-        <Metric>
-          <MetricHeader title="Form Stage 6" />
-          <MetricContent value="Pending" />
-        </Metric>
       </FlowLayout>
     </div>
   );
 };
+
 export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
-FlowLayoutSimpleUsage.args = {
-  gap: 3,
+
+const RightForm = () => (
+  <Accordion>
+    {Array.from({ length: 6 }, (_, index) => (
+      <AccordionSection key={index} defaultExpanded={index === 0}>
+        <AccordionSummary>Expandable and collapsible section</AccordionSummary>
+        <AccordionDetails>
+          <StackLayoutComposite />
+        </AccordionDetails>
+      </AccordionSection>
+    ))}
+  </Accordion>
+);
+
+const leftFormContent = (
+  <>
+    <FlexItem>
+      <ComplexFormOne />
+    </FlexItem>
+    <FlexItem>
+      <ComplexFormTwo />
+    </FlexItem>
+    <FlexItem>
+      <ComplexFormThree />
+    </FlexItem>
+    <FlexItem>
+      <ComplexFormFour />
+    </FlexItem>
+  </>
+);
+
+const LeftForm = () => (
+  <>
+    {leftFormContent}
+    {leftFormContent}
+    {leftFormContent}
+  </>
+);
+
+const Form: ComponentStory<typeof FlowLayout> = (args) => {
+  return (
+    <div className="flow-layout-form-container">
+      <form>
+        <FlowLayout {...args}>
+          <FlexItem grow={1}>
+            <StackLayout separators>
+              <LeftForm />
+            </StackLayout>
+          </FlexItem>
+          <FlexItem grow={1}>
+            <StackLayout>
+              <RightForm />
+            </StackLayout>
+          </FlexItem>
+        </FlowLayout>
+      </form>
+    </div>
+  );
+};
+export const FlowLayoutComposite = Form.bind({});
+
+FlowLayoutComposite.args = {
+  separators: true,
 };

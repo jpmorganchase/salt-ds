@@ -11,7 +11,7 @@
   font-family: var(--uitk-typography-fontFamily);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-regular);
-  line-height: var(--uitk-typography-line-height);
+  line-height: var(--uitk-typography-lineHeight);
   margin-right: calc(var(--uitk-size-unit) / 1.5);
   display: block;
 }
