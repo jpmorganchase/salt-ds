@@ -14,7 +14,7 @@ export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   rows?: ResponsiveProp<number>;
   /**
-   * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 1
+   * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
    */
   gap?: ResponsiveProp<number>;
   /**
@@ -36,7 +36,7 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
       className,
       columns = 12,
       rows = 1,
-      gap = 1,
+      gap,
       columnGap,
       rowGap,
       style,
@@ -47,19 +47,18 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
 
     const gridRows = useResponsiveProp(rows, 1);
 
-    const gridGap = useResponsiveProp(gap, 1);
+    const gridGap = useResponsiveProp(gap, 3);
 
-    const gridColumnGap = useResponsiveProp(columnGap, 1);
+    const gridColumnGap = useResponsiveProp(columnGap, 3);
 
-    const gridRowGap = useResponsiveProp(rowGap, 1);
+    const gridRowGap = useResponsiveProp(rowGap, 3);
 
     const gridLayoutStyles = {
       ...style,
       "--grid-layout-columns": gridColumns,
       "--grid-layout-rows": gridRows,
-      "--grid-layout-column-gap":
-        gridColumnGap !== undefined ? gridColumnGap : gridGap,
-      "--grid-layout-row-gap": gridRowGap !== undefined ? gridRowGap : gridGap,
+      "--grid-layout-column-gap": gridColumnGap || gridGap,
+      "--grid-layout-row-gap": gridRowGap || gridGap,
     };
 
     return (
