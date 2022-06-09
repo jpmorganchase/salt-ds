@@ -16,7 +16,7 @@ import { ContactDetailsExample } from "./flex-layout.stories";
 import { MetricExample } from "./flow-layout.stories";
 
 export default {
-  title: "Layout/Core/GridLayout",
+  title: "Core/Layout/GridLayout",
   component: GridLayout,
   subcomponents: { GridItem },
 } as ComponentMeta<typeof GridLayout>;

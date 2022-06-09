@@ -24,7 +24,7 @@ import {
 } from "./stack-layout.stories";
 
 export default {
-  title: "Layout/Core/FlowLayout",
+  title: "Core/Layout/FlowLayout",
   component: FlowLayout,
   argTypes: {
     align: {

@@ -21,7 +21,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
 export default {
-  title: "Layout/Core/FlexLayout",
+  title: "Core/Layout/FlexLayout",
   component: FlexLayout,
   subcomponents: { FlexItem },
   argTypes: {
