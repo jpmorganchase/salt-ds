@@ -1,0 +1,6 @@
+.uitkEmphasisHigh.uitkCard {
+  --uitkCard-background-color: var(--uitk-container-background-high);
+  --uitkCard-border-color: var(--uitk-container-borderColor-high);
+  --uitkCard-border-radius: 10px;
+  --uitkCard-border-width: 3px;
+}
