@@ -4,7 +4,19 @@ import {
   FlexItem,
   FlexLayout,
 } from "@jpmorganchase/uitk-core";
-import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
+import {
+  Metric,
+  MetricContent,
+  MetricHeader,
+  Card,
+  ContactAvatar,
+  ContactDetails,
+  ContactMetadata,
+  ContactMetadataItem,
+  ContactPrimaryInfo,
+  ContactSecondaryInfo,
+  ContactTertiaryInfo,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
@@ -26,6 +38,7 @@ export default {
       control: { type: "select" },
     },
   },
+  excludeStories: ["ContactDetailsExample"],
 } as ComponentMeta<typeof FlexLayout>;
 
 const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
@@ -91,6 +104,39 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
 };
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
 FlexLayoutSimpleUsage.args = {
-  gap: 3,
+  wrap: true,
+};
+
+export const ContactDetailsExample = ({ index }: { index: number }) => (
+  <ContactDetails embedded={true}>
+    <ContactAvatar />
+    <ContactPrimaryInfo text={`Contact ${index + 1}`} />
+    <ContactSecondaryInfo text="Blackrock Advisors (UK) Limited" />
+    <ContactTertiaryInfo text="SPN 2188538" />
+    <ContactMetadata collapsible={true}>
+      <ContactMetadataItem value="Analyst" label="Role" />
+      <ContactMetadataItem value="London, GBR" label="Location" />
+      <ContactMetadataItem value="+44 2077 431102" label="Office" />
+
+      <ContactMetadataItem value="alex.brailescu@blackrock.com" label="Email" />
+    </ContactMetadata>
+  </ContactDetails>
+);
+
+const ContactCards: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout {...args}>
+      {Array.from({ length: 12 }, (_, index) => (
+        <FlexItem grow={1} key={index}>
+          <Card style={{ minWidth: 360 }}>
+            <ContactDetailsExample key={index} index={index} />
+          </Card>
+        </FlexItem>
+      ))}
+    </FlexLayout>
+  );
+};
+export const FlexLayoutComposite = ContactCards.bind({});
+FlexLayoutComposite.args = {
   wrap: true,
 };

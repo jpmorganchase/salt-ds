@@ -49,7 +49,15 @@ const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
 
 export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
-    { align, leftSplitItem, rightSplitItem, separators, wrap = true, ...rest },
+    {
+      align,
+      leftSplitItem,
+      rightSplitItem,
+      separators,
+      wrap = true,
+      className,
+      ...rest
+    },
     ref
   ) {
     const separatorAlignment = separators === true ? "center" : separators;
@@ -58,12 +66,12 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         direction="row"
         ref={ref}
         wrap={wrap}
-        {...rest}
-        className={cx(withBaseName(), {
+        className={cx(withBaseName(), className, {
           [withBaseName("separator")]: separatorAlignment,
           [withBaseName(`separator-${separatorAlignment}`)]:
             separatorAlignment && separatorAlignment !== "center",
         })}
+        {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>
         {separatorAlignment === "center" && (
