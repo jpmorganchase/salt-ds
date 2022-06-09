@@ -13,7 +13,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ContactDetailsExample } from "./flex-layout.stories";
-import { MetricExample } from "../../../core/stories/layout/flow-layout.stories";
+import { MetricExample } from "./flow-layout.stories";
 
 export default {
   title: "Layout/GridLayout",
@@ -35,12 +35,7 @@ const Template: ComponentStory<typeof GridLayout> = (args) => {
   );
 };
 export const ToolkitGridLayout = Template.bind({});
-ToolkitGridLayout.args = {
-  columns: 12,
-  rows: 1,
-  rowGap: 1,
-  columnGap: 1,
-};
+ToolkitGridLayout.args = {};
 
 const DefaultGridLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
   return (
@@ -107,8 +102,6 @@ export const ToolkitGridLayoutResponsiveView = ResponsiveView.bind({});
 ToolkitGridLayoutResponsiveView.args = {
   columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
   rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
-  rowGap: 1,
-  columnGap: 1,
 };
 
 const breakpoints = {
@@ -155,8 +148,6 @@ export const ToolkitGridLayoutCustomBreakpoints = CustomBreakpoints.bind({});
 ToolkitGridLayoutCustomBreakpoints.args = {
   columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
   rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
-  rowGap: 1,
-  columnGap: 1,
 };
 
 const Border: ComponentStory<typeof GridLayout> = (args) => {
@@ -278,7 +269,6 @@ export const ToolkitGridLayoutFooter = Footer.bind({});
 ToolkitGridLayoutFooter.args = {
   columns: 6,
   columnGap: 8,
-  rowGap: 1,
 };
 
 const blogMainContent = (
@@ -364,7 +354,6 @@ export const ToolkitGridLayoutBlog = Blog.bind({});
 ToolkitGridLayoutBlog.args = {
   columns: 3,
   columnGap: 12,
-  rowGap: 1,
 };
 
 const cardText =
@@ -372,7 +361,12 @@ const cardText =
 
 const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout rows={2} columns={3} className="grid-layout-container">
+    <GridLayout
+      {...args}
+      rows={2}
+      columns={3}
+      className="grid-layout-container"
+    >
       <GridItem rowSpan={2}>
         <h2>My contacts</h2>
         <Card>
