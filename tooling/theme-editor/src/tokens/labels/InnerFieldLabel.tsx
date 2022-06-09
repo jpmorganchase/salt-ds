@@ -10,50 +10,38 @@ const withBaseName = makePrefixer("uitkInnerFieldLabel");
 
 interface InnerFieldLabelProps {
   fieldName: string;
-  isEmphasis?: boolean;
   patternName: string;
   remainingJSON: JSONObj;
   size?: string;
 }
-
-const getLabel = (fieldName: string, isEmphasis?: boolean) => {
-  let label = fieldName.split("-").slice(-1)[0];
-
-  if (isEmphasis) {
-    if (label === "med") label = "Medium";
-    label += " emphasis";
-  }
-
-  return label;
-};
 
 export const InnerFieldLabel = ({
   fieldName,
   patternName,
   remainingJSON,
   size,
-  isEmphasis = false,
 }: InnerFieldLabelProps): ReactElement => {
   const tokenPositionInPath = fieldName.split("-").length;
-  const label = getLabel(fieldName, isEmphasis);
+  const label = fieldName.split("-").slice(-1)[0];
 
   if (
-    (Object.keys(remainingJSON).length === 1 &&
-      Object.keys(remainingJSON)[0] === "value" &&
-      label !== "background" &&
-      label !== "color" &&
-      !SECTIONED_BY_COLOR_STATE.includes(label)) ||
-    label === "emphasis"
+    Object.keys(remainingJSON).length === 1 &&
+    Object.keys(remainingJSON)[0] === "value" &&
+    label !== "background" &&
+    label !== "color" &&
+    !SECTIONED_BY_COLOR_STATE.includes(label)
   ) {
     return <></>; // no need to return, will be shown next to value
   }
 
   const variantClassName = size ? withBaseName(`${size}`) : undefined;
+  const isVariant = ["cta", "primary", "secondary", "tertiary"].includes(label);
 
   return (
     <div
       className={cn(withBaseName(), variantClassName, {
-        [withBaseName("large")]: !size && tokenPositionInPath === 1,
+        [withBaseName("variant")]: isVariant,
+        [withBaseName("large")]: !size && tokenPositionInPath < 2 && !isVariant,
         [withBaseName("medium")]: !size && tokenPositionInPath === 2,
         [withBaseName("small")]: !size && tokenPositionInPath > 2,
       })}

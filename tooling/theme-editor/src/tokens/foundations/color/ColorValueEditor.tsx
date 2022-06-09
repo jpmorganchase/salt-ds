@@ -69,7 +69,7 @@ export function isRGBAColor(value: string): boolean {
   return false;
 }
 
-export function isColor(value: string): string {
+export function isColor(value: string): string | undefined {
   if (rgbaRegex.exec(value) || rgbRegex.exec(value)) {
     return value;
   }
@@ -80,7 +80,7 @@ export function isColor(value: string): string {
     return value;
   }
 
-  return "";
+  return undefined;
 }
 
 const StateIcon = (iconInitial: string) => {
@@ -124,16 +124,24 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
   );
 
   const formFieldLabel: string = useMemo(() => {
-    return !["white", "black"].includes(label)
-      ? `${capitalize(label)}`
-      : `${capitalize(label[0])}`;
+    return `${capitalize(label)}`;
   }, [label]);
 
   useEffect(() => {
-    const updatedColor = Color.makeColorFromHex(
-      extractValue(value.includes("fade") ? value.split("-fade")[0] : value)
-    );
-    setSelectedColor(updatedColor);
+    if (value.includes("fade")) {
+      const color = value.split("-fade")[0];
+      const opacity = `uitk-opacity-${value.split("fade-")[1]}`;
+      const rgba = `${extractValue(color)
+        .replace("rgb(", "")
+        .replace(")", "")}, ${extractValue(opacity)}`;
+      setSelectedColor(
+        Color.makeColorFromRGB(
+          ...rgba.split(",").map((n) => parseFloat(n.replace(" ", "")))
+        )
+      );
+    } else {
+      setSelectedColor(Color.makeColorFromHex(extractValue(value)));
+    }
   }, [extractValue, value]);
 
   const onSelect = (color: Color | undefined, finalSelection: boolean) => {
@@ -234,23 +242,16 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 </div>
               </>
             )}
-            <div
-              className={cn({
-                [withBaseName("backgroundColorInput")]:
-                  formFieldLabel.includes("Background"),
-              })}
-            >
-              <ColorChooser
-                color={selectedColor}
-                displayHexOnly={!characteristicsView}
-                hideLabel={isStateValue}
-                showSwatches={characteristicsView ? true : false}
-                showColorPicker={characteristicsView ? false : true}
-                onSelect={onSelect}
-                onClear={onClear}
-                UITKColorOverrides={uitkColorOverrides}
-              />
-            </div>
+            <ColorChooser
+              color={selectedColor}
+              displayHexOnly={!characteristicsView}
+              hideLabel={isStateValue}
+              showSwatches={characteristicsView ? true : false}
+              showColorPicker={characteristicsView ? false : true}
+              onSelect={onSelect}
+              onClear={onClear}
+              UITKColorOverrides={uitkColorOverrides}
+            />
           </div>
           {characteristicsView && !isStateValue && (
             <JumpToTokenButton

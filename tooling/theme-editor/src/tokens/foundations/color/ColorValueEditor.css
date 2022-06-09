@@ -3,13 +3,12 @@
 }
 
 .uitkColorValueEditor-input {
-  padding: 0px 10px 2px 0px;
   width: 100%;
 }
 
 .uitkColorValueEditor-colorInput {
   display: inline-grid;
-  grid-template-columns: 30px auto;
+  grid-template-columns: 70px auto;
   align-items: center;
   width: 100%;
 }
@@ -24,10 +23,6 @@
 .uitkColorValueEditor-colorStatesField {
   width: auto;
   height: 14px;
-}
-
-.uitkColorValueEditor-backgroundColorInput {
-  max-width: 80px;
 }
 
 .uitkColorValueEditor-jumpToFoundation {

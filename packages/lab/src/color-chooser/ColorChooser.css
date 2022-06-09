@@ -13,8 +13,8 @@
 }
 
 .uitkColorChooser-overlayButtonSwatchTransparent {
-  height: calc(3 * var(--uitk-size-unit) - 2px) !important;
-  width: calc(3 * var(--uitk-size-unit) - 2px) !important;
+  height: calc(2 * var(--uitk-size-unit) - 2px) !important;
+  width: calc(2 * var(--uitk-size-unit) - 2px) !important;
   border: 1px solid var(--uitk-differential-negative-foreground);
   /* RGBA using red-700 */
   background: linear-gradient(

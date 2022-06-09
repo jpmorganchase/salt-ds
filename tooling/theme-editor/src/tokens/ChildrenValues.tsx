@@ -10,6 +10,7 @@ import "./ChildrenValues.css";
 const withBaseName = makePrefixer("uitkChildrenValues");
 
 export const SECTIONED_BY_COLOR_STATE = ["foreground", "border", "outline"];
+
 interface ChildrenValuesProps {
   uitkColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
@@ -31,52 +32,15 @@ export const ChildrenValuesWithinSection = ({
   patternName,
   scope,
 }: ChildrenValuesProps) => {
+  console.log(fieldName, patternName, children);
   return (
-    <div className={cn(withBaseName())}>
+    <div className={cn(withBaseName("section"))}>
       <InnerFieldLabel
-        isEmphasis={Object.keys(children).includes("emphasis")}
         fieldName={fieldName}
         patternName={patternName}
         remainingJSON={children}
       />
       {Object.keys(children)
-        .filter(
-          (node) =>
-            Object.keys(children[node]).includes("value") ||
-            SECTIONED_BY_COLOR_STATE.some((token) => token === node)
-        )
-        .sort((k1, k2) => (k1 === "value" ? -1 : 1))
-        .map((node) =>
-          node === "background" || node === "color" || children[node].color ? (
-            <TokenWithColors
-              children={children}
-              extractValue={extractValue}
-              fieldName={fieldName}
-              onUpdateJSON={onUpdateJSON}
-              patternName={patternName}
-              scope={scope}
-              node={node}
-            />
-          ) : (
-            <ChildrenValues
-              uitkColorOverrides={uitkColorOverrides}
-              extractValue={extractValue}
-              characteristicsView={characteristicsView}
-              children={children[node]}
-              fieldName={`${fieldName}-${node}`}
-              key={`${patternName}-${fieldName}-${node}`}
-              onUpdateJSON={onUpdateJSON}
-              patternName={patternName}
-              scope={scope}
-            />
-          )
-        )}
-      {Object.keys(children)
-        .filter(
-          (node) =>
-            !Object.keys(children[node]).includes("value") &&
-            !SECTIONED_BY_COLOR_STATE.some((token) => token === node)
-        )
         .sort((k1, k2) => (k1 === "value" ? -1 : 1))
         .map((node) =>
           node !== "value" ? (
@@ -90,6 +54,7 @@ export const ChildrenValuesWithinSection = ({
               onUpdateJSON={onUpdateJSON}
               patternName={patternName}
               scope={scope}
+              inSection={true}
             />
           ) : (
             <ValueEditor
@@ -101,7 +66,7 @@ export const ChildrenValuesWithinSection = ({
               patternName={patternName}
               scope={scope}
               value={children.value!}
-              valueName={fieldName}
+              valueName={"Default"}
             />
           )
         )}
@@ -111,30 +76,27 @@ export const ChildrenValuesWithinSection = ({
 
 export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
   return (
-    <>
-      {props.children &&
-        !!Object.keys(props.children).filter(
-          (node) =>
-            Object.keys(props.children[node]).includes("value") ||
-            SECTIONED_BY_COLOR_STATE.some((token) => token === node)
-        ).length && (
-          <ChildrenValuesWithinSection
-            characteristicsView={props.characteristicsView}
-            children={props.children}
-            uitkColorOverrides={props.uitkColorOverrides}
-            extractValue={props.extractValue}
-            fieldName={props.fieldName}
-            onUpdateJSON={props.onUpdateJSON}
-            patternName={props.patternName}
-            scope={props.scope}
-          />
-        )}
-      {props.children &&
+    <div className={cn(withBaseName())}>
+      {!!Object.keys(props.children).filter((node) =>
+        Object.keys(props.children[node]).includes("value")
+      ).length && (
+        <ChildrenValuesWithinSection
+          characteristicsView={props.characteristicsView}
+          children={props.children}
+          uitkColorOverrides={props.uitkColorOverrides}
+          extractValue={props.extractValue}
+          fieldName={props.fieldName}
+          onUpdateJSON={props.onUpdateJSON}
+          patternName={props.patternName}
+          scope={props.scope}
+        />
+      )}
+      {!Object.keys(props.children).filter((node) =>
+        Object.keys(props.children[node]).includes("value")
+      ).length &&
         Object.keys(props.children)
           .filter(
-            (node) =>
-              !Object.keys(props.children[node]).includes("value") &&
-              !SECTIONED_BY_COLOR_STATE.some((token) => token === node)
+            (node) => !Object.keys(props.children[node]).includes("value")
           )
           .sort((k1, k2) => (k1 === "value" ? -1 : 1))
           .map((node) =>
@@ -159,11 +121,11 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
                 onUpdateJSON={props.onUpdateJSON}
                 patternName={props.patternName}
                 scope={props.scope}
-                value={props.children.value!}
+                value={props.children.value}
                 valueName={props.fieldName}
               />
             )
           )}
-    </>
+    </div>
   );
 };

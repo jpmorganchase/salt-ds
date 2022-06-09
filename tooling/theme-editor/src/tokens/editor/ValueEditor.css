@@ -1,6 +1,5 @@
 .uitkValueEditor {
-  width: 90%;
-  flex-basis: 25%;
+  width: 100%;
 }
 .uitkValueEditor-input {
   padding: 0px 10px 2px 0px;

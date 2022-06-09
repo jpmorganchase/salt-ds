@@ -48,6 +48,12 @@ export const extractValueFromJSON = (
   jsonInCurrentScope: JSONByScope[]
 ): string => {
   const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.uitk));
+  
+  if (value.includes("fade")) {
+    const color = value.split("-fade")[0];
+    const opacity = `uitk-opacity-${value.split("fade-")[1]}`;
+    return `rgba(${extractValueFromJSON(color, jsonInCurrentScope).replace('rgb(','').replace(')','')}, ${extractValueFromJSON(opacity, jsonInCurrentScope)})`;
+  }
 
   function recursePath(v: string): string {
     let path = mergedJSON;
@@ -60,7 +66,9 @@ export const extractValueFromJSON = (
       if (!path) return original;
     }
     if (path.value && typeof path.value === "string") {
-      if (path.value.startsWith("uitk")) return recursePath(path.value);
+      if (path.value.startsWith("uitk")) {
+        return extractValueFromJSON(path.value, jsonInCurrentScope)
+      }
       else return path.value;
     } else return original;
   }

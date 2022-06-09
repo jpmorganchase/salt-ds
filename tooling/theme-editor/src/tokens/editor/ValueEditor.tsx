@@ -64,11 +64,14 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
     }
   };
 
-  const label = props.valueName.split("-").join(" ");
-
+  const label = props.valueName.split("-").slice(-1)[0];
+  const extractedValue = props.extractValue(value);
+  console.log(extractedValue);
   return (
     <div className={cn(withBaseName(), props.className)}>
-      {props.isStateValue || isColor(props.extractValue(value)).length ? (
+      {isColor(extractedValue) ||
+      value === "transparent" ||
+      extractedValue === "transparent" ? (
         <div className={cn(withBaseName("colorInput"))}>
           <ColorValueEditor
             uitkColorOverrides={props.uitkColorOverrides}

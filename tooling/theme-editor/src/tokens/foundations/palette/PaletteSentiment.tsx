@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   AccordionDetails,
   AccordionSection,
@@ -6,7 +7,9 @@ import {
   capitalize,
 } from "@jpmorganchase/uitk-lab";
 import { JSONObj } from "../../../helpers/parseToJson";
-import { ChildrenValuesWithinSection } from "../../ChildrenValues";
+import { ChildrenValues } from "../../ChildrenValues";
+
+const withBaseName = makePrefixer("uitkPaletteSentiment");
 
 export interface PaletteSentimentProps {
   extractValue: (value: string) => string;
@@ -26,41 +29,42 @@ export const PaletteSentiment = (
       <AccordionSummary>{capitalize(props.sentimentName)}</AccordionSummary>
       <AccordionDetails>
         {props.sentimentValues &&
-          Object.keys(props.sentimentValues).map((scope) => {
-            return (
-              <div key={`${props.sentimentName}-${scope}`}>
-                {Object.keys(props.sentimentValues[scope])
-                  .sort((a, b) => (a > b ? 1 : -1))
-                  .sort((a, b) =>
-                    Object.keys(props.sentimentValues[scope][a]).includes(
-                      "value"
-                    ) &&
-                    Object.keys(props.sentimentValues[scope][a]).length === 1
-                      ? -1
-                      : 1
-                  )
-                  .map(function (node) {
-                    const [values, fieldName] =
-                      node === "value"
-                        ? [props.sentimentValues[scope], props.sentimentName]
-                        : [props.sentimentValues[scope][node], node];
+          Object.keys(props.sentimentValues)
+            .sort((k1, k2) =>
+              ["cta", "primary", "secondary", "tertiary"].includes(k1) ? 1 : -1
+            )
+            .sort((a, b) =>
+              Object.keys(props.sentimentValues[a]).includes("value") &&
+              Object.keys(props.sentimentValues[a]).length === 1
+                ? -1
+                : 1
+            )
 
-                    return (
-                      <ChildrenValuesWithinSection
-                        characteristicsView={true}
-                        children={values}
-                        uitkColorOverrides={props.uitkColorOverrides}
-                        extractValue={props.extractValue}
-                        fieldName={fieldName}
-                        onUpdateJSON={props.onUpdateJSON}
-                        patternName={props.sentimentName}
-                        scope={props.scope}
-                      />
-                    );
-                  })}
-              </div>
-            );
-          })}
+            .map((intent) => {
+              const [values, fieldName] =
+                intent === "value"
+                  ? [props.sentimentValues, intent]
+                  : [props.sentimentValues[intent], intent];
+
+              return (
+                <div
+                  className={withBaseName()}
+                  key={`${props.sentimentName}-${intent}`}
+                >
+                  <ChildrenValues
+                    key={`${props.sentimentName}-${intent}-${fieldName}`}
+                    characteristicsView={true}
+                    children={values}
+                    uitkColorOverrides={props.uitkColorOverrides}
+                    extractValue={props.extractValue}
+                    fieldName={fieldName}
+                    onUpdateJSON={props.onUpdateJSON}
+                    patternName={props.sentimentName}
+                    scope={props.scope}
+                  />
+                </div>
+              );
+            })}
       </AccordionDetails>
     </AccordionSection>
   );

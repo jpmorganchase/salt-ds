@@ -17,7 +17,6 @@ export interface PalettePatternProps {
 }
 
 export const PalettePattern = (props: PalettePatternProps): ReactElement => {
-  console.log(props);
   return (
     <Accordion>
       <div className={cn(withBaseName())}>

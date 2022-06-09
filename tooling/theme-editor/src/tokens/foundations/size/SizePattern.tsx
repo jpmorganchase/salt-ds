@@ -44,7 +44,6 @@ function getScopeName(scope: string): string {
 }
 
 export const SizePattern = (props: SizePatternProps): ReactElement => {
-  console.log(props);
   return (
     <AccordionSection key={`${props.themeName}-${props.patternName}-accordion`}>
       <AccordionSummary>{getScopeName(props.scope)}</AccordionSummary>

@@ -45,7 +45,7 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
           overflowMenu={true}
           activeTabIndex={props.selectedTabIndex}
         >
-          {UITK_FOUNDATIONS.filter((f) => f !== "fade").map((label, i) => (
+          {UITK_FOUNDATIONS.map((label, i) => (
             <Tab aria-label={label} label={capitalize(label)} key={i} />
           ))}
         </Tabstrip>
