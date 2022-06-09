@@ -2,6 +2,7 @@ import { composeStories } from "@storybook/testing-react";
 import * as flexStories from "@stories/layout/flex-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { FlexLayoutNested } from "@stories/layout/flex-layout.stories";
 
 const composedStories = composeStories(flexStories);
 const { DefaultFlexLayout, ToolkitFlexLayoutResponsive } = composedStories;
@@ -28,6 +29,22 @@ describe("GIVEN a Flex", () => {
       cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
 
       cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
+    });
+
+    it("THEN nested items should not inherit css variables from parent", () => {
+      cy.mount(<FlexLayoutNested />);
+
+      cy.get(".uitkFlexLayout").eq(0).should("have.css", "flex-wrap", "wrap");
+      cy.get(".uitkFlexLayout")
+        .eq(0)
+        .should("have.css", "justify-content", "space-between");
+      cy.get(".uitkFlexLayout").eq(0).should("have.css", "row-gap", "48px");
+
+      cy.get(".uitkFlexLayout").eq(1).should("have.css", "flex-wrap", "nowrap");
+      cy.get(".uitkFlexLayout")
+        .eq(1)
+        .should("have.css", "justify-content", "flex-start");
+      cy.get(".uitkFlexLayout").eq(1).should("have.css", "row-gap", "24px");
     });
   });
 
