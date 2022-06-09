@@ -55,7 +55,6 @@ export const SizePattern = (props: SizePatternProps): ReactElement => {
                 node === "value"
                   ? [props.values, props.patternName]
                   : [props.values[node], node];
-              console.log(values, fieldName);
 
               return (
                 <>

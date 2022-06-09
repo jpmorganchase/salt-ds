@@ -66,7 +66,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
 
   const label = props.valueName.split("-").slice(-1)[0];
   const extractedValue = props.extractValue(value);
-  console.log(extractedValue);
+
   return (
     <div className={cn(withBaseName(), props.className)}>
       {isColor(extractedValue) ||

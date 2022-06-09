@@ -129,7 +129,6 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
 
   // for each css selector
   for (const [id, scopeAndJSON] of Object.entries(tokenTree)) {
-    console.log(scopeAndJSON)
     var stringJSON = "{";
     var comma = false;
     if (Object.keys(scopeAndJSON.children).length > 1) {
@@ -141,7 +140,6 @@ export function parseCSStoJSON(stringCSS): JSONByScope[] {
       scope: scopeAndJSON.label,
       jsonObj: JSON.parse(stringJSON),
     });
-    console.log(stringJSON)
   }
   return scopeToJSONMap;
 }

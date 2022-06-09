@@ -32,7 +32,6 @@ export const ChildrenValuesWithinSection = ({
   patternName,
   scope,
 }: ChildrenValuesProps) => {
-  console.log(fieldName, patternName, children);
   return (
     <div className={cn(withBaseName("section"))}>
       <InnerFieldLabel
