@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import classnames from "classnames";
 
-import { ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
-  Checkbox,
   ContactAction,
   ContactActions,
   ContactAvatar,
@@ -17,13 +14,7 @@ import {
   ContactTertiaryInfo,
   MailLinkComponent,
 } from "@jpmorganchase/uitk-lab";
-import {
-  CallIcon,
-  ChatIcon,
-  CopyIcon,
-  ExportIcon,
-  MessageIcon,
-} from "@jpmorganchase/uitk-icons";
+import { CallIcon, ChatIcon, MessageIcon } from "@jpmorganchase/uitk-icons";
 import { QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
 import avatar1 from "./assets/avatar1.png";
@@ -32,29 +23,6 @@ export default {
   title: "Lab/ContactDetails/QA",
   component: ContactDetails,
 } as ComponentMeta<typeof ContactDetails>;
-
-const contactWithoutIcons = {
-  primary: { value: "Alex Brailescu" },
-  secondary: {
-    value: "Blackrock Advisors (UK) Limited",
-  },
-  tertiary: {
-    value: "SPN 2188538",
-  },
-};
-
-const contactWithIcons = {
-  primary: { value: "Alex Brailescu" },
-  secondary: {
-    value: "alex.brailescu@blackrock.com",
-    icon: MessageIcon,
-    ValueComponent: MailLinkComponent,
-  },
-  tertiary: {
-    value: "+44 141 228 0210",
-    icon: CallIcon,
-  },
-};
 
 const actions = [
   { icon: CallIcon, action: () => console.log("Custom Action: Phone") },
@@ -91,116 +59,64 @@ const metadata = [
   },
 ];
 
-const metadataWithIcon = [
-  {
-    label: "Bloomberg",
-    icon: MessageIcon,
-    value: "ABRAILESCU@bloomberg.net",
-    ValueComponent: MailLinkComponent,
-  },
-  {
-    label: "Office",
-    value: "+44 3071 234539",
-    icon: CallIcon,
-  },
-];
-
 const contactWithActions = {
   avatar: avatar1,
-  ...contactWithoutIcons,
+  primary: "Alex Brailescu",
+  secondary: "Blackrock Advisors (UK) Limited",
+  tertiary: "SPN 2188538",
   actions,
   metadata,
 };
 
-const contactWithIconsAvatar = {
-  avatar: avatar1,
-  ...contactWithIcons,
-  metadata,
-};
+const getComponent = (variant = "default") => {
+  const { avatar, actions, primary, secondary, tertiary, metadata } =
+    contactWithActions;
+  return (
+    <ContactDetails
+      variant={
+        variant === "compact"
+          ? "compact"
+          : variant === "mini"
+          ? "mini"
+          : "default"
+      }
+    >
+      {!!avatar && <ContactAvatar src={avatar1} />}
 
-const contactWithMetaIcon = {
-  avatar: avatar1,
-  ...contactWithoutIcons,
-  metadata: metadataWithIcon,
-};
+      <ContactFavoriteToggle onChange={console.log} />
 
-// const styles = ({ toolkit: toolkitTheme }: Theme) => {
-//   const {
-//     palette: { type, blue900, blue10 },
-//   } = toolkitTheme;
+      <ContactPrimaryInfo text={primary} />
+      <ContactSecondaryInfo text={secondary} />
+      <ContactTertiaryInfo text={tertiary} />
 
-//   return {
-//     container: {
-//       width: 400,
-//       marginBottom: 16,
-//     },
-//     narrowContainer: {
-//       width: 300,
-//       marginBottom: 16,
-//     },
-//     withBackground: {
-//       background: type === "dark" ? blue900 : blue10,
-//     },
-//   };
-// };
-
-const getDefault = ({
-  data,
-  collapsible = false,
-  avatar = true,
-  favorite = true,
-  isFavorite = false,
-  variant = "default",
-}) => (
-  <ContactDetails
-    variant={
-      variant === "compact"
-        ? "compact"
-        : variant === "mini"
-        ? "mini"
-        : "default"
-    }
-  >
-    {!!avatar && <ContactAvatar src={avatar1} />}
-
-    {!!favorite && (
-      <ContactFavoriteToggle
-        defaultIsFavorite={isFavorite}
-        onChange={console.log}
-      />
-    )}
-
-    <ContactPrimaryInfo text={data.primary.value} />
-    <ContactSecondaryInfo text={data.secondary.value} />
-    <ContactTertiaryInfo text={data.tertiary.value} />
-
-    <ContactMetadata collapsible={collapsible}>
-      {data.metadata.map((item: any) => {
-        return (
-          <ContactMetadataItem
-            value={item.value}
-            label={item.label}
-            icon={item.icon}
-          />
-        );
-      })}
-    </ContactMetadata>
-
-    {!!data.actions && (
-      <ContactActions>
-        {data.actions.map((item: any) => {
+      <ContactMetadata>
+        {metadata.map((item: any) => {
           return (
-            <ContactAction
+            <ContactMetadataItem
+              value={item.value}
+              label={item.label}
               icon={item.icon}
-              accessibleText={item.accessibleText}
-              onClick={item.action}
             />
           );
         })}
-      </ContactActions>
-    )}
-  </ContactDetails>
-);
+      </ContactMetadata>
+
+      {!!actions && (
+        <ContactActions>
+          {actions.map((item: any) => {
+            return (
+              <ContactAction
+                icon={item.icon}
+                accessibleText={item.accessibleText}
+                onClick={item.action}
+              />
+            );
+          })}
+        </ContactActions>
+      )}
+    </ContactDetails>
+  );
+};
 
 const AllVariants = () => {
   const containerStyle = {
@@ -211,30 +127,12 @@ const AllVariants = () => {
   return (
     <div className="backwardsCompat">
       <h3>Default</h3>
-      <div style={containerStyle}>
-        {getDefault({ data: contactWithActions, collapsible: false })}
-      </div>
+      <div style={containerStyle}>{getComponent()}</div>
 
       <h3>Compact</h3>
-      <div style={containerStyle}>
-        {getDefault({
-          data: contactWithActions,
-          variant: "compact",
-        })}
-      </div>
+      <div style={containerStyle}>{getComponent("compact")}</div>
       <h3>Mini</h3>
-      <div style={containerStyle}>
-        {getDefault({
-          data: contactWithActions,
-          variant: "mini",
-        })}
-        {/* <ContactDetails
-          contact={contactWithActions}
-          embedded={embedded}
-          showFavoriteToggle
-          variant="mini"
-        /> */}
-      </div>
+      <div style={containerStyle}>{getComponent("mini")}</div>
     </div>
   );
 };
