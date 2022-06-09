@@ -1,9 +1,12 @@
 name: "Chromatic"
 
-on: push
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   chromatic-deployment:
+    if: github.event.pull_request.draft == false
     # Operating System
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +22,7 @@ jobs:
         run: yarn
         # 👇 Adds Chromatic as a step in the workflow
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action-next@v1
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
@@ -31,3 +34,5 @@ jobs:
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
+          traceChanged: "expanded"
+          debug: true
