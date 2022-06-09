@@ -2,10 +2,10 @@ import { composeStories } from "@storybook/testing-react";
 import * as flexStories from "@stories/layout/flex-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { FlexLayoutNested } from "@stories/layout/flex-layout.stories";
 
 const composedStories = composeStories(flexStories);
-const { DefaultFlexLayout, ToolkitFlexLayoutResponsive } = composedStories;
+const { DefaultFlexLayout, ToolkitFlexLayoutResponsive, FlexLayoutNested } =
+  composedStories;
 
 describe("GIVEN a Flex", () => {
   checkAccessibility(composedStories);

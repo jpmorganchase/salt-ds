@@ -2,13 +2,13 @@ import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/layout/grid-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { GridLayoutNested } from "@stories/layout/grid-layout.stories";
 
 const composedStories = composeStories(gridStories);
 const {
   ToolkitGridLayout,
   ToolkitGridLayoutMultipleRows,
   ToolkitGridLayoutResponsiveView,
+  GridLayoutNested,
 } = composedStories;
 
 const testElementsNumber = (elements: number) =>
