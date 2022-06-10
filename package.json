@@ -108,7 +108,6 @@
     "vite-plugin-istanbul": "^2.7.3",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
-    "vite-plugin-turbosnap": "^1.0.1",
     "vite-tsconfig-paths": "^3.4.1",
     "warning": "^4.0.3",
     "webpack": "5"
