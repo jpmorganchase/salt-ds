@@ -12,9 +12,6 @@
 /* Styles applied to inner content */
 .uitkContentStatus-content {
   color: var(--uitkContentStatus-content-color, var(--uitk-text-primary-foreground));
-  letter-spacing: var(--uitkContentStatus-letter-spacing, 0);
-  line-height: var(--uitkContentStatus-line-height, var(--uitk-typography-lineHeight));
-  font-size: var(--uitkContentStatus-font-size, var(--uitk-text-fontSize));
   min-height: var(--uitkContentStatus-min-height, var(--uitk-text-minHeight));
   display: flex;
   flex-direction: column;
@@ -27,10 +24,6 @@
 /* Styles applied to status title */
 .uitkContentStatus-title {
   color: var(--uitkContentStatus-title-color, var(--uitk-text-primary-foreground));
-  letter-spacing: var(--uitkContentStatus-title-letter-spacing, 0);
-  font-weight: var(--uitkContentStatus-title-font-weight, var(--uitk-typography-weight-semiBold));
-  line-height: var(--uitkContentStatus-title-line-height, var(--uitk-typography-lineHeight));
-  font-size: var(--uitkContentStatus-title-font-size, var(--uitk-text-fontSize));
   min-height: var(--uitkContentStatus-title-min-height, var(--uitk-text-minHeight));
   margin-top: var(--uitkContentStatus-title-margin-top, var(--uitk-size-unit));
 }

@@ -15,6 +15,7 @@ import {
 import { CircularProgressProps } from "../progress";
 import { SpinnerProps } from "../spinner";
 import { useId } from "../utils";
+import { Div } from "../typography";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
 
 import "./ContentStatus.css";
@@ -130,9 +131,15 @@ export const ContentStatus = forwardRef(function ContentStatus(
           id={id}
           role="region"
         >
-          {title && <div className={cx(withBaseName("title"))}>{title}</div>}
+          {title && (
+            <Div styleAs="h4" truncate className={cx(withBaseName("title"))}>
+              {title}
+            </Div>
+          )}
           {message && (
-            <div className={cx(withBaseName("message"))}>{message}</div>
+            <Div truncate className={cx(withBaseName("message"))}>
+              {message}
+            </Div>
           )}
           {hasActions && (
             <div className={cx(withBaseName("actions"))}>
