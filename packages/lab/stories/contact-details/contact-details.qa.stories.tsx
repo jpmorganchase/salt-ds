@@ -164,23 +164,3 @@ export const CompareWithOriginalToolkit: ComponentStory<
     </QAContainer>
   );
 };
-
-export const QAExample: ComponentStory<typeof ContactDetails> = () => {
-  return (
-    <div
-      className="backwardsCompat"
-      style={{ width: 800, display: "flex", flex: 1 }}
-    >
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock style={{ background: "white" }}>
-          <AllVariants />
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>
-          <AllVariants />
-        </BackgroundBlock>
-      </ToolkitProvider>
-    </div>
-  );
-};
