@@ -114,12 +114,12 @@ export function typescriptTurbosnap({
             // This gets modules imports for side effects e.g. css files
             .filter((importDeclaration) => !importDeclaration.getImportClause())
             .forEach((importDeclaration) => {
-              addFilesToModuleMap(file.getFilePath(), [
-                path.resolve(
-                  path.dirname(file.getFilePath()),
-                  importDeclaration.getModuleSpecifierValue()
-                ),
-              ]);
+              const filePath = file.getFilePath();
+              const cssFile = path.resolve(
+                path.dirname(filePath),
+                importDeclaration.getModuleSpecifierValue()
+              );
+              addFilesToModuleMap(cssFile, [filePath]);
             });
         }
       }
