@@ -1,3 +1,8 @@
+/**
+ * A modified version of: https://github.com/IanVS/vite-plugin-turbosnap
+ * Reason, Module and Stats types; isUserCode, normalize, the plugin shell and generateBundle are copied.
+ */
+
 import { writeFile } from "fs/promises";
 import { Project } from "ts-morph";
 import path from "path";
@@ -36,33 +41,34 @@ function isUserCode(moduleName: string) {
       !moduleName.startsWith("\x00") &&
       !moduleName.startsWith("\u0000") &&
       moduleName !== "react/jsx-runtime" &&
-      !moduleName.match(/node_modules\//)
+      !/node_modules\//.exec(moduleName)
   );
+}
+
+/**
+ * Convert an absolute path name to a path relative to the vite root, with a starting `./`
+ */
+function normalize(rootDir: string, filename: string) {
+  // Do not try to resolve virtual files
+  if (filename.startsWith("/virtual:")) {
+    return filename;
+  }
+
+  // We need them in the format `./path/to/file.js`.
+  const relativePath = normalizePath(path.relative(rootDir, filename));
+  // This seems hacky, got to be a better way to add a `./` to the start of a path.
+  return `./${relativePath}`;
 }
 
 export function typescriptTurbosnap({
   rootDir,
 }: TurbosnapPluginOptions): Plugin {
   const moduleMap: Record<string, Module> = {};
-  /**
-   * Convert an absolute path name to a path relative to the vite root, with a starting `./`
-   */
-  function normalize(filename: string) {
-    // Do not try to resolve virtual files
-    if (filename.startsWith("/virtual:")) {
-      return filename;
-    }
-
-    // We need them in the format `./path/to/file.js`.
-    const relativePath = normalizePath(path.relative(rootDir, filename));
-    // This seems hacky, got to be a better way to add a `./` to the start of a path.
-    return `./${relativePath}`;
-  }
 
   function addFilesToModuleMap(filePath: string, reasonPaths: string[]) {
-    const normalizedFilePath = normalize(filePath);
+    const normalizedFilePath = normalize(rootDir, filePath);
     const normalizedReasons = reasonPaths.map((reasonPath) => ({
-      moduleName: normalize(reasonPath),
+      moduleName: normalize(rootDir, reasonPath),
     }));
 
     if (!moduleMap[normalizedFilePath]) {
@@ -89,6 +95,7 @@ export function typescriptTurbosnap({
         const file = project.getSourceFile(path.resolve(mod.id));
 
         if (file) {
+          const filePath = file.getFilePath();
           const declarations = file.getVariableDeclarations();
           declarations?.forEach((declaration) => {
             const x = Array.from(
@@ -98,15 +105,15 @@ export function typescriptTurbosnap({
                   .flatMap((references) =>
                     references
                       .getReferences()
-                      .flatMap((reference) =>
+                      .map((reference) =>
                         reference.getSourceFile().getFilePath()
                       )
                   )
-                  .filter((path) => path !== file.getFilePath())
+                  .filter((path) => path !== filePath)
               )
             );
 
-            addFilesToModuleMap(file.getFilePath(), x);
+            addFilesToModuleMap(filePath, x);
           });
 
           file
@@ -114,7 +121,6 @@ export function typescriptTurbosnap({
             // This gets modules imports for side effects e.g. css files
             .filter((importDeclaration) => !importDeclaration.getImportClause())
             .forEach((importDeclaration) => {
-              const filePath = file.getFilePath();
               const cssFile = path.resolve(
                 path.dirname(filePath),
                 importDeclaration.getModuleSpecifierValue()
