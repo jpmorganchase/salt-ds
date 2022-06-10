@@ -1,11 +1,3 @@
-.uitk-light.uitk-newapp,
-.uitk-dark.uitk-newapp {
-  --uitkSwitch-track-borderRadius: 5px;
-  --uitkSwitch-thumb-borderRadius: 20px;
-  --uitkSwitch-track-minHeight: 0px;
-  --uitkSwitch-track-border-checked: none;
-}
-
 .uitk-density-high.uitk-newapp {
   --uitkSwitch-track-transform: translate(0px, 6px);
   --uitkSwitch-track-height: 4px;
@@ -44,6 +36,14 @@
   --uitkSwitch-base-margin: 2px 0 0 -2px;
 }
 
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkSwitch-track-borderRadius: 5px;
+  --uitkSwitch-thumb-borderRadius: 20px;
+  --uitkSwitch-track-minHeight: 0px;
+  --uitkSwitch-track-border-checked: none;
+}
+
 .uitk-light.uitk-newapp {
   --uitkSwitch-track-color-checked: var(--uitk-color-red-100);
   --uitkSwitch-icon-color-checked: var(--uitk-color-white);
@@ -56,4 +56,8 @@
   --uitkSwitch-icon-color-checked: var(--uitk-color-red-800);
   --uitkSwitch-thumb-background: var(--uitk-color-red-400);
   --uitkSwitch-track-color-hover: var(--uitk-color-red-50);
+}
+
+.uitk-newapp .uitkSwitch:hover:not(.uitkSwitch-disabled) .uitkSwitch-track {
+  box-shadow: 0 4px 8px 0 rgba(255, 108, 88, 0.55);
 }
