@@ -60,7 +60,7 @@ Controlled.args = {
 };
 
 export const CustomStyling: ComponentStory<typeof Switch> = () => (
-  <div style={{ display: "flex" }}>
+  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
     <ToolkitProvider density="high" theme={["light", "newapp"]}>
       <Panel>
         <FeatureSwitch label="Custom styling" />
@@ -68,7 +68,18 @@ export const CustomStyling: ComponentStory<typeof Switch> = () => (
     </ToolkitProvider>
     <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
       <Panel>
-        <FeatureSwitch label="Custom styling" checked={true} />
+        <FeatureSwitch label="Custom styling" defaultChecked />
+      </Panel>
+    </ToolkitProvider>
+
+    <ToolkitProvider density="touch" theme={["light", "newapp"]}>
+      <Panel>
+        <FeatureSwitch label="Custom styling" />
+      </Panel>
+    </ToolkitProvider>
+    <ToolkitProvider density="touch" theme={["dark", "newapp"]}>
+      <Panel>
+        <FeatureSwitch label="Custom styling" defaultChecked />
       </Panel>
     </ToolkitProvider>
   </div>

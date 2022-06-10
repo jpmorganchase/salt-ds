@@ -1,8 +1,6 @@
 .uitkSwitchQA .uitkDocGrid {
   min-height: 174px;
 }
-
-.uitkSwitchQA .uitk-dark .uitkSwitch-label {
-  /* Backwards compat styling example */
-  --uitkSwitch-checked-icon-color: var(--uitk-color-white);
+.uitkSwitchQA .uitk-dark .uitkSwitch-iconTick {
+  --uitkSwitch-icon-color-checked: var(--uitk-color-white);
 }
