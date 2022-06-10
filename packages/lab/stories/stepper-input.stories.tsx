@@ -5,7 +5,7 @@ import { FormField, StepperInput } from "@jpmorganchase/uitk-lab";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
-} from "./story-layout/ColumnLayout";
+} from "@jpmorganchase/uitk-core/stories";
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {

@@ -1,0 +1,18 @@
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --newapp-panel-color: rgb(66, 103, 178);
+
+  --uitkCard-background: var(--newapp-panel-color);
+  --uitkCard-borderRadius: 20px;
+  --uitkCard-borderColor: var(--uitk-color-white);
+  --uitkCard-borderColor-hover: var(--uitk-color-grey-900);
+  --uitkCard-boxShadow: var(--uitk-overlayable-shadow-default);
+}
+
+.uitk-newapp.uitkPanel {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.uitk-light.uitk-newapp .uitkCard {
+  color: var(--uitk-color-white);
+}
