@@ -48,6 +48,11 @@ export function typescriptTurbosnap({
    * Convert an absolute path name to a path relative to the vite root, with a starting `./`
    */
   function normalize(filename: string) {
+    // Do not try to resolve virtual files
+    if (filename.startsWith("/virtual:")) {
+      return filename;
+    }
+
     // We need them in the format `./path/to/file.js`.
     const relativePath = normalizePath(path.relative(rootDir, filename));
     // This seems hacky, got to be a better way to add a `./` to the start of a path.
@@ -117,6 +122,20 @@ export function typescriptTurbosnap({
               ]);
             });
         }
+      }
+
+      if (
+        [
+          "/virtual:/@storybook/builder-vite/storybook-stories.js",
+          "/virtual:/@storybook/builder-vite/vite-app.js",
+        ].includes(mod.id)
+      ) {
+        mod.importedIds
+          .concat(mod.dynamicallyImportedIds)
+          .filter((name) => isUserCode(name))
+          .forEach((depId) => {
+            addFilesToModuleMap(depId, [mod.id]);
+          });
       }
     },
     generateBundle: function (this, outOpts) {
