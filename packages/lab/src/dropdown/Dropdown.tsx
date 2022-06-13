@@ -286,6 +286,7 @@ export const Dropdown = forwardRef(function Dropdown<
         <Portal disablePortal={disablePortal} container={container}>
           <Window
             id={id}
+            className={withBaseName("listWindowRoot")}
             style={{
               top: y ?? "",
               left: x ?? "",
