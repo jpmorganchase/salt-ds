@@ -1,9 +1,6 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
-import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
-import { ShadowBlockCell } from "docs/components/ShadowBlock";
-import { BlankBlockCode } from "docs/components/BlankBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Draggable" />
 
@@ -19,27 +16,14 @@ Components that can be grabbed and moved to a target area (related to Drop Targe
   <Story name="All">
     <>
       <DocGrid>
-        <CursorBlock cursor="--uitk-draggable-cursor-active" />
-        <CursorBlock cursor="--uitk-draggable-cursor-hover" />
-        <ShadowBlockCell shadowVar="--uitk-draggable-box-shadow" />
-        <BlankBlockCode>--uitk-draggable-box-shadow</BlankBlockCode>
+        <CursorBlock cursor="--uitk-draggable-vertical-cursor-hover" />
+        <CursorBlock cursor="--uitk-draggable-vertical-cursor-active" />
+        <CursorBlock cursor="--uitk-draggable-horizontal-cursor-hover" />
+        <CursorBlock cursor="--uitk-draggable-horizontal-cursor-active" />
+        <CursorBlock cursor="--uitk-draggable-grab-cursor-hover" />
+        <CursorBlock cursor="--uitk-draggable-grab-cursor-active" />
       </DocGrid>
     </>
-  </Story>
-</Canvas>
-
-### Colors
-
-<Canvas>
-  <Story name="Colors">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-draggable-background" />
-      <ColorBlock colorVar="--uitk-draggable-background-active" />
-      <ColorBlock colorVar="--uitk-draggable-background-hover" />
-      <ColorBlock colorVar="--uitk-draggable-icon" />
-      <ColorBlock colorVar="--uitk-draggable-icon-active" />
-      <ColorBlock colorVar="--uitk-draggable-icon-hover" />
-    </DocGrid>
   </Story>
 </Canvas>
 
