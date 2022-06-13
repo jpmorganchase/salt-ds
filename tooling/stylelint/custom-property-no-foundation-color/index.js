@@ -40,11 +40,12 @@ const ruleName = "uitk/custom-property-no-foundation-color";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
-    `No foundation or palette color should be used in component`, // Can encode option in error message eif needed
+    `No foundation or palette color should be used in component`, // Can encode option in error message if needed
 });
 
 const meta = {
-  url: "https://stylelint.io/user-guide/rules/list/custom-property-pattern",
+  // Point to style documentation
+  url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
 /**
