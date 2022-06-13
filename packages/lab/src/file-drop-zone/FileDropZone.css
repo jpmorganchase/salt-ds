@@ -90,7 +90,7 @@
 }
 
 .uitkFileDropZone-disabled {
-  cursor: var(--uitk-droptarget-cursor-disabled);
+  cursor: var(--uitk-dropTarget-cursor-disabled);
   background: var(--file-drop-zone-background-disabled);
 }
 

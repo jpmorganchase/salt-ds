@@ -239,7 +239,7 @@ var UITK_CHARACTERISTICS = [
   "delay",
   "disabled",
   "draggable",
-  "droptarget",
+  "dropTarget",
   "editable",
   "focused",
   "measured",
