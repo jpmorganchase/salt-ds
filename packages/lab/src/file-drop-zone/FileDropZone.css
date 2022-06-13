@@ -3,7 +3,7 @@
   --fileDropZone-background: var(--uitk-container-background-high);
   --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
   --fileDropZone-borderWidth: var(--uitk-container-borderWidth);
-  --fileDropZone-borderStyle: var(--uitk-droptarget-borderStyle);
+  --fileDropZone-borderStyle: var(--uitk-dropTarget-borderStyle);
   --fileDropZone-textColor: var(--uitk-text-primary-foreground);
   --fileDropZone-iconColor: var(--uitk-text-primary-foreground);
   --fileDropZone-padding: calc(var(--uitk-size-unit) * 3);
@@ -36,8 +36,9 @@
 }
 
 /* Styles applied if `isActive={true}` */
-.uitkFileDropZone-active {
-  --fileDropZone-background: var(--uitk-droptarget-background-hover);
+.uitkFileDropZone-active,
+.uitkFileDropZone:hover {
+  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
 }
 
 /* Styles applied to description if `isRejected={true}`  */
@@ -49,14 +50,15 @@
 .uitkFileDropZone-error {
   --fileDropZone-background: var(--uitk-status-error-background-high);
   --fileDropZone-borderColor: var(--uitk-status-error-borderColor);
-  --fileDropZone-iconColor: var(--uitk-status-error-color);
+  --fileDropZone-iconColor: var(--uitk-status-error-foreground);
 }
 
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
-.uitkFileDropZone-error.uitkFileDropZone-active {
-  --fileDropZone-background: var(--uitk-droptarget-background-hover);
+.uitkFileDropZone-error.uitkFileDropZone-active,
+.uitkFileDropZone-error:hover {
+  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
   --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
-  --fileDropZone-iconColor: var(--uitk-status-error-color);
+  --fileDropZone-iconColor: var(--uitk-status-error-foreground);
 }
 
 /* Styles applied to title and description */
@@ -91,7 +93,7 @@
 .uitkFileDropZone-disabled {
   --fileDropZone-borderColor: var(--uitk-container-borderColor-disabled-high);
 
-  cursor: var(--uitk-droptarget-cursor-disabled);
+  cursor: var(--uitk-dropTarget-cursor-disabled);
 }
 
 /* Styles applied if `disabled={true}` to icon and title */
