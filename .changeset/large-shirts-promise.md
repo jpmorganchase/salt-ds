@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-lab": minor
 ---
 
-Characteristics usage
+Use Overlayable characteristic in CascadingMenu, Tabs, Tooltip and responsive components
