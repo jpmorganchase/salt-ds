@@ -403,3 +403,22 @@ const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
 };
 export const GridLayoutComposite = Dashboard.bind({});
 GridLayoutComposite.args = {};
+
+const renderCards = (cardsNumber: number) => {
+  return Array.from({ length: cardsNumber }, (_, index) => (
+    <Card key={index} style={{ maxHeight: "150px", minWidth: "100px" }}>
+      <p>{`Item ${index + 1}`}</p>
+    </Card>
+  ));
+};
+
+const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = (args) => {
+  return (
+    <GridLayout columnGap={6} rows={2} columns={2}>
+      {renderCards(2)}
+      <GridLayout>{renderCards(2)}</GridLayout>
+    </GridLayout>
+  );
+};
+export const GridLayoutNested = GridLayoutNestedExample.bind({});
+GridLayoutNested.args = {};
