@@ -1,29 +1,10 @@
 /* TODO: Characteristics revamp */
 .uitk-light,
 .uitk-dark {
-  --uitk-draggable-cursor-hover: grab;
-  --uitk-draggable-cursor-active: grabbing;
-
-  /* not in figma */
-  --uitk-draggable-box-shadow: var(--uitk-shadow-4);
-}
-
-.uitk-light {
-  --uitk-draggable-background: var(--uitk-color-grey-60);
-  --uitk-draggable-background-hover: var(--uitk-color-grey-40);
-  --uitk-draggable-background-active: var(--uitk-color-blue-500);
-
-  --uitk-draggable-icon: var(--uitk-color-grey-900);
-  --uitk-draggable-icon-hover: var(--uitk-color-grey-900);
-  --uitk-draggable-icon-active: var(--uitk-color-white);
-}
-
-.uitk-dark {
-  --uitk-draggable-background: var(--uitk-color-grey-500);
-  --uitk-draggable-background-hover: var(--uitk-color-grey-200);
-  --uitk-draggable-background-active: var(--uitk-color-blue-500);
-
-  --uitk-draggable-icon: var(--uitk-color-white);
-  --uitk-draggable-icon-hover: var(--uitk-color-white);
-  --uitk-draggable-icon-active: var(--uitk-color-white);
+  --uitk-draggable-horizontal-cursor-hover: row-resize;
+  --uitk-draggable-horizontal-cursor-hover: row-resize;
+  --uitk-draggable-vertical-cursor-active: col-resize;
+  --uitk-draggable-vertical-cursor-hover: col-resize;
+  --uitk-draggable-grab-cursor-hover: grab;
+  --uitk-draggable-grab-cursor-active: grabbing;
 }
