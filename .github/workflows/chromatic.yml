@@ -3,6 +3,9 @@ name: "Chromatic"
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches:
+      - main
 
 jobs:
   chromatic-deployment:
@@ -29,10 +32,11 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
-          onlyChanged: "!(main)**"
+          onlyChanged: true
           externals: "packages/theme/**/*.css"
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
           traceChanged: "expanded"
-          debug: true
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"

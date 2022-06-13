@@ -4,7 +4,7 @@ import { mergeConfig } from "vite";
 import PkgConfig from "vite-plugin-package-config";
 import OptimizationPersist from "vite-plugin-optimize-persist";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
-import turbosnap from "vite-plugin-turbosnap";
+import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 
 type ViteFinalOptions = {
   configType: "DEVELOPMENT" | "PRODUCTION";
@@ -60,7 +60,9 @@ const config: ExtendedConfig = {
     };
 
     if (configType === "PRODUCTION") {
-      customConfig.plugins!.push(turbosnap({ rootDir: config.root! }));
+      customConfig.plugins!.push(
+        typescriptTurbosnap({ rootDir: config.root! })
+      );
     }
 
     return mergeConfig(customConfig, config);
