@@ -17,6 +17,7 @@ jobs:
       # Enable lint when all errors are fixed
       # - run: yarn run lint
       - run: yarn run prettier:ci
+      - run: yarn run lint:style
   dependency-check:
     runs-on: ubuntu-latest
     steps:
