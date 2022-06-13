@@ -114,7 +114,7 @@
 .uitkTab-dragging {
   --tab-cursor: grabbing;
   background-color: var(--tab-drag-background);
-  box-shadow: var(--uitk-draggable-box-shadow);
+  box-shadow: var(--uitk-overlayable-shadow-drag);
   z-index: 100;
   display: var(--tabstrip-tag-dragging-display);
 }
