@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Introduce Draggable characteristic
+Introduce Draggable and Drop Target characteristics
