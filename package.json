@@ -26,6 +26,7 @@
     "lint": "modular lint",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
+    "lint:style": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
@@ -134,5 +135,8 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "stylelint": "^14.9.1"
+  }
 }
