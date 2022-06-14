@@ -22,10 +22,10 @@ function matchGlob(globs: string[] = []) {
     const matches: string[] = (await Promise.all(matchers))[0] || [];
     return Boolean(
       filename &&
-        matches.find(
-          (match) =>
-            path.normalize(filename) === path.join(process.cwd(), match)
-        )
+      matches.find(
+        (match) =>
+          path.normalize(filename) === path.join(process.cwd(), match)
+      )
     );
   };
 }
@@ -271,10 +271,10 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     property: this.declaration?.property,
                     fallbackValue: this.declaration
                       ? generate(
-                          findLast(this.declaration, (node) =>
-                            valueTypes.includes(node.type)
-                          )
+                        findLast(this.declaration, (node) =>
+                          valueTypes.includes(node.type)
                         )
+                      )
                       : undefined,
                   };
                 } catch (e) {
@@ -311,8 +311,11 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           if (!value || !privateVariableMap[value]) {
             return value;
           }
-
-          return resolveValue(privateVariableMap[value].value);
+          try {
+            return resolveValue(privateVariableMap[value].value);
+          } catch (e) {
+            console.log(e);
+          }
         };
 
         Object.keys(identifierMap).forEach((key) => {
