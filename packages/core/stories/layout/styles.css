@@ -6,6 +6,12 @@
   background: var(--uitk-color-orange-20);
   padding: 1rem;
 }
+.grid-item {
+  padding: 16px;
+  height: calc(100% - 32px);
+  display: flex;
+  align-content: center;
+}
 
 .responsive-grid-item {
   min-height: 200px;

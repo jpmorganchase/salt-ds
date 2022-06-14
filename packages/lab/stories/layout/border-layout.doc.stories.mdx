@@ -7,22 +7,20 @@ import {
 } from "css-variable-docgen-components";
 import { ToolkitBorderLayout } from "./border-layout.stories";
 
-<Meta title="Layout/Docs/BorderLayout" component={BorderLayout} />
+<Meta title="Layout/Docs/Lab/BorderLayout" component={BorderLayout} />
 
 # Border Layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
 
 <Canvas>
-  <Story name="Default Border Layout">
-    <ToolkitBorderLayout />
-  </Story>
+  <Story id="layout-lab-borderlayout--toolkit-border-layout" />
 </Canvas>
 
 ## API
 
 ```
-import {BorderLayout, BorderItem} from "@jpmorganchase/uitk-lab";
+import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 ```
 
 ## Props
@@ -40,13 +38,13 @@ import {BorderLayout, BorderItem} from "@jpmorganchase/uitk-lab";
 ### Border Item inside default border layout
 
 <Canvas>
-  <Story id="layout-borderlayout-borderitem--toolkit-border-item" />
+  <Story id="layout-lab-borderlayout-borderitem--toolkit-border-item" />
 </Canvas>
 
 ### Fixed panels
 
 <Canvas>
-  <Story id="layout-borderlayout--toolkit-border-layout-fixed-panels" />
+  <Story id="layout-lab-borderlayout--toolkit-border-layout-fixed-panels" />
 </Canvas>
 
 ## Anatomy
