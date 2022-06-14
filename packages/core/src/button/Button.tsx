@@ -19,7 +19,7 @@ const withBaseName = makePrefixer("uitkButton");
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export type ButtonVariant = typeof ButtonVariantValues[number];
 
-interface Props<T extends ElementType> {
+export interface ButtonBaseProps<T extends ElementType> {
   /**
    * By default, root element of Button will be a `button` HTMLElement. This behaviour
    * can be changed by passing a value to elementType. This can be a string
@@ -47,8 +47,8 @@ interface Props<T extends ElementType> {
   variant?: ButtonVariant;
 }
 
-export type ButtonProps<T extends ElementType = "button"> = Props<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>;
+export type ButtonProps<T extends ElementType = "button"> = ButtonBaseProps<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof ButtonBaseProps<T>>;
 
 type PolymorphicButton = <T extends ElementType = "button">(
   p: ButtonProps<T> & { ref?: polymorphicRef<T> }
