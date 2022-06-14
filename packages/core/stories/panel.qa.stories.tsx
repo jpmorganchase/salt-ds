@@ -1,10 +1,11 @@
-import { Panel } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Panel } from "@jpmorganchase/uitk-core";
 import { AllRenderer, QAContainer } from "docs/components";
+
 import "./panel.qa.stories.css";
 
 export default {
-  title: "Lab/Panel/QA",
+  title: "Core/Panel/QA",
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 

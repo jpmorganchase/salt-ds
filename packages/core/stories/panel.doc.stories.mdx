@@ -1,8 +1,8 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { withFlexGap } from "docs/decorators/withFlexGap";
+import { Panel } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
   CSSVariableTable,
@@ -10,7 +10,7 @@ import {
 } from "css-variable-docgen-components";
 import { CustomStyling } from "./panel.stories";
 
-<Meta title="Lab/Panel/Doc" component={Panel} />
+<Meta title="Core/Panel/Doc" component={Panel} />
 
 # Panel
 
@@ -32,7 +32,7 @@ Panel components have two levels of emphasis; medium (default) and high.
 # API
 
 ```
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -95,12 +95,20 @@ The CSS is as simple as below:
 }
 
 .uitk-light.uitk-newapp {
-  --uitkPanel-background: var(--uitk-color-teal-10);
-  --uitkPanel-color: var(--uitk-color-teal-500);
+  --uitkPanel-background: linear-gradient(
+    to bottom,
+    var(--uitk-color-teal-10),
+    var(--uitk-color-teal-50)
+  );
+  --uitkPanel-color: var(--uitk-color-teal-800);
 }
 
 .uitk-dark.uitk-newapp {
-  --uitkPanel-background: var(--uitk-color-purple-700);
+  --uitkPanel-background: linear-gradient(
+    to bottom,
+    var(--uitk-color-purple-700),
+    var(--uitk-color-purple-300)
+  );
   --uitkPanel-color: var(--uitk-color-purple-10);
 }
 ```

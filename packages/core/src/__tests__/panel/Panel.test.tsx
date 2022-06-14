@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
-
-import { Panel } from "../../panel";
+import { Panel } from "@jpmorganchase/uitk-core";
 
 describe("GIVEN a Panel", () => {
   const text = "Lorem Ipsum";
