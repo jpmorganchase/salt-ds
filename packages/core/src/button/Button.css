@@ -26,7 +26,7 @@
 
 /* Icon API in "CTA" variant @ignore */
 .uitkButton-cta {
-  --uitkIcon-color: var(--uitk-actionable-cta-foreground);
+  --uitkIcon-color: var(--uitkButton-icon-color,, var(--uitk-actionable-cta-foreground));
 }
 .uitkButton-cta:hover:not(:active) {
   --uitkIcon-color: var(--uitk-actionable-cta-foreground-hover);
@@ -54,7 +54,7 @@
 
 /* Icon API in "primary" variant @ignore */
 .uitkButton-primary {
-  --uitkIcon-color: var(--uitkButton-iconColor, var(--uitk-actionable-primary-foreground));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-primary-foreground));
 }
 .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled) {
   --uitkIcon-color: var(--uitk-actionable-primary-foreground-hover);
@@ -82,7 +82,7 @@
 
 /* Icon API in "secondary" variant @ignore */
 .uitkButton-secondary {
-  --uitkIcon-color: var(--uitkButton-iconColor, var(--uitk-actionable-secondary-foreground));
+  --uitkIcon-color: var(--uitkButton-icon-color, var(--uitk-actionable-secondary-foreground));
 }
 
 .uitkButton-secondary:hover:not(:active) {
