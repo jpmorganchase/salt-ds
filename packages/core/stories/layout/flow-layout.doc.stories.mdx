@@ -7,7 +7,13 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultFlowLayout } from "./flow-layout.stories";
 
-<Meta title="Layout/Docs/Core/FlowLayout" component={FlowLayout} />
+<Meta
+  title="Documentation/Core/Layout/FlowLayout"
+  component={FlowLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Flow Layout
 
@@ -17,7 +23,7 @@ Builds from flex layout
 Flow is responsive by default and will break into one column as soon as there is not enough space.
 
 <Canvas>
-  <Story id="layout-core-flowlayout--default-flow-layout" />
+  <Story id="core-layout-flowlayout--default-flow-layout" />
 </Canvas>
 
 Height is driven by child items,
@@ -38,13 +44,13 @@ import { FlowLayout } from "@jpmorganchase/uitk-lab";
 ### Simple Usage
 
 <Canvas>
-  <Story id="layout-core-flowlayout--flow-layout-simple-usage" />
+  <Story id="core-layout-flowlayout--flow-layout-simple-usage" />
 </Canvas>
 
 ### Composite Usage
 
 <Canvas>
-  <Story id="layout-core-flowlayout--flow-layout-composite" />
+  <Story id="core-layout-flowlayout--flow-layout-composite" />
 </Canvas>
 
 ## Anatomy

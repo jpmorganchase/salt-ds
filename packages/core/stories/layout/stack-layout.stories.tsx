@@ -9,7 +9,7 @@ import { FlexContent } from "./flex-item.stories";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
-  title: "Layout/Core/StackLayout",
+  title: "Core/Layout/StackLayout",
   component: StackLayout,
   argTypes: {
     align: {

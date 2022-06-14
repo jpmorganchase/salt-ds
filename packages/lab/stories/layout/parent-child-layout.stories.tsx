@@ -16,7 +16,7 @@ import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import "./styles.css";
 
 export default {
-  title: "Layout/Lab/ParentChildLayout",
+  title: "Lab/Layout/ParentChildLayout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {

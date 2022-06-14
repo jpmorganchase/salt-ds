@@ -17,7 +17,7 @@ const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
 );
 
 export default {
-  title: "Layout/Lab/SplitLayout",
+  title: "Lab/Layout/SplitLayout",
   component: SplitLayout,
   argTypes: {
     align: {

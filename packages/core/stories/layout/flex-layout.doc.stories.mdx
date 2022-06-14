@@ -7,7 +7,13 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultFlexLayout } from "./flex-layout.stories";
 
-<Meta title="Layout/Docs/Core/FlexLayout" component={FlexLayout} />
+<Meta
+  title="Documentation/Core/Layout/FlexLayout"
+  component={FlexLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Flex layout
 
@@ -20,7 +26,7 @@ for example, in layouts where the direction needs to change depending on the vie
 Out of the box, flex layout will spread items horizontally disabling them to wrap unless responsive props are passed.
 
 <Canvas>
-  <Story id="layout-core-flexlayout--default-flex-layout" />
+  <Story id="core-layout-flexlayout--default-flex-layout" />
 </Canvas>
 
 ## API
@@ -52,7 +58,7 @@ direction={{ lg: "row", md: "column", sm: "column", xl: "row", xs: "row" }}
 A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and it's alignment
 
 <Canvas>
-  <Story id="layout-core-flexlayout-flexitem--flex-item-wrapper" />
+  <Story id="core-layout-flexlayout-flexitem--flex-item-wrapper" />
 </Canvas>
 
 ### Responsive
@@ -61,7 +67,7 @@ The flex layout supports the use of responsive props, so you can defined differe
 You can use the default breakpoints or pass in you own.
 
 <Canvas>
-  <Story id="layout-core-flexlayout--toolkit-flex-layout-responsive" />
+  <Story id="core-layout-flexlayout--toolkit-flex-layout-responsive" />
 </Canvas>
 
 ### Simple Usage
@@ -69,7 +75,7 @@ You can use the default breakpoints or pass in you own.
 the simple usage examples shows a group of elements inside a flex container with `wrap`
 
 <Canvas>
-  <Story id="layout-core-flexlayout--flex-layout-simple-usage" />
+  <Story id="core-layout-flexlayout--flex-layout-simple-usage" />
 </Canvas>
 
 ## Used in

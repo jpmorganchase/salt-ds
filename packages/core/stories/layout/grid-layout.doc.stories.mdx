@@ -7,7 +7,13 @@ import {
 } from "css-variable-docgen-components";
 import { ToolkitGridLayout } from "./grid-layout.stories";
 
-<Meta title="Layout/Docs/Core/GridLayout" component={GridLayout} />
+<Meta
+  title="Documentation/Core/Layout/GridLayout"
+  component={GridLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Grid Layout
 
@@ -18,7 +24,7 @@ The grid layout defaults to a twelve column grid with 1 row but you can customis
 For more complex layouts, supports spanning across columns and rows
 
 <Canvas>
-  <Story id="layout-core-gridlayout--toolkit-grid-layout" />
+  <Story id="core-layout-gridlayout--toolkit-grid-layout" />
 </Canvas>
 
 ## API
@@ -50,7 +56,7 @@ columns={{ lg: 12, md: 12, sm: 2, xl: 12, xs: 1 }}
 A grid item allows more complex controls to the default behaviour of a grid child, like defining how many rows or columns will it span trough and it's alignment
 
 <Canvas>
-  <Story id="layout-core-gridlayout-griditem--grid-item-wrapper" />
+  <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
 </Canvas>
 
 ### Responsive
@@ -61,7 +67,7 @@ You can use the default breakpoints or pass in you own
 
 <Canvas>
   <h4>Grid with responsive rows and columns</h4>
-  <Story id="layout-core-gridlayout--toolkit-grid-layout-responsive-view" />
+  <Story id="core-layout-gridlayout--toolkit-grid-layout-responsive-view" />
 </Canvas>
 
 ## Used in
