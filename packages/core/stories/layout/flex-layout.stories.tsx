@@ -38,7 +38,7 @@ export default {
       control: { type: "select" },
     },
   },
-  excludeStories: ["ContactDetailsExample"],
+  excludeStories: ["ContactDetailsExample", "FlexLayoutNestedExample"],
 } as ComponentMeta<typeof FlexLayout>;
 
 const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
@@ -132,3 +132,23 @@ export const FlexLayoutComposite = ContactCards.bind({});
 FlexLayoutComposite.args = {
   wrap: true,
 };
+
+const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout justify={"space-between"} wrap={true} gap={6}>
+      <Card style={{ minWidth: 150 }}>
+        <ContactDetailsExample index={0} />
+      </Card>
+      <FlexLayout>
+        <Card style={{ minWidth: 150 }}>
+          <ContactDetailsExample index={1} />
+        </Card>
+        <Card style={{ minWidth: 150 }}>
+          <ContactDetailsExample index={2} />
+        </Card>
+      </FlexLayout>
+    </FlexLayout>
+  );
+};
+export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
+FlexLayoutNested.args = {};

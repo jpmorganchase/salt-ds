@@ -5,7 +5,7 @@ export type characteristic =
   | "delay"
   | "disabled"
   | "draggable"
-  | "droptarget"
+  | "dropTarget"
   | "editable"
   | "focused"
   | "measured"

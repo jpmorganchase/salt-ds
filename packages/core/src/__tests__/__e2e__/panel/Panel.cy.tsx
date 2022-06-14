@@ -1,4 +1,4 @@
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel } from "@jpmorganchase/uitk-core";
 
 describe("GIVEN a Panel", () => {
   it("SHOULD have no a11y violations on load", () => {

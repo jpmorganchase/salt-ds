@@ -3149,7 +3149,6 @@ __metadata:
     vite-plugin-istanbul: ^2.7.3
     vite-plugin-optimize-persist: ^0.1.2
     vite-plugin-package-config: ^0.1.1
-    vite-plugin-turbosnap: ^1.0.1
     vite-tsconfig-paths: ^3.4.1
     warning: ^4.0.3
     webpack: 5
@@ -5574,6 +5573,18 @@ __metadata:
     mkdirp: ^1.0.4
     path-browserify: ^1.0.1
   checksum: 88b3d4b82dc6aca12741e55c6bf037f2243d14f4b9c42bbe28ed4a773ae9cd8d3ca6a6f9f827b5830c188037b0781d881a002ddb73e094fa5d5ff2a3352dc842
+  languageName: node
+  linkType: hard
+
+"@ts-morph/common@npm:~0.16.0":
+  version: 0.16.0
+  resolution: "@ts-morph/common@npm:0.16.0"
+  dependencies:
+    fast-glob: ^3.2.11
+    minimatch: ^5.1.0
+    mkdirp: ^1.0.4
+    path-browserify: ^1.0.1
+  checksum: 0ef97330a164a42b81b0499b042e91db8e39d705bb983ef83cbc80cc32ab36123e26baefb78203953d1a0c6e3b92cad9bc7a5e0ea409623a5e7db90cb3742112
   languageName: node
   linkType: hard
 
@@ -18184,6 +18195,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "minimatch@npm:5.1.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
+  languageName: node
+  linkType: hard
+
 "minimist-options@npm:^4.0.2":
   version: 4.1.0
   resolution: "minimist-options@npm:4.1.0"
@@ -25137,6 +25157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-morph@npm:^15.1.0":
+  version: 15.1.0
+  resolution: "ts-morph@npm:15.1.0"
+  dependencies:
+    "@ts-morph/common": ~0.16.0
+    code-block-writer: ^11.0.0
+  checksum: 95e026214282850f08d1d4de673e969cdc166cb6d9366e455e1ea0251a204f80cffcb958c8ed7b1f351e56b972c4244e0dc7be0b13df3c4a6f22abdd4d4608e4
+  languageName: node
+  linkType: hard
+
 "ts-node@npm:^10.4.0":
   version: 10.5.0
   resolution: "ts-node@npm:10.5.0"
@@ -26029,12 +26059,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-turbosnap@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "vite-plugin-turbosnap@npm:1.0.1"
-  checksum: 1f182feb737bcb16822d067f6e0cab4b712ab6f3a60f2de0229f18217b86417c52315bb6c1868a6caedea9094c6e2a03c3fe6d949322796ac3cf947c2fd898c7
-  languageName: node
-  linkType: hard
+"vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap":
+  version: 0.0.0-use.local
+  resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
+  dependencies:
+    ts-morph: ^15.1.0
+  peerDependencies:
+    vite: ^2.9.0
+  languageName: unknown
+  linkType: soft
 
 "vite-tsconfig-paths@npm:^3.4.1":
   version: 3.4.1

@@ -6,7 +6,7 @@ import {
   LineBlockCell,
   LineBlockDashed,
 } from "docs/components/LineBlock";
-import { NumberBlock } from "docs/components/NumberBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Drop Target" />
 
@@ -21,16 +21,23 @@ Components which indicate a target area where a draggable item can be dropped (r
 <Canvas>
   <Story name="All">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-dropTarget-background-hover" />
       <LineBlockDashed
-        lineStyle="--uitk-droptarget-border-style"
-        lineWidth="--uitk-droptarget-border-width"
+        lineStyle="--uitk-dropTarget-borderStyle"
+        lineWidth="--uitk-dropTarget-borderWidth"
       />
-      <LineBlock lineWidth="--uitk-droptarget-border-width" />
-      <ColorBlock colorVar="--uitk-droptarget-border-color" />
-      <ColorBlock colorVar="--uitk-droptarget-background" />
-      <ColorBlock colorVar="--uitk-droptarget-background-hover" />
-      <ColorBlock colorVar="--uitk-droptarget-icon-color" />
-      <ColorBlock colorVar="--uitk-droptarget-icon-color-hover" />
+      <LineBlockDashed
+        lineStyle="--uitk-dropTarget-borderStyle-hover"
+        lineWidth="--uitk-dropTarget-borderWidth-hover"
+      />
+      <LineBlockDashed
+        lineStyle="--uitk-dropTarget-borderStyle-disabled"
+        lineWidth="--uitk-dropTarget-borderWidth-disabled"
+      />
+      <LineBlock lineWidth="--uitk-dropTarget-borderWidth" />
+      <LineBlock lineWidth="--uitk-dropTarget-borderWidth-hover" />
+      <LineBlock lineWidth="--uitk-dropTarget-borderWidth-disabled" />
+      <CursorBlock cursor="--uitk-dropTarget-cursor-disabled" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -41,7 +41,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   separators?: LayoutSeparator | true;
   /**
-   * Allow the items to wrap as needed, default is true.
+   * Allow the items to wrap as needed, default is false.
    */
   wrap?: ResponsiveProp<boolean>;
 }

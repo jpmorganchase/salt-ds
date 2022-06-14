@@ -1,19 +1,10 @@
 .uitk-density-touch {
   --flex-layout-gap-density-multiplier: 2;
 }
-.uitk-density-low {
-  --flex-layout-gap-density-multiplier: 3;
-}
-.uitk-density-medium {
-  --flex-layout-gap-density-multiplier: 3;
-}
-.uitk-density-high {
-  --flex-layout-gap-density-multiplier: 3;
-}
 
 /* VARIABLES */
 .uitkFlexLayout {
-  --flex-layout-gap-multiplier: var(--flex-layout-gap-density-multiplier);
+  --flex-layout-gap-multiplier: var(--flex-layout-gap-density-multiplier, 3);
   --flex-layout-layout-display: flex;
   --flex-layout-direction: row;
   --flex-layout-wrap: nowrap;

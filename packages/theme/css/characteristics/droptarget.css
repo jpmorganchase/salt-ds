@@ -1,27 +1,15 @@
 /* TODO: Characteristics revamp */
 .uitk-light,
 .uitk-dark {
-  --uitk-droptarget-cursor-disabled: not-allowed;
-  --uitk-droptarget-border-style: dashed;
-  --uitk-droptarget-border-width: 1px;
-}
+  --uitk-dropTarget-borderStyle: dashed;
+  --uitk-dropTarget-borderStyle-hover: dashed;
+  --uitk-dropTarget-borderStyle-disabled: dashed;
 
-.uitk-light {
-  --uitk-droptarget-background: var(--uitk-color-grey-20);
-  --uitk-droptarget-background-hover: var(--uitk-color-blue-30);
+  --uitk-dropTarget-borderWidth: 1px;
+  --uitk-dropTarget-borderWidth-hover: 1px;
+  --uitk-dropTarget-borderWidth-disabled: 1px;
 
-  --uitk-droptarget-icon-color: var(--uitk-color-grey-200);
-  --uitk-droptarget-icon-color-hover: var(--uitk-color-grey-200);
+  --uitk-dropTarget-cursor-disabled: not-allowed;
 
-  --uitk-droptarget-border-color: var(--uitk-color-grey-60);
-}
-
-.uitk-dark {
-  --uitk-droptarget-background: var(--uitk-color-grey-600);
-  --uitk-droptarget-background-hover: var(--uitk-color-blue-2000); /* TODO: Replace with -900 when palette updated */
-
-  --uitk-droptarget-icon-color: var(--uitk-color-grey-60);
-  --uitk-droptarget-icon-color-hover: var(--uitk-color-grey-60);
-
-  --uitk-droptarget-border-color: var(--uitk-color-grey-200);
+  --uitk-dropTarget-background-hover: var(--uitk-palette-interact-background-hover);
 }
