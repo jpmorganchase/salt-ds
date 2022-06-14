@@ -48,10 +48,6 @@
   --contactDetails-selecting-icon-color: var(--uitk-ratable-background-hover);
 }
 
-.uitk-dark {
-  color: var(--uitk-color-white);
-}
-
 .uitkContactDetails {
   box-sizing: border-box;
   display: grid;
