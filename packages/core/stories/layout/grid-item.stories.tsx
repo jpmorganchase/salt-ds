@@ -2,7 +2,7 @@ import { GridItem, GridLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
 export default {
-  title: "Layout/Core/GridLayout/GridItem",
+  title: "Core/Layout/GridLayout/GridItem",
   component: GridItem,
   argTypes: {
     colSpan: { control: { type: "number" } },

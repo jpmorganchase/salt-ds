@@ -8,14 +8,20 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultSplitLayout } from "./split-layout.stories";
 
-<Meta title="Layout/Docs/Lab/SplitLayout" component={SplitLayout} />
+<Meta
+  title="Documentation/Lab/Layout/SplitLayout"
+  component={SplitLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Split Layout
 
 Defines left and right regions for UI elements within a span, such as a button bar
 
 <Canvas>
-  <Story id="layout-lab-splitlayout--default-split-layout" />
+  <Story id="lab-layout-splitlayout--default-split-layout" />
 </Canvas>
 
 ## API
@@ -33,7 +39,7 @@ import { SplitLayout } from "@jpmorganchase/uitk-lab";
 ### Simple Usage
 
 <Canvas>
-  <Story id="layout-lab-splitlayout--split-layout-simple-usage" />
+  <Story id="lab-layout-splitlayout--split-layout-simple-usage" />
 </Canvas>
 
 ## Anatomy
