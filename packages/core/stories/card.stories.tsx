@@ -1,16 +1,16 @@
 import { FC, ReactNode } from "react";
-import { Card, Link } from "@jpmorganchase/uitk-lab";
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Link } from "@jpmorganchase/uitk-lab";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
 } from "./story-layout/ColumnLayout";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import "./Card.stories.newapp-card.css";
 
 export default {
-  title: "Lab/Card",
+  title: "Core/Card",
   component: Card,
 } as ComponentMeta<typeof Card>;
 

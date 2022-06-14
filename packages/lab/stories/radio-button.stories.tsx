@@ -9,7 +9,7 @@ import {
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
-} from "./story-layout/ColumnLayout";
+} from "@jpmorganchase/uitk-core/stories";
 import { ChangeEventHandler, FC, ReactNode, useState } from "react";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 

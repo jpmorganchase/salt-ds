@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { Panel } from "@jpmorganchase/uitk-core";
-import { FormField, Input, Card } from "@jpmorganchase/uitk-lab";
+import { Card, Panel } from "@jpmorganchase/uitk-core";
+import { FormField, Input } from "@jpmorganchase/uitk-lab";
 import { DocGrid } from "docs/components/DocGrid";
 import "./characteristics.stories.css";
 
@@ -135,10 +135,10 @@ Let's add the following to `Card.css`:
 
 ```css
 .uitkEmphasisHigh.uitkCard {
-  --uitkCard-background-color: var(--uitk-container-background-high);
-  --uitkCard-border-color: var(--uitk-container-borderColor-high);
-  --uitkCard-border-radius: 10px;
-  --uitkCard-border-width: 3px;
+  --uitkCard-background: var(--uitk-container-background-high);
+  --uitkCard-borderColor: var(--uitk-container-borderColor-high);
+  --uitkCard-borderRadius: 10px;
+  --uitkCard-borderWidth: 3px;
 }
 ```
 

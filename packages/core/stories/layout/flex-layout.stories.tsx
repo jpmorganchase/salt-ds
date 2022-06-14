@@ -1,4 +1,5 @@
 import {
+  Card,
   FLEX_ALIGNMENT_BASE,
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
@@ -8,7 +9,6 @@ import {
   Metric,
   MetricContent,
   MetricHeader,
-  Card,
   ContactAvatar,
   ContactDetails,
   ContactMetadata,

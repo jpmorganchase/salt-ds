@@ -4,7 +4,6 @@ import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
 import { QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
-import "./card.qa.stories.css";
 
 export default {
   title: "Lab/Metric/QA",

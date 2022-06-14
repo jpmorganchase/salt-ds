@@ -1,4 +1,4 @@
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Card } from "@jpmorganchase/uitk-core";
 import {
   CallIcon,
   ChatIcon,
@@ -7,7 +7,6 @@ import {
   MessageIcon,
 } from "@jpmorganchase/uitk-icons";
 import {
-  Card,
   ComboBox,
   ContactAction,
   ContactActions,
