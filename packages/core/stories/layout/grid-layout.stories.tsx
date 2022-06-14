@@ -1,11 +1,12 @@
 import { CSSProperties } from "react";
 import {
+  Card,
   GridLayout,
   GridItem,
   StackLayout,
   FlowLayout,
 } from "@jpmorganchase/uitk-core";
-import { Avatar, Card } from "@jpmorganchase/uitk-lab";
+import { Avatar } from "@jpmorganchase/uitk-lab";
 import {
   ToolkitProvider,
   FlexLayout,

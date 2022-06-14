@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Card, Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
-  Card,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
