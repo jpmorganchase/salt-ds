@@ -30,30 +30,6 @@
 .backwardsCompat.uitkCard {
   --uitkCard-content-lineHeight: 1.3;
 }
-/* 
-.uitkCard-content h1 {
-  line-height: var(--uitkCard-content-h1-lineHeight, var(--uitk-text-h1-lineHeight));
-  font-size: var(--uitkCard-content-h1-fontSize, var(--uitk-text-h1-fontSize));
-  font-weight: var(--uitkCard-content-h1-fontWeight, var(--uitk-text-h1-fontWeight));
-}
-
-.uitkCard-content h2 {
-  line-height: var(--uitkCard-content-h2-lineHeight, var(--uitk-text-h2-lineHeight));
-  font-size: var(--uitkCard-content-h2-fontSize, var(--uitk-text-h2-fontSize));
-  font-weight: var(--uitkCard-content-h2-fontWeight, var(--uitk-text-h2-fontWeight));
-}
-
-.uitkCard-content h3 {
-  line-height: var(--uitkCard-content-h3-lineHeight, var(--uitk-text-h3-lineHeight));
-  font-size: var(--uitkCard-content-h3-fontSize, var(--uitk-text-h3-fontSize));
-  font-weight: var(--uitkCard-content-h3-fontWeight, var(--uitk-text-h3-fontWeight));
-}
-
-.uitkCard-content h4 {
-  line-height: var(--uitkCard-content-h4-lineHeight, var(--uitk-text-hh41-lineHeight));
-  font-size: var(--uitkCard-content-h4-fontSize, var(--uitk-text-h4-fontSize));
-  font-weight: var(--uitkCard-content-h4-fontWeight, var(--uitk-text-h4-fontWeight));
-} */
 
 /* Styles applied if `disabled={true}` */
 .uitkCard-disabled {
