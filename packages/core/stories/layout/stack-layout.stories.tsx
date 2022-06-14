@@ -1,10 +1,7 @@
-import { FLEX_ALIGNMENT_BASE, StackLayout } from "@jpmorganchase/uitk-core";
-import { Panel, FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
 import {
   FLEX_ALIGNMENT_BASE,
-  FlexItem,
-  Panel,
   StackLayout,
+  Panel,
 } from "@jpmorganchase/uitk-core";
 import { FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
