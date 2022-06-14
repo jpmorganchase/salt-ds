@@ -8,5 +8,5 @@
   padding: 0 var(--uitk-size-unit);
   position: sticky;
   top: 0;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }

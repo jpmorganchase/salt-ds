@@ -84,7 +84,7 @@
   text-align: center;
   transition: left 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   width: var(--uitkSwitch-base-width, var(--switch-thumb-size));
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 /* Styles applied to track */
@@ -125,7 +125,7 @@
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 /* Styles applied to thumb, and icon if `checked={true}` */

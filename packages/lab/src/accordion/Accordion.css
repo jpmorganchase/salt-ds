@@ -82,7 +82,7 @@
 }
 
 .uitkAccordionSection:focus-within {
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 .uitkAccordionSection-expanded {

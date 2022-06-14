@@ -17,5 +17,5 @@
   position: absolute;
   top: 0;
   width: 10px;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }

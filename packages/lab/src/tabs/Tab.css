@@ -59,7 +59,7 @@
   opacity: 1;
   position: absolute;
   right: 0;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
@@ -74,7 +74,7 @@
   opacity: 1;
   position: absolute;
   right: 0;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 .uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before {
@@ -159,7 +159,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   /* ensure content sita above focus ring */
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 .uitkTab-vertical .uitkTab-text {
@@ -204,7 +204,7 @@
   opacity: 1;
   position: absolute;
   right: 0;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
   /* horizontal */
   left: 0;
   height: 2px;

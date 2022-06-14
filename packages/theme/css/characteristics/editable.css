@@ -3,7 +3,7 @@
   --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;
-  --uitk-editable-cursor-readonly: not-allowed;
+  --uitk-editable-cursor-readonly: text;
 
   --uitk-editable-borderStyle: solid;
   --uitk-editable-borderStyle-hover: solid;
