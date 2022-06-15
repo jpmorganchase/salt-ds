@@ -1,30 +1,28 @@
 /* Styles applied to root element */
 .uitk-density-touch {
-  --form-label-top: 11px;
-  --form-label-min-height: 16px;
+  --formLabel-default-top: 11px;
+  --formLabel-left-top: 16px;
+  --formLabel-minHeight: 16px;
 }
 .uitk-density-low {
-  --form-label-top: 7px;
+  --formLabel-default-top: 7px;
+  --formLabel-left-top: 12px;
 }
 .uitk-density-medium {
-  --form-label-top: 5px;
+  --formLabel-default-top: 5px;
+  --formLabel-left-top: 8px;
 }
 .uitk-density-high {
-  --form-label-top: 3px;
+  --formLabel-default-top: 3px;
+  --formLabel-left-top: 4px;
 }
 
-/* Styles applied to root element */
-.uitk-density-medium .uitkFormField-labelLeft {
-  --form-label-top: 8px;
+.uitkFormLabel {
+  --formLabel-top: var(--formLabel-default-top);
 }
-.uitk-density-touch .uitkFormField-labelLeft {
-  --form-label-top: 16px;
-}
-.uitk-density-low .uitkFormField-labelLeft {
-  --form-label-top: 12px;
-}
-.uitk-density-high .uitkFormField-labelLeft {
-  --form-label-top: 4px;
+
+.uitkFormField-labelLeft .uitkFormLabel {
+  --formLabel-top: var(--formLabel-left-top);
 }
 
 .uitkFormLabel {
@@ -32,21 +30,25 @@
   box-sizing: border-box;
   color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-foreground));
   display: block;
-  font-size: var(--uitkFormLabel-font-size, var(--uitk-text-caption-fontSize));
-  margin-bottom: var(--uitkFormLabel-margin-bottom, var(--form-label-margin-bottom));
-  min-height: var(--uitkFormLabel-min-height, var(--form-label-min-height, var(--uitk-text-caption-minHeight)));
-  margin-top: var(--uitkFormLabel-margin-top, 0px);
-  line-height: var(--uitkFormLabel-line-height, var(--uitk-typography-line-height));
+  font-size: var(--uitkFormLabel-fontSize, var(--uitk-text-caption-fontSize));
+  margin-bottom: var(--uitkFormLabel-margin-Bottom, var(--formLabel-marginBottom));
+  min-height: var(--uitkFormLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
+  margin-top: var(--uitkFormLabel-marginTop, 0px);
+  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-typography-lineHeight));
   overflow: hidden;
-  padding-left: var(--uitkFormLabel-padding-left, var(--form-label-padding-left));
-  padding-right: var(--uitkFormLabel-padding-right, var(--form-label-padding-right));
-  padding-top: var(--uitkFormLabel-padding-top, 0);
-  padding-bottom: var(--uitkFormLabel-padding-bottom, 0);
+  padding-left: var(--uitkFormLabel-paddingLeft, var(--formLabel-paddingLeft));
+  padding-right: var(--uitkFormLabel-paddingRight, var(--formLabel-paddingRight));
+  padding-top: var(--uitkFormLabel-paddingTop, 0);
+  padding-bottom: var(--uitkFormLabel-paddingBottom, 0);
   text-overflow: ellipsis;
-  top: var(--uitkFormLabel-top, var(--form-label-top));
-  transform: translate(var(--uitkFormLabel-transform-x, 0), var(--uitkFormLabel-transform-y, var(--form-label-top)));
+  top: var(--uitkFormLabel-top, var(--formLabel-top));
+  transform: translate(var(--uitkFormLabel-transform-x, 0), var(--uitkFormLabel-transform-y, var(--formLabel-top)));
   white-space: nowrap;
   width: 100%;
+}
+
+.uitkFormLabel ~ * {
+  z-index: 1;
 }
 
 /* Styles applied when `disabled={true}` */
