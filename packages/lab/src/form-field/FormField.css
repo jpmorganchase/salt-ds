@@ -41,8 +41,7 @@
   --uitkInput-cursor: var(--uitk-editable-cursor-hover);
 }
 
-/* Class applied to the root element on focus 
-   Setting Activation Indicator API */
+/* Class applied to the root element on focus */
 .uitkFormField-focused,
 .uitkFormField-lowFocused {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-active);
@@ -60,7 +59,7 @@
 }
 
 .backwardsCompat.uitkFormField-withHelperText {
-  --backwardsCompat-helperText-formField-background-offset-height: var(--backwardsCompat-formField-background-offset-height);
+  --backwardsCompat-formField-helperText-background-offset-height: var(--backwardsCompat-formField-background-offset-height);
 }
 
 /* Class applied if `fullWidth={true}` and helper text is provided */

@@ -1,30 +1,28 @@
 /* Styles applied to root element */
 .uitk-density-touch {
-  --formLabel-top: 11px;
+  --formLabel-default-top: 11px;
+  --formLabel-left-top: 16px;
   --formLabel-minHeight: 16px;
 }
 .uitk-density-low {
-  --formLabel-top: 7px;
+  --formLabel-default-top: 7px;
+  --formLabel-left-top: 12px;
 }
 .uitk-density-medium {
-  --formLabel-top: 5px;
+  --formLabel-default-top: 5px;
+  --formLabel-left-top: 8px;
 }
 .uitk-density-high {
-  --formLabel-top: 3px;
+  --formLabel-default-top: 3px;
+  --formLabel-left-top: 4px;
 }
 
-/* Styles applied to root element */
-.uitk-density-medium .uitkFormField-labelLeft {
-  --formLabel-top: 8px;
+.uitkFormLabel {
+  --formLabel-top: var(--formLabel-default-top);
 }
-.uitk-density-touch .uitkFormField-labelLeft {
-  --formLabel-top: 16px;
-}
-.uitk-density-low .uitkFormField-labelLeft {
-  --formLabel-top: 12px;
-}
-.uitk-density-high .uitkFormField-labelLeft {
-  --formLabel-top: 4px;
+
+.uitkFormField-labelLeft .uitkFormLabel {
+  --formLabel-top: var(--formLabel-left-top);
 }
 
 .uitkFormLabel {

@@ -18,6 +18,7 @@
   position: relative;
 }
 
+/* Styles applied to the indication bar */
 .uitkFormActivationIndicator-bar {
   bottom: 0px;
   border-color: var(--uitkFormActivationIndicator-borderColor, var(--formField-activationIndicator-color));
@@ -29,9 +30,10 @@
   width: 100%;
 }
 
+/* Styles applied to the indication icon */
 .uitkFormActivationIndicator-icon {
-  width: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size, var(--uitk-size-unit)));
-  height: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size, var(--uitk-size-unit)));
+  width: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
+  height: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
   fill: var(--uitkFormActivationIndicator-icon-color, var(--formField-activationIndicator-color));
   /** 
  * It's only a solid icon showing different color for validation states. 
