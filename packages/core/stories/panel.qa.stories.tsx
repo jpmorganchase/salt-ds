@@ -19,6 +19,10 @@ export const ExamplesGrid: ComponentStory<typeof Panel> = (props) => {
   );
 };
 
+ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Panel> = (
   props
 ) => {

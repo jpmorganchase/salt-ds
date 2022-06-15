@@ -1,9 +1,9 @@
 .uitkScrim {
-  --scrim-bg: var(--uitk-overlayable-background-low);
+  --scrim-background: var(--uitk-overlayable-background-low);
 }
 
 .uitkEmphasisMedium.uitkScrim {
-  --scrim-bg: var(--uitk-overlayable-background-medium);
+  --scrim-background: var(--uitk-overlayable-background-medium);
 }
 
 .uitkScrim {
@@ -18,7 +18,7 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background-color: var(--uitkscrim-background-low, var(--scrim-bg));
+  background: var(--uitkScrim-background, var(--scrim-background));
   -webkit-tap-highlight-color: transparent;
 }
 

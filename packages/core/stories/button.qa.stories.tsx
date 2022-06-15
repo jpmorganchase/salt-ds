@@ -49,6 +49,10 @@ export const AllVariantsGrid: ComponentStory<typeof Button> = (props) => {
   );
 };
 
+AllVariantsGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Button> = (
   props
 ) => {
