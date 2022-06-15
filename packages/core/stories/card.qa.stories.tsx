@@ -21,6 +21,10 @@ export const AllExamplesGrid: ComponentStory<typeof Card> = () => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Card> = () => {
   return (
     <QAContainer

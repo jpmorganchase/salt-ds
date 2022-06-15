@@ -54,6 +54,10 @@ export const AllExamplesGrid: ComponentStory<typeof ContentStatus> = () => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<
   typeof ContentStatus
 > = () => {

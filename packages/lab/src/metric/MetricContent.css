@@ -19,6 +19,10 @@
   margin-right: 4px;
 } */
 
+.uitkMetricContent-value {
+  overflow: unset;
+}
+
 .uitkMetricContent-indicator {
   display: flex;
   flex-direction: column;

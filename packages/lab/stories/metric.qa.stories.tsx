@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
@@ -10,7 +10,7 @@ export default {
   component: Metric,
 } as ComponentMeta<typeof Metric>;
 
-const metricExamples = (
+const MetricExamples = () => (
   <div
     data-jpmui-test="metric-example"
     style={{
@@ -73,6 +73,27 @@ const metricExamples = (
   </div>
 );
 
+export const ExamplesGrid: Story = (props) => {
+  return (
+    <div style={{ width: 800, display: "flex", flex: 1 }} {...props}>
+      <ToolkitProvider theme={"light"}>
+        <BackgroundBlock style={{ background: "white" }}>
+          <MetricExamples />
+        </BackgroundBlock>
+      </ToolkitProvider>
+      <ToolkitProvider theme={"dark"}>
+        <BackgroundBlock>
+          <MetricExamples />
+        </BackgroundBlock>
+      </ToolkitProvider>
+    </div>
+  );
+};
+
+ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
   return (
     <QAContainer
@@ -80,19 +101,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
       className="uitkMetricQA"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
     >
-      <div
-        className="backwardsCompat"
-        style={{ width: 700, display: "flex", flex: 1 }}
-      >
-        <ToolkitProvider theme={"light"}>
-          <BackgroundBlock style={{ background: "white" }}>
-            {metricExamples}
-          </BackgroundBlock>
-        </ToolkitProvider>
-        <ToolkitProvider theme={"dark"}>
-          <BackgroundBlock>{metricExamples}</BackgroundBlock>
-        </ToolkitProvider>
-      </div>
+      <ExamplesGrid className="backwardsCompat" />
     </QAContainer>
   );
 };

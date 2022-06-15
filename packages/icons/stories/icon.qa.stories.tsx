@@ -30,6 +30,10 @@ export const AllIcons: Story = () => {
   );
 };
 
+AllIcons.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: Story = () => {
   return (
     <QAContainer

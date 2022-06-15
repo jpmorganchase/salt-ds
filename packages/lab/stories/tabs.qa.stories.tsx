@@ -25,7 +25,7 @@ const TabExamples: FC<TabstripProps> = (props) => (
   </Panel>
 );
 
-export const QA: React.FC<ExampleProps> = () => (
+export const QA: Story = () => (
   <>
     <ToolkitProvider theme="light" density="high">
       <TabExamples />
@@ -68,6 +68,10 @@ export const QA: React.FC<ExampleProps> = () => (
     </ToolkitProvider>
   </>
 );
+
+QA.parameters = {
+  chromatic: { disableSnapshot: false },
+};
 
 export const CompareWithOriginalToolkit: Story<TabstripProps> = () => {
   return (
