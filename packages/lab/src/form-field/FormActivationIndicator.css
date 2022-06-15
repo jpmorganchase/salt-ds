@@ -1,24 +1,40 @@
+/* Styles applied to the root element dependent on density */
+.uitk-density-touch {
+  --formField-activationIndicator-icon-size: 7px;
+}
+.uitk-density-low {
+  --formField-activationIndicator-icon-size: 5px;
+}
+.uitk-density-medium {
+  --formField-activationIndicator-icon-size: 5px;
+}
+.uitk-density-high {
+  --formField-activationIndicator-icon-size: 3px;
+}
+
 .uitkFormActivationIndicator {
   height: 0px;
   width: 100%;
   position: relative;
 }
 
+/* Styles applied to the indication bar */
 .uitkFormActivationIndicator-bar {
   bottom: 0px;
-  border-color: var(--uitkFormActivationIndicator-color, var(--uitk-editable-borderColor));
-  border-bottom-width: var(--uitkFormActivationIndicator-size, var(--uitk-editable-borderWidth));
-  border-bottom-style: var(--uitkFormActivationIndicator-style, var(--uitk-editable-borderStyle));
+  border-color: var(--uitkFormActivationIndicator-borderColor, var(--formField-activationIndicator-color));
+  border-bottom-width: var(--uitkFormActivationIndicator-borderWidth, var(--formField-activationIndicator-size));
+  border-bottom-style: var(--uitkFormActivationIndicator-borderStyle, var(--formField-activationIndicator-style));
   height: 0;
   opacity: var(--uitkFormActivationIndicator-opacity, 1);
   position: absolute;
   width: 100%;
 }
 
+/* Styles applied to the indication icon */
 .uitkFormActivationIndicator-icon {
-  width: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
-  height: var(--uitkFormActivationIndicator-icon-size, var(--uitk-size-unit));
-  fill: var(--uitkFormActivationIndicator-color, var(--uitk-status-info-iconColor));
+  width: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
+  height: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
+  fill: var(--uitkFormActivationIndicator-icon-color, var(--formField-activationIndicator-color));
   /** 
  * It's only a solid icon showing different color for validation states. 
  * Applying opacity instead of re-defining all colors.

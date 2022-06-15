@@ -485,23 +485,27 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
   >
     <style>{`
       .carbon {
-        --uitkFormField-focused-outline-style: none;
-        --uitkFormFieldHelperText-font-style: normal;
-        --uitkFormActivationIndicator-color: var(--uitk-color-purple-400);
-        --uitkFormLabel-margin-bottom: 6px;
+        --uitkFormField-focused-outlineStyle: none;
+        --uitkFormFieldHelperText-fontStyle: normal;
+        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-400);
+        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-200);
+        --uitkFormLabel-marginBottom: 6px;
         --uitkFormLabel-text-color: var(--uitk-color-purple-800);
       }
       .carbon .uitkFormField-focused {
         --uitkFormActivationIndicator-size: 3px;
-        --uitkFormActivationIndicator-color: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-style: dotted;
+        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
+        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
+        --uitkFormActivationIndicator-borderStyle: dotted;
       }
       .carbon.uitkFormField:not(.uitkFormField-readOnly):not(.uitkFormField-disabled):hover {
-        --uitkFormActivationIndicator-color: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-style: dashed;
+        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
+        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
+        --uitkFormActivationIndicator-borderStyle: dashed;
       }
-      .carbon.uitkFormField-focused {
-        outline: solid 2px var(--uitk-color-purple-50);
+      .carbon.uitkFormField-focused:after {
+        outline-style: solid;
+        outline-color: var(--uitk-color-purple-50);
       }
     `}</style>
     <div style={{ width: "200px" }}>

@@ -1,55 +1,49 @@
 /* Styles applied to the root element dependent on density */
+.uitk-density-high {
+  --formField-helperText-marginTop: 2px;
+  --formField-helperText-marginTop-fullWidth: 3px;
 
+  --formHelperText-background-offset-height: 17px;
+}
 .uitk-density-medium {
-  --form-field-helper-text-margin-top: 2px;
-  --form-field-helper-text-transform: translate(0, 2px);
+  --formField-helperText-marginTop: 2px;
+  --formField-helperText-marginTop-fullWidth: 3px;
+  --formField-helperText-transform: translate(0, 2px);
+
+  --formHelperText-background-offset-height: 19px;
 }
 .uitk-density-touch {
-  --form-field-helper-text-margin-top: 8px;
-  --form-field-helper-text-transform: translate(0, -3px);
+  --formField-helperText-marginTop: 8px;
+  --formField-helperText-marginTop-fullWidth: 5px;
+  --formField-helperText-transform: translate(0, -3px);
+
+  --formHelperText-background-offset-height: 21px;
 }
 .uitk-density-low {
-  --form-field-helper-text-margin-top: 4px;
-  --form-field-helper-text-transform: translate(0, 1px);
-}
-.uitk-density-high {
-  --form-field-helper-text-margin-top: 2px;
+  --formField-helperText-marginTop: 4px;
+  --formField-helperText-marginTop-fullWidth: 5px;
+  --formField-helperText-transform: translate(0, 1px);
+
+  --formHelperText-background-offset-height: 21px;
 }
 
-/* above, if `fillWidth={true}` */
-.uitk-density-medium {
-  --form-field-helper-text-margin-top-full-width: 3px;
-}
-.uitk-density-touch {
-  --form-field-helper-text-margin-top-full-width: 5px;
-}
-.uitk-density-low {
-  --form-field-helper-text-margin-top-full-width: 5px;
-}
-.uitk-density-high {
-  --form-field-helper-text-margin-top-full-width: 3px;
-}
-
+/* Class applied if `fullWidth={true}` */
 .uitkFormField-fullWidth {
-  --form-field-helper-text-transform: none;
+  --formField-helperText-transform: none;
 }
 
 /* Class applied to the helper text container */
 .uitkFormFieldHelperText {
   color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-foreground));
-  font-size: var(--uitkFormFieldHelperText-font-size, var(--uitk-text-help-fontSize));
-  font-style: var(--uitkFormFieldHelperText-font-style, italic);
-  letter-spacing: var(--uitkFormFieldHelperText-letter-spacing, 0);
-  line-height: var(--uitkFormFieldHelperText-line-height, var(--uitk-text-help-lineHeight));
-  min-height: var(--uitkFormFieldHelperText-min-height, var(--uitk-text-caption-minHeight));
-  margin-bottom: var(--uitkFormFieldHelperText-margin-bottom, 0);
-  margin-top: var(--uitkFormFieldHelperText-margin-top, var(--form-field-helper-text-margin-top-full-width, var(--form-field-helper-text-margin-top)));
-  opacity: var(--uitkFormFieldHelperText-opacity, 1);
-  padding-left: var(--uitkFormFieldHelperText-padding-left, var(--uitk-size-unit));
-  padding-right: var(--uitkFormFieldHelperText-padding-right, var(--uitk-size-unit));
-  transform: var(--uitkFormFieldHelperText-transform, var(--form-field-helper-text-transform, none));
-}
-
-.backwardsCompat > .uitkFormFieldHelperText {
-  line-height: var(--uitkFormFieldHelperText-line-height, 1.3);
+  font-size: var(--uitkFormFieldHelperText-fontSize, var(--uitk-text-help-fontSize));
+  font-style: var(--uitkFormFieldHelperText-fontStyle, italic);
+  letter-spacing: var(--uitkFormFieldHelperText-letterSpacing, 0);
+  line-height: var(--uitkFormFieldHelperText-height, var(--uitk-typography-lineHeight));
+  min-height: var(--uitkFormFieldHelperText-minHeight, var(--uitk-text-caption-minHeight));
+  margin-bottom: var(--uitkFormFieldHelperText-marginBottom, 0);
+  margin-top: var(--uitkFormFieldHelperText-marginTop, var(--formField-withHelperText-marginTop));
+  opacity: var(--uitkFormFieldHelperText-opacity, var(--formHelperText-opacity, 1));
+  padding-left: var(--uitkFormFieldHelperText-paddingLeft, var(--uitk-size-unit));
+  padding-right: var(--uitkFormFieldHelperText-paddingRight, var(--uitk-size-unit));
+  transform: var(--uitkFormFieldHelperText-transform, var(--formField-helperText-transform, none));
 }
