@@ -200,7 +200,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: var(--uitkFormFieldHelperText-height, var(--formField-helperText-height, var(--uitk-text-lineHeight)));
+  bottom: var(--uitkFormFieldHelperText-height, var(--formField-helperText-height, 0px));
   outline-color: var(--uitkFormField-focus-outlineColor, var(--formField-focus-outlineColor));
   outline-style: var(--uitkFormField-focus-outlineStyle, var(--formField-focus-outlineStyle));
   outline-width: var(--uitkFormField-focus-outlineWidth, var(--formField-focus-outlineWidth));
