@@ -47,6 +47,10 @@
   width: 100%;
 }
 
+.uitkFormLabel ~ * {
+  z-index: 1;
+}
+
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
   cursor: var(--uitk-editable-cursor-disabled);

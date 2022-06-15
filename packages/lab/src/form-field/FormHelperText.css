@@ -3,28 +3,28 @@
   --formField-helperText-marginTop: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
 
-  --backwardsCompat-formField-background-offset-height: 17px;
+  --formHelperText-background-offset-height: 17px;
 }
 .uitk-density-medium {
   --formField-helperText-marginTop: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
   --formField-helperText-transform: translate(0, 2px);
 
-  --backwardsCompat-formField-background-offset-height: 19px;
+  --formHelperText-background-offset-height: 19px;
 }
 .uitk-density-touch {
   --formField-helperText-marginTop: 8px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, -3px);
 
-  --backwardsCompat-formField-background-offset-height: 21px;
+  --formHelperText-background-offset-height: 21px;
 }
 .uitk-density-low {
   --formField-helperText-marginTop: 4px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, 1px);
 
-  --backwardsCompat-formField-background-offset-height: 21px;
+  --formHelperText-background-offset-height: 21px;
 }
 
 /* Class applied if `fullWidth={true}` */
@@ -38,20 +38,12 @@
   font-size: var(--uitkFormFieldHelperText-fontSize, var(--uitk-text-help-fontSize));
   font-style: var(--uitkFormFieldHelperText-fontStyle, italic);
   letter-spacing: var(--uitkFormFieldHelperText-letterSpacing, 0);
-  line-height: var(--uitkFormFieldHelperText-height, var(--formField-helperText-height, var(--uitk-text-help-lineHeight)));
+  line-height: var(--uitkFormFieldHelperText-height, var(--uitk-typography-lineHeight));
   min-height: var(--uitkFormFieldHelperText-minHeight, var(--uitk-text-caption-minHeight));
   margin-bottom: var(--uitkFormFieldHelperText-marginBottom, 0);
   margin-top: var(--uitkFormFieldHelperText-marginTop, var(--formField-withHelperText-marginTop));
-  opacity: var(--uitkFormFieldHelperText-opacity, 1);
+  opacity: var(--uitkFormFieldHelperText-opacity, var(--formHelperText-opacity, 1));
   padding-left: var(--uitkFormFieldHelperText-paddingLeft, var(--uitk-size-unit));
   padding-right: var(--uitkFormFieldHelperText-paddingRight, var(--uitk-size-unit));
   transform: var(--uitkFormFieldHelperText-transform, var(--formField-helperText-transform, none));
-}
-
-.backwardsCompat > .uitkFormFieldHelperText {
-  line-height: 1.3;
-}
-
-.uitkFormField-labelTop.uitkFormField-withHelperText.backwardsCompat {
-  --formField-background-offset-height: var(--backwardsCompat-formField-helperText-background-offset-height);
 }
