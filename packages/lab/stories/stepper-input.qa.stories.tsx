@@ -47,6 +47,10 @@ export const ExamplesGrid: ComponentStory<typeof StepperInput> = (props) => {
   );
 };
 
+ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof StepperInput> = (
   props
 ) => {

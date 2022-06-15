@@ -61,6 +61,10 @@ export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
   props
 ) => {

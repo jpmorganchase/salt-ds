@@ -104,6 +104,8 @@ export const parameters: Parameters = {
       </DocsContainer>
     ),
   },
+  // disables snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };
 
 // Bottom most is outermost

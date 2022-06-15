@@ -94,6 +94,10 @@ export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof FormField> = (
   props
 ) => {

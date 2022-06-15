@@ -7,3 +7,7 @@
   position: unset;
   background-color: var(--uitk-color-white);
 }
+
+.examples-container .uitkScrim {
+  position: unset;
+}

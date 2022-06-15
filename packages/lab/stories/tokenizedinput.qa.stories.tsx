@@ -41,6 +41,10 @@ export const ExamplesGrid: ComponentStory<typeof TokenizedInput> = (props) => {
   );
 };
 
+ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<
   typeof TokenizedInput
 > = (props) => {

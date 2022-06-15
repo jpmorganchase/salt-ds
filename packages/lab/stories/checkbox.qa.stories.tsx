@@ -35,6 +35,10 @@ export const AllExamplesGrid: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<
   typeof Checkbox
 > = () => {
