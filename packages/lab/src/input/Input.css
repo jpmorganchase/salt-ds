@@ -17,18 +17,18 @@
   align-items: center;
   background: var(--uitkInput-background, none);
   border: var(--uitkInput-border, none);
-  border-radius: var(--uitkInput-border-radius, 0);
+  border-radius: var(--uitkInput-borderRadius, 0);
   box-sizing: border-box;
   color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
-  cursor: default;
+  cursor: var(--uitkInput-cursor, default);
   display: inline-flex;
-  font-family: var(--uitkInput-font-family, var(--uitk-typography-fontFamily));
-  font-size: var(--uitkInput-font-size, var(--uitk-text-fontSize));
+  font-family: var(--uitkInput-fontFamily, var(--uitk-typography-fontFamily));
+  font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
-  letter-spacing: var(--uitkInput-letter-spacing, 0);
+  letter-spacing: var(--uitkInput-letterSpacing, 0);
   line-height: var(--uitk-typography-lineHeight);
-  min-height: var(--uitkInput-min-height, var(--uitk-size-base));
-  min-width: var(--uitkInput-min-width, 8em);
+  min-height: var(--uitkInput-minHeight, var(--uitk-size-base));
+  min-width: var(--uitkInput-minWidth, 8em);
   padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
   position: var(--uitkInput-position, relative);
   width: 100%;
@@ -41,10 +41,10 @@
 
 /* Pseudo-class applied to the root element when focused */
 .uitkInput-focused {
-  outline-style: var(--uitkInput-focused-outline-style, var(--uitk-focused-outlineStyle));
-  outline-width: var(--uitkInput-focused-outline-width, var(--uitk-focused-outlineWidth));
-  outline-color: var(--uitkInput-focused-outline-color, var(--uitk-focused-outlineColor));
-  outline-offset: var(--uitkInput-focused-outline-offset, var(--uitk-focused-outlineOffset));
+  outline-style: var(--uitkInput-focused-outlineStyle, var(--uitk-focused-outlineStyle));
+  outline-width: var(--uitkInput-focused-outlineWidth, var(--uitk-focused-outlineWidth));
+  outline-color: var(--uitkInput-focused-outlineColor, var(--uitk-focused-outlineColor));
+  outline-offset: var(--uitkInput-focused-outlineOffset, var(--uitk-focused-outlineOffset));
 }
 
 /* Style applied to selected input */
@@ -87,22 +87,22 @@
 
 /* Style applied to root element with start adornment */
 .uitkInput-inputAdornedStart {
-  padding-left: var(--uitkInput-adorned-start-padding, 0);
+  padding-left: var(--uitkInput-adornedStart-padding, 0);
 }
 
 /* Style applied to inner input element with start adornment */
 .uitkInput-inputAdornedStart .uitkInput-input {
-  padding-left: var(--uitkInput-adorned-start-input-padding, var(--uitk-size-unit));
+  padding-left: var(--uitkInput-adornedStart-input-padding, var(--uitk-size-unit));
 }
 
 /* Style applied to root element with end adornment */
 .uitkInput-inputAdornedEnd {
-  padding-right: var(--uitkInput-adorned-end-padding, 0);
+  padding-right: var(--uitkInput-adornedEnd-padding, 0);
 }
 
 /* Style applied to inner input element with end adornment */
 .uitkInput-inputAdornedEnd .uitkInput-input {
-  padding-right: var(--uitkInput-adorned-end-input-padding, var(--uitk-size-unit));
+  padding-right: var(--uitkInput-adornedEnd-input-padding, var(--uitk-size-unit));
 }
 
 /* Style applied to uitk Button used within Input component adornments */

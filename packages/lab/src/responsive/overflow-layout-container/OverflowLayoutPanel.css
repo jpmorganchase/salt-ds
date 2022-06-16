@@ -4,7 +4,7 @@
   align-items: stretch;
   background-color: var(--overflow-layout-panel-background-color);
   border: 1px solid var(--uitk-accent-border);
-  box-shadow: var(--uitk-shadow-4);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
