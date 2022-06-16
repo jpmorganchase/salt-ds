@@ -5,7 +5,7 @@ import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Core/Icon",
+  title: "Icons/Icon",
   component: Icon,
 } as ComponentMeta<typeof Icon>;
 
