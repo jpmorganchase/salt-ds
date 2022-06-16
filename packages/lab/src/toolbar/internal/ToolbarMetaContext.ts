@@ -1,7 +1,6 @@
+import { TooltipProps } from "@jpmorganchase/uitk-core";
 import React, { createContext } from "react";
-
 import { OrientationShape } from "../ToolbarProps";
-import { TooltipProps } from "../../tooltip";
 
 export type ToolbarMeta = {
   orientation?: OrientationShape;

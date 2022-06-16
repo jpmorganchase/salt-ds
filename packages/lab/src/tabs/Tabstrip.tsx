@@ -1,42 +1,43 @@
-import React, {
-  forwardRef,
-  ForwardedRef,
-  KeyboardEvent,
-  RefObject,
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
-import cx from "classnames";
 import {
   Button,
   ButtonProps,
   makePrefixer,
+  useForkRef,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
 import { AddIcon } from "@jpmorganchase/uitk-icons";
-import { Tab } from "./Tab";
-import {
-  responsiveDataAttributes,
-  TabDescriptor,
-  TabElement,
-  TabstripProps,
-  TabProps,
-  TabsSource,
-} from "./TabstripProps";
+import cx from "classnames";
+import React, {
+  ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ListProps, ListSingleSelectionVariant } from "../list";
-import { useTabstrip } from "./useTabstrip";
-import { TabActivationIndicator } from "./TabActivationIndicator";
-import { useForkRef, useLayoutEffectSkipFirst } from "../utils";
 import {
   ManagedItem,
   OverflowMenuTabs as OverflowMenu,
   useOverflowLayout,
 } from "../responsive";
+import { useLayoutEffectSkipFirst } from "../utils";
+import { Tab } from "./Tab";
+import { TabActivationIndicator } from "./TabActivationIndicator";
+import {
+  responsiveDataAttributes,
+  TabDescriptor,
+  TabElement,
+  TabProps,
+  TabsSource,
+  TabstripProps,
+} from "./TabstripProps";
+import { useTabstrip } from "./useTabstrip";
 
-import "./ThemeTabstrip.css";
 import "./Tabstrip.css";
+import "./ThemeTabstrip.css";
 
 const withBaseName = makePrefixer("uitkTabstrip");
 

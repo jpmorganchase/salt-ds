@@ -1,23 +1,23 @@
+import { useForkRef } from "@jpmorganchase/uitk-core";
 import React, {
   cloneElement,
   forwardRef,
-  useState,
+  ReactChild,
   useCallback,
   useEffect,
   useRef,
-  ReactChild,
+  useState,
 } from "react";
-import { ownerWindow, useEventCallback, useForkRef } from "../../utils";
-
-import useClickAway from "./useClickAway";
-import useMenuTriggerHandlers from "./useMenuTriggerHandlers";
-import useRefsManager from "./useRefsManager";
-import OverflowPanelItems from "./OverflowPanelItems";
+import { ownerWindow, useEventCallback } from "../../utils";
 import {
   defaultGetBoundingClientRect,
   defaultGetScreenBounds,
 } from "./menuPositioning";
+import OverflowPanelItems from "./OverflowPanelItems";
 import { MenuState, OverflowPanelProps } from "./OverflowPanelProps";
+import useClickAway from "./useClickAway";
+import useMenuTriggerHandlers from "./useMenuTriggerHandlers";
+import useRefsManager from "./useRefsManager";
 
 import "./OverflowPanel.css";
 

@@ -1,16 +1,13 @@
 import {
-  ElementType,
-  HTMLAttributes,
-  ReactNode,
-  CSSProperties,
-  forwardRef,
-} from "react";
+  makePrefixer,
+  Tooltip,
+  TooltipProps,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
-
+import { CSSProperties, ElementType, forwardRef, HTMLAttributes } from "react";
 import { useTruncation } from "./useTruncation";
-import { useForkRef } from "../utils";
 
 import "./Text.css";
 

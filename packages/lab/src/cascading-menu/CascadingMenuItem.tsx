@@ -1,21 +1,23 @@
 import {
+  makePrefixer,
+  Tooltip,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
+import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import classnames from "classnames";
+import {
   forwardRef,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
   useRef,
   useState,
-  useEffect,
-  MouseEvent,
-  KeyboardEvent,
 } from "react";
-import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-
-import { MenuDescriptor } from "./CascadingMenuProps";
 import { ListItem, ListItemProps } from "../list";
-import { Tooltip, useTooltip } from "../tooltip";
+import { MenuDescriptor } from "./CascadingMenuProps";
 
 import "./CascadingMenuItem.css";
-import { useForkRef } from "../utils";
 
 const noop = () => undefined;
 const withBaseName = makePrefixer("uitkMenuItem");

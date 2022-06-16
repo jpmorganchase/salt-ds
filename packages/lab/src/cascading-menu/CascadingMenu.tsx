@@ -1,34 +1,32 @@
 import {
+  useControlled,
+  useDensity,
+  useForkRef,
+} from "@jpmorganchase/uitk-core";
+import {
   cloneElement,
   forwardRef,
-  useState,
-  useCallback,
-  useReducer,
-  useEffect,
-  useRef,
-  useMemo,
-  ReactNode,
   isValidElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
 } from "react";
-import {
-  ownerWindow,
-  useControlled,
-  useEventCallback,
-  useForkRef,
-  usePrevious,
-} from "../utils";
-import { useDensity } from "@jpmorganchase/uitk-core";
+import { ownerWindow, useEventCallback, usePrevious } from "../utils";
 import { CascadingMenuProps } from "./CascadingMenuProps";
 
-import { deriveFlatStateFromTree } from "./internal/stateUtils";
+import { CascadingMenuList } from "./CascadingMenuList";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
+import { defaultGetScreenBounds } from "./internal/menuPositioning";
+import { deriveFlatStateFromTree } from "./internal/stateUtils";
 import { useClickAway } from "./internal/useClickAway";
 import { useMenuTriggerHandlers } from "./internal/useMenuTriggerHandlers";
 import { useRefsManager } from "./internal/useRefsManager";
 import { useStateReducer } from "./internal/useStateReducer";
 import { stateChangeTypes } from "./stateChangeTypes";
-import { CascadingMenuList } from "./CascadingMenuList";
-import { defaultGetScreenBounds } from "./internal/menuPositioning";
 
 const defaultItemToString = (item: any) => item?.title || String(item);
 

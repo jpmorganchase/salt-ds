@@ -1,11 +1,11 @@
-import { Button } from "@jpmorganchase/uitk-core";
 import {
+  Button,
   Tooltip,
   TooltipProps,
   useForkRef,
   useTooltip,
   UseTooltipProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { useCallback } from "react";
 

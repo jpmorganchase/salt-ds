@@ -1,4 +1,4 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
@@ -12,18 +12,15 @@ import {
   ListChangeHandler,
   ListItemBase,
   MultiSelectDropdown,
-  Tooltip,
   useListItem,
-  useTooltip,
 } from "@jpmorganchase/uitk-lab";
-import { useState, FC, ChangeEvent } from "react";
-
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ChangeEvent, FC, useState } from "react";
 import {
   objectOptionsExampleData,
   objectOptionType,
   usStateExampleData,
 } from "./exampleData";
-import { Story, ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {
   title: "Lab/Dropdown",

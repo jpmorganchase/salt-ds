@@ -1,5 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useForkRef } from "../utils";
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import { forwardRef, HTMLAttributes, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useAccordionSectionContext } from "./AccordionSectionContext";

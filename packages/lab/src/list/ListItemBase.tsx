@@ -1,18 +1,21 @@
 import {
-  memo,
+  makePrefixer,
+  useForkRef,
+  useTooltip,
+  useTooltipContext,
+} from "@jpmorganchase/uitk-core";
+import cn from "classnames";
+import {
+  ForwardedRef,
   forwardRef,
+  HTMLAttributes,
+  memo,
   useEffect,
   useRef,
   useState,
-  ForwardedRef,
-  HTMLAttributes,
 } from "react";
-import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useForkRef, useOverflowDetection } from "../utils";
+import { useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
-
-import { useTooltip, useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 
