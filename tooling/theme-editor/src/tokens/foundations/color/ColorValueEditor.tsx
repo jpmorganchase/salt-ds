@@ -1,23 +1,27 @@
-import { useState, useEffect, useMemo } from "react";
-import cn from "classnames";
-import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  ToolkitProvider,
+  Tooltip,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-  Tooltip,
-  useTooltip,
 } from "@jpmorganchase/uitk-lab";
+import cn from "classnames";
+import { useEffect, useMemo, useState } from "react";
 
-import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
-import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";
 import { ActiveIcon } from "../../../icons/components/ActiveIcon";
 import { DisabledIcon } from "../../../icons/components/DisabledIcon";
 import { ErrorIcon } from "../../../icons/components/ErrorIcon";
 import { HoverIcon } from "../../../icons/components/HoverIcon";
 import { RegularIcon } from "../../../icons/components/RegularIcon";
 import { WarningIcon } from "../../../icons/components/WarningIcon";
+import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";
+import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
+
 import "./ColorValueEditor.css";
 
 const withBaseName = makePrefixer("uitkColorValueEditor");
