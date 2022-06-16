@@ -4,9 +4,5 @@
 
 .uitkCascadingMenuList-popper {
   --list-box-content: content-box;
-  --list-box-shadow: var(--uitk-shadow-4);
-}
-
-.uitkCascadingMenuList {
-  --menu-item-background: var(--uitk-selectable-background);
+  --list-box-shadow: var(--uitk-overlayable-shadow-popout);
 }

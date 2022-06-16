@@ -126,7 +126,7 @@
 
 .uitkTooltip-info {
   --tooltip-status-color: var(--uitk-status-info-foreground);
-  box-shadow: var(--uitk-shadow-4);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
 }
 .uitkTooltip-error {
   --tooltip-status-color: var(--uitk-status-error-foreground);
