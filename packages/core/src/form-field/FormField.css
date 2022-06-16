@@ -70,8 +70,8 @@
 
 /* Class applied when helper text is provided */
 .uitkFormField-withHelperText {
-  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
-  --formField-withHelperText-marginTop: var(--formField-helperText-marginTop);
+  --formField-activationIndicator-offsetBottom: calc(var(--formField-withHelperText-marginTop) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-helperText-marginTop: var(--formField-withHelperText-marginTop);
 }
 
 .uitkFormField-withHelperText *:after {
@@ -85,15 +85,14 @@
 
 /* Class applied if `fullWidth={true}` and helper text is provided */
 .uitkFormField-fullWidth.uitkFormField-withHelperText {
-  --formField-withHelperText-marginTop: var(--formField-helperText-marginTop-fullWidth);
-  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-helperText-marginTop: var(--formField-withHelperText-marginTop-fullWidth);
+  --formField-activationIndicator-offsetBottom: calc(var(--formField-withHelperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
 }
 
 /* Class applied to the root element if `disabled={true}` */
-.uitkFormField-disabled {
-  --formField-activationIndicator-opacity: var(--uitk-opacity-foreground);
-  --formField-activationIndicator-icon-opacity: var(--uitk-opacity-foreground);
-  --formHelperText-opacity: var(--uitk-opacity-foreground);
+.uitkFormField-disabled:not(.uitkFormField-warning):not(.uitkFormField-error) {
+  --formField-activationIndicator-color: var(--uitk-editable-borderColor-disabled);
+  --formField-helperText-color: var(--uitk-text-secondary-foreground-disabled);
 
   cursor: var(--uitk-editable-cursor-disabled);
 }
@@ -136,7 +135,7 @@
   --formLabel-paddingLeft: var(--uitk-size-unit);
   --formLabel-paddingRight: var(--uitk-size-unit);
   /* Uses density invariant value unless helper text provided */
-  --formField-background-offset-height: calc(var(--formField-withHelperText-marginTop, 0px) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-background-offset-height: calc(var(--formField-helperText-marginTop, 0px) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
 
   background: linear-gradient(to top, transparent var(--formField-background-offset-height), var(--uitkFormField-background, var(--formField-background)) var(--formField-background-offset-height));
 }

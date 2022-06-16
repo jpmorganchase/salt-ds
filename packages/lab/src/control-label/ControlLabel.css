@@ -23,7 +23,7 @@
 
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-selectable-cursor-disabled);
-  opacity: var(--uitk-opacity-foreground);
+  color: var(--uitkControlLabel-color-disabled, var(--uitk-text-primary-foreground-disabled));
 }
 
 .uitk-density-medium .uitkControlLabel-labelRight {

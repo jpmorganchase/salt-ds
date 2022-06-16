@@ -55,8 +55,8 @@
 
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
+  color: var(--uitkFormLabel-text-color-disabled, var(--uitk-text-secondary-foreground-disabled));
   cursor: var(--uitk-editable-cursor-disabled);
-  opacity: var(--uitkFormLabel-opacity-disabled, var(--uitk-opacity-foreground));
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */

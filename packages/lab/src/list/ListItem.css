@@ -8,6 +8,8 @@
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
 
+  --list-item-text-color-disabled: var(--uitk-selectable-foreground-disabled);
+
   /* Text, Font */
   --list-item-text-align: var(--uitk-selectable-textAlign);
   --list-item-font-size: var(--uitk-text-fontSize);
@@ -29,7 +31,6 @@
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
-  --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
 }
 
 .uitkListItem {
@@ -80,8 +81,8 @@
 }
 
 .uitkListItem-disabled {
+  color: var(--list-item-text-color-disabled);
   cursor: var(--list-item-disabled-cursor);
-  opacity: var(--list-item-disabled-regular-opacity);
 }
 
 .uitkListItem-focusVisible:after {

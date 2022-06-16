@@ -1,3 +1,23 @@
+/* Opacities */
+.uitk-light,
+.uitk-dark {
+  --uitk-palette-opacity-background: var(--uitk-opacity-3);
+  --uitk-palette-opacity-border: var(--uitk-opacity-2);
+  --uitk-palette-opacity-border-readOnly: var(--uitk-opacity-1);
+  --uitk-palette-opacity-fill: var(--uitk-opacity-2);
+  --uitk-palette-opacity-foreground: var(--uitk-opacity-3);
+  --uitk-palette-opacity-scrim-low: var(--uitk-opacity-4);
+  --uitk-palette-opacity-stroke: var(--uitk-opacity-2);
+}
+
+.uitk-light {
+  --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-4);
+}
+
+.uitk-dark {
+  --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-3);
+}
+
 .uitk-light {
   /* Accent */
   --uitk-palette-accent-background: var(--uitk-color-blue-500);
@@ -77,7 +97,10 @@
   /** Note: SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
   --uitk-palette-measure-fill-startColor: var(--uitk-color-teal-500);
   --uitk-palette-measure-fill-stopColor: var(--uitk-color-blue-500);
+  --uitk-palette-measure-fill-startColor: var(--uitk-color-teal-500-fade-fill);
+  --uitk-palette-measure-fill-stopColor: var(--uitk-color-blue-500-fade-fill);
   --uitk-palette-measure-fill: linear-gradient(0deg, var(--uitk-palette-measure-fill-startColor) 0%, var(--uitk-palette-measure-fill-stopColor) 100%);
+  --uitk-palette-measure-fill-disabled: linear-gradient(0deg, var(--uitk-palette-measure-fill-startColor-disabled) 0%, var(--uitk-palette-measure-fill-stopColor-disabled) 100%);
   --uitk-palette-measure-background: var(--uitk-color-grey-60);
   --uitk-palette-measure-border: var(--uitk-color-grey-90);
 
@@ -216,7 +239,10 @@
   /** Note: SVG stroke doesn't support CSS linear-gradient (yet), so we have to split the color value out */
   --uitk-palette-measure-fill-startColor: var(--uitk-color-teal-300);
   --uitk-palette-measure-fill-stopColor: var(--uitk-color-blue-300);
+  --uitk-palette-measure-fill-startColor: var(--uitk-color-teal-300-fade-fill);
+  --uitk-palette-measure-fill-stopColor: var(--uitk-color-blue-300-fade-fill);
   --uitk-palette-measure-fill: linear-gradient(0deg, var(--uitk-palette-measure-fill-startColor) 0%, var(--uitk-palette-measure-fill-stopColor) 100%);
+  --uitk-palette-measure-fill-disabled: linear-gradient(0deg, var(--uitk-palette-measure-fill-startColor-disabled) 0%, var(--uitk-palette-measure-fill-stopColor-disabled) 100%);
   --uitk-palette-measure-background: var(--uitk-color-grey-300);
   --uitk-palette-measure-border: var(--uitk-color-grey-90);
 

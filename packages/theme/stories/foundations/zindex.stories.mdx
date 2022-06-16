@@ -1,26 +1,26 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import { NumberBlock } from "docs/components/NumberBlock";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Documentation/Styles and Theming/Foundations/Z-Index" />
 
 # Z-Index
 
-## Variants
+## Z-Index
 
 <Canvas>
-  <Story name="Variants">
+  <Story name="Z-Index">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-zIndex-default" />
-      <ColorBlock colorVar="--uitk-zIndex-popout" />
-      <ColorBlock colorVar="--uitk-zIndex-docked" />
-      <ColorBlock colorVar="--uitk-zIndex-appheader" />
-      <ColorBlock colorVar="--uitk-zIndex-drawer" />
-      <ColorBlock colorVar="--uitk-zIndex-modal" />
-      <ColorBlock colorVar="--uitk-zIndex-notification" />
-      <ColorBlock colorVar="--uitk-zIndex-dragobject" />
-      <ColorBlock colorVar="--uitk-zIndex-contextmenu" />
-      <ColorBlock colorVar="--uitk-zIndex-tooltip" />
+      <NumberBlock number="1" cssVariable="--uitk-zIndex-default" />
+      <NumberBlock number="1000" cssVariable="--uitk-zIndex-popout" />
+      <NumberBlock number="1050" cssVariable="--uitk-zIndex-docked" />
+      <NumberBlock number="1100" cssVariable="--uitk-zIndex-appheader" />
+      <NumberBlock number="1200" cssVariable="--uitk-zIndex-drawer" />
+      <NumberBlock number="1300" cssVariable="--uitk-zIndex-modal" />
+      <NumberBlock number="1400" cssVariable="--uitk-zIndex-notification" />
+      <NumberBlock number="1420" cssVariable="--uitk-zIndex-dragobject" />
+      <NumberBlock number="1450" cssVariable="--uitk-zIndex-contextmenu" />
+      <NumberBlock number="1500" cssVariable="--uitk-zIndex-tooltip" />
     </DocGrid>
   </Story>
 </Canvas>

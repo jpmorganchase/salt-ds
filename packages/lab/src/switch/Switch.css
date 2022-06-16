@@ -164,7 +164,7 @@
 
 /* Styles applied to icon tick shown when `checked={true}` and `disabled={true}` */
 .uitkSwitch-disabled .uitkSwitch-iconTick {
-  opacity: var(--uitk-opacity-foreground);
+  fill: var(--uitkSwitch-checked-icon-color, var(--switch-checked-icon-color-disabled));
 }
 
 /* Styles applied when `focusVisible={true}` */
