@@ -1,4 +1,3 @@
 .uitkCascadingMenuList.custom-styles {
-  --menu-item-background: var(--uitk-color-orange-40);
   --menu-item-border-bottom: 1px dashed var(--uitk-color-grey-900);
 }
