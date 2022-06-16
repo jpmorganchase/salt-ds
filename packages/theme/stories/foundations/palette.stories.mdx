@@ -83,16 +83,20 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Interact">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-interact-background-high" />
       <ColorBlock colorVar="--uitk-palette-interact-background-low" />
       <ColorBlock colorVar="--uitk-palette-interact-background-medium" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-blurSelected" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-high" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-disabled-medium" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-disabled-high" />
       <ColorBlock colorVar="--uitk-palette-interact-background-hover" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-selected" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-blurSelected" />
       <ColorBlock colorVar="--uitk-palette-interact-border" />
       <ColorBlock colorVar="--uitk-palette-interact-border-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-border-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-border-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-border-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-border-readonly" />
-      <ColorBlock colorVar="--uitk-palette-interact-border-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-fill" />
       <ColorBlock colorVar="--uitk-palette-interact-fill-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-fill-partial" />
@@ -100,35 +104,43 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-interact-foreground" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-active" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-blurSelected" />
+      <ColorBlock colorVar="--uitk-palette-interact-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-hover" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-selected" />
+      <ColorBlock colorVar="--uitk-palette-interact-foreground-partial" />
+      <ColorBlock colorVar="--uitk-palette-interact-foreground-partialDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-foreground-activeDisabled" />
       <ColorBlock colorVar="--uitk-palette-interact-stroke" />
       <ColorBlock colorVar="--uitk-palette-interact-stroke-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-stroke-selected" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background" />
-      <ColorBlock colorVar="--uitk-palette-interact-cta-background-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-cta-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-cta-background-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-cta-background-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-cta-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-foreground" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-foreground-active" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-background" />
-      <ColorBlock colorVar="--uitk-palette-interact-primary-background-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-primary-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-background-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-foreground" />
-      <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-primary-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-background" />
-      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground" />
-      <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-hover" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-active" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-secondary-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -186,10 +198,11 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
 <Canvas>
   <Story name="Measure">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-measure-background-gradient-start-color" />
-      <ColorBlock colorVar="--uitk-palette-measure-background-gradient-stop-color" />
       <ColorBlock colorVar="--uitk-palette-measure-background" />
       <ColorBlock colorVar="--uitk-palette-measure-border" />
+      <ColorBlock colorVar="--uitk-palette-measure-fill-start-color" />
+      <ColorBlock colorVar="--uitk-palette-measure-fill-stop-color" />
+      <ColorBlock colorVar="--uitk-palette-measure-fill" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -202,12 +215,13 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-navigate-background-low" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-medium" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-high" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-low" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-medium" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-high" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-low" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-medium" />
       <ColorBlock colorVar="--uitk-palette-navigate-background-hover-high" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-low" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-medium" />
+      <ColorBlock colorVar="--uitk-palette-navigate-background-active-high" />
+      <ColorBlock colorVar="--uitk-palette-navigate-foreground" />
       <ColorBlock colorVar="--uitk-palette-navigate-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-active" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-hover" />
@@ -237,16 +251,18 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
       <ColorBlock colorVar="--uitk-palette-neutral-border-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-high" />
+      <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-medium" />
       <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-high" />
+      <ColorBlock colorVar="--uitk-palette-neutral-highlight" />
       <ColorBlock colorVar="--uitk-palette-neutral-scrim-low" />
       <ColorBlock colorVar="--uitk-palette-neutral-scrim-medium" />
+      <ColorBlock colorVar="--uitk-palette-neutral-cta-border" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-border" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-foreground" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-foreground-disabled" />
       <ColorBlock colorVar="--uitk-palette-neutral-secondary-foreground" />
       <ColorBlock colorVar="--uitk-palette-neutral-secondary-foreground-disabled" />
-      <ColorBlock colorVar="--uitk-palette-neutral-cta-border" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -267,12 +283,13 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
   <Story name="Rate">
     <DocGrid>
       <ColorBlock colorVar="--uitk-palette-rate-background" />
-      <ColorBlock colorVar="--uitk-palette-rate-background-active" />
       <ColorBlock colorVar="--uitk-palette-rate-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-rate-background-active" />
+      <ColorBlock colorVar="--uitk-palette-rate-background-activeDisabled" />
       <ColorBlock colorVar="--uitk-palette-rate-background-undo" />
       <ColorBlock colorVar="--uitk-palette-rate-border" />
-      <ColorBlock colorVar="--uitk-palette-rate-border-active" />
       <ColorBlock colorVar="--uitk-palette-rate-border-hover" />
+      <ColorBlock colorVar="--uitk-palette-rate-border-active" />
       <ColorBlock colorVar="--uitk-palette-rate-border-undo" />
     </DocGrid>
   </Story>

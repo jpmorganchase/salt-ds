@@ -1,19 +1,86 @@
+.uitk-density-high.uitk-newapp {
+  --uitkSwitch-track-transform: translate(0px, 6px);
+  --uitkSwitch-track-height: 4px;
+  --uitkSwitch-thumb-height: 8px;
+  --uitkSwitch-thumb-width: 8px;
+  --uitkSwitch-base-width: 12px;
+  --uitkSwitch-track-width: 20px;
+  --uitkSwitch-base-margin: 4px 0 0 0px;
+  --uitkSwitch-focused-left: 10px;
+  --uitkSwitch-focused-width: 2px;
+  --uitkSwitch-focused-height: 2px;
+  --uitkSwitch-focused-top: 3px;
+}
+.uitk-density-medium.uitk-newapp {
+  --uitkSwitch-track-transform: translate(0px, 6px);
+  --uitkSwitch-inputContainer-translate-x: -6px;
+  --uitkSwitch-track-height: 6px;
+  --uitkSwitch-thumb-height: 14px;
+  --uitkSwitch-thumb-width: 14px;
+  --uitkSwitch-base-width: 15px;
+  --uitkSwitch-track-width: 34px;
+  --uitkSwitch-base-margin: 2px 0 0 5px;
+  --uitkSwitch-focused-left: 4px;
+  --uitkSwitch-focused-width: 18px;
+  --uitkSwitch-focused-height: 2px;
+  --uitkSwitch-focused-top: 6px;
+}
+.uitk-density-low.uitk-newapp {
+  --uitkSwitch-track-transform: translate(0px, 7px);
+  --uitkSwitch-inputContainer-translate-x: -2px;
+  --uitkSwitch-track-height: 8px;
+  --uitkSwitch-thumb-height: 17px;
+  --uitkSwitch-thumb-width: 17px;
+  --uitkSwitch-base-width: 18px;
+  --uitkSwitch-track-width: 36px;
+  --uitkSwitch-base-margin: 2px 0 0 2px;
+  --uitkSwitch-focused-left: 8px;
+  --uitkSwitch-focused-width: 18px;
+  --uitkSwitch-focused-height: 2px;
+  --uitkSwitch-focused-top: 8px;
+}
+.uitk-density-touch.uitk-newapp {
+  --uitkSwitch-track-height: 15px;
+  --uitkSwitch-track-transform: translate(0px, 5px);
+  --uitkSwitch-inputContainer-translate-x: -20px;
+  --uitkSwitch-track-height: 12px;
+  --uitkSwitch-thumb-height: 22px;
+  --uitkSwitch-thumb-width: 22px;
+  --uitkSwitch-base-width: 22px;
+  --uitkSwitch-track-width: 54px;
+  --uitkSwitch-base-margin: 0px 0 0 18px;
+  --uitkSwitch-focused-left: -10px;
+  --uitkSwitch-focused-width: 44px;
+  --uitkSwitch-focused-height: 14px;
+  --uitkSwitch-focused-top: 4px;
+}
+
 .uitk-light.uitk-newapp,
 .uitk-dark.uitk-newapp {
-  --uitkSwitch-track-border-radius: 5px;
-  --uitkSwitch-thumb-border-radius: 3px;
+  --uitkSwitch-track-borderRadius: 5px;
+  --uitkSwitch-thumb-borderRadius: 20px;
+  --uitkSwitch-track-minHeight: 0px;
+  --uitkSwitch-track-border-checked: none;
+  --uitkSwitch-focused-outlineStyle: solid;
+  --uitkSwitch-focused-outlineWidth: 1px;
+  --uitkSwitch-focused-outlineColor: red;
+  --uitkSwitch-focused-outlineOffset: 10px;
 }
 
 .uitk-light.uitk-newapp {
-  --uitkSwitch-checked-track-color: var(--uitk-color-red-100);
-  --uitkSwitch-checked-icon-color: var(--uitk-color-red-50);
-  --uitkSwitch-thumb-background: var(--uitk-color-grey-20);
+  --uitkSwitch-track-color-checked: var(--uitk-color-red-100);
+  --uitkSwitch-icon-color-checked: var(--uitk-color-white);
+  --uitkSwitch-thumb-background: var(--uitk-color-red-500);
   --uitkSwitch-track-color-hover: var(--uitk-color-red-200);
 }
 
 .uitk-dark.uitk-newapp {
-  --uitkSwitch-checked-track-color: var(--uitk-color-red-800);
-  --uitkSwitch-checked-icon-color: var(--uitk-color-grey-10);
-  --uitkSwitch-thumb-background: var(--uitk-color-grey-900);
-  --uitkSwitch-track-color-hover: var(--uitk-color-red-700);
+  --uitkSwitch-track-color-checked: var(--uitk-color-red-800);
+  --uitkSwitch-icon-color-checked: var(--uitk-color-red-800);
+  --uitkSwitch-thumb-background: var(--uitk-color-red-400);
+  --uitkSwitch-track-color-hover: var(--uitk-color-red-50);
+}
+
+.uitk-newapp .uitkSwitch:hover:not(.uitkSwitch-disabled) .uitkSwitch-track {
+  box-shadow: 0 4px 8px 0 rgba(255, 108, 88, 0.55);
 }
