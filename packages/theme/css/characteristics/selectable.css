@@ -24,6 +24,7 @@
   --uitk-selectable-foreground-partial: var(--uitk-palette-interact-foreground-partial);
   --uitk-selectable-foreground-disabled: var(--uitk-palette-interact-foreground-disabled);
   --uitk-selectable-foreground-partialDisabled: var(--uitk-palette-interact-foreground-partialDisabled);
+  --uitk-selectable-foreground-selectedDisabled: var(--uitk-palette-interact-foreground-activeDisabled);
 
   --uitk-selectable-background: transparent;
   --uitk-selectable-background-hover: var(--uitk-palette-interact-background-hover);
