@@ -1,0 +1,8 @@
+.uitk-success.uitk-newapp {
+  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
+
+.uitk-error.uitk-newapp {
+  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
+}
