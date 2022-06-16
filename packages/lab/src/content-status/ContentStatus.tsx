@@ -12,8 +12,11 @@ import {
   Ref,
   useEffect,
 } from "react";
-import { CircularProgressProps, SpinnerProps, useId } from "../";
+import { CircularProgressProps } from "../progress";
+import { SpinnerProps } from "../spinner";
+import { useId } from "../utils";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
+
 import "./ContentStatus.css";
 
 const withBaseName = makePrefixer("uitkContentStatus");

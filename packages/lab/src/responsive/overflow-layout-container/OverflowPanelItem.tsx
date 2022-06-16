@@ -16,7 +16,7 @@ import { FormField, FormFieldProps } from "../../form-field";
 import {
   extractResponsiveProps,
   isResponsiveAttribute,
-} from "../../responsive";
+} from "../../responsive/utils";
 import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
 
 function useControlledTooltip(

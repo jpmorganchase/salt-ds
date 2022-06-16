@@ -9,12 +9,12 @@ import React, {
   useRef,
 } from "react";
 import { FormField } from "../form-field";
+import { OverflowMenu } from "../responsive/overflow-menu";
 import {
   isCollapsedOrCollapsing,
   isOverflowed,
-  OverflowMenu,
-  useOverflowLayout,
-} from "../responsive";
+} from "../responsive/overflowUtils";
+import { useOverflowLayout } from "../responsive/useOverflowLayout";
 import { useId } from "../utils";
 import { renderTools } from "./internal/renderTools";
 import ToolbarMetaContext, { ToolbarMeta } from "./internal/ToolbarMetaContext";

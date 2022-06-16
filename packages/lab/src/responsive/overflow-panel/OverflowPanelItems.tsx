@@ -16,7 +16,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Tooltray } from "../../toolbar";
+import Tooltray from "../../toolbar/Tooltray";
 import OverflowPanelItem from "./OverflowPanelItem";
 import { OverflowPanelItemProps } from "./OverflowPanelProps";
 import { PanelItemRendererProps } from "./PanelItemRendererProps";
