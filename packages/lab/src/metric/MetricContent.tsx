@@ -1,9 +1,14 @@
-import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
-import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  IconProps,
+} from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { Div, Figure1, Figure2, Figure3 } from "../typography";
 import { useMetricContext } from "./internal";
+
 import "./MetricContent.css";
 
 export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {

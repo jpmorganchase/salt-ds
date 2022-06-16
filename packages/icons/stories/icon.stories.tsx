@@ -1,6 +1,5 @@
 import { createElement, ElementType, useMemo } from "react";
-import { Icon, IconProps } from "@jpmorganchase/uitk-core";
-import { AddDocumentIcon } from "@jpmorganchase/uitk-icons";
+import { AddDocumentIcon, Icon, IconProps } from "@jpmorganchase/uitk-icons";
 import { allIcons } from "./icon.all";
 import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
