@@ -1,0 +1,19 @@
+.uitk-light.uitk-newapp .uitkBadge-success {
+  --uitkBadge-content-icon-color: var(--uitk-color-green-10);
+  --uitkBadge-content-text-color: var(--uitk-color-black);
+}
+
+.uitk-light.uitk-newapp .uitkBadge-error {
+  --uitkBadge-content-icon-color: var(--uitk-color-red-10);
+  --uitkBadge-content-text-color: var(--uitk-color-black);
+}
+
+.uitk-dark.uitk-newapp .uitkBadge-success {
+  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
+
+.uitk-dark.uitk-newapp .uitkBadge-error {
+  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
