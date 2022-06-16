@@ -1,11 +1,13 @@
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Badge } from "@jpmorganchase/uitk-lab";
+
 import {
   ClockIcon,
   SettingsSolidIcon,
   UserBadgeIcon,
   MessageIcon,
 } from "@jpmorganchase/uitk-icons";
+
 import "./badge.stories.css";
 import "./Badge.stories.newapp-badge.css"
 
@@ -67,12 +69,18 @@ WordsBadge.args = {
 };
 
 export const CustomStyling: ComponentStory<typeof Badge> = () => (
-  <div style={{ display: 'flex', gap: 5 }}>
-    <ToolkitProvider theme={["success", 'newapp']}>
-      <Badge badgeContent={1} max={100}><MessageIcon /></Badge>
+  <>
+    <ToolkitProvider theme={['light', 'newapp']}>
+      <Badge badgeContent={1} max={100} className="uitkBadge-success"><MessageIcon /></Badge>
     </ToolkitProvider>
-    <ToolkitProvider theme={["error", 'newapp']}>
-      <Badge badgeContent="Text">Text Badge</Badge>
+    <ToolkitProvider theme={['light', 'newapp']}>
+      <Badge badgeContent="Text" className="uitkBadge-error">Text Badge</Badge>
     </ToolkitProvider>
-  </div>
+    <ToolkitProvider theme={['dark', 'newapp']}>
+      <Badge badgeContent={1} max={100} className="uitkBadge-success"><MessageIcon /></Badge>
+    </ToolkitProvider>
+    <ToolkitProvider theme={['dark', 'newapp']}>
+      <Badge badgeContent="Text" className="uitkBadge-error">Text Badge</Badge>
+    </ToolkitProvider>
+  </>
 )
