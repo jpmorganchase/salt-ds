@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import warning from "warning";
-import { debounce } from "../utils";
+import { debounce } from "../utils/debounce";
 import { AriaAnnouncer, AriaAnnouncerContext } from "./AriaAnnouncerContext";
 
 export type useAnnouncerOptions = {
