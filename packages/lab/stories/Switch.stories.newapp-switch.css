@@ -1,39 +1,41 @@
 .uitk-density-high.uitk-newapp {
   --uitkSwitch-track-transform: translate(0px, 6px);
   --uitkSwitch-track-height: 4px;
-  --uitkSwitch-thumb-height: 12px;
-  --uitkSwitch-thumb-width: 12px;
+  --uitkSwitch-thumb-height: 8px;
+  --uitkSwitch-thumb-width: 8px;
   --uitkSwitch-base-width: 12px;
-  --uitkSwitch-track-width: 24px;
-  --uitkSwitch-base-margin: 3px 0 0 -2px;
+  --uitkSwitch-track-width: 20px;
+  --uitkSwitch-base-margin: 4px 0 0 0px;
 }
 .uitk-density-medium.uitk-newapp {
   --uitkSwitch-track-transform: translate(0px, 6px);
+  --uitkSwitch-inputContainer-translate-x: -6px;
   --uitkSwitch-track-height: 6px;
-  --uitkSwitch-thumb-height: 15px;
-  --uitkSwitch-thumb-width: 15px;
+  --uitkSwitch-thumb-height: 14px;
+  --uitkSwitch-thumb-width: 14px;
   --uitkSwitch-base-width: 15px;
-  --uitkSwitch-track-width: 28px;
-  --uitkSwitch-base-margin: 1px 0 0 -2px;
+  --uitkSwitch-track-width: 34px;
+  --uitkSwitch-base-margin: 2px 0 0 5px;
 }
 .uitk-density-low.uitk-newapp {
-  --uitkSwitch-track-transform: translate(0px, 6px);
-  --uitkSwitch-track-height: 9px;
-  --uitkSwitch-thumb-height: 18px;
-  --uitkSwitch-thumb-width: 18px;
+  --uitkSwitch-track-transform: translate(0px, 7px);
+  --uitkSwitch-track-height: 8px;
+  --uitkSwitch-thumb-height: 17px;
+  --uitkSwitch-thumb-width: 17px;
   --uitkSwitch-base-width: 18px;
-  --uitkSwitch-track-width: 30px;
-  --uitkSwitch-base-margin: 3px 0 0 -2px;
+  --uitkSwitch-track-width: 36px;
+  --uitkSwitch-base-margin: 2px 0 0 -2px;
 }
 .uitk-density-touch.uitk-newapp {
   --uitkSwitch-track-height: 15px;
-  --uitkSwitch-track-transform: translate(0px, 8px);
+  --uitkSwitch-track-transform: translate(0px, 5px);
+  --uitkSwitch-inputContainer-translate-x: -20px;
   --uitkSwitch-track-height: 12px;
   --uitkSwitch-thumb-height: 22px;
   --uitkSwitch-thumb-width: 22px;
   --uitkSwitch-base-width: 22px;
-  --uitkSwitch-track-width: 36px;
-  --uitkSwitch-base-margin: 2px 0 0 -2px;
+  --uitkSwitch-track-width: 54px;
+  --uitkSwitch-base-margin: 0px 0 0 18px;
 }
 
 .uitk-light.uitk-newapp,

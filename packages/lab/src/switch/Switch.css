@@ -109,7 +109,7 @@
   align-items: inherit;
   display: flex;
   justify-content: inherit;
-  transform: translateX(0px);
+  transform: translateX(var(--uitkSwitch-inputContainer-translate-x, 0px));
   transition: transform 0.15s;
   width: 100%;
 }

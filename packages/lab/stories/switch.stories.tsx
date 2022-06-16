@@ -72,7 +72,7 @@ export const CustomStyling: ComponentStory<typeof Switch> = () => (
       </Panel>
     </ToolkitProvider>
 
-    <ToolkitProvider density="touch" theme={["light", "newapp"]}>
+    <ToolkitProvider density="low" theme={["light", "newapp"]}>
       <Panel>
         <FeatureSwitch label="Custom styling" />
       </Panel>
