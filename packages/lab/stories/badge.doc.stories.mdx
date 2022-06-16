@@ -1,0 +1,140 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { Badge } from "@jpmorganchase/uitk-lab";
+import {
+  MessageIcon,
+  ClockIcon,
+  SettingsSolidIcon,
+  UserBadgeIcon,
+} from "@jpmorganchase/uitk-icons";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./badge.stories";
+
+<Meta
+  title="Documentation/Lab/Badge"
+  component={Badge}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Badge
+
+The Badge component provides a small status descriptor for UI elements. It is a small circle containing a number or a few characters that typically appears in one of the corners of the UI element.
+
+## Icon Badge
+
+The default UI element is MessageIcon
+
+<Canvas>
+  <Story name="Default Badge">
+    <Badge badgeContent={1} max={1000}>
+      <MessageIcon />
+    </Badge>
+  </Story>
+</Canvas>
+
+## Words Badge
+
+<Canvas>
+  <Story name="Words Badge">
+    <Badge badgeContent={10} max={1000}>
+      Words Badge
+    </Badge>
+  </Story>
+</Canvas>
+
+## Badge with text
+
+`badgeContent` can accept both number and string
+
+<Canvas>
+  <Story name="Text Badge">
+    <Badge badgeContent="Text">Text Badge</Badge>
+  </Story>
+</Canvas>
+
+## Badge with maximum number
+
+Specify the maximum number to be displayed with `max`. If `badgeContent` exceeds `max`, suffix `+` will be appended.
+
+<Canvas>
+  <Story name="Badge with max number">
+    <Badge badgeContent={150} max={99}>
+      <UserBadgeIcon />
+    </Badge>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Badge } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Badge} />
+
+## HTML Anatomy of Badge component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent={1} max={100}>
+      <ClockIcon />
+    </Badge>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent="Text">Text Badge</Badge>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent={150} max={99}>
+      <UserBadgeIcon />
+    </Badge>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Badge} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Badge} />
+
+## --uitkBadge CSS Custom Property API
+
+The default colors of the badge are provided by the theme variables. See Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Badge, but not defined by Badge. They can be defined via a container or
+a custom class name to override badge styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Badge} />
+
+## Customising Badge styles
+
+<Canvas>
+  <Story name="Custom Badge Styling">
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Badge.stories.newapp-badge.css */
+
+.uitk-success.uitk-newapp {
+  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
+
+.uitk-error.uitk-newapp {
+  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
+}
+```

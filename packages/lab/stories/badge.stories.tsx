@@ -1,10 +1,13 @@
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Badge } from "@jpmorganchase/uitk-lab";
 import {
   ClockIcon,
   SettingsSolidIcon,
   UserBadgeIcon,
+  MessageIcon,
 } from "@jpmorganchase/uitk-icons";
 import "./badge.stories.css";
+import "./Badge.stories.newapp-badge.css"
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -62,3 +65,14 @@ WordsBadge.args = {
   badgeContent: 1,
   children: "Lorem Ipsum",
 };
+
+export const CustomStyling: ComponentStory<typeof Badge> = () => (
+  <div style={{ display: 'flex', gap: 5 }}>
+    <ToolkitProvider theme={["success", 'newapp']}>
+      <Badge badgeContent={1} max={100}><MessageIcon /></Badge>
+    </ToolkitProvider>
+    <ToolkitProvider theme={["error", 'newapp']}>
+      <Badge badgeContent="Text">Text Badge</Badge>
+    </ToolkitProvider>
+  </div>
+)
