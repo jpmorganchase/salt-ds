@@ -6,18 +6,16 @@
 }
 
 .uitkBreadcrumb {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 0px;
-  gap: var(--uitk-size-unit);
-  text-decoration: underline;
 }
 
 .uitkBreadcrumb-regular {
   display: flex;
+  flex-direction: row;
+  gap: var(--uitk-size-unit);
   align-items: center;
   color: var(--color);
+  text-decoration: underline;
 }
 
 .uitkBreadcrumb-regular:visited {

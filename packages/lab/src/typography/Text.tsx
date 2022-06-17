@@ -6,7 +6,12 @@ import {
   useTooltip,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { CSSProperties, ElementType, forwardRef, HTMLAttributes } from "react";
+import {
+  CSSProperties,
+  ElementType,
+  forwardRef,
+  ComponentPropsWithoutRef,
+} from "react";
 import { useTruncation } from "./useTruncation";
 
 import "./Text.css";

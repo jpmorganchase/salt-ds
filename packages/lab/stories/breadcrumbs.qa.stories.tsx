@@ -5,7 +5,6 @@ import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
 import { HomeIcon, TreeIcon } from "@jpmorganchase/uitk-icons";
 import { QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
-import "./card.qa.stories.css";
 
 export default {
   title: "Lab/Breadcrumbs/QA",
