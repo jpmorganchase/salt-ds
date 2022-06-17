@@ -87,4 +87,14 @@ describe("GIVEN a Split", () => {
         .should("have.text", rightItem.join(""));
     });
   });
+
+  describe("WHEN passing the gap prop", () => {
+    it("THEN it should render with a new gap value", () => {
+      cy.mount(<DefaultSplitLayout gap={2} />);
+
+      cy.get(".uitkSplitLayout").should("have.css", "column-gap", "16px");
+
+      cy.get(".uitkSplitLayout").should("have.css", "row-gap", "16px");
+    });
+  });
 });
