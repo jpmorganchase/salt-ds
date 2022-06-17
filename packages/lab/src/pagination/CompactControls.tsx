@@ -1,8 +1,8 @@
+import { FormFieldProps } from "@jpmorganchase/uitk-core";
 import { FC } from "react";
 import { CompactInput } from "./CompactInput";
-import { withBaseName } from "./utils";
 import { PageButton } from "./PageButton";
-import { FormFieldProps } from "../form-field";
+import { withBaseName } from "./utils";
 
 export interface CompactControlsProps {
   count: number;

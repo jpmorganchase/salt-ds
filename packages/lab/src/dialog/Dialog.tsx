@@ -1,4 +1,10 @@
-import { makePrefixer, Portal, useWindow } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  Portal,
+  useId,
+  useWindow,
+  ValidationState,
+} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
   forwardRef,
@@ -9,10 +15,7 @@ import {
   useState,
 } from "react";
 import { Scrim, ScrimProps } from "../scrim";
-
-import { useId } from "../utils";
 import { DialogContext } from "./internal/DialogContext";
-import { State } from "./State";
 
 import "./Dialog.css";
 
@@ -21,7 +24,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   height?: string | number;
   onClose?: () => void;
   open?: boolean;
-  state?: State;
+  state?: ValidationState;
   width?: string | number;
   enableBackdropClick?: boolean;
   disablePortal?: boolean;

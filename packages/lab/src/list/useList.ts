@@ -2,6 +2,7 @@ import {
   ownerDocument,
   useControlled,
   useForkRef,
+  useId,
 } from "@jpmorganchase/uitk-core";
 import {
   AriaAttributes,
@@ -17,7 +18,7 @@ import {
   useState,
 } from "react";
 import warning from "warning";
-import { useId, useIsFocusVisible } from "../utils";
+import { useIsFocusVisible } from "../utils";
 import {
   ListMultiSelectionVariant,
   ListProps,

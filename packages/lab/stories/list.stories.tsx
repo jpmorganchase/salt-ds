@@ -1,13 +1,6 @@
-import type {
-  DecoratorFn,
-  ComponentMeta,
-  ComponentStory,
-  Story,
-} from "@storybook/react";
-import { Button, useDensity } from "@jpmorganchase/uitk-core";
+import { Button, FormField, useDensity } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 import {
-  FormField,
   Input,
   List,
   ListChangeHandler,
@@ -19,6 +12,13 @@ import {
   useListItem,
   useListItemContext,
 } from "@jpmorganchase/uitk-lab";
+import { IndexedListItemProps } from "@jpmorganchase/uitk-lab/src/list";
+import type {
+  ComponentMeta,
+  ComponentStory,
+  DecoratorFn,
+  Story,
+} from "@storybook/react";
 import {
   ChangeEventHandler,
   ComponentPropsWithoutRef,
@@ -31,8 +31,8 @@ import {
   useState,
 } from "react";
 import { usStateExampleData as listExampleData } from "./exampleData";
+
 import "./list.stories.css";
-import { IndexedListItemProps } from "@jpmorganchase/uitk-lab/src/list";
 
 const containerStyle = {
   display: "flex",

@@ -1,10 +1,17 @@
 import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
+import {
   isDesktop,
   makePrefixer,
   Portal,
   PortalProps,
   useFloatingUI,
   useForkRef,
+  useId,
   useWindow,
 } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
@@ -32,17 +39,9 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
-import { useDropdown } from "./useDropdown";
-
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
 

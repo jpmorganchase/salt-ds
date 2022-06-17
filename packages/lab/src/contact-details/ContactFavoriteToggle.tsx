@@ -1,6 +1,5 @@
-import { TooltipProps, useControlled } from "@jpmorganchase/uitk-core";
+import { TooltipProps, useControlled, useId } from "@jpmorganchase/uitk-core";
 import { forwardRef } from "react";
-import { useId } from "../utils";
 import {
   FavoriteToggleWithTooltip,
   FavoriteToggleWithTooltipProps,

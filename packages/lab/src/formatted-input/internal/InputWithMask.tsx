@@ -1,7 +1,7 @@
+import { useId } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { useId } from "../../utils";
-import { FormattedInputProps } from "../FormattedInput";
 import { forwardRef, InputHTMLAttributes } from "react";
+import { FormattedInputProps } from "../FormattedInput";
 
 export const baseName = "uitkFormattedInput";
 
