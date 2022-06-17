@@ -11,6 +11,8 @@ import {
   ElementType,
   forwardRef,
   ComponentPropsWithoutRef,
+  useMemo,
+  useCallback,
 } from "react";
 import { useTruncation } from "./useTruncation";
 
