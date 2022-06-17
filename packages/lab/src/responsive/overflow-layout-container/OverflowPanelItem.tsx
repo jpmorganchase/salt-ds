@@ -13,10 +13,7 @@ import {
   useState,
 } from "react";
 import { FormField, FormFieldProps } from "../../form-field";
-import {
-  extractResponsiveProps,
-  isResponsiveAttribute,
-} from "../../responsive/utils";
+import { extractResponsiveProps, isResponsiveAttribute } from "../utils";
 import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
 
 function useControlledTooltip(
