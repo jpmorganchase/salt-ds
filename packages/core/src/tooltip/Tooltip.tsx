@@ -1,4 +1,3 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import {
@@ -9,6 +8,7 @@ import {
   useCallback,
 } from "react";
 import { Portal, PortalProps } from "../portal";
+import { makePrefixer } from "../utils/makePrefixer";
 import { useWindow } from "../window";
 import { getIconForState } from "./getIconForState";
 

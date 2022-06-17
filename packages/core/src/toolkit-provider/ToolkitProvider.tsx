@@ -1,29 +1,28 @@
+import cx from "classnames";
 import React, {
   createContext,
-  FC,
   DetailedHTMLProps,
   DOMAttributes,
+  FC,
   HTMLAttributes,
+  ReactElement,
   ReactNode,
+  RefObject,
   useContext,
   useState,
-  RefObject,
-  ReactElement,
 } from "react";
-import cx from "classnames";
-
-import { useIsomorphicLayoutEffect } from "../utils";
+import { AriaAnnouncerProvider } from "../aria-announcer";
+import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
 import {
   characteristic,
-  Density,
   DEFAULT_THEME,
+  Density,
   getTheme,
   Theme,
 } from "../theme";
-
-import { AriaAnnouncerProvider } from "../aria-announcer";
-import { DEFAULT_BREAKPOINTS, Breakpoints } from "../breakpoints";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import { ViewportProvider } from "../viewport";
+
 export const DEFAULT_DENSITY = "medium";
 
 // TODDO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)

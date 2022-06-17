@@ -1,8 +1,7 @@
-import { forwardRef, useCallback } from "react";
+import { Portal, useForkRef } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { Portal } from "../../portal";
+import { forwardRef, useCallback } from "react";
 import { Rect } from "./dragDropTypes";
-import { useForkRef } from "../../utils";
 
 import "./Draggable.css";
 

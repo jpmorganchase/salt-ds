@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Button } from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
 import {
-  useState,
-  useRef,
+  cloneElement,
+  FC,
+  KeyboardEvent,
+  ReactElement,
   useCallback,
   useEffect,
-  KeyboardEvent,
-  FC,
-  cloneElement,
-  ReactElement,
+  useRef,
+  useState,
 } from "react";
-import classnames from "classnames";
-import { Button } from "@jpmorganchase/uitk-core";
 import { FormField, FormFieldProps } from "../../form-field";
-import { Tooltip } from "../../tooltip";
-
-import { extractResponsiveProps, isResponsiveAttribute } from "../..";
+import { extractResponsiveProps, isResponsiveAttribute } from "../utils";
 import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
 
 function useControlledTooltip(

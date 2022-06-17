@@ -1,7 +1,6 @@
-import { HTMLAttributes, FC, ReactNode, Ref } from "react";
-
+import { TooltipProps } from "@jpmorganchase/uitk-core";
+import { FC, HTMLAttributes, ReactNode, Ref } from "react";
 import { OverflowButtonProps, OverflowPanelProps } from "../responsive";
-import { TooltipProps } from "../tooltip";
 
 export type OrientationShape = "vertical" | "horizontal";
 

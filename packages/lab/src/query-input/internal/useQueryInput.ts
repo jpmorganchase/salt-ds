@@ -1,10 +1,4 @@
-import {
-  QueryInputCategory,
-  QueryInputProps,
-  QueryInputItem,
-} from "../QueryInput";
-import { useControlled, useForkRef } from "../../utils";
-import { usePopperStatus } from "./usePopperStatus";
+import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
   FocusEventHandler,
@@ -16,9 +10,15 @@ import {
   useRef,
   useState,
 } from "react";
-import { QueryInputBodyProps } from "./QueryInputBody";
-import { ValueSelectorProps } from "./ValueSelector";
 import { useWidth } from "../../list/internal/useWidth";
+import {
+  QueryInputCategory,
+  QueryInputItem,
+  QueryInputProps,
+} from "../QueryInput";
+import { QueryInputBodyProps } from "./QueryInputBody";
+import { usePopperStatus } from "./usePopperStatus";
+import { ValueSelectorProps } from "./ValueSelector";
 
 export type BooleanOperator = "or" | "and";
 

@@ -1,20 +1,20 @@
 import { useCallback, useRef } from "react";
+import { useLayoutEffectOnce } from "../utils/useLayoutEffectOnce";
+import { useLayoutEffectSkipFirst } from "../utils/useLayoutEffectSkipFirst";
 import {
   ElementRef,
-  getIsOverflowed,
   ManagedItem,
   ManagedListRef,
-  measureContainerOverflow,
   orientationType,
   overflowDispatch,
-  useDynamicCollapse,
-  useInstantCollapse,
-  useManagedItems,
-  useOverflow,
-  useReclaimSpace,
-  useResizeObserver,
-} from ".";
-import { useLayoutEffectOnce, useLayoutEffectSkipFirst } from "../utils";
+} from "./overflowTypes";
+import { getIsOverflowed, measureContainerOverflow } from "./overflowUtils";
+import { useDynamicCollapse } from "./useDynamicCollapse";
+import { useInstantCollapse } from "./useInstantCollapse";
+import { useManagedItems } from "./useManagedItems";
+import { useOverflow } from "./useOverflow";
+import { useReclaimSpace } from "./useReclaimSpace";
+import { useResizeObserver } from "./useResizeObserver";
 
 const MONITORED_DIMENSIONS: { [key: string]: string[] } = {
   horizontal: ["width", "scrollHeight"],

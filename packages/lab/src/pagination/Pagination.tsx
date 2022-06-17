@@ -1,3 +1,5 @@
+import { useAriaAnnouncer, useControlled } from "@jpmorganchase/uitk-core";
+import cn from "classnames";
 import {
   forwardRef,
   HTMLAttributes,
@@ -8,10 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import cn from "classnames";
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 import { PaginationContext, paginationContext } from "./PaginationContext";
-import { useControlled } from "../utils";
 import { withBaseName } from "./utils";
 
 const { Provider } = paginationContext;

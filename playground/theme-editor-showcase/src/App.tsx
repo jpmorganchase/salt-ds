@@ -3,10 +3,8 @@ import { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
-import {
-  WindowContext,
-  ElectronWindow,
-} from "@jpmorganchase/uitk-lab/src/window";
+import { ElectronWindow } from "@jpmorganchase/uitk-lab/src/window";
+import { WindowContext } from "@jpmorganchase/uitk-core/src/window";
 import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";

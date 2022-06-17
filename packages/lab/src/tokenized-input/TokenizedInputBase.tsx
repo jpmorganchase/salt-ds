@@ -1,41 +1,40 @@
 import {
-  forwardRef,
-  useRef,
-  useState,
-  useCallback,
-  HTMLAttributes,
-  Ref,
-  FocusEventHandler,
-  KeyboardEventHandler,
-  ChangeEventHandler,
-  ReactEventHandler,
-  ForwardedRef,
-  KeyboardEvent,
-  FocusEvent,
-  ReactElement,
-  SyntheticEvent,
-} from "react";
-import classnames from "classnames";
-import deepmerge from "deepmerge";
-import warning from "warning";
-import {
-  makePrefixer,
   Button,
   ButtonProps,
+  makePrefixer,
   useDensity,
+  useForkRef,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon, CloseIcon } from "@jpmorganchase/uitk-icons";
-import { useForkRef, useId } from "../utils";
+import { CloseIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import classnames from "classnames";
+import deepmerge from "deepmerge";
+import {
+  ChangeEventHandler,
+  FocusEvent,
+  FocusEventHandler,
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  ReactElement,
+  ReactEventHandler,
+  Ref,
+  SyntheticEvent,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
+import warning from "warning";
 import { Input, InputProps } from "../input";
-
+import { useId } from "../utils";
+import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
+import { defaultItemToString } from "./internal/defaultItemToString";
 import { InputPill } from "./internal/InputPill";
 import { InputRuler } from "./internal/InputRuler";
-import { defaultItemToString } from "./internal/defaultItemToString";
-import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { useWidth } from "./internal/useWidth";
-
 import {
   TokenizedInputHelpers,
   TokenizedInputState,

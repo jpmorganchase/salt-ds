@@ -6,8 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useControlled } from "../utils";
+import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
 import "./Accordion.css";
 import cn from "classnames";
 import { AccordionContext } from "./AccordionContext";

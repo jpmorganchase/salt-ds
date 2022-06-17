@@ -1,3 +1,5 @@
+import { makePrefixer, Portal, useWindow } from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
 import {
   forwardRef,
   HTMLAttributes,
@@ -6,14 +8,10 @@ import {
   useRef,
   useState,
 } from "react";
-import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Portal } from "../portal";
 import { Scrim, ScrimProps } from "../scrim";
-import { useWindow } from "../window";
 
-import { DialogContext } from "./internal/DialogContext";
 import { useId } from "../utils";
+import { DialogContext } from "./internal/DialogContext";
 import { State } from "./State";
 
 import "./Dialog.css";
