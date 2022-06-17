@@ -32,8 +32,6 @@ export default {
         "expanded",
         "style",
         "onOverflowChange",
-        "marginTop",
-        "marginBottom",
       ],
     },
   },

@@ -22,8 +22,6 @@ export default {
       description: "Set 0 if you want to ignore",
       control: { type: "number" },
     },
-    marginTop: { control: { type: "number" } },
-    marginBottom: { control: { type: "number" } },
     expanded: { control: { type: "boolean" } },
     showTooltip: { control: { type: "boolean" } },
     styleAs: {
@@ -56,8 +54,6 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     truncate,
     showTooltip,
     maxRows,
-    marginTop,
-    marginBottom,
     parentWidth,
     parentHeight,
     styleAs,
@@ -72,8 +68,6 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
     maxRows,
     truncate,
     showTooltip,
-    marginTop,
-    marginBottom,
     styleAs,
   };
 
@@ -112,8 +106,6 @@ BaseTextComponent.args = {
   showTooltip: true,
   expanded: undefined,
   maxRows: undefined,
-  marginTop: undefined,
-  marginBottom: undefined,
   parentWidth: undefined,
   parentHeight: undefined,
 };

@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Button } from "@jpmorganchase/uitk-core";
-
-import {
-  DoubleChevronUpIcon,
-  DoubleChevronDownIcon,
-} from "@jpmorganchase/uitk-icons";
-
 import { Text, P, Span, Div } from "@jpmorganchase/uitk-lab";
 
 export default {
@@ -25,8 +18,6 @@ const excludeProps = [
   "expanded",
   "style",
   "onOverflowChange",
-  "marginTop",
-  "marginBottom",
 ];
 
 const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
