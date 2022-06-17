@@ -27,7 +27,7 @@ For more complex layouts, it supports spanning across columns and rows.
 
 ## How you can use Grid layout
 
-Grid layout can take any number of children, and will by default display them in a 12 columns grid (items after the 12th one will wrap). 
+Grid layout can take any number of children, and will by default display them in a 12 columns grid (items after the 12th one will wrap).
 to change the number of columns displayed in the grid, you can reduce or increase the `columns` prop.
 
 Grid layout is useful when you want to control the layout in both row and columns dimensions and it can achieve more complex forms when used in combination with `GridItems`.
@@ -57,6 +57,7 @@ columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 A grid item allows more complex controls to the default behaviour of a grid child, like defining how many rows or columns will it span trough and it's alignment
 
 #### Use when
+
 You have an item that needs to take the space of more than one row/column or when you have an item that requires a different alignment to the component's default.
 
 <Canvas>
@@ -70,6 +71,7 @@ All grid props are responsive, and their values can be individually customised p
 You can use the default breakpoints or pass in you own
 
 #### Use when
+
 The flow of the grid is dependant on the viewport size.
 
 <Canvas>
@@ -87,8 +89,8 @@ The grid layout is used in the following components
 
 <Canvas>
   <ComponentAnatomy showControls={false}>
-    <GridLayout style={{ border: 'dashed 1px black', padding: '1rem'}}>
-      <GridItem style={{ border: 'dashed 1px black', padding: '1rem'}}/>
+    <GridLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
+      <GridItem style={{ border: "dashed 1px black", padding: "1rem" }} />
     </GridLayout>
   </ComponentAnatomy>
 </Canvas>
