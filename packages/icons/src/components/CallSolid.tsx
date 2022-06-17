@@ -1,4 +1,4 @@
-import { createIcon } from "@jpmorganchase/uitk-core";
+import { createIcon } from "../icon/createIcon";
 
 export const CallSolidIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="CallSolidIcon">

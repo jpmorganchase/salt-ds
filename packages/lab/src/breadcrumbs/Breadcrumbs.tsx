@@ -1,3 +1,6 @@
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
+import classnames from "classnames";
 import React, {
   HTMLAttributes,
   isValidElement,
@@ -5,12 +8,11 @@ import React, {
   useMemo,
 } from "react";
 import warning from "warning";
-import classnames from "classnames";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
+import { BreadcrumbProps } from "./Breadcrumb";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
-import { BreadcrumbProps } from "./Breadcrumb";
+import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
+
 import "./Breadcrumbs.css";
 
 const iconWidth = 12;
