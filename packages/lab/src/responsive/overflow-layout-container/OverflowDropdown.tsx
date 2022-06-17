@@ -1,26 +1,27 @@
 import {
-  ForwardedRef,
-  HTMLAttributes,
-  forwardRef,
-  useRef,
-  useState,
-} from "react";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
-
-import { useForkRef } from "../../utils";
-import { useOverflowDropdown } from "./useOverflowDropdown";
-import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
-
-import { useFloatingUI } from "../../popper";
-import { useWindow } from "../../window";
-import { Portal } from "../../portal";
-import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import {
+  Button,
+  makePrefixer,
+  Portal,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import {
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
+  useRef,
+  useState,
+} from "react";
+import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
+import { useOverflowDropdown } from "./useOverflowDropdown";
 
 export interface OverflowDropdownProps extends HTMLAttributes<HTMLDivElement> {}
 

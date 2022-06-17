@@ -1,16 +1,19 @@
 import {
+  Breakpoints,
+  FlexLayout,
+  makePrefixer,
+} from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import {
+  ComponentPropsWithoutRef,
   forwardRef,
   HTMLAttributes,
   ReactNode,
-  ComponentPropsWithoutRef,
 } from "react";
-import cx from "classnames";
-
-import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
+import { useIsStacked } from "./useIsStacked";
+
 import "./ParentChildLayout.css";
-import { useIsStacked } from "./";
 
 type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 

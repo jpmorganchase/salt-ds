@@ -1,3 +1,5 @@
+import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
 import {
   ChangeEvent,
   FocusEvent,
@@ -7,14 +9,10 @@ import {
   useRef,
   useState,
 } from "react";
-import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
-
-import { useControlled } from "../utils";
 import { useFormFieldProps } from "../form-field-context";
-
 import { CheckedIcon } from "./assets/CheckedIcon";
+
 import "./Switch.css";
 
 export interface SwitchProps

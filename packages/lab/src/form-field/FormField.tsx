@@ -1,3 +1,9 @@
+import {
+  makePrefixer,
+  Tooltip,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   Dispatch,
@@ -11,11 +17,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip, useTooltip } from "../tooltip";
-import { useForkRef, useId } from "../utils";
+import { useId } from "../utils";
+import { classBase } from "./constant";
 import {
   FormActivationIndicator,
   FormActivationIndicatorProps,
@@ -24,7 +28,6 @@ import { FormHelperText, FormHelperTextProps } from "./FormHelperText";
 import { FormLabel, FormLabelProps } from "./FormLabel";
 import { NecessityIndicatorOptions } from "./NecessityIndicator";
 import { StatusIndicatorProps } from "./StatusIndicator";
-import { classBase } from "./constant";
 
 import "./FormField.css";
 

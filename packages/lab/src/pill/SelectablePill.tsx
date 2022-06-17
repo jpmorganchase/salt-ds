@@ -1,10 +1,9 @@
+import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import React, { ForwardedRef, forwardRef, useCallback } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useControlled } from "../utils";
+import { pillBaseName } from "./constants";
 import { PillBase, PillBaseProps } from "./internal/PillBase";
 import { PillCheckbox } from "./internal/PillCheckbox";
-import { pillBaseName } from "./constants";
 
 const noop = () => undefined;
 

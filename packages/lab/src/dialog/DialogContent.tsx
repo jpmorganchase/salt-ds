@@ -1,8 +1,8 @@
-import { forwardRef, HTMLAttributes, useContext } from "react";
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { forwardRef, HTMLAttributes, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
-import { useForkRef } from "../utils";
+
 import "./DialogContent.css";
 
 export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {}

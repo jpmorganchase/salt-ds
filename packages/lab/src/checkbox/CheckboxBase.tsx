@@ -1,3 +1,5 @@
+import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
 import {
   ChangeEvent,
   FocusEvent,
@@ -9,9 +11,6 @@ import {
   useRef,
   useState,
 } from "react";
-import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useControlled } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./CheckboxBase.css";

@@ -1,15 +1,16 @@
-import { forwardRef } from "react";
+import { useControlled } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { Input, InputProps } from "../input";
-import { useControlled } from "../utils";
-
-import "./FormattedInput.css";
+import { forwardRef } from "react";
 import { useRifm } from "rifm";
+
+import { Input, InputProps } from "../input";
 import {
+  baseName,
   InputWithMask,
   InputWithMaskProps,
-  baseName,
 } from "./internal/InputWithMask";
+
+import "./FormattedInput.css";
 
 export type MaskFunction = (value: string | undefined) => boolean;
 

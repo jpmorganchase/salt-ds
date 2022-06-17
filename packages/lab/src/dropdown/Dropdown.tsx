@@ -1,5 +1,12 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import {
+  makePrefixer,
+  Portal,
+  PortalProps,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { IconProps, ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import {
   ComponentType,
@@ -24,8 +31,7 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { useFloatingUI } from "../popper";
-import { useForkRef, useId } from "../utils";
+import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
@@ -35,8 +41,6 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import { Portal, PortalProps } from "../portal";
-import { useWindow } from "../window";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
 
 import "./Dropdown.css";

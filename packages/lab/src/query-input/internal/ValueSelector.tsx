@@ -1,16 +1,16 @@
-import { QueryInputCategory, QueryInputItem } from "../QueryInput";
-import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
 import {
   makePrefixer,
+  Portal,
+  useFloatingUI,
+  useForkRef,
   useIsomorphicLayoutEffect,
+  useWindow,
 } from "@jpmorganchase/uitk-core";
-import { ValueList } from "./ValueList";
+import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
+import { QueryInputCategory, QueryInputItem } from "../QueryInput";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
-import { Portal } from "../../portal";
-import { useWindow } from "../../window";
-import { useFloatingUI } from "../../popper";
-import { useForkRef } from "../../utils";
+import { ValueList } from "./ValueList";
 
 const withBaseName = makePrefixer("uitkQueryInputValueSelector");
 

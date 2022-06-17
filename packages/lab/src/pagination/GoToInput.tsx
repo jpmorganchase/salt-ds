@@ -1,4 +1,9 @@
 import {
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import {
   ChangeEventHandler,
   forwardRef,
   HTMLAttributes,
@@ -8,13 +13,11 @@ import {
   useRef,
   useState,
 } from "react";
-import cx from "classnames";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
-import { usePaginationContext } from "./usePaginationContext";
-import { useForkRef, useId } from "../utils";
-import { withBaseName } from "./utils";
 import { FormField, FormFieldProps } from "../form-field";
 import { Input } from "../input";
+import { useId } from "../utils";
+import { usePaginationContext } from "./usePaginationContext";
+import { withBaseName } from "./utils";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;

@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { limitShift, shift } from "@floating-ui/react-dom-interactions";
+import {
+  Button,
+  Portal,
+  useFloatingUI,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
 import React, {
   forwardRef,
+  ReactElement,
   useCallback,
   useEffect,
   useState,
-  ReactElement,
 } from "react";
-import classnames from "classnames";
-import { limitShift, shift } from "@floating-ui/react-dom-interactions";
-import { Button, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
-
-import { useFloatingUI } from "../../popper";
-import { PanelItemRendererProps } from "./PanelItemRendererProps";
+import Tooltray from "../../toolbar/Tooltray";
 import OverflowPanelItem from "./OverflowPanelItem";
 import { OverflowPanelItemProps } from "./OverflowPanelProps";
-import { Tooltray } from "../../toolbar";
-import { Portal } from "../../portal";
-import { useWindow } from "../../window";
-import { useForkRef } from "../../utils";
+import { PanelItemRendererProps } from "./PanelItemRendererProps";
 
 const OverflowPanelItems = forwardRef<HTMLDivElement, OverflowPanelItemProps>(
   function OverflowPanelItems(props, ref) {

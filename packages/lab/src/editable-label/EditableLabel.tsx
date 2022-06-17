@@ -1,8 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent, useCallback, useRef } from "react";
+import {
+  useControlled,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
-import { useControlled } from "../utils";
+import React, { ChangeEvent, KeyboardEvent, useCallback, useRef } from "react";
 import { Input } from "../input";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 import "./EditableLabel.css";
 

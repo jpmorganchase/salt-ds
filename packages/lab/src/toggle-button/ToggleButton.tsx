@@ -1,18 +1,21 @@
 import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  Tooltip,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import {
   forwardRef,
   SyntheticEvent,
   useCallback,
   useContext,
   useEffect,
-  useState,
   useRef,
+  useState,
 } from "react";
-import cx from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-
-import { useForkRef } from "../utils";
-import { Tooltip, useTooltip } from "../tooltip";
-
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
 import "./ToggleButton.css";

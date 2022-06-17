@@ -1,9 +1,8 @@
-import { forwardRef } from "react";
-import cx from "classnames";
-
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-
-import { Span, TextProps } from "./";
+import cx from "classnames";
+import { forwardRef } from "react";
+import { Span } from "./Span";
+import { TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 

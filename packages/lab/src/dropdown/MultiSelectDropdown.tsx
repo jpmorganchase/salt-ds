@@ -1,23 +1,25 @@
-import classnames from "classnames";
-import { ForwardedRef, forwardRef, ReactElement, useState } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
-import { ListBase, ListStateContext } from "../list";
-import { useFloatingUI } from "../popper";
-import { useForkRef } from "../utils";
-import { DropdownProps } from "./Dropdown";
-import { DropdownButton } from "./DropdownButton";
-import { useDropdown } from "./useDropdown";
-
-import "./Dropdown.css";
-import { Portal } from "../portal";
-import { useWindow } from "../window";
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import {
+  makePrefixer,
+  Portal,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
+import classnames from "classnames";
+import { ForwardedRef, forwardRef, ReactElement, useState } from "react";
+import { ListBase, ListStateContext } from "../list";
+import { DropdownProps } from "./Dropdown";
+import { DropdownButton } from "./DropdownButton";
+import { useDropdown } from "./useDropdown";
+
+import "./Dropdown.css";
 
 export type MultiSelectDropdownProps<Item = string> = DropdownProps<
   Item,
