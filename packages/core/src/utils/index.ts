@@ -1,4 +1,3 @@
-export * from "./createIcon";
 export * from "./debounce";
 export * from "./inferElementType";
 export * from "./makePrefixer";
