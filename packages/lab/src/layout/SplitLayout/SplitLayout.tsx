@@ -25,6 +25,10 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   wrap?: FlexLayoutProps["wrap"];
   /**
+   * Controls the space between items.
+   */
+  gap?: FlexLayoutProps["gap"];
+  /**
    * Parent component to be rendered
    */
   leftSplitItem: ReactNode;
@@ -56,6 +60,7 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
       separators,
       wrap = true,
       className,
+      gap,
       ...rest
     },
     ref
@@ -66,6 +71,7 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         direction="row"
         ref={ref}
         wrap={wrap}
+        gap={gap}
         className={cx(withBaseName(), className, {
           [withBaseName("separator")]: separatorAlignment,
           [withBaseName(`separator-${separatorAlignment}`)]:
