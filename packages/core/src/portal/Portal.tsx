@@ -1,18 +1,15 @@
 import {
-  forwardRef,
-  ReactNode,
-  useState,
-  isValidElement,
   cloneElement,
-  useRef,
+  forwardRef,
+  isValidElement,
   ReactElement,
+  ReactNode,
+  useRef,
+  useState,
 } from "react";
 import { createPortal } from "react-dom";
-import {
-  ToolkitProvider,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-import { ownerDocument, useForkRef } from "../utils";
+import { ToolkitProvider } from "../toolkit-provider";
+import { ownerDocument, useForkRef, useIsomorphicLayoutEffect } from "../utils";
 
 export interface PortalProps {
   /**

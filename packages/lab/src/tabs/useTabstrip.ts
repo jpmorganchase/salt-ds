@@ -1,17 +1,16 @@
+import { useControlled } from "@jpmorganchase/uitk-core";
 import { MouseEventHandler, RefObject, useCallback } from "react";
-import { useKeyboardNavigation } from "./useKeyboardNavigation";
-import { dragStrategy, useDragDrop, DragHookResult } from "./drag-drop";
-import { useSelection } from "./useSelection";
-import { useEditableItem } from "./useEditableItem";
 import { ManagedItem } from "../responsive";
-
+import { DragHookResult, dragStrategy, useDragDrop } from "./drag-drop";
 import {
   composableTabProps,
   exitEditHandler,
   TabDescriptor,
   TabElement,
 } from "./TabstripProps";
-import { useControlled } from "../utils";
+import { useEditableItem } from "./useEditableItem";
+import { useKeyboardNavigation } from "./useKeyboardNavigation";
+import { useSelection } from "./useSelection";
 
 type setTabsType = (tabs: TabDescriptor[] | TabElement[]) => void;
 

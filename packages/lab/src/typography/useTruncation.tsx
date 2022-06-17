@@ -1,7 +1,10 @@
-import { debounce, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import {
+  debounce,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { ForwardedRef, useCallback, useRef, useState } from "react";
 import { TextProps } from "../typography";
-import { useForkRef } from "../utils";
 import { getComputedStyles } from "./getComputedStyles";
 
 export const useTruncation = (

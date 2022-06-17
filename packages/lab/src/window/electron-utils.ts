@@ -1,5 +1,5 @@
+import { setRef } from "@jpmorganchase/uitk-core";
 import { Ref, useMemo } from "react";
-import { setRef } from "../utils";
 
 const globalObject = typeof global === "undefined" ? window : global;
 export const isElectron: boolean = (globalObject as any).isElectron;

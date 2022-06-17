@@ -1,14 +1,15 @@
-import { forwardRef, HTMLAttributes, useCallback } from "react";
-import cn from "classnames";
+import { useForkRef } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-import "./Pagination.css";
-import { withBaseName } from "./utils";
-import { usePaginationContext } from "./usePaginationContext";
-import { RegularControls } from "./RegularControls";
+import cn from "classnames";
+import { forwardRef, HTMLAttributes, useCallback } from "react";
+import { FormFieldProps } from "../form-field";
 import { ArrowButton } from "./ArrowButton";
 import { CompactControls } from "./CompactControls";
-import { useForkRef } from "../utils";
-import { FormFieldProps } from "../form-field";
+import { RegularControls } from "./RegularControls";
+import { usePaginationContext } from "./usePaginationContext";
+import { withBaseName } from "./utils";
+
+import "./Pagination.css";
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;

@@ -1,3 +1,4 @@
+import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
 import {
   ChangeEvent,
   FocusEvent,
@@ -14,16 +15,11 @@ import {
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 
-import { DefaultComboBoxProps } from "./DefaultComboBox";
-import {
-  useControlled,
-  useForkRef,
-  useId,
-  useIsFocusVisible,
-} from "../../utils";
+import { InputProps } from "../../input";
 import { useList } from "../../list";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
-import { InputProps } from "../../input";
+import { useId, useIsFocusVisible } from "../../utils";
+import { DefaultComboBoxProps } from "./DefaultComboBox";
 
 export type UseComboBoxProps<Item> = Omit<
   DefaultComboBoxProps<Item>,

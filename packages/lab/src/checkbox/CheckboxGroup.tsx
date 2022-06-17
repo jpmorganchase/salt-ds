@@ -1,3 +1,5 @@
+import { useControlled } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -5,8 +7,6 @@ import {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import cx from "classnames";
-import { useControlled } from "../utils";
 import { FormGroup, FormGroupProps } from "../form-group";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 

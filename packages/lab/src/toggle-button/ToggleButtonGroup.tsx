@@ -1,4 +1,12 @@
 import {
+  ButtonVariant,
+  makePrefixer,
+  useControlled,
+} from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import {
+  Children,
+  cloneElement,
   FocusEventHandler,
   forwardRef,
   HTMLAttributes,
@@ -9,13 +17,7 @@ import {
   useMemo,
   useRef,
   useState,
-  Children,
-  cloneElement,
 } from "react";
-import cx from "classnames";
-import { makePrefixer, ButtonVariant } from "@jpmorganchase/uitk-core";
-import { useControlled } from "../utils";
-
 import {
   Orientation,
   ToggleButtonGroupContext,

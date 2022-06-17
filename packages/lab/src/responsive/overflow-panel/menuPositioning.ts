@@ -1,5 +1,5 @@
+import { UseFloatingUIProps } from "@jpmorganchase/uitk-core";
 import warning from "warning";
-import { UseFloatingUIProps } from "../../popper";
 
 export const DEFAULT_ROOT_PLACEMENT = "bottom-start";
 

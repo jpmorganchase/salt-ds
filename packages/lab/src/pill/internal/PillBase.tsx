@@ -1,31 +1,31 @@
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useTooltip,
+  useTooltipContext,
+} from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import {
   cloneElement,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  isValidElement,
+  KeyboardEvent,
   MutableRefObject,
   ReactElement,
-  KeyboardEvent,
   ReactEventHandler,
-  isValidElement,
   SyntheticEvent,
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  Button,
-  useIsomorphicLayoutEffect,
-  ButtonProps,
-} from "@jpmorganchase/uitk-core";
-
-import { useTooltip, useTooltipContext } from "../../tooltip";
-import { DeleteButton } from "./DeleteButton";
 import { pillBaseName } from "../constants";
+import { DeleteButton } from "./DeleteButton";
 
 import "./PillBase.css";
-import { useForkRef } from "../../utils";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,

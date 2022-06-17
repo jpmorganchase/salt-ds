@@ -1,16 +1,16 @@
-import { Button } from "@jpmorganchase/uitk-core";
 import {
+  Button,
   Tooltip,
   TooltipProps,
   useForkRef,
   useTooltip,
   UseTooltipProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
-  title: "Lab/Tooltip",
+  title: "Core/Tooltip",
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 

@@ -1,21 +1,23 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
-import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
-import { getAnnouncement } from "./getAnnouncement";
-import { BaseComboBoxProps } from "./DefaultComboBox";
-import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
-import { useFloatingUI } from "../../popper";
-import { TooltipContext } from "../../tooltip";
-import { ListBase, ListStateContext } from "../../list";
-import { useForkRef } from "../../utils";
-import { Portal } from "../../portal";
-import { useWindow } from "../../window";
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import {
+  Portal,
+  TooltipContext,
+  useAriaAnnouncer,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ListBase, ListStateContext } from "../../list";
+import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
+import { BaseComboBoxProps } from "./DefaultComboBox";
+import { getAnnouncement } from "./getAnnouncement";
+import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,

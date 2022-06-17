@@ -1,30 +1,28 @@
 import {
-  useEffect,
-  useCallback,
-  useRef,
-  useState,
+  ownerDocument,
+  useControlled,
+  useForkRef,
+} from "@jpmorganchase/uitk-core";
+import {
+  AriaAttributes,
   ChangeEvent,
   FocusEvent,
-  MouseEvent,
   KeyboardEvent,
   KeyboardEventHandler,
+  MouseEvent,
   Ref,
-  AriaAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
+import warning from "warning";
+import { useId, useIsFocusVisible } from "../utils";
 import {
   ListMultiSelectionVariant,
   ListProps,
   ListSelectionVariant,
 } from "./ListProps";
-
-import {
-  ownerDocument,
-  useForkRef,
-  useId,
-  useControlled,
-  useIsFocusVisible,
-} from "../utils";
-import warning from "warning";
 
 type keyHandler = (event: KeyboardEvent<HTMLInputElement>) => void;
 

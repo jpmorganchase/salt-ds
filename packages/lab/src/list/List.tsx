@@ -1,24 +1,21 @@
+import { TooltipContext, useForkRef } from "@jpmorganchase/uitk-core";
 import {
-  forwardRef,
-  useRef,
-  useContext,
-  KeyboardEvent,
   ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
   ReactElement,
+  useContext,
+  useRef,
 } from "react";
-
-import { useForkRef } from "../utils";
+import {
+  DescendantContext,
+  DescendantProvider,
+} from "./internal/DescendantContext";
 import { ListBase, ListScrollHandles } from "./ListBase";
 import { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
 import { useList } from "./useList";
 import { useTypeSelect } from "./useTypeSelect";
-
-import {
-  DescendantContext,
-  DescendantProvider,
-} from "./internal/DescendantContext";
-import { TooltipContext } from "../tooltip";
 
 const ListWithDescendants = forwardRef(function ListWithDescendants<
   Item,

@@ -1,10 +1,10 @@
+import { ButtonProps, useControlled } from "@jpmorganchase/uitk-core";
 import { KeyboardEvent, MouseEvent, MutableRefObject } from "react";
-import { ButtonProps } from "@jpmorganchase/uitk-core";
-import { StepperInputProps } from "./StepperInput";
-import { useControlled, useId } from "../utils";
+import { InputProps } from "../input";
+import { useId } from "../utils";
 import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
-import { InputProps } from "../input";
+import { StepperInputProps } from "./StepperInput";
 
 type Direction = "decrement" | "increment";
 

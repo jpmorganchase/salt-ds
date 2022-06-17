@@ -1,7 +1,6 @@
-import { useControlled } from "../utils";
-
-import dayjs from "./internal/dayjs";
+import { useControlled } from "@jpmorganchase/uitk-core";
 import { SyntheticEvent, useRef, useState } from "react";
+import dayjs from "./internal/dayjs";
 import {
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,

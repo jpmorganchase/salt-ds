@@ -1,4 +1,10 @@
 import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+} from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
+import {
   ChangeEventHandler,
   FC,
   FocusEventHandler,
@@ -6,12 +12,11 @@ import {
   Ref,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useFormFieldProps } from "../form-field-context";
+import { useIsFocusVisible } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
-import { useControlled, useForkRef, useIsFocusVisible } from "../utils";
-import classnames from "classnames";
 import { RadioIcon as DefaultRadioIcon, RadioIconProps } from "./RadioIcon";
+
 import "./Radio.css";
 
 const withBaseName = makePrefixer("uitkRadio");

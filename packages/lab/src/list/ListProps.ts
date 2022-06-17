@@ -1,6 +1,5 @@
+import { TooltipContextProps } from "@jpmorganchase/uitk-core";
 import { HTMLAttributes, Ref, SyntheticEvent } from "react";
-
-import { TooltipContextProps } from "../tooltip";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";

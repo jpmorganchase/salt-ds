@@ -1,10 +1,10 @@
+import { TooltipProps, useControlled } from "@jpmorganchase/uitk-core";
 import { forwardRef } from "react";
-import { TooltipProps } from "../tooltip";
+import { useId } from "../utils";
 import {
   FavoriteToggleWithTooltip,
   FavoriteToggleWithTooltipProps,
 } from "./internal";
-import { useControlled, useId } from "../utils";
 
 export interface ContactFavoriteToggleProps
   extends FavoriteToggleWithTooltipProps {

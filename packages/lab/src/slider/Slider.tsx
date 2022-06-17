@@ -1,3 +1,5 @@
+import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import cn from "classnames";
 import {
   CSSProperties,
   forwardRef,
@@ -5,23 +7,21 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import "./Slider.css";
-import { useControlled } from "../utils";
-import cn from "classnames";
+import { SliderHandle } from "./internal/SliderHandle";
+import { SliderMarkLabels } from "./internal/SliderMarkLabels";
+import { SliderRail } from "./internal/SliderRail";
+import { SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
+import { SliderSelection } from "./internal/SliderSelection";
 import { createHandleStyles, createTrackStyle } from "./internal/styles";
+import { useSliderKeyDown } from "./internal/useSliderKeyDown";
+import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import {
   SliderChangeHandler,
   SliderValue,
   useValueUpdater,
 } from "./internal/utils";
-import { useSliderKeyDown } from "./internal/useSliderKeyDown";
-import { useSliderMouseDown } from "./internal/useSliderMouseDown";
-import { SliderRail } from "./internal/SliderRail";
-import { SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
-import { SliderMarkLabels } from "./internal/SliderMarkLabels";
-import { SliderHandle } from "./internal/SliderHandle";
-import { SliderSelection } from "./internal/SliderSelection";
+
+import "./Slider.css";
 
 const withBaseName = makePrefixer("uitkSlider");
 
