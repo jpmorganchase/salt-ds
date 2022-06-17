@@ -2,12 +2,14 @@
   --grid-layout-gap-density-multiplier: 2;
 }
 
+/* Default variables applied to the root element */
 .uitkGridLayout {
   --grid-layout-space: 1fr;
   --grid-layout-row-gap: var(--grid-layout-gap-density-multiplier, 3);
   --grid-layout-column-gap: var(--grid-layout-gap-density-multiplier, 3);
 }
 
+/* Style applied to the root element */
 .uitkGridLayout {
   display: grid;
   column-gap: calc(var(--uitk-size-unit) * var(--grid-layout-column-gap));

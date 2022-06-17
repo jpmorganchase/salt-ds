@@ -17,17 +17,20 @@ import { DefaultFlowLayout } from "./flow-layout.stories";
 
 # Flow Layout
 
-Dictates a vertical or horizontal order and direction for UI elements.
-Builds from flex layout
+Flow layout dictates a horizontal order and direction for UI elements.
+It builds from flex layout, the height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
 
-Flow is responsive by default and will break into one column as soon as there is not enough space.
+It can be used for cases in which the direction needs to be consistently horizontal, for example a interdependent group of buttons.
 
 <Canvas>
   <Story id="core-layout-flowlayout--default-flow-layout" />
 </Canvas>
 
-Height is driven by child items,
-Visual seperators can be turned on/off (default) between items
+## How you can use Flow layout
+
+Flow is responsive by default and will break into two rows as soon as there is not enough space.
+
+If you want the direction to have more complex customization, we recommend you having a look at [Flex layout](?path=/docs/layout-docs-lab-flexlayout--page).
 
 ## API
 
@@ -39,15 +42,19 @@ import { FlowLayout } from "@jpmorganchase/uitk-lab";
 
 <ArgsTable of={FlowLayout} />
 
-## Usage Examples
+## Examples
 
 ### Simple Usage
+
+The simple usage example shows a group of elements inside a flow wrapper that wraps by default. 
 
 <Canvas>
   <Story id="core-layout-flowlayout--flow-layout-simple-usage" />
 </Canvas>
 
 ### Composite Usage
+
+The composite usage example shows 2 columns divided by a separator achieved with `FlowLayout`, with a nested `StackLayout`.
 
 <Canvas>
   <Story id="core-layout-flowlayout--flow-layout-composite" />
@@ -56,9 +63,10 @@ import { FlowLayout } from "@jpmorganchase/uitk-lab";
 ## Anatomy
 
 <Canvas>
-  <ComponentAnatomy showLegend>
-    <FlowLayout>
-      <FlowItem></FlowItem>
+  <ComponentAnatomy showControls={false}>
+    <FlowLayout style={{ border: 'dashed 1px black', padding: '1rem'}}>
+      <FlowItem style={{ border: 'dashed 1px black', padding: '1rem'}} />
+      <FlowItem style={{ border: 'dashed 1px black', padding: '1rem'}} />
     </FlowLayout>
   </ComponentAnatomy>
 </Canvas>

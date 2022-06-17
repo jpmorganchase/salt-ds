@@ -10,6 +10,7 @@ import { DefaultFlexLayout } from "./flex-layout.stories";
 <Meta
   title="Documentation/Core/Layout/FlexLayout"
   component={FlexLayout}
+  subcomponents={{ FlexItem }}
   parameters={{
     viewMode: "docs",
   }}
@@ -20,14 +21,20 @@ import { DefaultFlexLayout } from "./flex-layout.stories";
 Flex layout dictates a horizontal or vertical order and direction for UI elements.
 The height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
 
-it can be used for cases in which the direction needs complex customization that can't be achieved by stack or flow layouts.
-for example, in layouts where the direction needs to change depending on the viewport.
+It can be used for cases in which the direction needs complex customization that can't be achieved by stack or flow layouts.
+For example, in layouts where the direction needs to change depending on the viewport.
 
-Out of the box, flex layout will spread items horizontally disabling them to wrap unless responsive props are passed.
-
+For layouts where you need to control the two dimensions, see [Grid layout](?path=/docs/layout-docs-lab-gridlayout--page).
 <Canvas>
   <Story id="core-layout-flexlayout--default-flex-layout" />
 </Canvas>
+
+## How you can use Flex layout
+
+Out of the box, flex layout will spread items horizontally disabling them to wrap unless responsive props are passed.
+FlexLayout is useful when you want a layout that flows in a single dimension where the dimension changes dependant on something external like viewport size.
+
+If you want your layout to have a constant direction, we recommend you having a look at [Stack layout](?path=/docs/layout-docs-lab-stacklayout--page) or [Flow layout](?path=/docs/layout-docs-lab-flowlayout--page)
 
 ## API
 
@@ -38,20 +45,14 @@ import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-lab";
 ## Props
 
 **ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes
-
+For the following example, we can think about a layout that will change direction from rows to columns as the breakpoints change.
 ```
-direction={{ lg: "row", md: "column", sm: "column", xl: "row", xs: "row" }}
+direction={{ xs: "row", sm: "column", lg: "row", md: "column", xl: "row" }}
 ```
-
-### Flex Layout Props
 
 <ArgsTable of={FlexLayout} />
 
-### Flex Item Props
-
-<ArgsTable of={FlexItem} />
-
-## Usage Examples
+## Examples
 
 ### Flex Item inside default flex layout
 
@@ -72,13 +73,13 @@ You can use the default breakpoints or pass in you own.
 
 ### Simple Usage
 
-the simple usage examples shows a group of elements inside a flex container with `wrap`
+The simple usage examples shows a group of elements inside a flex container with `wrap`
 
 <Canvas>
   <Story id="core-layout-flexlayout--flex-layout-simple-usage" />
 </Canvas>
 
-## Used in
+## Related components
 
 The flex layout is used in the following components
 
@@ -90,19 +91,19 @@ The flex layout is used in the following components
 ## Anatomy
 
 <Canvas>
-  <ComponentAnatomy showLegend>
-    <FlexLayout>
-      <FlexItem></FlexItem>
+  <ComponentAnatomy showControls={false}>
+    <FlexLayout style={{ border: 'dashed 1px black', padding: '1rem'}}>
+      <FlexItem style={{ border: 'dashed 1px black', padding: '1rem'}}/>
     </FlexLayout>
   </ComponentAnatomy>
 </Canvas>
 
-## classes
+### Classes
 
-### Layout
+#### Layout
 
 <CSSClassTable of={FlexLayout} />
 
-### Item
+#### Item
 
 <CSSClassTable of={FlexItem} />
