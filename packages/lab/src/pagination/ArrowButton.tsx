@@ -1,12 +1,16 @@
+import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  IconProps,
+} from "@jpmorganchase/uitk-icons";
+import cn from "classnames";
 import {
   ComponentType,
   FC,
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { Button, ButtonProps, IconProps } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-import cn from "classnames";
 import { withBaseName } from "./utils";
 
 export type ArrowButtonType = "previous" | "next";

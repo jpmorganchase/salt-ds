@@ -15,7 +15,7 @@
 .uitkTab {
   --uitk-editable-label-padding: 0;
   --uitk-editable-label-height: var(--tabstrip-height);
-  --uitkInput-min-width: 4em;
+  --uitkInput-minWidth: 4em;
   --uitk-text-link-textDecoration: none;
   --uitk-text-link-textDecoration: none;
   --uitk-focused-outlineOffset: -2px;

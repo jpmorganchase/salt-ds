@@ -21,10 +21,10 @@ import {
   ComplexFormTwo,
   ComplexFormThree,
   ComplexFormFour,
-} from "../../../core/stories/layout/stack-layout.stories";
+} from "./stack-layout.stories";
 
 export default {
-  title: "Layout/FlowLayout",
+  title: "Core/Layout/FlowLayout",
   component: FlowLayout,
   argTypes: {
     align: {
@@ -38,15 +38,9 @@ export default {
 const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
   return (
     <FlowLayout {...args}>
-      {Array.from({ length: 4 }, (_, index) => (
-        <FlexItem key={index}>
-          <FlexContent />
-        </FlexItem>
+      {Array.from({ length: 5 }, (_, index) => (
+        <FlexContent key={index} />
       ))}
-      <FlexContent>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-      </FlexContent>
     </FlowLayout>
   );
 };

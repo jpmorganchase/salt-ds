@@ -1,10 +1,10 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Card, Portal } from "@jpmorganchase/uitk-lab";
+import { Button, Card, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Portal } from "@jpmorganchase/uitk-lab";
 
 import { NestedProviders } from "./toolkit-provider.stories";
 
-<Meta title="Core/Toolkit Provider/Docs" />
+<Meta title="Documentation/Core/Toolkit Provider" />
 
 # Toolkit Provider
 
@@ -91,14 +91,6 @@ None of the examples above mention `AriaAnnouncer`. The output it creates in mar
 It requires no configuration, but is included in your app when you use a ToolkitProvider. Because only one instance of
 AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
 nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
-
-<div style={{ backgroundColor: "red", color: "white" }}>
-  Note to self: what if multiple top-level ToolkitProviders are used ? Do we
-  need to guard against multiple AriaAnnouncer instances being cretaed ? Need to
-  check before release. <br />
-  Do we need a prop to suppress creation of AA - is there ever a case where it isn't
-  wanted (say, no content requires it )
-</div>
 
 #### Portal
 

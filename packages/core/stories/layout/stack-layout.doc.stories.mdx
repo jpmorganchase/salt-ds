@@ -7,22 +7,29 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultStackLayout } from "./stack-layout.stories";
 
-<Meta title="Layout/Docs/StackLayout" component={StackLayout} />
+<Meta
+  title="Documentation/Core/Layout/StackLayout"
+  component={StackLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Stack Layout
 
 Dictates a vertical order and direction for UI elements.
 
+Height is driven by child items,
+Visual seperators can be turned on/off (default) between items
+
 <Canvas>
-  <Story name="Default Stack Layout">
-    <DefaultStackLayout />
-  </Story>
+  <Story id="core-layout-stacklayout--default-stack-layout" />
 </Canvas>
 
 ## API
 
 ```
-import {StackLayout} from "@jpmorganchase/uitk-lab";
+import { StackLayout } from "@jpmorganchase/uitk-lab";
 ```
 
 ## Props
@@ -33,8 +40,16 @@ import {StackLayout} from "@jpmorganchase/uitk-lab";
 
 ### Simple Usage
 
+the simple usage example shows a group of panels stacked.
+
 <Canvas>
-  <Story id="layout-stacklayout--stack-layout-simple-usage" />
+  <Story id="core-layout-stacklayout--stack-layout-simple-usage" />
+</Canvas>
+
+### Composite Usage
+
+<Canvas>
+  <Story id="core-layout-stacklayout--stack-layout-composite" />
 </Canvas>
 
 ## Anatomy

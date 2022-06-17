@@ -84,11 +84,12 @@ export const parameters: Parameters = {
             "Characteristics",
             ["Introduction", "*"],
           ],
+          "Icons",
+          "Core",
+          "Lab",
         ],
-        "Core",
         "Icons",
-        "Layout",
-        ["Docs", ["Core", "Lab", "*"], "*"],
+        "Core",
         "Lab",
       ],
     },
@@ -105,6 +106,8 @@ export const parameters: Parameters = {
       </DocsContainer>
     ),
   },
+  // disables snapshotting on a global level
+  chromatic: { disableSnapshot: true },
 };
 
 // Bottom most is outermost

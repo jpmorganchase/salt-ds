@@ -2,7 +2,7 @@ import { Button } from "@jpmorganchase/uitk-core";
 import { SplitLayout } from "@jpmorganchase/uitk-lab";
 import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { HTMLAttributes, ReactNode, useMemo } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 interface ContentBlockProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
@@ -17,7 +17,7 @@ const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
 );
 
 export default {
-  title: "Layout/SplitLayout",
+  title: "Lab/Layout/SplitLayout",
   component: SplitLayout,
   argTypes: {
     align: {
@@ -37,7 +37,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={{ minWidth: "70vw" }}>
+      <div style={{ minWidth: "30vw" }}>
         <Story />
       </div>
     ),

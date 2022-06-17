@@ -1,8 +1,8 @@
 import { GridItem, GridLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-
+import "./styles.css";
 export default {
-  title: "Layout/GridLayout/GridItem",
+  title: "Core/Layout/GridLayout/GridItem",
   component: GridItem,
   argTypes: {
     colSpan: { control: { type: "number" } },
@@ -12,44 +12,30 @@ export default {
   },
 } as ComponentMeta<typeof GridItem>;
 
-const gridItemStyles = {
-  padding: 16,
-  height: "calc(100% - 32px)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+const GridItemContent = ({ active }: { active?: boolean }) => {
+  return (
+    <div
+      className={`grid-item ${
+        active ? "layout-active-content" : "layout-content"
+      }`}
+    >
+      <p>Item</p>
+    </div>
+  );
 };
-
-const gridLayoutStyle = { background: "lightblue" };
-
 const GridItemStory: ComponentStory<typeof GridItem> = (args) => {
   return (
-    <div style={gridLayoutStyle}>
+    <div>
       <GridLayout rows={2} columns={5}>
         <GridItem {...args}>
-          <div
-            style={{
-              ...gridItemStyles,
-              background: "lightcyan",
-            }}
-          >
-            <p>Item</p>
-          </div>
+          <GridItemContent active />
         </GridItem>
-        <GridItem colSpan={2}>
-          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
-            <p>Item</p>
-          </div>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
-            <p>Item</p>
-          </div>
-        </GridItem>
+        <GridItemContent />
+        <GridItemContent />
+        <GridItemContent />
+        <GridItemContent />
         <GridItem colSpan={4}>
-          <div style={{ ...gridItemStyles, background: "lightcoral" }}>
-            <p>Item</p>
-          </div>
+          <GridItemContent />
         </GridItem>
       </GridLayout>
     </div>

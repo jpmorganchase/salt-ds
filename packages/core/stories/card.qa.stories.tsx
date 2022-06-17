@@ -1,17 +1,17 @@
-import { Card } from "@jpmorganchase/uitk-lab";
+import { Card } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./card.qa.stories.css";
 
 export default {
-  title: "Lab/Card/QA",
+  title: "Core/Card/QA",
   component: Card,
 } as ComponentMeta<typeof Card>;
 
 export const AllExamplesGrid: ComponentStory<typeof Card> = () => {
   return (
-    <AllRenderer>
-      <Card className="uitkCardQA">
+    <AllRenderer className="uitkCardQA">
+      <Card className="backwardsCompat">
         <div>
           <h1 style={{ margin: 0 }}>Card with density</h1>
           <span>Content</span>
@@ -19,6 +19,10 @@ export const AllExamplesGrid: ComponentStory<typeof Card> = () => {
       </Card>
     </AllRenderer>
   );
+};
+
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
 };
 
 export const CompareWithOriginalToolkit: ComponentStory<typeof Card> = () => {

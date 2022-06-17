@@ -9,7 +9,7 @@ import {
   DialogTitle,
   OrderedButton,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
 import { QAContainer } from "docs/components";
 import "./dialog.qa.stories.css";
 
@@ -32,31 +32,29 @@ const BasicDialogExample: FC<BasicDialogExampleProps> = ({ state }) => {
   const densityBreakpoint = density === "touch" ? "xl" : "xs";
 
   return (
-    <div>
-      <Dialog
-        open
-        width={densityDialogWidths[density]}
-        state={state}
-        disablePortal={true}
-      >
-        <DialogTitle>Controlled Dialog:</DialogTitle>
-        <DialogContent>This is a dialog</DialogContent>
-        <DialogActions>
-          <ButtonBar
-            className={`DialogButtonBar-${density}Density`}
-            stackAtBreakpoint={densityBreakpoint}
-          >
-            <OrderedButton variant="cta">CTA BUTTON</OrderedButton>
-            <OrderedButton style={{ cursor: "pointer" }}>
-              REGULAR BUTTON
-            </OrderedButton>
-            <OrderedButton className="DialogButton" variant="secondary">
-              SECONDARY BUTTON
-            </OrderedButton>
-          </ButtonBar>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open
+      width={densityDialogWidths[density]}
+      state={state}
+      disablePortal={true}
+    >
+      <DialogTitle>Controlled Dialog</DialogTitle>
+      <DialogContent>This is a dialog</DialogContent>
+      <DialogActions>
+        <ButtonBar
+          className={`DialogButtonBar-${density}Density`}
+          stackAtBreakpoint={densityBreakpoint}
+        >
+          <OrderedButton variant="cta">CTA BUTTON</OrderedButton>
+          <OrderedButton style={{ cursor: "pointer" }}>
+            REGULAR BUTTON
+          </OrderedButton>
+          <OrderedButton className="DialogButton" variant="secondary">
+            SECONDARY BUTTON
+          </OrderedButton>
+        </ButtonBar>
+      </DialogActions>
+    </Dialog>
   );
 };
 
@@ -65,26 +63,40 @@ const ErrorDialog = () => <BasicDialogExample state={"error"} />;
 const WarningDialog = () => <BasicDialogExample state={"warning"} />;
 const SuccessDialog = () => <BasicDialogExample state={"success"} />;
 
+export const ExamplesGrid: Story = () => (
+  <div className={"examples-container"}>
+    <ToolkitProvider applyClassesToChild density={"high"} theme={"light"}>
+      <BasicDialog />
+    </ToolkitProvider>
+    <ToolkitProvider applyClassesToChild density={"medium"} theme={"dark"}>
+      <div>
+        <ErrorDialog />
+      </div>
+    </ToolkitProvider>
+    <ToolkitProvider applyClassesToChild density={"low"} theme={"light"}>
+      <div>
+        <WarningDialog />
+      </div>
+    </ToolkitProvider>
+    <ToolkitProvider applyClassesToChild density={"touch"} theme={"dark"}>
+      <div>
+        <SuccessDialog />
+      </div>
+    </ToolkitProvider>
+  </div>
+);
+
+ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Dialog> = () => {
   return (
     <QAContainer
       className="uitkDialogQA"
       imgSrc="/visual-regression-screenshots/Dialog-vr-snapshot.png"
     >
-      <div className={"container"}>
-        <ToolkitProvider density={"high"} theme={"light"}>
-          <BasicDialog />
-        </ToolkitProvider>
-        <ToolkitProvider density={"medium"} theme={"dark"}>
-          <ErrorDialog />
-        </ToolkitProvider>
-        <ToolkitProvider density={"low"} theme={"light"}>
-          <WarningDialog />
-        </ToolkitProvider>
-        <ToolkitProvider density={"touch"} theme={"dark"}>
-          <SuccessDialog />
-        </ToolkitProvider>
-      </div>
+      <ExamplesGrid />
     </QAContainer>
   );
 };

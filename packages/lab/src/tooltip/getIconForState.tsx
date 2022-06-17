@@ -2,8 +2,8 @@ import {
   ErrorIcon,
   SuccessTickIcon,
   WarningIcon,
+  IconProps,
 } from "@jpmorganchase/uitk-icons";
-import { IconProps } from "@jpmorganchase/uitk-core";
 import { TooltipState } from "./Tooltip";
 
 export const State = {

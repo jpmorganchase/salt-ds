@@ -1,15 +1,15 @@
 import {
   FLEX_ALIGNMENT_BASE,
-  FlexItem,
   StackLayout,
+  Panel,
 } from "@jpmorganchase/uitk-core";
-import { Panel, FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
+import { FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
-  title: "Layout/StackLayout",
+  title: "Core/Layout/StackLayout",
   component: StackLayout,
   argTypes: {
     align: {
@@ -32,15 +32,9 @@ export default {
 const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
   return (
     <StackLayout {...args}>
-      {Array.from({ length: 4 }, (_, index) => (
-        <FlexItem key={index}>
-          <FlexContent />
-        </FlexItem>
+      {Array.from({ length: 5 }, (_, index) => (
+        <FlexContent key={index} />
       ))}
-      <FlexContent>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-      </FlexContent>
     </StackLayout>
   );
 };

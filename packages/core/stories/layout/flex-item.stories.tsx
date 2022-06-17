@@ -8,7 +8,7 @@ import "./styles.css";
 import { ReactNode, HTMLAttributes } from "react";
 
 export default {
-  title: "Layout/FlexLayout/FlexItem",
+  title: "Core/Layout/FlexLayout/FlexItem",
   component: FlexItem,
   argTypes: {
     align: {

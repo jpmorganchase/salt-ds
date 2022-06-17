@@ -1,4 +1,5 @@
 import {
+  Card,
   FLEX_ALIGNMENT_BASE,
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
@@ -8,7 +9,6 @@ import {
   Metric,
   MetricContent,
   MetricHeader,
-  Card,
   ContactAvatar,
   ContactDetails,
   ContactMetadata,
@@ -21,7 +21,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
 export default {
-  title: "Layout/FlexLayout",
+  title: "Core/Layout/FlexLayout",
   component: FlexLayout,
   subcomponents: { FlexItem },
   argTypes: {
@@ -44,15 +44,9 @@ export default {
 const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
-      {Array.from({ length: 4 }, (_, index) => (
-        <FlexItem key={index}>
-          <FlexContent />
-        </FlexItem>
+      {Array.from({ length: 5 }, (_, index) => (
+        <FlexContent key={index} />
       ))}
-      <FlexContent>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-      </FlexContent>
     </FlexLayout>
   );
 };
@@ -63,9 +57,7 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 12 }, (_, index) => (
-        <FlexItem grow={1} key={index}>
-          <FlexContent />
-        </FlexItem>
+        <FlexContent key={index} />
       ))}
     </FlexLayout>
   );

@@ -1,11 +1,12 @@
 import { CSSProperties } from "react";
 import {
+  Card,
   GridLayout,
   GridItem,
   StackLayout,
   FlowLayout,
 } from "@jpmorganchase/uitk-core";
-import { Avatar, Card } from "@jpmorganchase/uitk-lab";
+import { Avatar } from "@jpmorganchase/uitk-lab";
 import {
   ToolkitProvider,
   FlexLayout,
@@ -16,7 +17,7 @@ import { ContactDetailsExample } from "./flex-layout.stories";
 import { MetricExample } from "./flow-layout.stories";
 
 export default {
-  title: "Layout/GridLayout",
+  title: "Core/Layout/GridLayout",
   component: GridLayout,
   subcomponents: { GridItem },
 } as ComponentMeta<typeof GridLayout>;

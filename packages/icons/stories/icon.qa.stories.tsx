@@ -4,7 +4,7 @@ import { QAContainer } from "docs/components";
 import { Meta, Story } from "@storybook/react";
 
 export default {
-  title: "Core/Icon/QA",
+  title: "Icons/Icon/QA",
 } as Meta;
 
 const sizes = ["small", "medium", "large"] as const;
@@ -28,6 +28,10 @@ export const AllIcons: Story = () => {
       ))}
     </>
   );
+};
+
+AllIcons.parameters = {
+  chromatic: { disableSnapshot: false },
 };
 
 export const CompareWithOriginalToolkit: Story = () => {

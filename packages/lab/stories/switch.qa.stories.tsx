@@ -49,6 +49,10 @@ export const AllExamplesGrid: ComponentStory<typeof Switch> = (props) => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
   props
 ) => {

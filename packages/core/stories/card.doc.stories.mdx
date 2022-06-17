@@ -1,7 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Card } from "@jpmorganchase/uitk-lab";
+import { Card, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
@@ -15,7 +14,13 @@ import {
   Interactable,
 } from "./card.stories";
 
-<Meta title="Lab/Card/Doc" component={Card} />
+<Meta
+  title="Documentation/Core/Card"
+  component={Card}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Card
 
@@ -39,7 +44,7 @@ Card components have two levels of emphasis; medium (default) and high.
 # API
 
 ```
-import { Card } from "@jpmorganchase/uitk-lab";
+import { Card } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -99,11 +104,11 @@ The CSS is as simple as below:
 .uitk-dark.uitk-newapp {
   --newapp-panel-color: rgb(66, 103, 178);
 
-  --uitkCard-background-color: var(--newapp-panel-color);
-  --uitkCard-border-radius: 20px;
-  --uitkCard-border-color: var(--uitk-color-white);
-  --uitkCard-border-color-hover: var(--uitk-color-grey-900);
-  --uitkCard-box-shadow: var(--uitk-shadow-1);
+  --uitkCard-background: var(--newapp-panel-color);
+  --uitkCard-borderRadius: 20px;
+  --uitkCard-borderColor: var(--uitk-color-white);
+  --uitkCard-borderColor-hover: var(--uitk-color-grey-900);
+  --uitkCard-boxShadow: var(--uitk-overlayable-shadow-border-region);
 }
 
 .uitk-newapp.uitkPanel {

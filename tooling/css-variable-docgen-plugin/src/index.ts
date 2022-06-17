@@ -311,8 +311,11 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           if (!value || !privateVariableMap[value]) {
             return value;
           }
-
-          return resolveValue(privateVariableMap[value].value);
+          try {
+            return resolveValue(privateVariableMap[value].value);
+          } catch (e) {
+            console.log(e);
+          }
         };
 
         Object.keys(identifierMap).forEach((key) => {

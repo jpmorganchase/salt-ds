@@ -2,7 +2,7 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
 export default {
-  title: "Layout/BorderLayout/BorderItem",
+  title: "Lab/Layout/BorderLayout/BorderItem",
   component: BorderItem,
   argTypes: {
     position: {

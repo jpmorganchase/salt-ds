@@ -17,6 +17,7 @@ jobs:
       # Enable lint when all errors are fixed
       # - run: yarn run lint
       - run: yarn run prettier:ci
+      - run: yarn run lint:style
   dependency-check:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +36,12 @@ jobs:
         run: |
           if grep -q "@jpmorganchase\/uitk-\(core\|lab\)\":" dist/jpmorganchase-uitk-core/package.json; then
               echo "Core package can not reference itself or lab package"
+              exit 1;
+          fi
+      - name: Check build icon package.json dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-\(icon\|core\|lab\)\":" dist/jpmorganchase-uitk-icon/package.json; then
+              echo "Icon package can not reference itself or core or lab package"
               exit 1;
           fi
       - name: Check build lab package.json dependencies

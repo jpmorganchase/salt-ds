@@ -6,9 +6,14 @@ import {
   SVGAttributes,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "../utils";
 
 import "./Icon.css";
+
+// Duplicate from core/util to avoid circular dependency
+export const makePrefixer =
+  (prefix: string): ((...names: string[]) => string) =>
+  (...names: string[]): string =>
+    [prefix, ...names].join("-");
 
 const ICON_NAMED_SIZES = ["small", "medium", "large"] as const;
 

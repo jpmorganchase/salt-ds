@@ -83,6 +83,10 @@ export const AllExamplesGrid: ComponentStory<typeof Input> = (props) => {
   );
 };
 
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
   props
 ) => {

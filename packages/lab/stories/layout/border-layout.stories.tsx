@@ -32,7 +32,7 @@ import { FlowLayoutComposite } from "../../../core/stories/layout/flow-layout.st
 import { FlexLayoutComposite } from "../../../core/stories/layout/flex-layout.stories";
 
 export default {
-  title: "Layout/BorderLayout",
+  title: "Lab/Layout/BorderLayout",
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {
