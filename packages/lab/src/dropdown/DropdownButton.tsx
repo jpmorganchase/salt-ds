@@ -1,12 +1,7 @@
+import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
-import {
-  makePrefixer,
-  Button,
-  ButtonProps,
-  IconProps,
-} from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 
 import { useFormFieldProps } from "../form-field-context";
 

@@ -1,6 +1,6 @@
+import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef } from "react";
-import { IconProps, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 import { useForkRef } from "../utils";
 
