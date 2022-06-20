@@ -1,111 +1,78 @@
-/* Styles applied to root component (RadioIcon) */
-.uitk-light .uitkRadioIcon {
-  /* TODO: Design - which characteristics do these align to? */
-  --radio-icon-border-fill-checked: var(--uitk-color-blue-400);
-  --radio-icon-check-fill: var(--uitk-color-white);
+.uitk-density-high {
+  --radioIcon-size: 12px;
 }
 
-.uitk-dark .uitkRadioIcon {
-  /* TODO: Design - which characteristics do these align to? */
-  --radio-icon-border-fill-checked: var(--uitk-color-grey-800);
-  --radio-icon-check-fill: var(--uitk-color-blue-400);
+.uitk-density-medium {
+  --radioIcon-size: 14px;
 }
 
-.uitk-density-medium .uitkRadioIcon {
-  --svg-size: 14px;
+.uitk-density-low {
+  --radioIcon-size: 16px;
 }
 
-.uitk-density-high .uitkRadioIcon {
-  --svg-size: 12px;
+.uitk-density-touch {
+  --radioIcon-size: 18px;
 }
-
-.uitk-density-low .uitkRadioIcon {
-  --svg-size: 16px;
-}
-
-.uitk-density-touch .uitkRadioIcon {
-  --svg-size: 18px;
-}
-
+/* Styles applied to root component */
 .uitkRadioIcon {
-  --radio-icon-border-stroke: var(--uitk-selectable-borderColor);
-  --radio-icon-border-stroke-checked: var(--uitk-selectable-borderColor-hover);
-  --radio-icon-border-stroke-hover: var(--uitk-selectable-borderColor-hover);
-  --radio-icon-border-stroke-width: var(--uitk-selectable-borderWidth);
-  --radio-icon-border-fill: var(--uitk-editable-background-medium);
-  --radio-icon-check-stroke: var(--uitk-editable-borderColor-active);
+  --radioIcon-fill: transparent;
+  --radioIcon-strokeWidth: var(--uitk-selectable-borderWidth);
+  --radioIcon-stroke-color: var(--uitk-selectable-borderColor);
 
-  width: var(--uitkRadioIcon-svg-size, var(--svg-size));
-  height: var(--uitkRadioIcon-svg-size, var(--svg-size));
+  --radioIcon-fill-checked: var(--uitk-selectable-borderColor-selected);
+  --radioIcon-strokeWidth-checked: var(--uitk-selectable-borderWidth-selected);
+  --radioIcon-stroke-color-checked: var(--uitk-selectable-borderColor-selected);
+
+  --radioIcon-strokeWidth-hover: var(--uitk-selectable-borderWidth-hover);
+  --radioIcon-stroke-color-hover: var(--uitk-selectable-borderColor-hover);
+
+  width: var(--uitkRadioIcon-svg-size, var(--radioIcon-size));
+  height: var(--uitkRadioIcon-svg-size, var(--radioIcon-size));
 }
 
 /* Styles applied to RadioIcon border */
 .uitkRadioIcon-border {
-  stroke: var(--uitkRadioIcon-border-stroke, var(--radio-icon-border-stroke));
-  stroke-width: var(--uitkRadioIcon-border-stroke-width, var(--radio-icon-border-stroke-width));
-  fill: var(--uitkRadioIcon-border-fill, var(--radio-icon-border-fill));
+  fill: var(--uitkRadioIcon-fill, var(--radioIcon-fill));
+  stroke: var(--uitkRadioIcon-stroke-color, var(--radioIcon-stroke-color));
+  stroke-width: var(--uitkRadioIcon-strokeWidth, var(--radioIcon-strokeWidth));
 }
 
 /* Styles applied to RadioIcon border when `checked={true}` */
 .uitkRadioIcon-checked .uitkRadioIcon-border {
-  stroke: var(--uitkRadioIcon-border-stroke-checked, var(--radio-icon-border-stroke-checked));
-  fill: var(--uitkRadioIcon-border-fill-checked, var(--radio-icon-border-fill-checked));
+  fill: var(--uitkRadioIcon-fill-checked, var(--radioIcon-fill-checked));
+  stroke: var(--uitkRadioIcon-stroke-color-checked, var(--radioIcon-stroke-color-checked));
+  stroke-width: var(--uitkRadioIcon-strokeWidth-checked, var(--radioIcon-strokeWidth-checked));
 }
 
 /* Styles applied to RadioIcon border on hover */
-*:not(.uitkFormField-disabled).uitkRadio:not(.uitkRadio-disabled):hover .uitkRadioIcon-border {
-  stroke: var(--uitkRadioIcon-border-stroke-hover, var(--radio-icon-border-stroke-hover));
+*:not(.uitkFormField-disabled).uitkRadio:not(.uitkRadioIcon-checked):not(.uitkRadio-disabled):hover .uitkRadioIcon-border {
+  fill: var(--uitkRadioIcon-fill-hover, var(--radioIcon-fill));
+  stroke: var(--uitkRadioIcon-stroke-color-hover, var(--radioIcon-stroke-color-hover));
+  stroke-width: var(--uitkRadioIcon-strokeWidth-hover, var(--radioIcon-strokeWidth-hover));
+}
+
+/* Styles applied to RadioIcon border on hover */
+*:not(.uitkFormField-disabled).uitkRadio:not(.uitkRadio-disabled):hover .uitkRadioIcon-checked .uitkRadioIcon-border {
+  fill: var(--uitkRadioIcon-fill-checked-hover, var(--radioIcon-fill-checked));
+  stroke: var(--uitkRadioIcon-stroke-color-checked-hover, var(--radioIcon-stroke-color-checked));
+  stroke-width: var(--uitkRadioIcon-strokeWidth-checked-hover, var(--radioIcon-strokeWidth-checked));
 }
 
 /* Styles applied to RadioIcon border on hover if `disabled={true}` */
 .uitkRadio-disabled:hover .uitkRadioIcon-border,
 .uitkRadioButton-disabled:hover .uitkRadioIcon-border {
-  stroke: var(--uitkRadioIcon-border-stroke, var(--radio-icon-border-stroke));
-}
-
-/* Styles applied to RadioIcon border with `uitkEmphasisHigh` class */
-.uitk-light .uitkEmphasisHigh.uitkRadioIcon-border {
-  fill: var(--uitkRadioIcon-border-fill, var(--uitk-color-grey-20));
-}
-
-.uitk-dark .uitkEmphasisHigh.uitkRadioIcon-border {
-  fill: var(--uitkRadioIcon-border-fill, var(--uitk-color-grey-900));
-}
-
-/* Styles applied to RadioIcon border with `uitkEmphasisLow` class */
-.uitkEmphasisLow.uitkRadioIcon-border {
-  fill: var(--uitkRadioIcon-border-fill, transparent);
+  stroke: var(--uitkRadioIcon-stroke, var(--radioIcon-stroke-color));
 }
 
 /* Styles applied to inner circle when `checked={true}` */
-.uitkRadioIcon-check {
-  stroke: var(--uitkRadioIcon-check-stroke, var(--radio-icon-check-stroke));
-  fill: var(--uitkRadioIcon-check-fill, var(--radio-icon-check-fill));
+.uitkRadioIcon-inner-checked {
+  fill: var(--uitkRadioIcon-inner-fill, var(--uitk-selectable-primary-foreground-selected));
 }
 
-/* Styles applied for TK1 backwards compatability */
-.uitk-light .backwardsCompat .uitkRadioIcon {
-  --radio-icon-border-stroke: var(--uitk-color-grey-90);
-  --radio-icon-border-stroke-checked: var(--uitk-color-blue-500);
-  --radio-icon-border-stroke-hover: var(--uitk-color-blue-400);
-  --radio-icon-border-stroke-width: 1px;
-
-  --radio-icon-border-fill: var(--uitk-color-white);
-  --radio-icon-border-fill-checked: var(--uitk-color-blue-400);
-
-  --radio-icon-check-stroke: var(--uitk-color-white);
-  --radio-icon-check-fill: var(--uitk-color-white);
+.backwardsCompat .uitk-dark .uitkRadioIcon-border {
+  fill: var(--radioIcon-fill);
 }
 
-.uitk-dark .backwardsCompat .uitkRadioIcon {
-  --radio-icon-border-stroke: var(--uitk-color-grey-100);
-  --radio-icon-border-stroke-checked: var(--uitk-color-blue-400);
-  --radio-icon-border-stroke-hover: var(--uitk-color-blue-300);
-  --radio-icon-border-stroke-width: 1px;
-
-  --radio-icon-border-fill: var(--uitk-color-grey-800);
-  --radio-icon-border-fill-checked: var(--uitk-color-grey-800);
-
-  --radio-icon-check-stroke: var(--uitk-color-blue-400);
-  --radio-icon-check-fill: var(--uitk-color-blue-400);
+.backwardsCompat .uitk-dark .uitkRadioIcon-inner-checked {
+  fill: var(--radioIcon-fill-checked);
 }
