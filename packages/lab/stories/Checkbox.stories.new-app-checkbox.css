@@ -1,0 +1,5 @@
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkCheckboxIcon-tick-fill: var(--uitk-color-purple-40);
+  --uitkCheckboxIcon-solid-color-checked: var(--uitk-color-purple-300);
+}
