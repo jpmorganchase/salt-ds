@@ -36,8 +36,7 @@
 }
 
 /* Styles applied if `isActive={true}` */
-.uitkFileDropZone-active:not(.uitkFileDropZone-disabled),
-.uitkFileDropZone:not(.uitkFileDropZone-disabled):hover {
+.uitkFileDropZone-active:not(.uitkFileDropZone-disabled) {
   --fileDropZone-background: var(--uitk-dropTarget-background-hover);
 }
 
@@ -54,8 +53,7 @@
 }
 
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
-.uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active,
-.uitkFileDropZone-error:not(.uitkFileDropZone-disabled):hover {
+.uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active {
   --fileDropZone-background: var(--uitk-dropTarget-background-hover);
   --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
 }
