@@ -1,9 +1,11 @@
 import { DocsContext, getComponent } from "@storybook/addon-docs";
 import { useContext } from "react";
-import { ResetWrapper, TableWrapper } from "@storybook/components";
+import { resetComponents, TableWrapper } from "@storybook/components";
 import { ClassNameRow } from "./ClassNameRow";
 import { getDocgenSection } from "./utils";
 import { EmptyBlock } from "./EmptyBlock";
+
+const ResetWrapper = resetComponents.resetwrapper;
 
 export interface ClassName {
   name: string;
