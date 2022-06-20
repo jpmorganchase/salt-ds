@@ -7,7 +7,7 @@
 }
 
 .uitkSplitLayout-separator > *:first-child::after,
-*:last-child::before,
+.uitkSplitLayout-separator > *:last-child::before,
 .uitkSplitLayout-separator-center::after {
   background-color: var(--uitk-separable-secondary-borderColor);
   width: var(--uitkFlexLayout-separator);
