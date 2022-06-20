@@ -1,11 +1,18 @@
-import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
+import {
+  makePrefixer,
+  Tooltip,
+  TooltipProps,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
-import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
-import { useForkRef, useOverflowDetection } from "../utils";
+import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { Link } from "../link";
+import { useOverflowDetection } from "../utils";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
+import { DefaultCurrentBreadcrumb } from "./internal/DefaultCurrentBreadcrumb";
+
 import "./Breadcrumb.css";
 
 const withBaseName = makePrefixer("uitkBreadcrumb");

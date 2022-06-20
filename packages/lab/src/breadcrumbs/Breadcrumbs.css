@@ -1,6 +1,6 @@
 .uitkBreadcrumbs {
-  --font-size: var(--uitk-text-caption-font-size);
-  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-text-line-height));
+  --font-size: var(--uitk-text-caption-fontSize);
+  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-text-lineHeight));
 }
 
 .uitkBreadcrumbs {

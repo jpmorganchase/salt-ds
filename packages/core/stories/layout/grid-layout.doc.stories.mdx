@@ -1,0 +1,87 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { ToolkitGridLayout } from "./grid-layout.stories";
+
+<Meta
+  title="Documentation/Core/Layout/GridLayout"
+  component={GridLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Grid Layout
+
+Defines an equally distributed layout system using columns and rows.
+
+The grid layout defaults to a twelve column grid with 1 row but you can customise it using the `columns` and `rows` props.
+
+For more complex layouts, supports spanning across columns and rows
+
+<Canvas>
+  <Story id="core-layout-gridlayout--toolkit-grid-layout" />
+</Canvas>
+
+## API
+
+```
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes
+
+```
+columns={{ lg: 12, md: 12, sm: 2, xl: 12, xs: 1 }}
+```
+
+### Grid Layout Props
+
+<ArgsTable of={GridLayout} />
+
+### Grid Item Props
+
+<ArgsTable of={GridItem} />
+
+## Usage Examples
+
+### Grid Item inside default grid layout
+
+A grid item allows more complex controls to the default behaviour of a grid child, like defining how many rows or columns will it span trough and it's alignment
+
+<Canvas>
+  <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
+</Canvas>
+
+### Responsive
+
+The grid supports the use of responsive props, so you can defined different behaviours based on viewport size.
+All grid props are responsive, and their values can be individually customised per breakpoint.  
+You can use the default breakpoints or pass in you own
+
+<Canvas>
+  <h4>Grid with responsive rows and columns</h4>
+  <Story id="core-layout-gridlayout--toolkit-grid-layout-responsive-view" />
+</Canvas>
+
+## Used in
+
+The grid layout is used in the following components
+
+- [Border Layout](?path=/docs/layout-docs-lab-borderlayout--page)
+
+## Anatomy
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <GridLayout>
+      <GridItem></GridItem>
+    </GridLayout>
+  </ComponentAnatomy>
+</Canvas>

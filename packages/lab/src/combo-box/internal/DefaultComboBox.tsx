@@ -1,4 +1,14 @@
 import {
+  isDesktop,
+  Portal,
+  TooltipContext,
+  TooltipContextProps,
+  useAriaAnnouncer,
+  useFloatingUI,
+  useForkRef,
+  Window,
+} from "@jpmorganchase/uitk-core";
+import {
   HTMLAttributes,
   ReactNode,
   Ref,
@@ -8,29 +18,23 @@ import {
   useRef,
   useState,
 } from "react";
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 
-import { useComboBox } from "./useComboBox";
-import { getAnnouncement } from "./getAnnouncement";
-import { GetFilterRegex } from "../filterHelpers";
-import {
-  ListBase,
-  ListProps,
-  ListSelectionVariant,
-  ListStateContext,
-} from "../../list";
-import { useFloatingUI } from "../../popper";
-import { Input, InputProps } from "../../input";
-import { useForkRef } from "../../utils";
-import { TooltipContext, TooltipContextProps } from "../../tooltip";
-import { Portal } from "../../portal";
-import { isDesktop, Window } from "../../window";
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import { Input, InputProps } from "../../input";
+import {
+  ListBase,
+  ListProps,
+  ListSelectionVariant,
+  ListStateContext,
+} from "../../list";
+import { GetFilterRegex } from "../filterHelpers";
+import { getAnnouncement } from "./getAnnouncement";
+import { useComboBox } from "./useComboBox";
 
 export type BaseComboBoxProps<
   Item,

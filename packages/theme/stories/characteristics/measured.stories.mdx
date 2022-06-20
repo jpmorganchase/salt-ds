@@ -2,6 +2,11 @@ import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { FontSizeBlock } from "docs/components/FontSizeBlock";
+import {
+  LineBlock,
+  LineBlockCell,
+  LineBlockCode,
+} from "docs/components/LineBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Measured" />
 
@@ -17,11 +22,16 @@ Components which have the ability to visually indicate progress, scale, or range
   <Story name="All">
     <DocGrid>
       <ColorBlock colorVar="--uitk-measured-background" />
-      <ColorBlock colorVar="--uitk-measured-background-active" />
-      <ColorBlock colorVar="--uitk-measured-border-color" />
-      <FontSizeBlock fontSize="--uitk-measured-font-size-low" />
-      <FontSizeBlock fontSize="--uitk-measured-font-size-medium" />
-      <FontSizeBlock fontSize="--uitk-measured-font-size-high" />
+      <ColorBlock colorVar="--uitk-measured-fill" />
+      <ColorBlock colorVar="--uitk-measured-fill-startColor" />
+      <ColorBlock colorVar="--uitk-measured-fill-stopColor" />
+      <ColorBlock colorVar="--uitk-measured-borderColor" />
+      <LineBlockCell />
+      <LineBlockCode>--uitk-measured-borderStyle</LineBlockCode>
+      <LineBlock lineWidth="--uitk-measured-borderWidth" />
+      <FontSizeBlock fontSize="--uitk-measured-fontSize-low" />
+      <FontSizeBlock fontSize="--uitk-measured-fontSize-medium" />
+      <FontSizeBlock fontSize="--uitk-measured-fontSize-high" />
     </DocGrid>
   </Story>
 </Canvas>

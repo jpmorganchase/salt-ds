@@ -1,19 +1,18 @@
-import React, {
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
-  ReactElement,
-} from "react";
 import cx from "classnames";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { FormField } from "../form-field";
-
-import useKeyboardNavigation from "./internal/useKeyboardNavigation";
-import { TooltrayProps } from "./TooltrayProps";
-
-import { OverflowMenu, useOverflowLayout } from "../responsive";
+import OverflowMenu from "../responsive/overflow-menu/OverflowMenu";
+import { useOverflowLayout } from "../responsive/useOverflowLayout";
 import { renderTrayTools } from "./internal/renderTrayTools";
 import { ensureChildrenHaveIds } from "./internal/toolUtils";
+import useKeyboardNavigation from "./internal/useKeyboardNavigation";
+import { TooltrayProps } from "./TooltrayProps";
 
 import "./Tooltray.css";
 

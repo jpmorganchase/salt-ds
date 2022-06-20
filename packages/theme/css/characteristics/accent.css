@@ -1,6 +1,6 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-accent-border-color: var(--uitk-palette-accent-border);
+  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
   --uitk-accent-background: var(--uitk-palette-accent-background);
   --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
 }

@@ -21,13 +21,12 @@
     "build:lab": "modular build @jpmorganchase/uitk-lab",
     "build:theme": "cd packages/theme && yarn build",
     "test": "modular test",
-    "test:core-components": "cypress run-ct --browser chrome --headless --config-file core-cypress.json",
-    "test:lab-components": "cypress run-ct --browser chrome --headless --config-file lab-cypress.json",
-    "test:core-components:local": "cypress open-ct --browser chrome --config-file core-cypress.json",
-    "test:lab-components:local": "cypress open-ct --browser chrome --config-file lab-cypress.json",
+    "test:components": "cypress run --component --browser chrome --headless",
+    "test:components:local": "cypress open --component --browser chrome",
     "lint": "modular lint",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
+    "lint:style": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
@@ -38,9 +37,7 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.19.0",
-    "@cypress/code-coverage": "^3.9.11",
-    "@cypress/react": "^5.10.3",
-    "@cypress/vite-dev-server": "^2.2.2",
+    "@cypress/code-coverage": "^3.10.0",
     "@floating-ui/react-dom-interactions": "^0.5.0",
     "@storybook/addon-a11y": "^6.4.18",
     "@storybook/addon-actions": "^6.4.18",
@@ -57,6 +54,7 @@
     "@testing-library/react": "^12.1.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/classnames": "^2.2.11",
+    "@types/cypress-image-snapshot": "^3.1.6",
     "@types/jest": "^26.0.20",
     "@types/no-scroll": "^2.1.0",
     "@types/node": "^14.14.20",
@@ -73,13 +71,14 @@
     "aria-hidden": "^1.1.1",
     "attr-accept": "^2.0.0",
     "axe-core": "^4.3.5",
-    "chromatic": "^6.5.4",
+    "chromatic": "next",
+    "ci-info": "^3.3.1",
     "classnames": "^2.2.6",
     "clipboard-copy": "^4.0.1",
     "compute-scroll-into-view": "^1.0.16",
     "css-validator": "^0.10.0",
     "csstree-validator": "^3.0.0",
-    "cypress": "^9.4.1",
+    "cypress": "^10.0.3",
     "cypress-axe": "^0.14.0",
     "cypress-image-snapshot": "^4.0.1",
     "cypress-real-events": "^1.6.0",
@@ -91,7 +90,6 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-storybook": "^0.5.5",
     "glob": "^7.1.6",
-    "is-ci": "^3.0.0",
     "modular-scripts": "patch:modular-scripts@npm:3.0.0#.yarn/patches/modular-scripts-npm-3.0.0-465a9ac751.patch",
     "no-scroll": "^2.1.1",
     "prettier": "^2.6.2",
@@ -108,10 +106,9 @@
     "ts-node": "^10.4.0",
     "typescript": "4.6.4",
     "vite": "^2.9.0",
-    "vite-plugin-istanbul": "^2.5.1",
+    "vite-plugin-istanbul": "^2.7.3",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
-    "vite-plugin-turbosnap": "^1.0.1",
     "vite-tsconfig-paths": "^3.4.1",
     "warning": "^4.0.3",
     "webpack": "5"
@@ -138,5 +135,8 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "stylelint": "^14.9.1"
+  }
 }

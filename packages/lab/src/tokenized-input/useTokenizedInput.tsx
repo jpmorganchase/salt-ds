@@ -1,5 +1,7 @@
 //TODO remove when popout code has been migrated
 /* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
+import { useControlled, useDensity } from "@jpmorganchase/uitk-core";
+import copy from "clipboard-copy";
 import {
   ChangeEvent,
   FocusEvent,
@@ -14,22 +16,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { useDensity } from "@jpmorganchase/uitk-core";
-
-import {
-  escapeRegExp,
-  ownerWindow,
-  useControlled,
-  useEventCallback,
-  useId,
-} from "../utils";
-import { useFormFieldProps } from "../form-field-context";
-import copy from "clipboard-copy";
-
 import warning from "warning";
+import { useFormFieldProps } from "../form-field-context";
+import { escapeRegExp, ownerWindow, useEventCallback, useId } from "../utils";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
-import { TokenizedInputBaseProps, TokenizedInputProps } from ".";
+import { TokenizedInputProps } from "./TokenizedInput";
+import { TokenizedInputBaseProps } from "./TokenizedInputBase";
 
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;

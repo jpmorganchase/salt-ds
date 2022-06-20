@@ -1,16 +1,15 @@
-import { Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Density, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
 import {
   FormField,
   makeRadioIcon,
-  Panel,
   RadioButton,
   RadioButtonGroup,
 } from "@jpmorganchase/uitk-lab";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
-} from "./story-layout/ColumnLayout";
+} from "@jpmorganchase/uitk-core/stories";
 import { ChangeEventHandler, FC, ReactNode, useState } from "react";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 

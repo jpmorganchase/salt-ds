@@ -1,23 +1,24 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-focused-outline-color: var(--uitk-palette-info-border);
-  --uitk-focused-outline-style: dotted;
-  --uitk-focused-outline-width: 2px;
+  --uitk-focused-outlineColor: var(--uitk-palette-info-border);
+  --uitk-focused-outlineStyle: dotted;
+  --uitk-focused-outlineWidth: 2px;
 
-  --uitk-focused-outline-offset: 0; /* Not in Figma */
-  --uitk-focused-outline-inset: 0px 0px 0px 0px; /* Not in Figma */
+  --uitk-focused-outlineOffset: 0; /* Not in Figma */
+  --uitk-focused-outlineInset: 0px 0px 0px 0px; /* Not in Figma */
 
-  --uitk-focused-outline: var(--uitk-focused-outline-width) var(--uitk-focused-outline-style) var(--uitk-focused-outline-color); /* CSS shortcut: not in Figma */
+  /* CSS shortcut token: not in Figma */
+  --uitk-focused-outline: var(--uitk-focused-outlineWidth) var(--uitk-focused-outlineStyle) var(--uitk-focused-outlineColor);
 }
 
 .uitkFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
-  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-outline-inset));
-  outline-color: var(--uitk-focused-outline-color);
-  outline-offset: var(--uitk-focused-outline-offset);
-  outline-style: var(--uitk-focused-outline-style);
-  outline-width: var(--uitk-focused-outline-width);
+  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-outlineInset));
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
   position: absolute;
 }

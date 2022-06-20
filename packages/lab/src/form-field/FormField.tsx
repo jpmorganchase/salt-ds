@@ -1,3 +1,9 @@
+import {
+  makePrefixer,
+  Tooltip,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   Dispatch,
@@ -11,11 +17,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip, useTooltip } from "../tooltip";
-import { useForkRef, useId } from "../utils";
+import { useId } from "../utils";
+import { classBase } from "./constant";
 import {
   FormActivationIndicator,
   FormActivationIndicatorProps,
@@ -26,7 +30,6 @@ import { NecessityIndicatorOptions } from "./NecessityIndicator";
 import { StatusIndicatorProps } from "./StatusIndicator";
 
 import "./FormField.css";
-import { classBase } from "./constant";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
@@ -238,7 +241,9 @@ export const FormField = forwardRef(
     const labelLeft = labelPlacement === "left";
     const isWarning = validationState === "warning";
     const isError = validationState === "error";
-    const focusClass = disableFocusRing ? "lowFocused" : "focused";
+    const focusClass = disableFocusRing
+      ? "lowFocused"
+      : "focused"; /* Low emphasis will override this */
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =

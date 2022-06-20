@@ -1,0 +1,64 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { FlowLayout } from "@jpmorganchase/uitk-core";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+import { DefaultFlowLayout } from "./flow-layout.stories";
+
+<Meta
+  title="Documentation/Core/Layout/FlowLayout"
+  component={FlowLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Flow Layout
+
+Dictates a vertical or horizontal order and direction for UI elements.
+Builds from flex layout
+
+Flow is responsive by default and will break into one column as soon as there is not enough space.
+
+<Canvas>
+  <Story id="core-layout-flowlayout--default-flow-layout" />
+</Canvas>
+
+Height is driven by child items,
+Visual seperators can be turned on/off (default) between items
+
+## API
+
+```
+import { FlowLayout } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={FlowLayout} />
+
+## Usage Examples
+
+### Simple Usage
+
+<Canvas>
+  <Story id="core-layout-flowlayout--flow-layout-simple-usage" />
+</Canvas>
+
+### Composite Usage
+
+<Canvas>
+  <Story id="core-layout-flowlayout--flow-layout-composite" />
+</Canvas>
+
+## Anatomy
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <FlowLayout>
+      <FlowItem></FlowItem>
+    </FlowLayout>
+  </ComponentAnatomy>
+</Canvas>

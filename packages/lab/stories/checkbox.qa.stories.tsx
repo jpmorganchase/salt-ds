@@ -29,10 +29,14 @@ const Checkboxes = () => (
 
 export const AllExamplesGrid: ComponentStory<typeof Checkbox> = () => {
   return (
-    <AllRenderer>
+    <AllRenderer className="uitkCheckboxQA">
       <Checkboxes />
     </AllRenderer>
   );
+};
+
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
 };
 
 export const CompareWithOriginalToolkit: ComponentStory<

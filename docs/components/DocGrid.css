@@ -3,8 +3,8 @@
   --doc-grid-padding-block-start: var(--uitk-size-unit);
   --doc-grid-padding-block-end: var(--uitk-size-unit);
 
-  --doc-grid-code-font-size: var(--uitk-text-font-size);
-  --doc-grid-code-text-color: var(--uitk-text-primary-color);
+  --doc-grid-code-font-size: var(--uitk-text-fontSize);
+  --doc-grid-code-text-color: var(--uitk-text-primary-foreground);
 }
 
 .uitkDocGrid {

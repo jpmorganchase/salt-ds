@@ -9,13 +9,13 @@
 }
 
 .uitkColorChooser-overlayButtonSwatchWithBorder {
-  border: 0.2px solid var(--uitk-editable-border-color);
+  border: 0.2px solid var(--uitk-editable-borderColor);
 }
 
 .uitkColorChooser-overlayButtonSwatchTransparent {
   height: calc(3 * var(--uitk-size-unit) - 2px) !important;
   width: calc(3 * var(--uitk-size-unit) - 2px) !important;
-  border: 1px solid var(--uitk-differential-foreground-negative);
+  border: 1px solid var(--uitk-differential-negative-foreground);
   /* RGBA using red-700 */
   background: linear-gradient(
     to top left,
@@ -29,8 +29,8 @@
 
 .uitkColorChooser-overlayButtonText {
   font-weight: var(--uitk-typography-weight-regular);
-  font-family: var(--uitkButton-font-family, var(--uitk-typography-font-family));
-  font-size: var(--uitk-text-font-size);
+  font-family: var(--uitkButton-fontFamily, var(--uitk-typography-fontFamily));
+  font-size: var(--uitk-text-fontSize);
   letter-spacing: normal;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .uitkColorChooser-defaultButton {
-  border-bottom: var(--uitk-editable-border-width) var(--uitk-editable-border-style) var(--uitk-editable-border-color);
+  border-bottom: var(--uitk-editable-borderWidth) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
 }
 
 .uitkColorChooser-overlayContent {

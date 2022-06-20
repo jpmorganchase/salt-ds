@@ -1,5 +1,3 @@
-import { useControlled } from "../utils";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import {
   arrow,
   flip,
@@ -11,7 +9,12 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
-import { OverlayProps } from "./Overlay";
+import {
+  isDesktop,
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+} from "@jpmorganchase/uitk-core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
@@ -19,8 +22,9 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { isDesktop } from "../window";
-import { margin } from "../utils/marginMiddleware";
+import { OverlayProps } from "./Overlay";
+
+import { margin } from "@jpmorganchase/uitk-core/src/utils/marginMiddleware";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">

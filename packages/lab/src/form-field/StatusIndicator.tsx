@@ -1,7 +1,8 @@
-import React, { ElementType } from "react";
+import { Tooltip, TooltipProps, useTooltip } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import { IconProps } from "@jpmorganchase/uitk-core";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
+import { ElementType } from "react";
+
 // TODO: temporarily import from dialog internal before finding a better home
 import { StateIcon } from "../dialog/internal/StateIcon";
 

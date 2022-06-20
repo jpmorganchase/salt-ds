@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { forwardRef, ReactElement } from "react";
+import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
-
-import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
-import OverflowPanelItem from "./OverflowPanelItem";
+import React, { forwardRef, ReactElement } from "react";
+import Tooltray from "../../toolbar/Tooltray";
 import { OverflowLayoutPanelProps } from "./OverflowLayoutPanelProps";
-import { Tooltray } from "../../toolbar";
+import OverflowPanelItem from "./OverflowPanelItem";
+import { OverflowPanelItemProps } from "./OverflowPaneltemProps";
 
 import "./OverflowLayoutPanel.css";
 

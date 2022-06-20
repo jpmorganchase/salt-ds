@@ -1,20 +1,11 @@
-import React, { KeyboardEvent, ReactChildren, ReactElement, Ref } from "react";
-import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+import React, { KeyboardEvent, ReactElement, Ref } from "react";
 import { FormField } from "../../form-field";
-import {
-  isCollapsedOrCollapsing,
-  isOverflowed,
-  ManagedItem,
-  orientationType,
-  useOverflowLayout,
-} from "..";
-import {
-  OverflowButtonProps,
-  // OverflowMenu,
-  OverflowMenuProps,
-} from "../overflow-menu";
-
+import { OverflowButtonProps, OverflowMenuProps } from "../overflow-menu";
+import { ManagedItem, orientationType } from "../overflowTypes";
+import { isCollapsedOrCollapsing, isOverflowed } from "../overflowUtils";
+import { useOverflowLayout } from "../useOverflowLayout";
 import { OverflowDropdown } from "./OverflowDropdown";
 
 import "./OverflowLayoutContainer.css";

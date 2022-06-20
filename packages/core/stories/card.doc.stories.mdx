@@ -1,0 +1,121 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { Card, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import {
+  CustomStyling,
+  DefaultCard,
+  Disabled,
+  Interactable,
+} from "./card.stories";
+
+<Meta
+  title="Documentation/Core/Card"
+  component={Card}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Card
+
+A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+
+## Card Component
+
+Card components have two levels of emphasis; medium (default) and high.
+
+<Canvas>
+  <Story name="Card" decorators={[withFlexGap]}>
+    <Card>
+      <div>
+        <h1>This is Card</h1>
+        <span>Using Nested DOM Elements</span>
+      </div>
+    </Card>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Card } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Card} />
+
+## HTML Anatomy of a Card
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <DefaultCard />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Disabled />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Interactable />
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Card} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Card} />
+
+## --uitkCard CSS Custom Property API
+
+The default styling values for most Card attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Card. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Card, but not defined by Card. They can be defined via a container or
+a custom class name to override card styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Card} />
+
+## Customising Card styles - a simple example
+
+Because Card is such a simple component, custom styling is straightforward. In this example, it can be seen how to make use of the CSS Custom Property API to
+tweak the look of a Card. The CSS variables above have been defined in the `newapp` theme (see Button example for fuller explanation).
+
+<Canvas>
+  <Story name="Custom Panel Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Card.stories.newapp-card.css */
+
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --newapp-panel-color: rgb(66, 103, 178);
+
+  --uitkCard-background: var(--newapp-panel-color);
+  --uitkCard-borderRadius: 20px;
+  --uitkCard-borderColor: var(--uitk-color-white);
+  --uitkCard-borderColor-hover: var(--uitk-color-grey-900);
+  --uitkCard-boxShadow: var(--uitk-overlayable-shadow-border-region);
+}
+
+.uitk-newapp.uitkPanel {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.uitk-light.uitk-newapp .uitkCard {
+  color: var(--uitk-color-white);
+}
+```

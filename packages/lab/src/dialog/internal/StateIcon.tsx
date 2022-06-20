@@ -1,12 +1,13 @@
-import { forwardRef } from "react";
-import classnames from "classnames";
-import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   ErrorIcon,
+  IconProps,
   InfoIcon,
   SuccessTickIcon,
   WarningIcon,
 } from "@jpmorganchase/uitk-icons";
+import classnames from "classnames";
+import { forwardRef } from "react";
 
 import { State } from "../State";
 

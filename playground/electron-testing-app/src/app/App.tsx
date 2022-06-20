@@ -14,15 +14,18 @@ import {
   ListChangeHandler,
   MenuDescriptor,
   OrderedButton,
-  Portal,
   Toolbar,
+} from "@jpmorganchase/uitk-lab";
+
+import {
+  Button,
+  Portal,
   Tooltip,
+  useDensity,
   useTooltip,
   useWindow,
   WindowContext,
-} from "@jpmorganchase/uitk-lab";
-
-import { Button, useDensity } from "@jpmorganchase/uitk-core";
+} from "@jpmorganchase/uitk-core";
 
 import {
   ExportIcon,

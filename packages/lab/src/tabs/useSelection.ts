@@ -1,5 +1,5 @@
+import { useControlled } from "@jpmorganchase/uitk-core";
 import { KeyboardEvent, useCallback } from "react";
-import { useControlled } from "../utils";
 import { isTabElement } from "./tab-utils";
 
 const activationKeys = new Set(["Enter", " "]);

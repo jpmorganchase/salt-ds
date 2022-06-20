@@ -17,6 +17,39 @@ jobs:
       # Enable lint when all errors are fixed
       # - run: yarn run lint
       - run: yarn run prettier:ci
+      - run: yarn run lint:style
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Check build core package.json dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-\(core\|lab\)\":" dist/jpmorganchase-uitk-core/package.json; then
+              echo "Core package can not reference itself or lab package"
+              exit 1;
+          fi
+      - name: Check build icon package.json dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-\(icon\|core\|lab\)\":" dist/jpmorganchase-uitk-icon/package.json; then
+              echo "Icon package can not reference itself or core or lab package"
+              exit 1;
+          fi
+      - name: Check build lab package.json dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-lab\":" dist/jpmorganchase-uitk-lab/package.json; then
+              echo "Lab package can not reference itself"
+              exit 1;
+          fi
   type-checks:
     runs-on: ubuntu-latest
     steps:
@@ -64,16 +97,10 @@ jobs:
         run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
       - name: Build packages
         run: yarn run build
-      - name: Cypress Core Components
-        uses: cypress-io/github-action@v3
+      - name: Cypress Components
+        uses: cypress-io/github-action@v4
         with:
           install: false
-          command: yarn run test:core-components
-      - name: Cypress Lab Components
-        uses: cypress-io/github-action@v3
-        with:
-          install: false
-          command: yarn run test:lab-components
   desktop-integration:
     continue-on-error: true
     runs-on: ubuntu-latest

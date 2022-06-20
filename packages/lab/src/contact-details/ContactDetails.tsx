@@ -1,8 +1,8 @@
-import { forwardRef, HTMLAttributes, useState } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useForkRef } from "../utils";
-import { ContactDetailsContext, useComponentSize } from "./internal";
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
+import { forwardRef, HTMLAttributes, useState } from "react";
+import { ContactDetailsContext, useComponentSize } from "./internal";
+
 import "./ContactDetails.css";
 
 const withBaseName = makePrefixer("uitkContactDetails");

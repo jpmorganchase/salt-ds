@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
-import {
-  ElectronWindow,
-  isDesktop,
-  WindowContext,
-} from "@jpmorganchase/uitk-lab";
+import { ElectronWindow } from "@jpmorganchase/uitk-lab/src/window";
+import { WindowContext } from "@jpmorganchase/uitk-core/src/window";
+import { isDesktop } from "@jpmorganchase/uitk-core";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
 

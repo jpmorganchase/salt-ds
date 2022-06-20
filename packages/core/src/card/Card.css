@@ -1,0 +1,74 @@
+/* Styles applied to the root element */
+.uitkCard {
+  background: var(--uitkCard-background, var(--uitk-container-background-medium));
+  border-width: var(--uitkCard-borderWidth, var(--uitk-container-borderWidth));
+  border-style: var(--uitkCard-borderStyle, var(--uitk-container-borderStyle));
+  border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-medium));
+  border-radius: var(--uitkCard-borderRadius, var(--uitk-container-borderRadius));
+  box-shadow: var(--uitkCard-boxShadow, var(--uitk-overlayable-shadow));
+  box-sizing: border-box;
+  color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
+  overflow: hidden;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.uitkCard *,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* Styles applied to Card content */
+.uitkCard-content {
+  font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
+  letter-spacing: var(--uitkCard-content-letterSpacing, normal);
+  line-height: var(--uitkCard-content-lineHeight, var(--uitk-text-lineHeight));
+  min-height: var(--uitkCard-content-minHeight, var(--uitk-text-minHeight));
+  padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
+}
+
+.backwardsCompat.uitkCard {
+  --uitkCard-content-lineHeight: 1.3;
+}
+
+/* Styles applied if `disabled={true}` */
+.uitkCard-disabled {
+  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
+}
+
+/* Styles applied to nested divs if `disabled={true}` */
+.uitkCard-disabled div {
+  pointer-events: none;
+}
+
+/* Styles applied if `interactable={true}` */
+.uitkCard-interactable {
+  display: block;
+  transition: none;
+}
+
+/* Styles applied on hover if `interactable={true}` */
+a:focus .uitkCard-interactable,
+.uitkCard-interactable:hover {
+  border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-hover));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-hover));
+  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
+  position: relative;
+  box-shadow: var(--uitkCard-boxShadow-hover, var(--uitk-overlayable-shadow-hover));
+}
+
+/* Styles applied on active state if `interactable={true}` */
+.uitkCard-interactable:active {
+  border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-selected));
+  box-shadow: var(--uitkCard-boxShadow-active, var(--uitk-overlayable-shadow-hover));
+  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-selected));
+}
+
+/* Styles applied on focus-visible */
+.uitkCard:focus-visible {
+  outline-style: var(--uitk-focused-outlinestyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
+}

@@ -1,8 +1,9 @@
+import { Portal } from "@jpmorganchase/uitk-core";
 import { forwardRef } from "react";
-import { Portal } from "../../portal";
 import { Rect } from "./dragDropTypes";
 
 import "./DropIndicator.css";
+
 export const DropIndicator = forwardRef<
   HTMLDivElement,
   { className?: string; rect: Rect }

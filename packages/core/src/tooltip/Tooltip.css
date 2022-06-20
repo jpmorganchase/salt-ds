@@ -1,0 +1,139 @@
+.uitk-density-touch .uitkTooltip {
+  --icon-top: 6px;
+}
+
+.uitk-density-low .uitkTooltip {
+  --icon-top: 4px;
+}
+
+.uitk-density-medium .uitkTooltip {
+  --icon-top: 1px;
+}
+
+.uitk-density-high .uitkTooltip {
+  --icon-top: 1px;
+}
+
+.uitkTooltip {
+  --tooltip-background: var(--uitk-container-background-medium);
+  --tooltip-font-size: var(--uitk-text-fontSize);
+  --tooltip-color: var(--uitk-text-primary-foreground);
+  --tooltip-padding: var(--uitk-size-unit);
+}
+
+.uitkTooltip {
+  background: var(--tooltip-background);
+  box-sizing: border-box;
+  border: 1px solid var(--tooltip-status-color);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
+  color: var(--tooltip-color);
+  font-size: var(--tooltip-font-size);
+  line-height: var(--uitk-text-lineHeight);
+  min-height: calc(var(--tooltip-font-size) * var(--uitk-text-lineHeight));
+  padding: var(--tooltip-padding);
+  position: relative;
+  max-width: 230px;
+  text-align: left;
+}
+
+.uitkTooltip[data-placement^="top"] {
+  transform-origin: bottom;
+}
+
+.uitkTooltip[data-placement^="bottom"] {
+  transform-origin: top;
+}
+
+.uitkTooltip[data-placement^="left"] {
+  transform-origin: right;
+}
+
+.uitkTooltip[data-placement^="right"] {
+  transform-origin: left;
+}
+
+.uitkTooltip-content {
+  display: flex;
+  position: relative;
+}
+
+.uitkTooltip-body {
+  overflow: hidden;
+}
+
+.uitkTooltip-icon {
+  color: var(--tooltip-status-color);
+  fill: var(--tooltip-status-color);
+  margin-right: 6px;
+  top: var(--icon-top);
+  vertical-align: top;
+}
+
+.uitkTooltip-arrow,
+.uitkTooltip-arrow::after {
+  border: var(--uitk-size-sharktooth-height) solid transparent;
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.uitkTooltip-arrow::after {
+  content: "";
+}
+
+.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow {
+  border-top-color: var(--tooltip-status-color);
+  bottom: -11px;
+}
+
+.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow {
+  border-bottom-color: var(--tooltip-status-color);
+  top: -11px;
+}
+
+.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow {
+  border-left-color: var(--tooltip-status-color);
+  right: -11px;
+}
+
+.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow {
+  border-right-color: var(--tooltip-status-color);
+  left: -11px;
+}
+
+.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow::after {
+  border-top-color: var(--tooltip-background);
+  bottom: -4px;
+  left: calc(100% - var(--uitk-size-sharktooth-height));
+}
+
+.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow::after {
+  border-bottom-color: var(--tooltip-background);
+  top: -4px;
+  left: calc(100% - var(--uitk-size-sharktooth-height));
+}
+
+.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow::after {
+  border-left-color: var(--tooltip-background);
+  right: -4px;
+  top: calc(100% - var(--uitk-size-sharktooth-height));
+}
+
+.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow::after {
+  border-right-color: var(--tooltip-background);
+  left: -4px;
+  top: calc(100% - var(--uitk-size-sharktooth-height));
+}
+
+.uitkTooltip-info {
+  --tooltip-status-color: var(--uitk-status-info-foreground);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
+}
+.uitkTooltip-error {
+  --tooltip-status-color: var(--uitk-status-error-foreground);
+}
+.uitkTooltip-warning {
+  --tooltip-status-color: var(--uitk-status-warning-foreground);
+}
+.uitkTooltip-success {
+  --tooltip-status-color: var(--uitk-status-success-foreground);
+}

@@ -1,0 +1,120 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import { Panel } from "@jpmorganchase/uitk-core";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./panel.stories";
+
+<Meta
+  title="Documentation/Core/Panel"
+  component={Panel}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Panel
+
+A panel is a way to organize content areas in an application (both web and desktop). It provides expand/collapse behavior, it can have it's own scroll bar, and has "floating" and "docked" states. When a panel is removed from the application window it becomes a child window.
+
+## Panel Component
+
+Panel components have two levels of emphasis; medium (default) and high.
+
+<Canvas>
+  <Story name="Panels" decorators={[withFlexGap]}>
+    <Panel>This is a panel around some text.</Panel>
+    <Panel className="uitkEmphasisHigh">
+      This is a panel around some text with high emphasis.
+    </Panel>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Panel } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Panel} />
+
+## HTML Anatomy of a Panel
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <Panel aria-label="Default Panel">Default</Panel>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Panel aria-label="Panel with high emphasis" className="uitkEmphasisHigh">
+      High emphasis
+    </Panel>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Panel} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Panel} />
+
+## --uitkPanel CSS Custom Property API
+
+The default styling values for most Panel attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Panel. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Panel, but not defined by Panel. They can be defined via a container or
+a custom class name to override card styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Panel} />
+
+## Customising Panel styles - a simple example
+
+Because Panel is such a simple component, custom styling is straightforward. In this example, it can be seen how to make use of the CSS Custom Property API to
+tweak the look of a Panel. The CSS variables above have been defined in the `newapp` theme (see Button example for fuller explanation).
+
+<Canvas>
+  <Story name="Custom Panel Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Panel.stories.newapp-panel.css */
+
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkPanel-height: 100px;
+  --uitkPanel-padding: 5px;
+  --uitkPanel-width: 500px;
+}
+
+.uitk-light.uitk-newapp {
+  --uitkPanel-background: linear-gradient(
+    to bottom,
+    var(--uitk-color-teal-10),
+    var(--uitk-color-teal-50)
+  );
+  --uitkPanel-color: var(--uitk-color-teal-800);
+}
+
+.uitk-dark.uitk-newapp {
+  --uitkPanel-background: linear-gradient(
+    to bottom,
+    var(--uitk-color-purple-700),
+    var(--uitk-color-purple-300)
+  );
+  --uitkPanel-color: var(--uitk-color-purple-10);
+}
+```

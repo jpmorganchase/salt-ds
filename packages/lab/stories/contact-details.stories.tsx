@@ -1,4 +1,4 @@
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Card, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
 import {
   CallIcon,
   ChatIcon,
@@ -7,7 +7,6 @@ import {
   MessageIcon,
 } from "@jpmorganchase/uitk-icons";
 import {
-  Card,
   ComboBox,
   ContactAction,
   ContactActions,
@@ -22,20 +21,18 @@ import {
   FormField,
   Overlay,
   useOverlay,
-  Tooltip,
-  useTooltip,
 } from "@jpmorganchase/uitk-lab";
 import { ValueComponentProps } from "@jpmorganchase/uitk-lab/src/contact-details/internal";
+import { ListItemBase } from "@jpmorganchase/uitk-lab/src/list";
+import { ListChangeHandler } from "@jpmorganchase/uitk-lab/src/list/ListProps";
 import {
   IndexedListItemProps,
   useListItem,
 } from "@jpmorganchase/uitk-lab/src/list/useListItem";
-import { ListItemBase } from "@jpmorganchase/uitk-lab/src/list";
-import { ListChangeHandler } from "@jpmorganchase/uitk-lab/src/list/ListProps";
 import { Story } from "@storybook/react";
+import { FC, forwardRef, Fragment } from "react";
 
 import "./contact-details.stories.css";
-import { FC, forwardRef, Fragment } from "react";
 
 export default {
   title: "Lab/ContactDetails",

@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Panel, Tabstrip, TabstripProps } from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
+import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Tabstrip, TabstripProps } from "@jpmorganchase/uitk-lab";
 import { QAContainer } from "docs/components";
 
 import "docs/story.css";
@@ -25,7 +25,7 @@ const TabExamples: FC<TabstripProps> = (props) => (
   </Panel>
 );
 
-export const QA: React.FC<ExampleProps> = () => (
+export const QA: Story = () => (
   <>
     <ToolkitProvider theme="light" density="high">
       <TabExamples />
@@ -68,6 +68,10 @@ export const QA: React.FC<ExampleProps> = () => (
     </ToolkitProvider>
   </>
 );
+
+QA.parameters = {
+  chromatic: { disableSnapshot: false },
+};
 
 export const CompareWithOriginalToolkit: Story<TabstripProps> = () => {
   return (

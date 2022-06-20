@@ -1,29 +1,29 @@
-import { forwardRef, useCallback, useEffect, useState, useMemo } from "react";
-import classnames from "classnames";
 import {
+  Portal,
   useCharacteristic,
+  useFloatingUI,
+  UseFloatingUIProps,
+  useForkRef,
   useIsomorphicLayoutEffect,
+  useWindow,
 } from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
+import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { List, ListProps } from "../list";
-import { useForkRef } from "../utils";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
-import { refsManager } from "./internal/useRefsManager";
-
 import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
+import { getKeyDownHandlers } from "./internal/keydownHandlers";
 import {
-  getMaxHeight,
   getHeight,
+  getMaxHeight,
   screenBounds,
 } from "./internal/menuPositioning";
-import { stateChangeTypes } from "./stateChangeTypes";
-import { hasSubMenu, hasIcon, menuState } from "./internal/stateUtils";
-import { getKeyDownHandlers } from "./internal/keydownHandlers";
+import { hasIcon, hasSubMenu, menuState } from "./internal/stateUtils";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
+import { refsManager } from "./internal/useRefsManager";
+import { stateChangeTypes } from "./stateChangeTypes";
 
 import "./CascadingMenuList.css";
-import { Portal } from "../portal";
-import { useWindow } from "../window";
 
 export interface CascadingMenuListProps {
   className?: string;

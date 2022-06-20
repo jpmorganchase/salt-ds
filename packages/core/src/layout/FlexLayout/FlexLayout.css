@@ -1,0 +1,63 @@
+.uitk-density-touch {
+  --flex-layout-gap-density-multiplier: 2;
+}
+
+/* VARIABLES */
+.uitkFlexLayout {
+  --flex-layout-gap-multiplier: var(--flex-layout-gap-density-multiplier, 3);
+  --flex-layout-layout-display: flex;
+  --flex-layout-direction: row;
+  --flex-layout-wrap: nowrap;
+  --flex-layout-justify: flex-start;
+  --flex-layout-align: stretch;
+  --flex-layout-separator: var(--uitk-separable-borderWidth);
+  --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier));
+}
+
+.uitkFlexLayout {
+  gap: var(--flex-layout-gap);
+  display: var(--flex-layout-layout-display);
+  flex-direction: var(--flex-layout-direction);
+  flex-wrap: var(--flex-layout-wrap);
+  justify-content: var(--flex-layout-justify);
+  align-items: var(--flex-layout-align);
+}
+
+.uitkFlexLayout-separator {
+  --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier) * 2 + var(--flex-layout-separator));
+}
+
+.uitkFlexLayout-separator > *:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  background-color: var(--uitk-separable-secondary-borderColor);
+}
+
+.uitkFlexLayout-separator-row > *:not(:last-child)::after {
+  width: var(--flex-layout-separator);
+  top: 0;
+  height: 100%;
+}
+.uitkFlexLayout-separator-row-start > *:not(:last-child)::after {
+  right: calc(var(--flex-layout-separator) * -1);
+}
+.uitkFlexLayout-separator-row-center > *:not(:last-child)::after {
+  right: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
+}
+.uitkFlexLayout-separator-row-end > *:not(:last-child)::after {
+  right: calc(var(--flex-layout-gap) * -1);
+}
+
+.uitkFlexLayout-separator-column > *:not(:last-child)::after {
+  height: var(--flex-layout-separator);
+  width: 100%;
+}
+.uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
+  bottom: calc(var(--flex-layout-separator) * -1);
+}
+.uitkFlexLayout-separator-column-center > *:not(:last-child)::after {
+  bottom: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
+}
+.uitkFlexLayout-separator-column-end > *:not(:last-child)::after {
+  bottom: calc(var(--flex-layout-gap) * -1);
+}

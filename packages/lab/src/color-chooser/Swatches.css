@@ -1,17 +1,17 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatches-colorNameTextDiv {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-typography-weight-bold);
 }
 
 .uitkColorChooserSwatches-colorNameTextDiv,
 .uitkColorChooserSwatches-colorTextDiv,
 .uitkColorChooserSwatches-alphaTextDiv {
-  color: var(--uitk-text-secondary-color);
+  color: var(--uitk-text-secondary-foreground);
 }
 
 .uitkColorChooserSwatches-colorTextDiv {
-  font-size: var(--uitk-text-font-size);
+  font-size: var(--uitk-text-fontSize);
   margin-right: var(--uitk-size-unit);
 }
 

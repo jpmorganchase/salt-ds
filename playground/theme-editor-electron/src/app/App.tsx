@@ -3,16 +3,14 @@ import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
-import {
-  ElectronWindow,
-  WindowContext,
-} from "@jpmorganchase/uitk-lab/src/window";
-import { isDesktop } from "@jpmorganchase/uitk-lab";
+import { ElectronWindow } from "@jpmorganchase/uitk-lab/src/window";
+import { WindowContext } from "@jpmorganchase/uitk-core/src/window";
+import { isDesktop } from "@jpmorganchase/uitk-core";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
+import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 
 import "./App.css";
-import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 
 export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>();

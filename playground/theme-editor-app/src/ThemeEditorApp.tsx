@@ -7,10 +7,9 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { isDesktop, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
-  isDesktop,
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
@@ -65,7 +64,7 @@ export const ThemeEditorApp = (props: {
   const positionInHistory = useRef<number>(0);
 
   useEffect(() => {
-    if (props.initialTheme !== undefined) setCurrentMode(props.initialTheme!);
+    if (props.initialTheme !== undefined) setCurrentMode(props.initialTheme);
   }, [props.initialTheme]);
 
   const onFileUpload = useCallback(

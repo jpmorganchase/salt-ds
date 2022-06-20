@@ -1,34 +1,36 @@
 import {
-  forwardRef,
+  makePrefixer,
+  useCharacteristic,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
+import {
+  Children,
+  ComponentType,
   createContext,
+  ForwardedRef,
+  forwardRef,
+  HTMLAttributes,
   memo,
-  useRef,
+  ReactElement,
+  Ref,
   useContext,
   useImperativeHandle,
   useMemo,
-  ComponentType,
-  ForwardedRef,
-  HTMLAttributes,
-  // ReactNode,
-  Ref,
-  Children,
-  ReactElement,
+  useRef,
 } from "react";
-import classnames from "classnames";
-import { FixedSizeList, VariableSizeList, areEqual } from "react-window";
-import { makePrefixer, useCharacteristic } from "@jpmorganchase/uitk-core";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
-import { useForkRef, useId } from "../utils";
+import { areEqual, FixedSizeList, VariableSizeList } from "react-window";
+import { useId } from "../utils";
+import { calcPreferredListHeight } from "./internal/calcPreferredListHeight";
+import { scrollIntoView } from "./internal/scrollIntoView";
+import { useListAutoSizer } from "./internal/useListAutoSizer";
+import { itemToString as defaultItemToString } from "./itemToString";
 import { ListItemBase } from "./ListItemBase";
-import { ListBaseProps } from "./ListProps";
 import { ListItemContext } from "./ListItemContext";
+import { ListBaseProps } from "./ListProps";
 import { useListStateContext } from "./ListStateContext";
 import { useListItem, useVirtualizedListItem } from "./useListItem";
-
-import { useListAutoSizer } from "./internal/useListAutoSizer";
-import { scrollIntoView } from "./internal/scrollIntoView";
-import { calcPreferredListHeight } from "./internal/calcPreferredListHeight";
-import { itemToString as defaultItemToString } from "./itemToString";
 
 import "./List.css";
 

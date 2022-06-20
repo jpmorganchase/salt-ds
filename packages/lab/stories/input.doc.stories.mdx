@@ -15,7 +15,13 @@ import {
 } from "css-variable-docgen-components";
 import { CustomStyling } from "./input.stories";
 
-<Meta title="Lab/Input/Doc" component={Input} />
+<Meta
+  title="Documentation/Lab/Input"
+  component={Input}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Input
 
@@ -179,10 +185,10 @@ The CSS is as simple as below:
 .uitk-dark.uitk-newapp {
   --newapp-highlight-color: rgb(241, 231, 64);
 
-  --uitkInput-border-radius: 5px;
-  --uitkInput-focused-outline-color: var(--uitk-color-green-100);
+  --uitkInput-borderRadius: 5px;
+  --uitkInput-focused-outlineColor: var(--uitk-color-green-100);
   --uitkInput-highlight-color: var(--newapp-highlight-color);
-  --uitkInput-font-family: arial;
+  --uitkInput-fontFamily: arial;
 }
 
 .uitk-light.uitk-newapp {

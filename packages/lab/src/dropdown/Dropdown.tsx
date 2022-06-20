@@ -1,3 +1,13 @@
+import {
+  isDesktop,
+  makePrefixer,
+  Portal,
+  PortalProps,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import {
   ComponentType,
@@ -12,8 +22,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { IconProps, makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import {
   ListBase,
   ListChangeHandler,
@@ -24,21 +32,18 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { useFloatingUI } from "../popper";
-import { useForkRef, useId } from "../utils";
+import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
-import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
-import { Portal, PortalProps } from "../portal";
-import { isDesktop, useWindow } from "../window";
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,

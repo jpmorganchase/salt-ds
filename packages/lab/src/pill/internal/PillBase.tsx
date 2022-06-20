@@ -1,31 +1,31 @@
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useTooltip,
+  useTooltipContext,
+} from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import {
   cloneElement,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  isValidElement,
+  KeyboardEvent,
   MutableRefObject,
   ReactElement,
-  KeyboardEvent,
   ReactEventHandler,
-  isValidElement,
   SyntheticEvent,
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  Button,
-  useIsomorphicLayoutEffect,
-  ButtonProps,
-} from "@jpmorganchase/uitk-core";
-
-import { useTooltip, useTooltipContext } from "../../tooltip";
-import { DeleteButton } from "./DeleteButton";
 import { pillBaseName } from "../constants";
+import { DeleteButton } from "./DeleteButton";
 
 import "./PillBase.css";
-import { useForkRef } from "../../utils";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -117,6 +117,7 @@ export const PillBase = forwardRef(function PillBase(
     // TODO: Not implemented. Consider to add `useImperativeHandle` like API to Tooltip?
     highlighted,
     icon,
+    onClick = noop,
     onDelete,
     onKeyDown = noop,
     onKeyUp = noop,
@@ -148,6 +149,10 @@ export const PillBase = forwardRef(function PillBase(
   const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyUp(event);
     setActive(false);
+  };
+
+  const handleClick = (event: SyntheticEvent<HTMLDivElement, Event>) => {
+    onClick(event);
   };
 
   const Component = deletable || clickable ? DivButton : "div";
@@ -192,6 +197,7 @@ export const PillBase = forwardRef(function PillBase(
     "data-testid": "pill",
     onKeyDown: disabled ? undefined : handleKeyDown,
     onKeyUp: disabled ? undefined : handleKeyUp,
+    onClick: disabled ? undefined : handleClick,
     role: "button",
     tabIndex: disabled ? -1 : 0,
     ...rest,

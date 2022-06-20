@@ -9,7 +9,13 @@ import {
   CSSVariableTable,
 } from "css-variable-docgen-components";
 
-<Meta title="Lab/Pill/Doc" component={Pill} />
+<Meta
+  title="Documentation/Lab/Pill"
+  component={Pill}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Pill
 
@@ -191,7 +197,7 @@ application and not internally, within the component. It provides developers
 finer-grained control of interactions.
 
 <Canvas>
-  <Story id="toolkit-pill--controlled-pill" />
+  <Story id="lab-pill--controlled-pill" />
 </Canvas>
 
 ## Accessibility

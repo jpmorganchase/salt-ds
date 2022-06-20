@@ -1,28 +1,31 @@
 import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
+import {
+  Button,
+  isDesktop,
+  makePrefixer,
+  Portal,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import {
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
   useRef,
   useState,
 } from "react";
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 
-import { useForkRef } from "../../utils";
-import { useOverflowDropdown } from "./useOverflowDropdown";
 import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
+import { useOverflowDropdown } from "./useOverflowDropdown";
 
-import { useFloatingUI } from "../../popper";
-import { isDesktop, useWindow } from "../../window";
-import { Portal } from "../../portal";
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
-
-export interface OverflowDropdownProps extends HTMLAttributes<HTMLDivElement> {}
+export type OverflowDropdownProps = HTMLAttributes<HTMLDivElement>;
 
 const withBaseName = makePrefixer("uitkOverflowDropdown");
 

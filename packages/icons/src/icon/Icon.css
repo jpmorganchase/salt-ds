@@ -1,0 +1,55 @@
+.uitkIcon {
+  --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
+  --icon-size: var(--uitkIcon-size, var(--uitk-size-graphic-small));
+}
+
+.uitkIcon {
+  fill: var(--uitkIcon-color, var(--icon-color));
+  letter-spacing: var(--uitkIcon-letter-spacing, normal);
+  speak: none;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  /* Reset 1.3 line height Toolkit sets */
+  line-height: 1;
+}
+
+.uitkIcon:hover:not(:active) {
+  --icon-color: var(--uitkIcon-color-hover, var(--uitk-text-secondary-foreground));
+}
+
+.uitkIcon:active,
+.uitkIcon.uitkIcon-active {
+  --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
+}
+
+.uitkIcon-content {
+  display: block;
+}
+
+.uitkIcon-small {
+  --icon-size: var(--uitk-size-graphic-small);
+}
+
+.uitkIcon-medium {
+  --icon-size: var(--uitk-size-graphic-medium);
+}
+
+.uitkIcon-large {
+  --icon-size: var(--uitk-size-graphic-large);
+}
+
+.uitkIcon .uitkIcon-content {
+  /* We don't want any font size impacting the size of Icon span */
+  font-size: 0;
+}
+
+.uitkIcon .uitkIcon-Svg-content {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+}
+
+.uitkIcon .uitkIcon-Svg-content > img {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+}

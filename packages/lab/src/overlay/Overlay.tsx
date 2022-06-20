@@ -1,13 +1,16 @@
+import {
+  Button,
+  makePrefixer,
+  Portal,
+  UseFloatingUIProps,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
-import { UseFloatingUIProps } from "../popper";
 import { useId } from "../utils";
 
 import "./Overlay.css";
-import { useWindow } from "../window";
-import { Portal } from "../portal";
 
 interface ADAExceptions {
   showClose?: boolean;

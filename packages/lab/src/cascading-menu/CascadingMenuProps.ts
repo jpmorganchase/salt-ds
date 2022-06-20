@@ -1,8 +1,8 @@
+import { UseFloatingUIProps } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, HTMLAttributes, ReactNode } from "react";
 import { ItemToStringFunction } from "../list";
 import { CascadingMenuListProps } from "./CascadingMenuList";
-import { UseFloatingUIProps } from "../popper";
-import { IconProps } from "@jpmorganchase/uitk-core";
 
 export interface ScreenBounds {
   clientHeight: number;

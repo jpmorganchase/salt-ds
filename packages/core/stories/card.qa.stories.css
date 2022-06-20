@@ -1,0 +1,32 @@
+.uitkCardQA {
+  --uitkDocGrid-width: 600px;
+  --uitkDocGrid-height: 616px;
+  --uitkDocGrid-gap: 8px;
+
+  --uitkCard-content-line-height: 1.3;
+  --uitkCard-content-h1-line-height: 1.3;
+}
+
+.uitkCardQA.uitkQAContainer {
+  height: unset important!;
+}
+
+.uitkCardQA .BackgroundBlock {
+  min-height: 0px;
+}
+
+.uitkCardQA .uitk-density-medium {
+  --uitkCard-content-h1-font-size: 24px;
+}
+
+.uitkCardQA .uitk-density-high {
+  --uitkCard-content-h1-font-size: 22px;
+}
+
+.uitkCardQA .uitk-density-low {
+  --uitkCard-content-h1-font-size: 28px;
+}
+
+.uitkCardQA .uitk-density-touch {
+  --uitkCard-content-h1-font-size: 32px;
+}

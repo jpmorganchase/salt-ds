@@ -1,9 +1,12 @@
 import { ComponentType, forwardRef, Ref, useRef } from "react";
 
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import warning from "warning";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 
+import { useFormFieldProps } from "../form-field-context";
+import { useWidth } from "../list/internal/useWidth";
+import { useId } from "../utils";
 import {
   DefaultComboBox,
   DefaultComboBoxProps,
@@ -12,9 +15,7 @@ import {
   MultiSelectComboBox,
   MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
-import { useFormFieldProps } from "../form-field-context";
-import { useForkRef, useId } from "../utils";
-import { useWidth } from "../list/internal/useWidth";
+
 import "./ComboBox.css";
 
 const withBaseName = makePrefixer("uitkComboBox");

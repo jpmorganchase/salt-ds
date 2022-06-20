@@ -23,12 +23,23 @@ Components that hold mutable data and allow for data entry.
     <DocGrid>
       <CursorBlock cursor="--uitk-editable-cursor-active" />
       <CursorBlock cursor="--uitk-editable-cursor-hover" />
+      <CursorBlock cursor="--uitk-editable-cursor-disabled" />
+      <CursorBlock cursor="--uitk-editable-cursor-readonly" />
       <LineBlockCell />
-      <LineBlockCode>--uitk-editable-border-style</LineBlockCode>
-      <LineBlock lineWidth="--uitk-editable-border-width" />
-      <LineBlock lineWidth="--uitk-editable-border-width-hover" />
-      <LineBlock lineWidth="--uitk-editable-border-width-active" />
-      <LineBlock lineWidth="--uitk-editable-border-width-readonly" />
+      <LineBlockCode>--uitk-editable-borderStyle</LineBlockCode>
+      <LineBlockCell />
+      <LineBlockCode>--uitk-editable-borderStyle-hover</LineBlockCode>
+      <LineBlockCell />
+      <LineBlockCode>--uitk-editable-borderStyle-active</LineBlockCode>
+      <LineBlockCell />
+      <LineBlockCode>--uitk-editable-borderStyle-disabled</LineBlockCode>
+      <LineBlockCell />
+      <LineBlockCode>--uitk-editable-borderStyle-readonly</LineBlockCode>
+      <LineBlock lineWidth="--uitk-editable-borderWidth" />
+      <LineBlock lineWidth="--uitk-editable-borderWidth-hover" />
+      <LineBlock lineWidth="--uitk-editable-borderWidth-active" />
+      <LineBlock lineWidth="--uitk-editable-borderWidth-disabled" />
+      <LineBlock lineWidth="--uitk-editable-borderWidth-readonly" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -38,10 +49,11 @@ Components that hold mutable data and allow for data entry.
 <Canvas>
   <Story name="Colors">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-editable-border-color" />
-      <ColorBlock colorVar="--uitk-editable-border-color-active" />
-      <ColorBlock colorVar="--uitk-editable-border-color-hover" />
-      <ColorBlock colorVar="--uitk-editable-border-color-readonly" />
+      <ColorBlock colorVar="--uitk-editable-borderColor" />
+      <ColorBlock colorVar="--uitk-editable-borderColor-active" />
+      <ColorBlock colorVar="--uitk-editable-borderColor-hover" />
+      <ColorBlock colorVar="--uitk-editable-borderColor-disabled" />
+      <ColorBlock colorVar="--uitk-editable-borderColor-readonly" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -52,6 +64,10 @@ Components that hold mutable data and allow for data entry.
   <Story name="Medium emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-editable-background-medium" />
+      <ColorBlock colorVar="--uitk-editable-background-hover-medium" />
+      <ColorBlock colorVar="--uitk-editable-background-active-medium" />
+      <ColorBlock colorVar="--uitk-editable-background-disabled-medium" />
+      <ColorBlock colorVar="--uitk-editable-background-readonly-medium" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -62,6 +78,10 @@ Components that hold mutable data and allow for data entry.
   <Story name="High emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-editable-background-high" />
+      <ColorBlock colorVar="--uitk-editable-background-hover-high" />
+      <ColorBlock colorVar="--uitk-editable-background-active-high" />
+      <ColorBlock colorVar="--uitk-editable-background-disabled-high" />
+      <ColorBlock colorVar="--uitk-editable-background-readonly-high" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -72,6 +92,10 @@ Components that hold mutable data and allow for data entry.
   <Story name="Low emphasis">
     <DocGrid>
       <ColorBlock colorVar="--uitk-editable-background-low" />
+      <ColorBlock colorVar="--uitk-editable-background-hover-low" />
+      <ColorBlock colorVar="--uitk-editable-background-active-low" />
+      <ColorBlock colorVar="--uitk-editable-background-disabled-low" />
+      <ColorBlock colorVar="--uitk-editable-background-readonly-low" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -1,24 +1,22 @@
 import { useState } from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
+import { Card, GridLayout, GridItem } from "@jpmorganchase/uitk-core";
+import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import {
   ParentChildLayout,
   StackedViewElement,
   useIsStacked,
   Tabstrip,
   Tab,
-  GridLayout,
-  GridItem,
-  Card,
   Avatar,
 } from "@jpmorganchase/uitk-lab";
 import { Button } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
+
 import "./styles.css";
-import { FlexContent } from "./flex-item.stories";
 
 export default {
-  title: "Layout/ParentChildLayout",
+  title: "Lab/Layout/ParentChildLayout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {
@@ -35,12 +33,19 @@ const parentChildItemStyles = {
 };
 
 const parent = (
-  <FlexContent style={{ ...parentChildItemStyles, minWidth: 150 }}>
+  <div
+    className="layout-content"
+    style={{ ...parentChildItemStyles, minWidth: 150 }}
+  >
     Parent
-  </FlexContent>
+  </div>
 );
 
-const child = <FlexContent style={parentChildItemStyles}>Child</FlexContent>;
+const child = (
+  <div className="layout-active-content" style={parentChildItemStyles}>
+    Child
+  </div>
+);
 
 const DefaultParentChildLayoutStory: ComponentStory<
   typeof ParentChildLayout
@@ -244,3 +249,60 @@ export const ToolkitParentChildLayoutResponsive = Responsive.bind({});
 ToolkitParentChildLayoutResponsive.args = {
   stackedAtBreakpoint,
 };
+
+// TODO: add new example for parent and child
+// const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
+//   const [selectedTab, handleTabSelection] = useTabSelection();
+
+//   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+
+//   const isStacked = useIsStacked(stackedAtBreakpoint);
+
+//   const handleParent = () => {
+//     setCurrentView("parent");
+//   };
+//   const handleChild = () => {
+//     setCurrentView("child");
+//   };
+
+//   const parent = (
+//     <Tabstrip
+//       onChange={handleTabSelection}
+//       orientation="vertical"
+//       onClick={() => {
+//         if (isStacked) {
+//           handleChild();
+//         }
+//       }}
+//       value={selectedTab}
+//       style={{ width: "100%", minWidth: 300 }}
+//     >
+//       {tabs.map((_, index) => (
+//         <Tab label="Medium" key={index} />
+//       ))}
+//     </Tabstrip>
+//   );
+
+//   const backButton = isStacked && (
+//     <Button variant="cta" onClick={handleParent}>
+//       <DoubleChevronLeftIcon size={12} />
+//       {` Return`}
+//     </Button>
+//   );
+
+//   return (
+//     <div style={containerStyles}>
+//       <ParentChildLayout
+//         {...args}
+//         stackedViewElement={currentView}
+//         parent={parent}
+//         child={<GridLayoutComposite />}
+//       />
+//     </div>
+//   );
+// };
+
+// export const ParentChildLayoutComposite = Dashboard.bind({});
+// ParentChildLayoutComposite.args = {
+//   stackedAtBreakpoint,
+// };
