@@ -11259,7 +11259,7 @@ __metadata:
     css-loader: ^6.0.0
     electron: 17.0.0
     electron-squirrel-startup: ^1.0.0
-    esbuild-loader: ^2.18.0
+    esbuild-loader: ^2.19.0
     eslint: ^7.32.0
     eslint-plugin-import: ^2.25.0
     fork-ts-checker-webpack-plugin: ^6.0.1
@@ -12294,7 +12294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild-loader@npm:2.18.0, esbuild-loader@npm:^2.18.0":
+"esbuild-loader@npm:2.18.0":
   version: 2.18.0
   resolution: "esbuild-loader@npm:2.18.0"
   dependencies:
@@ -12307,6 +12307,22 @@ __metadata:
   peerDependencies:
     webpack: ^4.40.0 || ^5.0.0
   checksum: 744b9f8c8fadece3feb3eb50d4dcacafd9e528be0f4c345188ba9f549a6384bd34e3fba66d22df25ec240bb7edbff4da2787d621299f134255f22c868196d091
+  languageName: node
+  linkType: hard
+
+"esbuild-loader@npm:^2.19.0":
+  version: 2.19.0
+  resolution: "esbuild-loader@npm:2.19.0"
+  dependencies:
+    esbuild: ^0.14.39
+    joycon: ^3.0.1
+    json5: ^2.2.0
+    loader-utils: ^2.0.0
+    tapable: ^2.2.0
+    webpack-sources: ^2.2.0
+  peerDependencies:
+    webpack: ^4.40.0 || ^5.0.0
+  checksum: 7dc8deca3ab6f8684437359ce6d407d18622ba7cb7f0a22f44861f72b34405431070a6137e366232bea2418e37a54fe04299951a588fec54058f047e65616adc
   languageName: node
   linkType: hard
 
