@@ -4,7 +4,7 @@ import cx from "classnames";
 import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
 import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
-import { useChangeView } from "../utils";
+import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 export const LAYER_POSITION = [
   "center",
@@ -73,7 +73,9 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       }
     }, [open, showComponent, disableAnimations, hasAnimations]);
 
-    const fullScreen = useChangeView(fullScreenAtBreakpoint);
+    const fullScreen = useIsViewportLargerThanBreakpoint(
+      fullScreenAtBreakpoint
+    );
 
     const anchored = position !== "center" && !fullScreen;
 

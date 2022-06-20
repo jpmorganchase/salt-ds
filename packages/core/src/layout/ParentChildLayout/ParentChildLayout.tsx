@@ -8,7 +8,8 @@ import {
   ReactNode,
 } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
-import { useChangeView } from "../utils";
+import "./ParentChildLayout.css";
+import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import "./ParentChildLayout.css";
 import { FlexLayout } from "../FlexLayout";
@@ -92,7 +93,7 @@ export const ParentChildLayout = forwardRef<
   },
   ref
 ) {
-  const stackedView = useChangeView(stackedAtBreakpoint);
+  const stackedView = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
 
   const parentChildDirection = getDirection(orientation, stackedViewElement);
 

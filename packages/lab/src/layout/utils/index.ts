@@ -1,1 +1,1 @@
-export * from "./useChangeView";
+export * from "./useIsViewportLargerThanBreakpoint";
