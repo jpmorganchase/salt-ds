@@ -10,7 +10,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
 
 export default {
-  title: "Layout/LayerLayout",
+  title: "Lab/Layout/LayerLayout",
   component: LayerLayout,
   argTypes: {
     position: {

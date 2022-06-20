@@ -7,7 +7,13 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultLayerLayout } from "./layer-layout.stories";
 
-<Meta title="Layout/Docs/LayerLayout" component={LayerLayout} />
+<Meta
+  title="Documentation/Lab/Layout/LayerLayout"
+  component={LayerLayout}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Layer Layout
 
@@ -16,9 +22,7 @@ Defines a layer above the existing layout structure for UI elements to be displa
 It can be used to build dialog or drawer components and it can be positioned in different parts of the screen.
 
 <Canvas>
-  <Story name="Default Layer Layout">
-    <DefaultLayerLayout />
-  </Story>
+  <Story id="lab-layout-layerlayout--default-layer-layout" />
 </Canvas>
 
 ## API
@@ -36,33 +40,31 @@ import {LayerLayout} from "@jpmorganchase/uitk-lab";
 ### Top positioned
 
 <Canvas>
-  <Story id="layout-layerlayout--toolkit-layer-layout-top" />
+  <Story id="lab-layout-layerlayout--toolkit-layer-layout-top" />
 </Canvas>
 
 ### Right positioned
 
 <Canvas>
-  <Story id="layout-layerlayout--toolkit-layer-layout-right" />
+  <Story id="lab-layout-layerlayout--toolkit-layer-layout-right" />
 </Canvas>
 
 ### Left positioned
 
 <Canvas>
-  <Story id="layout-layerlayout--toolkit-layer-layout-left" />
+  <Story id="lab-layout-layerlayout--toolkit-layer-layout-left" />
 </Canvas>
 
 ### Bottom positioned
 
 <Canvas>
-  <Story id="layout-layerlayout--toolkit-layer-layout-bottom" />
+  <Story id="lab-layout-layerlayout--toolkit-layer-layout-bottom" />
 </Canvas>
 
 ## Anatomy
 
 <Canvas>
-  <Story name="Layer Layout Anatomy" inline={false} height={500}>
-    <ComponentAnatomy showLegend>
-      <LayerLayout open={false} />
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showLegend>
+    <LayerLayout open={false} />
+  </ComponentAnatomy>
 </Canvas>
