@@ -362,11 +362,7 @@ const cardText =
 
 const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout
-      {...args}
-      columns={3}
-      className="grid-layout-container"
-    >
+    <GridLayout {...args} columns={3} className="grid-layout-container">
       <GridItem rowSpan={2}>
         <h2>My contacts</h2>
         <Card>

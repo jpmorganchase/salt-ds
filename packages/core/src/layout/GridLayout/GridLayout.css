@@ -5,15 +5,15 @@
 /* Default variables applied to the root element */
 .uitkGridLayout {
   --grid-layout-space: 1fr;
-  --grid-layout-row-gap: var(--grid-layout-gap-density-multiplier, 3);
-  --grid-layout-column-gap: var(--grid-layout-gap-density-multiplier, 3);
+  --grid-layout-rowGap: var(--grid-layout-gap-density-multiplier, 3);
+  --grid-layout-columnGap: var(--grid-layout-gap-density-multiplier, 3);
 }
 
 /* Style applied to the root element */
 .uitkGridLayout {
   display: grid;
-  column-gap: calc(var(--uitk-size-unit) * var(--grid-layout-column-gap));
-  row-gap: calc(var(--uitk-size-unit) * var(--grid-layout-row-gap));
+  column-gap: calc(var(--uitk-size-unit) * var(--grid-layout-columnGap));
+  row-gap: calc(var(--uitk-size-unit) * var(--grid-layout-rowGap));
   grid-template-columns: repeat(var(--grid-layout-columns), var(--grid-layout-space));
   grid-template-rows: repeat(var(--grid-layout-rows), var(--grid-layout-space));
   grid-auto-columns: auto;

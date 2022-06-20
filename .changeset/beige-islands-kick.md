@@ -1,0 +1,5 @@
+---
+"@jpmorganchase/uitk-core": minor
+---
+
+Update Layouts documentation, change internal CSS variables for grid layout columnGap and rowGap
