@@ -49,7 +49,9 @@ export const CompareWithOriginalToolkit: ComponentStory<
       className="uitkCheckboxQA"
       imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png"
     >
-      <AllExamplesGrid />
+      <div className="backwardsCompat">
+        <AllExamplesGrid />
+      </div>
     </QAContainer>
   );
 };
