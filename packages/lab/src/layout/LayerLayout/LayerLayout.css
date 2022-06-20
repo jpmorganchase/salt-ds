@@ -1,19 +1,19 @@
 .uitkLayerLayout {
-  --layer-border-color: var(--uitkLayerLayout-border-color, var(--uitk-container-border-color-medium));
-  --layer-box-shadow: var(--uitkLayerLayout-box-shadow, var(--uitk-overlayable-shadow-modal));
-  --layer-background-color: var(--uitkLayerLayout-background-color, var(--uitk-container-background-medium));
-  --layer-border-width: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
+  --layer-borderColor: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderColor-medium));
+  --layer-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
+  --layer-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
+  --layer-borderWidth: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
   --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
-  --layer-border-style: var(--uitkLayerLayout-border-style, var(--uitk-container-border-style));
+  --layer-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
   --layer-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
   --uitk-animation-duration: 0.2s;
 }
 
 .uitkLayerLayout {
-  background: var(--layer-background-color);
-  border-color: var(--layer-border-color);
-  border-width: var(--layer-border-width);
-  border-style: var(--layer-border-style);
+  background: var(--layer-background);
+  border-color: var(--layer-borderColor);
+  border-width: var(--layer-borderWidth);
+  border-style: var(--layer-borderStyle);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
   max-width: 100%;
   overflow: auto;
   padding: var(--layer-padding);
-  box-shadow: var(--uitkLayerLayout-box-shadow, var(--layer-box-shadow));
+  box-shadow: var(--uitkLayerLayout-boxShadow, var(--layer-boxShadow));
   z-index: calc(var(--uitk-zindex-appheader) - 1);
 }
 
