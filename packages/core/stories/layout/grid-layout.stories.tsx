@@ -364,7 +364,6 @@ const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <GridLayout
       {...args}
-      rows={2}
       columns={3}
       className="grid-layout-container"
     >
