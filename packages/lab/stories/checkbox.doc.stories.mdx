@@ -1,0 +1,122 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Checkbox } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./checkbox.stories";
+
+<Meta
+  title="Documentation/Lab/Checkbox"
+  component={Checkbox}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Checkbox
+
+A Checkbox allows the user to turn a specific value on or off. The value can be an independent value or a selection of one or more values from a given set of choices (structured as a Checkbox Group).
+
+## Default
+
+Standalone checkboxes independently select a value and typically appear on preference panes. When the user needs to pick from related choices, use a Checkbox Group.
+
+<Canvas>
+  <Story id="lab-checkbox--default" />
+</Canvas>
+
+## Disabled
+
+Disabled checkboxes are shown with .4 opacity and are not able to be focused and will show a 'not-allowed' cursor.
+
+<Canvas>
+  <Story id="lab-checkbox--disabled" />
+</Canvas>
+
+## Controlled
+
+Controlled checkboxes require events to trigger the state change. The application must track state and update checkbox props manually. Useful for when logic or validation needs to be applied or a request should happen when updating a form.
+
+<Canvas>
+  <Story id="lab-checkbox--controlled-group" />
+</Canvas>
+
+## Uncontrolled
+
+<Canvas>
+  <Story id="lab-checkbox--uncontrolled-group" />
+</Canvas>
+
+## Horizontal Row Group
+
+The checkbox group layout can be set to horizontal simply by adding the prop 'row' to the CheckboxGroup component.
+
+<Canvas>
+  <Story id="lab-checkbox--horizontal-group" />
+</Canvas>
+
+# API
+
+```
+import { Checkbox } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<Story name="Props">
+  <ArgsTable of={Checkbox} />
+</Story>
+
+## HTML Anatomy of Checkbox component
+
+<Canvas>
+  <Story name="HTML Anatomy">
+    <ComponentAnatomy showLegend>
+      <Checkbox />
+    </ComponentAnatomy>
+    <ComponentAnatomy showLegend>
+      <Checkbox defaultChecked={true} label="Checked" />
+    </ComponentAnatomy>
+    <ComponentAnatomy showLegend>
+      <Checkbox disabled label="Disabled" />
+    </ComponentAnatomy>
+  </Story>
+</Canvas>
+
+## CSS Class
+
+<Story name="CSS Classes">
+  <CSSClassTable of={Checkbox} />
+</Story>
+
+## Characteristics Used
+
+<Story name="Characteristics">
+  <CharacteristicUsage of={Checkbox} />
+</Story>
+
+## --uitkCheckbox CSS Custom Property API
+
+The default styling values for most Checkbox attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Checkbox. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Checkbox, but not defined by Checkbox. They can be defined via a container or
+a custom class name to override Checkbox styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<Story name="Custom Property API">
+  <CSSVariableTable of={Checkbox} />
+</Story>
+
+## Customising Checkbox styles
+
+<Canvas>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>

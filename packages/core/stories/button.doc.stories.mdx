@@ -1,12 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import {
-  DownloadIcon,
-  SearchIcon,
-  SendIcon,
-  SettingsSolidIcon,
-} from "@jpmorganchase/uitk-icons";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import { CustomStylingExample } from "./button.stories";
 import {
@@ -32,11 +26,9 @@ A Button executes an action when clicked. Button labels should use only one or t
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
 <Canvas>
-  <Story name="Button Variants" decorators={[withFlexGap]}>
-    <Button variant="cta">CTA</Button>
-    <Button variant="primary">Primary</Button>
-    <Button variant="secondary">Secondary</Button>
-  </Story>
+  <Story id="core-button--cta" />
+  <Story id="core-button--primary" />
+  <Story id="core-button--secondary" />
 </Canvas>
 
 ## Button with icon and label
@@ -44,20 +36,7 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
 Icons can be put before or after text, or used alone.
 
 <Canvas>
-  <Story name="Button with icon and label" decorators={[withFlexGap]}>
-    <Button variant="cta">
-      Send <SendIcon size={12} />
-    </Button>
-    <Button variant="primary">
-      <SearchIcon size={12} /> Search
-    </Button>
-    <Button variant="secondary">
-      Setting <SettingsSolidIcon size={12} />
-    </Button>
-    <Button>
-      <DownloadIcon size={12} />
-    </Button>
-  </Story>
+  <Story id="core-button--with-icon-and-label" />
 </Canvas>
 
 ## Button as link, div etc
@@ -65,28 +44,11 @@ Icons can be put before or after text, or used alone.
 Sometimes a link must be styled as a button. The HTML must use the correct element, in order that browser built-in features function as expected.
 In this case, "Open link in new tab" should be available in the context menu. This is achieved with the `elementType` prop.
 
-<Canvas>
-  <Story name="Button as Link">
-    <Button
-      elementType="a"
-      href={window.location.href}
-      target="_blank"
-      aria-label="Button with HREF, opens in new window"
-    >
-      Link
-    </Button>
-  </Story>
-</Canvas>
-
 This is also useful where Button elements might otherwise be nested, a structure which would be flagged by accessibility tests as an error. An inner button can be
 rendered as a `div`.
 
 <Canvas>
-  <Story name="Button as Div">
-    <Button elementType="div" aria-label="Button as Div">
-      Div Button
-    </Button>
-  </Story>
+  <Story id="core-button--polymorphic-buttons" />
 </Canvas>
 
 TypeScript users, note that in the above examples, strict typing is still enforced, so if `elementType` is set to `a` then the Component will be be TypeChecked as
@@ -100,7 +62,9 @@ import { Button } from "@jpmorganchase/uitk-core";
 
 ## Props
 
-<ArgsTable of={Button} />
+<Story name="Props">
+  <ArgsTable of={Button} />
+</Story>
 
 ## HTML Anatomy of a Button
 
@@ -111,32 +75,34 @@ export const Link = ({ children, to, ...props }) => (
 );
 
 <Canvas>
-  <ComponentAnatomy>
-    <Button aria-label="Simple Button">Default</Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button elementType="div" aria-label="Button as Div" variant="secondary">
-      Secondary Div
-    </Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button variant="cta" aria-label="CTA with Icon">
-      CTA with Icon <SendIcon size={12} />
-    </Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button
-      elementType={Link}
-      to="/"
-      aria-label="Link as elementType"
-      role={null}
-    >
-      Custom Link
-    </Button>
-  </ComponentAnatomy>
+  <Story name="HTML Anatomy">
+    <ComponentAnatomy>
+      <Button aria-label="Simple Button">Default</Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button elementType="div" aria-label="Button as Div" variant="secondary">
+        Secondary Div
+      </Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button variant="cta" aria-label="CTA with Icon">
+        CTA with Icon <SendIcon size={12} />
+      </Button>
+    </ComponentAnatomy>
+    <br />
+    <ComponentAnatomy>
+      <Button
+        elementType={Link}
+        to="/"
+        aria-label="Link as elementType"
+        role={null}
+      >
+        Custom Link
+      </Button>
+    </ComponentAnatomy>
+  </Story>
 </Canvas>
 
 The Custom Link example above uses a simplified `Link` component defined as below. In reality, this might be A
@@ -154,11 +120,15 @@ export const Link = ({ children, to, ...props }) => (
 
 ## CSS Class
 
-<CSSClassTable of={Button} />
+<Story name="CSS Classes">
+  <CSSClassTable of={Button} />
+</Story>
 
 ## Characteristics Used
 
-<CharacteristicUsage of={Button} />
+<Story name="Characteristics">
+  <CharacteristicUsage of={Button} />
+</Story>
 
 ## --uitkButton CSS Custom Property API
 
@@ -169,7 +139,9 @@ The CSS custom properties below are consumed by Button, but not defined by Butto
 a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
-<CSSVariableTable of={Button} />
+<Story name="Custom Property API">
+  <CSSVariableTable of={Button} />
+</Story>
 
 ## Customising Button styles - a fully worked through example
 
@@ -180,7 +152,7 @@ Below is an illustration of some of the buttons used in a new application. Compa
 - visual treatments not present on standard toolkit buttons - background gradients, border styling
 
 <Canvas>
-  <Story name="Custom Button Styling" decorators={[withFlexGap]}>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
     <CustomStylingExample density={"high"} />
   </Story>
 </Canvas>

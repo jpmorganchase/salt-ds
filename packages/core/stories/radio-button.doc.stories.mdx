@@ -31,34 +31,13 @@ Radio groups allow selection of one or more values from a given set of choices. 
 - If there are more than 5 choices, use a Multiselect control instead.
 
 <Canvas>
-  <Story name="Vertical Group" decorators={[withFlexGap]}>
-    <RadioButtonGroup
-      aria-label="Uncontrolled Example"
-      defaultValue="forward"
-      legend={"Legend"}
-      name={"Name"}
-    >
-      <RadioButton key="spot" label="Spot" value="spot" />
-      <RadioButton key="forward" label="Forward" value="forward" />
-      <RadioButton
-        disabled
-        key="option"
-        label="Option (disabled)"
-        value="option"
-      />
-    </RadioButtonGroup>
-  </Story>
+  <Story id="lab-radio-button--uncontrolled-radio-button-group" />
 </Canvas>
 
 ## Row Group
 
 <Canvas>
-  <Story name="Row Group" decorators={[withFlexGap]}>
-    <RadioButtonGroup legend={"Legend"} name={"Name"} row>
-      <RadioButton key="spot" label="Spot" value="spot" />
-      <RadioButton key="forward" label="Forward" value="forward" />
-    </RadioButtonGroup>
-  </Story>
+  <Story id="lab-radio-button--horizontal-radio-button-group" />
 </Canvas>
 
 ## Controlled
@@ -91,23 +70,31 @@ import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-core";
 
 ## Props
 
-<ArgsTable of={RadioButton} />
+<Story name="Props">
+  <ArgsTable of={RadioButton} />
+</Story>
 
 ## HTML Anatomy of RadioButton component
 
 <Canvas>
-  <ComponentAnatomy>
-    <RadioButton key="spot" label="Spot" value="spot" />
-  </ComponentAnatomy>
+  <Story name="HTML Anatomy">
+    <ComponentAnatomy>
+      <RadioButton key="spot" label="Spot" value="spot" />
+    </ComponentAnatomy>
+  </Story>
 </Canvas>
 
 ## CSS Class
 
-<CSSClassTable of={RadioButton} />
+<Story name="CSS Classes">
+  <CSSClassTable of={RadioButton} />
+</Story>
 
 ## Characteristics Used
 
-<CharacteristicUsage of={RadioButton} />
+<Story name="Characteristics">
+  <CharacteristicUsage of={RadioButton} />
+</Story>
 
 ## --uitkRadioButton CSS Custom Property API
 
@@ -118,10 +105,12 @@ The CSS custom properties below are consumed by RadioButton, but not defined by 
 a custom class name to override RadioButton styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
-<CSSVariableTable of={RadioButton} />
+<Story name="Custom Property API">
+  <CSSVariableTable of={RadioButton} />
+</Story>
 
 ## Customising RadioButton styles
 
 <Canvas>
-  <Story name="Custom RadioButton Styling" decorators={[withFlexGap]}></Story>
+  <Story name="Custom Styling" decorators={[withFlexGap]}></Story>
 </Canvas>

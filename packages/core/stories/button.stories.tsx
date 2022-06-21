@@ -5,7 +5,13 @@ import {
   Density,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
-import { NotificationIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
+import {
+  DownloadIcon,
+  SearchIcon,
+  SendIcon,
+  SettingsSolidIcon,
+  NotificationIcon,
+} from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import "./Theme.stories.newapp-theme.css";
@@ -116,6 +122,25 @@ export const PolymorphicButtons: ComponentStory<typeof Button> = () => {
       <Button elementType="div">Div Button</Button>
       <Button elementType={Link} to="/">
         Custom Link
+      </Button>
+    </div>
+  );
+};
+
+export const WithIconAndLabel: ComponentStory<typeof Button> = () => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Button variant="cta">
+        Send <SendIcon size={12} />
+      </Button>
+      <Button variant="primary">
+        <SearchIcon size={12} /> Search
+      </Button>
+      <Button variant="secondary">
+        Setting <SettingsSolidIcon size={12} />
+      </Button>
+      <Button>
+        <DownloadIcon size={12} />
       </Button>
     </div>
   );

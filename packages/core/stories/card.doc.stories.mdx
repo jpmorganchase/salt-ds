@@ -26,19 +26,22 @@ import {
 
 A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
 
-## Card Component
-
-Card components have two levels of emphasis; medium (default) and high.
+## Default
 
 <Canvas>
-  <Story name="Card" decorators={[withFlexGap]}>
-    <Card>
-      <div>
-        <h1>This is Card</h1>
-        <span>Using Nested DOM Elements</span>
-      </div>
-    </Card>
-  </Story>
+  <Story id="core-card--default-card" />
+</Canvas>
+
+## Disabled
+
+<Canvas>
+  <Story id="core-card--disabled" />
+</Canvas>
+
+## Interactable
+
+<Canvas>
+  <Story id="core-card--interactable" />
 </Canvas>
 
 # API
@@ -49,29 +52,37 @@ import { Card } from "@jpmorganchase/uitk-core";
 
 ## Props
 
-<ArgsTable of={Card} />
+<Story name="Props">
+  <ArgsTable of={Card} />
+</Story>
 
 ## HTML Anatomy of a Card
 
 <Canvas>
-  <ComponentAnatomy>
-    <DefaultCard />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Disabled />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Interactable />
-  </ComponentAnatomy>
+  <Story name="HTML Anatomy">
+    <ComponentAnatomy>
+      <DefaultCard />
+    </ComponentAnatomy>
+    <ComponentAnatomy>
+      <Disabled />
+    </ComponentAnatomy>
+    <ComponentAnatomy>
+      <Interactable />
+    </ComponentAnatomy>
+  </Story>
 </Canvas>
 
 ## CSS Class
 
-<CSSClassTable of={Card} />
+<Story name="CSS Classes">
+  <CSSClassTable of={Card} />
+</Story>
 
 ## Characteristics Used
 
-<CharacteristicUsage of={Card} />
+<Story name="Characteristics">
+  <CharacteristicUsage of={Card} />
+</Story>
 
 ## --uitkCard CSS Custom Property API
 
@@ -82,7 +93,9 @@ The CSS custom properties below are consumed by Card, but not defined by Card. T
 a custom class name to override card styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
-<CSSVariableTable of={Card} />
+<Story name="Custom Property API">
+  <CSSVariableTable of={Card} />
+</Story>
 
 ## Customising Card styles - a simple example
 
@@ -90,7 +103,7 @@ Because Card is such a simple component, custom styling is straightforward. In t
 tweak the look of a Card. The CSS variables above have been defined in the `newapp` theme (see Button example for fuller explanation).
 
 <Canvas>
-  <Story name="Custom Panel Styling" decorators={[withFlexGap]}>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
     <CustomStyling />
   </Story>
 </Canvas>
