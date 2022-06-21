@@ -6,7 +6,6 @@
   --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
   --layer-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
   --layer-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
-  --uitk-animation-duration: 0.2s;
 }
 
 .uitkLayerLayout {
@@ -61,11 +60,11 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-top.uitkLayerLayout-enter-animation {
-  animation: slide-in-bottom var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-in-bottom);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-top.uitkLayerLayout-exit-animation {
-  animation: slide-out-bottom var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-out-bottom);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right {
@@ -75,11 +74,11 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-enter-animation {
-  animation: slide-in-right var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-in-right);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-exit-animation {
-  animation: slide-out-right var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-out-right);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left {
@@ -89,11 +88,11 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-enter-animation {
-  animation: slide-in-left var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-in-left);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-exit-animation {
-  animation: slide-out-left var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-out-left);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-bottom {
@@ -104,9 +103,9 @@
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-bottom.uitkLayerLayout-enter-animation {
-  animation: slide-in-top var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-in-top);
 }
 
 .uitkLayerLayout-anchor.uitkLayerLayout-bottom.uitkLayerLayout-exit-animation {
-  animation: slide-out-top var(--uitk-animation-duration) var(--uitk-animation-timing-function);
+  animation: var(--uitk-drawer-animation-slide-out-top);
 }
