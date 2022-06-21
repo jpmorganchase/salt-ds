@@ -1,37 +1,27 @@
-/* Styles applied to root component (RadioButton) */
-.uitk-density-medium .uitkRadioButton {
-  --radio-button-label-margin-left: 6px;
-  --radio-button-label-margin-top: 6px;
+/* Styles applied to root component  */
+.uitk-density-medium {
+  --radioButton-label-marginTop: 6px;
+  --radioButton-row-marginRight: 24px;
 }
 
-.uitk-density-high .uitkRadioButton {
-  --radio-button-label-margin-left: 3px;
-  --radio-button-label-margin-top: 3px;
+.uitk-density-high {
+  --radioButton-label-marginTop: 3px;
+  --radioButton-row-marginRight: 12px;
 }
 
-.uitk-density-low .uitkRadioButton {
-  --radio-button-label-margin-left: 9px;
-  --radio-button-label-margin-top: 9px;
+.uitk-density-low {
+  --radioButton-label-marginTop: 9px;
+  --radioButton-row-marginRight: 36px;
 }
 
-.uitk-density-touch .uitkRadioButton {
-  --radio-button-label-margin-left: 12px;
-  --radio-button-label-margin-top: 12px;
+.uitk-density-touch {
+  --radioButton-label-marginTop: 12px;
+  --radioButton-row-marginRight: 48px;
 }
 
 .uitkRadioButton {
   cursor: pointer;
   display: block;
-}
-
-/* Styles applied to root component on hover */
-.uitkRadioButton:hover {
-  background: var(--uitkRadioButton-background-hover, var(--uitk-selectable-background));
-}
-
-/* Styles applied to root component on hover if `checked={true}` */
-.uitkRadioButton-checked:hover {
-  background: var(--uitkRadioButton-checked-background-hover, var(--uitk-selectable-background));
 }
 
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
@@ -51,7 +41,7 @@
   align-items: flex-start;
   margin-left: 0;
   margin-right: 0;
-  margin-top: var(--uitkRadioButton-radio-label-margin-top, var(--radio-button-label-margin-top));
+  margin-top: var(--uitkRadioButton-label-marginTop, var(--radioButton-label-marginTop));
   vertical-align: baseline;
 }
 
@@ -61,31 +51,6 @@
   vertical-align: baseline;
 }
 
-/* Styles applied to RadioButton displayed in group when `row=true` */
-.uitk-density-medium .uitkFormGroup-row .uitkRadioButton {
-  --radio-button-horizontal-label-container-margin-right: 24px;
-}
-.uitk-density-high .uitkFormGroup-row .uitkRadioButton {
-  --radio-button-horizontal-label-container-margin-right: 12px;
-}
-.uitk-density-low .uitkFormGroup-row .uitkRadioButton {
-  --radio-button-horizontal-label-container-margin-right: 36px;
-}
-.uitk-density-touch .uitkFormGroup-row .uitkRadioButton {
-  --radio-button-horizontal-label-container-margin-right: 48px;
-}
-
-.uitkFormGroup.uitkFormGroup-row > .uitkRadioButton {
-  margin-right: var(--uitkRadioButton-label-container-margin-right, var(--radio-button-horizontal-label-container-margin-right));
-}
-
-/* Styles applied to label */
-.uitkRadioButton-labelText {
-  color: var(--uitkRadioButton-label-text-color, var(--uitk-text-primary-foreground));
-  flex-grow: 1;
-  font-size: var(--uitkRadioButton-label-font-size, var(--uitk-text-fontSize));
-  letter-spacing: 0;
-  line-height: var(--uitkRadioButton-label-line-height, var(--uitk-typography-lineHeight));
-  margin-left: var(--uitkRadioButton-radio-label-margin-left, var(--radio-button-label-margin-left));
-  min-height: var(--uitkRadioButton-label-min-height, var(--uitk-text-minHeight));
+.uitkFormGroup-row > .uitkRadioButton {
+  margin-right: var(--uitkFormGroup-row-marginRight, var(--radioButton-row-marginRight));
 }

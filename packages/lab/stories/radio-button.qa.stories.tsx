@@ -14,37 +14,20 @@ export default {
 
 export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
   return (
-    <div className="backwardsCompat">
-      <AllRenderer>
-        <>
-          <div
-            style={{
-              background: "inherit",
-              display: "inline-grid",
-              gridTemplate: "auto / repeat(4,auto)",
-              gap: "4px",
-            }}
-          >
-            <RadioButtonGroup
-              aria-label="Uncontrolled Example"
-              defaultValue="forward"
-              legend="Example"
-            >
-              <RadioButton key="spot" label="Spot" value="spot" />
-              <RadioButton key="forward" label="Forward" value="forward" />
-              <RadioButton
-                disabled
-                key="option"
-                label="Option (disabled)"
-                value="option"
-              />
-            </RadioButtonGroup>
-          </div>
+    <AllRenderer>
+      <>
+        <div
+          style={{
+            background: "inherit",
+            display: "inline-grid",
+            gridTemplate: "auto / repeat(4,auto)",
+            gap: "4px",
+          }}
+        >
           <RadioButtonGroup
+            aria-label="Uncontrolled Example"
             defaultValue="forward"
             legend="Example"
-            name="fx"
-            row
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -55,9 +38,19 @@ export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
               value="option"
             />
           </RadioButtonGroup>
-        </>
-      </AllRenderer>
-    </div>
+        </div>
+        <RadioButtonGroup defaultValue="forward" legend="Example" name="fx" row>
+          <RadioButton key="spot" label="Spot" value="spot" />
+          <RadioButton key="forward" label="Forward" value="forward" />
+          <RadioButton
+            disabled
+            key="option"
+            label="Option (disabled)"
+            value="option"
+          />
+        </RadioButtonGroup>
+      </>
+    </AllRenderer>
   );
 };
 
@@ -75,7 +68,9 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
       height={605}
       imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
     >
-      <AllExamplesGrid />
+      <div className="backwardsCompat">
+        <AllExamplesGrid />
+      </div>
     </QAContainer>
   );
 };

@@ -1,10 +1,12 @@
 import { DocsContext, getComponent } from "@storybook/addon-docs";
-import { ResetWrapper, TableWrapper } from "@storybook/components";
+import { resetComponents, TableWrapper } from "@storybook/components";
 import { useContext } from "react";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { CSSVariable } from "./CSSVariableTable";
 import { EmptyBlock } from "./EmptyBlock";
 import { getCharacteristics, getDocgenSection } from "./utils";
+
+const ResetWrapper = resetComponents.resetwrapper;
 
 export interface Characteristic {
   name: string;

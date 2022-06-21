@@ -19,10 +19,12 @@
 
 .uitkFormLabel {
   --formLabel-top: var(--formLabel-default-top);
+  --formLabel-width: 100%;
 }
 
 .uitkFormField-labelLeft .uitkFormLabel {
   --formLabel-top: var(--formLabel-left-top);
+  --formLabel-width: auto;
 }
 
 .uitkFormLabel {
@@ -44,7 +46,7 @@
   top: var(--uitkFormLabel-top, var(--formLabel-top));
   transform: translate(var(--uitkFormLabel-transform-x, 0), var(--uitkFormLabel-transform-y, var(--formLabel-top)));
   white-space: nowrap;
-  width: 100%;
+  width: var(--uitkFormLabel-width, var(--formLabel-width, 100%));
 }
 
 .uitkFormLabel ~ * {

@@ -52,7 +52,7 @@ index e749e90effe0a80a259a099ac4e3448a42a565ac..ad2ccb7811fff085bfe8b8da4569dbe1
        '^.+\\.(ts|tsx)$': require.resolve('ts-jest'),
        '^.+\\.(css|scss)$': require.resolve('jest-transform-stub'),
 diff --git a/dist-cjs/typecheck.js b/dist-cjs/typecheck.js
-index ef28f3b376629051fcd846b6a2f90738885036b9..12847cf2dc4828e2264d615f6dbf55467ecf0c8c 100644
+index ef28f3b376629051fcd846b6a2f90738885036b9..d46435ef70c9108a44d3cd7d4951a359bdcd3646 100644
 --- a/dist-cjs/typecheck.js
 +++ b/dist-cjs/typecheck.js
 @@ -34,7 +34,7 @@ async function typecheck() {
@@ -60,12 +60,12 @@ index ef28f3b376629051fcd846b6a2f90738885036b9..12847cf2dc4828e2264d615f6dbf5546
    } = typescriptConfig;
    const tsConfig = { ...rest,
 -    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist'],
-+    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', ...(Array.isArray(rest.exclude) ? rest.exclude : [])],
++        exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', ...(Array.isArray(rest.exclude) ? rest.exclude : [])],
      compilerOptions: {
        noEmit: true
      }
 diff --git a/dist-cjs/utils/getPackageMetadata.js b/dist-cjs/utils/getPackageMetadata.js
-index 4f6555e3988e6a229a64e2c429107e0f62526d39..20f0095a556a1ce68ff586823d372887b79e3446 100644
+index 4f6555e3988e6a229a64e2c429107e0f62526d39..d8ef7201d651d92262f1cc422f1136a45467a78a 100644
 --- a/dist-cjs/utils/getPackageMetadata.js
 +++ b/dist-cjs/utils/getPackageMetadata.js
 @@ -73,7 +73,7 @@ async function getPackageMetadata() {
@@ -73,7 +73,7 @@ index 4f6555e3988e6a229a64e2c429107e0f62526d39..20f0095a556a1ce68ff586823d372887
      // TODO: should probably include the original exclude in this
      exclude: distinct([// all TS test files, regardless whether co-located or in test/ etc
 -    '**/*.stories.ts', '**/*.stories.tsx', '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
-+    '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
++        '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
      'node_modules', 'bower_components', 'jspm_packages', 'tmp', // Casting so that configObject.exclude is set to the correct typing
      // Since configObject is a index type all values are "any" implicitly.
      ...(configObject.exclude || [])])
@@ -92,13 +92,13 @@ index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..905456cb8e02b32b4f105da274a3d4d7
    ],
    appTsConfig: resolveApp('tsconfig.json'),
 diff --git a/react-scripts/config/webpack.config.js b/react-scripts/config/webpack.config.js
-index ff26a93f3b6a935e51c35817c01c00e88dd80b71..d0ceebc21e2a5b62e8bbc1c7a3eb841cd99a9916 100644
+index e27fad30fc903a5dd7e86d208b93d4c2ef113926..6bc25c540728aa76bb782ef39c3810687369ae40 100644
 --- a/react-scripts/config/webpack.config.js
 +++ b/react-scripts/config/webpack.config.js
-@@ -534,6 +534,9 @@ module.exports = function (webpackEnv) {
-             : undefined,
-         ),
-       ),
+@@ -615,6 +615,9 @@ module.exports = function (webpackEnv) {
+             ),
+           )
+         : false,
 +      new webpack.ProvidePlugin({
 +        React: 'react',
 +      }),
