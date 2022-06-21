@@ -88,13 +88,8 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
     const Component: ElementType = elementType;
 
     const getTruncatingComponent = () => {
-      const {
-        setContainerRef,
-        hasTooltip,
-        tooltipTextDefault,
-        isOverflowed,
-        rows,
-      } = useTruncation(props, ref);
+      const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
+        useTruncation(props, ref);
 
       const { getTooltipProps, getTriggerProps } = useTooltip({
         enterDelay: 150,
@@ -103,8 +98,7 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
       });
 
       const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-        className: cx(withBaseName(), className, {
-          [withBaseName("lineClamp")]: isOverflowed,
+        className: cx(withBaseName(), className, withBaseName("lineClamp"), {
           [withBaseName(styleAs || "")]: styleAs,
         }),
         tabIndex: hasTooltip || elementType === "a" ? 0 : -1,

@@ -129,6 +129,5 @@ export const useTruncation = (
     hasTooltip,
     tooltipTextDefault,
     rows,
-    isOverflowed: isOverflowed.current,
   };
 };
