@@ -2991,8 +2991,7 @@ __metadata:
   dependencies:
     "@jpmorganchase/theme-editor": ">=1.0.0"
     "@jpmorganchase/theme-editor-app": ">=0.1.0"
-    concurrently: ^6.4.0
-    electron: ^16.0.1
+    electron: ^17.2.0
     electron-is-dev: ^2.0.0
   languageName: unknown
   linkType: soft
@@ -9199,24 +9198,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:^6.4.0":
-  version: 6.5.1
-  resolution: "concurrently@npm:6.5.1"
-  dependencies:
-    chalk: ^4.1.0
-    date-fns: ^2.16.1
-    lodash: ^4.17.21
-    rxjs: ^6.6.3
-    spawn-command: ^0.0.2-1
-    supports-color: ^8.1.0
-    tree-kill: ^1.2.2
-    yargs: ^16.2.0
-  bin:
-    concurrently: bin/concurrently.js
-  checksum: 3f4d89b464fa5c9fb6f9489b46594c30ba54eff6ff10ab3cb5f30f64b74c83be664623a0f0cc731a3cb3f057a1f4a3292f7d3470c012a292c44aca31f214a3fa
-  languageName: node
-  linkType: hard
-
 "config-chain@npm:^1.1.11, config-chain@npm:^1.1.12":
   version: 1.1.13
   resolution: "config-chain@npm:1.1.13"
@@ -10156,13 +10137,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.16.1":
-  version: 2.28.0
-  resolution: "date-fns@npm:2.28.0"
-  checksum: a0516b2e4f99b8bffc6cc5193349f185f195398385bdcaf07f17c2c4a24473c99d933eb0018be4142a86a6d46cb0b06be6440ad874f15e795acbedd6fd727a1f
-  languageName: node
-  linkType: hard
-
 "dayjs@npm:1.10.6":
   version: 1.10.6
   resolution: "dayjs@npm:1.10.6"
@@ -11011,7 +10985,7 @@ __metadata:
     "@vercel/webpack-asset-relocator-loader": 1.7.0
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
-    electron: 17.0.0
+    electron: ^17.2.0
     electron-squirrel-startup: ^1.0.0
     eslint: ^7.32.0
     eslint-plugin-import: ^2.25.0
@@ -11044,29 +11018,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:17.0.0":
-  version: 17.0.0
-  resolution: "electron@npm:17.0.0"
+"electron@npm:^17.2.0":
+  version: 17.4.7
+  resolution: "electron@npm:17.4.7"
   dependencies:
     "@electron/get": ^1.13.0
     "@types/node": ^14.6.2
     extract-zip: ^1.0.3
   bin:
     electron: cli.js
-  checksum: c945a1a5475ba66ca70637b150b3f10ea9d28b1f2167a9d8d2137e087785f647e1153f4335f898238470392ed689e3d207b2b96928025c5dd092d6f601e21414
-  languageName: node
-  linkType: hard
-
-"electron@npm:^16.0.1":
-  version: 16.2.5
-  resolution: "electron@npm:16.2.5"
-  dependencies:
-    "@electron/get": ^1.13.0
-    "@types/node": ^14.6.2
-    extract-zip: ^1.0.3
-  bin:
-    electron: cli.js
-  checksum: f1e1fd642a11feff8f6aa3f17b89961fa9f65ce3d61012f92d01a173fa4f5bd65810966df8fb4f111d4b94ed5b29d59441f875af45a032ea975fb364d7bf22b4
+  checksum: 1c951299386bbcd7ed73f6cdd60d6cfc6c19f8c6d4128b2b775004c01649249891d2259d39037f0f72168e3a007f66089e1f360f3d6a45f46ed2627877e036cf
   languageName: node
   linkType: hard
 
@@ -22134,15 +22095,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^6.6.3":
-  version: 6.6.7
-  resolution: "rxjs@npm:6.6.7"
-  dependencies:
-    tslib: ^1.9.0
-  checksum: bc334edef1bb8bbf56590b0b25734ba0deaf8825b703256a93714308ea36dff8a11d25533671adf8e104e5e8f256aa6fdfe39b2e248cdbd7a5f90c260acbbd1b
-  languageName: node
-  linkType: hard
-
 "rxjs@npm:^7.5.1, rxjs@npm:^7.5.5":
   version: 7.5.5
   resolution: "rxjs@npm:7.5.5"
@@ -22901,13 +22853,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spawn-command@npm:^0.0.2-1":
-  version: 0.0.2
-  resolution: "spawn-command@npm:0.0.2"
-  checksum: e35c5d28177b4d461d33c88cc11f6f3a5079e2b132c11e1746453bbb7a0c0b8a634f07541a2a234fa4758239d88203b758def509161b651e81958894c0b4b64b
-  languageName: node
-  linkType: hard
-
 "spawn-wrap@npm:^2.0.0":
   version: 2.0.0
   resolution: "spawn-wrap@npm:2.0.0"
@@ -23562,7 +23507,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^8.0.0, supports-color@npm:^8.1.0, supports-color@npm:^8.1.1":
+"supports-color@npm:^8.0.0, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
   dependencies:
@@ -24134,15 +24079,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tree-kill@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "tree-kill@npm:1.2.2"
-  bin:
-    tree-kill: cli.js
-  checksum: 49117f5f410d19c84b0464d29afb9642c863bc5ba40fcb9a245d474c6d5cc64d1b177a6e6713129eb346b40aebb9d4631d967517f9fbe8251c35b21b13cd96c7
-  languageName: node
-  linkType: hard
-
 "trim-newlines@npm:^1.0.0":
   version: 1.0.0
   resolution: "trim-newlines@npm:1.0.0"
@@ -24318,7 +24254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.0.0, tslib@npm:^1.8.1, tslib@npm:^1.9.0, tslib@npm:^1.9.3":
+"tslib@npm:^1.0.0, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
