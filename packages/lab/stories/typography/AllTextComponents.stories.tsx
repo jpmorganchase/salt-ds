@@ -29,7 +29,6 @@ export default {
         "showTooltip",
         "tooltipProps",
         "truncate",
-        "expanded",
         "style",
         "onOverflowChange",
       ],

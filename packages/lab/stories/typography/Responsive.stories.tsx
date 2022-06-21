@@ -15,7 +15,6 @@ const excludeProps = [
   "showTooltip",
   "tooltipProps",
   "truncate",
-  "expanded",
   "style",
   "onOverflowChange",
 ];
@@ -26,14 +25,12 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
     padding: 10,
   };
 
-  const [expanded, setExpand] = useState(false);
-
   return (
     <div
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        width: "70vw",
+        // width: "70vw",
       }}
     >
       <div style={box}>
@@ -46,7 +43,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>Wraps</strong>
       </div>
       <div style={{ ...box }}>
-        <Div truncate={true}>
+        <Div>
           The king's son said he was to send her up to him, but the mother
           answered, oh, no, she is much too dirty, she cannot show herself. But
           he absolutely insisted on it, and Cinderella had to be called.
@@ -96,11 +93,11 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
         <strong>shows Tooltip</strong>
       </div>
       <div style={box}>
-        <Span truncate={true} maxRows={2}>
+        <Div truncate={true} maxRows={2}>
           When the wedding with the king's son was to be celebrated, the two
           false sisters came and wanted to get into favor with cinderella and
           share her good fortune.
-        </Span>
+        </Div>
       </div>
     </div>
   );

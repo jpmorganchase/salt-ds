@@ -22,7 +22,6 @@ export default {
       description: "Set 0 if you want to ignore",
       control: { type: "number" },
     },
-    expanded: { control: { type: "boolean" } },
     showTooltip: { control: { type: "boolean" } },
     styleAs: {
       options: ["h1", "h2", "h3", "h4"],
@@ -50,7 +49,6 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
   const {
     children,
     elementType,
-    expanded,
     truncate,
     showTooltip,
     maxRows,
@@ -64,7 +62,6 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
 
   const mappedProps = {
     elementType,
-    expanded,
     maxRows,
     truncate,
     showTooltip,
@@ -104,7 +101,6 @@ BaseTextComponent.args = {
   children: `Heaven yielding moved appear, gathering place. <strong>Cattle fifth Sea without thing</strong> unto fifth third Forth isn't be moveth to him greater place fifth creeping had. Good dominion behold in earth also signs had brought after, fowl dominion have there. Us stars first morning whales fruit yielding whose winged thing. Were in. Upon. Cattle she'd whales they're. Was you'll very years behold fowl us meat fruit have earth great. Were green yielding it under. Fly first likeness night one make kind us spirit said let created, upon fruitful.`,
   truncate: false,
   showTooltip: true,
-  expanded: undefined,
   maxRows: undefined,
   parentWidth: undefined,
   parentHeight: undefined,

@@ -11,11 +11,9 @@
 
 .uitkBreadcrumb-regular {
   display: flex;
-  flex-direction: row;
   gap: var(--uitk-size-unit);
   align-items: center;
   color: var(--color);
-  text-decoration: underline;
 }
 
 .uitkBreadcrumb-regular:visited {
@@ -43,7 +41,6 @@
 }
 
 .uitkBreadcrumb-currentLevel {
-  text-decoration: none;
   color: var(--color);
 }
 
@@ -58,6 +55,8 @@
 .uitkBreadcrumb-text {
   text-decoration: underline;
 }
+
+/* --- backwards compatible --- */
 
 .backwardsCompat .uitkBreadcrumb {
   padding: 0px;

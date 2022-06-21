@@ -49,14 +49,6 @@ interface TextPropsBase<E extends ElementType> {
    */
   tooltipText?: string;
   /**
-   * If 'true' the text will expand to 100% height, if 'false' text will collapse to 'maxRows'.
-   *
-   * When set, maxRows defaults to 1.
-   *
-   * When set, it will not show the tooltip when text is truncated.
-   */
-  expanded?: boolean;
-  /**
    * Customise styling.
    */
   style?: CSSProperties;
@@ -80,7 +72,6 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
       children,
       className,
       elementType = "div",
-      expanded,
       maxRows,
       onOverflowChange,
       showTooltip = true,
@@ -89,6 +80,7 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
       tooltipProps,
       tooltipText,
       truncate = false,
+      tabIndex,
       ...restProps
     } = props;
 
@@ -96,8 +88,13 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
     const Component: ElementType = elementType;
 
     const getTruncatingComponent = () => {
-      const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
-        useTruncation(props, ref);
+      const {
+        setContainerRef,
+        hasTooltip,
+        tooltipTextDefault,
+        isOverflowed,
+        rows,
+      } = useTruncation(props, ref);
 
       const { getTooltipProps, getTriggerProps } = useTooltip({
         enterDelay: 150,
@@ -107,25 +104,23 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
 
       const { ref: triggerRef, ...triggerProps } = getTriggerProps({
         className: cx(withBaseName(), className, {
-          [withBaseName("lineClamp")]: !expanded,
+          [withBaseName("lineClamp")]: isOverflowed,
           [withBaseName(styleAs || "")]: styleAs,
         }),
+        tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
+        style: {
+          ...style,
+          // @ts-ignore
+          "--text-max-rows": rows,
+        },
         ...restProps,
-        tabIndex: hasTooltip ? 0 : -1,
       });
 
       const handleRef = useForkRef(triggerRef, setContainerRef);
 
       return (
         <>
-          <Component
-            {...triggerProps}
-            ref={handleRef}
-            style={{
-              ...style,
-              "--text-max-rows": rows,
-            }}
-          >
+          <Component {...triggerProps} ref={handleRef}>
             {children}
           </Component>
           <Tooltip

@@ -13,17 +13,14 @@ import {
 import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
 
+// this guards against text undeline which adds 1px on scrollHeight
+const VELOCITY = 1;
+
 export const useTruncation = (
   props: TextProps<ElementType>,
   ref: ForwardedRef<HTMLElement>
 ) => {
-  const {
-    children,
-    maxRows,
-    showTooltip = true,
-    expanded,
-    onOverflowChange,
-  } = props;
+  const { children, maxRows, showTooltip = true, onOverflowChange } = props;
 
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
@@ -38,12 +35,8 @@ export const useTruncation = (
       const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = element;
       const { lineHeight } = getComputedStyles(element);
 
-      if (maxRows === 0 || expanded) {
-        textRows = 0;
-      } else if (maxRows && !expanded) {
+      if (maxRows) {
         textRows = maxRows;
-      } else if (expanded !== undefined) {
-        textRows = 1;
       } else {
         const parent = element.parentElement;
 
@@ -52,7 +45,7 @@ export const useTruncation = (
             getComputedStyles(parent);
 
           if (
-            heightParent < scrollHeight ||
+            heightParent < scrollHeight - VELOCITY ||
             heightParent < offsetHeight ||
             offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
@@ -66,24 +59,29 @@ export const useTruncation = (
         const rowsHeight = textRows * lineHeight;
 
         const hasOverflowed =
+          rowsHeight < scrollHeight - VELOCITY ||
           rowsHeight < offsetHeight ||
-          rowsHeight < scrollHeight ||
           offsetWidth < scrollWidth;
+
         if (isOverflowed.current !== hasOverflowed) {
           onOverflowChange && onOverflowChange(hasOverflowed);
           isOverflowed.current = hasOverflowed;
+        }
+
+        if (!hasOverflowed) {
+          return 0;
         }
       }
     }
 
     return textRows;
-  }, [element, expanded, maxRows, onOverflowChange]);
+  }, [element, maxRows, onOverflowChange]);
 
   // Add Observers
   useIsomorphicLayoutEffect(() => {
     const onResize = debounce(() => {
       setRows(getRows());
-    });
+    }, 500);
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries.length > 0 && entries[0].target.isConnected) {
@@ -113,13 +111,13 @@ export const useTruncation = (
 
     return () => {
       scrollObserver.disconnect();
+      resizeObserver.disconnect();
       onResize.clear();
     };
   }, [element, getRows]);
 
   // Has Tooltip
-  const hasTooltip =
-    rows && showTooltip && isOverflowed.current && expanded === undefined;
+  const hasTooltip = rows && showTooltip && isOverflowed.current;
 
   const tooltipTextDefault =
     (hasTooltip &&
@@ -131,5 +129,6 @@ export const useTruncation = (
     hasTooltip,
     tooltipTextDefault,
     rows,
+    isOverflowed: isOverflowed.current,
   };
 };

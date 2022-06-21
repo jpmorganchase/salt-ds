@@ -13,6 +13,25 @@ describe("GIVEN a Breadcrumbs component", () => {
     });
   });
 
+  describe("WHEN Breadcrumbs are passed as children", () => {
+    it("THEN by default items are not truncated and tooltip doesn't show", () => {
+      cy.mount(
+        <Breadcrumbs>
+          <Breadcrumb>Test 1</Breadcrumb>
+          <Breadcrumb>Test 2</Breadcrumb>
+          <Breadcrumb>Test 3</Breadcrumb>
+        </Breadcrumbs>
+      );
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("not.exist");
+
+      cy.realPress("Escape");
+
+      cy.findByText("Test 1").realHover();
+      cy.findByRole("tooltip").should("not.exist");
+    });
+  });
+
   describe("WHEN passing the hideCurrentLevel prop", () => {
     it("THEN does not render the last Breadcrumb", () => {
       cy.mount(
@@ -175,13 +194,13 @@ describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN providing the itemsMaxWidth prop", () => {
     it("THEN correctly display Tooltip on hover and focus when truncating", () => {
       cy.mount(
-        <Breadcrumbs itemsMaxWidth={10}>
+        <Breadcrumbs itemsMaxWidth={30}>
           <Breadcrumb href="#">Root Level Entity</Breadcrumb>
           <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
           <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
         </Breadcrumbs>
       );
-      cy.wait(400);
+      cy.wait(1000);
 
       cy.realPress("Tab");
       cy.findByRole("tooltip").should("be.visible");
@@ -222,6 +241,22 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.get("#Test1").should("have.css", "min-width", "20px");
+    });
+  });
+
+  describe("WHEN passing 3 children", () => {
+    it("THEN first two should be focusable and third should not", () => {
+      cy.mount(
+        <Breadcrumbs>
+          <Breadcrumb>Test1</Breadcrumb>
+          <Breadcrumb>Test2</Breadcrumb>
+          <Breadcrumb>Test3</Breadcrumb>
+        </Breadcrumbs>
+      );
+
+      cy.findByText("Test1").should("exist").and("have.attr", "tabIndex", "0");
+      cy.findByText("Test2").should("exist").and("have.attr", "tabIndex", "0");
+      cy.findByText("Test3").should("exist").and("have.attr", "tabIndex", "-1");
     });
   });
 });
