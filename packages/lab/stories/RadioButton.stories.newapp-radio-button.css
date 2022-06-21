@@ -1,0 +1,36 @@
+.uitk-density-high.uitk-newapp {
+  --uitkFormGroup-row-marginRight: 10px;
+  --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 4px;
+}
+.uitk-density-medium.uitk-newapp {
+  --uitkFormGroup-row-marginRight: 6px;
+  --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 2px;
+}
+.uitk-density-low.uitk-newapp {
+  --uitkFormGroup-row-marginRight: 14px;
+  --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 6px;
+}
+.uitk-density-touch.uitk-newapp {
+  --uitkFormGroup-row-marginRight: 18px;
+  --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 8px;
+}
+
+.uitk-light.uitk-newapp {
+  --uitkControlLabel-color: var(--uitk-color-blue-300);
+}
+.uitk-dark.uitk-newapp {
+  --uitkControlLabel-color: var(--uitk-color-blue-30);
+}
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkRadioIcon-fill: var(--uitk-color-purple-10);
+  --uitkRadioIcon-strokeColor: var(--uitk-color-teal-30);
+}
+.uitk-newapp .uitkRadioIcon-checked .uitkRadioIcon-border {
+  --uitkRadioIcon-fill: var(--uitk-color-teal-30);
+  --uitkRadioIcon-strokeColor: var(--uitk-color-teal-30);
+}
+
+.uitk-newapp *:not(.uitkFormField-disabled).uitkRadio:not(.uitkRadio-disabled):hover .uitkRadioIcon-border {
+  --uitkRadioIcon-strokeColor: var(--uitk-color-teal-30);
+}

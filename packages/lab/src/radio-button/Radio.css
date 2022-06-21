@@ -1,5 +1,6 @@
-/* Styles applied to root component (Radio) */
+/* Styles applied to root component */
 .uitkRadio {
+  color: var(--uitk-text-secondary-foreground);
   padding: 1px 0;
   flex: 0 0 auto;
   overflow: visible;
@@ -18,7 +19,6 @@
   background-color: transparent;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-  color: var(--uitk-text-secondary-foreground);
 }
 
 /* Styles applied to container of Radio input and icon */

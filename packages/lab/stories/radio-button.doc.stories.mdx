@@ -1,0 +1,127 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Lab/Radio Button"
+  component={RadioButton}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# RadioButton
+
+A group of Radio Button components represents a set of mutually exclusive, but related values. The user is able to select a single value at a time, and selecting an unselected value deselect any previously-selected option. Radio Buttons should therefore be used to display a choice between two or more values, as it’s impossible to deselect a single Radio Button once it’s been selected.
+
+## Vertical Group
+
+Radio groups allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
+
+**Best practices**
+
+- Always use a label for Radio Groups.
+- If there are more than 5 choices, use a Multiselect control instead.
+
+<Canvas>
+  <Story name="Vertical Group" decorators={[withFlexGap]}>
+    <RadioButtonGroup
+      aria-label="Uncontrolled Example"
+      defaultValue="forward"
+      legend={"Legend"}
+      name={"Name"}
+    >
+      <RadioButton key="spot" label="Spot" value="spot" />
+      <RadioButton key="forward" label="Forward" value="forward" />
+      <RadioButton
+        disabled
+        key="option"
+        label="Option (disabled)"
+        value="option"
+      />
+    </RadioButtonGroup>
+  </Story>
+</Canvas>
+
+## Row Group
+
+<Canvas>
+  <Story name="Row Group" decorators={[withFlexGap]}>
+    <RadioButtonGroup legend={"Legend"} name={"Name"} row>
+      <RadioButton key="spot" label="Spot" value="spot" />
+      <RadioButton key="forward" label="Forward" value="forward" />
+    </RadioButtonGroup>
+  </Story>
+</Canvas>
+
+## Controlled
+
+Controlled Radio require events to trigger the state change. The application must track state and update Radio props manually. Useful for when logic or validation needs to be applied or a request should happen when updating a form.
+
+<Canvas>
+  <Story id="lab-radio-button--controlled-radio-button-group" />
+</Canvas>
+
+## Custom Icons
+
+<Canvas>
+  <Story id="lab-radio-button--custom-icons" />
+</Canvas>
+
+## Long Text
+
+When the text label wraps to multiple lines, align the text to the top.
+
+<Canvas>
+  <Story id="lab-radio-button--long-text-radio-button-group" />
+</Canvas>
+
+# API
+
+```
+import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={RadioButton} />
+
+## HTML Anatomy of RadioButton component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <RadioButton key="spot" label="Spot" value="spot" />
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={RadioButton} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={RadioButton} />
+
+## --uitkRadioButton CSS Custom Property API
+
+The default styling values for most RadioButton attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to RadioButton. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by RadioButton, but not defined by RadioButton. They can be defined via a container or
+a custom class name to override RadioButton styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={RadioButton} />
+
+## Customising RadioButton styles
+
+<Canvas>
+  <Story name="Custom RadioButton Styling" decorators={[withFlexGap]}></Story>
+</Canvas>
