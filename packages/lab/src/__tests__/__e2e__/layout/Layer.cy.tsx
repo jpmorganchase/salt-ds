@@ -152,4 +152,30 @@ describe("GIVEN a Layer", () => {
       cy.get(".uitkLayerLayout").should("not.exist");
     });
   });
+
+  describe("WHEN a layer component is in full screen mode", () => {
+    it(
+      "THEN it should be able to close",
+      {
+        viewportHeight: 900,
+        viewportWidth: 700,
+      },
+      () => {
+        cy.mount(<DefaultLayerLayout />);
+
+        cy.findByRole("button", { name: /Open Layer/i }).click();
+
+        cy.get(".uitkLayerLayout").should("be.visible");
+
+        cy.get(".uitkLayerLayout").should(
+          "have.class",
+          "uitkLayerLayout-fullScreen"
+        );
+
+        cy.findByRole("button", { name: /Close Layer/i }).click();
+
+        cy.get(".uitkLayerLayout").should("not.exist");
+      }
+    );
+  });
 });
