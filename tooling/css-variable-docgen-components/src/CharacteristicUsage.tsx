@@ -28,7 +28,7 @@ export function CharacteristicUsage(
   const characteristicTokenMap =
     getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
 
-  if (!characteristicTokenMap) {
+  if (Object.keys(characteristicTokenMap).length === 0) {
     return <EmptyBlock>No characteristics used for this component.</EmptyBlock>;
   }
 

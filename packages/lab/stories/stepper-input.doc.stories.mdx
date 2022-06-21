@@ -1,0 +1,130 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { StepperInput } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Lab/Stepper Input"
+  component={StepperInput}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Stepper Input
+
+The Stepper Input displays a default numeric value that users can increase or decrease using the controls or by keyboard actions. Users can also manually enter a specific value.
+
+**Usages**
+
+Use Stepper Input when you need to collect a numeric value from the user.
+
+The user can adjust the default value using the controls—or simply type in a number.
+
+**Best practices**
+
+- Pick a default value that reflects the desired value for most users. For example, this value could be the most frequently submitted one.
+- Consider using the Input component if it’s difficult to decide on a default value. Input is more appropriate when there’s a great deal of variability in the range of values that users enter.
+
+## Default
+
+The out-of-the-box Stepper Input has a default value of 0, an increment value of 1 and a block value of 10, and you can only use it to accept numeric characters.
+
+<Canvas>
+  <Story id="lab-stepper-input--default" />
+</Canvas>
+
+## Custom Values
+
+You are able to customize the default, increment and block values to suit your use case.
+
+<Canvas>
+  <Story id="lab-stepper-input--custom-values" />
+</Canvas>
+
+## Decimal
+
+By default, Stepper Input accepts zero decimal places. If the user needs to enter a value with a decimal such as a monetary amount, you can customize the number of decimal places the input accepts.
+
+If the user enters a value that doesn’t match the decimal places you have set, the component will add the correct number of decimal places when it loses focus. For example, if the component accepts two decimal places, and the number 12 is entered, then the displayed value would be, “12.00”.
+
+The component will round the value up or down, as required, to display the specified number of decimal places.
+
+<Canvas>
+  <Story id="lab-stepper-input--decimals" />
+</Canvas>
+
+## Live default value
+
+You can use the Stepper Input to pull the live value from a source that’s constantly changing—for example, when dealing with live stock prices.
+
+The component's value doesn't automatically update when the live value changes, however. In this case, the Refresh button automatically appears when the displayed value and live value don’t match.
+
+<Canvas>
+  <Story id="lab-stepper-input--live-default-value" />
+</Canvas>
+
+## Refresh
+
+This button gives you the option of resetting the component to its default value. You can enable it by setting the "showRefreshButton" prop.
+
+If you have set a live value, however, the prop is no longer optional. Once the component's displayed value and live value no longer match, the Refresh button will be visible. You can click it to reset the component to the latest live value.
+
+<Canvas>
+  <Story id="lab-stepper-input--refresh" />
+</Canvas>
+
+## Numeric Limits
+
+The default limits for the input's number value are set to the safest representation of the maximum and minimum floating-point number.
+
+If you need to limit the range of accepted values, you’re able to set a maximum or minimum (or both).
+
+<Canvas>
+  <Story id="lab-stepper-input--numeric-limits" />
+</Canvas>
+
+# API
+
+```
+import { StepperInput } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={StepperInput} />
+
+## HTML Anatomy of StepperInput component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <StepperInput defaultValue={999} max={1000} />
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={StepperInput} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={StepperInput} />
+
+## --uitkStepperInput CSS Custom Property API
+
+The default styling values for most StepperInput attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to StepperInput. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by StepperInput, but not defined by StepperInput. They can be defined via a container or
+a custom class name to override StepperInput styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={StepperInput} />
+
+## Customising StepperInput styles
