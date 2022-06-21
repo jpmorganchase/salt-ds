@@ -1,12 +1,14 @@
 import { FormField, Input } from "@jpmorganchase/uitk-core";
 import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
-import "docs/components/ComponentAnatomy.css";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { CustomStyling } from "./form-field.stories";
+import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import "docs/components/ComponentAnatomy.css";
 
 <Meta
   title="Documentation/Core/Form Field"
@@ -18,6 +20,70 @@ import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 
 # Form Field
 
+Form Field is a wrapper that provides an editable component with various states, a descriptive label, help text and optional or required flags. It’s ADA compliant, and is typically used in the context of a form.
+
+For demonstration purposes, all examples on this page include the Input component. Input, however, is not included in the Form Field package.
+
+## Default
+
+<Canvas>
+  <Story id="lab-form-field--default" />
+</Canvas>
+
+## High emphasis
+
+<Canvas>
+  <Story id="lab-form-field--high-emphasis" />
+</Canvas>
+
+## Low emphasis
+
+<Canvas>
+  <Story id="lab-form-field--low-emphasis" />
+</Canvas>
+
+## Disabled
+
+<Canvas>
+  <Story id="lab-form-field--disabled" />
+</Canvas>
+
+## Readonly
+
+<Canvas>
+  <Story id="lab-form-field--readonly" />
+</Canvas>
+
+## Helper Text
+
+<Canvas>
+  <Story id="lab-form-field--helper-text" />
+</Canvas>
+
+## Validation States
+
+<Canvas>
+  <Story id="lab-form-field--validation-states" />
+</Canvas>
+
+## Label alignments
+
+<Canvas>
+  <Story id="lab-form-field--label-alignments" />
+</Canvas>
+
+## Necessity
+
+<Canvas>
+  <Story id="lab-form-field--necessity" />
+</Canvas>
+
+## Status Indicator
+
+<Canvas>
+  <Story id="lab-form-field--status-indicator" />
+</Canvas>
+
 # API
 
 ```
@@ -26,26 +92,47 @@ import { FormField } from "@jpmorganchase/uitk-core";
 
 ## Props
 
-<ArgsTable of={FormField} />
+<Story name="Props">
+  <ArgsTable of={FormField} />
+</Story>
 
 ## HTML Anatomy of a Form Field
 
 <Canvas>
-  <ComponentAnatomy showControls={false}>
-    <FormField helperText="Sample helper text" label="Default Form Field label">
-      <Input defaultValue="Value" />
-    </FormField>
-  </ComponentAnatomy>
+  <Story name="HTML Anatomy">
+    <ComponentAnatomy showControls={false}>
+      <FormField
+        helperText="Sample helper text"
+        label="Default Form Field label"
+      >
+        <Input defaultValue="Value" />
+      </FormField>
+    </ComponentAnatomy>
+  </Story>
 </Canvas>
 
 ## CSS Class
 
-<CSSClassTable of={FormField} />
+<Story name="CSS Classes">
+  <CSSClassTable of={FormField} />
+</Story>
 
 ## Characteristics Used
 
-<CharacteristicUsage of={FormField} />
+<Story name="Characteristics">
+  <CharacteristicUsage of={FormField} />
+</Story>
 
 ## --uitkFormField CSS Custom Property API
 
-<CSSVariableTable of={FormField} />
+<Story name="Custom Property API">
+  <CSSVariableTable of={FormField} />
+</Story>
+
+## Customising FormField styles
+
+<Canvas>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
