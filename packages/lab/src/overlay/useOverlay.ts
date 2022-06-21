@@ -11,6 +11,7 @@ import {
 } from "@floating-ui/react-dom-interactions";
 import {
   isDesktop,
+  margin,
   useControlled,
   useFloatingUI,
   UseFloatingUIProps,
@@ -23,8 +24,6 @@ import {
   useRef,
 } from "react";
 import { OverlayProps } from "./Overlay";
-
-import { margin } from "@jpmorganchase/uitk-core/src/utils/marginMiddleware";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">

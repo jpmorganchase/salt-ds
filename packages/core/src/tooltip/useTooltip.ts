@@ -13,7 +13,7 @@ import {
   useRole,
 } from "@floating-ui/react-dom-interactions";
 import { useAriaAnnounce } from "./useAriaAnnounce";
-import { useControlled } from "../utils";
+import { margin, useControlled } from "../utils";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
@@ -23,7 +23,6 @@ import {
 } from "react";
 import { TooltipProps } from "./Tooltip";
 import { isDesktop } from "../window";
-import { margin } from "../utils/marginMiddleware";
 
 export interface UseTooltipProps
   extends Partial<
