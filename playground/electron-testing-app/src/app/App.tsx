@@ -202,7 +202,6 @@ export const App = () => {
           Click to open dialog
         </Button>
         <Dialog
-          className="Dialog-alignTop"
           disablePortal={true}
           id="example-1"
           open={open}
