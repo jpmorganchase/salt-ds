@@ -1,4 +1,4 @@
 //@ts-ignore
-global.isElectron = true;
+global.isDesktop = true;
 //@ts-ignore
 global.ipcRenderer = require("electron").ipcRenderer;
