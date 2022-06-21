@@ -25,7 +25,7 @@
   background: var(--overlay-background);
   color: var(--overlay-text-color);
   position: relative;
-  font-family: var(--uitk-typography-fontFamily);
+  font-family: var(--uitk-text-fontFamily);
   opacity: 1;
   overflow: visible;
   z-index: var(--overlay-zindex);

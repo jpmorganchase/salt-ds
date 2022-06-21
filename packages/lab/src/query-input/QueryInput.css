@@ -112,7 +112,7 @@
   color: var(--uitk-text-primary-foreground);
   background: var(--uitk-container-background-medium);
   font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: var(--uitk-text-fontWeight-strong);
   display: flex;
   align-items: center;
   padding: 0 var(--uitk-size-unit);

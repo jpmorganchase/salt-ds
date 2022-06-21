@@ -36,7 +36,7 @@
   margin-bottom: var(--uitkFormLabel-margin-Bottom, var(--formLabel-marginBottom));
   min-height: var(--uitkFormLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
   margin-top: var(--uitkFormLabel-marginTop, 0px);
-  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-typography-lineHeight));
+  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-text-lineHeight));
   overflow: hidden;
   padding-left: var(--uitkFormLabel-paddingLeft, var(--formLabel-paddingLeft));
   padding-right: var(--uitkFormLabel-paddingRight, var(--formLabel-paddingRight));
@@ -61,7 +61,7 @@
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
-  font-style: italic;
+  font-style: var(--uitkFormLabel-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
   margin-left: 1ch;
 }
 

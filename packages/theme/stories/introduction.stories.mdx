@@ -101,7 +101,7 @@ The full set of characteristics is currently defined is as follows:
 | Navigable           | components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover: pointer;`                                                             |
 | Overlayable         | components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                                             |
 | Ratable             | components which can be rated                                                     | `--uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);`                         |
-| Selectable          | components that have a selected state                                             | `--uitk-selectable-textAlign: left;`                                                                  |
+| Selectable          | components that have a selected state                                             | `--uitk-selectable-cursor-hover: pointer;`                                                            |
 | Separable           | components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-low);`                       |
 | Status              | components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor: var(--uitk-palette-info-border);`                                    |
 | Taggable            | components which allow data to be organized                                       | `--uitk-taggable-background: var(--uitk-palette-interact-primary-background);`                        |
@@ -217,7 +217,7 @@ We have already mentioned that components will reference Theme variables, the ex
 
 ```css
 .uitkButton {
-  font-size: var(--uitkButton-fontSize, var(--uitk-typography-size-regular));
+  font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
 }
 ```
 
@@ -226,9 +226,9 @@ We have already mentioned that components will reference Theme variables, the ex
 3. A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
    var(--primary-variable-value, var(--fallback-value))
 4. The fallback value can equally be a simple constant CSS value
-   var(--uitk-typography-font-size, 12px);
+   var(--primary-variable-value, 12px);
 
-In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, _or is not in scope at the point where this Button element is rendered_, then the fallback value will be taken from `--uitk-typography-size-regular`. This will have a value providing that a UI Toolkit theme is in scope at this point. If that were not the case, and neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, _or is not in scope at the point where this Button element is rendered_, then the fallback value will be taken from `--uitk-text-fontSize`. This will have a value providing that a UI Toolkit theme is in scope at this point. If that were not the case, and neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
 Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a `CSS API variable`. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
 

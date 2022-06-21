@@ -54,6 +54,9 @@
   --contact-details-deselecting-icon-color: var(--uitk-ratable-border);
   --contact-details-selected-icon-color: var(--uitk-ratable-background-active);
   --contact-details-selecting-icon-color: var(--uitk-ratable-background-hover);
+
+  --contact-details-primary-font-weight: var(--uitk-text-fontWeight-strong);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight-strong);
 }
 
 .uitkContactDetails {
@@ -73,25 +76,21 @@
 .uitkContactDetails-default,
 .uitkContactDetails-default-stacked {
   --contact-details-primary-font-size: var(--contact-details-default-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-default-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 .uitkContactDetails-compact,
 .uitkContactDetails-compact-stacked {
   --contact-details-primary-font-size: var(--contact-details-compact-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-compact-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-regular);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkContactDetails-mini,
 .uitkContactDetails-mini-stacked {
   --contact-details-primary-font-size: var(--contact-details-compact-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-compact-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-regular);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkContactDetails-default {

@@ -24,7 +24,7 @@
   --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-size-unit);
-  --tab-font-weight-selected: var(--uitk-typography-weight-semiBold);
+  --tab-font-weight-selected: var(--uitk-navigable-fontWeight-active);
 
   align-items: center;
   align-self: stretch;

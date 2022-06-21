@@ -22,8 +22,8 @@
   color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
   cursor: var(--uitkInput-cursor, default);
   display: inline-flex;
-  font-family: var(--uitkInput-fontFamily, var(--uitk-typography-fontFamily));
-  font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
+  font-family: var(--uitkInput-font-family, var(--uitk-text-fontFamily));
+  font-size: var(--uitkInput-font-size, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
   line-height: var(--uitk-typography-lineHeight);
   min-height: var(--uitkInput-minHeight, var(--uitk-size-base));

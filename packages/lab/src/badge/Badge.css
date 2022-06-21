@@ -4,13 +4,8 @@
   --badge-content-text-color: var(--uitkBadge-content-text-color, var(--uitk-accent-foreground));
   --badge-content-icon-color: var(--uitkBadge-content-icon-color, var(--uitk-accent-background));
   /* Font, Typography */
-  --badge-children-font-family: var(--uitk-typography-fontFamily);
-  --badge-children-line-height: var(--uitk-text-lineHeight);
-  --badge-children-font-size: var(--uitk-text-fontSize);
-  --badge-content-font-weight: var(--uitk-typography-weight-bold);
-  --badge-content-font-size: var(--uitk-text-caption-fontSize);
-  --badge-content-border-radius: 16px;
-  --badge-content-line-height: 15px;
+  --badge-content-borderRadius: 16px;
+  --badge-content-lineHeight: 15px;
   --badge-content-padding: 0px 4px;
 
   /* Derived */
@@ -28,9 +23,9 @@
   position: relative;
   flex-shrink: 0;
   vertical-align: middle;
-  font-family: var(--badge-children-font-family);
-  line-height: var(--badge-children-line-height);
-  font-size: var(--badge-children-font-size);
+  font-family: var(--uitk-text-fontFamily);
+  line-height: var(--uitk-text-lineHeight);
+  font-size: var(--uitk-text-fontSize);
 }
 
 /* Give automatic margin when they sit next to each other */
@@ -43,13 +38,13 @@
   color: var(--badge-content-text-color);
   box-sizing: border-box;
   display: inline-block;
-  font-weight: var(--badge-content-font-weight);
-  font-size: var(--badge-content-font-size);
+  font-weight: var(--uitk-typography-weight-bold);
+  font-size: var(--uitk-text-caption-fontSize);
   /* default small type */
   width: auto;
   min-width: 15px;
-  line-height: var(--badge-content-line-height);
-  border-radius: var(--badge-content-border-radius);
+  line-height: var(--badge-content-lineHeight);
+  border-radius: var(--badge-content-borderRadius);
   text-align: center;
 
   transform: translate(var(--badge-offset-inline), -50%);

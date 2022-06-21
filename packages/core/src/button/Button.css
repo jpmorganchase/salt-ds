@@ -110,8 +110,8 @@
   display: inline-block;
   justify-content: center;
   font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
-  font-family: var(--uitkButton-fontFamily, var(--uitk-typography-fontFamily));
-  line-height: var(--uitkButton-lineHeight, var(--uitk-typography-lineHeight));
+  font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
+  line-height: var(--uitkButton-lineHeight, var(--uitk-text-lineHeight));
   letter-spacing: var(--uitkButton-letterSpacing, var(--uitk-actionable-letterSpacing));
   text-transform: var(--uitkButton-textTransform, var(--uitk-actionable-textTransform));
   padding: 0 var(--uitkButton-padding, var(--uitk-size-unit));

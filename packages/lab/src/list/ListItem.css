@@ -11,7 +11,6 @@
   --list-item-text-color-disabled: var(--uitk-selectable-foreground-disabled);
 
   /* Text, Font */
-  --list-item-text-align: var(--uitk-selectable-textAlign);
   --list-item-font-size: var(--uitk-text-fontSize);
   --list-item-line-height: var(--uitk-text-lineHeight);
 
@@ -36,7 +35,7 @@
 .uitkListItem {
   color: var(--list-item-text-color);
   background: var(--list-item-background);
-  text-align: var(--list-item-text-align);
+  text-align: left;
   line-height: var(--list-item-line-height);
   font-size: var(--list-item-font-size);
   padding: var(--list-item-padding);

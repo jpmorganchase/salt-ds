@@ -14,13 +14,30 @@ import { TextBlock } from "docs/components/TextBlock";
   <Story name="Typography">
     <TextBlock
       lineHeight="--uitk-text-lineHeight"
-      fontFamily="--uitk-text-font-family"
+      fontFamily="--uitk-typography-fontFamily"
     />
     <DocGrid textExample={true}>
       <BlankBlockCell />
       <BlankBlockCode>--uitk-typography-fontFamily</BlankBlockCode>
+    </DocGrid>
+    <div style={{ padding: "20px" }} />
+    <TextBlock
+      lineHeight="--uitk-text-lineHeight"
+      fontFamily="--uitk-typography-fontFamily-code"
+    />
+    <DocGrid textExample={true}>
       <BlankBlockCell />
       <BlankBlockCode>--uitk-typography-lineHeight</BlankBlockCode>
+      <BlankBlockCode>--uitk-typography-fontFamily-code</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Weights
+
+<Canvas>
+  <Story name="Weights">
+    <DocGrid>
       <FontWeightBlock fontWeight="--uitk-typography-weight-light" />
       <FontWeightBlock fontWeight="--uitk-typography-weight-regular" />
       <FontWeightBlock fontWeight="--uitk-typography-weight-medium" />

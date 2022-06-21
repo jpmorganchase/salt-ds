@@ -34,14 +34,14 @@
 
 /* Class applied to the helper text container */
 .uitkFormFieldHelperText {
-  color: var(--uitkFormFieldHelperText-color, var(--formField-helperText-color, var(--uitk-text-secondary-foreground)));
-  font-size: var(--uitkFormFieldHelperText-fontSize, var(--uitk-text-help-fontSize));
-  font-style: var(--uitkFormFieldHelperText-fontStyle, italic);
-  letter-spacing: var(--uitkFormFieldHelperText-letterSpacing, 0);
-  line-height: var(--uitkFormFieldHelperText-height, var(--uitk-typography-lineHeight));
-  min-height: var(--uitkFormFieldHelperText-minHeight, var(--uitk-text-caption-minHeight));
-  margin-bottom: var(--uitkFormFieldHelperText-marginBottom, 0);
-  margin-top: var(--uitkFormFieldHelperText-marginTop, var(--formField-helperText-marginTop));
+  color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-foreground));
+  font-size: var(--uitkFormFieldHelperText-font-size, var(--uitk-text-help-fontSize));
+  font-style: var(--uitkFormFieldHelperText-font-style, var(--uitk-text-help-fontStyle));
+  letter-spacing: var(--uitkFormFieldHelperText-letter-spacing, 0);
+  line-height: var(--uitkFormFieldHelperText-line-height, var(--uitk-text-help-lineHeight));
+  min-height: var(--uitkFormFieldHelperText-min-height, var(--uitk-text-caption-minHeight));
+  margin-bottom: var(--uitkFormFieldHelperText-margin-bottom, 0);
+  margin-top: var(--uitkFormFieldHelperText-margin-top, var(--form-field-helper-text-margin-top-full-width, var(--form-field-helper-text-margin-top)));
   opacity: var(--uitkFormFieldHelperText-opacity, 1);
   padding-left: var(--uitkFormFieldHelperText-paddingLeft, var(--uitk-size-unit));
   padding-right: var(--uitkFormFieldHelperText-paddingRight, var(--uitk-size-unit));

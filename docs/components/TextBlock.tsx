@@ -8,12 +8,20 @@ export const TextBlock = ({
   fontWeight,
   lineHeight,
   fontFamily,
+  textDecoration,
+  color,
+  textAlign,
+  textTransform,
 }: {
   fontSize?: string;
   fontStyle?: string;
   fontWeight?: string;
   lineHeight?: string;
   fontFamily?: string;
+  textDecoration?: string;
+  color?: string;
+  textAlign?: string;
+  textTransform?: string;
 }) => {
   return (
     <>
@@ -21,11 +29,15 @@ export const TextBlock = ({
         className="TextBlock"
         style={
           {
+            color: `var(${color})`,
+            textDecoration: `var(${textDecoration})`,
             fontSize: `var(${fontSize})`,
             fontWeight: `var(${fontWeight})`,
             lineHeight: `var(${lineHeight})`,
             fontStyle: `var(${fontStyle})`,
             fontFamily: `var(${fontFamily})`,
+            textAlign: `var(${textAlign})`,
+            textTransform: `var(${textTransform})`,
           } as CSSProperties
         }
       >

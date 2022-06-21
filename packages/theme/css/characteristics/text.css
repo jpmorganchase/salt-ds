@@ -1,127 +1,62 @@
-/*TODO: colors once defined in Figma */
 .uitk-light,
 .uitk-dark {
+  /* Body text (default) */
+  --uitk-text-fontFamily: var(--uitk-typography-fontFamily);
+  --uitk-text-fontWeight: var(--uitk-typography-weight-regular);
+  --uitk-text-fontWeight-strong: var(--uitk-typography-weight-semiBold);
+  --uitk-text-fontWeight-small: var(--uitk-typography-weight-light);
+  --uitk-text-letterSpacing: 0;
+  --uitk-text-lineHeight: 1.3;
+  --uitk-text-textAlign: left;
+  --uitk-text-textDecoration: none;
+  --uitk-text-textTransform: none;
+
   /* H1 */
-  --uitk-text-h1-fontSize-touch: 36px;
-  --uitk-text-h1-fontSize-low: 32px;
-  --uitk-text-h1-fontSize-medium: 24px;
-  --uitk-text-h1-fontSize-high: 18px;
-
-  --uitk-text-h1-lineHeight-touch: auto;
-  --uitk-text-h1-lineHeight-low: 42px;
-  --uitk-text-h1-lineHeight-medium: 31px;
-  --uitk-text-h1-lineHeight-high: 24px;
-
   --uitk-text-h1-fontWeight: var(--uitk-typography-weight-bold);
   --uitk-text-h1-fontWeight-strong: var(--uitk-typography-weight-extraBold);
-  --uitk-text-h1-fontWeight-small: var(--uitk-typography-weight-medium);
+  --uitk-text-h1-fontWeight-small: var(--uitk-typography-weight-light);
 
   /* H2 */
-  --uitk-text-h2-fontSize-touch: 28px;
-  --uitk-text-h2-fontSize-low: 24px;
-  --uitk-text-h2-fontSize-medium: 18px;
-  --uitk-text-h2-fontSize-high: 14px;
-
-  --uitk-text-h2-lineHeight-touch: 36px;
-  --uitk-text-h2-lineHeight-low: 32px;
-  --uitk-text-h2-lineHeight-medium: 24px;
-  --uitk-text-h2-lineHeight-high: 18px;
-
   --uitk-text-h2-fontWeight: var(--uitk-typography-weight-semiBold);
   --uitk-text-h2-fontWeight-strong: var(--uitk-typography-weight-extraBold);
   --uitk-text-h2-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* H3 */
-  --uitk-text-h3-fontSize-touch: 18px;
-  --uitk-text-h3-fontSize-low: 18px;
-  --uitk-text-h3-fontSize-medium: 14px;
-  --uitk-text-h3-fontSize-high: 12px;
-
-  --uitk-text-h3-lineHeight-touch: 26px;
-  --uitk-text-h3-lineHeight-low: 26px;
-  --uitk-text-h3-lineHeight-medium: 22px;
-  --uitk-text-h3-lineHeight-high: 16px;
-
   --uitk-text-h3-fontWeight: var(--uitk-typography-weight-semiBold);
   --uitk-text-h3-fontWeight-strong: var(--uitk-typography-weight-extraBold);
   --uitk-text-h3-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* H4 */
-  --uitk-text-h4-fontSize-touch: 16px;
-  --uitk-text-h4-fontSize-low: 14px;
-  --uitk-text-h4-fontSize-medium: 12px;
-  --uitk-text-h4-fontSize-high: 11px;
-
-  --uitk-text-h4-lineHeight-touch: 22px;
-  --uitk-text-h4-lineHeight-low: 18px;
-  --uitk-text-h4-lineHeight-medium: 16px;
-  --uitk-text-h4-lineHeight-high: 14px;
-
   --uitk-text-h4-fontWeight: var(--uitk-typography-weight-semiBold);
   --uitk-text-h4-fontWeight-strong: var(--uitk-typography-weight-extraBold);
   --uitk-text-h4-fontWeight-small: var(--uitk-typography-weight-regular);
 
   /* Caption */
-  --uitk-text-caption-fontSize-touch: 12px;
-  --uitk-text-caption-fontSize-low: 11px;
-  --uitk-text-caption-fontSize-medium: 11px;
-  --uitk-text-caption-fontSize-high: 10px;
-
-  --uitk-text-caption-lineHeight-touch: 16px;
-  --uitk-text-caption-lineHeight-low: 14px;
-  --uitk-text-caption-lineHeight-medium: 14px;
-  --uitk-text-caption-lineHeight-high: 14px;
-
-  --uitk-text-caption-minHeight-touch: 16px;
-  --uitk-text-caption-minHeight-low: 14px;
-  --uitk-text-caption-minHeight-medium: 14px;
-  --uitk-text-caption-minHeight-high: 14px;
+  --uitk-text-caption-fontStyle: normal;
+  --uitk-text-caption-fontWeight: var(--uitk-typography-weight-regular);
+  --uitk-text-caption-fontWeight-strong: var(--uitk-typography-weight-semiBold);
 
   /* Help text */
-  --uitk-text-help-fontSize-touch: 12px;
-  --uitk-text-help-fontSize-low: 11px;
-  --uitk-text-help-fontSize-medium: 11px;
-  --uitk-text-help-fontSize-high: 10px;
-
-  --uitk-text-help-lineHeight-touch: 16px;
-  --uitk-text-help-lineHeight-low: 14px;
-  --uitk-text-help-lineHeight-medium: 14px;
-  --uitk-text-help-lineHeight-high: 13px;
+  --uitk-text-help-fontStyle: italic;
+  --uitk-text-help-fontWeight: var(--uitk-typography-weight-regular);
 
   /* Figure text */
-  --uitk-text-figure-1-font-size: 56px;
-  --uitk-text-figure-2-font-size: 36px;
-  --uitk-text-figure-3-font-size: 24px;
+  --uitk-text-figure1-fontSize: 56px;
+  --uitk-text-figure1-lineHeight: 74px;
+  --uitk-text-figure1-fontWeight: var(--uitk-typography-weight-semiBold);
 
-  --uitk-text-figure-1-lineHeight: 74px;
-  --uitk-text-figure-2-lineHeight: 48px;
-  --uitk-text-figure-3-lineHeight: 32px;
+  --uitk-text-figure2-fontSize: 36px;
+  --uitk-text-figure2-lineHeight: 48px;
+  --uitk-text-figure2-fontWeight: var(--uitk-typography-weight-semiBold);
 
-  /**
-    Body text (default)
-    Avoid using these directly. Instead, use --uitk-text-fontSize, --uitk-text-lineHeight values
-    below, which scope to density, unless strong reason applicable
-  **/
-  --uitk-text-fontSize-touch: 16px;
-  --uitk-text-lineHeight-touch: 22px;
-  --uitk-text-minHeight-touch: 20px;
-
-  --uitk-text-fontSize-low: 14px;
-  --uitk-text-lineHeight-low: 18px;
-  --uitk-text-minHeight-low: 18px;
-
-  --uitk-text-fontSize-medium: 12px;
-  --uitk-text-lineHeight-medium: 16px;
-  --uitk-text-minHeight-medium: 16px;
-
-  --uitk-text-fontSize-high: 11px;
-  --uitk-text-lineHeight-high: 14px;
-  --uitk-text-minHeight-high: 14px;
+  --uitk-text-figure3-lineHeight: 32px;
+  --uitk-text-figure3-fontSize: 24px;
+  --uitk-text-figure3-fontWeight: var(--uitk-typography-weight-semiBold);
 
   /* Colors */
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
-  --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
+  --uitk-text-background-selected: var(--uitk-palette-neutrallight);
 
   --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
   --uitk-text-primary-foreground-hover: var(--uitk-palette-neutral-primary-foreground);
@@ -133,106 +68,113 @@
   --uitk-text-secondary-foreground-selected: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-text-secondary-foreground-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
 
-  /* Links */
+  /* Link */
   --uitk-text-link-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
   --uitk-text-link-textDecoration: underline;
   --uitk-text-link-textDecoration-hover: none;
   --uitk-text-link-textDecoration-selected: underline;
+
+  /* Code */
+  --uitk-text-code-fontFamily: var(--uitk-typography-fontFamily-code);
 }
 
+/* Sizes by density */
 .uitk-density-touch {
-  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-touch);
-  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-touch);
+  --uitk-text-h1-fontSize: 36px;
+  --uitk-text-h1-lineHeight: auto;
 
-  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-touch);
-  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-touch);
+  --uitk-text-h2-fontSize: 28px;
+  --uitk-text-h2-lineHeight: 36px;
 
-  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-touch);
-  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-touch);
+  --uitk-text-h3-fontSize: 18px;
+  --uitk-text-h3-lineHeight: 26px;
 
-  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-touch);
-  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-touch);
+  --uitk-text-h4-fontSize: 16px;
+  --uitk-text-h4-lineHeight: 22px;
 
-  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-touch);
-  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-touch);
-  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-touch);
+  --uitk-text-caption-fontSize: 12px;
+  --uitk-text-caption-lineHeight: 16px;
+  --uitk-text-caption-minHeight: 16px;
 
-  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-touch);
-  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-touch);
+  --uitk-text-help-fontSize: 12px;
+  --uitk-text-help-lineHeight: 16px;
 
-  --uitk-text-fontSize: var(--uitk-text-fontSize-touch);
-  --uitk-text-lineHeight: var(--uitk-text-lineHeight-touch);
-  --uitk-text-minHeight: var(--uitk-text-minHeight-touch);
+  --uitk-text-fontSize: 16px;
+  --uitk-text-lineHeight: 22px;
+  --uitk-text-minHeight: 20px;
 }
+
 .uitk-density-low {
-  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-low);
-  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-low);
+  --uitk-text-h1-fontSize: 32px;
+  --uitk-text-h1-lineHeight: 42px;
 
-  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-low);
-  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-low);
+  --uitk-text-h2-fontSize: 24px;
+  --uitk-text-h2-lineHeight: 32px;
 
-  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-low);
-  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-low);
+  --uitk-text-h3-fontSize: 18px;
+  --uitk-text-h3-lineHeight: 26px;
 
-  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-low);
-  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-low);
+  --uitk-text-h4-fontSize: 14px;
+  --uitk-text-h4-lineHeight: 18px;
 
-  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-low);
-  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-low);
-  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-low);
+  --uitk-text-caption-fontSize: 11px;
+  --uitk-text-caption-lineHeight: 14px;
+  --uitk-text-caption-minHeight: 14px;
 
-  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-low);
-  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-low);
+  --uitk-text-help-fontSize: 11px;
+  --uitk-text-help-lineHeight: 14px;
 
-  --uitk-text-fontSize: var(--uitk-text-fontSize-low);
-  --uitk-text-lineHeight: var(--uitk-text-lineHeight-low);
-  --uitk-text-minHeight: var(--uitk-text-minHeight-low);
+  --uitk-text-fontSize: 14px;
+  --uitk-text-lineHeight: 18px;
+  --uitk-text-minHeight: 18px;
 }
+
 .uitk-density-medium {
-  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-medium);
-  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-medium);
+  --uitk-text-h1-fontSize: 24px;
+  --uitk-text-h1-lineHeight: 31px;
 
-  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-medium);
-  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-medium);
+  --uitk-text-h2-fontSize: 18px;
+  --uitk-text-h2-lineHeight: 24px;
 
-  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-medium);
-  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-medium);
+  --uitk-text-h3-fontSize: 14px;
+  --uitk-text-h3-lineHeight: 22px;
 
-  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-medium);
-  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-medium);
+  --uitk-text-h4-fontSize: 12px;
+  --uitk-text-h4-lineHeight: 16px;
 
-  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-medium);
-  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-medium);
-  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-medium);
+  --uitk-text-caption-fontSize: 11px;
+  --uitk-text-caption-lineHeight: 14px;
+  --uitk-text-caption-minHeight: 14px;
 
-  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-medium);
-  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-medium);
+  --uitk-text-help-fontSize: 11px;
+  --uitk-text-help-lineHeight: 14px;
 
-  --uitk-text-fontSize: var(--uitk-text-fontSize-medium);
-  --uitk-text-lineHeight: var(--uitk-text-lineHeight-medium);
-  --uitk-text-minHeight: var(--uitk-text-minHeight-medium);
+  --uitk-text-fontSize: 12px;
+  --uitk-text-lineHeight: 16px;
+  --uitk-text-minHeight: 16px;
 }
+
 .uitk-density-high {
-  --uitk-text-h1-fontSize: var(--uitk-text-h1-fontSize-high);
-  --uitk-text-h1-lineHeight: var(--uitk-text-h1-lineHeight-high);
+  --uitk-text-h1-fontSize: 18px;
+  --uitk-text-h1-lineHeight: 24px;
 
-  --uitk-text-h2-fontSize: var(--uitk-text-h2-fontSize-high);
-  --uitk-text-h2-lineHeight: var(--uitk-text-h2-lineHeight-high);
+  --uitk-text-h2-fontSize: 14px;
+  --uitk-text-h2-lineHeight: 18px;
 
-  --uitk-text-h3-fontSize: var(--uitk-text-h3-fontSize-high);
-  --uitk-text-h3-lineHeight: var(--uitk-text-h3-lineHeight-high);
+  --uitk-text-h3-fontSize: 12px;
+  --uitk-text-h3-lineHeight: 16px;
 
-  --uitk-text-h4-fontSize: var(--uitk-text-h4-fontSize-high);
-  --uitk-text-h4-lineHeight: var(--uitk-text-h4-lineHeight-high);
+  --uitk-text-h4-fontSize: 11px;
+  --uitk-text-h4-lineHeight: 14px;
 
-  --uitk-text-caption-fontSize: var(--uitk-text-caption-fontSize-high);
-  --uitk-text-caption-lineHeight: var(--uitk-text-caption-lineHeight-high);
-  --uitk-text-caption-minHeight: var(--uitk-text-caption-minHeight-high);
+  --uitk-text-caption-fontSize: 10px;
+  --uitk-text-caption-lineHeight: 14px;
+  --uitk-text-caption-minHeight: 14px;
 
-  --uitk-text-help-fontSize: var(--uitk-text-help-fontSize-high);
-  --uitk-text-help-lineHeight: var(--uitk-text-help-lineHeight-high);
+  --uitk-text-help-fontSize: 10px;
+  --uitk-text-help-lineHeight: 13px;
 
-  --uitk-text-fontSize: var(--uitk-text-fontSize-high);
-  --uitk-text-lineHeight: var(--uitk-text-lineHeight-high);
-  --uitk-text-minHeight: var(--uitk-text-minHeight-high);
+  --uitk-text-fontSize: 11px;
+  --uitk-text-lineHeight: 14px;
+  --uitk-text-minHeight: 14px;
 }

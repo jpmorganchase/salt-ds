@@ -17,7 +17,7 @@
   --file-drop-zone-padding: calc(var(--uitk-size-unit) * 3);
 
   /* Font / Typography */
-  --file-drop-zone-font-family: var(--uitk-typography-fontFamily);
+  --file-drop-zone-font-family: var(--uitk-text-fontFamily);
   --file-drop-zone-font-size: var(--uitk-text-fontSize);
   --file-drop-zone-line-height: var(--uitk-text-lineHeight);
 
@@ -72,7 +72,7 @@
 }
 
 .uitkFileDropZone-title {
-  font-weight: var(--file-drop-zone-title-font-weight);
+  font-weight: var(--uitkFileDropZone-font-weight, var(--uitk-text-fontWeight-strong));
 }
 
 .uitkFileDropZone-inputButton {

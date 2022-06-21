@@ -2,7 +2,8 @@
 .uitk-dark {
   --uitk-container-borderWidth: 1px;
   --uitk-container-borderStyle: solid;
-  --uitk-container-borderRadius: 0; /* Note: design token not in Figma */
+  --uitk-container-borderRadius: 0;
+  --uitk-container-textAlign: center;
 
   --uitk-container-cta-borderColor: var(--uitk-palette-neutral-cta-border);
   --uitk-container-primary-borderColor: var(--uitk-palette-neutral-primary-border);

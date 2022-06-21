@@ -18,7 +18,7 @@
   --dialog-close-button-padding: var(--uitkDialogTitle-close-button-padding, var(--uitk-size-unit));
   --dialog-close-button-offset: var(--uitkDialogTitle-close-button-offset, calc(var(--dialog-padding) * -1));
   --dialog-title-line-height: var(--uitkDialogTitle-line-height, var(--uitk-text-lineHeight));
-  --dialog-title-font-weight: var(--uitkDialogTitle-font-weight, var(--uitk-typography-weight-semiBold));
+  --dialog-title-font-weight: var(--uitkDialogTitle-font-weight, var(--uitk-text-fontWeight-strong));
   --dialog-title-icon-margin-right: var(--uitkDialogTitle-icon-margin-right, 8px);
   --dialog-title-color: var(--uitkDialogTitle-color, var(--uitk-text-primary-foreground));
 }

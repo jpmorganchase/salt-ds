@@ -6,7 +6,7 @@
 
   --link-text-decoration: var(--uitk-text-link-textDecoration);
 
-  --link-font-family: var(--uitk-typography-fontFamily);
+  --link-font-family: var(--uitk-text-fontFamily);
   --link-focus-outline: var(--uitk-focused-outline);
 }
 

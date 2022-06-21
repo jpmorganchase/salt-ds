@@ -23,7 +23,7 @@
 }
 
 .uitkEditableLabel .uitkInput {
-  font-weight: var(--uitk-typography-weight-regular);
+  font-weight: var(--uitk-text-fontWeight);
   left: var(--editable-label-padding, 0);
   padding: 0;
   outline-style: none;

@@ -5,7 +5,7 @@
   --dialog-border-style: var(--uitkDialog-border-style, var(--uitk-container-borderStyle));
   --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-borderWidth));
   --dialog-box-shadow: var(--uitkDialog-box-shadow, var(--uitk-overlayable-shadow-modal)); /* TODO: Check token w design */
-  --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-typography-fontFamily));
+  --dialog-font-family: var(--uitkDialog-font-family, var(--uitk-text-fontFamily));
   --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
   --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
 }
