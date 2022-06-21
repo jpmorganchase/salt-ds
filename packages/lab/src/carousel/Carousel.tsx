@@ -6,17 +6,19 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactElement,
-  useCallback,
   useEffect,
   useState,
 } from "react";
 import { RadioButtonGroup } from "../radio-button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import warning from "warning";
-import { LayoutAnimationDirection } from "../layout/types";
 import { useId } from "../utils";
 import cx from "classnames";
 import "./Carousel.css";
+import {
+  LayoutAnimationDirection,
+  LayoutAnimationTransition,
+} from "@jpmorganchase/uitk-core/src/layout/types";
 
 const withBaseName = makePrefixer("uitkCarousel");
 export type SlideDirections = "left" | "right";
@@ -62,13 +64,31 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const useSlideSelection = (
+  slidesCount: number,
   initialValue?: number
-): [number, (sliderIndex: number) => void] => {
-  const [selectedSlide, setSelectedSlide] = useState(initialValue ?? 0);
-  const handleSlideSelection = (sliderIndex: number) => {
+): [
+  LayoutAnimationTransition | undefined,
+  number,
+  (sliderIndex: number, transition?: LayoutAnimationTransition) => void
+] => {
+  const [selectedSlide, setSelectedSlide] = useState(initialValue || 0);
+  const [selectedTransition, setSelectedTransition] = useState<
+    LayoutAnimationTransition | undefined
+  >(undefined);
+
+  const handleSlideSelection = (
+    sliderIndex: number,
+    transition?: LayoutAnimationTransition
+  ) => {
+    const newTransition = transition
+      ? transition
+      : selectedSlide < sliderIndex
+      ? "increase"
+      : "decrease";
     setSelectedSlide(sliderIndex);
+    setSelectedTransition(newTransition);
   };
-  return [selectedSlide, handleSlideSelection];
+  return [selectedTransition, selectedSlide, handleSlideSelection];
 };
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
@@ -78,17 +98,19 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       animationTimeout = 800,
       carouselDescription,
       children,
+      className,
       compact,
       direction,
       id: idProp,
+      ...rest
     },
     ref
   ) {
     const id = useId(idProp);
-
-    const [selectedSlide, handleSlideSelection] =
-      useSlideSelection(activeIndex);
     const slidesCount = Children.count(children);
+
+    const [selectedTransition, selectedSlide, handleSlideSelection] =
+      useSlideSelection(slidesCount, activeIndex);
 
     const moveSlide = (direction: SlideDirections) => {
       const moveLeft =
@@ -96,25 +118,26 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       const moveRight =
         selectedSlide === slidesCount - 1 ? 0 : selectedSlide + 1;
       const newSelection = direction === "left" ? moveLeft : moveRight;
-      handleSlideSelection(newSelection);
+      const newTransition = direction === "left" ? "decrease" : "increase";
+      handleSlideSelection(newSelection, newTransition);
     };
-    const handleRadioChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-      ({ target: { value } }) => {
-        handleSlideSelection(Number(value));
-      },
-      []
-    );
+
+    const handleRadioChange: ChangeEventHandler<HTMLInputElement> = ({
+      target: { value },
+    }) => {
+      handleSlideSelection(Number(value));
+    };
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
         const validNumberOfChildren = slidesCount > 1;
-
         warning(
           validNumberOfChildren,
           "Carousel component requires more than one children to render. At least two elements should be provided."
         );
       }
     }, [children]);
+
     return (
       <div
         aria-label={carouselDescription}
@@ -122,7 +145,12 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         id={id}
         role="region"
         ref={ref}
-        className={cx(withBaseName(), compact && withBaseName("compact"))}
+        {...rest}
+        className={cx(
+          withBaseName(),
+          compact && withBaseName("compact"),
+          className
+        )}
       >
         <Button
           variant="secondary"
@@ -134,6 +162,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         <DeckLayout
           activeIndex={selectedSlide}
           animation={animation}
+          transition={selectedTransition}
           className={withBaseName("slider")}
           direction={direction}
         >

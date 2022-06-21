@@ -1,11 +1,4 @@
-import {
-  Children,
-  forwardRef,
-  HTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Children, forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import { DeckItem } from "../DeckItem";
@@ -13,24 +6,25 @@ import "./DeckLayout.css";
 
 import cx from "classnames";
 import {
-  LayoutAnimation, LayoutAnimationDirection,
-  LayoutAnimationTransition
+  LayoutAnimation,
+  LayoutAnimationDirection,
+  LayoutAnimationTransition,
 } from "@jpmorganchase/uitk-core/src/layout/types";
 
 export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * The animation when the slides are shown.
-   **/
-  animation?: LayoutAnimation;
   /**
    * The initial item to render.
    **/
   activeIndex?: number;
   /**
+   * The animation when the slides are shown.
+   **/
+  animation?: LayoutAnimation;
+  /**
    * The direction in which items will transition.
    **/
   direction?: LayoutAnimationDirection;
-  loadOffsetChildren?: "immediate" | "all" | false;
+  transition?: LayoutAnimationTransition;
 }
 
 const withBaseName = makePrefixer("uitkDeckLayout");
@@ -42,44 +36,22 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
       animation,
       className,
       children,
-      // loadChildren,
       direction = "horizontal",
+      transition,
       ...rest
     },
     ref
   ) {
-    const containerRef = useRef<number>(activeIndex | 0);
-    const [transition, setTransition] =
-      useState<LayoutAnimationTransition>("increase");
-    const decksCount = Children.count(children);
-
-    useEffect(() => {
-      const decreaseWrapping =
-        containerRef.current === 0 && activeIndex === decksCount - 1;
-      const increaseWrapping =
-        containerRef.current === decksCount - 1 && activeIndex === 0;
-      const decreaseMove =
-        containerRef.current &&
-        containerRef.current > activeIndex &&
-        !increaseWrapping;
-      if (decreaseMove || decreaseWrapping) {
-        setTransition("decrease");
-      } else {
-        setTransition("increase");
-      }
-      containerRef.current = activeIndex | 0;
-    }, [activeIndex, decksCount]);
-
+    const deckItemProps = { animation, direction, transition };
     return (
       <div className={cx(withBaseName(), className)} ref={ref} {...rest}>
         {Children.map(children, (child, index) => {
           return (
             <DeckItem
-              animation={animation}
-              direction={direction}
-              transition={transition}
+              {...deckItemProps}
               index={index}
               activeIndex={activeIndex}
+              transition={transition}
             >
               {child}
             </DeckItem>
