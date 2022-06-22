@@ -9,7 +9,7 @@ import {
 } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import "./ParentChildLayout.css";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { useIsViewportLargerThanBreakpoint } from "../../utils";
 
 import "./ParentChildLayout.css";
 import { FlexLayout } from "../FlexLayout";

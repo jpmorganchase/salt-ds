@@ -4,7 +4,7 @@ import cx from "classnames";
 import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
 import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { useIsViewportLargerThanBreakpoint } from "../../utils";
 
 export const LAYER_POSITION = [
   "center",
