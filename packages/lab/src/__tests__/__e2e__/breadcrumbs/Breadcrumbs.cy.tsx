@@ -1,37 +1,54 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { Breadcrumb, Breadcrumbs } from "../../breadcrumbs";
+import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
 
-describe("GIVEN Breadcrumbs", () => {
+describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN Breadcrumbs are passed as children", () => {
     it("THEN correctly renders the children", () => {
-      const { getByText } = render(
+      cy.mount(
         <Breadcrumbs>
           <Breadcrumb>Test</Breadcrumb>
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
+      cy.findByText("Test").should("exist");
+    });
+  });
+
+  describe("WHEN Breadcrumbs are passed as children", () => {
+    it("THEN by default items are not truncated and tooltip doesn't show", () => {
+      cy.mount(
+        <Breadcrumbs>
+          <Breadcrumb>Test 1</Breadcrumb>
+          <Breadcrumb>Test 2</Breadcrumb>
+          <Breadcrumb>Test 3</Breadcrumb>
+        </Breadcrumbs>
+      );
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("not.exist");
+
+      cy.realPress("Escape");
+
+      cy.findByText("Test 1").realHover();
+      cy.findByRole("tooltip").should("not.exist");
     });
   });
 
   describe("WHEN passing the hideCurrentLevel prop", () => {
     it("THEN does not render the last Breadcrumb", () => {
-      const { queryByText, getByText } = render(
+      cy.mount(
         <Breadcrumbs hideCurrentLevel>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(queryByText("Test2")).toBeNull();
+      cy.findByText("Test").should("exist");
+      cy.findByText("Test2").should("not.exist");
     });
   });
 
   describe("WHEN passing more than 3 children", () => {
     it("THEN by default renders the overflow menu", () => {
-      const { getByText, getByTestId, queryByText } = render(
+      cy.mount(
         <Breadcrumbs>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -40,17 +57,17 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(getByTestId("menu-trigger-button")).toBeDefined();
-      expect(queryByText("Test2")).toBeNull();
-      expect(queryByText("Test3")).toBeNull();
-      expect(getByText("Test4")).toBeDefined();
+      cy.findByText("Test").should("exist");
+      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByText("Test2").should("not.exist");
+      cy.findByText("Test3").should("not.exist");
+      cy.findByText("Test4").should("exist");
     });
   });
 
   describe("WHEN passing more children than maxItems prop", () => {
     it("THEN renders the overflow menu", () => {
-      const { getByText, getByTestId, queryByText } = render(
+      cy.mount(
         <Breadcrumbs maxItems={2}>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -58,16 +75,16 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(getByTestId("menu-trigger-button")).toBeDefined();
-      expect(queryByText("Test2")).toBeNull();
-      expect(getByText("Test3")).toBeDefined();
+      cy.findByText("Test").should("exist");
+      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByText("Test2").should("not.exist");
+      cy.findByText("Test3").should("exist");
     });
   });
 
   describe("WHEN passing more than maxItems children AND passing the itemsBeforeCollapse prop", () => {
     it("THEN renders the overflow menu with the correct number of Breadcrumb before the overflow menu", () => {
-      const { getByText, getByTestId, queryByText } = render(
+      cy.mount(
         <Breadcrumbs itemsBeforeCollapse={2} maxItems={3}>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -76,17 +93,17 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(getByText("Test2")).toBeDefined();
-      expect(getByTestId("menu-trigger-button")).toBeDefined();
-      expect(queryByText("Test3")).toBeNull();
-      expect(getByText("Test4")).toBeDefined();
+      cy.findByText("Test").should("exist");
+      cy.findByText("Test2").should("exist");
+      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByText("Test3").should("not.exist");
+      cy.findByText("Test4").should("exist");
     });
   });
 
   describe("WHEN passing more than maxItems children AND passing the itemsAfterCollapse prop", () => {
     it("THEN renders the overflow menu with the correct number of Breadcrumb before the overflow menu", () => {
-      const { getByText, getByTestId, queryByText } = render(
+      cy.mount(
         <Breadcrumbs itemsAfterCollapse={2} maxItems={3}>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -95,17 +112,17 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(getByTestId("menu-trigger-button")).toBeDefined();
-      expect(queryByText("Test2")).toBeNull();
-      expect(getByText("Test3")).toBeDefined();
-      expect(getByText("Test4")).toBeDefined();
+      cy.findByText("Test").should("exist");
+      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByText("Test2").should("not.exist");
+      cy.findByText("Test3").should("exist");
+      cy.findByText("Test4").should("exist");
     });
   });
 
   describe("WHEN passing more than maxItems children AND the Breadcrumb is wrapping", () => {
     it("THEN DOES NOT render the overflow menu", () => {
-      const { getByText, queryByTestId } = render(
+      cy.mount(
         <Breadcrumbs maxItems={3} wrap>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -114,18 +131,18 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(queryByTestId("menu-trigger-button")).toBeNull();
-      expect(getByText("Test2")).toBeDefined();
-      expect(getByText("Test3")).toBeDefined();
-      expect(getByText("Test4")).toBeDefined();
+      cy.findByText("Test").should("exist");
+      cy.findByTestId("menu-trigger-button").should("not.exist");
+      cy.findByText("Test2").should("exist");
+      cy.findByText("Test3").should("exist");
+      cy.findByText("Test4").should("exist");
     });
   });
 
   describe("WHEN providing a custom separator", () => {
     it("THEN correctly renders the custom separators", () => {
       const customSeparator = <div>Separator</div>;
-      const { getByText, queryByTestId, getAllByText } = render(
+      cy.mount(
         <Breadcrumbs separator={customSeparator}>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
@@ -133,18 +150,18 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      expect(getByText("Test")).toBeDefined();
-      expect(queryByTestId("menu-trigger-button")).toBeNull();
-      expect(getByText("Test2")).toBeDefined();
-      expect(getByText("Test3")).toBeDefined();
-      expect(getAllByText("Separator").length).toBe(2);
+      cy.findByText("Test").should("exist");
+      cy.findByTestId("menu-trigger-button").should("not.exist");
+      cy.findByText("Test2").should("exist");
+      cy.findByText("Test3").should("exist");
+      cy.findAllByText("Separator").should("have.length", 2);
     });
   });
 
   describe("WHEN providing the itemsMaxWidth prop", () => {
     it("THEN correctly applies max width styles to all Breadcrumb components", () => {
       const containerProps = { className: "item" };
-      const { container } = render(
+      cy.mount(
         <Breadcrumbs itemsMaxWidth={10}>
           <Breadcrumb ContainerProps={containerProps}>Test</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test2</Breadcrumb>
@@ -152,16 +169,15 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      const listItems = container.querySelectorAll(".item");
-      listItems.forEach((item) =>
-        expect((item as HTMLElement).style.maxWidth).toBe("10px")
-      );
+      cy.get(".item")
+        .should("have.length", 3)
+        .and("have.css", "max-width", "10px");
     });
   });
 
   describe("WHEN providing the itemsMaxWidth prop AND override it on a Breadcrumb", () => {
     it("THEN correctly override max width", () => {
-      const { container } = render(
+      cy.mount(
         <Breadcrumbs itemsMaxWidth={10}>
           <Breadcrumb ContainerProps={{ id: "Test1" }} maxWidth={20}>
             Test
@@ -171,32 +187,50 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      const test1 = container.querySelector("#Test1");
-      expect((test1 as HTMLElement).style.maxWidth).toBe("20px");
+      cy.get("#Test1").should("have.css", "max-width", "20px");
+    });
+  });
+
+  describe("WHEN providing the itemsMaxWidth prop", () => {
+    it("THEN correctly display Tooltip on hover and focus when truncating", () => {
+      cy.mount(
+        <Breadcrumbs itemsMaxWidth={30}>
+          <Breadcrumb href="#">Root Level Entity</Breadcrumb>
+          <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
+          <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
+        </Breadcrumbs>
+      );
+      cy.wait(1000);
+
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
+
+      cy.realPress("Escape");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("be.visible");
     });
   });
 
   describe("WHEN providing the itemsMinWidth prop", () => {
     it("THEN correctly applies min width styles to all Breadcrumb components", () => {
       const containerProps = { className: "item" };
-      const { container } = render(
+      cy.mount(
         <Breadcrumbs itemsMinWidth={10}>
           <Breadcrumb ContainerProps={containerProps}>Test</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test2</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test3</Breadcrumb>
         </Breadcrumbs>
       );
-
-      const listItems = container.querySelectorAll(".item");
-      listItems.forEach((item) =>
-        expect((item as HTMLElement).style.minWidth).toBe("10px")
-      );
+      cy.get(".item")
+        .should("have.length", 3)
+        .and("have.css", "min-width", "10px");
     });
   });
 
   describe("WHEN providing the itemsMinWidth prop AND override it on a Breadcrumb", () => {
     it("THEN correctly override min width", () => {
-      const { container } = render(
+      cy.mount(
         <Breadcrumbs itemsMinWidth={10}>
           <Breadcrumb ContainerProps={{ id: "Test1" }} minWidth={20}>
             Test
@@ -206,8 +240,23 @@ describe("GIVEN Breadcrumbs", () => {
         </Breadcrumbs>
       );
 
-      const test1 = container.querySelector("#Test1");
-      expect((test1 as HTMLElement).style.minWidth).toBe("20px");
+      cy.get("#Test1").should("have.css", "min-width", "20px");
+    });
+  });
+
+  describe("WHEN passing 3 children", () => {
+    it("THEN first two should be focusable and third should not", () => {
+      cy.mount(
+        <Breadcrumbs>
+          <Breadcrumb>Test1</Breadcrumb>
+          <Breadcrumb>Test2</Breadcrumb>
+          <Breadcrumb>Test3</Breadcrumb>
+        </Breadcrumbs>
+      );
+
+      cy.findByText("Test1").should("exist").and("have.attr", "tabIndex", "0");
+      cy.findByText("Test2").should("exist").and("have.attr", "tabIndex", "0");
+      cy.findByText("Test3").should("exist").and("have.attr", "tabIndex", "-1");
     });
   });
 });

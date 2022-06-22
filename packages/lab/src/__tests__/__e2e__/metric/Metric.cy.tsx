@@ -205,7 +205,7 @@ describe("Metric Header - Alignment", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetricHeader").should("have.css", "text-align", "left");
+    cy.get(".uitkMetricHeader").should("have.css", "align-items", "flex-start");
   });
   it(`should render with correct style for CENTER align`, () => {
     cy.mount(
@@ -214,7 +214,7 @@ describe("Metric Header - Alignment", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetricHeader").should("have.css", "text-align", "center");
+    cy.get(".uitkMetricHeader").should("have.css", "align-items", "center");
   });
   it(`should render with correct style for RIGHT align`, () => {
     cy.mount(
@@ -223,7 +223,7 @@ describe("Metric Header - Alignment", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkMetricHeader").should("have.css", "text-align", "right");
+    cy.get(".uitkMetricHeader").should("have.css", "align-items", "flex-end");
   });
 });
 

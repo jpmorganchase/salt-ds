@@ -1,4 +1,4 @@
-/* Styles applied to checkbox icon */
+/* Styles applied to root component */
 .uitk-density-high {
   --checkbox-size: 12px;
 }
@@ -21,54 +21,98 @@
 }
 
 .uitkCheckboxIcon {
-  --checkbox-border-width: var(--uitk-selectable-borderWidth);
-  --checkbox-solid-color: var(--uitk-selectable-background);
-  --checkbox-outline-color: var(--uitk-selectable-borderColor);
-  --checkbox-outline-color-hover: var(--uitk-selectable-borderColor-hover);
-  --checkbox-tick-fill: var(--uitkCheckboxIcon-tick-color, var(--uitk-selectable-foreground-selected));
+  --checkbox-borderWidth: var(--uitk-selectable-borderWidth);
+  --checkbox-tick-fill: var(--uitkCheckboxIcon-tick-color, var(--uitk-selectable-primary-foreground-selected));
   --checkbox-viewbox: 14px; /* do not change, matches value in svg viewBox */
-  --checkbox-box-size: calc(var(--checkbox-viewbox) - var(--checkbox-border-width));
-  --checkbox-box-offset: calc(var(--checkbox-border-width) / 2);
+  --checkbox-box-size: calc(var(--checkbox-viewbox) - var(--checkbox-borderWidth));
+  --checkbox-box-offset: calc(var(--checkbox-borderWidth) / 2);
 
-  fill: var(--uitkCheckboxIcon-solid-color, var(--checkbox-solid-color));
+  fill: var(--uitkCheckboxIcon-solid-color, var(--uitk-selectable-background));
   height: var(--uitkCheckboxIcon-size, var(--checkbox-size));
-  stroke: var(--uitkCheckboxIcon-outline-color, var(--checkbox-outline-color));
+  stroke: var(--uitkCheckboxIcon-stroke, var(--uitk-selectable-borderColor));
+  stroke-width: var(--uitkCheckboxIcon-strokeWidth, var(--uitk-selectable-borderWidth));
   width: var(--uitkCheckboxIcon-size, var(--checkbox-size));
 }
 
+/* Styles applied to root component on hover */
+.uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
+.uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
+  stroke: var(--uitkCheckboxIcon-stroke-hover, var(--uitk-selectable-borderColor-hover));
+  stroke-width: var(--uitkCheckboxIcon-stroke-width-hover, var(--uitk-selectable-borderWidth-hover));
+}
+
+/* Styles applied if `disabled={true}` */
 .uitkCheckboxIcon-disabled {
-  --checkbox-outline-color: var(--uitk-selectable-borderColor-disabled);
+  stroke: var(--uitkCheckboxIcon-stroke-disabled, var(--uitk-selectable-borderColor-disabled));
+  stroke-width: var(--uitkCheckboxIcon-stroke-width-disabled, var(--uitk-selectable-borderWidth));
 }
 
-/* Styles applied to icon if `checked={true}` */
+/* Styles applied if `checked={true}` */
 .uitkCheckboxIcon-checked {
-  --checkbox-border-width: var(--uitkCheckboxIcon-checked-border-width, 0px);
-  --checkbox-solid-color: var(--uitk-selectable-borderColor-selected);
+  --checkbox-borderWidth: var(--uitkCheckboxIcon-borderWidth-checked, 0px);
+
+  fill: var(--uitkCheckboxIcon-solid-color-checked, var(--uitk-selectable-borderColor-selected));
 }
 
+/* Styles applied if `checked={true}` and `disabled={true}` */
 .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
-  --checkbox-solid-color: var(--uitk-selectable-borderColor-selectedDisabled);
+  fill: var(--uitkCheckboxIcon-solid-color-disabled, var(--uitk-selectable-borderColor-selectedDisabled));
 }
 
-/* Styles applied to icon if `indeterminate={true}` */
-.uitkCheckboxIcon-indeterminate {
-  --checkbox-tick-fill: var(--uitkCheckboxIcon-solid-color, var(--uitk-selectable-foreground-partial));
-  --checkbox-bar-y: var(--checkbox-density-bar-y, 6px);
-  --checkbox-bar-height: var(--checkbox-density-bar-height, 2px);
-}
-
+/* Styles applied to box */
 .uitkCheckboxIcon-box {
   height: var(--checkbox-box-size);
-  stroke-width: var(--checkbox-border-width);
+  stroke-width: var(--checkbox-borderWidth);
   width: var(--checkbox-box-size);
   x: var(--checkbox-box-offset);
   y: var(--checkbox-box-offset);
 }
 
-/* Styles applied to icon if `checked={true}` or `indeterminate={true}` */
+/* Styles applied to icon if `indeterminate={true}` */
+.uitkCheckboxIcon-indeterminate {
+  --checkbox-tick-fill: var(--uitkCheckboxIcon-indeterminate-bar-color, var(--uitk-selectable-foreground-partial));
+}
+
+/* Styles applied if `indeterminate={true}` and `disabled={true}` */
+.uitkCheckboxIcon-disabled.uitkCheckboxIcon-indeterminate {
+  --checkbox-tick-fill: var(--uitkCheckboxIcon-indeterminate-bar-color-disabled, var(--uitk-selectable-foreground-partialDisabled));
+}
+
+/* Styles applied to tick */
 .uitkCheckboxIcon-tick {
-  fill: var(--checkbox-tick-fill);
-  height: var(--uitkCheckboxIcon-indeterminate-bar-height, var(--checkbox-bar-height));
+  fill: var(--uitkCheckboxIcon-tick-fill, var(--checkbox-tick-fill));
   stroke-width: 0;
-  y: var(--uitkCheckboxIcon-indeterminate-bar-y, var(--checkbox-bar-y));
+}
+
+/* Styles applied to tick if `indeterminate={true}` */
+.uitkCheckboxIcon-indeterminate .uitkCheckboxIcon-tick {
+  height: var(--uitkCheckboxIcon-indeterminate-bar-height, var(--checkbox-density-bar-height, 2px));
+  y: var(--uitkCheckboxIcon-indeterminate-bar-y, var(--checkbox-density-bar-y, 6px));
+}
+
+/* Backwards compat styling for TK1 */
+.backwardsCompat .uitk-light .uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
+.backwardsCompat .uitk-light .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
+  stroke: rgb(46, 132, 198); /* blue-400 */
+}
+
+.backwardsCompat .uitk-light .uitkCheckboxIcon-checked {
+  fill: rgb(38, 112, 169); /* blue-500 */
+}
+
+.backwardsCompat .uitk-light .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
+  fill: rgba(38, 112, 169, 0.7); /* blue-500 */
+}
+
+.backwardsCompat .uitk-dark .uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
+.backwardsCompat .uitk-dark .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
+  stroke: rgb(51, 141, 205); /* blue-300 */
+}
+
+.backwardsCompat .uitk-dark .uitkCheckboxIcon-checked {
+  fill: rgb(46, 132, 198); /* blue-400 */
+}
+
+.backwardsCompat .uitk-dark .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
+  fill: rgba(46, 132, 198, 0.7); /* blue-400 */
 }
