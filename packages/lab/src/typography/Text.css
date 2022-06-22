@@ -35,7 +35,6 @@
 
 h1.uitkText,
 .uitkText-h1.uitkText {
-  margin: 0;
   font-size: var(--uitk-text-h1-fontSize);
   line-height: var(--uitk-text-h1-lineHeight);
   font-weight: var(--uitk-text-h1-fontWeight);
@@ -56,7 +55,6 @@ h1.uitkText small,
 
 h2.uitkText,
 .uitkText-h2.uitkText {
-  margin: 0;
   font-size: var(--uitk-text-h2-fontSize);
   line-height: var(--uitk-text-h2-lineHeight);
   font-weight: var(--uitk-text-h2-fontWeight);
@@ -76,7 +74,6 @@ h2.uitkText small,
 /* Heading 3 */
 h3.uitkText,
 .uitkText-h3.uitkText {
-  margin: 0;
   font-size: var(--uitk-text-h3-fontSize);
   line-height: var(--uitk-text-h3-lineHeight);
   font-weight: var(--uitk-text-h3-fontWeight);
@@ -96,7 +93,6 @@ h3.uitkText small,
 /* Heading 4 */
 h4.uitkText,
 .uitkText-h4.uitkText {
-  margin: 0;
   font-size: var(--uitk-text-h4-fontSize);
   line-height: var(--uitk-text-h4-lineHeight);
   font-weight: var(--uitk-text-h4-fontWeight);
@@ -114,7 +110,8 @@ h4.uitkText small,
 }
 
 /* Label-Caption */
-label.uitkText {
+label.uitkText,
+.uitkText-label {
   font-size: var(--uitk-text-caption-fontSize);
   line-height: var(--uitk-text-caption-lineHeight);
 }
