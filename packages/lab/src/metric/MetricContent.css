@@ -5,28 +5,12 @@
   align-items: flex-start;
   padding: 0px;
 }
-/* .uitkMetric-orientation-horizontal .uitkMetricContent :not(:last-child) {
-  margin-bottom: calc(var(--uitk-size-unit) / 4);
-} */
 
 .uitkMetricContent-value-container {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 4px;
-}
-/* .uitkMetricContent-value-container :not(:last-child) {
-  margin-right: 4px;
-} */
-
-.uitkMetricContent-value {
-  overflow: unset;
-}
-
-.uitkMetricContent-indicator {
-  display: flex;
-  flex-direction: column;
-  /* align-items: flex-start; */
 }
 
 .uitkMetric-size-large .uitkMetricContent-indicator {
@@ -36,8 +20,7 @@
   padding: 0px 0px 11px;
 }
 .uitkMetric-size-small .uitkMetricContent-indicator {
-  padding: 0px 0px 1px;
-  /* height: 24px; */
+  padding: 0px 0px 8px;
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
@@ -72,10 +55,7 @@
   margin-top: -2px;
 }
 .backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
-  margin-top: -4px;
-}
-.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent {
-  margin-top: -1px;
+  margin-top: -6px;
 }
 .backwardsCompat .uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
   margin-top: -10px;
@@ -83,12 +63,4 @@
 
 .backwardsCompat .uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
   margin-top: 0px;
-}
-
-.backwardsCompat .uitkMetric-size-small .uitkMetricContent-indicator {
-  padding: 0px 0px 8px;
-}
-
-.backwardsCompat .uitkMetricContent-value-container {
-  gap: 4px;
 }

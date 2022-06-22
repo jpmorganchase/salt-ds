@@ -1,31 +1,15 @@
-.uitkBreadcrumbs {
-  --font-size: var(--uitk-text-caption-fontSize);
-  --line-height: var(--uitkBreadcrumbs-line-height, var(--uitk-text-lineHeight));
-}
-
-.uitkBreadcrumbs {
-  font-size: var(--font-size);
-  line-height: var(--line-height);
-}
-
 .uitkBreadcrumbs-ol {
   display: flex;
-  overflow: hidden;
   align-items: center;
   justify-content: flex-start;
   padding: 0;
   margin: 0;
+  gap: var(--uitk-size-unit);
 }
 
 .uitkBreadcrumbs-li {
-  list-style: none;
   flex: 0 1 auto;
-  padding: 2px;
-}
-
-.uitkBreadcrumbs-li,
-.uitkBreadcrumbs-separator {
-  margin-right: calc(var(--uitk-size-unit) - 2px);
+  list-style: none;
 }
 
 .uitkBreadcrumbs-separator {
@@ -37,10 +21,15 @@
   flex-wrap: wrap;
 }
 
-.uitkBreadcrumbs-ol-wrap li:not(:last-child) {
-  margin-bottom: calc(var(--uitk-size-unit) * 0.5 - 2px);
+.backwardsCompat .uitkBreadcrumbs-ol {
+  gap: 0;
 }
 
-.uitkBreadcrumbs-overflowButton {
-  margin: 0 !important;
+.backwardsCompat .uitkBreadcrumbs-li {
+  padding: 2px;
+}
+
+.backwardsCompat .uitkBreadcrumbs-li,
+.backwardsCompat .uitkBreadcrumbs-separator {
+  margin-right: 6px;
 }

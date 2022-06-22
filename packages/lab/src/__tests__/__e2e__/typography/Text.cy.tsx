@@ -123,60 +123,6 @@ describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=f
   });
 });
 
-// Expanded
-describe("GIVEN Text component with truncate=true, maxRows=2 and expanded=true", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should not be truncated`, () => {
-      const Component = component;
-
-      cy.mount(
-        <Component truncate={true} expanded={true} maxRows={2}>
-          {textExample}
-        </Component>
-      );
-      cy.get(".uitkText")
-        .should("not.have.class", "uitkText-lineClamp")
-        .and("not.have.css", "-webkit-line-clamp", "2");
-    });
-  });
-});
-
-// Collapsed with maxRows
-describe("GIVEN Text component with truncate=true, maxRows=2 and expanded=false", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should display only 2 rows`, () => {
-      const Component = component;
-
-      cy.mount(
-        <Component truncate={true} expanded={false} maxRows={2}>
-          {textExample}
-        </Component>
-      );
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-lineClamp")
-        .and("have.css", "-webkit-line-clamp", "2");
-    });
-  });
-});
-
-// Collapsed without maxRows
-describe("GIVEN Text component with truncate=true and expanded=true", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should be truncated and display 1 row`, () => {
-      const Component = component;
-
-      cy.mount(
-        <Component truncate={true} expanded={false}>
-          {textExample}
-        </Component>
-      );
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-lineClamp")
-        .and("have.css", "-webkit-line-clamp", "1");
-    });
-  });
-});
-
 // Scrollable
 describe("GIVEN Text component with parent height 100px", () => {
   componentsArray.forEach(({ component, name }) => {

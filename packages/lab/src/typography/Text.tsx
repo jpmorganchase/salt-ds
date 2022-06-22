@@ -6,14 +6,21 @@ import {
   useTooltip,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { CSSProperties, ElementType, forwardRef, HTMLAttributes } from "react";
+import {
+  CSSProperties,
+  ElementType,
+  forwardRef,
+  ComponentPropsWithoutRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { useTruncation } from "./useTruncation";
 
 import "./Text.css";
 
 const withBaseName = makePrefixer("uitkText");
 
-export interface TextProps extends HTMLAttributes<HTMLElement> {
+interface TextPropsBase<E extends ElementType> {
   /**
    * Represents the semantic element tag name as a string.
    * Defaults to 'div'
@@ -42,14 +49,6 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   tooltipText?: string;
   /**
-   * If 'true' the text will expand to 100% height, if 'false' text will collapse to 'maxRows'.
-   *
-   * When set, maxRows defaults to 1.
-   *
-   * When set, it will not show the tooltip when text is truncated.
-   */
-  expanded?: boolean;
-  /**
    * Customise styling.
    */
   style?: CSSProperties;
@@ -59,107 +58,90 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
    */
   onOverflowChange?: (isOverflowed: boolean) => unknown;
   /**
-   * Override style for margin-top
-   */
-  marginTop?: number;
-  /**
-   * Override style for margin-bottom
-   */
-  marginBottom?: number;
-  /**
    * Match styling to a specified heading
    */
-  styleAs?: "h1" | "h2" | "h3" | "h4";
+  styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
 }
 
-export const Text = forwardRef<HTMLElement, TextProps>(function Text(
-  props,
-  ref
-) {
-  const {
-    children,
-    className,
-    elementType = "div",
-    expanded,
-    marginBottom,
-    marginTop,
-    maxRows,
-    onOverflowChange,
-    showTooltip,
-    style,
-    styleAs,
-    tooltipProps,
-    tooltipText,
-    truncate = false,
-    ...restProps
-  } = props;
+export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
+  Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
-  // Rendering
-  const Component: ElementType = elementType;
+export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
+  function Text(props, ref) {
+    const {
+      children,
+      className,
+      elementType = "div",
+      maxRows,
+      onOverflowChange,
+      showTooltip = true,
+      style,
+      styleAs,
+      tooltipProps,
+      tooltipText,
+      truncate = false,
+      tabIndex,
+      ...restProps
+    } = props;
 
-  const getTruncatingComponent = () => {
-    const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
-      useTruncation(props, ref);
+    // Rendering
+    const Component: ElementType = elementType;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      enterDelay: 150,
-      placement: "top",
-      disabled: !hasTooltip,
-    });
+    const getTruncatingComponent = () => {
+      const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
+        useTruncation(props, ref);
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      className: cx(withBaseName(), className, {
-        [withBaseName("lineClamp")]: !expanded,
-        [withBaseName(styleAs || "")]: styleAs,
-      }),
-      ...restProps,
-      tabIndex: hasTooltip ? 0 : -1,
-    });
+      const { getTooltipProps, getTriggerProps } = useTooltip({
+        enterDelay: 150,
+        placement: "top",
+        disabled: !hasTooltip,
+      });
 
-    const handleRef = useForkRef(triggerRef, setContainerRef);
+      const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+        className: cx(withBaseName(), className, withBaseName("lineClamp"), {
+          [withBaseName(styleAs || "")]: styleAs,
+        }),
+        tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
+        style: {
+          ...style,
+          // @ts-ignore
+          "--text-max-rows": rows,
+        },
+        ...restProps,
+      });
+
+      const handleRef = useForkRef(triggerRef, setContainerRef);
+
+      return (
+        <>
+          <Component {...triggerProps} ref={handleRef}>
+            {children}
+          </Component>
+          <Tooltip
+            {...getTooltipProps({
+              title: tooltipText || tooltipTextDefault,
+              ...tooltipProps,
+            })}
+          />
+        </>
+      );
+    };
+
+    if (truncate) {
+      return getTruncatingComponent();
+    }
 
     return (
-      <>
-        <Component
-          {...triggerProps}
-          ref={handleRef}
-          style={{
-            marginTop,
-            marginBottom,
-            ...style,
-            "--text-max-rows": rows,
-          }}
-        >
-          {children}
-        </Component>
-        <Tooltip
-          {...getTooltipProps({
-            title: tooltipText || tooltipTextDefault,
-            ...tooltipProps,
-          })}
-        />
-      </>
+      <Component
+        className={cx(withBaseName(), withBaseName("overflow"), className, {
+          [withBaseName(styleAs || "")]: styleAs,
+        })}
+        {...restProps}
+        ref={ref}
+        style={style}
+      >
+        {children}
+      </Component>
     );
-  };
-
-  if (truncate) {
-    return getTruncatingComponent();
   }
-
-  return (
-    <Component
-      className={cx(withBaseName(), withBaseName("overflow"), className, {
-        [withBaseName(styleAs || "")]: styleAs,
-      })}
-      {...restProps}
-      ref={ref}
-      style={{
-        marginTop,
-        marginBottom,
-        ...style,
-      }}
-    >
-      {children}
-    </Component>
-  );
-});
+);
