@@ -1,9 +1,10 @@
-import { Card, Carousel, DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
+import {Card} from "@jpmorganchase/uitk-core";
+import { Carousel, DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React, { useState } from "react";
 
 export default {
-  title: "Layout/DeckLayout",
+  title: "Lab/Layout/DeckLayout",
   component: DeckLayout,
   argTypes: {},
 } as ComponentMeta<typeof DeckLayout>;

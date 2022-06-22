@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {makePrefixer, useForkRef} from "@jpmorganchase/uitk-core";
 import "./DeckItem.css";
 import cx from "classnames";
 import {
@@ -14,7 +14,7 @@ import {
   LayoutAnimationDirection,
   LayoutAnimationTransition,
 } from "@jpmorganchase/uitk-core/src/layout/types";
-import { useForkRef, usePrevious } from "../../utils";
+import { usePrevious } from "../../utils";
 
 const withBaseName = makePrefixer("uitkDeckItem");
 
@@ -57,9 +57,6 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         ? "next"
         : "previous";
     }, [activeIndex]);
-
-    const staticPosition =
-      index === 1 ? "current" : index === 2 ? "next" : "previous";
 
     const currentDirections = direction ? animationDirections[direction] : [];
     const classesIndex = animation && position === "current" ? 0 : 1;

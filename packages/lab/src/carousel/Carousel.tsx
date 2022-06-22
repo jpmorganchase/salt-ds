@@ -64,7 +64,6 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const useSlideSelection = (
-  slidesCount: number,
   initialValue?: number
 ): [
   LayoutAnimationTransition | undefined,
@@ -110,7 +109,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const slidesCount = Children.count(children);
 
     const [selectedTransition, selectedSlide, handleSlideSelection] =
-      useSlideSelection(slidesCount, activeIndex);
+      useSlideSelection(activeIndex);
 
     const moveSlide = (direction: SlideDirections) => {
       const moveLeft =
