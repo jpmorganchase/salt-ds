@@ -8,6 +8,8 @@
   letter-spacing: var(--uitkIcon-letter-spacing, normal);
   speak: none;
   display: inline-block;
+  margin: var(--uitkIcon-margin, 0);
+  padding: var(--uitkIcon-padding, 0);
   position: relative;
   box-sizing: border-box;
   /* Reset 1.3 line height Toolkit sets */
