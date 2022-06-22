@@ -4,7 +4,7 @@ import cx from "classnames";
 import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
 import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
-import { useIsViewportLargerThanBreakpoint } from "../../utils";
+import { useIsViewportLargerThanBreakpoint, usePrevious } from "../../utils";
 
 export const LAYER_POSITION = [
   "center",
@@ -59,6 +59,12 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       ...rest
     } = props;
 
+    const previousDisableAnimationsProp = usePrevious(
+      disableAnimations,
+      [disableAnimations],
+      false
+    ); // we check the previous value for this prop to prevent the animations from triggering again when it changes
+
     const [showComponent, setShowComponent] = useState(false);
 
     const [hasAnimations, setHasAnimations] = useState(false);
@@ -79,6 +85,11 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
 
     const anchored = position !== "center" && !fullScreen;
 
+    const enterAnimation =
+      !disableAnimations && open && !previousDisableAnimationsProp;
+
+    const exitAnimation = !disableAnimations && !open;
+
     const layerLayout = showComponent ? (
       <div
         ref={ref}
@@ -86,8 +97,8 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
           [withBaseName("anchor")]: anchored,
           [withBaseName("fullScreen")]: fullScreen,
           [withBaseName(position)]: !fullScreen,
-          [withBaseName("enter-animation")]: !disableAnimations && open,
-          [withBaseName("exit-animation")]: !disableAnimations && !open,
+          [withBaseName("enter-animation")]: enterAnimation,
+          [withBaseName("exit-animation")]: exitAnimation,
         })}
         onAnimationStart={() => setHasAnimations(true)}
         onAnimationEnd={() => {
