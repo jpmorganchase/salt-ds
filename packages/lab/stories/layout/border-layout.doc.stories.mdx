@@ -10,6 +10,7 @@ import { ToolkitBorderLayout } from "./border-layout.stories";
 <Meta
   title="Documentation/Lab/Layout/BorderLayout"
   component={BorderLayout}
+  subcomponents={{ BorderItem }}
   parameters={{
     viewMode: "docs",
   }}
@@ -31,15 +32,9 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 ## Props
 
-### Border Layout Props
-
 <ArgsTable of={BorderLayout} />
 
-### Border Item Props
-
-<ArgsTable of={BorderItem} />
-
-## Usage Examples
+## Examples
 
 ### Border Item inside default border layout
 
@@ -57,8 +52,13 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <BorderLayout>
-      <BorderItem></BorderItem>
+    <BorderLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
+      <BorderItem style={{ border: "dashed 1px black", padding: "1rem" }}/>
     </BorderLayout>
   </ComponentAnatomy>
 </Canvas>
+
+### Classes
+
+#### Item
+<CSSClassTable of={BorderItem} />
