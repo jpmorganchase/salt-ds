@@ -38,6 +38,12 @@ jobs:
               echo "Core package can not reference itself or lab package"
               exit 1;
           fi
+      - name: Check build icon package.json dependencies
+        run: |
+          if grep -q "@jpmorganchase\/uitk-\(icon\|core\|lab\)\":" dist/jpmorganchase-uitk-icon/package.json; then
+              echo "Icon package can not reference itself or core or lab package"
+              exit 1;
+          fi
       - name: Check build lab package.json dependencies
         run: |
           if grep -q "@jpmorganchase\/uitk-lab\":" dist/jpmorganchase-uitk-lab/package.json; then

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 // @ts-ignore
-import { validate } from "csstree-validator/dist/csstree-validator.esm.js";
+import { validate } from "csstree-validator";
 
 function getCSSText(rule: string, value: string) {
   return `body: { ${rule}: ${value} }`;

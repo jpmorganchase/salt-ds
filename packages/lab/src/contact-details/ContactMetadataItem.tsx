@@ -1,5 +1,6 @@
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef } from "react";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
 import { TruncatableValue, TruncatableValueProps } from "./internal";
 
 const withBaseName = makePrefixer("uitkContactMetadataItem");

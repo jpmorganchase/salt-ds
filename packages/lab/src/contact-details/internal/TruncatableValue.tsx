@@ -1,11 +1,16 @@
 import {
+  Tooltip,
+  TooltipProps,
+  useForkRef,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
+import { ComponentType, FC } from "react";
+import { useOverflowDetection } from "../../utils";
+import { MailLinkComponent } from "../MailLinkComponent";
+import {
   DefaultValueComponent,
   ValueComponentProps,
 } from "./DefaultValueComponent";
-import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
-import { ComponentType, FC } from "react";
-import { useForkRef, useOverflowDetection } from "../../utils";
-import { MailLinkComponent } from "../MailLinkComponent";
 
 function isEmail(value?: string): boolean {
   return !!value && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);

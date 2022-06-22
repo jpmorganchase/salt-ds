@@ -1,5 +1,3 @@
-import { useControlled } from "../utils";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import {
   arrow,
   flip,
@@ -11,7 +9,11 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
-import { OverlayProps } from "./Overlay";
+import {
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+} from "@jpmorganchase/uitk-core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
@@ -19,6 +21,7 @@ import {
   useCallback,
   useRef,
 } from "react";
+import { OverlayProps } from "./Overlay";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">

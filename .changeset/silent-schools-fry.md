@@ -1,5 +1,6 @@
 ---
 "@jpmorganchase/uitk-lab": patch
+"docs": patch
 ---
 
-Fix package depends on itself
+Breadcrumbs add typography

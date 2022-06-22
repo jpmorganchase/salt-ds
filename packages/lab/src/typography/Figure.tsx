@@ -1,15 +1,14 @@
-import { forwardRef } from "react";
-import cx from "classnames";
-
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-
-import { Span, TextProps } from "./";
+import cx from "classnames";
+import { forwardRef } from "react";
+import { Span } from "./Span";
+import { TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 
 export const Figure1 = forwardRef<
   HTMLSpanElement,
-  Omit<TextProps, "elementType">
+  Omit<TextProps<"span">, "elementType">
 >(function Figure1({ children, className, ...rest }, ref) {
   return (
     <Span
@@ -24,7 +23,7 @@ export const Figure1 = forwardRef<
 
 export const Figure2 = forwardRef<
   HTMLSpanElement,
-  Omit<TextProps, "elementType">
+  Omit<TextProps<"span">, "elementType">
 >(function Figure2({ children, className, ...rest }, ref) {
   return (
     <Span
@@ -39,7 +38,7 @@ export const Figure2 = forwardRef<
 
 export const Figure3 = forwardRef<
   HTMLSpanElement,
-  Omit<TextProps, "elementType">
+  Omit<TextProps<"span">, "elementType">
 >(function Figure3({ children, className, ...rest }, ref) {
   return (
     <Span

@@ -1,3 +1,4 @@
+import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
 import {
   FocusEvent,
   KeyboardEvent,
@@ -7,7 +8,6 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { useControlled, useForkRef, useId } from "../utils";
 import { useFormFieldProps } from "../form-field-context";
 import {
   itemToString as defaultItemToString,
@@ -15,10 +15,10 @@ import {
   useList,
   useTypeSelect,
 } from "../list";
-
-import { useResizeObserver } from "./internal/useResizeObserver";
+import { useId } from "../utils";
 import { DropdownProps } from "./Dropdown";
 import { DropdownButtonProps } from "./DropdownButton";
+import { useResizeObserver } from "./internal/useResizeObserver";
 
 export function useDropdown<Item, Variant extends ListSelectionVariant>(
   props: DropdownProps<Item, Variant> = { source: [] },

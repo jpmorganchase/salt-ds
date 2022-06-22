@@ -1,16 +1,16 @@
+import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import {
+  ComponentProps,
   forwardRef,
   HTMLAttributes,
   ReactNode,
   useCallback,
-  ComponentProps,
 } from "react";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-
-import { getIconForState } from "./getIconForState";
 import { Portal, PortalProps } from "../portal";
+import { makePrefixer } from "../utils/makePrefixer";
 import { useWindow } from "../window";
+import { getIconForState } from "./getIconForState";
 
 import "./Tooltip.css";
 

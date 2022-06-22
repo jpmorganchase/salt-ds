@@ -1,19 +1,26 @@
+import {
+  makePrefixer,
+  Portal,
+  PortalProps,
+  useFloatingUI,
+  useForkRef,
+  useWindow,
+} from "@jpmorganchase/uitk-core";
+import { IconProps, ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import {
   ComponentType,
+  FocusEvent,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
   Ref,
   useRef,
-  FocusEvent,
-  MouseEventHandler,
   useState,
 } from "react";
-import { makePrefixer, IconProps } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
 import {
   ListBase,
   ListChangeHandler,
@@ -24,21 +31,19 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { useFloatingUI } from "../popper";
-import { useForkRef, useId } from "../utils";
+import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
-import "./Dropdown.css";
-import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
-import { Portal, PortalProps } from "../portal";
-import { useWindow } from "../window";
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
+import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+
+import "./Dropdown.css";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,

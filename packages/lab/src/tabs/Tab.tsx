@@ -1,21 +1,25 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  useForkRef,
+} from "@jpmorganchase/uitk-core";
+import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/uitk-icons";
+import cx from "classnames";
 import React, {
-  forwardRef,
   ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  SyntheticEvent,
   useCallback,
   useRef,
   useState,
-  MouseEvent,
-  KeyboardEvent,
-  ReactElement,
-  SyntheticEvent,
 } from "react";
-import cx from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/uitk-icons";
-import { TabProps } from "./TabstripProps";
-import { useForkRef } from "../utils";
 import { EditableLabel, EditableLabelProps } from "../editable-label";
+import { TabProps } from "./TabstripProps";
 
 import "./Tab.css";
 

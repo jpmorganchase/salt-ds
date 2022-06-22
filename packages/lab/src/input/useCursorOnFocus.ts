@@ -1,5 +1,5 @@
-import { useRef, MouseEvent, useEffect, MutableRefObject } from "react";
-import { ownerDocument } from "../utils";
+import { ownerDocument } from "@jpmorganchase/uitk-core";
+import { MouseEvent, MutableRefObject, useEffect, useRef } from "react";
 
 function getSelectionRange(
   input: HTMLInputElement,
