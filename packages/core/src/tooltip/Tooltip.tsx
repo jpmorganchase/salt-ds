@@ -111,7 +111,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ) : (
               <>
                 {getIcon({})}
-                <span className={withBaseName("body")}>{title}</span>
+                <span className={withBaseName("title")}>{title}</span>
               </>
             )}
           </div>
