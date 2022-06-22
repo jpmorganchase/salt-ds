@@ -3,7 +3,7 @@ import { Text, TextProps } from "./Text";
 
 export const P = forwardRef<
   HTMLParagraphElement,
-  Omit<TextProps, "elementType">
+  Omit<TextProps<"p">, "elementType">
 >(function P({ children, ...rest }, ref) {
   return (
     <Text elementType="p" ref={ref} {...rest}>
