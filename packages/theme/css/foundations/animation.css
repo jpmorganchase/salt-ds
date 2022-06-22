@@ -9,7 +9,6 @@
   --uitk-animation-transform-start: 100%;
   --uitk-animation-transform-end: 0;
   --uitk-animation-duration: 0.3s;
-  --uitk-drawer-animation-duration: 0.2s;
   --uitk-animation-timing-function: ease-in;
 
   /* Slide Animations */
@@ -22,17 +21,6 @@
   --uitk-animation-slide-out-left: slide-out-left var(--uitk-animation-duration) var(--uitk-animation-timing-function);
   --uitk-animation-slide-out-right: slide-out-right var(--uitk-animation-duration) var(--uitk-animation-timing-function);
   --uitk-animation-slide-out-bottom: slide-out-bottom var(--uitk-animation-duration) var(--uitk-animation-timing-function);
-
-  /* Drawer Slide Animations */
-  --uitk-drawer-animation-slide-in-top: slide-in-top var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-in-left: slide-in-left var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-in-right: slide-in-right var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-in-bottom: slide-in-bottom var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-
-  --uitk-drawer-animation-slide-out-top: slide-out-top var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-out-left: slide-out-left var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-out-right: slide-out-right var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
-  --uitk-drawer-animation-slide-out-bottom: slide-out-bottom var(--uitk-drawer-animation-duration) var(--uitk-animation-timing-function);
 
   /* Fade Animations */
   --uitk-animation-fade-in-back: fade-in-back var(--uitk-animation-duration) var(--uitk-animation-timing-function);
