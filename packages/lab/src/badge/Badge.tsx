@@ -43,17 +43,15 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const withBaseName = makePrefixer("uitkBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  props,
-  ref
-) {
-  const {
+  {
     badgeContent = 0,
     max = 1000,
     className,
     children = <MessageIcon size={12} />,
     ...rest
-  } = props;
-
+  },
+  ref
+) {
   const badgeId = useId();
   const childId = useId(
     isValidElement<HTMLAttributes<HTMLElement>>(children)
