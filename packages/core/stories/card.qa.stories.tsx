@@ -11,7 +11,7 @@ export default {
 export const AllExamplesGrid: ComponentStory<typeof Card> = () => {
   return (
     <AllRenderer className="uitkCardQA">
-      <Card className="backwardsCompat">
+      <Card>
         <div>
           <h1 style={{ margin: 0 }}>Card with density</h1>
           <span>Content</span>

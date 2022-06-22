@@ -22,13 +22,9 @@
 .uitkCard-content {
   font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
   letter-spacing: var(--uitkCard-content-letterSpacing, normal);
-  line-height: var(--uitkCard-content-lineHeight, var(--uitk-text-lineHeight));
+  line-height: var(--uitkCard-content-lineHeight, var(--uitk-typography-lineHeight));
   min-height: var(--uitkCard-content-minHeight, var(--uitk-text-minHeight));
   padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
-}
-
-.backwardsCompat.uitkCard {
-  --uitkCard-content-lineHeight: 1.3;
 }
 
 /* Styles applied if `disabled={true}` */
