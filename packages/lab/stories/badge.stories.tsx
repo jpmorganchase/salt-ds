@@ -9,7 +9,7 @@ import {
 } from "@jpmorganchase/uitk-icons";
 
 import "./badge.stories.css";
-import "./Badge.stories.newapp-badge.css"
+import "./Badge.stories.newapp-badge.css";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -70,17 +70,25 @@ WordsBadge.args = {
 
 export const CustomStyling: ComponentStory<typeof Badge> = () => (
   <>
-    <ToolkitProvider theme={['light', 'newapp']}>
-      <Badge badgeContent={1} max={100} className="uitkBadge-success"><MessageIcon /></Badge>
+    <ToolkitProvider theme={["light", "newapp"]}>
+      <Badge badgeContent={1} max={100} className="uitkBadge-success">
+        <MessageIcon />
+      </Badge>
     </ToolkitProvider>
-    <ToolkitProvider theme={['light', 'newapp']}>
-      <Badge badgeContent="Text" className="uitkBadge-error">Text Badge</Badge>
+    <ToolkitProvider theme={["light", "newapp"]}>
+      <Badge badgeContent="Text" className="uitkBadge-error">
+        Text Badge
+      </Badge>
     </ToolkitProvider>
-    <ToolkitProvider theme={['dark', 'newapp']}>
-      <Badge badgeContent={1} max={100} className="uitkBadge-success"><MessageIcon /></Badge>
+    <ToolkitProvider theme={["dark", "newapp"]}>
+      <Badge badgeContent={1} max={100} className="uitkBadge-success">
+        <MessageIcon />
+      </Badge>
     </ToolkitProvider>
-    <ToolkitProvider theme={['dark', 'newapp']}>
-      <Badge badgeContent="Text" className="uitkBadge-error">Text Badge</Badge>
+    <ToolkitProvider theme={["dark", "newapp"]}>
+      <Badge badgeContent="Text" className="uitkBadge-error">
+        Text Badge
+      </Badge>
     </ToolkitProvider>
   </>
-)
+);

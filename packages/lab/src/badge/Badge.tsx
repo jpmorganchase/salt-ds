@@ -52,7 +52,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   },
   ref
 ) {
-
   const badgeId = useId();
   const childId = useId(
     isValidElement<HTMLAttributes<HTMLElement>>(children)
