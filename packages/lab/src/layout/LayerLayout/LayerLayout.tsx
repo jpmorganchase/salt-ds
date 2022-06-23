@@ -18,9 +18,9 @@ export type LayerPosition = typeof LAYER_POSITION[number];
 
 export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Display or hide the scrim.
+   * Disable the scrim.
    */
-  displayScrim?: boolean;
+  disableScrim?: boolean;
   /**
    * Defines the layer position within the screen.
    */
@@ -40,7 +40,7 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Props to be passed to the Scrim component.
    */
-  scrimProps?: ScrimProps;
+  scrimProps?: Partial<ScrimProps>;
 }
 
 const withBaseName = makePrefixer("uitkLayerLayout");
@@ -50,7 +50,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     const {
       children,
       className,
-      displayScrim = true,
+      disableScrim = false,
       position = "center",
       fullScreenAtBreakpoint = "sm",
       disableAnimations = false,
@@ -112,7 +112,9 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       </div>
     ) : null;
 
-    return displayScrim ? (
+    return disableScrim ? (
+      layerLayout
+    ) : (
       <Scrim
         open={showComponent}
         className="uitkEmphasisMedium"
@@ -120,8 +122,6 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       >
         {layerLayout}
       </Scrim>
-    ) : (
-      layerLayout
     );
   }
 );

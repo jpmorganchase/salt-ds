@@ -19,7 +19,7 @@ export default {
     },
   },
   args: {
-    displayScrim: true,
+    disableScrim: false,
     disableAnimations: false,
     fullScreenAtBreakpoint: "sm",
   },
