@@ -6,7 +6,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  useControlled,
+  StackLayout,
+} from "@jpmorganchase/uitk-core";
 import "./Accordion.css";
 import cn from "classnames";
 import { AccordionContext } from "./AccordionContext";
@@ -157,11 +161,16 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     }, [registerSection, unregisterSection, onChange, isExpanded, disabled]);
 
     return (
-      <div className={cn(withBaseName(), className)} {...restProps} ref={ref}>
+      <StackLayout
+        gap={0}
+        className={cn(withBaseName(), className)}
+        {...restProps}
+        ref={ref}
+      >
         <AccordionContext.Provider value={contextValue}>
           {children}
         </AccordionContext.Provider>
-      </div>
+      </StackLayout>
     );
   }
 );

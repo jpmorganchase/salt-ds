@@ -43,14 +43,14 @@
   --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
   --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
   --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
-  --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
+  --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-selectable-background-hover));
 
   --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-foreground));
   --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
   --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
-  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
+  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-selectable-foreground-hover));
 
-  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-borderColor));
+  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-container-borderColor-medium));
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
   --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
   --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);

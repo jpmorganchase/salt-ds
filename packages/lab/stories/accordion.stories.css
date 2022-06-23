@@ -1,19 +1,20 @@
 .story-root {
-  height: 600px;
+  width: 400px;
+  /* height: 600px;
   overflow-y: auto;
   border: solid 1px var(--uitk-container-borderColor-medium);
-  padding: var(--uitk-size-base);
+  padding: var(--uitk-size-base); */
 }
 
-.accordion {
+/* .accordion {
   width: 600px;
-}
+} */
 
-.accordion-story-details {
+/* .accordion-story-details {
   padding: var(--uitk-size-base);
   border: solid 1px var(--uitk-text-primary-foreground);
   box-sizing: border-box;
-}
+} */
 
 .accordion-styled {
   --uitkAccordionSummary-background: rgb(237, 237, 237);
