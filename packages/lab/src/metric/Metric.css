@@ -26,22 +26,8 @@
   justify-content: center;
 }
 
-/* .uitkMetric-orientation-vertical > :not(:last-child) {
-  margin-bottom: var(--metric-vertical-gap);
-} */
-
-.uitkMetric-align-left {
-  text-align: left;
-}
-
-.uitkMetric-align-center {
-  text-align: center;
-}
 .uitkMetric-orientation-vertical.uitkMetric-align-center {
   align-items: center;
-}
-.uitkMetric-align-right {
-  text-align: right;
 }
 .uitkMetric-orientation-vertical.uitkMetric-align-right {
   align-items: flex-end;

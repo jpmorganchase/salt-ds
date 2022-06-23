@@ -1,13 +1,12 @@
-import {
-  forwardRef,
-  AnchorHTMLAttributes,
-  ReactNode,
-  useCallback,
-} from "react";
+import { forwardRef, useCallback } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
+import { Text, TextProps } from "../typography";
 
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Link.css";
+
+const withBaseName = makePrefixer("uitkLink");
 
 /**
  * Links are a fundamental navigation element. When clicked, they take the user to an entirely different page.
@@ -16,28 +15,11 @@ import "./Link.css";
  * <LinkExample to="#link">Action</LinkExample>
  */
 
-export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  /**
-   * The content of the link.
-   */
-  children?: ReactNode;
-  /**
-   * The className(s) of the component
-   */
-  className?: string;
+export interface LinkProps extends TextProps<"a"> {
   /**
    * If `true`, the link will be disabled.
    */
   disabled?: boolean;
-  /**
-   * A string to indicate the link url
-   */
-  href?: string;
-  /**
-   * A string to indicate the link target
-   * Creates an Icon to the right of link if '_blank'
-   */
-  target?: string;
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
@@ -45,12 +27,16 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   ref
 ) {
   const stopPropagation = useCallback((evt) => evt.stopPropagation(), []);
-  const clxPrefix = "uitk";
   return (
-    <a
-      className={cx(className, clxPrefix + "Link", {
-        [clxPrefix + "Link-disabled"]: disabled,
-      })}
+    <Text
+      elementType="a"
+      className={cx(
+        withBaseName(),
+        {
+          [withBaseName("disabled")]: disabled,
+        },
+        className
+      )}
       href={disabled ? undefined : href}
       onClick={stopPropagation}
       ref={ref}
@@ -61,9 +47,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {target && target === "_blank" && (
         <TearOutIcon
           aria-label="External Link"
-          className={clxPrefix + "Link-icon"}
+          className={withBaseName("icon")}
         />
       )}
-    </a>
+    </Text>
   );
 });
