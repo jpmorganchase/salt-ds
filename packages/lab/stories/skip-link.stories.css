@@ -1,0 +1,9 @@
+.uitkTargetBlankNoIcon-Link .uitkLink-icon {
+  display: none;
+}
+
+.goalsList {
+  font-size: var(--uitk-text-fontSize);
+  font-family: var(--uitk-typography-fontFamily);
+  line-height: var(--uitk-typography-lineHeight);
+}
