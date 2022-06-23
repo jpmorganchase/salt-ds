@@ -13,7 +13,7 @@ import {
   useIsStacked,
 } from "@jpmorganchase/uitk-core";
 
-import "@jpmorganchase/uitk-core/stories/layout/styles.css";
+import "./styles.css";
 
 export default {
   title: "Core/Layout/ParentChildLayout",
