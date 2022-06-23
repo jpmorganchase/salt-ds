@@ -26,6 +26,10 @@
 .uitkFlexLayout-separator {
   --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier) * 2 + var(--flex-layout-separator));
 }
+.uitkFlexLayout-separator-wrapper {
+  position: relative;
+  width: 100%;
+}
 
 .uitkFlexLayout-separator > *:not(:last-child)::after {
   content: "";
@@ -50,6 +54,7 @@
 
 .uitkFlexLayout-separator-column > *:not(:last-child)::after {
   height: var(--flex-layout-separator);
+  left: 0;
   width: 100%;
 }
 .uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
