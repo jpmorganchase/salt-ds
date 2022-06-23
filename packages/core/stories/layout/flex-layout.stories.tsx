@@ -72,7 +72,7 @@ FlexLayoutWithSeparators.args = {
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
-      {Array.from({ length: 12 }, (_, index) => (
+      {Array.from({ length: 6 }, (_, index) => (
         <FlexContent key={index} />
       ))}
     </FlexLayout>
