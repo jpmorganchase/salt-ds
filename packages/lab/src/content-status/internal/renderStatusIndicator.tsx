@@ -61,7 +61,7 @@ const contentByType = new Map<
 ]);
 
 export function renderStatusIndicator({
-  status = Status.INFO,
+  status = "info",
   disableAnnouncer,
   unit,
   value,
@@ -72,7 +72,7 @@ export function renderStatusIndicator({
   id,
 }: Partial<ContentStatusProps>): ReactElement {
   const { icon: Icon, className } = contentByType.get(status)!;
-  if (status === Status.LOADING) {
+  if (status === "loading") {
     return value !== undefined
       ? getDeterminateLoadingComponent({
           unit,
