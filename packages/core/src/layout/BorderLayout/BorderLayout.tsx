@@ -9,8 +9,7 @@ import {
 import cx from "classnames";
 import warning from "warning";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridLayout } from "@jpmorganchase/uitk-core";
+import { GridLayout, makePrefixer } from "@jpmorganchase/uitk-core";
 import { BorderItemProps } from "../BorderItem";
 
 type GridLayoutProps = ComponentPropsWithoutRef<typeof GridLayout>;

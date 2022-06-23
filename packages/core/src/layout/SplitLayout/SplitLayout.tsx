@@ -1,7 +1,10 @@
 import { forwardRef, ReactNode, HTMLAttributes } from "react";
-import { FlexLayout, FlexLayoutProps } from "@jpmorganchase/uitk-core";
+import {
+  FlexLayout,
+  FlexLayoutProps,
+  makePrefixer,
+} from "@jpmorganchase/uitk-core";
 import "./SplitLayout.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 
 export interface SplitItemProps extends HTMLAttributes<HTMLDivElement> {

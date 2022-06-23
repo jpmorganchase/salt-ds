@@ -1,8 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import cx from "classnames";
 import {
-  BorderLayout,
-  BorderItem,
   AppHeader,
   Badge,
   Logo,
@@ -10,13 +8,17 @@ import {
   Tab,
   Tabstrip,
   Tooltray,
-  SplitLayout,
   Pill,
   Switch,
   ButtonBar,
   OrderedButton,
 } from "@jpmorganchase/uitk-lab";
-import { Button } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  BorderLayout,
+  BorderItem,
+  SplitLayout,
+} from "@jpmorganchase/uitk-core";
 import {
   NotificationIcon,
   MessageIcon,
@@ -24,15 +26,15 @@ import {
   ChevronLeftIcon,
 } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import "./styles.css";
+import "@jpmorganchase/uitk-core/stories/layout/styles.css";
 import PlaceholderLogo from "docs/assets/placeholder.svg";
-import { FlowLayoutSimpleUsage } from "../../../core/stories/layout/flow-layout.stories";
+import { FlowLayoutSimpleUsage } from "./flow-layout.stories";
 import { SplitLayoutSimpleUsage } from "./split-layout.stories";
-import { FlowLayoutComposite } from "../../../core/stories/layout/flow-layout.stories";
-import { FlexLayoutComposite } from "../../../core/stories/layout/flex-layout.stories";
+import { FlowLayoutComposite } from "./flow-layout.stories";
+import { FlexLayoutComposite } from "./flex-layout.stories";
 
 export default {
-  title: "Lab/Layout/BorderLayout",
+  title: "Core/Layout/BorderLayout",
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {

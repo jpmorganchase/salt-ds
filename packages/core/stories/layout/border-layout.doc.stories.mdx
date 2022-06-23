@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
+import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
   CSSVariableTable,
@@ -8,7 +8,7 @@ import {
 import { ToolkitBorderLayout } from "./border-layout.stories";
 
 <Meta
-  title="Documentation/Lab/Layout/BorderLayout"
+  title="Documentation/Core/Layout/BorderLayout"
   component={BorderLayout}
   subcomponents={{ BorderItem }}
   parameters={{
@@ -22,13 +22,13 @@ Defines the main content regions of an application, region or widget, such as a 
 The border layout is built using [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
 
 <Canvas>
-  <Story id="lab-layout-borderlayout--toolkit-border-layout" />
+  <Story id="core-layout-borderlayout--toolkit-border-layout" />
 </Canvas>
 
 ## API
 
 ```
-import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
+import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -43,7 +43,7 @@ The border item wrapper allows you to select the right position for your content
 It also provides access to other properties such as alignment and sticky behaviour.
 
 <Canvas>
-  <Story id="lab-layout-borderlayout-borderitem--toolkit-border-item" />
+  <Story id="core-layout-borderlayout-borderitem--toolkit-border-item" />
 </Canvas>
 
 ### Fixed panels
@@ -51,7 +51,7 @@ It also provides access to other properties such as alignment and sticky behavio
 You can have a responsive `main` region while the `left` and `right` panels remain with a fixed width as the content changes.
 
 <Canvas>
-  <Story id="lab-layout-borderlayout--toolkit-border-layout-fixed-panels" />
+  <Story id="core-layout-borderlayout--toolkit-border-layout-fixed-panels" />
 </Canvas>
 
 ### Composite Usage
