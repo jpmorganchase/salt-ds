@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Card, GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import { Tabstrip, Tab, Avatar } from "@jpmorganchase/uitk-lab";
 import {
   Button,
+  Card,
+  GridLayout,
+  GridItem,
   ParentChildLayout,
   StackedViewElement,
   useIsStacked,

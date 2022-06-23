@@ -1,8 +1,8 @@
 import { composeStories } from "@storybook/testing-react";
-import * as stackStories from "@stories/layout/split-layout.stories";
+import * as splitStories from "@stories/layout/split-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(stackStories);
+const composedStories = composeStories(splitStories);
 const { DefaultSplitLayout } = composedStories;
 
 describe("GIVEN a Split", () => {

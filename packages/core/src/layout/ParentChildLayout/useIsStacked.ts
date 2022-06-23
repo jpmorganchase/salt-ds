@@ -1,6 +1,5 @@
-import {Breakpoints} from "../../breakpoints";
-import {useCurrentBreakpoint, useOrderedBreakpoints} from "../../utils";
-
+import { Breakpoints } from "../../breakpoints";
+import { useCurrentBreakpoint, useOrderedBreakpoints } from "../../utils";
 
 export const useIsStacked = (stackedAtBreakpoint: keyof Breakpoints) => {
   const orderedBreakpoints = useOrderedBreakpoints();
