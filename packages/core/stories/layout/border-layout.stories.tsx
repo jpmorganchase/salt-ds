@@ -3,8 +3,6 @@ import cx from "classnames";
 import {
   AppHeader,
   Badge,
-  Logo,
-  LogoProps,
   Tab,
   Tabstrip,
   Tooltray,
@@ -27,7 +25,6 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "@jpmorganchase/uitk-core/stories/layout/styles.css";
-import PlaceholderLogo from "docs/assets/placeholder.svg";
 import { FlowLayoutSimpleUsage } from "./flow-layout.stories";
 import { SplitLayoutSimpleUsage } from "./split-layout.stories";
 import { FlowLayoutComposite } from "./flow-layout.stories";
@@ -205,25 +202,12 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
 export const ToolkitBorderLayoutFixedPanels = FixedPanels.bind({});
 ToolkitBorderLayoutFixedPanels.args = {};
 
-type ResponsiveItem = { "data-collapsed"?: boolean };
-
-const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} compact={props["data-collapsed"]} />
-);
-
 const Header = () => {
   const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];
   return (
     <>
       <AppHeader>
-        <CollapsibleLogo
-          data-align-start
-          data-collapsible="instant"
-          data-index={0}
-          data-priority={1}
-          src={PlaceholderLogo as string}
-          appTitle="Toolkit"
-        />
+        <strong>LOGO</strong>
         <Tabstrip data-index={1} data-priority={2}>
           {tabs.map((label, i) => (
             <Tab label={label} key={i} />

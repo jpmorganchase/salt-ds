@@ -1,11 +1,8 @@
 import { forwardRef } from "react";
 import cx from "classnames";
+import { FlexItem, FlexItemProps } from "../FlexItem";
 
-import {
-  FlexItem,
-  FlexItemProps,
-  makePrefixer,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";

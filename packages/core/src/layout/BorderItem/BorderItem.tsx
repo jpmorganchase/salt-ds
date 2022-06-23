@@ -1,6 +1,7 @@
 import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
 import cx from "classnames";
-import { GridItem, makePrefixer } from "@jpmorganchase/uitk-core";
+import { GridItem } from "../GridItem";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./BorderItem.css";
 
 export const BORDER_POSITION = [
