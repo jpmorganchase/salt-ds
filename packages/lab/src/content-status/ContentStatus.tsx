@@ -28,22 +28,16 @@ export type ContentStatusStatus =
   | "warning"
   | "info";
 
-export const Status = {
-  LOADING: "loading" as ContentStatusStatus,
-  ERROR: "error" as ContentStatusStatus,
-  SUCCESS: "success" as ContentStatusStatus,
-  WARNING: "warning" as ContentStatusStatus,
-  INFO: "info" as ContentStatusStatus,
+export const STATUS_TO_ICONS: {
+  [key in Exclude<ContentStatusStatus, "loading">]: string;
+} = {
+  error: "error",
+  success: "tick",
+  warning: "warning",
+  info: "info",
 };
 
-export const STATUS_TO_ICONS = {
-  [Status.ERROR]: "error",
-  [Status.SUCCESS]: "tick",
-  [Status.WARNING]: "warning",
-  [Status.INFO]: "info",
-};
-
-export type Status = keyof typeof Status;
+export type Status = ContentStatusStatus;
 
 export interface ContentStatusProps extends HTMLAttributes<HTMLDivElement> {
   CircularProgressProps?: Partial<CircularProgressProps>;
@@ -70,7 +64,7 @@ export const ContentStatus = forwardRef(function ContentStatus(
     disableAnnouncer,
     message,
     onActionClick,
-    status = Status.INFO,
+    status = "info",
     title,
     unit = "%",
     value,
@@ -97,7 +91,7 @@ export const ContentStatus = forwardRef(function ContentStatus(
       toBeAnnounced.push(message);
     }
     // Loading is announced by the spinner
-    if (status !== Status.LOADING) {
+    if (status !== "loading") {
       toBeAnnounced.push(status);
     }
     if (toBeAnnounced.length > 0) {
