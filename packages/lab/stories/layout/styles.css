@@ -20,6 +20,14 @@
   width: 240px;
 }
 
+.layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
+  animation: var(--uitk-animation-slide-in-top);
+}
+
+.layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
+  animation: var(--uitk-animation-slide-out-top);
+}
+
 @media (prefers-reduced-motion) {
   .reduced-motion .uitkParentChildItem-slide-left {
     animation: none;

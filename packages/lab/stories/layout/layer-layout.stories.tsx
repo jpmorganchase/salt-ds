@@ -18,6 +18,11 @@ export default {
       control: { type: "select" },
     },
   },
+  args: {
+    displayScrim: true,
+    disableAnimations: false,
+    fullScreenAtBreakpoint: "sm",
+  },
 } as ComponentMeta<typeof LayerLayout>;
 
 type LayerContentExampleProps = {
@@ -79,10 +84,7 @@ const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const DefaultLayerLayout = DefaultLayerLayoutStory.bind({});
 DefaultLayerLayout.args = {
-  displayScrim: true,
   position: "center",
-  disableAnimations: false,
-  fullScreenAtBreakpoint: "sm",
 };
 
 const Top: ComponentStory<typeof LayerLayout> = (args) => {
@@ -104,9 +106,7 @@ const Top: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const ToolkitLayerLayoutTop = Top.bind({});
 ToolkitLayerLayoutTop.args = {
-  displayScrim: true,
   position: "top",
-  disableAnimations: false,
 };
 
 const Right: ComponentStory<typeof LayerLayout> = (args) => {
@@ -128,9 +128,7 @@ const Right: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const ToolkitLayerLayoutRight = Right.bind({});
 ToolkitLayerLayoutRight.args = {
-  displayScrim: true,
   position: "right",
-  disableAnimations: false,
 };
 
 const Left: ComponentStory<typeof LayerLayout> = (args) => {
@@ -152,9 +150,7 @@ const Left: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const ToolkitLayerLayoutLeft = Left.bind({});
 ToolkitLayerLayoutLeft.args = {
-  displayScrim: true,
   position: "left",
-  disableAnimations: false,
 };
 
 const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
@@ -176,9 +172,39 @@ const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const ToolkitLayerLayoutBottom = Bottom.bind({});
 ToolkitLayerLayoutBottom.args = {
-  displayScrim: true,
   position: "bottom",
-  disableAnimations: false,
+};
+
+const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
+  args
+) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <div className="layer-container">
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout open={open} className="custom-animation" {...args}>
+        <LayerContentExample onClick={hide} />
+      </LayerLayout>
+    </div>
+  );
+};
+
+export const ToolkitLayerCustomFullScreenAnimation =
+  CustomFullScreenAnimation.bind({});
+
+ToolkitLayerCustomFullScreenAnimation.args = {
+  position: "bottom",
+};
+
+ToolkitLayerCustomFullScreenAnimation.parameters = {
+  viewport: {
+    defaultViewport: "mobile1",
+  },
 };
 
 const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
