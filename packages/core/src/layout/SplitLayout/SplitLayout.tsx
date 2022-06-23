@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode, HTMLAttributes } from "react";
 import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../../utils";
 import "./SplitLayout.css";
 import cx from "classnames";
 

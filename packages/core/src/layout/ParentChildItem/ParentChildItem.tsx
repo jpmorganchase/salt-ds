@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import cx from "classnames";
 import { FlexItem, FlexItemProps } from "../FlexItem";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../../utils";
 import "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";
