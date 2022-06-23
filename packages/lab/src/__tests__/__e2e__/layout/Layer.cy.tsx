@@ -12,7 +12,7 @@ const {
 } = composedStories;
 
 describe("GIVEN a Layer", () => {
-  describe("WHEN displayScrim is not disabled", () => {
+  describe("WHEN disableScrim is disabled", () => {
     it("THEN it should display a scrim by default", () => {
       cy.mount(<DefaultLayerLayout />);
 
@@ -22,9 +22,9 @@ describe("GIVEN a Layer", () => {
     });
   });
 
-  describe("WHEN displayScrim is disabled", () => {
+  describe("WHEN disableScrim is enabled", () => {
     it("THEN it should not display a scrim", () => {
-      cy.mount(<DefaultLayerLayout displayScrim={false} />);
+      cy.mount(<DefaultLayerLayout disableScrim={true} />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
