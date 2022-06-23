@@ -56,7 +56,7 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
       ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: middleware,
+    middleware,
   });
   const Window = useWindow();
   const handleRef = useForkRef<HTMLDivElement>(forwardedRef, reference);

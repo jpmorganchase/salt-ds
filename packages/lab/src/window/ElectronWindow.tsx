@@ -49,6 +49,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
     }
   }, [id]);
 
+  // The timeout is required to give the Dialog component time to report the correct height
+  // otherwise the window will be smaller than expected
   useEffect(() => {
     setTimeout(() => {
       if (windowRoot.current) {
@@ -69,6 +71,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
     }, 80);
   });
 
+  // The timeout is required to allow the window time to be moved into position and scaled
+  // before being shown to the user,
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
@@ -84,6 +88,8 @@ const Window: windowType = forwardRef(function ElectronWindow(
     };
   }, [closeWindow, windowRef, id]);
 
+  // The timeout is required to give the Dialog component time to report the correct height
+  // otherwise the window will be smaller than expected
   useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

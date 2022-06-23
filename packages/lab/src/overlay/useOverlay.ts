@@ -65,7 +65,7 @@ export function useOverlay(props: UseOverlayProps) {
     open,
     onOpenChange: handleOpenChange,
     placement,
-    middleware: middleware,
+    middleware,
   });
 
   const handleArrowRef = useCallback(

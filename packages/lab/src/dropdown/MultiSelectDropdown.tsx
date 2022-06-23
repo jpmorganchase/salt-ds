@@ -69,7 +69,7 @@ export const MultiSelectDropdown = forwardRef(function MultiSelectDropdown<
       ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: middleware,
+    middleware,
   });
 
   const {

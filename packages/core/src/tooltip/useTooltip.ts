@@ -104,7 +104,7 @@ export function useTooltip(props?: UseTooltipProps) {
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
-    middleware: middleware,
+    middleware,
   });
 
   const handleArrowRef = useCallback(

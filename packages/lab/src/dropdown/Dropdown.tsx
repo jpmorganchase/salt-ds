@@ -36,7 +36,6 @@ import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
 import { useDropdown } from "./useDropdown";
 
-import "./Dropdown.css";
 import {
   flip,
   limitShift,
@@ -44,6 +43,8 @@ import {
   size,
 } from "@floating-ui/react-dom-interactions";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+
+import "./Dropdown.css";
 
 export type DropdownControllerStateAndHelpers<
   Item = string,
@@ -240,7 +241,7 @@ export const Dropdown = forwardRef(function Dropdown<
       ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: middleware,
+    middleware,
   });
 
   const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(reference, ref);

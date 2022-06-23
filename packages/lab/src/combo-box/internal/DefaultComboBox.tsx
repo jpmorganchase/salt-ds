@@ -166,7 +166,7 @@ export function DefaultComboBox<Item>(
       ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: middleware,
+    middleware,
   });
 
   useEffect(() => {
