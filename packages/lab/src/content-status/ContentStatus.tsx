@@ -28,11 +28,13 @@ export type ContentStatusStatus =
   | "warning"
   | "info";
 
-export const STATUS_TO_ICONS: { [key in Exclude<ContentStatusStatus, "loading">]: string } = {
-  "error": "error",
-  "success": "tick",
-  "warning": "warning",
-  "info": "info",
+export const STATUS_TO_ICONS: {
+  [key in Exclude<ContentStatusStatus, "loading">]: string;
+} = {
+  error: "error",
+  success: "tick",
+  warning: "warning",
+  info: "info",
 };
 
 export type Status = ContentStatusStatus;
