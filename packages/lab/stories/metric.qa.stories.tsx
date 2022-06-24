@@ -10,87 +10,108 @@ export default {
   component: Metric,
 } as ComponentMeta<typeof Metric>;
 
-const MetricExamples = () => (
-  <div
-    data-jpmui-test="metric-example"
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      width: 334,
-      padding: 0,
-    }}
-  >
-    <Metric
-      align="left"
-      direction="up"
-      size="small"
-      orientation="horizontal"
-      showIndicator
+const MetricExamples = (props: { className?: string | undefined }) => {
+  return (
+    <div
+      data-jpmui-test="metric-example"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: 334,
+        padding: 0,
+      }}
     >
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-    <Metric
-      align="center"
-      direction="down"
-      size="medium"
-      orientation="horizontal"
-      showIndicator
-      indicatorPosition="start"
-    >
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-    <Metric
-      align="right"
-      size="large"
-      orientation="horizontal"
-      direction="up"
-      showIndicator
-      indicatorPosition="end"
-    >
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-    <Metric align="left" direction="up" size="small" showIndicator>
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-    <Metric align="center" direction="up" size="medium" showIndicator>
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-    <Metric
-      align="right"
-      direction="down"
-      size="large"
-      indicatorPosition="start"
-      showIndicator
-    >
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
-    </Metric>
-  </div>
-);
+      <Metric
+        align="left"
+        className={props.className}
+        direction="up"
+        size="small"
+        orientation="horizontal"
+        showIndicator
+      >
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+      <Metric
+        align="center"
+        className={props.className}
+        direction="down"
+        size="medium"
+        orientation="horizontal"
+        showIndicator
+        indicatorPosition="start"
+      >
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+      <Metric
+        align="right"
+        className={props.className}
+        size="large"
+        orientation="horizontal"
+        direction="up"
+        showIndicator
+        indicatorPosition="end"
+      >
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+      <Metric
+        align="left"
+        className={props.className}
+        direction="up"
+        size="small"
+        showIndicator
+      >
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+      <Metric align="center" direction="up" size="medium" showIndicator>
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+      <Metric
+        align="right"
+        className={props.className}
+        direction="down"
+        size="large"
+        indicatorPosition="start"
+        showIndicator
+      >
+        <MetricHeader subtitle="Total Value" title="Revenue YTD" />
+        <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
+      </Metric>
+    </div>
+  );
+};
 
-export const ExamplesGrid: Story = (props) => {
+export const AllExamplesGrid: Story = (props: { className?: string }) => {
   return (
     <div style={{ width: 800, display: "flex", flex: 1 }} {...props}>
       <ToolkitProvider theme={"light"}>
         <BackgroundBlock style={{ background: "white" }}>
-          <MetricExamples />
+          <MetricExamples className={props.className} />
         </BackgroundBlock>
       </ToolkitProvider>
       <ToolkitProvider theme={"dark"}>
         <BackgroundBlock>
-          <MetricExamples />
+          <MetricExamples className={props.className} />
         </BackgroundBlock>
       </ToolkitProvider>
     </div>
   );
 };
 
-ExamplesGrid.parameters = {
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const BackwardsCompatGrid = AllExamplesGrid.bind({});
+BackwardsCompatGrid.args = {
+  className: "backwardsCompat",
+};
+
+BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
@@ -101,7 +122,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
       className="uitkMetricQA"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
     >
-      <ExamplesGrid className="backwardsCompat" />
+      <BackwardsCompatGrid className="backwardsCompat" />
     </QAContainer>
   );
 };

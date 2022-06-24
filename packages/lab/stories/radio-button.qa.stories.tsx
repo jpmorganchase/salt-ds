@@ -13,6 +13,7 @@ export default {
 } as ComponentMeta<typeof RadioButton>;
 
 export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
+  const { className } = props;
   return (
     <AllRenderer>
       <>
@@ -25,6 +26,7 @@ export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
           }}
         >
           <RadioButtonGroup
+            className={className}
             aria-label="Uncontrolled Example"
             defaultValue="forward"
             legend="Example"
@@ -39,7 +41,13 @@ export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
             />
           </RadioButtonGroup>
         </div>
-        <RadioButtonGroup defaultValue="forward" legend="Example" name="fx" row>
+        <RadioButtonGroup
+          className={className}
+          defaultValue="forward"
+          legend="Example"
+          name="fx"
+          row
+        >
           <RadioButton key="spot" label="Spot" value="spot" />
           <RadioButton key="forward" label="Forward" value="forward" />
           <RadioButton
@@ -58,6 +66,15 @@ AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+export const BackwardsCompatGrid = AllExamplesGrid.bind({});
+BackwardsCompatGrid.args = {
+  className: "backwardsCompat",
+};
+
+BackwardsCompatGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
   props
 ) => {
@@ -68,9 +85,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
       height={605}
       imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
     >
-      <div className="backwardsCompat">
-        <AllExamplesGrid />
-      </div>
+      <BackwardsCompatGrid className="backwardsCompat" />
     </QAContainer>
   );
 };

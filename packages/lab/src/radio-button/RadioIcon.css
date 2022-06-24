@@ -69,10 +69,12 @@
   fill: var(--uitkRadioIcon-inner-fill, var(--uitk-selectable-primary-foreground-selected));
 }
 
-.backwardsCompat .uitk-dark .uitkRadioIcon-border {
+.uitk-dark .backwardsCompat.uitkRadioButton .uitkRadioIcon-border,
+.uitk-dark .backwardsCompat.uitkRadioButtonGroup .uitkRadioIcon-border {
   fill: var(--radioIcon-fill);
 }
 
-.backwardsCompat .uitk-dark .uitkRadioIcon-inner-checked {
+.uitk-dark .backwardsCompat.uitkRadioButton .uitkRadioIcon-inner-checked,
+.uitk-dark .backwardsCompat.uitkRadioButtonGroup .uitkRadioIcon-inner-checked {
   fill: var(--radioIcon-fill-checked);
 }
