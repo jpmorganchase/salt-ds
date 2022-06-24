@@ -28,6 +28,7 @@
 }
 .uitkFlexLayout-separator > *:not(:last-child)::after {
   position: relative;
+  display: block;
   content: "";
   background-color: var(--uitk-separable-secondary-borderColor);
 }
