@@ -65,24 +65,17 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
     },
     ref
   ) {
-    const separatorAlignment = separators === true ? "center" : separators;
     return (
       <FlexLayout
         direction="row"
         ref={ref}
         wrap={wrap}
         gap={gap}
-        className={cx(withBaseName(), className, {
-          [withBaseName("separator")]: separatorAlignment,
-          [withBaseName(`separator-${separatorAlignment}`)]:
-            separatorAlignment && separatorAlignment !== "center",
-        })}
+        separators={separators}
+        className={cx(withBaseName(), className)}
         {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>
-        {separatorAlignment === "center" && (
-          <span className={withBaseName("separator", separatorAlignment)} />
-        )}
         <SplitItem>{rightSplitItem}</SplitItem>
       </FlexLayout>
     );
