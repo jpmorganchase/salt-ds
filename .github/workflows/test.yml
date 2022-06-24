@@ -125,3 +125,18 @@ jobs:
       - name: Run Playwright
         run: xvfb-run yarn test
         working-directory: ./playground/electron-testing-app
+  vulnerability-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Test for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true # if vulnerabilities are found this step will produce an error
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
