@@ -1,6 +1,7 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
+import { FontSizeBlock } from "docs/components/FontSizeBlock";
 
 <Meta title="Documentation/Styles and Theming/Characteristics/Accent" />
 
@@ -18,6 +19,9 @@ Components which can or should be emphasized against others in close proximity.
       <ColorBlock colorVar="--uitk-accent-background" />
       <ColorBlock colorVar="--uitk-accent-borderColor" />
       <ColorBlock colorVar="--uitk-accent-foreground" />
+      <FontSizeBlock fontSize="--uitk-accent-fontSize-small" />
+      <FontSizeBlock fontSize="--uitk-accent-fontSize-medium" />
+      <FontSizeBlock fontSize="--uitk-accent-fontSize-large" />
     </DocGrid>
   </Story>
 </Canvas>
