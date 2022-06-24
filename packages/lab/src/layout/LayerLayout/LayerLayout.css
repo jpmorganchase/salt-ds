@@ -1,26 +1,26 @@
 .uitkLayerLayout {
-  --layer-borderColor: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderColor-medium));
-  --layer-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
-  --layer-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
-  --layer-borderWidth: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
-  --layer-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
-  --layer-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
-  --layer-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
+  --layerLayout-borderColor: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderColor-medium));
+  --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
+  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
+  --layerLayout-borderWidth: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
+  --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
+  --layerLayout-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
+  --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
 }
 
 .uitkLayerLayout {
-  background: var(--layer-background);
-  border-color: var(--layer-borderColor);
-  border-width: var(--layer-borderWidth);
-  border-style: var(--layer-borderStyle);
+  background: var(--layerLayout-background);
+  border-color: var(--layerLayout-borderColor);
+  border-width: var(--layerLayout-borderWidth);
+  border-style: var(--layerLayout-borderStyle);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
-  padding: var(--layer-padding);
-  box-shadow: var(--uitkLayerLayout-boxShadow, var(--layer-boxShadow));
+  padding: var(--layerLayout-padding);
+  box-shadow: var(--uitkLayerLayout-boxShadow, var(--layerLayout-boxShadow));
   z-index: calc(var(--uitk-zindex-appheader) - 1);
 }
 
@@ -34,7 +34,7 @@
 }
 
 .uitkLayerLayout-center {
-  margin: var(--uitkLayerLayout-margin, var(--layer-margin));
+  margin: var(--uitkLayerLayout-margin, var(--layerLayout-margin));
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-enter-animation,
