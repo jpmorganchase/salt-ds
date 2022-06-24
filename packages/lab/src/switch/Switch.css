@@ -206,3 +206,7 @@
 .uitkSwitch-disabled:hover {
   --switch-thumb-background: var(--uitk-selectable-foreground-selectedDisabled);
 }
+
+.uitk-dark .backwardsCompat.uitkSwitch .uitkSwitch-iconTick {
+  --uitkSwitch-icon-color-checked: var(--uitk-color-white);
+}
