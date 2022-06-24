@@ -1,6 +1,3 @@
 .uitkSwitchQA .uitkDocGrid {
   min-height: 174px;
 }
-.uitkSwitchQA .uitk-dark .uitkSwitch-iconTick {
-  --uitkSwitch-icon-color-checked: var(--uitk-color-white);
-}

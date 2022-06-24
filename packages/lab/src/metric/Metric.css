@@ -33,16 +33,16 @@
   align-items: flex-end;
 }
 
-.backwardsCompat .uitkMetric.uitkMetric-size-small {
+.backwardsCompat.uitkMetric.uitkMetric-size-small {
   margin-top: -5px;
 }
-.backwardsCompat .uitkMetric.uitkMetric-size-medium {
+.backwardsCompat.uitkMetric.uitkMetric-size-medium {
   margin-top: -9px;
 }
-.backwardsCompat .uitkMetric.uitkMetric-size-large {
+.backwardsCompat.uitkMetric.uitkMetric-size-large {
   margin-top: -16px;
 }
 
-.backwardsCompat .uitkMetric-orientation-vertical.uitkMetric-size-large {
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-large {
   margin-top: -14px;
 }
