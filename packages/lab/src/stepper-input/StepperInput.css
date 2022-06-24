@@ -49,12 +49,9 @@
 
 /* Styles applied to refresh button */
 .uitkStepperInput-secondaryButton {
-  height: var(--uitkStepperInput-secondary-button-height, var(--stepperInput-secondary-button-height));
-  margin-left: var(--uitkStepperInput-secondary-button-margin-left, var(--stepperInput-button-margin));
-  margin-bottom: var(--uitkStepperInput-secondary-button-margin-bottom, var(--stepperInput-button-margin));
-  margin-top: var(--uitkStepperInput-secondary-button-margin-top, var(--stepperInput-button-margin));
-  margin-right: var(--uitkStepperInput-secondary-button-marginRight, var(--stepperInput-secondary-button-marginRight));
-  width: var(--uitkStepperInput-secondary-button-width, var(--stepperInput-secondary-button-width));
+  --uitkButton-height: var(--stepperInput-secondary-button-height);
+  --uitkButton-margin: var(--stepperInput-button-margin) var(--stepperInput-secondary-button-marginRight) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
+  --uitkButton-width: var(--stepperInput-secondary-button-width);
 }
 
 .uitkStepperInput-hideSecondaryButton {
@@ -65,29 +62,27 @@
 .uitkStepperInput-buttonContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 /* Styles applied to stepper buttons */
 .uitkStepperInput-stepperButton {
-  height: var(--uitkStepperInput-button-height, var(--stepperInput-button-height));
-  margin: var(--uitkStepperInput-button-margin, var(--stepperInput-button-margin));
-  width: var(--uitkStepperInput-button-width, var(--stepperInput-button-width));
+  --uitkButton-height: var(--stepperInput-button-height);
+  --uitkButton-margin: var(--stepperInput-button-margin);
+  --uitkButton-width: var(--stepperInput-button-width);
 }
 
 /* Styles applied to increment button */
 .uitkStepperInput-increment {
-  background: var(--uitkStepperInput-increment-background, var(--button-background));
 }
 
 /* Styles applied to decrement button */
 .uitkStepperInput-decrement {
-  background: var(--uitkStepperInput-decrement-background, var(--button-background));
   margin-top: 0;
 }
 
 /* Styles applied to stepper button icon */
 .uitkStepperInput-stepperButtonIcon {
-  fill: var(--uitkStepperInput-stepperButtonIcon-color, var(--icon-color));
 }
 
 /* Styles applied to input component */

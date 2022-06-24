@@ -8,6 +8,7 @@ import {
   CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
+import { CustomStyling } from "./stepper-input.stories";
 
 <Meta
   title="Documentation/Lab/Stepper Input"
@@ -128,3 +129,54 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 <CSSVariableTable of={StepperInput} />
 
 ## Customising StepperInput styles
+
+<Canvas>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+```css
+/* from the file StepperInput.stories.newapp-stepper-input.css */
+
+.uitk-newapp .uitkStepperInput {
+  --uitkButton-borderRadius: 30px;
+  --uitkButton-background-hover: var(--uitk-color-purple-100);
+}
+
+.uitk-newapp .uitkStepperInput-input,
+.uitk-newapp .uitkStepperInput-adornmentContainer {
+  flex-flow: row-reverse;
+}
+
+.uitk-newapp .uitkStepperInput-adornmentContainer {
+  margin-top: 3px;
+}
+
+.uitk-newapp .uitkStepperInput-secondaryButton {
+  --uitkButton-height: calc(var(--stepperInput-secondary-button-height) - 2px);
+}
+
+.uitk-newapp .uitkStepperInput-secondaryButton:hover {
+  --uitkIcon-color: var(--uitk-color-white);
+}
+
+.uitk-newapp .uitkStepperInput-stepperButton.uitkButton {
+  --uitkButton-borderWidth: 0px;
+  --uitkButton-height: calc(var(--stepperInput-button-height) - 2px);
+  --uitkButton-margin: 2px;
+  --uitkIcon-size-small: 8px;
+}
+
+.uitk-newapp .uitkStepperInput-increment {
+  --uitkIcon-color: var(--uitk-color-white);
+  --uitkButton-background: var(--uitk-color-blue-100);
+  --uitkButton-background-hover: var(--uitk-color-blue-40);
+}
+
+.uitk-newapp .uitkStepperInput-decrement {
+  --uitkIcon-color: var(--uitk-color-white);
+  --uitkButton-background: var(--uitk-color-teal-100);
+  --uitkButton-background-hover: var(--uitk-color-teal-40);
+}
+```

@@ -29,7 +29,11 @@ export function CharacteristicUsage(
     getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
 
   if (Object.keys(characteristicTokenMap).length === 0) {
-    return <EmptyBlock>No characteristics used for this component.</EmptyBlock>;
+    return (
+      <EmptyBlock>
+        No characteristics used directly for this component.
+      </EmptyBlock>
+    );
   }
 
   return (
