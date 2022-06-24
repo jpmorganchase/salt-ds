@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Pill characteristics
+Pill style uses characteristics
