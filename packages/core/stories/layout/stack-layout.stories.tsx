@@ -2,6 +2,7 @@ import {
   FLEX_ALIGNMENT_BASE,
   StackLayout,
   Panel,
+  Button, FlexItem,
 } from "@jpmorganchase/uitk-core";
 import { FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -168,4 +169,20 @@ export const ComplexFormFour: ComponentStory<typeof StackLayout> = () => {
       ))}
     </StackLayout>
   );
+};
+
+const StackLayoutSeparatorsExample: ComponentStory<typeof StackLayout> = (args) => {
+  return (
+    <StackLayout {...args}>
+      <FlexItem><Button>Button Is the thing</Button></FlexItem>
+      <Button>Button</Button>
+      <Button>Button</Button>
+    </StackLayout>
+  );
+};
+export const StackLayoutSeparators = StackLayoutSeparatorsExample.bind({});
+StackLayoutSeparators.args = {
+  align: "center",
+  gap: 2,
+  separators: true
 };
