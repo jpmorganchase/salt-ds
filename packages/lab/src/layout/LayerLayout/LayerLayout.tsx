@@ -36,7 +36,7 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Display or hide the component.
    */
-  open?: boolean;
+  isOpen?: boolean;
   /**
    * Props to be passed to the Scrim component.
    */
@@ -55,7 +55,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       fullScreenAtBreakpoint = "sm",
       disableAnimations = false,
       scrimProps,
-      open = true,
+      isOpen = true,
       ...rest
     } = props;
 
@@ -70,14 +70,14 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-      if ((!open && disableAnimations) || (!open && !isAnimating)) {
+      if ((!isOpen && disableAnimations) || (!isOpen && !isAnimating)) {
         setShowComponent(false);
       }
 
-      if (open && !showComponent) {
+      if (isOpen && !showComponent) {
         setShowComponent(true);
       }
-    }, [open, showComponent, disableAnimations, isAnimating]);
+    }, [isOpen, showComponent, disableAnimations, isAnimating]);
 
     const fullScreen = useIsViewportLargerThanBreakpoint(
       fullScreenAtBreakpoint
@@ -86,9 +86,9 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     const anchored = position !== "center" && !fullScreen;
 
     const enterAnimation =
-      !disableAnimations && open && !previousDisableAnimationsProp;
+      !disableAnimations && isOpen && !previousDisableAnimationsProp;
 
-    const exitAnimation = !disableAnimations && !open;
+    const exitAnimation = !disableAnimations && !isOpen;
 
     const layerLayout = showComponent ? (
       <div
@@ -102,7 +102,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
         })}
         onAnimationStart={() => setIsAnimating(true)}
         onAnimationEnd={() => {
-          if (!open && showComponent) {
+          if (!isOpen && showComponent) {
             setShowComponent(false);
           }
         }}

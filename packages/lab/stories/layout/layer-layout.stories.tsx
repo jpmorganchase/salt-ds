@@ -75,7 +75,7 @@ const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} {...args}>
+      <LayerLayout isOpen={open} {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -97,7 +97,7 @@ const Top: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} {...args}>
+      <LayerLayout isOpen={open} {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -119,7 +119,7 @@ const Right: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} {...args}>
+      <LayerLayout isOpen={open} {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -141,7 +141,7 @@ const Left: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} {...args}>
+      <LayerLayout isOpen={open} {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -163,7 +163,7 @@ const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} {...args}>
+      <LayerLayout isOpen={open} {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -187,7 +187,7 @@ const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout open={open} className="custom-animation" {...args}>
+      <LayerLayout isOpen={open} className="custom-animation" {...args}>
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -223,7 +223,7 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
       </p>
       <div className="layer-container">
         <Button onClick={show}>Open Layer</Button>
-        <LayerLayout open={open} className="reduced-motion" {...args}>
+        <LayerLayout isOpen={open} className="reduced-motion" {...args}>
           <LayerContentExample onClick={hide} />
         </LayerLayout>
       </div>
