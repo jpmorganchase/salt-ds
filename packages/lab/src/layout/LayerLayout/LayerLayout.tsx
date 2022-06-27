@@ -67,17 +67,17 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
 
     const [showComponent, setShowComponent] = useState(false);
 
-    const [hasAnimations, setHasAnimations] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
-      if ((!open && disableAnimations) || (!open && !hasAnimations)) {
+      if ((!open && disableAnimations) || (!open && !isAnimating)) {
         setShowComponent(false);
       }
 
       if (open && !showComponent) {
         setShowComponent(true);
       }
-    }, [open, showComponent, disableAnimations, hasAnimations]);
+    }, [open, showComponent, disableAnimations, isAnimating]);
 
     const fullScreen = useIsViewportLargerThanBreakpoint(
       fullScreenAtBreakpoint
@@ -100,7 +100,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
           [withBaseName("enter-animation")]: enterAnimation,
           [withBaseName("exit-animation")]: exitAnimation,
         })}
-        onAnimationStart={() => setHasAnimations(true)}
+        onAnimationStart={() => setIsAnimating(true)}
         onAnimationEnd={() => {
           if (!open && showComponent) {
             setShowComponent(false);
