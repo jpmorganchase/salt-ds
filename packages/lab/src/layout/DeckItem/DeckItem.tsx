@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {makePrefixer, useForkRef} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import "./DeckItem.css";
 import cx from "classnames";
 import {
@@ -19,7 +19,7 @@ import { usePrevious } from "../../utils";
 const withBaseName = makePrefixer("uitkDeckItem");
 
 export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
-  activeIndex: number;
+  activeIndex?: number;
   animation?: LayoutAnimation;
   direction?: LayoutAnimationDirection;
   index: number;
@@ -35,7 +35,7 @@ const animationDirections = {
 export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
   function DeckItem(
     {
-      activeIndex,
+      activeIndex = 0,
       animation,
       children,
       className,

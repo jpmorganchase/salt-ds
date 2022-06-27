@@ -46,3 +46,6 @@
 .uitkDeckItem-fade-in {
   animation: var(--uitk-animation-fade-in-center);
 }
+.uitkDeckItem-fade-out {
+  animation: var(--uitk-animation-fade-out);
+}

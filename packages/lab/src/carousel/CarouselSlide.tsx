@@ -1,13 +1,21 @@
-import { forwardRef, HTMLAttributes, ReactElement, useRef } from "react";
+import {
+  ElementType,
+  forwardRef,
+  HTMLAttributes,
+  ReactElement,
+  useRef,
+} from "react";
 import { DeckItem } from "../layout/DeckItem";
 import { makePrefixer, useAriaAnnouncer } from "@jpmorganchase/uitk-core";
-import { ButtonBar } from "../buttonbar";
+
 import cx from "classnames";
+import { ButtonBarProps } from "../buttonbar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
-  ButtonBar?: ReactElement;
+  ButtonBar?: ElementType<ButtonBarProps>;
   Media: ReactElement;
   description: string;
+  index: number;
   title: string;
   contentAlignment: "center" | "left" | "right";
 }
@@ -16,14 +24,14 @@ const withBaseName = makePrefixer("uitkCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
-    { ButtonBar, Media, description, title, contentAlignment },
+    { ButtonBar, Media, description, title, contentAlignment, index },
     ref
   ) {
     const buttonBarRef = useRef(null);
     const { announce } = useAriaAnnouncer();
 
     const renderSlideContent = () => (
-      <div style={{ height: "100%" }}>
+      <DeckItem index={index}>
         {Media && <div className={withBaseName("mediaContainer")}>{Media}</div>}
         <div className={withBaseName("fixedContainer")} ref={buttonBarRef}>
           <div
@@ -34,7 +42,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             {title && (
               <div
-                aria-level="1"
+                aria-level={1}
                 className={withBaseName("titleContainer")}
                 role="heading"
               >
@@ -68,7 +76,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             </div>
           )}
         </div>
-      </div>
+      </DeckItem>
     );
 
     return renderSlideContent();

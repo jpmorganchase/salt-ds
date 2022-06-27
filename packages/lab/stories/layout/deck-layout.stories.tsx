@@ -1,7 +1,7 @@
-import {Card} from "@jpmorganchase/uitk-core";
+import { Card } from "@jpmorganchase/uitk-core";
 import { Carousel, DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 export default {
   title: "Lab/Layout/DeckLayout",
@@ -21,8 +21,10 @@ const deckCards = (slides: number) =>
   ));
 
 const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
-  const slides = 12;
-  const [currentIndex, setCurrentIndex] = useState(10);
+  const activeIndex = useMemo(() => args.activeIndex, [args.activeIndex]);
+
+  const slides = 6;
+  const [currentIndex, setCurrentIndex] = useState(activeIndex || 0);
 
   const handleIncrease = () => {
     if (currentIndex < slides - 1) {
@@ -45,7 +47,9 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
   );
 };
 export const DefaultDeckLayout = DefaultDeckLayoutStory.bind({});
-DefaultDeckLayout.args = {};
+DefaultDeckLayout.args = {
+  activeIndex: 0,
+};
 
 const useTabSelection = (initialValue?: any) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
