@@ -28,3 +28,7 @@ export type windowType = typeof Window;
 export const WindowContext = createContext<windowType>(Window);
 
 export const useWindow = () => useContext(WindowContext);
+
+const globalObject = typeof global === "undefined" ? window : global;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+export const isDesktop: boolean = (globalObject as any).isDesktop;

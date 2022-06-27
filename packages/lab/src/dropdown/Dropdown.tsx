@@ -1,4 +1,5 @@
 import {
+  isDesktop,
   makePrefixer,
   Portal,
   PortalProps,
@@ -6,7 +7,7 @@ import {
   useForkRef,
   useWindow,
 } from "@jpmorganchase/uitk-core";
-import { IconProps, ChevronDownIcon } from "@jpmorganchase/uitk-icons";
+import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import {
   ComponentType,
@@ -225,19 +226,22 @@ export const Dropdown = forwardRef(function Dropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ],
+    middleware,
   });
 
   const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(reference, ref);
