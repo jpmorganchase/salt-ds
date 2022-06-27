@@ -48,7 +48,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.class", "uitkLayerLayout-top");
+      cy.get(".uitkLayerLayout").should("have.css", "top", "0px");
     });
 
     it("THEN it should render on the right hand side", () => {
@@ -56,7 +56,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.class", "uitkLayerLayout-right");
+      cy.get(".uitkLayerLayout").should("have.css", "right", "0px");
     });
 
     it("THEN it should render on the left hand side", () => {
@@ -64,7 +64,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.class", "uitkLayerLayout-left");
+      cy.get(".uitkLayerLayout").should("have.css", "left", "0px");
     });
 
     it("THEN it should render at the bottom", () => {
@@ -72,7 +72,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.class", "uitkLayerLayout-bottom");
+      cy.get(".uitkLayerLayout").should("have.css", "bottom", "0px");
     });
   });
 
