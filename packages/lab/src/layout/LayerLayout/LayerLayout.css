@@ -24,7 +24,7 @@
   z-index: calc(var(--uitk-zindex-appheader) - 1);
 }
 
-.uitkLayerLayout.uitkLayerLayout-fullScreen {
+.uitkLayerLayout-fullScreen {
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -53,59 +53,59 @@
   top: 0;
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-top {
+.uitkLayerLayout-top {
   left: 0;
   right: 0;
   bottom: auto;
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-top.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-top.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-bottom);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-top.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-top.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-bottom);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-right {
+.uitkLayerLayout-right {
   left: auto;
   right: 0;
   height: 100%;
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-right.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-right);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-right.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-right.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-right);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-left {
+.uitkLayerLayout-left {
   left: 0;
   right: auto;
   height: 100%;
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-left.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-left);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-left.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-left.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-left);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-bottom {
+.uitkLayerLayout-bottom {
   left: 0;
   right: 0;
   bottom: 0;
   top: auto;
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-bottom.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-bottom.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-top);
 }
 
-.uitkLayerLayout-anchor.uitkLayerLayout-bottom.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-bottom.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-top);
 }
