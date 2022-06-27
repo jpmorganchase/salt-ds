@@ -56,7 +56,6 @@ export const AllExamplesGrid: ComponentStory<typeof Input> = (props) => {
         </div>
       </AllRenderer>
       <div
-        className="backwardsCompat"
         style={{
           background: "inherit",
           display: "inline-grid",
