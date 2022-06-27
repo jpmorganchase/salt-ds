@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from "react";
-import { LayerLayout, LAYER_POSITION } from "@jpmorganchase/uitk-lab";
+import { LayerLayout, LAYER_POSITIONS } from "@jpmorganchase/uitk-lab";
 import {
   Button,
   FlowLayout,
@@ -14,7 +14,7 @@ export default {
   component: LayerLayout,
   argTypes: {
     position: {
-      options: LAYER_POSITION,
+      options: LAYER_POSITIONS,
       control: { type: "select" },
     },
   },

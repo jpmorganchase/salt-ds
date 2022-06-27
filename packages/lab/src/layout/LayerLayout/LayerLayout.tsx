@@ -6,7 +6,7 @@ import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
 import { useIsViewportLargerThanBreakpoint, usePrevious } from "../../utils";
 
-export const LAYER_POSITION = [
+export const LAYER_POSITIONS = [
   "center",
   "left",
   "top",
@@ -14,7 +14,7 @@ export const LAYER_POSITION = [
   "bottom",
 ] as const;
 
-export type LayerPosition = typeof LAYER_POSITION[number];
+export type LayerPositions = typeof LAYER_POSITIONS[number];
 
 export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -24,7 +24,7 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the layer position within the screen.
    */
-  position?: LayerPosition;
+  position?: LayerPositions;
   /**
    * Breakpoint at which the layer will become fullscreen.
    */
