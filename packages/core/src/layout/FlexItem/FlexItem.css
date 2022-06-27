@@ -1,10 +1,11 @@
-/* VARIABLES */
+/* Default variables applied to the root element */
 .uitkFlexItem {
   --uitkFlexItem-item-alignment: auto;
   --uitkFlexItem-shrink: 1;
   --uitkFlexItem-grow: 0;
 }
 
+/* Style applied to the root element */
 .uitkFlexItem {
   position: relative;
   align-self: var(--uitkFlexItem-item-alignment);
