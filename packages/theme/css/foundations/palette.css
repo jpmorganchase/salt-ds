@@ -65,7 +65,7 @@
   --uitk-palette-interact-primary-background-hover: var(--uitk-color-grey-40);
   --uitk-palette-interact-primary-foreground: var(--uitk-color-grey-900);
   --uitk-palette-interact-primary-foreground-active: var(--uitk-color-white);
-  --uitk-palette-interact-primary-foreground-activeDisabled: var(--uitk-color-grey-900-fade-foreground);
+  --uitk-palette-interact-primary-foreground-activeDisabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-interact-primary-foreground-disabled: var(--uitk-color-grey-900-fade-foreground);
   --uitk-palette-interact-primary-foreground-hover: var(--uitk-color-grey-900);
   --uitk-palette-interact-secondary-background: transparent;

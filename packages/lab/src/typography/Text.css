@@ -126,21 +126,21 @@ label.uitkText,
 
 /* Figure 1 */
 .uitkText-figure1.uitkText {
-  font-size: var(--uitk-text-figure1-font-size);
+  font-size: var(--uitk-text-figure1-fontSize);
   line-height: var(--uitk-text-figure1-lineHeight);
   font-weight: var(--uitk-text-figure1-fontWeight);
 }
 
 /* Figure 2 */
 .uitkText-figure2.uitkText {
-  font-size: var(--uitk-text-figure2-font-size);
+  font-size: var(--uitk-text-figure2-fontSize);
   line-height: var(--uitk-text-figure2-lineHeight);
   font-weight: var(--uitk-text-figure2-fontWeight);
 }
 
 /* Figure 3 */
 .uitkText-figure3.uitkText {
-  font-size: var(--uitk-text-figure3-font-size);
+  font-size: var(--uitk-text-figure3-fontSize);
   line-height: var(--uitk-text-figure3-lineHeight);
   font-weight: var(--uitk-text-figure3-fontWeight);
 }

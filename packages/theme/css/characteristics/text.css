@@ -6,7 +6,7 @@
   --uitk-text-fontWeight-strong: var(--uitk-typography-weight-semiBold);
   --uitk-text-fontWeight-small: var(--uitk-typography-weight-light);
   --uitk-text-letterSpacing: 0;
-  --uitk-text-lineHeight: 1.3;
+  --uitk-text-base-lineHeight: 1.3;
   --uitk-text-textAlign: left;
   --uitk-text-textAlign-embedded: center;
   --uitk-text-textDecoration: none;

@@ -10,7 +10,6 @@
   line-height: var(--avatar-container-size);
   width: var(--avatar-container-size);
   height: var(--avatar-container-size);
-  font-family: var(--uitk-text-fontFamily);
   letter-spacing: 0;
   display: flex;
   align-items: center;

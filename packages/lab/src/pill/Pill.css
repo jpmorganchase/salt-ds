@@ -158,7 +158,7 @@
 .uitkPill-disabled .uitkPill-label,
 .uitkPill-disabled .uitkIcon {
   cursor: var(--uitk-selectable-cursor-disabled);
-  opacity: var(--uitk-opacity-foreground);
+  opacity: var(--uitk-palette-opacity-foreground);
 
   --uitkIcon-color: var(--pill-icon-color-disabled);
   --uitkIcon-color-hover: var(--pill-icon-color-disabled);
