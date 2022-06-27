@@ -21,15 +21,17 @@
   flex-wrap: wrap;
 }
 
-.backwardsCompat .uitkBreadcrumbs-ol {
+/* --- backwards compatible --- */
+
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
   gap: 0;
 }
 
-.backwardsCompat .uitkBreadcrumbs-li {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
   padding: 2px;
 }
 
-.backwardsCompat .uitkBreadcrumbs-li,
-.backwardsCompat .uitkBreadcrumbs-separator {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li,
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator {
   margin-right: 6px;
 }

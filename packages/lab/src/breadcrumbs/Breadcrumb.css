@@ -58,15 +58,15 @@
 
 /* --- backwards compatible --- */
 
-.backwardsCompat .uitkBreadcrumb {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb {
   padding: 0px;
   gap: 0;
 }
 
-.backwardsCompat .uitkBreadcrumb-icon {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon {
   margin: 0 4px 0 1px;
 }
 
-.backwardsCompat .uitkBreadcrumb-icon:only-child {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon:only-child {
   margin: 0;
 }

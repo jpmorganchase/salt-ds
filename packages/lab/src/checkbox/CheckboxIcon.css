@@ -91,28 +91,28 @@
 }
 
 /* Backwards compat styling for TK1 */
-.backwardsCompat .uitk-light .uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
-.backwardsCompat .uitk-light .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
-  stroke: rgb(46, 132, 198); /* blue-400 */
+.uitk-light .uitkCheckbox.backwardsCompat:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
+.uitk-light .uitkCheckbox.backwardsCompat .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
+  stroke: var(--uitk-color-blue-400);
 }
 
-.backwardsCompat .uitk-light .uitkCheckboxIcon-checked {
-  fill: rgb(38, 112, 169); /* blue-500 */
+.uitk-light .uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked {
+  fill: var(--uitk-color-blue-500);
 }
 
-.backwardsCompat .uitk-light .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
-  fill: rgba(38, 112, 169, 0.7); /* blue-500 */
+.uitk-light .uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
+  fill: var(--uitk-color-blue-500);
 }
 
-.backwardsCompat .uitk-dark .uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
-.backwardsCompat .uitk-dark .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
-  stroke: rgb(51, 141, 205); /* blue-300 */
+.uitk-dark .uitkCheckbox.backwardsCompat:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
+.uitk-dark .uitkCheckbox.backwardsCompat .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
+  stroke: var(--uitk-color-blue-300);
 }
 
-.backwardsCompat .uitk-dark .uitkCheckboxIcon-checked {
-  fill: rgb(46, 132, 198); /* blue-400 */
+.uitk-dark .uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked {
+  fill: var(--uitk-color-blue-400);
 }
 
-.backwardsCompat .uitk-dark .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
-  fill: rgba(46, 132, 198, 0.7); /* blue-400 */
+.uitk-dark .uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
+  fill: var(--uitk-color-blue-400);
 }

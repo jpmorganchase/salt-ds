@@ -44,6 +44,6 @@
 }
 
 /* Backwards compat styling to match TK1 */
-.backwardsCompat .uitkDropdownButton {
+.backwardsCompat.uitkDropdown .uitkDropdownButton {
   letter-spacing: normal;
 }

@@ -103,7 +103,8 @@ export const RadioButtonGroup = forwardRef<
     <fieldset
       className={classnames(
         withBaseName(),
-        row ? withBaseName("horizontal") : withBaseName("vertical")
+        row ? withBaseName("horizontal") : withBaseName("vertical"),
+        className
       )}
       data-testid="radio-button-group"
       ref={ref}
@@ -112,7 +113,7 @@ export const RadioButtonGroup = forwardRef<
     >
       {!inFormField && (
         <FormLabel
-          className={classnames(className, withBaseName("legend"))}
+          className={classnames(withBaseName("legend"))}
           label={legend}
         />
       )}
