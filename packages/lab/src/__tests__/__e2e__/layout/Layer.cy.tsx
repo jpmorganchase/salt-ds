@@ -12,7 +12,7 @@ const {
 } = composedStories;
 
 describe("GIVEN a Layer", () => {
-  describe("WHEN disableScrim is disabled", () => {
+  describe("WHEN scrim is enabled", () => {
     it("THEN it should display a scrim by default", () => {
       cy.mount(<DefaultLayerLayout />);
 
@@ -22,7 +22,7 @@ describe("GIVEN a Layer", () => {
     });
   });
 
-  describe("WHEN disableScrim is enabled", () => {
+  describe("WHEN scrim is disabled", () => {
     it("THEN it should not display a scrim", () => {
       cy.mount(<DefaultLayerLayout disableScrim={true} />);
 
