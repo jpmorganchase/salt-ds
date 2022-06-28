@@ -76,10 +76,9 @@ test("Opens the cascading menu in a new child window", async () => {
 
   expect(childWindowSize).toStrictEqual([201, 112]);
   expect(childWindowPosition).toStrictEqual([355, 36]);
-
   await cascadingMenuPage
     .locator("#UITK-cascading-menu-item-1 >> text=Level 1 Menu Item")
-    .click();
+    .click({ force: true });
   expect(electronApp.windows().length).toBe(1);
 });
 
