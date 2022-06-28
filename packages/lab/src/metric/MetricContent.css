@@ -51,16 +51,16 @@
   text-align: right;
 }
 
-.backwardsCompat .uitkMetric.uitkMetric-size-small .uitkMetricContent-subvalue {
+.backwardsCompat.uitkMetric.uitkMetric-size-small .uitkMetricContent-subvalue {
   margin-top: -2px;
 }
-.backwardsCompat .uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
+.backwardsCompat.uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
   margin-top: -6px;
 }
-.backwardsCompat .uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
+.backwardsCompat.uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
   margin-top: -10px;
 }
 
-.backwardsCompat .uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
   margin-top: 0px;
 }

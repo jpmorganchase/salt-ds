@@ -12,3 +12,14 @@
   --uitkCheckboxIcon-borderWidth-checked: var(--uitk-selectable-borderWidth);
   --uitkCheckboxIcon-tick-color: var(--uitk-taggable-foreground);
 }
+
+/* Backwards compat styling to match TK1 */
+.uitk-light .backwardsCompat.uitkPill .uitkPill-checkbox {
+  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-100);
+  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-300);
+}
+
+.uitk-dark .backwardsCompat.uitkPill .uitkPill-checkbox {
+  --uitkCheckboxIcon-stroke: var(--uitk-color-grey-80);
+  --uitkCheckboxIcon-tick-color: var(--uitk-color-grey-60);
+}

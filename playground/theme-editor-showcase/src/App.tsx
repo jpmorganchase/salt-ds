@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeEditorApp } from "@jpmorganchase/theme-editor-app/src/ThemeEditorApp";
 import { ElectronWindow } from "@jpmorganchase/uitk-lab/src/window";
 import { WindowContext } from "@jpmorganchase/uitk-core/src/window";
-import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
+import { isDesktop } from "@jpmorganchase/uitk-core";
 
 import { CSSByPattern } from "@jpmorganchase/theme-editor";
 
@@ -15,7 +15,7 @@ export const App = () => {
   const [cssByPattern, setCSSByPattern] = useState<CSSByPattern[]>([]);
 
   useEffect(() => {
-    if (isElectron) {
+    if (isDesktop) {
       let cssString = "";
       cssByPattern?.forEach((element) => {
         cssString += element.cssObj;
@@ -29,7 +29,7 @@ export const App = () => {
   }, [cssByPattern]);
 
   const saveCSS = () => {
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       (window as any).ipcRenderer.send("save-styles", cssByPattern);
     }
