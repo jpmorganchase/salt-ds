@@ -128,10 +128,6 @@ test("Opens the dialog in a new child window", async () => {
   expect(childWindowPosition).toStrictEqual([99, 144]);
   // catches an issue where the window starts off with the default size and then corrects itself
   expect(childWindowSize).toStrictEqual([501, 212]);
-
-  // Close Dialog
-  await newPage.locator("button >> nth=0").click();
-  expect(electronApp.windows().length).toBe(1);
 });
 
 test("Opens the colour chooser in a new child window", async () => {
