@@ -31,6 +31,7 @@
   --uitk-selectable-background-selected: var(--uitk-palette-interact-background-active);
   --uitk-selectable-background-blurSelected: var(--uitk-palette-interact-background-blurSelected);
   --uitk-selectable-background-disabled: transparent;
+  --uitk-selectable-background-selectedDisabled: var(--uitk-palette-interact-background-activeDisabled);
 
   --uitk-selectable-borderColor: var(--uitk-palette-interact-border);
   --uitk-selectable-borderColor-hover: var(--uitk-palette-interact-border-hover);
