@@ -4,6 +4,7 @@ import {
   makePrefixer,
   useDensity,
   useForkRef,
+  useId,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
@@ -28,7 +29,6 @@ import {
 } from "react";
 import warning from "warning";
 import { Input, InputProps } from "../input";
-import { useId } from "../utils";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { InputPill } from "./internal/InputPill";

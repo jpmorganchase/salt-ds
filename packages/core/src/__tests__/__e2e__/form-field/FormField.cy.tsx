@@ -1,4 +1,5 @@
-import { FormField, Input } from "@jpmorganchase/uitk-lab";
+import { FormField } from "@jpmorganchase/uitk-core";
+import { Input } from "@jpmorganchase/uitk-lab";
 
 describe("GIVEN an Input", () => {
   describe("WHEN validation state is warning", () => {

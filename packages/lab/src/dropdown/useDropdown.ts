@@ -1,4 +1,9 @@
-import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
+import {
+  useControlled,
+  useForkRef,
+  useFormFieldProps,
+  useId,
+} from "@jpmorganchase/uitk-core";
 import {
   FocusEvent,
   KeyboardEvent,
@@ -8,14 +13,12 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
 import {
   itemToString as defaultItemToString,
   ListSelectionVariant,
   useList,
   useTypeSelect,
 } from "../list";
-import { useId } from "../utils";
 import { DropdownProps } from "./Dropdown";
 import { DropdownButtonProps } from "./DropdownButton";
 import { useResizeObserver } from "./internal/useResizeObserver";

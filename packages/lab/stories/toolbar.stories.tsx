@@ -1,7 +1,4 @@
-import { CSSProperties, useState } from "react";
-import { ComponentAnatomy } from "docs/components";
-
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps, FormField } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   ExportIcon,
@@ -18,13 +15,11 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
-import {
-  Dropdown,
-  FormField,
-  Toolbar,
-  Tooltray,
-} from "@jpmorganchase/uitk-lab";
+import { Dropdown, Toolbar, Tooltray } from "@jpmorganchase/uitk-lab";
+import { ComponentAnatomy } from "docs/components";
+import { CSSProperties, useState } from "react";
 import { AdjustableFlexbox } from "./story-components";
+
 import "./toolbar.stories.css";
 
 export default {

@@ -4,6 +4,7 @@ import {
   makePrefixer,
   Tooltip,
   useForkRef,
+  useId,
   useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
@@ -15,11 +16,9 @@ import {
   SyntheticEvent,
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
-import { useId } from "../../utils";
+import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
 import { useCalendarContext } from "./CalendarContext";
 import dayjs from "./dayjs";
-
-import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
 
 import "./CalendarNavigation.css";
 

@@ -1,4 +1,3 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   ErrorIcon,
   IconProps,
@@ -8,8 +7,8 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { forwardRef } from "react";
-
-import { State } from "../State";
+import { makePrefixer } from "../utils";
+import { ValidationState } from "./ValidationState";
 
 import "./StateIcon.css";
 
@@ -21,7 +20,7 @@ const icons = {
 };
 
 export interface StateIconProps extends IconProps {
-  state: State;
+  state: ValidationState;
 }
 
 const withBaseName = makePrefixer("uitkStateIcon");

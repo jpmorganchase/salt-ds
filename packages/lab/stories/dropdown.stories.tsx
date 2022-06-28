@@ -1,4 +1,9 @@
-import { ToolkitProvider, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
+import {
+  FormField,
+  ToolkitProvider,
+  Tooltip,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
@@ -7,7 +12,6 @@ import {
   Dropdown,
   DropdownButton,
   DropdownProps,
-  FormField,
   IndexedListItemProps,
   ListChangeHandler,
   ListItemBase,

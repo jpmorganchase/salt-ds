@@ -3,12 +3,12 @@ import {
   makePrefixer,
   Portal,
   UseFloatingUIProps,
+  useId,
   useWindow,
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
-import { useId } from "../utils";
 
 import "./Overlay.css";
 

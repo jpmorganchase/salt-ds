@@ -1,8 +1,7 @@
-import { forwardRef, HTMLAttributes, useState } from "react";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
-import { useId } from "../utils";
+import { forwardRef, HTMLAttributes, useState } from "react";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("uitkContactMetadata");
