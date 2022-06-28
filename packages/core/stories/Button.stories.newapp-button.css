@@ -1,5 +1,9 @@
-.uitk-newapp {
+.uitk-newapp .uitkButton {
   --uitkButton-borderWidth: 1px 0;
+}
+
+.uitk-newapp.uitk-density-medium {
+  --uitkButton-height: 32px;
 }
 
 .uitk-newapp .uitkButton-cta {
@@ -103,4 +107,14 @@
 
 .uitk-newapp .uitkButton-disabled {
   opacity: var(--uitk-opacity-foreground);
+}
+
+/*
+  cheating a bit here to keep the example generation simpler. In reality, we would not
+  create a button with both readonly and final-execution classes
+
+*/
+.uitk-newapp .uitkButton-cta[data-readonly],
+.uitk-newapp .uitkButton-final-execution[data-readonly] {
+  visibility: hidden;
 }
