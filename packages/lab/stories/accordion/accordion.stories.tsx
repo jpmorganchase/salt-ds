@@ -13,7 +13,7 @@ import { TriangleUpIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 
-import { CustomSummary } from "./accordion/CustomSummary";
+import { CustomSummary } from "./CustomSummary";
 
 export default {
   title: "Lab/Accordion",

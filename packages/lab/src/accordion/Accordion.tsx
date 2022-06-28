@@ -20,6 +20,7 @@ const withBaseName = makePrefixer("uitkAccordion");
 export interface AccordionProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
   disabled?: boolean;
+  bordered?: boolean;
   maxExpandedItems?: number;
   expandedSectionIds?: string[];
   defaultExpandedSectionIds?: string[];
@@ -43,6 +44,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
   function Accordion(
     {
       disabled = false,
+      bordered = false,
       expandedSectionIds: expandedSectionIdsProp,
       defaultExpandedSectionIds = [],
       maxExpandedItems,
@@ -163,7 +165,9 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     return (
       <StackLayout
         gap={0}
-        className={cn(withBaseName(), className)}
+        className={cn(withBaseName(), className, {
+          [withBaseName("bordered")]: bordered,
+        })}
         {...restProps}
         ref={ref}
       >

@@ -54,7 +54,7 @@
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
   --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
   --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);
-  --section-border-bottom-width: var(--uitkAccordionSection-border-bottom-width, 1px);
+  --section-border-bottom-width: var(--uitkAccordionSection-border-bottom-width, 0);
   --section-border-left-width: var(--uitkAccordionSection-border-left-width, 0);
 
   --section-margin-top: var(--uitkAccordionSection-margin-top, 0);
@@ -70,6 +70,10 @@
   --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
   --summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--summary-icon-transition-default));
+}
+
+.uitkAccordion-bordered .uitkAccordionSection {
+  --section-border-bottom-width: var(--uitkAccordionSection-border-bottom-width, 1px);
 }
 
 .uitkAccordionSection {
