@@ -1,5 +1,12 @@
 import { Card } from "@jpmorganchase/uitk-core";
-import { Carousel, DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
+import {
+  ButtonBar,
+  Carousel,
+  CarouselSlide,
+  DeckLayout,
+  OrderedButton,
+  Tabstrip,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React, { useMemo, useState } from "react";
 
@@ -87,23 +94,30 @@ DeckInTabstrip.args = {};
 
 const colors = ["fcd5ce", "f8edeb", "d8e2dc", "ffe5d9", "ffd7ba"];
 const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
+  const renderButtonBar = () => (
+    <ButtonBar>
+      <OrderedButton variant="cta">Learn more</OrderedButton>
+    </ButtonBar>
+  );
+
   return (
     <Carousel {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <Card key={index}>
-          <img
-            alt="placeholder slider"
-            src={`https://via.placeholder.com/1140x520/${
-              colors[index]
-            }?text=Carousel+Slide+${index + 1}`}
-            style={{ width: "100%" }}
-          />
-          <h4>Lorem ipsum dolor sit amet</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto
-            at atque cum doloribus fugiat in iste magnam natus nobis.
-          </p>
-        </Card>
+        <CarouselSlide
+          ButtonBar={renderButtonBar}
+          Media={
+            <img
+              alt="placeholder slider"
+              src={`https://via.placeholder.com/1140x520/${
+                colors[index]
+              }?text=Carousel+Slide+${index + 1}`}
+              style={{ width: "100%" }}
+            />
+          }
+          description={"Lorem ipsum dolor sit amet"}
+          title={"Carousel Slide"}
+          contentAlignment={"left"}
+        />
       ))}
     </Carousel>
   );

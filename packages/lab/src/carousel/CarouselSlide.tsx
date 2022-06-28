@@ -5,17 +5,15 @@ import {
   ReactElement,
   useRef,
 } from "react";
-import { DeckItem } from "../layout/DeckItem";
 import { makePrefixer, useAriaAnnouncer } from "@jpmorganchase/uitk-core";
 
 import cx from "classnames";
-import { ButtonBarProps } from "../buttonbar";
+import { ButtonBar, ButtonBarProps } from "../buttonbar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
-  ButtonBar?: ElementType<ButtonBarProps>;
+  ButtonBar?: ElementType<Partial<ButtonBarProps>>;
   Media: ReactElement;
   description: string;
-  index: number;
   title: string;
   contentAlignment: "center" | "left" | "right";
 }
@@ -24,14 +22,14 @@ const withBaseName = makePrefixer("uitkCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
-    { ButtonBar, Media, description, title, contentAlignment, index },
+    { ButtonBar, Media, description, title, contentAlignment },
     ref
   ) {
     const buttonBarRef = useRef(null);
     const { announce } = useAriaAnnouncer();
 
     const renderSlideContent = () => (
-      <DeckItem index={index}>
+      <div ref={ref}>
         {Media && <div className={withBaseName("mediaContainer")}>{Media}</div>}
         <div className={withBaseName("fixedContainer")} ref={buttonBarRef}>
           <div
@@ -72,11 +70,11 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
                     contentAlignment === "left",
                 })}
                 stackAtBreakpoint={0}
-              />
+              ></ButtonBar>
             </div>
           )}
         </div>
-      </DeckItem>
+      </div>
     );
 
     return renderSlideContent();
