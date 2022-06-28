@@ -24,41 +24,51 @@
   align-items: var(--flex-layout-align);
 }
 
-/* Style applied if `separators` are enabled */
-.uitkFlexLayout-separator {
-  --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier) * 2 + var(--flex-layout-separator));
+.uitkFlexLayout-separator-wrapper {
+  display: contents;
+}
+.uitkFlexLayout-separator > *:not(:last-child)::after {
+  position: relative;
+  display: block;
+  content: "";
+  background-color: var(--uitk-separable-secondary-borderColor);
 }
 
-.uitkFlexLayout-separator > *:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  background-color: var(--uitk-separable-secondary-borderColor);
+/* Row separator */
+
+.uitkFlexLayout-separator-row > .uitkFlexLayout-separator-wrapper {
+  height: 100%;
 }
 
 .uitkFlexLayout-separator-row > *:not(:last-child)::after {
   width: var(--flex-layout-separator);
   top: 0;
-  height: 100%;
 }
 .uitkFlexLayout-separator-row-start > *:not(:last-child)::after {
-  right: calc(var(--flex-layout-separator) * -1);
+  right: calc(var(--flex-layout-gap) * 1);
 }
 .uitkFlexLayout-separator-row-center > *:not(:last-child)::after {
-  right: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
+  right: 0;
 }
 .uitkFlexLayout-separator-row-end > *:not(:last-child)::after {
   right: calc(var(--flex-layout-gap) * -1);
 }
 
+/* Column separator */
+.uitkFlexLayout-separator-column > .uitkFlexLayout-separator-wrapper {
+  width: 100%;
+}
+
 .uitkFlexLayout-separator-column > *:not(:last-child)::after {
   height: var(--flex-layout-separator);
+  left: 0;
   width: 100%;
 }
 .uitkFlexLayout-separator-column-start > *:not(:last-child)::after {
-  bottom: calc(var(--flex-layout-separator) * -1);
+  bottom: calc(var(--flex-layout-gap) * 1);
 }
 .uitkFlexLayout-separator-column-center > *:not(:last-child)::after {
-  bottom: calc(var(--flex-layout-separator) * -1 + var(--flex-layout-gap) / 2 * -1);
+  bottom: 0;
 }
 .uitkFlexLayout-separator-column-end > *:not(:last-child)::after {
   bottom: calc(var(--flex-layout-gap) * -1);
