@@ -81,7 +81,6 @@ const allAllowedKeys = [
   "animation",
   "typography",
   "size",
-  "opacity",
 ];
 
 const regexpPattern = new RegExp(
