@@ -76,11 +76,6 @@ test("Opens the cascading menu in a new child window", async () => {
 
   expect(childWindowSize).toStrictEqual([201, 112]);
   expect(childWindowPosition).toStrictEqual([355, 36]);
-
-  await cascadingMenuPage
-    .locator("#UITK-cascading-menu-item-1 >> text=Level 1 Menu Item")
-    .click();
-  expect(electronApp.windows().length).toBe(1);
 });
 
 test.skip("Opens multiple cascading menu windows", async () => {
@@ -108,12 +103,12 @@ test("Opens the dialog in a new child window", async () => {
   // Open Dialog
   await page.locator("data-testid=dialog-button").click();
   expect(electronApp.windows().length).toBe(2);
-  const newPage = electronApp.windows()[1];
-  expect(newPage).toBeTruthy();
+  const dialogPage = electronApp.windows()[1];
+  expect(dialogPage).toBeTruthy();
 
   await page.waitForTimeout(200);
 
-  const dialogWindowHandle = await electronApp.browserWindow(newPage);
+  const dialogWindowHandle = await electronApp.browserWindow(dialogPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
 
   expect(
