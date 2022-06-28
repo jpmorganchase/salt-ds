@@ -36,7 +36,7 @@
   margin-bottom: var(--uitkFormLabel-margin-Bottom, var(--formLabel-marginBottom));
   min-height: var(--uitkFormLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
   margin-top: var(--uitkFormLabel-marginTop, 0px);
-  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-text-lineHeight));
+  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-text-base-lineHeight));
   overflow: hidden;
   padding-left: var(--uitkFormLabel-paddingLeft, var(--formLabel-paddingLeft));
   padding-right: var(--uitkFormLabel-paddingRight, var(--formLabel-paddingRight));

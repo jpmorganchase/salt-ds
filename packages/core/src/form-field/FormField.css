@@ -70,7 +70,7 @@
 
 /* Class applied when helper text is provided */
 .uitkFormField-withHelperText {
-  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
   --formField-withHelperText-marginTop: var(--formField-helperText-marginTop);
 }
 
@@ -86,7 +86,7 @@
 /* Class applied if `fullWidth={true}` and helper text is provided */
 .uitkFormField-fullWidth.uitkFormField-withHelperText {
   --formField-withHelperText-marginTop: var(--formField-helperText-marginTop-fullWidth);
-  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
 }
 
 /* Class applied to the root element if `disabled={true}` */
@@ -136,7 +136,7 @@
   --formLabel-paddingLeft: var(--uitk-size-unit);
   --formLabel-paddingRight: var(--uitk-size-unit);
   /* Uses density invariant value unless helper text provided */
-  --formField-background-offset-height: calc(var(--formField-withHelperText-marginTop, 0px) + var(--uitkFormFieldHelperText-height, var(--formField-helperText-height)));
+  --formField-background-offset-height: calc(var(--formField-withHelperText-marginTop, 0px) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
 
   background: linear-gradient(to top, transparent var(--formField-background-offset-height), var(--uitkFormField-background, var(--formField-background)) var(--formField-background-offset-height));
 }
@@ -192,7 +192,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: var(--uitkFormFieldHelperText-height, var(--formField-helperText-height, 0px));
+  bottom: var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height, 0px));
   outline-color: var(--uitkFormField-focused-outlineColor, var(--formField-focused-outlineColor));
   outline-style: var(--uitkFormField-focused-outlineStyle, var(--formField-focused-outlineStyle));
   outline-width: var(--uitkFormField-focused-outlineWidth, var(--formField-focused-outlineWidth));
@@ -206,7 +206,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: calc(var(--uitkFormFieldHelperText-height, var(--formField-withHelperText-height, var(--uitk-text-lineHeight))) + var(--formField-withHelperText-focused-outline-bottom, 0px));
+  bottom: calc(var(--uitkFormFieldHelperText-lineHeight, var(--formField-withHelperText-height, var(--uitk-text-base-lineHeight))) + var(--formField-withHelperText-focused-outline-bottom, 0px));
   outline-color: var(--uitkFormField-focused-outlineColor, var(--formField-focused-outlineColor));
   outline-style: var(--uitkFormField-focused-outlineStyle, var(--formField-focused-outlineStyle));
   outline-width: var(--uitkFormField-focused-outlineWidth, var(--formField-focused-outlineWidth));
