@@ -2,8 +2,15 @@ import {
   FLEX_ALIGNMENT_BASE,
   StackLayout,
   Panel,
+  Button,
 } from "@jpmorganchase/uitk-core";
-import { FormField, Input, Dropdown } from "@jpmorganchase/uitk-lab";
+import {
+  FormField,
+  Input,
+  Dropdown,
+  ButtonBar,
+  OrderedButton,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
@@ -168,4 +175,28 @@ export const ComplexFormFour: ComponentStory<typeof StackLayout> = () => {
       ))}
     </StackLayout>
   );
+};
+
+const StackLayoutSeparatorsExample: ComponentStory<typeof StackLayout> = (
+  args
+) => {
+  return (
+    <StackLayout
+      {...args}
+      role="region"
+      aria-label="Display contents with role example"
+    >
+      <Button>Button outside region</Button>
+      <ButtonBar>
+        <OrderedButton>Button in region 1</OrderedButton>
+        <OrderedButton>Button in region 2</OrderedButton>
+      </ButtonBar>
+    </StackLayout>
+  );
+};
+export const StackLayoutSeparators = StackLayoutSeparatorsExample.bind({});
+StackLayoutSeparators.args = {
+  align: "center",
+  gap: 2,
+  separators: true,
 };

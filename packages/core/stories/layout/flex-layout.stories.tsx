@@ -151,7 +151,7 @@ FlexLayoutComposite.args = {
 
 const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   return (
-    <FlexLayout justify={"space-between"} wrap={true} gap={6}>
+    <FlexLayout {...args}>
       <Card style={{ minWidth: 150 }}>
         <ContactDetailsExample index={0} />
       </Card>
@@ -167,4 +167,8 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
-FlexLayoutNested.args = {};
+FlexLayoutNested.args = {
+  justify: "space-between",
+  wrap: true,
+  gap: 6,
+};
