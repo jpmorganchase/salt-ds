@@ -8,7 +8,7 @@ import {
 import { NotificationIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import "./Button.stories.newapp-theme.css";
+import "./Theme.stories.newapp-theme.css";
 import "./Button.stories.newapp-button.css";
 
 export default {

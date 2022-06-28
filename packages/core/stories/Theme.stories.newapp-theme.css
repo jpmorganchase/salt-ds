@@ -2,10 +2,6 @@
   --uitk-opacity-background: 0.4;
 }
 
-.uitk-newapp.uitk-density-medium {
-  --uitkButton-height: 32px;
-}
-
 .uitk-light.uitk-newapp {
   /* CTA */
   --uitk-actionable-cta-background: linear-gradient(to bottom, var(--uitk-color-blue-500), var(--uitk-color-blue-600));
@@ -150,14 +146,4 @@
   --uitk-actionable-ask-background-readonly: transparent none;
   --uitk-actionable-ask-topline-color-readonly: transparent;
   --uitk-actionable-ask-baseline-color-readonly: var(--uitk-color-grey-40);
-}
-
-/*
-  cheating a bit here to keep the example generation simpler. In reality, we would not
-  create a button with both readonly and final-execution classes
-
-*/
-.uitk-newapp .uitkButton-cta[data-readonly],
-.uitk-newapp .uitkButton-final-execution[data-readonly] {
-  visibility: hidden;
 }
