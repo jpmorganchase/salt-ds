@@ -8,13 +8,12 @@ import {
   FormField,
   Input,
   Dropdown,
-  Tab,
-  Tabstrip,
+  ButtonBar,
+  OrderedButton,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
-import { useState } from "react";
 
 export default {
   title: "Core/Layout/StackLayout",
@@ -181,21 +180,17 @@ export const ComplexFormFour: ComponentStory<typeof StackLayout> = () => {
 const StackLayoutSeparatorsExample: ComponentStory<typeof StackLayout> = (
   args
 ) => {
-  const [selectedTab, setSelectedTab] = useState(0);
   return (
     <StackLayout
       {...args}
       role="region"
       aria-label="Display contents with role example"
     >
-      <Tabstrip onChange={(nextValue) => setSelectedTab(nextValue)}>
-        <Tab>Tab 1</Tab>
-        <Tab>Tab 2</Tab>
-        <Tab>Tab 3</Tab>
-      </Tabstrip>
-      <div style={{ padding: 10 }}>
-        <Button>{`Button for tab ${selectedTab + 1}`}</Button>
-      </div>
+      <Button>Button outside region</Button>
+      <ButtonBar>
+        <OrderedButton>Button in region 1</OrderedButton>
+        <OrderedButton>Button in region 2</OrderedButton>
+      </ButtonBar>
     </StackLayout>
   );
 };
