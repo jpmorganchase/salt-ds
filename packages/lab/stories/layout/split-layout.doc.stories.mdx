@@ -26,6 +26,11 @@ For layouts that require more than 2 regions please see [Flow layout](?path=/doc
   <Story id="lab-layout-splitlayout--default-split-layout" />
 </Canvas>
 
+## How you can use Split layout
+
+Use Split layout when there are 2 defined areas that require to be in the opposite horizontal ends of a container,
+for example if 2 `ButtonBar` components need to be in a header.
+
 ## API
 
 ```
@@ -50,9 +55,14 @@ The simple usage examples shows 2 groups of buttons inside a Split layout.
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <SplitLayout style={{ border: "dashed 1px black", padding: "1rem" }}
-    leftSplitItem={<FlexItem style={{ border: "dashed 1px black", padding: "1rem" }}/>}
-    rightSplitItem={<FlexItem style={{ border: "dashed 1px black", padding: "1rem" }}/>}
+    <SplitLayout
+      style={{ border: "dashed 1px black", padding: "1rem" }}
+      leftSplitItem={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+      rightSplitItem={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
     />
   </ComponentAnatomy>
 </Canvas>

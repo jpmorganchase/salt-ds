@@ -57,9 +57,14 @@ import { ParentChildLayout } from "@jpmorganchase/uitk-lab";
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <ParentChildLayout style={{ border: "dashed 1px black", padding: "1rem" }}
-    parent={<FlexItem style={{ border: "dashed 1px black", padding: "1rem" }}/>}
-    child={<FlexItem style={{ border: "dashed 1px black", padding: "1rem" }}/>}
+    <ParentChildLayout
+      style={{ border: "dashed 1px black", padding: "1rem" }}
+      parent={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+      child={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
     />
   </ComponentAnatomy>
 </Canvas>

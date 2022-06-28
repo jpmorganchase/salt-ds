@@ -19,6 +19,7 @@ import { ToolkitBorderLayout } from "./border-layout.stories";
 # Border Layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
+The border layout is built using [Grid layout](?path=/docs/layout-docs-core-gridlayout--page) and it is intended for laying out pages where there is at least a main area with a header and footer.
 
 <Canvas>
   <Story id="lab-layout-borderlayout--toolkit-border-layout" />
@@ -38,6 +39,8 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 ### Border Item inside default border layout
 
+A border item allows more complex controls to the default behaviour of a border child, like defining how many rows or columns will it span trough and it's alignment
+
 <Canvas>
   <Story id="lab-layout-borderlayout-borderitem--toolkit-border-item" />
 </Canvas>
@@ -53,7 +56,7 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 <Canvas>
   <ComponentAnatomy showLegend>
     <BorderLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <BorderItem style={{ border: "dashed 1px black", padding: "1rem" }}/>
+      <BorderItem style={{ border: "dashed 1px black", padding: "1rem" }} />
     </BorderLayout>
   </ComponentAnatomy>
 </Canvas>
@@ -61,4 +64,5 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 ### Classes
 
 #### Item
+
 <CSSClassTable of={BorderItem} />
