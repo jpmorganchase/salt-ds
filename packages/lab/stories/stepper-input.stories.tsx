@@ -8,6 +8,8 @@ import {
 } from "@jpmorganchase/uitk-core/stories";
 import { ComponentMeta, Story } from "@storybook/react";
 
+import "./StepperInput.stories.newapp-stepper-input.css";
+
 export default {
   title: "Lab/Stepper Input",
   component: StepperInput,
@@ -71,7 +73,6 @@ export const Alignment: Story = () => (
     >
       <StepperInput />
     </FormField>
-
     <FormField
       helperText="Please enter a number"
       label="Centered value"
@@ -79,7 +80,6 @@ export const Alignment: Story = () => (
     >
       <StepperInput textAlign="center" />
     </FormField>
-
     <FormField
       helperText="Please enter a number"
       label="Right-aligned value"
@@ -340,4 +340,15 @@ export const RefreshButton: Story = () => (
       />
     </FormField>
   </ToolkitProvider>
+);
+
+export const CustomStyling: Story<typeof StepperInput> = () => (
+  <div style={{ display: "flex" }}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <Examples />
+    </ToolkitProvider>
+    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
+      <Examples />
+    </ToolkitProvider>
+  </div>
 );
