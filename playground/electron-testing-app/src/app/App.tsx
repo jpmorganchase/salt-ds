@@ -1,4 +1,13 @@
-import React, { useCallback, useRef, useState } from "react";
+import {
+  Button,
+  FormField,
+  Portal,
+  Tooltip,
+  useDensity,
+  useTooltip,
+  useWindow,
+  WindowContext,
+} from "@jpmorganchase/uitk-core";
 import {
   ButtonBar,
   CascadingMenu,
@@ -10,22 +19,12 @@ import {
   DialogTitle,
   Dropdown,
   ElectronWindow,
-  FormField,
   ListChangeHandler,
   MenuDescriptor,
   OrderedButton,
   Toolbar,
 } from "@jpmorganchase/uitk-lab";
-
-import {
-  Button,
-  Portal,
-  Tooltip,
-  useDensity,
-  useTooltip,
-  useWindow,
-  WindowContext,
-} from "@jpmorganchase/uitk-core";
+import { useCallback, useRef, useState } from "react";
 
 import {
   ExportIcon,

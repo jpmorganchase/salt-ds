@@ -1,13 +1,10 @@
-import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
-import classnames from "classnames";
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer, StateIcon } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
-
-import { StateIcon } from "./internal/StateIcon";
+import classnames from "classnames";
+import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
 import "./DialogTitle.css";
-
 export interface DialogTitleProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Disable the built-in ARIA heading attributes.

@@ -1,11 +1,10 @@
-import React from "react";
+import { FormField } from "@jpmorganchase/uitk-core";
+import { fireEvent, render, screen } from "@testing-library/react";
 import {
   computeAccessibleDescription,
   computeAccessibleName,
 } from "dom-accessibility-api";
-import { fireEvent, render, screen } from "@testing-library/react";
 import { StepperInput } from "../../stepper-input";
-import { FormField } from "../../form-field";
 
 const mockAnnounce = jest.fn();
 

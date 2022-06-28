@@ -1,12 +1,13 @@
-import { ComponentType, forwardRef, Ref, useRef } from "react";
-
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  useForkRef,
+  useFormFieldProps,
+  useId,
+} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
+import { ComponentType, forwardRef, Ref, useRef } from "react";
 import warning from "warning";
-
-import { useFormFieldProps } from "../form-field-context";
 import { useWidth } from "../list/internal/useWidth";
-import { useId } from "../utils";
 import {
   DefaultComboBox,
   DefaultComboBoxProps,

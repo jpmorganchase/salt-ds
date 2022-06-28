@@ -1,4 +1,10 @@
-import { Button, Card, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  Card,
+  FormField,
+  Tooltip,
+  useTooltip,
+} from "@jpmorganchase/uitk-core";
 import {
   CallIcon,
   ChatIcon,
@@ -18,7 +24,6 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
-  FormField,
   Overlay,
   useOverlay,
 } from "@jpmorganchase/uitk-lab";

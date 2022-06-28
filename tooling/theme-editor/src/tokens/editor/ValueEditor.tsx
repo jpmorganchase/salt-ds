@@ -1,14 +1,15 @@
-import { useState, ReactElement, useCallback, useMemo, useEffect } from "react";
+import { FormField, makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize, Input } from "@jpmorganchase/uitk-lab";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { capitalize, FormField, Input } from "@jpmorganchase/uitk-lab";
+import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import { validateTokenInput } from "../../helpers/validateTokenInput";
+import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
 import {
   ColorValueEditor,
   isColor,
 } from "../foundations/color/ColorValueEditor";
-import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
-import { validateTokenInput } from "../../helpers/validateTokenInput";
 import { JumpToTokenButton } from "../toggles/JumpToTokenButton";
+
 import "./ValueEditor.css";
 
 const withBaseName = makePrefixer("uitkValueEditor");

@@ -1,9 +1,7 @@
-import { forwardRef, HTMLAttributes, useMemo, ReactChildren } from "react";
+import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-
+import { forwardRef, HTMLAttributes, useMemo } from "react";
 import { MetricContextProvider, MetricContextValue } from "./internal";
-import { useId } from "../utils";
 
 import "./Metric.css";
 

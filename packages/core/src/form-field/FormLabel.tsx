@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { ElementType, HTMLAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../utils";
 import { FormFieldValidationState } from "./FormField";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
