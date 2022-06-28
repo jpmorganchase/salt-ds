@@ -6,6 +6,7 @@ import {
 } from "@floating-ui/react-dom-interactions";
 import {
   Button,
+  isDesktop,
   makePrefixer,
   Portal,
   useFloatingUI,
@@ -20,10 +21,11 @@ import {
   useRef,
   useState,
 } from "react";
+
 import { OverflowLayoutPanel } from "./OverflowLayoutPanel";
 import { useOverflowDropdown } from "./useOverflowDropdown";
 
-export interface OverflowDropdownProps extends HTMLAttributes<HTMLDivElement> {}
+export type OverflowDropdownProps = HTMLAttributes<HTMLDivElement>;
 
 const withBaseName = makePrefixer("uitkOverflowDropdown");
 
@@ -39,19 +41,22 @@ export const OverflowDropdown = forwardRef(function OverflowDropdown(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ],
+    middleware,
   });
   const Window = useWindow();
   const handleRef = useForkRef<HTMLDivElement>(forwardedRef, reference);

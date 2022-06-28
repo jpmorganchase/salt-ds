@@ -5,27 +5,33 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
-import { ToolkitGridLayout } from "./grid-layout.stories";
 
 <Meta
   title="Documentation/Core/Layout/GridLayout"
   component={GridLayout}
+  subcomponents={{ GridItem }}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Grid Layout
+# Grid layout
 
 Defines an equally distributed layout system using columns and rows.
-
 The grid layout defaults to a twelve column grid with 1 row but you can customise it using the `columns` and `rows` props.
-
-For more complex layouts, supports spanning across columns and rows
+For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
   <Story id="core-layout-gridlayout--toolkit-grid-layout" />
 </Canvas>
+
+## How you can use Grid layout
+
+Grid layout can take any number of children, and will by default display them in a 12 columns grid (items after the 12th one will wrap).
+to change the number of columns displayed in the grid, you can reduce or increase the `columns` prop.
+
+Grid layout is useful when you want to control the layout in both row and columns dimensions and it can achieve more complex forms when used in combination with `GridItems`.
+If you want to control the flow in a single dimension, we recommend you having a look at [Stack layout](?path=/docs/layout-docs-lab-stacklayout--page), [Flow layout](?path=/docs/layout-docs-lab-flowlayout--page) or [Flex layout](?path=/docs/layout-docs-lab-flexlayout--page).
 
 ## API
 
@@ -35,25 +41,24 @@ import { GridLayout, GridItem } from "@jpmorganchase/uitk-lab";
 
 ## Props
 
-**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes
+**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes.
+For the following example, we can think about a layout that will responsively change from 12 columns to 2 and then to 1 as the space decreases.
 
 ```
-columns={{ lg: 12, md: 12, sm: 2, xl: 12, xs: 1 }}
+columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 ```
-
-### Grid Layout Props
 
 <ArgsTable of={GridLayout} />
 
-### Grid Item Props
-
-<ArgsTable of={GridItem} />
-
-## Usage Examples
+## Examples
 
 ### Grid Item inside default grid layout
 
 A grid item allows more complex controls to the default behaviour of a grid child, like defining how many rows or columns will it span trough and it's alignment
+
+#### Use when
+
+You have an item that needs to take the space of more than one row/column or when you have an item that requires a different alignment to the component's default.
 
 <Canvas>
   <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
@@ -65,12 +70,27 @@ The grid supports the use of responsive props, so you can defined different beha
 All grid props are responsive, and their values can be individually customised per breakpoint.  
 You can use the default breakpoints or pass in you own
 
+#### Use when
+
+The flow of the grid is dependant on the viewport size.
+
 <Canvas>
-  <h4>Grid with responsive rows and columns</h4>
   <Story id="core-layout-gridlayout--toolkit-grid-layout-responsive-view" />
 </Canvas>
 
-## Used in
+### Simple Usage
+
+<Canvas>
+  <Story id="core-layout-gridlayout--toolkit-grid-layout-footer" />
+</Canvas>
+
+### Composite Usage
+
+<Canvas>
+  <Story id="core-layout-gridlayout--grid-layout-composite" />
+</Canvas>
+
+## Related components
 
 The grid layout is used in the following components
 
@@ -79,9 +99,19 @@ The grid layout is used in the following components
 ## Anatomy
 
 <Canvas>
-  <ComponentAnatomy showLegend>
-    <GridLayout>
-      <GridItem></GridItem>
+  <ComponentAnatomy showControls={false}>
+    <GridLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
+      <GridItem style={{ border: "dashed 1px black", padding: "1rem" }} />
     </GridLayout>
   </ComponentAnatomy>
 </Canvas>
+
+### Classes
+
+#### Layout
+
+<CSSClassTable of={GridLayout} />
+
+#### Item
+
+<CSSClassTable of={GridItem} />

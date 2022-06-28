@@ -53,10 +53,26 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
 DefaultFlexLayout.args = {};
 
+const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout {...args}>
+      {Array.from({ length: 4 }, (_, index) => (
+        <FlexItem>
+          <FlexContent key={index} />
+        </FlexItem>
+      ))}
+    </FlexLayout>
+  );
+};
+export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
+FlexLayoutWithSeparators.args = {
+  separators: "center",
+};
+
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
-      {Array.from({ length: 12 }, (_, index) => (
+      {Array.from({ length: 6 }, (_, index) => (
         <FlexContent key={index} />
       ))}
     </FlexLayout>

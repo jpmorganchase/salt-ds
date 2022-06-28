@@ -2,7 +2,7 @@
   --flex-layout-gap-density-multiplier: 2;
 }
 
-/* VARIABLES */
+/* Default variables applied to the root element */
 .uitkFlexLayout {
   --flex-layout-gap-multiplier: var(--flex-layout-gap-density-multiplier, 3);
   --flex-layout-layout-display: flex;
@@ -14,6 +14,7 @@
   --flex-layout-gap: calc(var(--uitk-size-unit) * var(--flex-layout-gap-multiplier));
 }
 
+/* Style applied to the root element */
 .uitkFlexLayout {
   gap: var(--flex-layout-gap);
   display: var(--flex-layout-layout-display);
