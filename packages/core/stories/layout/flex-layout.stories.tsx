@@ -53,10 +53,26 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
 DefaultFlexLayout.args = {};
 
+const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout {...args}>
+      {Array.from({ length: 4 }, (_, index) => (
+        <FlexItem>
+          <FlexContent key={index} />
+        </FlexItem>
+      ))}
+    </FlexLayout>
+  );
+};
+export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
+FlexLayoutWithSeparators.args = {
+  separators: "center",
+};
+
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
-      {Array.from({ length: 12 }, (_, index) => (
+      {Array.from({ length: 6 }, (_, index) => (
         <FlexContent key={index} />
       ))}
     </FlexLayout>
@@ -135,7 +151,7 @@ FlexLayoutComposite.args = {
 
 const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   return (
-    <FlexLayout justify={"space-between"} wrap={true} gap={6}>
+    <FlexLayout {...args}>
       <Card style={{ minWidth: 150 }}>
         <ContactDetailsExample index={0} />
       </Card>
@@ -151,4 +167,8 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
-FlexLayoutNested.args = {};
+FlexLayoutNested.args = {
+  justify: "space-between",
+  wrap: true,
+  gap: 6,
+};

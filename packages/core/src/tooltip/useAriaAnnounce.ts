@@ -4,7 +4,7 @@ import type {
 } from "@floating-ui/react-dom-interactions";
 import { PointerEvent, useEffect, useRef } from "react";
 import { useAriaAnnouncer } from "../aria-announcer";
-import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 function getDocument(floating: HTMLElement | null) {
   return floating?.ownerDocument ?? document;

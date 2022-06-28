@@ -20,14 +20,16 @@ export const ExamplesGrid: ComponentStory<typeof Pill> = (props) => {
           verticalAlign: "top",
         }}
       >
-        <Pill label="Default Pill" />
-        <Pill disabled label="Disabled Pill" />
+        <Pill className="backwardsCompat" label="Default Pill" />
+        <Pill className="backwardsCompat" disabled label="Disabled Pill" />
         <Pill
+          className="backwardsCompat"
           variant="closable"
           label="Closable Pill"
           onDelete={() => console.log("Deleted.")}
         />
         <Pill
+          className="backwardsCompat"
           label="Extra extra long Pill label example."
           onClick={() => console.log("Clicked.")}
         />

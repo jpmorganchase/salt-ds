@@ -1,5 +1,5 @@
-import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
-import { parseCSStoJSON, tidyUp, JSONByScope } from "../helpers/parseToJson";
+import { isDesktop } from "@jpmorganchase/uitk-core";
+import { JSONByScope, parseCSStoJSON, tidyUp } from "../helpers/parseToJson";
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 
 export const handleThemeUpload = async (
@@ -10,7 +10,7 @@ export const handleThemeUpload = async (
   try {
     let allContents;
     let themeName;
-    if (isElectron) {
+    if (isDesktop) {
       // eslint-disable-next-line
       [allContents, themeName] = await (window as any).ipcRenderer.invoke(
         "select-dir"

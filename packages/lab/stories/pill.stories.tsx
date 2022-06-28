@@ -54,7 +54,6 @@ export const DisabledPill: ComponentStory<typeof Pill> = () => {
       disabled
       label="Disabled Pill"
       onDelete={() => console.log("Deleted.")}
-      variant={"closable"}
     />
   );
 };
@@ -63,6 +62,17 @@ export const ClosablePill: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Closable Pill"
+      onDelete={() => console.log("Deleted.")}
+      variant={"closable"}
+    />
+  );
+};
+
+export const DisabledClosablePill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      disabled
+      label="Disabled Pill"
       onDelete={() => console.log("Deleted.")}
       variant={"closable"}
     />
@@ -89,7 +99,7 @@ export const SelectablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const SelectableDisabledPill: ComponentStory<typeof Pill> = () => {
+export const DisabledSelectablePill: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Selectable Pill"

@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { Children, forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
 
 import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
@@ -93,7 +93,11 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
         style={flexLayoutStyles}
         {...rest}
       >
-        {children}
+        {separators
+          ? Children.map(children, (child) => (
+              <div className={withBaseName("separator-wrapper")}>{child}</div>
+            ))
+          : children}
       </div>
     );
   }

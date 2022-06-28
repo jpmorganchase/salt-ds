@@ -8,7 +8,7 @@ import {
   useCallback,
 } from "react";
 import { Portal, PortalProps } from "../portal";
-import { makePrefixer } from "../utils/makePrefixer";
+import { makePrefixer } from "../utils";
 import { useWindow } from "../window";
 import { getIconForState } from "./getIconForState";
 
