@@ -1,0 +1,174 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Badge } from "@jpmorganchase/uitk-lab";
+import {
+  MessageIcon,
+  ClockIcon,
+  SettingsSolidIcon,
+  UserBadgeIcon,
+} from "@jpmorganchase/uitk-icons";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./badge.stories";
+
+<Meta
+  title="Documentation/Lab/Badge"
+  component={Badge}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Badge
+
+A Badge is a numeric annotation that indicates the number of outstanding items that need to be addressed. It appears on the top-right of an element, usually an icon. The badge can accommodate values of up to four digits in length.
+
+## Icon Badge
+
+The default element is `MessageIcon`
+
+<Canvas>
+  <Story name="Default Badge">
+    <Badge badgeContent={1} max={1000}>
+      <MessageIcon />
+    </Badge>
+  </Story>
+</Canvas>
+
+## Words Badge
+
+<Canvas>
+  <Story name="Words Badge">
+    <Badge badgeContent={10} max={1000}>
+      Words Badge
+    </Badge>
+  </Story>
+</Canvas>
+
+## Badge with text
+
+`badgeContent` can accept both number and string
+
+<Canvas>
+  <Story name="Text Badge">
+    <Badge badgeContent="Text">Text Badge</Badge>
+  </Story>
+</Canvas>
+
+## Badge with maximum number
+
+Specify the maximum number to be displayed with `max`. If `badgeContent` exceeds `max`, suffix `+` will be appended.
+
+<Canvas>
+  <Story name="Badge with max number">
+    <Badge badgeContent={150} max={99}>
+      <UserBadgeIcon />
+    </Badge>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Badge } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Badge} />
+
+## HTML Anatomy of Badge component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent={1} max={100}>
+      <ClockIcon />
+    </Badge>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent="Text">Text Badge</Badge>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Badge badgeContent={150} max={99}>
+      <UserBadgeIcon />
+    </Badge>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Badge} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Badge} />
+
+## --uitkBadge CSS Custom Property API
+
+The default colors of the badge are provided by the theme variables. See Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Badge, but not defined by Badge. They can be defined via a container or
+a custom class name to override badge styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Badge} />
+
+## Customising Badge styles
+
+<Canvas>
+  <Story name="Custom Badge Styling" decorators={[withFlexGap]}>
+    <>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Badge badgeContent={1} max={100} className="uitkBadge-success">
+          <MessageIcon />
+        </Badge>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Badge badgeContent="Text" className="uitkBadge-error">
+          Text Badge
+        </Badge>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Badge badgeContent={1} max={100} className="uitkBadge-success">
+          <MessageIcon />
+        </Badge>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Badge badgeContent="Text" className="uitkBadge-error">
+          Text Badge
+        </Badge>
+      </ToolkitProvider>
+    </>
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Badge.stories.newapp-badge.css */
+
+.uitk-light.uitk-newapp .uitkBadge-success {
+  --uitkBadge-content-icon-color: var(--uitk-color-green-10);
+  --uitkBadge-content-text-color: var(--uitk-color-black);
+}
+
+.uitk-light.uitk-newapp .uitkBadge-error {
+  --uitkBadge-content-icon-color: var(--uitk-color-red-10);
+  --uitkBadge-content-text-color: var(--uitk-color-black);
+}
+
+.uitk-dark.uitk-newapp .uitkBadge-success {
+  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
+
+.uitk-dark.uitk-newapp .uitkBadge-error {
+  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
+  --uitkBadge-content-text-color: var(--uitk-color-white);
+}
+```

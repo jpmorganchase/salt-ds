@@ -2,12 +2,12 @@ import {
   ReactElement,
   useCallback,
   useEffect,
-  useState,
   useReducer,
   useRef,
+  useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { isDesktop, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
   SearchInput,
@@ -21,7 +21,6 @@ import {
   ThemeEditor,
   uitkTheme,
 } from "@jpmorganchase/theme-editor";
-import { isElectron } from "@jpmorganchase/uitk-lab/src/window/electron-utils";
 import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";
@@ -65,7 +64,7 @@ export const ThemeEditorApp = (props: {
   const positionInHistory = useRef<number>(0);
 
   useEffect(() => {
-    if (props.initialTheme !== undefined) setCurrentMode(props.initialTheme!);
+    if (props.initialTheme !== undefined) setCurrentMode(props.initialTheme);
   }, [props.initialTheme]);
 
   const onFileUpload = useCallback(
@@ -87,14 +86,14 @@ export const ThemeEditorApp = (props: {
   }, [dispatch, setThemeWithCallback]);
 
   useEffect(() => {
-    if (isElectron && props.sendCSStoElectron) {
+    if (isDesktop && props.sendCSStoElectron) {
       const cssByPattern = parseJSONtoCSS(jsonByScope);
       props.sendCSStoElectron(cssByPattern);
     }
   }, [jsonByScope]);
 
   useLayoutEffectSkipFirst(() => {
-    if (isElectron && props.switchBrowserViewMode) {
+    if (isDesktop && props.switchBrowserViewMode) {
       props.switchBrowserViewMode(
         currentMode === ThemeMode.LIGHT ? "light" : "dark"
       );
@@ -131,7 +130,7 @@ export const ThemeEditorApp = (props: {
 
   const onSave = async () => {
     const cssByPattern = parseJSONtoCSS(jsonByScope);
-    if (!isElectron) {
+    if (!isDesktop) {
       const directoryName = (await saveToDirectory(cssByPattern)) as string;
       saveDirectoryName(directoryName);
       saveCSS(cssByPattern);
@@ -267,7 +266,7 @@ export const ThemeEditorApp = (props: {
           )}
         </div>
         <div className="uitkThemeEditorAppOutputHeader">
-          {isElectron && (
+          {isDesktop && (
             <AppHeader>
               <SearchInput
                 defaultValue={"http://localhost:3005"}

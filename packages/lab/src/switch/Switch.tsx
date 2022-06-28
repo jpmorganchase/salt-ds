@@ -89,7 +89,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     [onBlur]
   );
 
-  // TODO review ControlLabel
   return (
     <ControlLabel
       {...LabelProps}
@@ -102,7 +101,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
       label={label}
       ref={ref}
     >
-      <span className={withBaseName()}>
+      <span className={cx(withBaseName(), className)}>
         <span
           className={cx(withBaseName("base"), {
             [withBaseName("checked")]: checked,

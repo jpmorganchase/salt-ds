@@ -28,8 +28,12 @@ export function CharacteristicUsage(
   const characteristicTokenMap =
     getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
 
-  if (!characteristicTokenMap) {
-    return <EmptyBlock>No characteristics used for this component.</EmptyBlock>;
+  if (Object.keys(characteristicTokenMap).length === 0) {
+    return (
+      <EmptyBlock>
+        No characteristics used directly for this component.
+      </EmptyBlock>
+    );
   }
 
   return (

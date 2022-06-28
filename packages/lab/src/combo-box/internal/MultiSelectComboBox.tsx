@@ -5,6 +5,7 @@ import {
   size,
 } from "@floating-ui/react-dom-interactions";
 import {
+  isDesktop,
   Portal,
   TooltipContext,
   useAriaAnnouncer,
@@ -100,19 +101,22 @@ export function MultiSelectComboBox<Item>(
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ],
+    middleware,
   });
 
   useEffect(() => {

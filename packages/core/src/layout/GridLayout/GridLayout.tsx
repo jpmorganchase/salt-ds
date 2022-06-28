@@ -57,8 +57,8 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
       ...style,
       "--grid-layout-columns": gridColumns,
       "--grid-layout-rows": gridRows,
-      "--grid-layout-column-gap": gridColumnGap || gridGap,
-      "--grid-layout-row-gap": gridRowGap || gridGap,
+      "--grid-layout-columnGap": gridColumnGap || gridGap,
+      "--grid-layout-rowGap": gridRowGap || gridGap,
     };
 
     return (

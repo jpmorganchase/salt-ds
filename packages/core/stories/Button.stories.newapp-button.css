@@ -1,5 +1,9 @@
-.uitk-newapp {
+.uitk-newapp .uitkButton {
   --uitkButton-borderWidth: 1px 0;
+}
+
+.uitk-newapp.uitk-density-medium {
+  --uitkButton-height: 32px;
 }
 
 .uitk-newapp .uitkButton-cta {
@@ -26,14 +30,14 @@
 }
 
 .uitk-newapp .uitkButton-primary[data-readonly] {
-  --uitkButton-textColor: var(--uitk-actionable-primary-foreground-readonly);
+  --uitkButton-text-color: var(--uitk-actionable-primary-foreground-readonly);
   --uitkButton-background: var(--uitk-actionable-primary-background-readonly);
   --uitkIcon-color: var(--uitk-actionable-primary-foreground-readonly);
   --uitkButton-borderColor: var(--uitk-actionable-primary-topline-color-readonly) transparent var(--uitk-actionable-primary-baseline-color-readonly) transparent;
 }
 
 .uitk-newapp .uitkButton-secondary[data-readonly] {
-  --uitkButton-textColor: var(--uitk-actionable-secondary-foreground-readonly);
+  --uitkButton-text-color: var(--uitk-actionable-secondary-foreground-readonly);
   --uitkButton-background: var(--uitk-actionable-secondary-background-readonly);
   --uitkIcon-color: var(--uitk-actionable-secondary-foreground-readonly);
   --uitkButton-borderColor: var(--uitk-actionable-secondary-topline-color-readonly) transparent var(--uitk-actionable-secondary-baseline-color-readonly) transparent;
@@ -44,10 +48,10 @@
   --button-background-active: var(--uitk-actionable-final-background-active);
   --button-background-disabled: var(--uitk-actionable-final-background-disabled);
   --button-background-hover: var(--uitk-actionable-final-background-hover);
-  --button-textColor: var(--uitk-actionable-final-foreground);
-  --button-textColor-active: var(--uitk-actionable-final-foreground-active);
-  --button-textColor-disabled: var(--uitk-actionable-final-foreground-disabled);
-  --button-textColor-hover: var(--uitk-actionable-final-foreground-hover);
+  --button-text-color: var(--uitk-actionable-final-foreground);
+  --button-text-color-active: var(--uitk-actionable-final-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-final-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-final-foreground-hover);
   --uitkIcon-color: var(--uitk-actionable-final-foreground);
   --uitkButton-borderColor: var(--uitk-actionable-final-topline-color) transparent var(--uitk-actionable-final-baseline-color) transparent;
 }
@@ -57,16 +61,16 @@
   --button-background-active: var(--uitk-actionable-bid-background-active);
   --button-background-disabled: var(--uitk-actionable-bid-background-disabled);
   --button-background-hover: var(--uitk-actionable-bid-background-hover);
-  --button-textColor: var(--uitk-actionable-bid-foreground);
-  --button-textColor-active: var(--uitk-actionable-bid-foreground-active);
-  --button-textColor-disabled: var(--uitk-actionable-bid-foreground-disabled);
-  --button-textColor-hover: var(--uitk-actionable-bid-foreground-hover);
+  --button-text-color: var(--uitk-actionable-bid-foreground);
+  --button-text-color-active: var(--uitk-actionable-bid-foreground-active);
+  --button-text-color-disabled: var(--uitk-actionable-bid-foreground-disabled);
+  --button-text-color-hover: var(--uitk-actionable-bid-foreground-hover);
   --uitkIcon-color: var(--uitk-actionable-bid-foreground);
   --uitkButton-borderColor: var(--uitk-actionable-bid-topline-color) transparent var(--uitk-actionable-bid-baseline-color) transparent;
 }
 
 .uitk-newapp .uitkButton-primary.uitkButton-bid[data-readonly] {
-  --uitkButton-textColor: var(--uitk-actionable-bid-foreground-readonly);
+  --uitkButton-text-color: var(--uitk-actionable-bid-foreground-readonly);
   --uitkButton-background: var(--uitk-actionable-bid-background-readonly);
   --uitkIcon-color: var(--uitk-actionable-bid-foreground-readonly);
   --uitkButton-borderColor: var(--uitk-actionable-bid-topline-color-readonly) transparent var(--uitk-actionable-bid-baseline-color-readonly) transparent;
@@ -81,16 +85,16 @@
   --button-background-active: var(--uitk-actionable-ask-background-active);
   --button-background-disabled: var(--uitk-actionable-ask-background-disabled);
   --button-background-hover: var(--uitk-actionable-ask-background-hover);
-  --button-textColor: var(--uitk-actionable-ask-text-color);
-  --button-textColor-active: var(--uitk-actionable-ask-text-color-active);
-  --button-textColor-hover: var(--uitk-actionable-ask-text-color-hover);
-  --button-textColor-disabled: var(--uitk-actionable-ask-text-color-disabled);
+  --button-text-color: var(--uitk-actionable-ask-text-color);
+  --button-text-color-active: var(--uitk-actionable-ask-text-color-active);
+  --button-text-color-hover: var(--uitk-actionable-ask-text-color-hover);
+  --button-text-color-disabled: var(--uitk-actionable-ask-text-color-disabled);
   --uitkIcon-color: var(--uitk-actionable-ask-icon-color);
   --uitkButton-borderColor: var(--uitk-actionable-ask-topline-color) transparent var(--uitk-actionable-ask-baseline-color) transparent;
 }
 
 .uitk-newapp .uitkButton-primary.uitkButton-ask[data-readonly] {
-  --uitkButton-textColor: var(--uitk-actionable-ask-text-color-readonly);
+  --uitkButton-text-color: var(--uitk-actionable-ask-text-color-readonly);
   --uitkButton-background: var(--uitk-actionable-ask-background-readonly);
   --uitkIcon-color: var(--uitk-actionable-ask-icon-color-readonly);
   --uitkButton-borderColor: var(--uitk-actionable-ask-topline-color-readonly) transparent var(--uitk-actionable-ask-baseline-color-readonly) transparent;
@@ -103,4 +107,14 @@
 
 .uitk-newapp .uitkButton-disabled {
   opacity: var(--uitk-opacity-foreground);
+}
+
+/*
+  cheating a bit here to keep the example generation simpler. In reality, we would not
+  create a button with both readonly and final-execution classes
+
+*/
+.uitk-newapp .uitkButton-cta[data-readonly],
+.uitk-newapp .uitkButton-final-execution[data-readonly] {
+  visibility: hidden;
 }
