@@ -1,4 +1,3 @@
-import { DeckLayout } from "@jpmorganchase/uitk-lab";
 import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
@@ -19,6 +18,7 @@ import {
   LayoutAnimationDirection,
   LayoutAnimationTransition,
 } from "@jpmorganchase/uitk-core/src/layout/types";
+import { DeckLayout } from "../layout";
 
 const withBaseName = makePrefixer("uitkCarousel");
 export type SlideDirections = "left" | "right";
