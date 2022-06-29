@@ -31,7 +31,7 @@
   --pill-text-color-disabled: var(--uitkPill-text-color-disabled, var(--uitk-taggable-foreground-disabled));
 
   /* Button API */
-  --uitkButton-font-weight: var(--uitkPill-button-fontWeight, var(--uitk-typography-weight-regular));
+  --uitkButton-font-weight: var(--uitkPill-button-fontWeight, var(--uitk-text-fontWeight));
   --uitkButton-padding: var(--uitkPill-button-padding, 0);
   --uitkButton-textTransform: var(--uitkPill-button-textTransform, unset);
   --uitkButton-cursor: normal;
@@ -46,7 +46,7 @@
   font-size: var(--uitkPill-fontSize, var(--uitk-text-help-fontSize));
   height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letterSpacing, 0);
-  line-height: var(--uitkPill-lineHeight, var(--uitk-typography-lineHeight));
+  line-height: var(--uitkPill-lineHeight, var(--uitk-text-base-lineHeight));
   max-width: var(--uitkPill-maxWidth, 160px);
   min-width: var(--uitkPill-minWidth, 40px);
   min-height: var(--uitkPill-minHeight, var(--uitk-text-minHeight));
@@ -133,7 +133,7 @@
   color: var(--uitkPill-text-color, var(--pill-text-color));
   display: inline;
   flex-grow: 1;
-  font-weight: var(--uitkPill-fontWeight, var(--uitk-typography-weight-regular));
+  font-weight: var(--uitkPill-fontWeight, var(--uitk-text-fontWeight));
   overflow: hidden;
   padding-left: var(--uitkPill-label-paddingLeft, calc(var(--uitk-size-unit) * 0.75));
   padding-right: var(--uitkPill-label-paddingRight, calc(var(--uitk-size-unit) * 0.75));

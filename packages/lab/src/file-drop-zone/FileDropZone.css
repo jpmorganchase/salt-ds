@@ -21,7 +21,7 @@
   --file-drop-zone-font-size: var(--uitk-text-fontSize);
   --file-drop-zone-line-height: var(--uitk-text-lineHeight);
 
-  --file-drop-zone-title-font-weight: var(--uitk-typography-weight-semiBold);
+  --file-drop-zone-title-font-weight: var(--uitk-text-h4-fontWeight);
 }
 
 .uitkFileDropZone .uitkFileDropZone-icon {

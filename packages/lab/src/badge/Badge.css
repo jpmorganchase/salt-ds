@@ -37,7 +37,7 @@
   color: var(--badge-content-text-color);
   box-sizing: border-box;
   display: inline-block;
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: 700; /* TODO: Use characteristic once aligned */
   font-size: var(--uitk-text-caption-fontSize);
   /* default small type */
   width: auto;
