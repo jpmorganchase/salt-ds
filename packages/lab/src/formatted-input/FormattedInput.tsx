@@ -1,9 +1,7 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
-
-import { Input, InputProps } from "../input";
+import { Input, InputProps, useControlled } from "@jpmorganchase/uitk-core";
 import {
   baseName,
   InputWithMask,

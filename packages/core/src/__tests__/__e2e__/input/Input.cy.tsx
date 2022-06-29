@@ -1,4 +1,4 @@
-import { Input } from "@jpmorganchase/uitk-lab";
+import { Input } from "@jpmorganchase/uitk-core";
 import { ChangeEvent, useState } from "react";
 
 describe("GIVEN an Input", () => {

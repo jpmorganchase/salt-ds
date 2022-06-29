@@ -1,14 +1,4 @@
 import {
-  isDesktop,
-  Portal,
-  TooltipContext,
-  TooltipContextProps,
-  useAriaAnnouncer,
-  useFloatingUI,
-  useForkRef,
-  Window,
-} from "@jpmorganchase/uitk-core";
-import {
   HTMLAttributes,
   ReactNode,
   Ref,
@@ -18,14 +8,24 @@ import {
   useRef,
   useState,
 } from "react";
-
 import {
   flip,
   limitShift,
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import { Input, InputProps } from "../../input";
+import {
+  isDesktop,
+  Input,
+  InputProps,
+  Portal,
+  TooltipContext,
+  TooltipContextProps,
+  useAriaAnnouncer,
+  useFloatingUI,
+  useForkRef,
+  Window,
+} from "@jpmorganchase/uitk-core";
 import {
   ListBase,
   ListProps,

@@ -1,14 +1,19 @@
-import React, { forwardRef, ReactNode, useRef } from "react";
 import classnames from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import React, { forwardRef, ReactNode, useRef } from "react";
+import {
+  makePrefixer,
+  Button,
+  ButtonProps,
+  Input,
+  InputProps,
+} from "@jpmorganchase/uitk-core";
 import {
   RefreshIcon,
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@jpmorganchase/uitk-icons";
-
-import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
+
 import "./StepperInput.css";
 
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
