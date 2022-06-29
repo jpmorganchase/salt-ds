@@ -2,16 +2,12 @@ import {
   Button,
   FLEX_ALIGNMENT_BASE,
   FormField,
+  Input,
   Panel,
   StackLayout,
 } from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
-import {
-  ButtonBar,
-  Dropdown,
-  Input,
-  OrderedButton,
-} from "@jpmorganchase/uitk-lab";
+import { ButtonBar, Dropdown, OrderedButton } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 

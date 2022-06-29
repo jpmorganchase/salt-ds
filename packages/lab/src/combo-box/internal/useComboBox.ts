@@ -10,7 +10,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { InputProps, useControlled, useForkRef, useId } from "@jpmorganchase/uitk-core";
+import {
+  InputProps,
+  useControlled,
+  useForkRef,
+  useId,
+} from "@jpmorganchase/uitk-core";
 import { useList } from "../../list";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 import { useIsFocusVisible } from "../../utils";

@@ -21,9 +21,9 @@ import warning from "warning";
 import {
   Button,
   ButtonProps,
+  makePrefixer,
   Input,
   InputProps,
-  makePrefixer,
   useDensity,
   useForkRef,
   useId,
