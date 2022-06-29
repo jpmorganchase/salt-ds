@@ -1,7 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import { Checkbox, CheckboxGroup } from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Checkbox,
+  CheckboxGroup,
+  Panel,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 
 import "./Checkbox.stories.new-app-checkbox.css";
 

@@ -2,6 +2,7 @@ export * from "./aria-announcer";
 export * from "./breakpoints";
 export * from "./button";
 export * from "./card";
+export * from "./checkbox";
 export * from "./form-field";
 export * from "./form-field-context";
 export * from "./input";

@@ -1,5 +1,5 @@
-import { Checkbox } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Checkbox } from "@jpmorganchase/uitk-core";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./checkbox.qa.stories.css";
 

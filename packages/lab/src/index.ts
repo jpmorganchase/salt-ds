@@ -6,7 +6,6 @@ export * from "./breadcrumbs";
 export * from "./buttonbar";
 export * from "./calendar";
 export * from "./cascading-menu";
-export * from "./checkbox";
 export * from "./color-chooser";
 export * from "./combo-box";
 export * from "./contact-details";

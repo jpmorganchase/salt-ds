@@ -1,7 +1,10 @@
-import { forwardRef, useContext } from "react";
 import classnames from "classnames";
-import { ControlLabel, ControlLabelProps } from "../control-label";
-import { createChainedFunction } from "../utils";
+import { forwardRef, useContext } from "react";
+import {
+  ControlLabel,
+  ControlLabelProps,
+  createChainedFunction,
+} from "@jpmorganchase/uitk-lab";
 import { CheckboxBase, CheckboxBaseProps } from "./CheckboxBase";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
