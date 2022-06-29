@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./CheckboxBase.css";
