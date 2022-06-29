@@ -10,6 +10,7 @@ import { ToolkitBorderLayout } from "./border-layout.stories";
 <Meta
   title="Documentation/Lab/Layout/BorderLayout"
   component={BorderLayout}
+  subcomponents={{ BorderItem }}
   parameters={{
     viewMode: "docs",
   }}
@@ -18,6 +19,7 @@ import { ToolkitBorderLayout } from "./border-layout.stories";
 # Border Layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
+The border layout is built using [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
 
 <Canvas>
   <Story id="lab-layout-borderlayout--toolkit-border-layout" />
@@ -31,17 +33,14 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 ## Props
 
-### Border Layout Props
-
 <ArgsTable of={BorderLayout} />
 
-### Border Item Props
-
-<ArgsTable of={BorderItem} />
-
-## Usage Examples
+## Examples
 
 ### Border Item inside default border layout
+
+The border item wrapper allows you to select the right position for your content to be displayed at - `header`, `left`, `main`, `right` or `bottom`.  
+It also provides access to other properties such as alignment and sticky behaviour.
 
 <Canvas>
   <Story id="lab-layout-borderlayout-borderitem--toolkit-border-item" />
@@ -49,16 +48,32 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 ### Fixed panels
 
+You can have a responsive `main` region while the `left` and `right` panels remain with a fixed width as the content changes.
+
 <Canvas>
   <Story id="lab-layout-borderlayout--toolkit-border-layout-fixed-panels" />
+</Canvas>
+
+### Composite Usage
+
+The composite usage combines examples from other layout components nested to give a better example of a complex implementation of the border component.
+
+<Canvas>
+  <Story id="lab-layout-borderlayout--border-layout-form-composite" />
 </Canvas>
 
 ## Anatomy
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <BorderLayout>
-      <BorderItem></BorderItem>
+    <BorderLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
+      <BorderItem style={{ border: "dashed 1px black", padding: "1rem" }} />
     </BorderLayout>
   </ComponentAnatomy>
 </Canvas>
+
+### Classes
+
+#### Item
+
+<CSSClassTable of={BorderItem} />

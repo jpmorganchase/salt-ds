@@ -13,8 +13,6 @@ import {
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import { useIsStacked } from "./useIsStacked";
 
-import "./ParentChildLayout.css";
-
 type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 
 export type StackedViewElement = "parent" | "child";
