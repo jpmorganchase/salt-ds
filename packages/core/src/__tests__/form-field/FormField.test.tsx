@@ -1,9 +1,8 @@
-import { screen, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
-import { AriaAnnouncerProvider } from "@jpmorganchase/uitk-core";
+import { AriaAnnouncerProvider } from "../../aria-announcer";
 import { FormField, FormFieldProps } from "../../form-field";
 import { useFormFieldProps } from "../../form-field-context";
-import { Input } from "../../input";
 
 const label = "A Label";
 const labelId = "label-id";
@@ -76,17 +75,6 @@ describe("GIVEN a FormField", () => {
   });
 
   describe("WHEN disabled", () => {
-    test("Then input within should be disabled", () => {
-      render(
-        <FormField label="Disabled form field" disabled>
-          <Input defaultValue="Value" />
-        </FormField>
-      );
-      expect(screen.getByLabelText(/Disabled form field/i)).toHaveAttribute(
-        "disabled"
-      );
-    });
-
     test("THEN inner component should have disabled set from useFormFieldProps.a11yProps", () => {
       const mockFn = jest.fn();
       render(
@@ -125,17 +113,6 @@ describe("GIVEN a FormField", () => {
   });
 
   describe("WHEN readonly", () => {
-    test("Then input within should be readonly", () => {
-      render(
-        <FormField label="Readonly form field" readOnly>
-          <Input defaultValue="Value" />
-        </FormField>
-      );
-      expect(screen.getByLabelText(/Readonly form field/i)).toHaveAttribute(
-        "readonly"
-      );
-    });
-
     test("THEN inner component should have readOnly set from useFormFieldProps.a11yProps", () => {
       const mockFn = jest.fn();
       render(

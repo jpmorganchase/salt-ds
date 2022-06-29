@@ -2,6 +2,7 @@ import {
   Button,
   makePrefixer,
   useAriaAnnouncer,
+  useId,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
@@ -14,7 +15,6 @@ import {
 } from "react";
 import { CircularProgressProps } from "../progress";
 import { SpinnerProps } from "../spinner";
-import { useId } from "../utils";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
 
 import "./ContentStatus.css";

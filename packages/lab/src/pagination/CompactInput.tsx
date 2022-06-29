@@ -1,3 +1,5 @@
+import { FormField, FormFieldProps } from "@jpmorganchase/uitk-core";
+import cn from "classnames";
 import {
   ChangeEventHandler,
   FC,
@@ -5,11 +7,8 @@ import {
   useEffect,
   useState,
 } from "react";
-
-import { FormField, FormFieldProps } from "../form-field";
-import { withBaseName } from "./utils";
 import { Input } from "../input";
-import cn from "classnames";
+import { withBaseName } from "./utils";
 
 export interface CompactInputProps {
   count: number;

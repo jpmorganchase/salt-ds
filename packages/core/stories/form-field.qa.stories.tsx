@@ -1,16 +1,16 @@
-import cn from "classnames";
-import { FormField, Input } from "@jpmorganchase/uitk-lab";
+import { FormField } from "@jpmorganchase/uitk-core";
+import { Input } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
+
 import "./form-field.qa.stories.css";
 
 export default {
-  title: "Lab/Form Field/QA",
+  title: "Core/Form Field/QA",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
 export const AllExamplesGrid: ComponentStory<typeof FormField> = (props) => {
-  const { className } = props;
   return (
     <AllRenderer>
       <div

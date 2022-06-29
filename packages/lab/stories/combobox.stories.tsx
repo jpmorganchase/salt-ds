@@ -1,21 +1,19 @@
-import { ChangeEvent, ComponentProps, memo, useRef, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-
+import { Button, FormField } from "@jpmorganchase/uitk-core";
+import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import {
   ComboBox,
   escapeRegExp,
-  FormField,
   GetFilterRegex,
   ListChangeHandler,
-  ListSelectHandler,
   ListItemBase,
   ListItemProps,
+  ListSelectHandler,
   useListItem,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
-import { Highlighter } from "../src/list/internal/Highlighter";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ChangeEvent, ComponentProps, memo, useRef, useState } from "react";
 import { IndexedListItemProps } from "../src/list";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { Highlighter } from "../src/list/internal/Highlighter";
 
 export default {
   title: "Lab/ComboBox",

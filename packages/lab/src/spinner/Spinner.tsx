@@ -1,9 +1,7 @@
-import { forwardRef, HTMLAttributes, useEffect } from "react";
+import { useAriaAnnouncer, useId } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
-
+import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { getSvgSpinner } from "./svgSpinners";
-import { useId } from "../utils";
 
 import "./Spinner.css";
 

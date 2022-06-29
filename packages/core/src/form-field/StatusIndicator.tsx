@@ -1,10 +1,8 @@
-import { Tooltip, TooltipProps, useTooltip } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ElementType } from "react";
-
-// TODO: temporarily import from dialog internal before finding a better home
-import { StateIcon } from "../dialog/internal/StateIcon";
+import { StateIcon } from "../state-icon";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 export type StateIndicatorState = "error" | "info" | "warning" | "success";
 

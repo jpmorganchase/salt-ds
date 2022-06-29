@@ -1,6 +1,11 @@
 //TODO remove when popout code has been migrated
 /* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
-import { useControlled, useDensity } from "@jpmorganchase/uitk-core";
+import {
+  useControlled,
+  useDensity,
+  useFormFieldProps,
+  useId,
+} from "@jpmorganchase/uitk-core";
 import copy from "clipboard-copy";
 import {
   ChangeEvent,
@@ -17,8 +22,7 @@ import {
   useState,
 } from "react";
 import warning from "warning";
-import { useFormFieldProps } from "../form-field-context";
-import { escapeRegExp, ownerWindow, useEventCallback, useId } from "../utils";
+import { escapeRegExp, ownerWindow, useEventCallback } from "../utils";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
