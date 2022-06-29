@@ -144,3 +144,7 @@ label.uitkText,
   line-height: var(--uitk-text-figure-3-lineHeight);
   font-weight: var(--uitk-typography-weight-semiBold);
 }
+
+.backwardsCompat.uitkText {
+  line-height: 1.3;
+}

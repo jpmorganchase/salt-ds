@@ -59,3 +59,15 @@
   --avatar-font-size: 14px;
   --avatar-container-size: var(--uitk-size-graphic-large);
 }
+
+.backwardsCompat .uitkAvatar-small {
+  --avatar-container-size: var(--uitk-size-graphic-small);
+}
+
+.backwardsCompat .uitkAvatar-medium {
+  --avatar-container-size: 28px;
+}
+
+.backwardsCompat .uitkAvatar-large {
+  --avatar-container-size: 44px;
+}

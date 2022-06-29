@@ -1,6 +1,7 @@
 export * from "./capitalize";
 export * from "./createChainedFunction";
 export * from "./escapeRegExp";
+export * from "./isEmail";
 export * from "./isPlainObject";
 export * from "./ownerWindow";
 export * from "./partition";
