@@ -1,10 +1,9 @@
-import { forwardRef, HTMLAttributes, ImgHTMLAttributes } from "react";
+import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useId } from "../utils";
-import { useLoaded } from "./internal/useLoaded";
-import { DefaultAvatar } from "./internal/DefaultAvatar";
+import { forwardRef, HTMLAttributes, ImgHTMLAttributes } from "react";
 import { classBase } from "./internal/constants";
+import { DefaultAvatar } from "./internal/DefaultAvatar";
+import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 

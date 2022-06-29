@@ -1,12 +1,11 @@
-import { ReactNode, useEffect, useState, FC } from "react";
-
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { FormField, StepperInput } from "@jpmorganchase/uitk-lab";
+import { FormField, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
 } from "@jpmorganchase/uitk-core/stories";
+import { StepperInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 import "./StepperInput.stories.newapp-stepper-input.css";
 

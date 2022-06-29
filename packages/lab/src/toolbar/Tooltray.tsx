@@ -1,3 +1,4 @@
+import { FormField } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import React, {
   ReactElement,
@@ -6,7 +7,6 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { FormField } from "../form-field";
 import OverflowMenu from "../responsive/overflow-menu/OverflowMenu";
 import { useOverflowLayout } from "../responsive/useOverflowLayout";
 import { renderTrayTools } from "./internal/renderTrayTools";
