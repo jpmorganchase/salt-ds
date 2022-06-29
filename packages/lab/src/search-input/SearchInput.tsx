@@ -1,6 +1,3 @@
-import { Button, useControlled, useForkRef } from "@jpmorganchase/uitk-core";
-import { CloseIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
-import cx from "classnames";
 import {
   ChangeEvent,
   ComponentType,
@@ -9,7 +6,16 @@ import {
   SyntheticEvent,
   useRef,
 } from "react";
-import { Input, InputProps, StaticInputAdornment } from "../input";
+import cx from "classnames";
+import {
+  Button,
+  Input,
+  InputProps,
+  StaticInputAdornment,
+  useControlled,
+  useForkRef,
+} from "@jpmorganchase/uitk-core";
+import { CloseIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
 
 import "./SearchInput.css";
 

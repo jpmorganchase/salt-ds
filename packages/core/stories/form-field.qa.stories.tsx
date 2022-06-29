@@ -1,5 +1,4 @@
-import { FormField } from "@jpmorganchase/uitk-core";
-import { Input } from "@jpmorganchase/uitk-lab";
+import { Input, FormField } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 

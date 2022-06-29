@@ -4,6 +4,7 @@ export * from "./button";
 export * from "./card";
 export * from "./form-field";
 export * from "./form-field-context";
+export * from "./input";
 export * from "./layout";
 export * from "./panel";
 export * from "./popper";
