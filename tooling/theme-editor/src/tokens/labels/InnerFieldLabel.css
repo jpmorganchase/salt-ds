@@ -1,21 +1,7 @@
 .uitkInnerFieldLabel {
+  font-size: var(--uitk-text-caption-fontSize);
+  font-weight: var(--uitk-text-caption-fontWeight);
   color: var(--uitk-text-primary-foreground);
   padding: 2px 0px;
   margin-top: 5px;
-}
-
-/* TODO: Make font size adjust to density */
-.uitkInnerFieldLabel-large {
-  font-size: 12px;
-  font-weight: var(--uitk-typography-weight-semiBold);
-}
-
-.uitkInnerFieldLabel-medium {
-  font-size: 11px;
-  font-weight: var(--uitk-typography-weight-regular);
-}
-
-.uitkInnerFieldLabel-small {
-  font-size: 10px;
-  font-weight: var(--uitk-typography-weight-light);
 }

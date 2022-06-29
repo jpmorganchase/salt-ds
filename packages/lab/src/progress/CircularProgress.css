@@ -4,13 +4,10 @@
   position: relative;
 }
 
-.uitkCircularProgress-disabled .uitkCircularProgress-progressValue {
-  opacity: var(--uitk-opacity-border);
-  cursor: var(--uitk-selectable-cursor-disabled);
-}
-
+.uitkCircularProgress-disabled .uitkCircularProgress-progressValue,
 .uitkCircularProgress-disabled circle {
-  opacity: var(--uitk-opacity-border);
+  color: var(--uitk-text-primary-foreground-disabled);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkCircularProgress-circle {

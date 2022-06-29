@@ -1,10 +1,10 @@
 /* Body emphasis */
 .uitkText strong {
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: var(--uitk-text-weight-strong);
 }
 .uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-typography-weight-light);
+  font-weight: var(--uitk-text-weight-small);
 }
 
 /* Main css class */
@@ -118,7 +118,7 @@ label.uitkText,
 
 /* Help text */
 .uitkText-helpText.uitkText {
-  font-style: italic;
+  font-style: var(--uitk-text-help-fontStyle);
   color: var(--uitk-text-secondary-foreground);
   font-size: var(--uitk-text-help-fontSize);
   line-height: var(--uitk-text-help-lineHeight);
@@ -126,23 +126,23 @@ label.uitkText,
 
 /* Figure 1 */
 .uitkText-figure1.uitkText {
-  font-size: var(--uitk-text-figure-1-font-size);
-  line-height: var(--uitk-text-figure-1-lineHeight);
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-size: var(--uitk-text-figure1-fontSize);
+  line-height: var(--uitk-text-figure1-lineHeight);
+  font-weight: var(--uitk-text-figure1-fontWeight);
 }
 
 /* Figure 2 */
 .uitkText-figure2.uitkText {
-  font-size: var(--uitk-text-figure-2-font-size);
-  line-height: var(--uitk-text-figure-2-lineHeight);
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-size: var(--uitk-text-figure2-fontSize);
+  line-height: var(--uitk-text-figure2-lineHeight);
+  font-weight: var(--uitk-text-figure2-fontWeight);
 }
 
 /* Figure 3 */
 .uitkText-figure3.uitkText {
-  font-size: var(--uitk-text-figure-3-font-size);
-  line-height: var(--uitk-text-figure-3-lineHeight);
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-size: var(--uitk-text-figure3-fontSize);
+  line-height: var(--uitk-text-figure3-lineHeight);
+  font-weight: var(--uitk-text-figure3-fontWeight);
 }
 
 .backwardsCompat.uitkText {

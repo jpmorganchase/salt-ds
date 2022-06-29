@@ -8,10 +8,6 @@
   --list-border-width: var(--uitk-container-borderWidth);
   --list-border-radius: var(--uitk-container-borderRadius);
 
-  /* Text, Font */
-  /* TODO: Do we necessary want to set this? Should rely on inheritance? */
-  /* --list-font-family: var(--uitk-typography-fontFamily); */
-
   /* Misc. */
   --list-box-shadow: none;
   --list-content-box: border-box;

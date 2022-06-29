@@ -25,15 +25,15 @@
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-bar {
-  opacity: var(--uitk-opacity-foreground);
+  background: var(--uitk-measured-fill-disabled);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-barContainer :after {
-  opacity: var(--uitk-opacity-foreground);
+  background: var(--uitk-measured-fill-disabled);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
-  opacity: var(--uitk-opacity-border);
+  color: var(--uitk-text-primary-foreground-disabled);
   cursor: var(--uitk-selectable-cursor-disabled);
 }
 

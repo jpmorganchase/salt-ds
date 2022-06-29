@@ -10,7 +10,7 @@
 .uitkDialogContent {
   flex: 1 1 auto;
   overflow: visible;
-  font-weight: var(--uitk-typography-weight-regular);
+  font-weight: var(--uitk-text-fontWeight);
   font-size: var(--dialog-content-font-size);
   padding-top: var(--dialog-content-padding-top);
   padding-bottom: var(--dialog-content-padding-bottom);
