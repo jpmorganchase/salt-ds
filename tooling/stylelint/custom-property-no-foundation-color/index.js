@@ -79,9 +79,10 @@ const allAllowedKeys = [
   "text",
   // additional to decide
   "animation",
-  "typography",
+  "delay", // to be merged with animation
+  "palette", // currently for opacity purposes
   "size",
-  "opacity",
+  "zIndex" // to be added to overlayable
 ];
 
 const regexpPattern = new RegExp(

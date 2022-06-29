@@ -91,9 +91,9 @@
 
 /* Class applied to the root element if `disabled={true}` */
 .uitkFormField-disabled {
-  --formField-activationIndicator-opacity: var(--uitk-opacity-foreground);
-  --formField-activationIndicator-icon-opacity: var(--uitk-opacity-foreground);
-  --formHelperText-opacity: var(--uitk-opacity-foreground);
+  --formField-activationIndicator-opacity: var(--uitk-palette-opacity-foreground);
+  --formField-activationIndicator-icon-opacity: var(--uitk-palette-opacity-foreground);
+  --formHelperText-opacity: var(--uitk-palette-opacity-foreground);
 
   cursor: var(--uitk-editable-cursor-disabled);
 }
