@@ -1,10 +1,10 @@
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./switch.qa.stories.css";
 
 export default {
-  title: "Lab/Switch/QA",
+  title: "Core/Switch/QA",
   component: Switch,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension
