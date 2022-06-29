@@ -1,5 +1,5 @@
-import { Button, FormField } from "@jpmorganchase/uitk-core";
-import { ChangeHandler, Input, TokenizedInput } from "@jpmorganchase/uitk-lab";
+import { Button, FormField, Input } from "@jpmorganchase/uitk-core";
+import { ChangeHandler, TokenizedInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   ChangeEventHandler,

@@ -1,7 +1,6 @@
-import { Button, FormField, useDensity } from "@jpmorganchase/uitk-core";
+import { Button, Input, FormField, useDensity } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 import {
-  Input,
   List,
   ListChangeHandler,
   ListItem,

@@ -2,6 +2,7 @@ import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
+import { Div } from "../typography";
 
 const withBaseName = makePrefixer("uitkContactPrimaryInfo");
 
@@ -21,7 +22,7 @@ export const ContactPrimaryInfo = forwardRef<
     "aria-level": ariaLevel = 2,
     ...restProps
   } = props;
-  const { setPrimary, setPrimaryId, secondaryId, tertiaryId } =
+  const { setPrimary, setPrimaryId, secondaryId, tertiaryId, variant } =
     useContactDetailsContext();
   const id = useId(idProp);
 
@@ -32,13 +33,16 @@ export const ContactPrimaryInfo = forwardRef<
       setPrimary(undefined);
       setPrimaryId(undefined);
     };
-  }, [setPrimary, id, setPrimaryId]);
+  }, [setPrimary, id, text, setPrimaryId]);
 
   return (
-    <div
+    <Div
       {...restProps}
+      truncate
+      maxRows={1}
       id={id}
       ref={ref}
+      styleAs={variant === "default" ? "h2" : "h4"}
       className={cn(withBaseName(), className)}
       role="heading"
       aria-labelledby={`${id} ${secondaryId != null ? secondaryId : null} ${
@@ -48,6 +52,6 @@ export const ContactPrimaryInfo = forwardRef<
       data-testid="primary"
     >
       {text}
-    </div>
+    </Div>
   );
 });
