@@ -1,10 +1,3 @@
-import {
-  FormGroup,
-  FormLabel,
-  makePrefixer,
-  useFormFieldProps,
-  useId,
-} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
   ChangeEventHandler,
@@ -15,6 +8,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { FormLabel } from "../form-field";
+import { useFormFieldProps } from "../form-field-context";
+import { FormGroup } from "../form-group";
+import { makePrefixer, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { RadioButton } from "./RadioButton";
 import { RadioIconProps } from "./RadioIcon";

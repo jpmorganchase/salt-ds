@@ -1,7 +1,10 @@
 import {
   Density,
   FormField,
+  makeRadioIcon,
   Panel,
+  RadioButton,
+  RadioButtonGroup,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import {
@@ -9,18 +12,13 @@ import {
   ColumnLayoutItem,
 } from "@jpmorganchase/uitk-core/stories";
 import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
-import {
-  makeRadioIcon,
-  RadioButton,
-  RadioButtonGroup,
-} from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { ChangeEventHandler, FC, ReactNode, useState } from "react";
 
 import "./RadioButton.stories.newapp-radio-button.css";
 
 export default {
-  title: "Lab/Radio Button",
+  title: "Core/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 
