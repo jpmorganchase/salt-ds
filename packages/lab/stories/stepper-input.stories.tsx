@@ -1,12 +1,13 @@
-import { ReactNode, useEffect, useState, FC } from "react";
-
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { FormField, StepperInput } from "@jpmorganchase/uitk-lab";
+import { FormField, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
 } from "@jpmorganchase/uitk-core/stories";
+import { StepperInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
+import { FC, ReactNode, useEffect, useState } from "react";
+
+import "./StepperInput.stories.newapp-stepper-input.css";
 
 export default {
   title: "Lab/Stepper Input",
@@ -71,7 +72,6 @@ export const Alignment: Story = () => (
     >
       <StepperInput />
     </FormField>
-
     <FormField
       helperText="Please enter a number"
       label="Centered value"
@@ -79,7 +79,6 @@ export const Alignment: Story = () => (
     >
       <StepperInput textAlign="center" />
     </FormField>
-
     <FormField
       helperText="Please enter a number"
       label="Right-aligned value"
@@ -340,4 +339,15 @@ export const RefreshButton: Story = () => (
       />
     </FormField>
   </ToolkitProvider>
+);
+
+export const CustomStyling: Story<typeof StepperInput> = () => (
+  <div style={{ display: "flex" }}>
+    <ToolkitProvider density="high" theme={["light", "newapp"]}>
+      <Examples />
+    </ToolkitProvider>
+    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
+      <Examples />
+    </ToolkitProvider>
+  </div>
 );

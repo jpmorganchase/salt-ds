@@ -56,10 +56,6 @@
   --contact-details-selecting-icon-color: var(--uitk-ratable-background-hover);
 }
 
-.uitk-dark {
-  color: var(--uitk-color-white);
-}
-
 .uitkContactDetails {
   box-sizing: border-box;
   display: grid;
@@ -174,12 +170,16 @@
   grid-area: primary;
 }
 
+.uitkContactDetails-default .uitkContactPrimaryInfo {
+  margin-bottom: calc(var(--uitk-size-unit) * 0.5);
+}
+
 .uitkContactSecondaryInfo {
   grid-area: secondary;
 }
 
 .uitkContactDetails-mini .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-size-unit) * 2);
+  margin-left: calc(var(--uitk-size-unit));
 }
 
 /* TODO Mini-stacked does not really look "stacked". Is it a bug? */

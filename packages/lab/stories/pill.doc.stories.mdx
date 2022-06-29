@@ -7,6 +7,7 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
+  CharacteristicUsage,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -34,7 +35,7 @@ allow users to trigger actions, make selections or filter results.
 **Uses:** [Button](/?path=/story/core-button--cta),
 [Checkbox](/?path=/story/lab-checkbox--feature-input),
 [Icon](/?path=/story/core-icon--toolkit-icon),
-[Tooltip](/?path=/story/lab-tooltip--default)
+[Tooltip](/?path=/story/core-tooltip--default)
 
 **Usage**  
 Pill is a versatile, interactive and stand-alone component. It is often used to:
@@ -261,23 +262,7 @@ When `variant` is `'selectable'`
 
 ## Characteristics Used
 
-- [Actionable](/docs/documentation-styles-and-theming-characteristics-actionable--misc)
-  - --uitk-actionable-secondary-icon-color
-- [Focused](/docs/documentation-styles-and-theming-characteristics-focused--misc)
-  - --uitk-focused-line-width
-  - --uitk-focused-outline-offset
-- [Taggable](/docs/documentation-styles-and-theming-characteristics-taggable--misc)
-  - --uitk-taggable-background
-  - --uitk-taggable-background-active
-  - --uitk-taggable-icon
-  - --uitk-taggable-icon-hover
-  - --uitk-taggable-icon-active
-  - --uitk-taggable-text-color
-  - --uitk-taggable-text-color-hover
-  - --uitk-taggable-text-color-active
-- [Text](/docs/documentation-styles-and-theming-characteristics-text--colors)
-  - --uitk-text-help-font-size
-  - --uitk-text-min-height
+<CharacteristicUsage of={Pill} />
 
 ## --uitkPill CSS Custom Property API
 

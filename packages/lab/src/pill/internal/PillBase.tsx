@@ -25,7 +25,7 @@ import {
 import { pillBaseName } from "../constants";
 import { DeleteButton } from "./DeleteButton";
 
-import "./PillBase.css";
+import "../Pill.css";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,

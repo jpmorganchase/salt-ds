@@ -1,12 +1,20 @@
 import {
+  flip,
+  limitShift,
+  shift,
+  size,
+} from "@floating-ui/react-dom-interactions";
+import {
+  isDesktop,
   makePrefixer,
   Portal,
   PortalProps,
   useFloatingUI,
   useForkRef,
+  useId,
   useWindow,
 } from "@jpmorganchase/uitk-core";
-import { IconProps, ChevronDownIcon } from "@jpmorganchase/uitk-icons";
+import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import {
   ComponentType,
@@ -31,17 +39,9 @@ import {
   ListSingleSelectionVariant,
   ListStateContext,
 } from "../list";
-import { useId } from "../utils";
 import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
-import { useDropdown } from "./useDropdown";
-
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
 import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+import { useDropdown } from "./useDropdown";
 
 import "./Dropdown.css";
 
@@ -225,19 +225,22 @@ export const Dropdown = forwardRef(function Dropdown<
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
     undefined
   );
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
-    middleware: [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ],
+    middleware,
   });
 
   const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(reference, ref);

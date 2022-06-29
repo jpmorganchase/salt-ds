@@ -1,6 +1,7 @@
 import {
   useControlled,
   useForkRef,
+  useId,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
 import {
@@ -19,7 +20,7 @@ import {
 import { useList } from "../../list";
 import { ExpandButtonProps, useTokenizedInput } from "../../tokenized-input";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
-import { useId, useIsFocusVisible, usePrevious } from "../../utils";
+import { useIsFocusVisible, usePrevious } from "../../utils";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";

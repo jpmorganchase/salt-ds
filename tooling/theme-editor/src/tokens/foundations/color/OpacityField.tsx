@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
+import { FormField, makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { FormField } from "@jpmorganchase/uitk-lab";
-import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
+import { ReactElement } from "react";
 import {
-  UITK_FOUNDATIONS,
   UITK_CHARACTERISTICS,
+  UITK_FOUNDATIONS,
 } from "../../../utils/uitkValues";
+import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { OpacityInput } from "./OpacityInput";
+
 import "./OpacityField.css";
 
 const withBaseName = makePrefixer("uitkOpacityField");

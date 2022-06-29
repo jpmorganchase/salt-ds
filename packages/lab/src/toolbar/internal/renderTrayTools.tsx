@@ -1,13 +1,12 @@
-import React, { ReactElement } from "react";
+import { FormField } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
-import { FormField } from "../../form-field";
-
-import { OrientationShape } from "../ToolbarProps";
+import React, { ReactElement } from "react";
 import {
   extractResponsiveProps,
   isResponsiveAttribute,
   ManagedItem,
 } from "../../responsive";
+import { OrientationShape } from "../ToolbarProps";
 
 const fieldProps = {
   fullWidth: false,

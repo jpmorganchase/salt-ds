@@ -1,3 +1,6 @@
+import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { MessageIcon } from "@jpmorganchase/uitk-icons";
+import cx from "classnames";
 import {
   cloneElement,
   forwardRef,
@@ -6,12 +9,8 @@ import {
   ReactElement,
   ReactText,
 } from "react";
-import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { MessageIcon } from "@jpmorganchase/uitk-icons";
 
 import "./Badge.css";
-import { useId } from "../utils";
 
 /**
  * @example overriding density prop to fit a smaller denser space otherwise handled through context provider
@@ -43,17 +42,15 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const withBaseName = makePrefixer("uitkBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  props,
-  ref
-) {
-  const {
+  {
     badgeContent = 0,
     max = 1000,
     className,
     children = <MessageIcon size={12} />,
     ...rest
-  } = props;
-
+  },
+  ref
+) {
   const badgeId = useId();
   const childId = useId(
     isValidElement<HTMLAttributes<HTMLElement>>(children)

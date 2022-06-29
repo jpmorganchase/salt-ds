@@ -1,3 +1,6 @@
+import { Button, FormField } from "@jpmorganchase/uitk-core";
+import { ChangeHandler, Input, TokenizedInput } from "@jpmorganchase/uitk-lab";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   ChangeEventHandler,
   useEffect,
@@ -5,14 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button } from "@jpmorganchase/uitk-core";
-import {
-  ChangeHandler,
-  FormField,
-  Input,
-  TokenizedInput,
-} from "@jpmorganchase/uitk-lab";
 
 export default {
   title: "Lab/Tokenized Input",

@@ -1,7 +1,18 @@
+.uitk-newapp {
+  --uitkPill-height: 20px;
+  --uitkPill-borderRadius: 10px;
+  --uitkPill-label-paddingLeft: 20px;
+  --uitkPill-label-paddingRight: 20px;
+  --uitkPill-background-hover: var(--uitk-color-teal-300);
+  --uitkPill-background-active: var(--uitk-color-teal-50);
+}
+
 .uitk-light.uitk-newapp {
   --uitkPill-background: var(--uitk-color-teal-10);
+  --uitkPill-text-color-hover: var(--uitk-color-white);
 }
 
 .uitk-dark.uitk-newapp {
   --uitkPill-background: var(--uitk-color-teal-700);
+  --uitkPill-text-color-active: var(--uitk-color-white);
 }

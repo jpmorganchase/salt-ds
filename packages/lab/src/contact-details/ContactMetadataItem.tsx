@@ -3,6 +3,7 @@ import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { Div } from "../typography";
 import { ValueComponentProps } from "./internal";
+import { MailLinkComponent } from "./";
 
 const withBaseName = makePrefixer("uitkContactMetadataItem");
 
@@ -18,13 +19,21 @@ export const ContactMetadataItem = forwardRef<
   HTMLDivElement,
   ContactMetadataItemProps
 >(function ContactMetadataItem(props, ref) {
-  const { label, value, icon: Icon, ...restProps } = props;
+  const { label, value, icon: Icon, ValueComponent, ...restProps } = props;
   return (
-    <Div {...restProps} ref={ref} className={withBaseName()}>
-      {!Icon ? <div className={withBaseName("label")}>{label}</div> : null}
+    <div {...restProps} ref={ref} className={withBaseName()}>
+      {!Icon ? (
+        <Div truncate maxRows={1} className={withBaseName("label")}>
+          {label}
+        </Div>
+      ) : null}
       {Icon ? <Icon className={withBaseName("icon")} /> : null}
 
-      {value}
-    </Div>
+      {ValueComponent ? (
+        <ValueComponent value={value} />
+      ) : (
+        <MailLinkComponent value={value} />
+      )}
+    </div>
   );
 });

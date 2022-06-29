@@ -1,4 +1,8 @@
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  useControlled,
+  useFormFieldProps,
+} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   ChangeEvent,
@@ -10,7 +14,6 @@ import {
   useState,
 } from "react";
 import { ControlLabel, ControlLabelProps } from "../control-label";
-import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
 import "./Switch.css";
@@ -89,7 +92,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     [onBlur]
   );
 
-  // TODO review ControlLabel
   return (
     <ControlLabel
       {...LabelProps}
@@ -102,7 +104,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
       label={label}
       ref={ref}
     >
-      <span className={withBaseName()}>
+      <span className={cx(withBaseName(), className)}>
         <span
           className={cx(withBaseName("base"), {
             [withBaseName("checked")]: checked,

@@ -1,6 +1,6 @@
 .uitkIcon {
   --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
-  --icon-size: var(--uitkIcon-size, var(--uitk-size-graphic-small));
+  --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
 }
 
 .uitkIcon {
@@ -8,13 +8,15 @@
   letter-spacing: var(--uitkIcon-letter-spacing, normal);
   speak: none;
   display: inline-block;
+  margin: var(--uitkIcon-margin, 0);
+  padding: var(--uitkIcon-padding, 0);
   position: relative;
   box-sizing: border-box;
   /* Reset 1.3 line height Toolkit sets */
   line-height: 1;
 }
 
-.uitkIcon:hover:not(:active) {
+.uitkIcon:hover {
   --icon-color: var(--uitkIcon-color-hover, var(--uitk-text-secondary-foreground));
 }
 
@@ -28,15 +30,15 @@
 }
 
 .uitkIcon-small {
-  --icon-size: var(--uitk-size-graphic-small);
+  --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
 }
 
 .uitkIcon-medium {
-  --icon-size: var(--uitk-size-graphic-medium);
+  --icon-size: var(--uitkIcon-size-medium, var(--uitk-size-graphic-medium));
 }
 
 .uitkIcon-large {
-  --icon-size: var(--uitk-size-graphic-large);
+  --icon-size: var(--uitkIcon-size-large, var(--uitk-size-graphic-large));
 }
 
 .uitkIcon .uitkIcon-content {

@@ -1,4 +1,11 @@
 import {
+  FormLabel,
+  makePrefixer,
+  useFormFieldProps,
+  useId,
+} from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
+import {
   ChangeEventHandler,
   FC,
   forwardRef,
@@ -7,13 +14,8 @@ import {
   useRef,
   useState,
 } from "react";
-import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { useFormFieldProps } from "../form-field-context";
-import { useId } from "../utils";
-import { FormLabel } from "../form-field";
-import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { FormGroup } from "../form-group";
+import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { RadioButton } from "./RadioButton";
 import { RadioIconProps } from "./RadioIcon";
 
@@ -103,7 +105,8 @@ export const RadioButtonGroup = forwardRef<
     <fieldset
       className={classnames(
         withBaseName(),
-        row ? withBaseName("horizontal") : withBaseName("vertical")
+        row ? withBaseName("horizontal") : withBaseName("vertical"),
+        className
       )}
       data-testid="radio-button-group"
       ref={ref}
@@ -112,7 +115,7 @@ export const RadioButtonGroup = forwardRef<
     >
       {!inFormField && (
         <FormLabel
-          className={classnames(className, withBaseName("legend"))}
+          className={classnames(withBaseName("legend"))}
           label={legend}
         />
       )}

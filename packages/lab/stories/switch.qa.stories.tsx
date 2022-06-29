@@ -12,25 +12,8 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Switch>;
 
-const SwitchExamples = [
-  <Switch className="backwardsCompat" key="Default" label="Default" />,
-  <Switch
-    className="backwardsCompat"
-    defaultChecked
-    key="Default"
-    label="Default"
-  />,
-  <Switch className="backwardsCompat" disabled key="Default" label="Default" />,
-  <Switch
-    className="backwardsCompat"
-    defaultChecked
-    disabled
-    key="Default"
-    label="Default"
-  />,
-];
-
 export const AllExamplesGrid: ComponentStory<typeof Switch> = (props) => {
+  const { className } = props;
   return (
     <AllRenderer>
       <div
@@ -41,15 +24,36 @@ export const AllExamplesGrid: ComponentStory<typeof Switch> = (props) => {
           gap: "4px",
         }}
       >
-        {SwitchExamples.map((s) => (
-          <>{s}</>
-        ))}
+        <Switch className={className} key="Default" label="Default" />
+        <Switch
+          className={className}
+          defaultChecked
+          key="Default"
+          label="Default"
+        />
+        <Switch className={className} disabled key="Default" label="Default" />
+        <Switch
+          className={className}
+          defaultChecked
+          disabled
+          key="Default"
+          label="Default"
+        />
       </div>
     </AllRenderer>
   );
 };
 
 AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const BackwardsCompatGrid = AllExamplesGrid.bind({});
+BackwardsCompatGrid.args = {
+  className: "backwardsCompat",
+};
+
+BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
@@ -62,7 +66,7 @@ export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
       className="uitkSwitchQA"
       imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
     >
-      <AllExamplesGrid />
+      <BackwardsCompatGrid className="backwardsCompat" />
     </QAContainer>
   );
 };

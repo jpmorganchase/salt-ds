@@ -78,8 +78,10 @@ const allAllowedKeys = [
   "taggable",
   "text",
   // additional to decide
+  "animation",
   "typography",
   "size",
+  "opacity",
 ];
 
 const regexpPattern = new RegExp(

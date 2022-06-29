@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { KeyboardEvent, ReactElement } from "react";
+import { FormField, FormFieldProps } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
-import { FormField, FormFieldProps } from "../../form-field";
-
-import Tooltray from "../Tooltray";
+import React, { KeyboardEvent, ReactElement } from "react";
 import {
   extractResponsiveProps,
   isResponsiveAttribute,
   ManagedItem,
   orientationType,
 } from "../../responsive";
+import Tooltray from "../Tooltray";
 
 const fieldProps = {
   fullWidth: false,

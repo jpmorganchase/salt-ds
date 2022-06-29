@@ -1,6 +1,4 @@
-import { FormField } from "../../form-field";
-import { ComponentType, FC } from "react";
-
+import { FormField } from "@jpmorganchase/uitk-core";
 import {
   fireEvent,
   render,
@@ -8,7 +6,7 @@ import {
   screen,
   within,
 } from "@testing-library/react";
-
+import { ComponentType, FC } from "react";
 import {
   Dropdown,
   DropdownButton,

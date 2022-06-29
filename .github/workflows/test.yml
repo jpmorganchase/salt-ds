@@ -1,5 +1,5 @@
 name: "Test"
-on: [push, workflow_dispatch]
+on: [push, workflow_dispatch, pull_request]
 
 jobs:
   lint:
@@ -102,3 +102,19 @@ jobs:
         with:
           install: false
           command: yarn run test:components
+  desktop-integration:
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Run Playwright
+        run: xvfb-run yarn test
+        working-directory: ./playground/electron-testing-app

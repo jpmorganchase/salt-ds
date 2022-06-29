@@ -10,6 +10,8 @@ import {
   useRole,
 } from "@floating-ui/react-dom-interactions";
 import {
+  isDesktop,
+  margin,
   useControlled,
   useFloatingUI,
   UseFloatingUIProps,
@@ -42,6 +44,14 @@ export function useOverlay(props: UseOverlayProps) {
     setOpen(newOpen);
     onOpenChange?.(newOpen);
   };
+  const middleware = isDesktop
+    ? [margin(24), arrow({ element: arrowRef })]
+    : [
+        offset(24),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ];
   const {
     reference,
     floating,
@@ -55,12 +65,7 @@ export function useOverlay(props: UseOverlayProps) {
     open,
     onOpenChange: handleOpenChange,
     placement,
-    middleware: [
-      offset(24),
-      flip(),
-      shift({ limiter: limitShift() }),
-      arrow({ element: arrowRef }),
-    ],
+    middleware,
   });
 
   const handleArrowRef = useCallback(
