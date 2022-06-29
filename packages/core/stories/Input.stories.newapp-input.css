@@ -2,7 +2,7 @@
 .uitk-dark.uitk-newapp {
   --newapp-highlight-color: rgb(241, 231, 64);
 
-  --uitkInput-borderRadius: 5px;
+  --uitkInput-letterSpacing: 1.2px;
   --uitkInput-focused-outlineColor: var(--uitk-color-green-100);
   --uitkInput-highlight-color: var(--newapp-highlight-color);
   --uitkInput-fontFamily: arial;

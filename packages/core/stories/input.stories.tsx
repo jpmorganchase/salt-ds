@@ -1,6 +1,12 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
-import { Button, FormField, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  FormField,
+  Input,
+  StaticInputAdornment,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 import {
   CalendarIcon,
   CallIcon,
@@ -8,14 +14,14 @@ import {
   SendIcon,
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
-import { Dropdown, Input, StaticInputAdornment } from "@jpmorganchase/uitk-lab";
+import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import "./input.qa.stories.css";
 import "./Input.stories.newapp-input.css";
 
 export default {
-  title: "Lab/Input",
+  title: "Core/Input",
   component: Input,
 } as ComponentMeta<typeof Input>;
 

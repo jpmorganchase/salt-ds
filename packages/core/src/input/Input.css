@@ -25,7 +25,6 @@
   font-family: var(--uitkInput-fontFamily, var(--uitk-typography-fontFamily));
   font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
-  letter-spacing: var(--uitkInput-letterSpacing, 0);
   line-height: var(--uitk-typography-lineHeight);
   min-height: var(--uitkInput-minHeight, var(--uitk-size-base));
   min-width: var(--uitkInput-minWidth, 8em);
@@ -61,7 +60,7 @@
   display: block;
   flex: 1;
   font: inherit;
-  letter-spacing: inherit;
+  letter-spacing: var(--uitkInput-letterSpacing, 0);
   margin: 0;
   min-width: 0;
   overflow: hidden;

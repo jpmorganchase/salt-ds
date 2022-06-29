@@ -1,9 +1,3 @@
-import {
-  makePrefixer,
-  useControlled,
-  useForkRef,
-  useFormFieldProps,
-} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   ChangeEvent,
@@ -20,6 +14,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useFormFieldProps } from "../form-field-context";
+import { makePrefixer, useControlled, useForkRef } from "../utils";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./Input.css";

@@ -1,18 +1,22 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { FormField, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Input, StaticInputAdornment } from "@jpmorganchase/uitk-lab";
+import {
+  FormField,
+  Input,
+  StaticInputAdornment,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 import { CallIcon, CalendarIcon } from "@jpmorganchase/uitk-icons";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { withFlexGap } from "docs/decorators/withFlexGap";
 import { CustomStyling } from "./input.stories";
 
 <Meta
-  title="Documentation/Lab/Input"
+  title="Documentation/Core/Input"
   component={Input}
   parameters={{
     viewMode: "docs",
@@ -107,7 +111,7 @@ Input is a component that would commonly be nested inside a FormField.
 # API
 
 ```
-import { Input } from "@jpmorganchase/uitk-lab";
+import { Input } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -181,7 +185,7 @@ The CSS is as simple as below:
 .uitk-dark.uitk-newapp {
   --newapp-highlight-color: rgb(241, 231, 64);
 
-  --uitkInput-borderRadius: 5px;
+  --uitkInput-letterSpacing: 1.2px;
   --uitkInput-focused-outlineColor: var(--uitk-color-green-100);
   --uitkInput-highlight-color: var(--newapp-highlight-color);
   --uitkInput-fontFamily: arial;
