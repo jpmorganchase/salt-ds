@@ -19,7 +19,7 @@ import { ToolkitBorderLayout } from "./border-layout.stories";
 # Border Layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
-The border layout is built using [Grid layout](?path=/docs/layout-docs-core-gridlayout--page) and it is intended for laying out pages where there is at least a main area with a header and footer.
+The border layout is built using [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
 
 <Canvas>
   <Story id="lab-layout-borderlayout--toolkit-border-layout" />
@@ -39,13 +39,16 @@ import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-lab";
 
 ### Border Item inside default border layout
 
-A border item allows more complex controls to the default behaviour of a border child, like defining how many rows or columns will it span trough and it's alignment
+The border item wrapper allows you to select the right position for your content to be displayed at - `header`, `left`, `main`, `right` or `bottom`.  
+It also provides access to other properties such as alignment and sticky behaviour.
 
 <Canvas>
   <Story id="lab-layout-borderlayout-borderitem--toolkit-border-item" />
 </Canvas>
 
 ### Fixed panels
+
+You can have a responsive `main` region while the `left` and `right` panels remain with a fixed width as the content changes.
 
 <Canvas>
   <Story id="lab-layout-borderlayout--toolkit-border-layout-fixed-panels" />
