@@ -82,7 +82,7 @@ const allAllowedKeys = [
   "delay", // to be merged with animation
   "palette", // currently for opacity purposes
   "size",
-  "zIndex" // to be added to overlayable
+  "zIndex", // to be added to overlayable
 ];
 
 const regexpPattern = new RegExp(
