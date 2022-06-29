@@ -1,16 +1,15 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
-  Input,
+  ToolkitProvider,
   FormField,
   FormFieldProps,
-  Dropdown,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
+import { Input, Dropdown } from "@jpmorganchase/uitk-lab";
 import { useState } from "react";
 import { usStateExampleData } from "./exampleData";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Form Field",
+  title: "Core/Form Field",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 

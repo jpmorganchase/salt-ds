@@ -1,7 +1,6 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FormField, makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import React, { KeyboardEvent, ReactElement, Ref } from "react";
-import { FormField } from "../../form-field";
 import { OverflowButtonProps, OverflowMenuProps } from "../overflow-menu";
 import { ManagedItem, orientationType } from "../overflowTypes";
 import { isCollapsedOrCollapsing, isOverflowed } from "../overflowUtils";

@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { State } from "../State";
+import { ValidationState } from "@jpmorganchase/uitk-core";
 
 export const DialogContext = createContext<{
-  state?: State;
+  state?: ValidationState;
   dialogId?: string;
   setContentElement?: (node: HTMLDivElement) => void;
 }>({});

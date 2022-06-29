@@ -1,9 +1,3 @@
-import {
-  makePrefixer,
-  Tooltip,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   Dispatch,
@@ -18,7 +12,8 @@ import {
   useState,
 } from "react";
 import { FormFieldContext } from "../form-field-context";
-import { useId } from "../utils";
+import { Tooltip, useTooltip } from "../tooltip";
+import { makePrefixer, useForkRef, useId } from "../utils";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,

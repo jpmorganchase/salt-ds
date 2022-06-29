@@ -2,6 +2,7 @@ import {
   makePrefixer,
   useCharacteristic,
   useForkRef,
+  useId,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
@@ -21,7 +22,6 @@ import {
   useRef,
 } from "react";
 import { areEqual, FixedSizeList, VariableSizeList } from "react-window";
-import { useId } from "../utils";
 import { calcPreferredListHeight } from "./internal/calcPreferredListHeight";
 import { scrollIntoView } from "./internal/scrollIntoView";
 import { useListAutoSizer } from "./internal/useListAutoSizer";

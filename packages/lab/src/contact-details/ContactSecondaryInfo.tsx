@@ -1,8 +1,7 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
-import { useId } from "../utils";
 import {
   TruncatableValue,
   useContactDetailsContext,

@@ -1,3 +1,6 @@
+import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { MessageIcon } from "@jpmorganchase/uitk-icons";
+import cx from "classnames";
 import {
   cloneElement,
   forwardRef,
@@ -6,12 +9,8 @@ import {
   ReactElement,
   ReactText,
 } from "react";
-import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { MessageIcon } from "@jpmorganchase/uitk-icons";
 
 import "./Badge.css";
-import { useId } from "../utils";
 
 /**
  * @example overriding density prop to fit a smaller denser space otherwise handled through context provider

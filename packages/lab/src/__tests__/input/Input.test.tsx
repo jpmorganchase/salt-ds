@@ -1,4 +1,5 @@
 import { fireEvent, screen, render } from "@testing-library/react";
+import { FormField } from "@jpmorganchase/uitk-core";
 
 import { Input } from "../../input";
 
@@ -243,5 +244,28 @@ describe("GIVEN an Input", () => {
       expect(input.selectionStart).toEqual(4);
       expect(input.selectionEnd).toEqual(11);
     });
+  });
+
+  describe("WHEN used in Formfield", () => {
+    test("and is disabled Then input within should be disabled", () => {
+      render(
+        <FormField label="Disabled form field" disabled>
+          <Input defaultValue="Value" />
+        </FormField>
+      );
+      expect(screen.getByLabelText(/Disabled form field/i)).toHaveAttribute(
+        "disabled"
+      );
+    });
+  });
+  test("and is readonly Then input within should be readonly", () => {
+    render(
+      <FormField label="Readonly form field" readOnly>
+        <Input defaultValue="Value" />
+      </FormField>
+    );
+    expect(screen.getByLabelText(/Readonly form field/i)).toHaveAttribute(
+      "readonly"
+    );
   });
 });

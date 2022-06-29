@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, FormField, FormFieldProps } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
   cloneElement,
@@ -12,7 +12,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { FormField, FormFieldProps } from "../../form-field";
 import {
   extractResponsiveProps,
   isResponsiveAttribute,

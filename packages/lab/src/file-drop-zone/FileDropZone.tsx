@@ -1,26 +1,23 @@
+import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { ErrorIcon, UploadIcon } from "@jpmorganchase/uitk-icons";
+import cx from "classnames";
 import {
-  forwardRef,
-  HTMLAttributes,
-  ReactNode,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  SyntheticEvent,
-  DragEventHandler,
   ChangeEventHandler,
   DragEvent,
+  DragEventHandler,
   FocusEvent,
+  forwardRef,
+  HTMLAttributes,
   KeyboardEvent,
+  ReactNode,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
-import cx from "classnames";
-import { makePrefixer, Button } from "@jpmorganchase/uitk-core";
-import { ErrorIcon, UploadIcon } from "@jpmorganchase/uitk-icons";
-
-import { useId } from "../utils";
-
-import { FilesValidator } from "./validators";
 import { containsFiles, extractFiles, validateFiles } from "./internal/utils";
+import { FilesValidator } from "./validators";
 
 import "./FileDropZone.css";
 

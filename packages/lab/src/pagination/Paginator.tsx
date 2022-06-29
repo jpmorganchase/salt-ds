@@ -1,8 +1,7 @@
-import { useForkRef } from "@jpmorganchase/uitk-core";
+import { FormFieldProps, useForkRef } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
-import { FormFieldProps } from "../form-field";
 import { ArrowButton } from "./ArrowButton";
 import { CompactControls } from "./CompactControls";
 import { RegularControls } from "./RegularControls";
