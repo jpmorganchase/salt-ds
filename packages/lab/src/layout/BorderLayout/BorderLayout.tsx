@@ -12,7 +12,6 @@ import warning from "warning";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridLayout } from "@jpmorganchase/uitk-core";
 import { BorderItemProps } from "../BorderItem";
-import "./BorderLayout.css";
 
 type GridLayoutProps = ComponentPropsWithoutRef<typeof GridLayout>;
 

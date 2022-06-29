@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Input } from "../input";
+import { Input } from "@jpmorganchase/uitk-core";
 import { isValidHex } from "./ColorHelpers";
 
 import "./ColorPicker.css";

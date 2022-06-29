@@ -22,11 +22,10 @@
   color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
   cursor: var(--uitkInput-cursor, default);
   display: inline-flex;
-  font-family: var(--uitkInput-fontFamily, var(--uitk-typography-fontFamily));
+  font-family: var(--uitkInput-fontFamily, var(--uitk-text-fontFamily));
   font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
-  letter-spacing: var(--uitkInput-letterSpacing, 0);
-  line-height: var(--uitk-typography-lineHeight);
+  line-height: var(--uitk-text-base-lineHeight);
   min-height: var(--uitkInput-minHeight, var(--uitk-size-base));
   min-width: var(--uitkInput-minWidth, 8em);
   padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
@@ -61,7 +60,7 @@
   display: block;
   flex: 1;
   font: inherit;
-  letter-spacing: inherit;
+  letter-spacing: var(--uitkInput-letterSpacing, 0);
   margin: 0;
   min-width: 0;
   overflow: hidden;
@@ -73,7 +72,7 @@
 /* Style applied to input if `disabled={true}` */
 .uitkInput-disabled .uitkInput-input {
   cursor: var(--uitk-editable-cursor-disabled);
-  opacity: var(--uitk-opacity-foreground);
+  color: var(--uitkInput-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
 }
 
 /* Style applied to adornment containers */

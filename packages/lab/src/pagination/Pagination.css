@@ -39,7 +39,7 @@
 .uitkPagination-pageButton {
   min-width: var(--button-size);
   height: var(--button-size);
-  --uitkButton-font-weight: var(--uitk-typography-weight-regular);
+  --uitkButton-font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkPagination-pageButtonSelected {

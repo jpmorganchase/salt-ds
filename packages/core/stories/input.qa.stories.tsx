@@ -1,5 +1,4 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Input } from "@jpmorganchase/uitk-lab";
+import { Input, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
@@ -7,7 +6,7 @@ import { Adornments } from "./input.stories";
 import "./input.qa.stories.css";
 
 export default {
-  title: "Lab/Input/QA",
+  title: "Core/Input/QA",
   component: Input,
 } as ComponentMeta<typeof Input>;
 

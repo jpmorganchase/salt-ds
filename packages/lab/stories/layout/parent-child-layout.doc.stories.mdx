@@ -18,6 +18,7 @@ import { DefaultParentChildLayout } from "./parent-child-layout.stories";
 # ParentChild Layout
 
 Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
+The parent and child layout is built using [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page) and it is intended for displaying two related layers such as navigation and associated content or a preferences dialog.
 
 <Canvas>
   <Story id="lab-layout-parentchildlayout--default-parent-child-layout" />
@@ -33,9 +34,11 @@ import { ParentChildLayout } from "@jpmorganchase/uitk-lab";
 
 <ArgsTable of={ParentChildLayout} />
 
-## Usage Examples
+## Examples
 
 ### Stacked
+
+The parent and child component changes to a stacked view once it approaches a specified breakpoint that can be customised via the `stackedAtBreakpoint` prop.
 
 <Canvas>
   <Story id="lab-layout-parentchildlayout--toolkit-parent-child-layout-stacked" />
@@ -57,8 +60,14 @@ import { ParentChildLayout } from "@jpmorganchase/uitk-lab";
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <ParentChildLayout>
-      <ParentChildItem></ParentChildItem>
-    </ParentChildLayout>
+    <ParentChildLayout
+      style={{ border: "dashed 1px black", padding: "1rem" }}
+      parent={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+      child={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+    />
   </ComponentAnatomy>
 </Canvas>

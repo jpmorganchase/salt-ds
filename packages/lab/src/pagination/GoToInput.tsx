@@ -1,10 +1,3 @@
-import {
-  FormField,
-  FormFieldProps,
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   ChangeEventHandler,
@@ -16,7 +9,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { Input } from "../input";
+import {
+  FormField,
+  FormFieldProps,
+  Input,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 

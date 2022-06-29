@@ -5,7 +5,7 @@
   --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
 
   /* Fonts, Text */
-  --uitkButton-label-fontWeight: var(--uitk-typography-weight-medium);
+  --uitkButton-label-fontWeight: var(--uitk-text-fontWeight);
   --uitkButton-textAlign: left;
 }
 

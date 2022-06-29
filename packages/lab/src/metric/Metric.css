@@ -5,7 +5,7 @@
   --metric-horizontal-gap: calc(var(--uitk-size-unit) * 2);
   --metric-vertical-gap: calc(var(--uitk-size-unit) * 0.25);
 
-  --metric-font-family: var(--uitk-typography-fontFamily);
+  --metric-font-family: var(--uitk-text-fontFamily);
 }
 
 .uitkMetric {

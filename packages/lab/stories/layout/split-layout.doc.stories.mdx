@@ -16,13 +16,20 @@ import { DefaultSplitLayout } from "./split-layout.stories";
   }}
 />
 
-# Split Layout
+# Split layout
 
-Defines left and right regions for UI elements within a span, such as a button bar
+Defines left and right regions for UI elements within a span, such as a button bar.
+By default the Split layout will break into a second row with the elements on the right hand side as soon as it finds limited space.
+For layouts that require more than 2 regions please see [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page).
 
 <Canvas>
   <Story id="lab-layout-splitlayout--default-split-layout" />
 </Canvas>
+
+## How you can use Split layout
+
+Use Split layout when there are 2 defined areas that require to be in the opposite horizontal ends of a container,
+for example if 2 `ButtonBar` components need to be in a header.
 
 ## API
 
@@ -34,9 +41,11 @@ import { SplitLayout } from "@jpmorganchase/uitk-lab";
 
 <ArgsTable of={SplitLayout} />
 
-## Usage Examples
+## Examples
 
 ### Simple Usage
+
+The simple usage examples shows 2 groups of buttons inside a Split layout.
 
 <Canvas>
   <Story id="lab-layout-splitlayout--split-layout-simple-usage" />
@@ -46,8 +55,18 @@ import { SplitLayout } from "@jpmorganchase/uitk-lab";
 
 <Canvas>
   <ComponentAnatomy showLegend>
-    <SplitLayout>
-      <FlexItem></FlexItem>
-    </SplitLayout>
+    <SplitLayout
+      style={{ border: "dashed 1px black", padding: "1rem" }}
+      leftSplitItem={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+      rightSplitItem={
+        <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      }
+    />
   </ComponentAnatomy>
 </Canvas>
+
+### Classes
+
+<CSSClassTable of={SplitLayout} />
