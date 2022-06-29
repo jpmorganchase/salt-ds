@@ -1,7 +1,9 @@
+/* Style applied to the root element */
 .uitkSplitLayout {
   justify-content: space-between;
 }
 
+/* Style applied to the separator */
 .uitkSplitLayout-separator {
   --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
 }

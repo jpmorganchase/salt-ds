@@ -180,7 +180,7 @@ ToolkitBorderLayoutNoHeader.args = {};
 
 const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   return (
-    <BorderLayout {...args} style={{ width: "80vw" }}>
+    <BorderLayout {...args} style={{ width: "60vw" }}>
       <BorderItem position="header">
         <HeaderItem height={50} />
       </BorderItem>
