@@ -1,10 +1,10 @@
-import { Checkbox } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Checkbox } from "@jpmorganchase/uitk-core";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./checkbox.qa.stories.css";
 
 export default {
-  title: "Lab/Checkbox/QA",
+  title: "Core/Checkbox/QA",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 

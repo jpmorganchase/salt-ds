@@ -1,5 +1,5 @@
-import { Button, Card } from "@jpmorganchase/uitk-core";
-import { Checkbox, Slider, SliderProps } from "@jpmorganchase/uitk-lab";
+import { Button, Card, Checkbox } from "@jpmorganchase/uitk-core";
+import { Slider, SliderProps } from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
 import "./slider.stories.css";
 
