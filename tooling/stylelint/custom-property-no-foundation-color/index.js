@@ -82,6 +82,7 @@ const allAllowedKeys = [
   "delay", // to be merged with animation
   "palette", // currently for opacity purposes
   "size",
+  "opacity",
   "zIndex", // to be added to overlayable
 ];
 
