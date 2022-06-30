@@ -5,8 +5,7 @@
   --uitk-selectable-cursor-blurSelected: pointer;
   --uitk-selectable-cursor-disabled: not-allowed;
 
-  --uitk-selectable-textAlign: left;
-
+  --uitk-selectable-borderRadius: 0;
   --uitk-selectable-borderWidth: 1px;
   --uitk-selectable-borderWidth-hover: 1px;
   --uitk-selectable-borderWidth-selected: 1px;

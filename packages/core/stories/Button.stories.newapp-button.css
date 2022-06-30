@@ -104,17 +104,3 @@
 .uitkButton-primary.uitkButton-ask:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
   --uitkIcon-color: var(--uitk-actionable-ask-icon-color-hover);
 }
-
-.uitk-newapp .uitkButton-disabled {
-  opacity: var(--uitk-opacity-foreground);
-}
-
-/*
-  cheating a bit here to keep the example generation simpler. In reality, we would not
-  create a button with both readonly and final-execution classes
-
-*/
-.uitk-newapp .uitkButton-cta[data-readonly],
-.uitk-newapp .uitkButton-final-execution[data-readonly] {
-  visibility: hidden;
-}

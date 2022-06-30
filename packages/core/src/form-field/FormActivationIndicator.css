@@ -39,7 +39,7 @@
  * It's only a solid icon showing different color for validation states. 
  * Applying opacity instead of re-defining all colors.
  */
-  opacity: var(--uitkFormActivationIndicator-icon-opacity, 1);
+  opacity: var(--uitkFormActivationIndicator-opacity, 1);
   position: absolute;
   bottom: 3px;
   right: 2px;

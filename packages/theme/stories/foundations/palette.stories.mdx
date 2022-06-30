@@ -1,12 +1,13 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { DocGrid } from "docs/components/DocGrid";
+import { OpacityBlock } from "docs/components/OpacityBlock";
 
 <Meta title="Documentation/Styles and Theming/Palette" />
 
 # Palette
 
-There is a special layer which sits in between the foundations and characteristics: the palette. The palette is a set of refined color tokens using values from the color foundation. This set is split into subgroups guided by semantics:
+There is a special layer which sits in between the foundations and characteristics: the palette. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
 
 | Semantic | Appropriate usage                                               | Example token                                            | UITK Theme value<br /> (light mode) |
 | -------- | --------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------- |
@@ -65,6 +66,53 @@ The characteristic with the respective emphasis should be used within a `uitkEmp
   background: var(--uitk-editable-background-hover-medium);
 }
 ```
+
+## Opacities
+
+Opacity values to adjust different attributes.
+
+### Opacitiy
+
+<Canvas>
+  <Story name="Opacities">
+    <DocGrid>
+      <OpacityBlock
+        opacity="--uitk-opacity-3"
+        cssVariable="--uitk-palette-opacity-background"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-2"
+        cssVariable="--uitk-palette-opacity-border"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-1"
+        cssVariable="--uitk-palette-opacity-border-readOnly"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-3"
+        cssVariable="--uitk-palette-opacity-foreground"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-4"
+        cssVariable="--uitk-palette-opacity-scrim-medium"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-4"
+        cssVariable="--uitk-palette-opacity-scrim-low"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-2"
+        cssVariable="--uitk-palette-opacity-fill"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-2"
+        cssVariable="--uitk-palette-opacity-stroke"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+- Note: `--uitk-palette-opacity-scrim-medium` is `--uitk-opacity-3` in dark mode
 
 ## Accent
 
