@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-lab": patch
 ---
 
-Move Checkbox and FormGroup to Core
+Move Checkbox, FormGroup and ControlLabel to Core

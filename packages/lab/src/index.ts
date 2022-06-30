@@ -10,7 +10,6 @@ export * from "./color-chooser";
 export * from "./combo-box";
 export * from "./contact-details";
 export * from "./content-status";
-export * from "./control-label";
 export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";

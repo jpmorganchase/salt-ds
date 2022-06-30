@@ -3,6 +3,7 @@ export * from "./breakpoints";
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";
+export * from "./control-label";
 export * from "./form-field";
 export * from "./form-field-context";
 export * from "./form-group";

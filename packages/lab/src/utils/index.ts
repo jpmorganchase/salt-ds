@@ -1,5 +1,4 @@
 export * from "./capitalize";
-export * from "./createChainedFunction";
 export * from "./escapeRegExp";
 export * from "./isEmail";
 export * from "./isPlainObject";
