@@ -6,8 +6,8 @@ import {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import { useControlled } from "@jpmorganchase/uitk-core";
-import { FormGroup, FormGroupProps } from "@jpmorganchase/uitk-lab";
+import { FormGroup, FormGroupProps } from "../form-group";
+import { useControlled } from "../utils";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";

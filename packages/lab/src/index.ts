@@ -15,7 +15,6 @@ export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
-export * from "./form-group";
 export * from "./formatted-input";
 export * from "./layout";
 export * from "./link";

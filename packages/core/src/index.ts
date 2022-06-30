@@ -5,6 +5,7 @@ export * from "./card";
 export * from "./checkbox";
 export * from "./form-field";
 export * from "./form-field-context";
+export * from "./form-group";
 export * from "./input";
 export * from "./layout";
 export * from "./panel";
