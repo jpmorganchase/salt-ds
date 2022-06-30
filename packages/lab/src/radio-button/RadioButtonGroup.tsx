@@ -1,4 +1,5 @@
 import {
+  FormGroup,
   FormLabel,
   makePrefixer,
   useFormFieldProps,
@@ -14,7 +15,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { FormGroup } from "../form-group";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { RadioButton } from "./RadioButton";
 import { RadioIconProps } from "./RadioIcon";

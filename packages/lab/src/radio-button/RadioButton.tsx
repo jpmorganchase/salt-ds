@@ -1,9 +1,13 @@
-import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
+import {
+  ControlLabel,
+  ControlLabelProps,
+  makePrefixer,
+} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
 import { Radio } from "./Radio";
 import { RadioIconProps } from "./RadioIcon";
-import { ControlLabel, ControlLabelProps } from "../control-label";
+
 import "./RadioButton.css";
 
 const withBaseName = makePrefixer("uitkRadioButton");
