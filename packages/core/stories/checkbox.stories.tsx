@@ -10,7 +10,7 @@ import {
 import "./Checkbox.stories.new-app-checkbox.css";
 
 export default {
-  title: "Lab/Checkbox",
+  title: "Core/Checkbox",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 

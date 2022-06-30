@@ -4,7 +4,7 @@ import { AllRenderer, QAContainer } from "docs/components";
 import "./checkbox.qa.stories.css";
 
 export default {
-  title: "Lab/Checkbox/QA",
+  title: "Core/Checkbox/QA",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
