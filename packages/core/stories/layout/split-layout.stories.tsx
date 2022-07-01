@@ -1,5 +1,4 @@
-import { Button } from "@jpmorganchase/uitk-core";
-import { SplitLayout } from "@jpmorganchase/uitk-lab";
+import { Button, SplitLayout } from "@jpmorganchase/uitk-core";
 import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { HTMLAttributes, ReactNode } from "react";
@@ -17,7 +16,7 @@ const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
 );
 
 export default {
-  title: "Lab/Layout/SplitLayout",
+  title: "Core/Layout/SplitLayout",
   component: SplitLayout,
   argTypes: {
     align: {
