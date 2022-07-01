@@ -1,4 +1,7 @@
-.uitkContentStatusQA .uitkDocGrid {
-  --uitkDocGrid-width: 1272px;
-  --uitkDocGrid-height: 1001px;
+.uitkContentStatusQA {
+  width: 1600px;
+  height: 900px;
+
+  display: flex;
+  align-items: flex-start;
 }

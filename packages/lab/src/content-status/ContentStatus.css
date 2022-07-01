@@ -1,64 +1,39 @@
-/* Styles applied to root component (ContentStatus) */
 .uitkContentStatus {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  letter-spacing: normal;
+  text-align: center;
+  gap: var(--uitk-size-unit);
 }
 
-/* Styles applied to inner content */
 .uitkContentStatus-content {
   color: var(--uitkContentStatus-content-color, var(--uitk-text-primary-foreground));
-  min-height: var(--uitkContentStatus-min-height, var(--uitk-text-minHeight));
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
+  gap: var(--uitk-size-unit);
 }
 
-/* Styles applied to status title */
 .uitkContentStatus-title {
-  color: var(--uitkContentStatus-title-color, var(--uitk-text-primary-foreground));
-  min-height: var(--uitkContentStatus-title-min-height, var(--uitk-text-minHeight));
-  margin-top: var(--uitkContentStatus-title-margin-top, var(--uitk-size-unit));
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
 
-/* Styles applied to status message */
-.uitkContentStatus-message {
-  margin-top: var(--uitkContentStatus-message-margin-top, var(--uitk-size-unit));
-  width: var(--uitkContentStatus-message-width, 100%);
-}
-
-/* Styles applied to status actions */
 .uitkContentStatus-actions {
-  margin-top: var(--uitkContentStatus-actions-margin-top, calc(2 * var(--uitk-size-unit)));
+  margin-top: var(--uitkContentStatus-actions-margin-top, var(--uitk-size-unit));
 }
 
-/* Styles applied if `status="error"` */
 .uitkContentStatus-error {
   fill: var(--uitkContentStatus-error-fill, var(--uitk-status-error-foreground));
-  border: var(--uitkContentStatus-error-border, var(--uitk-status-error-border));
 }
 
-/* Styles applied if `status="success"` */
 .uitkContentStatus-success {
   fill: var(--uitkContentStatus-success-fill, var(--uitk-status-success-foreground));
-  border: var(--uitkContentStatus-success-border, var(--uitk-status-success-border));
 }
 
-/* Styles applied if `status="warning"` */
 .uitkContentStatus-warning {
   fill: var(--uitkContentStatus-warning-fill, var(--uitk-status-warning-foreground));
-  border: var(--uitkContentStatus-warning-border, var(--uitk-status-warning-border));
 }
 
-/* Styles applied if `status="info"` */
 .uitkContentStatus-info {
   fill: var(--uitkContentStatus-info-fill, var(--uitk-status-info-foreground));
-  border: var(--uitkContentStatus-info-border, var(--uitk-status-info-border));
 }
