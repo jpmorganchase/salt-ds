@@ -1,5 +1,8 @@
-import { Breakpoints } from "../../breakpoints";
-import { useCurrentBreakpoint, useOrderedBreakpoints } from "../../utils";
+import {
+  Breakpoints,
+  useCurrentBreakpoint,
+  useOrderedBreakpoints,
+} from "@jpmorganchase/uitk-core";
 
 export const useIsViewportLargerThanBreakpoint = (
   targetedBreakpoint: keyof Breakpoints

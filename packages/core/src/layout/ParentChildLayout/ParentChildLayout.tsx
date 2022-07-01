@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
-import { useIsViewportLargerThanBreakpoint } from "../../utils";
+import { useIsViewportLargerThanBreakpoint } from "@jpmorganchase/uitk-lab";
 
 import "./ParentChildLayout.css";
 import { FlexLayout } from "../FlexLayout";
