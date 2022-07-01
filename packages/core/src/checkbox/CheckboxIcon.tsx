@@ -1,10 +1,10 @@
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
   CheckboxUncheckedIcon,
   CheckboxCheckedIcon,
   CheckboxIndeterminateIcon,
 } from "./assets";
+import { makePrefixer } from "../utils";
 
 import "./CheckboxIcon.css";
 

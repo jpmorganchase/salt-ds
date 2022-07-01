@@ -1,4 +1,6 @@
 import {
+  ControlLabel,
+  ControlLabelProps,
   makePrefixer,
   useControlled,
   useFormFieldProps,
@@ -13,7 +15,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { ControlLabel, ControlLabelProps } from "../control-label";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
 import "./Switch.css";

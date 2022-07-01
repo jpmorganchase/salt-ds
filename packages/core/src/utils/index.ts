@@ -1,3 +1,4 @@
+export * from "./createChainedFunction";
 export * from "./createContext";
 export * from "./debounce";
 export * from "./inferElementType";
