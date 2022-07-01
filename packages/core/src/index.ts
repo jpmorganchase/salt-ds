@@ -10,6 +10,7 @@ export * from "./form-group";
 export * from "./input";
 export * from "./layout";
 export * from "./panel";
+export * from "./pill";
 export * from "./popper";
 export * from "./portal";
 export * from "./state-icon";

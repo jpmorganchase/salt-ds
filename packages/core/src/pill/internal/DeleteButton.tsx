@@ -1,8 +1,8 @@
-import { MouseEvent } from "react";
-import cn from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import { CloseSmallIcon } from "@jpmorganchase/uitk-icons";
-
+import cn from "classnames";
+import { MouseEvent } from "react";
+import { Button, ButtonProps } from "../../button";
+import { makePrefixer } from "../../utils";
 import { pillBaseName } from "../constants";
 
 export interface DeleteButtonProps extends ButtonProps {

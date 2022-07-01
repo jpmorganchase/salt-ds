@@ -1,5 +1,4 @@
 import { fireEvent, render } from "@testing-library/react";
-
 import { Pill } from "../../pill";
 
 /**

@@ -1,5 +1,5 @@
+import { Pill } from "@jpmorganchase/uitk-core";
 import { CallIcon } from "@jpmorganchase/uitk-icons";
-import { Pill } from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied to the tests after copy over

@@ -1,10 +1,10 @@
-import { Pill } from "@jpmorganchase/uitk-lab";
+import { Pill } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./pill.qa.stories.css";
 
 export default {
-  title: "Lab/Pill/QA",
+  title: "Core/Pill/QA",
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
