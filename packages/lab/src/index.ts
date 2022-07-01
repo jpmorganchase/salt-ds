@@ -23,7 +23,6 @@ export * from "./menu-button";
 export * from "./metric";
 export * from "./overlay";
 export * from "./pagination";
-export * from "./pill";
 export * from "./progress";
 export * from "./query-input";
 export * from "./responsive";

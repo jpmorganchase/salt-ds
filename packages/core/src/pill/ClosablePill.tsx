@@ -1,11 +1,15 @@
-import { KeyboardEvent } from "react";
 import cn from "classnames";
-import { ForwardedRef, forwardRef, useCallback, useState } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-
+import {
+  ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
+  useCallback,
+  useState,
+} from "react";
+import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 import { PillBase, PillBaseProps } from "./internal/PillBase";
-import { pillBaseName } from "./constants";
+import { makePrefixer } from "../utils";
 
 const deleteKeys = ["Enter", "Delete", "Backspace"];
 const noop = () => undefined;
