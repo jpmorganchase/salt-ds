@@ -1,10 +1,10 @@
-import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-lab";
+import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer, QAContainer } from "docs/components";
 import "./radio-button.qa.stories.css";
 
 export default {
-  title: "Lab/Radio Button/QA",
+  title: "Core/Radio Button/QA",
   component: RadioButton,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension

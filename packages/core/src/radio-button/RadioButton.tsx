@@ -1,10 +1,7 @@
-import {
-  ControlLabel,
-  ControlLabelProps,
-  makePrefixer,
-} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
+import { ControlLabel, ControlLabelProps } from "../control-label";
+import { makePrefixer } from "../utils";
 import { Radio } from "./Radio";
 import { RadioIconProps } from "./RadioIcon";
 

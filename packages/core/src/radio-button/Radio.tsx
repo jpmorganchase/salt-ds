@@ -1,9 +1,3 @@
-import {
-  makePrefixer,
-  useControlled,
-  useForkRef,
-  useFormFieldProps,
-} from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
   ChangeEventHandler,
@@ -13,7 +7,13 @@ import {
   Ref,
   useState,
 } from "react";
-import { useIsFocusVisible } from "../utils";
+import { useFormFieldProps } from "../form-field-context";
+import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsFocusVisible,
+} from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioIcon as DefaultRadioIcon, RadioIconProps } from "./RadioIcon";
 
