@@ -1,5 +1,13 @@
 # @jpmorganchase/uitk-theme
 
+## 0.3.0
+
+### Minor Changes
+
+- 50dcb9a: Pill style uses characteristics
+- 0093d6e: Characteristic changes - text characteristic, no direct usage of typography and opacty, rename tokens to use camel case
+- fe868ab: Add layer layout component to lab
+
 ## 0.2.0
 
 ### Minor Changes
