@@ -10,7 +10,7 @@
 /* Main css class */
 .uitkText {
   font-size: var(--uitk-text-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-lineHeight));
 }
 
 .uitkText-overflow {
@@ -23,12 +23,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows);
   overflow: hidden;
-  word-break: break-word;
-}
-
-.uitkText-lazy {
-  transition: opacity 0.1s ease-in-out;
-  opacity: 0;
+  /* word-break: break-word; */
 }
 
 /* Heading 1 */
@@ -36,7 +31,7 @@
 h1.uitkText,
 .uitkText-h1.uitkText {
   font-size: var(--uitk-text-h1-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-h1-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-h1-lineHeight));
   font-weight: var(--uitk-text-h1-fontWeight);
 }
 
@@ -56,7 +51,7 @@ h1.uitkText small,
 h2.uitkText,
 .uitkText-h2.uitkText {
   font-size: var(--uitk-text-h2-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-h2-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-h2-lineHeight));
   font-weight: var(--uitk-text-h2-fontWeight);
 }
 
@@ -75,7 +70,7 @@ h2.uitkText small,
 h3.uitkText,
 .uitkText-h3.uitkText {
   font-size: var(--uitk-text-h3-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-h3-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-h3-lineHeight));
   font-weight: var(--uitk-text-h3-fontWeight);
 }
 
@@ -94,7 +89,7 @@ h3.uitkText small,
 h4.uitkText,
 .uitkText-h4.uitkText {
   font-size: var(--uitk-text-h4-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-h4-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-h4-lineHeight));
   font-weight: var(--uitk-text-h4-fontWeight);
 }
 
@@ -113,7 +108,7 @@ h4.uitkText small,
 label.uitkText,
 .uitkText-label {
   font-size: var(--uitk-text-caption-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-caption-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-caption-lineHeight));
 }
 
 /* Help text */
@@ -121,26 +116,26 @@ label.uitkText,
   font-style: var(--uitk-text-help-fontStyle);
   color: var(--uitk-text-secondary-foreground);
   font-size: var(--uitk-text-help-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-help-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-help-lineHeight));
 }
 
 /* Figure 1 */
 .uitkText-figure1.uitkText {
   font-size: var(--uitk-text-figure1-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-figure1-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-figure1-lineHeight));
   font-weight: var(--uitk-text-figure1-fontWeight);
 }
 
 /* Figure 2 */
 .uitkText-figure2.uitkText {
   font-size: var(--uitk-text-figure2-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-figure2-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-figure2-lineHeight));
   font-weight: var(--uitk-text-figure2-fontWeight);
 }
 
 /* Figure 3 */
 .uitkText-figure3.uitkText {
   font-size: var(--uitk-text-figure3-fontSize);
-  line-height: var(--uitk-text-lineHeight-backwardsCompat, --uitk-text-figure3-lineHeight);
+  line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-figure3-lineHeight));
   font-weight: var(--uitk-text-figure3-fontWeight);
 }

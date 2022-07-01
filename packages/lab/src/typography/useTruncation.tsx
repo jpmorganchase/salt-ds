@@ -45,12 +45,12 @@ export const useTruncation = (
             getComputedStyles(parent);
 
           if (
-            heightParent < scrollHeight - VELOCITY ||
-            heightParent < offsetHeight ||
+            Math.ceil(heightParent) < scrollHeight - VELOCITY ||
+            Math.ceil(heightParent) < offsetHeight ||
             offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
           ) {
-            textRows = Math.ceil(heightParent / lineHeight);
+            textRows = Math.floor(heightParent / lineHeight);
           }
         }
       }
