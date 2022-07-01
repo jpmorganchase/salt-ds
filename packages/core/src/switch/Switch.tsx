@@ -1,10 +1,3 @@
-import {
-  ControlLabel,
-  ControlLabelProps,
-  makePrefixer,
-  useControlled,
-  useFormFieldProps,
-} from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   ChangeEvent,
@@ -15,6 +8,9 @@ import {
   useRef,
   useState,
 } from "react";
+import { ControlLabel, ControlLabelProps } from "../control-label";
+import { useFormFieldProps } from "../form-field-context";
+import { makePrefixer, useControlled } from "../utils";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
 import "./Switch.css";
@@ -56,7 +52,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     name: "Switch",
     state: "checked",
   });
-  /* TODO: Controlled version does not work */
 
   const [focusVisible, setFocusVisible] = useState(false);
 
