@@ -1,12 +1,3 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useForkRef,
-  useIsomorphicLayoutEffect,
-  useTooltip,
-  useTooltipContext,
-} from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import {
   cloneElement,
@@ -22,6 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { Button, ButtonProps } from "../../button";
+import { useTooltip, useTooltipContext } from "../../tooltip";
+import {
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../../utils";
 import { pillBaseName } from "../constants";
 import { DeleteButton } from "./DeleteButton";
 
