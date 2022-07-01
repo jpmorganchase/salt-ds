@@ -13,7 +13,7 @@
   display: none;
 }
 
-[data-closing] {
+[data-uitkDeckItem-closing] {
   display: block;
   pointer-events: none;
   inset: 0;

@@ -7,16 +7,18 @@ import {
 } from "css-variable-docgen-components";
 import { DefaultDeckLayout } from "./deck-layout.stories";
 
-<Meta title="Documentation/Lab/Layout/DeckLayout" component={DeckLayout} />
+<Meta
+  title="Documentation/Lab/Layout/DeckLayout"
+  component={ DeckLayout }
+  subcomponents={{ DeckItem }}
+/>
 
 # Deck Layout
 
 Defines pages of content that appear within the same specified region, one at a time
 
 <Canvas>
-  <Story name="Default Deck Layout">
-    <DefaultDeckLayout />
-  </Story>
+  <Story id="lab-layout-decklayout--default-deck-layout" />
 </Canvas>
 
 ## API
@@ -27,24 +29,22 @@ import { DeckLayout } from "@jpmorganchase/uitk-lab";
 
 ## Props
 
-### Border Layout Props
-
 <ArgsTable of={DeckLayout} />
 
-### Deck Item Props
+## Examples
 
-<ArgsTable of={DeckItem} />
-
-## Usage Examples
+### Deck used in carousel 
+ 
+<Canvas>
+  <Story id="lab-layout-decklayout--deck-in-carousel" />
+</Canvas>
 
 ## Anatomy
 
 <Canvas>
-  <Story name="Deck Layout Anatomy">
-    <ComponentAnatomy showLegend>
-      <DeckLayout>
-        <DeckItem></DeckItem>
-      </DeckLayout>
-    </ComponentAnatomy>
-  </Story>
+  <ComponentAnatomy showControls={false}>
+    <DeckLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
+      <DeckItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+    </DeckLayout>
+  </ComponentAnatomy>
 </Canvas>

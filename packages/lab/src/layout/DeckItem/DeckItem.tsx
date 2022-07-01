@@ -76,11 +76,11 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       ) {
         const exitingSlider = sliderRef.current;
         if (exitingSlider) {
-          exitingSlider.setAttribute("data-closing", "");
+          exitingSlider.setAttribute("data-uitkDeckItem-closing", "");
           exitingSlider.addEventListener(
             "animationend",
             () => {
-              exitingSlider.removeAttribute("data-closing");
+              exitingSlider.removeAttribute("data-uitkDeckItem-closing");
             },
             { once: true }
           );

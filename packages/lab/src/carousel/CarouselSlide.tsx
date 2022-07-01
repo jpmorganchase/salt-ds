@@ -13,9 +13,9 @@ import { ButtonBar, ButtonBarProps } from "../buttonbar";
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   ButtonBar?: ElementType<Partial<ButtonBarProps>>;
   Media: ReactElement;
-  description: string;
-  title: string;
-  contentAlignment: "center" | "left" | "right";
+  description?: string;
+  title?: string;
+  contentAlignment?: "center" | "left" | "right";
 }
 
 const withBaseName = makePrefixer("uitkCarouselSlide");
@@ -70,7 +70,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
                     contentAlignment === "left",
                 })}
                 stackAtBreakpoint={0}
-              ></ButtonBar>
+              />
             </div>
           )}
         </div>

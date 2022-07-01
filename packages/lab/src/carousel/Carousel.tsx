@@ -1,4 +1,4 @@
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
   Children,
@@ -6,29 +6,25 @@ import {
   HTMLAttributes,
   ReactElement,
   useEffect,
-  useState,
 } from "react";
 import { RadioButtonGroup } from "../radio-button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import warning from "warning";
-import { useId } from "../utils";
 import cx from "classnames";
 import "./Carousel.css";
-import {
-  LayoutAnimationDirection,
-  LayoutAnimationTransition,
-} from "@jpmorganchase/uitk-core/src/layout/types";
+import { LayoutAnimationDirection } from "@jpmorganchase/uitk-core/src/layout/types";
 import { DeckLayout } from "../layout";
+import { useSlideSelection } from "../utils";
 
 const withBaseName = makePrefixer("uitkCarousel");
 export type SlideDirections = "left" | "right";
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The active Index enables the consumers to select the active slide in the carousel.
+   * The initial Index enables you to select the active slide in the carousel.
    * Optional, default 0.
    **/
-  activeIndex?: number;
+  initialIndex?: number;
   /**
    * The animation when the slides are shown.
    * Optional. Defaults to `slide`
@@ -63,36 +59,10 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   id?: string;
 }
 
-const useSlideSelection = (
-  initialValue?: number
-): [
-  LayoutAnimationTransition | undefined,
-  number,
-  (sliderIndex: number, transition?: LayoutAnimationTransition) => void
-] => {
-  const [selectedSlide, setSelectedSlide] = useState(initialValue || 0);
-  const [selectedTransition, setSelectedTransition] = useState<
-    LayoutAnimationTransition | undefined
-  >(undefined);
-
-  const handleSlideSelection = (
-    sliderIndex: number,
-    transition?: LayoutAnimationTransition
-  ) => {
-    const newTransition = transition
-      ? transition
-      : selectedSlide < sliderIndex
-      ? "increase"
-      : "decrease";
-    setSelectedSlide(sliderIndex);
-    setSelectedTransition(newTransition);
-  };
-  return [selectedTransition, selectedSlide, handleSlideSelection];
-};
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
     {
-      activeIndex,
+      initialIndex,
       animation = "slide",
       animationTimeout = 800,
       carouselDescription,
@@ -109,7 +79,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const slidesCount = Children.count(children);
 
     const [selectedTransition, selectedSlide, handleSlideSelection] =
-      useSlideSelection(activeIndex);
+      useSlideSelection(initialIndex);
 
     const moveSlide = (direction: SlideDirections) => {
       const moveLeft =
