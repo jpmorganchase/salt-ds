@@ -1,16 +1,16 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { ToolkitProvider, FormField } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch, ToolkitProvider, FormField } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
 import { CustomStyling } from "./switch.stories";
 
 <Meta
-  title="Documentation/Lab/Switch"
+  title="Documentation/Core/Switch"
   component={Switch}
   parameters={{
     viewMode: "docs",
@@ -64,7 +64,7 @@ Disabled Switches can be either true or false but cannot be changed. Disabled Sw
 # API
 
 ```
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -93,15 +93,7 @@ import { Switch } from "@jpmorganchase/uitk-lab";
 
 ## Characteristics Used
 
-- [Focused](/docs/documentation-styles-and-theming-characteristics-focused--misc)
-  - --uitk-focused-outline-style
-  - --uitk-focused-line-width
-  - --uitk-focused-color
-  - --uitk-focused-outline-offset
-- [Text](/docs/documentation-styles-and-theming-characteristics-text--colors)
-  - --uitk-text-font-size
-  - --uitk-text-primary-foreground
-  - --uitk-text-highlight-color
+<CharacteristicUsage of={Switch} />
 
 ## --uitkSwitch CSS Custom Property API
 

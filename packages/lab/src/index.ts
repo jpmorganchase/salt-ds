@@ -32,7 +32,6 @@ export * from "./search-input";
 export * from "./slider";
 export * from "./spinner";
 export * from "./stepper-input";
-export * from "./switch";
 export * from "./tabs";
 export * from "./toggle-button";
 export * from "./toolbar";
