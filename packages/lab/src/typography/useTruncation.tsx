@@ -50,7 +50,7 @@ export const useTruncation = (
             offsetWidth < scrollWidth ||
             Math.ceil(widthParent) < scrollWidth
           ) {
-            textRows = Math.floor(heightParent / lineHeight);
+            textRows = Math.ceil(heightParent / lineHeight);
           }
         }
       }
