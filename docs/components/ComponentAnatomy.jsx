@@ -57,21 +57,21 @@ export const ComponentAnatomy = ({
   const getComponentElement = () =>
     targetId
       ? document.querySelector(`#${targetId}`)
-      : root.current?.querySelector(".RenderVisualiser-component > *");
-
-  const target = getComponentElement();
+      : root.current.querySelector(".RenderVisualiser-component > *");
 
   const mutationHandler = useCallback((mutations) => {
+    const target = getComponentElement();
     fetchTree(target);
   }, []);
 
   useEffect(() => {
     // also somehow need to monitor owned and controlled elements
+    const target = getComponentElement();
     if (target) {
       registerMutationObserver(target, mutationHandler);
       fetchTree(target);
     }
-  }, [mutationHandler, target]);
+  }, [mutationHandler]);
 
   return (
     <div className="RenderVisualiser" ref={root} {...props}>
