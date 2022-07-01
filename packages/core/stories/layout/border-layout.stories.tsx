@@ -3,6 +3,7 @@ import {
   BorderLayout,
   Button,
   SplitLayout,
+  Switch,
 } from "@jpmorganchase/uitk-core";
 import {
   ChevronLeftIcon,
@@ -16,7 +17,6 @@ import {
   ButtonBar,
   OrderedButton,
   Pill,
-  Switch,
   Tab,
   Tabstrip,
   Tooltray,
