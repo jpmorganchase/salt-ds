@@ -1,8 +1,8 @@
+import { Breakpoints } from "../breakpoints";
 import {
-  Breakpoints,
   useCurrentBreakpoint,
   useOrderedBreakpoints,
-} from "@jpmorganchase/uitk-core";
+} from "./useResponsiveProp";
 
 export const useIsViewportLargerThanBreakpoint = (
   targetedBreakpoint: keyof Breakpoints
