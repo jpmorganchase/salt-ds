@@ -1,38 +1,38 @@
 import { ChangeEvent, useState } from "react";
 import cx from "classnames";
 import {
-  BorderLayout,
-  BorderItem,
+  ChevronLeftIcon,
+  MessageIcon,
+  NotificationIcon,
+  SettingsIcon,
+} from "@jpmorganchase/uitk-icons";
+import {
   AppHeader,
   Badge,
-  Logo,
-  LogoProps,
+  ButtonBar,
+  OrderedButton,
+  Pill,
+  Switch,
   Tab,
   Tabstrip,
   Tooltray,
-  SplitLayout,
-  Pill,
-  Switch,
-  ButtonBar,
-  OrderedButton,
 } from "@jpmorganchase/uitk-lab";
-import { Button } from "@jpmorganchase/uitk-core";
 import {
-  NotificationIcon,
-  MessageIcon,
-  SettingsIcon,
-  ChevronLeftIcon,
-} from "@jpmorganchase/uitk-icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import "./styles.css";
-import PlaceholderLogo from "docs/assets/placeholder.svg";
-import { FlowLayoutSimpleUsage } from "../../../core/stories/layout/flow-layout.stories";
+  FlowLayoutComposite,
+  FlowLayoutSimpleUsage,
+} from "./flow-layout.stories";
+import {
+  Button,
+  BorderItem,
+  BorderLayout,
+  SplitLayout,
+} from "@jpmorganchase/uitk-core";
 import { SplitLayoutSimpleUsage } from "./split-layout.stories";
-import { FlowLayoutComposite } from "../../../core/stories/layout/flow-layout.stories";
-import { FlexLayoutComposite } from "../../../core/stories/layout/flex-layout.stories";
+import { FlexLayoutComposite } from "./flex-layout.stories";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Layout/BorderLayout",
+  title: "Core/Layout/BorderLayout",
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {
@@ -203,25 +203,12 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
 export const ToolkitBorderLayoutFixedPanels = FixedPanels.bind({});
 ToolkitBorderLayoutFixedPanels.args = {};
 
-type ResponsiveItem = { "data-collapsed"?: boolean };
-
-const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} compact={props["data-collapsed"]} />
-);
-
 const Header = () => {
   const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];
   return (
     <>
       <AppHeader>
-        <CollapsibleLogo
-          data-align-start
-          data-collapsible="instant"
-          data-index={0}
-          data-priority={1}
-          src={PlaceholderLogo as string}
-          appTitle="Toolkit"
-        />
+        <strong>LOGO</strong>
         <Tabstrip data-index={1} data-priority={2}>
           {tabs.map((label, i) => (
             <Tab label={label} key={i} />

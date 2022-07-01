@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Card, GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
+import { Tabstrip, Tab, Avatar } from "@jpmorganchase/uitk-lab";
 import {
+  Button,
+  Card,
+  GridLayout,
+  GridItem,
   ParentChildLayout,
   StackedViewElement,
   useIsStacked,
-  Tabstrip,
-  Tab,
-  Avatar,
-} from "@jpmorganchase/uitk-lab";
-import { Button } from "@jpmorganchase/uitk-core";
+} from "@jpmorganchase/uitk-core";
 
 import "./styles.css";
 
 export default {
-  title: "Lab/Layout/ParentChildLayout",
+  title: "Core/Layout/ParentChildLayout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {
