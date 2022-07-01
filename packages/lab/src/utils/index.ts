@@ -7,7 +7,6 @@ export * from "./partition";
 export * from "./useChildRefs";
 export * from "./useClickOutside";
 export * from "./useEventCallback";
-export * from "./useIsFocusVisible";
 export * from "./useLayoutEffectOnce";
 export * from "./useLayoutEffectSkipFirst";
 export * from "./useOverflowDetection";
