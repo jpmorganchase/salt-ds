@@ -13,6 +13,7 @@ export * from "./panel";
 export * from "./popper";
 export * from "./portal";
 export * from "./state-icon";
+export * from "./switch";
 export * from "./theme";
 export * from "./toolkit-provider";
 export * from "./tooltip";
