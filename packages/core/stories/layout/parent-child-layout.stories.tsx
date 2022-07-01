@@ -10,7 +10,7 @@ import {
   GridItem,
   ParentChildLayout,
   StackedViewElement,
-  useIsStacked,
+  useIsViewportLargerThanBreakpoint,
 } from "@jpmorganchase/uitk-core";
 
 import "./styles.css";
@@ -164,7 +164,7 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
 
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
-  const isStacked = useIsStacked(stackedAtBreakpoint);
+  const isStacked = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
 
   const handleParent = () => {
     setCurrentView("parent");

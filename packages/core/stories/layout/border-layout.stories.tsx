@@ -2,6 +2,7 @@ import {
   BorderItem,
   BorderLayout,
   Button,
+  Pill,
   SplitLayout,
   Switch,
 } from "@jpmorganchase/uitk-core";
@@ -16,7 +17,6 @@ import {
   Badge,
   ButtonBar,
   OrderedButton,
-  Pill,
   Tab,
   Tabstrip,
   Tooltray,
