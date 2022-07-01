@@ -13,12 +13,8 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  Button,
-  ButtonProps,
-  useTooltip,
-  useTooltipContext,
-} from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps } from "../../button";
+import { useTooltip, useTooltipContext } from "../../tooltip";
 import {
   makePrefixer,
   useForkRef,
