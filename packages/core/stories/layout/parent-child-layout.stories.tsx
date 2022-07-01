@@ -2,12 +2,7 @@ import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import {
-  Tabstrip,
-  Tab,
-  Avatar,
-  useIsViewportLargerThanBreakpoint,
-} from "@jpmorganchase/uitk-lab";
+import { Tabstrip, Tab, Avatar } from "@jpmorganchase/uitk-lab";
 import {
   Button,
   Card,
@@ -15,6 +10,7 @@ import {
   GridItem,
   ParentChildLayout,
   StackedViewElement,
+  useIsViewportLargerThanBreakpoint,
 } from "@jpmorganchase/uitk-core";
 
 import "./styles.css";

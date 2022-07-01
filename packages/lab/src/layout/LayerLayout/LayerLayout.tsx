@@ -1,10 +1,14 @@
 import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
 import cx from "classnames";
 
-import { makePrefixer, Breakpoints } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  Breakpoints,
+  useIsViewportLargerThanBreakpoint,
+} from "@jpmorganchase/uitk-core";
 import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
-import { useIsViewportLargerThanBreakpoint, usePrevious } from "../../utils";
+import { usePrevious } from "../../utils";
 
 export const LAYER_POSITIONS = [
   "center",

@@ -10,5 +10,6 @@ export * from "./useControlled";
 export * from "./useForkRef";
 export * from "./useId";
 export * from "./useIsomorphicLayoutEffect";
+export * from "./useIsViewportLargerThanBreakpoint";
 export * from "./useResponsiveProp";
 export * from "./marginMiddleware";
