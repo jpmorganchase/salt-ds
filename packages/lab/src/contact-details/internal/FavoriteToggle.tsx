@@ -1,4 +1,8 @@
-import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
+import {
+  useControlled,
+  useForkRef,
+  useIsFocusVisible,
+} from "@jpmorganchase/uitk-core";
 import React, {
   FocusEventHandler,
   forwardRef,
@@ -6,7 +10,6 @@ import React, {
   MouseEventHandler,
   useState,
 } from "react";
-import { useIsFocusVisible } from "../../utils";
 import { StarIconContainer, StarIconContainerProps } from "./StarIconContainer";
 
 export interface FavoriteToggleProps
