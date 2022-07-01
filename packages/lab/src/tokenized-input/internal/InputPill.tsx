@@ -1,11 +1,11 @@
-import { CSSProperties, memo, MutableRefObject, useMemo, useRef } from "react";
 import classnames from "classnames";
+import { memo, MutableRefObject, useRef } from "react";
 import {
   makePrefixer,
+  Pill,
+  PillProps,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { Pill, PillProps } from "../../pill";
-
 import { getWidth } from "./useWidth";
 
 const withBaseName = makePrefixer("uitkInputPill");

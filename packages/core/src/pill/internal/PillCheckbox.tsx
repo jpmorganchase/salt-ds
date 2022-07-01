@@ -1,4 +1,5 @@
-import { CheckboxIcon, makePrefixer } from "@jpmorganchase/uitk-core";
+import { CheckboxIcon } from "../../checkbox";
+import { makePrefixer } from "../../utils";
 import { pillBaseName } from "../constants";
 
 import "./PillCheckbox.css";

@@ -1,17 +1,17 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Pill, SelectablePill } from "@jpmorganchase/uitk-core";
 import { UserBadgeIcon } from "@jpmorganchase/uitk-icons";
-import { Pill, SelectablePill } from "@jpmorganchase/uitk-lab";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { CustomStyling } from "./pill.stories";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CSSClassTable,
   CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
+import { CustomStyling } from "./pill.stories";
 
 <Meta
-  title="Documentation/Lab/Pill"
+  title="Documentation/Core/Pill"
   component={Pill}
   parameters={{
     viewMode: "docs",
@@ -198,7 +198,7 @@ application and not internally, within the component. It provides developers
 finer-grained control of interactions.
 
 <Canvas>
-  <Story id="lab-pill--controlled-pill" />
+  <Story id="core-pill--controlled-pill" />
 </Canvas>
 
 ## Accessibility
@@ -224,7 +224,7 @@ ensure it provides an accurate role to screen readers.
 ## API
 
 ```
-import { Pill } from "@jpmorganchase/uitk-lab";
+import { Pill } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props

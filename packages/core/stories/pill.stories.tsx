@@ -7,15 +7,14 @@
  */
 
 import { useState, SyntheticEvent } from "react";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Pill } from "@jpmorganchase/uitk-lab";
+import { Pill, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { FavoriteIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { StarIcon } from "../src/contact-details/internal/StarIcon";
 
 import "./Pill.stories.newapp-pill.css";
 
 export default {
-  title: "Lab/Pill",
+  title: "Core/Pill",
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
@@ -82,7 +81,7 @@ export const DisabledClosablePill: ComponentStory<typeof Pill> = () => {
 export const IconPill: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
-      icon={<StarIcon />}
+      icon={<FavoriteIcon />}
       label="Pill with Icon"
       onClick={() => console.log("Clicked.")}
     />
