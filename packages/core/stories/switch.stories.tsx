@@ -1,12 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Panel, Switch, ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 import "./Switch.stories.newapp-switch.css";
 
 export default {
-  title: "Lab/Switch",
+  title: "Core/Switch",
   component: Switch,
 } as ComponentMeta<typeof Switch>;
 
