@@ -1,4 +1,9 @@
-import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  makePrefixer,
+  useId,
+  RadioButtonGroup,
+} from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
   Children,
@@ -7,7 +12,6 @@ import {
   ReactElement,
   useEffect,
 } from "react";
-import { RadioButtonGroup } from "../radio-button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import warning from "warning";
 import cx from "classnames";
