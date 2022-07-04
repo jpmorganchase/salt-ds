@@ -1,15 +1,15 @@
 import { Children, forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  LayoutAnimation,
+  LayoutAnimationDirection,
+  LayoutAnimationTransition,
+} from "@jpmorganchase/uitk-core";
 
 import { DeckItem } from "../DeckItem";
 import "./DeckLayout.css";
 
 import cx from "classnames";
-import {
-  LayoutAnimation,
-  LayoutAnimationDirection,
-  LayoutAnimationTransition,
-} from "@jpmorganchase/uitk-core/src/layout/types";
 
 export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
