@@ -1,6 +1,26 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./ComponentAnatomy.css";
 
+function waitForElement(selector) {
+  return new Promise((resolve) => {
+    if (document.querySelector(selector)) {
+      return resolve(document.querySelector(selector));
+    }
+
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(selector)) {
+        resolve(document.querySelector(selector));
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+}
+
 const registerMutationObserver = (element, callback) => {
   console.log("registerMutationObserver");
 
@@ -33,6 +53,8 @@ export const ComponentAnatomy = ({
 }) => {
   const root = useRef(null);
   const [tree, setTree] = useState([]);
+  const [renderVisualiserChildren, setRenderVisualiserChildren] =
+    useState(undefined);
   const [[showClasses, showRole, showAria, showData], setState] = useState([
     1, 1, 1, 1,
   ]);
@@ -54,10 +76,16 @@ export const ComponentAnatomy = ({
     setTree(t);
   };
 
+  useEffect(() => {
+    waitForElement(".RenderVisualiser-component > *").then((element) => {
+      setRenderVisualiserChildren(element);
+    });
+  }, []);
+
   const getComponentElement = () =>
     targetId
       ? document.querySelector(`#${targetId}`)
-      : root.current.querySelector(".RenderVisualiser-component > *");
+      : renderVisualiserChildren;
 
   const mutationHandler = useCallback((mutations) => {
     const target = getComponentElement();
@@ -71,7 +99,7 @@ export const ComponentAnatomy = ({
       registerMutationObserver(target, mutationHandler);
       fetchTree(target);
     }
-  }, [mutationHandler]);
+  }, [mutationHandler, renderVisualiserChildren]);
 
   return (
     <div className="RenderVisualiser" ref={root} {...props}>
