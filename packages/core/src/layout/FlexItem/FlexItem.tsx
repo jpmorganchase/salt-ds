@@ -4,7 +4,12 @@ import "./FlexItem.css";
 import cx from "classnames";
 
 const withBaseName = makePrefixer("uitkFlexItem");
-export const FLEX_ITEM_ALIGNMENTS = ["start", "end", "center", "stretch"];
+export const FLEX_ITEM_ALIGNMENTS = [
+  "start",
+  "end",
+  "center",
+  "stretch",
+] as const;
 
 export type flexItemAlignment = typeof FLEX_ITEM_ALIGNMENTS[number];
 
