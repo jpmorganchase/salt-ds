@@ -94,6 +94,7 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
 };
 export const ToolkitFlexLayoutResponsive = Responsive.bind({});
 ToolkitFlexLayoutResponsive.args = {
+  justify: "center",
   direction: {
     xs: "column",
     md: "row",
