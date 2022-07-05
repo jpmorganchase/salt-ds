@@ -29,7 +29,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   direction?: ResponsiveProp<LayoutDirection>;
   /**
-   * Controls the space between items.
+   * Controls the space between items, default is 3.
    */
   gap?: ResponsiveProp<number>;
   /**

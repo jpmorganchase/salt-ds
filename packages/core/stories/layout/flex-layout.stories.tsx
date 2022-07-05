@@ -4,6 +4,7 @@ import {
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
   FlexLayout,
+  LAYOUT_DIRECTION,
 } from "@jpmorganchase/uitk-core";
 import {
   Metric,
@@ -27,6 +28,10 @@ export default {
   argTypes: {
     align: {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
+      control: { type: "select" },
+    },
+    direction: {
+      options: LAYOUT_DIRECTION,
       control: { type: "select" },
     },
     justify: {
