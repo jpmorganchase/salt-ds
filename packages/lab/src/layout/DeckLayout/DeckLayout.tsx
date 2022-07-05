@@ -4,6 +4,7 @@ import {
   LayoutAnimation,
   LayoutAnimationDirection,
   LayoutAnimationTransition,
+  GridLayout,
 } from "@jpmorganchase/uitk-core";
 
 import { DeckItem } from "../DeckItem";
@@ -44,7 +45,13 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
   ) {
     const deckItemProps = { animation, direction, transition };
     return (
-      <div className={cx(withBaseName(), className)} ref={ref} {...rest}>
+      <GridLayout
+        className={cx(withBaseName(), className)}
+        ref={ref}
+        columns={1}
+        rows={1}
+        {...rest}
+      >
         {Children.map(children, (child, index) => {
           return (
             <DeckItem
@@ -57,7 +64,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
             </DeckItem>
           );
         })}
-      </div>
+      </GridLayout>
     );
   }
 );
