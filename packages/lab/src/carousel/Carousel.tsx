@@ -3,6 +3,7 @@ import {
   makePrefixer,
   useId,
   RadioButtonGroup,
+  GridLayout,
 } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
@@ -112,18 +113,19 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     }, [children]);
 
     return (
-      <div
+      <GridLayout
         aria-label={carouselDescription}
         aria-roledescription="carousel"
         id={id}
         role="region"
         ref={ref}
-        {...rest}
+        gap={0}
         className={cx(
           withBaseName(),
           compact && withBaseName("compact"),
           className
         )}
+        {...rest}
       >
         <Button
           variant="secondary"
@@ -159,7 +161,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
             value={`${selectedSlide}`}
           />
         </div>
-      </div>
+      </GridLayout>
     );
   }
 );

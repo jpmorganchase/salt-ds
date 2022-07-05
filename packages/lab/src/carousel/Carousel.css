@@ -1,5 +1,4 @@
 .uitkCarousel {
-  display: grid;
   grid-template-columns: min-content auto min-content;
   grid-template-areas: "prev-button slider next-button" "dots dots dots";
 }
