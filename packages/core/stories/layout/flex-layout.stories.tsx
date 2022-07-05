@@ -34,6 +34,10 @@ export default {
       options: LAYOUT_DIRECTION,
       control: { type: "select" },
     },
+    gap: {
+      type: "number",
+      defaultValue: 3,
+    },
     justify: {
       options: FLEX_CONTENT_ALIGNMENT_BASE,
       control: { type: "select" },

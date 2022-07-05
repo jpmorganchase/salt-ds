@@ -23,6 +23,10 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
+    gap: {
+      type: "number",
+      defaultValue: 3,
+    },
   },
   excludeStories: [
     "ComplexFormOne",
