@@ -116,7 +116,7 @@ FlexLayoutSimpleUsage.args = {
 };
 
 export const ContactDetailsExample = ({ index }: { index: number }) => (
-  <ContactDetails embedded={true}>
+  <ContactDetails embedded={true} stackAtBreakpoint={0}>
     <ContactAvatar />
     <ContactPrimaryInfo text={`Contact ${index + 1}`} />
     <ContactSecondaryInfo text="Blackrock Advisors (UK) Limited" />

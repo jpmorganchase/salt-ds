@@ -48,7 +48,7 @@ export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
 DefaultFlowLayout.args = {};
 
 export const MetricExample = () => (
-  <Metric direction="up">
+  <Metric direction="up" size="large">
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
   </Metric>
