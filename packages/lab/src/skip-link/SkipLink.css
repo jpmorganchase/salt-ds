@@ -6,6 +6,11 @@
   --skipLink-color: var(--uitkSkipLink-color, var(--uitk-text-primary-foreground));
 }
 
+/* Overrides */
+.uitkSkipLink {
+  --uitkLink-color-focus: var(--skipLink-color)
+}
+
 .uitkSkipLink-target {
   --skipLink-target-focus: var(--uitk-focused-outline);
 }
