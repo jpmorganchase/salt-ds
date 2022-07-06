@@ -21,11 +21,11 @@ export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+   * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
    */
   align?: FlexAlignment | "stretch" | "baseline";
   /**
-   * Establishes the main-axis, defining the direction children are placed.
+   * Establishes the main-axis, defining the direction children are placed. Default is "row".
    */
   direction?: ResponsiveProp<LayoutDirection>;
   /**
@@ -33,11 +33,11 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   gap?: ResponsiveProp<number>;
   /**
-   * Defines the alignment along the main axis.
+   * Defines the alignment along the main axis, default is "start".
    */
   justify?: FlexContentAlignment;
   /**
-   * Adds a separator between elements.
+   * Adds a separator between elements, default is false.
    */
   separators?: LayoutSeparator | true;
   /**
