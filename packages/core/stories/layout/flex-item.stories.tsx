@@ -39,17 +39,17 @@ export const FlexContent = ({
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout>
-      <FlexItem {...args}>
+    <FlexLayout style={{ width: "50vw" }}>
+      <FlexItem style={{ width: "100%" }} {...args}>
         <FlexContent classname={"layout-active-content"} />
       </FlexItem>
-      <FlexItem>
+      <FlexItem style={{ width: "100%" }}>
         <FlexContent>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
         </FlexContent>
       </FlexItem>
-      <FlexItem>
+      <FlexItem style={{ width: "100%" }}>
         <FlexContent>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
@@ -60,6 +60,6 @@ const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
 };
 export const FlexItemWrapper = FlexItemStory.bind({});
 FlexItemWrapper.args = {
-  shrink: 0,
+  shrink: 1,
   grow: 0,
 };
