@@ -17,6 +17,12 @@ describe("GIVEN a Flex", () => {
       cy.get(".uitkFlexLayout").should("have.css", "flex-direction", "row");
     });
 
+    it("THEN it should render with no flex wrap", () => {
+      cy.mount(<DefaultFlexLayout />);
+
+      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+    });
+
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultFlexLayout />);
 
