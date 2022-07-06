@@ -2,16 +2,14 @@ import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import { Tabstrip, Tab, Avatar } from "@jpmorganchase/uitk-lab";
+import { Tabstrip, Tab } from "@jpmorganchase/uitk-lab";
 import {
   Button,
-  Card,
-  GridLayout,
-  GridItem,
   ParentChildLayout,
   StackedViewElement,
   useIsViewportLargerThanBreakpoint,
 } from "@jpmorganchase/uitk-core";
+import { GridLayoutComposite } from "./grid-layout.stories";
 
 import "./styles.css";
 
@@ -159,7 +157,7 @@ const containerStyles = {
 
 const stackedAtBreakpoint = "sm";
 
-const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
+const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
@@ -183,126 +181,34 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
         }
       }}
       value={selectedTab}
-      style={{ width: "100%" }}
+      style={{ width: "100%", minWidth: 300 }}
     >
-      {tabs.map((label, i) => (
-        <Tab label={label} key={i} />
+      {tabs.map((_, index) => (
+        <Tab label="Medium" key={index} />
       ))}
     </Tabstrip>
   );
 
-  const child = (
-    <GridLayout rows={2} columns={5}>
-      <GridItem rowSpan={2} colSpan={1}>
-        <Card
-          style={{
-            ...cardStyles,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h1>{tabs[selectedTab]}</h1>
-          {isStacked && (
-            <Button variant="cta" onClick={handleParent}>
-              <DoubleChevronLeftIcon size={12} />
-              {` Return`}
-            </Button>
-          )}
-        </Card>
-      </GridItem>
-
-      <GridItem colSpan={2}>
-        <Card style={cardStyles}>
-          <Avatar />
-          <p>{cardText}</p>
-        </Card>
-      </GridItem>
-      <GridItem colSpan={2}>
-        <Card style={cardStyles}>
-          <Avatar />
-          <p>{cardText}</p>
-        </Card>
-      </GridItem>
-      <GridItem colSpan={4}>
-        <Card style={cardStyles}>
-          <Avatar />
-          <p>{cardText}</p>
-        </Card>
-      </GridItem>
-    </GridLayout>
+  const backButton = isStacked && (
+    <Button variant="cta" onClick={handleParent}>
+      <DoubleChevronLeftIcon size={12} />
+      {` Return`}
+    </Button>
   );
 
   return (
-    <div style={containerStyles}>
+    <div>
       <ParentChildLayout
         {...args}
         stackedViewElement={currentView}
         parent={parent}
-        child={child}
+        child={<GridLayoutComposite />}
       />
     </div>
   );
 };
 
-export const ToolkitParentChildLayoutResponsive = Responsive.bind({});
-ToolkitParentChildLayoutResponsive.args = {
+export const ParentChildLayoutComposite = Dashboard.bind({});
+ParentChildLayoutComposite.args = {
   stackedAtBreakpoint,
 };
-
-// TODO: add new example for parent and child
-// const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
-//   const [selectedTab, handleTabSelection] = useTabSelection();
-
-//   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
-
-//   const isStacked = useIsStacked(stackedAtBreakpoint);
-
-//   const handleParent = () => {
-//     setCurrentView("parent");
-//   };
-//   const handleChild = () => {
-//     setCurrentView("child");
-//   };
-
-//   const parent = (
-//     <Tabstrip
-//       onChange={handleTabSelection}
-//       orientation="vertical"
-//       onClick={() => {
-//         if (isStacked) {
-//           handleChild();
-//         }
-//       }}
-//       value={selectedTab}
-//       style={{ width: "100%", minWidth: 300 }}
-//     >
-//       {tabs.map((_, index) => (
-//         <Tab label="Medium" key={index} />
-//       ))}
-//     </Tabstrip>
-//   );
-
-//   const backButton = isStacked && (
-//     <Button variant="cta" onClick={handleParent}>
-//       <DoubleChevronLeftIcon size={12} />
-//       {` Return`}
-//     </Button>
-//   );
-
-//   return (
-//     <div style={containerStyles}>
-//       <ParentChildLayout
-//         {...args}
-//         stackedViewElement={currentView}
-//         parent={parent}
-//         child={<GridLayoutComposite />}
-//       />
-//     </div>
-//   );
-// };
-
-// export const ParentChildLayoutComposite = Dashboard.bind({});
-// ParentChildLayoutComposite.args = {
-//   stackedAtBreakpoint,
-// };

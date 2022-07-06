@@ -113,6 +113,18 @@
   padding: calc(var(--uitk-size-unit) * 3) 0 calc(var(--uitk-size-unit) * 2) 0;
 }
 
+.grid-layout-container .uitkCard {
+  min-height: 744px;
+}
+
+.grid-blog-container {
+  padding: calc(var(--uitk-size-unit) * 3);
+}
+
+.grid-blog-container img {
+  width: 100%;
+}
+
 @media (prefers-reduced-motion) {
   .reduced-motion .uitkParentChildItem-slide-left {
     animation: none;
