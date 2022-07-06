@@ -172,7 +172,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
         }
       }}
       activeTabIndex={selectedTab}
-      style={{ width: "100%", , minWidth: 300 }}
+      style={{ width: "100%", minWidth: 300 }}
     >
       {tabs.map((label, index) => (
         <Tab label={label} key={index} />

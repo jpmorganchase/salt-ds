@@ -4,12 +4,12 @@ import {
   FLEX_CONTENT_ALIGNMENT_BASE,
   FlexItem,
   FlexLayout,
+  LAYOUT_DIRECTION,
   FormField,
   Input,
   StackLayout,
   FlowLayout,
   Pill,
-  LAYOUT_DIRECTION,
 } from "@jpmorganchase/uitk-core";
 import {
   Metric,
