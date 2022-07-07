@@ -37,7 +37,7 @@
 .background-item-wrapper {
   --itemWrapper-calculated-item-width: calc(var(--bgBlock-inner-width) / var(--qaContainer-cols) - var(--bgBlock-gap));
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
   margin-right: var(--bgBlock-gap);
   padding: var(--qaContainer-item-padding, 0);
   vertical-align: top;
