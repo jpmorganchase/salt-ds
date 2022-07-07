@@ -39,7 +39,7 @@ export const FlexContent = ({
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout style={{ width: "50vw" }}>
+    <FlexLayout wrap={false} style={{ width: "50vw" }}>
       <FlexItem style={{ width: "100%" }} {...args}>
         <FlexContent classname={"layout-active-content"} />
       </FlexItem>

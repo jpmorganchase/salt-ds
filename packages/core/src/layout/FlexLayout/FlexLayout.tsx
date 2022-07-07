@@ -41,7 +41,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   separators?: LayoutSeparator | true;
   /**
-   * Allow the items to wrap as needed, default is false.
+   * Allow the items to wrap as needed, default is true.
    */
   wrap?: ResponsiveProp<boolean>;
 }
@@ -57,7 +57,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       justify,
       separators,
       style,
-      wrap,
+      wrap = true,
       ...rest
     },
     ref
@@ -69,7 +69,8 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
 
     const flexGap = useResponsiveProp(gap, 3);
     const flexDirection = useResponsiveProp(direction, "row");
-    const flexWrap = useResponsiveProp(wrap, false);
+    const flexWrap = useResponsiveProp(wrap, true);
+
     const flexLayoutStyles = {
       ...style,
       "--flex-layout-align": align && addPrefix(align),
