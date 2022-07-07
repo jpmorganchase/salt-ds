@@ -1,6 +1,6 @@
 import { Switch } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
+import { ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
 import "./switch.qa.stories.css";
 
 export default {
@@ -12,35 +12,17 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Switch>;
 
-export const AllExamplesGrid: ComponentStory<typeof Switch> = (props) => {
+export const AllExamplesGrid: Story<
+  QAContainerProps & { className?: string }
+> = (props) => {
   const { className } = props;
   return (
-    <AllRenderer>
-      <div
-        style={{
-          background: "inherit",
-          display: "inline-grid",
-          gridTemplate: "auto / repeat(4,auto)",
-          gap: "4px",
-        }}
-      >
-        <Switch className={className} key="Default" label="Default" />
-        <Switch
-          className={className}
-          defaultChecked
-          key="Default"
-          label="Default"
-        />
-        <Switch className={className} disabled key="Default" label="Default" />
-        <Switch
-          className={className}
-          defaultChecked
-          disabled
-          key="Default"
-          label="Default"
-        />
-      </div>
-    </AllRenderer>
+    <QAContainer cols={4} {...props}>
+      <Switch label="Default" />
+      <Switch checked label="Default" />
+      <Switch disabled label="Default" />
+      <Switch checked disabled label="Default" />
+    </QAContainer>
   );
 };
 
@@ -57,16 +39,8 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Switch> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      width={948}
-      className="uitkSwitchQA"
-      imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
+    <BackwardsCompatGrid imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png" />
   );
 };
