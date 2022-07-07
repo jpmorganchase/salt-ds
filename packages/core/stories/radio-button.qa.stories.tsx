@@ -1,7 +1,6 @@
 import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
-import "./radio-button.qa.stories.css";
+import { ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Radio Button/QA",
@@ -12,53 +11,44 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof RadioButton>;
 
-export const AllExamplesGrid: ComponentStory<typeof RadioButton> = (props) => {
+export const AllExamplesGrid: Story<
+  QAContainerProps & { className?: string }
+> = (props) => {
   const { className } = props;
   return (
-    <AllRenderer>
-      <>
-        <div
-          style={{
-            background: "inherit",
-            display: "inline-grid",
-            gridTemplate: "auto / repeat(4,auto)",
-            gap: "4px",
-          }}
-        >
-          <RadioButtonGroup
-            className={className}
-            aria-label="Uncontrolled Example"
-            defaultValue="forward"
-            legend="Example"
-          >
-            <RadioButton key="spot" label="Spot" value="spot" />
-            <RadioButton key="forward" label="Forward" value="forward" />
-            <RadioButton
-              disabled
-              key="option"
-              label="Option (disabled)"
-              value="option"
-            />
-          </RadioButtonGroup>
-        </div>
-        <RadioButtonGroup
-          className={className}
-          defaultValue="forward"
-          legend="Example"
-          name="fx"
-          row
-        >
-          <RadioButton key="spot" label="Spot" value="spot" />
-          <RadioButton key="forward" label="Forward" value="forward" />
-          <RadioButton
-            disabled
-            key="option"
-            label="Option (disabled)"
-            value="option"
-          />
-        </RadioButtonGroup>
-      </>
-    </AllRenderer>
+    <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
+      <RadioButtonGroup
+        className={className}
+        aria-label="Uncontrolled Example"
+        defaultValue="forward"
+        legend="Example"
+      >
+        <RadioButton key="spot" label="Spot" value="spot" />
+        <RadioButton key="forward" label="Forward" value="forward" />
+        <RadioButton
+          disabled
+          key="option"
+          label="Option (disabled)"
+          value="option"
+        />
+      </RadioButtonGroup>
+      <RadioButtonGroup
+        className={className}
+        defaultValue="forward"
+        legend="Example"
+        name="fx"
+        row
+      >
+        <RadioButton key="spot" label="Spot" value="spot" />
+        <RadioButton key="forward" label="Forward" value="forward" />
+        <RadioButton
+          disabled
+          key="option"
+          label="Option (disabled)"
+          value="option"
+        />
+      </RadioButtonGroup>
+    </QAContainer>
   );
 };
 
@@ -75,17 +65,11 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof RadioButton> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      className="uitkRadioButtonQA"
-      width={1180}
-      height={605}
+    <AllExamplesGrid
+      className="backwardsCompat"
       imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
+    />
   );
 };
