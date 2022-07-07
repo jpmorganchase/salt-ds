@@ -17,10 +17,10 @@ describe("GIVEN a Flex", () => {
       cy.get(".uitkFlexLayout").should("have.css", "flex-direction", "row");
     });
 
-    it("THEN it should render with no flex wrap", () => {
+    it("THEN it should render with flex wrap", () => {
       cy.mount(<DefaultFlexLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
@@ -34,13 +34,13 @@ describe("GIVEN a Flex", () => {
     it("THEN nested items should not inherit css variables from parent", () => {
       cy.mount(<FlexLayoutNested />);
 
-      cy.get(".uitkFlexLayout").eq(0).should("have.css", "flex-wrap", "wrap");
+      cy.get(".uitkFlexLayout").eq(0).should("have.css", "flex-wrap", "nowrap");
       cy.get(".uitkFlexLayout")
         .eq(0)
         .should("have.css", "justify-content", "space-between");
       cy.get(".uitkFlexLayout").eq(0).should("have.css", "row-gap", "48px");
 
-      cy.get(".uitkFlexLayout").eq(1).should("have.css", "flex-wrap", "nowrap");
+      cy.get(".uitkFlexLayout").eq(1).should("have.css", "flex-wrap", "wrap");
       cy.get(".uitkFlexLayout")
         .eq(1)
         .should("have.css", "justify-content", "flex-start");

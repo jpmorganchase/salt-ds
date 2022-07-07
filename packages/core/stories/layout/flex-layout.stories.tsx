@@ -175,5 +175,6 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
 FlexLayoutNested.args = {
   justify: "space-between",
+  wrap: false,
   gap: 6,
 };
