@@ -47,7 +47,7 @@ const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
   return (
     <FlowLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </FlowLayout>
   );

@@ -25,15 +25,22 @@ interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   caption?: string;
   classname?: string;
+  number?: number;
 }
 
 export const FlexContent = ({
   children,
   classname,
+  number,
   ...rest
 }: FlexContentProps) => (
   <div className={classname || "layout-content"} {...rest}>
-    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
+    {children || (
+      <p>
+        {number && `${number}. `}Lorem ipsum dolor sit amet, consectetur
+        adipisicing.
+      </p>
+    )}
   </div>
 );
 

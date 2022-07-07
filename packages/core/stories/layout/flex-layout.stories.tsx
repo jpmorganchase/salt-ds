@@ -57,7 +57,7 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </FlexLayout>
   );
@@ -69,7 +69,7 @@ const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
         <FlexItem>
-          <FlexContent key={index} />
+          <FlexContent key={index} number={index + 1} />
         </FlexItem>
       ))}
     </FlexLayout>
@@ -84,7 +84,7 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 6 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </FlexLayout>
   );
