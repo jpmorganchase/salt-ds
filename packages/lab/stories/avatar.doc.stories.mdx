@@ -1,0 +1,142 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Avatar } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./avatar.stories";
+
+<Meta
+  title="Documentation/Lab/Avatar"
+  component={Avatar}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Avatar
+
+An Avatar is a small circular graphical representation of a person through a personal profile picture or name initials.
+
+## Default Avatar
+
+<Canvas>
+  <Story name="Default Avatar" decorators={[withFlexGap]}>
+    <Avatar size="small" />
+    <Avatar size="medium" />
+    <Avatar size="large" />
+  </Story>
+</Canvas>
+
+## Image Avatar
+
+Reference your image in the `src` prop
+
+<Canvas>
+  <Story name="Image Avatar" decorators={[withFlexGap]}>
+    <Avatar alt="Logo" size="small" src="/docs/assets/placeholder.svg" />
+    <Avatar alt="Logo" size="medium" src="/docs/assets/placeholder.svg" />
+    <Avatar alt="Logo" size="large" src="/docs/assets/placeholder.svg" />
+  </Story>
+</Canvas>
+
+## Initials Avatar
+
+You can pass the initials as children
+
+<Canvas>
+  <Story name="Initials Avatar" decorators={[withFlexGap]}>
+    <Avatar size="small">SB</Avatar>
+    <Avatar size="medium">SB</Avatar>
+    <Avatar size="large">SB</Avatar>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Avatar } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Avatar} />
+
+## HTML Anatomy of Avatar component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <Avatar size="large" />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Avatar size="large" alt="Logo" src="/docs/assets/placeholder.svg" />
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Avatar size="large">SB</Avatar>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Avatar} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Avatar} />
+
+## --uitkAvatar CSS Custom Property API
+
+The default foreground and background colors of the Avatar are provided by the theme variables. See Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Avatar, but not defined by Avatar. They can be defined via a container or
+a custom class name to override avatar styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Avatar} />
+
+# Customising Avatar styles
+
+<Canvas>
+  <Story name="Custom Avatar Styling" decorators={[withFlexGap]}>
+    <>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Avatar size="small">SB</Avatar>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Avatar size="medium" alt="Logo" src="/docs/assets/placeholder.svg" />
+      </ToolkitProvider>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Avatar size="large" />
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Avatar size="small">SB</Avatar>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Avatar size="medium" alt="Logo" src="/docs/assets/placeholder.svg" />
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Avatar size="large" />
+      </ToolkitProvider>
+    </>
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file avatar.stories.newapp-avatar.css */
+
+.uitk-light.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-accent-background);
+  --uitkAvatar-foreground: var(--uitk-accent-foreground);
+}
+
+.uitk-dark.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-color-grey-50);
+  --uitkAvatar-foreground: var(--uitk-accent-background);
+}
+```

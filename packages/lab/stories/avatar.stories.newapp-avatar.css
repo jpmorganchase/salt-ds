@@ -1,0 +1,9 @@
+.uitk-light.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-accent-background);
+  --uitkAvatar-foreground: var(--uitk-accent-foreground);
+}
+
+.uitk-dark.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-color-grey-50);
+  --uitkAvatar-foreground: var(--uitk-accent-background);
+}
