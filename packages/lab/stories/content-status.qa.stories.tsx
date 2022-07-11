@@ -2,6 +2,8 @@ import { ContentStatus } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
+import "./content-status.qa.stories.css";
+
 export default {
   title: "Lab/Content Status/QA",
   component: ContentStatus,

@@ -23,10 +23,6 @@
   width: var(--qaContainer-width);
 }
 
-.uitkQAContainer uitk-theme {
-  display: inline-block;
-}
-
 .background-block {
   --bgBlock-outer-width: calc(var(--qaContainer-inner-width) / var(--qaContainer-cols));
   --bgBlock-inner-width: calc(var(--bgBlock-outer-width) - (2 * var(--qaContainer-item-padding)));
