@@ -120,6 +120,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         role="region"
         ref={ref}
         gap={0}
+        columns={3}
         className={cx(
           withBaseName(),
           compact && withBaseName("compact"),
