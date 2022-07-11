@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as skipLinkStories from "@stories/skip-link.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { SkipLink } from "../../../skip-link";
+import { SkipLink } from "@jpmorganchase/uitk-lab";
 
 const composedStories = composeStories(skipLinkStories);
 const { Default, MultipleLinks } = composedStories;
@@ -71,9 +71,8 @@ describe("GIVEN a SkipLink", () => {
         "Click here and press the Tab key to see the Skip Link"
       ).click();
       cy.realPress("Tab");
-      let skipLink = cy.findByTestId("skipLink");
-      skipLink.should("be.visible");
-      skipLink.click();
+      cy.findByTestId("skipLink").should("be.visible");
+      cy.findByTestId("skipLink").click();
 
       cy.get("#main").should("be.focused");
     });
@@ -84,10 +83,9 @@ describe("GIVEN a SkipLink", () => {
         "Click here and press the Tab key to see the Skip Link"
       ).click();
       cy.realPress("Tab");
-      let skipLink = cy.findByTestId("skipLink");
-      skipLink.should("be.visible");
-      skipLink.click();
-      skipLink.should("not.be.focused");
+      cy.findByTestId("skipLink").should("be.visible");
+      cy.findByTestId("skipLink").click();
+      cy.findByTestId("skipLink").should("not.be.focused");
       cy.get("#main").should("not.be.focused");
     });
   });

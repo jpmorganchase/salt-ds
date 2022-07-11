@@ -3,6 +3,7 @@ import { Link, LinkProps } from "../link";
 import "./SkipLink.css";
 import cx from "classnames";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 interface SkipLinkProps extends LinkProps {
   /**
@@ -13,14 +14,14 @@ interface SkipLinkProps extends LinkProps {
   targetRef?: RefObject<HTMLElement>;
 }
 
+const withBaseName = makePrefixer("uitkSkipLink");
+
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink(
     { className, targetRef, ...rest },
     ref: ForwardedRef<HTMLAnchorElement>
   ) {
-    const clxPrefix = "uitk";
-
-    const targetClass = cx(className, clxPrefix + "SkipLink-target");
+    const targetClass = cx(withBaseName("target"), className);
 
     const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });
 
@@ -28,7 +29,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
       <Link
         {...eventHandlers}
         {...rest}
-        className={cx(className, clxPrefix + "SkipLink")}
+        className={cx(withBaseName(), className)}
         ref={ref}
       />
     );
