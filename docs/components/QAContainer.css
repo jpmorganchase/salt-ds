@@ -1,5 +1,5 @@
 .uitkQAContainer {
-  --qaContainer-cols: 2;
+  --qaContainer-cols: 3;
   --qaContainer-height: 900px;
   --qaContainer-width: 1600px;
   --qaContainer-padding: 4px;
@@ -24,24 +24,29 @@
 }
 
 .background-block {
-  --bgBlock-outer-width: calc(var(--qaContainer-inner-width) / var(--qaContainer-cols));
-  --bgBlock-inner-width: calc(var(--bgBlock-outer-width) - (2 * var(--qaContainer-item-padding)));
   --bgBlock-padding: 6px;
   --bgBlock-gap: 0px;
+  --bgBlock-outer-width: calc(var(--qaContainer-inner-width) / var(--qaContainer-mode-cols));
+  --bgBlock-inner-width: calc(var(--bgBlock-outer-width) - (2 * var(--bgBlock-padding)));
+  --itemWrapper-item-width: calc(var(--bgBlock-inner-width) / var(--qaContainer-cols) - var(--bgBlock-gap));
+
   box-sizing: border-box;
   display: inline-block;
   padding: var(--bgBlock-padding);
   width: var(--bgBlock-outer-width);
 }
 
+.uitkQAContainer-vertical {
+  --qaContainer-mode-cols: 1;
+}
+
 .background-item-wrapper {
-  --itemWrapper-calculated-item-width: calc(var(--bgBlock-inner-width) / var(--qaContainer-cols) - var(--bgBlock-gap));
   box-sizing: border-box;
   display: inline-flex;
   margin-right: var(--bgBlock-gap);
   padding: var(--qaContainer-item-padding, 0);
   vertical-align: top;
-  width: var(--qaContainer-item-width, var(--itemWrapper-calculated-item-width));
+  width: var(--qaContainer-item-width, var(--itemWrapper-item-width));
 }
 .uitkFormFieldQA.uitkQAContainer {
   height: unset !important;

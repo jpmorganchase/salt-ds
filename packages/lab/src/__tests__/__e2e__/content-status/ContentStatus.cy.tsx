@@ -4,22 +4,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { ContentStatus } from "@jpmorganchase/uitk-lab";
 
-// Mock aria announcer to avoid the warnings
-// const mockAnnounce = jest.fn();
-
-// jest.mock("@jpmorganchase/uitk-core", () => ({
-//   ...jest.requireActual("@jpmorganchase/uitk-core"),
-//   useAriaAnnouncer: () => ({
-//     announce: mockAnnounce,
-//   }),
-// }));
-
 describe("GIVEN Content Status", () => {
-  // beforeEach(() => {
-  //   // jest.resetAllMocks();
-  //   cy.stub(AriaAnnounce, "announcement");
-  // });
-
   it("renders the info status with NO title AND NO message and NO actions WHEN no props are passed", () => {
     cy.mount(<ContentStatus id="1" />);
 
@@ -210,7 +195,7 @@ describe("GIVEN Content Status", () => {
   });
 
   /* TODO: custom ariaLabel prop removed causing issues here */
-  xdescribe("indeterminate loading", () => {
+  describe("indeterminate loading", () => {
     it("props from spinner can be customized", () => {
       const ariaLabel = "Loading component";
 

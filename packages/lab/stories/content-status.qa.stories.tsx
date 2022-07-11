@@ -1,6 +1,6 @@
 import { ContentStatus } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { QAContainer } from "docs/components";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./content-status.qa.stories.css";
 
@@ -9,9 +9,16 @@ export default {
   component: ContentStatus,
 } as ComponentMeta<typeof ContentStatus>;
 
-const ContentStatusExamples: ComponentStory<typeof ContentStatus> = (props) => {
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
-    <div>
+    <QAContainer
+      width={1600}
+      height={900}
+      cols={4}
+      vertical
+      className="uitkContentStatusQA"
+      {...props}
+    >
       <ContentStatus
         className={props.className}
         actionLabel="[CUSTOM ACTION]"
@@ -51,24 +58,24 @@ const ContentStatusExamples: ComponentStory<typeof ContentStatus> = (props) => {
         status="loading"
         value={38}
       />
-    </div>
-  );
-};
-
-export const AllExamplesGrid: Story = (props: { className?: string }) => {
-  const { className } = props;
-  return (
-    <QAContainer
-      width={1600}
-      height={900}
-      cols={8}
-      itemWidthAuto
-      className="uitkContentStatusQA"
-    >
-      <ContentStatusExamples className={className} />
     </QAContainer>
   );
 };
+
+// export const AllExamplesGrid: Story = (props: { className?: string }) => {
+//   const { className } = props;
+//   return (
+//     <QAContainer
+//       width={1600}
+//       height={900}
+//       cols={4}
+//       // itemWidthAuto
+//       className="uitkContentStatusQA"
+//     >
+//       <ContentStatusExamples className={className} />
+//     </QAContainer>
+//   );
+// };
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
@@ -87,15 +94,9 @@ export const CompareWithOriginalToolkit: ComponentStory<
   typeof ContentStatus
 > = () => {
   return (
-    <QAContainer
-      width={1600}
-      height={900}
-      cols={8}
-      itemWidthAuto
-      className="uitkContentStatusQA"
+    <AllExamplesGrid
       imgSrc="/visual-regression-screenshots/ContentStatus-vr-snapshot.png"
-    >
-      <ContentStatusExamples className="backwardsCompat" />
-    </QAContainer>
+      className="backwardsCompat"
+    />
   );
 };
