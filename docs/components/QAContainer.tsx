@@ -65,7 +65,7 @@ const DensityBlock = ({
 export const QAContainer: FC<QAContainerProps> = ({
   children,
   className,
-  cols = 2,
+  cols = 3,
   height,
   itemPadding,
   itemWidthAuto,

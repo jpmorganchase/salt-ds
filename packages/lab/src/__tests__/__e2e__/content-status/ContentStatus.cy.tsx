@@ -198,7 +198,7 @@ describe("GIVEN Content Status", () => {
   });
 
   /* TODO: custom ariaLabel prop removed causing issues here */
-  xdescribe("indeterminate loading", () => {
+  describe("indeterminate loading", () => {
     it("props from spinner can be customized", () => {
       const ariaLabel = "Loading component";
 
