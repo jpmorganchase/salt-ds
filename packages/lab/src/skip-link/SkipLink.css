@@ -8,7 +8,7 @@
 
 /* Overrides */
 .uitkSkipLink {
-  --uitkLink-color-focus: var(--skipLink-color)
+  --uitkLink-color-focus: var(--skipLink-color);
 }
 
 .uitkSkipLink-target {
@@ -17,7 +17,7 @@
 
 /*Styles applied when the link is focused to hide the Skip Link when not in focus*/
 .uitkSkipLink {
-  top:0;
+  top: 0;
   left: 0;
   width: 1px;
   height: 1px;
@@ -48,6 +48,5 @@
 
 /*Styles applied to the skip link focus target*/
 .uitkSkipLink-target {
-  outline: var(--skipLink-target-focus)
+  outline: var(--skipLink-target-focus);
 }
-
