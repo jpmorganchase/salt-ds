@@ -32,13 +32,13 @@ const Move: Record<string, [number, number]> = {
 export const DraggableImg = ({
   src,
   style: styleProp = {},
-  targetPosition = { left: 154, top: 100 },
+  targetPosition = { left: -1, top: -121 },
 }: {
   src: string;
   style?: CSSProperties;
   targetPosition?: { left: number; top: number };
-}) => {
-  const [[left, top], setPosition] = useState([20, 20]);
+}): JSX.Element => {
+  const [[left, top], setPosition] = useState([20, -100]);
   const [isAnimating, setIsAnimating] = useState(false);
   const currentPosition = useRef([left, top]);
   const [opacity, setOpacity] = useState(0.5);
@@ -96,8 +96,9 @@ export const DraggableImg = ({
   );
 
   const alignImages = useCallback(() => {
-    currentPosition.current = [targetPosition.left, targetPosition.top - 120];
-    setPosition([targetPosition.left, targetPosition.top - 120]);
+    console.log(`target top ${targetPosition.top}`);
+    currentPosition.current = [targetPosition.left, targetPosition.top];
+    setPosition([targetPosition.left, targetPosition.top]);
     setIsAnimating(true);
   }, [targetPosition]);
 

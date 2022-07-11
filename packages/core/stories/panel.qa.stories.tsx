@@ -1,6 +1,6 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 import { Panel } from "@jpmorganchase/uitk-core";
-import { AllRenderer, QAContainer } from "docs/components";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./panel.qa.stories.css";
 
@@ -9,29 +9,27 @@ export default {
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 
-export const ExamplesGrid: ComponentStory<typeof Panel> = (props) => {
-  return (
-    <AllRenderer>
-      <Panel {...props}>
-        <p>This is a panel around some text</p>
-      </Panel>
-    </AllRenderer>
-  );
-};
+export const ExamplesGrid: Story<QAContainerProps> = (props) => (
+  <QAContainer
+    className="uitkPanelQA"
+    cols={1}
+    itemWidthAuto
+    height={600}
+    width={1000}
+    {...props}
+  >
+    <Panel>
+      <p>This is a panel around some text</p>
+    </Panel>
+  </QAContainer>
+);
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Panel> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      className="uitkPanelQA"
-      imgSrc="/visual-regression-screenshots/Panel-vr-snapshot.png"
-    >
-      <ExamplesGrid />
-    </QAContainer>
+    <ExamplesGrid imgSrc="/visual-regression-screenshots/Panel-vr-snapshot.png" />
   );
 };

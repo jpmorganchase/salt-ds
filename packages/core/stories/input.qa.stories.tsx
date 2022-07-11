@@ -1,14 +1,33 @@
-import { Input, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
-import { BackgroundBlock } from "docs/components/BackgroundBlock";
-import { Adornments } from "./input.stories";
+import { Button, Input, StaticInputAdornment } from "@jpmorganchase/uitk-core";
+import {
+  CalendarIcon,
+  CallIcon,
+  CloseIcon,
+  SendIcon,
+  UserIcon,
+} from "@jpmorganchase/uitk-icons";
+import { Dropdown } from "@jpmorganchase/uitk-lab";
+import { ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
+
 import "./input.qa.stories.css";
 
 export default {
   title: "Core/Input/QA",
   component: Input,
 } as ComponentMeta<typeof Input>;
+
+const data = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Delaware",
+  "Florida",
+];
+
+const suffixData = ["KG", "lbs", "g"];
 
 const Default = () => (
   <Input
@@ -27,7 +46,7 @@ const Disabled = () => (
   />
 );
 
-const ReadOnly: ComponentStory<typeof Input> = () => {
+const ReadOnly = () => {
   return (
     <Input
       defaultValue={"Read Only Input"} // Read Only isn't currently a prop
@@ -37,47 +56,113 @@ const ReadOnly: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const AllExamplesGrid: ComponentStory<typeof Input> = (props) => {
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
-    <>
-      <AllRenderer>
-        <div
-          style={{
-            background: "inherit",
-            display: "inline-grid",
-            gridTemplate: "auto / repeat(3,auto)",
-            gap: "4px",
-          }}
-        >
-          <Default />
-          <Disabled />
-          <ReadOnly />
-        </div>
-      </AllRenderer>
-      <div
-        style={{
-          background: "inherit",
-          display: "inline-grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4px",
-        }}
-      >
-        <ToolkitProvider theme={"light"}>
-          <BackgroundBlock>
-            <div>
-              <Adornments />
-            </div>
-          </BackgroundBlock>
-        </ToolkitProvider>
-        <ToolkitProvider theme={"dark"}>
-          <BackgroundBlock>
-            <div>
-              <Adornments />
-            </div>
-          </BackgroundBlock>
-        </ToolkitProvider>
-      </div>
-    </>
+    <QAContainer cols={2} height={1300} itemPadding={6} width={1400} {...props}>
+      <Default />
+      <Disabled />
+      <ReadOnly />
+      <Input
+        defaultValue="Prefix: Icon"
+        startAdornment={
+          <StaticInputAdornment>
+            <CallIcon />
+          </StaticInputAdornment>
+        }
+      />
+      <Input
+        defaultValue="Prefix: Text"
+        startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
+      />
+      <Input
+        defaultValue="Suffix: Icon"
+        endAdornment={
+          <StaticInputAdornment>
+            <CalendarIcon size="small" />
+          </StaticInputAdornment>
+        }
+      />
+      <Input
+        defaultValue="Suffix: Text"
+        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+      />
+      <Input
+        defaultValue="Suffix: Button"
+        endAdornment={
+          <Button variant="secondary">
+            <CloseIcon aria-label="clear input" size="small" />
+          </Button>
+        }
+      />
+      <Input
+        defaultValue="Prefix: Icon + Text"
+        startAdornment={
+          <>
+            <StaticInputAdornment>
+              {/* Phone --> Call */}
+              <CallIcon size="small" />
+            </StaticInputAdornment>
+            <StaticInputAdornment>+1</StaticInputAdornment>
+          </>
+        }
+      />
+      <Input
+        defaultValue="Prefix: Interactive Component"
+        startAdornment={
+          <Dropdown initialSelectedItem={data[0]} source={data} width={90} />
+        }
+      />
+      <Input
+        defaultValue="Suffix: Text + Button"
+        endAdornment={
+          <>
+            <StaticInputAdornment>KG</StaticInputAdornment>
+            <Button variant="secondary">
+              <CloseIcon aria-label="clear input" size="small" />
+            </Button>
+          </>
+        }
+      />
+      <Input
+        defaultValue="Suffix: Interactive Component"
+        endAdornment={
+          <Dropdown
+            initialSelectedItem={suffixData[0]}
+            source={suffixData}
+            width={60}
+          />
+        }
+      />
+      <Input
+        defaultValue="Suffix: Button + Button"
+        endAdornment={
+          <>
+            <Button variant="secondary">
+              <CloseIcon aria-label="clear input" size="small" />
+            </Button>
+            <Button variant="cta">
+              <SendIcon size="small" />
+            </Button>
+          </>
+        }
+      />
+      <Input
+        defaultValue={"Suffix: Static + Button\n\n"}
+        endAdornment={
+          <>
+            <StaticInputAdornment>0/100</StaticInputAdornment>
+            <Button variant="primary">
+              <SendIcon size="small" />
+            </Button>
+          </>
+        }
+        startAdornment={
+          <StaticInputAdornment>
+            <UserIcon size="small" />
+          </StaticInputAdornment>
+        }
+      />
+    </QAContainer>
   );
 };
 
@@ -85,17 +170,8 @@ AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Input> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      className="uitkInputQA"
-      imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png"
-      width={2272}
-      height={2000}
-    >
-      <AllExamplesGrid />
-    </QAContainer>
+    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png" />
   );
 };

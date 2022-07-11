@@ -1,7 +1,7 @@
-import { Button, ButtonVariantValues } from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
+import { ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Button/QA",
@@ -12,70 +12,38 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Button>;
 
-const ButtonText = () => <>Button</>;
-const ButtonIcon = () => <SearchIcon size={12} />;
-const ButtonIconText = () => (
-  <>
-    <SearchIcon size={12} /> Button
-  </>
+export const AllVariantsGrid: Story<QAContainerProps> = (props) => (
+  <QAContainer height={500} width={1000} {...props}>
+    <Button variant="primary">Button</Button>
+    <Button variant="primary">
+      <SearchIcon size={12} />
+    </Button>
+    <Button variant="primary">
+      <SearchIcon size={12} /> Button
+    </Button>
+    <Button variant="secondary">Button</Button>
+    <Button variant="secondary">
+      <SearchIcon size={12} />
+    </Button>
+    <Button variant="secondary">
+      <SearchIcon size={12} /> Button
+    </Button>
+    <Button variant="cta">Button</Button>
+    <Button variant="cta">
+      <SearchIcon size={12} />
+    </Button>
+    <Button variant="cta">
+      <SearchIcon size={12} /> Button
+    </Button>
+  </QAContainer>
 );
-
-const ButtonChildrenVariants = [
-  <ButtonText />,
-  <ButtonIcon />,
-  <ButtonIconText />,
-];
-
-export const AllVariantsGrid: ComponentStory<typeof Button> = (props) => {
-  return (
-    <AllRenderer>
-      <div
-        style={{
-          background: "inherit",
-          display: "inline-grid",
-          gridTemplate: "auto / repeat(3,auto)",
-          gap: "4px",
-        }}
-      >
-        {ButtonVariantValues.map((v) =>
-          ButtonChildrenVariants.map((c, i) => (
-            <Button {...props} variant={v} key={`${v}-${i}`}>
-              {c}
-            </Button>
-          ))
-        )}
-      </div>
-    </AllRenderer>
-  );
-};
 
 AllVariantsGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Button> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer imgSrc="/visual-regression-screenshots/Button-vr-snapshot.png">
-      <AllRenderer>
-        <div
-          style={{
-            background: "inherit",
-            display: "inline-grid",
-            gridTemplate: "auto / repeat(3,auto)",
-            gap: "4px",
-          }}
-        >
-          {ButtonVariantValues.map((v) =>
-            ButtonChildrenVariants.map((c, i) => (
-              <Button {...props} variant={v} key={`${v}-${i}`}>
-                {c}
-              </Button>
-            ))
-          )}
-        </div>
-      </AllRenderer>
-    </QAContainer>
+    <AllVariantsGrid imgSrc="/visual-regression-screenshots/Button-vr-snapshot.png" />
   );
 };
