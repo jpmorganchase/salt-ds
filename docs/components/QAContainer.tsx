@@ -50,7 +50,7 @@ const DensityValues = ["high", "medium", "low", "touch"] as const;
 export const QAContainer: FC<QAContainerProps> = ({
   children,
   className,
-  cols = 3,
+  cols = 2,
   height,
   itemPadding,
   itemWidthAuto,
