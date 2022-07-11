@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card } from "@jpmorganchase/uitk-core";
 import {
   ButtonBar,
@@ -7,8 +9,7 @@ import {
   OrderedButton,
   Tabstrip,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import React, { useMemo, useState } from "react";
+import "./styles.css";
 
 export default {
   title: "Lab/Layout/DeckLayout",
@@ -101,7 +102,7 @@ const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
   );
 
   return (
-    <Carousel {...args}>
+    <Carousel className="carousel-container" {...args}>
       {Array.from({ length: 5 }, (_, index) => (
         <CarouselSlide
           ButtonBar={renderButtonBar}
