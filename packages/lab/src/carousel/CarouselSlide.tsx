@@ -5,10 +5,10 @@ import {
   ReactElement,
   useRef,
 } from "react";
-import { makePrefixer, useAriaAnnouncer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import cx from "classnames";
-import { ButtonBar, ButtonBarProps } from "../buttonbar";
+import { ButtonBarProps } from "../buttonbar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   ButtonBar?: ElementType<Partial<ButtonBarProps>>;
@@ -26,9 +26,8 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     ref
   ) {
     const buttonBarRef = useRef(null);
-    const { announce } = useAriaAnnouncer();
 
-    const renderSlideContent = () => (
+    return (
       <div ref={ref}>
         {Media && <div className={withBaseName("mediaContainer")}>{Media}</div>}
         <div className={withBaseName("fixedContainer")} ref={buttonBarRef}>
@@ -76,7 +75,5 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         </div>
       </div>
     );
-
-    return renderSlideContent();
   }
 );

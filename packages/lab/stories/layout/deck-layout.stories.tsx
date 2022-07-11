@@ -105,6 +105,7 @@ const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
     <Carousel className="carousel-container" {...args}>
       {Array.from({ length: 5 }, (_, index) => (
         <CarouselSlide
+          key={index}
           ButtonBar={renderButtonBar}
           Media={
             <img
