@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Card, Panel, Link } from "@jpmorganchase/uitk-lab";
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Button, Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { AddIcon, RemoveIcon } from "@jpmorganchase/uitk-icons";
+import { Link } from "@jpmorganchase/uitk-lab";
 import { Nav } from "./components/Nav";
 
 import "./App.css";
