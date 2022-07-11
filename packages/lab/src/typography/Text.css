@@ -23,7 +23,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows);
   overflow: hidden;
-  /* word-break: break-word; */
+  word-break: break-word;
 }
 
 /* Heading 1 */

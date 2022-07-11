@@ -1,22 +1,15 @@
-import { ComponentPropsWithoutRef, Fragment } from "react";
-import { DensityValues, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ContentStatus } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { QAContainer, BackgroundBlock } from "docs/components";
-import "./content-status.qa.stories.css";
+import { QAContainer } from "docs/components";
 
 export default {
   title: "Lab/Content Status/QA",
   component: ContentStatus,
 } as ComponentMeta<typeof ContentStatus>;
 
-const BgBlock = (props: ComponentPropsWithoutRef<"div">) => (
-  <BackgroundBlock style={{ width: 200 }} {...props} />
-);
-
 const ContentStatusExamples: ComponentStory<typeof ContentStatus> = (props) => {
   return (
-    <>
+    <div>
       <ContentStatus
         className={props.className}
         actionLabel="[CUSTOM ACTION]"
@@ -56,40 +49,22 @@ const ContentStatusExamples: ComponentStory<typeof ContentStatus> = (props) => {
         status="loading"
         value={38}
       />
-    </>
+    </div>
   );
 };
 
 export const AllExamplesGrid: Story = (props: { className?: string }) => {
+  const { className } = props;
   return (
-    <div className="uitkContentStatusQA">
-      {DensityValues.map((d, i) => {
-        return (
-          <Fragment key={`${d}-${i}`}>
-            <ToolkitProvider
-              density={d}
-              theme="light"
-              key={`theme-light-${d}`}
-              applyClassesToChild
-            >
-              <BgBlock>
-                <ContentStatusExamples className={props.className} />
-              </BgBlock>
-            </ToolkitProvider>
-            <ToolkitProvider
-              applyClassesToChild
-              density={d}
-              theme="dark"
-              key={`theme-dark-${d}`}
-            >
-              <BgBlock>
-                <ContentStatusExamples className={props.className} />
-              </BgBlock>
-            </ToolkitProvider>
-          </Fragment>
-        );
-      })}
-    </div>
+    <QAContainer
+      width={1600}
+      height={900}
+      cols={8}
+      itemWidthAuto
+      className="uitkContentStatusQA"
+    >
+      <ContentStatusExamples className={className} />
+    </QAContainer>
   );
 };
 
@@ -113,10 +88,12 @@ export const CompareWithOriginalToolkit: ComponentStory<
     <QAContainer
       width={1600}
       height={900}
+      cols={8}
+      itemWidthAuto
       className="uitkContentStatusQA"
       imgSrc="/visual-regression-screenshots/ContentStatus-vr-snapshot.png"
     >
-      <BackwardsCompatGrid className="backwardsCompat" />
+      <ContentStatusExamples className="backwardsCompat" />
     </QAContainer>
   );
 };
