@@ -41,7 +41,7 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   animationTimeout?: number;
   /**
    * If this props is passed it will set the aria-label with value to the carousel container.
-   * Optional. Defaults to null
+   * Optional. Defaults to undefined
    */
   carouselDescription?: string;
   /**
@@ -69,7 +69,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       initialIndex,
       animation = "slide",
       animationTimeout = 800,
-      carouselDescription = null,
+      carouselDescription,
       children,
       className,
       compact,
