@@ -60,8 +60,11 @@ describe("Given a deck layout", () => {
   describe("WHEN animation and direction values are provided", () => {
     it("THEN items should have animation classes top to bottom if direction is vertical", () => {
       cy.mount(<DefaultDeckLayout direction="vertical" animation="slide" />);
+      cy.findByRole("button", {
+        name: "Next",
+      }).realClick();
       cy.get(".uitkDeckItem")
-        .eq(1)
+        .eq(2)
         .should("have.class", "uitkDeckItem-slide-out-top");
       cy.findByRole("button", {
         name: "Next",
@@ -70,28 +73,31 @@ describe("Given a deck layout", () => {
         .eq(0)
         .should("have.class", "uitkDeckItem-slide-out-top");
       cy.get(".uitkDeckItem")
-        .eq(1)
+        .eq(2)
         .should("have.class", "uitkDeckItem-slide-in-bottom");
       cy.get(".uitkDeckItem")
-        .eq(2)
+        .eq(3)
         .should("have.class", "uitkDeckItem-slide-out-top");
     });
     it("THEN items should have animation classes left to right if direction is horizontal", () => {
       cy.mount(<DefaultDeckLayout animation="slide" />);
-      cy.get(".uitkDeckItem")
-        .eq(1)
-        .should("have.class", "uitkDeckItem-slide-out-left");
       cy.findByRole("button", {
         name: "Next",
       }).realClick();
       cy.get(".uitkDeckItem")
         .eq(0)
         .should("have.class", "uitkDeckItem-slide-out-left");
+      cy.findByRole("button", {
+        name: "Next",
+      }).realClick();
       cy.get(".uitkDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-slide-in-right");
+        .should("have.class", "uitkDeckItem-slide-out-left");
       cy.get(".uitkDeckItem")
         .eq(2)
+        .should("have.class", "uitkDeckItem-slide-in-right");
+      cy.get(".uitkDeckItem")
+        .eq(3)
         .should("have.class", "uitkDeckItem-slide-out-left");
     });
   });
