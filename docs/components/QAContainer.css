@@ -25,7 +25,7 @@
 
 .background-block {
   --bgBlock-outer-width: calc(var(--qaContainer-inner-width) / var(--qaContainer-mode-cols));
-  --bgBlock-inner-width: calc(var(--bgBlock-outer-width) - (2 * var(--qaContainer-item-padding)));
+  --bgBlock-inner-width: calc(var(--bgBlock-outer-width) - (2 * var(--bgBlock-padding)));
   --bgBlock-padding: 6px;
   --bgBlock-gap: 0px;
   box-sizing: border-box;
