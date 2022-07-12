@@ -69,7 +69,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       initialIndex,
       animation = "slide",
       animationTimeout = 800,
-      carouselDescription,
+      carouselDescription = null,
       children,
       className,
       compact,
