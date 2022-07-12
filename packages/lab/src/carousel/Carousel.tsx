@@ -22,7 +22,6 @@ import { DeckLayout } from "../layout";
 import { useSlideSelection } from "../utils";
 
 const withBaseName = makePrefixer("uitkCarousel");
-export type SlideDirections = "left" | "right";
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -86,7 +85,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const [selectedTransition, selectedSlide, handleSlideSelection] =
       useSlideSelection(initialIndex);
 
-    const moveSlide = (direction: SlideDirections) => {
+    const moveSlide = (direction: "left" | "right") => {
       const moveLeft =
         selectedSlide === 0 ? slidesCount - 1 : selectedSlide - 1;
       const moveRight =
