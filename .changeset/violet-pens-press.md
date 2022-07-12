@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Add layer layout component to lab
+Add deck layout component to lab
