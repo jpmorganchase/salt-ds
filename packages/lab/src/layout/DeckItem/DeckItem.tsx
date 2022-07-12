@@ -48,7 +48,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     ref
   ) {
     const sliderRef = useRef<HTMLDivElement | null>(null);
-    const lastActive = usePrevious(activeIndex, [activeIndex]);
+    const lastActive = usePrevious(activeIndex, [activeIndex], -1);
     const [animationClass, setAnimationClass] = useState("");
     const position = useMemo(() => {
       return activeIndex === index
@@ -62,18 +62,13 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     const classesIndex = animation && position === "current" ? 0 : 1;
 
     useEffect(() => {
-      if (lastActive === undefined && index === activeIndex) return;
       // ENTRANCE ANIMATION
-      if (animation && lastActive !== activeIndex) {
+      if (animation && lastActive !== activeIndex && lastActive !== -1) {
         setAnimationClass(getActiveClasses()[classesIndex]);
       }
+
       // EXIT ANIMATION
-      if (
-        animationClass &&
-        animation &&
-        lastActive !== activeIndex &&
-        lastActive === index
-      ) {
+      if (animation && lastActive !== activeIndex && lastActive === index) {
         const exitingSlider = sliderRef.current;
         if (exitingSlider) {
           exitingSlider.setAttribute("data-uitkDeckItem-closing", "");
