@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./ComponentAnatomy.css";
 
-function waitForElement(selector) {
+function waitForElement(root, selector) {
   return new Promise((resolve) => {
-    if (document.querySelector(selector)) {
-      return resolve(document.querySelector(selector));
+    if (root.current.querySelector(selector)) {
+      return resolve(root.current.querySelector(selector));
     }
 
     const observer = new MutationObserver(() => {
-      if (document.querySelector(selector)) {
-        resolve(document.querySelector(selector));
+      if (root.current.querySelector(selector)) {
+        resolve(root.current.querySelector(selector));
         observer.disconnect();
       }
     });
 
-    observer.observe(document.body, {
+    observer.observe(root.current.body, {
       childList: true,
       subtree: true,
     });
@@ -77,10 +77,10 @@ export const ComponentAnatomy = ({
   };
 
   useEffect(() => {
-    waitForElement(".RenderVisualiser-component > *").then((element) => {
+    waitForElement(root, ".RenderVisualiser-component > *").then((element) => {
       setRenderVisualiserChildren(element);
     });
-  }, []);
+  }, [root.current]);
 
   const getComponentElement = () =>
     targetId
