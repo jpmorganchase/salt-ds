@@ -1,3 +1,10 @@
-/* .uitkContentStatusQA uitk-theme {
-  display: inline-block;
-} */
+.uitkContentStatusQA.uitkDocGrid {
+  align-items: flex-start;
+  width: 1600px;
+  height: 900px;
+  padding: 0;
+}
+
+.uitkContentStatusQA .BackgroundBlock {
+  padding: 4px;
+}
