@@ -1,24 +1,25 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
 import { FlexLayout } from "../FlexLayout";
-import { FlexLayoutPropsWithoutRef } from "../types";
+
+type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  align?: FlexLayoutPropsWithoutRef["align"];
+  align?: FlexLayoutProps["align"];
   /**
    * Controls the space between items.
    */
-  gap?: FlexLayoutPropsWithoutRef["gap"];
+  gap?: FlexLayoutProps["gap"];
   /**
    * Defines the alignment along the main axis.
    */
-  justify?: FlexLayoutPropsWithoutRef["justify"];
+  justify?: FlexLayoutProps["justify"];
   /**
    * Adds a separator between elements.
    */
-  separators?: FlexLayoutPropsWithoutRef["separators"];
+  separators?: FlexLayoutProps["separators"];
 }
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout({ ...rest }, ref) {

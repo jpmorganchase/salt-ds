@@ -1,20 +1,20 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
 import { FlexLayout } from "../FlexLayout";
-import { FlexLayoutPropsWithoutRef } from "../types";
 
+type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
 export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  align?: FlexLayoutPropsWithoutRef["align"];
+  align?: FlexLayoutProps["align"];
   /**
    * Controls the space between items.
    */
-  gap?: FlexLayoutPropsWithoutRef["gap"];
+  gap?: FlexLayoutProps["gap"];
   /**
    * Adds a separator between elements.
    */
-  separators?: FlexLayoutPropsWithoutRef["separators"];
+  separators?: FlexLayoutProps["separators"];
 }
 
 export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
