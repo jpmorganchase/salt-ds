@@ -14,7 +14,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
     <QAContainer
       width={1600}
       height={900}
-      cols={4}
+      cols={6}
       vertical
       className="uitkContentStatusQA"
       {...props}
