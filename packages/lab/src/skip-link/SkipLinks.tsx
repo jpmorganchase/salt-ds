@@ -1,4 +1,4 @@
-import { Children, forwardRef, isValidElement, ReactElement } from "react";
+import { Children, forwardRef, HTMLAttributes, isValidElement } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
@@ -8,21 +8,17 @@ const renderListItem = (child: { key: React.Key | null | undefined }) => (
   <li key={child.key}>{child}</li>
 );
 
-interface SkipLinksProps {
-  className?: string | undefined;
-  children: ReactElement[];
-}
-
 const withBaseName = makePrefixer("uitkSkipLinks");
 
-export const SkipLinks = forwardRef<HTMLUListElement, SkipLinksProps>(
-  (props, ref) => {
-    const { className, children, ...restProps } = props;
+export const SkipLinks = forwardRef<
+  HTMLUListElement,
+  HTMLAttributes<HTMLUListElement>
+>((props, ref) => {
+  const { className, children, ...restProps } = props;
 
-    return (
-      <ul {...restProps} className={cx(withBaseName(), className)} ref={ref}>
-        {Children.toArray(children).filter(isValidElement).map(renderListItem)}
-      </ul>
-    );
-  }
-);
+  return (
+    <ul {...restProps} className={cx(withBaseName(), className)} ref={ref}>
+      {Children.toArray(children).filter(isValidElement).map(renderListItem)}
+    </ul>
+  );
+});
