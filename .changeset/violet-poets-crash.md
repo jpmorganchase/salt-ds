@@ -1,5 +1,4 @@
 ---
-"docs": minor
 "@jpmorganchase/uitk-lab": minor
 ---
 
