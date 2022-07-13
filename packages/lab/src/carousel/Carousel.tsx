@@ -20,6 +20,7 @@ import "./Carousel.css";
 import { LayoutAnimationDirection } from "@jpmorganchase/uitk-core/src/layout/types";
 import { DeckLayout } from "../layout";
 import { useSlideSelection } from "../utils";
+import { CarouselSlideProps } from "./CarouselSlide";
 
 const withBaseName = makePrefixer("uitkCarousel");
 
@@ -46,9 +47,9 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   carouselDescription?: string;
   /**
    * Collection of slides to render
-   * TODO: Component must implement CarouselSlideProps. Mandatory.
+   * Component must implement CarouselSlideProps. Mandatory.
    */
-  children: ReactElement[];
+  children: Array<ReactElement<CarouselSlideProps>>;
   /**
    * This prop will enable compact / reduced width mode.
    * The navigation buttons would be part of indicators
