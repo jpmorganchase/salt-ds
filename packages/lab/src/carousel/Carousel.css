@@ -3,7 +3,7 @@
   grid-template-areas: "prev-button slider next-button" "dots dots dots";
 }
 
-.uitkCarousel-compact {
+.uitkCarousel.uitkCarousel-compact {
   grid-template-areas: "slider slider slider" "prev-button dots next-button";
 }
 

@@ -1,36 +1,17 @@
-import {
-  forwardRef,
-  HTMLAttributes,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import "./DeckItem.css";
 import cx from "classnames";
-import {
-  LayoutAnimation,
-  LayoutAnimationDirection,
-  LayoutAnimationTransition,
-} from "@jpmorganchase/uitk-core/src/layout/types";
-import { usePrevious } from "../../utils";
+import { LayoutAnimation } from "@jpmorganchase/uitk-core/src/layout/types";
 
 const withBaseName = makePrefixer("uitkDeckItem");
 
 export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
   activeIndex?: number;
   animation?: LayoutAnimation;
-  direction?: LayoutAnimationDirection;
   index: number;
   role?: string;
-  transition?: LayoutAnimationTransition;
 }
-
-const animationDirections = {
-  vertical: ["top", "bottom"],
-  horizontal: ["left", "right"],
-};
 
 export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
   function DeckItem(
@@ -39,17 +20,14 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       animation,
       children,
       className,
-      direction,
       index,
       role = "group",
-      transition,
       ...rest
     },
     ref
   ) {
     const sliderRef = useRef<HTMLDivElement | null>(null);
-    const lastActive = usePrevious(activeIndex, [activeIndex], -1);
-    const [animationClass, setAnimationClass] = useState("");
+
     const position = useMemo(() => {
       return activeIndex === index
         ? "current"
@@ -58,52 +36,23 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         : "previous";
     }, [activeIndex]);
 
-    const currentDirections = direction ? animationDirections[direction] : [];
     const classesIndex = animation && position === "current" ? 0 : 1;
 
-    useEffect(() => {
-      // ENTRANCE ANIMATION
-      if (animation && lastActive !== activeIndex && lastActive !== -1) {
-        setAnimationClass(getActiveClasses()[classesIndex]);
-      }
-
-      // EXIT ANIMATION
-      if (animation && lastActive !== activeIndex && lastActive === index) {
-        const exitingSlider = sliderRef.current;
-        if (exitingSlider) {
-          exitingSlider.setAttribute("data-uitkDeckItem-closing", "");
-          exitingSlider.addEventListener(
-            "animationend",
-            () => {
-              exitingSlider.removeAttribute("data-uitkDeckItem-closing");
-            },
-            { once: true }
-          );
-        }
-      }
-    }, [activeIndex]);
-
-    const getActiveClasses = () => {
-      const getCurrentMove = (index: number) =>
-        animation === "fade" ? "" : `-${currentDirections[index]}`;
-      return transition === "decrease"
-        ? [
-            `${animation}-in${getCurrentMove(0)}`, // in-left
-            `${animation}-out${getCurrentMove(1)}`, // out-right
-          ]
-        : [
-            `${animation}-in${getCurrentMove(1)}`, // in-right
-            `${animation}-out${getCurrentMove(0)}`, //out-left
-          ];
-    };
+    const getActiveClasses = [
+      `${animation}-in`, // in-left
+      `${animation}-out`, // out-right
+    ];
 
     // TODO: add aria attributes (labelledby, roledescription, hidden)
     return (
       <div
         className={cx(
           withBaseName(),
-          withBaseName(position),
-          { [withBaseName(animationClass)]: animationClass },
+          withBaseName(`${animation ? animation : "static"}-${position}`),
+          {
+            [withBaseName(getActiveClasses[classesIndex])]:
+              animation === "fade",
+          },
           className
         )}
         ref={useForkRef(ref, sliderRef)}

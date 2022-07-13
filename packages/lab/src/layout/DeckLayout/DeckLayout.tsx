@@ -1,13 +1,20 @@
-import { Children, forwardRef, HTMLAttributes } from "react";
+import {
+  Children,
+  forwardRef,
+  HTMLAttributes,
+  useState,
+  useCallback,
+  CSSProperties,
+} from "react";
 import {
   makePrefixer,
   LayoutAnimation,
   LayoutAnimationDirection,
-  LayoutAnimationTransition,
-  GridLayout,
+  useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
 
 import { DeckItem } from "../DeckItem";
+import { useWidth } from "../../list/internal/useWidth";
 import "./DeckLayout.css";
 
 import cx from "classnames";
@@ -25,7 +32,6 @@ export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * The direction in which items will transition.
    **/
   direction?: LayoutAnimationDirection;
-  transition?: LayoutAnimationTransition;
 }
 
 const withBaseName = makePrefixer("uitkDeckLayout");
@@ -38,33 +44,83 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
       className,
       children,
       direction = "horizontal",
-      transition,
+      style,
       ...rest
     },
     ref
   ) {
-    const deckItemProps = { animation, direction, transition };
+    const [deckItemRef, deckItemWidth] = useWidth<HTMLDivElement>(true);
+
+    const [deckItemHeight, setDeckItemHeight] = useState<number>();
+
+    const handleResize = useCallback(function handleResize(
+      contentRect: DOMRect
+    ) {
+      setDeckItemHeight(contentRect.height);
+    },
+    []);
+
+    useIsomorphicLayoutEffect(() => {
+      if (!deckItemRef.current) {
+        return undefined;
+      }
+
+      handleResize(deckItemRef.current.getBoundingClientRect());
+
+      const observer = new ResizeObserver(
+        ([{ contentRect }]: ResizeObserverEntry[]) => {
+          handleResize(contentRect);
+        }
+      );
+      observer.observe(deckItemRef.current);
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [deckItemRef, handleResize]);
+
+    const deckLayoutStyles = {
+      ...style,
+      "--deck-layout-width": `${deckItemWidth}px`,
+      "--deck-layout-height": `${deckItemHeight}px`,
+    };
+
+    const innerStyles = {
+      "--deck-layout-transform-value": `-${activeIndex * 100}%`,
+    } as CSSProperties;
+
     return (
-      <GridLayout
+      <div
         className={cx(withBaseName(), className)}
+        style={deckLayoutStyles}
         ref={ref}
-        columns={1}
-        rows={1}
         {...rest}
       >
-        {Children.map(children, (child, index) => {
-          return (
-            <DeckItem
-              {...deckItemProps}
-              index={index}
-              activeIndex={activeIndex}
-              transition={transition}
-            >
-              {child}
-            </DeckItem>
-          );
-        })}
-      </GridLayout>
+        <div
+          className={cx(
+            {
+              [withBaseName("animate")]: animation,
+            },
+            {
+              [withBaseName(`${animation}-${direction}`)]: animation,
+            }
+          )}
+          style={innerStyles}
+        >
+          {Children.map(children, (child, index) => {
+            return (
+              <DeckItem
+                ref={deckItemRef}
+                index={index}
+                activeIndex={activeIndex}
+                animation={animation}
+              >
+                {child}
+              </DeckItem>
+            );
+          })}
+        </div>
+      </div>
     );
   }
 );

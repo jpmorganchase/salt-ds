@@ -1,48 +1,18 @@
 .uitkDeckItem {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  display: inline-block;
 }
 
-.uitkDeckItem-current {
+.uitkDeckLayout-slide-vertical .uitkDeckItem {
   display: block;
 }
-.uitkDeckItem-previous,
-.uitkDeckItem-next {
+
+.uitkDeckItem-fade-previous,
+.uitkDeckItem-fade-next,
+.uitkDeckItem-static-previous,
+.uitkDeckItem-static-next {
   display: none;
 }
 
-.uitkDeckItem[data-uitkDeckItem-closing] {
-  display: block;
-  pointer-events: none;
-  inset: 0;
-}
-
-.uitkDeckItem-slide-in-top {
-  animation: var(--uitk-animation-slide-in-top);
-}
-.uitkDeckItem-slide-in-bottom {
-  animation: var(--uitk-animation-slide-in-bottom);
-}
-.uitkDeckItem-slide-in-left {
-  animation: var(--uitk-animation-slide-in-left);
-}
-.uitkDeckItem-slide-in-right {
-  animation: var(--uitk-animation-slide-in-right);
-}
-.uitkDeckItem-slide-out-top {
-  animation: var(--uitk-animation-slide-out-top);
-}
-.uitkDeckItem-slide-out-bottom {
-  animation: var(--uitk-animation-slide-out-bottom);
-}
-.uitkDeckItem-slide-out-left {
-  animation: var(--uitk-animation-slide-out-left);
-}
-.uitkDeckItem-slide-out-right {
-  animation: var(--uitk-animation-slide-out-right);
-}
 .uitkDeckItem-fade-in {
   animation: var(--uitk-animation-fade-in-center);
 }

@@ -17,7 +17,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import warning from "warning";
 import cx from "classnames";
 import "./Carousel.css";
-import { LayoutAnimationDirection } from "@jpmorganchase/uitk-core/src/layout/types";
 import { DeckLayout } from "../layout";
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
@@ -36,11 +35,6 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    **/
   animation?: "slide" | "fade";
   /**
-   * The timeout for each animation.
-   * Optional. Defaults to 800 ms
-   **/
-  animationTimeout?: number;
-  /**
    * If this props is passed it will set the aria-label with value to the carousel container.
    * Optional. Defaults to undefined
    */
@@ -56,7 +50,6 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * Optional. Defaults to false
    **/
   compact?: boolean;
-  direction?: LayoutAnimationDirection;
   /**
    * It sets the id for the Carousel Container.
    * String. Optional
@@ -69,12 +62,10 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     {
       initialIndex,
       animation = "slide",
-      animationTimeout = 800,
       carouselDescription,
       children,
       className,
       compact,
-      direction,
       id: idProp,
       ...rest
     },
@@ -83,7 +74,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const id = useId(idProp);
     const slidesCount = Children.count(children);
 
-    const [selectedTransition, selectedSlide, handleSlideSelection] =
+    const [_, selectedSlide, handleSlideSelection] =
       useSlideSelection(initialIndex);
 
     const moveSlide = (direction: "left" | "right") => {
@@ -138,9 +129,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         <DeckLayout
           activeIndex={selectedSlide}
           animation={animation}
-          transition={selectedTransition}
           className={withBaseName("slider")}
-          direction={direction}
         >
           {children}
         </DeckLayout>

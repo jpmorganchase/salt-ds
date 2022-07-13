@@ -1,20 +1,18 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card } from "@jpmorganchase/uitk-core";
-import {
-  ButtonBar,
-  Carousel,
-  CarouselSlide,
-  DeckLayout,
-  OrderedButton,
-  Tabstrip,
-} from "@jpmorganchase/uitk-lab";
+import { DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
+
 import "./styles.css";
 
 export default {
   title: "Lab/Layout/DeckLayout",
   component: DeckLayout,
-  argTypes: {},
+  argTypes: {
+    activeIndex: {
+      control: { type: "number", min: 0, max: 5, defaultValue: 0 },
+    },
+  },
 } as ComponentMeta<typeof DeckLayout>;
 
 const deckCards = (slides: number) =>
@@ -29,10 +27,12 @@ const deckCards = (slides: number) =>
   ));
 
 const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
-  const activeIndex = useMemo(() => args.activeIndex, [args.activeIndex]);
-
   const slides = 6;
-  const [currentIndex, setCurrentIndex] = useState(activeIndex || 0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    args.activeIndex && setCurrentIndex(args.activeIndex);
+  }, [args.activeIndex]);
 
   const handleIncrease = () => {
     if (currentIndex < slides - 1) {
@@ -55,9 +55,7 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
   );
 };
 export const DefaultDeckLayout = DefaultDeckLayoutStory.bind({});
-DefaultDeckLayout.args = {
-  activeIndex: 0,
-};
+DefaultDeckLayout.args = {};
 
 const useTabSelection = (initialValue?: any) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
@@ -70,11 +68,18 @@ const useTabSelection = (initialValue?: any) => {
 const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
-  const tabs = ["Home", "Transactions", "FX", "Security Center", "Blog"];
+  const tabs = [
+    "Home",
+    "Transactions",
+    "FX",
+    "Security Center",
+    "Blog",
+    "Settings",
+  ];
   return (
     <div>
       <Tabstrip onChange={handleTabSelection} defaultTabs={tabs} />
-      <DeckLayout {...args} activeIndex={selectedTab}>
+      <DeckLayout activeIndex={selectedTab} {...args}>
         {tabs.map((tab, index) => {
           return (
             <Card key={index}>
@@ -92,37 +97,3 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
 };
 export const DeckInTabstrip = WithTabStrip.bind({});
 DeckInTabstrip.args = {};
-
-const colors = ["fcd5ce", "f8edeb", "d8e2dc", "ffe5d9", "ffd7ba"];
-const WithCarousel: ComponentStory<typeof DeckLayout> = (args) => {
-  const renderButtonBar = () => (
-    <ButtonBar>
-      <OrderedButton variant="cta">Learn more</OrderedButton>
-    </ButtonBar>
-  );
-
-  return (
-    <Carousel className="carousel-container" {...args}>
-      {Array.from({ length: 5 }, (_, index) => (
-        <CarouselSlide
-          key={index}
-          ButtonBar={renderButtonBar}
-          Media={
-            <img
-              alt="placeholder slider"
-              src={`https://via.placeholder.com/1140x520/${
-                colors[index]
-              }?text=Carousel+Slide+${index + 1}`}
-              style={{ width: "100%" }}
-            />
-          }
-          description={"Lorem ipsum dolor sit amet"}
-          title={"Carousel Slide"}
-          contentAlignment={"left"}
-        />
-      ))}
-    </Carousel>
-  );
-};
-export const DeckInCarousel = WithCarousel.bind({});
-DeckInCarousel.args = {};
