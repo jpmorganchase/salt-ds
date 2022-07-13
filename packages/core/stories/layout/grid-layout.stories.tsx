@@ -28,13 +28,13 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ContactDetailsExample } from "./flex-layout.stories";
 import { MetricExample } from "./flow-layout.stories";
-import image1 from "./assets/image1.png";
-import image2 from "./assets/image2.png";
-import image3 from "./assets/image3.png";
-import image4 from "./assets/image4.png";
-import wen from "./assets/wen.png";
-import andre from "./assets/andre.png";
-import gemma from "./assets/gemma.png";
+import image1 from "docs/assets/image1.png";
+import image2 from "docs/assets//image2.png";
+import image3 from "docs/assets//image3.png";
+import image4 from "docs/assets//image4.png";
+import wen from "docs/assets//wen.png";
+import andre from "docs/assets//andre.png";
+import gemma from "docs/assets//gemma.png";
 
 export default {
   title: "Core/Layout/GridLayout",
