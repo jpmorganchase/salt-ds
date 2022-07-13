@@ -292,81 +292,73 @@ ToolkitGridLayoutFooter.args = {
   columnGap: 8,
 };
 
+const sidebar = (
+  <StackLayout>
+    <Card>
+      <ContactDetails embedded={true} stackAtBreakpoint={0}>
+        <ContactAvatar src={wen} alt="Wen Chou" />
+        <ContactPrimaryInfo text="Wen Chou" />
+        <ContactSecondaryInfo text="Editorial contributor" />
+        <ContactTertiaryInfo text="UI Toolkit" />
+        <ContactMetadata collapsible={true}>
+          <ContactMetadataItem value="Editorial contributor" label="Role" />
+          <ContactMetadataItem value="London, GBR" label="Location" />
+          <ContactMetadataItem value="+44 2077 431102" label="Office" />
+          <ContactMetadataItem value="wen.chou@jpmorgan.com" label="Email" />
+        </ContactMetadata>
+      </ContactDetails>
+    </Card>
+    <Card>
+      <ContactDetails embedded={true} stackAtBreakpoint={0}>
+        <ContactAvatar src={andre} alt="Andre L Rizzuto" />
+        <ContactPrimaryInfo text="Andre L. Rizzuto" />
+        <ContactSecondaryInfo text="Editorial contributor" />
+        <ContactTertiaryInfo text="Markets" />
+        <ContactMetadata collapsible={true}>
+          <ContactMetadataItem value="Editorial contributor" label="Role" />
+          <ContactMetadataItem value="London, GBR" label="Location" />
+          <ContactMetadataItem value="+44 2077 431103" label="Office" />
+          <ContactMetadataItem
+            value="andre.rizzuto@jpmorgan.com"
+            label="Email"
+          />
+        </ContactMetadata>
+      </ContactDetails>
+    </Card>
+    <Card>
+      <ContactDetails embedded={true} stackAtBreakpoint={0}>
+        <ContactAvatar src={gemma} alt="Gemma Henley" />
+        <ContactPrimaryInfo text="Gemma Henley" />
+        <ContactSecondaryInfo text="Editorial contributor" />
+        <ContactTertiaryInfo text="Digital Platforms" />
+        <ContactMetadata collapsible={true}>
+          <ContactMetadataItem value="Editorial contributor" label="Role" />
+          <ContactMetadataItem value="London, GBR" label="Location" />
+          <ContactMetadataItem value="+44 2077 431104" label="Office" />
+          <ContactMetadataItem
+            value="gemma.henley@jpmorgan.com"
+            label="Email"
+          />
+        </ContactMetadata>
+      </ContactDetails>
+    </Card>
+  </StackLayout>
+);
+
 const Blog: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
-        <GridItem colSpan={3} rowSpan={1}>
+        <GridItem colSpan={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }} rowSpan={1}>
           <h1>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </h1>
           <img src={image1} alt="house and trees landscape" />
         </GridItem>
-        <GridItem colSpan={1} rowSpan={2}>
+        <GridItem colSpan={{ xs: 1, sm: 2, md: 3, lg: 1, xl: 1 }} rowSpan={2}>
           <h2>Editorial content contributors</h2>
-          <StackLayout>
-            <Card>
-              <ContactDetails embedded={true} stackAtBreakpoint={0}>
-                <ContactAvatar src={wen} alt="Wen Chou" />
-                <ContactPrimaryInfo text="Wen Chou" />
-                <ContactSecondaryInfo text="Editorial contributor" />
-                <ContactTertiaryInfo text="UI Toolkit" />
-                <ContactMetadata collapsible={true}>
-                  <ContactMetadataItem
-                    value="Editorial contributor"
-                    label="Role"
-                  />
-                  <ContactMetadataItem value="London, GBR" label="Location" />
-                  <ContactMetadataItem value="+44 2077 431102" label="Office" />
-                  <ContactMetadataItem
-                    value="wen.chou@jpmorgan.com"
-                    label="Email"
-                  />
-                </ContactMetadata>
-              </ContactDetails>
-            </Card>
-            <Card>
-              <ContactDetails embedded={true} stackAtBreakpoint={0}>
-                <ContactAvatar src={andre} alt="Andre L Rizzuto" />
-                <ContactPrimaryInfo text="Andre L. Rizzuto" />
-                <ContactSecondaryInfo text="Editorial contributor" />
-                <ContactTertiaryInfo text="Markets" />
-                <ContactMetadata collapsible={true}>
-                  <ContactMetadataItem
-                    value="Editorial contributor"
-                    label="Role"
-                  />
-                  <ContactMetadataItem value="London, GBR" label="Location" />
-                  <ContactMetadataItem value="+44 2077 431103" label="Office" />
-                  <ContactMetadataItem
-                    value="andre.rizzuto@jpmorgan.com"
-                    label="Email"
-                  />
-                </ContactMetadata>
-              </ContactDetails>
-            </Card>
-            <Card>
-              <ContactDetails embedded={true} stackAtBreakpoint={0}>
-                <ContactAvatar src={gemma} alt="Gemma Henley" />
-                <ContactPrimaryInfo text="Gemma Henley" />
-                <ContactSecondaryInfo text="Editorial contributor" />
-                <ContactTertiaryInfo text="Digital Platforms" />
-                <ContactMetadata collapsible={true}>
-                  <ContactMetadataItem
-                    value="Editorial contributor"
-                    label="Role"
-                  />
-                  <ContactMetadataItem value="London, GBR" label="Location" />
-                  <ContactMetadataItem value="+44 2077 431104" label="Office" />
-                  <ContactMetadataItem
-                    value="gemma.henley@jpmorgan.com"
-                    label="Email"
-                  />
-                </ContactMetadata>
-              </ContactDetails>
-            </Card>
-          </StackLayout>
+          {sidebar}
         </GridItem>
         <GridItem colSpan={1} rowSpan={1}>
           <h2>
@@ -420,7 +412,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
 };
 export const ToolkitGridLayoutBlog = Blog.bind({});
 ToolkitGridLayoutBlog.args = {
-  columns: 4,
+  columns: { xs: 1, sm: 2, md: 3, lg: 4, xl: 4 },
   rows: 2,
 };
 
