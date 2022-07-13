@@ -1,6 +1,6 @@
 import { Pill } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
+import { ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
 import "./pill.qa.stories.css";
 
 export default {
@@ -8,33 +8,32 @@ export default {
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
-export const ExamplesGrid: ComponentStory<typeof Pill> = (props) => {
+export const ExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
-    <AllRenderer>
-      <div
-        style={{
-          background: "inherit",
-          display: "inline-grid",
-          gridTemplate: "auto / repeat(4,auto)",
-          gap: "4px",
-          verticalAlign: "top",
-        }}
-      >
-        <Pill className="backwardsCompat" label="Default Pill" />
-        <Pill className="backwardsCompat" disabled label="Disabled Pill" />
-        <Pill
-          className="backwardsCompat"
-          variant="closable"
-          label="Closable Pill"
-          onDelete={() => console.log("Deleted.")}
-        />
-        <Pill
-          className="backwardsCompat"
-          label="Extra extra long Pill label example."
-          onClick={() => console.log("Clicked.")}
-        />
-      </div>
-    </AllRenderer>
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...props}>
+      <Pill className="backwardsCompat" label="Default Pill" />
+      <Pill
+        className="backwardsCompat"
+        label="Closable Pill"
+        variant="closable"
+      />
+      <Pill
+        className="backwardsCompat"
+        label="Selectable Pill"
+        variant="selectable"
+      />
+      <Pill className="backwardsCompat" disabled label="Disabled Pill" />
+      <Pill
+        className="backwardsCompat"
+        label="Extra extra long Pill label example."
+      />
+      <Pill
+        className="backwardsCompat"
+        checked
+        label="Selectable Pill"
+        variant="selectable"
+      />
+    </QAContainer>
   );
 };
 
@@ -42,17 +41,8 @@ ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<typeof Pill> = (
-  props
-) => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      width={951}
-      height={172}
-      className="uitkPillQA"
-      imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png"
-    >
-      <ExamplesGrid />
-    </QAContainer>
+    <ExamplesGrid imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png" />
   );
 };

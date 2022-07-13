@@ -1,6 +1,6 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 import { Checkbox } from "@jpmorganchase/uitk-core";
-import { AllRenderer, QAContainer } from "docs/components";
+import { QAContainer, QAContainerProps } from "docs/components";
 import "./checkbox.qa.stories.css";
 
 export default {
@@ -8,33 +8,32 @@ export default {
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
-export const AllExamplesGrid: ComponentStory<typeof Checkbox> = (props) => {
-  const { className } = props;
+export const AllExamplesGrid: Story<
+  QAContainerProps & { className?: string }
+> = ({ className, ...props }) => {
   return (
-    <AllRenderer className="uitkCheckboxQA">
-      <div data-jpmui-test="checkboxes">
-        <Checkbox
-          className={className}
-          label="I understand ADA requires Labels on unchecked checkboxes"
-        />
-        <Checkbox
-          className={className}
-          defaultChecked
-          label="I understand ADA requires Labels on checked checkboxes"
-        />
-        <Checkbox
-          className={className}
-          defaultChecked
-          indeterminate
-          label="I understand ADA requires Labels on indeterminate checkboxes"
-        />
-        <Checkbox
-          className={className}
-          disabled
-          label="I understand ADA requires Labels on indeterminate checkboxes"
-        />
-      </div>
-    </AllRenderer>
+    <QAContainer cols={1} height={500} width={1200} {...props}>
+      <Checkbox
+        className={className}
+        label="I understand ADA requires Labels on unchecked checkboxes"
+      />
+      <Checkbox
+        className={className}
+        defaultChecked
+        label="I understand ADA requires Labels on checked checkboxes"
+      />
+      <Checkbox
+        className={className}
+        defaultChecked
+        indeterminate
+        label="I understand ADA requires Labels on indeterminate checkboxes"
+      />
+      <Checkbox
+        className={className}
+        disabled
+        label="I understand ADA requires Labels on indeterminate checkboxes"
+      />
+    </QAContainer>
   );
 };
 
@@ -51,17 +50,8 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<
-  typeof Checkbox
-> = () => {
+export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <QAContainer
-      width={1145}
-      height={512}
-      className="uitkCheckboxQA"
-      imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
+    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png" />
   );
 };
