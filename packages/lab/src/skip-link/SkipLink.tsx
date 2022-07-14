@@ -26,12 +26,14 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
     const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });
 
     return (
-      <Link
-        {...eventHandlers}
-        {...rest}
-        className={cx(withBaseName(), className)}
-        ref={ref}
-      />
+      <li>
+        <Link
+          {...eventHandlers}
+          {...rest}
+          className={cx(withBaseName(), className)}
+          ref={ref}
+        />
+      </li>
     );
   }
 );

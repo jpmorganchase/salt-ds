@@ -1,8 +1,7 @@
 import "./skip-link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { SkipLink } from "../src";
+import { SkipLink, SkipLinks } from "../src";
 import { useRef } from "react";
-import { SkipLinks } from "../src/skip-link/SkipLinks";
 import { Button } from "@jpmorganchase/uitk-core";
 
 export default {
@@ -19,9 +18,11 @@ export const Default: ComponentStory<typeof SkipLink> = () => {
         Click here and press the Tab key to see the Skip Link
       </span>
       <div style={{ position: "relative", maxWidth: 500 }}>
-        <SkipLink data-testid="skipLink" href="#main" targetRef={articleRef}>
-          Skip to main content
-        </SkipLink>
+        <SkipLinks>
+          <SkipLink data-testid="skipLink" href="#main" targetRef={articleRef}>
+            Skip to main content
+          </SkipLink>
+        </SkipLinks>
 
         <div
           style={{

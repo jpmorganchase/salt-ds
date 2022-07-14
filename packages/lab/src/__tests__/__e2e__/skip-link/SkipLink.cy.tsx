@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as skipLinkStories from "@stories/skip-link.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { SkipLink } from "@jpmorganchase/uitk-lab";
+import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
 
 const composedStories = composeStories(skipLinkStories);
 const { Default, MultipleLinks } = composedStories;
@@ -14,10 +14,11 @@ export const NoTargetRef = () => {
           Click here and press the Tab key to see the Skip Link
         </span>
         <div style={{ position: "relative", maxWidth: 500 }}>
-          <SkipLink data-testid="skipLink" href="#main">
-            Skip to main content
-          </SkipLink>
-
+          <SkipLinks>
+            <SkipLink data-testid="skipLink" href="#main">
+              Skip to main content
+            </SkipLink>
+          </SkipLinks>
           <div
             style={{
               borderTop: "2px solid grey",
