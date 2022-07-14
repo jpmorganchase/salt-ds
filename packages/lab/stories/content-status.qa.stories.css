@@ -1,10 +1,18 @@
+.wrapperQA {
+  border: solid 1px #ccc;
+  box-sizing: border-box;
+  line-height: 1;
+  margin: 120px 0 0 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 .uitkContentStatusQA.uitkDocGrid {
+  display: flex;
   align-items: flex-start;
   width: 1600px;
   height: 900px;
   padding: 0;
-}
-
-.uitkContentStatusQA .BackgroundBlock {
-  padding: 4px;
+  gap: 0;
 }
