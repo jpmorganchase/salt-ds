@@ -33,6 +33,8 @@ export const ComponentAnatomy = ({
 }) => {
   const root = useRef(null);
   const [tree, setTree] = useState([]);
+  const [renderVisualiserChildren, setRenderVisualiserChildren] =
+    useState(undefined);
   const [[showClasses, showRole, showAria, showData], setState] = useState([
     1, 1, 1, 1,
   ]);
@@ -54,10 +56,16 @@ export const ComponentAnatomy = ({
     setTree(t);
   };
 
+  useEffect(() => {
+    setRenderVisualiserChildren(
+      root.current.querySelector(".RenderVisualiser-component > *")
+    );
+  }, [root.current]);
+
   const getComponentElement = () =>
     targetId
       ? document.querySelector(`#${targetId}`)
-      : root.current.querySelector(".RenderVisualiser-component > *");
+      : renderVisualiserChildren;
 
   const mutationHandler = useCallback((mutations) => {
     const target = getComponentElement();
@@ -71,7 +79,7 @@ export const ComponentAnatomy = ({
       registerMutationObserver(target, mutationHandler);
       fetchTree(target);
     }
-  }, [mutationHandler]);
+  }, [mutationHandler, renderVisualiserChildren]);
 
   return (
     <div className="RenderVisualiser" ref={root} {...props}>
