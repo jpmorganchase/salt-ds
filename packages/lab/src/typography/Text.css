@@ -9,13 +9,9 @@
 
 /* Main css class */
 .uitkText {
+  color: var(--uitk-text-primary-foreground);
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight-backwardsCompat, var(--uitk-text-lineHeight));
-}
-
-.uitkText-overflow {
-  height: 100%;
-  overflow: auto;
 }
 
 .uitkText-lineClamp {
