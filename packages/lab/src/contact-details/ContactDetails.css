@@ -43,6 +43,7 @@
 }
 
 .uitkContactDetails {
+  --contact-details-color: var(--uitk-text-primary-foreground);
   --contact-details-label-color: var(--uitk-text-secondary-foreground);
   --contact-details-line-height: var(--uitk-text-lineHeight);
   --contact-details-no-avatar-color: var(--uitk-accent-background);
@@ -94,6 +95,7 @@
 }
 
 .uitkContactDetails-default {
+  color: var(--contact-details-color);
   grid-template-columns: auto auto 1fr auto;
   grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
@@ -121,7 +123,7 @@
   grid-template-rows: auto auto auto;
   grid-template-areas:
     "noAvatar avatar primary primary favorite"
-    "noAvatar avatar secondary tertiary favorite"
+    "noAvatar avatar secondary tertiary tertiary"
     ". . actions actions actions";
 }
 
@@ -195,7 +197,7 @@
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
-  margin-left: calc(var(--uitk-size-unit) * 2);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkContactTertiaryInfo-icon {
@@ -250,10 +252,6 @@
   width: var(--contact-details-label-width);
 }
 
-.uitkContactMetadataItem-value {
-  min-width: 0;
-}
-
 .uitkContactFavoriteToggle {
   grid-area: favorite;
   justify-self: center;
@@ -288,4 +286,38 @@
 .uitkContactFavoriteToggle-svg {
   height: var(--contact-details-icon-size);
   width: var(--contact-details-icon-size);
+}
+
+/* backwardsCompat */
+
+.uitk-density-touch .backwardsCompat.uitkContactDetails-default .uitkContactPrimaryInfo {
+  font-size: 30px;
+}
+.uitk-density-touch .backwardsCompat.uitkContactDetails-compact .uitkContactSecondaryInfo,
+.uitk-density-touch .backwardsCompat.uitkContactDetails-compact .uitkContactTertiaryInfo,
+.uitk-density-touch .backwardsCompat.uitkContactDetails-mini .uitkContactSecondaryInfo {
+  font-size: 14px;
+}
+.backwardsCompat.uitkContactDetails-compact .uitkContactTertiaryInfo {
+  margin-left: 16px;
+}
+.backwardsCompat.uitkContactDetails-mini .uitkContactSecondaryInfo,
+.backwardsCompat.uitkContactDetails-mini-stacked .uitkContactSecondaryInfo {
+  margin-left: var(--uitk-size-unit);
+}
+
+.backwardsCompat.uitkContactDetails-default .uitkContactFavoriteToggle {
+  margin-right: var(--uitk-size-unit);
+  margin-top: calc(var(--uitk-size-unit) * 0.5);
+}
+.uitk-density-touch .backwardsCompat.uitkContactDetails-default .uitkContactFavoriteToggle {
+  margin-right: calc(var(--uitk-size-unit) * 0.65);
+  margin-top: calc(var(--uitk-size-unit) * 0.4);
+}
+
+.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-deselected,
+.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-selecting,
+.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-selected,
+.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-deselecting {
+  fill: var(--uitk-text-secondary-foreground);
 }
