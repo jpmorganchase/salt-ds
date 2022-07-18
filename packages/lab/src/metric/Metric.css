@@ -1,19 +1,8 @@
 .uitkMetric {
-  --metric-text-color: var(--uitk-text-primary-foreground);
-  --metric-line-height: var(--uitk-text-lineHeight);
-
-  --metric-horizontal-gap: calc(var(--uitk-size-unit) * 2);
-  --metric-vertical-gap: calc(var(--uitk-size-unit) * 0.25);
-
-  --metric-font-family: var(--uitk-text-fontFamily);
-}
-
-.uitkMetric {
-  font-family: var(--metric-font-family);
-  color: var(--metric-text-color);
   display: flex;
   align-items: flex-start;
   padding: 0px;
+  color: var(--uitkMetric-color, var(--uitk-text-primary-foreground));
 }
 
 .uitkMetric-orientation-horizontal {
@@ -33,16 +22,15 @@
   align-items: flex-end;
 }
 
-.backwardsCompat.uitkMetric.uitkMetric-size-small {
-  margin-top: -5px;
+.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal {
+  gap: calc(var(--uitk-size-unit) * 2);
 }
-.backwardsCompat.uitkMetric.uitkMetric-size-medium {
-  margin-top: -9px;
+.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small {
+  margin-top: -4px;
 }
-.backwardsCompat.uitkMetric.uitkMetric-size-large {
-  margin-top: -16px;
+.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium {
+  margin-top: -8px;
 }
-
-.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-large {
+.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large {
   margin-top: -14px;
 }

@@ -58,7 +58,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       subtitleId,
     } = useMetricContext();
 
-    const iconSize = size === "small" ? 12 : 24;
+    const iconSize = size === "large" ? "medium" : size;
 
     const valueComponentMap = {
       small: Figure3,

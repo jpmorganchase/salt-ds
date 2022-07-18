@@ -1,104 +1,89 @@
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
-import { QAContainer } from "docs/components";
-import { BackgroundBlock } from "docs/components/BackgroundBlock";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Metric/QA",
   component: Metric,
 } as ComponentMeta<typeof Metric>;
 
-const MetricExamples = (props: { className?: string | undefined }) => {
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
-    <div
-      data-jpmui-test="metric-example"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: 334,
-        padding: 0,
-      }}
+    <QAContainer
+      cols={4}
+      vertical
+      transposeDensity
+      height={1400}
+      className="uitkMetricQA"
+      imgSrc={props.imgSrc}
     >
       <Metric
         align="left"
-        className={props.className}
         direction="up"
         size="small"
         orientation="horizontal"
         showIndicator
+        className={props.className}
       >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
       <Metric
         align="center"
-        className={props.className}
         direction="down"
         size="medium"
+        indicatorPosition="start"
         orientation="horizontal"
         showIndicator
-        indicatorPosition="start"
+        className={props.className}
       >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
       <Metric
         align="right"
-        className={props.className}
+        direction="up"
         size="large"
         orientation="horizontal"
-        direction="up"
         showIndicator
-        indicatorPosition="end"
+        className={props.className}
       >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
       <Metric
         align="left"
-        className={props.className}
         direction="up"
         size="small"
         showIndicator
+        className={props.className}
       >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
-      <Metric align="center" direction="up" size="medium" showIndicator>
+      <Metric
+        align="center"
+        direction="up"
+        size="medium"
+        showIndicator
+        className={props.className}
+      >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
       <Metric
         align="right"
-        className={props.className}
         direction="down"
         size="large"
         indicatorPosition="start"
         showIndicator
+        className={props.className}
       >
         <MetricHeader subtitle="Total Value" title="Revenue YTD" />
         <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
       </Metric>
-    </div>
-  );
-};
-
-export const AllExamplesGrid: Story = (props: { className?: string }) => {
-  return (
-    <div style={{ width: 800, display: "flex", flex: 1 }} {...props}>
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock style={{ background: "white" }}>
-          <MetricExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>
-          <MetricExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-    </div>
+    </QAContainer>
   );
 };
 
@@ -117,12 +102,9 @@ BackwardsCompatGrid.parameters = {
 
 export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
   return (
-    <QAContainer
-      width={700}
-      className="uitkMetricQA"
+    <AllExamplesGrid
+      className="backwardsCompat"
       imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
+    />
   );
 };
