@@ -1,6 +1,6 @@
 import "./skip-link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { SkipLink, SkipLinks } from "../src";
+import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
 import { useRef } from "react";
 import { Button } from "@jpmorganchase/uitk-core";
 

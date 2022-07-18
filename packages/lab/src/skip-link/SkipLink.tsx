@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, RefObject } from "react";
+import { forwardRef, RefObject } from "react";
 import { Link, LinkProps } from "../link";
 import "./SkipLink.css";
 import cx from "classnames";
@@ -20,10 +20,7 @@ interface SkipLinkProps extends LinkProps {
 const withBaseName = makePrefixer("uitkSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
-  function SkipLink(
-    { className, targetRef, ...rest },
-    ref: ForwardedRef<HTMLAnchorElement>
-  ) {
+  function SkipLink({ className, targetRef, ...rest }, ref) {
     const targetClass = cx(withBaseName("target"), className);
 
     const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });

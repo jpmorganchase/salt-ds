@@ -9,7 +9,7 @@ const withBaseName = makePrefixer("uitkSkipLinks");
 export const SkipLinks = forwardRef<
   HTMLUListElement,
   HTMLAttributes<HTMLUListElement>
->((props, ref) => {
+>(function SkipLinks(props, ref) {
   const { className, children, ...restProps } = props;
 
   return (
