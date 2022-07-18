@@ -1,8 +1,11 @@
 import { Avatar } from "@jpmorganchase/uitk-lab";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
+
+import "./avatar.stories.newapp-avatar.css";
 
 export default {
   title: "Lab/Avatar",
@@ -34,3 +37,26 @@ Image.args = {
   src: PlaceholderLogo as string,
   alt: "Logo",
 };
+
+export const CustomStyling: ComponentStory<typeof Avatar> = () => (
+  <>
+    <ToolkitProvider theme={["light", "newapp"]}>
+      <Avatar size="large" />
+    </ToolkitProvider>
+    <ToolkitProvider theme={["light", "newapp"]}>
+      <Avatar size="large" alt="Logo" src="/docs/assets/placeholder.svg" />
+    </ToolkitProvider>
+    <ToolkitProvider theme={["light", "newapp"]}>
+      <Avatar size="large">SB</Avatar>
+    </ToolkitProvider>
+    <ToolkitProvider theme={["dark", "newapp"]}>
+      <Avatar size="large" />
+    </ToolkitProvider>
+    <ToolkitProvider theme={["dark", "newapp"]}>
+      <Avatar size="large" alt="Logo" src="/docs/assets/placeholder.svg" />
+    </ToolkitProvider>
+    <ToolkitProvider theme={["dark", "newapp"]}>
+      <Avatar size="large">SB</Avatar>
+    </ToolkitProvider>
+  </>
+);
