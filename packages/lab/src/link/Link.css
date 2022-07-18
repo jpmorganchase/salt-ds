@@ -2,6 +2,7 @@
   --link-color: var(--uitk-text-link-foreground);
   --link-color-hover: var(--uitk-text-link-foreground-hover);
   --link-color-active: var(--uitk-text-link-foreground-active);
+  --link-color-focus: var(--uitkLink-color-focus, --link-color-hover);
   --link-color-disabled: var(--uitk-text-link-foreground-disabled);
 
   --link-text-decoration: var(--uitk-text-link-textDecoration);
@@ -39,7 +40,7 @@
 .uitkLink:focus {
   outline: var(--link-focus-outline);
   /* When focused, we also want hover style */
-  color: var(--link-color-hover);
+  color: var(--link-color-focus);
 }
 
 .uitkLink-disabled,
