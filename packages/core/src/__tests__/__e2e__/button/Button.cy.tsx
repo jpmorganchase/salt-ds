@@ -14,9 +14,16 @@ describe("Given a Button", () => {
   });
 
   it("should be focusable when disabled and focusableWhenDisabled", () => {
-    cy.mount(<FocusableWhenDisabled />);
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(<FocusableWhenDisabled onClick={clickSpy} />);
     cy.findByRole("button").should("have.attr", "aria-disabled", "true");
     cy.realPress("Tab");
     cy.findByRole("button").should("be.focused");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("not.be.called");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("not.be.called");
+    cy.findByRole("button").realClick();
+    cy.get("@clickSpy").should("not.be.called");
   });
 });
