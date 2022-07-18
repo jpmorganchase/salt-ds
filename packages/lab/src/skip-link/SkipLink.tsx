@@ -10,6 +10,9 @@ interface SkipLinkProps extends LinkProps {
    * This is a ref that has access to the target element.
    *
    * This will be used to apply focus to that element
+   *
+   * Refs are referentially stable so if this changes it won't be picked up
+   * will need to find a better way of passing in the target element to apply the attributes
    */
   targetRef?: RefObject<HTMLElement>;
 }

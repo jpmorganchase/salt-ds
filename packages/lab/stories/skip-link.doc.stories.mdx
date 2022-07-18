@@ -1,12 +1,23 @@
-import { ArgsTable, Canvas, Meta } from "@storybook/addon-docs";
-import { SkipLink } from "../src";
+import {
+  ArgsTable,
+  Canvas,
+  Meta,
+  Story
+} from "@storybook/addon-docs";
+import {
+  SkipLink
+} from "../src";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
-import { Default, MultipleLinks } from "./skip-link.stories";
+import {
+  Default,
+  MultipleLinks
+} from "./skip-link.stories";
 
-<Meta title="Documentation/Lab/Skip Link" />
+<Meta
+  title="Documentation/Lab/Skip Link"/>
 
 # Skip Link
 
@@ -48,9 +59,10 @@ Skip Links are visible only on focus. When a Skip Link is activated, focus moves
 The Skip link component is displayed above the application layout on a single line, as a link element. It receives focus when the user navigates to it using the Tab key. When activated, the Skip Link enables user to skip to the target content you've defined.
 
 <Canvas>
-  <div style={{ margin: "auto", width: "50%" }}>
-    <Default />
-  </div>
+  <Story
+    name="Default" parameters={{layout: 'centered'}}>
+      <Default/>
+  </Story>
 </Canvas>
 
 ## With multiple links
@@ -62,19 +74,23 @@ The Skip Link component can provide multiple links. Links are displayed in seque
 Multiple links should be used sparingly. In order to avoid polluting the page-tab order it is recommended not to use more than two links per Skip Link.
 
 <Canvas>
-  <div style={{ margin: "auto", width: "50%" }}>
-    <MultipleLinks />
-  </div>
+  <Story
+    name="Multiple Links" parameters={{layout: 'centered'}}>
+      <MultipleLinks/>
+  </Story>
 </Canvas>
 
 ## Props
 
-<ArgsTable of={SkipLink} />
+<ArgsTable
+  of={SkipLink}/>
 
 ## CSS Classes
 
-<CSSClassTable of={SkipLink} />
+<CSSClassTable
+  of={SkipLink}/>
 
 ## Characteristics Used
 
-<CharacteristicUsage of={SkipLink} />
+<CharacteristicUsage
+  of={SkipLink}/>
