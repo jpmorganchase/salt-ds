@@ -1,0 +1,9 @@
+.uitk-light.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-color-grey-20);
+  --uitkAvatar-foreground: var(--uitk-color-blue-800);
+}
+
+.uitk-dark.uitk-newapp .uitkAvatar {
+  --uitkAvatar-background: var(--uitk-color-green-600);
+  --uitkAvatar-foreground: var(--uitk-color-grey-10);
+}

@@ -28,7 +28,7 @@ const registerMutationObserver = (element, callback) => {
 export const ComponentAnatomy = ({
   children = null,
   "aria-owns": targetId,
-  showControls = true,
+  showControls = false,
   ...props
 }) => {
   const root = useRef(null);
