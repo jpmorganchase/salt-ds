@@ -21,7 +21,7 @@ interface ExampleRowProps {
 
 const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
   <Panel style={{ height: "unset", width: 800 }}>
-    <h3>{name} - ( Touch, Low, Medium, High )</h3>
+    <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
         Touch

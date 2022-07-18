@@ -1,7 +1,7 @@
 .content-heading {
   margin: 0 0 calc(var(--uitk-size-unit) / 2);
   font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-text-fontWeight-strong);
 }
 
 .content-body {

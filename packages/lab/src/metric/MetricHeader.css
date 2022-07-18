@@ -29,7 +29,7 @@
 
 .uitkMetricHeader-subtitle {
   color: var(--metric-subtitle-color);
-  font-weight: var(--uitk-typography-weight-regular);
+  font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkMetric-align-center .uitkMetricHeader {

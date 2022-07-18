@@ -28,5 +28,5 @@
 
 .uitkScrim-containerFix {
   position: absolute;
-  z-index: calc(var(--uitk-zindex-appheader) - 1);
+  z-index: calc(var(--uitk-zIndex-appheader) - 1);
 }

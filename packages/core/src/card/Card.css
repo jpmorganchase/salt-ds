@@ -70,5 +70,5 @@ a:focus .uitkCard-interactable,
 
 /* TK1 backwards compat styling */
 .backwardsCompat.uitkCard .uitkCard-content {
-  line-height: var(--uitk-typography-lineHeight);
+  line-height: var(--uitk-text-base-lineHeight);
 }

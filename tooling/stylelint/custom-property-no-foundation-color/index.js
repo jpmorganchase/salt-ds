@@ -79,9 +79,11 @@ const allAllowedKeys = [
   "text",
   // additional to decide
   "animation",
-  "typography",
+  "delay", // to be merged with animation
+  "palette", // currently for opacity purposes
   "size",
   "opacity",
+  "zIndex", // to be added to overlayable
 ];
 
 const regexpPattern = new RegExp(
@@ -102,6 +104,14 @@ module.exports = stylelint.createPlugin(
       }
 
       root.walkDecls((decl) => {
+        if (
+          decl.parent?.type === "rule" &&
+          decl.parent?.selector?.includes?.("backwardsCompat")
+        ) {
+          // Do not check backwardsCompat CSS
+          return;
+        }
+
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
@@ -115,7 +125,7 @@ module.exports = stylelint.createPlugin(
 
           const firstNode = nodes[0];
 
-          verboseLog && console.log("firstNode", { firstNode });
+          verboseLog && console.log({ nodes });
 
           if (!firstNode || check(firstNode.value)) return;
 
@@ -125,6 +135,8 @@ module.exports = stylelint.createPlugin(
             decl
           );
         });
+
+        verboseLog && console.log({ prop });
 
         if (check(prop)) return;
 

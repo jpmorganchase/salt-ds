@@ -8,19 +8,27 @@ import { TextBlock } from "docs/components/TextBlock";
 
 # Typography
 
-## Misc
+## Typography
 
 <Canvas>
-  <Story name="Misc">
+  <Story name="Typography">
     <TextBlock
       lineHeight="--uitk-text-lineHeight"
-      fontFamily="--uitk-text-font-family"
+      fontFamily="--uitk-typography-fontFamily"
     />
     <DocGrid textExample={true}>
       <BlankBlockCell />
       <BlankBlockCode>--uitk-typography-fontFamily</BlankBlockCode>
+    </DocGrid>
+    <div style={{ padding: "20px" }} />
+    <TextBlock
+      lineHeight="--uitk-text-lineHeight"
+      fontFamily="--uitk-typography-fontFamily-code"
+    />
+    <DocGrid textExample={true}>
       <BlankBlockCell />
       <BlankBlockCode>--uitk-typography-lineHeight</BlankBlockCode>
+      <BlankBlockCode>--uitk-typography-fontFamily-code</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>

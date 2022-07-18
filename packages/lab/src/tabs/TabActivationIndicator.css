@@ -20,7 +20,7 @@
   background-color: var(--uitkTabActivationIndicator-thumb-bg, var(--activation-indicator-thumb-bg));
   transition: var(--uitkTabActivationIndicator-transition, left 0.2s ease);
   bottom: 0;
-  z-index: var(--uitk-zindex-default);
+  z-index: var(--uitk-zIndex-default);
 }
 
 .uitkTabActivationIndicator-vertical {

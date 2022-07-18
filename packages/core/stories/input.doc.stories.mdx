@@ -1,0 +1,201 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import {
+  FormField,
+  Input,
+  StaticInputAdornment,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
+import { CallIcon, CalendarIcon } from "@jpmorganchase/uitk-icons";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import { CustomStyling } from "./input.stories";
+
+<Meta
+  title="Documentation/Core/Input"
+  component={Input}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Input
+
+The Input component provides an editable field in which users can enter arbitrary text and numeric values—with no specific format defined.
+
+## Basic Input Component
+
+<Canvas>
+  <Story name="Basic Input" decorators={[withFlexGap]}>
+    <Input defaultValue={"Value"} style={{ width: "292px" }} />
+  </Story>
+</Canvas>
+
+## Read Only Input
+
+Read only mode switched on by providing the `readOnly` prop.
+
+<Canvas>
+  <Story name="Read Only" decorators={[withFlexGap]}>
+    <Input
+      defaultValue={"Read Only Input"}
+      readOnly
+      style={{ width: "292px" }}
+    />
+  </Story>
+</Canvas>
+
+## Input with spellcheck
+
+Automatic spellchecking can be turned on by using `inputProps`.
+
+<Canvas>
+  <Story name="Input with spellcheck" decorators={[withFlexGap]}>
+    <Input
+      defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
+      style={{ width: "292px" }}
+      inputProps={{ spellCheck: true }}
+    />
+  </Story>
+</Canvas>
+
+## Input with adornments
+
+Icons and text can be used as adornments at the start or end of the component.
+
+<Canvas>
+  <Story name="Input with adornments" decorators={[withFlexGap]}>
+    <div>
+      <Input
+        defaultValue="Prefix: Icon"
+        startAdornment={
+          <StaticInputAdornment>
+            <CallIcon />
+          </StaticInputAdornment>
+        }
+      />
+      <div style={{ height: "15px" }} />
+      <Input
+        defaultValue="Suffix: Icon"
+        endAdornment={
+          <StaticInputAdornment>
+            <CalendarIcon size="small" />
+          </StaticInputAdornment>
+        }
+      />
+      <div style={{ height: "15px" }} />
+      <Input
+        defaultValue="Suffix: Text"
+        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+## Used in FormField
+
+Input is a component that would commonly be nested inside a FormField.
+
+<Canvas>
+  <Story name="Used in FormField" decorators={[withFlexGap]}>
+    <FormField label="ADA compliant label" style={{ width: 292 }}>
+      <Input defaultValue="Value" />
+    </FormField>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Input } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Input} />
+
+## HTML Anatomy of Input component
+
+<Canvas>
+  <ComponentAnatomy>
+    <Input defaultValue={"Default"} style={{ width: "292px" }} />
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Input
+      defaultValue={"Read Only Input"}
+      readOnly
+      style={{ width: "292px" }}
+    />
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Input
+      defaultValue="Prefix: Icon"
+      startAdornment={
+        <StaticInputAdornment>
+          <CallIcon />
+        </StaticInputAdornment>
+      }
+    />
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Input
+      defaultValue="Suffix: Text"
+      endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+    />
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Input} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Input} />
+
+## --uitkInput CSS Custom Property API
+
+The default styling values for most Input attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Input. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Input, but not defined by Input. They can be defined via a container or
+a custom class name to override input styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Input} />
+
+## Customising Input styles
+
+<Canvas>
+  <Story name="Custom Input Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Input.stories.newapp-input.css */
+
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --newapp-highlight-color: rgb(241, 231, 64);
+
+  --uitkInput-letterSpacing: 1.2px;
+  --uitkInput-focused-outlineColor: var(--uitk-color-green-100);
+  --uitkInput-highlight-color: var(--newapp-highlight-color);
+  --uitkInput-fontFamily: arial;
+}
+
+.uitk-light.uitk-newapp {
+  --uitkInput-background: var(--uitk-color-green-10);
+}
+
+.uitk-dark.uitk-newapp {
+  --uitkInput-background: var(--uitk-color-green-700);
+}
+```

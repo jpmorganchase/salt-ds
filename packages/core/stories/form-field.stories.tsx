@@ -1,12 +1,13 @@
+import { useState } from "react";
 import {
-  ToolkitProvider,
+  Input,
   FormField,
   FormFieldProps,
+  ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
-import { Input, Dropdown } from "@jpmorganchase/uitk-lab";
-import { useState } from "react";
-import { usStateExampleData } from "./exampleData";
+import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { usStateExampleData } from "./exampleData";
 
 export default {
   title: "Core/Form Field",

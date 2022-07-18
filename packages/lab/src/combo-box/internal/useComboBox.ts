@@ -1,4 +1,10 @@
-import { useControlled, useForkRef, useId } from "@jpmorganchase/uitk-core";
+import {
+  InputProps,
+  useControlled,
+  useForkRef,
+  useId,
+  useIsFocusVisible,
+} from "@jpmorganchase/uitk-core";
 import {
   ChangeEvent,
   FocusEvent,
@@ -11,10 +17,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { InputProps } from "../../input";
 import { useList } from "../../list";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
-import { useIsFocusVisible } from "../../utils";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";

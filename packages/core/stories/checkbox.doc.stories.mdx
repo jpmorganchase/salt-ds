@@ -1,0 +1,135 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Checkbox, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./checkbox.stories";
+
+<Meta
+  title="Documentation/Core/Checkbox"
+  component={Checkbox}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Checkbox
+
+A Checkbox allows the user to turn a specific value on or off. The value can be an independent value or a selection of one or more values from a given set of choices (structured as a Checkbox Group).
+
+## Default
+
+<Canvas>
+  <Story id="core-checkbox--default" />
+</Canvas>
+
+## Disabled
+
+<Canvas>
+  <Story id="core-checkbox--disabled" />
+</Canvas>
+
+## Without Label
+
+<Canvas>
+  <Story id="core-checkbox--without-label" />
+</Canvas>
+
+## Indeterminate
+
+<Canvas>
+  <Story id="core-checkbox--indeterminate" />
+</Canvas>
+
+## Horizontal Group
+
+<Canvas>
+  <Story id="core-checkbox--horizontal-group" />
+</Canvas>
+
+## Controlled Group
+
+<Canvas>
+  <Story id="core-checkbox--controlled-group" />
+</Canvas>
+
+## Uncontrolled Group
+
+<Canvas>
+  <Story id="core-checkbox--uncontrolled-group" />
+</Canvas>
+
+## Long Text Group
+
+<Canvas>
+  <Story id="core-checkbox--long-text-group" />
+</Canvas>
+
+# API
+
+```
+import { Checkbox } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Checkbox} />
+
+## HTML Anatomy of a Checkbox
+
+<Canvas>
+  <ComponentAnatomy>
+    <Checkbox aria-label="Default Checkbox">Default</Checkbox>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Checkbox
+      aria-label="Checkbox with high emphasis"
+      className="uitkEmphasisHigh"
+    >
+      High emphasis
+    </Checkbox>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Checkbox} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Checkbox} />
+
+## --uitkCheckbox CSS Custom Property API
+
+The default styling values for most Checkbox attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Checkbox. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Checkbox, but not defined by Checkbox. They can be defined via a container or
+a custom class name to override card styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Checkbox} />
+
+## Customising Checkbox styles
+
+<Canvas>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file Checkbox.stories.newapp-checkbox.css */
+
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkCheckboxIcon-tick-fill: var(--uitk-color-purple-40);
+  --uitkCheckboxIcon-solid-color-checked: var(--uitk-color-purple-300);
+}
+```

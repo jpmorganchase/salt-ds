@@ -54,6 +54,9 @@
   --contact-details-deselecting-icon-color: var(--uitk-ratable-border);
   --contact-details-selected-icon-color: var(--uitk-ratable-background-active);
   --contact-details-selecting-icon-color: var(--uitk-ratable-background-hover);
+
+  --contact-details-primary-font-weight: var(--uitk-text-fontWeight-strong);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight-strong);
 }
 
 .uitkContactDetails {
@@ -73,25 +76,21 @@
 .uitkContactDetails-default,
 .uitkContactDetails-default-stacked {
   --contact-details-primary-font-size: var(--contact-details-default-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-default-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 .uitkContactDetails-compact,
 .uitkContactDetails-compact-stacked {
   --contact-details-primary-font-size: var(--contact-details-compact-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-compact-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-regular);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkContactDetails-mini,
 .uitkContactDetails-mini-stacked {
   --contact-details-primary-font-size: var(--contact-details-compact-primary-font-size);
-  --contact-details-primary-font-weight: var(--uitk-typography-weight-semiBold);
   --contact-details-secondary-font-size: var(--contact-details-compact-contact-details-secondary-font-size);
-  --contact-details-secondary-font-weight: var(--uitk-typography-weight-regular);
+  --contact-details-secondary-font-weight: var(--uitk-text-fontWeight);
 }
 
 .uitkContactDetails-default {
@@ -166,37 +165,20 @@
   margin-left: calc(var(--uitk-size-unit) * -1);
 }
 
-.uitkContactMetadata {
-}
-
-.uitkContactMetadataItem {
-}
-
 .uitkContactPrimaryInfo {
   grid-area: primary;
-  font-size: var(--contact-details-primary-font-size);
-  font-weight: var(--contact-details-primary-font-weight);
+}
+
+.uitkContactDetails-default .uitkContactPrimaryInfo {
+  margin-bottom: calc(var(--uitk-size-unit) * 0.5);
 }
 
 .uitkContactSecondaryInfo {
   grid-area: secondary;
-  font-size: var(--contact-details-secondary-font-size);
-  font-weight: var(--contact-details-secondary-font-weight);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.uitkContactDetails-default .uitkContactSecondaryInfo {
-  white-space: unset;
-}
-
-.uitkContactDetails-default-stacked .uitkContactSecondaryInfo {
-  white-space: unset;
 }
 
 .uitkContactDetails-mini .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-size-unit) * 2);
+  margin-left: calc(var(--uitk-size-unit));
 }
 
 /* TODO Mini-stacked does not really look "stacked". Is it a bug? */
@@ -208,24 +190,8 @@
   margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
-.uitkContactSecondaryInfo-value {
-}
-
 .uitkContactTertiaryInfo {
   grid-area: tertiary;
-  font-size: var(--contact-details-secondary-font-size);
-  font-weight: var(--contact-details-secondary-font-weight);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.uitkContactDetails-default .uitkContactSecondaryInfo {
-  white-space: unset;
-}
-
-.uitkContactDetails-default-stacked .uitkContactSecondaryInfo {
-  white-space: unset;
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
@@ -236,20 +202,12 @@
   margin-right: calc(var(--uitk-size-unit) * 0.5);
 }
 
-.uitkContactTertiaryInfo-value {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .uitkContactMetadata {
   grid-area: metadata;
   display: flex;
   flex-direction: column;
   padding-top: var(--uitk-size-unit);
   padding-bottom: var(--uitk-size-unit);
-}
-
-.uitkContactMetadata-default {
 }
 
 .uitkContactMetadata-expander {
@@ -286,19 +244,14 @@
 }
 
 .uitkContactMetadataItem-label {
-  text-overflow: ellipsis;
   flex-shrink: 0;
   color: var(--contact-details-label-color);
-  font-size: var(--contact-details-metadata-font-size);
   margin-right: calc(var(--uitk-size-unit) * 2);
   width: var(--contact-details-label-width);
 }
 
 .uitkContactMetadataItem-value {
-  overflow: hidden;
   min-width: 0;
-  font-size: var(--contact-details-metadata-font-size);
-  white-space: nowrap;
 }
 
 .uitkContactFavoriteToggle {

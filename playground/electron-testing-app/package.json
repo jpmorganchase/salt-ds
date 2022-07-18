@@ -2,6 +2,7 @@
   "name": "desktop-testing-environment",
   "productName": "electron-test-app",
   "version": "1.0.0",
+  "private": true,
   "description": "Electron testing environment",
   "main": ".webpack/main",
   "scripts": {
