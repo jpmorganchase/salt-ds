@@ -171,7 +171,7 @@ describe("GIVEN Content Status", () => {
       </AriaAnnouncerProvider>
     );
 
-    cy.get('[aria-live="assertive"]').should("contain", "loading");
+    cy.get('[aria-live="assertive"]').should("announce", "loading");
 
     cy.mount(
       <AriaAnnouncerProvider>
@@ -180,7 +180,10 @@ describe("GIVEN Content Status", () => {
     );
 
     // Disabled completion announcement from spinner
-    cy.get('[aria-live="assertive"]').should("not.contain", "finished loading");
+    cy.get('[aria-live="assertive"]').should(
+      "not.announce",
+      "finished loading"
+    );
     cy.get('[aria-live="assertive"]').should("contain", "success");
   });
 
@@ -191,7 +194,7 @@ describe("GIVEN Content Status", () => {
       </AriaAnnouncerProvider>
     );
 
-    cy.get('[aria-live="assertive"]').should("not.contain", "loading");
+    cy.get('[aria-live="assertive"]').should("not.announce", "loading");
   });
 
   /* TODO: custom ariaLabel prop removed causing issues here */
