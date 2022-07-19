@@ -14,9 +14,10 @@
   padding: var(--accordion-padding);
   margin: var(--accordion-margin);
   border-radius: var(--accordion-border-radius);
+  /* gap: calc(var(--uitk-size-unit) * 1); */
 }
 
-.uitk-density-high .uitkAccordionSection {
+/* .uitk-density-high .uitkAccordionSection {
   --summary-padding-left: 20px;
   --details-padding: 3px 4px 5px 20px;
 }
@@ -34,11 +35,14 @@
 .uitk-density-touch .uitkAccordionSection {
   --summary-padding-left: 44px;
   --details-padding: 18px 16px 17px 44px;
-}
+} */
 
 .uitkAccordionSection {
   --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
-  --summary-fontWeight: var(--uitkAccordionSummary-fontWeight, initial);
+  --summary-padding: var(--uitkAccordionSummary-padding, 0);
+  --summary-lineHeight: var(--uitkAccordionSummary-height, var(--uitk-text-lineHeight));
+  --summary-fontWeight: var(--uitkAccordionSummary-fontWeight, var(--uitk-text-fontWeight));
+  --summary-fontSize: var(--uitkAccordionSummary-font-size, var(--uitk-text-fontSize));
 
   --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
   --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
@@ -49,6 +53,15 @@
   --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
   --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
   --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-selectable-foreground-hover));
+
+  --summary-focus-outline-style: var(--uitk-focused-outlineStyle);
+  --summary-focus-outline-width: var(--uitk-focused-outlineWidth);
+  --summary-focus-outline-color: var(--uitk-focused-outlineColor);
+  --summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
+
+  --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
+  --summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--summary-icon-transition-default));
 
   --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-container-borderColor-medium));
   --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
@@ -61,15 +74,6 @@
   --section-margin-right: var(--uitkAccordionSection-margin-right, 0);
   --section-margin-bottom: var(--uitkAccordionSection-margin-bottom, 0);
   --section-margin-left: var(--uitkAccordionSection-margin-left, 0);
-
-  --summary-focus-outline-style: var(--uitk-focused-outlineStyle);
-  --summary-focus-outline-width: var(--uitk-focused-outlineWidth);
-  --summary-focus-outline-color: var(--uitk-focused-outlineColor);
-  --summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
-
-  --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
-  --summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--summary-icon-transition-default));
 }
 
 .uitkAccordion-bordered .uitkAccordionSection {
@@ -82,29 +86,26 @@
   --border-width: var(--section-border-top-width) var(--section-border-right-width) var(--section-border-bottom-width) var(--section-border-left-width);
   border-width: var(--uitkAccordionSection-border-width, var(--border-width));
   margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* gap: calc(var(--uitk-size-unit) * 1.5); */
 }
 
 .uitkAccordionSection:focus-within {
   z-index: var(--uitk-zIndex-default);
 }
 
-.uitkAccordionSection-expanded {
-}
-
-.uitkAccordionSection-disabled {
-}
-
 .uitkAccordionSummary {
-  height: var(--summary-height);
-  line-height: var(--summary-height);
+  line-height: var(--summary-lineHeight);
   font-weight: var(--summary-fontWeight);
+  font-size: var(--summary-fontSize);
   background: var(--summary-background);
   color: var(--summary-text-color);
-  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-fontSize));
-  font-family: var(--uitkAccordionSummary-font-family, var(--uitk-text-fontFamily));
-  padding-left: var(--summary-padding-left);
-  position: relative;
+  height: var(--summary-height);
+  padding: var(--summary-padding);
+  display: flex;
+  align-items: center;
+  gap: var(--uitk-size-unit);
 }
 
 .uitkAccordionSummary:focus-visible {
@@ -131,15 +132,6 @@
 }
 
 .uitkAccordionSummary-icon {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: var(--summary-padding-left);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   transition: var(--summary-icon-transition);
 }
 
@@ -163,4 +155,15 @@
   position: fixed;
   top: -10000px;
   left: 0;
+}
+
+/* backwardsCompat */
+
+.uitk-density-medium .backwardsCompat.uitkAccordion .uitkAccordionSummary {
+  padding: 3px 2px;
+}
+
+.uitk-density-high .backwardsCompat.uitkAccordion .uitkAccordionSummary {
+  padding: 0px 0px 0px 3px;
+  gap: 5px;
 }

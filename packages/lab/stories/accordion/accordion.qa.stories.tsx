@@ -9,7 +9,7 @@ import {
   AccordionDetails,
   Link,
 } from "@jpmorganchase/uitk-lab";
-import { QAContainer } from "docs/components";
+import { QAContainer } from "docs/components/QAContainer";
 import { BackgroundBlock } from "docs/components/BackgroundBlock";
 
 export default {
@@ -20,11 +20,14 @@ export default {
 type PanelsData = {
   content: ReactNode;
   summary: ReactNode;
+  expanded?: boolean;
+  disabled?: boolean;
 };
 
 const panelsData: PanelsData[] = [
   {
     summary: "My first Panel",
+    expanded: true,
     content: (
       <div>
         My first panel content <Link href="#">Link 1</Link>
@@ -33,109 +36,61 @@ const panelsData: PanelsData[] = [
   },
   {
     summary: "My second Panel",
+    disabled: true,
     content: (
       <div>
         My second panel content <Link href="#">Link 2</Link>
       </div>
     ),
   },
+
+  {
+    summary: "My third Panel",
+    content: (
+      <div>
+        My third panel content <Link href="#">Link 2</Link>
+      </div>
+    ),
+  },
 ];
 
-type ExampleProps = {
-  readonly title?: string;
-  readonly bordered?: boolean;
-  className?: string | undefined;
-};
-
-const Default: ComponentType<ExampleProps> = (props) => (
-  <div style={{ width: 400 }}>
-    <h3>{props.title}</h3>
-    <Accordion
-      className={props.className}
-      maxExpandedItems={1}
-      bordered={props.bordered}
-      // disabled={props.disabled}
-    >
-      {panelsData.map((panel) => {
-        const { content, summary } = panel;
-        return (
-          <AccordionSection key={summary?.toString()}>
-            <AccordionSummary>{summary}</AccordionSummary>
-            <AccordionDetails>{content}</AccordionDetails>
-          </AccordionSection>
-        );
-      })}
-    </Accordion>
-  </div>
-);
-
-// const Expanded: ComponentType<ExampleProps> = (props) => (
-//   <div style={{ width: 400 }}>
-//     <h3>{props.title}</h3>
-//     <Accordion
-//       // bordered={props.bordered}
-//       defaultExpandedSectionIds={["panel1"]}
-//       panels={["panel1", "panel2"]}
-//       renderPanel={({ value, getPanelProps }) => {
-//         const panel = panelsData[value];
-//         return (
-//           <ExpansionPanel
-//             content={panel.content}
-//             summary={panel.summary}
-//             {...getPanelProps()}
-//           />
-//         );
-//       }}
-//     />
-//   </div>
-// );
-
-// const Disabled: ComponentType<ExampleProps> = (props) => (
-//   <div style={{ width: 400 }}>
-//     <h3>{props.title}</h3>
-//     <Accordion
-//       // bordered={props.bordered}
-//       disabled={["panel1"]}
-//       panels={["panel1", "panel2"]}
-//       renderPanel={({ value, getPanelProps }) => {
-//         const panel = panelsData[value];
-//         return (
-//           <ExpansionPanel
-//             content={panel.content}
-//             summary={panel.summary}
-//             {...getPanelProps()}
-//           />
-//         );
-//       }}
-//     />
-//   </div>
-// );
-
-const AccordionExamples = (props: { className?: string | undefined }) => (
-  <div>
-    <Default title="Default" className={props.className} />
-    <Default title="Default bordered" bordered className={props.className} />
-    {/* <Expanded title="Expanded" />
-    <Expanded bordered title="Expanded bordered" />
-    <Disabled title="Disabled" />
-    <Disabled bordered title="Disabled bordered " /> */}
-  </div>
-);
-
-export const AllExamplesGrid: Story = (props: { className?: string }) => {
+export const AllExamplesGrid: Story = (props: {
+  className?: string;
+  imgSrc?: string;
+}) => {
   return (
-    <div style={{ width: 700, display: "flex", flex: 1 }}>
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock style={{ background: "white" }}>
-          <AccordionExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>
-          <AccordionExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-    </div>
+    <QAContainer cols={2} imgSrc={props.imgSrc}>
+      <Accordion className={props.className}>
+        {panelsData.map((panel) => {
+          const { content, summary, disabled, expanded } = panel;
+          return (
+            <AccordionSection
+              disabled={disabled}
+              expanded={expanded}
+              key={summary?.toString()}
+            >
+              <AccordionSummary>{summary}</AccordionSummary>
+              <AccordionDetails>{content}</AccordionDetails>
+            </AccordionSection>
+          );
+        })}
+      </Accordion>
+      <Accordion bordered className={props.className}>
+        {panelsData.map((panel) => {
+          const { content, summary, disabled, expanded } = panel;
+          return (
+            <AccordionSection
+              disabled={disabled}
+              expanded={expanded}
+              key={summary?.toString()}
+            >
+              <AccordionSummary>{summary}</AccordionSummary>
+              <AccordionDetails>{content}</AccordionDetails>
+            </AccordionSection>
+          );
+        })}
+      </Accordion>
+    </QAContainer>
   );
 };
 
@@ -152,16 +107,8 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<
-  typeof Accordion
-> = () => {
-  return (
-    <QAContainer
-      width={700}
-      className="uitkMetricQA"
-      imgSrc="/visual-regression-screenshots/Accordion-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
-  );
+export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
+CompareWithOriginalToolkit.args = {
+  className: "backwardsCompat",
+  imgSrc: "/visual-regression-screenshots/Accordion-vr-snapshot.png",
 };

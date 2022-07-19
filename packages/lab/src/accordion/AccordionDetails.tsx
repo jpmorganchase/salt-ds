@@ -58,47 +58,36 @@ export const AccordionDetails = forwardRef<
       return;
     }
     if (isExpanded) {
-      switch (state) {
-        case AccordionState.COLLAPSED:
-          setState(AccordionState.MEASURING);
-          break;
-        case AccordionState.MEASURING:
-          rootRef.current.style.height = `${
-            contentRef.current!.getBoundingClientRect().height
-          }px`;
-          setState(AccordionState.EXPANDING);
-          break;
-        case AccordionState.EXPANDING:
-          setTimeout(() => {
-            setState(AccordionState.EXPANDED);
-          }, msCollapseAnimationDuration);
-          break;
-        case AccordionState.EXPANDED:
-          rootRef.current.style.height = "auto";
-          break;
+      if (state === AccordionState.COLLAPSED) {
+        setState(AccordionState.MEASURING);
+      } else if (state === AccordionState.MEASURING) {
+        rootRef.current.style.height = `${
+          contentRef.current!.getBoundingClientRect().height
+        }px`;
+        setState(AccordionState.EXPANDING);
+      } else if (state === AccordionState.EXPANDING) {
+        setTimeout(() => {
+          setState(AccordionState.EXPANDED);
+        }, msCollapseAnimationDuration);
+      } else if (state === AccordionState.EXPANDED) {
+        rootRef.current.style.height = "auto";
       }
     } else {
-      let height: string = "auto";
-      switch (state) {
-        case AccordionState.EXPANDED:
-          const { height: rootRefHeight } =
-            rootRef.current.getBoundingClientRect();
-          height = `${rootRefHeight}px`;
-          setTimeout(() => {
-            setState(AccordionState.COLLAPSING);
-          }, 0);
-          break;
-        case AccordionState.COLLAPSING:
-          height = "0";
-          setTimeout(() => {
-            setState(AccordionState.COLLAPSED);
-          }, msCollapseAnimationDuration);
-          break;
-        case AccordionState.COLLAPSED:
-          height = "0";
-          break;
+      if (state === AccordionState.EXPANDED) {
+        rootRef.current.style.height = `${
+          rootRef.current.getBoundingClientRect().height
+        }px`;
+        setTimeout(() => {
+          setState(AccordionState.COLLAPSING);
+        }, 0);
+      } else if (state === AccordionState.COLLAPSING) {
+        rootRef.current.style.height = "0";
+        setTimeout(() => {
+          setState(AccordionState.COLLAPSED);
+        }, msCollapseAnimationDuration);
+      } else if (state === AccordionState.COLLAPSED) {
+        rootRef.current.style.height = "0";
       }
-      rootRef.current.style.height = height;
     }
   }, [isExpanded, state]);
 

@@ -163,8 +163,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     }, [registerSection, unregisterSection, onChange, isExpanded, disabled]);
 
     return (
-      <StackLayout
-        gap={0}
+      <div
         className={cn(withBaseName(), className, {
           [withBaseName("bordered")]: bordered,
         })}
@@ -174,7 +173,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
         <AccordionContext.Provider value={contextValue}>
           {children}
         </AccordionContext.Provider>
-      </StackLayout>
+      </div>
     );
   }
 );
