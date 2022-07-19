@@ -24,6 +24,10 @@
   padding: var(--uitkFileDropZone-padding, var(--fileDropZone-padding));
 }
 
+.uitkFileDropZone *:not(.uitkFileDropZone-inputRoot, .uitkFileDropZone-inputRoot *) {
+  pointer-events: none;
+}
+
 /* Styles applied to icon */
 .uitkFileDropZone-icon {
   fill: var(--fileDropZone-icon-color);
