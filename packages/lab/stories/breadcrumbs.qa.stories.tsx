@@ -11,15 +11,17 @@ export default {
   component: Breadcrumbs,
 } as ComponentMeta<typeof Breadcrumbs>;
 
-const BreadcrumbsExamples = (props: { className?: string | undefined }) => {
+export const AllExamplesGrid: Story = (props: {
+  className?: string;
+  imgSrc?: string;
+}) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: 334,
-        padding: 0,
-      }}
+    <QAContainer
+      cols={4}
+      transposeDensity
+      vertical
+      className="uitkMetricQA"
+      imgSrc={props.imgSrc}
     >
       <Breadcrumbs
         className={props.className}
@@ -145,24 +147,7 @@ const BreadcrumbsExamples = (props: { className?: string | undefined }) => {
           Level 4 Entity
         </Breadcrumb>
       </Breadcrumbs>
-    </div>
-  );
-};
-
-export const AllExamplesGrid: Story = (props: { className?: string }) => {
-  return (
-    <div style={{ width: 700, display: "flex", flex: 1 }}>
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock style={{ background: "white" }}>
-          <BreadcrumbsExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>
-          <BreadcrumbsExamples className={props.className} />
-        </BackgroundBlock>
-      </ToolkitProvider>
-    </div>
+    </QAContainer>
   );
 };
 
@@ -179,16 +164,8 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<
-  typeof Breadcrumbs
-> = () => {
-  return (
-    <QAContainer
-      width={700}
-      className="uitkMetricQA"
-      imgSrc="/visual-regression-screenshots/Breadcrumbs-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
-  );
+export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
+CompareWithOriginalToolkit.args = {
+  className: "backwardsCompat",
+  imgSrc: "/visual-regression-screenshots/Breadcrumbs-vr-snapshot.png",
 };
