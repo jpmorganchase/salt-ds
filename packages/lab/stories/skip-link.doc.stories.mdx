@@ -1,0 +1,80 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { SkipLink } from "@jpmorganchase/uitk-lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import { Default, MultipleLinks } from "./skip-link.stories";
+
+<Meta title="Documentation/Lab/Skip Link" />
+
+# Skip Link
+
+The Skip Link component allows keyboard users to navigate a page more quickly by skipping past repeated or generic content to move focus to a target element.
+
+Unlike mouse users who can move from any point in the page to any other point in the page in a single action, keyboard users navigate elements in a linear and sequential manner from element to element.
+Repeated navigation past large blocks of content at the top of the page in this fashion can be extremely laborious.
+
+Skip Links help enhance your application's usability and accessibility by providing a convenient mechanism for moving focus directly to the main content on the page.
+
+## Usages
+
+Use a Skip Link to allow users to bypass a block of repeated elements, such as complex global navigation or a toolbar with multiple action buttons.
+Instead of painstakingly navigating through individual elements, a Skip Link gives them a more efficient alternative.
+
+**Placement**
+
+- The Skip Link should appear in the top left corner of the container element that it will bypass. For example, include a Skip Link about the page `<header>` to bypass the header element.
+- In most cases, the Skip Link should be the _first focusable item_ on the page. It's acceptable to position it after cooke warnings and disclaimers, but it must be placed before the header content in order to fulfil its purpose: enabling users to skip the header content.
+
+**Implementation**
+
+- To navigate users to a specific target element on the screen, you must reference the element id in the Skip Link `href` prop and set the link text accordingly.
+- For improved accessibility, configure the target element to visually display focus when the Skip Link is activated.
+
+**Best practices**
+
+- If your users access your application on a Mac, Tab-key function may be limited to link and form inputs, so Skip LInks may not display. Advise users to resolve this by allowing "Full Keyboard Access" in their Keyboard System Preferences.
+- If your users access your application on the Safari browser, preferences may need to be configured so Skip Links will display. Open Safari Preferences and click on the Advanced tab. In order to resolve, check the box for "Press Tab to highlight each item on a webpage" in the Accessibility tab.
+
+## Interactions and behaviours
+
+**Visibility**
+
+Skip Links are visible only on focus. When a Skip Link is activated, focus moves from it to the target element, navigating the user to that element - and the Skip Link is once again hidden.
+
+## Default
+
+The Skip link component is displayed above the application layout on a single line, as a link element. It receives focus when the user navigates to it using the Tab key. When activated, the Skip Link enables user to skip to the target content you've defined.
+
+<Canvas>
+  <Story name="Default" parameters={{ layout: "centered" }}>
+    <Default />
+  </Story>
+</Canvas>
+
+## With multiple links
+
+The Skip Link component can provide multiple links. Links are displayed in sequence, replacing the previous link on Tab-key press enabling a user to navigate to a different elements on a page.
+
+**Best Practices**
+
+Multiple links should be used sparingly. In order to avoid polluting the page-tab order it is recommended not to use more than two links per Skip Link.
+
+<Canvas>
+  <Story name="Multiple Links" parameters={{ layout: "centered" }}>
+    <MultipleLinks />
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={SkipLink} />
+
+## CSS Classes
+
+<CSSClassTable of={SkipLink} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={SkipLink} />
