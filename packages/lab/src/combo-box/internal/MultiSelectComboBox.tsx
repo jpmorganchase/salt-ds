@@ -47,6 +47,7 @@ export function MultiSelectComboBox<Item>(
   const {
     ListItem,
     Tooltip,
+    WindowProps,
     tooltipEnterDelay,
     tooltipLeaveDelay,
     tooltipPlacement,
@@ -142,13 +143,14 @@ export function MultiSelectComboBox<Item>(
       {rootRef.current && isListOpen && (
         <Portal>
           <Window
-            ref={floating}
             style={{
               top: y ?? "",
               left: x ?? "",
               position: strategy,
               maxHeight: maxListHeight ?? "",
             }}
+            {...WindowProps}
+            ref={floating}
           >
             <TooltipContext.Provider value={tooltipContext}>
               <ListStateContext.Provider value={listContext}>

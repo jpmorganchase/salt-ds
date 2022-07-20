@@ -8,3 +8,7 @@
 .uitkDropdown-fullwidth {
   width: 100%;
 }
+
+.uitkDropdown-listWindowRoot {
+  z-index: calc(var(--uitk-zindex-tooltip) - 1);
+}
