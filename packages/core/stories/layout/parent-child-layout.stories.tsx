@@ -10,6 +10,7 @@ import {
   useIsViewportLargerThanBreakpoint,
 } from "@jpmorganchase/uitk-core";
 import { GridLayoutComposite } from "./grid-layout.stories";
+import { SectionForm } from "./flex-layout.stories";
 
 import "./styles.css";
 
@@ -142,18 +143,7 @@ const useTabSelection = (initialValue?: any) => {
   return [selectedTab, handleTabSelection];
 };
 
-const cardText =
-  "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut, dicta impedit nemo nobis sed sunt. Consequuntur dignissimos, doloribus enim et hic incidunt, magnam mollitia nisi omnis quam rerum veniam veritatis?";
-
-const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-
-const cardStyles = { height: "100%" };
-
-const containerStyles = {
-  border: "solid 1px lightgrey",
-  padding: 16,
-  minWidth: "60vw",
-};
+const tabs = ["Dashboard", "Form", "Blog"];
 
 const stackedAtBreakpoint = "sm";
 
@@ -183,10 +173,17 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
       value={selectedTab}
       style={{ width: "100%", minWidth: 300 }}
     >
-      {tabs.map((_, index) => (
-        <Tab label="Medium" key={index} />
+      {tabs.map((label, index) => (
+        <Tab label={label} key={index} />
       ))}
     </Tabstrip>
+  );
+
+  const child = (
+    <>
+      {selectedTab === 0 && <GridLayoutComposite />}
+      {selectedTab === 1 && <SectionForm />}
+    </>
   );
 
   const backButton = isStacked && (
@@ -202,7 +199,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
         {...args}
         stackedViewElement={currentView}
         parent={parent}
-        child={<GridLayoutComposite />}
+        child={child}
       />
     </div>
   );
