@@ -1,0 +1,97 @@
+.uitkGridHeaderCell {
+  border-collapse: collapse;
+  text-align: left;
+
+  border-style: solid;
+  border-color: var(--uitkGrid-header-borderColor);
+  border-width: 0 0 1px 0;
+
+  font-size: var(--uitkGrid-fontSize);
+  font-weight: normal;
+
+  height: var(--uitkGrid-rowHeight);
+  line-height: var(--uitkGrid-rowHeight);
+
+  position: relative;
+  box-sizing: border-box;
+
+  background-color: var(--uitkGrid-header-backgroundColor);
+  color: var(--uitkGrid-header-color);
+
+  white-space: nowrap;
+}
+
+.uitkGridHeaderCell-valueContainer {
+  line-height: var(--uitkGrid-rowHeight);
+  padding: var(--uitkGrid-cell-padding);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.uitkGridHeaderCell-autosizeContainer {
+  line-height: var(--uitkGrid-rowHeight);
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.uitkGridHeaderCell-measuredContent {
+  display: inline-block;
+  padding: var(--uitkGrid-cell-padding);
+}
+
+.uitkGridHeaderCell-text {
+}
+
+.uitkGridHeaderCell-regularSeparator {
+  background-color: #84878e;
+  width: 1px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 4px;
+  bottom: 4px;
+}
+
+.uitkGridHeaderCell-edgeSeparator {
+  background-color: var(--uitkGrid-headerColumnSeparator-color);
+  width: 1px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 4px;
+}
+
+.uitkGridHeaderCell-resizeHandle {
+  position: absolute;
+  right: -8px;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  background-color: transparent;
+  cursor: col-resize;
+  z-index: 2;
+}
+
+.uitkGridHeaderCell-moveHandle {
+  position: absolute;
+  right: 32px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  cursor: move;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

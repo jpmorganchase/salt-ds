@@ -1,0 +1,32 @@
+.uitkGridRowSelectionRadioCellValue {
+  height: var(--uitkGrid-rowHeight);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.uitk-density-medium .uitkGridRowSelectionRadioHeaderValue {
+  --radio-size: 14px;
+}
+
+.uitk-density-high .uitkGridRowSelectionRadioHeaderValue {
+  --radio-size: 12px;
+}
+
+.uitk-density-ultrahigh .uitkGridRowSelectionRadioHeaderValue {
+  --radio-size: 12px;
+}
+
+.uitk-density-low .uitkGridRowSelectionRadioHeaderValue {
+  --radio-size: 16px;
+}
+
+.uitk-density-touch .uitkGridRowSelectionRadioHeaderValue {
+  --radio-size: 18px;
+}
+
+.uitkGridRowSelectionRadioHeaderValue {
+  height: var(--uitkGrid-rowHeight);
+  width: var(--radio-size);
+}

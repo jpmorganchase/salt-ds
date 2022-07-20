@@ -1,0 +1,23 @@
+{
+  "name": "@jpmorganchase/uitk-grid",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.css.js"
+  ],
+  "peerDependencies": {
+    "@types/react": ">=16.8.6",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "directory": "../../dist/jpmorganchase-uitk-grid"
+  }
+}
