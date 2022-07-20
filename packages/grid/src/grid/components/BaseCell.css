@@ -1,0 +1,68 @@
+.uitkGridBaseCell {
+}
+
+.uitkGridBaseCell {
+  border-collapse: collapse;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  border-width: 1px 0 1px 0;
+  border-style: solid;
+  white-space: nowrap;
+  position: relative;
+
+  height: var(--uitkGrid-rowHeight);
+  border-bottom-color: var(--uitkGrid-cell-borderColor);
+  border-top-color: transparent;
+  font-size: var(--uitkGrid-fontSize);
+  font-weight: normal;
+
+  background-color: var(--uitkGrid-cell-backgroundColor);
+}
+
+.uitkGridBaseCell-hover {
+  background-color: var(--uitkGrid-row-backgroundColor-hover);
+}
+
+.uitkGridBaseCell-selectedRow {
+  background-color: var(--uitkGrid-row-backgroundColor-selected);
+  border-top-color: var(--uitkGrid-row-borderColor-selected);
+  border-bottom-color: var(--uitkGrid-row-borderColor-selected);
+}
+
+.uitkGridBaseCell-selectedCell {
+  background-color: var(--uitkGrid-cell-backgroundColor-selected);
+}
+
+.uitkGridBaseCell-zebra {
+  background-color: var(--uitkGrid-zebraColor);
+}
+
+.uitkGridBaseCell-secondary {
+  background-color: var(--uitkGrid-backgroundColor-secondary);
+}
+
+.uitkGridBaseCell-divided {
+  border-bottom-color: var(--uitkGrid-rowDividerColor);
+}
+
+.uitkGridBaseCell-allEditable {
+  border-width: 0 0 1px 1px;
+}
+
+.uitkGridBaseCell-editable {
+  border-width: 0 1px 1px 2px;
+  border-color: #84878e;
+}
+
+.uitkGridBaseCell-valueContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: var(--uitkGrid-cell-padding);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: var(--uitkGrid-rowHeight);
+}
