@@ -13,6 +13,7 @@ import {
   useForkRef,
   useId,
   useWindow,
+  WindowProps,
 } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
@@ -85,6 +86,10 @@ export interface DropdownProps<
    * Props to be applied on the list component
    */
   ListProps?: Partial<ListProps<Item, Variant>>;
+  /**
+   * Props to be applied on the window component
+   */
+  WindowProps?: Partial<WindowProps>;
   /**
    * Object that houses ADA-related props.
    *
@@ -201,6 +206,7 @@ export const Dropdown = forwardRef(function Dropdown<
     children,
     container,
     disablePortal,
+    WindowProps,
     ...restProps
   }: DropdownProps<Item, Variant>,
   ref: ForwardedRef<HTMLDivElement>
@@ -293,6 +299,7 @@ export const Dropdown = forwardRef(function Dropdown<
               maxHeight: maxListHeight ?? "",
             }}
             ref={floating}
+            {...WindowProps}
           >
             <ListStateContext.Provider value={listContext}>
               <ListBase<Item>

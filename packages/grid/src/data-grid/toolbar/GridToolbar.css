@@ -1,0 +1,7 @@
+.uitkDataGridToolbar {
+  justify-content: end;
+}
+
+.uitkDataGridToolbar-sortIcon {
+  transform: rotate(90deg);
+}
