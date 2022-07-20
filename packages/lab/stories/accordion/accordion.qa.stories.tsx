@@ -1,7 +1,6 @@
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ComponentType, ReactNode } from "react";
+import { ComponentMeta, Story } from "@storybook/react";
+import { ReactNode } from "react";
 
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   Accordion,
   AccordionSection,
@@ -10,7 +9,6 @@ import {
   Link,
 } from "@jpmorganchase/uitk-lab";
 import { QAContainer } from "docs/components/QAContainer";
-import { BackgroundBlock } from "docs/components/BackgroundBlock";
 
 export default {
   title: "Lab/Accordion/QA",
@@ -20,14 +18,14 @@ export default {
 type PanelsData = {
   content: ReactNode;
   summary: ReactNode;
-  expanded?: boolean;
+  defaultExpanded?: boolean;
   disabled?: boolean;
 };
 
 const panelsData: PanelsData[] = [
   {
     summary: "My first Panel",
-    expanded: true,
+    defaultExpanded: true,
     content: (
       <div>
         My first panel content <Link href="#">Link 1</Link>
@@ -62,11 +60,11 @@ export const AllExamplesGrid: Story = (props: {
     <QAContainer cols={2} imgSrc={props.imgSrc}>
       <Accordion className={props.className}>
         {panelsData.map((panel) => {
-          const { content, summary, disabled, expanded } = panel;
+          const { content, summary, disabled, defaultExpanded } = panel;
           return (
             <AccordionSection
               disabled={disabled}
-              expanded={expanded}
+              defaultExpanded={defaultExpanded}
               key={summary?.toString()}
             >
               <AccordionSummary>{summary}</AccordionSummary>
@@ -77,11 +75,11 @@ export const AllExamplesGrid: Story = (props: {
       </Accordion>
       <Accordion bordered className={props.className}>
         {panelsData.map((panel) => {
-          const { content, summary, disabled, expanded } = panel;
+          const { content, summary, disabled, defaultExpanded } = panel;
           return (
             <AccordionSection
               disabled={disabled}
-              expanded={expanded}
+              defaultExpanded={defaultExpanded}
               key={summary?.toString()}
             >
               <AccordionSummary>{summary}</AccordionSummary>

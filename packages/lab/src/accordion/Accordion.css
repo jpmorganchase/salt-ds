@@ -14,28 +14,7 @@
   padding: var(--accordion-padding);
   margin: var(--accordion-margin);
   border-radius: var(--accordion-border-radius);
-  /* gap: calc(var(--uitk-size-unit) * 1); */
 }
-
-/* .uitk-density-high .uitkAccordionSection {
-  --summary-padding-left: 20px;
-  --details-padding: 3px 4px 5px 20px;
-}
-
-.uitk-density-medium .uitkAccordionSection {
-  --summary-padding-left: 28px;
-  --details-padding: 8px 8px 9px 28px;
-}
-
-.uitk-density-low .uitkAccordionSection {
-  --summary-padding-left: 36px;
-  --details-padding: 12px 12px 13px 38px;
-}
-
-.uitk-density-touch .uitkAccordionSection {
-  --summary-padding-left: 44px;
-  --details-padding: 18px 16px 17px 44px;
-} */
 
 .uitkAccordionSection {
   --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
@@ -74,6 +53,10 @@
   --section-margin-right: var(--uitkAccordionSection-margin-right, 0);
   --section-margin-bottom: var(--uitkAccordionSection-margin-bottom, 0);
   --section-margin-left: var(--uitkAccordionSection-margin-left, 0);
+
+  --details-lineHeight: var(--uitkAccordionDetails-height, var(--uitk-text-lineHeight));
+  --details-fontWeight: var(--uitkAccordionDetails-fontWeight, var(--uitk-text-fontWeight));
+  --details-fontSize: var(--uitkAccordionDetails-font-size, var(--uitk-text-fontSize));
 }
 
 .uitkAccordion-bordered .uitkAccordionSection {
@@ -86,9 +69,6 @@
   --border-width: var(--section-border-top-width) var(--section-border-right-width) var(--section-border-bottom-width) var(--section-border-left-width);
   border-width: var(--uitkAccordionSection-border-width, var(--border-width));
   margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
-  display: flex;
-  flex-direction: column;
-  /* gap: calc(var(--uitk-size-unit) * 1.5); */
 }
 
 .uitkAccordionSection:focus-within {
@@ -140,15 +120,16 @@
 }
 
 .uitkAccordionDetails {
+  line-height: var(--summary-lineHeight);
+  font-weight: var(--summary-fontWeight);
+  font-size: var(--summary-fontSize);
   transition: height 150ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
 .uitkAccordionDetails-content {
-  padding: var(--uitkAccordionDetails-padding, var(--details-padding));
-}
-
-.uitkAccordionDetails-disabled {
+  padding: var(--uitk-size-unit);
+  padding-left: calc(var(--uitk-size-unit) + 12px);
 }
 
 .uitkAccordionDetails-dummy {
@@ -159,11 +140,24 @@
 
 /* backwardsCompat */
 
-.uitk-density-medium .backwardsCompat.uitkAccordion .uitkAccordionSummary {
-  padding: 3px 2px;
+.backwardsCompat.uitkAccordion .uitkAccordionSummary {
+  gap: var(--uitk-size-unit);
 }
 
-.uitk-density-high .backwardsCompat.uitkAccordion .uitkAccordionSummary {
-  padding: 0px 0px 0px 3px;
-  gap: 5px;
+.backwardsCompat.uitkAccordion .uitkAccordionSummary-icon {
+  margin-top: 2px;
+  margin-left: var(--uitk-size-unit);
+}
+
+.uitk-density-medium .backwardsCompat.uitkAccordion .uitkAccordionDetails-content {
+  padding: 14px 0px 14px 28px;
+}
+.uitk-density-high .backwardsCompat.uitkAccordion .uitkAccordionDetails-content {
+  padding: 7px 0px 7px 20px;
+}
+.uitk-density-low .backwardsCompat.uitkAccordion .uitkAccordionDetails-content {
+  padding: 21px 0px 21px 36px;
+}
+.uitk-density-touch .backwardsCompat.uitkAccordion .uitkAccordionDetails-content {
+  padding: 27px 0px 27px 44px;
 }
