@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-icons": minor
 ---
 
-Remove sideEffects false from package.json
+Modify sideEffects to css related files from package.json
