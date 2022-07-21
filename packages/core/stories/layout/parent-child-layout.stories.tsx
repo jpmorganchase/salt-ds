@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { DoubleChevronLeftIcon } from "@jpmorganchase/uitk-icons";
+import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import { Tabstrip, Tab } from "@jpmorganchase/uitk-lab";
 import {
   Button,
   ParentChildLayout,
   StackedViewElement,
   useIsViewportLargerThanBreakpoint,
+  FlowLayout,
 } from "@jpmorganchase/uitk-core";
 import { GridLayoutComposite } from "./grid-layout.stories";
 import { SectionForm, Blog } from "./flex-layout.stories";
@@ -179,23 +180,43 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
     </Tabstrip>
   );
 
-  const child = (
-    <>
-      {selectedTab === 0 && <GridLayoutComposite />}
-      {selectedTab === 1 && <SectionForm />}
-      {selectedTab === 2 && <Blog />}
-    </>
-  );
-
   const backButton = isStacked && (
-    <Button variant="cta" onClick={handleParent}>
-      <DoubleChevronLeftIcon size={12} />
-      {` Return`}
+    <Button onClick={handleParent} variant="secondary">
+      <ChevronLeftIcon size={12} />
     </Button>
   );
 
+  const Title = ({ text }: { text: string }) => (
+    <FlowLayout align="center">
+      {backButton} <h2>{text}</h2>
+    </FlowLayout>
+  );
+
+  const child = (
+    <>
+      {selectedTab === 0 && (
+        <>
+          <Title text={tabs[selectedTab]} />
+          <GridLayoutComposite />
+        </>
+      )}
+      {selectedTab === 1 && (
+        <>
+          <Title text={tabs[selectedTab]} />
+          <SectionForm />
+        </>
+      )}
+      {selectedTab === 2 && (
+        <>
+          <Title text={tabs[selectedTab]} />
+          <Blog />
+        </>
+      )}
+    </>
+  );
+
   return (
-    <div>
+    <div className="parent-child-composite-container">
       <ParentChildLayout
         {...args}
         stackedViewElement={currentView}

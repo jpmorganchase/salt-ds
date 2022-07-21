@@ -28,13 +28,6 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ContactDetailsExample } from "./flex-layout.stories";
 import { MetricExample } from "./flow-layout.stories";
-import image1 from "docs/assets/image1.png";
-import image2 from "docs/assets/image2.png";
-import image3 from "docs/assets/image3.png";
-import image4 from "docs/assets/image4.png";
-import wen from "docs/assets/wen.png";
-import andre from "docs/assets/andre.png";
-import gemma from "docs/assets/gemma.png";
 
 export default {
   title: "Core/Layout/GridLayout",
@@ -296,7 +289,7 @@ const sidebar = (
   <StackLayout>
     <Card>
       <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar src={wen} alt="Wen Chou" />
+        <ContactAvatar />
         <ContactPrimaryInfo text="Wen Chou" />
         <ContactSecondaryInfo text="Editorial contributor" />
         <ContactTertiaryInfo text="UI Toolkit" />
@@ -310,7 +303,7 @@ const sidebar = (
     </Card>
     <Card>
       <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar src={andre} alt="Andre L Rizzuto" />
+        <ContactAvatar />
         <ContactPrimaryInfo text="Andre L. Rizzuto" />
         <ContactSecondaryInfo text="Editorial contributor" />
         <ContactTertiaryInfo text="Markets" />
@@ -327,7 +320,7 @@ const sidebar = (
     </Card>
     <Card>
       <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar src={gemma} alt="Gemma Henley" />
+        <ContactAvatar />
         <ContactPrimaryInfo text="Gemma Henley" />
         <ContactSecondaryInfo text="Editorial contributor" />
         <ContactTertiaryInfo text="Digital Platforms" />
@@ -354,7 +347,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </h1>
-          <img src={image1} alt="house and trees landscape" />
+          <div className="grid-blog-hero" />
         </GridItem>
         <GridItem colSpan={{ xs: 1, sm: 2, md: 3, lg: 1, xl: 1 }} rowSpan={2}>
           <h2>Editorial content contributors</h2>
@@ -364,7 +357,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           <h2>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </h2>
-          <img src={image2} alt="eiffel tower" />
+          <div className="grid-blog-image grid-blog-image-one" />
           <p>
             Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
             suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
@@ -377,7 +370,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
         </GridItem>
         <GridItem colSpan={1} rowSpan={1}>
           <h2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h2>
-          <img src={image3} alt="tree" />
+          <div className="grid-blog-image grid-blog-image-two" />
           <p>
             At vero eos et accusamus et iusto odio dignissimos ducimus qui
             blanditiis praesentium voluptatum deleniti atque corrupti quos
@@ -393,7 +386,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
         </GridItem>
         <GridItem colSpan={1} rowSpan={1}>
           <h2>At vero eos et accusamus et iusto odio dignissimos ducimus</h2>
-          <img src={image4} alt="stairs" />
+          <div className="grid-blog-image grid-blog-image-three" />
           <p>
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
@@ -431,7 +424,6 @@ const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
       {...args}
     >
       <GridItem rowSpan={3} colSpan={1}>
-        <h2>Contacts</h2>
         <Card>
           <StackLayout>
             {Array.from({ length: 6 }, (_, index) => (
@@ -441,7 +433,6 @@ const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
         </Card>
       </GridItem>
       <GridItem rowSpan={3} colSpan={1}>
-        <h2>Performance</h2>
         <Card>
           <StackLayout>
             {Array.from({ length: 4 }, (_, index) => (
@@ -451,7 +442,6 @@ const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
         </Card>
       </GridItem>
       <GridItem rowSpan={3} colSpan={1}>
-        <h2>Preferences</h2>
         <Card>
           <StackLayout>
             {Array.from({ length: 7 }, (_, index) => (

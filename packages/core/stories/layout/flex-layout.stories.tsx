@@ -26,9 +26,6 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
-import image2 from "docs/assets/image2.png";
-import image3 from "docs/assets/image3.png";
-import image4 from "docs/assets/image4.png";
 
 export default {
   title: "Core/Layout/FlexLayout",
@@ -195,33 +192,43 @@ const FormFieldExample = () => (
 );
 
 const sectionFormContent = (
-  <>
+  <StackLayout>
     <h3>Section title</h3>
     <p>
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
       doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
       inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.
     </p>
-    <StackLayout>
-      <FlexLayout wrap={false}>
-        {Array.from({ length: 2 }, (_, index) => (
-          <FormFieldExample key={index} />
-        ))}
-      </FlexLayout>
-      <FormFieldExample />
-      <FlexLayout wrap={false}>
-        {Array.from({ length: 2 }, (_, index) => (
-          <FormFieldExample key={index} />
-        ))}
-      </FlexLayout>
-    </StackLayout>
-  </>
+
+    <FlexLayout wrap={false}>
+      {Array.from({ length: 2 }, (_, index) => (
+        <FormFieldExample key={index} />
+      ))}
+    </FlexLayout>
+    <FormFieldExample />
+    <FlexLayout wrap={false}>
+      {Array.from({ length: 2 }, (_, index) => (
+        <FormFieldExample key={index} />
+      ))}
+    </FlexLayout>
+    {Array.from({ length: 2 }, (_, index) => (
+      <FormFieldExample key={index} />
+    ))}
+    <FlexLayout wrap={false}>
+      {Array.from({ length: 2 }, (_, index) => (
+        <FormFieldExample key={index} />
+      ))}
+    </FlexLayout>
+  </StackLayout>
 );
 
 export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
   return (
-    <form>
-      <h2>Page title</h2>
+    <StackLayout>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -241,22 +248,18 @@ export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
           <OrderedButton>Cancel</OrderedButton>
         </ButtonBar>
       </StackLayout>
-    </form>
+    </StackLayout>
   );
 };
 
 export const Blog = () => (
-  <>
-    <h2>
-      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod temp
-      incididunt ut labore et dolore magna aliqua.
-    </h2>
-    <StackLayout>
-      <FlexLayout wrap={false}>
-        <FlexItem>
-          <img src={image2} alt="eiffel tower" />
-        </FlexItem>
-        <FlexItem>
+  <StackLayout>
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+      <FlexItem>
+        <div className="flex-blog-image flex-blog-image-one" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
           <h3>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </h3>
@@ -276,14 +279,16 @@ export const Blog = () => (
               <Pill label="Lorem" key={index} />
             ))}
           </FlowLayout>
-        </FlexItem>
-      </FlexLayout>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
 
-      <FlexLayout wrap={false}>
-        <FlexItem>
-          <img src={image3} alt="tree" />
-        </FlexItem>
-        <FlexItem>
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+      <FlexItem>
+        <div className="flex-blog-image flex-blog-image-two" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
           <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
           <p>
             At vero eos et accusamus et iusto odio dignissimos ducimus qui
@@ -297,14 +302,16 @@ export const Blog = () => (
               <Pill label="Lorem" key={index} />
             ))}
           </FlowLayout>
-        </FlexItem>
-      </FlexLayout>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
 
-      <FlexLayout wrap={false}>
-        <FlexItem>
-          <img src={image4} alt="stairs" />
-        </FlexItem>
-        <FlexItem>
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+      <FlexItem>
+        <div className="flex-blog-image flex-blog-image-three" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <p>
             Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -320,8 +327,8 @@ export const Blog = () => (
               <Pill label="Lorem" key={index} />
             ))}
           </FlowLayout>
-        </FlexItem>
-      </FlexLayout>
-    </StackLayout>
-  </>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
+  </StackLayout>
 );
