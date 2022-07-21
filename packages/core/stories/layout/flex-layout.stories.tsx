@@ -7,6 +7,8 @@ import {
   FormField,
   Input,
   StackLayout,
+  FlowLayout,
+  Pill,
 } from "@jpmorganchase/uitk-core";
 import {
   Metric,
@@ -24,6 +26,9 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
+import image2 from "docs/assets/image2.png";
+import image3 from "docs/assets/image3.png";
+import image4 from "docs/assets/image4.png";
 
 export default {
   title: "Core/Layout/FlexLayout",
@@ -47,6 +52,7 @@ export default {
     "ContactDetailsExample",
     "FlexLayoutNestedExample",
     "SectionForm",
+    "Blog",
   ],
 } as ComponentMeta<typeof FlexLayout>;
 
@@ -238,3 +244,84 @@ export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
     </form>
   );
 };
+
+export const Blog = () => (
+  <>
+    <h2>
+      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod temp
+      incididunt ut labore et dolore magna aliqua.
+    </h2>
+    <StackLayout>
+      <FlexLayout wrap={false}>
+        <FlexItem>
+          <img src={image2} alt="eiffel tower" />
+        </FlexItem>
+        <FlexItem>
+          <h3>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          </h3>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+            qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
+            sed quia non numquam eius modi tempora incidunt ut labore et dolore
+            magnam aliquam quaerat voluptatem.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </FlexItem>
+      </FlexLayout>
+
+      <FlexLayout wrap={false}>
+        <FlexItem>
+          <img src={image3} alt="tree" />
+        </FlexItem>
+        <FlexItem>
+          <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
+          <p>
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui
+            blanditiis praesentium voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi sint occaecati cupiditate non
+            provident, similique sunt in culpa qui officia deserunt mollitia
+            animi.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </FlexItem>
+      </FlexLayout>
+
+      <FlexLayout wrap={false}>
+        <FlexItem>
+          <img src={image4} alt="stairs" />
+        </FlexItem>
+        <FlexItem>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
+  </>
+);

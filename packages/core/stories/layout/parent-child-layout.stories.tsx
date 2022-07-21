@@ -10,7 +10,7 @@ import {
   useIsViewportLargerThanBreakpoint,
 } from "@jpmorganchase/uitk-core";
 import { GridLayoutComposite } from "./grid-layout.stories";
-import { SectionForm } from "./flex-layout.stories";
+import { SectionForm, Blog } from "./flex-layout.stories";
 
 import "./styles.css";
 
@@ -183,6 +183,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
     <>
       {selectedTab === 0 && <GridLayoutComposite />}
       {selectedTab === 1 && <SectionForm />}
+      {selectedTab === 2 && <Blog />}
     </>
   );
 
