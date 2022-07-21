@@ -200,7 +200,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
         {...args}
         stackedViewElement={currentView}
         parent={parent}
-        child={<GridLayoutComposite />}
+        child={child}
       />
     </div>
   );
