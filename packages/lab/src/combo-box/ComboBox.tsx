@@ -75,6 +75,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
     validateProps({ isMultiSelect, ...props });
 
     const {
+      WindowProps = {},
       inputRef,
       listRef,
       className,
@@ -116,6 +117,13 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
         <ComboBoxComponent
           {...{
             ...restProps,
+            WindowProps: {
+              ...WindowProps,
+              className: classnames(
+                withBaseName("listWindowRoot"),
+                WindowProps.className
+              ),
+            },
             id,
             source,
             disabled,
