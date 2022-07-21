@@ -29,7 +29,7 @@ Panel components have two levels of emphasis; medium (default) and high.
 <Canvas>
   <Story name="Panels" decorators={[withFlexGap]}>
     <Panel>This is a panel around some text.</Panel>
-    <Panel className="uitkEmphasisHigh">
+    <Panel emphasis="high">
       This is a panel around some text with high emphasis.
     </Panel>
   </Story>
@@ -52,7 +52,7 @@ import { Panel } from "@jpmorganchase/uitk-core";
     <Panel aria-label="Default Panel">Default</Panel>
   </ComponentAnatomy>
   <ComponentAnatomy>
-    <Panel aria-label="Panel with high emphasis" className="uitkEmphasisHigh">
+    <Panel aria-label="Panel with high emphasis" emphasis="high">
       High emphasis
     </Panel>
   </ComponentAnatomy>
