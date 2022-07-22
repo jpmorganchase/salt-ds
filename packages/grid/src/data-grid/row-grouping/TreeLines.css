@@ -1,0 +1,38 @@
+.uitkDataGridTreeLines-treeLine {
+  width: 24px;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.uitkDataGridTreeLines-pipe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  border-left: solid 1px darkblue;
+}
+
+.uitkDataGridTreeLines-l {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 12px;
+  width: 12px;
+  border-left: solid 1px darkblue;
+  border-bottom: solid 1px darkblue;
+}
+
+.uitkDataGridTreeLines-dash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 12px;
+  width: 12px;
+  border-bottom: solid 1px darkblue;
+}
+
+.uitkDataGridTreeLines-gap {
+  width: 24px;
+}

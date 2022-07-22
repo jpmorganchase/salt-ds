@@ -1,30 +1,36 @@
-/* Theme / Colors */
+/* Styles applied to root component */
 .uitkFileDropZone {
-  /* Colors */
-  --file-drop-zone-background: var(--uitk-container-background-medium);
-  --file-drop-zone-text-color: var(--uitk-text-primary-foreground);
-  /* TODO: Design, dark mode used to be grey-400 */
-  --file-drop-zone-border-color: var(--uitk-container-borderColor-medium);
-  --file-drop-zone-background-disabled: var(--uitk-container-background-disabled-medium);
-  /* TODO: Design, light mode used to be grey 200 */
-  --file-drop-zone-icon-color: var(--uitk-text-secondary-foreground);
-
-  --file-drop-zone-border-width: var(--uitk-container-borderWidth);
-  /* Overriding containable characteristics */
-  --file-drop-zone-border-style: dashed;
-
-  /* Density / Spacings */
-  --file-drop-zone-padding: calc(var(--uitk-size-unit) * 3);
-
-  /* Font / Typography */
-  --file-drop-zone-font-family: var(--uitk-text-fontFamily);
-  --file-drop-zone-font-size: var(--uitk-text-fontSize);
-  --file-drop-zone-line-height: var(--uitk-text-lineHeight);
-
-  --file-drop-zone-title-font-weight: var(--uitk-text-h4-fontWeight);
+  --fileDropZone-background: var(--uitk-container-background-high);
+  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
+  --fileDropZone-borderWidth: var(--uitk-container-borderWidth);
+  --fileDropZone-borderStyle: var(--uitk-dropTarget-borderStyle);
+  --fileDropZone-text-color: var(--uitk-text-primary-foreground);
+  --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
+  --fileDropZone-padding: calc(var(--uitk-size-unit) * 3);
 }
 
-.uitkFileDropZone .uitkFileDropZone-icon {
+.uitkFileDropZone {
+  color: var(--uitkFileDropZone-text-color, var(--fileDropZone-text-color));
+  display: inline-flex;
+  background: var(--uitkFileDropZone-background, var(--fileDropZone-background));
+  box-sizing: border-box;
+  text-align: center;
+  align-items: stretch;
+  justify-content: center;
+  border-color: var(--uitkFileDropZone-borderColor, var(--fileDropZone-borderColor));
+  border-style: var(--uitkFileDropZone-borderStyle, var(--fileDropZone-borderStyle));
+  border-width: var(--uitkFileDropZone-borderWidth, var(--fileDropZone-borderWidth));
+  flex-direction: column;
+  padding: var(--uitkFileDropZone-padding, var(--fileDropZone-padding));
+}
+
+.uitkFileDropZone *:not(.uitkFileDropZone-inputRoot, .uitkFileDropZone-inputRoot *) {
+  pointer-events: none;
+}
+
+/* Styles applied to icon */
+.uitkFileDropZone-icon {
+  fill: var(--fileDropZone-icon-color);
   margin-bottom: var(--uitk-size-unit);
 }
 
@@ -33,52 +39,47 @@
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
-.uitkFileDropZone-icon {
-  fill: var(--file-drop-zone-icon-color);
+/* Styles applied if `isActive={true}` */
+.uitkFileDropZone-active:not(.uitkFileDropZone-disabled) {
+  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
 }
 
-.uitkFileDropZone {
-  color: var(--file-drop-zone-text-color);
-  display: inline-flex;
-  background: var(--file-drop-zone-background);
-  box-sizing: border-box;
-  text-align: center;
-  align-items: stretch;
-  justify-content: center;
-  border-color: var(--file-drop-zone-border-color);
-  border-style: var(--file-drop-zone-border-style);
-  border-width: var(--file-drop-zone-border-width);
-  flex-direction: column;
-  padding: var(--file-drop-zone-padding);
-  font-family: var(--file-drop-zone-font-family);
-}
-
-.uitkFileDropZone-active {
-  background: var(--uitk-selectable-background-hover);
-}
-
+/* Styles applied to description if `isRejected={true}`  */
 .uitkFileDropZone-error .uitkFileDropZone-description {
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
-.uitkFileDropZone-error .uitkFileDropZone-icon {
-  fill: var(--uitk-status-error-color);
+/* Styles applied if `isRejected={true}`  */
+.uitkFileDropZone-error {
+  --fileDropZone-background: var(--uitk-status-error-background-high);
+  --fileDropZone-borderColor: var(--uitk-status-error-borderColor);
+  --fileDropZone-icon-color: var(--uitk-status-error-foreground);
 }
 
+/* Styles applied on if `isRejected={true}` and `isActive={true}` */
+.uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active {
+  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
+  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
+}
+
+/* Styles applied to title and description */
 .uitkFileDropZone-title,
 .uitkFileDropZone-description {
-  font-size: var(--file-drop-zone-font-size);
-  line-height: var(--file-drop-zone-line-height);
+  font-size: var(--uitkFileDropZone-title-fontSize, var(--uitk-text-fontSize));
+  line-height: var(--uitkFileDropZone-title-lineHeight, var(--uitk-text-lineHeight));
 }
 
+/* Styles applied to title */
 .uitkFileDropZone-title {
-  font-weight: var(--uitkFileDropZone-font-weight, var(--uitk-text-fontWeight-strong));
+  font-weight: var(--uitkFileDropZone-fontWeight, var(--uitk-text-fontWeight-strong));
 }
 
+/* Styles applied to input button */
 .uitkFileDropZone-inputButton {
   display: inline-flex;
 }
 
+/* Styles applied to input root */
 .uitkFileDropZone-inputRoot {
   line-height: 1;
 }
@@ -89,13 +90,33 @@
   visibility: hidden;
 }
 
+/* Styles applied if `disabled={true}` */
 .uitkFileDropZone-disabled {
+  --fileDropZone-borderColor: var(--uitk-container-borderColor-disabled-high);
+
   cursor: var(--uitk-dropTarget-cursor-disabled);
-  background: var(--file-drop-zone-background-disabled);
 }
 
+/* Styles applied if `disabled={true}` to icon and title */
 .uitkFileDropZone-disabled .uitkFileDropZone-icon,
 .uitkFileDropZone-disabled .uitkFileDropZone-title {
-  --file-drop-zone-text-color: var(--uitk-text-primary-foreground-disabled);
-  --file-drop-zone-icon-color: var(--uitk-text-secondary-foreground-disabled);
+  --fileDropZone-text-color: var(--uitk-text-primary-foreground-disabled);
+  --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
+}
+
+.backwardsCompat.uitkFileDropZone {
+  --uitkFileDropZone-title-lineHeight: 1.3;
+}
+
+.backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-icon,
+.backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-title {
+  --fileDropZone-text-color: var(--uitk-text-primary-foreground);
+  --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
+
+  opacity: 0.4;
+}
+
+.backwardsCompat.uitkFileDropZone-error {
+  --fileDropZone-background: var(--uitk-container-background-high);
+  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
 }

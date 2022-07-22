@@ -1,0 +1,20 @@
+.uitkDataGridGroupCellValue {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+.uitkDataGridGroupCellValue-icon {
+  width: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.uitkDataGridGroupCellValue-leafName {
+  margin-left: 8px;
+}
