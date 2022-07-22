@@ -1,7 +1,5 @@
-import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
-import { FlexLayout } from "../FlexLayout";
-
-type FlexLayoutProps = ComponentPropsWithoutRef<typeof FlexLayout>;
+import { forwardRef, HTMLAttributes } from "react";
+import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
