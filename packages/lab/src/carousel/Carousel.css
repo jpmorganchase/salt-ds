@@ -1,0 +1,27 @@
+.uitkGridLayout.uitkCarousel {
+  grid-template-columns: min-content auto min-content;
+  grid-template-areas: "prev-button slider next-button" "dots dots dots";
+}
+
+.uitkCarousel.uitkCarousel-compact {
+  grid-template-areas: "slider slider slider" "prev-button dots next-button";
+}
+
+.uitkCarousel-prev-button {
+  grid-area: prev-button;
+  height: 100%;
+}
+
+.uitkCarousel-next-button {
+  grid-area: next-button;
+  height: 100%;
+}
+
+.uitkCarousel-slider {
+  grid-area: slider;
+}
+
+.uitkCarousel-dots {
+  grid-area: dots;
+  justify-self: center;
+}
