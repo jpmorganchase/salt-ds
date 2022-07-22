@@ -1,0 +1,19 @@
+.uitkDeckLayout {
+  overflow: hidden;
+}
+
+.uitkDeckLayout-animate {
+  white-space: nowrap;
+}
+
+.uitkDeckLayout-slide-horizontal {
+  width: var(--deck-layout-width);
+  transition: transform var(--uitk-animation-duration);
+  transform: translateX(var(--deck-layout-transform-value));
+}
+
+.uitkDeckLayout-slide-vertical {
+  height: var(--deck-layout-height);
+  transition: transform var(--uitk-animation-duration);
+  transform: translateY(var(--deck-layout-transform-value));
+}
