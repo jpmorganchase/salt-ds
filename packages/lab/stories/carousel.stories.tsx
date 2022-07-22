@@ -11,7 +11,6 @@ import "./carousel.stories.css";
 export default {
   title: "Lab/Carousel",
   component: Carousel,
-  argTypes: {},
 } as ComponentMeta<typeof Carousel>;
 
 const colors = ["fcd5ce", "f8edeb", "d8e2dc", "ffe5d9", "ffd7ba"];
