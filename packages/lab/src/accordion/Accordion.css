@@ -64,11 +64,13 @@
 }
 
 .uitkAccordionSection {
-  border-color: var(--section-border-color);
+  --border-color: var(--section-border-color) var(--section-border-color) var(--section-border-color) var(--section-border-color);
+  border-color: var(--border-color);
   border-style: solid;
   --border-width: var(--section-border-top-width) var(--section-border-right-width) var(--section-border-bottom-width) var(--section-border-left-width);
   border-width: var(--uitkAccordionSection-border-width, var(--border-width));
-  margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
+  --margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
+  margin: var(--margin);
 }
 
 .uitkAccordionSection:focus-within {
