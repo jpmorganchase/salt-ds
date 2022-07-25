@@ -27,7 +27,7 @@
     "lint": "modular lint",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
-    "lint:style": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
+    "lint:style": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
