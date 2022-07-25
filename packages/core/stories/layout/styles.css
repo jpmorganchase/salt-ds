@@ -152,7 +152,16 @@
 }
 
 .parent-child-composite-container h2 {
+  margin: 0;
+}
+
+.parent-child-composite-title {
   margin: calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 3) 0;
+}
+
+.parent-child-composite-empty-container {
+  width: 12px;
+  padding: var(--uitk-size-unit);
 }
 
 .parent-child-composite-container p,

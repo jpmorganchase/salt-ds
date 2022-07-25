@@ -234,7 +234,7 @@ export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
 export const Blog = () => (
   <StackLayout>
     <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
-      <FlexItem>
+      <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-one" />
       </FlexItem>
       <FlexItem>
@@ -263,7 +263,7 @@ export const Blog = () => (
     </FlexLayout>
 
     <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
-      <FlexItem>
+      <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-two" />
       </FlexItem>
       <FlexItem>
@@ -286,7 +286,7 @@ export const Blog = () => (
     </FlexLayout>
 
     <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
-      <FlexItem>
+      <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-three" />
       </FlexItem>
       <FlexItem>

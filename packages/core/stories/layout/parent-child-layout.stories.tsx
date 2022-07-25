@@ -180,35 +180,50 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
     </Tabstrip>
   );
 
-  const backButton = isStacked && (
-    <Button onClick={handleParent} variant="secondary">
-      <ChevronLeftIcon size={12} />
-    </Button>
+  const TitleWithBackButton = ({ text }: { text: string }) => (
+    <FlowLayout
+      align="center"
+      justify="space-between"
+      className="parent-child-composite-title"
+    >
+      <Button onClick={handleParent} variant="secondary" aria-label="Back">
+        <ChevronLeftIcon size={12} />
+      </Button>
+      <h2>{text}</h2>
+      <div className="parent-child-composite-empty-container"></div>
+    </FlowLayout>
   );
 
   const Title = ({ text }: { text: string }) => (
-    <FlowLayout align="center">
-      {backButton} <h2>{text}</h2>
+    <FlowLayout align="center" className="parent-child-composite-title">
+      <h2>{text}</h2>
     </FlowLayout>
   );
+
+  const ChildTitle = () =>
+    isStacked ? (
+      <TitleWithBackButton text={tabs[selectedTab]} />
+    ) : (
+      <Title text={tabs[selectedTab]} />
+    );
 
   const child = (
     <>
       {selectedTab === 0 && (
         <>
-          <Title text={tabs[selectedTab]} />
+          <ChildTitle />
           <GridLayoutComposite />
         </>
       )}
       {selectedTab === 1 && (
         <>
-          <Title text={tabs[selectedTab]} />
+          <ChildTitle />
           <SectionForm />
         </>
       )}
       {selectedTab === 2 && (
         <>
-          <Title text={tabs[selectedTab]} />
+          <ChildTitle />
           <Blog />
         </>
       )}
