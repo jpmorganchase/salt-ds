@@ -14,10 +14,6 @@
   --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
 }
 
-.uitkList-wrapper {
-  position: relative;
-}
-
 .uitkList {
   box-sizing: border-box;
   /* font-family: var(--list-font-family); */

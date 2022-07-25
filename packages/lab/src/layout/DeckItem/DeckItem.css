@@ -1,0 +1,21 @@
+.uitkDeckItem {
+  display: inline-block;
+}
+
+.uitkDeckLayout-slide-vertical .uitkDeckItem {
+  display: block;
+}
+
+.uitkDeckItem-fade-previous,
+.uitkDeckItem-fade-next,
+.uitkDeckItem-static-previous,
+.uitkDeckItem-static-next {
+  display: none;
+}
+
+.uitkDeckItem-fade-in {
+  animation: var(--uitk-animation-fade-in-center);
+}
+.uitkDeckItem-fade-out {
+  animation: var(--uitk-animation-fade-out-back);
+}

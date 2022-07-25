@@ -40,6 +40,7 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
       columnGap,
       rowGap,
       style,
+      ...rest
     },
     ref
   ) {
@@ -66,6 +67,7 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
         className={cx(withBaseName(), className)}
         style={gridLayoutStyles}
         ref={ref}
+        {...rest}
       >
         {children}
       </div>

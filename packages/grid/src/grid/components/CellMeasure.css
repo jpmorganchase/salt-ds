@@ -1,0 +1,33 @@
+.uitkGridCellMeasure {
+  position: fixed;
+  top: -1000px;
+  left: 0;
+}
+
+.uitkGridCellMeasure table {
+  border-collapse: collapse;
+}
+
+.uitkGridCellMeasure tr {
+}
+
+.uitkGridCellMeasure th {
+  border-collapse: collapse;
+  box-sizing: border-box;
+  height: var(--uitkGrid-rowHeight);
+  overflow: hidden;
+
+  margin: 0;
+  padding: var(--uitkGrid-cell-padding);
+
+  border-style: solid;
+  border-color: #d9dde3;
+  border-width: 0 0 1px 0;
+
+  font-size: var(--uitkGrid-fontSize);
+  font-weight: normal;
+
+  background-color: white;
+  white-space: nowrap;
+  position: relative;
+}
