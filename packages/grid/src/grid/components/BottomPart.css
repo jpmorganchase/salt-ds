@@ -1,0 +1,24 @@
+.uitkGridBottomPart {
+  --uitkGrid-scrollBar-size: 15px;
+}
+
+.uitkGridBottomPart {
+  position: absolute;
+  bottom: var(--uitkGrid-scrollBar-size);
+  left: 0;
+  right: var(--uitkGrid-scrollBar-size);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+}
+
+.uitkGridBottomPart-space {
+  position: relative;
+}
+
+.uitkGridBottomPart table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  position: absolute;
+  bottom: 0;
+}

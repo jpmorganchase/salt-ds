@@ -15,6 +15,7 @@ import {
 } from "react";
 import { CircularProgressProps } from "../progress";
 import { SpinnerProps } from "../spinner";
+import { Div } from "../typography";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
 
 import "./ContentStatus.css";
@@ -27,15 +28,6 @@ export type ContentStatusStatus =
   | "success"
   | "warning"
   | "info";
-
-export const STATUS_TO_ICONS: {
-  [key in Exclude<ContentStatusStatus, "loading">]: string;
-} = {
-  error: "error",
-  success: "tick",
-  warning: "warning",
-  info: "info",
-};
 
 export type Status = ContentStatusStatus;
 
@@ -124,9 +116,15 @@ export const ContentStatus = forwardRef(function ContentStatus(
           id={id}
           role="region"
         >
-          {title && <div className={cx(withBaseName("title"))}>{title}</div>}
+          {title && (
+            <Div truncate className={cx(withBaseName("title"))}>
+              {title}
+            </Div>
+          )}
           {message && (
-            <div className={cx(withBaseName("message"))}>{message}</div>
+            <Div truncate className={cx(withBaseName("message"))}>
+              {message}
+            </Div>
           )}
           {hasActions && (
             <div className={cx(withBaseName("actions"))}>

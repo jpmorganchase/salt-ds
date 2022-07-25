@@ -1,0 +1,8 @@
+.carousel-container .uitkCarouselSlide-fixedContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
+  margin-right: 0;
+}

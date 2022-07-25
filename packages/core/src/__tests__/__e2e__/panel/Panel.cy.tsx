@@ -30,7 +30,7 @@ describe("GIVEN a Panel", () => {
   describe("emphasis prop", () => {
     describe('WHEN the "high" emphasis is input', () => {
       it('THEN should display "high" emphasis', () => {
-        cy.mount(<Panel className="uitkEmphasisHigh">Content</Panel>);
+        cy.mount(<Panel emphasis="high">Content</Panel>);
         cy.get("div").should("have.class", "uitkEmphasisHigh");
       });
     });

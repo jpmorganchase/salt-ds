@@ -1,6 +1,6 @@
-import { forwardRef, HTMLAttributes, ComponentPropsWithoutRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { GridItem } from "../GridItem";
+import { GridItem, GridItemProps } from "../GridItem";
 import "./BorderItem.css";
 import { makePrefixer } from "../../utils";
 
@@ -13,8 +13,6 @@ export const BORDER_POSITION = [
 ] as const;
 
 export type BorderPosition = typeof BORDER_POSITION[number];
-
-type GridItemProps = ComponentPropsWithoutRef<typeof GridItem>;
 
 export interface BorderItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
