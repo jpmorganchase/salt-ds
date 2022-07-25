@@ -30,7 +30,7 @@ export const Error: ComponentStory<typeof ContentStatus> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const loadingProps: ContentStatusProps = {
     status: "loading",
-    message: "We’re retrieving your data. This shouldn’t take long.",
+    message: "We're retrieving your data. This shouldn't take long.",
   };
 
   const errorProps: ContentStatusProps = {
@@ -123,7 +123,7 @@ export const CardContent: ComponentStory<typeof ContentStatus> = () => {
   const [loadingCount, setLoadingCount] = useState(0);
   const loadingProps: ContentStatusProps = {
     status: "loading",
-    message: "We’re retrieving your data. This shouldn’t take long.",
+    message: "We're retrieving your data. This shouldn't take long.",
   };
 
   const startLoading = () => {

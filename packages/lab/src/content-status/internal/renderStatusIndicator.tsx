@@ -8,12 +8,7 @@ import {
   WarningIcon,
 } from "@jpmorganchase/uitk-icons";
 import { ComponentType, ReactElement } from "react";
-import {
-  ContentStatusProps,
-  ContentStatusStatus,
-  Status,
-  STATUS_TO_ICONS,
-} from "../ContentStatus";
+import { ContentStatusProps, ContentStatusStatus } from "../ContentStatus";
 import { getDeterminateLoadingComponent } from "./getDeterminateLoadingComponent";
 import { getIndeterminateLoadingComponent } from "./getIndeterminateLoadingComponent";
 
@@ -21,12 +16,13 @@ const withBaseName = makePrefixer("uitkContentStatus");
 
 const contentByType = new Map<
   ContentStatusStatus,
-  { icon: ComponentType<IconProps>; className: string }
+  { icon: ComponentType<IconProps>; iconName: string; className: string }
 >([
   [
     "loading",
     {
       icon: LoaderIcon,
+      iconName: "loading",
       className: withBaseName("loading"),
     },
   ],
@@ -34,6 +30,7 @@ const contentByType = new Map<
     "error",
     {
       icon: ErrorIcon,
+      iconName: "error",
       className: withBaseName("error"),
     },
   ],
@@ -41,6 +38,7 @@ const contentByType = new Map<
     "success",
     {
       icon: SuccessIcon,
+      iconName: "tick",
       className: withBaseName("success"),
     },
   ],
@@ -48,6 +46,7 @@ const contentByType = new Map<
     "warning",
     {
       icon: WarningIcon,
+      iconName: "warning",
       className: withBaseName("warning"),
     },
   ],
@@ -55,6 +54,7 @@ const contentByType = new Map<
     "info",
     {
       icon: InfoIcon,
+      iconName: "info",
       className: withBaseName("info"),
     },
   ],
@@ -71,7 +71,7 @@ export function renderStatusIndicator({
   SpinnerProps: { ...restSpinnerProps } = {},
   id,
 }: Partial<ContentStatusProps>): ReactElement {
-  const { icon: Icon, className } = contentByType.get(status)!;
+  const { icon: Icon, iconName, className } = contentByType.get(status)!;
   if (status === "loading") {
     return value !== undefined
       ? getDeterminateLoadingComponent({
@@ -86,16 +86,15 @@ export function renderStatusIndicator({
           id,
           ...restSpinnerProps,
         });
-  } else {
-    const iconName = STATUS_TO_ICONS[status];
-    return (
-      <Icon
-        aria-label={status}
-        className={className}
-        data-jpmui-test={`icon-${iconName}-${id!}`}
-        role="img"
-        size={24}
-      />
-    );
   }
+
+  return (
+    <Icon
+      aria-label={status}
+      className={className}
+      data-jpmui-test={`icon-${iconName}-${id!}`}
+      role="img"
+      size="medium"
+    />
+  );
 }
