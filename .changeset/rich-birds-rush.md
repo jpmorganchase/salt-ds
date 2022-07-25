@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-lab": patch
 ---
 
-Content status add typography
+Refactor ContentStatus to use Typography components
