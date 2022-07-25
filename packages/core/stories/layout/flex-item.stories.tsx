@@ -46,7 +46,7 @@ export const FlexContent = ({
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout wrap={false}>
+    <FlexLayout disableWrap>
       <FlexItem {...args}>
         <FlexContent classname={"layout-active-content"} />
       </FlexItem>

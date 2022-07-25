@@ -46,7 +46,7 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
-    wrap: {
+    disableWrap: {
       control: "boolean",
     },
   },
@@ -96,9 +96,9 @@ ToolkitFlexLayoutResponsive.args = {
     xs: "column",
     md: "row",
   },
-  wrap: {
-    xs: true,
-    lg: false,
+  disableWrap: {
+    xs: false,
+    lg: true,
   },
 };
 
@@ -175,6 +175,6 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
 FlexLayoutNested.args = {
   justify: "space-between",
-  wrap: false,
+  disableWrap: true,
   gap: 6,
 };

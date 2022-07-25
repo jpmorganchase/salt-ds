@@ -61,19 +61,19 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN wrap is set to true", () => {
     it("THEN it should render with flex wrap", () => {
-      cy.mount(<DefaultFlexLayout wrap={true} />);
+      cy.mount(<DefaultFlexLayout disableWrap={false} />);
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
   });
 
   describe("WHEN responsive values are provided", () => {
-    const wrap = {
-      xs: true,
-      sm: true,
-      md: true,
-      lg: false,
-      xl: false,
+    const disableWrap = {
+      xs: false,
+      sm: false,
+      md: false,
+      lg: true,
+      xl: true,
     };
 
     it(
@@ -83,7 +83,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive wrap={wrap} />);
+        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
       }
@@ -96,7 +96,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive wrap={wrap} />);
+        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -109,7 +109,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive wrap={wrap} />);
+        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -122,7 +122,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 600,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive wrap={wrap} />);
+        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -130,12 +130,12 @@ describe("GIVEN a Flex", () => {
   });
 
   describe("WHEN custom breakpoints are provided", () => {
-    const wrap = {
-      xs: true,
-      sm: true,
-      md: true,
-      lg: false,
-      xl: false,
+    const disableWrap = {
+      xs: false,
+      sm: false,
+      md: false,
+      lg: true,
+      xl: true,
     };
 
     const breakpoints = {
@@ -155,7 +155,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive wrap={wrap} />
+            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -172,7 +172,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive wrap={wrap} />
+            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -189,7 +189,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive wrap={wrap} />
+            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -206,7 +206,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive wrap={wrap} />
+            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
