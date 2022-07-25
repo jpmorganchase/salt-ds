@@ -4,16 +4,13 @@ import {
   HTMLAttributes,
   ReactElement,
   useEffect,
-  ComponentPropsWithoutRef,
 } from "react";
 import cx from "classnames";
 import warning from "warning";
 
-import { GridLayout } from "../GridLayout";
+import { GridLayout, GridLayoutProps } from "../GridLayout";
 import { makePrefixer } from "../../utils";
 import { BorderItemProps } from "../BorderItem";
-
-type GridLayoutProps = ComponentPropsWithoutRef<typeof GridLayout>;
 
 export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
