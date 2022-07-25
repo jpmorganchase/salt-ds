@@ -194,25 +194,17 @@ const FormFieldExample = () => (
 const sectionFormContent = (
   <StackLayout>
     <h3>Section title</h3>
-    <FlexLayout wrap={false}>
-      {Array.from({ length: 2 }, (_, index) => (
-        <FormFieldExample key={index} />
-      ))}
-    </FlexLayout>
-    <FormFieldExample />
-    <FlexLayout wrap={false}>
-      {Array.from({ length: 2 }, (_, index) => (
-        <FormFieldExample key={index} />
-      ))}
-    </FlexLayout>
-    {Array.from({ length: 2 }, (_, index) => (
-      <FormFieldExample key={index} />
+    {Array.from({ length: 3 }, (_, index) => (
+      <>
+        <FlexLayout wrap={false} key={index}>
+          {Array.from({ length: 2 }, (_, index) => (
+            <FormFieldExample key={index} />
+          ))}
+        </FlexLayout>
+        <FormFieldExample />
+      </>
     ))}
-    <FlexLayout wrap={false}>
-      {Array.from({ length: 2 }, (_, index) => (
-        <FormFieldExample key={index} />
-      ))}
-    </FlexLayout>
+    <FormFieldExample />
   </StackLayout>
 );
 

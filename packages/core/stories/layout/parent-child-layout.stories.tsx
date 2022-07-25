@@ -144,7 +144,7 @@ const useTabSelection = (initialValue?: any) => {
   return [selectedTab, handleTabSelection];
 };
 
-const tabs = ["Dashboard", "Form", "Blog"];
+const tabs = ["Sint", "Dolor", "Magna"];
 
 const stackedAtBreakpoint = "sm";
 
