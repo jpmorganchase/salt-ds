@@ -287,54 +287,25 @@ ToolkitGridLayoutFooter.args = {
 
 const sidebar = (
   <StackLayout>
-    <Card>
-      <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar />
-        <ContactPrimaryInfo text="Wen Chou" />
-        <ContactSecondaryInfo text="Editorial contributor" />
-        <ContactTertiaryInfo text="UI Toolkit" />
-        <ContactMetadata collapsible={true}>
-          <ContactMetadataItem value="Editorial contributor" label="Role" />
-          <ContactMetadataItem value="London, GBR" label="Location" />
-          <ContactMetadataItem value="+44 2077 431102" label="Office" />
-          <ContactMetadataItem value="wen.chou@jpmorgan.com" label="Email" />
-        </ContactMetadata>
-      </ContactDetails>
-    </Card>
-    <Card>
-      <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar />
-        <ContactPrimaryInfo text="Andre L. Rizzuto" />
-        <ContactSecondaryInfo text="Editorial contributor" />
-        <ContactTertiaryInfo text="Markets" />
-        <ContactMetadata collapsible={true}>
-          <ContactMetadataItem value="Editorial contributor" label="Role" />
-          <ContactMetadataItem value="London, GBR" label="Location" />
-          <ContactMetadataItem value="+44 2077 431103" label="Office" />
-          <ContactMetadataItem
-            value="andre.rizzuto@jpmorgan.com"
-            label="Email"
-          />
-        </ContactMetadata>
-      </ContactDetails>
-    </Card>
-    <Card>
-      <ContactDetails embedded={true} stackAtBreakpoint={0}>
-        <ContactAvatar />
-        <ContactPrimaryInfo text="Gemma Henley" />
-        <ContactSecondaryInfo text="Editorial contributor" />
-        <ContactTertiaryInfo text="Digital Platforms" />
-        <ContactMetadata collapsible={true}>
-          <ContactMetadataItem value="Editorial contributor" label="Role" />
-          <ContactMetadataItem value="London, GBR" label="Location" />
-          <ContactMetadataItem value="+44 2077 431104" label="Office" />
-          <ContactMetadataItem
-            value="gemma.henley@jpmorgan.com"
-            label="Email"
-          />
-        </ContactMetadata>
-      </ContactDetails>
-    </Card>
+    {Array.from({ length: 3 }, (_, index) => (
+      <Card key={index}>
+        <ContactDetails embedded={true} stackAtBreakpoint={0}>
+          <ContactAvatar />
+          <ContactPrimaryInfo text="Allamco Adipisicing" />
+          <ContactSecondaryInfo text="Editorial contributor" />
+          <ContactTertiaryInfo text="Cupidatat Elit" />
+          <ContactMetadata collapsible={true}>
+            <ContactMetadataItem value="Editorial contributor" label="Role" />
+            <ContactMetadataItem value="London, GBR" label="Location" />
+            <ContactMetadataItem value="+44 1234 123456" label="Office" />
+            <ContactMetadataItem
+              value="laboris.elit@aliquip.com"
+              label="Email"
+            />
+          </ContactMetadata>
+        </ContactDetails>
+      </Card>
+    ))}
   </StackLayout>
 );
 
