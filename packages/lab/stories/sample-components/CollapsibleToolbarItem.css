@@ -1,0 +1,9 @@
+.CollapsibleToolbarItem {
+  background-color: red;
+  height: 28px;
+  width: 100px;
+}
+
+[data-collapsed="true"] > .CollapsibleToolbarItem {
+  width: 50px;
+}

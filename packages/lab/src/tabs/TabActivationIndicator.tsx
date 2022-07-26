@@ -1,36 +1,36 @@
 import React, { RefObject, useRef } from "react";
 import classnames from "classnames";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+
 import { useActivationIndicator } from "./useActivationIndicator";
 
 import "./TabActivationIndicator.css";
 
 interface TabActivationIndicatorProps {
-  hideBackground?: boolean;
   hideThumb?: boolean;
   orientation?: "horizontal" | "vertical";
   disableAnimation?: boolean;
-  tabRef: RefObject<HTMLElement | null>;
+  tabId?: string;
 }
 
+const withBaseName = makePrefixer("uitkTabActivationIndicator");
+
 export const TabActivationIndicator: React.FC<TabActivationIndicatorProps> = ({
-  hideBackground = false,
   hideThumb = false,
   orientation = "horizontal",
-  tabRef,
+  tabId,
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const rootClass = "uitkTabActivationIndicator";
-  const style = useActivationIndicator(rootRef, tabRef, orientation);
+  const style = useActivationIndicator({
+    rootRef,
+    tabId,
+    orientation,
+  });
 
   return (
-    <div
-      className={classnames(rootClass, `${rootClass}-${orientation}`, {
-        [`${rootClass}-no-background`]: hideBackground,
-      })}
-      ref={rootRef}
-    >
+    <div className={classnames(withBaseName())} ref={rootRef}>
       {hideThumb === false ? (
-        <div className={`${rootClass}-thumb`} style={style} />
+        <div className={withBaseName("thumb")} style={style} />
       ) : null}
     </div>
   );

@@ -1,0 +1,4 @@
+.uitkTabs {
+  display: flex;
+  flex-direction: column;
+}

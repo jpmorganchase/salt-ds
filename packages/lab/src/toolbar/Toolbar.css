@@ -9,7 +9,7 @@
 }
 
 .uitkToolbar {
-  background-color: var(--uitk-toolbar-background-color, var(--toolbar-background));
+  background-color: var(--uitkToolbar-background-color, var(--toolbar-background));
   box-sizing: border-box;
   font-size: var(--toolbar-font-size);
   justify-content: flex-start;
@@ -17,10 +17,10 @@
   position: relative;
 }
 
-.uitkToolbarField:not([data-overflow-indicator]) {
+/* .uitkToolbarField:not([data-overflow-indicator]) > .uitkButton {
   --uitkButton-fontSize: 0;
   --uitkButton-letterSpacing: 0;
-}
+} */
 
 .uitkToolbar > .Responsive-inner {
   align-items: flex-start;
@@ -92,6 +92,7 @@
 }
 
 .uitkToolbar > .Responsive-inner > .uitkToolbarField {
+  --uitkButton-focused-outline-style: none;
   flex-shrink: 0;
   flex-grow: 0;
 }

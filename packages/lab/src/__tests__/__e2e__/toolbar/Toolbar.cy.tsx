@@ -260,7 +260,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
         cy.get(".uitkToolbar").invoke("css", "width", "520px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "510px");
+        cy.get(".uitkToolbar").invoke("css", "width", "500px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -284,7 +284,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.wait(50);
         cy.get(".uitkToolbar").invoke("css", "width", "510px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "460px");
+        cy.get(".uitkToolbar").invoke("css", "width", "450px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -307,7 +307,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
 
     describe("WHEN initial size only allows 4 items to display", () => {
       it("THEN all displayed items will be priority 2", () => {
-        cy.mount(<ToolbarUsingOverflowPriorities width={300} />);
+        cy.mount(<ToolbarUsingOverflowPriorities width={250} />);
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")

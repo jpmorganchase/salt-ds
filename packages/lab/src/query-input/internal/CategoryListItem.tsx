@@ -1,30 +1,21 @@
-import {
-  CSSProperties,
-  FC,
-  MouseEventHandler,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import { CSSProperties, useMemo, useRef } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-import { ListItem } from "../../list";
-import { QueryInputCategory } from "../QueryInput";
+import { ListItem as ListItem, ListItemProps, ListItemType } from "../../list";
+import { QueryInputCategory } from "../queryInputTypes";
 import { useCategoryListContext } from "./CategoryListContext";
 
 const withBaseName = makePrefixer("uitkCategoryListItem");
 
-export interface CategoryListItemProps {
+export interface CategoryListItemProps
+  extends ListItemProps<QueryInputCategory> {
   category: QueryInputCategory;
-  index: number;
-  onMouseMove: (category: QueryInputCategory, index: number) => void;
 }
 
-export const CategoryListItem: FC<CategoryListItemProps> =
-  function CategoryListItem(props) {
+export const CategoryListItem: ListItemType<QueryInputCategory> =
+  function CategoryListItem({ item: category, ...props }) {
     const textRef = useRef<HTMLDivElement>(null);
     const context = useCategoryListContext();
-    const { category, index } = props;
 
     const textStyle: CSSProperties = useMemo(
       () => ({
@@ -33,19 +24,15 @@ export const CategoryListItem: FC<CategoryListItemProps> =
       [context.width]
     );
 
-    const onMouseMove: MouseEventHandler = useCallback(() => {
-      props.onMouseMove(category, index);
-    }, [props.onMouseMove, category, index]);
-
     return (
-      <ListItem item={category} onMouseMove={onMouseMove}>
+      <ListItem {...props} label={category?.name}>
         <div ref={textRef} className={withBaseName("text")} style={textStyle}>
-          {category.name}
+          {category?.name}
         </div>
         <div className={withBaseName("valuesContainer")}>
           <span>(</span>
           <span className={withBaseName("values")}>
-            {category.values.join(", ")}
+            {category?.values.join(", ")}
           </span>
           <span>)</span>
         </div>

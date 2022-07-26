@@ -24,7 +24,8 @@ export const ensureChildrenHaveIds = (
         ? React.cloneElement(child, {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore TODO - investigate this
-            itemId: `${container}-button-generated-id-${++toolbarButtonId}`,
+            // itemId: `${container}-button-generated-id-${++toolbarButtonId}`,
+            id: `${container}-button-generated-id-${++toolbarButtonId}`,
           })
         : child;
     });

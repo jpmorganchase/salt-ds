@@ -1,75 +1,142 @@
 import {
+  useControlled,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
+import {
   FocusEvent,
+  FocusEventHandler,
   KeyboardEvent,
   MouseEvent,
-  RefObject,
+  MouseEventHandler,
   useCallback,
   useRef,
   useState,
 } from "react";
-import { useChildRefs } from "../utils";
-import { isTabElement } from "./tab-utils";
+import { OverflowItem } from "../responsive";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowLeft,
+  ArrowRight,
+  Home,
+  End,
+} from "../common-hooks";
 
-const navigationKeys = new Set([
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowUp",
-  "ArrowDown",
-  "Home",
-  "End",
-]);
-
-const isNavigationKey = (key: string) => navigationKeys.has(key);
-
-type keyboardNavigationHook = (options: {
-  itemCount: number;
-  keyBoardActivation?: "manual" | "automatic";
-  orientation: "vertical" | "horizontal";
-  value: number;
-}) => {
-  focusedIndex: number;
-  focusTab: (tabIndex: number, immediateFocus?: boolean) => void;
-  navItemRefs: RefObject<Array<RefObject<HTMLElement>>>;
-  onBlur: (evt: FocusEvent<HTMLElement>) => void;
-  onClick: (evt: MouseEvent, tabIndex: number) => void;
-  onFocus: (evt: FocusEvent<HTMLElement>) => void;
-  onKeyDown: (evt: KeyboardEvent, tabIndex: number) => void;
+type orientationType = "horizontal" | "vertical";
+type directionType = "bwd" | "fwd" | "start" | "end";
+type directionMap = { [key: string]: directionType };
+const navigation = {
+  horizontal: {
+    [Home]: "start",
+    [End]: "end",
+    [ArrowLeft]: "bwd",
+    [ArrowRight]: "fwd",
+  } as directionMap,
+  vertical: {
+    [Home]: "start",
+    [End]: "end",
+    [ArrowUp]: "bwd",
+    [ArrowDown]: "fwd",
+  } as directionMap,
 };
 
-export const useKeyboardNavigation: keyboardNavigationHook = ({
-  itemCount,
+const isNavigationKey = (
+  key: string,
+  orientation: orientationType = "horizontal"
+) => navigation[orientation][key] !== undefined;
+
+function nextItemIdx(count: number, direction: directionType, idx: number) {
+  if (direction === "start") {
+    return 0;
+  } else if (direction === "end") {
+    return count - 1;
+  } else if (direction === "bwd") {
+    if (idx > 0) {
+      return idx - 1;
+    } else {
+      return idx;
+    }
+  } else {
+    if (idx === null) {
+      return 0;
+    } else if (idx === count - 1) {
+      return idx;
+    } else {
+      return idx + 1;
+    }
+  }
+}
+
+const isFocusable = (item: OverflowItem) => !item.overflowed;
+const getFocusableElement = (el: HTMLElement | null) =>
+  el
+    ? el.hasAttribute("tabindex")
+      ? el
+      : (el.querySelector("[tabindex]") as HTMLElement)
+    : null;
+
+export interface ContainerNavigationProps {
+  onBlur: FocusEventHandler;
+  onFocus: FocusEventHandler;
+  onMouseDownCapture: MouseEventHandler;
+  onMouseLeave: MouseEventHandler;
+  onMouseMove: MouseEventHandler;
+}
+
+interface TabstripNavigationHookProps {
+  defaultHighlightedIdx?: number;
+  highlightedIdx?: number;
+  indexPositions: OverflowItem[];
+  keyBoardActivation?: "manual" | "automatic";
+  orientation: orientationType;
+  selectedIndex: number;
+}
+
+interface TabstripNavigationHookResult {
+  containerProps: ContainerNavigationProps;
+  highlightedIdx: number;
+  focusTab: (
+    tabIndex: number,
+    immediateFocus?: boolean,
+    withKeyboard?: boolean
+  ) => void;
+  focusVisible: number;
+  focusIsWithinComponent: boolean;
+  onClick: (evt: MouseEvent, tabIndex: number) => void;
+  onFocus: (evt: FocusEvent<HTMLElement>) => void;
+  onKeyDown: (evt: KeyboardEvent) => void;
+}
+
+export const useKeyboardNavigation = ({
+  defaultHighlightedIdx = -1,
+  highlightedIdx: highlightedIdxProp,
+  indexPositions,
   keyBoardActivation,
   orientation,
-  value: selectedTabIndex = 0,
-}) => {
-  const [navItemRefs, getTabRef] = useChildRefs<HTMLElement>(itemCount);
+  selectedIndex: selectedTabIndex = 0,
+}: TabstripNavigationHookProps): TabstripNavigationHookResult => {
   const manualActivation = keyBoardActivation === "manual";
-  const vertical = orientation === "vertical";
+  const mouseClickPending = useRef(false);
   const focusedRef = useRef<number>(-1);
-  const [focusedIndex, _setFocusedIndex] = useState<number>(-1);
-  const setFocusedIndex = (value: number) => {
-    _setFocusedIndex((focusedRef.current = value));
-  };
+  const [hasFocus, setHasFocus] = useState(false);
+  const [, forceRefresh] = useState({});
+  const [highlightedIdx, _setHighlightedIdx] = useControlled({
+    controlled: highlightedIdxProp,
+    default: defaultHighlightedIdx,
+    name: "UseKeyboardNavigation",
+  });
 
-  const getFocusableChild = (el: HTMLElement) => el.querySelector("[tabindex]");
-
-  const getFocusable = useCallback(
-    (tabIndex: number): HTMLElement | undefined => {
-      const tab = getTabRef(tabIndex);
-      if (tab) {
-        if (tab.getAttribute("tabindex") !== null) {
-          return tab;
-        } else {
-          const focusableChild = getFocusableChild(tab);
-          return focusableChild as HTMLElement;
-        }
-      }
+  const setHighlightedIdx = useCallback(
+    (value: number) => {
+      _setHighlightedIdx((focusedRef.current = value));
     },
-    [getTabRef]
+    [_setHighlightedIdx]
   );
 
+  const keyboardNavigation = useRef(false);
+
   const focusTab = useCallback(
-    (tabIndex: number, immediateFocus = false) => {
+    (tabIndex: number, immediateFocus = false, withKeyboard?: boolean) => {
       // The timeout is important in two scenarios:
       // 1) where tab has overflowed and is being selected from overflow menu.
       // We must not focus it until the overflow mechanism + render has restored
@@ -78,10 +145,21 @@ export const useKeyboardNavigation: keyboardNavigationHook = ({
       // We MUST NOT delay focus when using keyboard nav, else when focus moves from
       // close button (focus ring styled by :focus-visible) to Tab label (focus ring
       // styled by css class) focus style will briefly linger on both.
-      setFocusedIndex(tabIndex);
+      setHighlightedIdx(tabIndex);
+
+      if (withKeyboard === true && !keyboardNavigation.current) {
+        keyboardNavigation.current = true;
+      }
+
       const setFocus = () => {
-        const focussableElement = getFocusable(tabIndex);
-        focussableElement?.focus();
+        const item = indexPositions.find((i) => i.index === tabIndex);
+
+        if (item) {
+          const focussableElement = getFocusableElement(
+            document.getElementById(item.id)
+          );
+          focussableElement?.focus();
+        }
       };
       if (immediateFocus) {
         setFocus();
@@ -89,95 +167,9 @@ export const useKeyboardNavigation: keyboardNavigationHook = ({
         setTimeout(setFocus, 70);
       }
     },
-    [getFocusable]
+    [indexPositions, setHighlightedIdx]
   );
 
-  // Navigate next/previous Tab. Visible Tabs are those that have not overflowed
-  // and been banished to overflow menu.
-  const lastVisibleTabIndex = (): number => {
-    if (navItemRefs.current !== null) {
-      return moveTabIndex(navItemRefs.current.length, -1);
-    } else {
-      return -1;
-    }
-  };
-
-  const firstVisibleTabIndex = (): number => moveTabIndex(-1, +1);
-
-  const nextVisibleTabIndex = (tabIndex: number): number => {
-    return moveTabIndex(tabIndex, +1, firstVisibleTabIndex);
-  };
-
-  const previousVisibleTabIndex = (tabIndex: number): number => {
-    return moveTabIndex(tabIndex, -1, lastVisibleTabIndex);
-  };
-
-  const moveTabIndex = (
-    start: number,
-    increment: 1 | -1,
-    fallback: () => number | undefined = () => undefined
-  ): number => {
-    let newTabIndex = start + increment;
-    let tabElement = getTabRef(newTabIndex);
-    while (tabElement && tabElement.dataset.overflowed === "true") {
-      newTabIndex += increment;
-      tabElement = getTabRef(newTabIndex);
-    }
-
-    if (!tabElement) {
-      newTabIndex = fallback() ?? start;
-    }
-    return newTabIndex;
-  };
-
-  function switchTabOnKeyPress(e: KeyboardEvent, tabIndex: number) {
-    const { key } = e;
-
-    const newTabIndex = navigateTabIndex(key, tabIndex);
-
-    if (newTabIndex === tabIndex) {
-      return;
-    }
-
-    e.preventDefault();
-    const immediateFocus = true;
-
-    if (newTabIndex !== tabIndex) {
-      if (manualActivation) {
-        focusTab(newTabIndex, immediateFocus);
-      } else {
-        // activateTab(newTabIndex);
-      }
-    }
-  }
-
-  function navigateTabIndex(key: string, tabIndex: number): number {
-    const stayWhereWeAre: number = tabIndex;
-    switch (key) {
-      case "ArrowLeft":
-        return vertical ? stayWhereWeAre : previousVisibleTabIndex(tabIndex);
-      case "ArrowUp":
-        return vertical ? previousVisibleTabIndex(tabIndex) : stayWhereWeAre;
-      case "ArrowRight":
-        return vertical ? stayWhereWeAre : nextVisibleTabIndex(tabIndex);
-      case "ArrowDown":
-        return vertical ? nextVisibleTabIndex(tabIndex) : stayWhereWeAre;
-      case "End":
-        return lastVisibleTabIndex();
-      case "Home":
-        return firstVisibleTabIndex();
-      default:
-        return stayWhereWeAre;
-    }
-  }
-
-  const onBlur = (e: FocusEvent<HTMLElement>) => {
-    const target = e.relatedTarget as HTMLElement;
-    if (!isTabElement(target)) {
-      // TODO what about the overflow menu
-      setFocusedIndex(-1);
-    }
-  };
   const onFocus = (e: FocusEvent<HTMLElement>) => {
     // If focus is received by keyboard navigation, item with tabindex 0 will receive
     // focus. If the item receiving focus has tabindex -1, then focus has been set
@@ -192,29 +184,155 @@ export const useKeyboardNavigation: keyboardNavigationHook = ({
         setTimeout(() => {
           // The selected tab will have tabIndex 0 make sure our internal state is aligned.
           if (focusedRef.current === -1) {
-            setFocusedIndex(selectedTabIndex);
+            setHighlightedIdx(selectedTabIndex);
           }
         }, 200);
       }
     }
   };
-  const onKeyDown = (e: KeyboardEvent, tabIndex: number) => {
-    if (isNavigationKey(e.key)) {
-      e.preventDefault();
-      switchTabOnKeyPress(e, tabIndex);
-    }
-  };
-  const onClick = (e: MouseEvent, tabIndex: number) => {
-    setFocusedIndex(-1);
+
+  const nextFocusableItemIdx = useCallback(
+    (
+      direction: directionType = "fwd",
+      idx = direction === "fwd" ? -1 : indexPositions.length
+    ) => {
+      let nextIdx = nextItemIdx(indexPositions.length, direction, idx);
+      const nextDirection =
+        direction === "start" ? "fwd" : direction === "end" ? "bwd" : direction;
+      while (
+        ((nextDirection === "fwd" && nextIdx < indexPositions.length) ||
+          (nextDirection === "bwd" && nextIdx > 0)) &&
+        !isFocusable(indexPositions[nextIdx])
+      ) {
+        const newIdx = nextItemIdx(
+          indexPositions.length,
+          nextDirection,
+          nextIdx
+        );
+        if (newIdx === nextIdx) {
+          break;
+        } else {
+          nextIdx = newIdx;
+        }
+      }
+      return nextIdx;
+    },
+    [indexPositions]
+  );
+
+  // forceFocusVisible supports an edge case - first or last Tab are clicked
+  // then Left or Right Arrow keys are pressed, There will be no navigation
+  // but focusVisible must be applied
+  const navigateChildItems = useCallback(
+    (e: React.KeyboardEvent, forceFocusVisible = false) => {
+      const direction = navigation[orientation][e.key];
+      const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
+      if (nextIdx !== highlightedIdx) {
+        const immediateFocus = true;
+        if (manualActivation) {
+          focusTab(nextIdx, immediateFocus);
+        } else {
+          // activateTab(newTabIndex);
+        }
+      } else if (forceFocusVisible) {
+        forceRefresh({});
+      }
+    },
+    [
+      highlightedIdx,
+      manualActivation,
+      nextFocusableItemIdx,
+      focusTab,
+      orientation,
+    ]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (indexPositions.length > 0 && isNavigationKey(e.key, orientation)) {
+        e.preventDefault();
+        if (keyboardNavigation.current) {
+          navigateChildItems(e);
+        } else {
+          keyboardNavigation.current = true;
+          navigateChildItems(e, true);
+        }
+      }
+    },
+    [indexPositions, navigateChildItems, orientation]
+  );
+
+  // TODO, in common hooks, we use mouse movement to track current highlighted
+  // index, rather than rely on component item reporting it
+  const handleItemClick = (_: MouseEvent, tabIndex: number) => {
+    setHighlightedIdx(tabIndex);
   };
 
+  const handleFocus = useCallback(
+    (evt: FocusEvent) => {
+      if (!hasFocus) {
+        setHasFocus(true);
+        if (!mouseClickPending.current) {
+          keyboardNavigation.current = true;
+        } else {
+          mouseClickPending.current = false;
+        }
+      }
+    },
+    [hasFocus]
+  );
+
+  const handleContainerMouseDown = useCallback(
+    (evt: MouseEvent) => {
+      if (!hasFocus) {
+        mouseClickPending.current = true;
+      }
+      keyboardNavigation.current = false;
+    },
+    [hasFocus]
+  );
+
+  const containerProps = {
+    onBlur: (e: FocusEvent) => {
+      const sourceTarget = (e.target as HTMLElement).closest(".uitkTabstrip");
+      const destTarget = e.relatedTarget as HTMLElement;
+      if (sourceTarget && !sourceTarget?.contains(destTarget)) {
+        setHighlightedIdx(-1);
+        setHasFocus(false);
+      }
+    },
+    // onClick: handleContainerClick,
+    onMouseDown: handleContainerMouseDown,
+    onFocus: handleFocus,
+    // onKeyDown: () => console.log("[useKeyboardNavigation] onKeyDown"),
+    onMouseDownCapture: () => {
+      // console.log("[useKeyboardNavigation onMouseDownCapture")
+    },
+
+    onMouseMove: () => {
+      // console.log("[useKeyboardNavigation onMouseMove");
+    },
+    onMouseLeave: () => {
+      keyboardNavigation.current = true;
+      setHighlightedIdx(-1);
+      mouseClickPending.current = false;
+    },
+  };
+
+  useIsomorphicLayoutEffect(() => {
+    if (hasFocus && selectedTabIndex !== undefined) {
+      focusTab(selectedTabIndex);
+    }
+  }, [focusTab, hasFocus, selectedTabIndex]);
+
   return {
-    focusedIndex,
+    containerProps,
+    focusVisible: keyboardNavigation.current ? highlightedIdx : -1,
+    focusIsWithinComponent: hasFocus,
+    highlightedIdx,
     focusTab,
-    navItemRefs,
-    onBlur,
-    onClick,
+    onClick: handleItemClick,
     onFocus,
-    onKeyDown,
+    onKeyDown: handleKeyDown,
   };
 };

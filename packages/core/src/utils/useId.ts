@@ -27,3 +27,12 @@ export function useId(idOverride?: string): string {
   // eslint-disable-next-line react-hooks/rules-of-hooks -- `React.useId` is invariant at runtime.
   return useIdLegacy(idOverride);
 }
+
+// Note: Some usages require that an id is returned on first call, not only post-first-render
+// (as with the useEffect solution). This can go away once we totally move to React 18
+export function useIdMemo(idOverride?: string): string {
+  const id = React.useMemo(() => {
+    return idOverride ?? `uitk-${Math.round(Math.random() * 1e5)}`;
+  }, [idOverride]);
+  return id;
+}

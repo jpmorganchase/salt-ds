@@ -34,11 +34,8 @@ export const TextColumnFilter = function TextColumnFilter(
       <FlexLayout direction={"column"}>
         <Dropdown
           source={operations}
-          onChange={onOperationChange}
-          selectedItem={selectedOperation}
-          WindowProps={{
-            className: withBaseName("window"),
-          }}
+          onSelectionChange={onOperationChange}
+          selected={selectedOperation}
         />
         <FormField>
           <Input

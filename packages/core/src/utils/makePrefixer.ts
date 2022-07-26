@@ -1,4 +1,5 @@
+export type ClassNamePrefixer = (...names: string[]) => string;
 export const makePrefixer =
-  (prefix: string): ((...names: string[]) => string) =>
+  (prefix: string): ClassNamePrefixer =>
   (...names: string[]): string =>
     [prefix, ...names].join("-");

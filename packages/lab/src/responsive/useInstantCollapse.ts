@@ -1,6 +1,10 @@
 import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useCallback, useMemo } from "react";
-import { ManagedItem, overflowHookProps } from "./overflowTypes";
+import {
+  OverflowItem,
+  OverflowHookProps,
+  InstantCollapseHookResult,
+} from "./overflowTypes";
 import {
   addAll,
   allExceptOverflowIndicator,
@@ -9,13 +13,18 @@ import {
   measureElementSize,
 } from "./overflowUtils";
 
-const newlyCollapsed = (visibleItems: ManagedItem[]) =>
-  visibleItems.some(
+type MinMaxSize = {
+  maxSize: number | null;
+  minSize: number | null;
+};
+
+const newlyCollapsed = (overflowItems: OverflowItem[]) =>
+  overflowItems.some(
     (item) =>
       item.collapsible === "instant" && item.collapsed && item.fullSize === null
   );
 
-const findItemToCollapse = (items: ManagedItem[]) => {
+const findItemToCollapse = (items: OverflowItem[]) => {
   for (let i = items.length - 1; i >= 0; i--) {
     const item = items[i];
     if (item.collapsible === "instant" && !item.collapsed) {
@@ -26,8 +35,8 @@ const findItemToCollapse = (items: ManagedItem[]) => {
   }
 };
 
-const findItemsToUncollapse = (items: ManagedItem[], containerSize: number) => {
-  let visibleContentSize = items.reduce(allExceptOverflowIndicator, 0);
+const uncollapseItems = (items: OverflowItem[], containerSize: number) => {
+  const visibleContentSize = items.reduce(allExceptOverflowIndicator, 0);
   let diff = containerSize - visibleContentSize;
 
   const collapsed = items
@@ -35,9 +44,9 @@ const findItemsToUncollapse = (items: ManagedItem[], containerSize: number) => {
     .sort((i1, i2) => i2.index - i1.index);
   // find the next collapsed item, see how much extra space it would
   // occupy if restored. If we have enough space, restore it.
-  let result: ManagedItem[] = [];
+  const result: OverflowItem[] = [];
   while (collapsed.length) {
-    const item = collapsed.pop() as ManagedItem;
+    const item = collapsed.pop() as OverflowItem;
     const itemDiff = item.fullSize! - item.size;
     if (diff >= itemDiff) {
       result.push({
@@ -55,49 +64,44 @@ const findItemsToUncollapse = (items: ManagedItem[], containerSize: number) => {
 };
 
 export const useInstantCollapse = ({
-  dispatchOverflowAction,
+  collectionHook,
   hasOverflowedItems,
   innerContainerSize = 0,
   label = "Toolbar",
-  ref,
-  managedItemsRef,
+  overflowContainerRef: ref,
+  overflowItemsRef,
   orientation,
-}: overflowHookProps) => {
-  const minMaxSizes = useMemo(() => new Map(), []);
+}: OverflowHookProps): InstantCollapseHookResult => {
+  const minMaxSizes = useMemo(() => new Map<number, MinMaxSize>(), []);
+  const { dispatch } = collectionHook;
 
   const updateCollapse = useCallback(
     (containerSize, renderedSize) => {
-      const { current: managedItems } = managedItemsRef;
+      const { current: managedItems } = overflowItemsRef;
       if (renderedSize && containerSize < renderedSize) {
-        const managedItem = findItemToCollapse(managedItems);
-        if (managedItem) {
-          dispatchOverflowAction({
-            type: "collapse",
-            managedItem: {
-              ...managedItem,
-              collapsed: true,
-            },
+        const overflowItem = findItemToCollapse(managedItems);
+        if (overflowItem) {
+          dispatch({
+            type: "collapse-instant-item",
+            overflowItem,
           });
         }
       } else {
-        const collapsedItems = findItemsToUncollapse(
-          managedItems,
-          containerSize
-        );
-        if (collapsedItems.length) {
-          dispatchOverflowAction({
-            type: "uncollapse",
-            managedItems: collapsedItems,
+        const uncollapsedItems = uncollapseItems(managedItems, containerSize);
+        if (uncollapsedItems.length) {
+          dispatch({
+            type: "update-items",
+            overflowItems: uncollapsedItems,
           });
         }
       }
     },
-    [findItemsToUncollapse]
+    [dispatch, overflowItemsRef]
   );
 
   const handleResize = useCallback(
     (size, containerHasGrown) => {
-      const { current: managedItems } = managedItemsRef;
+      const { current: managedItems } = overflowItemsRef;
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
         orientation
@@ -106,14 +110,11 @@ export const useInstantCollapse = ({
       const collapsedItems = managedItems.filter((item) => item.collapsed);
 
       if (willOverflow && !hasOverflowedItems) {
-        const managedItem = findItemToCollapse(managedItems);
-        if (managedItem) {
-          dispatchOverflowAction({
-            type: "collapse",
-            managedItem: {
-              ...managedItem,
-              collapsed: true,
-            },
+        const overflowItem = findItemToCollapse(managedItems);
+        if (overflowItem) {
+          dispatch({
+            type: "collapse-instant-item",
+            overflowItem,
           });
         }
       } else if (collapsedItems.length > 0 && containerHasGrown) {
@@ -127,38 +128,49 @@ export const useInstantCollapse = ({
         updateCollapse(size, renderedSize);
       }
     },
-    [hasOverflowedItems, updateCollapse]
+    [
+      dispatch,
+      hasOverflowedItems,
+      orientation,
+      overflowItemsRef,
+      ref,
+      updateCollapse,
+    ]
   );
 
   const resetMeasurements = useCallback(
     (isOverflowing) => {
-      const { current: managedItems } = managedItemsRef;
+      const { current: managedItems } = overflowItemsRef;
       if (isOverflowing) {
-        const managedItem = findItemToCollapse(managedItems);
-        if (managedItem) {
-          dispatchOverflowAction({
-            type: "collapse",
-            managedItem: {
-              ...managedItem,
-              collapsed: true,
-            },
+        const overflowItem = findItemToCollapse(managedItems);
+        if (overflowItem) {
+          dispatch({
+            type: "collapse-instant-item",
+            overflowItem,
           });
+          return true;
+        } else {
+          return false;
         }
       }
     },
-    [findItemToCollapse]
+    [dispatch, overflowItemsRef]
   );
 
-  const setMinSize = useCallback((item, size) => {
-    if (minMaxSizes.has(item.index)) {
-      minMaxSizes.get(item.index).minSize = size;
-    } else {
-      minMaxSizes.set(item.index, { maxSize: null, minSize: size });
-    }
-  }, []);
+  const setMinSize = useCallback(
+    (item: OverflowItem, size: number) => {
+      const minMaxSize = minMaxSizes.get(item.index);
+      if (minMaxSize) {
+        minMaxSize.minSize = size;
+      } else {
+        minMaxSizes.set(item.index, { maxSize: null, minSize: size });
+      }
+    },
+    [minMaxSizes]
+  );
 
   const measureCollapsedItem = useCallback(() => {
-    const { current: managedItems } = managedItemsRef;
+    const { current: managedItems } = overflowItemsRef;
     const dimension = orientation === "horizontal" ? "width" : "height";
     const [collapsedItem] = managedItems.filter(
       (item) => item.collapsible === "instant" && item.collapsed
@@ -190,21 +202,31 @@ export const useInstantCollapse = ({
             size: collapsedSize,
           });
         }
-        dispatchOverflowAction({ type: "collapse", managedItems: updates });
+        dispatch({
+          type: "update-items",
+          overflowItems: updates,
+        });
         setMinSize(collapsedItem, collapsedSize);
       }
     } else {
       return -1;
     }
-  }, [innerContainerSize, orientation]);
+  }, [
+    dispatch,
+    innerContainerSize,
+    orientation,
+    overflowItemsRef,
+    ref,
+    setMinSize,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
-    const { current: managedItems } = managedItemsRef;
+    const { current: managedItems } = overflowItemsRef;
     const newlyCollapsedItem = newlyCollapsed(managedItems);
     if (newlyCollapsedItem) {
       measureCollapsedItem();
     }
-  }, [managedItemsRef.current, measureCollapsedItem]);
+  }, [overflowItemsRef.current, measureCollapsedItem]);
 
   return {
     onResize: handleResize,

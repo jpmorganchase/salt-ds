@@ -14,7 +14,7 @@ import {
 import { AddIcon, DeleteIcon } from "@jpmorganchase/uitk-icons";
 import { ChangeEvent, useMemo } from "react";
 import "./Filter.css";
-import { Dropdown, ListChangeHandler } from "@jpmorganchase/uitk-lab";
+import { Dropdown, SelectionChangeHandler } from "@jpmorganchase/uitk-lab";
 
 const withBaseName = makePrefixer("uitkDataGridFilter");
 
@@ -44,19 +44,19 @@ export const FilterRow = function FilterRow<T>(props: FilterRowProps<T>) {
     [columns]
   );
 
-  const onKindChange: ListChangeHandler = (event, selectedItem) => {
+  const onKindChange: SelectionChangeHandler = (event, selectedItem) => {
     if (selectedItem != null) {
       model.setKind(selectedItem as FilterRowKind);
     }
   };
 
-  const onOperatorChange: ListChangeHandler = (event, selectedItem) => {
+  const onOperatorChange: SelectionChangeHandler = (event, selectedItem) => {
     if (selectedItem != null) {
       model.setOperator(selectedItem);
     }
   };
 
-  const onColumnChange: ListChangeHandler = (event, selectedItem) => {
+  const onColumnChange: SelectionChangeHandler = (event, selectedItem) => {
     if (selectedItem != null) {
       model.setColumn(columnsByName.get(selectedItem));
     }
@@ -85,36 +85,30 @@ export const FilterRow = function FilterRow<T>(props: FilterRowProps<T>) {
             <ControlLabel label="Where" className={withBaseName("where")} />
           ) : (
             <Dropdown
+              className={withBaseName("dropdown")}
               fullWidth={true}
               source={["and"]}
-              selectedItem={kind}
-              onChange={onKindChange}
-              WindowProps={{
-                className: withBaseName("window"),
-              }}
+              selected={kind}
+              onSelectionChange={onKindChange}
             />
           )}
         </div>
         <div className={withBaseName("row-column")}>
           <Dropdown
+            className={withBaseName("dropdown")}
             fullWidth={true}
             source={columnNames}
-            selectedItem={column ? column.name : (null as any)}
-            onChange={onColumnChange}
-            WindowProps={{
-              className: withBaseName("window"),
-            }}
+            selected={column ? column.name : null}
+            onSelectionChange={onColumnChange}
           />
         </div>
         <div className={withBaseName("row-operator")}>
           <Dropdown
+            className={withBaseName("dropdown")}
             fullWidth={true}
             source={operators}
-            selectedItem={operator}
-            onChange={onOperatorChange}
-            WindowProps={{
-              className: withBaseName("window"),
-            }}
+            selected={operator}
+            onSelectionChange={onOperatorChange}
           />
         </div>
         <div className={withBaseName("row-query")}>

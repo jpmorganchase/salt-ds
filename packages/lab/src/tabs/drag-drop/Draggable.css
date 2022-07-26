@@ -1,62 +1,13 @@
 .uitkDraggable {
   background-color: transparent;
-  box-shadow: var(--uitk-overlayable-shadow-drag);
-  cursor: move;
+  box-shadow: var(--uitk-draggable-box-shadow);
+  cursor: var(--uitk-draggable-cursor-active);
   position: absolute;
 }
 
-.uitkDraggable-tabstrip {
-  --tabstrip-tab-display: flex;
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
-  --tabstrip-tab-dragging-display: block;
-
-  --uitkTab-background: var(--uitk-color-grey-40);
-  --uitkTab-background-hover: var(--uitk-color-grey-40);
-  --uitkTab-bar-color: var(--uitk-color-grey-90);
-
-  font-size: var(--uitk-text-fontSize, 12px);
-}
-
-.uitkDraggable-tabstrip .uitkTab {
-  cursor: move;
-}
-
-.uitkDraggable-tabstrip .uitkTab:before {
-  background: var(--uitkTab-bar-color);
-  bottom: 0;
-  content: "";
-  height: 2px;
-  left: 0;
-  opacity: 1;
-  position: absolute;
-  z-index: var(--uitk-zIndex-default);
-  width: calc(100% + 8px);
-}
-
-.uitkDraggable-tabstrip .uitkTab[aria-selected="true"]:before {
-  background: var(--uitk-color-orange-700);
-}
-
-/* .uitkTab-dragging[aria-selected="true"]:before {
-  background: var(--uitk-color-orange-700);
-  bottom: 0;
-  content: "";
-  opacity: 1;
-  position: absolute;
-  right: 0;
-  z-index: var(--uitk-zIndex-default);
-  left: 0;
-  height: 2px;
-} */
-
-.uitkDraggable-tooltip {
-  --uitkTab-background: white;
-  --uitkTab-background-hover: white;
-  --uitkTab-height: 100%;
-  --uitk-size-stackable: 100%;
-  border: 1px solid var(--uitk-status-info-borderColor);
-}
-.uitkDraggable-tooltip .uitkTab:hover:before,
-.uitkDraggable-tooltip .uitkTab:before {
-  content: none;
+.uitkDraggable-spacer {
+  display: inline-block;
+  height: var(--tabstrip-height);
+  transition: width 0.4s ease;
+  width: 0;
 }

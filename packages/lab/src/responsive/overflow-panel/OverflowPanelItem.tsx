@@ -12,10 +12,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  extractResponsiveProps,
-  isResponsiveAttribute,
-} from "../../responsive";
+import { extractResponsiveProps, isResponsiveAttribute } from "../utils";
 import { PanelItemRendererProps } from "./PanelItemRendererProps";
 
 function useControlledTooltip(

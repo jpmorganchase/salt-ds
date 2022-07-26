@@ -7,20 +7,11 @@ import React, {
   HTMLAttributes,
   ReactElement,
   ReactNode,
-  RefObject,
   useContext,
-  useState,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
-import {
-  characteristic,
-  DEFAULT_THEME,
-  Density,
-  getTheme,
-  Theme,
-} from "../theme";
-import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
+import { DEFAULT_THEME, Density, getTheme, Theme } from "../theme";
 import { ViewportProvider } from "../viewport";
 
 export const DEFAULT_DENSITY = "medium";
@@ -176,36 +167,7 @@ export function useDensity(density?: Density): Density {
   return density || densityFromContext || DEFAULT_DENSITY;
 }
 
-export const useBreakpoints = () => {
+export const useBreakpoints = (): Breakpoints => {
   const { breakpoints } = useContext(ToolkitContext);
   return breakpoints;
-};
-
-type HTMLElementRef = RefObject<HTMLElement>;
-// We might want to cache values in a local WeakMap ?
-export const useCharacteristic = (
-  characteristicName: characteristic,
-  variant: string,
-  ref: HTMLElementRef | HTMLElement | null = null
-): string | null => {
-  // TODO what do we do with multiple themes
-  const [theme] = useTheme();
-  const [value, setValue] = useState<string | null>(null);
-  const target =
-    (ref as HTMLElementRef)?.current !== undefined
-      ? (ref as HTMLElementRef).current
-      : (ref as HTMLElement);
-
-  useIsomorphicLayoutEffect(() => {
-    if (theme) {
-      const value = theme.getCharacteristicValue(
-        characteristicName,
-        variant,
-        target || undefined
-      );
-      setValue(value);
-    }
-  }, [characteristicName, target, theme, variant]);
-
-  return value;
 };

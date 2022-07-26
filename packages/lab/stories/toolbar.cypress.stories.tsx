@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   ExportIcon,
@@ -15,7 +15,12 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
-import { Toolbar, ToolbarProps, Tooltray } from "@jpmorganchase/uitk-lab";
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarProps,
+  Tooltray,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory } from "@storybook/react";
 
 import { AdjustableFlexbox, FlexboxProps } from "./story-components";
@@ -26,14 +31,6 @@ export default {
   component: Toolbar,
 };
 
-const ToolbarButton = ({
-  id,
-  label,
-  ...props
-}: ButtonProps & { label: string }) => (
-  <Button {...props} variant="secondary" id={id} data-overflow-lavel={label} />
-);
-
 type ToolbarStory = ComponentStory<FC<FlexboxProps & ToolbarProps>>;
 
 export const SimpleToolbar: ToolbarStory = ({
@@ -43,36 +40,36 @@ export const SimpleToolbar: ToolbarStory = ({
   return (
     <AdjustableFlexbox height={200} width={width}>
       <Toolbar {...toolbarProps}>
-        <Button variant="secondary">
+        <ToolbarButton>
           <ExportIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <ShareIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <NotificationIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <TearOutIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <MessageIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <FilterIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <UserGroupIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <PinIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <SearchIcon />
-        </Button>
-        <Button variant="secondary">
+        </ToolbarButton>
+        <ToolbarButton>
           <UserIcon />
-        </Button>
+        </ToolbarButton>
       </Toolbar>
     </AdjustableFlexbox>
   );
@@ -83,7 +80,7 @@ export const SimpleToolbarOverflowLabel: ToolbarStory = ({
 }) => <SimpleToolbar overflowButtonLabel={overflowButtonLabel} />;
 
 export const ToolbarUsingOverflowPriorities: ToolbarStory = ({
-  width = 420,
+  width = 600,
   ...toolbarProps
 }) => {
   return (
@@ -111,7 +108,7 @@ export const ToolbarUsingOverflowPriorities: ToolbarStory = ({
 };
 
 export const SimpleToolbarCollapsibleItems: ToolbarStory = ({
-  width = 500,
+  width = 210,
   ...toolbarProps
 }) => {
   return (
@@ -138,7 +135,7 @@ export const SimpleToolbarCollapsibleItems: ToolbarStory = ({
 };
 
 export const SingleDynamicCollapseTooltray: ToolbarStory = ({
-  width = 200,
+  width = 210,
 }) => {
   const pStyle = { whiteSpace: "nowrap", overflow: "hidden" } as any;
 

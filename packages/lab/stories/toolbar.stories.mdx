@@ -1,0 +1,95 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { useRef, useState } from "react";
+import { Button } from "@jpmorganchase/uitk-core";
+import {
+  ExportIcon,
+  NotificationIcon,
+  ShareIcon,
+  TearOutIcon,
+} from "@jpmorganchase/uitk-icons";
+import { Toolbar } from "@jpmorganchase/uitk-lab";
+import { CollapsibleToolbarItem } from "./sample-components";
+
+<Meta title="Lab/Toolbar/Doc" />
+
+# Toolbar
+
+Toolbar is a flexible container for controls.
+
+<br />
+
+Simple `Toolbar` with 4 `Buttons`. Note that Button text is not displayed if Button
+contains an Icon.
+
+```jsx
+<Toolbar>
+  <Button variant="secondary">
+    <ExportIcon /> Export
+  </Button>
+  <Button variant="secondary">
+    <ShareIcon /> Share
+  </Button>
+  <Button variant="secondary">
+    <NotificationIcon /> Set Alerts
+  </Button>
+  <Button variant="secondary">
+    <TearOutIcon /> Expand
+  </Button>
+  <Button variant="secondary">More</Button>
+</Toolbar>
+```
+
+<Canvas>
+  <Story name="Simple Toolbar Example">
+    <ToolkitProvider>
+      <Toolbar>
+        <Button variant="secondary">
+          <ExportIcon /> Export
+        </Button>
+        <Button variant="secondary">
+          <ShareIcon /> Share
+        </Button>
+        <Button variant="secondary">
+          <NotificationIcon /> Set Alerts
+        </Button>
+        <Button variant="secondary">
+          <TearOutIcon /> Expand
+        </Button>
+        <Button variant="secondary">More</Button>
+      </Toolbar>
+    </ToolkitProvider>
+  </Story>
+</Canvas>
+
+<br />
+
+##### Instant Collapse
+
+Example 1, use CSS alone to style compact state
+
+<Canvas>
+  <Story name="Toolbar with instant collapse items CSS">
+    <ToolkitProvider>
+      {/* <Toolbar style={{ width: 440 }}>
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
+      </Toolbar>
+      <p>With Toolbar size reduced</p>
+      <Toolbar style={{ width: 400 }}>
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
+      </Toolbar>
+      <p>and reduced further</p> */}
+      <Toolbar style={{ width: 300 }}>
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
+        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
+      </Toolbar>
+    </ToolkitProvider>
+  </Story>
+</Canvas>

@@ -136,12 +136,12 @@ ToolkitParentChildLayoutReducedMotion.args = {
   stackedAtBreakpoint: "xl",
 };
 
-const useTabSelection = (initialValue?: any) => {
+const useTabSelection = (initialValue?: number) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
   const handleTabSelection = (tabIndex: number) => {
     setSelectedTab(tabIndex);
   };
-  return [selectedTab, handleTabSelection];
+  return [selectedTab, handleTabSelection] as const;
 };
 
 const cardText =
@@ -175,14 +175,14 @@ const Responsive: ComponentStory<typeof ParentChildLayout> = (args) => {
 
   const parent = (
     <Tabstrip
-      onChange={handleTabSelection}
+      onActiveChange={handleTabSelection}
       orientation="vertical"
       onClick={() => {
         if (isStacked) {
           handleChild();
         }
       }}
-      value={selectedTab}
+      activeTabIndex={selectedTab}
       style={{ width: "100%" }}
     >
       {tabs.map((label, i) => (

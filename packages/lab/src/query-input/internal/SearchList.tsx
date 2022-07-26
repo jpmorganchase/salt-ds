@@ -1,20 +1,10 @@
-import {
-  Dispatch,
-  FC,
-  MouseEventHandler,
-  SetStateAction,
-  useCallback,
-  useMemo,
-} from "react";
+import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import {
-  List,
-  ListChangeHandler,
-  ListItem,
-  useListItemContext,
-} from "../../list";
+import { List, ListItem as ListItem, ListItemGroup } from "../../list";
 
-import { QueryInputCategory, QueryInputItem } from "../QueryInput";
+import { SelectionChangeHandler } from "../../common-hooks";
+
+import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import "../QueryInput.css";
 
 const withBaseName = makePrefixer("uitkQueryInputSearchList");
@@ -29,68 +19,6 @@ export interface SearchListProps {
   setHighlightedIndex: Dispatch<SetStateAction<number>>;
 }
 
-interface GroupProps {
-  category: QueryInputCategory;
-  inputValue?: string;
-  selectedItems?: QueryInputItem[];
-  onMouseMove: (item: QueryInputItem) => void;
-}
-
-interface ValueListItemProps {
-  item: QueryInputItem;
-  inputValue?: string;
-  onMouseMove: (item: QueryInputItem) => void;
-}
-
-const ValueListItem: FC<ValueListItemProps> = (props) => {
-  const { item, inputValue } = props;
-
-  const onMouseMove: MouseEventHandler = useCallback(() => {
-    props.onMouseMove(item);
-  }, [props.onMouseMove, item]);
-
-  return (
-    <ListItem
-      className={withBaseName("value")}
-      itemTextHighlightPattern={inputValue || undefined}
-      item={item}
-      onMouseMove={onMouseMove}
-    >
-      {item.value}
-    </ListItem>
-  );
-};
-
-const Group: FC<GroupProps> = function Group(props) {
-  const { inputValue, category, selectedItems, onMouseMove } = props;
-  const { getItemHeight } = useListItemContext();
-  const headerStyle = getItemHeight ? { height: getItemHeight() } : {};
-
-  return (
-    <div className={withBaseName("group")}>
-      <div className={withBaseName("categoryTitle")} style={headerStyle}>
-        {category.name}
-      </div>
-      {category.values.map((v, index) => {
-        const item = selectedItems?.find(
-          (x) => x.category === category.name && x.value === v
-        ) || {
-          category: category.name,
-          value: v,
-        };
-        return (
-          <ValueListItem
-            key={item.value}
-            item={item}
-            inputValue={inputValue}
-            onMouseMove={onMouseMove}
-          />
-        );
-      })}
-    </div>
-  );
-};
-
 function itemToString(item: QueryInputItem) {
   return [item.category, item.value].join(": ");
 }
@@ -102,66 +30,41 @@ export const SearchList: FC<SearchListProps> = function SearchList(props) {
     onChange: onChangeProp,
     rootWidth,
     highlightedIndex,
-    visibleCategories,
     setHighlightedIndex,
+    visibleCategories,
   } = props;
 
-  const visibleItems = useMemo(() => {
-    const visibleItems: QueryInputItem[] = [];
-    visibleCategories.forEach((category) => {
-      category.values.forEach((value) => {
-        visibleItems.push({ category: category.name, value });
-      });
-    });
-    return visibleItems;
-  }, [visibleCategories]);
-
-  const onChange: ListChangeHandler<QueryInputItem, "multiple"> = useCallback(
-    (event, items) => {
-      onChangeProp(items || []);
-    },
-    [onChangeProp]
-  );
-
-  const onMouseMove = useCallback(
-    (item: QueryInputItem) => {
-      const index = visibleItems.findIndex(
-        (x) => x.category === item.category && x.value === item.value
-      );
-      setHighlightedIndex(index);
-    },
-    [visibleItems, setHighlightedIndex]
-  );
-
-  const onAddKeywordMouseMove = useCallback(() => {
-    setHighlightedIndex(visibleItems.length);
-  }, [visibleItems.length]);
+  const onChange: SelectionChangeHandler<QueryInputItem, "multiple"> =
+    useCallback(
+      (event, items) => {
+        onChangeProp(items || []);
+      },
+      [onChangeProp]
+    );
 
   return (
     <List
-      selectionVariant="multiple"
-      selectedItem={selectedItems}
-      itemToString={itemToString}
-      onChange={onChange}
-      width={rootWidth}
+      checkable={false}
       data-testid="search-list"
       highlightedIndex={highlightedIndex}
+      itemTextHighlightPattern={inputValue}
+      itemToString={itemToString}
+      onHighlight={setHighlightedIndex}
+      onSelectionChange={onChange}
+      selectionStrategy="multiple"
+      selected={selectedItems}
+      width={rootWidth}
     >
-      {visibleCategories.map((c) => {
+      {visibleCategories.map((inputCategory: QueryInputCategory) => {
         return (
-          <Group
-            key={c.name}
-            category={c}
-            inputValue={inputValue}
-            selectedItems={selectedItems}
-            onMouseMove={onMouseMove}
-          />
+          <ListItemGroup key={inputCategory.name} label={inputCategory.name}>
+            {inputCategory.values.map((label) => (
+              <ListItem key={label} label={label} />
+            ))}
+          </ListItemGroup>
         );
       })}
-      <ListItem
-        className={withBaseName("addKeyword")}
-        onMouseMove={onAddKeywordMouseMove}
-      >
+      <ListItem className={withBaseName("addKeyword")}>
         {`Add keyword: "${inputValue}"`}
       </ListItem>
     </List>

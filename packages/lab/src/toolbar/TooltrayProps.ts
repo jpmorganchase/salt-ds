@@ -15,7 +15,7 @@ export interface TooltrayProps extends HTMLAttributes<HTMLDivElement> {
   "data-collapsible"?: collapsibleType;
   "data-collapsed"?: booleanAttribute;
   isInsidePanel?: boolean;
-  overflowButtonIcon?: string;
+  overflowButtonIcon?: JSX.Element;
   overflowButtonLabel?: string;
   orientation?: OrientationShape;
 }

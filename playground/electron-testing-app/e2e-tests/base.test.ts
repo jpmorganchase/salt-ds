@@ -145,7 +145,8 @@ test("Opens the colour chooser in a new child window", async () => {
 
   expect(childWindowPosition).toStrictEqual([391, 36]);
 
-  expect(childWindowSize).toStrictEqual([458, 346]);
+  expect(childWindowSize).toStrictEqual([458, 382]);
+  // expect(childWindowSize).toStrictEqual([458, 346]);
 
   //Click orange
   await colourPickerPage.locator("data-testid=swatch-#d65513").click();
@@ -173,7 +174,8 @@ test("Opens the dropdown in a new child window", async () => {
   );
 
   expect(childWindowPosition).toStrictEqual([175, 36]);
-  expect(childWindowSize).toStrictEqual([181, 372]);
+  expect(childWindowSize).toStrictEqual([181, 363]);
+  // expect(childWindowSize).toStrictEqual([181, 372]);
 
   // Click Colorado
   await dropdownPage.locator("text=Colorado").click();

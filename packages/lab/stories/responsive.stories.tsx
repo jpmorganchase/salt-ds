@@ -38,19 +38,19 @@ const blockLarge = {
   width: 100,
 } as any;
 
-export const DefaultBehaviour: Story = ({ initialWidth = 400 }) => {
-  return (
-    <AdjustableFlexbox height={200} width={initialWidth}>
-      <div style={{ backgroundColor: "yellow", height: 50 }}>
-        <OverflowLayoutContainer label={"Example"}>
-          <span style={blockSmall} data-priority={3}>
-            block 1
-          </span>
-          <span style={blockMedium}>block 2</span>
-          <span style={blockSmall}>block 3</span>
-          <span style={blockLarge}>block 4</span>
-        </OverflowLayoutContainer>
-      </div>
-    </AdjustableFlexbox>
-  );
-};
+// export const DefaultBehaviour: Story = ({ initialWidth = 400 }) => {
+//   return (
+//     <AdjustableFlexbox height={200} width={initialWidth}>
+//       <div style={{ backgroundColor: "yellow", height: 50 }}>
+//         <OverflowLayoutContainer label={"Example"}>
+//           <span style={blockSmall} data-priority={3}>
+//             block 1
+//           </span>
+//           <span style={blockMedium}>block 2</span>
+//           <span style={blockSmall}>block 3</span>
+//           <span style={blockLarge}>block 4</span>
+//         </OverflowLayoutContainer>
+//       </div>
+//     </AdjustableFlexbox>
+//   );
+// };

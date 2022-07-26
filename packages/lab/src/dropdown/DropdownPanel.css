@@ -1,0 +1,19 @@
+.uitkDropdownPanel-content {
+  align-items: flex-start;
+  background: var(--uitk-container-background);
+  color: var(--uitk-container-color);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-style) var(--uitk-container-border-color);
+  display: flex;
+  flex-direction: column;
+  outline: none;
+}
+
+.uitkDropdownPanel [aria-expanded="true"] {
+  --uitkButton-background: var(--uitk-actionable-secondary-background-active);
+  --uitkButton-background-hover: var(--uitk-actionable-secondary-background-active);
+  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-active);
+}
+
+.uitkDropdownPanel.uitkDropdown {
+  --uitkIcon-padding: 0;
+}

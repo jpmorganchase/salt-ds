@@ -6,9 +6,9 @@ const longSource = new Array(5000)
 
 describe("Dropdown - Performance Testing", () => {
   specify("Opening a large list without virtualization", () => {
-    cy.mountPerformance(<Dropdown source={longSource} />);
+    cy.mountPerformance(<Dropdown id="test" source={longSource} />);
 
-    cy.findByTestId("dropdown-button").click();
+    cy.get("#test").click();
 
     cy.getRenderCount().then((renderCount) => {
       cy.log(`Render count: ${renderCount}`);

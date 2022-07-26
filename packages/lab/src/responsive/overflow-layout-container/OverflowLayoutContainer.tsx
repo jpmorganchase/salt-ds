@@ -1,10 +1,21 @@
-import { FormField, makePrefixer } from "@jpmorganchase/uitk-core";
+import { FormField, makePrefixer, useIdMemo } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import React, { KeyboardEvent, ReactElement, Ref } from "react";
-import { OverflowButtonProps, OverflowMenuProps } from "../overflow-menu";
-import { ManagedItem, orientationType } from "../overflowTypes";
+
+import {
+  orientationType,
+  OverflowItem,
+  OverflowCollectionHookResult,
+} from "../overflowTypes";
 import { isCollapsedOrCollapsing, isOverflowed } from "../overflowUtils";
 import { useOverflowLayout } from "../useOverflowLayout";
+
+import {
+  OverflowButtonProps,
+  // OverflowMenu,
+  OverflowMenuProps,
+} from "../overflow-menu";
+
 import { OverflowDropdown } from "./OverflowDropdown";
 
 import "./OverflowLayoutContainer.css";
@@ -13,6 +24,8 @@ const withBaseName = makePrefixer("uitkOverflowLayoutContainer");
 
 interface OverflowLayoutContainerProps {
   className?: string;
+  collectionHook: OverflowCollectionHookResult;
+  id?: string;
   label?: string;
   orientation?: orientationType;
   overflowButtonIcon?: JSX.Element;
@@ -24,7 +37,7 @@ interface OverflowLayoutContainerProps {
 
 const defaultRenderLayoutItems = (
   childItems: ReactElement[],
-  managedItems: ManagedItem[]
+  managedItems: OverflowItem[]
 ) => {
   console.log(`defaultRenderLayoutItems`, { childItems, managedItems });
   return childItems.map((childItem, index) => {
@@ -46,6 +59,8 @@ export const OverflowLayoutContainer: React.FC<
 > = ({
   children,
   className,
+  collectionHook,
+  id: idProp,
   label = "",
   orientation = "horizontal",
   overflowButtonIcon,
@@ -54,7 +69,14 @@ export const OverflowLayoutContainer: React.FC<
   overflowButtonRef,
   renderLayoutItems = defaultRenderLayoutItems,
 }) => {
-  const [containerRef, managedItems] = useOverflowLayout(orientation, label);
+  const id = useIdMemo(idProp);
+  const [containerRef] = useOverflowLayout({
+    collectionHook,
+    id,
+    orientation,
+    label,
+  });
+  const managedItems = collectionHook.data;
   console.log({ ref: containerRef.current, managedItems });
 
   const childItems = React.Children.toArray(children) as ReactElement[];

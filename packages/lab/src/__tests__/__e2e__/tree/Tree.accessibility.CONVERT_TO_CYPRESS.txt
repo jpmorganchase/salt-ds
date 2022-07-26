@@ -1,0 +1,416 @@
+import React from 'react';
+import {
+  fireEvent,
+  render,
+  screen
+} from '@jpmuitk/react-testing-library-utils';
+import { getClasses } from '@jpmuitk/test-utils';
+import userEvent from '@testing-library/user-event';
+
+import Tree, { TreeNode } from '../Tree';
+import { TreeClassKey } from '../style';
+
+/**
+ * - 1
+ *   | - 2
+ *   | - 3 -- 8 (collapsed)
+ *   | - 4
+ *       | - 6
+ *       | - 7
+ * - 5
+ */
+function createSampleTreeData() {
+  return [
+    {
+      id: '1',
+      name: '1',
+      description: 'item 1',
+      expanded: true,
+      childNodes: [
+        {
+          id: '1-1',
+          name: '2',
+          description: 'item 2'
+        },
+        {
+          id: '1-2',
+          name: '3',
+          description: 'item 3',
+          // NOTE the false here
+          expanded: false,
+          childNodes: [
+            {
+              id: '1-2-1',
+              name: '8',
+              description: 'item 8'
+            }
+          ]
+        },
+        {
+          id: '1-3',
+          name: '4',
+          description: 'item 4',
+          expanded: true,
+          childNodes: [
+            {
+              id: '1-3-1',
+              name: '6',
+              description: 'item 6'
+            },
+            {
+              id: '1-3-2',
+              name: '7',
+              description: 'item 7'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: '2',
+      name: '5',
+      description: 'item 5'
+    }
+  ];
+}
+
+describe('Given a Tree', () => {
+  let treeClasses: {
+    [classKey in TreeClassKey]: string;
+  };
+
+  beforeAll(() => {
+    treeClasses = getClasses(<Tree />);
+  });
+
+  const assertItemHasFocus = (name: string | RegExp) => {
+    // We have to peak into implementation of the tree item to verify the visual focus ring
+    // Abstract this out so that when implementation detail changes, only below line needs to be updated
+    expect(screen.getByRole('treeitem', { name }).parentElement).toHaveClass(
+      treeClasses.focused
+    );
+  };
+
+  describe('with variant="checkbox"', () => {
+    test('checkbox are (aria) hidden so aXe is not giving false alarm', () => {
+      render(
+        <Tree initialSource={createSampleTreeData()} variant="checkbox" />
+      );
+
+      expect(screen.queryByRole('checkbox')).toBeNull();
+      expect(screen.getAllByRole('checkbox', { hidden: true }).length).toBe(7);
+    });
+  });
+
+  ['default', 'multiSelect', 'checkbox'].forEach(v => {
+    const variant = v === 'checkbox' ? 'checkbox' : 'default';
+    const multiSelect = v === 'multiSelect';
+
+    describe(`keyboard navigation with ${v} variant`, () => {
+      // {arrowdown} is not supported by the userEvent version we use <v12.5.0
+      // so specify these ourselves
+
+      const arrowUp = { code: 'ArrowUp', key: 'ArrowUp', keyCode: 38 };
+      const arrowDown = { code: 'ArrowDown', key: 'ArrowDown', keyCode: 40 };
+      const arrowLeft = { code: 'ArrowLeft', key: 'ArrowLeft', keyCode: 37 };
+      const arrowRight = { code: 'ArrowRight', key: 'ArrowRight', keyCode: 39 };
+
+      describe('arrow up', () => {
+        test('should move focus to the previous sibling when focused on non-first child', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 3/i });
+          item.focus();
+          assertItemHasFocus(/item 3/i);
+
+          fireEvent.keyDown(item, arrowUp);
+
+          assertItemHasFocus(/item 2/i);
+        });
+
+        test('should move focus to parent when focused on the first child', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 2/i });
+          item.focus();
+          assertItemHasFocus(/item 2/i);
+
+          fireEvent.keyDown(item, arrowUp);
+
+          assertItemHasFocus(/item 1/i);
+        });
+
+        test('should keep focus to the same element when focused on the first root element', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 1/i });
+          item.focus();
+          assertItemHasFocus(/item 1/i);
+
+          fireEvent.keyDown(item, arrowUp);
+
+          assertItemHasFocus(/item 1/i);
+        });
+      });
+
+      describe('arrow down', () => {
+        test('should move focus to the next sibling when focused on non-last child', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 2/i });
+          item.focus();
+          assertItemHasFocus(/item 2/i);
+
+          fireEvent.keyDown(item, arrowDown);
+
+          assertItemHasFocus(/item 3/i);
+        });
+
+        test('should move focus to the next sibling of the ancestor(s) when focused on last child', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 7/i });
+          item.focus();
+          assertItemHasFocus(/item 7/i);
+
+          fireEvent.keyDown(item, arrowDown);
+
+          assertItemHasFocus(/item 5/i);
+        });
+
+        test('should keep focus to the same element when focused on the last element of the tree', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 5/i });
+          item.focus();
+          assertItemHasFocus(/item 5/i);
+
+          fireEvent.keyDown(item, arrowDown);
+
+          assertItemHasFocus(/item 5/i);
+        });
+      });
+      describe('arrow left', () => {
+        test('should move the focus to the parent when focused on an item without children', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 7/i });
+          item.focus();
+          assertItemHasFocus(/item 7/i);
+
+          fireEvent.keyDown(item, arrowLeft);
+
+          assertItemHasFocus(/item 4/i);
+        });
+
+        test('should move the focus to the parent when focused on an item with children collapsed', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 3/i });
+          item.focus();
+          assertItemHasFocus(/item 3/i);
+
+          fireEvent.keyDown(item, arrowLeft);
+
+          assertItemHasFocus(/item 1/i);
+        });
+
+        test('should collapse the node and stay focused when focused on an item with expanded children', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 4/i });
+          item.focus();
+          assertItemHasFocus(/item 4/i);
+
+          fireEvent.keyDown(item, arrowLeft);
+
+          assertItemHasFocus(/item 4/i);
+
+          expect(
+            screen.queryByRole('treeitem', { name: /item 6/i })
+          ).toBeNull();
+          expect(
+            screen.queryByRole('treeitem', { name: /item 7/i })
+          ).toBeNull();
+        });
+      });
+      describe('arrow right', () => {
+        test('should expand the node and stay focused when focused on an item with collapsed children', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 3/i });
+          item.focus();
+          assertItemHasFocus(/item 3/i);
+
+          fireEvent.keyDown(item, arrowRight);
+
+          assertItemHasFocus(/item 3/i);
+
+          expect(
+            screen.getByRole('treeitem', { name: /item 8/i })
+          ).toBeInTheDocument();
+        });
+
+        test('should move the focus to first child when focused on an item with expanded children', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          const item = screen.getByRole('treeitem', { name: /item 4/i });
+          item.focus();
+          assertItemHasFocus(/item 4/i);
+
+          fireEvent.keyDown(item, arrowRight);
+
+          assertItemHasFocus(/item 6/i);
+        });
+      });
+
+      describe('tab sequence', () => {
+        /**
+         * Below test is skipped as it doesn't work with the unit test infrastructure, however it's
+         * worth to leave it in here to convey the intent of testing Shift + Tab. The behaviour works
+         * in the browser and can be tested in e2e when our cypress setup supports it (e.g. real event)
+         */
+        test.skip('once focused shift tab should move focus to the previous interactive element available', () => {
+          const inputBeforeLabel = 'input-before';
+          const inputAfterLabel = 'input-after';
+          render(
+            <div>
+              <input aria-label={inputBeforeLabel} />
+              <Tree
+                initialSource={createSampleTreeData()}
+                multiSelect={multiSelect}
+                variant={variant}
+              />
+              <input aria-label={inputAfterLabel} />
+            </div>
+          );
+
+          const inputBefore = screen.getByLabelText(inputBeforeLabel);
+          const inputAfter = screen.getByLabelText(inputAfterLabel);
+
+          inputBefore.focus();
+          userEvent.tab();
+
+          assertItemHasFocus(/item 1/i);
+          const itemA = screen.getByRole('treeitem', { name: /item 1/i });
+
+          // {arrowdown} is not supported by the userEvent version we use
+          // userEvent.type(itemA, '{arrowdown}'); // Available from 12.5.0
+          fireEvent.keyDown(itemA, {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 40
+          });
+
+          assertItemHasFocus(/item 2/i);
+
+          // This is the point that test breaks apart, as user events can't determine the order of
+          // elements when activeElement doesn't have tabIndex set, so tab order index gets messed up
+          userEvent.tab({ shift: true });
+          expect(inputBefore).toHaveFocus();
+        });
+
+        test('once focused no tree item should have tabIndex set to 0', () => {
+          render(
+            <Tree
+              initialSource={createSampleTreeData()}
+              multiSelect={multiSelect}
+              variant={variant}
+            />
+          );
+
+          expect(
+            screen
+              .getAllByRole('treeitem')
+              .some(item => item.getAttribute('tabindex') === '0')
+          ).toBeTruthy();
+
+          userEvent.tab();
+
+          assertItemHasFocus(/item 1/i);
+
+          const item1 = screen.getByRole('treeitem', { name: /item 1/i });
+          // {arrowdown} is not supported by the userEvent version we use
+          // userEvent.type(itemA, '{arrowdown}'); // Available from 12.5.0
+          fireEvent.keyDown(item1, {
+            code: 'ArrowDown',
+            key: 'ArrowDown',
+            keyCode: 40
+          });
+
+          assertItemHasFocus(/item 2/i);
+
+          screen
+            .getAllByRole('treeitem')
+            .forEach(item => expect(item).not.toHaveAttribute('tabindex', '0'));
+        });
+      });
+    });
+  });
+});

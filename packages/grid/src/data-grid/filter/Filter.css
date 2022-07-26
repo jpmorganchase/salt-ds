@@ -1,7 +1,7 @@
 .uitkDataGridFilter {
 }
 
-.uitkDataGridFilter-window {
+.uitkDataGridFilter-dropdown.uitkDropdown-popup {
   z-index: 10;
 }
 

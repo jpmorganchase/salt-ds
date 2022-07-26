@@ -1,5 +1,13 @@
 import classnames from "classnames";
-import React, { ChangeEvent, KeyboardEvent, useCallback, useRef } from "react";
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  forwardRef,
+  ForwardedRef,
+  ReactElement,
+  useRef,
+} from "react";
 import {
   Input,
   useControlled,
@@ -27,16 +35,19 @@ export interface EditableLabelProps {
 }
 
 //TODO do we need forwardRef ?
-export const EditableLabel: React.FC<EditableLabelProps> = ({
-  className: classNameProp,
-  defaultEditing,
-  defaultValue,
-  editing: editingProp,
-  onChange,
-  onEnterEditMode,
-  onExitEditMode,
-  value: valueProp,
-}) => {
+export const EditableLabel = forwardRef(function EditableLabel(
+  {
+    className: classNameProp,
+    defaultEditing,
+    defaultValue,
+    editing: editingProp,
+    onChange,
+    onEnterEditMode,
+    onExitEditMode,
+    value: valueProp,
+  }: EditableLabelProps,
+  forwardedRef: ForwardedRef<HTMLDivElement>
+): ReactElement<EditableLabelProps> {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [value, setValue] = useControlled({
@@ -122,6 +133,7 @@ export const EditableLabel: React.FC<EditableLabelProps> = ({
       className={className}
       onDoubleClick={handleDoubleClick}
       data-text={value}
+      ref={forwardedRef}
     >
       {editing ? (
         <Input
@@ -139,4 +151,4 @@ export const EditableLabel: React.FC<EditableLabelProps> = ({
       )}
     </div>
   );
-};
+});

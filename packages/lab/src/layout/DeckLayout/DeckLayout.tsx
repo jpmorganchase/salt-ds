@@ -14,7 +14,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 
 import { DeckItem } from "../DeckItem";
-import { useWidth } from "../../list/internal/useWidth";
+import { useWidth } from "../../responsive";
 import "./DeckLayout.css";
 
 import cx from "classnames";

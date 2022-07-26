@@ -1,14 +1,21 @@
 .uitkDropdown {
+  --uitkIcon-margin: 2px 0 0 0;
+  --uitkIcon-padding: 0 0 0 8px;
   box-sizing: border-box;
   display: inline-block;
   line-height: 0;
   position: relative;
 }
 
-.uitkDropdown-fullwidth {
+.uitkDropdown-fullWidth {
   width: 100%;
 }
 
-.uitkDropdown-listWindowRoot {
-  z-index: calc(var(--uitk-zindex-tooltip) - 1);
+.uitkDropdown-popup {
+  background: var(--uitk-container-background-medium);
+  z-index: 1;
+}
+
+.uitkDropdown-popup-component {
+  max-height: 300px;
 }
