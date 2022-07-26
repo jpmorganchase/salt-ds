@@ -1,26 +1,13 @@
 .uitkMetricContent {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0px;
 }
 
 .uitkMetricContent-value-container {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.uitkMetric-size-large .uitkMetricContent-indicator {
-  padding: 0px 0px 16px;
-}
-.uitkMetric-size-medium .uitkMetricContent-indicator {
-  padding: 0px 0px 11px;
-}
-.uitkMetric-size-small .uitkMetricContent-indicator {
-  padding: 0px 0px 8px;
+  align-items: baseline;
+  gap: calc(var(--uitk-size-unit) / 2);
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
@@ -51,16 +38,129 @@
   text-align: right;
 }
 
-.backwardsCompat.uitkMetric.uitkMetric-size-small .uitkMetricContent-subvalue {
+/* HORIZONTAL */
+
+/* Size small */
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: -1px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
   margin-top: -2px;
 }
-.backwardsCompat.uitkMetric.uitkMetric-size-medium .uitkMetricContent-subvalue {
-  margin-top: -6px;
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 0px;
 }
-.backwardsCompat.uitkMetric.uitkMetric-size-large .uitkMetricContent-subvalue {
-  margin-top: -10px;
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 1px;
 }
 
-.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric .uitkMetricContent-subvalue {
-  margin-top: 0px;
+/* Size medium */
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -4px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -5px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: -2px;
+}
+
+/* Size large */
+.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent {
+  margin-top: -1px;
+}
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -10px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -11px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -9px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: -8px;
+}
+
+/* VERTICAL */
+
+/* Size small */
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
+  margin-top: 1px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
+  margin-top: 4px;
+}
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 2px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
+  margin-top: 4px;
+}
+
+/* Size medium */
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
+  margin-top: 1px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
+  margin-top: 4px;
+}
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: 2px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  margin-top: 4px;
+}
+
+/* Size large */
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
+  margin-top: 1px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
+  margin-top: 4px;
+}
+.uitk-density-medium .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: 2px;
+}
+.uitk-density-high .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: 1px;
+}
+.uitk-density-low .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: 3px;
+}
+.uitk-density-touch .backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
+  margin-top: 4px;
 }

@@ -49,23 +49,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
           he absolutely insisted on it, and Cinderella had to be called.
         </Div>
       </div>
-      <div style={box}>
-        elementType - div
-        <br />
-        truncate - false
-        <br />
-        parent height - 70px
-        <br />
-        <strong>Has scrollbar</strong>
-      </div>
-      <div style={{ ...box, height: 70 }}>
-        <Div>
-          She first washed her hands and face clean, and then went and bowed
-          down before the king's son, who gave her the golden shoe. Then she
-          seated herself on a stool, drew her foot out of the heavy wooden shoe,
-          and put it into the slipper, which fitted like a glove.
-        </Div>
-      </div>
+
       <div style={box}>
         elementType - div
         <br />

@@ -133,7 +133,7 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
 
     return (
       <Component
-        className={cx(withBaseName(), withBaseName("overflow"), className, {
+        className={cx(withBaseName(), className, {
           [withBaseName(styleAs || "")]: styleAs,
         })}
         {...restProps}
