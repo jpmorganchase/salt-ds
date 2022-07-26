@@ -286,45 +286,44 @@ ToolkitGridLayoutFooter.args = {
 };
 
 const sidebar = (
-  <StackLayout>
-    {Array.from({ length: 3 }, (_, index) => (
-      <Card key={index}>
-        <ContactDetails embedded={true} stackAtBreakpoint={0}>
-          <ContactAvatar />
-          <ContactPrimaryInfo text="Allamco Adipisicing" />
-          <ContactSecondaryInfo text="Editorial contributor" />
-          <ContactTertiaryInfo text="Cupidatat Elit" />
-          <ContactMetadata collapsible={true}>
-            <ContactMetadataItem value="Editorial contributor" label="Role" />
-            <ContactMetadataItem value="London, GBR" label="Location" />
-            <ContactMetadataItem value="+44 1234 123456" label="Office" />
-            <ContactMetadataItem
-              value="laboris.elit@aliquip.com"
-              label="Email"
-            />
-          </ContactMetadata>
-        </ContactDetails>
-      </Card>
+  <FlowLayout>
+    {Array.from({ length: 4 }, (_, index) => (
+      <FlexItem key={index} grow={1}>
+        <Card>
+          <ContactDetails embedded={true} stackAtBreakpoint={0}>
+            <ContactAvatar />
+            <ContactPrimaryInfo text="Allamco Adipisicing" />
+            <ContactSecondaryInfo text="Editorial contributor" />
+            <ContactTertiaryInfo text="Cupidatat Elit" />
+            <ContactMetadata collapsible={true}>
+              <ContactMetadataItem value="Editorial contributor" label="Role" />
+              <ContactMetadataItem value="London, GBR" label="Location" />
+              <ContactMetadataItem value="+44 1234 123456" label="Office" />
+              <ContactMetadataItem
+                value="laboris.elit@aliquip.com"
+                label="Email"
+              />
+            </ContactMetadata>
+          </ContactDetails>
+        </Card>
+      </FlexItem>
     ))}
-  </StackLayout>
+  </FlowLayout>
 );
 
 const Blog: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
-        <GridItem colSpan={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }} rowSpan={1}>
+        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
           <h1>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </h1>
           <div className="grid-blog-hero" />
         </GridItem>
-        <GridItem colSpan={{ xs: 1, sm: 2, md: 3, lg: 1, xl: 1 }} rowSpan={2}>
-          <h2>Editorial content contributors</h2>
-          {sidebar}
-        </GridItem>
-        <GridItem colSpan={1} rowSpan={1}>
+
+        <GridItem colSpan={1}>
           <h2>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </h2>
@@ -339,7 +338,8 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             ))}
           </FlowLayout>
         </GridItem>
-        <GridItem colSpan={1} rowSpan={1}>
+
+        <GridItem colSpan={1}>
           <h2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h2>
           <div className="grid-blog-image grid-blog-image-two" />
           <p>
@@ -355,7 +355,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             ))}
           </FlowLayout>
         </GridItem>
-        <GridItem colSpan={1} rowSpan={1}>
+        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}>
           <h2>At vero eos et accusamus et iusto odio dignissimos ducimus</h2>
           <div className="grid-blog-image grid-blog-image-three" />
           <p>
@@ -370,14 +370,18 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             ))}
           </FlowLayout>
         </GridItem>
+
+        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
+          <h2>Editorial content contributors</h2>
+          {sidebar}
+        </GridItem>
       </GridLayout>
     </div>
   );
 };
 export const ToolkitGridLayoutBlog = Blog.bind({});
 ToolkitGridLayoutBlog.args = {
-  columns: { xs: 1, sm: 2, md: 3, lg: 4, xl: 4 },
-  rows: 2,
+  columns: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3 },
 };
 
 const dropdownExampleData = [
