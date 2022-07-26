@@ -584,35 +584,34 @@
     background-color: var(--uitkAgGrid-toggle-button-background);
     height: var(--uitkAgGrid-switch-height);
     width: calc(
-      var(--uitkAgGrid-switch-height) * 2 - var(--uitk-ag-switch-borderWidth)
+      var(--uitkAgGrid-switch-height) * 2 - var(--uitkAgGrid-switch-borderWidth)
     );
     &:focus-within:before {
       border: 2px dotted #2670a9;
     }
     &::before {
       border-radius: 0;
-      border-width: var(--uitk-ag-switch-borderWidth);
-      border-color: var(--uitk-ag-toggle-button-background);
+      border-width: var(--uitkAgGrid-switch-borderWidth);
+      border-color: var(--uitkAgGrid-toggle-button-background);
       top: 0;
       left: 0;
-      height: var(--uitk-ag-switch-height);
-      width: var(--uitk-ag-switch-height);
+      height: var(--uitkAgGrid-switch-height);
+      width: var(--uitkAgGrid-switch-height);
       box-sizing: border-box;
     }
     &.ag-checked {
-      border-color: var(--uitk-ag-toggle-background-checked);
-      background-color: var(--uitk-ag-toggle-background-checked);
+      border-color: var(--uitkAgGrid-toggle-background-checked);
+      background-color: var(--uitkAgGrid-toggle-background-checked);
       &::before {
         left: calc(
-          var(--uitk-ag-switch-height) - var(--uitk-ag-switch-borderWidth)
+          var(--uitkAgGrid-switch-height) - var(--uitkAgGrid-switch-borderWidth)
         );
-        border-color: var(--uitk-ag-toggle-background-checked);
-        // background-color: var(--uitk-ag-checkbox-color);
+        border-color: var(--uitkAgGrid-toggle-background-checked);
         display: flex;
         font-family: jpmuitk-icons;
         font-size: 12px;
         content: "\e95b";
-        color: var(--uitk-ag-checkbox-color);
+        color: var(--uitkAgGrid-checkbox-color);
         justify-content: center;
         align-items: center;
       }
@@ -620,7 +619,7 @@
   }
 
   .ag-side-bar .ag-tool-panel-wrapper {
-    background: var(--uitk-ag-side-buttons-background);
+    background: var(--uitkAgGrid-side-buttons-background);
   }
 
   .ag-side-buttons {
@@ -629,9 +628,8 @@
 
   .ag-column-drop-cell {
     height: 32px;
-    // font-size: var(--uitk-ag-list-item-fontSize);
     font-size: ag-param(font-size);
-    background-color: var(--uitk-ag-background);
+    background-color: var(--uitkAgGrid-background);
   }
 
   .ag-ltr .ag-side-bar-right .ag-side-button-button {
@@ -649,7 +647,7 @@
   }
 
   .ag-ltr .ag-side-buttons .ag-selected .ag-side-button-button {
-    border-left-color: var(--uitk-ag-tab-borderColor-active);
+    border-left-color: var(--uitkAgGrid-tab-borderColor-active);
     border-left-style: solid !important;
   }
 
@@ -716,20 +714,20 @@
   }
 
   .ag-menu-option-active {
-    background-color: var(--uitk-ag-menu-option-color-hover);
+    background-color: var(--uitkAgGrid-menu-option-color-hover);
   }
 
   .ag-column-drop-wrapper {
-    background: var(--uitk-ag-background);
+    background: var(--uitkAgGrid-background);
   }
 
   .ag-column-drop-horizontal {
-    background-color: var(--uitk-ag-background);
+    background-color: var(--uitkAgGrid-background);
     height: 48px;
   }
 
   .ag-column-drop.ag-column-drop-horizontal .ag-column-drop-cell {
-    background-color: var(--uitk-ag-column-drop-cell-horizontal-background);
+    background-color: var(--uitkAgGrid-column-drop-cell-horizontal-background);
   }
 
   .ag-column-drop-cell-text {
@@ -751,7 +749,7 @@
   .ag-paging-page-summary-panel {
     font-size: 14px;
     margin-top: 5px;
-    color: var(--uitk-ag-button-color);
+    color: var(--uitkAgGrid-button-color);
   }
 
   .ag-paging-number {
@@ -759,30 +757,30 @@
   }
 
   .ag-paging-button {
-    height: var(--uitk-ag-paging-button-width);
-    width: var(--uitk-ag-paging-button-width);
+    height: var(--uitkAgGrid-paging-button-width);
+    width: var(--uitkAgGrid-paging-button-width);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
     font-size: 12px;
     & .ag-icon {
-      color: var(--uitk-ag-pagination-button-color);
+      color: var(--uitkAgGrid-pagination-button-color);
     }
     &:hover {
-      background-color: var(--uitk-ag-button-background-hover);
+      background-color: var(--uitkAgGrid-button-background-hover);
     }
     &.ag-disabled {
       background-color: unset;
       cursor: not-allowed;
       & .ag-icon {
-        color: var(--uitk-ag-pagination-button-color-disabled);
+        color: var(--uitkAgGrid-pagination-button-color-disabled);
       }
     }
   }
 
   .ag-keyboard-focus .ag-paging-button:focus::after {
-    border: dotted 2px var(--uitk-ag-color-focus);
+    border: dotted 2px var(--uitkAgGrid-color-focus);
     outline: none;
   }
 
