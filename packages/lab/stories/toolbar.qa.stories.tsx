@@ -8,6 +8,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import {
   CloseIcon,
+  AddIcon,
   ColumnChooserIcon,
   ExportIcon,
   FilterIcon,
@@ -46,7 +47,7 @@ const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 const typeData = ["Open", "Close", "Discarted", "Resolved"];
 
 export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
-  <QAContainer cols={1} itemPadding={3} itemWidthAuto>
+  <QAContainer cols={1} itemPadding={3} imgSrc={imgSrc} itemWidthAuto>
     <Toolbar aria-label="Default toolbar" style={{ minWidth: "100px" }}>
       <FormField
         data-close-on-click={false}
@@ -87,11 +88,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       aria-label="Tooltray alignment toolbar"
       style={{ minWidth: "100px" }}
     >
-      <FormField
-        data-close-on-click={false}
-        label="Filter input"
-        data-activation-indicator
-      >
+      <FormField data-close-on-click={false} data-activation-indicator>
         <Input
           startAdornment={
             <StaticInputAdornment>
@@ -123,7 +120,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       <Tooltray aria-label="status tooltray" data-pad-end>
         <Button variant="secondary">CLEAR</Button>
         <Button variant="primary">
-          <FilterIcon />
+          <AddIcon />
         </Button>
       </Tooltray>
       <FormField
@@ -136,7 +133,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       </FormField>
       <Tooltray aria-label="search tooltray">
         <Button variant="primary">
-          <SearchIcon />
+          <AddIcon />
         </Button>
       </Tooltray>
       <Tooltray aria-label="buttons tooltray">
@@ -159,5 +156,5 @@ QA.parameters = {
 };
 
 export const CompareWithOriginalToolkit: Story = () => {
-  return <QA imgSrc="/visual-regression-screenshots/Tabs-vr-snapshot.png" />;
+  return <QA imgSrc="/visual-regression-screenshots/Toolbar-vr-snapshot.png" />;
 };

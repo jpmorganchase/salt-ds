@@ -1,5 +1,13 @@
-import { Button, ButtonProps, FormField } from "@jpmorganchase/uitk-core";
 import {
+  Button,
+  FormField,
+  Input,
+  Pill,
+  StaticInputAdornment,
+} from "@jpmorganchase/uitk-core";
+import {
+  AddIcon,
+  ColumnChooserIcon,
   DoubleChevronDownIcon,
   ExportIcon,
   FilterIcon,
@@ -11,12 +19,14 @@ import {
   SettingsIcon,
   SettingsSolidIcon,
   ShareIcon,
+  SwapIcon,
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
 import {
   Dropdown,
+  ToggleButton,
   Toolbar,
   ToolbarButton,
   Tooltray,
@@ -32,6 +42,8 @@ export default {
   title: "Lab/Toolbar",
   component: Toolbar,
 };
+
+const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
 export const DefaultToolbar = ({ initialWidth = 450 }) => {
   const typeData = ["Open", "Close", "Discarted", "Resolved"];
@@ -322,6 +334,82 @@ export const InstantCollapseTooltray = () => {
   );
 };
 
+export const WithPills = () => {
+  return (
+    <AdjustableFlexbox height={200} width={1000}>
+      <Toolbar
+        aria-label="Tooltray alignment toolbar"
+        style={{ minWidth: "100px" }}
+      >
+        <FormField data-close-on-click={false} data-activation-indicator>
+          <Input
+            startAdornment={
+              <StaticInputAdornment>
+                <FilterIcon />
+              </StaticInputAdornment>
+            }
+            style={{ width: 180 }}
+            value=""
+          />
+        </FormField>
+        <Tooltray aria-label="filters tooltray">
+          <FormField ActivationIndicatorComponent={() => null}>
+            <ToggleButton
+              ariaLabel=" AND"
+              style={{ width: "100%", minWidth: "60px" }}
+              toggled
+            >
+              <SwapIcon /> AND
+            </ToggleButton>
+          </FormField>
+          <FormField ActivationIndicatorComponent={() => null}>
+            <Pill label="LOREM" onClick={() => console.log("lorem.")} />
+          </FormField>
+          <FormField ActivationIndicatorComponent={() => null}>
+            <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
+          </FormField>
+          <FormField ActivationIndicatorComponent={() => null}>
+            <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+          </FormField>
+        </Tooltray>
+        <Tooltray aria-label="status tooltray" data-pad-end>
+          <FormField ActivationIndicatorComponent={() => null}>
+            <Button variant="secondary">CLEAR</Button>
+          </FormField>
+          <FormField ActivationIndicatorComponent={() => null}>
+            <Button variant="primary">
+              <AddIcon />
+            </Button>
+          </FormField>
+        </Tooltray>
+        <FormField
+          data-close-on-click={false}
+          label="Status"
+          data-activation-indicator
+        >
+          <Dropdown defaultSelected={statusData[1]} source={statusData} />
+        </FormField>
+        <Tooltray aria-label="search tooltray">
+          <Button variant="primary">
+            <AddIcon />
+          </Button>
+        </Tooltray>
+        <Tooltray aria-label="buttons tooltray">
+          <ToolbarButton itemId="exportButton" overflowLabel="Export">
+            <ExportIcon />
+          </ToolbarButton>
+          <ToolbarButton itemId="colsButton" overflowLabel="Select Columns">
+            <ColumnChooserIcon />
+          </ToolbarButton>
+          <ToolbarButton itemId="settingsButton" overflowLabel="Settings">
+            <SettingsIcon />
+          </ToolbarButton>
+        </Tooltray>
+      </Toolbar>
+    </AdjustableFlexbox>
+  );
+};
+
 export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
   const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
@@ -591,9 +679,7 @@ const SearchWidget = () => {
   );
 };
 
-export const ToolbarWithBreakpointSensitiveContent = ({
-  initialWidth = 450,
-}) => {
+export const ToolbarWithBreakpointSensitiveContent = () => {
   const typeData = ["Open", "Close", "Discarted", "Resolved"];
   const rangeData = [
     "Today",
@@ -610,7 +696,7 @@ export const ToolbarWithBreakpointSensitiveContent = ({
     console.log(`${buttonName} button clicked'`);
 
   return (
-    <AdjustableFlexbox height={420} width={initialWidth}>
+    <AdjustableFlexbox height={420} width={600}>
       <Toolbar id="toolbar-default">
         <Tooltray
           id="1"

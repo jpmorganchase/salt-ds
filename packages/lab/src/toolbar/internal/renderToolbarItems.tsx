@@ -79,8 +79,7 @@ export const renderToolbarItems = (
         "data-is-inside-panel": false,
         className: classnames(
           "uitkToolbarField",
-          "toolbar-item",
-          "uitkEmphasisLow",
+          "uitkEmphasisMedium",
           props?.className
         ),
       };

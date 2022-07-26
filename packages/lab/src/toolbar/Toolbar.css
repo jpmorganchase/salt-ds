@@ -1,5 +1,5 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-container-background-medium);
+  --toolbar-background: var(--uitk-container-background-high);
   --toolbar-font-size: var(--uitk-text-fontSize);
   /* --uitkFormActivationIndicator-size: 0; */
 }
@@ -95,4 +95,8 @@
   --uitkButton-focused-outline-style: none;
   flex-shrink: 0;
   flex-grow: 0;
+}
+
+.uitkToolbarField.uitkFormField-labelLeft > .uitkFormLabel {
+  padding-left: var(--uitk-size-unit);
 }

@@ -18,10 +18,11 @@
 }
 
 .uitkTooltray > .Responsive-inner {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   flex: 1;
   flex-wrap: nowrap;
+  gap: var(--uitk-size-unit);
   justify-content: inherit;
 }
 
@@ -66,4 +67,8 @@
 
 .uitkTooltray[data-collapsible="dynamic"][data-collapsed="true"] {
   flex-basis: 0;
+}
+
+.uitkTooltray-item {
+  flex: 0 0 auto;
 }

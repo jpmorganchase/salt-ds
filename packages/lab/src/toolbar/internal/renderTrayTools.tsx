@@ -10,6 +10,7 @@ import {
   isResponsiveAttribute,
 } from "../../responsive/utils";
 import { OrientationShape } from "../ToolbarProps";
+import { ToolbarButton } from "../ToolbarButton";
 
 const fieldProps = {
   fullWidth: false,
@@ -44,8 +45,8 @@ export const renderTrayTools = (
     const props = item.element.props as any;
 
     const className = classnames(
-      "tooltray-item",
-      "uitlEmphasisLow",
+      "uitkTooltray-item",
+      "uitkEmphasisLow",
       props.className
     );
     const overflowed =
@@ -65,7 +66,10 @@ export const renderTrayTools = (
       orientation,
     };
     if (item.element.type === FormField) {
-      return React.cloneElement(item.element, toolbarItemProps);
+      return React.cloneElement(item.element, {
+        ...toolbarItemProps,
+        ...fieldProps,
+      });
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

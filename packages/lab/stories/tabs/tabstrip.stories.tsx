@@ -20,7 +20,7 @@ import {
 import { AdjustableFlexbox } from "../story-components";
 
 export default {
-  title: "Lab/Tabstrip",
+  title: "Lab/Tabs/Standalone Tabstrip",
   component: Tabstrip,
 };
 
