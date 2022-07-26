@@ -7,7 +7,7 @@
   --flex-layout-gap-multiplier: var(--flex-layout-gap-density-multiplier, 3);
   --flex-layout-layout-display: flex;
   --flex-layout-direction: row;
-  --flex-layout-wrap: nowrap;
+  --flex-layout-wrap: wrap;
   --flex-layout-justify: flex-start;
   --flex-layout-align: stretch;
   --flex-layout-separator: var(--uitk-separable-borderWidth);

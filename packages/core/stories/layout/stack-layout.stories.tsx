@@ -23,6 +23,10 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
+    gap: {
+      type: "number",
+      defaultValue: 3,
+    },
   },
   excludeStories: [
     "ComplexFormOne",
@@ -36,7 +40,7 @@ const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
   return (
     <StackLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </StackLayout>
   );
