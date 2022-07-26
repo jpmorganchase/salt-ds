@@ -20,6 +20,16 @@ export default {
   title: "Core/Layout/GridLayout",
   component: GridLayout,
   subcomponents: { GridItem },
+  argTypes: {
+    columnGap: { type: "number" },
+    columns: { type: "number", defaultValue: 12 },
+    gap: {
+      type: "number",
+      defaultValue: 3,
+    },
+    rowGap: { type: "number" },
+    rows: { type: "number", defaultValue: 1 },
+  },
 } as ComponentMeta<typeof GridLayout>;
 
 const Template: ComponentStory<typeof GridLayout> = (args) => {

@@ -321,7 +321,7 @@ const Contacts: ComponentStory<typeof BorderLayout> = (args) => {
       <BorderItem position="main">
         <div className="border-layout-contacts">
           <h2>My contacts</h2>
-          <FlexLayoutComposite wrap={true} />
+          <FlexLayoutComposite />
         </div>
       </BorderItem>
 
