@@ -136,9 +136,6 @@
 }
 
 .uitk-density-medium {
-  --uitk-text-fontSize: 12px;
-  --uitk-text-lineHeight: 16px;
-
   --uitk-text-h1-fontSize: 24px;
   --uitk-text-h1-lineHeight: 31px;
 
@@ -157,6 +154,10 @@
 
   --uitk-text-help-fontSize: 11px;
   --uitk-text-help-lineHeight: 14px;
+
+  --uitk-text-fontSize: 12px;
+  --uitk-text-lineHeight: 16px;
+  --uitk-text-minHeight: 16px;
 }
 
 .uitk-density-high {
