@@ -1,9 +1,9 @@
 @import "./uitk-ag-theme-mixin";
 
-.uitk-light .ag-theme-uitk-high,
-.uitk-light .ag-theme-uitk-medium,
-.uitk-light .ag-theme-uitk-low,
-.uitk-light .ag-theme-uitk-touch {
+.ag-theme-uitk-high-light,
+.ag-theme-uitk-medium-light,
+.ag-theme-uitk-low-light,
+.ag-theme-uitk-touch-light {
   --uitk-ag-foreground: #2a2c2f;
   --uitk-ag-foreground-disabled: #161616;
   --uitk-ag-header-foreground: #61656e;
@@ -43,12 +43,13 @@
   --uitk-ag-pagination-button-color-disabled: rgba(22, 22, 22, 0.4);
 
   --uitk-ag-placeholder-color: #61656e;
+  --uitk-ag-ghost-icon-color: rgba(0, 0, 0, 0.87);
 }
 
-.uitk-dark .ag-theme-uitk-high,
-.uitk-dark .ag-theme-uitk-medium,
-.uitk-dark .ag-theme-uitk-low,
-.uitk-dark .ag-theme-uitk-touch {
+.ag-theme-uitk-high-dark,
+.ag-theme-uitk-medium-dark,
+.ag-theme-uitk-low-dark,
+.ag-theme-uitk-touch-dark {
   --uitk-ag-foreground: white;
   --uitk-ag-foreground-disabled: white;
   --uitk-ag-header-foreground: white;
@@ -89,7 +90,18 @@
   --uitk-ag-pagination-button-color-disabled: rgba(255, 255, 255, 0.4);
 
   --uitk-ag-placeholder-color: white;
+  --uitk-ag-ghost-icon-color: rgba(0, 0, 0, 0.87);
 }
+
+$ag-theme-uitk-params-dark: (
+  foreground-color: white,
+  background-color: #242526,
+);
+
+$ag-theme-uitk-params-light: (
+  foreground-color: #2a2c2f,
+  background-color: white,
+);
 
 $ag-theme-uitk-params-high: map-merge(
   $uitk-ag-theme-default-params,
@@ -102,6 +114,16 @@ $ag-theme-uitk-params-high: map-merge(
     list-item-height: 60px,
     icon-size: 12px,
   )
+);
+
+$ag-theme-uitk-params-high-light: map-merge(
+  $ag-theme-uitk-params-high,
+  $ag-theme-uitk-params-light
+);
+
+$ag-theme-uitk-params-high-dark: map-merge(
+  $ag-theme-uitk-params-high,
+  $ag-theme-uitk-params-dark
 );
 
 $ag-theme-uitk-params-medium: map-merge(
@@ -117,6 +139,16 @@ $ag-theme-uitk-params-medium: map-merge(
   )
 );
 
+$ag-theme-uitk-params-medium-light: map-merge(
+  $ag-theme-uitk-params-medium,
+  $ag-theme-uitk-params-light
+);
+
+$ag-theme-uitk-params-medium-dark: map-merge(
+  $ag-theme-uitk-params-medium,
+  $ag-theme-uitk-params-dark
+);
+
 $ag-theme-uitk-params-low: map-merge(
   $uitk-ag-theme-default-params,
   (
@@ -128,6 +160,16 @@ $ag-theme-uitk-params-low: map-merge(
     list-item-height: 48px,
     icon-size: 12px,
   )
+);
+
+$ag-theme-uitk-params-low-light: map-merge(
+  $ag-theme-uitk-params-low,
+  $ag-theme-uitk-params-light
+);
+
+$ag-theme-uitk-params-low-dark: map-merge(
+  $ag-theme-uitk-params-low,
+  $ag-theme-uitk-params-dark
 );
 
 $ag-theme-uitk-params-touch: map-merge(
@@ -143,7 +185,18 @@ $ag-theme-uitk-params-touch: map-merge(
   )
 );
 
-.ag-theme-uitk-high {
+$ag-theme-uitk-params-touch-light: map-merge(
+  $ag-theme-uitk-params-touch,
+  $ag-theme-uitk-params-light
+);
+
+$ag-theme-uitk-params-touch-dark: map-merge(
+  $ag-theme-uitk-params-touch,
+  $ag-theme-uitk-params-dark
+);
+
+.ag-theme-uitk-high-dark,
+.ag-theme-uitk-high-light {
   --uitk-ag-checkbox-size: 14px;
   --uitk-ag-input-padding: 4px;
   --uitk-ag-input-height: 20px;
@@ -162,10 +215,18 @@ $ag-theme-uitk-params-touch: map-merge(
   --uitk-ag-header-fontSize: 12px;
 
   --uitk-ag-paging-button-width: 20px;
-  @include ag-theme-uitk($ag-theme-uitk-params-high);
 }
 
-.ag-theme-uitk-medium {
+.ag-theme-uitk-high-dark {
+  @include ag-theme-uitk($ag-theme-uitk-params-high-dark);
+}
+
+.ag-theme-uitk-high-light {
+  @include ag-theme-uitk($ag-theme-uitk-params-high-light);
+}
+
+.ag-theme-uitk-medium-dark,
+.ag-theme-uitk-medium-light {
   --uitk-ag-checkbox-size: 14px;
   --uitk-ag-input-padding: 8px;
   --uitk-ag-input-height: 28px;
@@ -183,10 +244,18 @@ $ag-theme-uitk-params-touch: map-merge(
 
   --uitk-ag-header-fontSize: 12px;
   --uitk-ag-paging-button-width: 28px;
-  @include ag-theme-uitk($ag-theme-uitk-params-medium);
 }
 
-.ag-theme-uitk-low {
+.ag-theme-uitk-medium-dark {
+  @include ag-theme-uitk($ag-theme-uitk-params-medium-dark);
+}
+
+.ag-theme-uitk-medium-light {
+  @include ag-theme-uitk($ag-theme-uitk-params-medium-light);
+}
+
+.ag-theme-uitk-low-dark,
+.ag-theme-uitk-low-light {
   --uitk-ag-checkbox-size: 14px;
   --uitk-ag-input-padding: 12px;
   --uitk-ag-input-height: 36px;
@@ -204,10 +273,18 @@ $ag-theme-uitk-params-touch: map-merge(
 
   --uitk-ag-header-fontSize: 12px;
   --uitk-ag-paging-button-width: 36px;
-  @include ag-theme-uitk($ag-theme-uitk-params-low);
 }
 
-.ag-theme-uitk-touch {
+.ag-theme-uitk-low-dark {
+  @include ag-theme-uitk($ag-theme-uitk-params-low-dark);
+}
+
+.ag-theme-uitk-low-light {
+  @include ag-theme-uitk($ag-theme-uitk-params-low-light);
+}
+
+.ag-theme-uitk-touch-dark,
+.ag-theme-uitk-touch-light {
   --uitk-ag-checkbox-size: 14px;
   --uitk-ag-input-padding: 8px;
   --uitk-ag-input-height: 28px;
@@ -225,5 +302,12 @@ $ag-theme-uitk-params-touch: map-merge(
 
   --uitk-ag-header-fontSize: 12px;
   --uitk-ag-paging-button-width: 44px;
-  @include ag-theme-uitk($ag-theme-uitk-params-touch);
+}
+
+.ag-theme-uitk-touch-light {
+  @include ag-theme-uitk($ag-theme-uitk-params-touch-light);
+}
+
+.ag-theme-uitk-touch-dark {
+  @include ag-theme-uitk($ag-theme-uitk-params-touch-dark);
 }

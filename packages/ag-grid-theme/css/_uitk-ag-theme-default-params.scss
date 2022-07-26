@@ -2,12 +2,10 @@
 @import "./uitk-ag-theme-font-vars";
 
 $uitk-ag-theme-default-params: (
-  foreground-color: var(--uitk-ag-foreground),
   data-color: ag-derived(foreground-color),
   secondary-foreground-color: ag-derived(foreground-color),
   header-foreground-color: var(--uitk-ag-header-foreground),
   disabled-foreground-color: var(--uitk-ag-foreground-disabled),
-  background-color: var(--uitk-ag-background),
   header-background-color: null,
   subheader-background-color: null,
   subheader-toolbar-background-color: null,

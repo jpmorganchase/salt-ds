@@ -1,7 +1,7 @@
 import { HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
 import { AgGridReactProps } from "ag-grid-react";
 import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
-import { useDensity } from "@jpmorganchase/uitk-core";
+import { DEFAULT_THEME, useDensity, useTheme } from "@jpmorganchase/uitk-core";
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
 export function useAgGridHelpers(): {
@@ -14,6 +14,7 @@ export function useAgGridHelpers(): {
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const [isGridReady, setGridReady] = useState(false);
   const density = useDensity();
+  const themes = useTheme();
 
   const [rowHeight, listItemHeight] = useMemo(() => {
     switch (density) {
@@ -30,7 +31,10 @@ export function useAgGridHelpers(): {
     }
   }, [density]);
 
-  const className = `ag-theme-uitk-${density}`;
+  const themeName =
+    themes && themes.length > 0 ? themes[0].name : DEFAULT_THEME.name;
+
+  const className = `ag-theme-uitk-${density}-${themeName}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
