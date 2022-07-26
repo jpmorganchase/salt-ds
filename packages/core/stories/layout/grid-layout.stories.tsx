@@ -21,6 +21,7 @@ import {
   Pill,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import "./styles.css";
 
 export default {
   title: "Core/Layout/GridLayout",
