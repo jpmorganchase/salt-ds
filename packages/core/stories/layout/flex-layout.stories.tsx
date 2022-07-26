@@ -9,6 +9,7 @@ import {
   StackLayout,
   FlowLayout,
   Pill,
+  LAYOUT_DIRECTION,
 } from "@jpmorganchase/uitk-core";
 import {
   Metric,
@@ -36,6 +37,14 @@ export default {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
     },
+    direction: {
+      options: LAYOUT_DIRECTION,
+      control: { type: "select" },
+    },
+    gap: {
+      type: "number",
+      defaultValue: 3,
+    },
     justify: {
       options: FLEX_CONTENT_ALIGNMENT_BASE,
       control: { type: "select" },
@@ -43,6 +52,9 @@ export default {
     separators: {
       options: ["start", "center", "end", true],
       control: { type: "select" },
+    },
+    disableWrap: {
+      control: "boolean",
     },
   },
   excludeStories: [
@@ -57,20 +69,19 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </FlexLayout>
   );
 };
 export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
-DefaultFlexLayout.args = {};
 
 const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
         <FlexItem>
-          <FlexContent key={index} />
+          <FlexContent key={index} number={index + 1} />
         </FlexItem>
       ))}
     </FlexLayout>
@@ -85,20 +96,21 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 6 }, (_, index) => (
-        <FlexContent key={index} />
+        <FlexContent key={index} number={index + 1} />
       ))}
     </FlexLayout>
   );
 };
 export const ToolkitFlexLayoutResponsive = Responsive.bind({});
 ToolkitFlexLayoutResponsive.args = {
+  justify: "center",
   direction: {
     xs: "column",
     md: "row",
   },
-  wrap: {
-    xs: true,
-    lg: false,
+  disableWrap: {
+    xs: false,
+    lg: true,
   },
 };
 
@@ -123,9 +135,6 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
   );
 };
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
-FlexLayoutSimpleUsage.args = {
-  wrap: true,
-};
 
 export const ContactDetailsExample = ({ index }: { index: number }) => (
   <ContactDetails embedded={true} stackAtBreakpoint={0}>
@@ -160,9 +169,6 @@ const ContactCards: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const FlexLayoutComposite = ContactCards.bind({});
-FlexLayoutComposite.args = {
-  wrap: true,
-};
 
 const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   return (
@@ -184,7 +190,7 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
 FlexLayoutNested.args = {
   justify: "space-between",
-  wrap: true,
+  disableWrap: true,
   gap: 6,
 };
 

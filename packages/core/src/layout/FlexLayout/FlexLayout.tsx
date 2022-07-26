@@ -21,29 +21,29 @@ export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+   * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
    */
   align?: FlexAlignment | "stretch" | "baseline";
   /**
-   * Establishes the main-axis, defining the direction children are placed.
+   * Establishes the main-axis, defining the direction children are placed. Default is "row".
    */
   direction?: ResponsiveProp<LayoutDirection>;
   /**
-   * Controls the space between items.
+   * Controls the space between items, default is 3.
    */
   gap?: ResponsiveProp<number>;
   /**
-   * Defines the alignment along the main axis.
+   * Defines the alignment along the main axis, default is "start".
    */
   justify?: FlexContentAlignment;
   /**
-   * Adds a separator between elements.
+   * Adds a separator between elements, default is false.
    */
   separators?: LayoutSeparator | true;
   /**
-   * Allow the items to wrap as needed, default is false.
+   * Disable wrapping so flex items try to fit onto one line, default is false.
    */
-  wrap?: ResponsiveProp<boolean>;
+  disableWrap?: ResponsiveProp<boolean>;
 }
 
 export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
@@ -57,7 +57,7 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
       justify,
       separators,
       style,
-      wrap,
+      disableWrap = false,
       ...rest
     },
     ref
@@ -69,14 +69,15 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
 
     const flexGap = useResponsiveProp(gap, 3);
     const flexDirection = useResponsiveProp(direction, "row");
-    const flexWrap = useResponsiveProp(wrap, false);
+    const flexDisableWrap = useResponsiveProp(disableWrap, true);
+
     const flexLayoutStyles = {
       ...style,
       "--flex-layout-align": align && addPrefix(align),
       "--flex-layout-direction": flexDirection,
       "--flex-layout-gap-multiplier": flexGap,
       "--flex-layout-justify": justify && addPrefix(justify),
-      "--flex-layout-wrap": flexWrap ? "wrap" : "nowrap",
+      "--flex-layout-wrap": flexDisableWrap ? "nowrap" : "wrap",
     };
 
     return (
