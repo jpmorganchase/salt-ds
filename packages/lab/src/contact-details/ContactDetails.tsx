@@ -91,7 +91,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
         >
           {children}
           {showNoAvatar ? (
-            <div className={withBaseName("noAvatarIndicator")} />
+            <div className={withBaseName("noAvatar-indicator")} />
           ) : null}
         </div>
       </ContactDetailsContext.Provider>

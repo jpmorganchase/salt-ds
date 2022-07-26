@@ -60,7 +60,6 @@
 
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb {
   padding: 0px;
-  /* gap: 0; */
 }
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon {
   margin-left: 1px;
