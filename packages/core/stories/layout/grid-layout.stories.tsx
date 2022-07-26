@@ -3,14 +3,9 @@ import {
   Card,
   GridLayout,
   GridItem,
-  StackLayout,
-  FormField,
   FlowLayout,
 } from "@jpmorganchase/uitk-core";
 import {
-  Dropdown,
-  ButtonBar,
-  OrderedButton,
   ContactAvatar,
   ContactDetails,
   ContactMetadata,
@@ -26,8 +21,6 @@ import {
   Pill,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { ContactDetailsExample } from "./flex-layout.stories";
-import { MetricExample } from "./flow-layout.stories";
 
 export default {
   title: "Core/Layout/GridLayout",
@@ -389,70 +382,10 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
     </div>
   );
 };
-export const ToolkitGridLayoutBlog = Blog.bind({});
-ToolkitGridLayoutBlog.args = {
+export const GridLayoutComposite = Blog.bind({});
+GridLayoutComposite.args = {
   columns: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3 },
 };
-
-const dropdownExampleData = [
-  "Lorem ipsum dolor",
-  "Commodo laboris",
-  "Ipsum incididunt",
-];
-
-const Dashboard: ComponentStory<typeof GridLayout> = (args) => {
-  return (
-    <GridLayout
-      className="grid-layout-container"
-      columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}
-      rows={3}
-      {...args}
-    >
-      <GridItem rowSpan={3} colSpan={1}>
-        <Card>
-          <StackLayout>
-            {Array.from({ length: 6 }, (_, index) => (
-              <ContactDetailsExample key={index} index={index} />
-            ))}
-          </StackLayout>
-        </Card>
-      </GridItem>
-      <GridItem rowSpan={3} colSpan={1}>
-        <Card>
-          <StackLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              <MetricExample key={index} />
-            ))}
-          </StackLayout>
-        </Card>
-      </GridItem>
-      <GridItem rowSpan={3} colSpan={1}>
-        <Card>
-          <StackLayout>
-            {Array.from({ length: 7 }, (_, index) => (
-              <FormField
-                label="Preference 1"
-                helperText="Help text appears here"
-                key={index}
-              >
-                <Dropdown
-                  initialSelectedItem={dropdownExampleData[0]}
-                  source={dropdownExampleData}
-                />
-              </FormField>
-            ))}
-            <ButtonBar>
-              <OrderedButton variant="cta">Save</OrderedButton>
-              <OrderedButton>Cancel</OrderedButton>
-            </ButtonBar>
-          </StackLayout>
-        </Card>
-      </GridItem>
-    </GridLayout>
-  );
-};
-export const GridLayoutComposite = Dashboard.bind({});
-GridLayoutComposite.args = {};
 
 const renderCards = (cardsNumber: number) => {
   return Array.from({ length: cardsNumber }, (_, index) => (

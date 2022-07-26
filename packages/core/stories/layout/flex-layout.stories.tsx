@@ -205,7 +205,7 @@ const sectionFormContent = (
     <h3>Section title</h3>
     {Array.from({ length: 3 }, (_, index) => (
       <>
-        <FlexLayout wrap={false} key={index}>
+        <FlexLayout disableWrap key={index}>
           {Array.from({ length: 2 }, (_, index) => (
             <FormFieldExample key={index} />
           ))}
@@ -242,7 +242,9 @@ export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
 
 export const Blog = () => (
   <StackLayout>
-    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-one" />
       </FlexItem>
@@ -271,7 +273,9 @@ export const Blog = () => (
       </FlexItem>
     </FlexLayout>
 
-    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-two" />
       </FlexItem>
@@ -294,7 +298,9 @@ export const Blog = () => (
       </FlexItem>
     </FlexLayout>
 
-    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-three" />
       </FlexItem>

@@ -10,7 +10,7 @@ import {
   useIsViewportLargerThanBreakpoint,
   FlowLayout,
 } from "@jpmorganchase/uitk-core";
-import { GridLayoutComposite } from "./grid-layout.stories";
+import { DashboardExample } from "./flow-layout.stories";
 import { SectionForm, Blog } from "./flex-layout.stories";
 
 import "./styles.css";
@@ -146,7 +146,7 @@ const useTabSelection = (initialValue?: any) => {
 
 const tabs = ["Sint", "Dolor", "Magna"];
 
-const stackedAtBreakpoint = "sm";
+const stackedAtBreakpoint = "xs";
 
 const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
@@ -212,7 +212,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
       {selectedTab === 0 && (
         <>
           <ChildTitle />
-          <GridLayoutComposite />
+          <DashboardExample />
         </>
       )}
       {selectedTab === 1 && (
