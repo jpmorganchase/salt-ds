@@ -80,10 +80,6 @@
   --uitk-text-code-fontFamily: var(--uitk-typography-fontFamily-code);
 }
 
-.backwardsCompat {
-  --uitk-text-lineHeight-backwardsCompat: 1.3;
-}
-
 /* Sizes by density */
 .uitk-density-touch {
   --uitk-text-h1-fontSize: 36px;
