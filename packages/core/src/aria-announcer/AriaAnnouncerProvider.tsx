@@ -81,6 +81,7 @@ export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
           overflow: "hidden",
           padding: 0,
           position: "absolute",
+          margin: -1,
           ...style,
         }}
       >
