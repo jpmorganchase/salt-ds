@@ -135,7 +135,7 @@
 }
 
 .flex-blog-image {
-  width: 330px;
+  min-width: 330px;
   height: 230px;
 }
 
@@ -149,6 +149,7 @@
 
 .parent-child-composite-container {
   max-width: 1200px;
+  padding: calc(var(--uitk-size-unit) * 3);
 }
 
 .parent-child-composite-container h2 {
@@ -156,7 +157,7 @@
 }
 
 .parent-child-composite-title {
-  margin: calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 3) 0;
+  margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 .parent-child-composite-empty-container {
