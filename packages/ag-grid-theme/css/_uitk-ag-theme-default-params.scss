@@ -2,6 +2,63 @@
 @import "./uitk-ag-theme-font-vars";
 
 $uitk-ag-theme-default-params: (
+  // Taking primary and accent from the indigo / pink theme: https://github.com/angular/material2/blob/master/src/lib/core/theming/prebuilt/indigo-pink.scss
+  //material-primary-color: #3f51b5,
+  //material-accent-color: #ff4081,
+  // Colors
+  //foreground-color: rgba(#000, 0.87),
+  //secondary-foreground-color: ag-derived(foreground-color, $opacity: 0.54),
+  //disabled-foreground-color: ag-derived(foreground-color, $opacity: 0.38),
+  //background-color: #fff,
+  //header-background-color: #fff,
+  //subheader-background-color: #eee,
+  //header-cell-hover-background-color: ag-derived(header-background-color, $darken: 5%),
+  //chip-background-color: #e2e2e2,
+  //range-selection-background-color: rgba(122, 134, 203, 0.1),
+  //range-selection-highlight-color: #fce4ec,
+  //row-hover-color: #fafafa,
+  //column-hover-color: #fafafa,
+  //control-panel-background-color: #fafafa,
+  //selected-row-background-color: #eee,
+  //range-selection-border-color: ag-derived(material-primary-color),
+  //checkbox-checked-color: ag-derived(material-accent-color),
+  //checkbox-unchecked-color: #333,
+  //value-change-value-highlight-background-color: #00acc1,
+  // Borders
+  //borders: false,
+  //borders-critical: true,
+  //border-color: #e2e2e2,
+  // Sizing
+  grid-size: 8px,
+  icon-size: 18px,
+  header-height: ag-derived(grid-size, $times: 7),
+  row-height: ag-derived(grid-size, $times: 6),
+  cell-horizontal-padding: ag-derived(grid-size, $times: 3),
+  list-item-height: ag-derived(grid-size, $times: 4),
+  row-group-indent-size: ag-derived(grid-size, $times: 3, $plus: icon-size),
+  filter-tool-panel-sub-level-row-height: ag-derived(grid-size, $times: 4),
+  checkbox-border-radius: 2px,
+  toggle-button-switch-border-width: 2px,
+  toggle-button-height: ag-derived(icon-size),
+  // widget-container-horizontal-padding: ag-derived(grid-size, $times: 1.5),
+  widget-container-vertical-padding: ag-derived(grid-size, $times: 2),
+  widget-vertical-spacing: ag-derived(grid-size, $times: 1.75),
+  // Fonts
+  //font-family: ("Roboto", sans-serif),
+  //font-size: 13px,
+  //icon-font-family: $ag-theme-material-icon-font-family,
+  //icons-data: $ag-theme-material-icons-data,
+  //icons-font-codes: $ag-theme-material-icons-font-codes,
+  // Misc
+  // selected-tab-underline-color: ag-derived(material-primary-color),
+  selected-tab-underline-width: 2px,
+  full-width-tabs: true,
+
+  // input-focus-border-color: ag-derived(material-primary-color),
+  // input-focus-box-shadow: 0 0 0 5px rgba(32,33,36,0.122),
+  //card-shadow: (0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)),
+  //card-radius: 2px,
+  //invalid-color: #e02525,
   data-color: ag-derived(foreground-color),
   secondary-foreground-color: ag-derived(foreground-color),
   header-foreground-color: var(--uitkAgGrid-header-foreground),
@@ -16,7 +73,7 @@ $uitk-ag-theme-default-params: (
   column-hover-color: null,
   range-selection-highlight-color: ag-derived(range-selection-border-color),
   selected-tab-underline-color: ag-derived(range-selection-border-color),
-  selected-tab-underline-width: 0,
+  // selected-tab-underline-width: 0,
   selected-tab-underline-transition-speed: null,
   header-cell-hover-background-color: null,
   header-cell-moving-background-color:
@@ -48,7 +105,7 @@ $uitk-ag-theme-default-params: (
   input-disabled-border-color: ag-derived(input-border-color, $opacity: 0.3),
   input-disabled-background-color: null,
   checkbox-background-color: null,
-  checkbox-border-radius: ag-derived(border-radius),
+  // checkbox-border-radius: ag-derived(border-radius),
   checkbox-checked-color: ag-derived(background-color),
   checkbox-unchecked-color: ag-derived(foreground-color),
   checkbox-indeterminate-color: ag-derived(checkbox-unchecked-color),
@@ -67,24 +124,19 @@ $uitk-ag-theme-default-params: (
   minichart-selected-chart-color: ag-derived(checkbox-checked-color),
   minichart-selected-page-color: ag-derived(checkbox-checked-color),
   // SIZING / PADDING / SPACING
-  grid-size: 4px,
+  // grid-size: 4px,
   // These 4 variables set the padding around and spacing between widgets in "widget containers" which are parts of the UI that contain many related widgets, like the set filter menu, charts settings tabs etc.
-  widget-container-horizontal-padding: ag-derived(grid-size, $times: 1.5),
-  widget-container-vertical-padding: ag-derived(grid-size, $times: 1.5),
-  widget-horizontal-spacing: ag-derived(grid-size, $times: 1.5),
-  widget-vertical-spacing: ag-derived(grid-size),
-  cell-widget-spacing: ag-derived(cell-horizontal-padding),
-  column-select-indent-size: ag-derived(grid-size, $plus: icon-size),
-  row-group-indent-size: ag-derived(cell-widget-spacing, $plus: icon-size),
-  filter-tool-panel-group-indent: 16px,
-  full-width-tabs: false,
-
+  // widget-container-horizontal-padding: ag-derived(grid-size, $times: 1.5),
+  // widget-container-vertical-padding: ag-derived(grid-size, $times: 1.5),
+  // widget-horizontal-spacing: ag-derived(grid-size, $times: 1.5),
+  // widget-vertical-spacing: ag-derived(grid-size),
+  // cell-widget-spacing: ag-derived(cell-horizontal-padding),
+  // column-select-indent-size: ag-derived(grid-size, $plus: icon-size),
+  // row-group-indent-size: ag-derived(cell-widget-spacing, $plus: icon-size),
+  // filter-tool-panel-group-indent: 16px,
+  // full-width-tabs: false,
   // Fonts
-  font-family:
-    (
-      "uitk-sans",
-      sans-serif,
-    ),
+  font-family: ("uitk-sans", sans-serif),
   // ("Helvetica Neue", sans-serif),
   icon-font-family: $uitk-ag-theme-icon-font-family,
   // $ag-theme-base-icon-font-family, // this var exported by ag-theme-base-font-vars.scss
@@ -94,7 +146,7 @@ $uitk-ag-theme-default-params: (
   // $ag-theme-base-icons-font-codes, // this var exported by ag-theme-base-font-vars.scss
   card-radius: ag-derived(border-radius),
   card-shadow: none,
-  popup-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3),
+  popup-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 );
 
 $uitk-ag-theme-default-params: map-merge(

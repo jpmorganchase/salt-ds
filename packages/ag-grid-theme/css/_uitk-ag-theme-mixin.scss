@@ -1,11 +1,13 @@
 @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base";
+@import "~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material";
 @import "./uitk-ag-theme-default-params";
 
 @mixin ag-theme-uitk($params: ()) {
   @include ag-allow-color-param-access-with-ag-param(false);
 
   $params: ag-process-theme-variables($params, $uitk-ag-theme-default-params);
-  @include ag-theme-base($params);
+  // @include ag-theme-base($params);
+  @include ag-theme-material($params);
 
   .ag-filter-toolpanel-header,
   .ag-filter-toolpanel-search,
@@ -227,6 +229,11 @@
     }
   }
 
+  .ag-column-drop-vertical-icon {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
   .ag-column-drop-vertical-empty-message {
     display: flex;
     align-items: center;
@@ -299,6 +306,22 @@
     }
   }
 
+  .ag-floating-filter-button-button {
+    height: 18px;
+    width: 18px;
+  }
+
+  .ag-ltr .ag-floating-filter-button {
+    margin: 3px;
+  }
+
+  .ag-ltr
+    .ag-floating-filter-input
+    input.ag-input-field-input[type="text"]:focus {
+    height: 17px; // ag-param(row-height) - 4px;
+    min-height: 17px; // ag-param(row-height) - 4px;
+  }
+
   .ag-cell .ag-cell-wrapper .ag-group-contracted {
     margin-right: 2px;
   }
@@ -315,6 +338,10 @@
   .ag-header-cell {
     padding-left: 2px;
     padding-right: 2px;
+  }
+
+  .ag-header-cell.ag-floating-filter::after {
+    display: none;
   }
 
   .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
@@ -433,6 +460,7 @@
     height: var(--uitkAgGrid-checkbox-size);
     width: var(--uitkAgGrid-checkbox-size);
     border: 1px solid var(--uitkAgGrid-checkbox-color);
+    border-radius: 0;
     margin-left: 3px;
   }
 
@@ -455,6 +483,7 @@
   .ag-ltr input.ag-input-field-input[type="text"] {
     border-style: none;
     height: var(--uitkAgGrid-input-height);
+    min-height: var(--uitkAgGrid-input-height);
     line-height: var(--uitkAgGrid-input-height);
     padding: 0;
     font-size: inherit;
@@ -701,7 +730,7 @@
 
   .ag-floating-filter-input input.ag-input-field-input[type="text"] {
     border-width: 0;
-    height: ag-param(row-height) - 4px;
+    //height: ag-param(row-height) - 4px;
   }
 
   .ag-menu-option-part {
