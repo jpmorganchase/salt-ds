@@ -13,6 +13,7 @@
 
   color: var(--uitk-text-primary-foreground);
   font-size: var(--uitk-text-fontSize);
+  line-height: var(--text-lineHeight);
 }
 
 .uitkText-lineClamp {
@@ -135,10 +136,6 @@ label.uitkText,
   --text-lineHeight: var(--uitk-text-figure3-lineHeight);
   font-size: var(--uitk-text-figure3-fontSize);
   font-weight: var(--uitk-text-figure3-fontWeight);
-}
-
-.uitkText {
-  line-height: var(--text-lineHeight);
 }
 
 .backwardsCompat .uitkText {
