@@ -22,9 +22,9 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   separators?: FlexLayoutProps["separators"];
   /**
-   * Allow the items to wrap as needed, default is true.
+   * Disable wrapping so flex items try to fit onto one line, default is false.
    */
-  wrap?: FlexLayoutProps["wrap"];
+  disableWrap?: FlexLayoutProps["disableWrap"];
   /**
    * Controls the space between items.
    */
@@ -59,7 +59,7 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
       leftSplitItem,
       rightSplitItem,
       separators,
-      wrap = true,
+      disableWrap = false,
       className,
       gap,
       ...rest
@@ -70,7 +70,7 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
       <FlexLayout
         direction="row"
         ref={ref}
-        wrap={wrap}
+        disableWrap={disableWrap}
         gap={gap}
         separators={separators}
         className={cx(withBaseName(), className)}
