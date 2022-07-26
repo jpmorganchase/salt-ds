@@ -312,6 +312,11 @@
     margin-right: 2px;
   }
 
+  .ag-header-cell {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
   .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
     margin-right: 8px;
   }
@@ -321,6 +326,7 @@
   }
 
   .ag-header-cell-text {
+    margin-left: 3px;
     margin-right: auto;
   }
 
