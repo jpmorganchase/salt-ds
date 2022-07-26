@@ -42,7 +42,13 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
 
     const [containerRef, componentSize] =
       useComponentSize<HTMLDivElement>(stackAtBreakpoint);
+
     const isStacked = componentSize && componentSize.width < stackAtBreakpoint;
+
+    variant === "compact" &&
+      isStacked &&
+      console.log("componentSize", componentSize.width, containerRef.current);
+
     const ref = useForkRef(externalRef, containerRef);
 
     const contextValue = {
@@ -85,7 +91,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
         >
           {children}
           {showNoAvatar ? (
-            <div className={withBaseName("noAvatarIndicator")} />
+            <div className={withBaseName("noAvatar-indicator")} />
           ) : null}
         </div>
       </ContactDetailsContext.Provider>

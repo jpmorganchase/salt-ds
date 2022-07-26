@@ -1,6 +1,5 @@
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ContactAction,
   ContactActions,
@@ -15,8 +14,7 @@ import {
   MailLinkComponent,
 } from "@jpmorganchase/uitk-lab";
 import { CallIcon, ChatIcon, MessageIcon } from "@jpmorganchase/uitk-icons";
-import { QAContainer } from "docs/components";
-import { BackgroundBlock } from "docs/components/BackgroundBlock";
+import { QAContainer, QAContainerProps } from "docs/components";
 import avatar1 from "./assets/avatar1.png";
 
 export default {
@@ -73,80 +71,73 @@ const getComponent = (props: { variant?: string; className?: string }) => {
   const { avatar, actions, primary, secondary, tertiary, metadata } =
     contactWithActions;
   return (
-    <>
-      <h3>{variant.charAt(0).toUpperCase() + variant.slice(1)}</h3>
-      <div style={{ width: 400, marginBottom: 16 }}>
-        <ContactDetails
-          className={className}
-          variant={
-            variant === "compact"
-              ? "compact"
-              : variant === "mini"
-              ? "mini"
-              : "default"
-          }
-        >
-          {!!avatar && <ContactAvatar src={avatar1} />}
+    <div style={{ width: 400 }}>
+      <ContactDetails
+        className={className}
+        variant={
+          variant === "compact"
+            ? "compact"
+            : variant === "mini"
+            ? "mini"
+            : "default"
+        }
+      >
+        {!!avatar && <ContactAvatar src={avatar1} />}
 
-          <ContactFavoriteToggle onChange={console.log} />
+        <ContactFavoriteToggle onChange={console.log} />
 
-          <ContactPrimaryInfo text={primary} />
-          <ContactSecondaryInfo text={secondary} />
-          <ContactTertiaryInfo text={tertiary} />
+        <ContactPrimaryInfo text={primary} />
+        <ContactSecondaryInfo text={secondary} />
+        <ContactTertiaryInfo text={tertiary} />
 
-          <ContactMetadata>
-            {metadata.map((item: any) => {
+        <ContactMetadata>
+          {metadata.map((item: any) => {
+            return (
+              <ContactMetadataItem
+                key={Math.random()}
+                value={item.value}
+                label={item.label}
+                icon={item.icon}
+              />
+            );
+          })}
+        </ContactMetadata>
+
+        {!!actions && (
+          <ContactActions>
+            {actions.map((item: any) => {
               return (
-                <ContactMetadataItem
+                <ContactAction
                   key={Math.random()}
-                  value={item.value}
-                  label={item.label}
                   icon={item.icon}
+                  accessibleText={item.accessibleText}
+                  onClick={item.action}
                 />
               );
             })}
-          </ContactMetadata>
-
-          {!!actions && (
-            <ContactActions>
-              {actions.map((item: any) => {
-                return (
-                  <ContactAction
-                    key={Math.random()}
-                    icon={item.icon}
-                    accessibleText={item.accessibleText}
-                    onClick={item.action}
-                  />
-                );
-              })}
-            </ContactActions>
-          )}
-        </ContactDetails>
-      </div>
-    </>
+          </ContactActions>
+        )}
+      </ContactDetails>
+    </div>
   );
 };
 
-export const AllExamplesGrid: Story = (props: { className?: string }) => {
-  const { className } = props;
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+  const { className, imgSrc } = props;
 
   return (
-    <div style={{ width: 800, display: "flex", flex: 1 }}>
-      <ToolkitProvider theme={"light"}>
-        <BackgroundBlock>
-          {getComponent({ variant: "default", className })}
-          {getComponent({ variant: "compact", className })}
-          {getComponent({ variant: "mini", className })}
-        </BackgroundBlock>
-      </ToolkitProvider>
-      <ToolkitProvider theme={"dark"}>
-        <BackgroundBlock>
-          {getComponent({ variant: "default", className })}
-          {getComponent({ variant: "compact", className })}
-          {getComponent({ variant: "mini", className })}
-        </BackgroundBlock>
-      </ToolkitProvider>
-    </div>
+    <QAContainer
+      cols={4}
+      vertical
+      transposeDensity
+      className="uitkContactDetailsQA"
+      imgSrc={imgSrc}
+      height={1150}
+    >
+      {getComponent({ variant: "default", className })}
+      {getComponent({ variant: "compact", className })}
+      {getComponent({ variant: "mini", className })}
+    </QAContainer>
   );
 };
 
@@ -163,16 +154,8 @@ BackwardsCompatGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const CompareWithOriginalToolkit: ComponentStory<
-  typeof ContactDetails
-> = () => {
-  return (
-    <QAContainer
-      width={800}
-      className="uitkContactDetailsQA"
-      imgSrc="/visual-regression-screenshots/ContactDetails-vr-snapshot.png"
-    >
-      <BackwardsCompatGrid className="backwardsCompat" />
-    </QAContainer>
-  );
+export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
+CompareWithOriginalToolkit.args = {
+  className: "backwardsCompat",
+  imgSrc: "/visual-regression-screenshots/ContactDetails-vr-snapshot.png",
 };
