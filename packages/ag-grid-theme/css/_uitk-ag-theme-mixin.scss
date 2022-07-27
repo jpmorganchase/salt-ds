@@ -1,4 +1,4 @@
-@import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base";
+// @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base";
 @import "~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material";
 @import "./uitk-ag-theme-default-params";
 
@@ -318,8 +318,8 @@
   .ag-ltr
     .ag-floating-filter-input
     input.ag-input-field-input[type="text"]:focus {
-    height: 17px; // ag-param(row-height) - 4px;
-    min-height: 17px; // ag-param(row-height) - 4px;
+    height: 17px;
+    min-height: 17px;
   }
 
   .ag-cell .ag-cell-wrapper .ag-group-contracted {
@@ -730,7 +730,6 @@
 
   .ag-floating-filter-input input.ag-input-field-input[type="text"] {
     border-width: 0;
-    //height: ag-param(row-height) - 4px;
   }
 
   .ag-menu-option-part {
@@ -817,6 +816,10 @@
   .ag-keyboard-focus .ag-paging-button:focus::after {
     border: dotted 2px var(--uitkAgGrid-color-focus);
     outline: none;
+  }
+
+  input[class^="ag-"][type="text"] {
+    background-color: var(--uitkAgGrid-background);
   }
 
   @include ag-allow-color-param-access-with-ag-param(true);

@@ -23,7 +23,6 @@ export { default as ParentChildRows } from "./ParentChildRows";
 export { default as PivotingColumns } from "./PivotingColumns";
 export { default as RefreshGridContent } from "./RefreshGridContent";
 export { default as RowGrouping } from "./RowGrouping";
-export { default as RowGroupingWithPagination } from "./RowGroupingWithPagination";
 export { default as RowGroupPanel } from "./RowGroupPanel";
 export { default as SetFilter } from "./SetFilter";
 export { default as StatusBar } from "./StatusBar";

@@ -22,7 +22,6 @@ export {
   ColumnSpanning,
   ContextMenu,
   CustomFilter,
-  // CustomPagination, TODO
   DragRowOrder,
   ExcelExport,
   FloatingFilter,
@@ -33,7 +32,6 @@ export {
   Pagination,
   ParentChildRows,
   RowGrouping,
-  RowGroupingWithPagination,
   RowGroupPanel,
   SetFilter,
   SingleClickEdit,

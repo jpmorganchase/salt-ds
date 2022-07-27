@@ -27,7 +27,7 @@ const MasterDetailExample = function MasterDetailExample(
           getDetailRowData: (params: any) => params.successCallback(rowData),
         }}
         masterDetail={true}
-        detailRowHeight={30}
+        detailRowHeight={300}
         rowData={rowData}
         {...agGridProps}
         {...props}
