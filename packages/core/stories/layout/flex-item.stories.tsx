@@ -25,21 +25,28 @@ interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   caption?: string;
   classname?: string;
+  number?: number;
 }
 
 export const FlexContent = ({
   children,
   classname,
+  number,
   ...rest
 }: FlexContentProps) => (
   <div className={classname || "layout-content"} {...rest}>
-    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
+    {children || (
+      <p>
+        {number && `${number}. `}Lorem ipsum dolor sit amet, consectetur
+        adipisicing.
+      </p>
+    )}
   </div>
 );
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout>
+    <FlexLayout disableWrap>
       <FlexItem {...args}>
         <FlexContent classname={"layout-active-content"} />
       </FlexItem>
@@ -60,6 +67,6 @@ const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
 };
 export const FlexItemWrapper = FlexItemStory.bind({});
 FlexItemWrapper.args = {
-  shrink: 0,
+  shrink: 1,
   grow: 0,
 };

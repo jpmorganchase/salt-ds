@@ -26,12 +26,21 @@
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
   gap: 0;
 }
-
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol-wrap li:not(:last-child) {
+  margin-bottom: calc(var(--uitk-size-unit) / 2 - 2px);
+}
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
   padding: 2px;
 }
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li,
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator {
+.uitk-density-medium .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
   margin-right: 6px;
+}
+.uitk-density-high .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
+  margin-right: 2px;
+}
+.uitk-density-low .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
+  margin-right: 10px;
+}
+.uitk-density-touch .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
+  margin-right: 14px;
 }

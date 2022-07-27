@@ -11,7 +11,7 @@
 
 .uitkBreadcrumb-regular {
   display: flex;
-  gap: var(--uitk-size-unit);
+  gap: calc(var(--uitk-size-unit) / 2);
   align-items: center;
   color: var(--breadcrumb-color);
 }
@@ -60,13 +60,10 @@
 
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb {
   padding: 0px;
-  gap: 0;
 }
-
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon {
-  margin: 0 4px 0 1px;
+  margin-left: 1px;
 }
-
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon:only-child {
   margin: 0;
 }

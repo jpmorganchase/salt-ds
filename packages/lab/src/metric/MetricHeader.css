@@ -1,26 +1,23 @@
 .uitkMetricHeader {
   --metric-title-color: var(--uitk-text-primary-foreground);
   --metric-subtitle-color: var(--uitk-text-secondary-foreground);
-
-  --metric-header-gap: calc(var(--uitk-size-unit) * 0.25);
 }
 
 .uitkMetricHeader {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 14px 0px 0px;
-  gap: 2px;
+  gap: calc(var(--uitk-size-unit) * 0.25);
 }
 
-.uitkMetric-size-large .uitkMetricHeader {
-  padding: 14px 0px 0px;
+.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricHeader {
+  padding-top: 4px;
 }
-.uitkMetric-size-medium .uitkMetricHeader {
-  padding: 8px 0px 0px;
+.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricHeader {
+  padding-top: 8px;
 }
-.uitkMetric-size-small .uitkMetricHeader {
-  padding: 4px 0px 0px;
+.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricHeader {
+  padding-top: 14px;
 }
 
 .uitkMetricHeader-title {

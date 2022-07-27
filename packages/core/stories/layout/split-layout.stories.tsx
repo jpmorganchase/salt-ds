@@ -30,7 +30,7 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
-    wrap: {
+    disableWrap: {
       type: "boolean",
     },
   },
