@@ -19,6 +19,8 @@
   cursor: var(--uitkTab-cursor, pointer);
   display: var(--tabstrip-tab-display);
   height: var(--uitkTab-height, var(--tabstrip-height));
+  letter-spacing: var(--uitkTab-letterSpacing, 0);
+  min-width: var(--uitkTab-minWidth, 40px);
   outline: none;
   position: var(--uitkTab-position, relative);
   user-select: none;
@@ -80,10 +82,11 @@
 
 .uitkTab .uitkTab-text {
   display: inline-block;
-  position: static;
+  position: relative;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
+  top: var(--uitkTab-top, auto);
   white-space: nowrap;
   /* ensure content sita above focus ring */
   z-index: var(--uitk-zIndex-default);
@@ -166,8 +169,4 @@
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
   background-color: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
-}
-
-.uitkTab .uitkTab-closeButton:hover {
-  background-color: var(--uitk-grey-40);
 }

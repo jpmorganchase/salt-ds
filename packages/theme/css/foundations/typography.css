@@ -38,11 +38,6 @@
   --uitk-typography-size-240: 64px;
 }
 
-.uitk-light,
-.uitk-dark {
-  font-family: "uitk-sans";
-}
-
 /* TODO add uitk top-level identifier */
 .uitk-light,
 .uitk-dark {

@@ -137,7 +137,6 @@ export const Tab = forwardRef(function Tab(
   };
 
   const getLabel = () => {
-    console.log(`getLabel editable=${editable} editing=${editing}`);
     if (editable) {
       return (
         <EditableLabel

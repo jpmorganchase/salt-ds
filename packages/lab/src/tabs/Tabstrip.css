@@ -54,7 +54,7 @@
 }
 
 .uitkTabstrip-addButton,
-.uitkTabstrip-overflowMenu {
+.uitkDropdown.uitkTabstrip-overflowMenu {
   margin-left: var(--uitk-size-unit);
 }
 
@@ -70,7 +70,10 @@
 .uitkTabstrip-overflowMenu-open {
   --uitkButton-background: var(--uitk-actionable-secondary-background-active);
   --uitkButton-text-color: var(--uitk-actionable-secondary-text-color-active);
-  --uitkButton-icon-color: var(--uitk-actionable-secondary-icon-color-active);
+}
+
+.uitkTabstrip-overflowMenu-open .uitkButton {
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-active);
 }
 
 .uitkTabstrip-inner {
@@ -96,8 +99,8 @@
 
 /* Styling applied to Draggable wrapper when used to drag a Tab */
 .uitkDraggable[class*="tabstrip"] {
-  --uitkTab-cursor: var(--uitk-draggable-cursor-active);
-  --uitkTab-background: var(--uitk-navigable-background-hover);
+  --uitkTab-cursor: var(--uitk-draggable-grab-cursor-active);
+  --uitkTab-background: var(--uitk-navigable-background-hover-medium);
   --uitkTab-position: static;
   --tabstrip-tab-display: flex;
   --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable, 36px));
@@ -124,7 +127,11 @@
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab[aria-selected="true"]:before {
-  --tab-before-background: var(--uitk-navigable-indicator-color-active);
+  --tab-before-background: var(--uitk-navigable-indicator-active);
+}
+
+.uitkDraggable[class*="tabstrip"] .uitkTab {
+  box-shadow: var(--uitk-overlayable-shadow-drag);
 }
 
 [data-overflowed] {
@@ -133,11 +140,16 @@
 }
 
 .uitkTabstrip-overflowMenu-dropTarget:after {
-  background-color: var(--uitk-droptarget-background-hover);
+  background-color: var(--uitk-palette-interact-background-active);
   content: "";
   position: absolute;
   height: 2px;
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.uitkTabstrip.backwardsCompat {
+  --uitkTab-letterSpacing: -0.1px;
+  --uitkTab-top: -1px;
 }
