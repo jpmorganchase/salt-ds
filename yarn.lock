@@ -2926,8 +2926,6 @@ __metadata:
     "@types/tinycolor2": ^1.4.3
     "@types/warning": ^3.0.0
     "@vitejs/plugin-react": ^1.3.2
-    "@vuu-ui/data-remote": ^0.0.17
-    "@vuu-ui/utils": ^0.0.17
     ag-grid-community: ^25.0.0
     ag-grid-enterprise: ^25.0.0
     ag-grid-react: ^25.0.0
@@ -6376,26 +6374,6 @@ __metadata:
     react-refresh: ^0.13.0
     resolve: ^1.22.0
   checksum: 9e083e561145cad00bdd2bc93d56b7ec8e209a05c4a9ebce8d1891e88e74de7eda197934c716023a1642582f250e330da6269e0cd1dc2285762f628c82f32229
-  languageName: node
-  linkType: hard
-
-"@vuu-ui/data-remote@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@vuu-ui/data-remote@npm:0.0.17"
-  peerDependencies:
-    "@vuu-ui/utils": 0.0.17
-    react: ^17.0.2
-  checksum: 897c46b799ebc2a5e5c8e35ad1221a8a297b2d023299dbce925d9baf7bb28b6f3cf338315cb618e569067e205b0e4c4116645f7a20b200b29d777d8a54800efa
-  languageName: node
-  linkType: hard
-
-"@vuu-ui/utils@npm:^0.0.17":
-  version: 0.0.17
-  resolution: "@vuu-ui/utils@npm:0.0.17"
-  peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
-  checksum: 274763d10096b92759a0802cda9c700aa6d6447a14702b0a6b6ba73b13afe77b1e514bc4c22f0d3898ed7a0e721142c5147f51c33e30560feda99bb75eadf62f
   languageName: node
   linkType: hard
 
