@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-core": patch
 ---
 
-prevent AriaAnnouncer breaking full height layouts
+Prevent AriaAnnouncer breaking full height layouts
