@@ -13,6 +13,7 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
+  H3,
 } from "@jpmorganchase/uitk-lab";
 import {
   ToolkitProvider,
@@ -289,10 +290,10 @@ ToolkitGridLayoutFooter.args = {
   columnGap: 8,
 };
 
-const sidebar = (
+const editorialSection = (
   <FlowLayout>
     {Array.from({ length: 4 }, (_, index) => (
-      <FlexItem key={index} grow={1}>
+      <FlexItem key={index}>
         <Card>
           <ContactDetails embedded={true} stackAtBreakpoint={0}>
             <ContactAvatar />
@@ -319,7 +320,7 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
-        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
+        <GridItem colSpan={{ xs: 1, sm: 2, md: 2, lg: 4, xl: 4 }}>
           <h1>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -327,11 +328,11 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           <div className="grid-blog-hero" />
         </GridItem>
 
-        <GridItem colSpan={1}>
+        <GridItem colSpan={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 2 }}>
           <h2>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </h2>
-          <div className="grid-blog-image grid-blog-image-one" />
+          <div className="grid-blog-medium-image grid-blog-image-one" />
           <p>
             Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
             suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
@@ -343,9 +344,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           </FlowLayout>
         </GridItem>
 
-        <GridItem colSpan={1}>
+        <GridItem colSpan={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 2 }}>
           <h2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h2>
-          <div className="grid-blog-image grid-blog-image-two" />
+          <div className="grid-blog-medium-image grid-blog-image-two" />
           <p>
             At vero eos et accusamus et iusto odio dignissimos ducimus qui
             blanditiis praesentium voluptatum deleniti atque corrupti quos
@@ -359,9 +360,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             ))}
           </FlowLayout>
         </GridItem>
-        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}>
-          <h2>At vero eos et accusamus et iusto odio dignissimos ducimus</h2>
-          <div className="grid-blog-image grid-blog-image-three" />
+        <GridItem colSpan={1}>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <div className="grid-blog-small-image grid-blog-image-three" />
           <p>
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
@@ -375,17 +376,63 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           </FlowLayout>
         </GridItem>
 
-        <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
-          <h2>Editorial content contributors</h2>
-          {sidebar}
+        <GridItem colSpan={1}>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <div className="grid-blog-small-image grid-blog-image-four" />
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 4 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
         </GridItem>
+        <GridItem colSpan={1}>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <div className="grid-blog-small-image grid-blog-image-five" />
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 4 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <div className="grid-blog-small-image grid-blog-image-six" />
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 4 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </GridItem>
+
+        {/* <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
+          <h2>Editorial content contributors</h2>
+          {editorialSection}
+        </GridItem> */}
       </GridLayout>
     </div>
   );
 };
 export const GridLayoutComposite = Blog.bind({});
 GridLayoutComposite.args = {
-  columns: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3 },
+  columns: { xs: 1, sm: 2, md: 2, lg: 4, xl: 4 },
 };
 
 const renderCards = (cardsNumber: number) => {
