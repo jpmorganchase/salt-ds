@@ -74,14 +74,15 @@ export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
         aria-live="assertive"
         // hidden styling based on https://webaim.org/techniques/css/invisiblecontent/
         style={{
-          clip: "rect(1px, 1px, 1px, 1px)",
-          clipPath: "inset(50%)",
+          position: "absolute",
           height: 1,
           width: 1,
-          overflow: "hidden",
           padding: 0,
-          position: "absolute",
           margin: -1,
+          overflow: "hidden",
+          clip: "rect(0, 0, 0, 0)",
+          whiteSpace: "nowrap",
+          borderWidth: 0,
           ...style,
         }}
       >
