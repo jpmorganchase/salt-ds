@@ -1,9 +1,10 @@
 .uitkLink {
-  --link-color: var(--uitk-text-link-foreground);
-  --link-color-hover: var(--uitk-text-link-foreground-hover);
-  --link-color-active: var(--uitk-text-link-foreground-active);
-  --link-color-focus: var(--uitkLink-color-focus, --link-color-hover);
-  --link-color-disabled: var(--uitk-text-link-foreground-disabled);
+  --link-color: var(--uitkLink-color, var(--uitk-text-link-foreground));
+  --link-color-hover: var(--uitkLink-color-hover, var(--uitk-text-link-foreground-hover));
+  --link-color-active: var(--uitkLink-color-active, var(--uitk-text-link-foreground-active));
+  /* When focused, we also want hover style */
+  --link-color-focus: var(--uitkLink-color-focus, var(--link-color-hover));
+  --link-color-disabled: var(--uitkLink-color-disabled, var(--uitk-text-link-foreground-disabled));
 
   --link-text-decoration: var(--uitk-text-link-textDecoration);
 
@@ -24,7 +25,7 @@
 
 .uitkLink:visited,
 .uitkLink:visited .uitkLink-icon {
-  color: currentColor;
+  color: var(--link-color);
 }
 
 .uitkLink:hover,
@@ -39,7 +40,6 @@
 
 .uitkLink:focus {
   outline: var(--link-focus-outline);
-  /* When focused, we also want hover style */
   color: var(--link-color-focus);
 }
 

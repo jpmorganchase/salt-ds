@@ -1,0 +1,178 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Link } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./link.stories";
+
+<Meta
+  title="Documentation/Lab/Link"
+  component={Link}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Link
+
+An Link is a small circular graphical representation of a person through a personal profile picture or name initials.
+
+## Default Link
+
+<Canvas>
+  <Story name="Default Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com">Link to URL</Link>
+  </Story>
+</Canvas>
+
+## Disabled Link
+
+<Canvas>
+  <Story name="Disabled Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com" disabled>
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
+
+## Target blank Link
+
+<Canvas>
+  <Story name="Target blank Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com" target="_blank">
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
+
+## Truncated and with tooltip
+
+<Canvas>
+  <Story name="Truncated and with tooltip Link" decorators={[withFlexGap]}>
+    <div style={{ width: 50 }}>
+      <Link truncate={true} maxRows={1} href="https://www.google.com">
+        Link to URL with tooltip
+      </Link>
+    </div>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Link } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Link} />
+
+## HTML Anatomy of Link component
+
+<Canvas>
+  <ComponentAnatomy showLegend>
+    <Link href="https://www.google.com">Link to URL</Link>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Link href="https://www.google.com" disabled>
+      Link to URL
+    </Link>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <Link href="https://www.google.com" target="_blank">
+      Link to URL
+    </Link>
+  </ComponentAnatomy>
+  <ComponentAnatomy showLegend>
+    <div style={{ width: 50 }}>
+      <Link truncate={true} maxRows={1} href="https://www.google.com">
+        Link to URL with tooltip
+      </Link>
+    </div>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Link} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Link} />
+
+## --uitkLink CSS Custom Property API
+
+The default foreground and background colors of the Link are provided by the theme variables. See Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Link, but not defined by Link. They can be defined via a container or
+a custom class name to override avatar styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Link} />
+
+# Customising Link styles
+
+<Canvas>
+  <Story name="Custom Link Styling" decorators={[withFlexGap]}>
+    <>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Link href="https://www.google.com">Link to URL</Link>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <Link href="https://www.google.com" disabled>
+          Link to URL
+        </Link>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["light", "newapp"]}>
+        <div style={{ width: 50 }}>
+          <Link truncate={true} maxRows={1} href="https://www.google.com">
+            Link to URL with tooltip
+          </Link>
+        </div>
+      </ToolkitProvider>
+      <hr />
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Link href="https://www.google.com">Link to URL</Link>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <Link href="https://www.google.com" disabled>
+          Link to URL
+        </Link>
+      </ToolkitProvider>
+      <ToolkitProvider theme={["dark", "newapp"]}>
+        <div style={{ width: 50 }}>
+          <Link truncate={true} maxRows={1} href="https://www.google.com">
+            Link to URL with tooltip
+          </Link>
+        </div>
+      </ToolkitProvider>
+    </>
+  </Story>
+</Canvas>
+
+The CSS is as simple as below:
+
+```css
+/* from the file link.stories.newapp-link.css */
+
+.uitk-light.uitk-newapp .uitkLink {
+  --uitkLink-color: var(--uitk-color-green-200);
+  --uitkLink-color-hover: var(--uitk-color-purple-200);
+  --uitkLink-color-active: var(--uitk-color-green-200);
+  --uitkLink-color-focus: var(--uitk-color-red-200);
+  --uitkLink-color-disabled: var(--uitk-color-grey-100);
+}
+
+.uitk-dark.uitk-newapp .uitkLink {
+  --uitkLink-color: var(--uitk-color-red-200);
+  --uitkLink-color-hover: var(--uitk-color-green-200);
+  --uitkLink-color-active: var(--uitk-color-red-200);
+  --uitkLink-color-focus: var(--uitk-color-green-200);
+  --uitkLink-color-disabled: var(--uitk-color-grey-50);
+}
+```

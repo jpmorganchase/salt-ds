@@ -1,0 +1,15 @@
+.uitk-light.uitk-newapp .uitkLink {
+  --uitkLink-color: var(--uitk-color-green-200);
+  --uitkLink-color-hover: var(--uitk-color-purple-200);
+  --uitkLink-color-active: var(--uitk-color-green-200);
+  --uitkLink-color-focus: var(--uitk-color-red-200);
+  --uitkLink-color-disabled: var(--uitk-color-grey-100);
+}
+
+.uitk-dark.uitk-newapp .uitkLink {
+  --uitkLink-color: var(--uitk-color-red-200);
+  --uitkLink-color-hover: var(--uitk-color-green-200);
+  --uitkLink-color-active: var(--uitk-color-red-200);
+  --uitkLink-color-focus: var(--uitk-color-green-200);
+  --uitkLink-color-disabled: var(--uitk-color-grey-50);
+}
