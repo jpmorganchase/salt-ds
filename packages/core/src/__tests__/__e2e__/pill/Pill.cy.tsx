@@ -1,5 +1,10 @@
 import { Pill } from "@jpmorganchase/uitk-core";
 import { CallIcon } from "@jpmorganchase/uitk-icons";
+import { composeStories } from "@storybook/testing-react";
+import * as pillStories from "@stories/pill.stories";
+
+const composedStories = composeStories(pillStories);
+const { CustomTooltipTextPill } = composedStories;
 
 /**
  * Changes applied to the tests after copy over
@@ -115,5 +120,14 @@ describe("GIVEN a Pill", () => {
   it("SHOULD have no a11y violations on load", () => {
     cy.mount(<Pill label="label" />);
     cy.checkAxeComponent();
+  });
+
+  it("SHOULD have overridden tooltip title with TooltipProps", () => {
+    cy.mount(<CustomTooltipTextPill />);
+
+    cy.findByRole("button", { name: "Pill" }).realHover();
+    cy.findByRole("tooltip")
+      .should("be.visible")
+      .should("have.text", "Extra extra long Pill label example.");
   });
 });

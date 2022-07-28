@@ -121,6 +121,15 @@ export const MaxWidthPill: ComponentStory<typeof Pill> = () => {
   );
 };
 
+export const CustomTooltipTextPill: ComponentStory<typeof Pill> = () => {
+  return (
+    <Pill
+      label="Pill"
+      TooltipProps={{ title: "Extra extra long Pill label example." }}
+    />
+  );
+};
+
 export const AllDensities: ComponentStory<typeof Pill> = () => {
   return (
     <div
