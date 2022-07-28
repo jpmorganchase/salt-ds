@@ -72,7 +72,7 @@ export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
       <div
         aria-atomic="true"
         aria-live="assertive"
-        // hidden styling based on https://webaim.org/techniques/css/invisiblecontent/
+        // hidden styling based on https://tailwindcss.com/docs/screen-readers
         style={{
           position: "absolute",
           height: 1,
