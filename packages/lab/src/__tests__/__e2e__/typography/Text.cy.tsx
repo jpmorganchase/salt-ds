@@ -123,22 +123,6 @@ describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=f
   });
 });
 
-// Scrollable
-describe("GIVEN Text component with parent height 100px", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should be scrollable`, () => {
-      const Component = component;
-
-      cy.mount(
-        <div style={{ width: 200, height: 100 }}>
-          <Component>{textExample}</Component>
-        </div>
-      );
-      cy.get(".uitkText").should("have.class", "uitkText-overflow");
-    });
-  });
-});
-
 // Size restricted by parent container
 describe("GIVEN Text component with parent height 100px and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
