@@ -380,10 +380,10 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-four" />
           <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Enim sit excepteur incididunt et excepteur. Est incididunt enim
+            tempor labore ad. Sit reprehenderit nulla mollit ad sunt pariatur
+            nostrud cupidatat eu sint officia nulla esse. Veniam enim est irure
+            est est aliquip nisi enim veniam occaecat.
           </p>
           <FlowLayout gap={1}>
             {Array.from({ length: 4 }, (_, index) => (
@@ -395,10 +395,10 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-five" />
           <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Nostrud labore non aliqua dolore esse ullamco excepteur eu et. Nisi
+            labore nulla anim in non proident nisi labore sint enim exercitation
+            fugiat pariatur enim. Cillum est labore in labore labore culpa id.
+            Consectetur ut enim eiusmod aliqua eu eiusmod sit.
           </p>
           <FlowLayout gap={1}>
             {Array.from({ length: 4 }, (_, index) => (
@@ -410,10 +410,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-six" />
           <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Voluptate elit sit id consectetur sit reprehenderit minim mollit do.
+            Aliquip exercitation sunt esse voluptate laborum. Occaecat dolor
+            minim dolore in excepteur sint.
           </p>
           <FlowLayout gap={1}>
             {Array.from({ length: 4 }, (_, index) => (
