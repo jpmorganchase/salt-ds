@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { Text, TextProps } from "./Text";
 
 export const Div = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   Omit<TextProps<"div">, "elementType">
 >(function Div({ children, ...rest }, ref) {
   return (

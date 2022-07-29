@@ -2,13 +2,15 @@ import {
   debounce,
   useForkRef,
   useIsomorphicLayoutEffect,
+  polymorphicRef,
 } from "@jpmorganchase/uitk-core";
 import {
-  ElementType,
-  ForwardedRef,
   useCallback,
   useRef,
   useState,
+  ElementType,
+  RefObject,
+  ForwardedRef,
 } from "react";
 import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
@@ -17,11 +19,14 @@ import { getComputedStyles } from "./getComputedStyles";
 const VELOCITY = 1;
 
 export const useTruncation = (
-  props: TextProps<ElementType>,
+  {
+    children,
+    maxRows,
+    showTooltip = true,
+    onOverflowChange,
+  }: Partial<TextProps>,
   ref: ForwardedRef<HTMLElement>
 ) => {
-  const { children, maxRows, showTooltip = true, onOverflowChange } = props;
-
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
