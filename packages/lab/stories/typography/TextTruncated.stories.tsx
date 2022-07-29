@@ -19,7 +19,7 @@ const excludeProps = [
   "onOverflowChange",
 ];
 
-const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
+const TextTruncatedExamples: ComponentStory<typeof Text> = () => {
   const box = {
     border: "1px solid #ccc",
     padding: 10,
@@ -88,8 +88,8 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
     </div>
   );
 };
-export const ResponsiveExample = ResponsiveTextComponent.bind({});
-ResponsiveExample.parameters = {
+export const TextTruncated = TextTruncatedExamples.bind({});
+TextTruncated.parameters = {
   controls: {
     exclude: excludeProps,
   },

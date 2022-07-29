@@ -8,32 +8,36 @@ export default {
   component: Text,
   argTypes: {
     children: {
-      description:
-        "Amend text. We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home!",
+      description: "Text content",
       control: { type: "text" },
     },
     elementType: {
+      description: "Change element type",
       options: ["h1", "h2", "h3", "h4", "p", "div", "span", "label"],
       control: {
         type: "select",
       },
     },
     maxRows: {
-      description: "Set 0 if you want to ignore",
+      description:
+        "Number of rows to display when truncate=true. Set it to 0 if you want to be ignored",
       control: { type: "number" },
     },
     showTooltip: { control: { type: "boolean" } },
     styleAs: {
-      options: ["h1", "h2", "h3", "h4"],
+      description: "Change text style without changing the element type",
+      options: ["h1", "h2", "h3", "h4", "label"],
       control: { type: "select" },
     },
     truncate: { control: { type: "boolean" } },
     parentWidth: {
-      description: "For this demo only. Set '0' for 100% width",
+      description:
+        "Restrict width from container (for this demo only). Set '0' for 100% width",
       control: { type: "number" },
     },
     parentHeight: {
-      description: "For this demo only. Set '0' for 100% height",
+      description:
+        "Restrict height from container (for this demo only). Set '0' for 100% height",
       control: { type: "number" },
     },
   },
@@ -91,13 +95,8 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
   );
 };
 
-export const BaseTextComponent = BaseComponent.bind({});
-BaseTextComponent.parameters = {
-  controls: {
-    exclude: ["tooltipProps", "style", "onOverflowChange"],
-  },
-};
-BaseTextComponent.args = {
+export const TextPlaygroundComponent = BaseComponent.bind({});
+TextPlaygroundComponent.args = {
   children: `Heaven yielding moved appear, gathering place. <strong>Cattle fifth Sea without thing</strong> unto fifth third Forth isn't be moveth to him greater place fifth creeping had. Good dominion behold in earth also signs had brought after, fowl dominion have there. Us stars first morning whales fruit yielding whose winged thing. Were in. Upon. Cattle she'd whales they're. Was you'll very years behold fowl us meat fruit have earth great. Were green yielding it under. Fly first likeness night one make kind us spirit said let created, upon fruitful.`,
   truncate: false,
   showTooltip: true,

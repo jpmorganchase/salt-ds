@@ -10,18 +10,16 @@ export default {
   parameters: {
     controls: {
       exclude: [
-        "children",
         "elementType",
         "maxRows",
         "showTooltip",
         "tooltipProps",
         "truncate",
-        "expanded",
         "style",
         "styleAs",
         "onOverflowChange",
-        "marginTop",
-        "marginBottom",
+        "ref",
+        "tooltipText",
       ],
     },
   },

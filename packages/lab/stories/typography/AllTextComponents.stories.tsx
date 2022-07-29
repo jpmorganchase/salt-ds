@@ -2,10 +2,10 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import {
   Text,
-  Code as CodeText,
-  Div as DivText,
-  Span as SpanText,
-  P as PText,
+  Code,
+  Div,
+  Span,
+  P,
   Figure1,
   Figure2,
   Figure3,
@@ -13,147 +13,125 @@ import {
   H2,
   H3,
   H4,
-  HelpText as HelpTextComp,
-  LabelCaption as LabelCaptionText,
+  HelpText,
+  LabelCaption,
 } from "@jpmorganchase/uitk-lab";
 
 export default {
   title: "Lab/Typography",
   component: Text,
-  parameters: {
-    controls: {
-      hideNoControlsWarning: true,
-      exclude: [
-        "elementType",
-        "maxRows",
-        "showTooltip",
-        "tooltipProps",
-        "truncate",
-        "style",
-        "onOverflowChange",
-      ],
-    },
-  },
+  // parameters: {
+  //   controls: {
+  //     hideNoControlsWarning: true,
+  //     exclude: [
+  //       "elementType",
+  //       "maxRows",
+  //       "onOverflowChange",
+  //       "ref",
+  //       "showTooltip",
+  //       "style",
+  //       "styleAs",
+  //       "tooltipProps",
+  //       "tooltipText",
+  //       "truncate",
+  //     ],
+  //   },
+  // },
 } as ComponentMeta<typeof Text>;
-
-//********** Body Text ***********/
-
-const DefaultTextComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <Text>
-        Basic text - div - His seasons Shall without form fourth seed so.
-      </Text>
-      <Text>
-        Basic text
-        <strong> emphasis high</strong>
-      </Text>
-      <Text>
-        Basic text
-        <small> emphasis low</small>
-      </Text>
-    </>
-  );
-};
-
-export const DefaultText = DefaultTextComponent.bind({});
 
 //********** Div ***********/
 
-const DivTextComponent: ComponentStory<typeof Text> = () => {
+const DivExample: ComponentStory<typeof Text> = () => {
   return (
-    <>
-      <DivText>
-        Div text component - His seasons Shall without form fourth seed so.
-      </DivText>
-      <DivText>
-        Div text component
-        <strong> emphasis high</strong>
-      </DivText>
-      <DivText>
-        Div text component
-        <small> emphasis low</small>
-      </DivText>
-    </>
+    <Div>
+      Div component - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </Div>
   );
 };
 
-export const Div = DivTextComponent.bind({});
+export const DivComponent = DivExample.bind({});
+DivComponent.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [
+      "elementType",
+      "maxRows",
+      "onOverflowChange",
+      "ref",
+      "showTooltip",
+      "style",
+      "styleAs",
+      "tooltipProps",
+      "tooltipText",
+      "truncate",
+    ],
+  },
+};
 
 //********** Span ***********/
 
-const SpanTextComponent: ComponentStory<typeof Text> = () => {
+const SpanExample: ComponentStory<typeof Span> = () => {
   return (
-    <>
-      <SpanText>
-        Span text component - His seasons Shall without form fourth seed so.
-      </SpanText>
-      <br />
-      <SpanText>
-        Span text component
-        <strong> emphasis high</strong>
-      </SpanText>
-      <br />
-      <SpanText>
-        Span text component
-        <small> emphasis low</small>
-      </SpanText>
-    </>
+    <Span>
+      Span component - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </Span>
   );
 };
 
-export const Span = SpanTextComponent.bind({});
+export const SpanComponent = SpanExample.bind({});
+SpanComponent.parameters = {
+  controls: {
+    hideNoControlsWarning: true,
+    exclude: [
+      "elementType",
+      "maxRows",
+      "onOverflowChange",
+      "ref",
+      "showTooltip",
+      "style",
+      "styleAs",
+      "tooltipProps",
+      "tooltipText",
+      "truncate",
+    ],
+  },
+};
 
 //********** Paragraph - P ***********/
 
-const PTextComponent: ComponentStory<typeof Text> = () => {
+const PExample: ComponentStory<typeof P> = () => {
   return (
-    <>
-      <PText>
-        Paragraph text component - His seasons Shall without form fourth seed
-        so.
-      </PText>
-      <PText>
-        Paragraph text component
-        <strong> emphasis high</strong>
-      </PText>
-      <PText>
-        Paragraph text component
-        <small> emphasis low</small>
-      </PText>
-    </>
+    <P>
+      Paragraph component - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </P>
   );
 };
 
-export const P = PTextComponent.bind({});
+export const PComponent = PExample.bind({});
 
 //********** Code ***********/
 
-const CodeTextComponent: ComponentStory<typeof Text> = () => {
+const CodeExample: ComponentStory<typeof Code> = () => {
   return (
-    <>
-      <CodeText>
-        Code text component - His seasons Shall without form fourth seed so.
-      </CodeText>
-      <br />
-      <CodeText>
-        Code text component
-        <strong> emphasis high</strong>
-      </CodeText>
-      <br />
-      <CodeText>
-        Code text component
-        <small> emphasis low</small>
-      </CodeText>
-    </>
+    <Code>
+      Code component - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </Code>
   );
 };
 
-export const Code = CodeTextComponent.bind({});
+export const CodeComponent = CodeExample.bind({});
 
 //********** Figure 1,2 and 3 ***********/
 
-const FigureTextComponent: ComponentStory<typeof Text> = () => {
+const FigureExample: ComponentStory<typeof Figure1> = () => {
   return (
     <>
       <Figure1>Figure 1</Figure1>
@@ -163,11 +141,11 @@ const FigureTextComponent: ComponentStory<typeof Text> = () => {
   );
 };
 
-export const Figure = FigureTextComponent.bind({});
+export const Figure = FigureExample.bind({});
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 
-const HeadingsComponent: ComponentStory<typeof Text> = () => (
+const HeadingExample: ComponentStory<typeof H1> = () => (
   <>
     <div
       style={{
@@ -192,79 +170,52 @@ const HeadingsComponent: ComponentStory<typeof Text> = () => (
     <br />
     <br />
     <H1>
-      This is header 1 <strong>emphasis high</strong>
-    </H1>
-    <H1>
-      This is header 1 <small>emphasis low</small>
+      This is header 1. <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
     </H1>
     <br />
     <H2>
-      This is header 2 <strong>emphasis high</strong>
-    </H2>
-    <H2>
-      This is header 2 <small>emphasis low</small>
+      This is header 2 <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
     </H2>
     <br />
     <H3>
-      This is header 3 <strong>emphasis high</strong>
-    </H3>
-    <H3>
-      This is header 3 <small>emphasis low</small>
+      This is header 3 <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
     </H3>
     <br />
     <H4>
-      This is header 4 <strong>emphasis high</strong>
-    </H4>
-    <H4>
-      This is header 4 <small>emphasis low</small>
+      This is header 4 <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
     </H4>
   </>
 );
-export const Headings = HeadingsComponent.bind({});
+export const Headings = HeadingExample.bind({});
 
 //********** HelpText ***********/
 
-const HelpTextComponent: ComponentStory<typeof Text> = () => {
+const HelpTextExample: ComponentStory<typeof HelpText> = () => {
   return (
-    <>
-      <HelpTextComp>
-        Help Text - div - His seasons Shall without form fourth seed so.
-      </HelpTextComp>
-      <HelpTextComp>
-        Help Text
-        <strong> emphasis high</strong>
-      </HelpTextComp>
-      <HelpTextComp>
-        Help Text
-        <small> emphasis low</small>
-      </HelpTextComp>
-    </>
+    <HelpText>
+      Help Text - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </HelpText>
   );
 };
 
-export const HelpText = HelpTextComponent.bind({});
+export const HelpTextComponent = HelpTextExample.bind({});
 
 //********** LabelCaption ***********/
 
-const LabelCaptionTextComponent: ComponentStory<typeof Text> = () => {
+const LabelCaptionExample: ComponentStory<typeof LabelCaption> = () => {
   return (
-    <>
-      <LabelCaptionText>
-        LabelCaption text - label - His seasons Shall without form fourth seed
-        so.
-      </LabelCaptionText>
-      <br />
-      <LabelCaptionText>
-        LabelCaption text
-        <strong> emphasis high</strong>
-      </LabelCaptionText>
-      <br />
-      <LabelCaptionText>
-        LabelCaption text
-        <small> emphasis low</small>
-      </LabelCaptionText>
-    </>
+    <LabelCaption>
+      LabelCaption text - This is an example of text content.{" "}
+      <strong>Emphasis strong. </strong>
+      <small>Emphasis small. </small>
+    </LabelCaption>
   );
 };
 
-export const LabelCaption = LabelCaptionTextComponent.bind({});
+export const LabelCaptionComponent = LabelCaptionExample.bind({});

@@ -1,0 +1,38 @@
+import { Meta, Story, Canvas, ArgsTable, Props } from "@storybook/addon-docs";
+import { Text, Div } from "@jpmorganchase/uitk-lab";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Documentation/Lab/Text" component={Text} />
+
+## Default Text
+
+<Canvas>
+  <Story name="Text" decorators={[withFlexGap]}>
+    <Div>Default Div</Div>
+  </Story>
+</Canvas>
+
+## Truncated Text
+
+<Canvas>
+  <Story name="Truncated Text" decorators={[withFlexGap]}>
+    <div style={{ width: 30 }}>
+      <Text truncate maxRows={1}>
+        Default Text
+      </Text>
+    </div>
+  </Story>
+</Canvas>
+
+## Props
+
+<ArgsTable of={Text} />
+
+## Props Div
+
+<ArgsTable of={Div} />
