@@ -75,7 +75,7 @@ const AggregateValuesExample = function AggregateValuesExample(
   }, [isGridReady]);
 
   return (
-    <div style={{ height: 600, width: 800, marginTop: 25 }} {...containerProps}>
+    <div style={{ height: 500, width: 900, marginTop: 25 }} {...containerProps}>
       <AgGridReact
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

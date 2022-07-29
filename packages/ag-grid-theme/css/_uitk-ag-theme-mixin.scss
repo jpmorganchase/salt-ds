@@ -221,7 +221,7 @@
   }
 
   .ag-column-drop-vertical {
-    min-height: 75px;
+    min-height: 150px;
     padding-top: 8px;
     .ag-icon {
       height: 18px;
@@ -235,17 +235,14 @@
   }
 
   .ag-column-drop-vertical-empty-message {
-    display: flex;
-    align-items: center;
-    border: dashed 1px;
-    @include ag-color-property(border-color, border-color);
-    margin: ag-param(grid-size) * 2;
-    padding: ag-param(grid-size) * 2;
-  }
-
-  .ag-column-drop-empty-message {
-    @include ag-color-property(color, foreground-color);
-    opacity: 0.75;
+    padding-left: 34px;
+    padding-right: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.38);
+    margin-top: 8px;
+    margin-left: 2px;
+    margin-right: 2px;
   }
 
   .ag-status-bar {
@@ -513,6 +510,9 @@
 
   .ag-column-select {
     border-bottom: solid 1px var(--uitkAgGrid-borderColor);
+    flex-grow: 3;
+    flex-shrink: 1;
+    flex-basis: 0;
   }
 
   .ag-ltr .ag-column-select-header-checkbox,
@@ -535,6 +535,7 @@
     height: var(--uitkAgGrid-list-item-height);
     // font-size: var(--uitkAgGrid-list-item-fontSize);
     font-size: ag-param(font-size);
+    color: var(--uitkAgGrid-header-foreground);
   }
 
   .ag-list-item:hover,
@@ -646,7 +647,8 @@
         font-family: jpmuitk-icons;
         font-size: 12px;
         content: "\e95b";
-        color: var(--uitkAgGrid-checkbox-color);
+        color: var(--uitkAgGrid-toggle-background-checked);
+        background-color: white;
         justify-content: center;
         align-items: center;
       }
