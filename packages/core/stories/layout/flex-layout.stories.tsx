@@ -125,17 +125,20 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
 
 export const ContactDetailsExample = ({ index }: { index: number }) => (
-  <ContactDetails embedded={true}>
+  <ContactDetails embedded={true} stackAtBreakpoint={0}>
     <ContactAvatar />
     <ContactPrimaryInfo text={`Contact ${index + 1}`} />
-    <ContactSecondaryInfo text="Blackrock Advisors (UK) Limited" />
-    <ContactTertiaryInfo text="SPN 2188538" />
+    <ContactSecondaryInfo text="Commodo nisi officia consectetur" />
+    <ContactTertiaryInfo text="SPN 123456789" />
     <ContactMetadata collapsible={true}>
       <ContactMetadataItem value="Analyst" label="Role" />
       <ContactMetadataItem value="London, GBR" label="Location" />
-      <ContactMetadataItem value="+44 2077 431102" label="Office" />
+      <ContactMetadataItem value="+44 1234 123456" label="Office" />
 
-      <ContactMetadataItem value="alex.brailescu@blackrock.com" label="Email" />
+      <ContactMetadataItem
+        value="cillum.est.exercitation@cupidatat.com"
+        label="Email"
+      />
     </ContactMetadata>
   </ContactDetails>
 );
