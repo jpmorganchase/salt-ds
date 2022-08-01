@@ -1,12 +1,22 @@
 import { useState, MouseEvent } from "react";
-import { LayerLayout, LAYER_POSITIONS } from "@jpmorganchase/uitk-lab";
+import {
+  LayerLayout,
+  LAYER_POSITIONS,
+  ContentStatus,
+  ContentStatusProps,
+} from "@jpmorganchase/uitk-lab";
 import {
   Button,
   FlowLayout,
   StackLayout,
   FlexItem,
+  FormField,
+  Input,
+  FlexLayout,
+  Card,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ContactDetailsExample } from "../../../core/stories/layout/flex-layout.stories";
 import "./styles.css";
 
 export default {
@@ -104,8 +114,8 @@ const Top: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const ToolkitLayerLayoutTop = Top.bind({});
-ToolkitLayerLayoutTop.args = {
+export const LayerLayoutTop = Top.bind({});
+LayerLayoutTop.args = {
   position: "top",
 };
 
@@ -126,8 +136,8 @@ const Right: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const ToolkitLayerLayoutRight = Right.bind({});
-ToolkitLayerLayoutRight.args = {
+export const LayerLayoutRight = Right.bind({});
+LayerLayoutRight.args = {
   position: "right",
 };
 
@@ -148,8 +158,8 @@ const Left: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const ToolkitLayerLayoutLeft = Left.bind({});
-ToolkitLayerLayoutLeft.args = {
+export const LayerLayoutLeft = Left.bind({});
+LayerLayoutLeft.args = {
   position: "left",
 };
 
@@ -170,8 +180,8 @@ const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const ToolkitLayerLayoutBottom = Bottom.bind({});
-ToolkitLayerLayoutBottom.args = {
+export const LayerLayoutBottom = Bottom.bind({});
+LayerLayoutBottom.args = {
   position: "bottom",
 };
 
@@ -194,14 +204,15 @@ const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
   );
 };
 
-export const ToolkitLayerCustomFullScreenAnimation =
-  CustomFullScreenAnimation.bind({});
+export const LayerCustomFullScreenAnimation = CustomFullScreenAnimation.bind(
+  {}
+);
 
-ToolkitLayerCustomFullScreenAnimation.args = {
+LayerCustomFullScreenAnimation.args = {
   position: "bottom",
 };
 
-ToolkitLayerCustomFullScreenAnimation.parameters = {
+LayerCustomFullScreenAnimation.parameters = {
   viewport: {
     defaultViewport: "mobile1",
   },
@@ -231,4 +242,193 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const ToolkitLayerReducedMotion = ReducedMotion.bind({});
+export const LayerReducedMotion = ReducedMotion.bind({});
+
+const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  const errorProps: ContentStatusProps = {
+    status: "error",
+    title: "There's been a system error",
+    message: "It should be temporary, so please try again.",
+    actionLabel: "CLOSE LAYER",
+    onActionClick: hide,
+  };
+
+  return (
+    <>
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout isOpen={open} style={{ alignItems: "center" }} {...args}>
+        <FlowLayout style={{ width: 500, height: 500 }} justify="center">
+          <ContentStatus {...errorProps} />
+        </FlowLayout>
+      </LayerLayout>
+    </>
+  );
+};
+
+export const LayerLayoutCenterSimpleUsage = LayerLayoutCenterExample.bind({});
+LayerLayoutCenterSimpleUsage.args = {
+  position: "center",
+};
+
+const FormFieldExample = () => (
+  <FormField label="Label" helperText="Help text appears here">
+    <Input />
+  </FormField>
+);
+
+const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <div className="layer-container layer-simple-usage">
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout isOpen={open} {...args}>
+        <StackLayout>
+          <h1>Section title</h1>
+          <p>
+            Incididunt adipisicing deserunt nostrud ullamco consequat
+            consectetur magna id do irure labore fugiat. Eiusmod pariatur
+            officia elit ad. Ullamco adipisicing Lorem amet velit in do
+            reprehenderit nostrud eu aute voluptate quis quis.
+          </p>
+          {Array.from({ length: 7 }, (_, index) => (
+            <FormFieldExample key={index} />
+          ))}
+          <FlexItem align="end">
+            <Button onClick={hide}>Close layer</Button>
+          </FlexItem>
+        </StackLayout>
+      </LayerLayout>
+    </div>
+  );
+};
+
+export const LayerLayoutLeftSimpleUsage = LayerLayoutLeftExample.bind({});
+LayerLayoutLeftSimpleUsage.args = {
+  position: "left",
+};
+
+const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <div className="layer-container layer-simple-usage">
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout isOpen={open} {...args}>
+        <StackLayout>
+          <h1>Section title</h1>
+          <p>
+            Incididunt adipisicing deserunt nostrud ullamco consequat
+            consectetur magna id do irure labore fugiat. Eiusmod pariatur
+            officia elit ad. Ullamco adipisicing Lorem amet velit in do
+            reprehenderit nostrud eu aute voluptate quis quis.
+          </p>
+          <FlexLayout disableWrap>
+            {Array.from({ length: 4 }, (_, index) => (
+              <FormFieldExample key={index} />
+            ))}
+          </FlexLayout>
+          <FlexItem align="end">
+            <Button onClick={hide}>Close layer</Button>
+          </FlexItem>
+        </StackLayout>
+      </LayerLayout>
+    </div>
+  );
+};
+
+export const LayerLayoutTopSimpleUsage = LayerLayoutTopExample.bind({});
+LayerLayoutTopSimpleUsage.args = {
+  position: "top",
+};
+
+const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <div className="layer-container layer-simple-usage">
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout isOpen={open} {...args}>
+        <StackLayout>
+          <h1>Section title</h1>
+          {Array.from({ length: 4 }, (_, index) => (
+            <Card key={index}>
+              <ContactDetailsExample index={index} />
+            </Card>
+          ))}
+          <FlexItem align="end">
+            <Button onClick={hide}>Close layer</Button>
+          </FlexItem>
+        </StackLayout>
+      </LayerLayout>
+    </div>
+  );
+};
+
+export const LayerLayoutRightSimpleUsage = LayerLayoutRightExample.bind({});
+LayerLayoutRightSimpleUsage.args = {
+  position: "right",
+};
+
+const ArticleExample = () => (
+  <StackLayout style={{ width: "min-content" }}>
+    <div className="layer-article-image"></div>
+    <h2>Laborum in sit officia consecte</h2>
+    <p>
+      Do excepteur id ipsum qui dolor irure dolore commodo labore. Minim sunt
+      aliquip eiusmod excepteur qui sunt commodo ex cillum ullamco. Quis magna
+      deserunt reprehenderit anim elit laboris laboris fugiat Lorem est culpa
+      quis.
+    </p>
+  </StackLayout>
+);
+
+const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const show = () => setOpen(true);
+
+  const hide = () => setOpen(false);
+
+  return (
+    <div className="layer-container layer-simple-usage">
+      <Button onClick={show}>Open Layer</Button>
+      <LayerLayout isOpen={open} {...args}>
+        <StackLayout>
+          <h1>Section title</h1>
+          <FlowLayout>
+            {Array.from({ length: 4 }, (_, index) => (
+              <ArticleExample key={index} />
+            ))}
+          </FlowLayout>
+          <FlexItem align="end">
+            <Button onClick={hide}>Close layer</Button>
+          </FlexItem>
+        </StackLayout>
+      </LayerLayout>
+    </div>
+  );
+};
+
+export const LayerLayoutBottomSimpleUsage = LayerLayoutBottomExample.bind({});
+LayerLayoutBottomSimpleUsage.args = {
+  position: "bottom",
+};
