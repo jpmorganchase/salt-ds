@@ -1,3 +1,4 @@
+// @ts-ignore
 import { useEffect, useState, useId as useReactId } from "react";
 
 function useIdLegacy(idOverride?: string): string {
