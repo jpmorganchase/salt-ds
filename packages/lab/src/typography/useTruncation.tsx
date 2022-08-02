@@ -4,14 +4,7 @@ import {
   useIsomorphicLayoutEffect,
   polymorphicRef,
 } from "@jpmorganchase/uitk-core";
-import {
-  useCallback,
-  useRef,
-  useState,
-  ElementType,
-  RefObject,
-  ForwardedRef,
-} from "react";
+import { useCallback, useRef, useState, ElementType } from "react";
 import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
 
@@ -25,7 +18,7 @@ export const useTruncation = (
     showTooltip = true,
     onOverflowChange,
   }: Partial<TextProps>,
-  ref: ForwardedRef<HTMLElement>
+  ref: polymorphicRef<ElementType>
 ) => {
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);

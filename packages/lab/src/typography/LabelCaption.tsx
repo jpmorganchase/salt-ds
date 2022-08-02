@@ -1,17 +1,11 @@
-import { forwardRef, ForwardedRef, ReactElement } from "react";
-import { polymorphicRef } from "@jpmorganchase/uitk-core";
-
+import { forwardRef } from "react";
 import { Text, TextProps } from "./Text";
 
 export const LabelCaption = forwardRef<
-  HTMLElement,
+  HTMLLabelElement,
   Omit<TextProps<"label">, "elementType">
->(function LabelCaption(
-  { children, ...rest }: Omit<TextProps<"label">, "elementType">,
-  ref?: ForwardedRef<HTMLElement>
-): ReactElement<TextProps<"label">> {
+>(function LabelCaption({ children, ...rest }, ref) {
   return (
-    // @ts-ignore
     <Text elementType="label" ref={ref} {...rest}>
       {children}
     </Text>
