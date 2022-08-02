@@ -1,10 +1,15 @@
 // @ts-ignore
-import { useEffect, useState, useId as useReactId } from "react";
+import * as React from "react";
+
+// eslint-disable-next-line -- Workaround for https://github.com/webpack/webpack/issues/14814
+const maybeReactUseId: undefined | (() => string) = (React as any)[
+  "useId" + ""
+];
 
 function useIdLegacy(idOverride?: string): string {
-  const [defaultId, setDefaultId] = useState(idOverride);
+  const [defaultId, setDefaultId] = React.useState(idOverride);
   const id = idOverride || defaultId;
-  useEffect(() => {
+  React.useEffect(() => {
     if (defaultId == null) {
       // Fallback to this default id when possible.
       // Use the random value for client-side rendering only.
@@ -15,9 +20,11 @@ function useIdLegacy(idOverride?: string): string {
   return id as string;
 }
 
-function useIdInternal(idOverride?: string): string {
-  const id = (useReactId as () => string)();
-  return idOverride == null ? id : idOverride;
+export function useId(idOverride?: string): string {
+  if (maybeReactUseId !== undefined) {
+    const reactId = maybeReactUseId();
+    return idOverride ?? reactId;
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- `React.useId` is invariant at runtime.
+  return useIdLegacy(idOverride);
 }
-
-export const useId = useReactId === undefined ? useIdLegacy : useIdInternal;
