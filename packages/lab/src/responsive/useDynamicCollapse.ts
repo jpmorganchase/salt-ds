@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useCallback, useState } from "react";
 import {
   ElementRef,
   OverflowItem,
@@ -7,7 +8,6 @@ import {
 } from "./overflowTypes";
 import { byDescendingPriority } from "./overflowUtils";
 import {
-  addAll,
   getElementForItem,
   getRuntimePadding,
   isCollapsed,
@@ -40,11 +40,14 @@ export const useDynamicCollapse = ({
   overflowContainerRef: ref,
   orientation,
 }: OverflowHookProps): DynamicCollapseHookResult => {
+  const { dispatch } = collectionHook;
+  const [newCollapsingItem, setNewCollapsingItem] =
+    useState<OverflowItem | null>(null);
   const restoreCollapsingItem = useCallback(() => {
-    collectionHook.dispatch({
+    dispatch({
       type: "restore-collapsing-item",
     });
-  }, []);
+  }, [dispatch]);
 
   const collapseCollapsingItem = useCallback(
     (item: OverflowItem, target: HTMLElement, minSize: number) => {
@@ -54,14 +57,14 @@ export const useDynamicCollapse = ({
       target.style[styleDimension] = `${minSize}px`;
       const size = measureElementSize(target);
 
-      collectionHook.dispatch({
+      dispatch({
         type: "collapse-dynamic-item",
         overflowItem: item,
         collapsedSize: size,
         minSize,
       });
     },
-    [orientation]
+    [dispatch, orientation]
   );
 
   const checkDynamicContent = useCallback(
@@ -82,7 +85,7 @@ export const useDynamicCollapse = ({
         // TODO do we need a check to see whether we now have enough space to completely uncollapse the item ?
         // We may be able to uncollapse one or more items before the one we set to collapsing
 
-        collectionHook.dispatch({
+        dispatch({
           type: "uncollapse-dynamic-item",
           overflowItem: collapsedChild,
         });
@@ -91,8 +94,8 @@ export const useDynamicCollapse = ({
           const collapsingElement = getElementForItem(ref, collapsingChild);
           const dimension = orientation === "horizontal" ? "width" : "height";
           // can we avoid measuring ths element on every resize event ?
-          const { [dimension]: size } =
-            collapsingElement.getBoundingClientRect();
+          const size = measureElementSize(collapsingElement, dimension);
+          // collapsingElement.getBoundingClientRect();
 
           // We don't restore a collapsing item unless there is at least one collapsed item
           if (collapsedChild && size === collapsingChild.size) {
@@ -131,7 +134,14 @@ export const useDynamicCollapse = ({
         }
       }
     },
-    [collapseCollapsingItem]
+    [
+      collapseCollapsingItem,
+      dispatch,
+      managedItemsRef,
+      orientation,
+      ref,
+      restoreCollapsingItem,
+    ]
   );
 
   const handleResize = useCallback(
@@ -154,7 +164,7 @@ export const useDynamicCollapse = ({
         checkDynamicContent(true);
       }
     },
-    [checkDynamicContent]
+    [checkDynamicContent, managedItemsRef, orientation, ref]
   );
 
   const resetMeasurements = useCallback(() => {
@@ -162,7 +172,9 @@ export const useDynamicCollapse = ({
     const hasDynamicItems = hasUncollapsedDynamicItems(ref);
     if (hasDynamicItems) {
       const collapsingItem = nextItemToCollapse(managedItems);
-      collectionHook.dispatch({
+      setNewCollapsingItem(collapsingItem);
+
+      dispatch({
         type: "collapsing-item",
         overflowItem: collapsingItem,
       });
@@ -170,7 +182,14 @@ export const useDynamicCollapse = ({
     } else {
       return false;
     }
-  }, []);
+  }, [dispatch, managedItemsRef, ref]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (newCollapsingItem) {
+      const { current: managedItems } = managedItemsRef;
+      checkDynamicContent(false);
+    }
+  }, [checkDynamicContent, managedItemsRef, newCollapsingItem]);
 
   return {
     onResize: handleResize,

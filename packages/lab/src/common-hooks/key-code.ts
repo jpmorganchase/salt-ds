@@ -21,6 +21,7 @@ export const End = "End";
 export const PageUp = "PageUp";
 export const PageDown = "PageDown";
 export const Space = " ";
+export const Tab = "Tab";
 
 const actionKeys = new Set(["Enter", "Delete", " "]);
 const focusKeys = new Set(["Tab"]);

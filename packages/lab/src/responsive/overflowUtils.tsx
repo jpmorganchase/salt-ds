@@ -187,52 +187,6 @@ export const measureOverflowItems = (
   }
 };
 
-// export const measureChildNodes = (
-//   ref: ElementRef,
-//   dimension: heightOrWidth
-// ): OverflowItem<any>[] => {
-//   const { current: innerEl } = ref;
-//   const measurements = Array.from(innerEl!.childNodes).reduce(
-//     (list: OverflowItem<any>[], node) => {
-//       const childElement = node as HTMLElement;
-//       const {
-//         collapsible,
-//         collapsed = "false",
-//         collapsing = "false",
-//         index,
-//         priority = "1",
-//         overflowIndicator,
-//         overflowed,
-//         reclaimSpace,
-//       } = childElement.dataset ?? NO_DATA;
-//       if (index) {
-//         const size = measureElementSize(childElement, dimension);
-//         // if (overflowed) {
-//         //   delete childElement.dataset.overflowed;
-//         // }
-//         list.push({
-//           collapsible: asCollapsibleType(collapsible),
-//           collapsed: collapsed === "true",
-//           collapsing: collapsing === "true",
-//           fullSize: null,
-//           index: parseInt(index, 10),
-//           isOverflowIndicator: overflowIndicator === "true",
-//           label: getLabelForElement(childElement),
-//           overflowed: overflowed === "true",
-//           priority: parseInt(priority, 10),
-//           reclaimSpace: reclaimSpace === "true",
-//           size,
-//         });
-//       }
-//       return list;
-//     },
-//     []
-//   );
-
-//   // return measurements.sort(byDescendingPriority);
-//   return measurements;
-// };
-
 export const addAll = (sum: number, m: OverflowItem): number => sum + m.size;
 
 export const getElementForItem = (ref: ElementRef, item: OverflowItem) =>

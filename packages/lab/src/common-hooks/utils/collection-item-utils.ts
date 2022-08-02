@@ -10,6 +10,7 @@ import { ListItemGroup } from "../../list/ListItemGroup";
 import { ListItemHeader } from "../../list/ListItemHeader";
 import { itemToString as defaultItemToString } from "../itemToString";
 
+type NonFocusableElement = ReactElement<{ focusable: false }>;
 type DisablableElement = ReactElement<{ disabled: boolean }>;
 type SelectableElement = ReactElement<{ selectable: boolean }>;
 
@@ -42,6 +43,15 @@ export const isDisabled = (item: unknown): boolean => {
   }
 
   return false;
+};
+
+export const isFocusable = (item: unknown): boolean => {
+  if (isValidElement(item as NonFocusableElement)) {
+    if (childItemHasProp(item as NonFocusableElement, "focusable")) {
+      return (item as NonFocusableElement).props.focusable;
+    }
+  }
+  return true;
 };
 
 export const countChildItems = <Item>(

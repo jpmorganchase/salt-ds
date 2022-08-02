@@ -232,8 +232,9 @@ export const FormField = forwardRef(
       onFocus,
     });
 
-    const labelTop = labelPlacement === "top";
-    const labelLeft = labelPlacement === "left";
+    const hasLabel = label !== undefined;
+    const labelTop = hasLabel && labelPlacement === "top";
+    const labelLeft = hasLabel && labelPlacement === "left";
     const isWarning = validationState === "warning";
     const isError = validationState === "error";
     const focusClass = disableFocusRing
@@ -286,7 +287,7 @@ export const FormField = forwardRef(
               ref: rootRef,
             }}
           >
-            {!!label && (
+            {hasLabel && (
               <LabelComponent
                 {...LabelProps}
                 validationState={validationState}

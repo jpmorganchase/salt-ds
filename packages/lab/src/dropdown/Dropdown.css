@@ -17,5 +17,6 @@
 }
 
 .uitkDropdown-popup-component {
-  max-height: 300px;
+  /* why 300px ? */
+  max-height: var(--uitkDropdown-popup-maxHeight, 300px);
 }

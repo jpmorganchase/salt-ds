@@ -1,32 +1,32 @@
 import {
-  FormField,
-  FormFieldProps,
+  Button,
+  makePrefixer,
   useControlled,
   useIdMemo as useId,
 } from "@jpmorganchase/uitk-core";
+import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import React, {
-  forwardRef,
   ForwardedRef,
+  forwardRef,
+  MouseEvent,
+  ReactElement,
   useCallback,
   useRef,
-  ReactElement,
 } from "react";
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import { ToolbarField, ToolbarFieldProps } from "../toolbar-field";
+import { OverflowSeparator } from "./OverflowSeparator";
 
 import {
   useCollectionItems,
   useKeyboardNavigationPanel,
-} from "../common-hooks";
+} from "../../common-hooks";
 
-import { DropdownBase, DropdownBaseProps } from "./DropdownBase";
+import { DropdownBase, DropdownBaseProps } from "../../dropdown/DropdownBase";
 
-import "./DropdownPanel.css";
+import "./OverflowPanel.css";
 
-const withBaseName = makePrefixer("uitkDropdownPanel");
-
-const NullActivationIndicator = () => null;
+const withBaseName = makePrefixer("uitkOverflowPanel");
 
 export interface DropdownPanelProps extends DropdownBaseProps {
   /**
@@ -39,7 +39,7 @@ export interface DropdownPanelProps extends DropdownBaseProps {
   triggerButtonLabel?: string;
 }
 
-export const DropdownPanel = forwardRef(function DropdownPanel(
+export const OverflowPanel = forwardRef(function DropdownPanel(
   {
     children,
     className,
@@ -57,6 +57,7 @@ export const DropdownPanel = forwardRef(function DropdownPanel(
     id,
     children,
   });
+
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useControlled<boolean>({
     controlled: isOpenProp,
@@ -80,7 +81,7 @@ export const DropdownPanel = forwardRef(function DropdownPanel(
 
   const setPanelRef = useCallback((el: HTMLElement | null) => el?.focus(), []);
 
-  const handleItemClick = () => {
+  const handleItemClick = (evt: MouseEvent) => {
     // if (sourceItem.props["data-close-on-click"] !== false) closeMenu();
     setIsOpen(false);
     focusTrigger();
@@ -104,7 +105,6 @@ export const DropdownPanel = forwardRef(function DropdownPanel(
       onOpenChange={handleOpenChange}
       placement="bottom-end"
       ref={forwardedRef}
-      // onChange={handleChange}
     >
       <Button variant="secondary" ref={triggerRef}>
         {getTriggerButtonIcon()}
@@ -117,22 +117,27 @@ export const DropdownPanel = forwardRef(function DropdownPanel(
         {...keyboardHook.listProps}
       >
         {collectionHook.data.map((item) => {
-          const formFieldProps = {
-            ActivationIndicatorComponent: NullActivationIndicator,
-            emphasis: "low",
-            fullWidth: false,
-            id: item.id,
-            key: item.id,
-            onClick: handleItemClick,
-          } as FormFieldProps;
-          switch ((item.value as ReactElement).type) {
-            case FormField:
+          const { type } = item.value as ReactElement;
+          if (type === OverflowSeparator) {
+            return item.value;
+          } else {
+            const formFieldProps = {
+              id: item.id,
+              inOverflowPanel: true,
+              key: item.id,
+              onClick: handleItemClick,
+            } as ToolbarFieldProps;
+
+            if (type === ToolbarField) {
               return React.cloneElement(
                 item.value as ReactElement,
                 formFieldProps
               );
-            default:
-              return <FormField {...formFieldProps}>{item.value}</FormField>;
+            } else {
+              return (
+                <ToolbarField {...formFieldProps}>{item.value}</ToolbarField>
+              );
+            }
           }
         })}
       </div>

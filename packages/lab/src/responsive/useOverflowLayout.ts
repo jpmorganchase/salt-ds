@@ -127,6 +127,7 @@ export const useOverflowLayout = ({
       overflowContainerRef,
       orientation
     );
+
     measurement.current = contentWidthAndDepth;
     const { innerContainerSize } = contentWidthAndDepth;
     // TODO check this with complex combinations

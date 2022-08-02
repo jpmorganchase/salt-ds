@@ -9,6 +9,7 @@ export interface CollectionItemBase<T> {
   id: string;
   description?: string;
   disabled?: boolean;
+  focusable?: false | undefined;
   index?: number;
   label?: string;
   // Introduced null here just for the 'Empty' node in Tree - can we eliminate it ?

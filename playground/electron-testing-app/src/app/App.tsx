@@ -271,11 +271,7 @@ export const App = () => {
         Toggle Popper
       </Button>
       <Popper id="formfield1" anchorEl={anchorEl.current} open={openPopper}>
-        <FormField
-          data-close-on-click={false}
-          label="Range"
-          data-activation-indicator
-        >
+        <FormField data-close-on-click={false} label="Range">
           <Button data-testid="FormField">Test</Button>
         </FormField>
       </Popper>

@@ -7,13 +7,11 @@ import {
   StaticInputAdornment,
 } from "@jpmorganchase/uitk-core";
 import {
-  CloseIcon,
   AddIcon,
   ColumnChooserIcon,
   ExportIcon,
   FilterIcon,
   NotificationIcon,
-  SearchIcon,
   SettingsIcon,
   ShareIcon,
   SwapIcon,
@@ -49,22 +47,14 @@ const typeData = ["Open", "Close", "Discarted", "Resolved"];
 export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={1} itemPadding={3} imgSrc={imgSrc} itemWidthAuto>
     <Toolbar aria-label="Default toolbar" style={{ minWidth: "100px" }}>
-      <FormField
-        data-close-on-click={false}
-        label="Range"
-        data-activation-indicator
-      >
+      <FormField data-close-on-click={false} label="Range">
         <Dropdown
           defaultSelected={rangeData[0]}
           source={rangeData}
           style={{ width: 100 }}
         />
       </FormField>
-      <FormField
-        data-close-on-click={false}
-        label="Type"
-        data-activation-indicator
-      >
+      <FormField data-close-on-click={false} label="Type">
         <Dropdown
           defaultSelected={typeData[0]}
           source={typeData}
@@ -88,7 +78,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       aria-label="Tooltray alignment toolbar"
       style={{ minWidth: "100px" }}
     >
-      <FormField data-close-on-click={false} data-activation-indicator>
+      <FormField data-close-on-click={false}>
         <Input
           startAdornment={
             <StaticInputAdornment>
@@ -127,7 +117,6 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
         data-close-on-click={false}
         label="Status"
         style={{ width: "95px " }}
-        data-activation-indicator
       >
         <Dropdown defaultSelected={statusData[1]} source={statusData} />
       </FormField>

@@ -1,26 +1,25 @@
 import { useForkRef, useIdMemo } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import React, {
+import {
+  Children,
+  cloneElement,
   forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
+  ReactElement,
   useRef,
 } from "react";
 
-import { DropdownPanel } from "../dropdown";
+import { OverflowPanel } from "./overflow-panel/OverflowPanel";
+import { OverflowSeparator } from "./overflow-panel/OverflowSeparator";
 
-import useKeyboardNavigation from "./internal/useKeyboardNavigationDEPRECATED";
-import { renderToolbarItems } from "./internal/renderToolbarItems";
-import { ToolbarProps } from "./ToolbarProps";
-import Tooltray from "./Tooltray";
-import { ToolbarContext, ToolbarContextProps } from "./ToolbarContext";
 import {
-  isCollapsedOrCollapsing,
   isOverflowed,
   useOverflowCollectionItems,
   useOverflowLayout,
 } from "../responsive";
+import { renderToolbarItems } from "./internal/renderToolbarItems";
+import { ToolbarProps } from "./ToolbarProps";
+import { Tooltray } from "./Tooltray";
+import { TooltrayProps } from "./TooltrayProps";
 
 import "./Toolbar.css";
 
@@ -29,150 +28,81 @@ const classBase = "uitkToolbar";
 /**
  * The core Toolbar implementation, without the external wrapper provided by Toolbar.js
  */
-const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
-  props,
-  ref
-) {
-  const {
-    OverflowPanelProps,
-    OverflowButtonProps,
-    TooltipComponent,
-    "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    children,
-    className,
-    emphasis = "high",
-    id: idProp,
-    overflowButtonIcon,
-    overflowButtonLabel,
-    onHiddenItemsChange,
-    responsive = true,
-    disabled = false,
-    orientation = "horizontal",
-    overflowButtonRef: overflowButtonRefProp = null,
-    wrapChildrenWithFormFields = true,
-    ...restProp
-  } = props;
+export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
+  function Toolbar(props, ref) {
+    const {
+      TooltipComponent,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      children,
+      className,
+      id: idProp,
+      overflowButtonIcon,
+      overflowButtonLabel,
+      responsive = true,
+      disabled = false,
+      orientation = "horizontal",
+      ...restProp
+    } = props;
 
-  const toolbarId = useIdMemo(idProp);
-  const containerRef = useRef<HTMLDivElement>(null);
+    const toolbarId = useIdMemo(idProp);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-  const setContainerRef = useForkRef(ref, containerRef);
+    const setContainerRef = useForkRef(ref, containerRef);
 
-  const collectionHook = useOverflowCollectionItems({
-    children,
-    id: toolbarId,
-    orientation,
-    label: "Toolbar",
-  });
-
-  const [innerContainerRef] = useOverflowLayout({
-    collectionHook,
-    id: toolbarId,
-    orientation,
-    label: "Toolbar",
-  });
-
-  const overflowedItems = collectionHook.data.filter(isOverflowed);
-  const collapseItems = collectionHook.data.filter(isCollapsedOrCollapsing);
-
-  useEffect(() => {
-    onHiddenItemsChange && onHiddenItemsChange(overflowedItems);
-  }, [overflowedItems, onHiddenItemsChange]);
-
-  const isCollapsed = useCallback((id: string) => {
-    return false;
-  }, []);
-
-  const isInOverflowPanel = useCallback((id: string) => {
-    return false;
-  }, []);
-
-  const toolbarContext: ToolbarContextProps = useMemo(
-    () => ({
+    const collectionHook = useOverflowCollectionItems({
+      children,
+      id: toolbarId,
       orientation,
-      disabled,
-      isCollapsed,
-      isInOverflowPanel,
-    }),
-    [orientation, disabled]
-  );
+      label: "Toolbar",
+    });
 
-  // const alignedItems = tools.filter(
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   (item: any) => item.props["data-pad-end"] || item.props["data-pad-start"]
-  // );
+    const [innerContainerRef] = useOverflowLayout({
+      collectionHook,
+      id: toolbarId,
+      orientation,
+      label: "Toolbar",
+    });
 
-  const overflowMenuItems = overflowedItems.map(
-    (i) => collectionHook.data[i.index].element
-  );
+    const overflowedItems = collectionHook.data.filter(isOverflowed);
 
-  const insidePanelItems = useMemo(
-    () =>
-      overflowedItems.map((i, index) => ({
-        index: i.index,
-        isTooltray: overflowMenuItems[index]?.type === Tooltray,
-      })),
-    [overflowMenuItems, overflowedItems]
-  );
-
-  const focusableItems = useRef<HTMLElement[]>([]);
-  const visibleItems = useRef<HTMLElement[]>([]);
-
-  const getFocusableItems = (items: HTMLElement[]): HTMLElement[] =>
-    items.reduce((focusable: HTMLElement[], item: HTMLElement) => {
-      const focusTarget: HTMLElement | null =
-        item.querySelector('[tabindex = "0"]') || item.querySelector("input");
-      if (focusTarget) {
-        focusable.push(focusTarget);
-      }
-      return focusable;
-    }, []);
-
-  const setToolItems = useCallback(() => {
-    const container = innerContainerRef.current;
-    if (container) {
-      focusableItems.current = getFocusableItems(
-        Array.from(container.querySelectorAll(".toolbar-item, .tooltray-item"))
-      );
-
-      visibleItems.current = Array.from(container.children).reduce(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (visible: HTMLElement[], child: any, index): HTMLElement[] => {
-          if (!insidePanelItems.some((item) => item.index === index)) {
-            // spread if it is a tooltray
-            const trayItems: HTMLElement[] = Array.from(
-              child.querySelectorAll('[tabindex = "0"], input')
-            );
-            if (trayItems.length > 0) {
-              trayItems.map((item: HTMLElement) => visible.push(item));
-            } else {
-              if (child.getAttribute("tabindex") === "0") {
-                visible.push(child);
-              }
-            }
+    const overflowMenuItems = overflowedItems.reduce<ReactElement[]>(
+      (items, item, i, arr) => {
+        const { element, id } = item;
+        if (element.type === Tooltray) {
+          const tooltrayProps = element.props as TooltrayProps;
+          const nestedElements = tooltrayProps.children as ReactElement[];
+          items.push(
+            ...Children.map(nestedElements, (el) =>
+              cloneElement(el, {
+                "data-is-inside-panel": true,
+                key: id,
+              })
+            )
+          );
+          if (i < arr.length - 1) {
+            items.push(<OverflowSeparator key={`separator-${i}`} />);
           }
-          return visible;
-        },
-        []
-      );
-    }
-  }, [innerContainerRef, insidePanelItems]);
+        } else {
+          items.push(
+            cloneElement(element, {
+              key: id,
+              "data-is-inside-panel": true,
+            })
+          );
+        }
+        return items;
+      },
+      [] as ReactElement[]
+    );
 
-  useEffect(() => {
-    setToolItems();
-  }, [setToolItems, insidePanelItems]);
+    const overflowIndicator = collectionHook.data.find(
+      (i) => i.isOverflowIndicator
+    );
 
-  const handleKeyDown = useKeyboardNavigation(visibleItems);
-
-  const overflowIndicator = collectionHook.data.find(
-    (i) => i.isOverflowIndicator
-  );
-
-  //TODO when we drive this from the overflowItems, the overflowIndicator will
-  // be an overflowItem
-  return (
-    <ToolbarContext.Provider value={toolbarContext}>
+    //TODO when we drive this from the overflowItems, the overflowIndicator will
+    // be an overflowItem
+    return (
       <div
         aria-label={ariaLabel}
         // Using `classnames` to join string together. User may want to provide
@@ -182,9 +112,8 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
         aria-orientation={orientation}
         className={cx(classBase, className, {
           [`${classBase}-disabled`]: disabled,
+          // TODO whats this for ?
           [`${classBase}-nonResponsive`]: !responsive,
-          uitkEmphasisLow: emphasis === "low",
-          uitkEmphasisHigh: emphasis === "high",
         })}
         id={toolbarId}
         ref={setContainerRef}
@@ -194,36 +123,24 @@ const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(function Toolbar(
         <div
           className="Responsive-inner"
           ref={innerContainerRef}
-          data-collapsing={
-            collapseItems.findIndex((item) => item.collapsing) !== -1
-          }
+          data-collapsing={collectionHook.data.some((item) => item.collapsing)}
         >
-          {renderToolbarItems(
-            collectionHook,
-            handleKeyDown,
-            overflowedItems,
-            collapseItems,
-            orientation,
-            wrapChildrenWithFormFields
-          )}
+          {renderToolbarItems(collectionHook, overflowedItems, orientation)}
           {overflowIndicator ? (
-            <DropdownPanel
-              className={cx("uitkToolbarField", "toolbar-item")}
+            <OverflowPanel
+              className={cx("uitkToolbarField")}
               data-index={collectionHook.data.length}
               data-overflow-indicator
               data-priority={1}
               id={overflowIndicator.id}
               triggerButtonIcon={overflowButtonIcon}
               triggerButtonLabel={overflowButtonLabel}
-              // onChange={handleChange}
             >
               {overflowMenuItems}
-            </DropdownPanel>
+            </OverflowPanel>
           ) : null}
         </div>
       </div>
-    </ToolbarContext.Provider>
-  );
-});
-
-export default Toolbar;
+    );
+  }
+);

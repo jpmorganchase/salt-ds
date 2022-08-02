@@ -377,44 +377,6 @@ const removeItem = (
   return items.slice(0, indexPosition).concat(items.slice(indexPosition + 1));
 };
 
-// const insertItem = (
-//   items: OverflowItem<any>[],
-//   item: OverflowItem,
-//   indexPosition: number
-// ) => {
-//   const newItems: OverflowItem<any>[] = [];
-//   for (let i = 0; i < items.length; i++) {
-//     if (i < indexPosition) {
-//       newItems.push(items[i]);
-//     } else {
-//       if (i === indexPosition) {
-//         newItems.push(item);
-//       }
-//       newItems.push({
-//         ...items[i],
-//         index: i + 1,
-//       });
-//     }
-//   }
-//   return newItems;
-// };
-
-// const addChildItem = (
-//   items: OverflowItem<any>[],
-//   { idRoot, element, indexPosition = items.length }: AddChildAction
-// ): OverflowItem[] => {
-//   const newItem = childItem(
-//     element,
-//     `${idRoot}-${items.length}`,
-//     indexPosition
-//   );
-//   if (indexPosition === items.length) {
-//     return items.concat(newItem);
-//   } else {
-//     return insertItem(items, newItem, indexPosition);
-//   }
-// };
-
 const addOverflowIndicator = (
   items: OverflowItem<any>[],
   { overflowItem }: SingleItemAction
@@ -480,9 +442,6 @@ export const overflowReducer: OverflowReducer = (state, action) => {
 
     case "add-source-item":
       return addSourceItem(state, action);
-
-    // case "add-child-item":
-    //   return addChildItem(state, action);
 
     case "remove-item":
       return removeItem(state, action);

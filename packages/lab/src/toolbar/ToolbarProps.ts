@@ -1,12 +1,15 @@
 import { TooltipProps } from "@jpmorganchase/uitk-core";
 import { FC, HTMLAttributes, ReactNode, Ref } from "react";
-import { OverflowButtonProps, OverflowPanelProps } from "../responsive";
 
 export type OrientationShape = "vertical" | "horizontal";
 
+export interface ToolbarAlignmentProps {
+  alignCenter?: true | undefined;
+  alignEnd?: true | undefined;
+  alignStart?: true | undefined;
+}
+
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
-  OverflowButtonProps?: Partial<OverflowButtonProps>;
-  OverflowPanelProps?: Partial<OverflowPanelProps>;
   /**
    * Used by custom elements to render a custom tooltip
    */
@@ -19,15 +22,6 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * Disable all toolbar items
    */
   disabled?: boolean;
-  /**
-   * Emphasis determines the background of Toolbar 'low', 'medium' or 'high' (default)
-   */
-  emphasis?: "low" | "high";
-  /**
-   * TODO
-   * Callback for when the number of visible items changes
-   */
-  onHiddenItemsChange?: Function;
   /**
    * The orientation of the component
    */
@@ -51,6 +45,4 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * The default is `true`. Set it to `false` to revert back to non-responsive version.
    */
   responsive?: boolean;
-
-  wrapChildrenWithFormFields?: boolean;
 }

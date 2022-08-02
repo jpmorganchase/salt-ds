@@ -1,16 +1,18 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
 import { KeyboardEvent, useCallback, useMemo, useRef } from "react";
-import { ArrowDown, ArrowUp, isNavigationKey } from "./key-code";
+import { Tab } from "./key-code";
 import { CollectionItem } from "./collectionTypes";
 import { NavigationProps, NavigationHookResult } from "./navigationTypes";
 
+type NavigationDirection = "FWD" | "BWD";
+
 function nextItemIdx(
   count: number,
-  key: string,
+  direction: NavigationDirection,
   idx: number,
   cycleFocus = false
 ) {
-  if (key === ArrowUp) {
+  if (direction === "BWD") {
     if (idx > 0) {
       return idx - 1;
     } else {
@@ -30,7 +32,7 @@ function nextItemIdx(
 const isLeaf = <Item>(item: CollectionItem<Item>): boolean =>
   !item.header && !item.childNodes;
 const isFocusable = <Item>(item: CollectionItem<Item>) =>
-  isLeaf(item) || item.expanded !== undefined;
+  (isLeaf(item) || item.expanded !== undefined) && item.focusable !== false;
 
 // we need a way to set highlightedIdx when selection changes
 export const useKeyboardNavigationPanel = ({
@@ -65,14 +67,27 @@ export const useKeyboardNavigationPanel = ({
   );
 
   const nextFocusableItemIdx = useCallback(
-    (key = ArrowDown, idx = key === ArrowDown ? -1 : indexPositions.length) => {
-      let nextIdx = nextItemIdx(indexPositions.length, key, idx, cycleFocus);
+    (
+      direction: NavigationDirection = "FWD",
+      idx = direction === "FWD" ? -1 : indexPositions.length
+    ) => {
+      let nextIdx = nextItemIdx(
+        indexPositions.length,
+        direction,
+        idx,
+        cycleFocus
+      );
       while (
-        ((key === ArrowDown && nextIdx < indexPositions.length) ||
-          (key === ArrowUp && nextIdx > 0)) &&
+        ((direction === "FWD" && nextIdx < indexPositions.length) ||
+          (direction === "BWD" && nextIdx > 0)) &&
         !isFocusable(indexPositions[nextIdx])
       ) {
-        nextIdx = nextItemIdx(indexPositions.length, key, nextIdx, cycleFocus);
+        nextIdx = nextItemIdx(
+          indexPositions.length,
+          direction,
+          nextIdx,
+          cycleFocus
+        );
       }
       return nextIdx;
     },
@@ -94,7 +109,9 @@ export const useKeyboardNavigationPanel = ({
 
   const navigateChildItems = useCallback(
     (e: React.KeyboardEvent) => {
-      const nextIdx = nextFocusableItemIdx(e.key, highlightedIdx);
+      const direction: NavigationDirection = e.shiftKey ? "BWD" : "FWD";
+      const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
+      console.log(`nextFocusableItem from ${highlightedIdx} is ${nextIdx}`);
       if (nextIdx !== highlightedIdx) {
         setHighlightedIndex(nextIdx);
         // What exactly is the point of this ?
@@ -111,8 +128,7 @@ export const useKeyboardNavigationPanel = ({
 
   const handleKeyDown = useCallback(
     (evt: KeyboardEvent) => {
-      console.log("useKeyboardNavigationPanel handleKeyDown");
-      if (indexPositions.length > 0 && isNavigationKey(evt)) {
+      if (indexPositions.length > 0 && evt.key === "Tab") {
         evt.preventDefault();
         evt.stopPropagation();
         keyboardNavigation.current = true;

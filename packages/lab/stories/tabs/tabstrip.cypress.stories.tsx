@@ -3,20 +3,20 @@ import { ComponentStory } from "@storybook/react";
 
 import { Tabstrip, TabstripProps } from "@jpmorganchase/uitk-lab";
 
-import { AdjustableFlexbox, FlexboxProps } from "../story-components";
+import { AdjustableFlexbox, AsjustableFlexboxProps } from "../story-components";
 
 export default {
   title: "Lab/Tabs/Cypress Test Fixtures",
   component: Tabstrip,
 };
 
-type TabstripStory = ComponentStory<FC<FlexboxProps & TabstripProps>>;
+type TabstripStory = ComponentStory<FC<AsjustableFlexboxProps & TabstripProps>>;
 
 export const SimpleTabstrip: TabstripStory = ({
   width = 600,
   source: sourceProp,
   ...tabstripProps
-}: FlexboxProps & TabstripProps) => {
+}: AsjustableFlexboxProps & TabstripProps) => {
   const [tabs] = useState([
     "Home",
     "Transactions",
@@ -41,7 +41,7 @@ export const SimpleTabstripAddRemoveTab: TabstripStory = ({
   source: sourceProp,
   promptForNewTabName = true,
   ...tabstripProps
-}: FlexboxProps & TabstripProps) => {
+}: AsjustableFlexboxProps & TabstripProps) => {
   const [tabs, setTabs] = useState([
     "Home",
     "Transactions",
