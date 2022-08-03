@@ -34,7 +34,6 @@ export interface EditableLabelProps {
   value?: string;
 }
 
-//TODO do we need forwardRef ?
 export const EditableLabel = forwardRef(function EditableLabel(
   {
     className: classNameProp,

@@ -1,6 +1,5 @@
-import React, { RefObject, useRef } from "react";
-import classnames from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import React, { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
 
@@ -28,7 +27,7 @@ export const TabActivationIndicator: React.FC<TabActivationIndicatorProps> = ({
   });
 
   return (
-    <div className={classnames(withBaseName())} ref={rootRef}>
+    <div className={withBaseName()} ref={rootRef}>
       {hideThumb === false ? (
         <div className={withBaseName("thumb")} style={style} />
       ) : null}

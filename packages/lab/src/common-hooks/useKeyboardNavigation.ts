@@ -12,10 +12,11 @@ import {
   ArrowUp,
   End,
   Home,
+  isCharacterKey,
   isNavigationKey,
   PageDown,
   PageUp,
-} from "./key-code";
+} from "./keyUtils";
 import { CollectionItem } from "./collectionTypes";
 import { NavigationHookProps, NavigationHookResult } from "./navigationTypes";
 import {
@@ -144,6 +145,7 @@ export const useKeyboardNavigation = <
   Item,
   Selection extends SelectionStrategy
 >({
+  containerRef,
   defaultHighlightedIndex = -1,
   disableHighlightOnFocus,
   highlightedIndex: highlightedIndexProp,
@@ -180,10 +182,7 @@ export const useKeyboardNavigation = <
       let result: number | undefined;
       if (id) {
         const itemEl = document.getElementById(id);
-        let containerEl = itemEl?.parentElement;
-        if (containerEl?.className.match(/scrolling/)) {
-          containerEl = containerEl.parentElement;
-        }
+        const { current: containerEl } = containerRef;
         if (itemEl && containerEl) {
           result =
             e.key === PageDown
@@ -193,7 +192,7 @@ export const useKeyboardNavigation = <
       }
       return result ?? index;
     },
-    [indexPositions]
+    [containerRef, indexPositions]
   );
 
   const nextFocusableItemIdx = useCallback(
@@ -222,8 +221,9 @@ export const useKeyboardNavigation = <
         return idx;
       }
       while (
-        ((key === ArrowDown && nextIdx < indexPositions.length) ||
-          (key === ArrowUp && nextIdx > 0)) &&
+        (((key === ArrowDown || key === Home) &&
+          nextIdx < indexPositions.length) ||
+          ((key === ArrowUp || key === End) && nextIdx > 0)) &&
         !isFocusable(indexPositions[nextIdx])
       ) {
         nextIdx = nextItemIdx(indexPositions.length, key, nextIdx);
@@ -294,6 +294,10 @@ export const useKeyboardNavigation = <
           ? await nextPageItemIdx(e, highlightedIndex)
           : nextFocusableItemIdx(e.key, highlightedIndex);
 
+      console.log(
+        `useKeyboardNavigation navigateChildItems highlightedIndex = ${highlightedIndex} nextIdx = ${nextIdx}`
+      );
+
       if (nextIdx !== highlightedIndex) {
         setHighlightedIndex(nextIdx, true);
       }
@@ -318,6 +322,8 @@ export const useKeyboardNavigation = <
         e.stopPropagation();
         keyboardNavigation.current = true;
         void navigateChildItems(e);
+      } else if (isCharacterKey(e)) {
+        keyboardNavigation.current = true;
       }
     },
     [indexPositions, navigateChildItems]

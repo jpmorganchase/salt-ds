@@ -2,65 +2,20 @@ import { useControlled, useFormFieldProps } from "@jpmorganchase/uitk-core";
 import {
   FocusEvent,
   HTMLAttributes,
+  KeyboardEvent,
   MouseEvent,
   useCallback,
   useRef,
-  KeyboardEvent,
-  ReactElement,
-  RefObject,
   useState,
 } from "react";
-import { useClickAway } from "./useClickAway";
 import {
   measurements,
   useResizeObserver,
   WidthOnly,
 } from "../responsive/useResizeObserver";
-
+import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
+import { useClickAway } from "./useClickAway";
 const NO_OBSERVER: string[] = [];
-
-export interface DropdownHookProps {
-  ariaLabelledBy?: string;
-  defaultIsOpen?: boolean;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  id: string;
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
-  onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
-  openOnFocus?: boolean;
-  popupComponent: ReactElement;
-  popupWidth?: number;
-  rootRef: RefObject<HTMLDivElement>;
-  width?: number | string;
-}
-
-export interface DropdownHookTriggerProps {
-  "aria-expanded"?: boolean;
-  "aria-labelledby"?: string;
-  "aria-owns"?: string;
-  id: string;
-  onClick?: (e: MouseEvent) => void;
-  onFocus?: (e: FocusEvent) => void;
-  role: string;
-  onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
-  style?: any;
-}
-
-// We don't know what the popup component will be, but for those that
-// support a width prop ...
-interface ComponentProps extends HTMLAttributes<HTMLElement> {
-  width?: number | string;
-}
-
-// TODO add onButtonClick
-export interface DropdownHookResult {
-  componentProps: ComponentProps;
-  isOpen: boolean;
-  label: string;
-  popperRef: (node: HTMLElement | null) => void;
-  triggerProps: DropdownHookTriggerProps;
-}
 
 export const useDropdownBase = ({
   ariaLabelledBy: ariaLabelledByProp,

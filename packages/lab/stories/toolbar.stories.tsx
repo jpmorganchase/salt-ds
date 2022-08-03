@@ -37,10 +37,11 @@ import {
   Toolbar,
   ToolbarButton,
   ToolbarField,
+  ToolbarProps,
   Tooltray,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { CSSProperties, Fragment, useState } from "react";
+import { CSSProperties, MouseEvent, useState } from "react";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
 
@@ -53,7 +54,7 @@ export default {
 
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
-export const DefaultToolbar = ({ initialWidth = 450 }) => {
+export const DefaultToolbar: Story = () => {
   const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",
@@ -98,17 +99,17 @@ export const DefaultToolbar = ({ initialWidth = 450 }) => {
   );
 };
 
-export const DefaultAdjustable = ({ initialWidth = 600 }) => {
+export const DefaultAdjustable: Story<AdjustableFlexboxProps> = ({
+  width = 600,
+}) => {
   return (
-    <AdjustableFlexbox height={420} width={initialWidth}>
+    <AdjustableFlexbox height={420} width={width}>
       <DefaultToolbar />
     </AdjustableFlexbox>
   );
 };
 
-export const TooltrayAlignment = () => {
-  const [status, setStatus] = useState(statusData[0]);
-
+export const TooltrayAlignment: Story = () => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={800}>
       <Toolbar
@@ -160,7 +161,6 @@ export const TooltrayAlignment = () => {
           <Dropdown
             defaultSelected={statusData[0]}
             source={statusData}
-            onSelect={(_, item) => setStatus(item)}
             style={{ width: 95 }}
           />
         </ToolbarField>
@@ -185,18 +185,14 @@ export const TooltrayAlignment = () => {
   );
 };
 
-export const TooltrayCollapseOrder = ({
-  initialWidth = 900,
-  ...toolbarProps
+export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
+  width = 900,
 }) => {
-  const handleToolbarButtonClick = (evt) => {
-    console.log(`SimpleToolbar handleClick ${evt.currentTarget.textContent}`);
-  };
   const viewsData = ["No view selected", "Outstanding", "Closed"];
   const [view, setView] = useState(viewsData[0]);
 
   return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={1000}>
+    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
       <Toolbar style={{ minWidth: "100px" }}>
         <Tooltray
           aria-label="views tooltray"
@@ -315,18 +311,14 @@ export const TooltrayCollapseOrder = ({
     </AdjustableFlexbox>
   );
 };
-export const ToolbarOverflowLargeOverflowIndicator = ({
-  initialWidth = 900,
-  ...toolbarProps
-}) => {
-  const handleToolbarButtonClick = (evt) => {
-    console.log(`SimpleToolbar handleClick ${evt.currentTarget.textContent}`);
-  };
+export const ToolbarOverflowLargeOverflowIndicator: Story<
+  AdjustableFlexboxProps
+> = ({ width = 900 }) => {
   const viewsData = ["No view selected", "Outstanding", "Closed"];
   const [view, setView] = useState(viewsData[0]);
 
   return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={500}>
+    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
       <Toolbar style={{ minWidth: "100px" }} overflowButtonLabel="Views">
         <ToolbarField label="Views" labelPlacement="left">
           <Dropdown
@@ -408,8 +400,6 @@ const ToolbarWithInstantCollapseTooltrays = () => {
 
 export const TooltrayInstantCollapse: Story<AdjustableFlexboxProps> = ({
   width = 1000,
-}: {
-  width: number;
 }) => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
@@ -471,8 +461,6 @@ const ToolbarWithDynamicCollapseTooltrays = () => {
 
 export const TooltrayDynamicCollapse: Story<AdjustableFlexboxProps> = ({
   width = 1000,
-}: {
-  width: number;
 }) => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
@@ -524,8 +512,6 @@ const ToolbarWithNonCollapsingTooltrays = () => {
 
 export const TooltrayNonCollapsingTooltrays: Story<AdjustableFlexboxProps> = ({
   width = 1000,
-}: {
-  width: number;
 }) => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
@@ -536,7 +522,6 @@ export const TooltrayNonCollapsingTooltrays: Story<AdjustableFlexboxProps> = ({
 
 export const TooltrayCollapseComparison = () => {
   const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
 
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={1000}>
@@ -552,12 +537,15 @@ export const TooltrayCollapseComparison = () => {
   );
 };
 
-export const SimpleToolbar = ({ initialWidth = 320, ...toolbarProps }) => {
-  const handleToolbarButtonClick = (evt) => {
+export const SimpleToolbar: Story<AdjustableFlexboxProps & ToolbarProps> = ({
+  width = 320,
+  ...toolbarProps
+}) => {
+  const handleToolbarButtonClick = (evt: MouseEvent) => {
     console.log(`SimpleToolbar handleClick ${evt.currentTarget.textContent}`);
   };
   return (
-    <AdjustableFlexbox height={200} width={initialWidth}>
+    <AdjustableFlexbox height={200} width={width}>
       <Toolbar {...toolbarProps}>
         <ToolbarButton onClick={handleToolbarButtonClick}>
           Export <ExportIcon />
@@ -598,13 +586,12 @@ export const SimpleToolbarOverflowLabel = ({ overflowLabel = "more ..." }) => (
   <SimpleToolbar overflowButtonLabel={overflowLabel} />
 );
 
-export const SimpleToolbarCollapsibleItems = ({
-  initialWidth = 500,
-  ...toolbarProps
+export const SimpleToolbarCollapsibleItems: Story<AdjustableFlexboxProps> = ({
+  width = 500,
 }) => {
   return (
-    <AdjustableFlexbox height={200} width={initialWidth}>
-      <Toolbar {...toolbarProps} id="toolbar-simple-collapsible">
+    <AdjustableFlexbox height={200} width={width}>
+      <Toolbar id="toolbar-simple-collapsible">
         <ToolbarButton variant="secondary" data-collapsible="instant">
           <ExportIcon /> Export
         </ToolbarButton>
@@ -912,7 +899,7 @@ export const VerticalToolbar = () => {
   );
 };
 
-export const MockAppHeader = () => {
+export const MockAppHeader: Story = () => {
   const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
   return (
@@ -924,14 +911,9 @@ export const MockAppHeader = () => {
         overflowButtonLabel="More"
         data-overflow-left
         overflowButtonIcon={<MenuIcon />}
-        OverflowButtonProps={{ align: "start" }}
+        overflowButtonPlacement="start"
       >
-        <Tooltray
-          id="1"
-          data-priority={1}
-          aria-label="left dynamic tooltray"
-          // overflowButtonLabel="left"
-        >
+        <Tooltray id="1" data-priority={1} aria-label="left dynamic tooltray">
           <ToolbarButton id="emailButton" label="Email">
             <MessageIcon />
           </ToolbarButton>
@@ -947,7 +929,6 @@ export const MockAppHeader = () => {
           aria-label="left dynamic tooltray"
           data-align-center
           data-priority={2}
-          // overflowButtonLabel="left"
         >
           <ToolbarButton id="emailButton" label="Email">
             <MessageIcon />
@@ -971,7 +952,6 @@ export const MockAppHeader = () => {
           data-collapsible="dynamic"
           data-reclaim-space
           data-priority={1}
-          // overflowButtonLabel="Right"
         >
           <ToolbarButton id="messageButton" label="Tear Out">
             <TearOutIcon />

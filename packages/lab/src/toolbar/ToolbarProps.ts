@@ -34,10 +34,11 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * Text to display next to overflow menu icon
    */
   overflowButtonLabel?: string;
+
   /**
-   * Use this to access overflow button element
+   * Placement of the Overflow, default is 'end'
    */
-  overflowButtonRef?: Ref<HTMLDivElement>;
+  overflowButtonPlacement?: "start" | "end";
   /**
    * If `true`, toolbar will adapt to the size of its container. It adds and removes toolbar buttons
    * from the overflow menu automatically as the size of the container changes.

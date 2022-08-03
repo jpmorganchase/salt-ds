@@ -1,27 +1,28 @@
 import { useForkRef, useIdMemo as useId } from "@jpmorganchase/uitk-core";
 import {
   cloneElement,
-  forwardRef,
   ForwardedRef,
+  forwardRef,
   ReactElement,
   useCallback,
   useRef,
 } from "react";
 
-import { List } from "../list/List";
-import { ListProps } from "../list/listTypes";
-import { DropdownBase, DropdownBaseProps } from "./DropdownBase";
-import { DropdownButton } from "./DropdownButton";
-import { useDropdown } from "./useDropdown";
 import {
   CollectionItem,
   CollectionProvider,
   itemToString as defaultItemToString,
-  useCollectionItems,
-  SelectionStrategy,
   SelectionProps,
+  SelectionStrategy,
   SingleSelectionStrategy,
+  useCollectionItems,
 } from "../common-hooks";
+import { List } from "../list/List";
+import { ListProps } from "../list/listTypes";
+import { DropdownBase } from "./DropdownBase";
+import { DropdownButton } from "./DropdownButton";
+import { DropdownBaseProps } from "./dropdownTypes";
+import { useDropdown } from "./useDropdown";
 
 export interface DropdownProps<
   Item = "string",
@@ -104,17 +105,17 @@ export const Dropdown = forwardRef(function Dropdown<
 
   const collectionItemsToItem = useCallback(
     (
-      sel?: CollectionItem<Item> | null | CollectionItem<Item>[]
+      itemOrItems?: CollectionItem<Item> | null | CollectionItem<Item>[]
     ):
       | undefined
       | (Selection extends SingleSelectionStrategy ? Item | null : Item[]) => {
       type returnType = Selection extends SingleSelectionStrategy
         ? Item | null
         : Item[];
-      if (Array.isArray(sel)) {
-        return sel.map((i) => i.value) as returnType;
-      } else if (sel) {
-        return sel.value as returnType;
+      if (Array.isArray(itemOrItems)) {
+        return itemOrItems.map((i) => i.value) as returnType;
+      } else if (itemOrItems) {
+        return itemOrItems.value as returnType;
       }
     },
     []

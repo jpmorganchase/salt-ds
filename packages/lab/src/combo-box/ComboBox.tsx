@@ -3,20 +3,20 @@ import {
   InputProps,
   useIdMemo as useId,
 } from "@jpmorganchase/uitk-core";
-import { forwardRef, ForwardedRef, ReactElement, useCallback } from "react";
+import { ForwardedRef, forwardRef, ReactElement, useCallback } from "react";
 
-import { List, ListProps } from "../list";
 import { DropdownBase, DropdownBaseProps } from "../dropdown";
+import { List, ListProps } from "../list";
 
-import { useCombobox } from "./useCombobox";
 import {
   CollectionItem,
   CollectionProvider,
-  useCollectionItems,
-  SelectionStrategy,
   SelectionProps,
+  SelectionStrategy,
   SingleSelectionStrategy,
+  useCollectionItems,
 } from "../common-hooks";
+import { useCombobox } from "./useCombobox";
 
 export interface ComboBoxProps<
   Item = string,
@@ -75,7 +75,6 @@ export const ComboBox = forwardRef(function Combobox<
     stringToItem,
     value: valueProp,
     width = 180,
-    // TODO why is onKeyDown in here
     ...props
   }: ComboBoxProps<Item, Selection>,
   forwardedRef: ForwardedRef<HTMLDivElement>

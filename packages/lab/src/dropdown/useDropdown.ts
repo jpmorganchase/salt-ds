@@ -1,7 +1,7 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
 import { useCallback, useMemo } from "react";
 import { ListHookProps, ListHookResult, useList } from "../list";
-import { DropdownHookResult, DropdownHookProps } from "./useDropdownBase";
+import { DropdownHookResult, DropdownHookProps } from "./dropdownTypes";
 import {
   CollectionItem,
   itemToString as defaultItemToString,

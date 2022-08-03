@@ -8,5 +8,4 @@ export function isSelected<Item>(
     ? selected.includes(item)
     : selected === item;
   return isSelected;
-  // return Array.isArray(selected) ? selected.includes(item) : selected === item;
 }

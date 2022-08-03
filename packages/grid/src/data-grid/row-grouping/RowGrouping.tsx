@@ -10,10 +10,9 @@ import {
   RowGroupingModel,
 } from "./RowGroupingModel";
 import { useMemo } from "react";
-import { SelectionChangeHandler } from "@jpmorganchase/uitk-lab";
 import { AddIcon, DeleteIcon } from "@jpmorganchase/uitk-icons";
 import "./RowGrouping.css";
-import { Dropdown } from "@jpmorganchase/uitk-lab";
+import { Dropdown, SelectionChangeHandler } from "@jpmorganchase/uitk-lab";
 
 const withBaseName = makePrefixer("uitkDataGridRowGrouping");
 

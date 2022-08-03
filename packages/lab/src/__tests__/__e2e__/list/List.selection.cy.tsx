@@ -8,8 +8,6 @@ const ITEMS: ItemWithLabel[] = [
   { label: "list item 4" },
 ];
 
-const SELECTED = "aria-selected";
-
 ["source", "declarative"].forEach((listType) => {
   describe(`A ${listType} List with a selected item`, () => {
     const isDeclarative = listType === "declarative";
@@ -43,7 +41,7 @@ const SELECTED = "aria-selected";
     });
 
     it("clicking the selected item should not change selected item", () => {
-      cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
+      cy.findAllByRole("option").eq(1).should("have.ariaSelected");
       cy.findByText("list item 2").realHover().realClick();
       cy.get("@selectionChangeHandler").should("not.have.been.called");
       cy.get("@selectHandler").should(
@@ -54,8 +52,8 @@ const SELECTED = "aria-selected";
     });
     it("clicking another item should change selected item", () => {
       cy.findByText("list item 3").realHover().realClick();
-      cy.findAllByRole("option").eq(1).should("not.have.attr", SELECTED);
-      cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
+      cy.findAllByRole("option").eq(1).should("not.have.ariaSelected");
+      cy.findAllByRole("option").eq(2).should("have.ariaSelected");
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
@@ -104,7 +102,7 @@ const SELECTED = "aria-selected";
     });
 
     it("clicking the selected item should not change selected item", () => {
-      cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
+      cy.findAllByRole("option").eq(1).should("have.ariaSelected");
       cy.findByText("list item 2").realClick();
       cy.get("@selectionChangeHandler").should("not.have.been.called");
       cy.get("@selectHandler").should("not.have.been.called");
@@ -112,8 +110,8 @@ const SELECTED = "aria-selected";
 
     it("clicking another item should not change selected item", () => {
       cy.findByText("list item 3").realClick();
-      cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
-      cy.findAllByRole("option").eq(2).should("not.have.attr", SELECTED);
+      cy.findAllByRole("option").eq(1).should("have.ariaSelected");
+      cy.findAllByRole("option").eq(2).should("not.have.ariaSelected");
       cy.get("@selectionChangeHandler").should("not.have.been.called");
       cy.get("@selectHandler").should("not.have.been.called");
     });
@@ -160,7 +158,7 @@ const SELECTED = "aria-selected";
     describe("when selected item is clicked", () => {
       it("should deselect that item", () => {
         cy.findByText("list item 2").realHover().realClick();
-        cy.findAllByRole("option").eq(1).should("not.have.attr", SELECTED);
+        cy.findAllByRole("option").eq(1).should("not.have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -223,8 +221,8 @@ const SELECTED = "aria-selected";
 
         cy.findByText("list item 3").realHover().realClick();
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -264,9 +262,9 @@ const SELECTED = "aria-selected";
 
         cy.findByText("list item 4").realHover().realClick();
 
-        cy.findAllByRole("option").eq(0).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("not.have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("not.have.ariaSelected");
 
         cy.get("@selectHandler").should(
           "have.been.calledWith",
@@ -309,10 +307,10 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 3").realHover().realClick();
         cy.findByText("list item 4").realHover().realClick();
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("not.have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("not.have.ariaSelected");
       });
     });
   });
@@ -357,8 +355,8 @@ const SELECTED = "aria-selected";
         );
 
         cy.findByText("list item 3").realHover().realClick();
-        cy.findAllByRole("option").eq(0).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -376,8 +374,8 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 1").realHover().realClick();
         cy.findByText("list item 3").click({ ctrlKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -397,10 +395,10 @@ const SELECTED = "aria-selected";
 
         cy.findByText("list item 4").click({ shiftKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -427,8 +425,8 @@ const SELECTED = "aria-selected";
 
         cy.findByText("list item 1").realHover().click({ shiftKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -461,8 +459,8 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 1").realHover().realClick();
         cy.findByText("list item 2").realHover().click({ shiftKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -480,10 +478,10 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 3").realHover().click();
         cy.findByText("list item 4").realHover().click({ shiftKey: true });
 
-        cy.findAllByRole("option").eq(0).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -496,8 +494,8 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 1").realHover().realClick();
         cy.findByText("list item 2").click({ shiftKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -514,10 +512,10 @@ const SELECTED = "aria-selected";
         cy.findByText("list item 3").click({ ctrlKey: true });
         cy.findByText("list item 4").click({ shiftKey: true, ctrlKey: true });
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("have.ariaSelected");
 
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
@@ -547,10 +545,10 @@ const SELECTED = "aria-selected";
           isDeclarative ? "list item 1" : ITEMS[0]
         );
 
-        cy.findAllByRole("option").eq(0).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("not.have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("not.have.ariaSelected");
       });
 
       it("should deselect only that item if control click is used", () => {
@@ -569,10 +567,10 @@ const SELECTED = "aria-selected";
           isDeclarative ? "list item 1" : ITEMS[0]
         );
 
-        cy.findAllByRole("option").eq(0).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(1).should("not.have.attr", SELECTED);
-        cy.findAllByRole("option").eq(2).should("have.attr", SELECTED);
-        cy.findAllByRole("option").eq(3).should("have.attr", SELECTED);
+        cy.findAllByRole("option").eq(0).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(1).should("not.have.ariaSelected");
+        cy.findAllByRole("option").eq(2).should("have.ariaSelected");
+        cy.findAllByRole("option").eq(3).should("have.ariaSelected");
       });
     });
   });

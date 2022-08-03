@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import { isCharacterKey, Space } from "./key-code";
+import { isCharacterKey, Space } from "./keyUtils";
 import { CollectionItem } from "./collectionTypes";
 
 interface TypeaheadHookProps<Item> {

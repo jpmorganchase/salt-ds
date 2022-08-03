@@ -8,55 +8,28 @@ import {
   isDesktop,
   makePrefixer,
   Portal,
-  PortalProps,
   useFloatingUI,
   useForkRef,
   useIdMemo as useId,
   useWindow,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import {
-  Children,
-  cloneElement,
-  forwardRef,
-  HTMLAttributes,
-  KeyboardEvent,
-  useRef,
-  useState,
-} from "react";
+import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
-
+import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
 
 import "./Dropdown.css";
 
+// Any component may be passed as our trigger or popup component.
+// Define the common props that we will act on, if present,
+// so we can type them.
 type MaybeProps = {
   className?: string;
   id?: string;
   role?: string;
   width: number | string;
 };
-
-type DropdownPlacement =
-  | "bottom-start"
-  | "bottom-end"
-  | "top-start"
-  | "top-end"; // do any others make sense ?
-export interface DropdownBaseProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "onSelect">,
-    Pick<PortalProps, "disablePortal" | "container"> {
-  defaultIsOpen?: boolean;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  isOpen?: boolean;
-  onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
-  onOpenChange?: (isOpen: boolean) => void;
-  openOnFocus?: boolean;
-  placement?: DropdownPlacement;
-  popupWidth?: number;
-  triggerComponent?: JSX.Element;
-  width?: number | string;
-}
 
 const withBaseName = makePrefixer("uitkDropdown");
 

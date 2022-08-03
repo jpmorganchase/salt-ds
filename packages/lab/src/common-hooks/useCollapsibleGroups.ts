@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { ArrowLeft, ArrowRight, Enter } from "./key-code";
+import { ArrowLeft, ArrowRight, Enter } from "./keyUtils";
 import { ListHandlers } from "./selectionTypes";
 import { CollectionItem, CollectionHookResult } from "./collectionTypes";
 

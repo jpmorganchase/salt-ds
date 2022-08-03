@@ -22,7 +22,7 @@ import {
   useKeyboardNavigationPanel,
 } from "../../common-hooks";
 
-import { DropdownBase, DropdownBaseProps } from "../../dropdown/DropdownBase";
+import { DropdownBase, DropdownBaseProps } from "../../dropdown";
 
 import "./OverflowPanel.css";
 

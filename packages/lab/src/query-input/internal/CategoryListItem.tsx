@@ -1,7 +1,7 @@
-import { CSSProperties, useMemo, useRef } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-import { ListItem as ListItem, ListItemProps, ListItemType } from "../../list";
+import { CSSProperties, useMemo, useRef } from "react";
+import { ListItem, ListItemProps, ListItemType } from "../../list";
 import { QueryInputCategory } from "../queryInputTypes";
 import { useCategoryListContext } from "./CategoryListContext";
 

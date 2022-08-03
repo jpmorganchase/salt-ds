@@ -137,7 +137,7 @@ describe("A list", () => {
     cy.findByText("list item 1").realClick();
     cy.get("@mouseDownHandler").should("not.have.been.called");
   });
-  describe('with a customised "itemHeight"', () => {
+  describe.skip('with a customised "itemHeight"', () => {
     it("should render with numeric value", () => {
       cy.mount(<List itemHeight={50} source={ITEMS} />);
       cy.findAllByRole("option").eq(0).should("have.css", "height", "50px");
@@ -146,7 +146,7 @@ describe("A list", () => {
     });
     it("should render with percentage value", () => {
       cy.mount(<List itemHeight="33.33%" source={ITEMS} />);
-      // Cypress errors with "element had detached from DOM"
+      // TODO Cypress errors with "element had detached from DOM"
       // cy.findAllByRole("option").eq(0).should("have.css", "height", "33.33%");
       // cy.findAllByRole("option").eq(1).should("have.css", "height", "33.33%");
       // cy.findAllByRole("option").eq(2).should("have.css", "height", "33.33%");

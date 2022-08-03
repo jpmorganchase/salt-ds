@@ -1,9 +1,5 @@
 import { List, ListItem, ListItemProps } from "@jpmorganchase/uitk-lab";
 
-const HIGHLIGHTED = "uitkListItem-highlighted";
-const DISABLED = "uitkListItem-disabled";
-const SELECTED = "aria-selected";
-
 describe("A declarative list", () => {
   it("should render all list items", () => {
     cy.mount(
@@ -19,40 +15,6 @@ describe("A declarative list", () => {
     cy.findByText("list item 3").should("exist");
   });
 
-  describe.skip("when item data is provided", () => {
-    it("should use the customized 'itemToString'", () => {
-      const item = { name: "John", age: 25 };
-      const itemToString: ListItemProps<typeof item>["itemToString"] = ({
-        name,
-      }) => name;
-
-      cy.mount(
-        <List>
-          <ListItem item={item} itemToString={itemToString} />
-        </List>
-      );
-
-      cy.findByRole("option").should("have.text", "John");
-    });
-
-    it("should ignore the data if it has children", () => {
-      const item = { name: "John", age: 25 };
-      const itemToString: ListItemProps<typeof item>["itemToString"] = ({
-        name,
-      }) => name;
-
-      cy.mount(
-        <List>
-          <ListItem item={item} itemToString={itemToString}>
-            Joe
-          </ListItem>
-        </List>
-      );
-
-      cy.findByRole("option").should("have.text", "Joe");
-    });
-  });
-
   describe("when mouse is moved over an item", () => {
     it("should highlight that item", () => {
       cy.mount(
@@ -63,7 +25,7 @@ describe("A declarative list", () => {
         </List>
       );
       cy.get("#list-item-1").trigger("mousemove");
-      cy.get("#list-item-1").should("have.class", HIGHLIGHTED);
+      cy.get("#list-item-1").should("be.highlighted");
     });
   });
 
@@ -85,7 +47,7 @@ describe("A declarative list", () => {
       );
 
       cy.get("#list-item-1").click();
-      cy.get("#list-item-1").should("have.attr", SELECTED);
+      cy.get("#list-item-1").should("have.ariaSelected");
 
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
@@ -115,13 +77,13 @@ describe("A declarative list with a disabled item", () => {
   });
 
   it("should render disabled style for the disabled item", () => {
-    cy.get("#list-item-1").should("have.class", DISABLED);
+    cy.get("#list-item-1").should("have.class", "uitkDisabled");
   });
 
   describe("when clicked on the disabled item", () => {
     it("should not select anything", () => {
       cy.get("#list-item-1").click();
-      cy.get("#list-item-1").should("not.have.attr", SELECTED);
+      cy.get("#list-item-1").should("not.have.ariaSelected");
       cy.get("@selectHandler").should("not.have.been.called");
     });
   });
@@ -129,7 +91,7 @@ describe("A declarative list with a disabled item", () => {
   describe("when mouse is moved over the disabled item", () => {
     it("should not highlight that item", () => {
       cy.get("#list-item-1").trigger("mousemove");
-      cy.get("#list-item-1").should("not.have.class", HIGHLIGHTED);
+      cy.get("#list-item-1").should("not.be.highlighted");
     });
   });
 });
@@ -148,7 +110,7 @@ describe("A disabled declarative list", () => {
   });
 
   it("should have the disabled list style", () => {
-    cy.findByRole("listbox").should("have.class", "uitkList-disabled");
+    cy.findByRole("listbox").should("have.class", "uitkDisabled");
   });
 
   describe("when clicked its items", () => {

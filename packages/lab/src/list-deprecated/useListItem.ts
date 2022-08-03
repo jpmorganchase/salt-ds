@@ -88,7 +88,6 @@ export function useListItem<Item>(
 
   const handleClick = useCallback(
     (event) => {
-      console.log("handleClick");
       handleSelect(event, index, item);
 
       if (onClick) {

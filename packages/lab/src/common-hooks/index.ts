@@ -3,7 +3,7 @@ export * from "./calcPreferredHeight";
 export * from "./collectionProvider";
 export * from "./collectionTypes";
 export * from "./itemToString";
-export * from "./key-code";
+export * from "./keyUtils";
 export * from "./useCollapsibleGroups";
 export * from "./list-dom-utils";
 export * from "./navigationTypes";

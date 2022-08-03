@@ -211,8 +211,8 @@ export const useDragDrop = ({
   );
 
   const dragMouseUpHandler = useCallback(() => {
-    removeEventListener("mousemove", dragMouseMoveHandler, false);
-    removeEventListener("mouseup", dragMouseUpHandler, false);
+    document.removeEventListener("mousemove", dragMouseMoveHandler, false);
+    document.removeEventListener("mouseup", dragMouseUpHandler, false);
 
     const { current: dropTargets } = measuredDropTargets;
     const draggedItem = getDraggedItem(dropTargets);
@@ -235,8 +235,12 @@ export const useDragDrop = ({
       const { [POS]: clientPos } = evt;
       let mouseMoveDistance = Math.abs(clientPos - startPos.current);
       if (mouseMoveDistance > dragThreshold && containerRef.current) {
-        removeEventListener("mousemove", preDragMouseMoveHandler, false);
-        removeEventListener("mouseup", preDragMouseUpHandler, false);
+        document.removeEventListener(
+          "mousemove",
+          preDragMouseMoveHandler,
+          false
+        );
+        document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
         const evtTarget = evt.target;
         const dragElement = evtTarget.closest(itemQuery);
@@ -286,8 +290,8 @@ export const useDragDrop = ({
             }
           }
 
-          addEventListener("mousemove", dragMouseMoveHandler, false);
-          addEventListener("mouseup", dragMouseUpHandler, false);
+          document.addEventListener("mousemove", dragMouseMoveHandler, false);
+          document.addEventListener("mouseup", dragMouseUpHandler, false);
         }
       }
     },
@@ -302,8 +306,8 @@ export const useDragDrop = ({
   );
 
   const preDragMouseUpHandler = useCallback(() => {
-    removeEventListener("mousemove", preDragMouseMoveHandler, false);
-    removeEventListener("mouseup", preDragMouseUpHandler, false);
+    document.removeEventListener("mousemove", preDragMouseMoveHandler, false);
+    document.removeEventListener("mouseup", preDragMouseUpHandler, false);
   }, [preDragMouseMoveHandler]);
 
   const mouseDownHandler = useCallback(
@@ -318,8 +322,8 @@ export const useDragDrop = ({
           containerRef.current;
         isScrollable.current = scrollSize > clientSize;
 
-        addEventListener("mousemove", preDragMouseMoveHandler, false);
-        addEventListener("mouseup", preDragMouseUpHandler, false);
+        document.addEventListener("mousemove", preDragMouseMoveHandler, false);
+        document.addEventListener("mouseup", preDragMouseUpHandler, false);
       }
     },
     [containerRef, orientation, preDragMouseMoveHandler, preDragMouseUpHandler]

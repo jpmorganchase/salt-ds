@@ -5,4 +5,4 @@ export * from "./listTypes";
 export * from "./ListItemHeader";
 export * from "./ListItemGroup";
 export * from "./useList";
-export * from "./virtualized-list";
+export * from "./VirtualizedList";

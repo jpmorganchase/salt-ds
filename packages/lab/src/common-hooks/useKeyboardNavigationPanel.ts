@@ -1,6 +1,6 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
 import { KeyboardEvent, useCallback, useMemo, useRef } from "react";
-import { Tab } from "./key-code";
+import { Tab } from "./keyUtils";
 import { CollectionItem } from "./collectionTypes";
 import { NavigationProps, NavigationHookResult } from "./navigationTypes";
 

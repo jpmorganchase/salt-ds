@@ -85,9 +85,9 @@ export const List = forwardRef(function List<
   forwardedRef?: ForwardedRef<ScrollingAPI<Item>>
 ) {
   const id = useIdMemo(idProp);
-  const rootRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const rowHeightProxyRef = useRef<HTMLDivElement | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const rowHeightProxyRef = useRef<HTMLDivElement>(null);
 
   const collectionHook = useCollectionItems<Item>({
     id,
@@ -205,7 +205,7 @@ export const List = forwardRef(function List<
       "data-idx": number;
     } = {
       className: cx({
-        "uitkListItem-highlighted": idx.value === highlightedIndex,
+        uitkHighlighted: idx.value === highlightedIndex,
         uitkFocusVisible: appliedFocusVisible === idx.value,
       }),
       disabled: disabled || listDisabled,
@@ -321,7 +321,7 @@ export const List = forwardRef(function List<
       className={cx(withBaseName(), className, {
         // TODO low-emphasis
         [withBaseName("borderless")]: borderless,
-        [withBaseName("disabled")]: listDisabled,
+        uitkDisabled: listDisabled,
         [withBaseName("collapsible")]: collapsibleHeaders,
       })}
       id={`${id}`}

@@ -11,7 +11,7 @@ import { useListHeight } from "./useListHeight";
 
 import { ListItem, ListItemProxy } from "./ListItem";
 import { useList } from "./useList";
-import { Row, useVirtualization } from "./use-virtualization";
+import { Row, useVirtualization } from "./useVirtualization";
 import { ListProps } from "./listTypes";
 
 import "./List.css";

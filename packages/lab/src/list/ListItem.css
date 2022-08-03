@@ -8,7 +8,7 @@
   --list-item-align-items: center;
 }
 
-.uitkListItem-highlighted {
+.uitkListItem.uitkHighlighted {
   --uitkCheckboxIcon-outline-color: var(--uitk-selectable-borderColor-hover);
   --list-item-background: var(--uitk-selectable-background-hover);
 }
@@ -59,7 +59,7 @@
   color: var(--list-item-text-color-active);
 }
 
-.uitkListItem-disabled {
+.uitkListItem.uitkDisabled {
   --list-item-text-color: var(--uitk-selectable-foreground-disabled);
   cursor: var(--uitk-selectable-cursor-disabled);
 }

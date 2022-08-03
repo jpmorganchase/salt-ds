@@ -262,7 +262,6 @@ export const useCombobox = <
     focusVisible,
     setHighlightedIndex,
     highlightedIndex,
-    // listControlProps: { onFocus: listOnFocus, ...listControlProps },
     listControlProps,
     listHandlers: listHookListHandlers,
     selected,
@@ -273,7 +272,6 @@ export const useCombobox = <
     disableAriaActiveDescendant,
     disableHighlightOnFocus: true,
     disableTypeToSelect: true,
-    label: "useComboBox",
     onKeyboardNavigation: handleKeyboardNavigation,
     onKeyDown: handleInputKeyDown,
     onSelectionChange: handleSelectionChange,
@@ -408,11 +406,10 @@ export const useCombobox = <
   const handleInputBlur = useCallback(
     (evt: FocusEvent<HTMLInputElement>) => {
       if (listFocused(evt)) {
-        console.log("listt focused");
+        // nothing doing
       } else {
         listOnBlur?.(evt);
         inputOnBlur?.(evt);
-        console.log("BLUR");
         if (allowFreeText) {
           selectInputValue(evt as ChangeEvent);
         } else {

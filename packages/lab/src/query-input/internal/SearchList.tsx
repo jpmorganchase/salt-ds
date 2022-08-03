@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useCallback } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { List, ListItem as ListItem, ListItemGroup } from "../../list";
+import { List, ListItem, ListItemGroup } from "../../list";
 
 import { SelectionChangeHandler } from "../../common-hooks";
 

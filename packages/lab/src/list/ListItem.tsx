@@ -8,6 +8,10 @@ import "./ListItem.css";
 
 const withBaseName = makePrefixer("uitkListItem");
 
+// A dummy ListItem rendered once and not visible. We measure this to
+// determine height of ListItem and monitor it for size changes (in
+// case of runtime density switch). This allows ListItem height to
+// be controlled purely through CSS.
 export const ListItemProxy = forwardRef(function ListItemNextProxy(
   props: HTMLAttributes<HTMLDivElement>,
   forwardedRef: ForwardedRef<HTMLDivElement>
@@ -44,7 +48,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     forwardedRef
   ) {
     const className = cx(withBaseName(), classNameProp, {
-      [withBaseName("disabled")]: disabled,
+      uitkDisabled: disabled,
       [withBaseName("checkbox")]: showCheckbox,
     });
     const style =

@@ -1,5 +1,4 @@
-import { Dropdown } from "@jpmorganchase/uitk-lab";
-import { SelectionStrategy } from "src/common-hooks";
+import { Dropdown, SelectionStrategy } from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied
@@ -20,19 +19,21 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
  */
 ["", "MultiSelect"].forEach((type) => {
   const isMultiSelect = !!type;
-  const props = {
-    id: "test",
-    selectionStrategy: (isMultiSelect
-      ? "multiple"
-      : "default") as SelectionStrategy,
-    source: testSource,
-  };
+  const selectionStrategy = isMultiSelect
+    ? "multiple"
+    : ("default" as SelectionStrategy);
 
   describe(`Given a ${type}Dropdown Dropdown`, () => {
     describe("When initial is closed", () => {
       ([" ", "{enter}", "{downarrow}"] as const).forEach((key) => {
         specify(`Pressing "${key}" should open the menu`, () => {
-          cy.mount(<Dropdown {...props} />);
+          cy.mount(
+            <Dropdown
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
           cy.realPress(key);
           cy.get("#test-popup").should("exist");
@@ -40,7 +41,13 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
       });
 
       specify("Pressing TAB key should not open the menu", () => {
-        cy.mount(<Dropdown {...props} />);
+        cy.mount(
+          <Dropdown
+            id="test"
+            selectionStrategy={selectionStrategy}
+            source={testSource}
+          />
+        );
         cy.get("#test-control").focus();
         cy.realPress("Tab");
         cy.get("#test-popup").should("not.exist");
@@ -54,7 +61,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
             isMultiSelect ? "not" : ""
           } close the menu and select first item`,
           () => {
-            cy.mount(<Dropdown defaultIsOpen {...props} />);
+            cy.mount(
+              <Dropdown
+                defaultIsOpen
+                id="test"
+                selectionStrategy={selectionStrategy}
+                source={testSource}
+              />
+            );
             cy.get("#test-control").focus();
             cy.realPress(key);
             if (isMultiSelect) {
@@ -73,7 +87,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
       specify(
         "Pressing ESC key should close the menu but without item selected",
         () => {
-          cy.mount(<Dropdown {...props} defaultIsOpen />);
+          cy.mount(
+            <Dropdown
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+              defaultIsOpen
+            />
+          );
           cy.get("#test-control").focus();
           cy.realPress("Escape");
           cy.get("#test-popup").should("not.exist");
@@ -82,7 +103,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
       );
 
       specify("Pressing ArrowDown should highlight second item", () => {
-        cy.mount(<Dropdown defaultIsOpen {...props} />);
+        cy.mount(
+          <Dropdown
+            defaultIsOpen
+            id="test"
+            selectionStrategy={selectionStrategy}
+            source={testSource}
+          />
+        );
         cy.get("#test-control").focus();
         cy.realPress("ArrowDown");
         cy.get("#test-control").should(
@@ -93,7 +121,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
       });
 
       specify("Pressing End should highlight last item", () => {
-        cy.mount(<Dropdown defaultIsOpen {...props} />);
+        cy.mount(
+          <Dropdown
+            defaultIsOpen
+            id="test"
+            selectionStrategy={selectionStrategy}
+            source={testSource}
+          />
+        );
         cy.get("#test-control").focus();
         cy.realPress("End");
         cy.get("#test-control").should(
@@ -108,7 +143,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
           isMultiSelect ? "not " : ""
         }select it`,
         () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
 
           cy.get("#test-control").within(() => {
@@ -127,7 +169,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
 
       describe("supports type to highlight", () => {
         it("supports focusing items by typing letters in rapid succession", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
 
           cy.get("#test-control").should(
@@ -160,7 +209,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("supports the space character in a search without closing the menu", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
 
           cy.get("#test-control").should(
@@ -220,7 +276,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("supports item selection using the Spacebar after search times out", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
 
           cy.get("#test-control").should(
@@ -272,7 +335,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("resets the search text after a timeout", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
           cy.realPress("F");
           cy.get("#test-control").should(
@@ -292,7 +362,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("wraps around to search from the beginning when no items past the current one match", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
           cy.realPress("B");
           cy.realPress("A");
@@ -314,7 +391,14 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
 
         it("cycles through options when typing the first character repeatedly", () => {
-          cy.mount(<Dropdown defaultIsOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              defaultIsOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
           cy.get("#test-control").focus();
           cy.realPress("F");
           cy.get("#test-control").should(
@@ -339,24 +423,34 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         });
       });
 
-      // specify("Pressing ALT + ARROW DOWN key should not be propagated", () => {
-      //   const parentKeyDownSpy = cy.stub().as("keyDownSpy");
+      specify.skip(
+        "Pressing ALT + ARROW DOWN key should not be propagated",
+        () => {
+          const parentKeyDownSpy = cy.stub().as("keyDownSpy");
 
-      //   cy.mount(
-      //     <div onKeyDown={parentKeyDownSpy}>
-      //       <Dropdown source={testSource} id="test" />
-      //     </div>
-      //   );
+          cy.mount(
+            <div onKeyDown={parentKeyDownSpy}>
+              <Dropdown source={testSource} id="test" />
+            </div>
+          );
 
-      //   cy.get("#test-control").focus();
-      //   cy.realPress(["Alt", "ArrowDown"]);
-      //   cy.get("@keyDownSpy").should("have.callCount", 1);
-      // });
+          cy.get("#test-control").focus();
+          cy.realPress(["Alt", "ArrowDown"]);
+          cy.get("@keyDownSpy").should("have.callCount", 1);
+        }
+      );
 
       specify(
         "When isOpen is controlled, TAB onto it should still allow navigation",
         () => {
-          cy.mount(<Dropdown isOpen {...props} />);
+          cy.mount(
+            <Dropdown
+              isOpen
+              id="test"
+              selectionStrategy={selectionStrategy}
+              source={testSource}
+            />
+          );
 
           cy.get("#test-control").focus();
           cy.get("#test-control").should(
@@ -376,14 +470,28 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
 
     describe("When disabled", () => {
       it("Clicking it should not open the menu", () => {
-        cy.mount(<Dropdown disabled {...props} />);
+        cy.mount(
+          <Dropdown
+            disabled
+            id="test"
+            selectionStrategy={selectionStrategy}
+            source={testSource}
+          />
+        );
         cy.get("#test-control").click();
 
         cy.get("#test-popup").should("not.exist");
       });
 
       it("Pressing Enter should not open the menu", () => {
-        cy.mount(<Dropdown disabled {...props} />);
+        cy.mount(
+          <Dropdown
+            disabled
+            id="test"
+            selectionStrategy={selectionStrategy}
+            source={testSource}
+          />
+        );
         cy.get("#test-control").focus();
         cy.realPress("Enter");
         cy.get("#test-popup").should("not.exist");

@@ -1,7 +1,7 @@
 import { FC, CSSProperties, useRef, useState, useReducer } from "react";
 import { Button, Input, InputProps } from "@jpmorganchase/uitk-core";
 
-export interface AsjustableFlexboxProps {
+export interface AdjustableFlexboxProps {
   containerWidth?: number | string;
   style?: CSSProperties;
   height?: number;
@@ -13,7 +13,7 @@ export interface AsjustableFlexboxProps {
  * Container for testing responsive components - a bit basic, but
  * does the job for now
  */
-export const AdjustableFlexbox: FC<AsjustableFlexboxProps> = ({
+export const AdjustableFlexbox: FC<AdjustableFlexboxProps> = ({
   children,
   containerWidth = "auto",
   style,

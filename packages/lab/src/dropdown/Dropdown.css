@@ -13,10 +13,5 @@
 
 .uitkDropdown-popup {
   background: var(--uitk-container-background-medium);
-  z-index: 1;
-}
+  z-index: calc(var(--uitk-zindex-tooltip) - 1);}
 
-.uitkDropdown-popup-component {
-  /* why 300px ? */
-  max-height: var(--uitkDropdown-popup-maxHeight, 300px);
-}

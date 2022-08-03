@@ -17,6 +17,7 @@ export interface NavigationProps<Item = unknown> {
 
 export interface NavigationHookProps<Item, Selection extends SelectionStrategy>
   extends NavigationProps<Item> {
+  containerRef: RefObject<HTMLElement>;
   label?: string;
   selected?: Selection extends SingleSelectionStrategy
     ? CollectionItem<Item> | null

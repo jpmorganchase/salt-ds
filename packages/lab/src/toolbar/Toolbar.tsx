@@ -39,6 +39,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       id: idProp,
       overflowButtonIcon,
       overflowButtonLabel,
+      overflowButtonPlacement = "end",
       responsive = true,
       disabled = false,
       orientation = "horizontal",
@@ -100,6 +101,20 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       (i) => i.isOverflowIndicator
     );
 
+    const overflowPanel = overflowIndicator ? (
+      <OverflowPanel
+        className={cx("uitkToolbarField")}
+        data-index={collectionHook.data.length}
+        data-overflow-indicator
+        data-priority={1}
+        id={overflowIndicator.id}
+        triggerButtonIcon={overflowButtonIcon}
+        triggerButtonLabel={overflowButtonLabel}
+      >
+        {overflowMenuItems}
+      </OverflowPanel>
+    ) : null;
+
     //TODO when we drive this from the overflowItems, the overflowIndicator will
     // be an overflowItem
     return (
@@ -125,20 +140,9 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
           ref={innerContainerRef}
           data-collapsing={collectionHook.data.some((item) => item.collapsing)}
         >
+          {overflowButtonPlacement === "start" && overflowPanel}
           {renderToolbarItems(collectionHook, overflowedItems, orientation)}
-          {overflowIndicator ? (
-            <OverflowPanel
-              className={cx("uitkToolbarField")}
-              data-index={collectionHook.data.length}
-              data-overflow-indicator
-              data-priority={1}
-              id={overflowIndicator.id}
-              triggerButtonIcon={overflowButtonIcon}
-              triggerButtonLabel={overflowButtonLabel}
-            >
-              {overflowMenuItems}
-            </OverflowPanel>
-          ) : null}
+          {overflowButtonPlacement === "end" && overflowPanel}
         </div>
       </div>
     );

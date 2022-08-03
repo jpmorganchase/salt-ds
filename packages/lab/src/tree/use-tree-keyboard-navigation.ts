@@ -1,5 +1,5 @@
 import { KeyboardEvent, useCallback } from "react";
-import { ArrowLeft } from "../common-hooks/key-code";
+import { ArrowLeft } from "../common-hooks/keyUtils";
 import { CollectionItem, CollectionHookResult } from "../common-hooks";
 
 export const getNodeParentPath = ({ id }: CollectionItem<any>) => {

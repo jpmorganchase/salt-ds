@@ -23,7 +23,7 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentStory } from "@storybook/react";
 
-import { AdjustableFlexbox, AsjustableFlexboxProps } from "./story-components";
+import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
 import "./toolbar.stories.css";
 
 export default {
@@ -31,12 +31,12 @@ export default {
   component: Toolbar,
 };
 
-type ToolbarStory = ComponentStory<FC<AsjustableFlexboxProps & ToolbarProps>>;
+type ToolbarStory = ComponentStory<FC<AdjustableFlexboxProps & ToolbarProps>>;
 
 export const SimpleToolbar: ToolbarStory = ({
   width = 400,
   ...toolbarProps
-}: AsjustableFlexboxProps & ToolbarProps) => {
+}: AdjustableFlexboxProps & ToolbarProps) => {
   return (
     <AdjustableFlexbox height={200} width={width}>
       <Toolbar {...toolbarProps}>

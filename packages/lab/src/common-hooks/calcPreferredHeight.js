@@ -1,3 +1,5 @@
+// TODO refactor this into hook. See useListHeight hook. This code was originally used by List and Tree. List has been refactored,
+// Tree hasn't yet. When Tree is finalised, probably want to share the useListHeight hook, and rename it to make it more generic.
 export const calcPreferredHeight = (props = {}) => {
   const {
     borderless,

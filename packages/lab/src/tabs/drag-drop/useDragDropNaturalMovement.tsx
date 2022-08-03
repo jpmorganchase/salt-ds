@@ -114,8 +114,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
   );
 
   const dragMouseUpHandler = useCallback(() => {
-    window.removeEventListener("mousemove", dragMouseMoveHandler, false);
-    window.removeEventListener("mouseup", dragMouseUpHandler, false);
+    document.removeEventListener("mousemove", dragMouseMoveHandler, false);
+    document.removeEventListener("mouseup", dragMouseUpHandler, false);
 
     clearSpacers();
 
@@ -193,8 +193,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           setIsDragging(true);
         }
 
-        window.addEventListener("mousemove", dragMouseMoveHandler, false);
-        window.addEventListener("mouseup", dragMouseUpHandler, false);
+        document.addEventListener("mousemove", dragMouseMoveHandler, false);
+        document.addEventListener("mouseup", dragMouseUpHandler, false);
       }
     },
     [
@@ -219,8 +219,12 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           window.clearTimeout(mouseDownTimer.current);
           mouseDownTimer.current = null;
         }
-        window.removeEventListener("mousemove", preDragMouseMoveHandler, false);
-        window.removeEventListener("mouseup", preDragMouseUpHandler, false);
+        document.removeEventListener(
+          "mousemove",
+          preDragMouseMoveHandler,
+          false
+        );
+        document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
         enterDraggingState(evt);
       }
@@ -233,8 +237,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
       window.clearTimeout(mouseDownTimer.current);
       mouseDownTimer.current = null;
     }
-    window.removeEventListener("mousemove", preDragMouseMoveHandler, false);
-    window.removeEventListener("mouseup", preDragMouseUpHandler, false);
+    document.removeEventListener("mousemove", preDragMouseMoveHandler, false);
+    document.removeEventListener("mouseup", preDragMouseUpHandler, false);
   }, [preDragMouseMoveHandler]);
 
   const mouseDownHandler: MouseEventHandler = useCallback(
@@ -245,18 +249,18 @@ export const useDragDropNaturalMovement: DragDropHook = ({
         startPos.current = clientPos;
         previousPos.current = clientPos;
 
-        window.addEventListener("mousemove", preDragMouseMoveHandler, false);
-        window.addEventListener("mouseup", preDragMouseUpHandler, false);
+        document.addEventListener("mousemove", preDragMouseMoveHandler, false);
+        document.addEventListener("mouseup", preDragMouseUpHandler, false);
 
         evt.persist();
 
         mouseDownTimer.current = window.setTimeout(() => {
-          window.removeEventListener(
+          document.removeEventListener(
             "mousemove",
             preDragMouseMoveHandler,
             false
           );
-          window.removeEventListener("mouseup", preDragMouseUpHandler, false);
+          document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
           enterDraggingState(evt.nativeEvent);
         }, 500);

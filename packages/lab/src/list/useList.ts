@@ -1,4 +1,10 @@
-import { isValidElement, KeyboardEvent, useCallback, useRef } from "react";
+import {
+  isValidElement,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useRef,
+} from "react";
 import {
   closestListItemIndex,
   CollectionItem,
@@ -45,10 +51,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   type selectedItem = selectedType<Item, Selection>;
 
   const lastSelection = useRef<typeof selected>(selected || defaultSelected);
-  const handleKeyboardNavigation = (
-    evt: React.KeyboardEvent,
-    nextIndex: number
-  ) => {
+  const handleKeyboardNavigation = (evt: KeyboardEvent, nextIndex: number) => {
     selectionHook.listHandlers.onKeyboardNavigation?.(evt, nextIndex);
     onKeyboardNavigation?.(evt, nextIndex);
   };
@@ -98,6 +101,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
     setHighlightedIndex,
     ...keyboardHook
   } = useKeyboardNavigation<Item, Selection>({
+    containerRef,
     defaultHighlightedIndex,
     disableHighlightOnFocus,
     highlightedIndex: highlightedIndexProp,
@@ -138,12 +142,14 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
 
   const handleKeyDown = useCallback(
     (evt: KeyboardEvent) => {
+      console.log(`useList handleKeyDown`);
       if (!evt.defaultPrevented) {
         typeaheadOnKeyDown?.(evt);
       }
-      if (!evt.defaultPrevented) {
-        navigationKeyDown(evt);
-      }
+      // We still let the keyboard navigation hook process the event even
+      // if it has been handled by the typeahead hook. That is so it can
+      // correctly manage the focusVisible state.
+      navigationKeyDown(evt);
       if (!evt.defaultPrevented) {
         selectionHook.listHandlers.onKeyDown?.(evt);
       }
@@ -175,7 +181,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   });
 
   const handleMouseMove = useCallback(
-    (evt: React.MouseEvent) => {
+    (evt: MouseEvent) => {
       if (!isScrolling.current && !disabled) {
         navigationMouseMove();
         const idx = closestListItemIndex(evt.target as HTMLElement);

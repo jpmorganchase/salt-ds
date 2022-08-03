@@ -2,7 +2,7 @@ import { QueryInputCategory } from "../queryInputTypes";
 import { Dispatch, FC, ReactElement, SetStateAction } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import { List, ListItem as ListItem } from "../../list";
+import { List, ListItem } from "../../list";
 import { SelectHandler } from "../../common-hooks";
 
 const withBaseName = makePrefixer("uitkQueryInputValueList");
