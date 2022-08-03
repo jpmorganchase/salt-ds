@@ -1,4 +1,3 @@
-// @ts-ignore
 import * as React from "react";
 
 // eslint-disable-next-line -- Workaround for https://github.com/webpack/webpack/issues/14814
