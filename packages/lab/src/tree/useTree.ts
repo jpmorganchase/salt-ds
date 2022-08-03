@@ -35,6 +35,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
 
   const { highlightedIndex: highlightedIdx, ...keyboardHook } =
     useKeyboardNavigation<Item, Selection>({
+      containerRef,
       indexPositions: collectionHook.data,
       onHighlight: onHighlightProp,
       onKeyboardNavigation: handleKeyboardNavigation,
