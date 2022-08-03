@@ -55,16 +55,15 @@
   /* margin-right: var(--uitk-size-unit); */
 }
 
-
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > .uitkTooltray {
   margin-top: 0;
 }
 
-.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > [data-pad-end='true']{
+.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > [data-pad-end="true"] {
   margin-right: auto;
 }
 
-.uitkToolbar[aria-orientation="vertical"] > .Responsive-inner > [data-pad-end='true']{
+.uitkToolbar[aria-orientation="vertical"] > .Responsive-inner > [data-pad-end="true"] {
   margin-bottom: auto;
 }
 
@@ -73,7 +72,7 @@
 }
 
 .uitkToolbar[aria-orientation="vertical"] {
-display: inline-flex;
+  display: inline-flex;
   flex-direction: column;
   height: 100%;
   min-height: 0;
@@ -133,7 +132,6 @@ display: inline-flex;
 .Responsive-inner > [data-collapsing='true'] {
   background-color: pink;
 } */
-
 
 /* .uitkToolbar > .Responsive-inner > .uitkOverflowPanel {
   background-color: pink;;

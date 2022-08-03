@@ -37,7 +37,6 @@
   margin-right: var(--uitk-size-unit);
 }
 
-
 /* .uitkTooltray-horizontal:first-child {
   padding-left: var(--uitk-size-unit);
 } */
@@ -84,4 +83,3 @@
 .uitkTooltray[data-collapsible="dynamic"][data-collapsed="true"] {
   flex-basis: 0;
 }
-
