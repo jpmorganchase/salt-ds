@@ -17,10 +17,7 @@ describe("A combo box", () => {
         cy.mount(<Default />);
 
         cy.realPress("Tab");
-        cy.findAllByRole("option").should(
-          "not.have.class",
-          "uitkListItem-highlighted"
-        );
+        cy.findAllByRole("option").should("not.be.highlighted");
       });
     });
 
@@ -69,15 +66,15 @@ describe("A combo box", () => {
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alabama" })
-          .should("have.class", "uitkListItem-highlighted")
-          .and("have.class", "uitkFocusVisible");
+          .should("be.highlighted")
+          .and("be.focusVisible");
 
         cy.realPress("ArrowDown");
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alaska" })
-          .should("have.class", "uitkListItem-highlighted")
-          .and("have.class", "uitkFocusVisible");
+          .should("be.highlighted")
+          .and("be.focusVisible");
       });
     });
 
@@ -221,8 +218,8 @@ describe("A combo box", () => {
           .findByRole("option", {
             name: "Brown",
           })
-          .should("have.class", "uitkListItem-highlighted")
-          .and("have.class", "uitkFocusVisible");
+          .should("be.highlighted")
+          .and("be.focusVisible");
       });
     });
   });

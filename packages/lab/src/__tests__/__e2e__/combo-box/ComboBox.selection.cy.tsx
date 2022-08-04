@@ -73,8 +73,8 @@ describe("A combo box", () => {
 
     // list style stays the same
     cy.findByRole("option", { name: "Alaska" })
-      .should("have.attr", "aria-selected", "true")
-      .and("have.class", "uitkListItem-highlighted");
+      .should("have.ariaSelected")
+      .and("be.highlighted");
 
     // change callback invoked only once
     cy.get("@changeSpy").should("have.callCount", 1);
