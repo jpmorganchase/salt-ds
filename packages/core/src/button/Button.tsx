@@ -102,7 +102,6 @@ export const Button = forwardRef(function Button<
   };
 
   const handleClick = (event: MouseEvent<inferElementType<T>>) => {
-    console.log("Button CLick");
     setActive(true);
     if (onClick) {
       onClick?.(event);

@@ -3,7 +3,6 @@ import { ToolbarFieldProps } from "./toolbarFieldTypes";
 import { useToolbarField } from "./useToolbarField";
 
 import { FormField } from "@jpmorganchase/uitk-core";
-import "./ToolbarField.css";
 
 export const ToolbarField = forwardRef(function ToolbarField(
   props: ToolbarFieldProps,
