@@ -49,7 +49,7 @@ const colours = [
   "maroon",
 ];
 
-const useTabSelection = (): [number, TabstripProps["onChange"]] => {
+const useTabSelection = (): [number, TabstripProps["onActiveChange"]] => {
   const [selectedTab, setSelectedTab] = useState(0);
   const handleTabSelection = (tabIndex: number) => {
     setSelectedTab(tabIndex);
@@ -81,7 +81,7 @@ export const DefaultAppHeader: ComponentStory<typeof AppHeader> = () => {
         <Tabstrip
           data-index={1}
           data-priority={2}
-          onChange={handleTabSelection}
+          onActiveChange={handleTabSelection}
         >
           {tabs.map((label, i) => (
             <Tab label={label} key={i} />

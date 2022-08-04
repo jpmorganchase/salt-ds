@@ -1,5 +1,5 @@
 .uitkTooltray {
-  --tooltray-height: var(--uitk-size-toolbar);
+  --tooltray-height: var(--toolbar-size);
 }
 
 .uitkTooltray {
@@ -17,20 +17,32 @@
   height: var(--tooltray-height);
 }
 
+.uitkTooltray > .Responsive-inner > .uitkToolbarField {
+  /* --uitkButton-focused-outline-style: none; */
+  flex-shrink: 0;
+  flex-grow: 0;
+}
 .uitkTooltray > .Responsive-inner {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   flex: 1;
   flex-wrap: nowrap;
+  gap: 0 !important;
   justify-content: inherit;
 }
 
-.uitkTooltray-horizontal:first-child {
+/* .uitkTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
+.uitkTooltray-horizontal > .Responsive-inner > * {
+  margin-top: var(--uitk-size-unit);
+  margin-right: var(--uitk-size-unit);
+}
+
+/* .uitkTooltray-horizontal:first-child {
   padding-left: var(--uitk-size-unit);
-}
-.uitkTooltray-horizontal:last-child {
+} */
+/* .uitkTooltray-horizontal:last-child {
   padding-right: var(--uitk-size-unit);
-}
+} */
 
 .uitkTooltray-horizontal:not(:first-child) {
   margin-left: var(--uitk-size-unit);
@@ -44,6 +56,10 @@
   left: 0;
   width: 1px;
   height: 28px;
+}
+
+.uitkTooltray > .Responsive-inner > .uitkToolbarField {
+  flex: 0 0 auto;
 }
 
 .uitkTooltray > .Responsive-inner > *[data-pad-start="true"] {

@@ -10,10 +10,9 @@ import {
   RowGroupingModel,
 } from "./RowGroupingModel";
 import { useMemo } from "react";
-import { ListChangeHandler } from "@jpmorganchase/uitk-lab/src/list";
 import { AddIcon, DeleteIcon } from "@jpmorganchase/uitk-icons";
 import "./RowGrouping.css";
-import { Dropdown } from "@jpmorganchase/uitk-lab";
+import { Dropdown, SelectionChangeHandler } from "@jpmorganchase/uitk-lab";
 
 const withBaseName = makePrefixer("uitkDataGridRowGrouping");
 
@@ -42,7 +41,7 @@ export const RowGroupingLevel = function RowGroupingLevel<T>(
     [columns]
   );
 
-  const onColumnChange: ListChangeHandler = (event, selectedItem) => {
+  const onColumnChange: SelectionChangeHandler = (event, selectedItem) => {
     model.setColumn(
       selectedItem != null ? columnsByName.get(selectedItem) : undefined
     );
@@ -64,13 +63,11 @@ export const RowGroupingLevel = function RowGroupingLevel<T>(
         </div>
         <div className={withBaseName("row-column")}>
           <Dropdown
+            className={withBaseName("dropdown")}
             fullWidth={true}
             source={columnNames}
-            selectedItem={column ? column.name : (null as any)}
-            onChange={onColumnChange}
-            WindowProps={{
-              className: withBaseName("window"),
-            }}
+            selected={column ? column.name : null}
+            onSelectionChange={onColumnChange}
           />
         </div>
         <Button

@@ -1,102 +1,46 @@
-.uitk-light .uitkTab {
-  --tab-color: var(--uitk-color-grey-400);
-  --tab-selected-color: var(--uitk-color-grey-900);
-  --tab-drag-background: var(--uitk-color-grey-20);
-  --tab-hover-background: var(--uitk-color-grey-20);
-}
-
-.uitk-dark .uitkTab {
-  --tab-color: var(--uitk-color-grey-40);
-  --tab-selected-color: var(--uitk-color-white);
-  --tab-drag-background: var(--uitk-color-grey-600);
-  --tab-hover-background: var(--uitk-color-grey-600);
-}
-
+/* class applied to root Tab element */
 .uitkTab {
-  --uitk-editable-label-padding: 0;
-  --uitk-editable-label-height: var(--tabstrip-height);
-  --uitkInput-minWidth: 4em;
+  --uitkFocusVisible-inset: 2px 2px 4px 2px;
+  --uitkEditableLabel-padding: 0;
+  --uitkEditableLabel-height: var(--tabstrip-height);
+  --uitkInput-min-width: 4em;
   --uitk-text-link-textDecoration: none;
   --uitk-text-link-textDecoration: none;
-  --uitk-focused-outlineOffset: -2px;
-  --uitk-focused-outline-top: 0px;
-  --uitk-focused-outline-bottom: 2px;
   --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-size-unit);
-  --tab-font-weight-selected: var(--uitk-navigable-fontWeight-active);
 
   align-items: center;
   align-self: stretch;
   background: var(--uitkTab-background, var(--tabstrip-tab-background));
   border: none;
   border-radius: 0;
-  color: var(--tab-color);
-  cursor: var(--tab-cursor);
+  color: var(--uitk-text-primary-foreground);
+  cursor: var(--uitkTab-cursor, pointer);
   display: var(--tabstrip-tab-display);
-  /* 2px padding bottom ? */
   height: var(--uitkTab-height, var(--tabstrip-height));
+  letter-spacing: var(--uitkTab-letterSpacing, 0);
+  min-width: var(--uitkTab-minWidth, 40px);
   outline: none;
-  position: relative;
+  position: var(--uitkTab-position, relative);
+  user-select: none;
 }
 
 .uitkTab:not(.uitkTab-vertical) {
   margin: 0 var(--tab-spacing) 0 0;
 }
 
-.uitkTab-dragAway {
-  background: var(--tab-hover-background);
-  display: var(--tab-drag-away-display, none);
-  opacity: 0.4;
-}
-
-.uitkTab-dragAway:before {
-  background: var(--tab-bar-color);
-  bottom: 0;
-  content: "";
-  left: 0;
-  height: 2px;
-  opacity: 1;
-  position: absolute;
-  right: 0;
-  z-index: var(--uitk-zIndex-default);
-}
-
-.uitkTab:hover:not(.uitkTab-closeHover) {
-  background-color: var(--uitkTab-background-hover, var(--tab-hover-background));
-}
-
-.uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before,
-.uitkTab:hover:not([aria-selected="true"]):before {
-  background: var(--tab-bar-color);
-  bottom: 0;
-  content: "";
-  opacity: 1;
-  position: absolute;
-  right: 0;
-  z-index: var(--uitk-zIndex-default);
-}
-
-.uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab:before {
-  background: var(--uitk-color-orange-700);
-}
-
-.uitkTabstrip[class*="uitkTabstrip-draggingTab"] .uitkTab[aria-selected="true"]:before,
-.uitkTab:not(.uitkTab-vertical):hover:not([aria-selected="true"]):before {
-  left: 0;
-  height: 2px;
-}
-
-.uitkTab-vertical:hover:not([aria-selected="true"]):before {
-  top: 0;
-  width: 2px;
-}
-
 .uitkTab[aria-selected="true"] {
-  color: var(--tab-selected-color);
-  font-weight: var(--tab-font-weight-selected);
+  color: var(--uitk-navigable-link-color-active);
+  /* should be fontWeight-active, but nor sure where that belongs */
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
 
+.uitkTab-dragAway {
+  display: none;
+}
+
+/* main content aria of Tab */
 .uitkTab-main {
   background-color: inherit;
   border: none;
@@ -111,18 +55,6 @@
   position: relative;
 }
 
-.uitkTab-dragging {
-  --tab-cursor: grabbing;
-  background-color: var(--tab-drag-background);
-  box-shadow: var(--uitk-overlayable-shadow-drag);
-  z-index: 100;
-  display: var(--tabstrip-tag-dragging-display);
-}
-
-.uitkTab-draggedAway {
-  opacity: 0.5;
-}
-
 .uitkTab-closeable .uitkTab-main {
   border-right: solid transparent var(--uitk-size-unit);
 }
@@ -133,6 +65,7 @@
   justify-content: center;
 }
 
+/* the close Button on a closeable Tab*/
 .uitkTab-close-icon {
   display: none;
 }
@@ -147,16 +80,13 @@
   display: none;
 }
 
-.uitkTab .uitkTab-closeButton:hover {
-  background-color: var(--uitk-color-grey-40);
-}
-
 .uitkTab .uitkTab-text {
   display: inline-block;
-  position: static;
+  position: relative;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
+  top: var(--uitkTab-top, auto);
   white-space: nowrap;
   /* ensure content sita above focus ring */
   z-index: var(--uitk-zIndex-default);
@@ -171,7 +101,8 @@
   content: attr(data-text);
   display: block;
   visibility: hidden;
-  font-weight: 600;
+  /* must match font weight of selected tab styling */
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 /* Editing  - these are focusVisible styles, just assign uitkFocusVisible*/
@@ -196,20 +127,6 @@
   bottom: 0;
 }
 
-/* FocusVisible underline bar styling */
-.uitkTab:not([aria-selected="true"]).uitkFocusVisible:before {
-  background: var(--tab-bar-color);
-  bottom: 0;
-  content: "";
-  opacity: 1;
-  position: absolute;
-  right: 0;
-  z-index: var(--uitk-zIndex-default);
-  /* horizontal */
-  left: 0;
-  height: 2px;
-}
-
 .uitkTab-vertical .uitkFocusVisible:not([aria-selected="true"]):before {
   left: auto;
   height: auto;
@@ -218,6 +135,38 @@
 }
 
 .uitkTab.uitkFocusVisible {
-  outline: none;
-  background-color: var(--tab-hover-background);
+  background-color: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
+}
+
+.uitkTab:before {
+  content: var(--tab-before-content, none);
+  background: var(--tab-before-background);
+  height: var(--tab-before-height);
+  inset: var(--tab-before-inset);
+  position: absolute;
+  width: var(--tab-before-width);
+  z-index: 1;
+}
+
+.uitkTabstrip-draggingTab .uitkTab[aria-selected="true"]:before {
+  --tab-before-content: "";
+  --tab-before-height: 2px;
+  --tab-before-background: var(--uitk-navigable-indicator-color-active);
+  --tab-before-height: var(--tabstrip-activation-thumb-height);
+  --tab-before-inset: var(--tabstrip-activation-indicator-inset);
+  --tab-before-width: var(--tabstrip-activation-thumb-width);
+}
+
+/* Hover styling */
+.uitkTab:not([aria-selected="true"]).uitkFocusVisible:before,
+.uitkTab:hover:not([aria-selected="true"]):before {
+  --tab-before-content: "";
+  --tab-before-background: var(--uitk-navigable-indicator-hover);
+  --tab-before-height: var(--tabstrip-activation-thumb-height);
+  --tab-before-inset: var(--tabstrip-activation-indicator-inset);
+  --tab-before-width: var(--tabstrip-activation-thumb-width);
+}
+
+.uitkTab:hover:not(.uitkTab-closeHover) {
+  background-color: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
 }

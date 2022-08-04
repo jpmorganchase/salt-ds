@@ -109,7 +109,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       <Input
         defaultValue="Prefix: Interactive Component"
         startAdornment={
-          <Dropdown initialSelectedItem={data[0]} source={data} width={90} />
+          <Dropdown defaultSelected={data[0]} source={data} width={90} />
         }
       />
       <Input
@@ -127,7 +127,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Interactive Component"
         endAdornment={
           <Dropdown
-            initialSelectedItem={suffixData[0]}
+            defaultSelected={suffixData[0]}
             source={suffixData}
             width={60}
           />

@@ -1,12 +1,15 @@
 import { TooltipProps } from "@jpmorganchase/uitk-core";
 import { FC, HTMLAttributes, ReactNode, Ref } from "react";
-import { OverflowButtonProps, OverflowPanelProps } from "../responsive";
 
 export type OrientationShape = "vertical" | "horizontal";
 
+export interface ToolbarAlignmentProps {
+  alignCenter?: true | undefined;
+  alignEnd?: true | undefined;
+  alignStart?: true | undefined;
+}
+
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
-  OverflowButtonProps?: Partial<OverflowButtonProps>;
-  OverflowPanelProps?: Partial<OverflowPanelProps>;
   /**
    * Used by custom elements to render a custom tooltip
    */
@@ -20,11 +23,6 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    */
   disabled?: boolean;
   /**
-   * TODO
-   * Callback for when the number of visible items changes
-   */
-  onHiddenItemsChange?: Function;
-  /**
    * The orientation of the component
    */
   orientation?: OrientationShape;
@@ -36,10 +34,11 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * Text to display next to overflow menu icon
    */
   overflowButtonLabel?: string;
+
   /**
-   * Use this to access overflow button element
+   * Placement of the Overflow, default is 'end'
    */
-  overflowButtonRef?: Ref<HTMLDivElement>;
+  overflowButtonPlacement?: "start" | "end";
   /**
    * If `true`, toolbar will adapt to the size of its container. It adds and removes toolbar buttons
    * from the overflow menu automatically as the size of the container changes.
@@ -47,6 +46,4 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * The default is `true`. Set it to `false` to revert back to non-responsive version.
    */
   responsive?: boolean;
-
-  wrapChildrenWithFormFields?: boolean;
 }

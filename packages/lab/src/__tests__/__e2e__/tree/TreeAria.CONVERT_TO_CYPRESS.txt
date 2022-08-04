@@ -1,0 +1,240 @@
+import React from 'react';
+import {
+  render,
+  screen,
+  fireEvent
+} from '@jpmuitk/react-testing-library-utils';
+import { AriaAnnouncerProvider } from '@jpmuitk/aria-announcer';
+
+import Tree from '../Tree';
+
+const mockAnnounce = jest.fn();
+
+jest.mock('@jpmuitk/aria-announcer/useAriaAnnouncer', () => () => ({
+  announce: mockAnnounce
+}));
+
+const createSecondLevelData = () => [
+  {
+    id: '1.1',
+    name: 'b',
+    expanded: true,
+    childNodes: [
+      {
+        id: '1.1.1',
+        name: 'c'
+      },
+      {
+        id: '1.1.2',
+        name: 'd',
+        childNodes: [
+          {
+            id: '1.1.2.1',
+            name: 'e',
+            description: 'description',
+            childNodes: [
+              {
+                id: '1.1.2.1.1',
+                name: 'f',
+                description: 'description'
+              },
+              {
+                id: '1.1.2.1.2',
+                name: 'g'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: '1.2',
+    name: 'h'
+  }
+];
+
+function createSampleTreeData(async = false) {
+  return [
+    {
+      id: '1',
+      name: 'a',
+      description: 'description',
+      expanded: !async,
+      childNodes: async ? [] : createSecondLevelData()
+    }
+  ];
+}
+
+const loadSecondaryNodes = () => Promise.resolve(createSecondLevelData());
+
+describe('GIVEN a Tree', () => {
+  describe('WHEN multiselect', () => {
+    it('THEN should apply aria-multiselectable', () => {
+      render(
+        <Tree
+          initialSource={createSampleTreeData()}
+          multiSelect
+          variant="default"
+        />
+      );
+      expect(screen.getByRole('tree')).toHaveAttribute(
+        'aria-multiselectable',
+        'true'
+      );
+    });
+
+    it('should assign correct aria-checked values', () => {
+      render(
+        <Tree
+          initialSource={createSampleTreeData()}
+          multiSelect
+          variant="default"
+        />
+      );
+
+      const [node1, node11, node111, , node12] = screen.getAllByRole(
+        'treeitem'
+      );
+
+      fireEvent.click(node11);
+      expect(node111.getAttribute('aria-checked')).toBe('false');
+      expect(node11.getAttribute('aria-checked')).toBe('true');
+      expect(node1.getAttribute('aria-checked')).toBe('mixed');
+      expect(node12.getAttribute('aria-checked')).toBe('false');
+
+      fireEvent.click(node12);
+      expect(node111.getAttribute('aria-checked')).toBe('false');
+      expect(node11.getAttribute('aria-checked')).toBe('true');
+      expect(node1.getAttribute('aria-checked')).toBe('mixed');
+      expect(node12.getAttribute('aria-checked')).toBe('true');
+    });
+  });
+
+  describe('WHEN multiselect, variant checkbox', () => {
+    it('THEN should apply aria-multiselectable', () => {
+      render(
+        <Tree
+          initialSource={createSampleTreeData()}
+          multiSelect
+          variant="checkbox"
+        />
+      );
+      expect(screen.getByRole('tree')).toHaveAttribute('aria-multiselectable');
+    });
+
+    it('should assign correct aria-checked values', () => {
+      render(
+        <Tree
+          initialSource={createSampleTreeData()}
+          multiSelect
+          variant="checkbox"
+        />
+      );
+
+      const [node1, node11, node111, node112, node12] = screen.getAllByRole(
+        'treeitem'
+      );
+
+      fireEvent.click(node11);
+      expect(node111.getAttribute('aria-checked')).toBe('true');
+      expect(node112.getAttribute('aria-checked')).toBe('true');
+      expect(node11.getAttribute('aria-checked')).toBe('true');
+      expect(node1.getAttribute('aria-checked')).toBe('mixed');
+      expect(node12.getAttribute('aria-checked')).toBe('false');
+
+      fireEvent.click(node12);
+      expect(node111.getAttribute('aria-checked')).toBe('true');
+      expect(node11.getAttribute('aria-checked')).toBe('true');
+      expect(node1.getAttribute('aria-checked')).toBe('true');
+      expect(node12.getAttribute('aria-checked')).toBe('true');
+    });
+  });
+
+  describe('WHEN not multiselect ', () => {
+    it('THEN should apply aria-multiselectable', () => {
+      render(<Tree initialSource={createSampleTreeData()} variant="default" />);
+      expect(screen.getByRole('tree')).not.toHaveAttribute(
+        'aria-multiselectable'
+      );
+    });
+  });
+
+  describe('WHEN not async and with no explicit label', () => {
+    it('THEN it should not have aria-label', () => {
+      render(
+        <AriaAnnouncerProvider>
+          <Tree initialSource={createSampleTreeData()} />
+        </AriaAnnouncerProvider>
+      );
+
+      expect(screen.getByRole('tree')).not.toHaveAttribute(
+        'aria-label',
+        'tree has asynchronous loading'
+      );
+    });
+
+    it('THEN when loader present, as long as data is complete', () => {
+      render(
+        <AriaAnnouncerProvider>
+          <Tree
+            initialSource={createSampleTreeData()}
+            loadChildNodes={() => []}
+          />
+        </AriaAnnouncerProvider>
+      );
+
+      expect(screen.getByRole('tree')).not.toHaveAttribute(
+        'aria-label',
+        'tree has asynchronous loading'
+      );
+    });
+
+    it('THEN if no loader present, even if data is incomplete', () => {
+      render(
+        <AriaAnnouncerProvider>
+          <Tree initialSource={createSampleTreeData(true)} />
+        </AriaAnnouncerProvider>
+      );
+
+      expect(screen.getByRole('tree')).not.toHaveAttribute(
+        'aria-label',
+        'tree has asynchronous loading'
+      );
+    });
+  });
+
+  describe('WHEN async', () => {
+    it('THEN it should have aria-label', () => {
+      render(
+        <AriaAnnouncerProvider>
+          <Tree
+            initialSource={createSampleTreeData(true)}
+            loadChildNodes={loadSecondaryNodes}
+          />
+        </AriaAnnouncerProvider>
+      );
+
+      expect(screen.getByRole('tree')).toHaveAttribute(
+        'aria-label',
+        'tree has asynchronous loading'
+      );
+    });
+    it('THEN explicit aria-label should have async message suffix', () => {
+      render(
+        <AriaAnnouncerProvider>
+          <Tree
+            aria-label="My Tree"
+            initialSource={createSampleTreeData(true)}
+            loadChildNodes={loadSecondaryNodes}
+          />
+        </AriaAnnouncerProvider>
+      );
+
+      expect(screen.getByRole('tree')).toHaveAttribute(
+        'aria-label',
+        'My Tree has asynchronous loading'
+      );
+    });
+  });
+});

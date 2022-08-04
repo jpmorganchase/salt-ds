@@ -38,8 +38,8 @@ export const DictTabs = ({
         {...props}
         data-testid="color-chooser-tabstrip"
         className={cn(withBaseName("wrapper"))}
-        value={activeTab}
-        onChange={(tabIndex: number) => onTabClick(tabIndex)}
+        activeTabIndex={activeTab}
+        onActiveChange={(tabIndex: number) => onTabClick(tabIndex)}
       >
         {[...Object.keys(tabs)].map((label, i) => (
           <Tab className={cn(withBaseName("text"))} label={label} key={i} />

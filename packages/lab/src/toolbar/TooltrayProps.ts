@@ -1,13 +1,13 @@
 import { HTMLAttributes } from "react";
 
-import { OrientationShape } from "./ToolbarProps";
-import { OverflowMenuProps } from "../responsive";
+import { OrientationShape, ToolbarAlignmentProps } from "./ToolbarProps";
 
 type collapsibleType = "dynamic" | "instant";
 type booleanAttribute = "true" | "false";
 
-export interface TooltrayProps extends HTMLAttributes<HTMLDivElement> {
-  OverflowButtonProps?: Omit<Partial<OverflowMenuProps>, "ref">;
+export interface TooltrayProps
+  extends ToolbarAlignmentProps,
+    HTMLAttributes<HTMLDivElement> {
   collapse?: boolean;
   collapsed?: boolean;
   collapsible?: boolean;
@@ -15,7 +15,7 @@ export interface TooltrayProps extends HTMLAttributes<HTMLDivElement> {
   "data-collapsible"?: collapsibleType;
   "data-collapsed"?: booleanAttribute;
   isInsidePanel?: boolean;
-  overflowButtonIcon?: string;
+  overflowButtonIcon?: JSX.Element;
   overflowButtonLabel?: string;
   orientation?: OrientationShape;
 }

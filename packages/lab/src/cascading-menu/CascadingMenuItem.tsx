@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ListItem, ListItemProps } from "../list";
+import { ListItem, ListItemProps } from "../list-deprecated";
 import { MenuDescriptor } from "./CascadingMenuProps";
 
 import "./CascadingMenuItem.css";

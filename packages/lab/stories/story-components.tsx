@@ -1,7 +1,8 @@
 import { FC, CSSProperties, useRef, useState, useReducer } from "react";
 import { Button, Input, InputProps } from "@jpmorganchase/uitk-core";
 
-export interface FlexboxProps {
+export interface AdjustableFlexboxProps {
+  containerWidth?: number | string;
   style?: CSSProperties;
   height?: number;
   row?: boolean;
@@ -12,8 +13,9 @@ export interface FlexboxProps {
  * Container for testing responsive components - a bit basic, but
  * does the job for now
  */
-export const AdjustableFlexbox: FC<FlexboxProps> = ({
+export const AdjustableFlexbox: FC<AdjustableFlexboxProps> = ({
   children,
+  containerWidth = "auto",
   style,
   height = 300,
   row = false,
@@ -45,7 +47,7 @@ export const AdjustableFlexbox: FC<FlexboxProps> = ({
 
   return (
     <>
-      <div>
+      <div style={{ minWidth: containerWidth }}>
         <Input
           value={`${widthRef.current}`}
           onChange={handleWidthChange}
@@ -57,6 +59,7 @@ export const AdjustableFlexbox: FC<FlexboxProps> = ({
           10px)
         </span>
       </div>
+      <br />
       <div
         className="Flexbox"
         style={{

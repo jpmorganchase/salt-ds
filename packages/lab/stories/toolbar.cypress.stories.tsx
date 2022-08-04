@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
   ExportIcon,
@@ -15,10 +15,15 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
-import { Toolbar, ToolbarProps, Tooltray } from "@jpmorganchase/uitk-lab";
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarProps,
+  Tooltray,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory } from "@storybook/react";
 
-import { AdjustableFlexbox, FlexboxProps } from "./story-components";
+import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
 import "./toolbar.stories.css";
 
 export default {
@@ -26,53 +31,45 @@ export default {
   component: Toolbar,
 };
 
-const ToolbarButton = ({
-  id,
-  label,
-  ...props
-}: ButtonProps & { label: string }) => (
-  <Button {...props} variant="secondary" id={id} data-overflow-lavel={label} />
-);
-
-type ToolbarStory = ComponentStory<FC<FlexboxProps & ToolbarProps>>;
+type ToolbarStory = ComponentStory<FC<AdjustableFlexboxProps & ToolbarProps>>;
 
 export const SimpleToolbar: ToolbarStory = ({
   width = 400,
   ...toolbarProps
-}: FlexboxProps & ToolbarProps) => {
+}: AdjustableFlexboxProps & ToolbarProps) => {
   return (
     <AdjustableFlexbox height={200} width={width}>
       <Toolbar {...toolbarProps}>
-        <Button variant="secondary">
-          <ExportIcon />
-        </Button>
-        <Button variant="secondary">
-          <ShareIcon />
-        </Button>
-        <Button variant="secondary">
-          <NotificationIcon />
-        </Button>
-        <Button variant="secondary">
-          <TearOutIcon />
-        </Button>
-        <Button variant="secondary">
-          <MessageIcon />
-        </Button>
-        <Button variant="secondary">
-          <FilterIcon />
-        </Button>
-        <Button variant="secondary">
-          <UserGroupIcon />
-        </Button>
-        <Button variant="secondary">
-          <PinIcon />
-        </Button>
-        <Button variant="secondary">
-          <SearchIcon />
-        </Button>
-        <Button variant="secondary">
-          <UserIcon />
-        </Button>
+        <ToolbarButton>
+          <ExportIcon /> Export
+        </ToolbarButton>
+        <ToolbarButton>
+          <ShareIcon /> Share
+        </ToolbarButton>
+        <ToolbarButton>
+          <NotificationIcon /> Notification
+        </ToolbarButton>
+        <ToolbarButton>
+          <TearOutIcon /> Tear Out
+        </ToolbarButton>
+        <ToolbarButton>
+          <MessageIcon /> Message
+        </ToolbarButton>
+        <ToolbarButton>
+          <FilterIcon /> Filter
+        </ToolbarButton>
+        <ToolbarButton>
+          <UserGroupIcon /> User Group
+        </ToolbarButton>
+        <ToolbarButton>
+          <PinIcon /> Pin
+        </ToolbarButton>
+        <ToolbarButton>
+          <SearchIcon /> Search
+        </ToolbarButton>
+        <ToolbarButton>
+          <UserIcon /> User
+        </ToolbarButton>
       </Toolbar>
     </AdjustableFlexbox>
   );
@@ -83,7 +80,7 @@ export const SimpleToolbarOverflowLabel: ToolbarStory = ({
 }) => <SimpleToolbar overflowButtonLabel={overflowButtonLabel} />;
 
 export const ToolbarUsingOverflowPriorities: ToolbarStory = ({
-  width = 420,
+  width = 600,
   ...toolbarProps
 }) => {
   return (
@@ -138,13 +135,11 @@ export const SimpleToolbarCollapsibleItems: ToolbarStory = ({
 };
 
 export const SingleDynamicCollapseTooltray: ToolbarStory = ({
-  width = 200,
+  width = 310,
 }) => {
-  const pStyle = { whiteSpace: "nowrap", overflow: "hidden" } as any;
-
   return (
     <AdjustableFlexbox height={500} width={width}>
-      <p style={pStyle}>
+      <p style={{ whiteSpace: "nowrap", overflow: "hidden" }}>
         A single <em>Tooltray</em> with 10 buttons
       </p>
       <Toolbar aria-label="Toolbar with dynamic collapse variants">
@@ -153,35 +148,35 @@ export const SingleDynamicCollapseTooltray: ToolbarStory = ({
           data-collapsible="dynamic"
           // overflowButtonLabel="More"
         >
-          <ToolbarButton id="messageButton" label="Email">
-            <MessageIcon />
+          <ToolbarButton>
+            <MessageIcon /> Email
           </ToolbarButton>
-          <ToolbarButton id="searchButton" label="Search">
-            <SearchIcon />
+          <ToolbarButton>
+            <SearchIcon /> Search
           </ToolbarButton>
-          <ToolbarButton id="filterButton" label="Filter">
-            <FilterIcon />
+          <ToolbarButton>
+            <FilterIcon /> Filter
           </ToolbarButton>
-          <ToolbarButton id="userButton" label="User">
-            <UserIcon />
+          <ToolbarButton>
+            <UserIcon /> User
           </ToolbarButton>
-          <ToolbarButton id="userGroupButton" label="User Group">
-            <UserGroupIcon />
+          <ToolbarButton>
+            <UserGroupIcon /> User Group
           </ToolbarButton>
-          <ToolbarButton id="tearOutButton" label="Tear Out">
-            <TearOutIcon />
+          <ToolbarButton>
+            <TearOutIcon /> Tear Out
           </ToolbarButton>
-          <ToolbarButton id="expandButton" label="Expand">
-            <DoubleChevronDownIcon />
+          <ToolbarButton>
+            <DoubleChevronDownIcon /> Expand
           </ToolbarButton>
-          <ToolbarButton id="pinButton" label="Pin">
-            <PinIcon />
+          <ToolbarButton>
+            <PinIcon /> Pin
           </ToolbarButton>
-          <ToolbarButton id="settingsButton" label="Settings">
-            <SettingsIcon />
+          <ToolbarButton>
+            <SettingsIcon /> Settings
           </ToolbarButton>
-          <ToolbarButton id="settingsSolidButton" label="More Settings">
-            <SettingsSolidIcon />
+          <ToolbarButton>
+            <SettingsSolidIcon /> More Settings
           </ToolbarButton>
         </Tooltray>
       </Toolbar>
@@ -189,50 +184,45 @@ export const SingleDynamicCollapseTooltray: ToolbarStory = ({
   );
 };
 
-export const TwoDynamicCollapseTooltraysDefaultPriority = ({ width = 350 }) => {
+export const TwoDynamicCollapseTooltraysDefaultPriority = ({ width = 70 }) => {
   return (
     <AdjustableFlexbox height={500} width={width}>
       <Toolbar>
-        <Tooltray
-          aria-label="left dynamic tooltray"
-          data-collapsible="dynamic"
-          // overflowButtonLabel="left"
-        >
-          <ToolbarButton id="messageButton" label="Email">
-            <MessageIcon />
+        <Tooltray aria-label="left dynamic tooltray" data-collapsible="dynamic">
+          <ToolbarButton>
+            <MessageIcon /> Email
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Search">
-            <SearchIcon />
+          <ToolbarButton>
+            <SearchIcon /> Search
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Filter">
-            <FilterIcon />
+          <ToolbarButton>
+            <FilterIcon /> Filter
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="User">
-            <UserIcon />
+          <ToolbarButton>
+            <UserIcon /> User
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Group">
-            <UserGroupIcon />
+          <ToolbarButton>
+            <UserGroupIcon /> Group
           </ToolbarButton>
         </Tooltray>
         <Tooltray
           aria-label="right dynamic tooltray"
           data-collapsible="dynamic"
-          // overflowButtonLabel="right"
         >
-          <ToolbarButton id="messageButton" label="Tear Out">
-            <TearOutIcon />
+          <ToolbarButton>
+            <TearOutIcon /> Tear Out
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Expand">
-            <DoubleChevronDownIcon />
+          <ToolbarButton>
+            <DoubleChevronDownIcon /> Expand
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Pin">
-            <PinIcon />
+          <ToolbarButton>
+            <PinIcon /> Pin
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="Settings">
-            <SettingsIcon />
+          <ToolbarButton>
+            <SettingsIcon /> Settings
           </ToolbarButton>
-          <ToolbarButton id="messageButton" label="More Settings">
-            <SettingsSolidIcon />
+          <ToolbarButton>
+            <SettingsSolidIcon /> More Settings
           </ToolbarButton>
         </Tooltray>
       </Toolbar>

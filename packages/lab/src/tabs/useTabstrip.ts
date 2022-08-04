@@ -1,116 +1,134 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
-import { MouseEventHandler, RefObject, useCallback } from "react";
-import { ManagedItem } from "../responsive";
-import { DragHookResult, dragStrategy, useDragDrop } from "./drag-drop";
+import {
+  createElement,
+  KeyboardEvent,
+  MouseEvent,
+  MouseEventHandler,
+  RefObject,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
+import { Tab } from "./Tab";
+import {
+  ContainerNavigationProps,
+  useKeyboardNavigation,
+} from "./useKeyboardNavigation";
+import { dragStrategy, useDragDrop, DragHookResult } from "./drag-drop";
+import { useSelection } from "./useSelection";
+import { ExitEditModeHandler, useEditableItem } from "./useEditableItem";
+import { OverflowCollectionHookResult } from "../responsive";
+
 import {
   composableTabProps,
   exitEditHandler,
+  navigationProps,
   TabDescriptor,
   TabElement,
-} from "./TabstripProps";
-import { useEditableItem } from "./useEditableItem";
-import { useKeyboardNavigation } from "./useKeyboardNavigation";
-import { useSelection } from "./useSelection";
-
-type setTabsType = (tabs: TabDescriptor[] | TabElement[]) => void;
+} from "./TabsTypes";
 
 interface tabstripHookProps {
+  activeTabIndex?: number;
   allowDragDrop?: boolean | dragStrategy;
-  defaultValue?: number;
+  collectionHook: OverflowCollectionHookResult;
+  defaultActiveTabIndex?: number;
   defaultTabs?: TabDescriptor[];
+  editing?: boolean;
   enableAddTab: boolean;
+  idRoot: string;
   innerContainerRef: RefObject<HTMLDivElement>;
   keyBoardActivation?: "manual" | "automatic";
-  managedItems: ManagedItem[];
-  onChange?: (tabIndex: number) => void;
+  onActiveChange?: (tabIndex: number) => void;
+  onCloseTab?: (indexPosition: number) => void;
+  onEnterEditMode?: () => void;
+  onExitEditMode?: ExitEditModeHandler;
   onMoveTab?: (fromIndex: number, toIndex: number) => void;
   orientation: "horizontal" | "vertical";
+  promptForNewTabName?: boolean;
   tabs?: TabDescriptor[] | TabElement[];
-  value?: number;
 }
 
-//TODO create this from composite hooks
 interface tabstripHookResult {
   activateTab: (tabIndex: number) => void;
+  activeTabIndex: number;
+  addTab: (indexPosition?: number) => void;
+  closeTab: (indexPosition: number) => void;
+  containerProps: ContainerNavigationProps;
   controlledSelection: boolean;
-  editing: boolean;
-  focusedIndex: number;
+  editing?: boolean;
+  highlightedIdx: number;
+  focusVisible: number;
+  focusIsWithinComponent: boolean;
   focusTab: (tabIndex: number, immediateFocus?: boolean) => void;
   isDragging?: boolean;
-  navItemRefs: RefObject<Array<RefObject<HTMLElement>>>;
+  navigationProps: navigationProps;
   onMouseDown?: MouseEventHandler;
-  setEditing: (value: boolean) => void;
-  setTabs: setTabsType;
-  tabs: TabDescriptor[] | TabElement[];
-  value: number;
+  revealOverflowedItems: boolean;
   tabProps: composableTabProps;
 }
 
-// Simple strings for tab labels are accepted as input, convert to TabDescriptors internally
-
 export const useTabstrip = ({
+  activeTabIndex: activeTabIndexProp,
   allowDragDrop = false,
-  defaultValue,
-  enableAddTab,
+  collectionHook,
+  defaultActiveTabIndex,
+  editing: editingProp,
+  idRoot,
   innerContainerRef,
   keyBoardActivation,
-  managedItems,
-  onChange,
+  onActiveChange,
+  onCloseTab,
+  onEnterEditMode,
+  onExitEditMode,
   onMoveTab,
   orientation,
-  defaultTabs,
-  tabs: tabsProp,
-  value: valueProp,
+  promptForNewTabName,
 }: tabstripHookProps): tabstripHookResult & DragHookResult => {
-  const [tabs, setTabs] = useControlled<TabDescriptor[] | TabElement[]>({
-    controlled: tabsProp,
-    default: defaultTabs ?? [],
-    name: "Tabstrip",
-    state: "tabs",
+  const lastSelection = useRef(
+    activeTabIndexProp || defaultActiveTabIndex || 0
+  );
+  const pendingNewTab = useRef<string | null>(null);
+
+  const overflowedItems = collectionHook.data.filter((item) => item.overflowed);
+
+  const keyboardHook = useKeyboardNavigation({
+    indexPositions: collectionHook.data,
+    keyBoardActivation,
+    orientation,
+    selectedIndex: lastSelection.current,
   });
-
-  const overflowedItems = managedItems.filter((item) => item.overflowed);
-
-  const getItemCount = () => {
-    let itemCount = tabs.length;
-    if (enableAddTab) {
-      itemCount += 1;
-    }
-    if (overflowedItems.length > 0) {
-      itemCount += 1;
-    }
-    return itemCount;
-  };
 
   const selectionHook = useSelection({
-    defaultValue,
-    onChange,
-    value: valueProp,
+    defaultSelected: defaultActiveTabIndex,
+    highlightedIdx: keyboardHook.highlightedIdx,
+    onSelectionChange: onActiveChange,
+    selected: activeTabIndexProp,
   });
+
+  // We need this on reEntry for navigation hook to handle focus
+  lastSelection.current = selectionHook.selected;
 
   const handleDrop = useCallback(
     (fromIndex: number, toIndex: number) => {
-      // Always activate the dropped tab. We might want to make this a configuration option
-
-      // if (fromIndex === selectionHook.value) {
-      //   const newSelectedTab =
-      //     toIndex === -1
-      //       ? tabs.length - 1
-      //       : toIndex < fromIndex
-      //       ? toIndex
-      //       : toIndex - 1;
-      //   selectionHook.activateTab(newSelectedTab);
-      // } else if (
-      //   fromIndex < selectionHook.value &&
-      //   toIndex > selectionHook.value
-      // ) {
-      //   selectionHook.activateTab(selectionHook.value - 1);
-      // }
-
       onMoveTab?.(fromIndex, toIndex);
-      selectionHook.activateTab(toIndex);
+      if (toIndex === -1) {
+        // nothing to do
+      } else {
+        if (selectionHook.selected === fromIndex) {
+          selectionHook.activateTab(toIndex);
+        } else if (
+          fromIndex > selectionHook.selected &&
+          toIndex <= selectionHook.selected
+        ) {
+          selectionHook.activateTab(selectionHook.selected + 1);
+        } else if (
+          fromIndex < selectionHook.selected &&
+          toIndex >= selectionHook.selected
+        ) {
+          selectionHook.activateTab(selectionHook.selected - 1);
+        }
+      }
     },
-    [onMoveTab, selectionHook.value, tabs]
+    [onMoveTab, selectionHook]
   );
 
   const dragDropHook = useDragDrop({
@@ -122,11 +140,12 @@ export const useTabstrip = ({
     itemQuery: ".uitkTab",
   });
 
-  const keyboardHook = useKeyboardNavigation({
-    itemCount: getItemCount(),
-    keyBoardActivation,
-    orientation,
-    value: selectionHook.value,
+  const editableHook = useEditableItem({
+    editing: editingProp,
+    highlightedIdx: keyboardHook.highlightedIdx,
+    indexPositions: collectionHook.data,
+    onEnterEditMode,
+    onExitEditMode,
   });
 
   const handleExitEditMode = useCallback<exitEditHandler>(
@@ -137,71 +156,153 @@ export const useTabstrip = ({
         allowDeactivation,
         tabIndex
       );
-      if (setTabs) {
-        setTabs(
-          //@ts-ignore tabs can only be TabDescriptors here
-          tabs.map<TabDescriptor>((tab: TabDescriptor, idx) =>
-            idx === tabIndex ? { ...tab, label: editedValue } : tab
-          )
-        );
-      }
       if (!allowDeactivation) {
-        keyboardHook.focusTab(tabIndex);
+        // this indicates that Enter or Esc key has been pressed, hence we
+        // want to make sure keyboardHook treats this as a keyboard event
+        // (and applies focusVisible). The last parameter here does that.
+        keyboardHook.focusTab(tabIndex, false, true);
       }
     },
-    [keyboardHook.focusTab, setTabs]
+    [editableHook, keyboardHook]
   );
 
-  const editableHook = useEditableItem();
-
   const handleClick = useCallback(
-    (evt, tabIndex) => {
+    (evt: MouseEvent<Element>, tabIndex: number) => {
       // releasing the mouse at end of drag will trigger a click, ignore those
       if (!dragDropHook.isDragging) {
         keyboardHook.onClick(evt, tabIndex);
         selectionHook.onClick(evt, tabIndex);
       }
     },
-    [dragDropHook.isDragging, keyboardHook.onClick, selectionHook.onClick]
+    [dragDropHook.isDragging, keyboardHook, selectionHook]
   );
 
   const handleKeyDown = useCallback(
-    (evt, tabIndex) => {
-      keyboardHook.onKeyDown(evt, tabIndex);
+    (evt: KeyboardEvent<Element>) => {
+      keyboardHook.onKeyDown(evt);
       if (!evt.defaultPrevented) {
-        selectionHook.onKeyDown(evt, tabIndex);
+        selectionHook.onKeyDown(evt);
       }
       if (!evt.defaultPrevented) {
-        editableHook.onKeyDown(evt, tabIndex);
+        editableHook.onKeyDown(evt);
       }
     },
-    [keyboardHook.onKeyDown, selectionHook.onKeyDown, editableHook.onKeyDown]
+    [keyboardHook, selectionHook, editableHook]
   );
 
-  const { tabProps: dragTabProps, ...dragProps } = dragDropHook;
+  // const { tabProps: dragTabProps, ...dragProps } = dragDropHook;
+  const dragProps = dragDropHook;
 
-  const tabProps: composableTabProps = {
-    onBlur: keyboardHook.onBlur,
+  const navigationProps = {
     onFocus: keyboardHook.onFocus,
     onKeyDown: handleKeyDown,
+  };
+
+  const tabProps: composableTabProps = {
     onClick: handleClick,
     onEnterEditMode: editableHook.onEnterEditMode,
     onExitEditMode: handleExitEditMode,
-    ...dragTabProps,
+    // ...dragTabProps,
   };
+
+  const addTab = useCallback(
+    // The -1 is to account for the AddTab button - we shoudn't assume this
+    (indexPosition: number = collectionHook.data.length - 1) => {
+      const tabId =
+        (pendingNewTab.current = `${idRoot}-${collectionHook.data.length}`);
+      const overflowIndicator = collectionHook.data.find(
+        (i) => i.isOverflowIndicator
+      );
+      const newTabs = collectionHook.data.filter((item) =>
+        item.label?.startsWith("New Tab")
+      );
+      const count = newTabs.length + 1;
+      collectionHook.dispatch({
+        type: "add-child-item",
+        idRoot,
+        element: createElement(Tab, {
+          editable: true,
+          label: `New Tab ${count}`,
+          id: tabId,
+        }),
+        indexPosition: overflowIndicator ? indexPosition - 1 : indexPosition,
+      });
+    },
+    [collectionHook, idRoot]
+  );
+
+  const selectNewTab = useCallback(
+    (tabId) => {
+      const tab = collectionHook.data.find((item) => item.id === tabId);
+      if (tab) {
+        selectionHook.activateTab(tab.index);
+        if (promptForNewTabName) {
+          // this will take care of focus, which will be set to the editable input
+          editableHook.setEditing(true);
+        } else {
+          keyboardHook.focusTab(tab.index);
+        }
+      }
+    },
+    [
+      collectionHook.data,
+      editableHook,
+      keyboardHook,
+      promptForNewTabName,
+      selectionHook,
+    ]
+  );
+
+  const closeTab = useCallback(
+    (indexPosition: number) => {
+      if (!collectionHook.isControlled) {
+        collectionHook.dispatch({
+          type: "remove-item",
+          indexPosition,
+        });
+        if (collectionHook.data.length > 1) {
+          if (
+            indexPosition === selectionHook.selected &&
+            //TODO need to exclude oberflow indicator, addButton
+            indexPosition === collectionHook.data.length - 1
+          ) {
+            selectionHook.activateTab(indexPosition - 1);
+          }
+          // does this have to be here ?
+          onCloseTab?.(indexPosition);
+          if (indexPosition < selectionHook.selected) {
+            selectionHook.activateTab(selectionHook.selected - 1);
+          }
+        }
+      } else {
+        onCloseTab?.(indexPosition);
+      }
+    },
+    [collectionHook, onCloseTab, selectionHook]
+  );
+
+  useEffect(() => {
+    if (pendingNewTab.current) {
+      const { current: tabId } = pendingNewTab;
+      pendingNewTab.current = null;
+      selectNewTab(tabId);
+    }
+  }, [collectionHook.data, promptForNewTabName, selectNewTab]);
 
   return {
     activateTab: selectionHook.activateTab,
+    addTab,
+    closeTab,
+    containerProps: keyboardHook.containerProps,
     controlledSelection: selectionHook.isControlled,
-    editing: editableHook.editing,
     focusTab: keyboardHook.focusTab,
-    focusedIndex: keyboardHook.focusedIndex,
-    navItemRefs: keyboardHook.navItemRefs,
-    setEditing: editableHook.setEditing,
-    setTabs,
-    tabs,
-    value: selectionHook.value,
+    focusIsWithinComponent: keyboardHook.focusIsWithinComponent,
+    focusVisible: keyboardHook.focusVisible,
+    highlightedIdx: keyboardHook.highlightedIdx,
+    activeTabIndex: selectionHook.selected,
+    navigationProps,
     tabProps,
     ...dragProps,
+    ...editableHook,
   };
 };

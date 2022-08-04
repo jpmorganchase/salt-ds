@@ -3,35 +3,24 @@
 }
 
 .uitkTabActivationIndicator {
-  --activation-indicator-bg: var(--uitk-container-background-medium); /* TODO: Check token */
-  --activation-indicator-thumb-bg: var(--uitk-navigable-indicator-active); /* TODO: Check token */
+  --activation-indicator-bg: var(--uitk-container-borderColor-medium); /* TODO: Check token */
 
   background-color: var(--uitkTabActivationIndicator-bg, var(--activation-indicator-bg));
   bottom: 0;
   box-sizing: border-box;
+  height: var(--tabstrip-activation-indicator-height, auto);
+  inset: var(--tabstrip-activation-indicator-inset);
   position: absolute;
-  height: 1px;
-  width: 100%;
+  width: var(--tabstrip-activation-indicator-width, auto);
 }
 
+/* the Active Tab indicator, uses navigable styles */
 .uitkTabActivationIndicator-thumb {
+  inset: var(--tabstrip-activation-thumb-inset);
   position: absolute;
-  height: 2px;
-  background-color: var(--uitkTabActivationIndicator-thumb-bg, var(--activation-indicator-thumb-bg));
-  transition: var(--uitkTabActivationIndicator-transition, left 0.2s ease);
-  bottom: 0;
-  z-index: var(--uitk-zIndex-default);
-}
-
-.uitkTabActivationIndicator-vertical {
-  right: 0;
-  height: 100%;
-  width: 1px;
-}
-
-.uitkTabActivationIndicator-vertical .uitkTabActivationIndicator-thumb {
-  bottom: auto;
-  right: 0;
-  transition: top 0.2s ease;
-  width: 2px;
+  height: var(--tabstrip-activation-thumb-height, auto);
+  background-color: var(--uitk-navigable-indicator-active);
+  transition: var(--uitkTabActivationIndicator-transition, left 0.3s ease);
+  width: var(--tabstrip-activation-thumb-width, auto);
+  z-index: 1;
 }

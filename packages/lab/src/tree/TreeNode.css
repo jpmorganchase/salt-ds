@@ -1,0 +1,203 @@
+.uitkTreeNode {
+  /* Color */
+  --tree-item-text-color: var(--uitk-selectable-text-color);
+  --tree-item-background: var(--uitk-selectable-background);
+  --tree-item-background-hover: var(--uitk-selectable-background-hover);
+  --tree-item-selected-focus-visible-outline-color: var(--uitk-white);
+
+  --tree-node-height: var(--uitkTreeNode-height, 24px);
+  --tree-node-icon-size: 12px;
+  --tree-node-icon-transform: none;
+  --tree-node-padding-left: 6px;
+
+  --tree-item-background: var(--uitk-selectable-background);
+
+  align-items: flex-start;
+  min-height: var(--tree-node-height, auto);
+  line-height: var(--uitk-text-line-height);
+  list-style: none;
+  position: relative;
+  text-align: var(--list-item-text-align);
+}
+
+.uitkTreeNode-highlighted {
+  --tree-item-background: var(--uitk-selectable-background-hover);
+}
+
+.uitkTreeNode-item[aria-selected="true"] {
+  background: var(--uitk-selectable-background-active);
+  color: var(--uitk-selectable-text-color-active);
+  --uitkIcon-color: var(--uitk-selectable-icon-color-active);
+}
+
+.uitkTreeNode[aria-expanded="true"] {
+  --tree-node-icon-transform: rotate(45deg) translate(1px, 1px);
+}
+
+.uitkTreeNode-item {
+  align-items: center;
+  background: var(--tree-item-background);
+  display: flex;
+  height: var(--tree-node-height);
+  padding-left: calc(var(--tree-node-padding-left) + var(--tree-node-indent));
+  position: relative;
+}
+
+.uitkTreeNode-toggle {
+  display: inline-block;
+  flex: 0 0 18px;
+  height: var(--tree-node-icon-size);
+  transform: var(--tree-node-icon-transform);
+  transition: transform 0.1s ease;
+}
+
+.uitkTreeNode-label {
+  align-items: center;
+  display: inline-flex;
+  height: var(--tree-node-height);
+}
+.uitkTreeNode-description {
+  align-items: center;
+  display: inline-flex;
+  height: var(--tree-node-height);
+  padding-left: var(--uitk-spacing-unit);
+}
+
+/* Leaf node or the div child of a collapsible node */
+/* .uitkTreeNode:not([aria-expanded="true"]), */
+.uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
+  --checkbox-border-color: black;
+  --checkbox-border-width: 1px;
+  --checkbox-tick: black;
+  /* --svg-toggle: var(--svg-chevron-down); */
+  --svg-toggle: var(--tree-node-collapse);
+
+  color: var(--list-item-text-color);
+  flex-wrap: nowrap;
+  line-height: var(--tree-node-height);
+  padding: var(--list-item-padding);
+  position: relative;
+  cursor: default;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.uitkTreeNode:not([aria-expanded]) {
+  --padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+}
+
+.uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
+  --padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+}
+
+.uitkTreeNode[aria-expanded] {
+  flex-direction: column;
+}
+
+.uitkTreeNode[aria-expanded] {
+  flex-direction: column;
+  height: auto;
+}
+
+.uitkTreeNode > *[role="group"] {
+  padding-left: 0px;
+}
+
+[aria-level="2"] {
+  --tree-node-indent: 24px;
+}
+[aria-level="3"] {
+  --tree-node-indent: 36px;
+}
+[aria-level="4"] {
+  --tree-node-indent: 48px;
+}
+
+.uitkTreeNode:not(.focusVisible):not(.hwListItemHeader):not([aria-expanded])[data-highlighted],
+.uitkTreeNode:not(.focusVisible):not(.hwListItemHeader)[aria-expanded][data-highlighted] > div:first-child {
+  background-color: var(--list-hilited-bg);
+}
+
+.uitkTree-toggle {
+  cursor: pointer;
+}
+
+.uitkTreeNode[aria-selected="true"] {
+  --list-item-header-twisty-color: var(--list-item-selected-color);
+}
+
+/* .hwListItemHeader {
+    background-color: var(--list-item-header-bg);
+    color: var(--list-item-header-color);
+    font-weight: var(--list-item-header-font-weight);
+  
+  
+  .hwListItemHeader[data-sticky='true'] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  } */
+
+.uitkTreeNode:not(.focusVisible):focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.uitkTreeNode:not([aria-expanded]).focusVisible:before,
+.uitkTreeNode[aria-expanded].focusVisible > div:first-child:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: var(--tree-focus-offset, 0px);
+  right: 0;
+  bottom: 0px;
+  border: dotted var(--focus-visible-border-color) 2px;
+  background-color: var(--list-hilited-bg);
+}
+
+/* .uitkTreeNode[aria-level='2'] {
+    --tree-focus-offset: -13px;
+  }
+  
+  .uitkTreeNode[aria-level='3'] {
+    --tree-focus-offset: -24px;
+  }
+  
+  .uitkTreeNode[aria-level='4'] {
+    --tree-focus-offset: -36px;
+  } */
+
+.uitkTreeNode[aria-expanded="false"] > *:first-child:after {
+  --svg-toggle: var(--tree-node-expand);
+}
+
+.uitkTreeNode[aria-expanded="true"] > *:first-child:after {
+  transform: var(--tree-node-expanded-transform);
+}
+
+/* Selection */
+
+.uitkTree:not(.checkbox-only) .uitkTreeNode:not([aria-expanded])[aria-selected="true"],
+.uitkTree:not(.checkbox-only) .uitkTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
+  --checkbox-border-color: var(--list-item-selected-color);
+  --checkbox-tick: var(--list-item-selected-color);
+  --focus-visible-border-color: var(--list-item-selected-color);
+  background-color: var(--list-item-selected-bg);
+  color: var(--list-item-selected-color);
+}
+
+.with-checkbox .uitkTreeNode {
+  padding-left: 28px;
+}
+
+.with-checkbox .uitkTreeNode:before {
+  border-style: solid;
+  border-width: var(--checkbox-border-width);
+  border-color: var(--checkbox-border-color);
+  content: "";
+  height: 12px;
+  left: 3px;
+  margin-top: -7px;
+  position: absolute;
+  top: 50%;
+  width: 12px;
+}

@@ -7,9 +7,11 @@ const TOP_BOTTOM = ["top", "bottom"];
 
 export type MeasuredDropTarget = {
   currentIndex: number;
+  dataIndex?: number;
   element: HTMLElement;
   index: number;
   isDraggedElement: boolean;
+  isOverflowIndicator?: boolean;
   start: number;
   end: number;
   mid: number;
@@ -143,15 +145,11 @@ export const measureDropTargets = (
   itemQuery?: string
 ) => {
   const dragThresholds: MeasuredDropTarget[] = [];
-  const start = performance.now();
 
   // TODO need to make sure we're including only the children we should
   const children = Array.from(
-    itemQuery
-      ? container.querySelectorAll(`${itemQuery}:not([data-overflowed="true"])`)
-      : container.children
+    itemQuery ? container.querySelectorAll(itemQuery) : container.children
   );
-  console.log({ children });
   let previousThreshold = null;
   for (let index = 0; index < children.length; index++) {
     const element = children[index] as HTMLElement;
@@ -161,8 +159,10 @@ export const measureDropTargets = (
     dragThresholds.push(
       (previousThreshold = {
         currentIndex: index,
+        dataIndex: parseInt(element.dataset.index ?? "-1"),
         index,
         isDraggedElement: element === draggedItem,
+        isOverflowIndicator: element.dataset.overflowIndicator === "true",
         element: element as HTMLElement,
         start,
         end: start + size,
@@ -171,8 +171,6 @@ export const measureDropTargets = (
       })
     );
   }
-  const end = performance.now();
-  console.log(`measuring elements took ${end - start} ms`);
   return dragThresholds;
 };
 

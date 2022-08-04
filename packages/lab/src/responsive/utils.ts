@@ -1,43 +1,58 @@
 const COLLAPSIBLE = "data-collapsible";
-// const COLLAPSED = "data-collapsed";
 
 export type dataPadDirection = "data-pad-start" | "data-pad-end";
 
 const RESPONSIVE_ATTRIBUTE: { [key: string]: boolean } = {
-  // [COLLAPSED]: true,
   [COLLAPSIBLE]: true,
   "data-pad-start": true,
   "data-pad-end": true,
 };
 
-export const isResponsiveAttribute = (propName: string) =>
+export const isResponsiveAttribute = (propName: string): boolean =>
   RESPONSIVE_ATTRIBUTE[propName] ?? false;
 
 const isCollapsible = (propName: string) => propName === COLLAPSIBLE;
 
 const COLLAPSIBLE_VALUE: { [key: string]: string } = {
-  dynanic: "dynamic",
+  dynamic: "dynamic",
   instant: "instant",
   true: "instant",
 };
 
 const collapsibleValue = (value: string) => COLLAPSIBLE_VALUE[value] ?? "none";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const extractResponsiveProps = (props: any) =>
-  Object.keys(props).reduce(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (result: [any, any], propName) => {
-      const [toolbarProps, rest] = result;
-      if (isResponsiveAttribute(propName)) {
-        const value = isCollapsible(propName)
-          ? collapsibleValue(props[propName])
-          : props[propName];
+type AnyProps = Record<string, unknown>;
+type ResponsivePropsTuple = [AnyProps, AnyProps];
+/**
+ * data- attributes can be used to manage item overflow behaviour. Users may
+ * speficy these attributes directly on a Toolbar component, which ultimately
+ * gets wrapped by a FormField. We need to 'lift' these attributes to the form
+ * field and remove them from the props of the nested component.
+ * @param props
+ * @returns
+ */
+export const liftResponsivePropsToFormField = (
+  props: AnyProps
+): ResponsivePropsTuple => {
+  const propNames = Object.keys(props);
+  if (propNames.some(isResponsiveAttribute)) {
+    return propNames.reduce<ResponsivePropsTuple>(
+      (tuple, propName): ResponsivePropsTuple => {
+        const [toolbarProps, rest] = tuple;
+        const propValue = props[propName];
+        if (isResponsiveAttribute(propName)) {
+          const value = isCollapsible(propName)
+            ? collapsibleValue(propValue as string)
+            : propValue;
 
-        toolbarProps[propName] = value;
-        rest[propName] = undefined;
-      }
-      return result;
-    },
-    [{}, {}]
-  );
+          toolbarProps[propName] = value;
+          rest[propName] = undefined;
+        }
+        return tuple;
+      },
+      [{}, {}]
+    );
+  } else {
+    return [{}, props];
+  }
+};
