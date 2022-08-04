@@ -10,10 +10,9 @@ import {
   UploadIcon,
 } from "@jpmorganchase/uitk-icons";
 import {
-  CascadingMenu,
+  DropdownButton,
   Dropdown,
-  itemToString,
-  ListChangeHandler,
+  SelectionChangeHandler,
   MenuDescriptor,
 } from "@jpmorganchase/uitk-lab";
 import { handleThemeUpload } from "./handleThemeUpload";
@@ -40,39 +39,46 @@ const undo: MenuDescriptor["icon"] = UndoIcon;
 const redo: MenuDescriptor["icon"] = RedoIcon;
 const reset: MenuDescriptor["icon"] = RefreshIcon;
 
+type menuItem = {
+  title: string;
+  disabled?: boolean;
+  icon: MenuDescriptor["icon"];
+};
+
 export const ThemeHeader = (props: ThemeHeaderProps): ReactElement => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const handleChange: ListChangeHandler<string> = (e, item) => {
+  const handleChange: SelectionChangeHandler<string> = (e, item) => {
     props.onChangeTheme(item as string);
   };
-  const source = useMemo(
-    () => ({
-      menuItems: [
-        {
-          title: "Download",
-          icon: download,
-        },
-        {
-          title: "Undo",
-          disabled: props.undoDisabled,
-          icon: undo,
-        },
-        {
-          title: "Redo",
-          disabled: props.redoDisabled,
-          icon: redo,
-        },
-        {
-          title: "Reset",
-          disabled: props.resetDisabled,
-          icon: reset,
-        },
-      ],
-    }),
+  const menuItems: menuItem[] = useMemo(
+    () => [
+      {
+        title: "Download",
+        icon: download,
+      },
+      {
+        title: "Undo",
+        disabled: props.undoDisabled,
+        icon: undo,
+      },
+      {
+        title: "Redo",
+        disabled: props.redoDisabled,
+        icon: redo,
+      },
+      {
+        title: "Reset",
+        disabled: props.resetDisabled,
+        icon: reset,
+      },
+    ],
+
     [props.undoDisabled, props.redoDisabled, props.resetDisabled]
   );
 
-  const microMenuClickHandler = (evt: any, selectedItem: any) => {
+  const microMenuClickHandler: SelectionChangeHandler<menuItem> = (
+    _evt,
+    selectedItem
+  ) => {
     switch (selectedItem?.title) {
       case "Download":
         props.onSave();
@@ -105,56 +111,21 @@ export const ThemeHeader = (props: ThemeHeaderProps): ReactElement => {
           <Button variant="secondary" onClick={props.onClone}>
             <CloneIcon />
           </Button>
-          <Dropdown
-            IconComponent={MicroMenuIcon}
+          <Dropdown<menuItem>
+            triggerComponent={<DropdownButton IconComponent={MicroMenuIcon} />}
             itemToString={(item) => item.title}
-            onChange={microMenuClickHandler}
-            source={source.menuItems}
+            onSelectionChange={microMenuClickHandler}
+            source={menuItems}
             className="ThemeHeaderMicroMenu"
           />
-          {/* <CascadingMenu
-            source={source}
-            rootPlacement="bottom-end"
-            minWidth="124px"
-            maxWidth="124px"
-            // eslint-disable-next-line
-            itemToString={(item) => item?.title}
-            onClose={() => {
-              setMenuOpen(false);
-            }}
-            onItemClick={(sourceItem) => {
-              switch (sourceItem.title) {
-                case "Download":
-                  props.onSave();
-                  break;
-                case "Undo":
-                  props.onUndo();
-                  break;
-                case "Redo":
-                  props.onRedo();
-                  break;
-                case "Reset":
-                  props.onReset();
-                  break;
-                default:
-                  break;
-              }
-              setMenuOpen(false);
-            }}
-            open={menuOpen}
-          >
-            <Button variant="secondary" onClick={() => setMenuOpen((o) => !o)}>
-              <MicroMenuIcon />
-            </Button>
-          </CascadingMenu> */}
         </span>
       </div>
       <Dropdown
         source={props.themeNames}
-        selectedItem={
+        selected={
           props.themeNames[props.themeNames.indexOf(props.currentTheme)]
         }
-        onChange={handleChange}
+        onSelectionChange={handleChange}
         className="themeSelector"
       />
     </div>

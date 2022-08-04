@@ -1,44 +1,40 @@
 .uitkListItem {
   /* Color */
   --list-item-text-color: var(--uitk-selectable-foreground);
-  --list-item-background: var(--uitk-selectable-background);
-  --list-item-background-hover: var(--uitk-selectable-background-hover);
-  --list-item-selected-focus-visible-outline-color: var(--uitk-accent-foreground); /* TODO: Check token with design */
-
+  --list-item-background: var(--uitkListItem-background, var(--uitk-selectable-background));
+  --list-item-selected-focus-visible-outline-color: var(--uitk-color-white);
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
-
-  --list-item-text-color-disabled: var(--uitk-selectable-foreground-disabled);
-
-  /* Text, Font */
-  --list-item-font-size: var(--uitk-text-fontSize);
-  --list-item-line-height: var(--uitk-text-lineHeight);
-
-  /* Spacing */
-  --list-item-padding: 0 var(--uitk-size-unit);
-
-  /* Misc. */
-
-  --list-item-focus-visible-outline-style: var(--uitk-focused-outlineStyle);
-  --list-item-focus-visible-outline-width: var(--uitk-focused-outlineWidth);
-  --list-item-focus-visible-outline-color: var(--uitk-focused-outlineColor);
-  --list-item-focus-visible-outline-offset: var(--uitk-focused-outlineOffset);
-
-  --list-item-gap: 1px;
   --list-item-align-items: center;
-  --list-item-selectable-cursor: pointer;
-  --list-item-cursor: default;
+}
 
-  --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
+.uitkListItem.uitkHighlighted {
+  --uitkCheckboxIcon-outline-color: var(--uitk-selectable-borderColor-hover);
+  --list-item-background: var(--uitk-selectable-background-hover);
+}
+
+.uitkListItemHeader {
+  font-weight: var(--uitk-typography-weight-bold);
+}
+
+.uitkListItemHeader[data-sticky] {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .uitkListItem {
   color: var(--list-item-text-color);
-  background: var(--list-item-background);
+  cursor: var(--uitkListItem-cursor, pointer);
+  background: var(--uitkListItem-background, var(--list-item-background));
+  font-size: var(--uitk-text-fontSize);
   text-align: left;
-  line-height: var(--list-item-line-height);
-  font-size: var(--list-item-font-size);
-  padding: var(--list-item-padding);
+  line-height: var(--uitk-text-lineHeight);
+  gap: var(--uitk-spacing-unit);
+  height: var(--uitkListItem-height, auto);
+  /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
+  margin-bottom: var(--list-item-gap);
+  padding: 0 var(--uitk-size-unit);
   left: 0;
   right: 0;
   display: flex;
@@ -48,56 +44,50 @@
   white-space: nowrap;
 }
 
-.uitkListItem {
-  /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
-  margin-bottom: var(--list-item-gap);
-  cursor: var(--list-item-selectable-cursor);
-}
-
 .uitkListItem:last-child {
   margin-bottom: 0px;
 }
 
-.uitkListItem.uitkListItem-highlighted:not(.uitkListItem-selected) {
-  background: var(--list-item-background-hover);
+.uitkListItem-checkbox {
+  --list-item-background-active: var(--uitk-selectable-background);
+  --list-item-text-color-active: var(--uitk-selectable-foreground);
+  --list-item-text-padding: 0 0 0 var(--uitk-size-unit);
 }
 
-.uitkListItem.uitkListItem-deselectable {
-  cursor: var(--list-item-selectable-cursor);
+.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox) {
+  --list-item-background: var(--list-item-background-active);
+  color: var(--list-item-text-color-active);
+}
+
+.uitkListItem.uitkDisabled {
+  --list-item-text-color: var(--uitk-selectable-foreground-disabled);
+  cursor: var(--uitk-selectable-cursor-disabled);
+}
+
+.uitkListItem.uitkFocusVisible {
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-offset: -2px;
+  outline-color: var(--uitk-focused-outlineColor);
+}
+
+.uitkListItem.uitkFocusVisible:after {
+  content: none;
+}
+
+.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox).uitkFocusVisible {
+  outline-color: var(--list-item-selected-focus-visible-outline-color);
 }
 
 .uitkListItem-textWrapper {
   flex: 1;
   overflow: hidden;
+  padding: var(--list-item-text-padding, 0px);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.uitkListItem-selected {
-  color: var(--list-item-text-color-active);
-  background: var(--list-item-background-active);
-  cursor: var(--list-item-cursor);
-}
-
-.uitkListItem-disabled {
-  color: var(--list-item-text-color-disabled);
-  cursor: var(--list-item-disabled-cursor);
-}
-
-.uitkListItem-focusVisible:after {
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  content: "";
-  position: absolute;
-
-  outline-style: var(--list-item-focus-visible-outline-style);
-  outline-width: var(--list-item-focus-visible-outline-width);
-  outline-color: var(--list-item-focus-visible-outline-color);
-  outline-offset: var(--list-item-focus-visible-outline-offset);
-}
-
-.uitkListItem-focusVisible.uitkListItem-selected:after {
-  outline-color: var(--list-item-selected-focus-visible-outline-color);
+.uitkListItem-proxy {
+  position: absolute !important;
+  visibility: hidden;
 }

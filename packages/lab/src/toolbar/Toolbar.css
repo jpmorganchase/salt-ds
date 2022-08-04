@@ -1,15 +1,13 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-container-background-medium);
+  --toolbar-background: var(--uitk-container-background-high);
   --toolbar-font-size: var(--uitk-text-fontSize);
   /* --uitkFormActivationIndicator-size: 0; */
 }
 
-.uitkToolbar [data-activation-indicator] {
-  --uitkFormActivationIndicator-size: 1px;
-}
-
 .uitkToolbar {
-  background-color: var(--uitk-toolbar-background-color, var(--toolbar-background));
+  --toolbar-size: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+
+  background-color: var(--uitkToolbar-background-color, var(--toolbar-background));
   box-sizing: border-box;
   font-size: var(--toolbar-font-size);
   justify-content: flex-start;
@@ -17,10 +15,10 @@
   position: relative;
 }
 
-.uitkToolbarField:not([data-overflow-indicator]) {
+/* .uitkToolbarField:not([data-overflow-indicator]) > .uitkButton {
   --uitkButton-fontSize: 0;
   --uitkButton-letterSpacing: 0;
-}
+} */
 
 .uitkToolbar > .Responsive-inner {
   align-items: flex-start;
@@ -34,7 +32,7 @@
 
 .uitkToolbar[aria-orientation="horizontal"] {
   display: flex;
-  height: var(--uitkToolbar-height, var(--uitk-size-toolbar));
+  height: var(--uitkToolbar-height, var(--toolbar-size));
   line-height: normal;
   min-width: 0;
   white-space: nowrap;
@@ -47,13 +45,30 @@
   width: 100%;
 }
 
-.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > * {
-  padding-top: var(--uitk-size-unit);
-  padding-right: var(--uitk-size-unit);
+.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > :not(.uitkTooltray) {
+  margin-top: var(--uitk-size-unit);
+  margin-right: var(--uitk-size-unit);
+}
+
+.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > .uitkTooltray > .Responsive-inner > * {
+  margin-top: var(--uitk-size-unit);
+  /* margin-right: var(--uitk-size-unit); */
+}
+
+.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > .uitkTooltray {
+  margin-top: 0;
+}
+
+.uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > [data-pad-end="true"] {
+  margin-right: auto;
+}
+
+.uitkToolbar[aria-orientation="vertical"] > .Responsive-inner > [data-pad-end="true"] {
+  margin-bottom: auto;
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > *:first-child {
-  padding-left: var(--uitk-size-unit);
+  margin-left: var(--uitk-size-unit);
 }
 
 .uitkToolbar[aria-orientation="vertical"] {
@@ -95,3 +110,33 @@
   flex-shrink: 0;
   flex-grow: 0;
 }
+
+.uitkToolbarField.uitkFormField-labelLeft > .uitkFormLabel {
+  padding-left: var(--uitk-size-unit);
+}
+
+.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton {
+  background: var(--toolbar-background);
+}
+.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton:hover {
+  background: var(--uitk-actionable-secondary-background-hover);
+}
+.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkButton-active,
+.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton:active {
+  background: var(--uitk-actionable-secondary-background-active) !important;
+}
+
+/* .Responsive-inner > [data-collapsed='true'] {
+  background-color: brown;
+}
+.Responsive-inner > [data-collapsing='true'] {
+  background-color: pink;
+} */
+
+/* .uitkToolbar > .Responsive-inner > .uitkOverflowPanel {
+  background-color: pink;;
+}
+
+.uitkTooltray > .Responsive-inner > .uitkOverflowPanel {
+  background-color: yellow;
+} */

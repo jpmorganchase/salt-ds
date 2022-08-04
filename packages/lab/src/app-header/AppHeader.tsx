@@ -21,9 +21,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       <Toolbar
         className={cx(withBaseName(), className)}
         ref={ref}
-        wrapChildrenWithFormFields={false}
         overflowButtonIcon={<MenuIcon />}
-        OverflowButtonProps={{ align: "start" }}
+        // OverflowButtonProps={{ align: "start" }}
       >
         {children}
       </Toolbar>

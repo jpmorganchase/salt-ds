@@ -1,322 +1,176 @@
+import { useForkRef, useIdMemo as useId } from "@jpmorganchase/uitk-core";
 import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
-import {
-  isDesktop,
-  makePrefixer,
-  Portal,
-  PortalProps,
-  useFloatingUI,
-  useForkRef,
-  useId,
-  useWindow,
-  WindowProps,
-} from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
-import classnames from "classnames";
-import {
-  ComponentType,
-  FocusEvent,
+  cloneElement,
   ForwardedRef,
   forwardRef,
-  HTMLAttributes,
-  MouseEventHandler,
   ReactElement,
-  ReactNode,
-  Ref,
+  useCallback,
   useRef,
-  useState,
 } from "react";
+
 import {
-  ListBase,
-  ListChangeHandler,
-  ListMultiSelectionVariant,
-  ListProps,
-  ListSelectHandler,
-  ListSelectionVariant,
-  ListSingleSelectionVariant,
-  ListStateContext,
-} from "../list";
-import { DropdownButton, DropdownButtonProps } from "./DropdownButton";
-import { useDropdownSelectionAriaAttributes } from "./internal/useDropdownSelectionAriaAttributes";
+  CollectionItem,
+  CollectionProvider,
+  itemToString as defaultItemToString,
+  SelectionProps,
+  SelectionStrategy,
+  SingleSelectionStrategy,
+  useCollectionItems,
+} from "../common-hooks";
+import { List } from "../list/List";
+import { ListProps } from "../list/listTypes";
+import { DropdownBase } from "./DropdownBase";
+import { DropdownButton } from "./DropdownButton";
+import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdown } from "./useDropdown";
 
-import "./Dropdown.css";
-
-export type DropdownControllerStateAndHelpers<
-  Item = string,
-  Variant extends ListSelectionVariant = "default"
-> = {
-  DropdownButtonProps: DropdownButtonProps;
-  buttonRef?: Ref<HTMLDivElement>;
-  isOpen?: boolean;
-  itemToString?: (item: Item) => string;
-  selectedItem?: Variant extends ListMultiSelectionVariant ? Array<Item> : Item;
-};
-
-export type DropdownChildrenFunction<
-  Item = string,
-  Variant extends ListSelectionVariant = "default"
-> = (options: DropdownControllerStateAndHelpers<Item, Variant>) => ReactNode;
-
 export interface DropdownProps<
-  Item = string,
-  Variant extends ListSelectionVariant = "default"
-> extends Omit<
-      HTMLAttributes<HTMLDivElement>,
-      "children" | "onChange" | "onSelect"
+  Item = "string",
+  Selection extends SelectionStrategy = "default"
+> extends DropdownBaseProps,
+    Pick<
+      ListProps<Item, Selection>,
+      "ListItem" | "itemToString" | "source" | "width"
     >,
-    Pick<PortalProps, "disablePortal" | "container"> {
-  /**
-   * Props to be applied on the default button component
-   */
-  ButtonProps?: Partial<DropdownButtonProps>;
-  /**
-   * Replace the default Icon component
-   */
-  IconComponent?: ComponentType<any>;
-  /**
-   * Customize item component used for rendering in the dropdown list
-   */
-  ListItem?: ReactNode;
-  /**
-   * Props to be applied on the list component
-   */
-  ListProps?: Partial<ListProps<Item, Variant>>;
-  /**
-   * Props to be applied on the window component
-   */
-  WindowProps?: Partial<WindowProps>;
-  /**
-   * Object that houses ADA-related props.
-   *
-   * @property {bool} virtualized Set to `true` to boost browser performance
-   * for long lists by rendering only the items currently scrolled into view
-   * (plus overscan items). JSX: `adaExceptions={{virtualized:true}}`
-   * For better ADA support, omit (or set to `false`).
-   */
-  adaExceptions?: {
-    virtualized?: boolean;
-  };
-  /**
-   * If the dropdown has no border
-   */
-  borderless?: boolean;
-  /**
-   * A ref to the button
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  buttonRef?: Ref<any>;
-  /**
-   * Override the triggering component
-   */
-  children?: DropdownChildrenFunction<Item, Variant>;
-  /**
-   * Disable user interaction
-   */
-  disabled?: boolean;
-  /**
-   * The number of items displayed in the visible area.
-   *
-   * Note that this determines the max height of the list if the list height is not set to 100%.
-   *
-   * @default 10
-   */
-  displayedItemCount?: number;
-  /**
-   * If, `true`, the Dropdown will occupy the full width of it's container
-   */
-  fullWidth?: boolean;
-  /**
-   * Sets the size of the down arrow icon. If this is not specified, a default size based on density is used.
-   */
-  iconSize?: IconProps["size"];
-  /**
-   * This is the initial isOpen value
-   *
-   * @default false
-   */
-  initialIsOpen?: boolean;
-  /**
-   * Pass an item that should be selected by default.
-   */
-  initialSelectedItem?: ListProps<Item, Variant>["selectedItem"];
-  /**
-   * Whether the menu should be considered open or closed.
-   */
-  isOpen?: boolean;
-  /**
-   * Used to determine the string value for the selected item.
-   */
-  itemToString?: (item: Item) => string;
-  /**
-   * Customize width of the Dropdown List. This supersedes `width`.
-   */
-  listWidth?: number | string;
-  /**
-   * Callback fired by the child component's onBlur.
-   */
-  onBlur?: (event: FocusEvent<HTMLDivElement>) => void;
-  /**
-   * Callback fired by the button / child component's onClick.
-   */
-  onButtonClick?: MouseEventHandler<HTMLDivElement>;
-  /**
-   * Called when the user selects an item and the selected item has changed.
-   */
-  onChange?: ListChangeHandler<Item, Variant>;
-  /**
-   * Callback fired by the child component's onFocus.
-   */
-  onFocus?: (event: FocusEvent<HTMLDivElement>) => void;
-  /**
-   * Called when the user selects an item no matter whether the selected item has changed.
-   */
-  onSelect?: ListSelectHandler<Item>;
-  /**
-   * The currently selected item.
-   */
-  selectedItem?: ListProps<Item, Variant>["selectedItem"];
-  /**
-   * List of items when using a Dropdown.
-   */
-  source: ReadonlyArray<Item>;
-  /**
-   Customize width of Dropdown. Also controls Dropdown List if `listWidth` prop is not set.
-   */
-  width?: number | string;
+    SelectionProps<Item, Selection> {
+  ListProps?: Omit<
+    ListProps<Item, Selection>,
+    "ListItem" | "itemToString" | "source"
+  >;
 }
 
-const withBaseName = makePrefixer("uitkDropdown");
-
-/**
- * Renders a basic dropdown with selectable item
- */
 export const Dropdown = forwardRef(function Dropdown<
-  Item,
-  Variant extends ListSingleSelectionVariant
+  Item = "string",
+  Selection extends SelectionStrategy = "default"
 >(
   {
-    IconComponent = ChevronDownIcon,
-    className,
-    width = 180,
+    "aria-label": ariaLabel,
     children,
-    container,
-    disablePortal,
-    WindowProps,
-    ...restProps
-  }: DropdownProps<Item, Variant>,
-  ref: ForwardedRef<HTMLDivElement>
+    defaultIsOpen,
+    defaultSelected,
+    id: idProp,
+    isOpen: isOpenProp,
+    itemToString = defaultItemToString,
+    onOpenChange,
+    onSelectionChange,
+    selected: selectedProp,
+    selectionStrategy,
+    source,
+    triggerComponent,
+    ListItem,
+    ListProps,
+    width = 180,
+    ...props
+  }: DropdownProps<Item, Selection>,
+  forwardedRef: ForwardedRef<HTMLDivElement>
 ) {
-  const {
-    rootProps,
-    buttonProps: { ref: buttonRef, ...buttonProps },
-    listContext,
-    listProps,
-  } = useDropdown<Item, Variant>({ IconComponent, width, ...restProps });
+  const id = useId(idProp);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const forkedRef = useForkRef<HTMLDivElement>(rootRef, forwardedRef);
 
-  const listRef = useRef<HTMLElement>(null);
-
-  const {
-    disabled,
-    fullWidth,
-    isOpen,
-    ref: rootRef,
-    ...restRootProps
-  } = rootProps;
-
-  const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
-    undefined
-  );
-  const middleware = isDesktop
-    ? []
-    : [
-        flip({
-          fallbackPlacements: ["bottom-start", "top-start"],
-        }),
-        shift({ limiter: limitShift() }),
-        size({
-          apply({ availableHeight }) {
-            setMaxListHeight(availableHeight);
-          },
-        }),
-      ];
-  const { reference, floating, x, y, strategy } = useFloatingUI({
-    placement: "bottom-start",
-    middleware,
+  const collectionHook = useCollectionItems<Item>({
+    id,
+    source,
+    children,
+    options: {
+      itemToString,
+    },
   });
 
-  const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(reference, ref);
-  const handleRootRef = useForkRef(rootRef, handlePopperListAdapterRef);
+  const {
+    highlightedIndex: highlightedIdx,
+    triggerLabel,
+    listHandlers,
+    listControlProps,
+    selected,
+    ...dropdownListHook
+  } = useDropdown<Item, Selection>({
+    collectionHook,
+    defaultIsOpen,
+    defaultSelected: collectionHook.itemToCollectionItem<
+      Selection,
+      typeof defaultSelected
+    >(defaultSelected),
+    isOpen: isOpenProp,
+    itemToString,
+    label: "Dropdown",
+    onOpenChange,
+    onSelectionChange,
+    selected: collectionHook.itemToCollectionItem<
+      Selection,
+      typeof selectedProp
+    >(selectedProp),
+    selectionStrategy,
+  });
 
-  const ariaAttributes = useDropdownSelectionAriaAttributes(
-    listContext.state.selectedItem,
-    listProps.source
+  const collectionItemsToItem = useCallback(
+    (
+      itemOrItems?: CollectionItem<Item> | null | CollectionItem<Item>[]
+    ):
+      | undefined
+      | (Selection extends SingleSelectionStrategy ? Item | null : Item[]) => {
+      type returnType = Selection extends SingleSelectionStrategy
+        ? Item | null
+        : Item[];
+      if (Array.isArray(itemOrItems)) {
+        return itemOrItems.map((i) => i.value) as returnType;
+      } else if (itemOrItems) {
+        return itemOrItems.value as returnType;
+      }
+    },
+    []
   );
-  // Will need to figure out a better way to assign popper id's for the electron windows
-  const id = useId();
-  const Window = useWindow();
+
+  const getTriggerComponent = () => {
+    const ariaProps = {
+      "aria-activedescendant": dropdownListHook.isOpen
+        ? listControlProps?.["aria-activedescendant"]
+        : undefined,
+      "aria-label": ariaLabel,
+    };
+    if (triggerComponent) {
+      return cloneElement(triggerComponent, {
+        ...listControlProps,
+        ...ariaProps,
+      });
+    } else {
+      return (
+        <DropdownButton
+          label={triggerLabel}
+          {...listControlProps}
+          {...ariaProps}
+        />
+      );
+    }
+  };
 
   return (
-    <div
-      className={classnames(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("fullwidth")]: fullWidth,
-        },
-        className
-      )}
-      ref={handleRootRef}
-      {...restRootProps}
-    >
-      {children ? (
-        children({
-          DropdownButtonProps: buttonProps,
-          buttonRef,
-          isOpen,
-          itemToString: listProps.itemToString,
-          selectedItem: listContext.state.selectedItem,
-        })
-      ) : (
-        <DropdownButton
-          labelAriaAttributes={ariaAttributes}
-          {...buttonProps}
-          ref={buttonRef}
+    <CollectionProvider<Item> collectionHook={collectionHook}>
+      <DropdownBase
+        {...props}
+        id={id}
+        isOpen={dropdownListHook.isOpen}
+        onOpenChange={dropdownListHook.onOpenChange}
+        ref={forkedRef}
+        width={width}
+      >
+        {getTriggerComponent()}
+        <List<Item, Selection>
+          ListItem={ListItem}
+          itemToString={itemToString}
+          {...ListProps}
+          highlightedIndex={highlightedIdx}
+          listHandlers={listHandlers}
+          onSelectionChange={onSelectionChange}
+          selected={collectionItemsToItem(selected)}
+          selectionStrategy={selectionStrategy}
+          data-testid="dropdown-list"
         />
-      )}
-      {rootRef.current && isOpen && (
-        <Portal disablePortal={disablePortal} container={container}>
-          <Window
-            id={id}
-            className={withBaseName("listWindowRoot")}
-            style={{
-              top: y ?? "",
-              left: x ?? "",
-              position: strategy,
-              maxHeight: maxListHeight ?? "",
-            }}
-            ref={floating}
-            {...WindowProps}
-          >
-            <ListStateContext.Provider value={listContext}>
-              <ListBase<Item>
-                data-testid="dropdown-list"
-                {...listProps}
-                maxHeight={maxListHeight || listProps.maxHeight}
-                listRef={listRef}
-              />
-            </ListStateContext.Provider>
-          </Window>
-        </Portal>
-      )}
-    </div>
+      </DropdownBase>
+    </CollectionProvider>
   );
-}) as <Item = string, Variant extends ListSingleSelectionVariant = "default">(
-  props: DropdownProps<Item, Variant> & {
+}) as <Item, Selection extends SelectionStrategy = "default">(
+  props: DropdownProps<Item, Selection> & {
     ref?: ForwardedRef<HTMLDivElement>;
   }
-) => ReactElement<DropdownProps<Item, Variant>>;
+) => ReactElement<DropdownProps<Item, Selection>>;

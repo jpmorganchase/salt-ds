@@ -1,6 +1,4 @@
-import { RefObject, useCallback, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
-
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useResizeObserver, orientationType, WidthOnly } from "../responsive";
 
 type activationIndicatorStyles = {
@@ -8,68 +6,96 @@ type activationIndicatorStyles = {
   left?: number;
   top?: number;
   width?: number;
+  hasChanged?: boolean;
 };
+
+const MEASUREMENTS = {
+  horizontal: {
+    pos: "left" as keyof activationIndicatorStyles,
+    size: "width" as keyof activationIndicatorStyles,
+  },
+  vertical: {
+    pos: "top" as keyof activationIndicatorStyles,
+    size: "height" as keyof activationIndicatorStyles,
+  },
+};
+
 // Overflow can affect tab positions, so we recalculate when it changes
-export function useActivationIndicator(
-  rootRef: RefObject<HTMLDivElement | null>,
-  tabRef: RefObject<HTMLElement | null>,
-  orientation: orientationType
-): activationIndicatorStyles {
-  const styleRef = useRef<activationIndicatorStyles>({ left: 0, width: 0 });
+export function useActivationIndicator({
+  rootRef,
+  tabId,
+  orientation,
+}: {
+  rootRef: RefObject<HTMLDivElement | null>;
+  tabId?: string;
+  orientation: orientationType;
+}): activationIndicatorStyles {
   const [style, setStyle] = useState<activationIndicatorStyles>({
     left: 0,
     width: 0,
   });
+  // Keep style in a ref, so style is not a dependency for createIndicatorStyle, which in turn
+  // means our useEffect below will re-run only when the tab changes, not after every style change
+  // as well.
 
-  const [, forceRender] = useState<Record<string, never> | null>(null);
-  //   const vertical = orientation === "vertical";
-  const createIndicatorStyle = useCallback((): activationIndicatorStyles => {
-    if (tabRef.current) {
-      const { index, overflowed } = tabRef.current.dataset;
-      // We shouldn't need this check, investigate why we get this superfluous render from useOberflowLayout
-      if (tabRef.current.dataset?.overflowed === "true") {
-        return styleRef.current;
-      } else {
-        const tabRect = tabRef.current.getBoundingClientRect();
-        if (rootRef.current) {
-          const rootRect = rootRef.current.getBoundingClientRect();
-          if (orientation === "horizontal") {
-            const left = tabRect.left - rootRect.left;
-            return { left, width: tabRect.width };
-          } else {
-            const top = tabRect.top - rootRect.top;
-            return { top, height: tabRect.height };
-          }
+  const styleRef = useRef(style);
+
+  const getTabPos = useCallback(() => {
+    const { pos, size } = MEASUREMENTS[orientation];
+    return [pos, size];
+  }, [orientation]);
+
+  const createIndicatorStyle = useCallback(
+    (tabElement: HTMLElement | null): activationIndicatorStyles => {
+      if (tabElement) {
+        const tabRect = tabElement.getBoundingClientRect() as any;
+        if (rootRef.current && tabRect) {
+          const rootRect = rootRef.current.getBoundingClientRect() as any;
+          const [pos, size] = getTabPos();
+          const { [pos]: existingPos, [size]: existingSize } = styleRef.current;
+          const newPos = tabRect[pos] - rootRect[pos];
+          const newSize = tabRect[size];
+
+          return {
+            [pos]: newPos,
+            [size]: newSize,
+            hasChanged: newPos !== existingPos || newSize !== existingSize,
+          };
         }
       }
-    }
-    return {};
-  }, [orientation, rootRef, tabRef]);
+      return {};
+    },
+    [orientation, rootRef]
+  );
 
   const onResize = useCallback(() => {
-    forceRender({});
-  }, []);
+    requestAnimationFrame(() => {
+      if (tabId) {
+        const tabEl = document.getElementById(tabId);
+        const { hasChanged, ...newStyle } = createIndicatorStyle(tabEl);
+        if (hasChanged) {
+          setStyle(newStyle);
+        }
+      }
+    });
+  }, [createIndicatorStyle, tabId]);
 
-  useIsomorphicLayoutEffect(() => {
-    if (tabRef.current) {
-      const newStyle = createIndicatorStyle();
-      let hasChanged = false;
-      if (orientation === "horizontal") {
-        const { left: newLeft, width: newWidth } = newStyle;
-        const { left, width } = styleRef.current;
-        hasChanged = left !== newLeft || width !== newWidth;
-      } else {
-        const { top: newTop, height: newHeight } = newStyle;
-        const { top, height } = styleRef.current;
-        hasChanged = top !== newTop || height !== newHeight;
-      }
-      if (hasChanged) {
-        setStyle((styleRef.current = newStyle));
-      }
+  useEffect(() => {
+    if (tabId) {
+      // The timeout is employed in case selectedTab has been selected from
+      // overflow menu. In this case, the tab is only restored to visibility
+      // in the render cycle after selection.
+      setTimeout(() => {
+        const tabEl = document.getElementById(tabId);
+        const { hasChanged, ...newStyle } = createIndicatorStyle(tabEl);
+        if (hasChanged) {
+          setStyle((styleRef.current = newStyle));
+        }
+      }, 50);
     }
-  });
+  }, [createIndicatorStyle, tabId]);
 
-  useResizeObserver(tabRef, WidthOnly, onResize);
+  useResizeObserver(rootRef, WidthOnly, onResize);
 
-  return styleRef.current;
+  return style;
 }

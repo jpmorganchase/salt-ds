@@ -1,30 +1,51 @@
-import { useState, KeyboardEvent } from "react";
-import { isEditableElement } from "./tab-utils";
+import { useControlled } from "@jpmorganchase/uitk-core";
+import { useCallback, KeyboardEvent } from "react";
+import { OverflowItem } from "../responsive";
 
 const editKeys = new Set(["Enter", " "]);
 const isEditKey = (key: string) => editKeys.has(key);
 
-type ExitEditModeHandler = (
+export type ExitEditModeHandler = (
   originalValue: string,
   editedValue: string,
   allowDeactivation: boolean,
   tabIndex: number
 ) => void;
 
-type editableItemHook = () => {
+export interface Editable {
   editing: boolean;
   onEnterEditMode: () => void;
   onExitEditMode: ExitEditModeHandler;
-  onKeyDown: (evt: KeyboardEvent, tabIndex: number) => void;
   setEditing: (value: boolean) => void;
-};
+}
+interface EditableItemHookProps extends Partial<Editable> {
+  highlightedIdx: number;
+  indexPositions: OverflowItem[];
+}
 
-export const useEditableItem: editableItemHook = () => {
-  const [editing, setEditing] = useState(false);
+interface EditableItemHookResult extends Editable {
+  onKeyDown: (evt: KeyboardEvent) => void;
+}
 
-  const onEnterEditMode = () => {
+export const useEditableItem = ({
+  editing: editingProp,
+  highlightedIdx,
+  indexPositions,
+  onEnterEditMode: onEnterEditModeProp,
+  onExitEditMode: onExitEditModeProp,
+}: EditableItemHookProps): EditableItemHookResult => {
+  const [editing, setEditing] = useControlled({
+    controlled: editingProp,
+    default: false,
+    name: "useEditableItem",
+    state: "editing",
+  });
+
+  const onEnterEditMode = useCallback(() => {
     setEditing(true);
-  };
+    onEnterEditModeProp?.();
+  }, [onEnterEditModeProp, setEditing]);
+
   const onExitEditMode = (
     originalValue: string,
     editedValue: string,
@@ -32,18 +53,31 @@ export const useEditableItem: editableItemHook = () => {
     tabIndex: number
   ) => {
     setEditing(false);
+    console.log("exit edit mode");
+    onExitEditModeProp?.(
+      originalValue,
+      editedValue,
+      allowDeactivation,
+      tabIndex
+    );
   };
 
-  const onKeyDown = (evt: KeyboardEvent, tabIndex: number) => {
-    const target = evt.target as HTMLElement;
-    if (isEditKey(evt.key) && isEditableElement(target)) {
-      setEditing(true);
-    }
-  };
+  const onKeyDown = useCallback(
+    (evt: KeyboardEvent) => {
+      console.log(`useEditableItem onKeyDown ${highlightedIdx}`, {
+        editable: indexPositions[highlightedIdx]?.editable,
+      });
+      if (isEditKey(evt.key) && indexPositions[highlightedIdx]?.editable) {
+        onEnterEditMode();
+      }
+    },
+    [onEnterEditMode, highlightedIdx, indexPositions]
+  );
 
   return {
     editing,
     onKeyDown,
+    // careful what do we use these for ?
     onEnterEditMode,
     onExitEditMode,
     setEditing,

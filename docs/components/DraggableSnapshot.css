@@ -11,6 +11,7 @@
   outline: none;
   top: 0;
   width: var(--img-width);
+  z-index: 1000;
 }
 
 .uitkDraggableSnapshot-sliding {

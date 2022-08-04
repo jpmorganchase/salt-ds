@@ -10,15 +10,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { useWidth } from "../../list/internal/useWidth";
-import {
-  QueryInputCategory,
-  QueryInputItem,
-  QueryInputProps,
-} from "../QueryInput";
+import { QueryInputProps } from "../QueryInput";
+import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { QueryInputBodyProps } from "./QueryInputBody";
 import { usePopperStatus } from "./usePopperStatus";
 import { ValueSelectorProps } from "./ValueSelector";
+import { useWidth } from "../../responsive";
 
 export type BooleanOperator = "or" | "and";
 
@@ -75,6 +72,9 @@ export function useQueryInput(
   const [highlightedValueIndex, setHighlightedValueIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] =
     useState<QueryInputCategory | null>(null);
+  const searchListIndexPositions = useRef<Array<QueryInputCategory | string>>(
+    []
+  );
 
   const onInputFocus: FocusEventHandler<HTMLInputElement> = (event) => {
     popperStatus.onFocus(event);
@@ -163,16 +163,21 @@ export function useQueryInput(
 
   const [inputValue, setInputValue] = useState<string>("");
 
+  const searchListItems = useMemo(() => {
+    const [searchListItems, indexPositions] = filterCategories(
+      props.categories,
+      inputValue
+    );
+    searchListIndexPositions.current = indexPositions;
+    return searchListItems;
+  }, [props.categories, inputValue]);
+
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newInputValue = event.target.value;
     setInputValue(newInputValue);
-    setHighlightedIndex(0);
+    // If we have search results, the first index position will be a header
+    setHighlightedIndex(searchListIndexPositions.current.length === 0 ? 0 : 1);
   };
-
-  const searchListItems = useMemo(
-    () => filterCategories(props.categories, inputValue),
-    [props.categories, inputValue]
-  );
 
   const searchListItemCount = useMemo(() => {
     return searchListItems.reduce(
@@ -190,8 +195,8 @@ export function useQueryInput(
   };
 
   const newItemFromSelected = (): QueryInputItem | undefined => {
-    let i = highlightedIndex;
-    for (let category of searchListItems) {
+    const i = highlightedIndex;
+    for (const category of searchListItems) {
       if (i < category.values.length) {
         const value = category.values[i];
         return {
@@ -213,10 +218,15 @@ export function useQueryInput(
         setHighlightedIndex(searchListItemCount);
         return;
       case "ArrowUp":
-        setHighlightedIndex((i) => Math.max(0, i - 1));
+        setHighlightedIndex((i) =>
+          prevSearchItemIndex(i, searchListIndexPositions.current)
+        );
         return;
       case "ArrowDown":
-        setHighlightedIndex((i) => Math.min(searchListItemCount, i + 1));
+        // setHighlightedIndex((i) => Math.min(searchListItemCount, i + 1));
+        setHighlightedIndex((i) =>
+          nextSearchItemIndex(i, searchListIndexPositions.current)
+        );
         return;
       case "PageDown":
         setHighlightedIndex((i) =>
@@ -442,20 +452,55 @@ export function useQueryInput(
 function filterCategories(
   categories: QueryInputCategory[],
   inputValue?: string
-) {
+): [QueryInputCategory[], Array<QueryInputCategory | string>] {
+  // Note: if there is no input value, this List would not be display
   if (!inputValue) {
-    return categories;
+    return [categories, []];
   }
   const query = inputValue.toUpperCase();
-  const result: QueryInputCategory[] = [];
-  for (let c of categories) {
+  const visibleCategories: QueryInputCategory[] = [];
+  const indexPositions: Array<QueryInputCategory | string> = [];
+  for (const c of categories) {
     const values = c.values.filter((v) => v.toUpperCase().includes(query));
     if (values.length > 0) {
-      result.push({
+      const queryInputCategory = {
         name: c.name,
         values,
-      });
+      };
+      visibleCategories.push(queryInputCategory);
+      indexPositions.push(queryInputCategory, ...values);
     }
   }
-  return result;
+  return [visibleCategories, indexPositions];
+}
+
+function nextSearchItemIndex(
+  index: number,
+  indexPositions: Array<QueryInputCategory | string>
+) {
+  const nextIndex = index + 1;
+  // Note: allow 1 for the extra ListItem we append to end of List
+  if (nextIndex === indexPositions.length + 1) {
+    return index;
+  } else if (nextIndex === indexPositions.length) {
+    return nextIndex;
+  } else if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  } else {
+    return nextIndex + 1;
+  }
+}
+
+function prevSearchItemIndex(
+  index: number,
+  indexPositions: Array<QueryInputCategory | string>
+) {
+  const nextIndex = index - 1;
+  if (nextIndex === 0) {
+    return index;
+  } else if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  } else {
+    return nextIndex - 1;
+  }
 }

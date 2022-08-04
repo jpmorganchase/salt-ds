@@ -1,46 +1,83 @@
-/* TODO: Should the outer most container being 'wrapper'? */
-.uitkList-wrapper {
-  /* Color */
-  --list-background: var(--uitk-container-background-medium);
-  /* Border */
-  --list-border-color: var(--uitk-container-borderColor-medium);
-  --list-border-style: var(--uitk-container-borderStyle);
-  --list-border-width: var(--uitk-container-borderWidth);
-  --list-border-radius: var(--uitk-container-borderRadius);
-
-  /* Misc. */
-  --list-box-shadow: none;
-  --list-content-box: border-box;
-  --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
-}
-
 .uitkList {
-  box-sizing: border-box;
-  /* font-family: var(--list-font-family); */
-  overflow-y: auto;
-}
-.uitkList:focus {
-  outline: none;
-}
+  --list-background: var(--uitk-container-background-medium);
+  --list-border-style: var(--uitk-container-borderStyle);
+  --list-borderWidth: var(--uitk-container-borderWidth);
+  --list-height: auto;
+  --list-item-gap: 0px;
+  --list-max-height: 100%;
 
-.uitkList-wrapper:not(.uitkList-borderless) {
-  border-color: var(--list-border-color);
-  border-style: var(--list-border-style);
-  border-width: var(--list-border-width);
-  border-radius: var(--list-border-radius);
-}
-.uitkList-wrapper {
+  --uitkListItem-height: var(--uitkList-item-height, var(--uitk-size-stackable));
+
   background: var(--list-background);
-  box-shadow: var(--list-box-shadow);
-  box-sizing: var(--list-content-box);
+  border-color: var(--uitk-container-borderColor-medium);
+  border-style: var(--list-border-style);
+  border-width: var(--list-borderWidth);
+  box-sizing: border-box;
+  height: var(--uitkList-height, var(--list-height));
+  max-height: var(--list-max-height);
+  outline: none;
+  overflow-y: auto;
   position: relative;
+  user-select: none;
+  width: var(--uitkList-width, auto);
 }
 
 .uitkList-borderless {
-  border: none;
+  --list-border-style: none;
 }
-.uitkList-disabled {
-  cursor: var(--list-disabled-cursor);
-  /* TODO: Design: Check whether we want things behind the list to actually show through opacity */
-  /* Or instead of using `opacity` in favor of dedicated color setting, on background, border-color, etc. */
+
+/* virtualised list */
+.uitkList-viewport {
+  --list-item-height: 30px;
+  box-sizing: border-box;
+  max-height: calc(var(--list-max-height) - 2 * var(--list-borderWidth));
+  overflow: auto;
+}
+
+.uitkListItemHeader {
+  --uitkListItem-background: var(--list-item-header-bg);
+  color: var(--list-item-header-color);
+}
+
+.uitkListItemHeader[data-sticky="true"] {
+  --uitkListItem-background: var(--list-background);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.uitkList-collapsible .uitkListItemHeader:after {
+  border-width: var(--checkbox-border-width);
+  border-color: var(--checkbox-border-color);
+  content: var(--list-item-header-twisty-content);
+  -webkit-mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
+  mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
+  background-color: var(--list-item-header-twisty-color);
+  height: 12px;
+  left: var(--list-item-header-twisty-left);
+  right: var(--list-item-header-twisty-right);
+  margin-top: -8px;
+  position: absolute;
+  top: var(--list-item-header-twisty-top);
+  transition: transform 0.3s;
+  width: 12px;
+}
+.uitkListItemHeader[aria-expanded="false"]:after {
+  transform: rotate(-90deg);
+}
+
+/* Selection */
+
+.uitkList-scrollingContentContainer {
+  box-sizing: inherit;
+  position: relative;
+}
+
+.uitkList-virtualized .uitkListItem {
+  line-height: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
 }

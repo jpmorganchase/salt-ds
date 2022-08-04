@@ -1,0 +1,5 @@
+.uitkOverflowSeparator {
+  background-color: var(--uitk-separable-tertiary-borderColor);
+  height: var(--uitk-separable-borderWidth);
+  margin: calc(var(--uitk-size-unit) / 2) 0;
+}

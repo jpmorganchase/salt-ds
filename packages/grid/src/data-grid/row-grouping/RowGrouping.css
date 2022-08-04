@@ -1,7 +1,7 @@
 .uitkDataGridRowGrouping {
 }
 
-.uitkDataGridRowGrouping-window {
+.uitkDataGridRowGrouping-dropdown.uitkDropdown-popup {
   z-index: 10;
 }
 

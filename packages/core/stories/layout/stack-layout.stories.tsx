@@ -7,7 +7,7 @@ import {
   StackLayout,
 } from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
-import { ButtonBar, Dropdown, OrderedButton } from "@jpmorganchase/uitk-lab";
+import { ButtonBar, OrderedButton, Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
@@ -114,7 +114,7 @@ export const ComplexFormOne: ComponentStory<typeof StackLayout> = () => {
         }}
       >
         <Dropdown
-          initialSelectedItem={dropdownExampleData[0]}
+          defaultSelected={dropdownExampleData[0]}
           source={dropdownExampleData}
         />
       </FormField>

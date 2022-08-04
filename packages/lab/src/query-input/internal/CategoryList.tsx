@@ -10,11 +10,11 @@ import {
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { QueryInputCategory } from "../QueryInput";
-import { List, ListSelectHandler } from "../../list";
+import { QueryInputCategory } from "../queryInputTypes";
+import { SelectHandler } from "../../common-hooks";
+import { List } from "../../list";
 import { CategoryListItem } from "./CategoryListItem";
 import { CategoryListContext } from "./CategoryListContext";
-import { ItemToString } from "../../tokenized-input";
 
 const withBaseName = makePrefixer("uitkCategoryList");
 
@@ -26,7 +26,7 @@ export interface CategoryListProps {
   setHighlightedCategoryIndex: Dispatch<SetStateAction<number>>;
 }
 
-const itemToString: ItemToString<QueryInputCategory> = (item) => item.name;
+const getCategoryLabel = (category: QueryInputCategory) => category.name;
 
 export const CategoryList: FC<CategoryListProps> = function CategoryList(
   props
@@ -57,20 +57,13 @@ export const CategoryList: FC<CategoryListProps> = function CategoryList(
         });
       }
     }, 0);
-  }, [measureRef.current, categories, setMeasuredCategories, setContextValue]);
+  }, [categories, setMeasuredCategories, setContextValue]);
 
-  const onSelect: ListSelectHandler<QueryInputCategory> = useCallback(
-    (event, item) => {
+  const onSelect: SelectHandler<QueryInputCategory> = useCallback(
+    (_, item) => {
       onCategorySelect(item);
     },
     [onCategorySelect]
-  );
-
-  const onMouseMove = useCallback(
-    (category: QueryInputCategory, index: number) => {
-      setHighlightedCategoryIndex(index);
-    },
-    [setHighlightedCategoryIndex]
   );
 
   const isMeasuring = measuredCategories !== categories;
@@ -91,24 +84,16 @@ export const CategoryList: FC<CategoryListProps> = function CategoryList(
 
   return (
     <CategoryListContext.Provider value={contextValue}>
-      <List
-        width={rootWidth}
-        itemToString={itemToString}
-        onSelect={onSelect}
+      <List<QueryInputCategory>
+        ListItem={CategoryListItem}
         data-testid="category-list"
         highlightedIndex={highlightedCategoryIndex}
-      >
-        {categories.map((category, index) => {
-          return (
-            <CategoryListItem
-              key={category.name}
-              category={category}
-              index={index}
-              onMouseMove={onMouseMove}
-            />
-          );
-        })}
-      </List>
+        itemToString={getCategoryLabel}
+        onHighlight={setHighlightedCategoryIndex}
+        onSelect={onSelect}
+        source={categories}
+        width={rootWidth}
+      />
     </CategoryListContext.Provider>
   );
 };

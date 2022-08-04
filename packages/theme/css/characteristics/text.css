@@ -58,7 +58,7 @@
   /* Colors */
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
-  --uitk-text-background-selected: var(--uitk-palette-neutrallight);
+  --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
 
   --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
   --uitk-text-primary-foreground-hover: var(--uitk-palette-neutral-primary-foreground);

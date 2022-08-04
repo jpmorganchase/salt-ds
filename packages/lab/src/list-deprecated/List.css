@@ -1,0 +1,54 @@
+/* TODO: Should the outer most container being 'wrapper'? */
+.uitkListDeprecated-wrapper {
+  /* Color */
+  --list-background: var(--uitk-container-background-medium);
+  /* Border */
+  --list-border-color: var(--uitk-container-borderColor-medium);
+  --list-border-style: var(--uitk-container-borderStyle);
+  --list-border-width: var(--uitk-container-borderWidth);
+  --list-border-radius: var(--uitk-container-borderRadius);
+
+  /* Text, Font */
+  /* TODO: Do we necessary want to set this? Should rely on inheritance? */
+  /* --list-font-family: var(--uitk-typography-fontFamily); */
+
+  /* Misc. */
+  --list-box-shadow: none;
+  --list-content-box: border-box;
+  --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
+}
+
+.uitkListDeprecated-wrapper {
+  position: relative;
+}
+
+.uitkListDeprecated {
+  box-sizing: border-box;
+  /* font-family: var(--list-font-family); */
+  overflow-y: auto;
+}
+.uitkListDeprecated:focus {
+  outline: none;
+}
+
+.uitkListDeprecated-wrapper:not(.uitkListDeprecated-borderless) {
+  border-color: var(--list-border-color);
+  border-style: var(--list-border-style);
+  border-width: var(--list-border-width);
+  border-radius: var(--list-border-radius);
+}
+.uitkListDeprecated-wrapper {
+  background: var(--list-background);
+  box-shadow: var(--list-box-shadow);
+  box-sizing: var(--list-content-box);
+  position: relative;
+}
+
+.uitkListDeprecated-borderless {
+  border: none;
+}
+.uitkListDeprecated-disabled {
+  cursor: var(--list-disabled-cursor);
+  /* TODO: Design: Check whether we want things behind the list to actually show through opacity */
+  /* Or instead of using `opacity` in favor of dedicated color setting, on background, border-color, etc. */
+}
