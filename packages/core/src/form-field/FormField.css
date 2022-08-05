@@ -27,7 +27,6 @@
   --formField-focused-outlineWidth: var(--uitkFormField-focused-outlineWidth, var(--uitk-focused-outlineWidth));
   --formField-helperText-height: 0px;
   --formField-helperText-lineHeight: var(--uitk-text-base-lineHeight);
-
 }
 
 .uitkEmphasisLow.uitkFormField {
