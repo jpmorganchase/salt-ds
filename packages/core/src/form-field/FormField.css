@@ -212,10 +212,6 @@
   outline-width: var(--uitkFormField-focused-outlineWidth, var(--formField-focused-outlineWidth));
 }
 
-.uitkFormField-withHelperText.uitkFormField-focused {
-  --formField-withHelperText-focused-outline-bottom: var(--formField-focused-outline-bottom);
-}
-
 .uitkFormField-labelLeft.uitkFormField-focused:before {
   content: none;
 }
