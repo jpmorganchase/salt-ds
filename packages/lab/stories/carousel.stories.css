@@ -6,3 +6,29 @@
 .carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
   margin-right: 0;
 }
+
+.carousel-image-placeholder {
+  width: 1140px;
+  height: 520px;
+  font-size: 4em;
+  color: var(--uitk-color-grey-200);
+}
+
+.carousel-image-placeholder-1 {
+  background-color: var(--uitk-color-orange-20);
+}
+
+.carousel-image-placeholder-2 {
+  background-color: var(--uitk-color-grey-40);
+}
+.carousel-image-placeholder-3 {
+  background-color: var(--uitk-color-teal-30);
+}
+
+.carousel-image-placeholder-4 {
+  background-color: var(--uitk-color-red-30);
+}
+
+.carousel-image-placeholder-5 {
+  background-color: var(--uitk-color-purple-30);
+}
