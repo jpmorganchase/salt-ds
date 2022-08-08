@@ -30,5 +30,5 @@ export const WindowContext = createContext<windowType>(Window);
 export const useWindow = () => useContext(WindowContext);
 
 const globalObject = typeof global === "undefined" ? window : global;
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any
 export const isDesktop: boolean = (globalObject as any).isDesktop;

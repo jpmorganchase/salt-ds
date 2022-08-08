@@ -87,6 +87,8 @@ export function useControlled<S = unknown>({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 
+  // FIXME: `value` can be undefined
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return [value!, setValueIfUncontrolled, isControlled];
 }
 
