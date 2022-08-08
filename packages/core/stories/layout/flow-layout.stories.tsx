@@ -188,7 +188,7 @@ export const DashboardExample: ComponentStory<typeof FlowLayout> = (args) => {
                 key={index}
               >
                 <Dropdown
-                  initialSelectedItem={dropdownExampleData[0]}
+                  defaultSelected={dropdownExampleData[0]}
                   source={dropdownExampleData}
                 />
               </FormField>
