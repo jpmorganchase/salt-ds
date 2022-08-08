@@ -19,8 +19,8 @@ interface ExtendedConfig extends StorybookConfig {
 
 const config: ExtendedConfig = {
   framework: "@storybook/react",
-  stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
-  staticDirs: ["../docs/public"],
+  stories: ["../packages/**/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  staticDirs: ["../packages/docs/public"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-a11y",

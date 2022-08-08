@@ -3,13 +3,13 @@ index ec658b3e7d3e05e99e8f4f547da1597cf6b7c709..7034d70b567b5bae13a8c986187232ed
 --- a/dist-cjs/build/buildPackage/makeBundle.js
 +++ b/dist-cjs/build/buildPackage/makeBundle.js
 @@ -25,6 +25,8 @@ var _rollupPluginPostcss = _interopRequireDefault(require("rollup-plugin-postcss
- 
+
  var _pluginNodeResolve = _interopRequireDefault(require("@rollup/plugin-node-resolve"));
- 
+
 +var _swcPlugin = require("swc-plugin");
 +
  var _getPackageEntryPoints = require("./getPackageEntryPoints");
- 
+
  var _getPrefixedLogger = _interopRequireDefault(require("../../utils/getPrefixedLogger"));
 @@ -90,7 +92,7 @@ async function makeBundle(packageName, preserveModules, includePrivate) {
        mainFields: ['module', 'main', 'browser']
@@ -20,22 +20,6 @@ index ec658b3e7d3e05e99e8f4f547da1597cf6b7c709..7034d70b567b5bae13a8c986187232ed
        target,
        minify: false,
        include: [`packages/**/*`],
-diff --git a/dist-cjs/check/verifyWorkspaceDependencies.js b/dist-cjs/check/verifyWorkspaceDependencies.js
-index 89555c78426ac0c1a8a00089980ef6f121a50be8..615a4c7ce750a7f4d8783441eeb09932c9bb3508 100644
---- a/dist-cjs/check/verifyWorkspaceDependencies.js
-+++ b/dist-cjs/check/verifyWorkspaceDependencies.js
-@@ -40,11 +40,6 @@ async function check() {
-       valid = false;
-     }
- 
--    if (!packageInfo.location.startsWith('packages')) {
--      logger.error(`${packageName} is not located within the "/packages" directory in the repository, instead found "${packageInfo.location}"`);
--      valid = false;
--    }
--
-     if (!(0, _isModularType.isValidModularType)(path.join(modularRoot, packageInfo.location))) {
-       logger.error(`${packageName} at ${packageInfo.location} is not a valid modular type - Found ${(0, _isModularType.getModularType)(packageInfo.location)}`);
-       valid = false;
 diff --git a/dist-cjs/test/config.js b/dist-cjs/test/config.js
 index e749e90effe0a80a259a099ac4e3448a42a565ac..ad2ccb7811fff085bfe8b8da4569dbe176cdd2e6 100644
 --- a/dist-cjs/test/config.js
@@ -77,20 +61,6 @@ index 4f6555e3988e6a229a64e2c429107e0f62526d39..d8ef7201d651d92262f1cc422f1136a4
      'node_modules', 'bower_components', 'jspm_packages', 'tmp', // Casting so that configObject.exclude is set to the correct typing
      // Since configObject is a index type all values are "any" implicitly.
      ...(configObject.exclude || [])])
-diff --git a/react-scripts/config/paths.js b/react-scripts/config/paths.js
-index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..905456cb8e02b32b4f105da274a3d4d72ddca440 100644
---- a/react-scripts/config/paths.js
-+++ b/react-scripts/config/paths.js
-@@ -88,6 +88,9 @@ module.exports = {
-   appSrc: resolveApp('src'),
-   modularSrc: [
-     resolveModular('packages'),
-+	resolveModular('playground'),
-+	resolveModular('tooling'),
-+	resolveModular('docs'),
-     resolveModular('node_modules/.modular'),
-   ],
-   appTsConfig: resolveApp('tsconfig.json'),
 diff --git a/react-scripts/config/webpack.config.js b/react-scripts/config/webpack.config.js
 index e27fad30fc903a5dd7e86d208b93d4c2ef113926..6bc25c540728aa76bb782ef39c3810687369ae40 100644
 --- a/react-scripts/config/webpack.config.js

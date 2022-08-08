@@ -5,10 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "workspaces": [
-    "packages/**",
-    "tooling/**",
-    "playground/**",
-    "docs"
+    "packages/**"
   ],
   "modular": {
     "type": "root"
@@ -19,9 +16,9 @@
     "build:core": "modular build @jpmorganchase/uitk-core",
     "build:icons": "modular build @jpmorganchase/uitk-icons",
     "build:lab": "modular build @jpmorganchase/uitk-lab",
-    "build:theme": "cd packages/theme && yarn build",
+    "build:theme": "yarn workspace @jpmorganchase/uitk-theme build",
     "build:grid": "modular build @jpmorganchase/uitk-grid",
-    "build:ag-grid-theme": "cd packages/ag-grid-theme && yarn build",
+    "build:ag-grid-theme": "yarn workspace @jpmorganchase/uitk-ag-grid-theme build",
     "test": "modular test",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser chrome",
@@ -29,14 +26,14 @@
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
     "lint:style": "yarn lint:style:core && yarn lint:style:icon",
-    "lint:style:core": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
-    "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
+    "lint:style:core": "yarn stylelint -f verbose \"packages/design-system/core/src/**/*.css\"",
+    "lint:style:icon": "yarn stylelint -f verbose \"packages/design-system/icons/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && build-storybook",
     "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
     "typecheck:modular": "modular typecheck",
-    "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
-    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
+    "typecheck:toolkit:test": "tsc --noEmit --project packages/design-system/core/src/__tests__/tsconfig.json",
+    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/design-system/core/src/__tests__/__e2e__/tsconfig.json",
     "chromatic": "chromatic"
   },
   "dependencies": {

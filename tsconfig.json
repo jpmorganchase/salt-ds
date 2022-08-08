@@ -7,9 +7,6 @@
     "modular",
     "packages",
     "integration/toolkit",
-    "docs",
-    "tooling",
-    "playground",
     "cypress.config.ts"
   ],
   "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]

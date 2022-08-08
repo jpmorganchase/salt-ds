@@ -3017,17 +3017,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor-app@>=0.1.0, @jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app":
+"@jpmorganchase/theme-editor-app@>=0.1.0, @jpmorganchase/theme-editor-app@workspace:packages/playground/theme-editor-app":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app"
+  resolution: "@jpmorganchase/theme-editor-app@workspace:packages/playground/theme-editor-app"
   dependencies:
     "@jpmorganchase/theme-editor": ">=1.0.0"
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase":
+"@jpmorganchase/theme-editor-showcase@workspace:packages/playground/theme-editor-showcase":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor-showcase@workspace:playground/theme-editor-showcase"
+  resolution: "@jpmorganchase/theme-editor-showcase@workspace:packages/playground/theme-editor-showcase"
   dependencies:
     "@jpmorganchase/theme-editor": ">=1.0.0"
     "@jpmorganchase/theme-editor-app": ">=0.1.0"
@@ -3036,26 +3036,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:packages/tooling/theme-editor":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
+  resolution: "@jpmorganchase/theme-editor@workspace:packages/tooling/theme-editor"
   dependencies:
     js-beautify: 1.14.0
     tinycolor2: 1.4.2
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-ag-grid-theme@workspace:packages/ag-grid-theme":
+"@jpmorganchase/uitk-ag-grid-theme@workspace:packages/design-system/ag-grid-theme":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-ag-grid-theme@workspace:packages/ag-grid-theme"
+  resolution: "@jpmorganchase/uitk-ag-grid-theme@workspace:packages/design-system/ag-grid-theme"
   dependencies:
     sass: ^1.51.0
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-core@workspace:packages/core":
+"@jpmorganchase/uitk-core@workspace:packages/design-system/core":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-core@workspace:packages/core"
+  resolution: "@jpmorganchase/uitk-core@workspace:packages/design-system/core"
   peerDependencies:
     "@types/react": ">=16.8.6"
     react: ">=16.8.0"
@@ -3066,9 +3066,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-grid@workspace:packages/grid":
+"@jpmorganchase/uitk-grid@workspace:packages/design-system/grid":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-grid@workspace:packages/grid"
+  resolution: "@jpmorganchase/uitk-grid@workspace:packages/design-system/grid"
   peerDependencies:
     "@types/react": ">=16.8.6"
     react: ">=16.8.0"
@@ -3079,9 +3079,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-icons@workspace:packages/icons":
+"@jpmorganchase/uitk-icons@workspace:packages/design-system/icons":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-icons@workspace:packages/icons"
+  resolution: "@jpmorganchase/uitk-icons@workspace:packages/design-system/icons"
   dependencies:
     dom-serializer: ^1.3.2
     htmlparser2: ^7.2.0
@@ -3096,9 +3096,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-lab@workspace:packages/lab":
+"@jpmorganchase/uitk-lab@workspace:packages/design-system/lab":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-lab@workspace:packages/lab"
+  resolution: "@jpmorganchase/uitk-lab@workspace:packages/design-system/lab"
   peerDependencies:
     "@types/react": ">=16.8.6"
     react: ">=16.8.0"
@@ -3109,9 +3109,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-theme@workspace:packages/theme":
+"@jpmorganchase/uitk-theme@workspace:packages/design-system/theme":
   version: 0.0.0-use.local
-  resolution: "@jpmorganchase/uitk-theme@workspace:packages/theme"
+  resolution: "@jpmorganchase/uitk-theme@workspace:packages/design-system/theme"
   languageName: unknown
   linkType: soft
 
@@ -9992,15 +9992,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-variable-docgen-components@workspace:tooling/css-variable-docgen-components":
+"css-variable-docgen-components@workspace:packages/tooling/css-variable-docgen-components":
   version: 0.0.0-use.local
-  resolution: "css-variable-docgen-components@workspace:tooling/css-variable-docgen-components"
+  resolution: "css-variable-docgen-components@workspace:packages/tooling/css-variable-docgen-components"
   languageName: unknown
   linkType: soft
 
-"css-variable-docgen-plugin@workspace:tooling/css-variable-docgen-plugin":
+"css-variable-docgen-plugin@workspace:packages/tooling/css-variable-docgen-plugin":
   version: 0.0.0-use.local
-  resolution: "css-variable-docgen-plugin@workspace:tooling/css-variable-docgen-plugin"
+  resolution: "css-variable-docgen-plugin@workspace:packages/tooling/css-variable-docgen-plugin"
   dependencies:
     "@storybook/components": ^6.5.9
     "@storybook/theming": ^6.5.9
@@ -10622,9 +10622,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"desktop-testing-environment@workspace:playground/electron-testing-app":
+"desktop-testing-environment@workspace:packages/playground/electron-testing-app":
   version: 0.0.0-use.local
-  resolution: "desktop-testing-environment@workspace:playground/electron-testing-app"
+  resolution: "desktop-testing-environment@workspace:packages/playground/electron-testing-app"
   dependencies:
     "@babel/core": ^7.16.12
     "@babel/preset-react": ^7.16.7
@@ -10819,9 +10819,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docs@workspace:docs":
+"docs@workspace:packages/docs":
   version: 0.0.0-use.local
-  resolution: "docs@workspace:docs"
+  resolution: "docs@workspace:packages/docs"
   languageName: unknown
   linkType: soft
 
@@ -11212,9 +11212,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-test-app@workspace:playground/theme-editor-electron":
+"electron-test-app@workspace:packages/playground/theme-editor-electron":
   version: 0.0.0-use.local
-  resolution: "electron-test-app@workspace:playground/theme-editor-electron"
+  resolution: "electron-test-app@workspace:packages/playground/theme-editor-electron"
   dependencies:
     "@babel/core": ^7.16.12
     "@babel/preset-react": ^7.16.7
@@ -18175,7 +18175,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.1.2#.yarn/patches/modular-scripts-npm-3.1.0-5a349ac39e.patch::locator=%40jpmorganchase%2Froot%40workspace%3A.":
   version: 3.1.2
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.1.2#.yarn/patches/modular-scripts-npm-3.1.0-5a349ac39e.patch::version=3.1.2&hash=b8d690&locator=%40jpmorganchase%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.1.2#.yarn/patches/modular-scripts-npm-3.1.0-5a349ac39e.patch::version=3.1.2&hash=494e0b&locator=%40jpmorganchase%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.16.7
     "@rollup/plugin-babel": 5.3.1
@@ -18280,7 +18280,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: 3f03b592de23abd118a8822035817c8cdd251a146887bb562a7e9b57182a864462040470cf92b657e5629615155e1082dd32520d7046ae9bb016155bd1b7c702
+  checksum: d9138b637578393db6215e7c4e574a6e7b970be6dda4bf238a16f5c37192bc93bb7b7a10ff672f4e92158f56715d9e422279204917fa9f00c5484a26bc9d8f19
   languageName: node
   linkType: hard
 
@@ -24035,9 +24035,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-plugin@workspace:tooling/swc-plugin":
+"swc-plugin@workspace:packages/tooling/swc-plugin":
   version: 0.0.0-use.local
-  resolution: "swc-plugin@workspace:tooling/swc-plugin"
+  resolution: "swc-plugin@workspace:packages/tooling/swc-plugin"
   dependencies:
     "@swc/core": ^1.2.160
     rollup: 2.67.2
@@ -25511,9 +25511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap":
+"vite-plugin-typescript-turbosnap@workspace:packages/tooling/typescript-turbosnap":
   version: 0.0.0-use.local
-  resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
+  resolution: "vite-plugin-typescript-turbosnap@workspace:packages/tooling/typescript-turbosnap"
   dependencies:
     ts-morph: ^15.1.0
   peerDependencies:

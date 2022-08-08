@@ -1,6 +1,6 @@
 {
   "plugins": [
-    "./tooling/stylelint/custom-property-no-foundation-color/index.js"
+    "./packages/tooling/stylelint/custom-property-no-foundation-color/index.js"
   ],
   "rules": {
     "uitk/custom-property-no-foundation-color": {

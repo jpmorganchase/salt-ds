@@ -124,4 +124,4 @@ jobs:
         run: yarn
       - name: Run Playwright
         run: xvfb-run yarn test
-        working-directory: ./playground/electron-testing-app
+        working-directory: ./packages/playground/electron-testing-app
