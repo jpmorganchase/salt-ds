@@ -14,6 +14,7 @@ module.exports = {
               "(useIsomorphicLayoutEffect|useLayoutEffectOnce|useLayoutEffectSkipFirst)",
           },
         ],
+        "@typescript-eslint/explicit-module-boundary-types": 0,
       },
     },
     {
