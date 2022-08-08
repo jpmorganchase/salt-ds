@@ -26,6 +26,19 @@
   margin: 0;
 }
 
+.layer-simple-usage-center {
+  align-items: center;
+}
+
+.layer-simple-usage-center .uitkFlexLayout {
+  width: 500px;
+  height: 500px;
+}
+
+.layer-article-container {
+  width: min-content;
+}
+
 .layer-article-image {
   min-width: 350px;
   width: 100%;

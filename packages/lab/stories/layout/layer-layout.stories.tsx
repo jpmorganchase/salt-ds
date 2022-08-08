@@ -245,7 +245,7 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
 export const LayerReducedMotion = ReducedMotion.bind({});
 
 const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
 
@@ -262,8 +262,12 @@ const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <>
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} style={{ alignItems: "center" }} {...args}>
-        <FlowLayout style={{ width: 500, height: 500 }} justify="center">
+      <LayerLayout
+        isOpen={open}
+        className="layer-simple-usage-center"
+        {...args}
+      >
+        <FlowLayout justify="center">
           <ContentStatus {...errorProps} />
         </FlowLayout>
       </LayerLayout>
@@ -283,7 +287,7 @@ const FormFieldExample = () => (
 );
 
 const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
 
@@ -319,7 +323,7 @@ LayerLayoutLeftSimpleUsage.args = {
 };
 
 const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
 
@@ -357,7 +361,7 @@ LayerLayoutTopSimpleUsage.args = {
 };
 
 const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
 
@@ -389,7 +393,7 @@ LayerLayoutRightSimpleUsage.args = {
 };
 
 const ArticleExample = () => (
-  <StackLayout style={{ width: "min-content" }}>
+  <StackLayout className="layer-article-container">
     <div className="layer-article-image"></div>
     <h2>Laborum in sit officia consecte</h2>
     <p>
@@ -402,7 +406,7 @@ const ArticleExample = () => (
 );
 
 const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
 
