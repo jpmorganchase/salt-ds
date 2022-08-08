@@ -19,9 +19,9 @@ import {
   DialogTitle,
   Dropdown,
   ElectronWindow,
-  ListChangeHandler,
   MenuDescriptor,
   OrderedButton,
+  SelectionChangeHandler,
   Toolbar,
 } from "@jpmorganchase/uitk-lab";
 import { useCallback, useRef, useState } from "react";
@@ -113,14 +113,14 @@ const DefaultToolbar = ({ initialWidth = 315 }) => {
         <ToolbarAnchor />
       </div>
       <Dropdown
-        initialSelectedItem={range}
+        defaultSelected={range}
         onSelect={(_, item) => setRange(item || undefined)}
         source={rangeData}
         style={{ width: 100 }}
       />
 
       <Dropdown
-        initialSelectedItem={type}
+        defaultSelected={type}
         onSelect={(_, item) => setType(item || undefined)}
         source={typeData}
         style={{ width: 90 }}
@@ -162,7 +162,7 @@ export const App = () => {
     setOpen(false);
   };
 
-  const handleChange: ListChangeHandler<string> = (e, item) => {
+  const handleChange: SelectionChangeHandler<string> = (e, item) => {
     console.log(e);
     setSelectedItem(item as string);
   };
@@ -234,9 +234,9 @@ export const App = () => {
         </Dialog>
       </>
       <Dropdown
-        selectedItem={selectedItem}
+        selected={selectedItem}
         source={usStateExampleData}
-        onChange={handleChange}
+        onSelectionChange={handleChange}
       />
       <CascadingMenu
         disableClickAway
@@ -271,11 +271,7 @@ export const App = () => {
         Toggle Popper
       </Button>
       <Popper id="formfield1" anchorEl={anchorEl.current} open={openPopper}>
-        <FormField
-          data-close-on-click={false}
-          label="Range"
-          data-activation-indicator
-        >
+        <FormField data-close-on-click={false} label="Range">
           <Button data-testid="FormField">Test</Button>
         </FormField>
       </Popper>

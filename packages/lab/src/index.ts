@@ -1,3 +1,16 @@
+import {
+  SelectionChangeHandler,
+  SelectionStrategy,
+  useCollectionItems,
+} from "./common-hooks";
+
+import {
+  ListItemBase as ListItemBaseDeprecated,
+  ListChangeHandler as ListChangeHandlerDeprecated,
+  ListSelectHandler as ListSelectHandlerDeprecated,
+  useListItem as useListItemDeprecated,
+} from "./list-deprecated";
+
 export * from "./accordion";
 export * from "./app-header";
 export * from "./avatar";
@@ -9,6 +22,7 @@ export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
+export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./dialog";
@@ -37,6 +51,18 @@ export * from "./tabs";
 export * from "./toggle-button";
 export * from "./toolbar";
 export * from "./tokenized-input";
+export * from "./tree";
 export * from "./typography";
 export * from "./window";
 export * from "./utils";
+
+export { ListItemBaseDeprecated };
+
+export { useCollectionItems, useListItemDeprecated };
+
+export type {
+  ListChangeHandlerDeprecated,
+  ListSelectHandlerDeprecated,
+  SelectionChangeHandler,
+  SelectionStrategy,
+};

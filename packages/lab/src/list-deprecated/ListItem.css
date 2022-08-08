@@ -1,0 +1,103 @@
+.uitkListItemDeprecated {
+  /* Color */
+  --list-item-text-color: var(--uitk-selectable-foreground);
+  --list-item-background: var(--uitk-selectable-background);
+  --list-item-background-hover: var(--uitk-selectable-background-hover);
+  --list-item-selected-focus-visible-outline-color: var(--uitk-accent-foreground); /* TODO: Check token with design */
+
+  --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
+  --list-item-background-active: var(--uitk-selectable-background-selected);
+
+  /* Text, Font */
+  --list-item-text-align: var(--uitk-selectable-textAlign);
+  --list-item-font-size: var(--uitk-text-fontSize);
+  --list-item-line-height: var(--uitk-text-lineHeight);
+
+  /* Spacing */
+  --list-item-padding: 0 var(--uitk-size-unit);
+
+  /* Misc. */
+
+  --list-item-focus-visible-outline-style: var(--uitk-focused-outlineStyle);
+  --list-item-focus-visible-outline-width: var(--uitk-focused-outlineWidth);
+  --list-item-focus-visible-outline-color: var(--uitk-focused-outlineColor);
+  --list-item-focus-visible-outline-offset: var(--uitk-focused-outlineOffset);
+
+  --list-item-gap: 0px;
+  --list-item-align-items: center;
+  --list-item-selectable-cursor: pointer;
+  --list-item-cursor: default;
+
+  --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
+  --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
+}
+
+.uitkListItemDeprecated {
+  color: var(--list-item-text-color);
+  background: var(--list-item-background);
+  text-align: var(--list-item-text-align);
+  line-height: var(--list-item-line-height);
+  font-size: var(--list-item-font-size);
+  padding: var(--list-item-padding);
+  left: 0;
+  right: 0;
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  align-items: var(--list-item-align-items);
+  white-space: nowrap;
+}
+
+.uitkListItemDeprecated {
+  /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
+  margin-bottom: var(--list-item-gap);
+  cursor: var(--list-item-selectable-cursor);
+}
+
+.uitkListItemDeprecated:last-child {
+  margin-bottom: 0px;
+}
+
+.uitkListItemDeprecated.uitkListItemDeprecated-highlighted:not(.uitkListItemDeprecated-selected) {
+  background: var(--list-item-background-hover);
+}
+
+.uitkListItemDeprecated.uitkListItemDeprecated-deselectable {
+  cursor: var(--list-item-selectable-cursor);
+}
+
+.uitkListItemDeprecated-textWrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.uitkListItemDeprecated-selected {
+  color: var(--list-item-text-color-active);
+  background: var(--list-item-background-active);
+  cursor: var(--list-item-cursor);
+}
+
+.uitkListItemDeprecated-disabled {
+  cursor: var(--list-item-disabled-cursor);
+  opacity: var(--list-item-disabled-regular-opacity);
+}
+
+.uitkListItemDeprecated-focusVisible:after {
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  content: "";
+  position: absolute;
+
+  outline-style: var(--list-item-focus-visible-outline-style);
+  outline-width: var(--list-item-focus-visible-outline-width);
+  outline-color: var(--list-item-focus-visible-outline-color);
+  outline-offset: var(--list-item-focus-visible-outline-offset);
+}
+
+.uitkListItemDeprecated-focusVisible.uitkListItemDeprecated-selected:after {
+  outline-color: var(--list-item-selected-focus-visible-outline-color);
+}

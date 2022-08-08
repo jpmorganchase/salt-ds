@@ -1,0 +1,791 @@
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { mountWithTheme } from '@jpmuitk/test-utils';
+import CheckboxBase from '@jpmuitk/checkbox/CheckboxBase';
+
+import TreeListItem from '../internal/TreeListItem';
+import Tree from '../Tree';
+
+const arrowUp = { code: 'ArrowUp', key: 'ArrowUp', keyCode: 38 };
+const arrowDown = { code: 'ArrowDown', key: 'ArrowDown', keyCode: 40 };
+const arrowLeft = { code: 'ArrowLeft', key: 'ArrowLeft', keyCode: 37 };
+const arrowRight = { code: 'ArrowRight', key: 'ArrowRight', keyCode: 39 };
+const spaceKey = { code: 'Space', key: ' ' };
+const enterKey = { code: 'Enter', key: 'Enter', keyCode: 13 };
+const homeKey = { code: 'Home', key: 'Home', keyCode: 36 };
+const endKey = { code: 'End', key: 'End', keyCode: 35 };
+
+const mountedContainersAndWrappers = new Set();
+
+function mount(node) {
+  const container = document.body.appendChild(document.createElement('div'));
+
+  // See https://github.com/ant-design/ant-design/pull/21185#issuecomment-581846344
+  // However, we're attaching to a container to avoid warnings from React:
+  // https://github.com/facebook/react/blob/60016c4/packages/react-dom/src/client/ReactDOMLegacy.js#L76-L88
+  const wrapper = mountWithTheme(node, { attachTo: container });
+  mountedContainersAndWrappers.add([container, wrapper]);
+  return wrapper;
+}
+
+// Based on https://github.com/testing-library/react-testing-library/blob/c5a7206/src/pure.js#L95-L103
+afterEach(() => {
+  mountedContainersAndWrappers.forEach(containerAndWrapper => {
+    const [container, wrapper] = containerAndWrapper;
+    wrapper.unmount();
+    container.remove();
+    mountedContainersAndWrappers.delete(containerAndWrapper);
+  });
+});
+
+function createSampleTreeData(expanded = true) {
+  return [
+    {
+      id: 'a',
+      name: '2018',
+      expanded,
+      description: 'Last Year',
+      childNodes: [
+        {
+          id: 'b',
+          expanded,
+          name: 'Q1',
+          childNodes: [{ id: 'c', name: 'January' }]
+        }
+      ]
+    },
+    {
+      id: 'x',
+      name: 'x',
+      expanded,
+      description: '[item x parent]',
+      childNodes: [
+        { id: 'x2', name: 'item x 2', description: 'desc x 2' },
+        { id: 'x3', name: 'item x 3', description: 'desc x 3' },
+        { id: 'x4', name: 'item x 4', description: 'desc x 4' }
+      ]
+    },
+    {
+      id: 'd',
+      name: '[item d]',
+      expanded,
+      description: 'Current Year',
+      childNodes: [{ id: 'e', name: 'Q1', description: 'Current Quarter' }]
+    }
+  ];
+}
+
+describe('GIVEN a Tree with a KeyboardController', () => {
+  let mockEvent;
+
+  describe('AND right arrow is pressed on a collapsed node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onExpandToggleSpy;
+
+    const nodes = createSampleTreeData(false);
+
+    beforeAll(() => {
+      mockEvent = { preventDefault: jest.fn(), stopPropagation: jest.fn() };
+
+      onKeyDownSpy = jest.fn();
+      onExpandToggleSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={nodes}
+            onExpandToggle={onExpandToggleSpy}
+            onKeyDown={onKeyDownSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...arrowRight });
+      });
+    });
+
+    it('THEN should stop event propagation of keyboard event', () => {
+      expect(mockEvent.stopPropagation).toHaveBeenCalled();
+    });
+
+    it('THEN should prevent default keyboard behaviour', () => {
+      expect(mockEvent.preventDefault).toHaveBeenCalled();
+    });
+
+    it('THEN should pass the path to the node', () => {
+      expect(onExpandToggleSpy.mock.calls[0][2].join('.')).toEqual('[2]');
+    });
+
+    it('THEN should expand the active node', () => {
+      expect(onExpandToggleSpy.mock.calls[0][0].id).toEqual(
+        nodes[nodes.length - 1].id
+      );
+    });
+  });
+
+  describe('AND an unsupported key is pressed', () => {
+    let wrapper;
+
+    beforeAll(() => {
+      act(() => {
+        mockEvent = { preventDefault: jest.fn(), stopPropagation: jest.fn() };
+
+        wrapper = mount(
+          <Tree
+            initialSource={[
+              {
+                id: 'expander-a',
+                name: 'Q1',
+                description: '2018',
+                expanded: true,
+                childNodes: [
+                  {
+                    id: 'expander-b',
+                    name: 'First Quarter',
+                    description: 'Expand Test'
+                  },
+                  {
+                    id: 'expander-c',
+                    name: 'Second Quarter',
+                    description: 'Other Expand Test'
+                  }
+                ]
+              }
+            ]}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, which: 97 });
+      });
+    });
+
+    it('THEN should NOT prevent default keyboard behaviour', () => {
+      expect(mockEvent.preventDefault).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('AND right arrow is pressed on an expanded node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onExpandToggleSpy;
+
+    beforeEach(() => {
+      onKeyDownSpy = jest.fn();
+      onExpandToggleSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={[
+              {
+                id: 'expander-a',
+                name: 'Q1',
+                description: '2018',
+                expanded: true,
+                childNodes: [
+                  {
+                    id: 'expander-b',
+                    name: 'First Quarter',
+                    description: 'Expand Test'
+                  },
+                  {
+                    id: 'expander-c',
+                    name: 'Second Quarter',
+                    description: 'Other Expand Test'
+                  }
+                ]
+              }
+            ]}
+            onExpandToggle={onExpandToggleSpy}
+            onKeyDown={onKeyDownSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, ...arrowRight });
+      });
+    });
+
+    it('THEN should not invoke expandToggle callback', () => {
+      expect(onExpandToggleSpy).not.toHaveBeenCalled();
+    });
+
+    it('THEN focus should move to first child node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.update().find(TreeListItem).at(1).prop('name')
+      );
+    });
+  });
+
+  describe('AND right arrow is pressed on an end node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onExpandToggleSpy;
+
+    beforeAll(() => {
+      onKeyDownSpy = jest.fn();
+      onExpandToggleSpy = jest.fn();
+
+      act(() => {
+        mockEvent = { preventDefault: jest.fn(), stopPropagation: jest.fn() };
+        wrapper = mount(
+          <Tree
+            initialSource={[
+              {
+                id: 'expander-a',
+                name: 'Expand',
+                description: 'Current Expand Test',
+                expanded: true,
+                childNodes: [
+                  {
+                    id: 'expander-b',
+                    name: 'Expand',
+                    description: 'Other Expand Test'
+                  },
+                  {
+                    id: 'expander-c',
+                    name: 'Expand',
+                    description: 'Other Expand Test'
+                  }
+                ]
+              }
+            ]}
+            onExpandToggle={onExpandToggleSpy}
+            onKeyDown={onKeyDownSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...arrowRight });
+      });
+    });
+
+    it('THEN should prevent default keyboard behaviour', () => {
+      expect(mockEvent.preventDefault).toHaveBeenCalled();
+    });
+
+    it('THEN should not invoke expandToggle callback', () => {
+      expect(onExpandToggleSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('AND left arrow is pressed on an expanded node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onExpandToggleSpy;
+
+    const nodes = [
+      {
+        id: 'expander-a',
+        name: 'Expand',
+        description: 'Current Expand Test',
+        expanded: true,
+        childNodes: [
+          {
+            id: 'expander-b',
+            name: 'Expand',
+            description: 'Other Expand Test'
+          },
+          {
+            id: 'expander-c',
+            name: 'Expand',
+            description: 'Other Expand Test'
+          }
+        ]
+      }
+    ];
+
+    beforeAll(() => {
+      onKeyDownSpy = jest.fn();
+      onExpandToggleSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={nodes}
+            onExpandToggle={onExpandToggleSpy}
+            onKeyDown={onKeyDownSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, ...arrowLeft });
+      });
+    });
+
+    it('THEN should collapse the active node', () => {
+      expect(onExpandToggleSpy.mock.calls[0][0].id).toEqual(nodes[0].id);
+    });
+  });
+
+  describe('AND left arrow is pressed on a collapsed node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onExpandToggleSpy;
+
+    const nodes = [
+      {
+        id: 'expander-a',
+        name: 'Expand',
+        description: 'Current Expand Test',
+        expanded: true,
+        childNodes: [
+          {
+            id: 'expander-b',
+            name: 'Expand',
+            description: 'Other Expand Test'
+          },
+          {
+            id: 'expander-c',
+            name: 'Expand',
+            description: 'Other Expand Test'
+          }
+        ]
+      }
+    ];
+
+    beforeEach(() => {
+      onKeyDownSpy = jest.fn();
+      onExpandToggleSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={nodes}
+            onExpandToggle={onExpandToggleSpy}
+            onKeyDown={onKeyDownSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...arrowLeft });
+      });
+    });
+
+    it('THEN should not invoke expandToggle callback', () => {
+      expect(onExpandToggleSpy).not.toHaveBeenCalled();
+    });
+
+    it('THEN focus should move to parent node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.find(TreeListItem).first().prop('name')
+      );
+    });
+  });
+
+  describe('AND space key is pressed on a node', () => {
+    let wrapper;
+    let onKeyDownSpy;
+    let onSelectToggleSpy;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDownSpy = jest.fn();
+      onSelectToggleSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={nodes}
+            onKeyDown={onKeyDownSpy}
+            onSelectToggle={onSelectToggleSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, ...spaceKey });
+      });
+    });
+
+    it('THEN should select the active node', () => {
+      expect(onSelectToggleSpy.mock.calls[0][0].id).toEqual(nodes[0].id);
+    });
+  });
+
+  describe('AND when `variant` is set to "checkbox"', () => {
+    let wrapper;
+    let onCheckToggleSpy;
+    let onKeyDownSpy;
+
+    beforeAll(() => {
+      onCheckToggleSpy = jest.fn();
+      onKeyDownSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={createSampleTreeData()}
+            onCheckToggle={onCheckToggleSpy}
+            onKeyDown={onKeyDownSpy}
+            variant="checkbox"
+          />
+        );
+      });
+    });
+
+    describe('WHEN space key is pressed', () => {
+      beforeAll(() => {
+        act(() => {
+          wrapper
+            .find(TreeListItem)
+            .last()
+            .simulate('keyDown', { ...mockEvent, ...spaceKey });
+        });
+      });
+
+      it('THEN should check the checkbox', () => {
+        expect(
+          wrapper.update().find(TreeListItem).last().find(CheckboxBase).props()
+            .checked
+        ).toEqual(true);
+      });
+
+      it('THEN should invoke onCheckToggle callback', () => {
+        expect(onCheckToggleSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  describe('AND enter key is pressed on a collapsed node', () => {
+    let wrapper;
+    let onKeyDown;
+    let onSelectToggleSpy;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+      onSelectToggleSpy = jest.fn();
+
+      act(() => {
+        nodes[nodes.length - 1].expanded = false;
+
+        wrapper = mount(
+          <Tree
+            initialSource={nodes}
+            onKeyDown={onKeyDown}
+            onSelectToggle={onSelectToggleSpy}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...enterKey });
+      });
+    });
+
+    it('THEN should select the node', () => {
+      expect(
+        wrapper.update().find(TreeListItem).last().prop('selected')
+      ).toEqual(true);
+    });
+
+    it('THEN should pass the path to the node', () => {
+      expect(onSelectToggleSpy.mock.calls[0][2].join('.')).toEqual('[2]');
+    });
+
+    it('THEN should select the active node', () => {
+      expect(onSelectToggleSpy.mock.calls[0][0].id).toEqual(
+        nodes[nodes.length - 1].id
+      );
+    });
+  });
+
+  describe('AND when `variant` is set to "checkbox"', () => {
+    let wrapper;
+    let onCheckToggleSpy;
+    let onKeyDownSpy;
+
+    beforeAll(() => {
+      onCheckToggleSpy = jest.fn();
+      onKeyDownSpy = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={createSampleTreeData()}
+            onCheckToggle={onCheckToggleSpy}
+            onKeyDown={onKeyDownSpy}
+            variant="checkbox"
+          />
+        );
+      });
+    });
+
+    describe('WHEN enter key is pressed', () => {
+      beforeAll(() => {
+        act(() => {
+          wrapper
+            .find(TreeListItem)
+            .first()
+            .simulate('keyDown', { ...mockEvent, ...enterKey });
+        });
+      });
+
+      it('THEN should not invoke onCheckToggle callback', () => {
+        expect(onCheckToggleSpy).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('AND down key is pressed on a collapsed node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData(false);
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, ...arrowDown });
+      });
+    });
+
+    it('THEN should move focus down to the next sibling node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.find(TreeListItem).at(1).prop('name')
+      );
+    });
+  });
+
+  describe('AND down key is pressed on an expanded node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .at(3)
+          .simulate('keyDown', { ...mockEvent, ...arrowDown });
+      });
+    });
+
+    it('THEN should move focus down to the next focusable node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.find(TreeListItem).at(4).prop('name')
+      );
+    });
+  });
+
+  describe('AND down key is pressed on the last child of an expanded node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .at(2)
+          .simulate('keyDown', { ...mockEvent, ...arrowDown });
+      });
+    });
+
+    it('THEN should move focus down to the next focusable node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper
+          .update()
+          .find({ description: '[item x parent]' })
+          .last()
+          .prop('name')
+      );
+    });
+  });
+
+  describe('AND up key is pressed on a single node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .at(4)
+          .simulate('keyDown', { ...mockEvent, ...arrowUp });
+      });
+    });
+
+    it('THEN should move focus up to the next focusable node', () => {
+      expect(document.activeElement).toHaveTextContent('[item x parent]');
+    });
+  });
+
+  describe('AND up key is pressed on a mid-level child node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .at(2)
+          .simulate('keyDown', { ...mockEvent, ...arrowUp });
+      });
+    });
+
+    it('THEN should move focus up to the next focusable node', () => {
+      expect(document.activeElement).toHaveTextContent('Q1');
+    });
+  });
+
+  describe('AND up key is pressed on a parent node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    const nodes = createSampleTreeData();
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+
+      act(() => {
+        wrapper = mount(<Tree initialSource={nodes} onKeyDown={onKeyDown} />);
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...arrowUp });
+      });
+    });
+
+    it('THEN should move focus up to the next focusable node', () => {
+      expect(document.activeElement).toHaveTextContent('[item d]');
+    });
+  });
+
+  describe('AND home key is pressed on a node', () => {
+    let wrapper;
+    let onKeyDown;
+
+    beforeAll(() => {
+      onKeyDown = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={[
+              {
+                id: 'expander-a',
+                name: 'Q1',
+                description: '2018',
+                expanded: true,
+                childNodes: [
+                  {
+                    id: 'expander-b',
+                    name: 'First Quarter',
+                    description: 'Expand Test'
+                  },
+                  {
+                    id: 'expander-c',
+                    name: 'Second Quarter',
+                    description: 'Other Expand Test'
+                  }
+                ]
+              }
+            ]}
+            onKeyDown={onKeyDown}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .last()
+          .simulate('keyDown', { ...mockEvent, ...homeKey });
+      });
+    });
+
+    it('THEN should move focus up to the first node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.find(TreeListItem).first().prop('name')
+      );
+    });
+  });
+
+  describe('AND end key is pressed on a node', () => {
+    let wrapper;
+
+    beforeAll(() => {
+      act(() => {
+        wrapper = mount(
+          <Tree
+            initialSource={[
+              {
+                id: 'expander-a',
+                name: 'Q1',
+                description: '2018',
+                expanded: true,
+                childNodes: [
+                  {
+                    id: 'expander-b',
+                    name: 'First Quarter',
+                    description: 'Expand Test'
+                  },
+                  {
+                    id: 'expander-c',
+                    name: 'Second Quarter',
+                    description: 'Other Expand Test'
+                  }
+                ]
+              }
+            ]}
+          />
+        );
+
+        wrapper
+          .find(TreeListItem)
+          .first()
+          .simulate('keyDown', { ...mockEvent, ...endKey });
+      });
+    });
+
+    it('THEN should move focus down to the last node', () => {
+      expect(document.activeElement).toHaveTextContent(
+        wrapper.find(TreeListItem).last().prop('name')
+      );
+    });
+  });
+});

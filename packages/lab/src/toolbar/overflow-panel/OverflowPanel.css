@@ -1,0 +1,31 @@
+.uitkOverflowPanel.uitkDropdown-popup {
+  background: var(--uitk-container-background-medium);
+  border: solid 1px var(--uitk-selectable-borderColor-hover);
+  box-shadow: var(--uitk-overlayable-shadow-popout);
+}
+
+.uitkOverflowPanel-content {
+  --uitkButton-justifyContent: flex-start;
+  --uitkDropdown-popup-maxHeight: auto;
+  align-items: stretch;
+  color: var(--uitk-container-color);
+  border: var(--uitk-container-border-width) var(--uitk-container-border-style) var(--uitk-container-border-color);
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--uitk-size-unit) * 1.5) 0;
+  outline: none;
+}
+
+.uitkOverflowPanel [aria-expanded="true"] {
+  --uitkButton-background: var(--uitk-actionable-secondary-background-active);
+  --uitkButton-background-hover: var(--uitk-actionable-secondary-background-active);
+  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-active);
+}
+
+.uitkOverflowPanel.uitkDropdown {
+  --uitkIcon-padding: 0;
+}
+
+.uitkOverflowPanel.uitkDropdown-popup .uitkFormField:not(.uitkFormField-toolbarButton) {
+  --uitkFormField-margin: 0 12px 8px 12px;
+}

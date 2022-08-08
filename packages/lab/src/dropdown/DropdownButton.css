@@ -1,29 +1,27 @@
 .uitkDropdownButton {
+  --uitkButton-label-fontWeight: var(--uitk-typography-weight-regular);
   --uitkButton-textTransform: none;
   --uitkButton-background-hover: var(--uitk-actionable-secondary-background);
   --uitkButton-background-active: var(--uitk-actionable-secondary-background);
-  --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
+  --uitkButton-background-hover: var(--uitk-actionable-secondary-background);
+  --uitkButton-textColor-active: var(--uitk-actionable-secondary-foreground);
+  --uitkButton-width: 100%;
 
   /* Fonts, Text */
-  --uitkButton-label-fontWeight: var(--uitk-text-fontWeight);
+  --uitkButton-label-fontWeight: var(--uitk-typography-weight-medium);
   --uitkButton-textAlign: left;
 }
 
 .uitkDropdownButton:active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
+  --uitkIcon-color: var(--uitk-actionable-secondary-text-color);
 }
 
 .uitkDropdownButton-fullwidth {
   width: 100%;
 }
 
-.uitkDropdownButton-icon {
-  margin-top: 2px;
-  padding-left: 8px;
-}
-
 .uitkDropdownButton-content {
-  align-items: var(--uitkButton-alignItems, center);
+  align-items: center;
   flex: 1;
   width: 100%;
   display: flex;
@@ -31,19 +29,14 @@
 }
 
 .uitkDropdownButton-buttonLabel {
-  width: 100%;
   display: inline-block;
+  letter-spacing: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
 
-/* refactor to use FormField context to detect and apply focus like input? */
 .uitkDropdownButton-formField.uitkButton:focus,
 .uitkDropdownButton-formField.uitkButton:focus-visible {
   outline: none;
-}
-
-/* Backwards compat styling to match TK1 */
-.backwardsCompat.uitkDropdown .uitkDropdownButton {
-  letter-spacing: normal;
 }

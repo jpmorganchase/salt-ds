@@ -1,6 +1,9 @@
+import { FC, useCallback, useState } from "react";
+import { Story } from "@storybook/react";
+
 import {
+  Button,
   FormField,
-  ToolkitProvider,
   Tooltip,
   useTooltip,
 } from "@jpmorganchase/uitk-core";
@@ -8,199 +11,167 @@ import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
 } from "@jpmorganchase/uitk-icons";
+
 import {
-  Dropdown,
   DropdownButton,
+  Dropdown,
   DropdownProps,
-  IndexedListItemProps,
-  ListChangeHandler,
-  ListItemBase,
-  MultiSelectDropdown,
-  useListItem,
+  ListItem,
+  ListItemType,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ChangeEvent, FC, useState } from "react";
-import {
-  objectOptionsExampleData,
-  objectOptionType,
-  usStateExampleData,
-} from "./exampleData";
+import { usa_states } from "./list.data";
+
+import { SelectionChangeHandler } from "../src/common-hooks";
 
 export default {
   title: "Lab/Dropdown",
   component: Dropdown,
-} as ComponentMeta<typeof Dropdown>;
+};
 
-export const DefaultDropdown: ComponentStory<typeof Dropdown> = () => {
-  const handleChange: ListChangeHandler = (event, selectedItem) => {
+export const DefaultDropdown: Story<DropdownProps> = () => {
+  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
   };
   return (
     <Dropdown
-      initialSelectedItem={usStateExampleData[0]}
-      source={usStateExampleData}
-      onChange={handleChange}
+      defaultSelected={usa_states[0]}
+      onSelectionChange={handleChange}
+      source={usa_states}
     />
   );
 };
 
-export const MultiSelectDropdownExample: ComponentStory<
-  typeof Dropdown
-> = () => {
-  const handleChange: ListChangeHandler<string, "multiple"> = (_, items) => {
-    console.log(items);
+export const MultiSelectDropdownExample: Story<DropdownProps> = () => {
+  const handleChange: SelectionChangeHandler<string, "multiple"> = (
+    _e,
+    [items]
+  ) => {
+    console.log({ selected: items });
   };
   return (
-    <MultiSelectDropdown
-      initialSelectedItem={[usStateExampleData[4], usStateExampleData[5]]}
-      source={usStateExampleData}
-      onChange={handleChange}
+    <Dropdown
+      defaultSelected={["California", "Colorado"]}
+      onSelectionChange={handleChange}
+      selectionStrategy="multiple"
+      source={usa_states}
     />
   );
 };
 
-MultiSelectDropdownExample.storyName = "Multi Select Dropdown";
+interface objectOptionType {
+  value: number;
+  text: string;
+  id: number;
+}
+const objectOptionsExampleData: objectOptionType[] = [
+  { value: 10, text: "A Option", id: 1 },
+  { value: 20, text: "B Option", id: 2 },
+  { value: 30, text: "C Option", id: 3 },
+  { value: 40, text: "D Option", id: 4 },
+];
 
-export const ItemToString: ComponentStory<typeof Dropdown> = () => {
+export const ItemToString: Story<DropdownProps<objectOptionType>> = () => {
   const itemToString = (item: objectOptionType) => {
     return item ? item.text : "";
   };
   return (
     <Dropdown<objectOptionType>
-      initialSelectedItem={objectOptionsExampleData[0]}
+      defaultSelected={objectOptionsExampleData[0]}
       itemToString={itemToString}
       source={objectOptionsExampleData}
     />
   );
 };
 
-export const CustomButton: ComponentStory<typeof Dropdown> = () => (
-  <Dropdown
-    initialSelectedItem={usStateExampleData[3]}
-    source={usStateExampleData}
-  >
-    {({ DropdownButtonProps, isOpen, buttonRef }) => {
-      const { style, ...restButtonProps } = DropdownButtonProps;
-      return (
-        <DropdownButton
-          {...restButtonProps}
-          IconComponent={isOpen ? DoubleChevronUpIcon : DoubleChevronDownIcon}
-          style={{ ...style, border: "1px solid rgba(213,213,213,1)" }}
-          ref={buttonRef}
-        />
-      );
-    }}
-  </Dropdown>
-);
+export const CustomButton: Story<DropdownProps> = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("Arkansas");
+  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
+    if (selectedItem) {
+      setSelectedValue(selectedItem);
+    }
+  };
 
-export const CustomWidth: ComponentStory<typeof Dropdown> = () => (
+  return (
+    <Dropdown
+      selected={selectedValue}
+      onOpenChange={setIsOpen}
+      onSelectionChange={handleChange}
+      placement="bottom-end"
+      source={usa_states}
+      triggerComponent={
+        <DropdownButton
+          IconComponent={isOpen ? DoubleChevronUpIcon : DoubleChevronDownIcon}
+          label={selectedValue}
+        />
+      }
+    ></Dropdown>
+  );
+};
+
+export const CustomWidth: Story<DropdownProps> = () => (
   <Dropdown
-    initialSelectedItem={usStateExampleData[0]}
-    listWidth={300}
-    source={usStateExampleData}
+    ListProps={{ width: 300 }}
+    defaultSelected={usa_states[0]}
+    source={usa_states}
     width={200}
   />
 );
 
-const ItalicListItem: FC<IndexedListItemProps<string>> = (props) => {
-  const { item, itemProps } = useListItem<string>(props);
-
+const ItalicListItem: ListItemType<string> = ({ item, ...props }) => {
   return (
     // Make sure to spread the props onto custom item
-    <ListItemBase {...itemProps}>
+    <ListItem {...props}>
       <i>{item}</i>
-    </ListItemBase>
+    </ListItem>
   );
 };
 
-export const CustomRowRenderer: ComponentStory<typeof Dropdown> = () => (
+export const CustomRowRenderer: Story<DropdownProps> = () => (
   <Dropdown
     ListItem={ItalicListItem}
-    initialSelectedItem={usStateExampleData[0]}
-    source={usStateExampleData}
+    defaultSelected={usa_states[0]}
+    source={usa_states}
   />
 );
 
-const ListItemWithTooltip: FC<IndexedListItemProps<string>> = (props) => {
-  const { item, itemProps } = useListItem<string>(props);
+const ListItemWithTooltip: ListItemType<string> = ({
+  item = "uknown",
+  ...props
+}) => {
   const { getTriggerProps, getTooltipProps } = useTooltip({
     placement: "right",
   });
+  const { ref: triggerRef, ...triggerProps } =
+    getTriggerProps<typeof ListItem>(props);
+
   return (
-    <ListItemBase {...getTriggerProps<typeof ListItemBase>(itemProps)}>
-      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
+    <ListItem ref={triggerRef} {...triggerProps}>
       <label style={{ width: "100%" }}>{item}</label>
-    </ListItemBase>
+      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
+    </ListItem>
   );
 };
 
-export const CustomRowRendererWithTooltip: ComponentStory<
-  typeof Dropdown
-> = () => (
+export const CustomRowRendererWithTooltip: Story<DropdownProps> = () => (
   <Dropdown
     ListItem={ListItemWithTooltip}
-    source={usStateExampleData}
-    initialSelectedItem={usStateExampleData[0]}
+    source={usa_states}
+    defaultSelected={usa_states[0]}
   />
 );
 
-export const FullWidth: ComponentStory<typeof Dropdown> = () => {
-  const [width, setWidth] = useState(200);
-
-  const handleWidthChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setWidth(Number.parseInt(e.target.value));
-  };
-
-  return (
-    <div
-      style={{
-        width,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <label htmlFor="width">Width: {width}px</label>
-      <input
-        id="width"
-        max={500}
-        min={100}
-        onChange={handleWidthChange}
-        value={width}
-      />
-      <Dropdown
-        fullWidth
-        initialSelectedItem={usStateExampleData[0]}
-        isOpen
-        source={usStateExampleData}
-      />
-    </div>
-  );
-};
-
-export const Virtualized: ComponentStory<typeof Dropdown> = () => (
-  <Dropdown
-    adaExceptions={{ virtualized: true }}
-    displayedItemCount={8}
-    initialSelectedItem={usStateExampleData[1]}
-    source={usStateExampleData}
-  />
-);
-
-export const WithFormFieldLabelTop: ComponentStory<typeof Dropdown> = () => {
+export const WithFormFieldLabelTop: Story<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
       <FormField helperText="Select a value" label="ADA compliant label">
-        <Dropdown
-          initialSelectedItem={usStateExampleData[2]}
-          source={usStateExampleData}
-        />
+        <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
       </FormField>
     </div>
   );
 };
 
-export const WithFormFieldLabelLeft: ComponentStory<typeof Dropdown> = () => {
+export const WithFormFieldLabelLeft: Story<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
       <FormField
@@ -208,10 +179,7 @@ export const WithFormFieldLabelLeft: ComponentStory<typeof Dropdown> = () => {
         label="ADA compliant label"
         labelPlacement="left"
       >
-        <Dropdown
-          initialSelectedItem={usStateExampleData[2]}
-          source={usStateExampleData}
-        />
+        <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
       </FormField>
     </div>
   );
@@ -219,7 +187,7 @@ export const WithFormFieldLabelLeft: ComponentStory<typeof Dropdown> = () => {
 
 // We supply `height` to the div so that the popper can be captured in visual
 // regression test
-export const InitialIsOpen: ComponentStory<typeof Dropdown> = () => {
+export const InitialIsOpen: Story<DropdownProps> = () => {
   return (
     <div style={{ width: 250, height: 500 }}>
       <FormField
@@ -227,75 +195,58 @@ export const InitialIsOpen: ComponentStory<typeof Dropdown> = () => {
         label="ADA compliant label"
       >
         <Dropdown
-          initialSelectedItem={usStateExampleData[2]}
-          initialIsOpen
-          source={usStateExampleData}
+          defaultSelected={usa_states[2]}
+          defaultIsOpen
+          source={usa_states}
         />
       </FormField>
     </div>
   );
 };
 
-export const TouchDensityDropdown: Story<DropdownProps> = ({
-  initialSelectedItem,
-  source,
-  onChange,
-  ...props
-}) => {
-  const handleChange: ListChangeHandler = (event, selectedItem) => {
-    console.log("selection changed", selectedItem);
-    onChange?.(event, selectedItem);
-  };
-  return (
-    <ToolkitProvider density="touch">
-      <Dropdown
-        initialSelectedItem={initialSelectedItem || usStateExampleData[0]}
-        source={source || usStateExampleData}
-        onChange={handleChange}
-        {...props}
-      />
-    </ToolkitProvider>
-  );
-};
-
-export const LowDensityDropdown: ComponentStory<typeof Dropdown> = () => {
-  const handleChange: ListChangeHandler = (event, selectedItem) => {
-    console.log("selection changed", selectedItem);
-  };
-  return (
-    <ToolkitProvider density="low">
-      <Dropdown
-        initialSelectedItem={usStateExampleData[0]}
-        source={usStateExampleData}
-        onChange={handleChange}
-      />
-    </ToolkitProvider>
-  );
-};
-
-export const HighDensityDropdown: Story<DropdownProps> = ({
-  initialSelectedItem,
-  source,
-  onChange,
-}) => {
-  const handleChange: ListChangeHandler = (event, selectedItem) => {
-    console.log("selection changed", selectedItem);
-    onChange?.(event, selectedItem);
-  };
-  return (
-    <ToolkitProvider density="high">
-      <Dropdown
-        initialSelectedItem={initialSelectedItem || usStateExampleData[0]}
-        source={source || usStateExampleData}
-        onChange={handleChange}
-      />
-    </ToolkitProvider>
-  );
-};
-
 const constArray = ["A", "B", "C"] as const;
 
 /** Illustration of using readonly source */
-export const ConstReadonlySource: ComponentStory<typeof Dropdown> = () => (
-  <Dropdown initialSelectedItem={constArray[0]} source={constArray} />
+export const ConstReadonlySource: Story<DropdownProps> = () => (
+  <Dropdown defaultSelected={constArray[0]} source={constArray} />
 );
+
+export const DisabledDropdownList: Story<DropdownProps> = () => {
+  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+  };
+  return (
+    <Dropdown
+      disabled
+      id="test"
+      onSelectionChange={handleChange}
+      source={["Bar", "Foo", "Foo Bar", "Baz"]}
+      style={{ width: 180 }}
+    />
+  );
+};
+
+export const ControlledOpenDropdown: Story<DropdownProps> = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const handleChange: any = (open: boolean) => {
+    console.log({ openChanged: open });
+  };
+  const toggleDropdown = useCallback(() => {
+    console.log(`toggleDropdoen isOpen = ${isOpen}`);
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+  return (
+    <>
+      <Button onClick={toggleDropdown}>
+        {isOpen ? "Hide Dropdown" : "Show Dropdown"}
+      </Button>
+      <Dropdown
+        isOpen={isOpen}
+        defaultSelected="Alaska"
+        onOpenChange={handleChange}
+        source={usa_states}
+        style={{ width: 180 }}
+      />
+    </>
+  );
+};

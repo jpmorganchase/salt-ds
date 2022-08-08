@@ -3,9 +3,9 @@ import * as comboBoxStories from "@stories/combobox.stories";
 
 const {
   Default,
-  MultiSelectWithInitialSelection,
+  // MultiSelectWithInitialSelection,
   WithInitialSelection,
-  MultiSelect,
+  // MultiSelect,
   ItemRenderer,
   WithCustomizedFilter,
 } = composeStories(comboBoxStories);
@@ -30,11 +30,7 @@ describe("A combo box", () => {
     cy.findByRole("listbox").should("have.attr", "id", "my-combo-box-list");
     cy.findAllByRole("option").then((items) => {
       Array.from(items).forEach((item, index) => {
-        cy.wrap(item).should(
-          "have.attr",
-          "id",
-          `my-combo-box-list-item-${index}`
-        );
+        cy.wrap(item).should("have.attr", "id", `my-combo-box-item-${index}`);
       });
     });
   });
@@ -56,10 +52,10 @@ describe("A combo box", () => {
 
     cy.findByRole("combobox").should("have.value", "Brown");
     cy.findAllByRole("option").should("have.length", 1);
-    cy.findByRole("option").should("have.class", "uitkListItem-selected");
+    cy.findByRole("option").should("have.attr", "aria-selected", "true");
   });
 
-  it('should become a multi-select combo box if "initialSelectedItem" is an array', () => {
+  it.skip('should become a multi-select combo box if "initialSelectedItem" is an array', () => {
     cy.mount(
       <Default
         initialSelectedItem={[
@@ -136,67 +132,67 @@ describe("A combo box", () => {
   });
 });
 
-describe("A multi-select combo box", () => {
-  // Should pass - check implementation
-  it.skip("should render with a customized id", () => {
-    cy.mount(<MultiSelectWithInitialSelection id="my-combo-box" />);
+// describe("A multi-select combo box", () => {
+//   // Should pass - check implementation
+//   it.skip("should render with a customized id", () => {
+//     cy.mount(<MultiSelectWithInitialSelection id="my-combo-box" />);
 
-    cy.findByRole("textbox").realClick();
+//     cy.findByRole("textbox").realClick();
 
-    cy.findByRole("textbox").should(
-      "have.attr",
-      "id",
-      "my-combo-box-input-input"
-    );
-    cy.findByRole("listbox").should("have.attr", "id", "my-combo-box-list");
+//     cy.findByRole("textbox").should(
+//       "have.attr",
+//       "id",
+//       "my-combo-box-input-input"
+//     );
+//     cy.findByRole("listbox").should("have.attr", "id", "my-combo-box-list");
 
-    cy.findAllByTestId("pill").then((items) => {
-      Array.from(items).forEach((item, index) => {
-        cy.wrap(item).should(
-          "have.attr",
-          "id",
-          `my-combo-box-input-pill-${index}`
-        );
-      });
-    });
+//     cy.findAllByTestId("pill").then((items) => {
+//       Array.from(items).forEach((item, index) => {
+//         cy.wrap(item).should(
+//           "have.attr",
+//           "id",
+//           `my-combo-box-input-pill-${index}`
+//         );
+//       });
+//     });
 
-    cy.findByRole("listbox")
-      .findAllByRole("option")
-      .then((items) => {
-        Array.from(items).forEach((item, index) => {
-          cy.wrap(item).should(
-            "have.attr",
-            "id",
-            `my-combo-box-list-item-${index}`
-          );
-        });
-      });
-  });
+//     cy.findByRole("listbox")
+//       .findAllByRole("option")
+//       .then((items) => {
+//         Array.from(items).forEach((item, index) => {
+//           cy.wrap(item).should(
+//             "have.attr",
+//             "id",
+//             `my-combo-box-list-item-${index}`
+//           );
+//         });
+//       });
+// });
 
-  it("should allow customized delimiter", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+// it("should allow customized delimiter", () => {
+//   const changeSpy = cy.stub().as("changeSpy");
 
-    cy.mount(<MultiSelect delimiter="|" onChange={changeSpy} />);
+//   cy.mount(<MultiSelect delimiter="|" onChange={changeSpy} />);
 
-    cy.findByRole("textbox").realClick();
-    cy.findByRole("textbox").paste("Alabama| Alaska");
+//   cy.findByRole("textbox").realClick();
+//   cy.findByRole("textbox").paste("Alabama| Alaska");
 
-    cy.findAllByTestId("pill").should("have.length", 2);
-    cy.findAllByTestId("pill").eq(0).should("have.text", "Alabama");
-    cy.findAllByTestId("pill").eq(1).should("have.text", "Alaska");
+//   cy.findAllByTestId("pill").should("have.length", 2);
+//   cy.findAllByTestId("pill").eq(0).should("have.text", "Alabama");
+//   cy.findAllByTestId("pill").eq(1).should("have.text", "Alaska");
 
-    // list style updated
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .should("have.attr", "aria-selected", "true");
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .should("have.attr", "aria-selected", "true");
+//   // list style updated
+//   cy.findByRole("listbox")
+//     .findByRole("option", { name: "Alabama" })
+//     .should("have.attr", "aria-selected", "true");
+//   cy.findByRole("listbox")
+//     .findByRole("option", { name: "Alaska" })
+//     .should("have.attr", "aria-selected", "true");
 
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
-    );
-  });
-});
+//   cy.get("@changeSpy").should(
+//     "have.been.calledWith",
+//     Cypress.sinon.match.any,
+//     ["Alabama", "Alaska"]
+//   );
+// });
+// });

@@ -56,6 +56,62 @@ declare global {
        ```
        * */
       (chainer: "announce"): Chainable<Subject>;
+      /**
+       * Checks if the approriate uitkHighlighted className has been applied.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('be.highlighted')
+       ```
+       * */
+      (chainer: "be.highlighted"): Chainable<Subject>;
+      /**
+       * Checks if the approriate uitkHighlighted className has been applied.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('be.highlighted')
+       ```
+       * */
+      (chainer: "not.be.highlighted"): Chainable<Subject>;
+      /**
+       * Checks that the aria-selected attribute has been applied.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('have.ariaSelected')
+       ```
+       * */
+      (chainer: "have.ariaSelected"): Chainable<Subject>;
+      /**
+       * Checks that the aria-selected attribute is not present.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('not.have.ariaSelected')
+       ```
+       * */
+      (chainer: "not.have.ariaSelected"): Chainable<Subject>;
+      /**
+       * Checks if the approriate uitkFocusVisible className has been applied.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('have.focusVisible')
+       ```
+       * */
+      (chainer: "be.focusVisible"): Chainable<Subject>;
+      (chainer: "have.focusVisible"): Chainable<Subject>;
+      /**
+       * Checks if the approriate uitkFocusVisible className has been applied.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('not.have.focusVisible')
+       ```
+       * */
+      (chainer: "not.be.focusVisible"): Chainable<Subject>;
+      (chainer: "not.have.focusVisible"): Chainable<Subject>;
     }
   }
 }
@@ -154,4 +210,109 @@ const announces: ChaiPlugin = (_chai, utils) => {
   _chai.Assertion.addMethod("announce", assertAnnounces);
 };
 chai.use(announces);
+
+/**
+ * Checks if the class includes the expected highlighted class
+ *
+ * @example
+ * cy.findByRole('option).should('be.highlighted')
+ */
+const isHighlighted: ChaiPlugin = (_chai, utils) => {
+  function assertIsHighlighted(this: AssertionStatic) {
+    const root = this._obj.get(0);
+    // make sure it's an Element
+    new _chai.Assertion(
+      root.nodeType,
+      `Expected an Element but got '${String(root)}'`
+    ).to.equal(1);
+
+    const className = this._obj.attr("class");
+
+    this.assert(
+      className.match(/uitkHighlighted/),
+      `expected \n${elementToString(
+        root
+      )} to include CSS class #{exp}, got #{act} instead.`,
+      `expected \n${elementToString(root)} not to have class #{exp}.`,
+      "uitkHighlighted",
+      className
+    );
+  }
+
+  _chai.Assertion.addMethod("highlighted", assertIsHighlighted);
+};
+
+// registers our assertion function "isHighlighted" with Chai
+chai.use(isHighlighted);
+
+/**
+ * Checks if the class includes the expected uitkFocusVisible class
+ *
+ * @example
+ * cy.findByRole('option).should('have.focusVisible')
+ */
+const hasFocusVisible: ChaiPlugin = (_chai, utils) => {
+  function assertHasFocusVisible(this: AssertionStatic) {
+    const root = this._obj.get(0);
+    // make sure it's an Element
+    new _chai.Assertion(
+      root.nodeType,
+      `Expected an Element but got '${String(root)}'`
+    ).to.equal(1);
+
+    const className = this._obj.attr("class");
+
+    this.assert(
+      className.match(/uitkFocusVisible/),
+      `expected \n${elementToString(
+        root
+      )} to include CSS class #{exp}, got #{act} instead.`,
+      `expected \n${elementToString(root)} not to have class #{exp}.`,
+      "uitkFocusVisible",
+      className
+    );
+  }
+
+  _chai.Assertion.addMethod("focusVisible", assertHasFocusVisible);
+};
+
+// registers our assertion function "isHighlighted" with Chai
+chai.use(hasFocusVisible);
+
+/**
+ * Checks if the class includes the expected highlighted class
+ *
+ * @example
+ * cy.findByRole('option).should('be.highlighted')
+ */
+const hasAriaSelected: ChaiPlugin = (_chai, utils) => {
+  function assertHasAriaSelected(this: AssertionStatic) {
+    const root = this._obj.get(0);
+    // make sure it's an Element
+    new _chai.Assertion(
+      root.nodeType,
+      `Expected an Element but got '${String(root)}'`
+    ).to.equal(1);
+
+    const ariaSelected = this._obj.attr("aria-selected");
+
+    this.assert(
+      ariaSelected === "true",
+      `expected \n${elementToString(
+        root
+      )} to have aria-selected #{exp}, got #{act} instead.`,
+      `expected \n${elementToString(
+        root
+      )} to have aria-selected = #{exp}, got #{act} instead`,
+      "true",
+      ariaSelected
+    );
+  }
+
+  _chai.Assertion.addMethod("ariaSelected", assertHasAriaSelected);
+};
+
+// registers our assertion function "isHighlighted" with Chai
+chai.use(hasAriaSelected);
+
 export {};

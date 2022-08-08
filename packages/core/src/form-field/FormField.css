@@ -74,7 +74,7 @@
   --formField-withHelperText-marginTop: var(--formField-helperText-marginTop);
 }
 
-.uitkFormField-withHelperText *:after {
+.uitkFormField-withHelperText *:before {
   --formField-withHelperText-height: var(--uitk-text-lineHeight);
 }
 
@@ -185,7 +185,7 @@
 }
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */
-.uitkFormField:not(.uitkFormField-withHelperText):not(.uitkFormField-labelLeft).uitkFormField-focused:after {
+.uitkFormField:not(.uitkFormField-withHelperText):not(.uitkFormField-labelLeft).uitkFormField-focused:before {
   box-sizing: border-box;
   content: " ";
   position: absolute;
@@ -199,7 +199,7 @@
 }
 
 /* Class applied on focus with `labelTop={true}` and helper text provided */
-.uitkFormField-withHelperText:not(.uitkFormField-labelLeft).uitkFormField-focused:after {
+.uitkFormField-withHelperText:not(.uitkFormField-labelLeft).uitkFormField-focused:before {
   box-sizing: border-box;
   content: " ";
   position: absolute;
@@ -216,12 +216,12 @@
   --formField-withHelperText-focused-outline-bottom: var(--formField-focused-outline-bottom);
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused:after {
+.uitkFormField-labelLeft.uitkFormField-focused:before {
   content: none;
 }
 
 /* Class applied on focus with `labelLeft={true}` */
-.uitkFormField-labelLeft.uitkFormField-focused > *:after {
+.uitkFormField-labelLeft.uitkFormField-focused > *:before {
   box-sizing: border-box;
   content: " ";
   position: absolute;
@@ -235,7 +235,7 @@
   z-index: -1;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormActivationIndicator, .uitkFormFieldHelperText, .uitkFormLabel):after {
+.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormActivationIndicator, .uitkFormFieldHelperText, .uitkFormLabel):before {
   content: none;
 }
 
@@ -243,7 +243,7 @@
   outline: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormField-activationIndicator, .uitkFormField-helperText, .uitkFormLabel):after {
+.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormField-activationIndicator, .uitkFormField-helperText, .uitkFormLabel):before {
   content: none;
 }
 
@@ -252,6 +252,10 @@
 }
 
 .uitkEmphasisLow.uitkFormField.uitkFormField-labelLeft > .uitkFormLabel ~ * {
+  background: var(--uitkFormField-background, var(--formField-background));
+}
+
+.uitkEmphasisMedium.uitkFormField > :not(.uitkFormLabel):first-child {
   background: var(--uitkFormField-background, var(--formField-background));
 }
 

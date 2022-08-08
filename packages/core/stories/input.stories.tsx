@@ -15,7 +15,8 @@ import {
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentStory, ComponentMeta } from "@storybook/react";
+import "./input.qa.stories.css";
 
 import "./input.qa.stories.css";
 import "./Input.stories.newapp-input.css";
@@ -89,6 +90,14 @@ export const WithFormField: ComponentStory<typeof Input> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
       <Input defaultValue="Value" />
+    </FormField>
+  );
+};
+
+export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
+  return (
+    <FormField label="ADA compliant label" style={{ width: 292 }}>
+      <Input />
     </FormField>
   );
 };
@@ -215,7 +224,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         style={styles.input}
         {...args}
         startAdornment={
-          <Dropdown initialSelectedItem={data[0]} source={data} width={90} />
+          <Dropdown defaultSelected={data[0]} source={data} width={90} />
         }
       />
       <div style={{ height: "15px" }} />
@@ -239,7 +248,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         endAdornment={
           <Dropdown
-            initialSelectedItem={suffixData[0]}
+            defaultSelected={suffixData[0]}
             source={suffixData}
             width={60}
           />

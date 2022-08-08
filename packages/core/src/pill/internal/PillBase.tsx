@@ -14,7 +14,7 @@ import {
   useState,
 } from "react";
 import { Button, ButtonProps } from "../../button";
-import { useTooltip, useTooltipContext } from "../../tooltip";
+import { TooltipProps, useTooltip, useTooltipContext } from "../../tooltip";
 import {
   makePrefixer,
   useForkRef,
@@ -47,6 +47,10 @@ const noop = () => undefined;
 const withBaseName = makePrefixer(pillBaseName);
 
 export interface PillBaseProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Props passed to the tooltip
+   */
+  TooltipProps?: Partial<TooltipProps>;
   /**
    * Defines a human-readable, author-localized description for the role of an element.
    *
@@ -102,6 +106,7 @@ const DivButton = forwardRef<HTMLDivElement, ButtonProps<"div">>(
 
 export const PillBase = forwardRef(function PillBase(
   {
+    TooltipProps = {},
     "aria-roledescription": ariaRoledescription = "Pill",
     label,
     className,
@@ -205,7 +210,7 @@ export const PillBase = forwardRef(function PillBase(
 
   return (
     <>
-      <Tooltip {...getTooltipProps({ title: label })} />
+      <Tooltip {...getTooltipProps({ title: label, ...TooltipProps })} />
       <Component ref={handleRef} {...triggerProps}>
         {pillIcon || null}
         <div className={withBaseName("label")} ref={labelRef}>

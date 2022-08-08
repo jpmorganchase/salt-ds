@@ -3,12 +3,12 @@ import * as comboBoxStories from "@stories/combobox.stories";
 
 const {
   Default,
-  MultiSelectWithInitialSelection,
-  MultiSelectWithFormField,
+  // MultiSelectWithInitialSelection,
+  // MultiSelectWithFormField,
   WithInitialSelection,
   WithFormField,
-  MultiSelect,
-  MultiSelectWithFormFieldWithInitialSelection,
+  // MultiSelect,
+  // MultiSelectWithFormFieldWithInitialSelection,
 } = composeStories(comboBoxStories);
 
 describe("A combo box", () => {
@@ -33,8 +33,7 @@ describe("A combo box", () => {
   describe("when navigating using keyboard", () => {
     const mockId = "my-combo-box";
 
-    // TODO - fix
-    it.skip("should assign aria-activedescendant only on focus", () => {
+    it("should assign aria-activedescendant only on focus", () => {
       cy.mount(<WithInitialSelection id={mockId} />);
 
       cy.findByRole("combobox").should(
@@ -43,10 +42,12 @@ describe("A combo box", () => {
       );
       cy.realPress("Tab");
 
+      // Note: List contains only 1 item. ListItem id is not re-assigned
+      // on every filter operation, so -item-3 is correct.
       cy.findByRole("combobox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-list-item-0`
+        `${mockId}-item-3`
       );
     });
 
@@ -98,7 +99,7 @@ describe("A combo box", () => {
         cy.findByRole("combobox").should(
           "have.attr",
           "aria-activedescendant",
-          `${mockId}-list-item-${key === "ArrowDown" ? "1" : "0"}`
+          `${mockId}-item-${key === "ArrowDown" ? "1" : "0"}`
         );
       });
     });
@@ -113,7 +114,7 @@ describe("A combo box", () => {
   });
 });
 
-describe("A multi-select combo box", () => {
+describe.skip("A multi-select combo box", () => {
   it("should assign correct role and role description to the input", () => {
     const testId = "my-input";
 
@@ -160,7 +161,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-list-item-1`
+        `${mockId}-item-1`
       );
       cy.realPress("Home");
       cy.realPress("ArrowLeft");

@@ -72,7 +72,7 @@ export const ColumnMenu = function ColumnMenu(props: ColumnMenuProps) {
         <Portal>
           <Window id={id} style={windowStyle} ref={floating}>
             <Card>
-              <Tabstrip onChange={onTabChange}>
+              <Tabstrip onActiveChange={onTabChange}>
                 <Tab label={"Menu"} />
                 <Tab label={"Filter"} />
                 <Tab label={"search"} />

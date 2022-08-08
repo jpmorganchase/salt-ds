@@ -40,16 +40,12 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
       <div className={cx(withBaseName("tabs"))}>
         <Tabstrip
           centered
-          onChange={props.handleTabSelection}
+          onActiveChange={props.handleTabSelection}
           overflowMenu={true}
-          value={props.selectedTabIndex}
+          activeTabIndex={props.selectedTabIndex}
         >
           {UITK_FOUNDATIONS.filter((f) => f !== "fade").map((label, i) => (
-            <Tab
-              aria-label={label}
-              label={capitalize(label) as string}
-              key={i}
-            />
+            <Tab aria-label={label} label={capitalize(label)} key={i} />
           ))}
         </Tabstrip>
       </div>

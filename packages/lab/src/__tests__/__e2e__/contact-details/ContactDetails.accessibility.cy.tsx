@@ -103,14 +103,6 @@ variants.forEach((variant) => {
 
         it("contains aria labelled by attribute", () => {
           cy.findByRole("heading")
-            .invoke("attr", "id")
-            .should("match", /uitk-/i);
-
-          cy.findByTestId("secondary")
-            .invoke("attr", "id")
-            .should("match", /uitk-/i);
-
-          cy.findByRole("heading")
             .invoke("attr", "aria-labelledby")
             .then((headingLabelledBy) => {
               cy.findByRole("heading")
