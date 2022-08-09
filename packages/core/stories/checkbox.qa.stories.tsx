@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Checkbox } from "@jpmorganchase/uitk-core";
+import { Checkbox, CheckboxGroup, FormField } from "@jpmorganchase/uitk-core";
 import { QAContainer, QAContainerProps } from "docs/components";
 import "./checkbox.qa.stories.css";
 
@@ -53,5 +53,43 @@ BackwardsCompatGrid.parameters = {
 export const CompareWithOriginalToolkit: Story = () => {
   return (
     <CheckboxAllStatesGrid imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png" />
+  );
+};
+
+export const CheckboxGroupGrid: Story<
+  QAContainerProps & { className?: string }
+> = ({ className, ...props }) => {
+  return (
+    <QAContainer cols={1} height={760} width={1200} {...props}>
+      <FormField
+        helperText="This is some help text"
+        label="ADA compliant label"
+        labelPlacement="top"
+      >
+        <CheckboxGroup
+          defaultCheckedValues={["option-1", "option-2"]}
+          row
+          className={className}
+        >
+          <Checkbox label="option 1" value="option-1" />
+          <Checkbox label="option 2" value="option-2" />
+          <Checkbox label="option 3" value="option-3" />
+        </CheckboxGroup>
+      </FormField>
+      <FormField
+        helperText="This is some help text"
+        label="ADA compliant label"
+        labelPlacement="top"
+      >
+        <CheckboxGroup
+          defaultCheckedValues={["option-1", "option-2"]}
+          className={className}
+        >
+          <Checkbox label="option 1" value="option-1" />
+          <Checkbox label="option 2" value="option-2" />
+          <Checkbox label="option 3" value="option-3" />
+        </CheckboxGroup>
+      </FormField>
+    </QAContainer>
   );
 };
