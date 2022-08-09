@@ -8,7 +8,7 @@ export default {
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
-export const AllExamplesGrid: Story<
+export const CheckboxAllStatesGrid: Story<
   QAContainerProps & { className?: string }
 > = ({ className, ...props }) => {
   return (
@@ -37,11 +37,11 @@ export const AllExamplesGrid: Story<
   );
 };
 
-AllExamplesGrid.parameters = {
+CheckboxAllStatesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
+export const BackwardsCompatGrid = CheckboxAllStatesGrid.bind({});
 BackwardsCompatGrid.args = {
   className: "backwardsCompat",
 };
@@ -52,6 +52,6 @@ BackwardsCompatGrid.parameters = {
 
 export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png" />
+    <CheckboxAllStatesGrid imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png" />
   );
 };
