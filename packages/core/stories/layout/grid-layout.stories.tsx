@@ -6,16 +6,6 @@ import {
   FlowLayout,
 } from "@jpmorganchase/uitk-core";
 import {
-  ContactAvatar,
-  ContactDetails,
-  ContactMetadata,
-  ContactMetadataItem,
-  ContactPrimaryInfo,
-  ContactSecondaryInfo,
-  ContactTertiaryInfo,
-  H3,
-} from "@jpmorganchase/uitk-lab";
-import {
   ToolkitProvider,
   FlexLayout,
   FlexItem,
@@ -290,32 +280,6 @@ ToolkitGridLayoutFooter.args = {
   columnGap: 8,
 };
 
-const editorialSection = (
-  <FlowLayout>
-    {Array.from({ length: 4 }, (_, index) => (
-      <FlexItem key={index}>
-        <Card>
-          <ContactDetails embedded={true} stackAtBreakpoint={0}>
-            <ContactAvatar />
-            <ContactPrimaryInfo text="Allamco Adipisicing" />
-            <ContactSecondaryInfo text="Editorial contributor" />
-            <ContactTertiaryInfo text="Cupidatat Elit" />
-            <ContactMetadata collapsible={true}>
-              <ContactMetadataItem value="Editorial contributor" label="Role" />
-              <ContactMetadataItem value="London, GBR" label="Location" />
-              <ContactMetadataItem value="+44 1234 123456" label="Office" />
-              <ContactMetadataItem
-                value="laboris.elit@aliquip.com"
-                label="Email"
-              />
-            </ContactMetadata>
-          </ContactDetails>
-        </Card>
-      </FlexItem>
-    ))}
-  </FlowLayout>
-);
-
 const Blog: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
@@ -420,11 +384,6 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             ))}
           </FlowLayout>
         </GridItem>
-
-        {/* <GridItem colSpan={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }}>
-          <h2>Editorial content contributors</h2>
-          {editorialSection}
-        </GridItem> */}
       </GridLayout>
     </div>
   );
