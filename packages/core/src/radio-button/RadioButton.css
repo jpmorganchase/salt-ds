@@ -1,22 +1,18 @@
 /* Styles applied to root component  */
 .uitk-density-medium {
   --radioButton-label-marginTop: 6px;
-  --radioButton-row-marginRight: 24px;
 }
 
 .uitk-density-high {
   --radioButton-label-marginTop: 3px;
-  --radioButton-row-marginRight: 12px;
 }
 
 .uitk-density-low {
   --radioButton-label-marginTop: 9px;
-  --radioButton-row-marginRight: 36px;
 }
 
 .uitk-density-touch {
   --radioButton-label-marginTop: 12px;
-  --radioButton-row-marginRight: 48px;
 }
 
 .uitkRadioButton {
@@ -49,8 +45,4 @@
   display: inline-flex;
   align-content: flex-start;
   vertical-align: baseline;
-}
-
-.uitkFormGroup-row > .uitkRadioButton {
-  margin-right: var(--uitkFormGroup-row-marginRight, var(--radioButton-row-marginRight));
 }

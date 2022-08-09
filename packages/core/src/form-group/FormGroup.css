@@ -6,6 +6,7 @@
 }
 
 .uitkFormGroup-row {
+  gap: var(--uitkFormGroup-row-gap, calc(3 * var(--uitk-size-unit)));
   flex-direction: row;
   float: left;
 }

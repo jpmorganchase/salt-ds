@@ -1,17 +1,17 @@
 .uitk-density-high.uitk-newapp {
-  --uitkFormGroup-row-marginRight: 10px;
+  --uitkFormGroup-row-gap: 10px;
   --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 4px;
 }
 .uitk-density-medium.uitk-newapp {
-  --uitkFormGroup-row-marginRight: 6px;
+  --uitkFormGroup-row-gap: 6px;
   --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 2px;
 }
 .uitk-density-low.uitk-newapp {
-  --uitkFormGroup-row-marginRight: 14px;
+  --uitkFormGroup-row-gap: 14px;
   --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 6px;
 }
 .uitk-density-touch.uitk-newapp {
-  --uitkFormGroup-row-marginRight: 18px;
+  --uitkFormGroup-row-gap: 18px;
   --uitkRadioButtonGroup-horizontal-legend-marginRight-unit: 8px;
 }
 
