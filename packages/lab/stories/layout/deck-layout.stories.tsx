@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card } from "@jpmorganchase/uitk-core";
 import { DeckLayout, Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
