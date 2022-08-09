@@ -6,8 +6,8 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import { ListSelectHandler } from "@jpmorganchase/uitk-lab/src/list";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
+import { SelectHandler } from "@jpmorganchase/uitk-lab/src/common-hooks";
 
 type SourceItem = {
   value: number;
@@ -26,76 +26,75 @@ function ownerDocument(node: HTMLElement | null) {
   return (node && node.ownerDocument) || document;
 }
 
-const RatingDropdown = forwardRef(function RatingDropdown(
-  props: ICellEditorParams,
-  ref
-) {
-  const source = generateSourceItems();
-  const previousActiveElement = useRef<HTMLElement | null>(null);
+const RatingDropdown = forwardRef<HTMLDivElement, ICellEditorParams>(
+  function RatingDropdown(props, ref) {
+    const source = generateSourceItems();
+    const previousActiveElement = useRef<HTMLElement | null>(null);
 
-  const [selectedItem, setSelectedItem] = useState<SourceItem>(
-    source.find((item) => item.value === props.value) || source[0]
-  );
+    const [selectedItem, setSelectedItem] = useState<SourceItem>(
+      source.find((item) => item.value === props.value) || source[0]
+    );
 
-  const [selectionMade, setSelectionMade] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+    const [selectionMade, setSelectionMade] = useState(false);
+    const buttonRef = useRef<HTMLDivElement>(null);
 
-  const focusDropdown = () => {
-    /* In order for the component to receive focus it must be deferred to the next frame */
-    setTimeout(() => {
-      if (buttonRef.current) {
-        buttonRef.current.focus();
+    const focusDropdown = () => {
+      /* In order for the component to receive focus it must be deferred to the next frame */
+      setTimeout(() => {
+        if (buttonRef.current) {
+          buttonRef.current.focus();
+        }
+      });
+    };
+
+    useEffect(() => {
+      previousActiveElement.current = ownerDocument(buttonRef.current)
+        .activeElement as HTMLElement;
+      focusDropdown();
+    }, []);
+
+    useEffect(() => {
+      if (selectionMade) {
+        console.log(`Rating changed to ${selectedItem.value}`);
+
+        /* Refocus the cell renderer before we remove the editor for keyboard usage */
+        previousActiveElement.current?.focus();
+        props.api?.stopEditing();
       }
-    });
-  };
+    }, [props.api, selectedItem, selectionMade]);
 
-  useEffect(() => {
-    previousActiveElement.current = ownerDocument(buttonRef.current)
-      .activeElement as HTMLElement;
-    focusDropdown();
-  }, []);
+    /**
+     * Required by ag-grid, refer to ag-grid docs for details
+     * https://www.ag-grid.com/react-grid/component-cell-editor/
+     */
+    // useImperativeHandle(ref, () => ({
+    //   getValue: () => selectedItem.value,
+    //   isPopup: () => true,
+    //   isCancelAfterEnd: () => false,
+    // }));
 
-  useEffect(() => {
-    if (selectionMade) {
-      console.log(`Rating changed to ${selectedItem.value}`);
+    const itemToString = ({ text }: SourceItem) => text;
 
-      /* Refocus the cell renderer before we remove the editor for keyboard usage */
-      previousActiveElement.current?.focus();
-      props.api?.stopEditing();
-    }
-  }, [props.api, selectedItem, selectionMade]);
+    const onSelect: SelectHandler<SourceItem> = (_event, item) => {
+      setSelectedItem(item as SourceItem);
+      setSelectionMade(true);
+    };
 
-  /**
-   * Required by ag-grid, refer to ag-grid docs for details
-   * https://www.ag-grid.com/react-grid/component-cell-editor/
-   */
-  useImperativeHandle(ref, () => ({
-    getValue: () => selectedItem.value,
-    isPopup: () => true,
-    isCancelAfterEnd: () => false,
-  }));
+    const { column } = props;
 
-  const itemToString = ({ text }: SourceItem) => text;
-
-  const onSelect: ListSelectHandler<SourceItem> = (_event, item) => {
-    setSelectedItem(item as SourceItem);
-    setSelectionMade(true);
-  };
-
-  const { column } = props;
-
-  return (
-    <Dropdown
-      disablePortal={true}
-      buttonRef={buttonRef}
-      initialIsOpen
-      initialSelectedItem={selectedItem}
-      itemToString={itemToString}
-      onSelect={onSelect}
-      source={source}
-      width={column.getActualWidth()}
-    />
-  );
-});
+    return (
+      <Dropdown
+        disablePortal={true}
+        ref={buttonRef}
+        defaultIsOpen
+        defaultSelected={selectedItem}
+        itemToString={itemToString}
+        onSelect={onSelect}
+        source={source}
+        width={column.getActualWidth()}
+      />
+    );
+  }
+);
 
 export default RatingDropdown;

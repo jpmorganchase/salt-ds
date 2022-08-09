@@ -61,9 +61,18 @@ function tryBuildStyles() {
 console.log(`Building "${entry}"`);
 tryBuildStyles();
 
-watch.createMonitor(path.resolve(__dirname, "../css/"), function (monitor) {
-  monitor.on("changed", function (f, curr, prev) {
-    console.log(`"${f}" changed. Rebuilding "${entry}"`);
-    tryBuildStyles();
-  });
+let isWatch = false;
+process.argv.forEach((p) => {
+  if (p === "--watch") {
+    isWatch = true;
+  }
 });
+
+if (isWatch) {
+  watch.createMonitor(path.resolve(__dirname, "../css/"), function (monitor) {
+    monitor.on("changed", function (f, curr, prev) {
+      console.log(`"${f}" changed. Rebuilding "${entry}"`);
+      tryBuildStyles();
+    });
+  });
+}

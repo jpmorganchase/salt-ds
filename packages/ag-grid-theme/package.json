@@ -7,7 +7,8 @@
     "/index.css"
   ],
   "scripts": {
-    "build": "yarn node ./scripts/build.js"
+    "build": "yarn node ./scripts/build.js",
+    "build-watch": "yarn node ./scripts/build.js --watch"
   },
   "publishConfig": {
     "directory": "../../dist/jpmorganchase-uitk-ag-grid-theme"
