@@ -33,7 +33,7 @@ export const AccordionSummary = forwardRef<
   );
 
   if (!icon) {
-    icon = <ChevronRightIcon />;
+    icon = <ChevronRightIcon aria-hidden />;
   }
 
   return (
