@@ -2,9 +2,9 @@
   "name": "@jpmorganchase/uitk-ag-grid-theme",
   "version": "0.1.0",
   "license": "Apache-2.0",
-  "style": "index.css",
+  "style": "uitk-ag-theme.css",
   "files": [
-    "/index.css"
+    "/uitk-ag-theme.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js",
