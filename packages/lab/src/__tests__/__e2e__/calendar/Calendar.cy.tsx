@@ -150,7 +150,7 @@ describe("GIVEN a Calendar component", () => {
         }).should("be.visible");
       });
 
-      it("SHOULD move the focus when the shortcut keys are pressed", () => {
+      it.only("SHOULD move the focus when the shortcut keys are pressed", () => {
         cy.mount(<DefaultCalendar initialVisibleMonth={testDateDate} />);
 
         cy.findByRole("button", {
@@ -163,12 +163,12 @@ describe("GIVEN a Calendar component", () => {
 
         cy.realPress("Home");
         cy.findByRole("button", {
-          name: formatDate(testDate.startOf("week")),
+          name: formatDate(testDate.startOf("isoWeek")),
         }).should("be.focused");
 
         cy.realPress("End");
         cy.findByRole("button", {
-          name: formatDate(testDate.endOf("week")),
+          name: formatDate(testDate.endOf("isoWeek")),
         }).should("be.focused");
 
         //RESET
