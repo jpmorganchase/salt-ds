@@ -153,6 +153,7 @@ describe("Navigation, Given a Tabstrip", () => {
           it("THEN focus will be transfered to the next tab", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.wait(50); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowRight");
             cy.get(".uitkTabstrip-inner > *:nth-child(2)")
               .should("be.focused")
