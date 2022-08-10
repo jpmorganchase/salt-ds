@@ -26,6 +26,7 @@
   --formField-focused-outlineStyle: var(--uitkFormField-focused-outlineStyle, var(--uitk-focused-outlineStyle));
   --formField-focused-outlineWidth: var(--uitkFormField-focused-outlineWidth, var(--uitk-focused-outlineWidth));
   --formField-helperText-height: 0px;
+  --formField-helperText-lineHeight: var(--uitk-text-base-lineHeight);
 }
 
 .uitkEmphasisLow.uitkFormField {
@@ -72,10 +73,9 @@
 .uitkFormField-withHelperText {
   --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
   --formField-withHelperText-marginTop: var(--formField-helperText-marginTop);
-}
-
-.uitkFormField-withHelperText *:before {
-  --formField-withHelperText-height: var(--uitk-text-lineHeight);
+  --formField-helperText-baseHeight: calc(var(--formField-helperText-lineHeight) * var(--uitk-text-help-fontSize));
+  --formField-helperText-calculatedHeight: max(var(--uitk-text-caption-minHeight), var(--formField-helperText-baseHeight));
+  --formField-helperText-height: calc(var(--formField-helperText-calculatedHeight) + var(--formField-withHelperText-marginTop));
 }
 
 /* Class applied to the root element if `fillWidth={true}` */
@@ -206,14 +206,10 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: calc(var(--uitkFormFieldHelperText-lineHeight, var(--formField-withHelperText-height, var(--uitk-text-base-lineHeight))) + var(--formField-withHelperText-focused-outline-bottom, 0px));
+  bottom: var(--formField-helperText-height);
   outline-color: var(--uitkFormField-focused-outlineColor, var(--formField-focused-outlineColor));
   outline-style: var(--uitkFormField-focused-outlineStyle, var(--formField-focused-outlineStyle));
   outline-width: var(--uitkFormField-focused-outlineWidth, var(--formField-focused-outlineWidth));
-}
-
-.uitkFormField-withHelperText.uitkFormField-focused {
-  --formField-withHelperText-focused-outline-bottom: var(--formField-focused-outline-bottom);
 }
 
 .uitkFormField-labelLeft.uitkFormField-focused:before {
