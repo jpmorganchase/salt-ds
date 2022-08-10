@@ -23,30 +23,27 @@ export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
 
   return (
-    <div
-      key={index}
-      className={cn(withBaseName(), {
-        [withBaseName("min")]: value === min,
-        [withBaseName("max")]: value === max,
-      })}
-      style={style}
-      role="slider"
-      data-handle-index={index}
-      aria-valuemin={min}
-      aria-valuemax={max}
-      aria-valuenow={value}
-      aria-disabled={disabled}
-      aria-label={getSliderAriaLabel(valueLength, index)}
-    >
+    <>
+      <div
+        {...getTriggerProps<"div">({
+          className: cn(withBaseName(), {
+            [withBaseName("min")]: value === min,
+            [withBaseName("max")]: value === max,
+          }),
+          style,
+          role: "slider",
+          "aria-valuemin": min,
+          "aria-valuemax": max,
+          "aria-valuenow": value,
+          "aria-disabled": disabled,
+          "aria-label": getSliderAriaLabel(valueLength, index),
+          tabIndex: 0,
+        })}
+        data-handle-index={index}
+      />
       <Tooltip
         {...getTooltipProps({ title: `${value}`, disablePortal: true })}
       />
-      <div
-        {...getTriggerProps<"div">({
-          className: withBaseName("box"),
-          tabIndex: 0,
-        })}
-      />
-    </div>
+    </>
   );
 }
