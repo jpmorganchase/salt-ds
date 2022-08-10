@@ -245,6 +245,7 @@ describe("Editable Tabs", () => {
     it("THEN tab enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
       cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.wait(100); // ArrowRight need some time to move focus after click
       // Navigate to second tab ...
       cy.realPress("ArrowRight");
       // First press of ENTER selects ...
