@@ -150,7 +150,7 @@ describe("GIVEN a Calendar component", () => {
         }).should("be.visible");
       });
 
-      describe.only("SHOULD move the focus when the shortcut keys are pressed", () => {
+      describe("SHOULD move the focus when the shortcut keys are pressed", () => {
         beforeEach(() => {
           cy.mount(<DefaultCalendar initialVisibleMonth={testDateDate} />);
 
