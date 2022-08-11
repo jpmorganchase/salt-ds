@@ -1,3 +1,4 @@
+import React from "react";
 import { composeStories } from "@storybook/testing-react";
 import * as calendarStories from "@stories/calendar.stories";
 
@@ -221,6 +222,48 @@ describe("GIVEN a Calendar component", () => {
             "aria-label",
             formatDate(testDate.add(1, "year"))
           );
+        });
+      });
+
+      describe("DEBUG shift key on CI", () => {
+        const DebugShiftKey = () => {
+          const [keys, setKeys] = React.useState<string[]>([]);
+          const handleKeyDown = (e: React.KeyboardEvent) => {
+            const newKeys = [e.key];
+            if (e.shiftKey && e.key !== "Shift") {
+              newKeys.push("Shift");
+            }
+            if (e.altKey && e.key !== "Alt") {
+              newKeys.push("Alt");
+            }
+            if (e.ctrlKey && e.key !== "Control") {
+              newKeys.push("Ctrl");
+            }
+            if (e.metaKey && e.key !== "Meta") {
+              newKeys.push("Meta");
+            }
+            setKeys(newKeys);
+          };
+          return (
+            <div>
+              <input onKeyDown={handleKeyDown} id="input" />
+              <label id="label">{keys.join(",")}</label>
+            </div>
+          );
+        };
+
+        it("Shift PageUp", () => {
+          cy.mount(<DebugShiftKey />);
+          cy.get("#input").focus().realPress(["Shift", "PageUp"]);
+
+          cy.get("#label").should("have.text", "PageUp,Shift");
+        });
+
+        it("Shift PageDown", () => {
+          cy.mount(<DebugShiftKey />);
+          cy.get("#input").focus().realPress(["Shift", "PageDown"]);
+
+          cy.get("#label").should("have.text", "PageDown,Shift");
         });
       });
     });
