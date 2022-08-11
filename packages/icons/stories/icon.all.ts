@@ -198,7 +198,7 @@ import {
   WarningIcon,
   WarningSecondaryIcon,
   XlsIcon,
-  ZipIcon
+  ZipIcon,
 } from "@jpmorganchase/uitk-icons";
 
 export const allIcons = [
@@ -401,5 +401,5 @@ export const allIcons = [
   WarningIcon,
   WarningSecondaryIcon,
   XlsIcon,
-  ZipIcon
+  ZipIcon,
 ];

@@ -8,7 +8,7 @@
     "**/*.css.js"
   ],
   "scripts": {
-    "build": "node ./scripts/generateIconComponent.js '*.svg' && node ./scripts/generateIconIndex.js && yarn generateIconAll",
+    "build": "node ./scripts/generateIconComponent.js '*.svg' && node ./scripts/generateIconIndex.js",
     "generateIconAll": "node ./scripts/generateIconAll.js"
   },
   "peerDependencies": {
