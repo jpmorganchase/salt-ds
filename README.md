@@ -7,7 +7,7 @@ The UITK has been developed with the following design goals:
 - Complying with WCAG 2.1 accessibility guidelines.
 - To be lightweight and performant.
 - Offering flexible styling and theming support.
-- Minimising dependencies on third-party libraries.
+- Minimizing dependencies on third-party libraries.
 
 # Installation
 
