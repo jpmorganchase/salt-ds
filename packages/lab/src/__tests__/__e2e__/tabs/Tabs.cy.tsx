@@ -142,6 +142,7 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.get(".uitkTabstrip-inner > *:nth-child(1)").should(
               "not.be.focusVisible"
             );
+            cy.wait(100); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowLeft");
             cy.get(".uitkTabstrip-inner > *:nth-child(1)").should(
               "be.focusVisible"
@@ -153,6 +154,7 @@ describe("Navigation, Given a Tabstrip", () => {
           it("THEN focus will be transfered to the next tab", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.wait(100); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowRight");
             cy.get(".uitkTabstrip-inner > *:nth-child(2)")
               .should("be.focused")
@@ -243,6 +245,7 @@ describe("Editable Tabs", () => {
     it("THEN tab enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
       cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.wait(100); // ArrowRight need some time to move focus after click
       // Navigate to second tab ...
       cy.realPress("ArrowRight");
       // First press of ENTER selects ...
@@ -406,6 +409,7 @@ describe("Adding Tabs", () => {
       it("THEN add button is included in navigation", () => {
         cy.mount(<SimpleTabstripAddRemoveTab enableAddTab width={600} />);
         cy.get(".uitkTabstrip-inner > *:nth-child(3)").realClick();
+        cy.wait(100); // ArrowRight need some time to move focus after click
         cy.realPress("ArrowRight");
         cy.realPress("ArrowRight");
         cy.realPress("ArrowRight");
@@ -682,6 +686,7 @@ describe("7) Focus management", () => {
     it("THEN Tabstrip loses focus", () => {
       cy.mount(<SimpleTabstrip enableAddTab width={600} />);
       cy.get(".uitkTabstrip-inner > *:nth-child(2)").realClick();
+      cy.wait(100); // ArrowRight need some time to move focus after click
       cy.realPress("Tab");
       cy.get('.uitkTabstrip-inner > .uitkTab[tabindex="-1"]').should(
         "have.length",
