@@ -158,10 +158,16 @@ export const useKeyboardNavigation = <
 }: NavigationHookProps<Item, Selection>): NavigationHookResult => {
   const lastFocus = useRef(-1);
   const [, forceRender] = useState({});
+  const { current: initialSelectedIndex } = useRef(
+    getIndexOfSelectedItem(indexPositions, selected)
+  );
   const [highlightedIndex, setHighlightedIdx, isControlledHighlighting] =
     useControlled({
       controlled: highlightedIndexProp,
-      default: defaultHighlightedIndex,
+      default:
+        initialSelectedIndex === -1
+          ? defaultHighlightedIndex
+          : initialSelectedIndex,
       name: "UseKeyboardNavigation",
     });
 
