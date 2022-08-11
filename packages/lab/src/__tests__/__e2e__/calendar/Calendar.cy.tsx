@@ -165,50 +165,62 @@ describe("GIVEN a Calendar component", () => {
 
         it("HOME", () => {
           cy.realPress("Home");
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.startOf("isoWeek")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.startOf("isoWeek"))
+          );
         });
 
         it("END", () => {
           cy.realPress("End");
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.endOf("isoWeek")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.endOf("isoWeek"))
+          );
         });
 
         it("PageUp", () => {
           cy.realPress("PageUp");
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.subtract(1, "month")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.subtract(1, "month"))
+          );
         });
 
         it("PageDown", () => {
           cy.realPress("PageDown");
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.add(1, "month")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.add(1, "month"))
+          );
         });
 
         it("Shift PageUp", () => {
           cy.realPress(["Shift", "PageUp"]);
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.subtract(1, "year")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.subtract(1, "year"))
+          );
         });
 
         it("Shift PageDown", () => {
           cy.realPress(["Shift", "PageDown"]);
-          cy.wait(100);
-          cy.findByRole("button", {
-            name: formatDate(testDate.add(1, "year")),
-          }).should("be.focused");
+
+          cy.focused().should(
+            "have.attr",
+            "aria-label",
+            formatDate(testDate.add(1, "year"))
+          );
         });
       });
     });
