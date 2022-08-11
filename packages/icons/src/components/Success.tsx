@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const SuccessIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="SuccessIcon">
-    <path d="M4.489 7.866 2.053 5.421 1 6.457l3.53 3.542L11 2.995l-1.092-.996z" />
+    <path d="m11.8 2.26-7.463 8.052-4.1-3.832 1.024-1.096L4.26 8.187l6.439-6.948 1.1 1.02z" />
   </svg>,
   "Success",
   "success"

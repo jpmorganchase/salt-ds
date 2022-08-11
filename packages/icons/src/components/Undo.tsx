@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const UndoIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="UndoIcon">
-    <path d="m4 6.769-4-2.87L4 1v2.308h4c2.209 0 4 1.722 4 3.846S10.209 11 8 11H0v-.962h8c1.657 0 3-1.291 3-2.885S9.657 4.268 8 4.268H4v2.5z" />
+    <path d="M8 11a4 4 0 0 0 0-8H4.063V1l-4 2.5 4 2.5V4H8a3.001 3.001 0 0 1 0 6H.063v1H8z" />
   </svg>,
   "Undo",
   "undo"

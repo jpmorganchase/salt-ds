@@ -2,9 +2,8 @@ import { createIcon } from "../icon/createIcon";
 
 export const RunReportIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="RunReportIcon">
-    <path d="M10 4V2h1v3H7V1h1v3h2zm0-3v1H9V1h1z" />
-    <path d="M1 0h8v1H2v10h9v1H1V0z" />
-    <path d="M10 5h1v6h-1V5zM4 5v5l4-2.503z" />
+    <path d="M8 7.5 4 5v5l4-2.5z" />
+    <path d="M8.707 0 11 2.293V12H1V0h7.707zM1.5.5V0v.5zM2 1v10h8V4H7V1H2zm8 1.707L8.293 1H8v2h2v-.293z" />
   </svg>,
   "RunReport",
   "run report"

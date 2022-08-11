@@ -2,8 +2,8 @@ import { createIcon } from "../icon/createIcon";
 
 export const DeleteIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="DeleteIcon">
-    <path d="M7.8 10.595c-.095.27-.228.405-.4.405l-3.8-.006c-.261 0-.4-.194-.4-.406L2.2 3h6.6l-1 7.595zM4 1.424C4 1.191 4.201 1 4.444 1h2.112c.246 0 .444.19.444.424V2H4v-.576zM11 2H8V.992A.99.99 0 0 0 7 0H4c-.559 0-1 .443-1 .992V2H0v1h1l1 8c0 .548.437 1 1 1h5c.563 0 1-.452 1-1l1-8h1V2z" />
-    <path d="M7 4v6H6V4h1zM4.977 4 5 9.997 4 10l.01-5.99.967-.01z" />
+    <path d="M5 4v6H4V4h1zm2 0v6H6V4h1z" />
+    <path d="M4 0h3a1 1 0 0 1 1 1v1h3v1h-1v7.25A1.75 1.75 0 0 1 8.25 12H3a2 2 0 0 1-2-2V3H0V2h3V1a1 1 0 0 1 1-1zm5 3H2v7a1 1 0 0 0 1 1h5.25a.75.75 0 0 0 .75-.75V3zM7 2v-.5a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 0-.5.5V2h3z" />
   </svg>,
   "Delete",
   "delete"

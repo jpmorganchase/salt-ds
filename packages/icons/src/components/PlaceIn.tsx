@@ -2,8 +2,8 @@ import { createIcon } from "../icon/createIcon";
 
 export const PlaceInIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="PlaceInIcon">
-    <path d="M1 0h5v1H1v10.001h10v-5h1v6h-1V12l-11 .001v-12h1z" />
-    <path d="M6.4 5.601v-4L7.799 3l3-3 1.202 1.202-3 3L10.4 5.601z" />
+    <path d="M0 12h12V6h-1v5H1V1h5V0H0v12z" />
+    <path d="M10.939 0 12 1.061 9.025 4.036 10.489 5.5h-4v-4l1.475 1.475L10.939 0z" />
   </svg>,
   "PlaceIn",
   "place in"
