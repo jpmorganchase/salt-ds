@@ -23,7 +23,7 @@ export const useTruncation = (
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
-  const isOverflowed = useRef(false);
+  const isOverflowed = useRef<boolean | undefined>();
 
   // Calculating Rows
   const getRows = useCallback(() => {
@@ -49,11 +49,13 @@ export const useTruncation = (
             Math.ceil(widthParent) < scrollWidth
           ) {
             textRows = Math.floor(heightParent / lineHeight);
+          } else {
+            textRows = undefined;
           }
         }
       }
 
-      if (textRows) {
+      if (textRows !== undefined) {
         const rowsHeight = textRows * lineHeight;
 
         const hasOverflowed =
@@ -68,6 +70,11 @@ export const useTruncation = (
 
         if (!hasOverflowed) {
           return 0;
+        }
+      } else {
+        if (isOverflowed.current || isOverflowed.current === undefined) {
+          onOverflowChange && onOverflowChange(false);
+          isOverflowed.current = false;
         }
       }
     }

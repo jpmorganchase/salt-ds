@@ -1,5 +1,17 @@
 import { Meta, Story, Canvas, ArgsTable, Props } from "@storybook/addon-docs";
-import { Text, Div } from "@jpmorganchase/uitk-lab";
+import {
+  Text,
+  Div,
+  Code,
+  H1,
+  H2,
+  H3,
+  H4,
+  HelpText,
+  LabelCaption,
+  P,
+  Span,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
@@ -7,32 +19,248 @@ import {
   CSSClassTable,
 } from "css-variable-docgen-components";
 
-<Meta title="Documentation/Lab/Text" component={Text} />
+<Meta title="Documentation/Lab/Typography" component={Text} />
 
-## Default Text
+# Typography
 
-<Canvas>
-  <Story name="Text" decorators={[withFlexGap]}>
-    <Div>Default Div</Div>
-  </Story>
-</Canvas>
-
-## Truncated Text
-
-<Canvas>
-  <Story name="Truncated Text" decorators={[withFlexGap]}>
-    <div style={{ width: 30 }}>
-      <Text truncate maxRows={1}>
-        Default Text
-      </Text>
-    </div>
-  </Story>
-</Canvas>
+We've created a Text component that contains our key typography styles which can improve the effeiciency when building UI components that have typography styles.
+Text component is the base of all typography components. This way any text can benefit of the base functionality like truncation and tooltip.
 
 ## Props
 
 <ArgsTable of={Text} />
 
-## Props Div
+## Typography components
 
-<ArgsTable of={Div} />
+We've created a set of components that are most commonly used, but it's easy to generate your own by passing the tag you want to be returned into the `elementType` prop.
+
+### Default Text
+
+<Canvas>
+  <Story name="Text" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <Text>This is a text example</Text>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <Text truncate maxRows={1}>
+            This is a text example
+          </Text>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### H1
+
+<Canvas>
+  <Story name="H1" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <H1>This is a text example</H1>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <H1 truncate maxRows={1}>
+            This is a text example
+          </H1>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### H2
+
+<Canvas>
+  <Story name="H2" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <H2>This is a text example</H2>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <H2 truncate maxRows={1}>
+            This is a text example
+          </H2>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### H3
+
+<Canvas>
+  <Story name="H3" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <H3>This is a text example</H3>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <H3 truncate maxRows={1}>
+            This is a text example
+          </H3>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### H4
+
+<Canvas>
+  <Story name="H4" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <H4>This is a text example</H4>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <H4 truncate maxRows={1}>
+            This is a text example
+          </H4>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### Div
+
+<Canvas>
+  <Story name="Div" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <Div>This is a text example</Div>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <Div truncate maxRows={1}>
+            This is a text example
+          </Div>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### Span
+
+<Canvas>
+  <Story name="Span" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <Span>This is a text example</Span>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <Span truncate maxRows={1}>
+            This is a text example
+          </Span>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### P
+
+<Canvas>
+  <Story name="P" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <P>This is a text example</P>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <P truncate maxRows={1}>
+            This is a text example
+          </P>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### LabelCaption
+
+<Canvas>
+  <Story name="LabelCaption" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <LabelCaption>This is a text example</LabelCaption>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <LabelCaption truncate maxRows={1}>
+            This is a text example
+          </LabelCaption>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### HelpText
+
+<Canvas>
+  <Story name="HelpText" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <HelpText>This is a text example</HelpText>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <HelpText truncate maxRows={1}>
+            This is a text example
+          </HelpText>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
+
+### Code
+
+<Canvas>
+  <Story name="Code" decorators={[withFlexGap]}>
+    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+      <div>
+        <h4>Default</h4>
+        <Code>This is a text example</Code>
+      </div>
+      <div>
+        <h4>Truncated</h4>
+        <div style={{ width: 100 }}>
+          <Code truncate maxRows={1}>
+            This is a text example
+          </Code>
+        </div>
+      </div>
+    </div>
+  </Story>
+</Canvas>
