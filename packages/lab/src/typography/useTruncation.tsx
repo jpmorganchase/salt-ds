@@ -13,7 +13,7 @@ import {
 import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
 
-// this guards against text undeline which adds 1px on scrollHeight
+// this guards against text underline which adds 1px on scrollHeight
 const VELOCITY = 1;
 
 export const useTruncation = (
@@ -64,7 +64,7 @@ export const useTruncation = (
           offsetWidth < scrollWidth;
 
         if (isOverflowed.current !== hasOverflowed) {
-          onOverflowChange && onOverflowChange(hasOverflowed);
+          onOverflowChange?.(hasOverflowed);
           isOverflowed.current = hasOverflowed;
         }
 
@@ -79,41 +79,28 @@ export const useTruncation = (
 
   // Add Observers
   useIsomorphicLayoutEffect(() => {
-    const onResize = debounce(() => {
-      setRows(getRows());
-    }, 500);
+    if (element) {
+      const onResize = debounce(
+        () => {
+          setRows(getRows());
+        },
+        500,
+        true
+      );
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (entries.length > 0 && entries[0].target.isConnected) {
-        onResize();
-      }
-    });
-
-    const onScroll = debounce((entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (element && entry.isIntersecting) {
-          resizeObserver.observe(element);
-        } else {
-          resizeObserver.disconnect();
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (entries.length > 0 && entries[0].target.isConnected) {
+          onResize();
         }
       });
-    });
 
-    const scrollObserver = new IntersectionObserver(onScroll, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0,
-    });
+      resizeObserver.observe(element);
 
-    if (element) {
-      scrollObserver.observe(element);
+      return () => {
+        resizeObserver?.disconnect();
+        onResize?.clear();
+      };
     }
-
-    return () => {
-      scrollObserver.disconnect();
-      resizeObserver.disconnect();
-      onResize.clear();
-    };
   }, [element, getRows]);
 
   // Has Tooltip
