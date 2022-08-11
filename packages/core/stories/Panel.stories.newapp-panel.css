@@ -1,5 +1,5 @@
-.uitk-light.uitk-newapp,
-.uitk-dark.uitk-newapp {
+.uitk-light.uitk-newapp .uitk-newapp-panelStory,
+.uitk-dark.uitk-newapp .uitk-newapp-panelStory {
   --uitkPanel-height: 100px;
   --uitkPanel-padding: 5px;
   --uitkPanel-width: 500px;
