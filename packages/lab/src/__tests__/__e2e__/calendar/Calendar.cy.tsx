@@ -150,55 +150,66 @@ describe("GIVEN a Calendar component", () => {
         }).should("be.visible");
       });
 
-      it("SHOULD move the focus when the shortcut keys are pressed", () => {
-        cy.mount(<DefaultCalendar initialVisibleMonth={testDateDate} />);
+      describe("SHOULD move the focus when the shortcut keys are pressed", () => {
+        beforeEach(() => {
+          cy.mount(<DefaultCalendar initialVisibleMonth={testDateDate} />);
 
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).focus();
+          cy.findByRole("button", {
+            name: formatDate(testDate),
+          }).focus();
 
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).should("be.focused");
+          cy.findByRole("button", {
+            name: formatDate(testDate),
+          }).should("be.focused");
+        });
 
-        cy.realPress("Home");
-        cy.findByRole("button", {
-          name: formatDate(testDate.startOf("week")),
-        }).should("be.focused");
+        it("HOME", () => {
+          cy.realPress("Home");
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.startOf("isoWeek")),
+          }).should("be.focused");
+        });
 
-        cy.realPress("End");
-        cy.findByRole("button", {
-          name: formatDate(testDate.endOf("week")),
-        }).should("be.focused");
+        it("END", () => {
+          cy.realPress("End");
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.endOf("isoWeek")),
+          }).should("be.focused");
+        });
 
-        //RESET
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).focus();
+        it("PageUp", () => {
+          cy.realPress("PageUp");
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.subtract(1, "month")),
+          }).should("be.focused");
+        });
 
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).should("be.focused");
+        it("PageDown", () => {
+          cy.realPress("PageDown");
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.add(1, "month")),
+          }).should("be.focused");
+        });
 
-        cy.realPress("PageUp");
-        cy.findByRole("button", {
-          name: formatDate(testDate.subtract(1, "month")),
-        }).should("be.focused");
+        it("Shift PageUp", () => {
+          cy.realPress(["Shift", "PageUp"]);
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.subtract(1, "year")),
+          }).should("be.focused");
+        });
 
-        cy.realPress("PageDown");
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).should("be.focused");
-
-        cy.realPress(["Shift", "PageUp"]);
-        cy.findByRole("button", {
-          name: formatDate(testDate.subtract(1, "year")),
-        }).should("be.focused");
-
-        cy.realPress(["Shift", "PageDown"]);
-        cy.findByRole("button", {
-          name: formatDate(testDate),
-        }).should("be.focused");
+        it("Shift PageDown", () => {
+          cy.realPress(["Shift", "PageDown"]);
+          cy.wait(100);
+          cy.findByRole("button", {
+            name: formatDate(testDate.add(1, "year")),
+          }).should("be.focused");
+        });
       });
     });
   });
