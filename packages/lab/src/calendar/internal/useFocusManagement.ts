@@ -4,13 +4,15 @@ import {
   MouseEventHandler,
 } from "react";
 import { useCalendarContext } from "./CalendarContext";
-import dayjs from "./dayjs";
+import {
+  DateValue,
+  endOfWeek,
+  isSameDay,
+  startOfWeek,
+} from "@internationalized/date";
+import { getCurrentLocale } from "./utils";
 
-interface useFocusManagementProps {
-  date: Date;
-}
-
-export function useFocusManagement({ date }: useFocusManagementProps) {
+export function useFocusManagement({ date }: { date: DateValue }) {
   const {
     state: { focusedDate },
     helpers: { setFocusedDate },
@@ -23,35 +25,36 @@ export function useFocusManagement({ date }: useFocusManagementProps) {
     let newDate = date;
     switch (event.key) {
       case "ArrowUp":
-        newDate = dayjs(date).subtract(1, "week").toDate();
+        newDate = date.subtract({ weeks: 1 });
         break;
       case "ArrowDown":
-        newDate = dayjs(date).add(1, "week").toDate();
+        newDate = date.add({ weeks: 1 });
         break;
       case "ArrowLeft":
-        newDate = dayjs(date).subtract(1, "day").toDate();
+        newDate = date.subtract({ days: 1 });
         break;
       case "ArrowRight":
-        newDate = dayjs(date).add(1, "day").toDate();
+        newDate = date.add({ days: 1 });
         break;
       case "Home":
-        newDate = dayjs(date).startOf("week").toDate();
+        newDate = startOfWeek(date, getCurrentLocale());
         break;
       case "End":
-        newDate = dayjs(date).endOf("week").toDate();
+        // @ts-ignore TODO bug in @internationalized/date
+        newDate = endOfWeek(date, getCurrentLocale());
         break;
       case "PageUp":
         if (event.shiftKey) {
-          newDate = dayjs(date).subtract(1, "year").toDate();
+          newDate = date.subtract({ years: 1 });
         } else {
-          newDate = dayjs(date).subtract(1, "month").toDate();
+          newDate = date.subtract({ months: 1 });
         }
         break;
       case "PageDown":
         if (event.shiftKey) {
-          newDate = dayjs(date).add(1, "year").toDate();
+          newDate = date.add({ years: 1 });
         } else {
-          newDate = dayjs(date).add(1, "month").toDate();
+          newDate = date.add({ months: 1 });
         }
         break;
       default:
@@ -60,7 +63,7 @@ export function useFocusManagement({ date }: useFocusManagementProps) {
   };
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
-    if (!dayjs(date).isSame(focusedDate, "day")) {
+    if (!isSameDay(date, focusedDate)) {
       setFocusedDate(event, date);
     }
   };

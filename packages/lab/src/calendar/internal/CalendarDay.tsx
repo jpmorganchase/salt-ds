@@ -13,20 +13,21 @@ import {
   ReactElement,
   useCallback,
 } from "react";
-import { DayStatus, useCalendarDay } from "../useCalendarDay";
-import dayjs from "./dayjs";
+import { DateValue } from "@internationalized/date";
 
+import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
+import { formatDate } from "./utils";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
 export interface CalendarDayProps
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
-  day: Date;
+  day: DateValue;
   formatDate?: DateFormatter;
-  renderDayContents?: (date: Date, status: DayStatus) => ReactElement;
+  renderDayContents?: (date: DateValue, status: DayStatus) => ReactElement;
   status?: DayStatus;
-  month: Date;
+  month: DateValue;
   TooltipProps?: Partial<TooltipProps>;
 }
 
@@ -50,7 +51,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     });
 
     const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
-      "aria-label": dayjs(day).format("dddd, LL"),
+      "aria-label": formatDate(day),
       ...dayProps,
       ...rest,
       className: cx(
@@ -97,7 +98,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
           {renderDayContents
             ? renderDayContents(day, status)
-            : dayjs(day).format("D")}
+            : formatDate(day, { day: "numeric" })}
         </button>
       </>
     );

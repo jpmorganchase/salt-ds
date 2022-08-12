@@ -1,6 +1,16 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
 import { SyntheticEvent, useRef, useState } from "react";
-import dayjs from "./internal/dayjs";
+import {
+  DateValue,
+  endOfMonth,
+  endOfYear,
+  getLocalTimeZone,
+  isSameDay,
+  isSameMonth,
+  startOfMonth,
+  startOfYear,
+  today,
+} from "@internationalized/date";
 import {
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,
@@ -9,20 +19,23 @@ import {
   useSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "./internal/useSelection";
+import { formatDate } from "./internal/utils";
 
 export type UnselectableInfo =
   | { emphasis: "high"; tooltip?: string }
   | { emphasis: "low" };
 
 interface BaseUseCalendarProps {
-  initialVisibleMonth?: Date;
-  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: Date) => void;
-  isDayUnselectable?: (date: Date) => UnselectableInfo | boolean;
-  visibleMonth?: Date;
-  firstDayOfWeek?: number;
+  initialVisibleMonth?: DateValue;
+  onVisibleMonthChange?: (
+    event: SyntheticEvent,
+    visibleMonth: DateValue
+  ) => void;
+  isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean;
+  visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: DateValue;
+  maxDate?: DateValue;
 }
 
 export type useCalendarProps = (
@@ -41,10 +54,9 @@ export function useCalendar(props: useCalendarProps) {
     initialSelectedDate,
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
-    initialVisibleMonth = dayjs().startOf("month").toDate(),
+    initialVisibleMonth = today(getLocalTimeZone()),
     onSelectedDateChange,
     onVisibleMonthChange,
-    firstDayOfWeek = 1,
     isDayUnselectable = defaultIsDayUnselectable,
     minDate,
     maxDate,
@@ -55,7 +67,8 @@ export function useCalendar(props: useCalendarProps) {
     // endDateOffset,
   } = props;
 
-  const isDaySelectable = (date?: Date) => !(date && isDayUnselectable(date));
+  const isDaySelectable = (date?: DateValue) =>
+    !(date && isDayUnselectable(date));
 
   const selectionManager = useSelectionCalendar({
     initialSelectedDate,
@@ -75,76 +88,80 @@ export function useCalendar(props: useCalendarProps) {
     hoveredDate,
   } as useSelectionCalendarProps);
 
-  dayjs.updateLocale(dayjs.locale(), { weekStart: firstDayOfWeek });
-
   const [visibleMonth, setVisibleMonthState] = useControlled({
-    controlled: visibleMonthProp
-      ? dayjs(visibleMonthProp).startOf("month").toDate()
-      : undefined,
-    default: dayjs(initialVisibleMonth).startOf("month").toDate(),
+    controlled: visibleMonthProp ? startOfMonth(visibleMonthProp) : undefined,
+    default: startOfMonth(initialVisibleMonth),
     name: "Calendar",
     state: "visibleMonth",
   });
 
-  const [focusedDate, setFocusedDateState] = useState<Date>(
-    dayjs(visibleMonth).startOf("month").toDate()
+  const [focusedDate, setFocusedDateState] = useState<DateValue>(
+    startOfMonth(visibleMonth)
   );
 
-  const isDayVisible = (date: Date) => {
-    const startInsideDays = dayjs(visibleMonth).startOf("month");
+  const isDayVisible = (date: DateValue) => {
+    const startInsideDays = startOfMonth(visibleMonth);
 
-    if (dayjs(date).isBefore(startInsideDays, "day")) return false;
+    if (date.compare(startInsideDays) < 0) return false;
 
-    const endInsideDays = dayjs(visibleMonth).endOf("month");
+    const endInsideDays = endOfMonth(visibleMonth);
 
-    return !dayjs(date).isAfter(endInsideDays, "day");
+    return !(date.compare(endInsideDays) > 0);
   };
 
-  const isDateNavigable = (date: Date, type: "month" | "year") => {
-    if (minDate && dayjs(date).isBefore(dayjs(minDate), type)) {
-      return false;
-    }
-
-    if (maxDate && dayjs(date).isAfter(dayjs(maxDate), type)) {
-      return false;
-    }
-
-    return true;
+  const isOutsideAllowedDates = (date: DateValue) => {
+    return (
+      (minDate != null && date.compare(minDate) < 0) ||
+      (maxDate != null && date.compare(maxDate) > 0)
+    );
   };
 
-  const setFocusedDate = (event: SyntheticEvent, date: Date) => {
-    if (
-      dayjs(date).isSame(focusedDate, "day") ||
-      !isDateNavigable(date, "month")
-    )
-      return;
+  const isOutsideAllowedMonths = (date: DateValue) => {
+    return (
+      (minDate != null && endOfMonth(date).compare(minDate) < 0) ||
+      (maxDate != null && startOfMonth(date).compare(maxDate) > 0)
+    );
+  };
+
+  const isOutsideAllowedYears = (date: DateValue) => {
+    return (
+      (minDate != null && endOfYear(date).compare(minDate) < 0) ||
+      (maxDate != null && startOfYear(date).compare(maxDate) > 0)
+    );
+  };
+
+  const setFocusedDate = (event: SyntheticEvent, date: DateValue) => {
+    if (isSameDay(date, focusedDate) || isOutsideAllowedDates(date)) return;
 
     setFocusedDateState(date);
 
     const shouldTransition =
       !isDayVisible(date) &&
       isDaySelectable(date) &&
-      isDateNavigable(date, "month");
+      !isOutsideAllowedDates(date);
     if (shouldTransition) {
-      setVisibleMonth(event, dayjs(date).startOf("month").toDate());
+      setVisibleMonth(event, startOfMonth(date));
     }
     setTimeout(() => {
-      dayRefs.current[dayjs(date).format("L")]?.focus({ preventScroll: true });
+      dayRefs.current[formatDate(date)]?.focus({ preventScroll: true });
     });
   };
 
-  const setVisibleMonth = (event: SyntheticEvent, newVisibleMonth: Date) => {
+  const setVisibleMonth = (
+    event: SyntheticEvent,
+    newVisibleMonth: DateValue
+  ) => {
     setVisibleMonthState(newVisibleMonth);
-    if (!dayjs(focusedDate).isSame(newVisibleMonth, "month")) {
-      setFocusedDateState(dayjs(newVisibleMonth).startOf("month").toDate());
+    if (!isSameMonth(focusedDate, newVisibleMonth)) {
+      setFocusedDateState(startOfMonth(newVisibleMonth));
     }
     onVisibleMonthChange?.(event, newVisibleMonth);
   };
 
   const dayRefs = useRef<Record<string, HTMLElement>>({});
 
-  const registerDayRef = (date: Date, element: HTMLElement) => {
-    dayRefs.current[dayjs(date).format("L")] = element;
+  const registerDayRef = (date: DateValue, element: HTMLElement) => {
+    dayRefs.current[formatDate(date)] = element;
   };
 
   return {
@@ -162,7 +179,9 @@ export function useCalendar(props: useCalendarProps) {
       setFocusedDate,
       isDayUnselectable,
       isDayVisible,
-      isDateNavigable,
+      isOutsideAllowedDates,
+      isOutsideAllowedMonths,
+      isOutsideAllowedYears,
       ...selectionManager.helpers,
       registerDayRef,
     },

@@ -1,4 +1,3 @@
-import dayjs from "./internal/dayjs";
 import { useCalendarContext } from "./internal/CalendarContext";
 import {
   KeyboardEventHandler,
@@ -9,6 +8,13 @@ import {
 } from "react";
 import { useSelectionDay } from "./internal/useSelection";
 import { useFocusManagement } from "./internal/useFocusManagement";
+import {
+  DateValue,
+  getLocalTimeZone,
+  isSameDay,
+  isSameMonth,
+  isToday,
+} from "@internationalized/date";
 
 export type DayStatus = {
   outOfRange?: boolean;
@@ -20,14 +26,14 @@ export type DayStatus = {
 };
 
 export interface useCalendarDayProps {
-  date: Date;
-  month: Date;
+  date: DateValue;
+  month: DateValue;
 }
 
 export function useCalendarDay({ date, month }: useCalendarDayProps) {
   const {
     state: { focusedDate, hideOutOfRangeDates },
-    helpers: { isDayUnselectable, registerDayRef, isDateNavigable },
+    helpers: { isDayUnselectable, registerDayRef, isOutsideAllowedMonths },
   } = useCalendarContext();
   const selectionManager = useSelectionDay({ date });
   const focusManager = useFocusManagement({ date });
@@ -57,13 +63,13 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
     onMouseOver: handleMouseOver,
   };
 
-  const focused = dayjs(date).isSame(focusedDate, "day");
-  const outOfRange = !dayjs(date).isSame(month, "month");
+  const focused = isSameDay(date, focusedDate);
+  const outOfRange = !isSameMonth(date, month);
   const tabIndex = focused && !outOfRange ? 0 : -1;
-  const today = dayjs().isSame(date, "day");
+  const today = isToday(date, getLocalTimeZone());
 
   const registerDay = useCallback(
-    (day: Date, element: HTMLElement) => {
+    (day: DateValue, element: HTMLElement) => {
       if (!outOfRange) {
         registerDayRef(date, element);
       }
@@ -72,7 +78,7 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
   );
 
   const unselectableResult =
-    isDayUnselectable(date) || (outOfRange && !isDateNavigable(date, "month"));
+    isDayUnselectable(date) || (outOfRange && isOutsideAllowedMonths(date));
   const unselectableReason =
     typeof unselectableResult !== "boolean" &&
     unselectableResult.emphasis === "high"
