@@ -15,7 +15,7 @@ export const makePrefixer =
   (...names: string[]): string =>
     [prefix, ...names].join("-");
 
-const ICON_NAMED_SIZES = ["small", "medium", "large"] as const;
+export const ICON_NAMED_SIZES = ["small", "medium", "large"] as const;
 
 const withBaseName = makePrefixer("uitkIcon");
 
