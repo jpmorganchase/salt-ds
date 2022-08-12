@@ -13,13 +13,21 @@ import { DefaultDeckLayout } from "./deck-layout.stories";
   subcomponents={{ DeckItem }}
 />
 
-# Deck Layout
+# Deck layout
 
-Defines pages of content that appear within the same specified region, one at a time
+The deck layout defines pages of content that appear within the same specified region, one at a time.
+
+It allows motion customisation (`slide` or `fade`) and a custom direction for the animations (`horizontal` or `vertical`).
+
+This layout component also allows you to assign the initial page to be rendered via the `activeIndex` prop.
 
 <Canvas>
   <Story id="lab-layout-decklayout--default-deck-layout" />
 </Canvas>
+
+## How you can use deck layout
+
+Use this component by passing it a collection of children (pages). You may also choose to control the movement between pages by using buttons or tabs.
 
 ## API
 
@@ -31,20 +39,28 @@ import { DeckLayout } from "@jpmorganchase/uitk-lab";
 
 <ArgsTable of={DeckLayout} />
 
-## Examples
+## Example
 
-### Deck used in carousel
+### Deck used with tabstrip
+
+This example shows how the deck layout can be used in conjunction with `Tabstrip`. You can enable animations by setting the `animation` prop.
 
 <Canvas>
-  <Story id="lab-layout-decklayout--deck-in-carousel" />
+  <Story id="lab-layout-decklayout--deck-in-tabstrip" />
 </Canvas>
 
 ## Anatomy
 
 <Canvas>
-  <ComponentAnatomy showControls={false}>
+  <ComponentAnatomy>
     <DeckLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <DeckItem style={{ border: "dashed 1px black", padding: "1rem" }} />
+      <DeckItem
+        style={{
+          border: "dashed 1px black",
+          padding: "1rem",
+          display: "block",
+        }}
+      />
     </DeckLayout>
   </ComponentAnatomy>
 </Canvas>
