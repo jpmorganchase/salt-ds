@@ -55,7 +55,7 @@ export const useTruncation = (
         }
       }
 
-      if (textRows !== undefined) {
+      if (textRows) {
         const rowsHeight = textRows * lineHeight;
 
         const hasOverflowed =
