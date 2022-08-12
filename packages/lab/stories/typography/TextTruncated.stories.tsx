@@ -88,8 +88,8 @@ const TextTruncatedExamples: ComponentStory<typeof Text> = () => {
     </div>
   );
 };
-export const TextTruncated = TextTruncatedExamples.bind({});
-TextTruncated.parameters = {
+export const TruncatedTextExample = TextTruncatedExamples.bind({});
+TruncatedTextExample.parameters = {
   controls: {
     exclude: excludeProps,
   },

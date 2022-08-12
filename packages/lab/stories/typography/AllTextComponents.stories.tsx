@@ -20,23 +20,23 @@ import {
 export default {
   title: "Lab/Typography",
   component: Text,
-  // parameters: {
-  //   controls: {
-  //     hideNoControlsWarning: true,
-  //     exclude: [
-  //       "elementType",
-  //       "maxRows",
-  //       "onOverflowChange",
-  //       "ref",
-  //       "showTooltip",
-  //       "style",
-  //       "styleAs",
-  //       "tooltipProps",
-  //       "tooltipText",
-  //       "truncate",
-  //     ],
-  //   },
-  // },
+  parameters: {
+    controls: {
+      hideNoControlsWarning: true,
+      exclude: [
+        "elementType",
+        "maxRows",
+        "onOverflowChange",
+        "ref",
+        "showTooltip",
+        "style",
+        "styleAs",
+        "tooltipProps",
+        "tooltipText",
+        "truncate",
+      ],
+    },
+  },
 } as ComponentMeta<typeof Text>;
 
 //********** Div ***********/
@@ -134,9 +134,8 @@ export const CodeComponent = CodeExample.bind({});
 const FigureExample: ComponentStory<typeof Figure1> = () => {
   return (
     <>
-      <Figure1>Figure 1</Figure1>
-      <Figure2>Figure 2</Figure2>
-      <Figure3>Figure 3</Figure3>
+      <Figure1>Figure1</Figure1> <Figure2>Figure2</Figure2>{" "}
+      <Figure3>Figure3</Figure3>
     </>
   );
 };
@@ -147,6 +146,25 @@ export const Figure = FigureExample.bind({});
 
 const HeadingExample: ComponentStory<typeof H1> = () => (
   <>
+    <H1>
+      This is heading level 1. <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
+    </H1>
+    <br />
+    <H2>
+      This is heading level 2. <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
+    </H2>
+    <br />
+    <H3>
+      This is heading level 3. <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
+    </H3>
+    <br />
+    <H4>
+      This is heading level 4. <strong>Emphasis strong.</strong>{" "}
+      <small>Emphasis small.</small>
+    </H4>
     <div
       style={{
         display: "flex",
@@ -167,27 +185,6 @@ const HeadingExample: ComponentStory<typeof H1> = () => (
         <H1 styleAs="h4">Page heading 1 styled as h4</H1>
       </div>
     </div>
-    <br />
-    <br />
-    <H1>
-      This is header 1. <strong>Emphasis strong.</strong>{" "}
-      <small>Emphasis small.</small>
-    </H1>
-    <br />
-    <H2>
-      This is header 2 <strong>Emphasis strong.</strong>{" "}
-      <small>Emphasis small.</small>
-    </H2>
-    <br />
-    <H3>
-      This is header 3 <strong>Emphasis strong.</strong>{" "}
-      <small>Emphasis small.</small>
-    </H3>
-    <br />
-    <H4>
-      This is header 4 <strong>Emphasis strong.</strong>{" "}
-      <small>Emphasis small.</small>
-    </H4>
   </>
 );
 export const Headings = HeadingExample.bind({});

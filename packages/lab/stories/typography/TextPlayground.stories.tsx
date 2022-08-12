@@ -8,19 +8,30 @@ export default {
   component: Text,
   argTypes: {
     children: {
-      description: "Text content",
+      description: "Editable Text content",
       control: { type: "text" },
     },
     elementType: {
       description: "Change element type",
-      options: ["h1", "h2", "h3", "h4", "p", "div", "span", "label"],
+      options: [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "p",
+        "div",
+        "span",
+        "label",
+        "code",
+        "blockquote",
+      ],
       control: {
         type: "select",
       },
     },
     maxRows: {
       description:
-        "Number of rows to display when truncate=true. Set it to 0 if you want to be ignored",
+        "Number of rows to display when `truncate=true`. Set it to 0 to reset",
       control: { type: "number" },
     },
     showTooltip: { control: { type: "boolean" } },
@@ -32,13 +43,24 @@ export default {
     truncate: { control: { type: "boolean" } },
     parentWidth: {
       description:
-        "Restrict width from container (for this demo only). Set '0' for 100% width",
+        "Change container width (for this demo only).  Set it to 0 to reset",
       control: { type: "number" },
     },
     parentHeight: {
       description:
-        "Restrict height from container (for this demo only). Set '0' for 100% height",
+        "Change container height (for this demo only).  Set it to 0 to reset",
       control: { type: "number" },
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        "onOverflowChange",
+        "ref",
+        "style",
+        "tooltipProps",
+        "tooltipText",
+      ],
     },
   },
 } as ComponentMeta<typeof Text>;
@@ -85,7 +107,7 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
       style={{
         border: "1px solid #ccc",
         padding: 20,
-        width: width || "100%",
+        width: width || "calc(100% - 40px)",
         height: height || "auto",
       }}
     >
@@ -95,8 +117,8 @@ const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
   );
 };
 
-export const TextPlaygroundComponent = BaseComponent.bind({});
-TextPlaygroundComponent.args = {
+export const TextPlayground = BaseComponent.bind({});
+TextPlayground.args = {
   children: `Heaven yielding moved appear, gathering place. <strong>Cattle fifth Sea without thing</strong> unto fifth third Forth isn't be moveth to him greater place fifth creeping had. Good dominion behold in earth also signs had brought after, fowl dominion have there. Us stars first morning whales fruit yielding whose winged thing. Were in. Upon. Cattle she'd whales they're. Was you'll very years behold fowl us meat fruit have earth great. Were green yielding it under. Fly first likeness night one make kind us spirit said let created, upon fruitful.`,
   truncate: false,
   showTooltip: true,
