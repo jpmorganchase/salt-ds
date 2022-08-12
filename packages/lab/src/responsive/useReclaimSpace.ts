@@ -1,26 +1,24 @@
 import { useCallback } from "react";
-import {
-  OverflowItem,
-  OverflowHookProps,
-  OverflowHookResult,
-} from "./overflowTypes";
+import { itemToString } from "..";
+import { ManagedItem, overflowHookProps } from "./overflowTypes";
 
 import {
+  getIsOverflowed,
   getOverflowIndicator,
   measureContainerOverflow,
   popNextItemByPriority,
 } from "./overflowUtils";
 
-const getPriority = (item: OverflowItem) => item.priority;
+const getPriority = (item: ManagedItem) => item.priority;
 
-const canReclaimSpace = (item: OverflowItem) =>
+const canReclaimSpace = (item: ManagedItem) =>
   item.collapsed && item.reclaimSpace;
 
-const hasReclaimedSpace = (item: OverflowItem) => item.reclaimedSpace;
-const getReclaimableSpace = ({ size, minSize = 0 }: OverflowItem) =>
+const hasReclaimedSpace = (item: ManagedItem) => item.reclaimedSpace;
+const getReclaimableSpace = ({ size, minSize = 0 }: ManagedItem) =>
   size - minSize;
 
-const findNextOverflowedItem = (items: OverflowItem[]) => {
+const findNextOverflowedItem = (items: ManagedItem[]) => {
   const overflowedItems = items.filter((item) => item.overflowed);
   const minPriority = Math.min(...overflowedItems.map(getPriority));
   for (let i = 0; i < overflowedItems.length; i++) {
@@ -31,10 +29,10 @@ const findNextOverflowedItem = (items: OverflowItem[]) => {
   return null;
 };
 
-export const addAllVisible = (sum: number, m: OverflowItem) =>
+export const addAllVisible = (sum: number, m: ManagedItem) =>
   sum + (m.overflowed ? 0 : m.size);
 
-const canReleaseReclaimedSpace = (size: number, items: OverflowItem[]) => {
+const canReleaseReclaimedSpace = (size: number, items: ManagedItem[]) => {
   const claimant = items.find(hasReclaimedSpace);
   const overflowedItem = findNextOverflowedItem(items);
   if (claimant && overflowedItem) {
@@ -52,19 +50,19 @@ const canReleaseReclaimedSpace = (size: number, items: OverflowItem[]) => {
   }
 };
 
-const mightBeAbleToReclaimSpace = (items: OverflowItem[]) =>
+const mightBeAbleToReclaimSpace = (items: ManagedItem[]) =>
   items.some(canReclaimSpace);
 
 // We need to release the reclaimed space (i.e take it back from the collapsed item and re-assign it
 // as available space) when container grows and space now allows overflowed item to be 'un-wrapped'
 
 export const useReclaimSpace = ({
-  collectionHook,
+  dispatchOverflowAction,
   label = "Toolbar",
-  overflowItemsRef: managedItemsRef,
-  overflowContainerRef: ref,
+  managedItemsRef,
+  ref,
   orientation,
-}: OverflowHookProps): OverflowHookResult => {
+}: overflowHookProps) => {
   const getAllOverflowedItems = useCallback(
     (visibleContentSize, containerSize) => {
       let newlyOverflowedItems = [];
@@ -86,14 +84,18 @@ export const useReclaimSpace = ({
 
   const releaseReclaimedSpace = useCallback(() => {
     const { current: managedItems } = managedItemsRef;
+    console.log("[useReclaimSpace] releaseReclaimedSpace");
 
     const claimant = managedItems.find(hasReclaimedSpace);
     if (claimant) {
+      // const claimantElement = getElementForItem(ref, claimant);
+      const { minSize = 0 } = claimant;
       // Might not always need to collapse, if there is enough available space for it to still be collapsing
+      // collapseCollapsingItem(claimant, claimantElement, minSize);
       // collapse the claimant and turn off recvlaimed
-      collectionHook.dispatch({
-        type: "replace-item",
-        overflowItem: {
+      dispatchOverflowAction({
+        type: "collapse",
+        managedItem: {
           ...claimant,
           collapsed: true,
           collapsing: false,
@@ -105,14 +107,17 @@ export const useReclaimSpace = ({
     }
   }, []);
   const handleResize = useCallback((size, containerHasGrown) => {
+    console.log(`[useReclaimSpace] handleResize`);
     const { isOverflowing: willOverflow } = measureContainerOverflow(
       ref,
       orientation
     );
     const { current: managedItems } = managedItemsRef;
+    const isOverflowing = getIsOverflowed(managedItems);
 
     if (containerHasGrown && canReleaseReclaimedSpace(size, managedItems)) {
       releaseReclaimedSpace();
+      // updateOverflow(size, null);
     } else if (
       !containerHasGrown &&
       willOverflow &&
@@ -120,9 +125,10 @@ export const useReclaimSpace = ({
     ) {
       const collapsedChild = managedItems.find(canReclaimSpace);
       if (collapsedChild) {
-        collectionHook.dispatch({
-          type: "replace-item",
-          overflowItem: {
+        console.log(`[useReclaimSpace] handleResize: reclaim space`);
+        dispatchOverflowAction({
+          type: "collapse",
+          managedItem: {
             ...collapsedChild,
             collapsed: false,
             collapsing: true,

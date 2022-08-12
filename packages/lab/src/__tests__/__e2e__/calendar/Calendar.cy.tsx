@@ -70,9 +70,7 @@ describe("GIVEN a Calendar component", () => {
         }).realClick();
         cy.findByRole("option", {
           name: testDate.set("month", 4).format("MMM"),
-        })
-          .realHover()
-          .realClick();
+        }).realClick();
         cy.findByRole("option", {
           name: testDate.set("month", 4).format("MMM"),
         }).should("be.visible");
@@ -91,9 +89,7 @@ describe("GIVEN a Calendar component", () => {
         }).realClick();
         cy.findByRole("option", {
           name: testDate.add(1, "year").format("YYYY"),
-        })
-          .realHover()
-          .realClick();
+        }).realClick();
         cy.findByRole("option", {
           name: testDate.add(1, "year").format("YYYY"),
         }).should("be.visible");

@@ -1,86 +1,85 @@
-import React, { ReactNode } from "react";
+import { FormField } from "@jpmorganchase/uitk-core";
+import classnames from "classnames";
+import React, { ReactElement } from "react";
 import {
-  OverflowCollectionHookResult,
-  OverflowItem,
-} from "../../responsive/overflowTypes";
-import {
+  extractResponsiveProps,
   isResponsiveAttribute,
-  liftResponsivePropsToFormField,
-} from "../../responsive/utils";
-import { ToolbarField } from "../toolbar-field/ToolbarField";
+  ManagedItem,
+} from "../../responsive";
 import { OrientationShape } from "../ToolbarProps";
 
-type TooltrayItem = {
-  "data-priority"?: number | string;
-  className: string;
+const fieldProps = {
+  fullWidth: false,
 };
 
 export const renderTrayTools = (
-  collectionHook: OverflowCollectionHookResult,
-  overflowedItems: OverflowItem[],
-  orientation: OrientationShape,
-  collapsed?: boolean | string
-): ReactNode => {
-  if (collapsed) {
-    return [];
-  }
-
+  items: ReactElement[],
+  isInsidePanel: boolean,
+  overflowedItems: ManagedItem[],
+  orientation: OrientationShape
+) => {
   let index = -1;
 
-  const items = collectionHook.data.filter((item) => !item.isOverflowIndicator);
-
-  return items.map((item) => {
+  return items.map((tool) => {
     index += 1;
-    const props = item.element.props as TooltrayItem;
-
+    const className = classnames(
+      "tooltray-item",
+      tool.props.className,
+      "uitkEmphasisLow"
+    );
+    if (!React.isValidElement(tool)) return null;
     const overflowed =
-      overflowedItems.findIndex((i) => i.index === index) === -1
+      overflowedItems.findIndex((item) => item.index === index) === -1
         ? undefined
         : true;
 
     const toolbarItemProps = {
+      "data-is-inside-panel": isInsidePanel,
+      className,
       "data-index": index,
-      "data-priority": props["data-priority"] ?? 2,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      "data-priority": tool.props["data-priority"] ?? 2,
       "data-overflowed": overflowed,
-      id: item.id,
       orientation,
     };
-    if (item.element.type === ToolbarField) {
-      return React.cloneElement(item.element, {
-        key: index,
-        ...toolbarItemProps,
-      });
+    if (tool.type === FormField) {
+      return React.cloneElement(tool, toolbarItemProps);
     } else {
-      if (Object.keys(props).some(isResponsiveAttribute)) {
-        const [toolbarProps, restProps] = liftResponsivePropsToFormField(props);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (Object.keys(tool.props).some(isResponsiveAttribute)) {
+        const [toolbarProps, props] = extractResponsiveProps(tool.props);
         return (
-          <ToolbarField
+          <FormField
             {...toolbarProps}
-            {...toolbarItemProps}
-            // don't think we need the data-index
+            {...fieldProps}
+            className={className}
             data-index={index}
             data-priority={2}
+            isInsidePanel={isInsidePanel}
             key={index}
-            data-orientation={orientation}
+            orientation={orientation}
+            withActivationIndicator={false}
           >
             {/* We clone here just to remove the responsive props */}
-            {React.cloneElement(item.element, { ...restProps })}
-          </ToolbarField>
+            {React.cloneElement(tool, { ...props })}
+          </FormField>
         );
       } else {
         return (
-          <ToolbarField
-            {...toolbarItemProps}
+          <FormField
+            {...fieldProps}
+            className={className}
             data-index={index}
             data-overflowed={overflowed}
             data-priority={2}
+            data-is-inside-panel={isInsidePanel}
             key={index}
             data-orientation={orientation}
           >
-            {React.cloneElement(item.element, {
-              id: `tooltray-control-${item.id}`,
-            })}
-          </ToolbarField>
+            {React.cloneElement(tool)}
+          </FormField>
         );
       }
     }

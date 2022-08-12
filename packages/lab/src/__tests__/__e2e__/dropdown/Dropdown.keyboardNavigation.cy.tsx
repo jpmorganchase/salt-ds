@@ -1,4 +1,6 @@
-import { Dropdown, SelectionStrategy } from "@jpmorganchase/uitk-lab";
+import { ComponentType } from "react";
+
+import { Dropdown, MultiSelectDropdown } from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied
@@ -10,8 +12,6 @@ import { Dropdown, SelectionStrategy } from "@jpmorganchase/uitk-lab";
  *   useTimeout returns undefined
  */
 
-const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
-
 /**
  * getByTestId 'dropdown-button' and 'dropdownlist' are used for the convenience of
  * not needing to differentiate between 'listbox' and 'option' roles where both the
@@ -19,65 +19,54 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
  */
 ["", "MultiSelect"].forEach((type) => {
   const isMultiSelect = !!type;
-  const selectionStrategy = isMultiSelect
-    ? "multiple"
-    : ("default" as SelectionStrategy);
+  const Component: ComponentType<any> = isMultiSelect
+    ? MultiSelectDropdown
+    : Dropdown;
 
-  describe(`Given a ${type}Dropdown Dropdown`, () => {
+  describe(`Given a ${type}Dropdown component`, () => {
+    const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
+
     describe("When initial is closed", () => {
       ([" ", "{enter}", "{downarrow}"] as const).forEach((key) => {
         specify(`Pressing "${key}" should open the menu`, () => {
-          cy.mount(
-            <Dropdown
-              id="test"
-              selectionStrategy={selectionStrategy}
-              source={testSource}
-            />
-          );
-          cy.get("#test-control").focus();
+          cy.mount(<Component source={testSource} />);
+          cy.findByTestId("dropdown-button").focus();
           cy.realPress(key);
-          cy.get("#test-popup").should("exist");
+          cy.findByTestId("dropdown-button").should("exist");
         });
       });
 
       specify("Pressing TAB key should not open the menu", () => {
-        cy.mount(
-          <Dropdown
-            id="test"
-            selectionStrategy={selectionStrategy}
-            source={testSource}
-          />
-        );
-        cy.get("#test-control").focus();
+        cy.mount(<Component source={testSource} />);
+        cy.findByTestId("dropdown-button").focus();
         cy.realPress("Tab");
-        cy.get("#test-popup").should("not.exist");
+        cy.findByTestId("dropdown-list").should("not.exist");
       });
     });
 
-    describe("When defaultIsOpen", () => {
-      (["Space", "Enter"] as const).forEach((key) => {
+    describe("When initialIsOpen", () => {
+      ([" ", "{enter}"] as const).forEach((key) => {
         specify(
           `Pressing "${key}" should ${
             isMultiSelect ? "not" : ""
           } close the menu and select first item`,
           () => {
             cy.mount(
-              <Dropdown
-                defaultIsOpen
-                id="test"
-                selectionStrategy={selectionStrategy}
+              <Component
+                ListProps={{ id: "list" }}
+                initialIsOpen
                 source={testSource}
               />
             );
-            cy.get("#test-control").focus();
+            cy.findByTestId("dropdown-button").focus();
             cy.realPress(key);
             if (isMultiSelect) {
-              cy.get("#test-popup").should("exist");
+              cy.findByTestId("dropdown-list").should("exist");
             } else {
-              cy.get("#test-popup").should("not.exist");
+              cy.findByTestId("dropdown-list").should("not.exist");
             }
 
-            cy.get("#test-control").within(() => {
+            cy.findByTestId("dropdown-button").within(() => {
               cy.findByText(testSource[0]).should("exist");
             });
           }
@@ -88,53 +77,50 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         "Pressing ESC key should close the menu but without item selected",
         () => {
           cy.mount(
-            <Dropdown
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
-              defaultIsOpen
             />
           );
-          cy.get("#test-control").focus();
-          cy.realPress("Escape");
-          cy.get("#test-popup").should("not.exist");
+          cy.findByTestId("dropdown-button").focus();
+          cy.realPress("{esc}");
+          cy.findByTestId("dropdown-list").should("not.exist");
           cy.findByText(testSource[0]).should("not.exist");
         }
       );
 
       specify("Pressing ArrowDown should highlight second item", () => {
         cy.mount(
-          <Dropdown
-            defaultIsOpen
-            id="test"
-            selectionStrategy={selectionStrategy}
+          <Component
+            ListProps={{ id: "list" }}
+            initialIsOpen
             source={testSource}
           />
         );
-        cy.get("#test-control").focus();
-        cy.realPress("ArrowDown");
-        cy.get("#test-control").should(
+        cy.findByTestId("dropdown-button").focus();
+        cy.realPress("{downarrow}");
+        cy.findByTestId("dropdown-button").should(
           "have.attr",
           "aria-activedescendant",
-          "test-item-1"
+          "list-item-1"
         );
       });
 
       specify("Pressing End should highlight last item", () => {
         cy.mount(
-          <Dropdown
-            defaultIsOpen
-            id="test"
-            selectionStrategy={selectionStrategy}
+          <Component
+            ListProps={{ id: "list" }}
+            initialIsOpen
             source={testSource}
           />
         );
-        cy.get("#test-control").focus();
-        cy.realPress("End");
-        cy.get("#test-control").should(
+        cy.findByTestId("dropdown-button").focus();
+        cy.realPress("{end}");
+        cy.findByTestId("dropdown-button").should(
           "have.attr",
           "aria-activedescendant",
-          `test-item-${testSource.length - 1}`
+          `list-item-${testSource.length - 1}`
         );
       });
 
@@ -144,22 +130,21 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         }select it`,
         () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
 
-          cy.get("#test-control").within(() => {
+          cy.findByTestId("dropdown-button").within(() => {
             cy.findByText(testSource[1]).should("not.exist");
           });
 
-          cy.realPress("ArrowDown");
+          cy.realPress("{downarrow}");
           cy.realPress("Tab");
-          cy.get("#test-control").within(() => {
+          cy.findByTestId("dropdown-button").within(() => {
             cy.findByText(testSource[1]).should(
               isMultiSelect ? "not.exist" : "exist"
             );
@@ -170,332 +155,304 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
       describe("supports type to highlight", () => {
         it("supports focusing items by typing letters in rapid succession", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
 
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-0"
+            "list-item-0"
           );
 
           // Prioritize next available option starting with B from the cyclic effect
           cy.realPress("B");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-3"
+            "list-item-3"
           );
 
           cy.realPress("A");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-3"
+            "list-item-3"
           );
 
           cy.realPress("R");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-0"
+            "list-item-0"
           );
         });
 
         it("supports the space character in a search without closing the menu", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
 
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-0"
+            "list-item-0"
           );
 
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.realPress("O");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.realPress("O");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
-          cy.realPress("Space");
-          cy.get("#test-control").should(
+          cy.realPress(" ");
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
 
           cy.realPress("B");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
 
           cy.realPress("A");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
 
           cy.realPress("R");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
         });
 
         it("supports item selection using the Spacebar after search times out", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
 
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-0"
+            "list-item-0"
           );
 
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.realPress("O");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.realPress("O");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
-          cy.realPress("Space");
-          cy.get("#test-control").should(
+          cy.realPress(" ");
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
 
           // Advance the timers so we can select using the Spacebar
           cy.wait(1500);
 
-          cy.realPress("Space");
+          cy.realPress(" ");
           if (!isMultiSelect) {
             // Closes menu
             cy.findByTestId("dropdown-list").should("not.exist");
           }
 
-          cy.get("#test-control").within(() => {
+          cy.findByTestId("dropdown-button").within(() => {
             cy.findByText("Foo Bar").should("exist");
           });
         });
 
         it("resets the search text after a timeout", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.wait(1500);
 
           cy.realPress("B");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-3"
+            "list-item-3"
           );
         });
 
         it("wraps around to search from the beginning when no items past the current one match", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
           cy.realPress("B");
           cy.realPress("A");
           cy.realPress("Z");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-3"
+            "list-item-3"
           );
 
           cy.wait(1500);
 
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
         });
 
         it("cycles through options when typing the first character repeatedly", () => {
           cy.mount(
-            <Dropdown
-              defaultIsOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
+            <Component
+              ListProps={{ id: "list" }}
+              initialIsOpen
               source={testSource}
             />
           );
-          cy.get("#test-control").focus();
+          cy.findByTestId("dropdown-button").focus();
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
 
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-2"
+            "list-item-2"
           );
 
           cy.realPress("F");
-          cy.get("#test-control").should(
+          cy.findByTestId("dropdown-button").should(
             "have.attr",
             "aria-activedescendant",
-            "test-item-1"
+            "list-item-1"
           );
         });
       });
-
-      specify.skip(
-        "Pressing ALT + ARROW DOWN key should not be propagated",
-        () => {
-          const parentKeyDownSpy = cy.stub().as("keyDownSpy");
-
-          cy.mount(
-            <div onKeyDown={parentKeyDownSpy}>
-              <Dropdown source={testSource} id="test" />
-            </div>
-          );
-
-          cy.get("#test-control").focus();
-          cy.realPress(["Alt", "ArrowDown"]);
-          cy.get("@keyDownSpy").should("have.callCount", 1);
-        }
-      );
-
-      specify(
-        "When isOpen is controlled, TAB onto it should still allow navigation",
-        () => {
-          cy.mount(
-            <Dropdown
-              isOpen
-              id="test"
-              selectionStrategy={selectionStrategy}
-              source={testSource}
-            />
-          );
-
-          cy.get("#test-control").focus();
-          cy.get("#test-control").should(
-            "have.attr",
-            "aria-activedescendant",
-            "test-item-0"
-          );
-          cy.realPress("ArrowDown");
-          cy.get("#test-control").should(
-            "have.attr",
-            "aria-activedescendant",
-            "test-item-1"
-          );
-        }
-      );
     });
 
     describe("When disabled", () => {
-      it("Clicking it should not open the menu", () => {
-        cy.mount(
-          <Dropdown
-            disabled
-            id="test"
-            selectionStrategy={selectionStrategy}
-            source={testSource}
-          />
-        );
-        cy.get("#test-control").click();
+      specify("Clicking it should not open the menu", () => {
+        cy.mount(<Component disabled source={testSource} />);
+        cy.findByTestId("dropdown-button").click();
 
-        cy.get("#test-popup").should("not.exist");
+        cy.findByTestId("dropdown-list").should("not.exist");
       });
 
-      it("Pressing Enter should not open the menu", () => {
-        cy.mount(
-          <Dropdown
-            disabled
-            id="test"
-            selectionStrategy={selectionStrategy}
-            source={testSource}
-          />
-        );
-        cy.get("#test-control").focus();
-        cy.realPress("Enter");
-        cy.get("#test-popup").should("not.exist");
+      specify("Pressing Enter should not open the menu", () => {
+        cy.mount(<Component disabled source={testSource} />);
+        cy.findByTestId("dropdown-button").focus();
+        cy.realPress("{enter}");
+        cy.findByTestId("dropdown-list").should("not.exist");
       });
     });
+
+    specify("Pressing ALT + ARROW DOWN key should not be propagated", () => {
+      const parentKeyDownSpy = cy.stub().as("keyDownSpy");
+
+      cy.mount(
+        <div onKeyDown={parentKeyDownSpy}>
+          <Component source={testSource} />
+        </div>
+      );
+
+      cy.findByTestId("dropdown-button").focus();
+      cy.realPress(["Alt", "ArrowDown"]);
+      cy.get("@keyDownSpy").should("have.callCount", 1);
+    });
+
+    specify(
+      "When isOpen is controlled, TAB onto it should still allow navigation",
+      () => {
+        cy.mount(
+          <Component ListProps={{ id: "list" }} isOpen source={testSource} />
+        );
+
+        cy.findByTestId("dropdown-button").focus();
+        cy.findByTestId("dropdown-button").should(
+          "have.attr",
+          "aria-activedescendant",
+          "list-item-0"
+        );
+        cy.realPress("ArrowDown");
+        cy.findByTestId("dropdown-button").should(
+          "have.attr",
+          "aria-activedescendant",
+          "list-item-1"
+        );
+      }
+    );
   });
 });

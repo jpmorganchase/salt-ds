@@ -16,8 +16,7 @@ import {
   SyntheticEvent,
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
-import { ListItem, ListItemProps, ListItemType } from "../../list";
-
+import { IndexedListItemProps, ListItemBase, useListItem } from "../../list";
 import { useCalendarContext } from "./CalendarContext";
 import dayjs from "./dayjs";
 
@@ -115,31 +114,42 @@ function useCalendarNavigation() {
 
 const ListItemWithTooltip = forwardRef<
   HTMLDivElement,
-  ListItemProps<DropdownItem>
+  IndexedListItemProps<DropdownItem>
 >((props, ref) => {
-  const { item, label } = props;
+  const { item, itemProps, itemToString } = useListItem<DropdownItem>(props);
 
   const { getTooltipProps, getTriggerProps } = useTooltip({
     placement: "right",
-    disabled: !item?.disabled,
+    disabled: !item.disabled,
   });
 
   const { ref: triggerRef, ...triggerProps } =
-    getTriggerProps<typeof ListItem>(props);
+    getTriggerProps<typeof ListItemBase>(itemProps);
 
   const handleRef = useForkRef(triggerRef, ref);
 
   return (
-    <ListItem ref={handleRef} {...triggerProps}>
-      {label}
+    <>
+      <ListItemBase ref={handleRef} {...triggerProps}>
+        <label
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {itemToString(item)}
+        </label>
+      </ListItemBase>
       <Tooltip
         {...getTooltipProps({
           title: "Out of range",
         })}
       />
-    </ListItem>
+    </>
   );
-}) as ListItemType<DropdownProps>;
+});
 
 export const CalendarNavigation = forwardRef<
   HTMLDivElement,
@@ -176,19 +186,13 @@ export const CalendarNavigation = forwardRef<
     moveToNextMonth(event);
   };
 
-  const handleMonthSelect: dateDropdownProps["onSelectionChange"] = (
-    event,
-    month
-  ) => {
+  const handleMonthSelect: dateDropdownProps["onChange"] = (event, month) => {
     if (month) {
       moveToMonth(event, month.value);
     }
   };
 
-  const handleYearSelect: dateDropdownProps["onSelectionChange"] = (
-    event,
-    year
-  ) => {
+  const handleYearSelect: dateDropdownProps["onChange"] = (event, year) => {
     if (year) {
       moveToMonth(event, year.value);
     }
@@ -197,14 +201,12 @@ export const CalendarNavigation = forwardRef<
   const monthDropdownId = useId(MonthDropdownProps?.id);
   const monthDropdownLabelledBy = cx(
     MonthDropdownProps?.["aria-labelledby"],
-    // TODO need a prop on Dropdown to aloow buttonId to be passed, should not make assumptions about internal
-    // id assignment like this
-    `${monthDropdownId}-control`
+    monthDropdownId
   );
   const yearDropdownId = useId(YearDropdownProps?.id);
   const yearDropdownLabelledBy = cx(
     YearDropdownProps?.["aria-labelledby"],
-    `${yearDropdownId}-control`
+    yearDropdownId
   );
 
   const defaultItemToMonth = (date: DropdownItem) => {
@@ -247,9 +249,9 @@ export const CalendarNavigation = forwardRef<
         aria-label="Month Dropdown"
         {...MonthDropdownProps}
         ListItem={ListItemWithTooltip}
-        selected={selectedMonth}
+        selectedItem={selectedMonth}
         itemToString={defaultItemToMonth}
-        onSelectionChange={handleMonthSelect}
+        onChange={handleMonthSelect}
         fullWidth
       />
       {!hideYearDropdown && (
@@ -260,8 +262,8 @@ export const CalendarNavigation = forwardRef<
           aria-label="Year Dropdown"
           {...YearDropdownProps}
           ListItem={ListItemWithTooltip}
-          selected={selectedYear}
-          onSelectionChange={handleYearSelect}
+          selectedItem={selectedYear}
+          onChange={handleYearSelect}
           itemToString={defaultItemToYear}
           fullWidth
         />

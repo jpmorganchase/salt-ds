@@ -1,8 +1,27 @@
-import type { ComponentMeta, DecoratorFn, Story } from "@storybook/react";
-
+import { Button, Input, FormField, useDensity } from "@jpmorganchase/uitk-core";
+import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
+import {
+  List,
+  ListChangeHandler,
+  ListItem,
+  ListItemBase,
+  ListItemBaseProps,
+  ListProps,
+  ListScrollHandles,
+  useListItem,
+  useListItemContext,
+} from "@jpmorganchase/uitk-lab";
+import { IndexedListItemProps } from "@jpmorganchase/uitk-lab/src/list";
+import type {
+  ComponentMeta,
+  ComponentStory,
+  DecoratorFn,
+  Story,
+} from "@storybook/react";
 import {
   ChangeEventHandler,
-  CSSProperties,
+  ComponentPropsWithoutRef,
+  FC,
   memo,
   useEffect,
   useLayoutEffect,
@@ -10,40 +29,14 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  Button,
-  Input,
-  FlexLayout,
-  FlexItem,
-  FormField,
-  useDensity,
-} from "@jpmorganchase/uitk-core";
-import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
-
-import {
-  ContentStatus,
-  List,
-  ListProps,
-  ListItemGroup,
-  ListItem,
-  ListItemType,
-  ListItemProps,
-  ListScrollHandles,
-  VirtualizedList,
-} from "@jpmorganchase/uitk-lab";
-import { SelectionChangeHandler, SelectHandler } from "../src/common-hooks";
-
-import {
-  usa_states,
-  // random_1000,
-} from "./list.data";
+import { usStateExampleData as listExampleData } from "./exampleData";
 
 import "./list.stories.css";
 
 const containerStyle = {
   display: "flex",
   justifyContent: "center",
-  width: "calc(100vw - 2em)",
+  width: "100vw",
 };
 
 const withFullViewWidth: DecoratorFn = (Story) => (
@@ -52,93 +45,87 @@ const withFullViewWidth: DecoratorFn = (Story) => (
   </div>
 );
 
-type CustomItem = {
-  label: string;
-  disabled?: boolean;
-};
-
-const customItemToString: ListProps<CustomItem>["itemToString"] = ({ label }) =>
-  label;
-
 export default {
   title: "Lab/List",
   component: List,
   decorators: [withFullViewWidth],
 } as ComponentMeta<typeof List>;
 
-export const Default: Story<ListProps> = () => {
-  return (
-    <List aria-label="Listbox example" maxWidth={292} source={usa_states} />
-  );
+const Template: Story<ListProps> = ({ onChange, ...restProps }) => {
+  const handleChange: ListChangeHandler = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
+  };
+
+  return <List onChange={handleChange} {...restProps} />;
 };
 
+export const FeatureList: Story<ListProps> = Template.bind({});
+
+FeatureList.args = {
+  disabled: false,
+  virtualized: false,
+  maxWidth: 292,
+  minWidth: "8em",
+  selectionVariant: "default",
+  source: listExampleData,
+};
+
+FeatureList.argTypes = {
+  selectionVariant: {
+    options: ["default", "deselectable", "multiple"],
+    control: {
+      type: "inline-radio",
+    },
+  },
+};
+
+export const DefaultList: Story<ListProps> = (props) => (
+  <List maxWidth={292} source={listExampleData} {...props} />
+);
+
 export const BorderlessList: Story<ListProps> = (props) => (
+  <List maxWidth={292} source={listExampleData} borderless={true} {...props} />
+);
+
+export const DeclarativeList: Story<ListProps> = (props) => (
+  <List displayedItemCount={5} width={292} {...props}>
+    <ListItem>Alabama</ListItem>
+    <ListItem>Alaska</ListItem>
+    <ListItem disabled>Arizona</ListItem>
+    <ListItem>Arkansas</ListItem>
+    <ListItem>California</ListItem>
+    <ListItem>Colorado</ListItem>
+    <ListItem disabled>Connecticut</ListItem>
+    <ListItem>Delaware</ListItem>
+    <ListItem>Florida</ListItem>
+    <ListItem>Georgia</ListItem>
+  </List>
+);
+
+export const VirtualizedList: Story<ListProps> = (props) => (
+  <List maxWidth={292} source={listExampleData} virtualized={true} {...props} />
+);
+
+export const DeselectableList: Story<ListProps> = (props) => (
   <List
-    aria-label="Borderless List example"
     maxWidth={292}
-    source={usa_states}
-    borderless={true}
+    selectionVariant="deselectable"
+    source={listExampleData}
     {...props}
   />
 );
 
-export const DeclarativeList: Story<ListProps> = () => {
-  return (
-    <List
-      aria-label="Declarative List example"
-      displayedItemCount={5}
-      width={292}
-    >
-      <ListItem>Alabama</ListItem>
-      <ListItem>Alaska</ListItem>
-      <ListItem disabled>Arizona</ListItem>
-      <ListItem>Arkansas</ListItem>
-      <ListItem>California</ListItem>
-      <ListItem>Colorado</ListItem>
-      <ListItem disabled>Connecticut</ListItem>
-      <ListItem>Delaware</ListItem>
-      <ListItem>Florida</ListItem>
-      <ListItem>Georgia</ListItem>
-    </List>
-  );
-};
+export const DisplayedItemCount: Story<ListProps> = (props) => (
+  <List
+    displayedItemCount={4}
+    width={292}
+    source={listExampleData}
+    {...props}
+  />
+);
 
-export const VirtualizedListExample: Story<ListProps> = (props) => {
-  return (
-    <VirtualizedList
-      aria-label="Listbox example"
-      maxWidth={292}
-      source={usa_states}
-      {...props}
-    />
-  );
-};
-
-export const DeselectableList: Story<ListProps> = (props) => {
-  return (
-    <List
-      aria-label="Deselectable List example"
-      maxWidth={292}
-      selectionStrategy="deselectable"
-      source={usa_states}
-      {...props}
-    />
-  );
-};
-
-export const DisplayedItemCount: Story<ListProps> = (props) => {
-  return (
-    <List
-      aria-label="DisplayedItemCount List example"
-      displayedItemCount={4}
-      maxWidth={292}
-      source={usa_states}
-      {...props}
-    />
-  );
-};
-
-export const ControlledList: Story<ListProps> = (props) => {
+export const ControlledList: Story = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -159,7 +146,7 @@ export const ControlledList: Story<ListProps> = (props) => {
 
   const handleArrowDown = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(usa_states.length - 1, prevHighlightedIndex + 1)
+      Math.min(listExampleData.length - 1, prevHighlightedIndex + 1)
     );
   };
 
@@ -170,7 +157,7 @@ export const ControlledList: Story<ListProps> = (props) => {
   };
 
   const handleSelect = () => {
-    setSelectedItem(usa_states[highlightedIndex] || null);
+    setSelectedItem(listExampleData[highlightedIndex]);
   };
 
   return (
@@ -185,46 +172,48 @@ export const ControlledList: Story<ListProps> = (props) => {
     >
       <div
         ref={buttonsRef}
-        style={{ display: "flex", justifyContent: "flex-end", zIndex: 1 }}
+        style={{ display: "flex", justifyContent: "flex-end" }}
       >
         <Button
-          disabled={highlightedIndex === usa_states.length - 1}
+          disabled={highlightedIndex === listExampleData.length - 1}
           onClick={handleArrowDown}
         >
-          <ArrowDownIcon />
+          <ChevronDownIcon size={12} />
         </Button>
         <Button disabled={highlightedIndex <= 0} onClick={handleArrowUp}>
-          <ArrowUpIcon />
+          <ChevronUpIcon size={12} />
         </Button>
         <Button onClick={handleSelect}>Select</Button>
       </div>
       <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
-        <List
-          aria-label="Controlled List example"
+        <List<string | null>
           disableFocus
           highlightedIndex={highlightedIndex}
-          selected={selectedItem}
-          source={usa_states}
-          {...props}
+          selectedItem={selectedItem}
+          source={listExampleData}
         />
       </div>
     </div>
   );
 };
 
-export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
-  const source = useMemo(
-    () =>
-      usa_states.map(
-        (label, index): CustomItem => ({
-          label,
-          ...(index % 4 === 3 && { disabled: true }),
-        })
-      ),
-    []
-  );
+type Item = {
+  label: string;
+  disabled?: boolean;
+};
 
+const source = listExampleData.map(
+  (label, index): Item => ({
+    label,
+    ...(index % 4 === 3 && { disabled: true }),
+  })
+);
+
+const itemToString: ListProps<Item>["itemToString"] = ({ label }) => label;
+
+export const DisabledList: Story = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
+
   const [disabled, setDisabled] = useState(false);
   const [offsetHeight, setOffsetHeight] = useState(0);
 
@@ -234,14 +223,8 @@ export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
     }
   }, []);
 
-  const handleChange: SelectionChangeHandler<CustomItem> = (
-    _,
-    selectedItem
-  ) => {
+  const handleChange: ListChangeHandler<Item> = (_, selectedItem) => {
     console.log("selection changed", selectedItem);
-  };
-  const handleSelect: SelectHandler<CustomItem> = (_, selectedItem) => {
-    console.log("selected", selectedItem);
   };
 
   const handleToggleDisabled = () => {
@@ -249,63 +232,77 @@ export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
   };
 
   return (
-    <FlexLayout direction="column" gap={0}>
-      <FlexItem
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        maxWidth: 292,
+      }}
+    >
+      <div
         ref={buttonsRef}
         style={{ display: "flex", justifyContent: "flex-end" }}
       >
         <Button onClick={handleToggleDisabled}>
           {disabled ? "Enable" : "Disable"} list
         </Button>
-      </FlexItem>
-      <FlexItem style={{ height: `calc(100% - ${offsetHeight}px)` }}>
-        <List<CustomItem>
+      </div>
+      <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
+        <List<Item>
           disabled={disabled}
-          itemToString={customItemToString}
-          onSelect={handleSelect}
-          onSelectionChange={handleChange}
+          itemToString={itemToString}
+          maxWidth={292}
+          onChange={handleChange}
           source={source}
-          width={292}
-          {...props}
         />
-      </FlexItem>
-    </FlexLayout>
+      </div>
+    </div>
   );
 };
 
-export const Grouped: Story<ListProps> = (props) => (
-  <>
-    <style>{`#grouped-list .uitkListItemHeader {
-      background: var(--uitk-color-grey-20);
-      }`}</style>
-    <List
-      aria-label="Grouped List example"
-      maxWidth={292}
-      stickyHeaders
-      {...props}
-    >
-      <ListItemGroup title="A">
+const Group: FC<ComponentPropsWithoutRef<"div">> = (props) => {
+  return <div className="uitkListGroup" {...props} />;
+};
+
+const GroupHeader: FC<ComponentPropsWithoutRef<"div">> = (props) => {
+  const { getItemHeight } = useListItemContext<string>();
+  const height = getItemHeight?.();
+
+  return <div className="uitkListGroupHeader" style={{ height }} {...props} />;
+};
+
+export const Grouped: Story = () => (
+  <div style={containerStyle}>
+    <List maxWidth={292}>
+      <Group>
+        <GroupHeader>A</GroupHeader>
         <ListItem>Alabama</ListItem>
         <ListItem>Alaska</ListItem>
         <ListItem>Arizona</ListItem>
         <ListItem>Arkansas</ListItem>
-      </ListItemGroup>
-      <ListItemGroup title="C">
+      </Group>
+      <Group>
+        <GroupHeader>C</GroupHeader>
         <ListItem>California</ListItem>
         <ListItem>Colorado</ListItem>
         <ListItem>Connecticut</ListItem>
-      </ListItemGroup>
-      <ListItemGroup title="I">
+      </Group>
+      <Group>
+        <GroupHeader>I</GroupHeader>
         <ListItem>Idaho</ListItem>
         <ListItem>Illinois</ListItem>
         <ListItem>Indiana</ListItem>
         <ListItem>Iowa</ListItem>
-      </ListItemGroup>
-      <ListItemGroup title="K">
+      </Group>
+      <Group>
+        <GroupHeader>K</GroupHeader>
         <ListItem>Kansas</ListItem>
         <ListItem>Kentucky</ListItem>
-      </ListItemGroup>
-      <ListItemGroup title="M">
+      </Group>
+      <Group>
+        <GroupHeader>M</GroupHeader>
         <ListItem>Maine</ListItem>
         <ListItem>Maryland</ListItem>
         <ListItem>Massachusetts</ListItem>
@@ -314,154 +311,202 @@ export const Grouped: Story<ListProps> = (props) => (
         <ListItem>Mississippi</ListItem>
         <ListItem>Missouri</ListItem>
         <ListItem>Montana</ListItem>
-      </ListItemGroup>
-      <ListItemGroup title="N">
+      </Group>
+      <Group>
+        <GroupHeader>N</GroupHeader>
         <ListItem>Nebraska</ListItem>
         <ListItem>Nevada</ListItem>
         <ListItem>New Hampshire</ListItem>
         <ListItem>New Jersey</ListItem>
         <ListItem>New Mexico</ListItem>
         <ListItem>New York</ListItem>
-      </ListItemGroup>
+      </Group>
     </List>
-  </>
+  </div>
 );
 
-export const MultiSelectionList: Story<ListProps> = (props) => {
-  return (
-    <FlexLayout>
-      <FlexItem>
-        <List
-          aria-label="MultiSelection Listbox example"
-          checkable={false}
-          width={292}
-          selectionStrategy="multiple"
-          source={usa_states}
-          {...props}
-        />
-      </FlexItem>
-      <FlexItem>
-        <List
-          aria-label="MultiSelection Listbox example"
-          width={292}
-          selectionStrategy="multiple"
-          source={usa_states}
-          {...props}
-        />
-      </FlexItem>
-    </FlexLayout>
-  );
-};
+// For some reason, props of List will be overridden to `undefined`
+// if we're not doing props destructuring. This only happens locally.
+export const MultiSelectionList: ComponentStory<typeof List> = ({
+  width,
+  selectionVariant,
+  source,
+  ...restProps
+}) => (
+  <List
+    width={width ?? 292}
+    selectionVariant={selectionVariant ?? "multiple"}
+    source={source ?? listExampleData}
+    {...restProps}
+  />
+);
 
 // We don't want to introduce true run time randomness otherwise
 // our visual regression test wouldn't work. Cheating a bit to
 // sort string without 1st character
-const randomizedData = usa_states
+const randomizedData = listExampleData
   .slice()
   .sort((a, b) => a.substring(1).localeCompare(b.substring(1)));
 
 // We need an example of list not following alphabetical order to test certain feature, e.g. type to select
-export const RandomOrderList: Story<ListProps> = (props) => (
+export const RandomOrderList: ComponentStory<typeof List> = (props) => (
   <List width={292} source={randomizedData} {...props} />
 );
 
-export const TabToSelect: Story<ListProps> = () => {
-  return (
-    <FlexLayout>
-      <FlexItem>
-        <h4>default</h4>
-        <List
-          aria-label="List example"
-          width={240}
-          source={usa_states}
-          tabToSelect
-        />
-      </FlexItem>
-      <FlexItem>
-        <h4>deselectable</h4>
-        <List
-          aria-label="Deselectable List example"
-          width={240}
-          selectionStrategy="deselectable"
-          source={usa_states}
-          tabToSelect
-        />
-      </FlexItem>
-      <FlexItem>
-        <h4>multiple</h4>
-        <List
-          aria-label="MultiSelectable List example"
-          width={240}
-          selectionStrategy="multiple"
-          source={usa_states}
-          tabToSelect
-        />
-      </FlexItem>
-    </FlexLayout>
-  );
+export const TabToSelect: ComponentStory<typeof List> = ({
+  selectionVariant: _,
+  tabToSelect,
+  ...restProps
+}) => (
+  <>
+    <div>
+      <h4>default</h4>
+      <List
+        width={240}
+        selectionVariant={"default"}
+        source={listExampleData}
+        tabToSelect={tabToSelect ?? true}
+        {...restProps}
+      />
+    </div>
+    <div>
+      <h4>deselectable</h4>
+      <List
+        width={240}
+        selectionVariant={"deselectable"}
+        source={listExampleData}
+        tabToSelect={tabToSelect ?? true}
+        {...restProps}
+      />
+    </div>
+    <div>
+      <h4>multiple</h4>
+      <List
+        width={240}
+        selectionVariant={"multiple"}
+        source={listExampleData}
+        tabToSelect={tabToSelect ?? true}
+        {...restProps}
+      />
+    </div>
+  </>
+);
+
+// Default the args to true, still enable change to false during run time
+TabToSelect.args = {
+  tabToSelect: true,
 };
 
-export const ScrollToIndex: Story<ListProps> = () => {
+const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
+
+export const ScrollToIndex: Story<ListProps> = ({ source, ...restProps }) => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<ListScrollHandles<string>>(null);
-  const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
+
+  const [offsetHeight, setOffsetHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    if (inputFieldRef.current) {
+      setOffsetHeight(inputFieldRef.current.getBoundingClientRect().height);
+    }
+  }, []);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const inputValue = event.target.value;
 
-    if (NUMBER_REGEX.test(inputValue) && listRef.current) {
+    if (NUMBER_REGEX.exec(inputValue) && listRef.current) {
       listRef.current.scrollToIndex(parseInt(inputValue, 10) || 0);
     }
   };
 
+  const listSource = source ?? listExampleData;
+
   return (
-    <FlexLayout direction="column" style={{ width: 292 }}>
-      <FlexItem>
-        <FormField label="Type an index to scroll to" ref={inputFieldRef}>
-          <Input
-            inputProps={{
-              min: 0,
-              max: usa_states.length - 1,
-            }}
-            onChange={handleInputChange}
-            type="number"
-          />
-        </FormField>
-        <List
-          aria-label="ScrollToIndex List example"
-          ref={listRef}
-          source={usa_states}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: 292,
+      }}
+    >
+      <FormField label="Type an index to scroll to" ref={inputFieldRef}>
+        <Input
+          inputProps={{
+            min: 0,
+            max: listSource.length - 1,
+          }}
+          onChange={handleInputChange}
+          type="number"
         />
-      </FlexItem>
-    </FlexLayout>
+      </FormField>
+      <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
+        <List ref={listRef} source={listSource} {...restProps} />
+      </div>
+    </div>
   );
 };
 
-export const VariableHeight: Story<ListProps> = () => {
-  const heightByDensity = useMemo(
-    () => ({
-      high: 24,
-      medium: 32,
-      low: 36,
-      touch: 36,
-    }),
-    []
-  );
+const heightByDensity = {
+  high: 24,
+  medium: 32,
+  low: 36,
+  touch: 36,
+};
 
+export const VariableHeightList: Story<ListProps> = ({
+  onChange,
+  ...restProps
+}) => {
   const density = useDensity();
 
-  const getItemHeight = (index: number) => {
+  const getItemHeight = (index = 0) => {
     const height = heightByDensity[density];
     return height * ((index % 3) + 1);
   };
 
+  const handleChange: ListChangeHandler<string> = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
+  };
+
   return (
     <List
-      aria-label="VariableHeight List example"
       displayedItemCount={6}
       getItemHeight={getItemHeight}
-      maxWidth={292}
-      source={usa_states}
+      width={292}
+      onChange={handleChange}
+      source={listExampleData}
+      {...restProps}
+    />
+  );
+};
+
+export const VariableHeightVirtualizedList: Story<ListProps> = ({
+  onChange,
+  ...restProps
+}) => {
+  const density = useDensity();
+
+  const getItemHeight = (index = 0) => {
+    const height = heightByDensity[density];
+    return height * ((index % 3) + 1);
+  };
+
+  const handleChange: ListChangeHandler<string> = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
+  };
+
+  return (
+    <List
+      displayedItemCount={6}
+      getItemHeight={getItemHeight}
+      width={292}
+      onChange={handleChange}
+      source={listExampleData}
+      virtualized={true}
+      {...restProps}
     />
   );
 };
@@ -471,119 +516,152 @@ interface State {
   abbrev: string;
 }
 
-export const WithItemRenderer: Story<ListProps<State>> = (props) => {
-  const listExampleData = useMemo(
-    () =>
-      [
-        { name: "Alabama", abbrev: "AL" },
-        { name: "Alaska", abbrev: "AK" },
-        { name: "Arizona", abbrev: "AZ" },
-        { name: "Arkansas", abbrev: "AR" },
-        { name: "California", abbrev: "CA" },
-        { name: "Colorado", abbrev: "CO" },
-        { name: "Connecticut", abbrev: "CT" },
-        { name: "Delaware", abbrev: "DE" },
-        { name: "Florida", abbrev: "FL" },
-        { name: "Georgia", abbrev: "GA" },
-        { name: "Hawaii", abbrev: "HI" },
-        { name: "Idaho", abbrev: "ID" },
-        { name: "Illinois", abbrev: "IL" },
-        { name: "Indiana", abbrev: "IN" },
-        { name: "Iowa", abbrev: "IA" },
-        { name: "Kansas", abbrev: "KS" },
-        { name: "Kentucky", abbrev: "KY" },
-        { name: "Louisiana", abbrev: "LA" },
-        { name: "Maine", abbrev: "ME" },
-        { name: "Maryland", abbrev: "MD" },
-        { name: "Massachusetts", abbrev: "MA" },
-        { name: "Michigan", abbrev: "MI" },
-        { name: "Minnesota", abbrev: "MN" },
-        { name: "Mississippi", abbrev: "MS" },
-        { name: "Missouri", abbrev: "MO" },
-        { name: "Montana", abbrev: "MT" },
-        { name: "Nebraska", abbrev: "NE" },
-        { name: "Nevada", abbrev: "NV" },
-        { name: "New Hampshire", abbrev: "NH" },
-        { name: "New Jersey", abbrev: "NJ" },
-        { name: "New Mexico", abbrev: "NM" },
-        { name: "New York", abbrev: "NY" },
-        { name: "North Carolina", abbrev: "NC" },
-        { name: "North Dakota", abbrev: "ND" },
-        { name: "Ohio", abbrev: "OH" },
-        { name: "Oklahoma", abbrev: "OK" },
-        { name: "Oregon", abbrev: "OR" },
-        { name: "Pennsylvania", abbrev: "PA" },
-        { name: "Rhode Island", abbrev: "RI" },
-        { name: "South Carolina", abbrev: "SC" },
-        { name: "South Dakota", abbrev: "SD" },
-        { name: "Tennessee", abbrev: "TN" },
-        { name: "Texas", abbrev: "TX" },
-        { name: "Utah", abbrev: "UT" },
-        { name: "Vermont", abbrev: "VT" },
-        { name: "Virginia", abbrev: "VA" },
-        { name: "Washington", abbrev: "WA" },
-        { name: "West Virginia", abbrev: "WV" },
-        { name: "Wisconsin", abbrev: "WI" },
-        { name: "Wyoming", abbrev: "WY" },
-      ] as ReadonlyArray<State>,
-    []
-  );
+const stateItemToString = (item?: State) => {
+  // console.log(`stateItemToString`, item);
+  return item ? `${item.name} - ${item.abbrev}` : "";
+};
 
-  const stateItemToString = (item?: State) =>
-    item ? `${item.name} - ${item.abbrev}` : "";
-
-  /**
-   * We intentionally created this example with some "heavy" components.
-   * We memoize it with its props to avoid unnecessary re-render.
-   */
-  const MemoizedItem = memo<{ label?: string } & ListItemProps<State>>(
-    function MemoizedItem({ label, ...restProps }) {
-      return (
-        <ListItem {...restProps}>
-          <label>{label}</label>
-        </ListItem>
-      );
-    }
-  );
-
-  const CustomListItem: ListItemType<State> = ({
-    style: styleProp,
-    ...props
-  }) => {
-    const style = useMemo(
-      () =>
-        ({
-          ...styleProp,
-          fontStyle: "italic",
-        } as CSSProperties),
-      [styleProp]
+/**
+ * We intentionally created this example with some "heavy" components.
+ * We memoize it with its props to avoid unnecessary re-render.
+ */
+const MemoizedItem = memo<{ label: string } & ListItemBaseProps>(
+  function MemoizedItem({ label, ...restProps }) {
+    return (
+      <ListItemBase {...restProps}>
+        <label>{label}</label>
+      </ListItemBase>
     );
-    return <MemoizedItem style={style} {...props} />;
-  };
+  }
+);
+
+const CustomListItem: FC<IndexedListItemProps<State>> = (props) => {
+  const {
+    item,
+    itemProps: { style: itemStyle, ...restItemProps },
+  } = useListItem<State>(props);
+
+  const style = useMemo(
+    () => ({
+      ...itemStyle,
+      fontStyle: "italic",
+    }),
+    [itemStyle]
+  );
 
   return (
-    <List<State>
-      ListItem={CustomListItem}
-      aria-label="Custom ItemRenderer example"
-      itemToString={stateItemToString}
-      maxWidth={292}
-      source={listExampleData}
-      {...props}
+    <MemoizedItem
+      label={stateItemToString(item)}
+      style={style}
+      {...restItemProps}
     />
   );
 };
 
+const abbrevStateExampleData = [
+  { name: "Alabama", abbrev: "AL" },
+  { name: "Alaska", abbrev: "AK" },
+  { name: "Arizona", abbrev: "AZ" },
+  { name: "Arkansas", abbrev: "AR" },
+  { name: "California", abbrev: "CA" },
+  { name: "Colorado", abbrev: "CO" },
+  { name: "Connecticut", abbrev: "CT" },
+  { name: "Delaware", abbrev: "DE" },
+  { name: "Florida", abbrev: "FL" },
+  { name: "Georgia", abbrev: "GA" },
+  { name: "Hawaii", abbrev: "HI" },
+  { name: "Idaho", abbrev: "ID" },
+  { name: "Illinois", abbrev: "IL" },
+  { name: "Indiana", abbrev: "IN" },
+  { name: "Iowa", abbrev: "IA" },
+  { name: "Kansas", abbrev: "KS" },
+  { name: "Kentucky", abbrev: "KY" },
+  { name: "Louisiana", abbrev: "LA" },
+  { name: "Maine", abbrev: "ME" },
+  { name: "Maryland", abbrev: "MD" },
+  { name: "Massachusetts", abbrev: "MA" },
+  { name: "Michigan", abbrev: "MI" },
+  { name: "Minnesota", abbrev: "MN" },
+  { name: "Mississippi", abbrev: "MS" },
+  { name: "Missouri", abbrev: "MO" },
+  { name: "Montana", abbrev: "MT" },
+  { name: "Nebraska", abbrev: "NE" },
+  { name: "Nevada", abbrev: "NV" },
+  { name: "New Hampshire", abbrev: "NH" },
+  { name: "New Jersey", abbrev: "NJ" },
+  { name: "New Mexico", abbrev: "NM" },
+  { name: "New York", abbrev: "NY" },
+  { name: "North Carolina", abbrev: "NC" },
+  { name: "North Dakota", abbrev: "ND" },
+  { name: "Ohio", abbrev: "OH" },
+  { name: "Oklahoma", abbrev: "OK" },
+  { name: "Oregon", abbrev: "OR" },
+  { name: "Pennsylvania", abbrev: "PA" },
+  { name: "Rhode Island", abbrev: "RI" },
+  { name: "South Carolina", abbrev: "SC" },
+  { name: "South Dakota", abbrev: "SD" },
+  { name: "Tennessee", abbrev: "TN" },
+  { name: "Texas", abbrev: "TX" },
+  { name: "Utah", abbrev: "UT" },
+  { name: "Vermont", abbrev: "VT" },
+  { name: "Virginia", abbrev: "VA" },
+  { name: "Washington", abbrev: "WA" },
+  { name: "West Virginia", abbrev: "WV" },
+  { name: "Wisconsin", abbrev: "WI" },
+  { name: "Wyoming", abbrev: "WY" },
+];
+
+export const WithItemRenderer: Story<ListProps<State>> = ({
+  onChange,
+  ...restProps
+}) => {
+  const handleStateChange: ListChangeHandler<State> = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    // Doing JSON.stringify so Storybook Actions tab will show something instead of undefined.
+    // @ts-ignore
+    onChange?.(event, JSON.stringify(selectedItem));
+  };
+
+  return (
+    <List
+      ListItem={CustomListItem}
+      itemToString={stateItemToString}
+      maxWidth={292}
+      onChange={handleStateChange}
+      {...restProps}
+    />
+  );
+};
+
+WithItemRenderer.args = {
+  source: abbrevStateExampleData,
+};
+
+// const ListPlaceholder = () => (
+//   <ContentStatus message="Did you hide it somewhere?" title="No source found" />
+// );
 const ListPlaceholder = () => (
-  <ContentStatus message="Did you hide it somewhere?" title="No source found" />
+  <span>TODO: Replace this string in a span with a ContentStatus</span>
 );
 
-export const WithPlaceholder: Story<ListProps> = (props) => {
+export const WithPlaceholder: Story<ListProps> = ({
+  onChange,
+  ...restProps
+}) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [displaySource, setDisplaySource] = useState(true);
+  const [offsetHeight, setOffsetHeight] = useState(0);
 
-  const handleChange: SelectionChangeHandler<string> = (_, selectedItem) => {
+  useLayoutEffect(() => {
+    if (buttonsRef.current) {
+      setOffsetHeight(buttonsRef.current.getBoundingClientRect().height);
+    }
+  }, []);
+
+  const handleChange: ListChangeHandler<string> = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
   };
 
   const handleToggleDisplaySource = () => {
@@ -591,40 +669,48 @@ export const WithPlaceholder: Story<ListProps> = (props) => {
   };
 
   return (
-    <FlexLayout
-      direction="column"
-      gap={0}
-      style={{
-        height: 600,
-        width: 292,
-      }}
-    >
-      <FlexItem
-        shrink={0}
-        grow={0}
-        ref={buttonsRef}
-        style={{ height: 30, justifyContent: "flex-end" }}
+    <div style={containerStyle}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          height: "100%",
+          maxWidth: 292,
+        }}
       >
-        <Button onClick={handleToggleDisplaySource}>
-          {displaySource ? "Hide" : "Display"} source
-        </Button>
-      </FlexItem>
-      <FlexItem grow={1}>
-        <List
-          ListPlaceholder={ListPlaceholder}
-          aria-label="Placeholder List example"
-          onSelectionChange={handleChange}
-          source={displaySource ? usa_states : undefined}
-          {...props}
-        />
-      </FlexItem>
-    </FlexLayout>
+        <div
+          ref={buttonsRef}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <Button onClick={handleToggleDisplaySource}>
+            {displaySource ? "Hide" : "Display"} source
+          </Button>
+        </div>
+        <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
+          <List
+            ListPlaceholder={ListPlaceholder}
+            onChange={handleChange}
+            source={displaySource ? listExampleData : undefined}
+            {...restProps}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
-export const WithTextTruncation: Story<ListProps> = () => {
+export const WithTextTruncation: Story<ListProps<State>> = ({
+  onChange,
+  ...restProps
+}) => {
+  const handleStateChange: ListChangeHandler<State> = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
+  };
+
   return (
-    <List aria-label="Truncated List example" maxWidth={100}>
+    <List maxWidth={100} onChange={handleStateChange} {...restProps}>
       <ListItem>69 Manchester Road, London, EC90 6QG</ListItem>
       <ListItem>1 London Road, London, N98 3LH</ListItem>
       <ListItem>2 Church Lane, London, EC36 8IO</ListItem>
@@ -637,84 +723,32 @@ export const WithTextTruncation: Story<ListProps> = () => {
   );
 };
 
-export const WithLastFocusRestored: Story<ListProps> = () => {
-  return (
-    <List
-      aria-label="RestoreLastFocus List example"
-      defaultSelected={usa_states[4]}
-      maxWidth={292}
-      restoreLastFocus
-      source={usa_states}
-    />
-  );
-};
-
-export const WithTextHighlight: Story<ListProps> = () => {
-  const inputFieldRef = useRef<HTMLDivElement>(null);
-
-  const [highlightRegex, setHighlightIndex] = useState<RegExp>();
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const inputValue = event.target.value;
-    setHighlightIndex(
-      inputValue ? new RegExp(`(${inputValue})`, "gi") : undefined
-    );
-  };
-
-  return (
-    <FlexLayout
-      direction="column"
-      gap={0}
-      style={{
-        height: 600,
-        width: 292,
-      }}
-    >
-      <FlexItem>
-        <FormField label="Type to highlight" ref={inputFieldRef}>
-          <Input defaultValue="" onChange={handleInputChange} />
-        </FormField>
-        <List
-          disableFocus
-          itemTextHighlightPattern={highlightRegex}
-          source={usa_states}
-        />
-      </FlexItem>
-    </FlexLayout>
-  );
-};
-
-export const DisableTypeToSelect: Story<ListProps> = () => {
-  const handleChange: SelectionChangeHandler = (evt, selected) => {
-    console.log(`selectionChanged ${selected}`);
+export const WithLastFocusRestored: Story<ListProps> = ({
+  onChange,
+  ...props
+}) => {
+  const handleChange: ListChangeHandler = (event, selectedItem) => {
+    console.log("selection changed", selectedItem);
+    onChange?.(event, selectedItem);
   };
 
   return (
     <List
-      aria-label="Listbox example"
-      disableTypeToSelect
-      maxWidth={292}
-      onSelectionChange={handleChange}
-      source={usa_states}
-    />
-  );
-};
-
-export const ExtendedSelectionList: Story<ListProps> = () => {
-  const handleSelectionChange: SelectionChangeHandler = (evt, selected) => {
-    console.log({ selected });
-  };
-  return (
-    <List
+      initialSelectedItem={listExampleData[4]}
       width={292}
-      onSelectionChange={handleSelectionChange}
-      selectionStrategy="extended"
-      source={usa_states}
+      onChange={handleChange}
+      restoreLastFocus={true}
+      source={listExampleData}
+      {...props}
     />
   );
 };
 
-export const WithTextHighlightDeclarative: Story<ListProps> = () => {
+WithLastFocusRestored.args = {
+  restoreLastFocus: true,
+};
+
+export const WithTextHighlight: Story<ListProps> = (props) => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
 
   const [highlightRegex, setHighlightIndex] = useState<RegExp>();
@@ -745,706 +779,31 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
         }}
       >
         <FormField label="Type to highlight" ref={inputFieldRef}>
-          <Input defaultValue="" onChange={handleInputChange} />
+          <Input onChange={handleInputChange} />
         </FormField>
         <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
-          <List disableFocus itemTextHighlightPattern={highlightRegex}>
-            <ListItem>
-              <span>Alabama</span>
-            </ListItem>
-            <ListItem>Alaska</ListItem>
-            <ListItem disabled>Arizona</ListItem>
-            <ListItem>Arkansas</ListItem>
-            <ListItem>California</ListItem>
-            <ListItem>Colorado</ListItem>
-            <ListItem disabled>Connecticut</ListItem>
-            <ListItem>Delaware</ListItem>
-            <ListItem>Florida</ListItem>
-            <ListItem>Georgia</ListItem>
-          </List>
+          <List
+            disableFocus
+            itemTextHighlightPattern={highlightRegex}
+            source={listExampleData}
+            {...props}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-// export const SimpleListDefaultHighlight = () => {
-//   return (
-//     <div
-//       style={{
-//         ...fullWidthHeight,
-//       }}
-//     >
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List defaultHighlightedIdx={3} source={usa_states} />
-//       </div>
-//     </div>
-//   );
-// };
+const itemCount = listExampleData.length;
+const getItemIndex = (item: string) => listExampleData.indexOf(item);
+const getItemAtIndex = (index: number) => listExampleData[index];
 
-// export const SimpleListDefaultSelection = () => {
-//   return (
-//     <div
-//       style={{
-//         ...fullWidthHeight,
-//       }}
-//     >
-//       <input type="text" />
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List defaultSelected={["California"]} source={usa_states} />
-//       </div>
-//       <input type="text" />
-//     </div>
-//   );
-// };
-
-// export const SimpleListWithHeaders = () => {
-//   const wrapperStyle = {
-//     width: 150,
-//     height: 400,
-//     maxHeight: 400,
-//     position: "relative",
-//     border: "solid 1px #ccc",
-//   };
-//   return (
-//     <div
-//       style={{
-//         ...fullWidthHeight,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <input type="text" />
-//       <div style={wrapperStyle}>
-//         <List source={groupByInitialLetter(usa_states, "headers-only")} />
-//       </div>
-//       <div style={wrapperStyle}>
-//         <List
-//           collapsibleHeaders
-//           source={groupByInitialLetter(usa_states, "headers-only")}
-//         />
-//       </div>
-//       <div style={wrapperStyle}>
-//         <List
-//           collapsibleHeaders
-//           selection="none"
-//           source={groupByInitialLetter(usa_states, "headers-only")}
-//         />
-//       </div>
-//       <input type="text" />
-//     </div>
-//   );
-// };
-
-// export const SimpleListWithGroups = () => {
-//   return (
-//     <div
-//       style={{
-//         width: 900,
-//         height: 900,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <ComponentAnatomy>
-//           <List
-//             collapsibleHeaders
-//             source={groupByInitialLetter(usa_states, "groups-only")}
-//             style={{ maxHeight: 500 }}
-//           />
-//         </ComponentAnatomy>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const SimpleListWithNestedGroups = () => {
-//   return (
-//     <div
-//       style={{
-//         width: 900,
-//         height: 900,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <input type="text" />
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <ComponentAnatomy>
-//           <List
-//             collapsibleHeaders
-//             source={groupByInitialLetter(usa_states_cities, "groups-only")}
-//             style={{ maxHeight: 500 }}
-//           />
-//         </ComponentAnatomy>
-//       </div>
-//       <input type="text" />
-//     </div>
-//   );
-// };
-
-// export const MultiSelectList = () => {
-//   return (
-//     <div
-//       style={{
-//         width: 900,
-//         height: 900,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <div
-//         style={{
-//           width: 200,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List selection="multi" source={usa_states} />
-//       </div>
-//       <div
-//         style={{
-//           width: 200,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <VirtualizedList selection="multi" source={usa_states} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const CheckboxSelectList = () => {
-//   return (
-//     <div
-//       style={{
-//         width: 900,
-//         height: 900,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <input type="text" />
-//       <div
-//         style={{
-//           width: 250,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List selection="checkbox" source={usa_states} />
-//       </div>
-//       <div
-//         style={{
-//           width: 250,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <VirtualizedList selection="checkbox" source={usa_states} />
-//       </div>
-//       <input type="text" />
-//     </div>
-//   );
-// };
-
-// export const CheckboxOnlySelectList = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <input type="text" />
-//       <div
-//         style={{
-//           width: 300,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           onChange={(value) => setSelectedValue(value)}
-//           selection="checkbox-only"
-//           source={usa_states}
-//         />
-//       </div>
-//       <input type="text" />
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const ExtendedSelectList = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <div
-//       style={{
-//         ...fullWidthHeight,
-//         display: "flex",
-//         gap: 50,
-//         alignItems: "flex-start",
-//       }}
-//     >
-//       <input type="text" />
-//       <div
-//         style={{
-//           width: 300,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           onChange={(value) => setSelectedValue(value)}
-//           selection="extended"
-//           source={usa_states}
-//         />
-//       </div>
-//       <input type="text" />
-//       <div>{usa_states[selectedValue]}</div>
-//     </div>
-//   );
-// };
-
-// export const ControlledList = () => {
-//   const [selected, setSelected] = useState([]);
-//   const [hilitedIdx, setHilitedIdx] = useState(-1);
-
-//   const handleChangeController = (evt, newSelected) => {
-//     console.log(`handleChangeController`);
-//     setSelected(newSelected);
-//   };
-//   const handleChangeControlled = (idx) => {
-//     console.log(`handleChangeControlled`);
-//     console.log(`controlled clicked ${idx}`);
-//   };
-
-//   return (
-//     <div style={{ display: "flex", height: 600 }}>
-//       <div>
-//         <input type="text" />
-//         <List
-//           id="controller"
-//           source={usa_states}
-//           onChange={handleChangeController}
-//           onHighlight={(idx) => setHilitedIdx(idx)}
-//         />
-//         <input type="text" />
-//       </div>
-//       <div>
-//         <input type="text" />
-//         <List
-//           id="controlled"
-//           highlightedIdx={hilitedIdx}
-//           selected={selected}
-//           source={usa_states}
-//           onChange={handleChangeControlled}
-//         />
-//         <input type="text" />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const FullyControlledList = () => {
-//   const [selected, setSelected] = useState([]);
-//   const [hilitedIdx, setHilitedIdx] = useState(-1);
-
-//   const handleChangeController = (evt, newSelected) => {
-//     console.log(`handleChangeController`);
-//     setSelected(newSelected);
-//   };
-//   const handleChangeControlled = (idx) => {
-//     console.log(`handleChangeControlled`);
-//     console.log(`controlled clicked ${idx}`);
-//   };
-
-//   const moveUp = () => {
-//     setHilitedIdx((val) => Math.max(0, val - 1));
-//   };
-
-//   const selectCurrent = () => {
-//     const [selectedIdx] = selected;
-//     const newSelection =
-//       selectedIdx === hilitedIdx || hilitedIdx === -1 ? [] : [hilitedIdx];
-//     setSelected(newSelection);
-//   };
-
-//   const moveDown = () => {
-//     setHilitedIdx((val) => Math.min(usa_states.length - 1, val + 1));
-//   };
-
-//   return (
-//     <div style={{ height: 600 }}>
-//       <div style={{ display: "flex", gap: 12 }}>
-//         <Button onClick={moveDown}>Highlight down</Button>
-//         <Button onClick={moveUp}>Highlight up</Button>
-//         <Button onClick={selectCurrent}>Select</Button>
-//       </div>
-//       <div style={{ height: 600 }}>
-//         <List
-//           id="controlled"
-//           highlightedIdx={hilitedIdx}
-//           selected={selected}
-//           source={usa_states}
-//           onChange={handleChangeControlled}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const VirtualizedExample = () => {
-//   const data = useMemo(() => {
-//     const data = [];
-//     for (let i = 0; i < 1000; i++) {
-//       data.push(`Item ${i + 1}`);
-//     }
-//     return data;
-//   }, []);
-
-//   const style = {
-//     "--hwList-max-height": "300px",
-//     boxSizing: "content-box",
-//     width: 200,
-//   };
-
-//   return (
-//     <div style={style}>
-//       <VirtualizedList source={data} />
-//     </div>
-//   );
-// };
-
-// export const DeclarativeList2 = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List onChange={(value) => setSelectedValue(value)}>
-//           <ListItem
-//             onClick={() => console.log("click 1")}
-//             style={{ backgroundColor: "red" }}
-//           >
-//             Value 1
-//           </ListItem>
-//           <ListItem>Value 2</ListItem>
-//           <ListItem onClick={() => console.log("click 3")}>Value 3</ListItem>
-//           <ListItem>Value 4</ListItem>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const DeclarativeListUsingDivs = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List onChange={(value) => setSelectedValue(value)}>
-//           <div>
-//             <span>Value 1</span>
-//           </div>
-//           <div>
-//             <span>Value 2</span>
-//           </div>
-//           <div>Value 3</div>
-//           <div>Value 4</div>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const DeclarativeListWithHeadersUsingDivs = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           onChange={(value) => setSelectedValue(value)}
-//           collapsibleHeaders
-//         >
-//           <div data-header label="Group 1" />
-//           <div>
-//             <span>Value 1</span>
-//           </div>
-//           <div>
-//             <span>Value 2</span>
-//           </div>
-//           <div data-header>Group 2</div>
-//           <div>Value 3</div>
-//           <div>Value 4</div>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const DeclarativeListWithGroups = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           onChange={(value) => setSelectedValue(value)}
-//           collapsibleHeaders
-//           stickyHeaders
-//         >
-//           <ListItemGroup title="Group 1">
-//             <ListItem>Value 1.1</ListItem>
-//             <ListItem>Value 1.2</ListItem>
-//             <ListItem>Value 1.3</ListItem>
-//             <ListItem>Value 1.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 2">
-//             <ListItem>Value 2.1</ListItem>
-//             <ListItem>Value 2.2</ListItem>
-//             <ListItem>Value 2.3</ListItem>
-//             <ListItem>Value 2.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 3">
-//             <ListItem>Value 3.1</ListItem>
-//             <ListItem>Value 3.2</ListItem>
-//             <ListItem>Value 3.3</ListItem>
-//             <ListItem>Value 3.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 4">
-//             <ListItem>Value 4.1</ListItem>
-//             <ListItem>Value 4.2</ListItem>
-//             <ListItem>Value 4.3</ListItem>
-//             <ListItem>Value 4.4</ListItem>
-//             <ListItem>Value 4.5</ListItem>
-//             <ListItem>Value 4.6</ListItem>
-//             <ListItem>Value 4.7</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 5">
-//             <ListItem>Value 5.1</ListItem>
-//             <ListItem>Value 5.2</ListItem>
-//             <ListItem>Value 5.3</ListItem>
-//             <ListItem>Value 5.4</ListItem>
-//           </ListItemGroup>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const DeclarativeListWithNestedGroups = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           onChange={(value) => setSelectedValue(value)}
-//           collapsibleHeaders
-//           stickyHeaders
-//         >
-//           <ListItemGroup title="Group 1">
-//             <ListItem>Value 1.1</ListItem>
-//             <ListItem>Value 1.2</ListItem>
-//             <ListItem>Value 1.3</ListItem>
-//             <ListItem>Value 1.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 2">
-//             <ListItemGroup title="Group 2.1">
-//               <ListItem>Value 2.1.1</ListItem>
-//               <ListItem>Value 2.1.2</ListItem>
-//               <ListItem>Value 2.1.3</ListItem>
-//               <ListItem>Value 2.1.4</ListItem>
-//             </ListItemGroup>
-//             <ListItem>Value 2.2</ListItem>
-//             <ListItem>Value 2.3</ListItem>
-//             <ListItem>Value 2.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 3">
-//             <ListItem>Value 3.1</ListItem>
-//             <ListItem>Value 3.2</ListItem>
-//             <ListItem>Value 3.3</ListItem>
-//             <ListItem>Value 3.4</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 4">
-//             <ListItem>Value 4.1</ListItem>
-//             <ListItem>Value 4.2</ListItem>
-//             <ListItem>Value 4.3</ListItem>
-//             <ListItem>Value 4.4</ListItem>
-//             <ListItem>Value 4.5</ListItem>
-//             <ListItem>Value 4.6</ListItem>
-//             <ListItem>Value 4.7</ListItem>
-//           </ListItemGroup>
-//           <ListItemGroup title="Group 5">
-//             <ListItem>Value 5.1</ListItem>
-//             <ListItem>Value 5.2</ListItem>
-//             <ListItem>Value 5.3</ListItem>
-//             <ListItem>Value 5.4</ListItem>
-//           </ListItemGroup>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const DeclarativeListWithHeaders = () => {
-//   const [selectedValue, setSelectedValue] = useState("");
-//   return (
-//     <>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List
-//           stickyHeaders
-//           collapsibleHeaders
-//           onChange={(value) => setSelectedValue(value)}
-//         >
-//           <ListItemHeader id="1">Group 1</ListItemHeader>
-//           <ListItem>Value 1.1</ListItem>
-//           <ListItem>Value 1.2</ListItem>
-//           <ListItem>Value 1.3</ListItem>
-//           <ListItem>Value 1.4</ListItem>
-//           <ListItemHeader id="2">Group 2</ListItemHeader>
-//           <ListItem>Value 2.1</ListItem>
-//           <ListItem>Value 2.2</ListItem>
-//           <ListItem>Value 2.3</ListItem>
-//           <ListItem>Value 2.4</ListItem>
-//           <ListItemHeader id="3">Group 3</ListItemHeader>
-//           <ListItem>Value 3.1</ListItem>
-//           <ListItem>Value 3.2</ListItem>
-//           <ListItem>Value 3.3</ListItem>
-//           <ListItem>Value 3.4</ListItem>
-//         </List>>
-//       </div>
-//       <div>{usa_states[selectedValue]}</div>
-//     </>
-//   );
-// };
-
-// export const SimpleListDelayedContent = () => {
-//   const [source, setSource] = useState([]);
-
-//   const loadSource = () => {
-//     console.log("load source");
-//     setSource(usa_states);
-//   };
-
-//   return (
-//     <div
-//       style={{
-//         alignItems: "flex-start",
-//         display: "flex",
-//         flexDirection: "column",
-//         gap: 6,
-//         ...fullWidthHeight,
-//       }}
-//     >
-//       <Button onClick={loadSource}>Load States</Button>
-//       <div
-//         style={{
-//           width: 150,
-//           height: 400,
-//           maxHeight: 400,
-//           position: "relative",
-//           border: "solid 1px #ccc",
-//         }}
-//       >
-//         <List source={source} />
-//       </div>
-//     </div>
-//   );
-// };
+export const WithoutSource: Story<ListProps> = (props) => (
+  <List
+    getItemAtIndex={getItemAtIndex}
+    getItemIndex={getItemIndex}
+    itemCount={itemCount}
+    width={292}
+    {...props}
+  />
+);

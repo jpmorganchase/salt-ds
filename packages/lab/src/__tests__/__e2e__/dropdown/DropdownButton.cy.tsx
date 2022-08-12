@@ -20,13 +20,12 @@ describe("GIVEN a DropdownButton component", () => {
       const keyUpSpy = cy.stub().as("keyUpSpy");
       cy.mount(
         <DropdownButton
-          id="test-button"
           label="button"
           onKeyDown={keyDownSpy}
           onKeyUp={keyUpSpy}
         />
       );
-      cy.get("#test-button").focus();
+      cy.findByTestId("dropdown-button").focus();
       cy.realPress("B");
       cy.get("@keyDownSpy").should("have.callCount", 1);
       cy.get("@keyUpSpy").should("have.callCount", 1);

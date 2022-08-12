@@ -1,9 +1,14 @@
-import { QueryInputCategory } from "../queryInputTypes";
-import { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { QueryInputCategory } from "../QueryInput";
+import {
+  Dispatch,
+  FC,
+  MouseEventHandler,
+  ReactElement,
+  SetStateAction,
+} from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import { List, ListItem } from "../../list";
-import { SelectHandler } from "../../common-hooks";
 
 const withBaseName = makePrefixer("uitkQueryInputValueList");
 
@@ -17,6 +22,30 @@ export interface ValueListProps {
   setHighlightedValueIndex: Dispatch<SetStateAction<number>>;
 }
 
+export interface ValueListItemProps {
+  value: string;
+  onClick: (value: string) => void;
+  onMouseMove: (value: string) => void;
+}
+
+export const ValueListItem: FC<ValueListItemProps> = (props) => {
+  const { value } = props;
+
+  const onClick = () => {
+    props.onClick(value);
+  };
+
+  const onMouseMove: MouseEventHandler = (event) => {
+    props.onMouseMove(value);
+  };
+
+  return (
+    <ListItem item={value} onClick={onClick} onMouseMove={onMouseMove}>
+      {value}
+    </ListItem>
+  );
+};
+
 export const ValueList: FC<ValueListProps> = function ValueList(props) {
   const {
     category,
@@ -28,37 +57,49 @@ export const ValueList: FC<ValueListProps> = function ValueList(props) {
     setHighlightedValueIndex,
   } = props;
 
-  const handleSelect: SelectHandler = (_, value: string) => {
+  const onItemClick = (value: string) => {
     onValueToggle(category!, value);
+  };
+
+  const onBackMouseMove = () => {
+    setHighlightedValueIndex(0);
+  };
+
+  const onMouseMove = (value: string) => {
+    const index = category?.values.indexOf(value);
+    if (index != undefined) {
+      setHighlightedValueIndex(index + 1);
+    }
   };
 
   const items: ReactElement[] = category
     ? category.values.map((value) => (
-        <ListItem key={value} item={value}>
+        <ValueListItem
+          key={value}
+          value={value}
+          onClick={onItemClick}
+          onMouseMove={onMouseMove}
+        >
           {value}
-        </ListItem>
+        </ValueListItem>
       ))
     : [];
 
   return (
     <div className={withBaseName()} tabIndex={0} data-testid="value-list">
       <List
-        borderless={true}
-        checkable={false}
-        highlightedIndex={highlightedValueIndex}
-        onHighlight={setHighlightedValueIndex}
-        onSelect={handleSelect}
-        selectionStrategy="multiple"
-        selected={selectedValues}
+        selectionVariant="multiple"
+        selectedItem={selectedValues}
         width={rootWidth}
+        borderless={true}
+        highlightedIndex={highlightedValueIndex}
       >
         <ListItem
           className={withBaseName("back")}
-          onClick={onBack}
-          selectable={false}
+          onMouseMove={onBackMouseMove}
         >
           <ChevronLeftIcon />
-          <div className={withBaseName("category")}>
+          <div className={withBaseName("category")} onClick={onBack}>
             {category ? category.name : ""}
           </div>
         </ListItem>

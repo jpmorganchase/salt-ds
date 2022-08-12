@@ -1,9 +1,0 @@
-.uitkTabs {
-  display: flex;
-  flex-direction: column;
-}
-
-.uitkTabs.backwardsCompat {
-  --uitkTab-letterSpacing: -0.1px;
-  --uitkTab-top: -1px;
-}

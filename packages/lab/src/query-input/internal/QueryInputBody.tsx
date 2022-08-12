@@ -20,8 +20,7 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "../../toggle-button";
-import { QueryInputItem } from "../queryInputTypes";
-
+import { QueryInputItem } from "../QueryInput";
 import { BooleanOperator } from "./useQueryInput";
 
 const withBaseName = makePrefixer("uitkQueryInputBody");

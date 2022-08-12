@@ -127,11 +127,7 @@ const DevelopmentStory: Story<StoryProps> = (props) => {
   return (
     <div className={"root"}>
       <QueryInput
-        categories={[
-          { name: "A", values: ["A1", "A2", "A3"] },
-          { name: "B", values: ["B1", "B2", "B3", "B4"] },
-          { name: "C", values: ["C1", "C2", "C3", "C4", "C5"] },
-        ]}
+        categories={categories}
         defaultSelectedItems={selectedItems}
         showCategory={props.showCategory}
         autoClose={props.autoClose}

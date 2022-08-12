@@ -21,8 +21,7 @@ export type DragHookResult = {
   draggedItemIndex?: number;
   isDragging: boolean;
   onMouseDown?: MouseEventHandler;
-  revealOverflowedItems: boolean;
-  // tabProps?: Partial<TabProps>;
+  tabProps?: any;
 };
 
 export type DragDropHook = (props: {

@@ -50,9 +50,9 @@ export const ScopeSelector = (): JSX.Element => {
     <div className="uitkScopeSelector">
       <Tabstrip
         centered
-        onActiveChange={onChange}
+        onChange={onChange}
         overflowMenu={false}
-        activeTabIndex={selectedTabIndex}
+        value={selectedTabIndex}
       >
         {["Foundations", "Characteristics"].map((label, i) => (
           <Tab aria-label={label} label={label} key={i} />

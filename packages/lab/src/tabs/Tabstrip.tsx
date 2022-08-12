@@ -1,12 +1,11 @@
 import {
   Button,
+  ButtonProps,
   makePrefixer,
-  Tooltip,
-  useIdMemo,
+  useForkRef,
   useIsomorphicLayoutEffect,
-  useTooltip,
 } from "@jpmorganchase/uitk-core";
-import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import { AddIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import React, {
   ForwardedRef,
@@ -14,30 +13,27 @@ import React, {
   KeyboardEvent,
   RefObject,
   useCallback,
-  useImperativeHandle,
+  useEffect,
   useRef,
   useState,
 } from "react";
-import { SelectionChangeHandler } from "../common-hooks";
-
-import { Dropdown } from "../dropdown";
+import { ListProps, ListSingleSelectionVariant } from "../list";
 import {
-  InjectedSourceItem,
-  OverflowItem,
+  ManagedItem,
+  OverflowMenuTabs as OverflowMenu,
   useOverflowLayout,
 } from "../responsive";
-import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
+import { useLayoutEffectSkipFirst } from "../utils";
 import { Tab } from "./Tab";
 import { TabActivationIndicator } from "./TabActivationIndicator";
 import {
-  FocusAPI,
   responsiveDataAttributes,
   TabDescriptor,
   TabElement,
   TabProps,
   TabsSource,
   TabstripProps,
-} from "./TabsTypes";
+} from "./TabstripProps";
 import { useTabstrip } from "./useTabstrip";
 
 import "./Tabstrip.css";
@@ -47,89 +43,72 @@ const withBaseName = makePrefixer("uitkTabstrip");
 
 const ADD_TAB_LABEL = "Create Tab";
 
-// Simple strings for tab labels are accepted as input, convert to TabDescriptors internally
-const tabDescriptors = (
-  tabs: TabsSource | undefined
-): TabDescriptor[] | undefined =>
-  tabs &&
-  tabs.map((tab: string | TabDescriptor) =>
-    typeof tab === "string" ? { label: tab } : tab
-  );
+const isEditable = (tab: TabDescriptor | TabElement, defaultValue = false) => {
+  const value = React.isValidElement(tab) ? tab.props.editable : tab.editable;
+  return value ?? defaultValue;
+};
+
+const isCloseable = (tab: TabDescriptor | TabElement, defaultValue = false) => {
+  const value = React.isValidElement(tab) ? tab.props.closeable : tab.closeable;
+  return value ?? defaultValue;
+};
+
+const AddTabButton = forwardRef<HTMLButtonElement, ButtonProps<"button">>(
+  function AddTabButton({ title, ...props }, ref) {
+    return (
+      <Button {...props} ref={ref} variant="secondary" tabIndex={-1}>
+        <AddIcon aria-label={title} />
+      </Button>
+    );
+  }
+);
 
 export const Tabstrip = forwardRef(function Tabstrip(
-  {
-    activeTabIndex: activeTabIndexProp,
+  props: TabstripProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
+  const root = useRef<HTMLDivElement>(null);
+  const setForkRef = useForkRef(root, ref);
+  const managedItemsRef = useRef<ManagedItem[]>([]);
+
+  const {
     allowDragDrop = false,
     centered = false,
     children,
     className: classNameProp,
-    defaultSource,
-    defaultActiveTabIndex,
-    editing,
-    emphasis,
+    defaultTabs,
+    defaultValue,
     enableAddTab = false,
     enableCloseTab,
     enableRenameTab,
-    id: idProp,
     keyBoardActivation = "manual",
     onAddTab,
-    onActiveChange,
+    onChange,
     onCloseTab,
-    onEnterEditMode,
-    onExitEditMode,
     onMoveTab,
+    // doesn't feel like a great prop name ...
+    noBorder = false,
     orientation = "horizontal",
-    overflowMenu: overflowMenuProp = true,
+    // don't like this prop name either ...
+    overflowMenu = true,
     promptForNewTabName = true,
     showActivationIndicator = true,
-    source,
+    tabs: tabsProp,
     title,
-    ...htmlAttributes
-  }: TabstripProps,
-  forwardedRef: ForwardedRef<FocusAPI>
-) {
-  const root = useRef<HTMLDivElement>(null);
-  // can't use forwardedRef here, can we ?
-  // const setForkRef = useForkRef(root, forwardedRef);
-  const activeRef = useRef<number>(
-    activeTabIndexProp || defaultActiveTabIndex || 0
-  );
-
-  const overflowItemsRef = useRef<OverflowItem[]>([]);
-  const [showOverflowMenu, _setShowOverflowMenu] = useState(false);
-
-  const setShowOverflowMenu = useCallback((value) => {
-    _setShowOverflowMenu(value);
-  }, []);
-
-  const tabstripId = useIdMemo(idProp);
-
-  const injectedItems = enableAddTab
-    ? [
-        {
-          source: { label: "Add Tab", position: -1, priority: 1 },
-        } as InjectedSourceItem,
-      ]
-    : undefined;
-
-  const collectionHook = useOverflowCollectionItems({
-    children,
-    defaultSource: tabDescriptors(defaultSource),
-    id: tabstripId,
-    injectedItems,
-    label: "Tabstrip",
-    orientation,
-    source: tabDescriptors(source),
-    options: {
-      closeable: enableCloseTab,
-      editable: enableRenameTab,
-      getPriority: (item, index) => {
-        return index === activeRef.current ? 1 : undefined;
-      },
-    },
-  });
+    value: valueProp,
+    ...rootProps
+  } = props;
 
   const childCount = useRef(React.Children.count(children));
+
+  // Simple strings for tab labels are accepted as input, convert to TabDescriptors internally
+  const tabDescriptors = (
+    tabs: TabsSource | undefined
+  ): TabDescriptor[] | undefined =>
+    tabs &&
+    tabs.map((tab: string | TabDescriptor) =>
+      typeof tab === "string" ? { label: tab } : tab
+    );
 
   const getChildren = (): TabElement[] | undefined => {
     if (React.Children.count(children) === 0) {
@@ -139,134 +118,158 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   };
 
-  const [innerContainerRef, switchOverflowPriorities] = useOverflowLayout({
-    collectionHook,
-    disableOverflow: overflowMenuProp === false,
-    id: tabstripId,
-    orientation,
-    label: "Tabstrip",
+  const [selectedTab, setSelectedTab] = useState<RefObject<HTMLElement>>({
+    current: null,
   });
-  overflowItemsRef.current = collectionHook.data;
-  const overflowedItems = collectionHook.data.filter((item) => item.overflowed);
 
-  const tabMovedHandler = useCallback(
-    (fromIndex: number, toIndex: number) => {
-      onMoveTab?.(fromIndex, toIndex);
-      setTimeout(() => {
-        collectionHook.dispatch({
-          type: "reset",
-        });
-      }, 50);
-    },
-    [collectionHook, onMoveTab]
-  );
+  const [
+    innerContainerRef,
+    managedItems,
+    updatePriorities,
+    dispatchOverflowAction,
+  ] = useOverflowLayout(orientation /*, buttonDescriptors */, "Tabstrip");
+  managedItemsRef.current = managedItems;
+  const overflowedItems = managedItems.filter((item) => item.overflowed);
+
+  // TODO call this isEditing and make sure it's set whichever way we initiate editing
+  const renameExpected = useRef(false);
 
   const handleTabSelectionChange = useCallback(
     (tabIndex: number) => {
-      const selectedItem = collectionHook.data[tabIndex];
-      const prevSelectedItem = collectionHook.data.find(
+      const newSelectedItem = managedItems[tabIndex];
+      const prevSelectedItem = managedItems.find(
         (item) => item.priority === 1 && !item.isOverflowIndicator
       );
-      if (selectedItem && prevSelectedItem && overflowMenuProp) {
-        switchOverflowPriorities(selectedItem, prevSelectedItem);
+      const items = [{ ...newSelectedItem, priority: 1 }];
+      if (prevSelectedItem) {
+        items.push({ ...prevSelectedItem, priority: 3 });
       }
-      onActiveChange?.(tabIndex);
-      setShowOverflowMenu(false);
+      updatePriorities(items);
+      onChange?.(tabIndex);
+    },
+    [managedItems]
+  );
+
+  const tabsHook = useTabstrip({
+    allowDragDrop,
+    defaultTabs: tabDescriptors(defaultTabs),
+    defaultValue,
+    enableAddTab,
+    innerContainerRef,
+    keyBoardActivation,
+    managedItems,
+    onChange: handleTabSelectionChange,
+    onMoveTab,
+    orientation,
+    tabs: tabDescriptors(tabsProp) ?? getChildren(),
+    value: valueProp,
+  });
+
+  const selectedIndex = useRef(tabsHook.value ?? 0);
+  const focusedTabIndex = tabsHook.focusedIndex;
+  const handleOverflowChange: ListProps<
+    ManagedItem,
+    ListSingleSelectionVariant
+  >["onChange"] = (e, tab) => {
+    if (tab !== null) {
+      tabsHook.activateTab(tab.index);
+    }
+  };
+
+  const addTab = useCallback(
+    (indexPosition = tabsHook.tabs.length) => {
+      tabsHook.setTabs(
+        (tabsHook.tabs as TabDescriptor[]).concat({ label: "New Tab" })
+      );
+
+      if (!tabsHook.controlledSelection) {
+        //TODO how do we determine the default label ?
+        tabsHook.activateTab(indexPosition);
+        // TODO should we need this to be able to set initial name ?
+        if (enableRenameTab) {
+          tabsHook.setEditing(true);
+        }
+      }
+
+      onAddTab && onAddTab();
+
+      if (promptForNewTabName) {
+        renameExpected.current = true;
+      }
     },
     [
-      collectionHook.data,
-      onActiveChange,
-      overflowMenuProp,
-      setShowOverflowMenu,
-      switchOverflowPriorities,
+      tabsHook.activateTab,
+      tabsHook.controlledSelection,
+      enableRenameTab,
+      onAddTab,
+      promptForNewTabName,
+      tabsHook.setEditing,
+      tabsHook.setTabs,
+      tabsHook.tabs,
     ]
   );
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({});
-
-  const { activeTabIndex, activateTab, addTab, ...tabstripHook } = useTabstrip({
-    activeTabIndex: activeTabIndexProp,
-    allowDragDrop,
-    collectionHook,
-    defaultTabs: tabDescriptors(defaultSource),
-    defaultActiveTabIndex,
-    editing,
-    enableAddTab,
-    idRoot: tabstripId,
-    innerContainerRef,
-    keyBoardActivation,
-    onActiveChange: handleTabSelectionChange,
-    onCloseTab,
-    onEnterEditMode,
-    onExitEditMode,
-    onMoveTab: tabMovedHandler,
-    orientation,
-    promptForNewTabName,
-    tabs: tabDescriptors(source) ?? getChildren(),
-  });
-
-  activeRef.current = activeTabIndex;
-
-  useImperativeHandle(
-    forwardedRef,
-    () =>
-      ({
-        focus: () => {
-          const { current: tabstrip } = root;
-          if (tabstrip) {
-            const selectedTab = tabstrip.querySelector(
-              '.uitkTab[aria-selected="true"]'
-            ) as HTMLElement;
-            if (selectedTab) {
-              selectedTab.focus();
-            }
-          }
-        },
-      } as FocusAPI),
-    []
-  );
-
-  const handleAddTabClick = useCallback(() => {
-    if (!collectionHook.isControlled) {
+  const clickAddTab = useCallback(
+    (e) => {
       addTab();
-    }
-    onAddTab?.();
-  }, [collectionHook.isControlled, onAddTab, addTab]);
-
-  const selectedIndex = useRef(activeTabIndex);
-  const focusedTabIndex = tabstripHook.highlightedIdx;
-  const handleOverflowSelectionChange: SelectionChangeHandler<OverflowItem> =
-    useCallback(
-      (e, tab) => {
-        if (tab !== null) {
-          activateTab(tab.index);
-        }
-      },
-      [activateTab]
-    );
-
-  const handleKeydownOverflowMenu = useCallback(
-    (e: KeyboardEvent<HTMLElement>) => {
-      tabstripHook.navigationProps?.onKeyDown?.(e);
     },
-    [tabstripHook.navigationProps]
+    [addTab]
   );
 
-  const handleOverflowMenuOpen = useCallback((open) => {
-    setShowOverflowMenu(open);
-  }, []);
+  const navItemsCount = useCallback(
+    () =>
+      tabsHook.navItemRefs.current === null
+        ? 0
+        : tabsHook.navItemRefs.current.length,
+    [tabsHook.navItemRefs]
+  );
+
+  const indexOfAddButton = useCallback(
+    // If there are no navItems, we return -1, this is intended
+    () => navItemsCount() - 1,
+    [navItemsCount]
+  );
+
+  const addButtonRef = useCallback(
+    () =>
+      tabsHook.navItemRefs.current?.[
+        indexOfAddButton()
+      ] as RefObject<HTMLButtonElement>,
+    [indexOfAddButton, tabsHook.navItemRefs]
+  );
+
+  const handleKeydownAddTab = useCallback(
+    (e: KeyboardEvent<HTMLButtonElement>) => {
+      const idx = indexOfAddButton();
+      tabsHook.tabProps?.onKeyDown?.(e, idx);
+    },
+    [indexOfAddButton, tabsHook.tabProps]
+  );
+
+  const closeTab: TabProps["onClose"] = (index) => {
+    if (tabsHook.tabs.length > 1) {
+      if (index === tabsHook.value && index === tabsHook.tabs.length - 1) {
+        tabsHook.activateTab(index - 1);
+      }
+      onCloseTab && onCloseTab(index);
+
+      if (index < tabsHook.value) {
+        tabsHook.activateTab(tabsHook.value - 1);
+      }
+    }
+  };
 
   // shouldn't we use ref for this ?
   useIsomorphicLayoutEffect(() => {
     // We don't care about changes to overflowedItems here, the overflowObserver
     // always does the right thing. We only care about changes to selected tab
-    if (selectedIndex.current !== activeTabIndex && overflowMenuProp) {
+    if (selectedIndex.current !== tabsHook.value && overflowMenu) {
       // We might want to do this only if the selected tab is overflowed ?
       // TODO
       // resetOverflow();
-      selectedIndex.current = activeTabIndex;
+      selectedIndex.current = tabsHook.value;
     }
-  }, [overflowMenuProp, activeTabIndex]);
+  }, [overflowMenu, tabsHook.value]);
 
   useIsomorphicLayoutEffect(() => {
     if (React.Children.count(children) !== childCount.current) {
@@ -277,169 +280,129 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }, [children]);
 
   useIsomorphicLayoutEffect(() => {
-    if (focusedTabIndex !== activeTabIndex && focusedTabIndex !== -1) {
-      tabstripHook.focusTab(activeTabIndex);
+    if (focusedTabIndex !== tabsHook.value && focusedTabIndex !== -1) {
+      tabsHook.focusTab(tabsHook.value);
     }
-
     // We only want the effect to run when value changes, not every time focusedTabIndex changes.
     // It doesn't matter if focusedTabIndex is stale in between calls - it will be correct when
     // value changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTabIndex]);
+  }, [tabsHook.value]);
+
+  useLayoutEffectSkipFirst(() => {
+    console.log(
+      `%cTabstrip layout effect ${tabsHook.tabs.length} tabs`,
+      "color:brown;font-weight:bold;"
+    );
+    dispatchOverflowAction({ type: "reset" });
+  }, [tabsHook.tabs.length]);
 
   const renderContent = () => {
-    const content = collectionHook.data
-      .filter((item) => !item.isOverflowIndicator && !item.isInjectedItem)
-      .map((item: OverflowItem, index: number) => {
-        // TODO sort out typoing
-        const tab = item.source as unknown as TabDescriptor;
-        const element = item.element as TabElement;
-
-        const selected = index === activeTabIndex;
-        const focusVisible = tabstripHook.focusVisible === index;
+    const content = tabsHook.tabs.map(
+      (tab: TabDescriptor | TabElement, index: number) => {
+        const selected = index === tabsHook.value;
+        const focusVisible = focusedTabIndex === index;
+        const focusAway = focusedTabIndex === -1;
         const overflowed =
           overflowedItems.findIndex(
-            (item: OverflowItem) => item.index === index
+            (item: ManagedItem) => item.index === index
           ) !== -1;
-
-        const tabIsBeingEdited = tabstripHook.editing && selected;
-        const tabIndex = tabIsBeingEdited
-          ? undefined
-          : selected && !tabstripHook.focusIsWithinComponent
-          ? 0
-          : -1;
+        const editable =
+          isEditable(tab, enableRenameTab) ?? enableRenameTab ?? false;
+        const closeable =
+          isCloseable(tab, enableCloseTab) ?? enableCloseTab ?? false;
 
         const baseProps: Partial<TabProps> &
           responsiveDataAttributes & {
             ref?: RefObject<HTMLDivElement>;
             key: string | number;
           } = {
+          index,
+          ...tabsHook.tabProps,
+          closeable,
           "data-index": index,
-          "data-priority": item.priority,
+          "data-priority": selected ? 1 : 3,
           "data-overflowed": overflowed ? true : undefined,
-          ...tabstripHook.navigationProps,
-          id: item.id,
+          dragging: tabsHook.draggedItemIndex === index,
+          editable,
+          editing: tabsHook.editing && selected,
+          focusVisible,
           key: index,
-          onMouseDown: tabstripHook.onMouseDown,
-          tabIndex,
+          onClose: closeable ? closeTab : undefined,
+          onMouseDown: tabsHook.onMouseDown,
+          orientation,
+          ref: tabsHook.navItemRefs.current?.[
+            index
+          ] as RefObject<HTMLDivElement>,
+          selected,
+          tabIndex: selected && (focusVisible || focusAway) ? 0 : -1,
         };
 
-        const tabProps = {
-          ...tabstripHook.tabProps,
-          closeable: item.closeable,
-          dragging: tabstripHook.draggedItemIndex === index,
-          editable: item.editable,
-          editing: tabIsBeingEdited,
-          focusVisible,
-          index,
-          onClose: item.closeable ? tabstripHook.closeTab : undefined,
-          orientation,
-          selected,
-        } as Partial<TabProps>;
-
-        if (React.isValidElement(element)) {
-          if (element.type === Tab) {
-            return React.cloneElement(element, { ...baseProps, ...tabProps });
-          } else {
-            return React.cloneElement(element, baseProps);
-          }
-        } else {
-          //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
+        if (React.isValidElement(tab)) {
+          return React.cloneElement(tab, baseProps);
+        } else if (typeof tab === "string") {
           return React.createElement(Tab, {
             ...baseProps,
-            ...tabProps,
-            label: tab.label,
+            label: tab,
           });
+        } else {
+          //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
+          return React.createElement(Tab, { ...baseProps, label: tab.label });
         }
-      });
-
-    const overflowCount = overflowedItems.length;
-    const draggingActiveTab = tabstripHook.draggedItemIndex === activeTabIndex;
-    const showOverflow =
-      (tabstripHook.revealOverflowedItems && !draggingActiveTab) ||
-      showOverflowMenu;
-    const showTooltip = tabstripHook.revealOverflowedItems && draggingActiveTab;
-    const overflowIndicator = collectionHook.data.find(
-      (i) => i.isOverflowIndicator
+      }
     );
-    const [injectedItem] = collectionHook.data.filter((i) => i.isInjectedItem);
 
-    if (overflowIndicator) {
-      const triggerProps = getTriggerProps<typeof Button>();
+    if (overflowMenu) {
+      const overflowCount = overflowedItems.length;
       content.push(
-        <Dropdown<OverflowItem>
-          className={cx(withBaseName("overflowMenu"), {
-            [withBaseName("overflowMenu-open")]: showOverflow,
-          })}
-          ListProps={{
-            className: cx({
-              [withBaseName("overflowMenu-dropTarget")]:
-                tabstripHook.revealOverflowedItems,
-            }),
-          }}
-          data-overflow-indicator
+        <OverflowMenu
+          aria-label={`Tabs overflow menu ${overflowCount} item${
+            overflowCount === 1 ? "" : "s"
+          }`}
+          ButtonProps={{ tabIndex: -1 }}
+          className={withBaseName("overflowMenu")}
           data-priority={0}
-          id={overflowIndicator.id}
-          isOpen={showOverflow}
+          data-index={tabsHook.tabs.length}
+          data-overflow-indicator
           key="overflow"
-          onOpenChange={handleOverflowMenuOpen}
-          onKeyDown={handleKeydownOverflowMenu}
-          onSelectionChange={handleOverflowSelectionChange}
-          placement="bottom-end"
-          source={overflowedItems}
-          selected={null}
-          triggerComponent={
-            <Button
-              {...triggerProps}
-              aria-label={`Tabs overflow menu ${overflowCount} item${
-                overflowCount === 1 ? "" : "s"
-              }`}
-              variant="secondary"
-              tabIndex={-1}
-            >
-              <OverflowMenuIcon />
-            </Button>
+          onChange={handleOverflowChange}
+          onKeyDown={(e: React.KeyboardEvent) =>
+            tabsHook.tabProps?.onKeyDown?.(e, tabsHook.tabs.length)
           }
-          width="auto"
+          // @ts-ignore
+          ref={tabsHook.navItemRefs.current?.[tabsHook.tabs.length]}
+          source={overflowedItems}
         />
       );
-      if (showTooltip) {
-        content.push(
-          <Tooltip
-            {...getTooltipProps({
-              title: "Active Tab cannot be moved into overflow list",
-              open: true,
-              state: "warning",
-            })}
-            key="tooltip"
-          />
-        );
-      }
     }
 
-    if (injectedItem) {
+    if (enableAddTab) {
       content.push(
-        <Button
-          {...tabstripHook.navigationProps}
+        <AddTabButton
           aria-label={ADD_TAB_LABEL}
-          data-priority={injectedItem.priority}
-          data-overflowed={injectedItem.overflowed}
-          id={injectedItem.id}
-          key="addButton"
-          onClick={handleAddTabClick}
-          variant="secondary"
-          tabIndex={-1}
-        >
-          <AddIcon />
-        </Button>
+          data-priority={2}
+          data-index={tabsHook.tabs.length}
+          key="Tabstrip-addButton"
+          onClick={clickAddTab}
+          onKeyDown={handleKeydownAddTab}
+          ref={addButtonRef()}
+          title={title}
+        />
       );
     }
 
     return content;
   };
 
+  const { current: navItems } = tabsHook.navItemRefs;
+  useEffect(() => {
+    if (navItems !== null) {
+      setSelectedTab(navItems[tabsHook.value]);
+    }
+  }, [navItems, tabsHook.value]);
+
   const selectedTabOverflowed = overflowedItems.some(
-    (item: OverflowItem) => item.index === activeTabIndex
+    (item: ManagedItem) => item.index === tabsHook.value
   );
   const className = cx(
     withBaseName(),
@@ -447,33 +410,32 @@ export const Tabstrip = forwardRef(function Tabstrip(
     classNameProp,
     {
       [withBaseName("centered")]: centered,
-      [withBaseName("draggingTab")]: tabstripHook.isDragging,
-      uitkEmphasisLow: emphasis === "low",
+      [withBaseName("draggingTabNatural")]:
+        tabsHook.isDragging && allowDragDrop !== "drop-indicator",
+      [withBaseName("draggingTabIndicator")]:
+        tabsHook.isDragging && allowDragDrop === "drop-indicator",
     }
   );
 
-  const { id: selectedTabId } = collectionHook.data[activeTabIndex];
-
   return (
-    <div
-      {...htmlAttributes}
-      {...tabstripHook.containerProps}
-      className={className}
-      id={tabstripId}
-      ref={root}
-      role="tablist"
-    >
-      <div className={withBaseName("inner")} ref={innerContainerRef}>
+    <div {...rootProps} className={className} ref={setForkRef} role="tablist">
+      <div
+        className={withBaseName("inner")}
+        ref={innerContainerRef}
+        style={{ lineHeight: "36px" }}
+      >
         {renderContent()}
       </div>
       {showActivationIndicator ? (
         <TabActivationIndicator
-          hideThumb={selectedTabOverflowed || tabstripHook.isDragging}
+          hideThumb={selectedTabOverflowed || tabsHook.isDragging}
+          hideBackground={noBorder}
           orientation={orientation}
-          tabId={selectedTabId}
+          tabRef={selectedTab}
         />
       ) : null}
-      {tabstripHook.draggable}
+      {tabsHook.dropIndicator}
+      {tabsHook.draggable}
     </div>
   );
 });

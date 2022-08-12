@@ -10,7 +10,7 @@ import "./Sort.css";
 import { AddIcon, DeleteIcon } from "@jpmorganchase/uitk-icons";
 import {
   Dropdown,
-  SelectionChangeHandler,
+  ListChangeHandler,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
@@ -41,7 +41,7 @@ export const SortItem = function SortItem<T>(props: SortItemProps<T>) {
     [columns]
   );
 
-  const onColumnChange: SelectionChangeHandler = (event, selectedItem) => {
+  const onColumnChange: ListChangeHandler = (event, selectedItem) => {
     model.setColumn(selectedItem ? columnsByName.get(selectedItem) : undefined);
   };
 
@@ -71,11 +71,13 @@ export const SortItem = function SortItem<T>(props: SortItemProps<T>) {
         </div>
         <div className={withBaseName("item-column")}>
           <Dropdown
-            className={withBaseName("dropdown")}
             fullWidth={true}
             source={columnNames}
-            selected={column ? column.name : null}
-            onSelectionChange={onColumnChange}
+            selectedItem={column ? column.name : (null as any)}
+            onChange={onColumnChange}
+            WindowProps={{
+              className: withBaseName("window"),
+            }}
           />
         </div>
         <div className={withBaseName("item-order")}>

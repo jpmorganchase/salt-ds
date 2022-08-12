@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card } from "@jpmorganchase/uitk-core";
-import { DeckLayout, Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
+import { DeckLayout, Tabstrip } from "@jpmorganchase/uitk-lab";
 
 import "./styles.css";
 
@@ -57,8 +57,16 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
 export const DefaultDeckLayout = DefaultDeckLayoutStory.bind({});
 DefaultDeckLayout.args = {};
 
+const useTabSelection = (initialValue?: any) => {
+  const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
+  const handleTabSelection = (tabIndex: number) => {
+    setSelectedTab(tabIndex);
+  };
+  return [selectedTab, handleTabSelection];
+};
+
 const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [selectedTab, handleTabSelection] = useTabSelection();
 
   const tabs = [
     "Home",
@@ -70,12 +78,8 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
   ];
   return (
     <div>
-      <Tabstrip onActiveChange={setActiveTabIndex}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
-        ))}
-      </Tabstrip>
-      <DeckLayout activeIndex={activeTabIndex} {...args}>
+      <Tabstrip onChange={handleTabSelection} defaultTabs={tabs} />
+      <DeckLayout activeIndex={selectedTab} {...args}>
         {tabs.map((tab, index) => {
           return (
             <Card key={index}>

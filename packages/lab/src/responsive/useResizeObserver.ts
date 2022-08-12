@@ -2,63 +2,47 @@
 import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 import { useCallback, useRef, RefObject } from "react";
 export const WidthHeight = ["height", "width"];
-export const HeightOnly = ["height"];
 export const WidthOnly = ["width"];
 
-export type measurements<T = string | number> = {
-  height?: T;
-  scrollHeight?: T;
-  scrollWidth?: T;
-  width?: T;
-};
-type measuredDimension = keyof measurements<number>;
-
-export type ResizeHandler = (measurements: measurements<number>) => void;
-
+type measurements = { [key: string]: number };
 type observedDetails = {
-  onResize?: ResizeHandler;
-  measurements: measurements<number>;
+  onResize?: (measurements: measurements) => void;
+  measurements: measurements;
 };
 const observedMap = new WeakMap<HTMLElement, observedDetails>();
 
-const getTargetSize = (
-  element: HTMLElement,
-  contentRect: DOMRectReadOnly,
-  dimension: measuredDimension
-): number => {
-  switch (dimension) {
-    case "height":
-      return contentRect.height;
-    case "scrollHeight":
-      return element.scrollHeight;
-    case "scrollWidth":
-      return element.scrollWidth;
-    case "width":
-      return contentRect.width;
-    default:
-      return 0;
-  }
+const isScrollAttribute: { [key: string]: boolean } = {
+  scrollHeight: true,
+  scrollWidth: true,
 };
 
-const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+// TODO should we make this create-on-demand
+const resizeObserver = new ResizeObserver((entries: any[]) => {
   for (const entry of entries) {
     const { target, contentRect } = entry;
-    const observedTarget = observedMap.get(target as HTMLElement);
+    const observedTarget = observedMap.get(target);
     if (observedTarget) {
       const { onResize, measurements } = observedTarget;
       let sizeChanged = false;
       for (const [dimension, size] of Object.entries(measurements)) {
-        const newSize = getTargetSize(
-          target as HTMLElement,
-          contentRect,
-          dimension as measuredDimension
-        );
+        const newSize = isScrollAttribute[dimension]
+          ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            target[dimension]
+          : // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            contentRect[dimension];
         if (newSize !== size) {
           sizeChanged = true;
-          measurements[dimension as measuredDimension] = newSize;
+          // console.log(
+          //   `${dimension} changed from ${measurements[dimension]} to ${newSize}`
+          // );
+          measurements[dimension] = newSize;
         }
       }
       if (sizeChanged) {
+        // TODO only return measured sizes
+        // const { height, width } = contentRect;
         onResize && onResize(measurements);
       }
     }
@@ -67,20 +51,23 @@ const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
 
 // TODO use an optional lag (default to false) to ask to fire onResize
 // with initial size
-// Note asking for scrollHeight alone will not trigger onResize, this is only triggered by height,
-// with scrollHeight returned as an auxilliary value
 export function useResizeObserver(
   ref: RefObject<Element | HTMLElement | null>,
   dimensions: string[],
-  onResize: ResizeHandler,
-  reportInitialSize = false
-): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onResize: (sizes: any) => void
+) {
   const dimensionsRef = useRef(dimensions);
-  const measure = useCallback((target: HTMLElement): measurements<number> => {
+
+  const measure = useCallback((target): measurements => {
     const rect = target.getBoundingClientRect();
     return dimensionsRef.current.reduce(
       (map: { [key: string]: number }, dim) => {
-        map[dim] = getTargetSize(target, rect, dim as measuredDimension);
+        if (isScrollAttribute[dim]) {
+          map[dim] = target[dim];
+        } else {
+          map[dim] = rect[dim];
+        }
         return map;
       },
       {}
@@ -102,12 +89,10 @@ export function useResizeObserver(
     async function registerObserver() {
       // Create the map entry immediately. useEffect may fire below
       // before fonts are ready and attempt to update entry
-      observedMap.set(target, { measurements: {} as measurements<number> });
+      observedMap.set(target, { measurements: {} });
       cleanedUp = false;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const { fonts } = document as any;
       if (fonts) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         await fonts.ready;
       }
       if (!cleanedUp) {
@@ -116,9 +101,6 @@ export function useResizeObserver(
           const measurements = measure(target);
           observedTarget.measurements = measurements;
           resizeObserver.observe(target);
-          if (reportInitialSize) {
-            onResize(measurements);
-          }
         }
       }
     }
@@ -130,7 +112,8 @@ export function useResizeObserver(
           "useResizeObserver attemping to observe same element twice"
         );
       }
-      void registerObserver();
+      // TODO set a pending entry on map
+      registerObserver();
     }
     return () => {
       if (target && observedMap.has(target)) {

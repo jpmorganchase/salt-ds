@@ -3,8 +3,6 @@ import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 
-import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
-
 import {
   BooleanOperator,
   QueryInputBody,
@@ -13,6 +11,16 @@ import {
 } from "./internal";
 
 const withBaseName = makePrefixer("uitkQueryInput");
+
+export interface QueryInputCategory {
+  name: string;
+  values: string[];
+}
+
+export interface QueryInputItem {
+  category: string | null;
+  value: string;
+}
 
 export interface QueryInputProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {

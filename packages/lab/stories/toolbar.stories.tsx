@@ -1,582 +1,74 @@
-import type { ComponentMeta, Story } from "@storybook/react";
+import { Button, ButtonProps, FormField } from "@jpmorganchase/uitk-core";
 import {
-  Button,
-  Input,
-  Pill,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-core";
-import {
-  AddIcon,
-  ChatIcon,
-  ColumnChooserIcon,
-  CsvIcon,
   DoubleChevronDownIcon,
   ExportIcon,
   FilterIcon,
-  InfoIcon,
   MenuIcon,
   MessageIcon,
   NotificationIcon,
-  PdfIcon,
   PinIcon,
   SearchIcon,
   SettingsIcon,
   SettingsSolidIcon,
   ShareIcon,
-  SwapIcon,
-  SuccessTickIcon,
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
-  VisibleIcon,
 } from "@jpmorganchase/uitk-icons";
-import {
-  Avatar,
-  Dropdown,
-  ToggleButton,
-  Toolbar,
-  ToolbarButton,
-  ToolbarField,
-  ToolbarProps,
-  Tooltray,
-} from "@jpmorganchase/uitk-lab";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { CSSProperties, MouseEvent, useState } from "react";
-
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
+import { Dropdown, Toolbar, Tooltray } from "@jpmorganchase/uitk-lab";
+import { ComponentAnatomy } from "docs/components";
+import { CSSProperties, useState } from "react";
+import { AdjustableFlexbox } from "./story-components";
 
 import "./toolbar.stories.css";
 
 export default {
   title: "Lab/Toolbar",
   component: Toolbar,
-} as ComponentMeta<typeof Toolbar>;
-
-const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
-
-export const DefaultToolbar: Story = () => {
-  const typeData = ["Open", "Close", "Discarded", "Resolved"];
-  const rangeData = [
-    "Today",
-    "Yesterday",
-    "Last Week",
-    "Last Month",
-    "Last Year",
-  ];
-
-  const logItemName = (buttonName: string) =>
-    console.log(`${buttonName} button clicked'`);
-
-  return (
-    <Toolbar id="toolbar-default">
-      <ToolbarField label="Range">
-        <Dropdown
-          defaultSelected={rangeData[0]}
-          source={rangeData}
-          style={{ width: 100 }}
-        />
-      </ToolbarField>
-      <ToolbarField label="Type">
-        <Dropdown
-          defaultSelected={typeData[0]}
-          source={typeData}
-          style={{ width: 90 }}
-        />
-      </ToolbarField>
-      <ToolbarButton onClick={() => logItemName("export")}>
-        <ExportIcon /> Export
-      </ToolbarButton>
-      <ToolbarButton onClick={() => logItemName("share")}>
-        <ShareIcon /> Share
-      </ToolbarButton>
-      <ToolbarButton onClick={() => logItemName("alerts")}>
-        <NotificationIcon /> Set Alerts
-      </ToolbarButton>
-      <ToolbarButton onClick={() => logItemName("expand")}>
-        <TearOutIcon /> Expand
-      </ToolbarButton>
-    </Toolbar>
-  );
 };
 
-export const DefaultAdjustable: Story<AdjustableFlexboxProps> = ({
-  width = 600,
-}) => {
+const ToolbarButton = ({
+  id,
+  label,
+  ...props
+}: { label?: string } & ButtonProps) => (
+  <Button {...props} variant="secondary" id={id} data-overflow-label={label} />
+);
+
+export const SimpleToolbar = ({ initialWidth = 250, ...toolbarProps }) => {
   return (
-    <AdjustableFlexbox height={420} width={width}>
-      <DefaultToolbar />
-    </AdjustableFlexbox>
-  );
-};
-
-export const TooltrayAlignment: Story = () => {
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={800}>
-      <Toolbar
-        aria-label="Tooltray alignment toolbar"
-        style={{ minWidth: "100px" }}
-      >
-        <ToolbarField data-close-on-click={false}>
-          <Input
-            startAdornment={
-              <StaticInputAdornment>
-                <FilterIcon />
-              </StaticInputAdornment>
-            }
-            style={{ width: 180 }}
-            defaultValue=""
-          />
-        </ToolbarField>
-        <Tooltray aria-label="filters tooltray">
-          <ToolbarField>
-            <ToggleButton
-              ariaLabel=" AND"
-              style={{ width: "100%", minWidth: "60px" }}
-              toggled
-            >
-              <SwapIcon /> AND
-            </ToggleButton>
-          </ToolbarField>
-          <ToolbarField>
-            <Pill label="LOREM" onClick={() => console.log("lorem.")} />
-          </ToolbarField>
-          <ToolbarField>
-            <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
-          </ToolbarField>
-          <ToolbarField>
-            <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray aria-label="status tooltray" alignStart>
-          <ToolbarField>
-            <Button variant="secondary">CLEAR</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button variant="primary">
-              <AddIcon />
-            </Button>
-          </ToolbarField>
-        </Tooltray>
-        <ToolbarField data-close-on-click={false} label="Status">
-          <Dropdown
-            defaultSelected={statusData[0]}
-            source={statusData}
-            style={{ width: 95 }}
-          />
-        </ToolbarField>
-        <Tooltray aria-label="search tooltray">
-          <Button variant="primary">
-            <AddIcon />
-          </Button>
-        </Tooltray>
-        <Tooltray aria-label="buttons tooltray">
-          <ToolbarButton>
-            <ExportIcon /> Export
-          </ToolbarButton>
-          <ToolbarButton>
-            <ColumnChooserIcon /> Select Columns
-          </ToolbarButton>
-          <ToolbarButton>
-            <SettingsIcon /> Settings
-          </ToolbarButton>
-        </Tooltray>
-      </Toolbar>
-    </AdjustableFlexbox>
-  );
-};
-
-export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
-  width = 900,
-}) => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
-
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <Toolbar style={{ minWidth: "100px" }}>
-        <Tooltray
-          aria-label="views tooltray"
-          data-collapsible="dynamic"
-          data-priority={3}
-          overflowButtonLabel="Views"
-        >
-          <ToolbarField label="Views" labelPlacement="left">
-            <Dropdown
-              onSelect={(_, item) => setView(item)}
-              selected={view}
-              source={viewsData}
-              style={{ width: 132 }}
-            />
-          </ToolbarField>
-          <ToolbarField>
-            <Button>Save</Button>
-          </ToolbarField>
-
-          <ToolbarField>
-            <Button>Save as...</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button disabled>Reset</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="colsButton">
-              Select Columns <ColumnChooserIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray
-          aria-label="actions tooltray"
-          data-collapsible="dynamic"
-          data-priority={2}
-          overflowButtonLabel="actions"
-        >
-          <ToolbarField>
-            <Button>create instruction</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button>create net</Button>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray aria-label="export tooltray">
-          <ToolbarField>
-            <ToolbarButton id="pdfButton">
-              Export PDF <PdfIcon />
-            </ToolbarButton>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="csvButton">
-              Export CSV <CsvIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-      </Toolbar>
-      <br />
-      <Toolbar style={{ minWidth: "100px" }}>
-        <Tooltray
-          aria-label="views tooltray"
-          data-collapsible="dynamic"
-          data-priority={3}
-          overflowButtonLabel="Views"
-        >
-          <ToolbarField label="Views" labelPlacement="left">
-            <Dropdown
-              onSelect={(_, item) => setView(item)}
-              selected={view}
-              source={viewsData}
-              style={{ width: 132 }}
-            />
-          </ToolbarField>
-          <ToolbarField>
-            <Button>Save</Button>
-          </ToolbarField>
-
-          <ToolbarField>
-            <Button>Save as...</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button disabled>Reset</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="colsButton">
-              Select Columns <ColumnChooserIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray
-          aria-label="actions tooltray"
-          data-collapsible="dynamic"
-          data-priority={2}
-          overflowButtonLabel="actions"
-        >
-          <ToolbarField>
-            <Button>create instruction</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button>create net</Button>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray aria-label="export tooltray" data-priority={4}>
-          <ToolbarField>
-            <ToolbarButton id="pdfButton">
-              Export PDF <PdfIcon />
-            </ToolbarButton>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="csvButton">
-              Export CSV <CsvIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-      </Toolbar>
-    </AdjustableFlexbox>
-  );
-};
-export const ToolbarOverflowLargeOverflowIndicator: Story<
-  AdjustableFlexboxProps
-> = ({ width = 900 }) => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
-
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <Toolbar style={{ minWidth: "100px" }} overflowButtonLabel="Views">
-        <ToolbarField label="Views" labelPlacement="left">
-          <Dropdown
-            onSelect={(_, item) => setView(item)}
-            selected={view}
-            source={viewsData}
-            style={{ width: 132 }}
-          />
-        </ToolbarField>
-        <ToolbarField>
-          <Button>Save</Button>
-        </ToolbarField>
-
-        <ToolbarField>
-          <Button>Save as...</Button>
-        </ToolbarField>
-        <ToolbarField>
-          <Button disabled>Reset</Button>
-        </ToolbarField>
-        <ToolbarField>
-          <ToolbarButton id="colsButton">
-            Select Columns <ColumnChooserIcon />
-          </ToolbarButton>
-        </ToolbarField>
-      </Toolbar>
-    </AdjustableFlexbox>
-  );
-};
-
-const ToolbarWithInstantCollapseTooltrays = () => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
-  return (
-    <Toolbar
-      aria-label="Instant collapse toolbar"
-      style={{ minWidth: "100px" }}
-    >
-      <Tooltray
-        aria-label="views tooltray"
-        data-collapsible="instant"
-        data-priority={2}
-        overflowButtonLabel="Views"
-      >
-        <ToolbarField label="Views" labelPlacement="left">
-          <Dropdown
-            onSelect={(_, item) => setView(item)}
-            selected={view}
-            source={viewsData}
-            style={{ width: "132px " }}
-          />
-        </ToolbarField>
-        <Button>Save</Button>
-        <Button>Save as...</Button>
-        <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
-        </ToolbarButton>
-      </Tooltray>
-      <Tooltray
-        aria-label="actions tooltray"
-        data-collapsible="instant"
-        data-priority={3}
-        overflowButtonLabel="actions"
-      >
-        <Button>create instruction</Button>
-        <Button>create net</Button>
-      </Tooltray>
-      <Tooltray aria-label="export tooltray" data-priority={4}>
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
-        </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
-        </ToolbarButton>
-      </Tooltray>
-    </Toolbar>
-  );
-};
-
-export const TooltrayInstantCollapse: Story<AdjustableFlexboxProps> = ({
-  width = 1000,
-}) => {
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <ToolbarWithInstantCollapseTooltrays />
-    </AdjustableFlexbox>
-  );
-};
-
-const ToolbarWithDynamicCollapseTooltrays = () => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
-
-  return (
-    <Toolbar
-      aria-label="Dynamic collapse tooltbar"
-      style={{ minWidth: "100px" }}
-    >
-      <Tooltray
-        aria-label="views tooltray"
-        data-collapsible="dynamic"
-        data-priority={2}
-        overflowButtonLabel="Views"
-      >
-        <ToolbarField label="Views" labelPlacement="left">
-          <Dropdown
-            onSelect={(_, item) => setView(item)}
-            selected={view}
-            source={viewsData}
-            style={{ width: "132px " }}
-          />
-        </ToolbarField>
-        <Button>Save</Button>
-        <Button>Save as...</Button>
-        <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
-        </ToolbarButton>
-      </Tooltray>
-      <Tooltray
-        aria-label="actions tooltray"
-        data-collapsible="dynamic"
-        data-priority={3}
-        overflowButtonLabel="actions"
-      >
-        <Button>create instruction</Button>
-        <Button>create net</Button>
-      </Tooltray>
-      <Tooltray aria-label="export tooltray">
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
-        </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
-        </ToolbarButton>
-      </Tooltray>
-    </Toolbar>
-  );
-};
-
-export const TooltrayDynamicCollapse: Story<AdjustableFlexboxProps> = ({
-  width = 1000,
-}) => {
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <ToolbarWithDynamicCollapseTooltrays />
-    </AdjustableFlexbox>
-  );
-};
-
-const ToolbarWithNonCollapsingTooltrays = () => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-  const [view, setView] = useState(viewsData[0]);
-
-  return (
-    <Toolbar
-      aria-label="No tooltray collapse toolbar"
-      style={{ minWidth: "100px" }}
-    >
-      <Tooltray aria-label="views tooltray">
-        <ToolbarField label="Views" labelPlacement="left">
-          <Dropdown
-            onSelect={(_, item) => setView(item)}
-            selected={view}
-            source={viewsData}
-            style={{ width: "132px " }}
-          />
-        </ToolbarField>
-        <Button>Save</Button>
-        <Button>Save as...</Button>
-        <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
-        </ToolbarButton>
-      </Tooltray>
-      <Tooltray aria-label="actions tooltray">
-        <Button>create instruction</Button>
-        <Button>create net</Button>
-      </Tooltray>
-      <Tooltray aria-label="export tooltray">
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
-        </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
-        </ToolbarButton>
-      </Tooltray>
-    </Toolbar>
-  );
-};
-
-export const TooltrayNonCollapsingTooltrays: Story<AdjustableFlexboxProps> = ({
-  width = 1000,
-}) => {
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <ToolbarWithNonCollapsingTooltrays />
-    </AdjustableFlexbox>
-  );
-};
-
-export const TooltrayCollapseComparison = () => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={1000}>
-      <h4>Instant Collapse</h4>
-      <ToolbarWithInstantCollapseTooltrays />
-      <br />
-      <h4>Dynamic Collapse</h4>
-      <ToolbarWithDynamicCollapseTooltrays />
-      <br />
-      <h4>No Tooltray Collapse</h4>
-      <ToolbarWithNonCollapsingTooltrays />
-    </AdjustableFlexbox>
-  );
-};
-
-export const SimpleToolbar: Story<AdjustableFlexboxProps & ToolbarProps> = ({
-  width = 320,
-  ...toolbarProps
-}) => {
-  const handleToolbarButtonClick = (evt: MouseEvent) => {
-    console.log(`SimpleToolbar handleClick ${evt.currentTarget.textContent}`);
-  };
-  return (
-    <AdjustableFlexbox height={200} width={width}>
+    <AdjustableFlexbox height={200} width={initialWidth}>
       <Toolbar {...toolbarProps}>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Export <ExportIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Share <ShareIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Notification <NotificationIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Tear Out <TearOutIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Message <MessageIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Filter <FilterIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Group <UserGroupIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Pin <PinIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          Search <SearchIcon />
-        </ToolbarButton>
-        <ToolbarButton onClick={handleToolbarButtonClick}>
-          User <UserIcon />
-        </ToolbarButton>
+        <Button variant="secondary">
+          <ExportIcon />
+        </Button>
+        <Button variant="secondary">
+          <ShareIcon />
+        </Button>
+        <Button variant="secondary">
+          <NotificationIcon />
+        </Button>
+        <Button variant="secondary">
+          <TearOutIcon />
+        </Button>
+        <Button variant="secondary">
+          <MessageIcon />
+        </Button>
+        <Button variant="secondary">
+          <FilterIcon />
+        </Button>
+        <Button variant="secondary">
+          <UserGroupIcon />
+        </Button>
+        <Button variant="secondary">
+          <PinIcon />
+        </Button>
+        <Button variant="secondary">
+          <SearchIcon />
+        </Button>
+        <Button variant="secondary">
+          <UserIcon />
+        </Button>
       </Toolbar>
     </AdjustableFlexbox>
   );
@@ -586,27 +78,28 @@ export const SimpleToolbarOverflowLabel = ({ overflowLabel = "more ..." }) => (
   <SimpleToolbar overflowButtonLabel={overflowLabel} />
 );
 
-export const SimpleToolbarCollapsibleItems: Story<AdjustableFlexboxProps> = ({
-  width = 500,
+export const SimpleToolbarCollapsibleItems = ({
+  initialWidth = 500,
+  ...toolbarProps
 }) => {
   return (
-    <AdjustableFlexbox height={200} width={width}>
-      <Toolbar id="toolbar-simple-collapsible">
-        <ToolbarButton variant="secondary" data-collapsible="instant">
+    <AdjustableFlexbox height={200} width={initialWidth}>
+      <Toolbar {...toolbarProps} id="toolbar-simple-collapsible">
+        <Button variant="secondary" data-collapsible="instant">
           <ExportIcon /> Export
-        </ToolbarButton>
-        <ToolbarButton variant="secondary" data-collapsible="instant">
+        </Button>
+        <Button variant="secondary" data-collapsible="instant">
           <ShareIcon /> Share
-        </ToolbarButton>
-        <ToolbarButton variant="secondary" data-collapsible="instant">
+        </Button>
+        <Button variant="secondary" data-collapsible="instant">
           <NotificationIcon /> Alert
-        </ToolbarButton>
-        <ToolbarButton variant="secondary" data-collapsible="instant">
+        </Button>
+        <Button variant="secondary" data-collapsible="instant">
           <TearOutIcon /> Tear Out
-        </ToolbarButton>
-        <ToolbarButton variant="secondary" data-collapsible="instant">
+        </Button>
+        <Button variant="secondary" data-collapsible="instant">
           <MessageIcon /> Message
-        </ToolbarButton>
+        </Button>
       </Toolbar>
     </AdjustableFlexbox>
   );
@@ -646,9 +139,71 @@ export const SimpleToolbarCollapsibleItemsAnatomy = ({
   );
 };
 
+export const DefaultToolbar = ({ initialWidth = 315 }) => {
+  const typeData = ["Open", "Close", "Discarded", "Resolved"];
+  const rangeData = [
+    "Today",
+    "Yesterday",
+    "Last Week",
+    "Last Month",
+    "Last Year",
+  ];
+
+  const [type, setType] = useState<string | undefined>(typeData[0]);
+  const [range, setRange] = useState<string | undefined>(rangeData[0]);
+
+  const logItemName = (buttonName: string) =>
+    console.log(`${buttonName} button clicked'`);
+
+  return (
+    <AdjustableFlexbox height={100} width={initialWidth}>
+      <Toolbar id="toolbar-default">
+        <FormField
+          data-close-on-click={false}
+          label="Range"
+          data-activation-indicator
+          className="uitkEmphasisMedium"
+        >
+          <Dropdown
+            initialSelectedItem={range}
+            onSelect={(_, item) => setRange(item || undefined)}
+            source={rangeData}
+            style={{ width: 100 }}
+          />
+        </FormField>
+        <FormField
+          data-close-on-click={false}
+          label="Type"
+          data-activation-indicator
+          className="uitkEmphasisMedium"
+        >
+          <Dropdown
+            initialSelectedItem={type}
+            onSelect={(_, item) => setType(item || undefined)}
+            source={typeData}
+            style={{ width: 90 }}
+          />
+        </FormField>
+        <Button onClick={() => logItemName("export")} variant="secondary">
+          <ExportIcon /> Export
+        </Button>
+        <Button onClick={() => logItemName("share")} variant="secondary">
+          <ShareIcon /> Share
+        </Button>
+        <Button onClick={() => logItemName("alerts")} variant="secondary">
+          <NotificationIcon /> Set Alerts
+        </Button>
+        <Button onClick={() => logItemName("expand")} variant="secondary">
+          <TearOutIcon /> Expand
+        </Button>
+      </Toolbar>
+    </AdjustableFlexbox>
+  );
+};
+
 export const InstantCollapseTooltray = () => {
   return (
-    <AdjustableFlexbox height={200} width={800}>
+    <AdjustableFlexbox height={200} width={400}>
       <Toolbar aria-label="Toolbar with collapsible tooltray">
         <Tooltray data-collapsible="instant">
           {[
@@ -656,15 +211,28 @@ export const InstantCollapseTooltray = () => {
               Theme
             </Button>,
             [
-              <ToolbarField key="dropdown-1" style={{ width: "62px " }}>
-                <Dropdown defaultSelected="light" source={["light", "dark"]} />
-              </ToolbarField>,
-              <ToolbarField key="dropdown-2" style={{ width: "83px " }}>
+              <FormField
+                // closeOnClick={false}
+                key="dropdown-1"
+                style={{ width: "62px " }}
+                // withActivationIndicator
+              >
                 <Dropdown
-                  defaultSelected="medium"
+                  initialSelectedItem="light"
+                  source={["light", "dark"]}
+                />
+              </FormField>,
+              <FormField
+                // closeOnClick={false}
+                key="dropdown-2"
+                style={{ width: "83px " }}
+                // withActivationIndicator
+              >
+                <Dropdown
+                  initialSelectedItem="medium"
                   source={["touch", "low", "medium", "high"]}
                 />
-              </ToolbarField>,
+              </FormField>,
             ],
           ]}
         </Tooltray>
@@ -690,34 +258,34 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
         A single <em>Toolbar</em> with 10 buttons
       </p>
       <Toolbar aria-label="Toolbar with dynamic collapse variants">
-        <ToolbarButton label="Email">
+        <ToolbarButton id="messageButton" label="Email">
           <MessageIcon />
         </ToolbarButton>
-        <ToolbarButton label="Search">
+        <ToolbarButton id="searchButton" label="Search">
           <SearchIcon />
         </ToolbarButton>
-        <ToolbarButton label="Filter">
+        <ToolbarButton id="filterButton" label="Filter">
           <FilterIcon />
         </ToolbarButton>
-        <ToolbarButton label="User">
+        <ToolbarButton id="userButton" label="User">
           <UserIcon />
         </ToolbarButton>
-        <ToolbarButton label="User Group">
+        <ToolbarButton id="userGroupButton" label="User Group">
           <UserGroupIcon />
         </ToolbarButton>
-        <ToolbarButton label="Tear Out">
+        <ToolbarButton id="tearOutButton" label="Tear Out">
           <TearOutIcon />
         </ToolbarButton>
-        <ToolbarButton label="Expand">
+        <ToolbarButton id="expandButton" label="Expand">
           <DoubleChevronDownIcon />
         </ToolbarButton>
-        <ToolbarButton label="Pin">
+        <ToolbarButton id="pinButton" label="Pin">
           <PinIcon />
         </ToolbarButton>
-        <ToolbarButton label="Settings">
+        <ToolbarButton id="settingsButton" label="Settings">
           <SettingsIcon />
         </ToolbarButton>
-        <ToolbarButton label="More Settings">
+        <ToolbarButton id="settingsSolidButton" label="More Settings">
           <SettingsSolidIcon />
         </ToolbarButton>
       </Toolbar>
@@ -772,19 +340,19 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
           data-collapsible="dynamic"
           // overflowButtonLabel="left"
         >
-          <ToolbarButton label="Email">
+          <ToolbarButton id="messageButton" label="Email">
             <MessageIcon />
           </ToolbarButton>
-          <ToolbarButton label="Search">
+          <ToolbarButton id="messageButton" label="Search">
             <SearchIcon />
           </ToolbarButton>
-          <ToolbarButton label="Filter">
+          <ToolbarButton id="messageButton" label="Filter">
             <FilterIcon />
           </ToolbarButton>
-          <ToolbarButton label="User">
+          <ToolbarButton id="messageButton" label="User">
             <UserIcon />
           </ToolbarButton>
-          <ToolbarButton label="Group">
+          <ToolbarButton id="messageButton" label="Group">
             <UserGroupIcon />
           </ToolbarButton>
         </Tooltray>
@@ -793,26 +361,26 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
           data-collapsible="dynamic"
           // overflowButtonLabel="right"
         >
-          <ToolbarButton label="Tear Out">
+          <ToolbarButton id="messageButton" label="Tear Out">
             <TearOutIcon />
           </ToolbarButton>
-          <ToolbarButton label="Expand">
+          <ToolbarButton id="messageButton" label="Expand">
             <DoubleChevronDownIcon />
           </ToolbarButton>
-          <ToolbarButton label="Pin">
+          <ToolbarButton id="messageButton" label="Pin">
             <PinIcon />
           </ToolbarButton>
-          <ToolbarButton label="Settings">
+          <ToolbarButton id="messageButton" label="Settings">
             <SettingsIcon />
           </ToolbarButton>
-          <ToolbarButton label="More Settings">
+          <ToolbarButton id="messageButton" label="More Settings">
             <SettingsSolidIcon />
           </ToolbarButton>
         </Tooltray>
       </Toolbar>
       <p style={pStyle}>
         Two Tooltrays, 5 buttons each, both dynamic, <strong>first</strong> has
-        higher overflow priority (so will collapse first)
+        higher overflow priority
       </p>
       <Toolbar>
         <Tooltray
@@ -821,19 +389,19 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
           data-priority={4}
           // overflowButtonLabel="left"
         >
-          <ToolbarButton label="Email">
+          <ToolbarButton id="messageButton" label="Email">
             <MessageIcon />
           </ToolbarButton>
-          <ToolbarButton label="Search">
+          <ToolbarButton id="messageButton" label="Search">
             <SearchIcon />
           </ToolbarButton>
-          <ToolbarButton label="Filter">
+          <ToolbarButton id="messageButton" label="Filter">
             <FilterIcon />
           </ToolbarButton>
-          <ToolbarButton label="User">
+          <ToolbarButton id="messageButton" label="User">
             <UserIcon />
           </ToolbarButton>
-          <ToolbarButton label="Group">
+          <ToolbarButton id="messageButton" label="Group">
             <UserGroupIcon />
           </ToolbarButton>
         </Tooltray>
@@ -842,19 +410,19 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
           data-collapsible="dynamic"
           // overflowButtonLabel="right"
         >
-          <ToolbarButton label="Tear Out">
+          <ToolbarButton id="messageButton" label="Tear Out">
             <TearOutIcon />
           </ToolbarButton>
-          <ToolbarButton label="Expand">
+          <ToolbarButton id="messageButton" label="Expand">
             <DoubleChevronDownIcon />
           </ToolbarButton>
-          <ToolbarButton label="Pin">
+          <ToolbarButton id="messageButton" label="Pin">
             <PinIcon />
           </ToolbarButton>
-          <ToolbarButton label="Settings">
+          <ToolbarButton id="messageButton" label="Settings">
             <SettingsIcon />
           </ToolbarButton>
-          <ToolbarButton label="More Settings">
+          <ToolbarButton id="messageButton" label="More Settings">
             <SettingsSolidIcon />
           </ToolbarButton>
         </Tooltray>
@@ -862,44 +430,7 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
     </AdjustableFlexbox>
   );
 };
-
-export const VerticalToolbar = () => {
-  return (
-    <Toolbar
-      aria-label="vertical toolbar"
-      data-resizeable
-      orientation="vertical"
-      style={{ minHeight: "500px" }}
-    >
-      <ToolbarField>
-        <Avatar size="medium" />
-      </ToolbarField>
-      <ToolbarButton>
-        <InfoIcon /> View Description
-      </ToolbarButton>
-      <ToolbarButton>
-        <ChatIcon /> Add Comment
-      </ToolbarButton>
-      <ToolbarButton>
-        <SuccessTickIcon /> Add Task
-      </ToolbarButton>
-      <ToolbarButton disabled>
-        <VisibleIcon /> Watch
-      </ToolbarButton>
-      <ToolbarButton data-align-start>
-        <NotificationIcon /> Set Reminder
-      </ToolbarButton>
-      <ToolbarButton>
-        <SettingsIcon /> Settings
-      </ToolbarButton>
-      <ToolbarButton>
-        <TearOutIcon /> Expand
-      </ToolbarButton>
-    </Toolbar>
-  );
-};
-
-export const MockAppHeader: Story = () => {
+export const MockAppHeader = () => {
   const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
   return (
@@ -911,9 +442,14 @@ export const MockAppHeader: Story = () => {
         overflowButtonLabel="More"
         data-overflow-left
         overflowButtonIcon={<MenuIcon />}
-        overflowButtonPlacement="start"
+        OverflowButtonProps={{ align: "start" }}
       >
-        <Tooltray id="1" data-priority={1} aria-label="left dynamic tooltray">
+        <Tooltray
+          id="1"
+          data-priority={1}
+          aria-label="left dynamic tooltray"
+          // overflowButtonLabel="left"
+        >
           <ToolbarButton id="emailButton" label="Email">
             <MessageIcon />
           </ToolbarButton>
@@ -929,6 +465,7 @@ export const MockAppHeader: Story = () => {
           aria-label="left dynamic tooltray"
           data-align-center
           data-priority={2}
+          // overflowButtonLabel="left"
         >
           <ToolbarButton id="emailButton" label="Email">
             <MessageIcon />
@@ -952,6 +489,7 @@ export const MockAppHeader: Story = () => {
           data-collapsible="dynamic"
           data-reclaim-space
           data-priority={1}
+          // overflowButtonLabel="Right"
         >
           <ToolbarButton id="messageButton" label="Tear Out">
             <TearOutIcon />

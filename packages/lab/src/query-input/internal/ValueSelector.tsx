@@ -7,7 +7,7 @@ import {
   useWindow,
 } from "@jpmorganchase/uitk-core";
 import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
-import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
+import { QueryInputCategory, QueryInputItem } from "../QueryInput";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
@@ -34,6 +34,7 @@ export interface ValueSelectorProps {
 
   highlightedCategoryIndex?: number;
   highlightedValueIndex?: number;
+
   setHighlightedIndex: Dispatch<SetStateAction<number>>;
   setHighlightedCategoryIndex: Dispatch<SetStateAction<number>>;
   setHighlightedValueIndex: Dispatch<SetStateAction<number>>;

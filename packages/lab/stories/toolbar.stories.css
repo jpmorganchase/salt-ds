@@ -1,4 +1,3 @@
-#toolbar-simple-collapsible [data-collapsed] {
+#toolbar-simple-collapsible .toolbar-item[data-collapsed] {
   --uitkButton-fontSize: 0;
-  --uitkButton-letterSpacing: 0;
 }

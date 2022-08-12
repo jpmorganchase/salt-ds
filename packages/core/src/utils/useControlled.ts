@@ -1,6 +1,5 @@
 import {
   Dispatch,
-  isValidElement,
   SetStateAction,
   useRef,
   useState,
@@ -78,7 +77,7 @@ export function useControlled<S = unknown>({
     }
     return undefined;
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [JSON.stringify(defaultProp, ignoreReactElements)]);
+  }, [JSON.stringify(defaultProp)]);
 
   const setValueIfUncontrolled = useCallback((newValue) => {
     if (!isControlled) {
@@ -88,9 +87,4 @@ export function useControlled<S = unknown>({
   }, []);
 
   return [value!, setValueIfUncontrolled, isControlled];
-}
-
-// Ignore ReactElements in JSON, they contain circular refs
-function ignoreReactElements<T>(key: string, value: T): T | null {
-  return isValidElement(value) ? null : value;
 }

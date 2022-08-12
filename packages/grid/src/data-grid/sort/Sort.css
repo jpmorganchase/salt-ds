@@ -29,6 +29,6 @@
   /*background-color: var(--uitk-color-white);*/
 }
 
-.uitkDataGridSort-dropdown.uitkDropdown-popup {
+.uitkDataGridSort-window {
   z-index: 10;
 }

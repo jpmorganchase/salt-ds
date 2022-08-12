@@ -1,79 +1,71 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
-import { KeyboardEvent, MouseEvent, useCallback } from "react";
+import { KeyboardEvent, useCallback } from "react";
+import { isTabElement } from "./tab-utils";
 
-const defaultSelectionKeys = ["Enter", " "];
+const activationKeys = new Set(["Enter", " "]);
 
-export const isTabElement = (el: HTMLElement): boolean =>
-  el && el.matches('[class*="uitkTab "]');
+const isActivationKey = (key: string) => activationKeys.has(key);
 
-// TODO use SelectionProps
 export const useSelection = ({
-  defaultSelected,
-  highlightedIdx,
-  onSelectionChange,
-  selected: selectedProp,
+  defaultValue,
+  onChange,
+  value: valueProp,
 }: {
-  defaultSelected?: number;
-  highlightedIdx: number;
-  onSelectionChange?: (tabIndex: number) => void;
-  selected?: number;
+  defaultValue?: number;
+  onChange?: (tabIndex: number) => void;
+  value?: number;
 }): {
   activateTab: (tabIndex: number) => void;
   isControlled: boolean;
-  onClick: (evt: MouseEvent<Element>, tabIndex: number) => void;
-  onKeyDown: (evt: KeyboardEvent) => void;
-  selected: number;
+  onClick: (evt: MouseEvent, tabIndex: number) => void;
+  onKeyDown: (evt: KeyboardEvent, tabIndex: number) => void;
+  value: number;
 } => {
-  const [selected, setSelected, isControlled] = useControlled({
-    controlled: selectedProp,
-    default: defaultSelected ?? (selectedProp === undefined ? 0 : undefined),
+  const [value, setValue, isControlled] = useControlled({
+    controlled: valueProp,
+    default: defaultValue ?? (valueProp === undefined ? 0 : undefined),
     name: "Tabstrip",
     state: "value",
   });
 
-  const isSelectionEvent = useCallback(
-    (evt: KeyboardEvent) => defaultSelectionKeys.includes(evt.key),
-    []
-  );
-
-  const selectItem = useCallback(
+  const activateTab = useCallback(
     (tabIndex: number) => {
-      setSelected(tabIndex);
-      onSelectionChange?.(tabIndex);
+      setValue(tabIndex);
+      onChange && onChange(tabIndex);
     },
-    [onSelectionChange, setSelected]
+    [onChange, setValue]
   );
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent, tabIndex: number, childIndex?: number) => {
       const targetElement = e.target as HTMLElement;
       if (
-        isSelectionEvent(e) &&
-        highlightedIdx !== selected &&
+        isActivationKey(e.key) &&
+        tabIndex !== value &&
         isTabElement(targetElement)
       ) {
         e.stopPropagation();
         e.preventDefault();
-        selectItem(highlightedIdx);
+        activateTab(tabIndex);
       }
     },
-    [isSelectionEvent, highlightedIdx, selected, selectItem]
+    [activateTab, value]
   );
 
   const onClick = useCallback(
     (e: MouseEvent, tabIndex: number) => {
-      if (tabIndex !== selected) {
-        selectItem(tabIndex);
+      if (tabIndex !== value) {
+        activateTab(tabIndex);
       }
     },
-    [selectItem, selected]
+    [activateTab, value]
   );
 
   return {
-    activateTab: selectItem,
+    activateTab,
     isControlled,
     onClick,
-    onKeyDown: handleKeyDown,
-    selected,
+    onKeyDown,
+    value,
   };
 };

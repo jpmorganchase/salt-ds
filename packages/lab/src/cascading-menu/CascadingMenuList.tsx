@@ -1,5 +1,6 @@
 import {
   Portal,
+  useCharacteristic,
   useFloatingUI,
   UseFloatingUIProps,
   useForkRef,
@@ -8,8 +9,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
-import { List, ListProps } from "../list-deprecated";
-
+import { List, ListProps } from "../list";
 import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
 import { getKeyDownHandlers } from "./internal/keydownHandlers";
@@ -94,12 +94,12 @@ export const CascadingMenuList = forwardRef<
     [refsManager, menuId]
   );
 
-  // TODO removed useCharacteristic here
-  const sizeStackable = 36;
-  const defaultRowHeight = sizeStackable;
+  const sizeStackable = useCharacteristic("size", "stackable", menuRef);
+  const defaultRowHeight =
+    sizeStackable === null ? 36 : parseInt(sizeStackable, 10);
 
-  // TODO removed useCharacteristic here
-  const spacing = 8;
+  const spacingUnit = useCharacteristic("spacing", "unit", menuRef);
+  const spacing = spacingUnit === null ? 8 : parseInt(spacingUnit, 10);
 
   const isMenuActiveState = useState(true);
   const [isMenuActive, setIsMenuActive] = isMenuActiveState;
