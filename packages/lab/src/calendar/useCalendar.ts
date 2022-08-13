@@ -1,12 +1,11 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
-import { SyntheticEvent, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import {
   DateValue,
   endOfMonth,
   endOfYear,
   getLocalTimeZone,
   isSameDay,
-  isSameMonth,
   startOfMonth,
   startOfYear,
   today,
@@ -19,14 +18,13 @@ import {
   useSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "./internal/useSelection";
-import { formatDate } from "./internal/utils";
 
 export type UnselectableInfo =
   | { emphasis: "high"; tooltip?: string }
   | { emphasis: "low" };
 
 interface BaseUseCalendarProps {
-  initialVisibleMonth?: DateValue;
+  defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue
@@ -51,10 +49,10 @@ const defaultIsDayUnselectable = (): UnselectableInfo | boolean => false;
 export function useCalendar(props: useCalendarProps) {
   const {
     selectedDate,
-    initialSelectedDate,
+    defaultSelectedDate,
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
-    initialVisibleMonth = today(getLocalTimeZone()),
+    defaultVisibleMonth = today(getLocalTimeZone()),
     onSelectedDateChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
@@ -71,7 +69,7 @@ export function useCalendar(props: useCalendarProps) {
     !(date && isDayUnselectable(date));
 
   const selectionManager = useSelectionCalendar({
-    initialSelectedDate,
+    defaultSelectedDate: defaultSelectedDate,
     selectedDate,
     onSelectedDateChange,
     startDateOffset:
@@ -90,10 +88,12 @@ export function useCalendar(props: useCalendarProps) {
 
   const [visibleMonth, setVisibleMonthState] = useControlled({
     controlled: visibleMonthProp ? startOfMonth(visibleMonthProp) : undefined,
-    default: startOfMonth(initialVisibleMonth),
+    default: startOfMonth(defaultVisibleMonth),
     name: "Calendar",
     state: "visibleMonth",
   });
+
+  const [calendarFocused, setCalendarFocused] = useState(false);
 
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
     startOfMonth(visibleMonth)
@@ -142,9 +142,6 @@ export function useCalendar(props: useCalendarProps) {
     if (shouldTransition) {
       setVisibleMonth(event, startOfMonth(date));
     }
-    setTimeout(() => {
-      dayRefs.current[formatDate(date)]?.focus({ preventScroll: true });
-    });
   };
 
   const setVisibleMonth = (
@@ -152,17 +149,14 @@ export function useCalendar(props: useCalendarProps) {
     newVisibleMonth: DateValue
   ) => {
     setVisibleMonthState(newVisibleMonth);
-    if (!isSameMonth(focusedDate, newVisibleMonth)) {
-      setFocusedDateState(startOfMonth(newVisibleMonth));
-    }
     onVisibleMonthChange?.(event, newVisibleMonth);
   };
 
-  const dayRefs = useRef<Record<string, HTMLElement>>({});
-
-  const registerDayRef = (date: DateValue, element: HTMLElement) => {
-    dayRefs.current[formatDate(date)] = element;
-  };
+  useEffect(() => {
+    if (!isDayVisible(focusedDate)) {
+      setFocusedDateState(startOfMonth(visibleMonth));
+    }
+  }, [isDayVisible, focusedDate, visibleMonth, setFocusedDate]);
 
   return {
     state: {
@@ -172,18 +166,19 @@ export function useCalendar(props: useCalendarProps) {
       maxDate,
       selectionVariant,
       hideOutOfRangeDates,
+      calendarFocused,
       ...selectionManager.state,
     },
     helpers: {
       setVisibleMonth,
       setFocusedDate,
+      setCalendarFocused,
       isDayUnselectable,
       isDayVisible,
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
       ...selectionManager.helpers,
-      registerDayRef,
     },
   };
 }

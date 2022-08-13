@@ -8,7 +8,7 @@ import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   hoveredDate?: DateValue | null;
   selectedDate?: SelectionVariantType | null;
-  initialSelectedDate?: SelectionVariantType;
+  defaultSelectedDate?: SelectionVariantType;
   onSelectedDateChange?: (
     event: SyntheticEvent,
     selectedDate: SelectionVariantType
@@ -96,7 +96,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const {
     hoveredDate: hoveredDateProp,
     selectedDate: selectedDateProp,
-    initialSelectedDate,
+    defaultSelectedDate,
     // onSelectedDateChange,
     onHoveredDateChange,
     isDaySelectable,
@@ -106,7 +106,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   } = props;
   const [selectedDate, setSelectedDateState] = useControlled({
     controlled: selectedDateProp,
-    default: initialSelectedDate,
+    default: defaultSelectedDate,
     name: "Calendar",
     state: "selectedDate",
   });

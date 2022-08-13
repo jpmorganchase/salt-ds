@@ -7,12 +7,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import {
-  ComponentPropsWithRef,
-  forwardRef,
-  ReactElement,
-  useCallback,
-} from "react";
+import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
 
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
@@ -38,12 +33,14 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     const { className, day, renderDayContents, month, TooltipProps, ...rest } =
       props;
 
-    const { status, dayProps, registerDay, unselectableReason } =
-      useCalendarDay({
+    const dayRef = useRef<HTMLButtonElement>(null);
+    const { status, dayProps, unselectableReason } = useCalendarDay(
+      {
         date: day,
         month,
-      });
-
+      },
+      dayRef
+    );
     const { outOfRange, today, unselectable, hidden } = status;
 
     const { getTriggerProps, getTooltipProps } = useTooltip({
@@ -68,13 +65,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       ),
     });
 
-    const registerDayRef = useCallback(
-      (node: HTMLButtonElement) => {
-        registerDay(day, node);
-      },
-      [registerDay, day]
-    );
-    const handleTriggerRef = useForkRef(triggerRef, registerDayRef);
+    const handleTriggerRef = useForkRef(triggerRef, dayRef);
     const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (

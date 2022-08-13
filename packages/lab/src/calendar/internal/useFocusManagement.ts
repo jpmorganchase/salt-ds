@@ -4,17 +4,11 @@ import {
   MouseEventHandler,
 } from "react";
 import { useCalendarContext } from "./CalendarContext";
-import {
-  DateValue,
-  endOfWeek,
-  isSameDay,
-  startOfWeek,
-} from "@internationalized/date";
+import { DateValue, endOfWeek, startOfWeek } from "@internationalized/date";
 import { getCurrentLocale } from "./utils";
 
 export function useFocusManagement({ date }: { date: DateValue }) {
   const {
-    state: { focusedDate },
     helpers: { setFocusedDate },
   } = useCalendarContext();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -59,13 +53,12 @@ export function useFocusManagement({ date }: { date: DateValue }) {
         break;
       default:
     }
+
     setFocusedDate(event, newDate);
   };
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
-    if (!isSameDay(date, focusedDate)) {
-      setFocusedDate(event, date);
-    }
+    setFocusedDate(event, date);
   };
 
   return {
