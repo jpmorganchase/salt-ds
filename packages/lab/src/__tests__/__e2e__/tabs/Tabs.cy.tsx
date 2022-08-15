@@ -638,17 +638,19 @@ describe("Adding Tabs", () => {
           .realClick();
 
         cy.wait(50);
-        cy.findByRole("button", { name: "Create Tab" }).realClick();
+        cy.findByRole("button", { name: "Create Tab" })
+          .realClick()
+          .then(() => {
+            cy.get(".uitkTabstrip-inner > *")
+              .filter(":visible")
+              .should("have.length", 10);
 
-        cy.get(".uitkTabstrip-inner > *")
-          .filter(":visible")
-          .should("have.length", 10);
-
-        cy.get(".uitkTab").eq(7).should("not.be.visible");
-        cy.get(".uitkTab").eq(8).should("not.be.visible");
-        cy.get(".uitkTab").eq(9).should("be.visible");
-        cy.get(".uitkTab").eq(9).should("have.ariaSelected");
-        cy.get(".uitkTab").eq(9).should("be.focused");
+            cy.get(".uitkTab").eq(7).should("not.be.visible");
+            cy.get(".uitkTab").eq(8).should("not.be.visible");
+            cy.get(".uitkTab").eq(9).should("be.visible");
+            cy.get(".uitkTab").eq(9).should("have.ariaSelected");
+            cy.get(".uitkTab").eq(9).should("be.focused");
+          });
       });
     });
   });
