@@ -639,6 +639,7 @@ describe("Adding Tabs", () => {
 
         cy.wait(50);
         cy.findByRole("button", { name: "Create Tab" }).realClick();
+        cy.wait(100); // Wait the focus and movement to settle
 
         cy.get(".uitkTabstrip-inner > *")
           .filter(":visible")
