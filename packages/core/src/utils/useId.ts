@@ -2,7 +2,7 @@ import * as React from "react";
 
 // eslint-disable-next-line -- Workaround for https://github.com/webpack/webpack/issues/14814
 const maybeReactUseId: undefined | (() => string) = (React as any)[
-  "useId" + ""
+  `${"useId"}${""}`
 ];
 
 function useIdLegacy(idOverride?: string): string {
