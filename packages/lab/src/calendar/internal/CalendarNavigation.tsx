@@ -3,7 +3,6 @@ import {
   ButtonProps,
   makePrefixer,
   Tooltip,
-  useForkRef,
   useId,
   useTooltip,
 } from "@jpmorganchase/uitk-core";
@@ -16,15 +15,25 @@ import {
   SyntheticEvent,
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
-import { ListItem, ListItemProps, ListItemType } from "../../list";
+import { ListItem, ListItemType } from "../../list";
 
 import { useCalendarContext } from "./CalendarContext";
-import dayjs from "./dayjs";
 
 import "./CalendarNavigation.css";
+import {
+  DateValue,
+  endOfMonth,
+  endOfYear,
+  isSameMonth,
+  isSameYear,
+  startOfMonth,
+  startOfYear,
+} from "@internationalized/date";
+import { formatDate, monthDiff, monthsForLocale } from "./utils";
+import { SelectionChangeHandler } from "../../common-hooks";
 
 type DropdownItem = {
-  value: Date;
+  value: DateValue;
   disabled?: boolean;
 };
 
@@ -45,30 +54,34 @@ const withBaseName = makePrefixer("uitkCalendarNavigation");
 function useCalendarNavigation() {
   const {
     state: { visibleMonth, minDate, maxDate },
-    helpers: { setVisibleMonth, isDayVisible, isDateNavigable },
+    helpers: {
+      setVisibleMonth,
+      isDayVisible,
+      isOutsideAllowedYears,
+      isOutsideAllowedMonths,
+    },
   } = useCalendarContext();
 
   const moveToNextMonth = (event: SyntheticEvent) => {
-    setVisibleMonth(event, dayjs(visibleMonth).add(1, "month").toDate());
+    setVisibleMonth(event, visibleMonth.add({ months: 1 }));
   };
 
   const moveToPreviousMonth = (event: SyntheticEvent) => {
-    setVisibleMonth(event, dayjs(visibleMonth).subtract(1, "month").toDate());
+    setVisibleMonth(event, visibleMonth.subtract({ months: 1 }));
   };
 
-  const moveToMonth = (event: SyntheticEvent, month: Date) => {
+  const moveToMonth = (event: SyntheticEvent, month: DateValue) => {
     let newMonth = month;
 
-    if (isDateNavigable(newMonth, "year")) {
-      if (!isDateNavigable(newMonth, "month")) {
+    if (!isOutsideAllowedYears(newMonth)) {
+      if (isOutsideAllowedMonths(newMonth)) {
         // If month is navigable we should move to the closest navigable month
-        const navigableMonths = dayjs
-          .months()
-          .map((_, index) => dayjs(newMonth).set("month", index).toDate())
-          .filter((n) => isDateNavigable(n, "month"));
+        const navigableMonths = monthsForLocale(visibleMonth).filter(
+          (n) => !isOutsideAllowedMonths(n)
+        );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
-          Math.abs(dayjs(currentMonth).diff(newMonth, "month")) <
-          Math.abs(dayjs(closestMonth).diff(newMonth, "month"))
+          Math.abs(monthDiff(currentMonth, newMonth)) <
+          Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
             : closestMonth
         );
@@ -77,23 +90,19 @@ function useCalendarNavigation() {
     }
   };
 
-  const months = dayjs.months().map((month, monthIndex) => {
-    const date = dayjs(visibleMonth).set("month", monthIndex).toDate();
-    return { value: date, disabled: !isDateNavigable(date, "month") };
+  const months = monthsForLocale(visibleMonth).map((month) => {
+    return { value: month, disabled: isOutsideAllowedMonths(month) };
   });
 
   const years = [-2, -1, 0, 1, 2]
-    .map((delta) => {
-      const date = dayjs(visibleMonth).add(delta, "years").toDate();
-      return { value: date };
-    })
-    .filter(({ value }) => isDateNavigable(value, "year"));
+    .map((delta) => ({ value: visibleMonth.add({ years: delta }) }))
+    .filter(({ value }) => !isOutsideAllowedYears(value));
 
   const selectedMonth = months.find((item: DropdownItem) =>
-    dayjs(item.value).isSame(visibleMonth, "month")
+    isSameMonth(item.value, visibleMonth)
   );
   const selectedYear = years.find((item: DropdownItem) =>
-    dayjs(item.value).isSame(visibleMonth, "year")
+    isSameYear(item.value, visibleMonth)
   );
 
   const canNavigatePrevious = !(minDate && isDayVisible(minDate));
@@ -113,12 +122,11 @@ function useCalendarNavigation() {
   };
 }
 
-const ListItemWithTooltip = forwardRef<
-  HTMLDivElement,
-  ListItemProps<DropdownItem>
->((props, ref) => {
-  const { item, label } = props;
-
+const ListItemWithTooltip: ListItemType<DropdownItem> = ({
+  item,
+  label,
+  ...props
+}) => {
   const { getTooltipProps, getTriggerProps } = useTooltip({
     placement: "right",
     disabled: !item?.disabled,
@@ -127,10 +135,8 @@ const ListItemWithTooltip = forwardRef<
   const { ref: triggerRef, ...triggerProps } =
     getTriggerProps<typeof ListItem>(props);
 
-  const handleRef = useForkRef(triggerRef, ref);
-
   return (
-    <ListItem ref={handleRef} {...triggerProps}>
+    <ListItem ref={triggerRef} {...triggerProps}>
       {label}
       <Tooltip
         {...getTooltipProps({
@@ -139,7 +145,7 @@ const ListItemWithTooltip = forwardRef<
       />
     </ListItem>
   );
-}) as ListItemType<DropdownProps>;
+};
 
 export const CalendarNavigation = forwardRef<
   HTMLDivElement,
@@ -176,7 +182,7 @@ export const CalendarNavigation = forwardRef<
     moveToNextMonth(event);
   };
 
-  const handleMonthSelect: dateDropdownProps["onSelectionChange"] = (
+  const handleMonthSelect: SelectionChangeHandler<DropdownItem> = (
     event,
     month
   ) => {
@@ -185,7 +191,7 @@ export const CalendarNavigation = forwardRef<
     }
   };
 
-  const handleYearSelect: dateDropdownProps["onSelectionChange"] = (
+  const handleYearSelect: SelectionChangeHandler<DropdownItem> = (
     event,
     year
   ) => {
@@ -197,7 +203,7 @@ export const CalendarNavigation = forwardRef<
   const monthDropdownId = useId(MonthDropdownProps?.id);
   const monthDropdownLabelledBy = cx(
     MonthDropdownProps?.["aria-labelledby"],
-    // TODO need a prop on Dropdown to aloow buttonId to be passed, should not make assumptions about internal
+    // TODO need a prop on Dropdown to allow buttonId to be passed, should not make assumptions about internal
     // id assignment like this
     `${monthDropdownId}-control`
   );
@@ -209,13 +215,13 @@ export const CalendarNavigation = forwardRef<
 
   const defaultItemToMonth = (date: DropdownItem) => {
     if (hideYearDropdown) {
-      return dayjs(date.value).format("MMMM");
+      return formatDate(date.value, { month: "long" });
     }
-    return dayjs(date.value).format("MMM");
+    return formatDate(date.value, { month: "short" });
   };
 
   const defaultItemToYear = (date: DropdownItem) => {
-    return dayjs(date.value).format("YYYY");
+    return formatDate(date.value, { year: "numeric" });
   };
 
   return (
@@ -235,9 +241,9 @@ export const CalendarNavigation = forwardRef<
         className={withBaseName("previousButton")}
       >
         <ChevronLeftIcon
-          aria-label={`Previous Month, ${dayjs(visibleMonth)
-            .subtract(1, "month")
-            .format("MMMM YYYY")}`}
+          aria-label={`Previous Month, ${formatDate(
+            visibleMonth.subtract({ months: 1 })
+          )}`}
         />
       </Button>
       <Dropdown<DropdownItem>
@@ -273,9 +279,9 @@ export const CalendarNavigation = forwardRef<
         className={withBaseName("nextButton")}
       >
         <ChevronRightIcon
-          aria-label={`Next Month, ${dayjs(visibleMonth)
-            .add(1, "month")
-            .format("MMMM YYYY")}`}
+          aria-label={`Next Month, ${formatDate(
+            visibleMonth.add({ months: 1 })
+          )}`}
         />
       </Button>
     </div>

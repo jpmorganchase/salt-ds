@@ -1,9 +1,9 @@
 import { forwardRef, ComponentPropsWithRef } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import dayjs from "./dayjs";
 
 import "./CalendarWeekHeader.css";
+import { daysForLocale } from "./utils";
 
 export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div">;
 
@@ -13,7 +13,7 @@ export const CalendarWeekHeader = forwardRef<
   HTMLDivElement,
   CalendarWeekHeaderProps
 >(function CalendarWeekHeader({ className, ...rest }, ref) {
-  const weekdaysShort = dayjs.weekdaysMin(true);
+  const weekdaysShort = daysForLocale("narrow");
 
   return (
     <div
