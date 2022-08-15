@@ -82,24 +82,25 @@
 
 /* Sizes by density */
 .uitk-density-touch {
-  --uitk-text-h1-fontSize: 36px;
+  --uitk-text-h1-fontSize: 42px;
   --uitk-text-h1-lineHeight: auto;
 
-  --uitk-text-h2-fontSize: 28px;
+  --uitk-text-h2-fontSize: 32px;
   --uitk-text-h2-lineHeight: 36px;
 
-  --uitk-text-h3-fontSize: 18px;
+  --uitk-text-h3-fontSize: 24px;
   --uitk-text-h3-lineHeight: 26px;
 
   --uitk-text-h4-fontSize: 16px;
   --uitk-text-h4-lineHeight: 22px;
 
-  --uitk-text-caption-fontSize: 12px;
+  --uitk-text-caption-fontSize: 14px;
   --uitk-text-caption-lineHeight: 16px;
   --uitk-text-caption-minHeight: 16px;
 
-  --uitk-text-help-fontSize: 12px;
+  --uitk-text-help-fontSize: 14px;
   --uitk-text-help-lineHeight: 16px;
+  --uitk-text-help-minHeight: 16px;
 
   --uitk-text-fontSize: 16px;
   --uitk-text-lineHeight: 22px;
@@ -119,12 +120,13 @@
   --uitk-text-h4-fontSize: 14px;
   --uitk-text-h4-lineHeight: 18px;
 
-  --uitk-text-caption-fontSize: 11px;
+  --uitk-text-caption-fontSize: 12px;
   --uitk-text-caption-lineHeight: 14px;
   --uitk-text-caption-minHeight: 14px;
 
-  --uitk-text-help-fontSize: 11px;
+  --uitk-text-help-fontSize: 12px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 14px;
   --uitk-text-lineHeight: 18px;
@@ -150,6 +152,7 @@
 
   --uitk-text-help-fontSize: 11px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 12px;
   --uitk-text-lineHeight: 16px;
@@ -175,6 +178,7 @@
 
   --uitk-text-help-fontSize: 10px;
   --uitk-text-help-lineHeight: 13px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 11px;
   --uitk-text-lineHeight: 14px;
