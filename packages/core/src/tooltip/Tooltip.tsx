@@ -98,7 +98,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <Portal disablePortal={disablePortal} container={container}>
         <Window
-          className={cn(withBaseName(), withBaseName(state))}
+          className={cn(withBaseName(), withBaseName(state), classNameProp)}
           ref={ref}
           {...rest}
         >
