@@ -7,26 +7,22 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import {
-  ComponentPropsWithRef,
-  forwardRef,
-  ReactElement,
-  useCallback,
-} from "react";
-import { DayStatus, useCalendarDay } from "../useCalendarDay";
-import dayjs from "./dayjs";
+import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
+import { DateValue } from "@internationalized/date";
 
+import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
+import { formatDate } from "./utils";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
 export interface CalendarDayProps
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
-  day: Date;
+  day: DateValue;
   formatDate?: DateFormatter;
-  renderDayContents?: (date: Date, status: DayStatus) => ReactElement;
+  renderDayContents?: (date: DateValue, status: DayStatus) => ReactElement;
   status?: DayStatus;
-  month: Date;
+  month: DateValue;
   TooltipProps?: Partial<TooltipProps>;
 }
 
@@ -37,12 +33,14 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     const { className, day, renderDayContents, month, TooltipProps, ...rest } =
       props;
 
-    const { status, dayProps, registerDay, unselectableReason } =
-      useCalendarDay({
+    const dayRef = useRef<HTMLButtonElement>(null);
+    const { status, dayProps, unselectableReason } = useCalendarDay(
+      {
         date: day,
         month,
-      });
-
+      },
+      dayRef
+    );
     const { outOfRange, today, unselectable, hidden } = status;
 
     const { getTriggerProps, getTooltipProps } = useTooltip({
@@ -50,7 +48,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     });
 
     const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
-      "aria-label": dayjs(day).format("dddd, LL"),
+      "aria-label": formatDate(day),
       ...dayProps,
       ...rest,
       className: cx(
@@ -67,13 +65,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       ),
     });
 
-    const registerDayRef = useCallback(
-      (node: HTMLButtonElement) => {
-        registerDay(day, node);
-      },
-      [registerDay, day]
-    );
-    const handleTriggerRef = useForkRef(triggerRef, registerDayRef);
+    const handleTriggerRef = useForkRef(triggerRef, dayRef);
     const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (
@@ -97,7 +89,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
           {renderDayContents
             ? renderDayContents(day, status)
-            : dayjs(day).format("D")}
+            : formatDate(day, { day: "numeric" })}
         </button>
       </>
     );

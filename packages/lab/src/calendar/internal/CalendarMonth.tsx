@@ -5,16 +5,16 @@ import {
   SyntheticEvent,
 } from "react";
 import cx from "classnames";
-import dayjs from "./dayjs";
-import { CalendarDay, CalendarDayProps } from "./CalendarDay";
-import { generateVisibleDays } from "./calendarUtils";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { DateValue } from "@internationalized/date";
+import { CalendarDay, CalendarDayProps } from "./CalendarDay";
+import { formatDate, generateVisibleDays } from "./utils";
 
 import "./CalendarMonth.css";
 import { useCalendarContext } from "./CalendarContext";
 
 export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
-  date: Date;
+  date: DateValue;
   hideOutOfRangeDates?: boolean;
   renderDayContents?: CalendarDayProps["renderDayContents"];
   isVisible?: boolean;
@@ -36,10 +36,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
       ...rest
     } = props;
 
-    const month = dayjs(date).month();
-    const year = dayjs(date).year();
-
-    const days = generateVisibleDays(year, month);
+    const days = generateVisibleDays(date);
     const {
       helpers: { setHoveredDate },
     } = useCalendarContext();
@@ -63,7 +60,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
           {days.map((day) => {
             return (
               <CalendarDay
-                key={dayjs(day.date).format("L")}
+                key={formatDate(date)}
                 day={day.date}
                 renderDayContents={renderDayContents}
                 month={date}
