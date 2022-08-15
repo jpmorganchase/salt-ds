@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Calendar, CalendarProps } from "@jpmorganchase/uitk-lab";
-import dayjs from "dayjs";
-import isoWeek from "dayjs/plugin/isoWeek";
+import {
+  getDayOfWeek,
+  getLocalTimeZone,
+  today,
+  DateFormatter,
+  DateValue,
+} from "@internationalized/date";
 
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import "./calendar.stories.css";
 import { UseRangeSelectionCalendarProps } from "@jpmorganchase/uitk-lab/src/calendar/internal/useSelection";
-
-dayjs.extend(isoWeek);
 
 export default {
   title: "Lab/Calendar",
@@ -17,6 +20,9 @@ export default {
     selectionVariant: "default",
   },
 } as ComponentMeta<typeof Calendar>;
+
+const currentLocale = navigator.languages[0];
+const localTimeZone = getLocalTimeZone();
 
 const Template: ComponentStory<typeof Calendar> = (args) => {
   return <Calendar {...args} />;
@@ -27,21 +33,19 @@ export const DefaultCalendar = Template.bind({});
 export const UnselectableHighEmphasisDates = Template.bind({});
 UnselectableHighEmphasisDates.args = {
   isDayUnselectable: (day) =>
-    dayjs().diff(day) > 0
+    today(localTimeZone).compare(day) > 0
       ? { emphasis: "high", tooltip: "Date is in the past." }
       : false,
 };
 
 export const UnselectableLowEmphasisDates = Template.bind({});
 UnselectableLowEmphasisDates.args = {
-  isDayUnselectable: (day) => dayjs(day).isoWeekday() >= 6,
+  isDayUnselectable: (day) => getDayOfWeek(day, currentLocale) >= 5,
 };
 
-export const CustomFirstDayOfWeek = Template.bind({});
-CustomFirstDayOfWeek.args = { firstDayOfWeek: 0 };
-
-function renderDayContents(day: Date) {
-  return <>{dayjs(day).format("ddd")}</>;
+function renderDayContents(day: DateValue) {
+  const formatter = new DateFormatter(currentLocale, { day: "2-digit" });
+  return <>{formatter.format(day.toDate(localTimeZone))}</>;
 }
 
 export const CustomDayRender = Template.bind({});
@@ -56,11 +60,10 @@ FadeMonthAnimation.args = {
 };
 
 export const NavigationBlocked = Template.bind({});
-// Calling .add() with this inline breaks storybook - https://github.com/storybookjs/storybook/issues/12208
-const dateRangeCount = 2;
+
 NavigationBlocked.args = {
-  minDate: dayjs().subtract(dateRangeCount, "month").toDate(),
-  maxDate: dayjs().add(dateRangeCount, "month").toDate(),
+  minDate: today(localTimeZone).subtract({ months: 2 }),
+  maxDate: today(localTimeZone).add({ months: 2 }),
 };
 
 export const RangeSelection = Template.bind({});
@@ -71,9 +74,8 @@ RangeSelection.args = {
 export const OffsetSelection = Template.bind({});
 OffsetSelection.args = {
   selectionVariant: "offset",
-  startDateOffset: (date) =>
-    dayjs(date).subtract(dateRangeCount, "days").toDate(),
-  endDateOffset: (date) => dayjs(date).add(dateRangeCount, "days").toDate(),
+  startDateOffset: (date) => date.subtract({ days: 2 }),
+  endDateOffset: (date) => date.add({ days: 2 }),
 };
 
 export const MultiSelection = Template.bind({});
@@ -87,7 +89,7 @@ HideOutOfRangeDays.args = {
 };
 
 export const TwinCalendars: ComponentStory<typeof Calendar> = () => {
-  const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     event,
     newHoveredDate

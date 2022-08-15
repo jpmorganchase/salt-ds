@@ -1,5 +1,10 @@
 import { forwardRef, useRef, useEffect, useState } from "react";
-import dayjs from "./dayjs";
+import {
+  DateValue,
+  getLocalTimeZone,
+  isSameMonth,
+  today,
+} from "@internationalized/date";
 import { CalendarMonth, CalendarMonthProps } from "./CalendarMonth";
 import {
   makePrefixer,
@@ -9,19 +14,18 @@ import { usePrevious } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";
 
 import "./CalendarCarousel.css";
+import { formatDate, monthDiff } from "./utils";
 
 export type CalendarCarouselProps = Omit<CalendarMonthProps, "date">;
 
-function getMonths(month: Date | undefined) {
-  return [
-    dayjs(month)
-      .startOf("month")
-      .subtract(1, "month")
-      .startOf("month")
-      .format("L"),
-    dayjs(month).startOf("month").format("L"),
-    dayjs(month).startOf("month").add(1, "month").startOf("month").format("L"),
-  ];
+function getMonths(month: DateValue) {
+  return [month.subtract({ months: 1 }), month, month.add({ months: 1 })];
+}
+
+function usePreviousMonth(visibleMonth: DateValue) {
+  const previous = usePrevious(visibleMonth, [formatDate(visibleMonth)]);
+
+  return previous ?? today(getLocalTimeZone());
 }
 
 const withBaseName = makePrefixer("uitkCalendarCarousel");
@@ -36,21 +40,18 @@ export const CalendarCarousel = forwardRef<
     state: { visibleMonth },
   } = useCalendarContext();
   const containerRef = useRef<HTMLDivElement>(null);
-  const diffIndex = (a: Date | undefined, b: Date | undefined) =>
-    dayjs(a).diff(dayjs(b), "month");
+  const diffIndex = (a: DateValue, b: DateValue) => monthDiff(a, b);
 
-  const previousMonth = usePrevious(visibleMonth, [
-    dayjs(visibleMonth).format("L"),
-  ]);
   const { current: baseIndex } = useRef(visibleMonth);
+  const previousVisibleMonth = usePreviousMonth(visibleMonth);
 
   useIsomorphicLayoutEffect(() => {
-    if (Math.abs(diffIndex(visibleMonth, previousMonth)) > 1) {
+    if (Math.abs(diffIndex(visibleMonth, previousVisibleMonth)) > 1) {
       containerRef.current?.classList.remove(withBaseName("shouldAnimate"));
     } else {
       containerRef.current?.classList.add(withBaseName("shouldAnimate"));
     }
-  }, [dayjs(visibleMonth).format("L"), dayjs(previousMonth).format("L")]);
+  }, [formatDate(visibleMonth), formatDate(previousVisibleMonth)]);
 
   useIsomorphicLayoutEffect(() => {
     if (containerRef.current) {
@@ -64,10 +65,11 @@ export const CalendarCarousel = forwardRef<
 
   useEffect(() => {
     setMonths((oldMonths) => {
-      const newMonths = getMonths(visibleMonth);
-      const monthSet = new Set(oldMonths.concat(newMonths));
+      const newMonths = getMonths(visibleMonth).filter((month) => {
+        return !oldMonths.find((oldMonth) => isSameMonth(oldMonth, month));
+      });
 
-      return Array.from(monthSet);
+      return oldMonths.concat(newMonths);
     });
     const finishTransition = () => {
       setMonths(getMonths(visibleMonth));
@@ -88,7 +90,7 @@ export const CalendarCarousel = forwardRef<
     }
 
     return undefined;
-  }, [dayjs(visibleMonth).format("L")]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [formatDate(visibleMonth)]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -102,20 +104,14 @@ export const CalendarCarousel = forwardRef<
       <div className={withBaseName("track")} ref={containerRef}>
         {months.map((date, index) => (
           <div
-            key={dayjs(date).format("L")}
+            key={formatDate(date)}
             className={withBaseName("slide")}
             style={{
-              transform: `translateX(${
-                diffIndex(dayjs(date).toDate(), baseIndex) * 100
-              }%)`,
+              transform: `translateX(${diffIndex(date, baseIndex) * 100}%)`,
             }}
             aria-hidden={index !== 1 ? "true" : undefined}
           >
-            <CalendarMonth
-              isVisible={index === 1}
-              {...rest}
-              date={dayjs(date).toDate()}
-            />
+            <CalendarMonth isVisible={index === 1} {...rest} date={date} />
           </div>
         ))}
       </div>
