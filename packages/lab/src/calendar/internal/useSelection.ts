@@ -3,32 +3,32 @@ import classnames from "classnames";
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
 import { isPlainObject } from "../../utils";
 import { useCalendarContext } from "./CalendarContext";
-import dayjs from "./dayjs";
+import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 
 interface BaseUseSelectionCalendarProps<SelectionVariantType> {
-  hoveredDate?: Date | null;
+  hoveredDate?: DateValue | null;
   selectedDate?: SelectionVariantType | null;
-  initialSelectedDate?: SelectionVariantType;
+  defaultSelectedDate?: SelectionVariantType;
   onSelectedDateChange?: (
     event: SyntheticEvent,
     selectedDate: SelectionVariantType
   ) => void;
-  isDaySelectable: (date?: Date) => boolean;
+  isDaySelectable: (date?: DateValue) => boolean;
   onHoveredDateChange?: (
     event: SyntheticEvent,
-    hoveredDate: Date | null
+    hoveredDate: DateValue | null
   ) => void;
 }
 
-type SingleSelectionValueType = Date;
-type MultiSelectionValueType = Date[];
+type SingleSelectionValueType = DateValue;
+type MultiSelectionValueType = DateValue[];
 type RangeSelectionValueType = {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: DateValue;
+  endDate?: DateValue;
 };
 type OffsetSelectionValueType = {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: DateValue;
+  endDate?: DateValue;
 };
 
 type AllSelectionValueType =
@@ -44,8 +44,8 @@ export interface UseOffsetSelectionCalendarProps
     "startDateOffset" | "endDateOffset"
   > {
   selectionVariant: "offset";
-  startDateOffset?: (date: Date) => Date;
-  endDateOffset?: (date: Date) => Date;
+  startDateOffset?: (date: DateValue) => DateValue;
+  endDateOffset?: (date: DateValue) => DateValue;
 }
 
 export interface UseRangeSelectionCalendarProps
@@ -71,18 +71,18 @@ export type useSelectionCalendarProps =
 
 function addOrRemoveFromArray(
   array: AllSelectionValueType | null = [],
-  item: Date
+  item: DateValue
 ) {
   if (Array.isArray(array)) {
-    if (array.find((element) => dayjs(element).isSame(item, "day"))) {
-      return array.filter((element) => !dayjs(element).isSame(item, "day"));
+    if (array.find((element) => isSameDay(element, item))) {
+      return array.filter((element) => !isSameDay(element, item));
     }
     return array.concat(item);
   }
   return [item];
 }
 
-const defaultOffset = (date: Date) => date;
+const defaultOffset = (date: DateValue) => date;
 
 function isRangeOrOffsetSelectionValue(
   selectionValue: AllSelectionValueType
@@ -96,7 +96,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const {
     hoveredDate: hoveredDateProp,
     selectedDate: selectedDateProp,
-    initialSelectedDate,
+    defaultSelectedDate,
     // onSelectedDateChange,
     onHoveredDateChange,
     isDaySelectable,
@@ -106,12 +106,12 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   } = props;
   const [selectedDate, setSelectedDateState] = useControlled({
     controlled: selectedDateProp,
-    default: initialSelectedDate,
+    default: defaultSelectedDate,
     name: "Calendar",
     state: "selectedDate",
   });
 
-  const getStartDateOffset = (date: Date) => {
+  const getStartDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.startDateOffset) {
       return props.startDateOffset(date);
     } else {
@@ -119,7 +119,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
     }
   };
 
-  const getEndDateOffset = (date: Date) => {
+  const getEndDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.endDateOffset) {
       return props.endDateOffset(date);
     } else {
@@ -129,7 +129,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
 
   const setSelectedDate = (
     event: SyntheticEvent<HTMLButtonElement>,
-    newSelectedDate: Date
+    newSelectedDate: DateValue
   ) => {
     if (isDaySelectable(newSelectedDate)) {
       switch (props.selectionVariant) {
@@ -149,7 +149,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
               base = { startDate: newSelectedDate };
             } else if (
               base?.startDate &&
-              dayjs(newSelectedDate).isAfter(base.startDate, "day")
+              newSelectedDate.compare(base.startDate) > 0
             ) {
               base = { ...base, endDate: newSelectedDate };
             } else {
@@ -172,17 +172,16 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
     }
   };
 
-  const isSelected = (date: Date) => {
+  const isSelected = (date: DateValue) => {
     switch (selectionVariant) {
       case "default":
         return (
-          selectedDate instanceof Date &&
-          dayjs(selectedDate).isSame(date, "day")
+          selectedDate instanceof CalendarDate && isSameDay(selectedDate, date)
         );
       case "multiselect":
         return (
           Array.isArray(selectedDate) &&
-          !!selectedDate.find((element) => dayjs(element).isSame(date, "day"))
+          !!selectedDate.find((element) => isSameDay(element, date))
         );
       default:
         return false;
@@ -196,31 +195,30 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
     state: "hoveredDate",
   });
 
-  const setHoveredDate = (event: SyntheticEvent, date: Date | null) => {
+  const setHoveredDate = (event: SyntheticEvent, date: DateValue | null) => {
     setHoveredDateState(date);
     onHoveredDateChange?.(event, date);
   };
 
-  const isHovered = (date: Date) => {
-    return !!hoveredDate && dayjs(date).isSame(hoveredDate, "date");
+  const isHovered = (date: DateValue) => {
+    return !!hoveredDate && isSameDay(date, hoveredDate);
   };
 
-  const isSelectedSpan = (date: Date) => {
+  const isSelectedSpan = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isRangeOrOffsetSelectionValue(selectedDate) &&
       selectedDate?.startDate &&
       selectedDate?.endDate
     ) {
-      return dayjs(date).isBetween(
-        selectedDate.startDate,
-        selectedDate.endDate,
-        "days"
+      return (
+        date.compare(selectedDate.startDate) > 0 &&
+        date.compare(selectedDate.endDate) < 0
       );
     }
     return false;
   };
-  const isHoveredSpan = (date: Date) => {
+  const isHoveredSpan = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isRangeOrOffsetSelectionValue(selectedDate) &&
@@ -229,9 +227,10 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
       hoveredDate
     ) {
       const isForwardRange =
-        dayjs(hoveredDate).isAfter(selectedDate.startDate) &&
-        (dayjs(date).isBetween(selectedDate.startDate, hoveredDate, "day") ||
-          dayjs(date).isSame(hoveredDate, "day"));
+        hoveredDate.compare(selectedDate.startDate) > 0 &&
+        ((date.compare(selectedDate.startDate) > 0 &&
+          date.compare(hoveredDate) < 0) ||
+          isSameDay(date, hoveredDate));
 
       const isValidDayHovered = isDaySelectable(hoveredDate);
 
@@ -240,35 +239,36 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
     return false;
   };
 
-  const isSelectedStart = (date: Date) => {
+  const isSelectedStart = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isRangeOrOffsetSelectionValue(selectedDate) &&
       selectedDate.startDate
     ) {
-      return dayjs(selectedDate.startDate).isSame(date, "day");
+      return isSameDay(selectedDate.startDate, date);
     }
     return false;
   };
 
-  const isSelectedEnd = (date: Date) => {
+  const isSelectedEnd = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isRangeOrOffsetSelectionValue(selectedDate) &&
       selectedDate.endDate
     ) {
-      return dayjs(selectedDate.endDate).isSame(date, "day");
+      return isSameDay(selectedDate.endDate, date);
     }
     return false;
   };
 
-  const isHoveredOffset = (date: Date) => {
+  const isHoveredOffset = (date: DateValue) => {
     if (hoveredDate && selectionVariant === "offset") {
       const startDate = getStartDateOffset(hoveredDate);
       const endDate = getEndDateOffset(hoveredDate);
 
       return (
-        dayjs(date).isBetween(dayjs(startDate), dayjs(endDate), "days", "[]") &&
+        date.compare(startDate) >= 0 &&
+        date.compare(endDate) <= 0 &&
         isDaySelectable(date)
       );
     }
@@ -295,7 +295,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   };
 }
 
-export function useSelectionDay({ date }: { date: Date }) {
+export function useSelectionDay({ date }: { date: DateValue }) {
   const {
     helpers: {
       setSelectedDate,
