@@ -344,10 +344,40 @@ export const RefreshButton: Story = () => (
 export const CustomStyling: Story<typeof StepperInput> = () => (
   <div style={{ display: "flex" }}>
     <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Examples />
+      <Panel>
+        <FormField
+          className="uitkFormField-withStepperInput"
+          helperText="Please enter a number between -5 and 10"
+          label="Default Stepper Input"
+        >
+          <StepperInput
+            decimalPlaces={2}
+            defaultValue={0.5}
+            max={10}
+            min={-5}
+            showRefreshButton
+            step={0.5}
+          />
+        </FormField>
+      </Panel>
     </ToolkitProvider>
     <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Examples />
+      <Panel>
+        <FormField
+          className="uitkFormField-withStepperInput"
+          helperText="Please enter a number between -5 and 10"
+          label="Default Stepper Input"
+        >
+          <StepperInput
+            decimalPlaces={2}
+            defaultValue={0.5}
+            max={10}
+            min={-5}
+            showRefreshButton
+            step={0.5}
+          />
+        </FormField>
+      </Panel>
     </ToolkitProvider>
   </div>
 );

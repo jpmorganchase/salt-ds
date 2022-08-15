@@ -1,16 +1,18 @@
-.uitk-light.uitk-newapp,
-.uitk-dark.uitk-newapp {
+.uitk-light.uitk-newapp .uitk-newapp-panelStory,
+.uitk-dark.uitk-newapp .uitk-newapp-panelStory {
   --uitkPanel-height: 100px;
   --uitkPanel-padding: 5px;
   --uitkPanel-width: 500px;
 }
 
-.uitk-light.uitk-newapp {
+/* We use Panels in a lot of other stories for backgrounds that
+ we don't want to be changed by this, hence .uitk-newapp-panelStory */
+.uitk-light.uitk-newapp .uitk-newapp-panelStory {
   --uitkPanel-background: linear-gradient(to bottom, var(--uitk-color-teal-10), var(--uitk-color-teal-50));
   --uitkPanel-color: var(--uitk-color-teal-800);
 }
 
-.uitk-dark.uitk-newapp {
+.uitk-dark.uitk-newapp .uitk-newapp-panelStory {
   --uitkPanel-background: linear-gradient(to bottom, var(--uitk-color-purple-700), var(--uitk-color-purple-300));
   --uitkPanel-color: var(--uitk-color-purple-10);
 }

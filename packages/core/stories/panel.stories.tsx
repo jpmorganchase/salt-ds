@@ -44,10 +44,14 @@ All.args = {
 export const CustomStyling: ComponentStory<typeof Panel> = () => (
   <>
     <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel>This is a panel with some text.</Panel>
+      <Panel className="uitk-newapp-panelStory">
+        This is a panel with some text.
+      </Panel>
     </ToolkitProvider>
     <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Panel>This is a panel with some text.</Panel>
+      <Panel className="uitk-newapp-panelStory">
+        This is a panel with some text.
+      </Panel>
     </ToolkitProvider>
   </>
 );
