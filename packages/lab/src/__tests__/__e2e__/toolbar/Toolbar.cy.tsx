@@ -185,6 +185,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".uitkToolbar").invoke("css", "width", "100px");
         cy.wait(50);
         cy.get(".uitkToolbar").invoke("css", "width", "600px");
+        cy.wait(50);
         cy.get(".Responsive-inner > *")
           .should("have.length", 10)
           .filter(":visible")
