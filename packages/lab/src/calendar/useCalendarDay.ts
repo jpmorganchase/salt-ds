@@ -1,14 +1,21 @@
-import dayjs from "./internal/dayjs";
 import { useCalendarContext } from "./internal/CalendarContext";
 import {
   KeyboardEventHandler,
   MouseEventHandler,
   FocusEventHandler,
   ComponentPropsWithoutRef,
-  useCallback,
+  RefObject,
+  useEffect,
 } from "react";
 import { useSelectionDay } from "./internal/useSelection";
 import { useFocusManagement } from "./internal/useFocusManagement";
+import {
+  DateValue,
+  getLocalTimeZone,
+  isSameDay,
+  isSameMonth,
+  isToday,
+} from "@internationalized/date";
 
 export type DayStatus = {
   outOfRange?: boolean;
@@ -20,14 +27,17 @@ export type DayStatus = {
 };
 
 export interface useCalendarDayProps {
-  date: Date;
-  month: Date;
+  date: DateValue;
+  month: DateValue;
 }
 
-export function useCalendarDay({ date, month }: useCalendarDayProps) {
+export function useCalendarDay(
+  { date, month }: useCalendarDayProps,
+  ref: RefObject<HTMLElement>
+) {
   const {
-    state: { focusedDate, hideOutOfRangeDates },
-    helpers: { isDayUnselectable, registerDayRef, isDateNavigable },
+    state: { focusedDate, hideOutOfRangeDates, calendarFocused },
+    helpers: { isDayUnselectable, isOutsideAllowedMonths },
   } = useCalendarContext();
   const selectionManager = useSelectionDay({ date });
   const focusManager = useFocusManagement({ date });
@@ -57,22 +67,14 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
     onMouseOver: handleMouseOver,
   };
 
-  const focused = dayjs(date).isSame(focusedDate, "day");
-  const outOfRange = !dayjs(date).isSame(month, "month");
-  const tabIndex = focused && !outOfRange ? 0 : -1;
-  const today = dayjs().isSame(date, "day");
-
-  const registerDay = useCallback(
-    (day: Date, element: HTMLElement) => {
-      if (!outOfRange) {
-        registerDayRef(date, element);
-      }
-    },
-    [date, outOfRange, registerDayRef]
-  );
+  const outOfRange = !isSameMonth(date, month);
+  const focused =
+    isSameDay(date, focusedDate) && calendarFocused && !outOfRange;
+  const tabIndex = isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
+  const today = isToday(date, getLocalTimeZone());
 
   const unselectableResult =
-    isDayUnselectable(date) || (outOfRange && !isDateNavigable(date, "month"));
+    isDayUnselectable(date) || (outOfRange && isOutsideAllowedMonths(date));
   const unselectableReason =
     typeof unselectableResult !== "boolean" &&
     unselectableResult.emphasis === "high"
@@ -85,6 +87,12 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
       ? "low"
       : false;
   const hidden = hideOutOfRangeDates && outOfRange;
+
+  useEffect(() => {
+    if (focused) {
+      ref.current?.focus({ preventScroll: true });
+    }
+  }, [ref, focused]);
 
   return {
     status: {
@@ -103,6 +111,5 @@ export function useCalendarDay({ date, month }: useCalendarDayProps) {
       ...selectionManager.dayProps,
     } as ComponentPropsWithoutRef<"button">,
     unselectableReason,
-    registerDay,
   };
 }
