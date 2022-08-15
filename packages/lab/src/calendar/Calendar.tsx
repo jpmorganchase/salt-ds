@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 import classnames from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
@@ -37,6 +37,16 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
 
     const { state, helpers } = useCalendar({ ...rest });
 
+    const { setCalendarFocused } = helpers;
+
+    const handleFocus = useCallback(() => {
+      setCalendarFocused(true);
+    }, [setCalendarFocused]);
+
+    const handleBlur = useCallback(() => {
+      setCalendarFocused(false);
+    }, [setCalendarFocused]);
+
     return (
       <CalendarContext.Provider
         value={{
@@ -52,6 +62,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           <CalendarNavigation hideYearDropdown={hideYearDropdown} />
           <CalendarWeekHeader />
           <CalendarCarousel
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             renderDayContents={renderDayContents}
             TooltipProps={TooltipProps}
           />
