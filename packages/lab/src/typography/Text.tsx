@@ -11,8 +11,6 @@ import {
   ElementType,
   forwardRef,
   ComponentPropsWithoutRef,
-  useMemo,
-  useCallback,
 } from "react";
 import { useTruncation } from "./useTruncation";
 
@@ -66,6 +64,66 @@ interface TextPropsBase<E extends ElementType> {
 export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
   Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
+const TruncatingText = forwardRef<
+  HTMLElement,
+  Omit<TextProps<ElementType>, "truncate">
+>(function TruncatingText(props, ref) {
+  const {
+    children,
+    className,
+    elementType = "div",
+    maxRows,
+    onOverflowChange,
+    style,
+    styleAs,
+    tooltipProps,
+    tooltipText,
+    truncate: _truncate,
+    showTooltip: _showTooltip,
+    tabIndex,
+    ...restProps
+  } = props;
+  const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
+    useTruncation(props, ref);
+
+  const { getTooltipProps, getTriggerProps } = useTooltip({
+    enterDelay: 150,
+    placement: "top",
+    disabled: !hasTooltip,
+  });
+
+  const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+    className: cx(withBaseName(), className, withBaseName("lineClamp"), {
+      [withBaseName(styleAs || "")]: styleAs,
+    }),
+    tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
+    style: {
+      ...style,
+      // @ts-ignore
+      "--text-max-rows": rows,
+    },
+    ...restProps,
+  });
+
+  const handleRef = useForkRef(triggerRef, setContainerRef);
+
+  const Component: ElementType = elementType;
+
+  return (
+    <>
+      <Component {...triggerProps} ref={handleRef}>
+        {children}
+      </Component>
+      <Tooltip
+        {...getTooltipProps({
+          title: tooltipText || tooltipTextDefault,
+          ...tooltipProps,
+        })}
+      />
+    </>
+  );
+});
+
 export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
   function Text(props, ref) {
     const {
@@ -87,48 +145,8 @@ export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
     // Rendering
     const Component: ElementType = elementType;
 
-    const getTruncatingComponent = () => {
-      const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
-        useTruncation(props, ref);
-
-      const { getTooltipProps, getTriggerProps } = useTooltip({
-        enterDelay: 150,
-        placement: "top",
-        disabled: !hasTooltip,
-      });
-
-      const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-        className: cx(withBaseName(), className, withBaseName("lineClamp"), {
-          [withBaseName(styleAs || "")]: styleAs,
-        }),
-        tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
-        style: {
-          ...style,
-          // @ts-ignore
-          "--text-max-rows": rows,
-        },
-        ...restProps,
-      });
-
-      const handleRef = useForkRef(triggerRef, setContainerRef);
-
-      return (
-        <>
-          <Component {...triggerProps} ref={handleRef}>
-            {children}
-          </Component>
-          <Tooltip
-            {...getTooltipProps({
-              title: tooltipText || tooltipTextDefault,
-              ...tooltipProps,
-            })}
-          />
-        </>
-      );
-    };
-
     if (truncate) {
-      return getTruncatingComponent();
+      return <TruncatingText {...props} />;
     }
 
     return (
