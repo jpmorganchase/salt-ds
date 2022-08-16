@@ -27,8 +27,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       function makeAnnouncement() {
         if (mountedRef.current) {
           if (isReactAnnouncerInstalled) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            context!.announce(announcement);
+            context.announce(announcement);
           }
         }
       }

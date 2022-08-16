@@ -1,8 +1,51 @@
-import { AriaAnnouncerProvider } from "@jpmorganchase/uitk-core";
+import {
+  AriaAnnouncerProvider,
+  useAriaAnnouncer,
+  ARIA_ANNOUNCE_DELAY,
+} from "@jpmorganchase/uitk-core";
+import { mount } from "cypress/react";
+
+const BUTTON_TEXT = "CLICK ME";
+const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
+
+const TestComponent = ({
+  announcement,
+  delay,
+  debounce,
+  getAnnouncement,
+}: {
+  announcement?: string;
+  delay?: number;
+  debounce?: any;
+  getAnnouncement?: any;
+}) => {
+  const { announce } = useAriaAnnouncer({ debounce });
+  const getMessageToAnnounce = () =>
+    getAnnouncement ? getAnnouncement() : announcement;
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          announce(getMessageToAnnounce());
+        }}
+      >
+        {BUTTON_TEXT}
+      </button>
+      <button
+        onClick={() => {
+          announce(getMessageToAnnounce(), delay);
+        }}
+      >
+        {BUTTON_TEXT_WAIT}
+      </button>
+    </>
+  );
+};
 
 describe("Given a AriaAnnouncerProvider", () => {
   it("should not affect the document flow", () => {
-    cy.mount(
+    mount(
       <div id="test-1" style={{ height: "100%", width: "100%" }}>
         <AriaAnnouncerProvider>
           <div style={{ height: "100%", width: "100%" }} />
@@ -26,6 +69,85 @@ describe("Given a AriaAnnouncerProvider", () => {
       const documentHeight = doc.documentElement.getBoundingClientRect().height;
       const documentScrollHeight = document.documentElement.scrollHeight;
       expect(documentHeight).to.equal(documentScrollHeight);
+      doc.head.removeChild(style);
+    });
+  });
+  it.skip("should allow for style overrides on the [aria-live] element", () => {
+    mount(
+      <AriaAnnouncerProvider style={{ borderWidth: 1 }}></AriaAnnouncerProvider>
+    );
+
+    // TODO: figure out why this doesn't work
+    cy.get("[aria-live]").should("have.css", "border-width", "1px");
+  });
+});
+
+describe("Given useAriaAnnouncer", () => {
+  it("should trigger an announcement", () => {
+    mount(
+      <AriaAnnouncerProvider>
+        <TestComponent announcement="test" />
+      </AriaAnnouncerProvider>
+    );
+    cy.findByText(BUTTON_TEXT).click();
+
+    cy.get("[aria-live]").should("have.text", "test");
+  });
+
+  describe("given a delay", () => {
+    it("should trigger an announcement after that delay", () => {
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent announcement="test" delay={500} />
+        </AriaAnnouncerProvider>
+      );
+      cy.findByText(BUTTON_TEXT_WAIT).click();
+
+      cy.get("[aria-live]").should("not.have.text", "test");
+
+      cy.wait(510);
+
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test");
+    });
+  });
+
+  describe("given a debounce", () => {
+    it("should create an announce method that triggers an announcement after that delay", () => {
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent announcement="test" debounce={500} />
+        </AriaAnnouncerProvider>
+      );
+      cy.findByText(BUTTON_TEXT).click();
+
+      cy.get("[aria-live]").should("not.have.text", "test");
+
+      cy.wait(510);
+
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test");
+    });
+  });
+
+  describe("given two queued up announcements", () => {
+    it(`should render the queued announcements one after the other with a ${ARIA_ANNOUNCE_DELAY}ms delay`, () => {
+      let increment = 0;
+      mount(
+        <AriaAnnouncerProvider>
+          <TestComponent
+            getAnnouncement={() => {
+              increment++;
+              return `test ${increment}`;
+            }}
+          />
+        </AriaAnnouncerProvider>
+      );
+      cy.findByText(BUTTON_TEXT).click().click();
+
+      cy.get("[aria-live]").should("have.text", "test 1");
+
+      cy.wait(ARIA_ANNOUNCE_DELAY);
+
+      cy.get("[aria-live]", { timeout: 0 }).should("have.text", "test 2");
     });
   });
 });

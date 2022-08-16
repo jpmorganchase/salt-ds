@@ -87,5 +87,5 @@
 
 /* Styles applied to input component */
 .uitkStepperInput-input {
-  max-height: var(--uitkStepperInput-maxHeight, var(--stepperInput-input-maxHeight));
+  max-height: var(--uitkStepperInput-maxHeight, unset);
 }

@@ -45,6 +45,10 @@ if (isCI) {
         __dirname,
         "./dist/jpmorganchase-uitk-icons"
       ),
+      "@jpmorganchase/uitk-ag-grid-theme": path.resolve(
+        __dirname,
+        "./dist/jpmorganchase-uitk-ag-grid-theme"
+      ),
     },
   };
   viteConfig.optimizeDeps = {
