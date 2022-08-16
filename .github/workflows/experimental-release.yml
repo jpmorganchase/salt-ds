@@ -1,0 +1,39 @@
+name: Experimental Release
+on:
+  # Only manual trigger for now. Can be moved into `release.yml` to publish all commits from `main` branch
+  workflow_dispatch:
+
+jobs:
+  experimental:
+    name: Experimental
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Version packages
+        # Version all packages under ./packages/ with a format like 0.0.0-experimental-1b6573ce-20220816
+        run: |
+          shortHash=$(git rev-parse --short HEAD)  
+          echo $shortHash    
+          todayDate=$(date +%Y%m%d) 
+          echo $todayDate    
+          cd packages/  
+          yarn workspaces foreach version 0.0.0-experimental-${shortHash}-${todayDate}
+          git diff .
+      - name: Publish to npm
+        # Publish to `experimental` tag like react does
+        run: |
+          yarn workspaces foreach npm publish --tag experimental --access public --tolerate-republish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
