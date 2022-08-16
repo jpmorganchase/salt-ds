@@ -1,16 +1,16 @@
 import {
   ComponentPropsWithoutRef,
-  ElementType,
   FocusEvent,
   forwardRef,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
+  Ref,
   useEffect,
   useState,
 } from "react";
 import cx from "classnames";
-import { inferElementType, makePrefixer, polymorphicRef } from "../utils";
+import { makePrefixer } from "../utils";
 
 import "./Button.css";
 
@@ -19,15 +19,7 @@ const withBaseName = makePrefixer("uitkButton");
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export type ButtonVariant = typeof ButtonVariantValues[number];
 
-export interface ButtonBaseProps<T extends ElementType> {
-  /**
-   * By default, root element of Button will be a `button` HTMLElement. This behaviour
-   * can be changed by passing a value to elementType. This can be a string
-   * representing an alternative html element  e.g `"a"`, `"div"`. It can also be a
-   * React component eg RouterLink. If root element is not `button` or `a`, the
-   * aria button role will be assigned to the root element.
-   */
-  elementType?: T;
+export interface ButtonBaseProps {
   /**
    * If `true`, the button will be disabled.
    */
@@ -36,10 +28,11 @@ export interface ButtonBaseProps<T extends ElementType> {
    * If `true`, the button will be focusable when disabled.
    */
   focusableWhenDisabled?: boolean;
-  onBlur?: (evt: FocusEvent<inferElementType<T>>) => void;
-  onClick?: (evt: MouseEvent<inferElementType<T>>) => void;
-  onKeyDown?: (evt: KeyboardEvent<inferElementType<T>>) => void;
-  onKeyUp?: (evt: KeyboardEvent<inferElementType<T>>) => void;
+
+  onBlur?: (evt: FocusEvent<HTMLButtonElement>) => void;
+  onClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
+  onKeyDown?: (evt: KeyboardEvent<HTMLButtonElement>) => void;
+  onKeyUp?: (evt: KeyboardEvent<HTMLButtonElement>) => void;
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
@@ -47,21 +40,18 @@ export interface ButtonBaseProps<T extends ElementType> {
   variant?: ButtonVariant;
 }
 
-export type ButtonProps<T extends ElementType = "button"> = ButtonBaseProps<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof ButtonBaseProps<T>>;
+export type ButtonProps = ButtonBaseProps &
+  Omit<ComponentPropsWithoutRef<"button">, keyof ButtonBaseProps>;
 
-type PolymorphicButton = <T extends ElementType = "button">(
-  p: ButtonProps<T> & { ref?: polymorphicRef<T> }
-) => ReactElement<ButtonProps<T>>;
+type PolymorphicButton = (
+  p: ButtonProps & { ref?: Ref<HTMLButtonElement> }
+) => ReactElement<ButtonProps>;
 
-export const Button = forwardRef(function Button<
-  T extends ElementType = "button"
->(
+export const Button = forwardRef(function Button(
   {
     children,
     className,
     disabled,
-    elementType,
     focusableWhenDisabled,
     onKeyUp,
     onKeyDown,
@@ -70,9 +60,9 @@ export const Button = forwardRef(function Button<
     role: roleProp,
     variant = "primary",
     ...restProps
-  }: ButtonProps<T>,
-  ref?: polymorphicRef<T>
-): ReactElement<ButtonProps<T>> {
+  }: ButtonProps,
+  ref?: Ref<HTMLButtonElement>
+): ReactElement<ButtonProps> {
   const [keyIsDown, setkeyIsDown] = useState("");
   const [active, setActive] = useState(false);
 
@@ -93,7 +83,7 @@ export const Button = forwardRef(function Button<
     };
   }, [active, keyIsDown]);
 
-  const handleKeyUp = (event: KeyboardEvent<inferElementType<T>>) => {
+  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
     setkeyIsDown("");
     setActive(false);
     if (onKeyUp) {
@@ -101,29 +91,26 @@ export const Button = forwardRef(function Button<
     }
   };
 
-  const handleClick = (event: MouseEvent<inferElementType<T>>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setActive(true);
     if (onClick) {
       onClick?.(event);
     }
   };
 
-  const handleBlur = (event: FocusEvent<inferElementType<T>>) => {
+  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
     setActive(false);
     if (onBlur) {
       onBlur?.(event);
     }
   };
 
-  const handleKeyDown = (event: KeyboardEvent<inferElementType<T>>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     // for Pill component, which depends on Button
     if (
       !disabled &&
       // Don't act on children component
       event.target === event.currentTarget &&
-      // `button` and `a` would be handled by default
-      Component !== "button" &&
-      Component !== "a" &&
       (event.key === enter || event.key === space)
     ) {
       //@ts-ignore
@@ -138,17 +125,11 @@ export const Button = forwardRef(function Button<
     onKeyDown?.(event);
   };
 
-  const Component: ElementType = elementType || "button";
   // Allow an explicit null value to be passed by user to suppress role
-  const role =
-    roleProp !== undefined
-      ? roleProp
-      : Component === "button" || Component === "a"
-      ? undefined
-      : "button";
+  const role = roleProp !== undefined ? roleProp : "button";
 
   return (
-    <Component
+    <button
       aria-disabled={disabled}
       className={cx(withBaseName(), className, withBaseName(variant), {
         [withBaseName("disabled")]: disabled,
@@ -165,6 +146,6 @@ export const Button = forwardRef(function Button<
       ref={ref}
     >
       <span className={withBaseName("label")}>{children}</span>
-    </Component>
+    </button>
   );
 }) as PolymorphicButton;
