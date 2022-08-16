@@ -13,13 +13,11 @@ import cx from "classnames";
 import { makePrefixer } from "../utils";
 
 import "./Button.css";
+import { ButtonVariant } from "./Button";
 
 const withBaseName = makePrefixer("uitkButton");
 
-export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export type ButtonVariant = typeof ButtonVariantValues[number];
-
-export interface ButtonBaseProps {
+export interface DivButtonBaseProps {
   /**
    * If `true`, the button will be disabled.
    */
@@ -29,10 +27,10 @@ export interface ButtonBaseProps {
    */
   focusableWhenDisabled?: boolean;
 
-  onBlur?: (evt: FocusEvent<HTMLButtonElement>) => void;
-  onClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
-  onKeyDown?: (evt: KeyboardEvent<HTMLButtonElement>) => void;
-  onKeyUp?: (evt: KeyboardEvent<HTMLButtonElement>) => void;
+  onBlur?: (evt: FocusEvent<HTMLDivElement>) => void;
+  onClick?: (evt: MouseEvent<HTMLDivElement>) => void;
+  onKeyDown?: (evt: KeyboardEvent<HTMLDivElement>) => void;
+  onKeyUp?: (evt: KeyboardEvent<HTMLDivElement>) => void;
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
@@ -40,10 +38,10 @@ export interface ButtonBaseProps {
   variant?: ButtonVariant;
 }
 
-export type ButtonProps = ButtonBaseProps &
-  Omit<ComponentPropsWithoutRef<"button">, keyof ButtonBaseProps>;
+export type DivButtonProps = DivButtonBaseProps &
+  Omit<ComponentPropsWithoutRef<"div">, keyof DivButtonBaseProps>;
 
-export const Button = forwardRef(function Button(
+export const DivButton = forwardRef(function DivButton(
   {
     children,
     className,
@@ -56,9 +54,9 @@ export const Button = forwardRef(function Button(
     role: roleProp,
     variant = "primary",
     ...restProps
-  }: ButtonProps,
-  ref?: Ref<HTMLButtonElement>
-): ReactElement<ButtonProps> {
+  }: DivButtonProps,
+  ref?: Ref<HTMLDivElement>
+): ReactElement<DivButtonProps> {
   const [keyIsDown, setkeyIsDown] = useState("");
   const [active, setActive] = useState(false);
 
@@ -79,7 +77,7 @@ export const Button = forwardRef(function Button(
     };
   }, [active, keyIsDown]);
 
-  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
     setkeyIsDown("");
     setActive(false);
     if (onKeyUp) {
@@ -87,21 +85,32 @@ export const Button = forwardRef(function Button(
     }
   };
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     setActive(true);
     if (onClick) {
       onClick?.(event);
     }
   };
 
-  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
     setActive(false);
     if (onBlur) {
       onBlur?.(event);
     }
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    // for Pill component, which depends on Button
+    if (
+      !disabled &&
+      // Don't act on children component
+      event.target === event.currentTarget &&
+      (event.key === enter || event.key === space)
+    ) {
+      //@ts-ignore
+      onClick?.(event);
+    }
+
     if (event.key === enter || event.key === space) {
       setkeyIsDown(event.key);
       setActive(true);
@@ -114,16 +123,15 @@ export const Button = forwardRef(function Button(
   const role = roleProp !== undefined ? roleProp : "button";
 
   return (
-    <button
+    <div
       aria-disabled={disabled}
       className={cx(withBaseName(), className, withBaseName(variant), {
         [withBaseName("disabled")]: disabled,
         [withBaseName("active")]: active,
       })}
-      disabled={disabled && !focusableWhenDisabled}
       tabIndex={disabled && !focusableWhenDisabled ? -1 : 0}
       onBlur={handleBlur}
-      onClick={!disabled ? handleClick : undefined}
+      onClick={handleClick}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       role={role}
@@ -131,6 +139,6 @@ export const Button = forwardRef(function Button(
       ref={ref}
     >
       <span className={withBaseName("label")}>{children}</span>
-    </button>
+    </div>
   );
 });
