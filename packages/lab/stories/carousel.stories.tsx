@@ -38,8 +38,8 @@ const CarouselExample: ComponentStory<typeof Carousel> = (args) => {
               <span>Carousel Slide {index + 1}</span>
             </FlexLayout>
           }
-          description={"Lorem ipsum dolor sit amet"}
-          title={"Carousel Slide"}
+          description="Image description lorem ipsum dolor amit"
+          title="Carousel slide title"
           contentAlignment={"left"}
         />
       ))}

@@ -1,10 +1,29 @@
 .carousel-container .uitkCarouselSlide-fixedContainer {
   display: flex;
   justify-content: space-between;
+  padding-top: calc(var(--uitk-size-unit) * 2);
 }
 
 .carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
   margin-right: 0;
+}
+
+.carousel-container .uitkCarouselSlide-textContainerLeft {
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.carousel-container .uitkCarouselSlide-titleContainer {
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-h4-fontWeight);
+}
+
+.carousel-container .uitkCarouselSlide-descriptionContainer {
+  font-size: var(--uitk-text-fontSize);
+}
+
+.carousel-container .uitkCarousel-prev-button,
+.carousel-container .uitkCarousel-next-button {
+  max-height: 520px;
 }
 
 .carousel-image-placeholder {
