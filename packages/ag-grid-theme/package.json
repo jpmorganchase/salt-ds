@@ -1,0 +1,19 @@
+{
+  "name": "@jpmorganchase/uitk-ag-grid-theme",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "style": "uitk-ag-theme.css",
+  "files": [
+    "/uitk-ag-theme.css"
+  ],
+  "scripts": {
+    "build": "yarn node ./scripts/build.js",
+    "build-watch": "yarn node ./scripts/build.js --watch"
+  },
+  "publishConfig": {
+    "directory": "../../dist/jpmorganchase-uitk-ag-grid-theme"
+  },
+  "devDependencies": {
+    "sass": "^1.51.0"
+  }
+}
