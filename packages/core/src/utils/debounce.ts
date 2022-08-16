@@ -6,7 +6,8 @@ export interface Cancelable {
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   // Corresponds to 10 frames at 60 Hz.
-  wait = 166
+  wait = 166,
+  leading = false
 ): T & Cancelable {
   let timeout: number;
   const debounced: T & Cancelable = function debounced(
@@ -17,6 +18,9 @@ export function debounce<T extends (...args: any[]) => any>(
       func.apply(this, args);
     };
     clearTimeout(timeout);
+    if (leading) {
+      later();
+    }
     timeout = window.setTimeout(later, wait);
   } as T & Cancelable;
 
