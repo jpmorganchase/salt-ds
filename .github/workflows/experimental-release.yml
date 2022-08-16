@@ -18,8 +18,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: yarn install
-      - name: Build
-        run: yarn build
       - name: Version packages
         # Version all packages under ./packages/ with a format like 0.0.0-experimental-1b6573ce-20220816
         run: |
@@ -30,6 +28,8 @@ jobs:
           cd packages/  
           yarn workspaces foreach version 0.0.0-experimental-${shortHash}-${todayDate}
           git diff .
+      - name: Build
+        run: yarn build
       - name: Publish to npm
         # Publish to `experimental` tag like react does
         run: |
