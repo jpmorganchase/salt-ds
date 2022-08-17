@@ -1,6 +1,20 @@
 .uitk-newapp .uitkStepperInput {
   --uitkButton-borderRadius: 30px;
   --uitkButton-background-hover: var(--uitk-color-purple-100);
+
+  --uitkInput-height: calc(var(--uitk-size-base) + 4px);
+}
+
+.uitk-density-high {
+  --newapp-stepperInput-formLabel-padding: 2px;
+}
+
+.uitk-density-medium {
+  --newapp-stepperInput-formLabel-padding: 4px;
+}
+
+.uitk-newapp .uitkFormField-withStepperInput .uitkFormLabel {
+  --uitkFormLabel-paddingBottom: var(--newapp-stepperInput-formLabel-padding);
 }
 
 .uitk-newapp .uitkStepperInput-input,

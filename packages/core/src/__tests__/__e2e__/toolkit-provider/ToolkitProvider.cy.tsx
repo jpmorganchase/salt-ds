@@ -4,6 +4,8 @@ import {
   useAriaAnnouncer,
   ToolkitContext,
   ToolkitProvider,
+  useDensity,
+  useTheme,
 } from "@jpmorganchase/uitk-core";
 
 const TestComponent = ({
@@ -15,7 +17,8 @@ const TestComponent = ({
   className?: string;
   displayVariableValue?: [characteristic, string];
 }) => {
-  const { density, themes = [] } = useContext(ToolkitContext);
+  const density = useDensity();
+  const themes = useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
   const [theme] = themes;
@@ -108,7 +111,7 @@ describe("Given a ToolkitProvider", () => {
   });
 
   describe("when nested", () => {
-    it("should only creae a single AriaAnnouncer", () => {
+    it("should only create a single AriaAnnouncer", () => {
       cy.mount(
         <ToolkitProvider>
           <ToolkitProvider>

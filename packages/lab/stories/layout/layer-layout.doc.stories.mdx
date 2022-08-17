@@ -15,9 +15,9 @@ import { DefaultLayerLayout } from "./layer-layout.stories";
   }}
 />
 
-# Layer Layout
+# Layer layout
 
-Defines a layer above the existing layout structure for UI elements to be displayed in.
+The Layer layout defines a layer above the existing layout structure for UI elements to be displayed in.
 
 It can be used to build dialog or drawer components and it can be positioned in different parts of the screen.
 
@@ -25,17 +25,23 @@ It can be used to build dialog or drawer components and it can be positioned in 
   <Story id="lab-layout-layerlayout--default-layer-layout" />
 </Canvas>
 
+## How you can use layer layout
+
+Use this component by passing your content as children. You may also choose to control the opening/closing behaviour using something like a button.
+
+The Layer layout displays a scrim and animations by default but you can disable these via props. The `fullScreenAtBreakpoint` prop also allows you to customise the breakpoint at which the layer will take up the whole screen.
+
 ## API
 
 ```
-import {LayerLayout} from "@jpmorganchase/uitk-lab";
+import { LayerLayout } from "@jpmorganchase/uitk-lab";
 ```
 
 ## Props
 
 <ArgsTable of={LayerLayout} />
 
-## Usage Examples
+## Examples
 
 ### Top positioned
 
@@ -59,6 +65,12 @@ import {LayerLayout} from "@jpmorganchase/uitk-lab";
 
 <Canvas>
   <Story id="lab-layout-layerlayout--toolkit-layer-layout-bottom" />
+</Canvas>
+
+### Reduced motion
+
+<Canvas>
+  <Story id="lab-layout-layerlayout--toolkit-layer-reduced-motion" />
 </Canvas>
 
 ## Anatomy
