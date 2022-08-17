@@ -74,6 +74,7 @@ export const AlphaInput = ({
   return (
     <Input
       inputProps={{
+        // @ts-ignore
         "data-testid": "a-input",
       }}
       className={cn({
