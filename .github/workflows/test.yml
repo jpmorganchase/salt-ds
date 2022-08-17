@@ -104,6 +104,8 @@ jobs:
         run: yarn run build
       - name: Cypress Components
         uses: cypress-io/github-action@v4
+        env:
+          REACT_VERSION: ${{ matrix.react }}
         with:
           install: false
           command: yarn run test:components

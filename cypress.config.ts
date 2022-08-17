@@ -7,11 +7,11 @@ import OptimizationPersist from "vite-plugin-optimize-persist";
 import IstanbulPlugin from "vite-plugin-istanbul";
 import { isCI } from "ci-info";
 import path from "path";
-import { UserConfig } from "vite";
+import { mergeConfig, UserConfig } from "vite";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 
-const viteConfig: UserConfig = {
+let viteConfig: UserConfig = {
   plugins: [
     react(),
     tsconfigPaths(),
@@ -29,35 +29,41 @@ const viteConfig: UserConfig = {
   build: {
     sourcemap: true,
   },
+  resolve: {
+    alias: {
+      "cypress/react":
+        process.env.REACT_VERSION === "18"
+          ? "cypress/react18"
+          : "cypress/react",
+    },
+  },
 };
 if (isCI) {
-  viteConfig.resolve = {
-    alias: {
-      "@jpmorganchase/uitk-core": path.resolve(
-        __dirname,
-        "./dist/jpmorganchase-uitk-core"
-      ),
-      "@jpmorganchase/uitk-lab": path.resolve(
-        __dirname,
-        "./dist/jpmorganchase-uitk-lab"
-      ),
-      "@jpmorganchase/uitk-icons": path.resolve(
-        __dirname,
-        "./dist/jpmorganchase-uitk-icons"
-      ),
-      "@jpmorganchase/uitk-ag-grid-theme": path.resolve(
-        __dirname,
-        "./dist/jpmorganchase-uitk-ag-grid-theme"
-      ),
+  viteConfig = mergeConfig(viteConfig, {
+    resolve: {
+      alias: {
+        "@jpmorganchase/uitk-core": path.resolve(
+          __dirname,
+          "./dist/jpmorganchase-uitk-core"
+        ),
+        "@jpmorganchase/uitk-lab": path.resolve(
+          __dirname,
+          "./dist/jpmorganchase-uitk-lab"
+        ),
+        "@jpmorganchase/uitk-icons": path.resolve(
+          __dirname,
+          "./dist/jpmorganchase-uitk-icons"
+        ),
+      },
     },
-  };
-  viteConfig.optimizeDeps = {
-    include: [
-      "@jpmorganchase/uitk-core",
-      "@jpmorganchase/uitk-lab",
-      "@jpmorganchase/uitk-icons",
-    ],
-  };
+    optimizeDeps: {
+      include: [
+        "@jpmorganchase/uitk-core",
+        "@jpmorganchase/uitk-lab",
+        "@jpmorganchase/uitk-icons",
+      ],
+    },
+  } as UserConfig);
 }
 
 export default defineConfig({
