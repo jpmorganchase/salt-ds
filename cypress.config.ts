@@ -54,10 +54,6 @@ if (isCI) {
           __dirname,
           "./dist/jpmorganchase-uitk-icons"
         ),
-        "@jpmorganchase/uitk-ag-grid-theme": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-ag-grid-theme"
-        ),
       },
     },
     optimizeDeps: {
@@ -65,7 +61,6 @@ if (isCI) {
         "@jpmorganchase/uitk-core",
         "@jpmorganchase/uitk-lab",
         "@jpmorganchase/uitk-icons",
-        "@jpmorganchase/uitk-ag-grid-theme",
       ],
     },
   } as UserConfig);
