@@ -68,9 +68,7 @@ const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
       </p>
     </FlexItem>
     <FlowLayout justify="end">
-      <Button variant="cta" onClick={onClick}>
-        Close layer
-      </Button>
+      <Button onClick={onClick}>Close layer</Button>
     </FlowLayout>
   </StackLayout>
 );
