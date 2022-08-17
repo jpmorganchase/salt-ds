@@ -27,12 +27,16 @@ const DefaultStateIconStory: ComponentStory<typeof StateIcon> = (args) => {
 export const DefaultStateIcon = DefaultStateIconStory.bind({});
 DefaultStateIcon.args = { state: states[3] };
 
-export const AllStateIcons: ComponentStory<typeof StateIcon> = () => {
+const AllStateIconsStory: ComponentStory<typeof StateIcon> = (args) => {
+  const { size } = args;
+
   return (
     <FlowLayout>
       {states.map((state, index) => (
-        <StateIcon state={state} key={index} />
+        <StateIcon state={state} key={index} size={size} />
       ))}
     </FlowLayout>
   );
 };
+export const AllStateIcons = AllStateIconsStory.bind({});
+AllStateIcons.argTypes = { state: { control: false } };
