@@ -76,6 +76,7 @@ export default defineConfig({
         },
       });
       addMatchImageSnapshotPlugin(on, config);
+      return config;
     },
     devServer: {
       framework: "react",
