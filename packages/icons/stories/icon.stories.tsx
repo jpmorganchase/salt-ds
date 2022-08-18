@@ -1,8 +1,9 @@
-import { createElement, ElementType, useMemo } from "react";
+import { createElement, ElementType, useMemo, useState } from "react";
 import { AddDocumentIcon, Icon, IconProps } from "@jpmorganchase/uitk-icons";
-import { allIcons } from "./icon.all";
+import { allIconNamePairs } from "./icon.all";
 import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Input, FormField, StackLayout } from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Icons/Icon",
@@ -69,17 +70,27 @@ export const SVGImportAsFile: ComponentStory<typeof Icon> = () => {
 };
 
 export const AllIcons: ComponentStory<typeof Icon> = () => {
+  const [inputText, setInputText] = useState("");
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(15, auto)",
-        gap: 8,
-      }}
-    >
-      {allIcons.map((iconComponent, i) =>
-        createElement(iconComponent, { key: i, size: 24 })
-      )}
-    </div>
+    <StackLayout>
+      {/* TODO: className or prop like Panel */}
+      <FormField label="Search" className="uitkEmphasisHigh">
+        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
+      </FormField>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(15, auto)",
+          gap: 8,
+        }}
+      >
+        {allIconNamePairs
+          .filter((x) => new RegExp(inputText, "i").test(x[0]))
+          .map(([, iconComponent], i) => {
+            return createElement(iconComponent, { key: i, size: "medium" });
+          })}
+      </div>
+    </StackLayout>
   );
 };
