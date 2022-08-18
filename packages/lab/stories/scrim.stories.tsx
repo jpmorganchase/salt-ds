@@ -26,7 +26,7 @@ export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
         open={open}
         returnFocus
       >
-        <p style={{ color: "#fff" }}>
+        <p style={{ color: "#000" }}>
           Click or press Escape to close the Scrim
         </p>
       </Scrim>
@@ -53,7 +53,7 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
         open={open}
         returnFocus
       >
-        <p style={{ color: "#000" }}>
+        <p style={{ color: "#fff" }}>
           Click or press Escape to close the Scrim
         </p>
       </Scrim>
