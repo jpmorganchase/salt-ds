@@ -1,9 +1,31 @@
 import { Scrim } from "@jpmorganchase/uitk-lab";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // TODO lighter variant test
 
 describe("Given a Scrim", () => {
+  describe("WHEN autoFocusRef is set", () => {
+    it("THEN it should autofocus that element after mount", () => {
+      function TestComponent() {
+        const ref = useRef<HTMLButtonElement>(null);
+        return (
+          <div>
+            <Scrim autoFocusRef={ref} open closeWithEscape>
+              <button>Other Button</button>
+              <button ref={ref}>Autofocus Button</button>
+            </Scrim>
+          </div>
+        );
+      }
+
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "Autofocus Button" }).should(
+        "have.focus"
+      );
+    });
+  });
+
   describe("WHEN closeWithEscape is `true`", () => {
     it("THEN should call onClose when Escape is pressed and return focus", () => {
       const closeSpy = cy.stub().as("closeSpy");
@@ -35,6 +57,46 @@ describe("Given a Scrim", () => {
   });
 
   describe("WHEN open", () => {
+    it("THEN it should autofocus the first element after mount", () => {
+      function TestComponent() {
+        return (
+          <div>
+            <Scrim open closeWithEscape>
+              <button>First Button</button>
+            </Scrim>
+          </div>
+        );
+      }
+
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "First Button" }).should("have.focus");
+    });
+
+    it("THEN it should prevent tabbing out of the scrim boundary", () => {
+      function TestComponent() {
+        return (
+          <div>
+            <Scrim open closeWithEscape>
+              <button>First Button</button>
+            </Scrim>
+          </div>
+        );
+      }
+
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "First Button" })
+        .should("have.focus")
+        .realPress(["Shift", "Tab"]);
+      cy.findByRole("button", { name: "First Button" }).should("have.focus");
+
+      cy.findByRole("button", { name: "First Button" })
+        .should("have.focus")
+        .realPress("Tab");
+      cy.findByRole("button", { name: "First Button" }).should("have.focus");
+    });
+
     it("THEN should apply aria-hidden to siblings", () => {
       cy.mount(
         <div>

@@ -190,7 +190,13 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
         tryFocus(nodeToFocus);
       }
     }
-  }, [active, disableAutoFocus, getFirstElement, autoFocusRef]);
+  }, [
+    active,
+    disableAutoFocus,
+    getFirstElement,
+    autoFocusRef,
+    fallbackFocusRef,
+  ]);
 
   const enforceFocus = active && !disableEnforceFocus;
 

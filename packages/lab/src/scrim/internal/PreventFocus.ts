@@ -6,7 +6,7 @@ export function preventFocusOthers(
   originalTarget: HTMLElement | null,
   tabbableSelector: string,
   parentNode: HTMLElement
-) {
+): () => void {
   const elementsToHide: HTMLElement[] = findAllTabbableElements(
     parentNode,
     tabbableSelector,
