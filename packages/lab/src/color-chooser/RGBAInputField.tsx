@@ -67,7 +67,10 @@ export const RGBInput = ({
 
   return (
     <Input
-      data-testid={`${value}-input`}
+      inputProps={{
+        // @ts-ignore
+        "data-testid": `${value}-input`,
+      }}
       className={withBaseName("rgbaInput")}
       value={rgbaInputValue.toString()}
       onChange={handleRGBInputChange}
