@@ -1,83 +1,41 @@
-.uitkAccordion {
-  --accordion-border-style: var(--uitkAccordion-border-style, none);
-  --accordion-border-color: var(--uitkAccordion-border-color, transparent);
-  --accordion-border-width: var(--uitkAccordion-border-width, 0);
-  --accordion-border-radius: var(--uitkAccordion-border-radius, 0);
-  --accordion-padding: var(--uitkAccordion-padding, 0);
-  --accordion-margin: var(--uitkAccordion-margin, 0);
+.uitk-density-high {
+  --accordionSummary-paddingLeft: 20px;
+  --accordionDetails-padding: 3px 4px 5px 20px;
+}
+
+.uitk-density-medium {
+  --accordionSummary-paddingLeft: 28px;
+  --accordionDetails-padding: 8px 8px 9px 28px;
+}
+
+.uitk-density-low {
+  --accordionSummary-paddingLeft: 36px;
+  --accordionDetails-padding: 12px 12px 13px 38px;
+}
+
+.uitk-density-touch {
+  --accordionSummary-paddingLeft: 44px;
+  --accordionDetails-padding: 18px 16px 17px 44px;
 }
 
 .uitkAccordion {
-  border-style: var(--accordion-border-style);
-  border-color: var(--accordion-border-color);
-  border-width: var(--accordion-border-width);
-  padding: var(--accordion-padding);
-  margin: var(--accordion-margin);
-  border-radius: var(--accordion-border-radius);
-}
-
-.uitk-density-high .uitkAccordionSection {
-  --summary-padding-left: 20px;
-  --details-padding: 3px 4px 5px 20px;
-}
-
-.uitk-density-medium .uitkAccordionSection {
-  --summary-padding-left: 28px;
-  --details-padding: 8px 8px 9px 28px;
-}
-
-.uitk-density-low .uitkAccordionSection {
-  --summary-padding-left: 36px;
-  --details-padding: 12px 12px 13px 38px;
-}
-
-.uitk-density-touch .uitkAccordionSection {
-  --summary-padding-left: 44px;
-  --details-padding: 18px 16px 17px 44px;
+  border-color: var(--uitkAccordion-borderColor, transparent);
+  border-radius: var(--uitkAccordion-borderRadius, 0);
+  border-style: var(--uitkAccordion-borderStyle, none);
+  border-width: var(--uitkAccordion-borderWidth, 0);
+  padding: var(--uitkAccordion-padding, 0);
+  margin: var(--uitkAccordion-margin, 0);
 }
 
 .uitkAccordionSection {
-  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
-  --summary-fontWeight: var(--uitkAccordionSummary-fontWeight, initial);
-
-  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
-  --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
-  --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
-  --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
-
-  --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-foreground));
-  --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
-  --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
-  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
-
-  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-borderColor));
-  --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
-  --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
-  --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);
-  --section-border-bottom-width: var(--uitkAccordionSection-border-bottom-width, 1px);
-  --section-border-left-width: var(--uitkAccordionSection-border-left-width, 0);
-
-  --section-margin-top: var(--uitkAccordionSection-margin-top, 0);
-  --section-margin-right: var(--uitkAccordionSection-margin-right, 0);
-  --section-margin-bottom: var(--uitkAccordionSection-margin-bottom, 0);
-  --section-margin-left: var(--uitkAccordionSection-margin-left, 0);
-
-  --summary-focus-outline-style: var(--uitk-focused-outlineStyle);
-  --summary-focus-outline-width: var(--uitk-focused-outlineWidth);
-  --summary-focus-outline-color: var(--uitk-focused-outlineColor);
-  --summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
-
-  --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
-  --summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--summary-icon-transition-default));
+  --accordionSummary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
 }
 
 .uitkAccordionSection {
-  border-color: var(--section-border-color);
-  border-style: solid;
-  --border-width: var(--section-border-top-width) var(--section-border-right-width) var(--section-border-bottom-width) var(--section-border-left-width);
-  border-width: var(--uitkAccordionSection-border-width, var(--border-width));
-  margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
+  border-color: var(--uitkAccordionSection-borderColor, var(--uitk-separable-secondary-borderColor));
+  border-style: var(--uitkAccordionSection-borderStyle, var(--uitk-container-borderStyle));
+  border-width: var(--uitkAccordionSection-borderWidth, 0 0 1px 0);
+  margin: var(--uitkAccordionSection-margin, 0);
   position: relative;
 }
 
@@ -92,38 +50,38 @@
 }
 
 .uitkAccordionSummary {
-  height: var(--summary-height);
-  line-height: var(--summary-height);
-  font-weight: var(--summary-fontWeight);
-  background: var(--summary-background);
-  color: var(--summary-text-color);
-  font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-fontSize));
-  font-family: var(--uitkAccordionSummary-font-family, var(--uitk-text-fontFamily));
-  padding-left: var(--summary-padding-left);
+  height: var(--accordionSummary-height);
+  line-height: var(--accordionSummary-height);
+  font-weight: var(--uitkAccordionSummary-fontWeight, initial);
+  background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
+  color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-foreground));
+  font-size: var(--uitkAccordionSummary-fontSize, var(--uitk-text-fontSize));
+  font-family: var(--uitkAccordionSummary-fontFamily, var(--uitk-text-fontFamily));
+  padding-left: var(--accordionSummary-paddingLeft);
   position: relative;
 }
 
 .uitkAccordionSummary:focus-visible {
-  outline-style: var(--summary-focus-outline-style);
-  outline-width: var(--summary-focus-outline-width);
-  outline-color: var(--summary-focus-outline-color);
-  outline-offset: var(--summary-focus-outline-offset);
+  outline-style: var(--uitkAccordionSummary-focus-outlineStyle, var(--uitk-focused-outlineStyle));
+  outline-width: var(--uitkAccordionSummary-focus-outlineWidth, var(--uitk-focused-outlineWidth));
+  outline-color: var(--uitkAccordionSummary-focus-outlineColor, var(--uitk-focused-outlineColor));
+  outline-offset: var(--uitkAccordionSummary-focus-outlineOffset, var(--uitk-focused-outlineOffset));
 }
 
 .uitkAccordionSummary:hover:not(.uitkAccordionSummary-disabled) {
-  background: var(--summary-background-hover);
-  color: var(--summary-text-color-hover);
+  background: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
+  color: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
   cursor: pointer;
 }
 
 .uitkAccordionSummary-expanded {
-  background: var(--summary-background-active);
-  color: var(--summary-text-color-active);
+  background: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
+  color: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
 }
 
 .uitkAccordionSummary-disabled {
-  background: var(--summary-background-disabled);
-  color: var(--summary-text-color-disabled);
+  background: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
+  color: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
 }
 
 .uitkAccordionSummary-icon {
@@ -131,16 +89,16 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--summary-padding-left);
+  width: var(--accordionSummary-paddingLeft);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition: var(--summary-icon-transition);
+  transition: var(--uitkAccordionSummary-icon-transition, transform 150ms cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .uitkAccordionSummary-expanded .uitkAccordionSummary-icon {
-  transform: var(--summary-icon-transform);
+  transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
 }
 
 .uitkAccordionDetails {
@@ -149,7 +107,7 @@
 }
 
 .uitkAccordionDetails-content {
-  padding: var(--uitkAccordionDetails-padding, var(--details-padding));
+  padding: var(--uitkAccordionDetails-padding, var(--accordionDetails-padding));
 }
 
 .uitkAccordionDetails-disabled {

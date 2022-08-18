@@ -19,7 +19,7 @@
 
 /* Tabstrip orientation is horizontal */
 .uitkTabstrip-horizontal {
-  --tabstrip-activation-indicator-border-style: none none solid none;
+  --tabstrip-activation-indicator-borderStyle: none none solid none;
   --tabstrip-activation-indicator-height: 1px;
   --tabstrip-activation-indicator-inset: auto 0px 0px 0px;
   --tabstrip-activation-indicator-transition-property: left;
@@ -30,7 +30,7 @@
 /* Tabstrip orientation is vertical */
 .uitkTabstrip-vertical {
   --uitkTabActivationIndicator-transition: top 0.3s ease;
-  --tabstrip-activation-indicator-border-style: none solid none none;
+  --tabstrip-activation-indicator-borderStyle: none solid none none;
   --tabstrip-activation-indicator-inset: 0px 0px 0px auto;
   --tabstrip-activation-indicator-transition-property: top;
   --tabstrip-activation-indicator-width: 1px;

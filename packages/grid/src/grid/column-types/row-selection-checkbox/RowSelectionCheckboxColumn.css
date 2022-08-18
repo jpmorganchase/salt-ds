@@ -31,7 +31,7 @@
 }
 
 .uitkGridRowSelectionCheckboxCellValue {
-  height: var(--uitkGrid-rowHeight);
+  height: var(--grid-rowHeight);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +60,7 @@
 }
 
 .uitkGridRowSelectionCheckboxHeaderValue {
-  height: var(--uitkGrid-rowHeight);
+  height: var(--grid-rowHeight);
   overflow: hidden;
   /*display: flex;*/
   /*flex-direction: column;*/

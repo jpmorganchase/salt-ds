@@ -2,14 +2,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  bottom: var(--uitkGrid-scrollBar-size);
+  bottom: var(--grid-scrollBar-size);
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 2;
 }
 
 .uitkGridLeftPart-raised {
-  box-shadow: 6px 0 4px -4px var(--uitkGrid-shadow-color);
+  box-shadow: 6px 0 4px -4px var(--grid-shadow-color);
 }
 
 .uitkGridLeftPart-space {

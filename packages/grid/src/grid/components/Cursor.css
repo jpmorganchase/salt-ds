@@ -1,9 +1,9 @@
 .uitkGridCursor {
-  --uitkGrid-cursor-border: dotted 2px var(--uitkGrid-cursor-borderColor);
+  --grid-cursor-border: dotted 2px var(--grid-cursor-borderColor);
 }
 
 .uitkGridCursor {
-  border: var(--uitkGrid-cursor-border);
+  border: var(--grid-cursor-border);
   position: absolute;
   top: 0;
   right: 0;

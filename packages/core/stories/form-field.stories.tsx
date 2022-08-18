@@ -490,7 +490,7 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
     <style>{`
       .carbon {
         --uitkFormField-focused-outlineStyle: none;
-        --uitkFormFieldHelperText-fontStyle: normal;
+        --uitkFormField-helperText-fontStyle: normal;
         --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-400);
         --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-200);
         --uitkFormLabel-marginBottom: 6px;

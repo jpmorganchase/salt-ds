@@ -1,17 +1,17 @@
-.uitk-density-touch .uitkTooltip {
-  --icon-top: 6px;
+.uitk-density-touch {
+  --tooltip-icon-top: 6px;
 }
 
-.uitk-density-low .uitkTooltip {
-  --icon-top: 4px;
+.uitk-density-low {
+  --tooltip-icon-top: 4px;
 }
 
-.uitk-density-medium .uitkTooltip {
-  --icon-top: 1px;
+.uitk-density-medium {
+  --tooltip-icon-top: 1px;
 }
 
-.uitk-density-high .uitkTooltip {
-  --icon-top: 1px;
+.uitk-density-high {
+  --tooltip-icon-top: 1px;
 }
 
 .uitkTooltip {
@@ -65,7 +65,7 @@
   color: var(--tooltip-status-color);
   fill: var(--tooltip-status-color);
   margin-right: 6px;
-  top: var(--icon-top);
+  top: var(--tooltip-icon-top);
   vertical-align: top;
 }
 

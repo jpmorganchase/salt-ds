@@ -70,7 +70,7 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
 
     const gridStyles = {
       ...style,
-      "--grid-item-justify-self": horizontalAlignment,
+      "--grid-item-justifySelf": horizontalAlignment,
       "--grid-item-align-self": verticalAlignment,
       "--grid-item-row-start": gridRowStart,
       "--grid-item-column-start": gridColumnStart,

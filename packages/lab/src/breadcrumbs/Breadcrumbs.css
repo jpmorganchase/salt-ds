@@ -21,7 +21,20 @@
   flex-wrap: wrap;
 }
 
-/* --- backwards compatible --- */
+/* TK1 backwards compat styling */
+
+.uitk-density-high {
+  --backwardsCompat-breadcrumbs-li-marginRight: 2px;
+}
+.uitk-density-medium {
+  --backwardsCompat-breadcrumbs-li-marginRight: 6px;
+}
+.uitk-density-low {
+  --backwardsCompat-breadcrumbs-li-marginRight: 10px;
+}
+.uitk-density-touch {
+  --backwardsCompat-breadcrumbs-li-marginRight: 14px;
+}
 
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
   gap: 0;
@@ -32,15 +45,6 @@
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
   padding: 2px;
 }
-.uitk-density-medium .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
-  margin-right: 6px;
-}
-.uitk-density-high .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
-  margin-right: 2px;
-}
-.uitk-density-low .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
-  margin-right: 10px;
-}
-.uitk-density-touch .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
-  margin-right: 14px;
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
+  margin-right: var(--backwardsCompat-breadcrumbs-li-marginRight);
 }

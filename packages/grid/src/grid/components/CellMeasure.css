@@ -14,17 +14,17 @@
 .uitkGridCellMeasure th {
   border-collapse: collapse;
   box-sizing: border-box;
-  height: var(--uitkGrid-rowHeight);
+  height: var(--grid-rowHeight);
   overflow: hidden;
 
   margin: 0;
-  padding: var(--uitkGrid-cell-padding);
+  padding: var(--grid-cell-padding);
 
   border-style: solid;
   border-color: #d9dde3;
   border-width: 0 0 1px 0;
 
-  font-size: var(--uitkGrid-fontSize);
+  font-size: var(--grid-fontSize);
   font-weight: normal;
 
   background-color: white;

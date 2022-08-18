@@ -37,24 +37,24 @@
   --uitk-actionable-cta-foreground: var(--uitk-color-white);
 }
 
-.uitk-density-touch .uitkToggleButton {
-  --toggle-button-icon-padding: 11px;
+.uitk-density-touch {
+  --toggleButton-icon-padding: 11px;
 }
 
-.uitk-density-low .uitkToggleButton {
-  --toggle-button-icon-padding: 7px;
+.uitk-density-low {
+  --toggleButton-icon-padding: 7px;
 }
 
-.uitk-density-medium .uitkToggleButton {
-  --toggle-button-icon-padding: 5px;
+.uitk-density-medium {
+  --toggleButton-icon-padding: 5px;
 }
 
-.uitk-density-high .uitkToggleButton {
-  --toggle-button-icon-padding: 1px;
+.uitk-density-high {
+  --toggleButton-icon-padding: 1px;
 }
 
 .uitkToggleButton.uitkToggleButton-horizontal.uitkToggleButton-iconOnly {
-  padding: var(--toggle-button-icon-padding);
+  padding: var(--uitkToggleButton-icon-padding, var(--toggleButton-icon-padding));
 }
 
 .uitkToggleButton.uitkToggleButton-disabled {

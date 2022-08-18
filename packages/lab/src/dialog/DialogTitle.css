@@ -1,16 +1,16 @@
-.uitk-density-touch .uitkDialogTitle {
+.uitk-density-touch {
   --dialog-title-font-size: 26px;
 }
 
-.uitk-density-low .uitkDialogTitle {
+.uitk-density-low {
   --dialog-title-font-size: 24px;
 }
 
-.uitk-density-medium .uitkDialogTitle {
+.uitk-density-medium {
   --dialog-title-font-size: 22px;
 }
 
-.uitk-density-high .uitkDialogTitle {
+.uitk-density-high {
   --dialog-title-font-size: 20px;
 }
 

@@ -1,11 +1,11 @@
 .uitkGridBottomRightPart {
-  --uitkGrid-scrollBar-size: 15px;
+  --grid-scrollBar-size: 15px;
 }
 
 .uitkGridBottomRightPart {
   position: absolute;
-  bottom: var(--uitkGrid-scrollBar-size);
-  right: var(--uitkGrid-scrollBar-size);
+  bottom: var(--grid-scrollBar-size);
+  right: var(--grid-scrollBar-size);
   z-index: 2;
 }
 

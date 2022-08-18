@@ -3,8 +3,8 @@
   overflow-x: hidden;
   position: absolute;
   top: 0;
-  right: var(--uitkGrid-scrollBar-size);
-  bottom: var(--uitkGrid-scrollBar-size);
+  right: var(--grid-scrollBar-size);
+  bottom: var(--grid-scrollBar-size);
   left: 0;
 }
 

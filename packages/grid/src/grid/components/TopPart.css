@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: var(--uitkGrid-scrollBar-size); /* TODO scrollbar width and only when displayed */
+  right: var(--grid-scrollBar-size); /* TODO scrollbar width and only when displayed */
   overflow-x: hidden;
   overflow-y: hidden;
   z-index: 2;

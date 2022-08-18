@@ -1,7 +1,7 @@
 .uitkGridTopRightPart {
   position: absolute;
   top: 0;
-  right: var(--uitkGrid-scrollBar-size);
+  right: var(--grid-scrollBar-size);
   z-index: 2;
 }
 

@@ -9,7 +9,7 @@
   --uitkDropdown-popup-maxHeight: auto;
   align-items: stretch;
   color: var(--uitk-container-color);
-  border: var(--uitk-container-border-width) var(--uitk-container-border-style) var(--uitk-container-border-color);
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderStyle) var(--uitk-container-borderColor);
   display: flex;
   flex-direction: column;
   padding: calc(var(--uitk-size-unit) * 1.5) 0;

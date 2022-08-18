@@ -1,33 +1,33 @@
-.uitk-density-touch .uitkGrid {
-  --uitkGrid-rowHeight: 60px;
-  --uitkGrid-padding: 16px;
-  --uitkGrid-fontSize: 16px;
+.uitk-density-touch {
+  --grid-rowHeight: 60px;
+  --grid-padding: 16px;
+  --grid-fontSize: 16px;
 }
 
-.uitk-density-low .uitkGrid {
-  --uitkGrid-rowHeight: 48px;
-  --uitkGrid-padding: 12px;
-  --uitkGrid-fontSize: 14px;
+.uitk-density-low {
+  --grid-rowHeight: 48px;
+  --grid-padding: 12px;
+  --grid-fontSize: 14px;
 }
 
-.uitk-density-medium .uitkGrid {
-  --uitkGrid-rowHeight: 36px;
-  --uitkGrid-padding: 8px;
-  --uitkGrid-fontSize: 12px;
+.uitk-density-medium {
+  --grid-rowHeight: 36px;
+  --grid-padding: 8px;
+  --grid-fontSize: 12px;
 }
 
-.uitk-density-high .uitkGrid {
-  --uitkGrid-rowHeight: 24px;
-  --uitkGrid-padding: 8px;
-  --uitkGrid-fontSize: 12px;
+.uitk-density-high {
+  --grid-rowHeight: 24px;
+  --grid-padding: 8px;
+  --grid-fontSize: 12px;
 }
 
-.uitk-density-ultrahigh .uitkGrid {
-  --uitkGrid-rowHeight: 20px;
-  --uitkGrid-padding: 4px;
-  --uitkGrid-fontSize: 12px;
+.uitk-density-ultrahigh {
+  --grid-rowHeight: 20px;
+  --grid-padding: 4px;
+  --grid-fontSize: 12px;
   /*Checkbox*/
-  --checkbox-font-size: 11px;
+  --checkbox-fontSize: 11px;
   /*CheckboxIcon*/
   --checkbox-density-bar-y: 5px;
   --checkbox-density-bar-height: 3px;
@@ -157,85 +157,87 @@
   --uitk-zIndex-tooltip: 1500;
 }
 
-/*ControlLabel*/
-.uitk-density-ultrahigh .uitkGrid .uitkControlLabel-labelRight {
-  margin-left: 3px;
-  margin-right: 0;
-}
-.uitk-density-ultrahigh .uitkGrid .backwardCompat .uitkControlLabel-label {
-  margin-right: 4px;
+.uitk-density-ultrahigh {
+  --grid-controlLabel-right-marginLeft: 3px;
+  --grid-controlLabel-right-marginRight: 0;
+
+  --grid-input-button-inset: 2px;
+
+  --grid-tooltip-icon-top: 1px;
+  --grid-tokenizedInput-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
+  --grid-tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
+  --grid-tokenizedInput-last-pill-margin: var(--uitk-size-unit);
+
+  --grid-toggleButton-icon-padding: 1px;
+
+  --backwardsCompat-controlLabel-right-marginRight: 4px;
 }
 
-/*Input*/
-.uitk-density-ultrahigh .uitkGrid .uitkInput {
-  --input-button-inset: 2px;
-}
-
-/*Tooltip*/
-.uitk-density-ultrahigh .uitkGrid .uitkTooltip {
-  --icon-top: 1px;
-}
-
-/*TokenizedInput*/
-.uitk-density-ultrahigh .uitkGrid .uitkTokenizedInput {
-  --tokenized-input-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenized-input-last-pill-margin: var(--uitk-size-unit);
-}
-/*ToggleButton*/
-.uitk-density-ultrahigh .uitkGrid .uitkToggleButton {
-  --toggle-button-icon-padding: 1px;
+.uitkGrid.backwardsCompat {
+  --uitkControlLabel-right-marginRight: var(--backwardsCompat-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
 
 .uitkGrid {
-  --uitkGrid-scrollBar-size: 15px;
-  --uitkGrid-cell-padding: 0 var(--uitkGrid-padding) 0 var(--uitkGrid-padding);
+  --grid-scrollBar-size: 15px;
+  --grid-cell-padding: 0 var(--grid-padding) 0 var(--grid-padding);
+
+  --uitkControlLabel-right-marginLeft: var(--grid-controlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
+  --uitkControlLabel-right-marginRight: var(--grid-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
+
+  --uitkInput-button-inset: var(--grid-input-button-inset, var(--input-button-inset));
+
+  --uitkTooltip-icon-top: var(--grid-tooltip-icon-top, var(--tooltip-icon-top));
+  --uitkTokenizedInput-gutter-size: var(--grid-tokenizedInput-gutter-size, var(--tokenizedInput-gutter-size));
+  --uitkTokenizedInput-pill-group-y-padding: var(--grid-tokenizedInput-pill-group-y-padding, var(--tokenizedInput-pill-group-y-padding));
+  --uitkTokenizedInput-last-pill-margin: var(--grid-tokenizedInput-last-pill-margin, var(--tokenizedInput-last-pill-margin));
+
+  --uitkToggleButton-icon-padding: var(--grid-toggleButton-icon-padding, var(--toggleButton-icon-padding));
 }
 
 .uitk-light .uitkGrid {
-  --uitkGrid-backgroundColor-secondary: #f2f4f6;
-  --uitkGrid-cell-borderColor: #d9dde3;
-  --uitkGrid-cell-backgroundColor: var(--uitk-color-white);
-  --uitkGrid-zebraColor: #eaedef;
-  --uitkGrid-row-backgroundColor-hover: #a4d5f4;
+  --grid-backgroundColor-secondary: #f2f4f6;
+  --grid-cell-borderColor: #d9dde3;
+  --grid-cell-backgroundColor: var(--uitk-color-white);
+  --grid-zebraColor: #eaedef;
+  --grid-row-backgroundColor-hover: #a4d5f4;
   /*--row-separator-color: #D9DDE3;*/
-  --uitkGrid-row-backgroundColor-selected: #64b1e4;
-  --uitkGrid-row-borderColor-selected: #2670a9;
-  --uitkGrid-cell-backgroundColor-selected: #64b1e4;
-  --uitkGrid-header-borderColor: var(--uitk-color-grey-90);
-  --uitkGrid-header-backgroundColor: var(--uitk-color-white);
-  --uitkGrid-header-color: var(--uitk-color-grey-300);
-  --uitkGrid-headerColumnSeparator-color: #84878e;
-  --uitkGrid-headerRowSeparator-color: var(--uitk-color-grey-40);
-  --uitkGrid-groupHeader-color: var(--uitk-color-grey-600);
-  --uitkGrid-shadow-color: rgba(0, 0, 0, 0.2);
-  --uitkGrid-columnDropTarget-color: var(--uitk-color-blue-500);
-  --uitkGrid-cursor-borderColor: #00477b;
-  --uitkGrid-borderColor: var(--uitk-color-grey-90);
-  --uitkGrid-rowDividerColor: var(--uitk-color-grey-90);
+  --grid-row-backgroundColor-selected: #64b1e4;
+  --grid-row-borderColor-selected: #2670a9;
+  --grid-cell-backgroundColor-selected: #64b1e4;
+  --grid-header-borderColor: var(--uitk-color-grey-90);
+  --grid-header-backgroundColor: var(--uitk-color-white);
+  --grid-header-color: var(--uitk-color-grey-300);
+  --grid-headerColumnSeparator-color: #84878e;
+  --grid-headerRowSeparator-color: var(--uitk-color-grey-40);
+  --grid-groupHeader-color: var(--uitk-color-grey-600);
+  --grid-shadow-color: rgba(0, 0, 0, 0.2);
+  --grid-columnDropTarget-color: var(--uitk-color-blue-500);
+  --grid-cursor-borderColor: #00477b;
+  --grid-borderColor: var(--uitk-color-grey-90);
+  --grid-rowDividerColor: var(--uitk-color-grey-90);
 }
 
 .uitk-dark .uitkGrid {
-  --uitkGrid-backgroundColor-secondary: #2f3136;
-  --uitkGrid-cell-borderColor: #3b3f46;
-  --uitkGrid-cell-backgroundColor: var(--uitk-color-grey-800);
-  --uitkGrid-zebraColor: #2f3136;
-  --uitkGrid-row-backgroundColor-hover: #254a67;
+  --grid-backgroundColor-secondary: #2f3136;
+  --grid-cell-borderColor: #3b3f46;
+  --grid-cell-backgroundColor: var(--uitk-color-grey-800);
+  --grid-zebraColor: #2f3136;
+  --grid-row-backgroundColor-hover: #254a67;
   /*--row-separator-color: #3B3F46;*/
-  --uitkGrid-row-backgroundColor-selected: #155c93;
-  --uitkGrid-row-borderColor-selected: #4b9fd8;
-  --uitkGrid-cell-backgroundColor-selected: #64b1e4;
-  --uitkGrid-header-borderColor: var(--uitk-color-grey-100);
-  --uitkGrid-header-backgroundColor: var(--uitk-color-grey-800);
-  --uitkGrid-header-color: var(--uitk-color-grey-50);
-  --uitkGrid-headerColumnSeparator-color: #74777f;
-  --uitkGrid-headerRowSeparator-color: var(--uitk-color-grey-500);
-  --uitkGrid-groupHeader-color: var(--uitk-color-grey-10);
-  --uitkGrid-shadow-color: rgba(255, 255, 255, 0.4);
-  --uitkGrid-columnDropTarget-color: var(--uitk-color-blue-100);
-  --uitkGrid-cursor-borderColor: #7dc3f2;
-  --uitkGrid-borderColor: var(--uitk-color-grey-100);
-  --uitkGrid-rowDividerColor: var(--uitk-color-grey-100);
+  --grid-row-backgroundColor-selected: #155c93;
+  --grid-row-borderColor-selected: #4b9fd8;
+  --grid-cell-backgroundColor-selected: #64b1e4;
+  --grid-header-borderColor: var(--uitk-color-grey-100);
+  --grid-header-backgroundColor: var(--uitk-color-grey-800);
+  --grid-header-color: var(--uitk-color-grey-50);
+  --grid-headerColumnSeparator-color: #74777f;
+  --grid-headerRowSeparator-color: var(--uitk-color-grey-500);
+  --grid-groupHeader-color: var(--uitk-color-grey-10);
+  --grid-shadow-color: rgba(255, 255, 255, 0.4);
+  --grid-columnDropTarget-color: var(--uitk-color-blue-100);
+  --grid-cursor-borderColor: #7dc3f2;
+  --grid-borderColor: var(--uitk-color-grey-100);
+  --grid-rowDividerColor: var(--uitk-color-grey-100);
 }
 
 .uitkGrid {
@@ -246,5 +248,5 @@
 }
 
 .uitkGrid-framed {
-  border: solid 1px var(--uitkGrid-borderColor);
+  border: solid 1px var(--grid-borderColor);
 }

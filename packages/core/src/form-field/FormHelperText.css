@@ -33,17 +33,17 @@
 }
 
 /* Class applied to the helper text container */
-.uitkFormFieldHelperText {
-  color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-foreground));
-  font-size: var(--uitkFormFieldHelperText-fontSize, var(--uitk-text-help-fontSize));
-  font-style: var(--uitkFormFieldHelperText-fontStyle, var(--uitk-text-help-fontStyle));
-  letter-spacing: var(--uitkFormFieldHelperText-letterSpacing, 0);
-  line-height: var(--uitkFormFieldHelperText-lineHeight, var(--uitk-text-base-lineHeight));
-  min-height: var(--uitkFormFieldHelperText-minHeight, var(--uitk-text-caption-minHeight));
-  margin-bottom: var(--uitkFormFieldHelperText-marginBottom, 0);
-  margin-top: var(--uitkFormFieldHelperText-marginTop, var(--formField-withHelperText-marginTop));
-  opacity: var(--uitkFormFieldHelperText-opacity, 1);
-  padding-left: var(--uitkFormFieldHelperText-paddingLeft, var(--uitk-size-unit));
-  padding-right: var(--uitkFormFieldHelperText-paddingRight, var(--uitk-size-unit));
-  transform: var(--uitkFormFieldHelperText-transform, var(--formField-helperText-transform, none));
+.uitkFormField-helperText {
+  color: var(--uitkFormField-helperText-color, var(--uitk-text-secondary-foreground));
+  font-size: var(--uitkFormField-helperText-fontSize, var(--uitk-text-help-fontSize));
+  font-style: var(--uitkFormField-helperText-fontStyle, var(--uitk-text-help-fontStyle));
+  letter-spacing: var(--uitkFormField-helperText-letterSpacing, 0);
+  line-height: var(--uitkFormField-helperText-lineHeight, var(--uitk-text-base-lineHeight));
+  min-height: var(--uitkFormField-helperText-minHeight, var(--uitk-text-caption-minHeight));
+  margin-bottom: var(--uitkFormField-helperText-marginBottom, 0);
+  margin-top: var(--uitkFormField-helperText-marginTop, var(--formField-withHelperText-marginTop));
+  opacity: var(--uitkFormField-helperText-opacity, 1);
+  padding-left: var(--uitkFormField-helperText-paddingLeft, var(--uitk-size-unit));
+  padding-right: var(--uitkFormField-helperText-paddingRight, var(--uitk-size-unit));
+  transform: var(--uitkFormField-helperText-transform, var(--formField-helperText-transform, none));
 }

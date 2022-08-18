@@ -3,6 +3,6 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: var(--uitkGrid-columnDropTarget-color);
+  background-color: var(--grid-columnDropTarget-color);
   z-index: 3;
 }

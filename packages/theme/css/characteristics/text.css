@@ -100,6 +100,7 @@
 
   --uitk-text-help-fontSize: 12px;
   --uitk-text-help-lineHeight: 16px;
+  --uitk-text-help-minHeight: 16px;
 
   --uitk-text-fontSize: 16px;
   --uitk-text-lineHeight: 22px;
@@ -125,6 +126,7 @@
 
   --uitk-text-help-fontSize: 11px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 14px;
   --uitk-text-lineHeight: 18px;
@@ -150,6 +152,7 @@
 
   --uitk-text-help-fontSize: 11px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 12px;
   --uitk-text-lineHeight: 16px;
@@ -175,6 +178,7 @@
 
   --uitk-text-help-fontSize: 10px;
   --uitk-text-help-lineHeight: 13px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 11px;
   --uitk-text-lineHeight: 14px;

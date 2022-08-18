@@ -3,27 +3,27 @@
   text-align: left;
 
   border-style: solid;
-  border-color: var(--uitkGrid-header-borderColor);
+  border-color: var(--grid-header-borderColor);
   border-width: 0 0 1px 0;
 
-  font-size: var(--uitkGrid-fontSize);
+  font-size: var(--grid-fontSize);
   font-weight: normal;
 
-  height: var(--uitkGrid-rowHeight);
-  line-height: var(--uitkGrid-rowHeight);
+  height: var(--grid-rowHeight);
+  line-height: var(--grid-rowHeight);
 
   position: relative;
   box-sizing: border-box;
 
-  background-color: var(--uitkGrid-header-backgroundColor);
-  color: var(--uitkGrid-header-color);
+  background-color: var(--grid-header-backgroundColor);
+  color: var(--grid-header-color);
 
   white-space: nowrap;
 }
 
 .uitkGridHeaderCell-valueContainer {
-  line-height: var(--uitkGrid-rowHeight);
-  padding: var(--uitkGrid-cell-padding);
+  line-height: var(--grid-rowHeight);
+  padding: var(--grid-cell-padding);
   position: absolute;
   top: 0;
   right: 0;
@@ -33,7 +33,7 @@
 }
 
 .uitkGridHeaderCell-autosizeContainer {
-  line-height: var(--uitkGrid-rowHeight);
+  line-height: var(--grid-rowHeight);
   padding: 0;
   position: absolute;
   top: 0;
@@ -45,7 +45,7 @@
 
 .uitkGridHeaderCell-measuredContent {
   display: inline-block;
-  padding: var(--uitkGrid-cell-padding);
+  padding: var(--grid-cell-padding);
 }
 
 .uitkGridHeaderCell-text {
@@ -62,7 +62,7 @@
 }
 
 .uitkGridHeaderCell-edgeSeparator {
-  background-color: var(--uitkGrid-headerColumnSeparator-color);
+  background-color: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
   position: absolute;

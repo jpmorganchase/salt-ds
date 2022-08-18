@@ -1,31 +1,31 @@
 /* Styles applied to root component (TokenizedInput) */
-.uitk-density-medium .uitkTokenizedInput {
-  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2);
-  --tokenized-input-last-pill-margin: var(--uitk-size-unit);
+.uitk-density-medium {
+  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2);
+  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
 }
-.uitk-density-touch .uitkTokenizedInput {
-  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 2px);
-  --tokenized-input-last-pill-margin: calc(var(--uitk-size-unit) / 2);
-}
-
-.uitk-density-low .uitkTokenizedInput {
-  --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenized-input-last-pill-margin: calc(var(--uitk-size-unit) / 2);
+.uitk-density-touch {
+  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 2px);
+  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
 }
 
-.uitk-density-high .uitkTokenizedInput {
-  --tokenized-input-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenized-input-last-pill-margin: var(--uitk-size-unit);
+.uitk-density-low {
+  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
+}
+
+.uitk-density-high {
+  --tokenizedInput-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
+  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
 }
 
 .uitkTokenizedInput {
-  --tokenized-input-spacing: var(--uitk-size-unit);
-  --tokenized-input-height: var(--uitk-size-base);
-  --tokenized-input-focused-outline: var(--uitk-focused-outline);
+  --tokenizedInput-spacing: var(--uitk-size-unit);
+  --tokenizedInput-height: var(--uitk-size-base);
+  --tokenizedInput-focused-outline: var(--uitk-focused-outline);
 }
 
 .uitkTokenizedInput {
@@ -47,8 +47,8 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  min-height: var(--tokenized-input-height);
-  padding: var(--tokenized-input-pill-group-y-padding) var(--tokenized-input-spacing);
+  min-height: var(--tokenizedInput-height);
+  padding: var(--uitkTokenizedInput-pill-group-y-padding, var(--tokenizedInput-pill-group-y-padding)) var(--tokenizedInput-spacing);
 }
 
 /* Styles applied to root component if `disabled={true}` */
@@ -59,7 +59,7 @@
 
 /* Styles applied to root component if `focused={true}` */
 .uitkTokenizedInput-focused {
-  outline: var(--uitkTokenizedInput-focused-outline, var(--tokenized-input-focused-outline));
+  outline: var(--uitkTokenizedInput-focused-outline, var(--tokenizedInput-focused-outline));
 }
 
 /* Styles applied to root component if `expanded={true}` */
@@ -99,7 +99,7 @@
 
 /* Styles applied to Expand Button  */
 .uitkTokenizedInput-expandButton {
-  padding: 0 calc(var(--tokenized-input-spacing) / 4);
+  padding: 0 calc(var(--tokenizedInput-spacing) / 4);
 }
 
 /* Styles applied to root component and pill container if `expanded={true}` */
@@ -114,14 +114,14 @@
 .uitkTokenizedInput-expandButton,
 .uitkTokenizedInput-input,
 .uitkTokenizedInput-inputField.uitkTokenizedInput-inputMultiline .uitkTokenizedInput-input {
-  margin: calc(var(--tokenized-input-gutter-size) / 2) 0;
-  height: calc(var(--tokenized-input-height) - var(--tokenized-input-spacing) * 1.5);
+  margin: calc(var(--uitkTokenizedInput-gutter-size, var(--tokenizedInput-gutter-size)) / 2) 0;
+  height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);
 }
 
 /* Styles applied to inner Pills */
 .uitkTokenizedInput .uitkInputPill {
   min-width: 0;
-  margin-right: var(--tokenized-input-gutter-size);
+  margin-right: var(--uitkTokenizedInput-gutter-size, var(--tokenizedInput-gutter-size));
   --uitkPill-maxWidth: 100px;
 }
 
@@ -136,7 +136,7 @@
 
 /* Styles applied to the last visible Pill when all visible */
 .uitkTokenizedInput .uitkInputPill-pillLastVisible {
-  margin-right: var(--uitkTokenizedInput-pill-last-visible-margin-right, var(--tokenized-input-last-pill-margin));
+  margin-right: var(--uitkTokenizedInput-pill-last-visible-margin-right, var(--uitkTokenizedInput-last-pill-margin, var(--tokenizedInput-last-pill-margin)));
 }
 
 /* Styles applied to a Pill when active */
