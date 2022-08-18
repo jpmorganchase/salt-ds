@@ -40,7 +40,7 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@changesets/cli": "^2.19.0",
+    "@changesets/cli": "^2.24.2",
     "@cypress/code-coverage": "^3.10.0",
     "@floating-ui/react-dom-interactions": "^0.5.0",
     "@internationalized/date": "^3.0.0",
