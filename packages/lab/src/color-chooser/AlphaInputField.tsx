@@ -73,7 +73,10 @@ export const AlphaInput = ({
 
   return (
     <Input
-      data-testid="a-input"
+      inputProps={{
+        // @ts-ignore
+        "data-testid": "a-input",
+      }}
       className={cn({
         [withBaseName("rgbaInput")]: !showAsOpacity,
         [withBaseName("opacityInput")]: showAsOpacity,
