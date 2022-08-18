@@ -4,9 +4,7 @@
   --uitkEditableLabel-padding: 0;
   --uitkEditableLabel-height: var(--tabstrip-height);
   --uitkInput-minWidth: 4em;
-  --uitk-text-link-textDecoration: none;
-  --uitk-text-link-textDecoration: none;
-  --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
+  --uitkLink-textDecoration: none;
   --tab-cursor: pointer;
   --tab-spacing: var(--uitk-size-unit);
 
@@ -33,7 +31,7 @@
 .uitkTab[aria-selected="true"] {
   color: var(--uitk-navigable-link-color-active);
   /* should be fontWeight-active, but nor sure where that belongs */
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-navigable-fontWeight-active);
 }
 
 .uitkTab-dragAway {
@@ -102,7 +100,7 @@
   display: block;
   visibility: hidden;
   /* must match font weight of selected tab styling */
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-text-fontWeight-strong);
 }
 
 /* Editing  - these are focusVisible styles, just assign uitkFocusVisible*/

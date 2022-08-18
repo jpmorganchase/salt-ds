@@ -76,7 +76,7 @@
 }
 
 .uitkColorChooserSwatch-transparent {
-  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-negative-foreground) !important;
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-differential-negative-foreground) !important;
   width: calc(var(--swatch-size-unit) - 2px) !important;
   height: calc(var(--swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;

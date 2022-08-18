@@ -13,5 +13,5 @@
 
 .uitkDropdown-popup {
   background: var(--uitk-container-background-medium);
-  z-index: calc(var(--uitk-zindex-tooltip) - 1);
+  z-index: calc(var(--uitk-zIndex-tooltip) - 1);
 }

@@ -2,6 +2,7 @@
 .uitkTabstrip-activationIndicator {
   --activation-indicator-transition-duration: 0.2s;
   --activation-indicator-transition-property: var(--tabstrip-activation-indicator-transition-property, left);
+
   border: var(--uitkTabstrip-activationIndicator-border, var(--uitk-navigable-border));
   border-style: var(--tabstrip-activation-indicator-borderStyle);
   box-sizing: border-box;

@@ -105,8 +105,7 @@
   --tabstrip-tab-display: flex;
   --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable, 36px));
   --tabstrip-tab-dragging-display: block;
-  --tab-bar-color: var(--uitk-grey-90);
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-size: var(--uitk-text-fontSize);
 
   --tab-before-content: "";
   --tab-before-background: var(--uitk-navigable-indicator-color-hover);
@@ -140,7 +139,7 @@
 }
 
 .uitkTabstrip-overflowMenu-dropTarget:after {
-  background-color: var(--uitk-palette-interact-background-active);
+  background-color: var(--uitk-dropTarget-background-hover);
   content: "";
   position: absolute;
   height: 2px;

@@ -1,12 +1,4 @@
-.uitk-light .uitkCalendarDay {
-  --calendar-day-current-day-border-color: var(--uitk-color-grey-900);
-}
-
-.uitk-dark .uitkCalendarDay {
-  --calendar-day-current-day-border-color: var(--uitk-color-white);
-}
-
-/* TODO: Design need to align characteristics for CalendarDay */
+/* TODO: Design need to align characteristics for CalendarDay  */
 .uitkCalendarDay {
   --calendar-day-text-color: var(--uitk-text-primary-foreground);
   --calendar-day-background: var(--uitk-selectable-background);
@@ -23,15 +15,15 @@
 
   --calendar-day-selected-background: var(--uitk-selectable-background-selected);
   --calendar-day-selected-text-color: var(--uitk-selectable-foreground-selected);
-  --calendar-day-selected-focused-outline-color: var(--uitk-color-white);
+  --calendar-day-selected-focused-outline-color: var(--uitk-selectable-foreground-selected);
 
   --calendar-day-selected-start-background: var(--uitk-selectable-background-selected);
   --calendar-day-selected-start-text-color: var(--uitk-selectable-foreground-selected);
-  --calendar-day-selected-start-focused-outline-color: var(--uitk-color-white);
+  --calendar-day-selected-start-focused-outline-color: var(--uitk-selectable-foreground-selected);
 
   --calendar-day-selected-end-background: var(--uitk-selectable-background-selected);
   --calendar-day-selected-end-text-color: var(--uitk-selectable-foreground-selected);
-  --calendar-day-selected-end-focused-outline-color: var(--uitk-color-white);
+  --calendar-day-selected-end-focused-outline-color: var(--uitk-selectable-foreground-selected);
 
   --calendar-day-selected-span-background: var(--uitk-selectable-background-hover);
   --calendar-day-selected-span-text-color: var(--uitk-selectable-foreground);
@@ -84,7 +76,7 @@
 }
 
 .uitkCalendarDay-today {
-  border: 1px solid var(--calendar-day-current-day-border-color);
+  border: 1px solid var(--uitk-container-borderColor-medium);
 }
 
 .uitkCalendarDay-selectedSpan,

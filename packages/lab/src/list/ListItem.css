@@ -2,7 +2,7 @@
   /* Color */
   --list-item-text-color: var(--uitk-selectable-foreground);
   --list-item-background: var(--uitkList-item-background, var(--uitk-selectable-background));
-  --list-item-outlineColor-selected: var(--uitk-color-white);
+  --list-item-outlineColor-selected: var(--uitk-selectable-foreground-selected);
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
   --list-item-alignItems: center;
@@ -15,7 +15,7 @@
 }
 
 .uitkListItemHeader {
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: var(--uitk-text-fontWeight-strong);
 }
 
 .uitkListItemHeader[data-sticky] {
@@ -31,7 +31,7 @@
   font-size: var(--uitk-text-fontSize);
   text-align: left;
   line-height: var(--uitk-text-lineHeight);
-  gap: var(--uitk-spacing-unit);
+  gap: var(--uitk-size-unit);
   height: var(--uitkList-item-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);

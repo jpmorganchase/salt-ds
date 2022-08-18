@@ -41,7 +41,7 @@
   --contactDetails-noAvatar-indicator-width: 4px;
 
   /* TODO: Check below tokens with design */
-  --contactDetails-separator-color: var(--uitk-separator-border-2);
+  --contactDetails-separator-color: var(--uitk-separable-border-2);
   --contactDetails-deselected-icon-color: var(--uitk-ratable-border);
   --contactDetails-deselecting-icon-color: var(--uitk-ratable-border);
   --contactDetails-selected-icon-color: var(--uitk-ratable-background-active);

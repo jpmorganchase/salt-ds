@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundation-color";
+const ruleName = "uitk/custom-property-no-foundations";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
@@ -61,11 +61,12 @@ const isUitkThemeCustomProperty = function (property) {
 
 const allAllowedKeys = [
   // characteristics
+  "accent",
   "actionable",
   "container",
   "differential",
   "draggable",
-  "droptarget",
+  "dropTarget",
   "editable",
   "focused",
   "measured",
@@ -77,12 +78,11 @@ const allAllowedKeys = [
   "status",
   "taggable",
   "text",
-  // additional to decide
+  // foundations, to decide
   "animation",
   "delay", // to be merged with animation
-  "palette", // currently for opacity purposes
+  "palette-opacity", // currently for opacity purposes
   "size",
-  "opacity",
   "zIndex", // to be added to overlayable
 ];
 
@@ -144,6 +144,7 @@ module.exports = stylelint.createPlugin(
       });
 
       function complain(index, length, decl) {
+        console.log(index, length, result)
         report({
           result,
           ruleName,

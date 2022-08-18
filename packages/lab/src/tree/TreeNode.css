@@ -3,7 +3,7 @@
   --tree-item-text-color: var(--uitk-selectable-text-color);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
-  --tree-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
+  --tree-item-selected-focus-visible-outlineColor: var(--uitk-selectable-foreground-selected);
 
   --tree-node-height: 24px;
   --tree-node-icon-size: 12px;
@@ -59,7 +59,7 @@
   align-items: center;
   display: inline-flex;
   height: var(--tree-node-height);
-  padding-left: var(--uitk-spacing-unit);
+  padding-left: var(--uitk-size-unit);
 }
 
 /* Leaf node or the div child of a collapsible node */
