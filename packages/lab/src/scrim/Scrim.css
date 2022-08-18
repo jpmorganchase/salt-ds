@@ -1,7 +1,9 @@
+/* Style applied to the root element */
 .uitkScrim {
   --scrim-background: var(--uitk-overlayable-background-medium);
 }
 
+/* Apply this className to the element to achieve the lighter color variant */
 .uitkEmphasisLow {
   --scrim-background: var(--uitk-overlayable-background-low);
 }
@@ -26,6 +28,7 @@
   outline: none;
 }
 
+/* Style applied to the root element when containerFix={true} */
 .uitkScrim-containerFix {
   position: absolute;
   z-index: calc(var(--uitk-zIndex-appheader) - 1);
