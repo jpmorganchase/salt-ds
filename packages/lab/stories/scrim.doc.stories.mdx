@@ -84,6 +84,16 @@ import { Scrim } from "@jpmorganchase/uitk-lab";
 
 <CharacteristicUsage of={Scrim} />
 
+## --uitkScrim CSS Custom Property API
+
+The default styling values for most Scrim attributes are hard-coded values local to Scrim.
+
+The CSS custom properties below are consumed by Scrim, but not defined by Scrim. They can be defined via a container or
+a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. See Theme documentation for guidance on when to use variables from the Custom Property API.
+
+<CSSVariableTable of={Scrim} />
+
 ## Accessibility
 
 The Scrim component is accessible by screen readers and provides full WAI ARIA support.
