@@ -4,7 +4,7 @@
   --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-borderColor-medium));
   --dialog-borderStyle: var(--uitkDialog-borderStyle, var(--uitk-container-borderStyle));
   --dialog-borderWidth: var(--uitkDialog-borderColor, var(--uitk-container-borderWidth));
-  --dialog-box-shadow: var(--uitkDialog-box-shadow, var(--uitk-overlayable-shadow-modal));
+  --dialog-boxShadow: var(--uitkDialog-boxShadow, var(--uitk-overlayable-shadow-modal));
   --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
   --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
 }
@@ -24,6 +24,6 @@
   overflow: auto;
   padding: var(--dialog-padding);
   position: relative;
-  box-shadow: var(--uitkDialog-box-shadow, var(--dialog-box-shadow));
+  box-shadow: var(--uitkDialog-boxShadow, var(--dialog-boxShadow));
   margin: var(--uitkDialog-margin, var(--dialog-margin));
 }

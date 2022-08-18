@@ -1,9 +1,9 @@
 .uitkDraggableSnapshot {
   --draggableSnapshot-header-height: 120px;
-  --draggableSnapshot-img-height: var(--draggableSnapshot-uitkDraggableSnapshot-img-height, 900px);
-  --draggableSnapshot-img-opacity: var(--draggableSnapshot-uitkDraggableSnapshot-opacity, 0.5);
-  --draggableSnapshot-img-width: var(--draggableSnapshot-uitkDraggableSnapshot-img-width, 1600px);
-  --draggableSnapshot-snapshot-url: var(--draggableSnapshot-uitkDraggableSnapshot-url);
+  --draggableSnapshot-img-height: var(--uitkDraggableSnapshot-img-height, 900px);
+  --draggableSnapshot-img-opacity: var(--uitkDraggableSnapshot-opacity, 0.5);
+  --draggableSnapshot-img-width: var(--uitkDraggableSnapshot-img-width, 1600px);
+  --draggableSnapshot-snapshot-url: var(--uitkDraggableSnapshot-url);
   cursor: grab;
   left: 0;
   position: absolute;

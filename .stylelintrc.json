@@ -1,7 +1,13 @@
 {
-  "plugins": ["./tooling/stylelint/custom-property-no-foundations/index.js"],
+  "plugins": [
+    "./tooling/stylelint/custom-property-no-foundations/index.js",
+    "./tooling/stylelint/custom-property-attributes-kebab-case/index.js"
+  ],
   "rules": {
     "uitk/custom-property-no-foundations": {
+      "logLevel": "default"
+    },
+    "uitk/custom-property-attributes-kebab-case": {
       "logLevel": "default"
     }
   }

@@ -140,7 +140,7 @@
 .uitkSliderMarkLabels-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
   font-size: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
-  margin-top: var(--uitkSlider-label-margin-top);
+  margin-top: var(--uitkSlider-label-marginTop);
   line-height: var(--uitkSlider-label-lineHeight, var(--uitk-text-lineHeight));
 
   white-space: nowrap;
@@ -201,7 +201,7 @@
 .uitkSlider-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
   font-size: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
-  margin-top: var(--uitkSlider-label-margin-top);
+  margin-top: var(--uitkSlider-label-marginTop);
   line-height: var(--uitkSlider-label-lineHeight, var(--uitk-text-lineHeight));
 
   padding-left: var(--slider-label-paddingLeft);

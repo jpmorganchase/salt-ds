@@ -36,11 +36,10 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundations";
+const ruleName = "uitk/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
-    `No foundation or palette color should be used in component`, // Can encode option in error message if needed
+  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -49,46 +48,41 @@ const meta = {
 };
 
 /**
- * Test whether a property value is from theme.
- *
- * We have 2 type of `--uitk` prefixes
- * - `--uitk-xyz` from theme
- * - `--uitkAbc` from a component
+ * Test whether a property contains CSS attr
  */
-const isUitkThemeCustomProperty = function (property) {
-  return property.startsWith("--uitk-");
+const includesCssAttribute = function (property) {
+  return (
+    property.startsWith("--") &&
+    cssAttributes.find((attr) => property.includes(`-${attr}`))
+  );
 };
 
-const allAllowedKeys = [
-  // characteristics
-  "accent",
-  "actionable",
-  "container",
-  "differential",
-  "draggable",
-  "dropTarget",
-  "editable",
-  "focused",
-  "measured",
-  "navigable",
-  "overlayable",
-  "ratable",
-  "selectable",
-  "separable",
-  "status",
-  "taggable",
-  "text",
-  // foundations, to decide
-  "animation",
-  "delay", // to be merged with animation
-  "palette-opacity", // currently for opacity purposes
-  "size",
-  "zIndex", // to be added to overlayable
+const cssAttributes = [
+  "border-color",
+  "border-width",
+  "border-style",
+  "border-radius",
+  "outline-color",
+  "outline-offset",
+  "outline-width",
+  "outline-style",
+  "padding-left",
+  "padding-right",
+  "padding-top",
+  "padding-bottom",
+  "line-height",
+  "font-size",
+  "font-style",
+  "max-height",
+  "max-width",
+  "min-height",
+  "min-width",
+  "box-shadow",
+  "margin-right",
+  "margin-left",
+  "margin-top",
+  "margin-bottom",
 ];
-
-const regexpPattern = new RegExp(
-  `--uitk(w+)?-(${allAllowedKeys.join("|")})-.+`
-);
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -97,21 +91,13 @@ module.exports = stylelint.createPlugin(
       const verboseLog = primary.logLevel === "verbose";
 
       function check(property) {
-        const checkResult =
-          !isUitkThemeCustomProperty(property) || regexpPattern.test(property);
-        verboseLog && console.log("Checking", checkResult, property);
-        return checkResult;
+        const checkResult = includesCssAttribute(property);
+        verboseLog &&
+          checkResult &&
+          console.log("Checking", checkResult, property);
+        return !checkResult;
       }
-
       root.walkDecls((decl) => {
-        if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
@@ -136,9 +122,8 @@ module.exports = stylelint.createPlugin(
           );
         });
 
-        verboseLog && console.log({ prop });
-
         if (check(prop)) return;
+        verboseLog && console.log({ prop });
 
         complain(0, prop.length, decl);
       });
