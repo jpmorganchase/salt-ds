@@ -1,9 +1,9 @@
 .uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-low);
+  --scrim-background: var(--uitk-overlayable-background-medium);
 }
 
-.uitkEmphasisMedium.uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-medium);
+.uitkEmphasisLow {
+  --scrim-background: var(--uitk-overlayable-background-low);
 }
 
 .uitkScrim {
