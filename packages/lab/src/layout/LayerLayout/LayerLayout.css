@@ -32,12 +32,14 @@
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-enter-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
+.uitkScrim.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-fade-in-center);
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-exit-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
+.uitkScrim.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-fade-out-back);
 }
 

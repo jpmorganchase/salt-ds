@@ -193,7 +193,7 @@ const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
   const hide = () => setOpen(false);
 
   return (
-    <div className="layer-container">
+    <div className="custom-layer-container">
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} className="custom-animation" {...args}>
         <LayerContentExample onClick={hide} />

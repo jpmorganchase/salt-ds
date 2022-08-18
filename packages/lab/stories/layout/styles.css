@@ -46,11 +46,13 @@
   background-color: var(--uitk-color-grey-40);
 }
 
-.layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
+.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
+.custom-layer-container .uitkScrim.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-top);
 }
 
-.layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
+.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
+.custom-layer-container .uitkScrim.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-top);
 }
 
