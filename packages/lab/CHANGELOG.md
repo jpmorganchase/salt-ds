@@ -1,5 +1,63 @@
 # @jpmorganchase/uitk-lab
 
+## 0.4.0
+
+### Minor Changes
+
+- d5e334e9: Fix delay in truncating Text component
+- d2ae5583: Update documentation for deck and layer layout components
+- 4a769b51: Remove undefined css var from StepperInput
+- 26af3070: - Migrate
+  from
+  dayjs
+  to
+  @internationalized/date
+  in
+  Calendar
+  - Change
+    Calendar
+    initialSelectedDate
+    to
+    defaultSelectedDate
+  - Change
+    Calendar
+    initialVisibleMonth
+    to
+    defaultVisibleMonth
+  - Fix
+    Shift+PageUp
+    not
+    moving
+    focus
+    properly
+    in
+    Calendar
+    when
+    using
+    React
+    18
+- 05d606a8: Add SkipLink component to lab
+- 3ac56cc2: Add z-index to dropdown and combobox list root
+- fb67b559: Add deck layout component to lab
+- 6364a827: Fix issue where the component anatomy sometimes would not display in the docs due to the root element not being rendered straight away
+
+### Patch Changes
+
+- d9fa5e85: List refactor, Dropdown refactor, ComboBox refactor, Tabs refactor, Toolbar refactor, Tree component
+- 765fed67: Theme
+  small additions to text characteristic
+
+  Lab
+  Breadcrumb, ContactDetails, ContentStatus, Metric, Text: apply new naming conventions for CSS variables, add backwardsCompat styling
+  Enhance QA stories
+
+  Docs
+  add functionality to QAContainer
+
+- d3ee2063: Refactor ContentStatus to use Typography components
+- 55d77c1e: Refactor FileDropZone's characteristic usage
+- 0ee6a5f6: Add doc for Lab/Avatar
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,5 +1,23 @@
 # @jpmorganchase/uitk-theme
 
+## 0.3.1
+
+### Patch Changes
+
+- 765fed67: Theme
+  small additions to text characteristic
+
+  Lab
+  Breadcrumb, ContactDetails, ContentStatus, Metric, Text: apply new naming conventions for CSS variables, add backwardsCompat styling
+  Enhance QA stories
+
+  Docs
+  add functionality to QAContainer
+
+- d3ee2063: - Remove text minimum height token.
+  - Add backwards compatibility for text line height
+  - Make sure text line height is declared for all densities
+
 ## 0.3.0
 
 ### Minor Changes
