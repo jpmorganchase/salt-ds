@@ -54,7 +54,7 @@
   --slider-clickable-paddingLeft: var(--uitkSlider-clickable-paddingLeft, calc(var(--uitk-size-base) * 0.5));
   --slider-clickable-paddingRight: var(--uitkSlider-clickable-paddingRight, calc(var(--uitk-size-base) * 0.5));
 
-  --slider-label-paddingLeft: var(--uitlSlider-label-paddingLeft, 0);
+  --slider-label-paddingLeft: var(--uitkSlider-label-paddingLeft, 0);
   --slider-label-paddingRight: var(--uitkSlider-label-paddingRight, 0);
 }
 

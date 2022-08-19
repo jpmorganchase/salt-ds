@@ -14,7 +14,7 @@
 }
 
 .uitk-newapp .uitkFormField-withStepperInput .uitkFormLabel {
-  --uitkFormLabel-paddingBottom: var(--newapp-stepperInput-formLabel-padding);
+  --uitkFormField-label-paddingBottom: var(--newapp-stepperInput-formLabel-padding);
 }
 
 .uitk-newapp .uitkStepperInput-input,

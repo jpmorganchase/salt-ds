@@ -7,7 +7,7 @@
   --appHeader-paddingLeft: 8px;
   --appHeader-paddingRight: var(--appHeader-padding);
 
-  --uitkTabstrip-height: var(--appHeader-height);
+  --uitkTabs-tabs-strip-height: var(--appHeader-height);
   --uitkToolbar-width: auto;
 }
 

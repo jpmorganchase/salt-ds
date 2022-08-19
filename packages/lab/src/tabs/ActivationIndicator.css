@@ -1,24 +1,24 @@
 /* the Tabstrip Activation Indicator, uses navigable styles */
 .uitkTabstrip-activationIndicator {
-  --activation-indicator-transitionDuration: 0.2s;
-  --activation-indicator-transitionProperty: var(--tabstrip-activation-indicator-transitionProperty, left);
+  --tabs-activationIndicator-indicator-transitionDuration: 0.2s;
+  --tabs-activationIndicator-indicator-transitionProperty: var(--tabs-strip-activation-indicator-transitionProperty, left);
 
-  border: var(--uitkTabstrip-activationIndicator-border, var(--uitk-navigable-border));
-  border-style: var(--tabstrip-activation-indicator-borderStyle);
+  border: var(--uitkTabs-tabs-strip-activationIndicator-border, var(--uitk-navigable-border));
+  border-style: var(--tabs-strip-activation-indicator-borderStyle);
   box-sizing: border-box;
-  height: var(--tabstrip-activation-indicator-height, auto);
-  inset: var(--tabstrip-activation-indicator-inset);
+  height: var(--tabs-strip-activation-indicator-height, auto);
+  inset: var(--tabs-strip-activation-indicator-inset);
   position: absolute;
-  width: var(--tabstrip-activation-indicator-width, auto);
+  width: var(--tabs-strip-activation-indicator-width, auto);
 }
 
 /* the Active Tab indicator, uses navigable styles */
 .uitkTabstrip-activationIndicatorThumb {
-  inset: var(--tabstrip-activation-thumb-inset);
+  inset: var(--tabs-strip-activation-thumb-inset);
   position: absolute;
-  height: var(--tabstrip-activation-thumb-height, auto);
+  height: var(--tabs-strip-activation-thumb-height, auto);
   background-color: var(--uitk-navigable-indicator-color-active);
-  transition: var(--uitkActivationIndicator-transition, var(--activation-indicator-transitionProperty) var(--activation-indicator-transitionDuration) ease);
-  width: var(--tabstrip-activation-thumb-width, auto);
+  transition: var(--uitkTabs-activationIndicator-transition, var(--tabs-activationIndicator-indicator-transitionProperty) var(--tabs-activationIndicator-indicator-transitionDuration) ease);
+  width: var(--tabs-strip-activation-thumb-width, auto);
   z-index: 1;
 }

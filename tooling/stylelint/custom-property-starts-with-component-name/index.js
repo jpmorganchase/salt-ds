@@ -1,8 +1,7 @@
 "use strict";
 
-const properties = require("known-css-properties").all;
-const stylelint = require("stylelint");
 const valueParser = require("postcss-value-parser");
+const stylelint = require("stylelint");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -37,10 +36,11 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-attributes-kebab-case";
+const ruleName = "uitk/custom-property-starts-with-component-name";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
+  expected: (pattern) =>
+    `Local tokens should start with --componentName, CSS API variables should start with --uitkComponentName`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -48,37 +48,125 @@ const meta = {
   url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
+const components = [
+  "Accordion",
+  "AppHeader",
+  "Avatar",
+  "Badge",
+  "BorderLayout",
+  "Breadcrumbs",
+  "Button",
+  "ButtonBar",
+  "Calendar",
+  "Card",
+  "Carousel",
+  "CascadingMenu",
+  "Checkbox",
+  "ColorChooser",
+  "ComboBox",
+  "ContactDetails",
+  "ContentStatus",
+  "ControlLabel",
+  "DeckLayout",
+  "Dialog",
+  "Dropdown",
+  "EditableLabel",
+  "FileDropZone",
+  "FlexLayout",
+  "FlowLayout",
+  "FormField",
+  "FormGroup",
+  "FormattedInput",
+  "Grid",
+  "GridLayout",
+  "Icon",
+  "Input",
+  "LayerLayout",
+  "LinearProgress",
+  "Link",
+  "List",
+  "Logo",
+  "MenuButton",
+  "Metric",
+  "Overlay",
+  "Pagination",
+  "Panel",
+  "ParentChildLayout",
+  "Pill",
+  "Popper",
+  "Portal",
+  "QueryInput",
+  "RadioButton",
+  "Scrim",
+  "SearchInput",
+  "SkipLink",
+  "Slider",
+  "Spinner",
+  "SplitLayout",
+  "StackLayout",
+  "StateIcon",
+  "StepperInput",
+  "Switch",
+  "Tabs",
+  "Text",
+  "ToggleButton",
+  "TokenizedInput",
+  "Toolbar",
+  "Tooltip",
+  "Tree",
+];
+
+const componentsFormatted = components.map(
+  (component) => `${component[0].toLowerCase()}${component.slice(1)}`
+);
+
 /**
- * Test whether a property contains CSS attr
+ * Test whether a property value is component custom property
+ *
+ * Starts with `--componentName-`
  */
-const includesCssAttribute = function (property) {
-  return (
-    property.startsWith("--") &&
-    cssAttributes.find(
-      (attr) =>
-        property.includes(`-${attr}-`) ||
-        (property.endsWith(`-${attr}`) &&
-          property !== `--uitk-${attr}`) /* --uitk-animation-duration */
-    )
+const isComponentCustomProperty = function (property) {
+  return componentsFormatted.find((component) =>
+    property.startsWith(`--${component}-`)
   );
 };
 
-const cssAttributes = properties
-  .filter((x) => !x.startsWith("-"))
-  .filter((x) => x.includes("-"));
+/**
+ * Test whether a property value is CSS API variables
+ *
+ * Starts with `--uitkComponentName-`
+ */
+const isCssApi = function (property) {
+  return components.find((component) =>
+    property.startsWith(`--uitk${component}-`)
+  );
+};
 
 module.exports = stylelint.createPlugin(
   ruleName,
   (primary, secondaryOptionObject, context) => {
+    let count = 0;
     return (root, result) => {
       const verboseLog = primary.logLevel === "verbose";
 
       function check(property) {
-        const checkResult = includesCssAttribute(property);
+        const checkResult =
+          isCssApi(property) ||
+          isComponentCustomProperty(property) ||
+          property.startsWith("--backwardsCompat-");
         verboseLog && console.log("Checking", checkResult, property);
-        return !checkResult;
+        return checkResult;
       }
+
       root.walkDecls((decl) => {
+        if (
+          decl.parent?.type === "rule" &&
+          decl.parent?.selector?.includes?.("backwardsCompat")
+        ) {
+          // Do not check backwardsCompat CSS
+          return;
+        }
+
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
@@ -94,7 +182,13 @@ module.exports = stylelint.createPlugin(
 
           verboseLog && console.log({ nodes });
 
-          if (!firstNode || check(firstNode.value)) return;
+          if (
+            !firstNode ||
+            firstNode.value.startsWith("--uitk-") ||
+            !firstNode.value.startsWith("--") ||
+            check(firstNode.value)
+          )
+            return;
 
           complain(
             declarationValueIndex(decl) + firstNode.sourceIndex,
@@ -103,9 +197,9 @@ module.exports = stylelint.createPlugin(
           );
         });
 
-        if (check(prop)) return;
-
         verboseLog && console.log({ prop });
+
+        if (!prop.startsWith("--") || prop.startsWith("--uitk-") || check(prop)) return;
 
         complain(0, prop.length, decl);
       });

@@ -3,28 +3,28 @@
   --formField-helperText-marginTop: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
 
-  --formHelperText-background-offset-height: 17px;
+  --formField-helperText-background-offset-height: 17px;
 }
 .uitk-density-medium {
   --formField-helperText-marginTop: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
   --formField-helperText-transform: translate(0, 2px);
 
-  --formHelperText-background-offset-height: 19px;
+  --formField-helperText-background-offset-height: 19px;
 }
 .uitk-density-touch {
   --formField-helperText-marginTop: 8px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, -3px);
 
-  --formHelperText-background-offset-height: 21px;
+  --formField-helperText-background-offset-height: 21px;
 }
 .uitk-density-low {
   --formField-helperText-marginTop: 4px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, 1px);
 
-  --formHelperText-background-offset-height: 21px;
+  --formField-helperText-background-offset-height: 21px;
 }
 
 /* Class applied if `fullWidth={true}` */

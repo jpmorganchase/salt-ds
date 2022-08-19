@@ -1,5 +1,5 @@
 .uitkStaticInputAdornment {
-  --adornment-padding: var(--uitk-size-unit);
+  --input-adornment-padding: var(--uitk-size-unit);
 }
 
 .uitkStaticInputAdornment {
@@ -8,9 +8,9 @@
 }
 
 .uitkInput-prefixContainer .uitkStaticInputAdornment {
-  padding-left: var(--adornment-padding);
+  padding-left: var(--input-adornment-padding);
 }
 
 .uitkInput-suffixContainer .uitkStaticInputAdornment {
-  padding-right: var(--adornment-padding);
+  padding-right: var(--input-adornment-padding);
 }

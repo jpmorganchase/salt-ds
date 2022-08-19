@@ -1,5 +1,5 @@
 .uitk-light.uitk-newapp,
 .uitk-dark.uitk-newapp {
-  --uitkCheckboxIcon-tick-fill: var(--uitk-color-purple-40);
-  --uitkCheckboxIcon-color-checked: var(--uitk-color-purple-300);
+  --uitkCheckbox-icon-tick-fill: var(--uitk-color-purple-40);
+  --uitkCheckbox-icon-color-checked: var(--uitk-color-purple-300);
 }

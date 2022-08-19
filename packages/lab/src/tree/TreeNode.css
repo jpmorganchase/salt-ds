@@ -68,8 +68,8 @@
   --checkbox-borderColor: black;
   --checkbox-borderWidth: 1px;
   --checkbox-tick: black;
-  /* --svg-toggle: var(--svg-chevron-down); */
-  --svg-toggle: var(--tree-node-collapse);
+  /* --tree-svg-toggle: var(--list-svg-chevron-down); */
+  --tree-svg-toggle: var(--tree-node-collapse);
 
   color: var(--list-item-text-color);
   flex-wrap: nowrap;
@@ -82,11 +82,11 @@
 }
 
 .uitkTreeNode:not([aria-expanded]) {
-  --paddingLeft: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
+  --tree-paddingLeft: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
-  --paddingLeft: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
+  --tree-paddingLeft: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] {
@@ -166,7 +166,7 @@
   } */
 
 .uitkTreeNode[aria-expanded="false"] > *:first-child:after {
-  --svg-toggle: var(--tree-node-expand);
+  --tree-svg-toggle: var(--tree-node-expand);
 }
 
 .uitkTreeNode[aria-expanded="true"] > *:first-child:after {

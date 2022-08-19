@@ -1,18 +1,18 @@
 .uitk-density-high {
   --formField-focused-outline-bottom: 4px;
-  --formLabel-top-marginBottom: 2px;
+  --formField-label-top-marginBottom: 2px;
 }
 .uitk-density-medium {
   --formField-focused-outline-bottom: 2px;
-  --formLabel-top-marginBottom: 2px;
+  --formField-label-top-marginBottom: 2px;
 }
 .uitk-density-low {
   --formField-focused-outline-bottom: 2px;
-  --formLabel-top-marginBottom: 4px;
+  --formField-label-top-marginBottom: 4px;
 }
 .uitk-density-touch {
   --formField-focused-outline-bottom: 0px;
-  --formLabel-top-marginBottom: 8px;
+  --formField-label-top-marginBottom: 8px;
 }
 
 /* Style applied to the root element */
@@ -92,7 +92,7 @@
 .uitkFormField-disabled {
   --formField-activationIndicator-opacity: var(--uitk-palette-opacity-foreground);
   --formField-activationIndicator-icon-opacity: var(--uitk-palette-opacity-foreground);
-  --formHelperText-opacity: var(--uitk-palette-opacity-foreground);
+  --formField-helperText-opacity: var(--uitk-palette-opacity-foreground);
 
   cursor: var(--uitk-editable-cursor-disabled);
 }
@@ -120,9 +120,9 @@
 
 /* Class applied to the root element if `labelPlacement="left"` */
 .uitkFormField-labelLeft {
-  --formLabel-marginTop: var(--uitk-size-unit);
-  --formLabel-paddingLeft: 0px;
-  --formLabel-paddingRight: calc(0.75 * var(--uitk-size-unit));
+  --formField-label-marginTop: var(--uitk-size-unit);
+  --formField-label-paddingLeft: 0px;
+  --formField-label-paddingRight: calc(0.75 * var(--uitk-size-unit));
 
   align-self: start;
   grid-template-columns: auto 1fr;
@@ -130,10 +130,10 @@
 
 /* Class applied to the root element if `labelPlacement="top"` or labelPlacement omitted (default is 'top') */
 .uitkFormField-labelTop {
-  --formLabel-marginBottom: var(--formLabel-top-marginBottom);
-  --formLabel-marginTop: 0;
-  --formLabel-paddingLeft: var(--uitk-size-unit);
-  --formLabel-paddingRight: var(--uitk-size-unit);
+  --formField-label-marginBottom: var(--formField-label-top-marginBottom);
+  --formField-label-marginTop: 0;
+  --formField-label-paddingLeft: var(--uitk-size-unit);
+  --formField-label-paddingRight: var(--uitk-size-unit);
   /* Uses density invariant value unless helper text provided */
   --formField-background-offset-height: calc(var(--formField-withHelperText-marginTop, 0px) + var(--uitkFormField-helperText-lineHeight, var(--formField-helperText-height)));
 
@@ -143,7 +143,7 @@
 /* Class applied if `labelPlacement="top"` and helper text is provided */
 .uitkFormField-labelTop.uitkFormField-withHelperText {
   /* Uses density aware value from FormHelperText */
-  --formField-background-offset-height: var(--formHelperText-background-offset-height);
+  --formField-background-offset-height: var(--formField-helperText-background-offset-height);
 }
 
 .uitkFormField > * {

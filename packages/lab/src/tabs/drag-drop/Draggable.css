@@ -7,7 +7,7 @@
 
 .uitkDraggable-spacer {
   display: inline-block;
-  height: var(--tabstrip-height);
+  height: var(--tabs-strip-height);
   transition: width 0.4s ease;
   width: 0;
 }
