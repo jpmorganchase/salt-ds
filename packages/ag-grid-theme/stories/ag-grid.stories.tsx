@@ -5,7 +5,7 @@
 import { AgGridReact } from "ag-grid-react";
 
 export default {
-  title: "Ag Grid Theme",
+  title: "Grid/Ag Grid Theme",
   component: AgGridReact,
   // decorators: [withFixedWidthWrapper, withRowStripsKnob]
 };
