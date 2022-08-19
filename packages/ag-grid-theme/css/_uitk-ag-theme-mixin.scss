@@ -1,4 +1,4 @@
-@import "~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material";
+@import "~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss";
 @import "./uitk-ag-theme-default-params";
 
 @mixin ag-theme-uitk($params: ()) {
@@ -335,6 +335,10 @@
     padding-right: 2px;
   }
 
+  .ag-header-select-all {
+    margin-left: 2px;
+  }
+
   .ag-header-cell.ag-floating-filter::after {
     display: none;
   }
@@ -572,7 +576,7 @@
 
   .ag-set-filter-list .ag-virtual-list-viewport {
     border-top: 1px solid var(--agGrid-filter-borderColor);
-    border-bottom: 1px solid var(--uitkAgGrid-filter-borderColor);
+    border-bottom: 1px solid var(--agGrid-filter-borderColor);
   }
 
   .ag-filter-apply-panel {
@@ -584,7 +588,7 @@
   .ag-filter .ag-filter-apply-panel button {
     height: 32px;
     padding: 0 8px;
-    color: var(--uitkAgGrid-filter-apply-button-color);
+    color: var(--agGrid-filter-apply-button-color);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -612,37 +616,37 @@
   .ag-toggle-button-input-wrapper {
     border-radius: 0;
     border-width: 0;
-    background-color: var(--uitkAgGrid-toggle-button-background);
-    height: var(--uitkAgGrid-switch-height);
+    background-color: var(--agGrid-toggle-button-background);
+    height: var(--agGrid-switch-height);
     width: calc(
-      var(--uitkAgGrid-switch-height) * 2 - var(--uitkAgGrid-switch-borderWidth)
+      var(--agGrid-switch-height) * 2 - var(--agGrid-switch-borderWidth)
     );
     &:focus-within:before {
       border: 2px dotted #2670a9;
     }
     &::before {
       border-radius: 0;
-      border-width: var(--uitkAgGrid-switch-borderWidth);
-      border-color: var(--uitkAgGrid-toggle-button-background);
+      border-width: var(--agGrid-switch-borderWidth);
+      border-color: var(--agGrid-toggle-button-background);
       top: 0;
       left: 0;
-      height: var(--uitkAgGrid-switch-height);
-      width: var(--uitkAgGrid-switch-height);
+      height: var(--agGrid-switch-height);
+      width: var(--agGrid-switch-height);
       box-sizing: border-box;
     }
     &.ag-checked {
-      border-color: var(--uitkAgGrid-toggle-background-checked);
-      background-color: var(--uitkAgGrid-toggle-background-checked);
+      border-color: var(--agGrid-toggle-background-checked);
+      background-color: var(--agGrid-toggle-background-checked);
       &::before {
         left: calc(
-          var(--uitkAgGrid-switch-height) - var(--uitkAgGrid-switch-borderWidth)
+          var(--agGrid-switch-height) - var(--agGrid-switch-borderWidth)
         );
-        border-color: var(--uitkAgGrid-toggle-background-checked);
+        border-color: var(--agGrid-toggle-background-checked);
         display: flex;
         font-family: jpmuitk-icons;
         font-size: 12px;
         content: "\e95b";
-        color: var(--uitkAgGrid-toggle-background-checked);
+        color: var(--agGrid-toggle-background-checked);
         background-color: white;
         justify-content: center;
         align-items: center;
@@ -651,7 +655,7 @@
   }
 
   .ag-side-bar .ag-tool-panel-wrapper {
-    background: var(--uitkAgGrid-side-buttons-background);
+    background: var(--agGrid-side-buttons-background);
   }
 
   .ag-side-buttons {
@@ -661,7 +665,7 @@
   .ag-column-drop-cell {
     height: 32px;
     font-size: ag-param(font-size);
-    background-color: var(--uitkAgGrid-background);
+    background-color: var(--agGrid-background);
   }
 
   .ag-ltr .ag-side-bar-right .ag-side-button-button {
@@ -679,7 +683,7 @@
   }
 
   .ag-ltr .ag-side-buttons .ag-selected .ag-side-button-button {
-    border-left-color: var(--uitkAgGrid-tab-borderColor-active);
+    border-left-color: var(--agGrid-tab-borderColor-active);
     border-left-style: solid !important;
   }
 
@@ -745,20 +749,20 @@
   }
 
   .ag-menu-option-active {
-    background-color: var(--uitkAgGrid-menu-option-color-hover);
+    background-color: var(--agGrid-menu-option-color-hover);
   }
 
   .ag-column-drop-wrapper {
-    background: var(--uitkAgGrid-background);
+    background: var(--agGrid-background);
   }
 
   .ag-column-drop-horizontal {
-    background-color: var(--uitkAgGrid-background);
+    background-color: var(--agGrid-background);
     height: 48px;
   }
 
   .ag-column-drop.ag-column-drop-horizontal .ag-column-drop-cell {
-    background-color: var(--uitkAgGrid-column-drop-cell-horizontal-background);
+    background-color: var(--agGrid-column-drop-cell-horizontal-background);
   }
 
   .ag-column-drop-cell-text {
@@ -780,7 +784,7 @@
   .ag-paging-page-summary-panel {
     font-size: 14px;
     margin-top: 5px;
-    color: var(--uitkAgGrid-button-color);
+    color: var(--agGrid-button-color);
   }
 
   .ag-paging-number {
@@ -788,35 +792,35 @@
   }
 
   .ag-paging-button {
-    height: var(--uitkAgGrid-paging-button-width);
-    width: var(--uitkAgGrid-paging-button-width);
+    height: var(--agGrid-paging-button-width);
+    width: var(--agGrid-paging-button-width);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
     font-size: 12px;
     & .ag-icon {
-      color: var(--uitkAgGrid-pagination-button-color);
+      color: var(--agGrid-pagination-button-color);
     }
     &:hover {
-      background-color: var(--uitkAgGrid-button-background-hover);
+      background-color: var(--agGrid-button-background-hover);
     }
     &.ag-disabled {
       background-color: unset;
       cursor: not-allowed;
       & .ag-icon {
-        color: var(--uitkAgGrid-pagination-button-color-disabled);
+        color: var(--agGrid-pagination-button-color-disabled);
       }
     }
   }
 
   .ag-keyboard-focus .ag-paging-button:focus::after {
-    border: dotted 2px var(--uitkAgGrid-color-focus);
+    border: dotted 2px var(--agGrid-color-focus);
     outline: none;
   }
 
   input[class^="ag-"][type="text"] {
-    background-color: var(--uitkAgGrid-background);
+    background-color: var(--agGrid-background);
   }
 
   @include ag-allow-color-param-access-with-ag-param(true);
