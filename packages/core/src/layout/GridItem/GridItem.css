@@ -1,7 +1,7 @@
 /* Style applied to the root element */
 .uitkGridItem {
   justify-self: var(--grid-item-justifySelf);
-  align-self: var(--grid-item-align-self);
+  align-self: var(--grid-item-alignSelf);
   grid-row-start: var(--grid-item-row-start);
   grid-column-start: var(--grid-item-column-start);
   grid-row-end: var(--grid-item-row-end);

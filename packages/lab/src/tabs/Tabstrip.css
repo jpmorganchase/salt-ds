@@ -6,7 +6,7 @@
   --tabstrip-tab-background: transparent;
 
   align-items: flex-start;
-  align-self: var(--uitkTabstrip-align-self, stretch);
+  align-self: var(--uitkTabstrip-alignSelf, stretch);
   box-sizing: border-box;
   font-size: var(--uitk-text-fontSize, 12px);
   font-weight: var(--uitk-text-fontWeight);

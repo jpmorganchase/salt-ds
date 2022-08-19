@@ -82,6 +82,10 @@ const cssAttributes = [
   "margin-left",
   "margin-top",
   "margin-bottom",
+  "justify-self",
+  "justify-items",
+  "align-self",
+  "align-items",
 ];
 
 module.exports = stylelint.createPlugin(
