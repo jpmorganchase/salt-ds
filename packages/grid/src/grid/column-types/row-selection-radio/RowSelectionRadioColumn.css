@@ -1,5 +1,5 @@
 .uitkGridRowSelectionRadioCellValue {
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +27,6 @@
 }
 
 .uitkGridRowSelectionRadioHeaderValue {
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   width: var(--grid-rowSelection-radio-size);
 }

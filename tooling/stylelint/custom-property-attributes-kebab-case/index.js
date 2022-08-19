@@ -1,7 +1,8 @@
 "use strict";
 
-const valueParser = require("postcss-value-parser");
+const properties = require('known-css-properties').all;
 const stylelint = require("stylelint");
+const valueParser = require("postcss-value-parser");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -53,40 +54,12 @@ const meta = {
 const includesCssAttribute = function (property) {
   return (
     property.startsWith("--") &&
-    cssAttributes.find((attr) => property.includes(`-${attr}`))
+    cssAttributes.find((attr) => property.includes(`-${attr}-`) ||
+      (property.endsWith(`-${attr}`) && property !== `--uitk-${attr}`) /* --uitk-animation-duration */)
   );
 };
 
-const cssAttributes = [
-  "border-color",
-  "border-width",
-  "border-style",
-  "border-radius",
-  "outline-color",
-  "outline-offset",
-  "outline-width",
-  "outline-style",
-  "padding-left",
-  "padding-right",
-  "padding-top",
-  "padding-bottom",
-  "line-height",
-  "font-size",
-  "font-style",
-  "max-height",
-  "max-width",
-  "min-height",
-  "min-width",
-  "box-shadow",
-  "margin-right",
-  "margin-left",
-  "margin-top",
-  "margin-bottom",
-  "justify-self",
-  "justify-items",
-  "align-self",
-  "align-items",
-];
+const cssAttributes = properties.filter(x => !x.startsWith('-')).filter(x => x.includes('-'));
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -97,7 +70,6 @@ module.exports = stylelint.createPlugin(
       function check(property) {
         const checkResult = includesCssAttribute(property);
         verboseLog &&
-          checkResult &&
           console.log("Checking", checkResult, property);
         return !checkResult;
       }
@@ -127,6 +99,7 @@ module.exports = stylelint.createPlugin(
         });
 
         if (check(prop)) return;
+
         verboseLog && console.log({ prop });
 
         complain(0, prop.length, decl);

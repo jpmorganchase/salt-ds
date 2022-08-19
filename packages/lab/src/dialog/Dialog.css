@@ -1,6 +1,6 @@
 .uitkDialog {
-  --dialog-background-color: var(--uitkDialog-background-color, var(--uitk-container-background-medium));
-  --dialog-border-bottom-width: var(--uitkDialog-border-bottom-width, 2px);
+  --dialog-background: var(--uitkDialog-background, var(--uitk-container-background-medium));
+  --dialog-borderBottom-width: var(--uitkDialog-borderBottom-width, 2px);
   --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-borderColor-medium));
   --dialog-borderStyle: var(--uitkDialog-borderStyle, var(--uitk-container-borderStyle));
   --dialog-borderWidth: var(--uitkDialog-borderColor, var(--uitk-container-borderWidth));
@@ -10,11 +10,11 @@
 }
 
 .uitkDialog {
-  background: var(--dialog-background-color);
+  background: var(--dialog-background);
   border-color: var(--dialog-borderColor);
   border-width: var(--dialog-borderWidth);
   border-style: var(--dialog-borderStyle);
-  border-bottom-width: var(--dialog-border-bottom-width);
+  border-bottom-width: var(--dialog-borderBottom-width);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

@@ -1,29 +1,29 @@
 .uitk-density-touch {
-  --grid-rowHeight: 60px;
+  --grid-row-height: 60px;
   --grid-padding: 16px;
   --grid-fontSize: 16px;
 }
 
 .uitk-density-low {
-  --grid-rowHeight: 48px;
+  --grid-row-height: 48px;
   --grid-padding: 12px;
   --grid-fontSize: 14px;
 }
 
 .uitk-density-medium {
-  --grid-rowHeight: 36px;
+  --grid-row-height: 36px;
   --grid-padding: 8px;
   --grid-fontSize: 12px;
 }
 
 .uitk-density-high {
-  --grid-rowHeight: 24px;
+  --grid-row-height: 24px;
   --grid-padding: 8px;
   --grid-fontSize: 12px;
 }
 
 .uitk-density-ultrahigh {
-  --grid-rowHeight: 20px;
+  --grid-row-height: 20px;
   --grid-padding: 4px;
   --grid-fontSize: 12px;
   /*Checkbox*/

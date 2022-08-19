@@ -14,7 +14,7 @@
 .uitkGridCellMeasure th {
   border-collapse: collapse;
   box-sizing: border-box;
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   overflow: hidden;
 
   margin: 0;

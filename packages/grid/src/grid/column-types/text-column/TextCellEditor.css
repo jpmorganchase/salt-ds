@@ -4,13 +4,13 @@
 .uitkGridTextCellEditor {
   border-collapse: collapse;
   box-sizing: border-box;
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   margin: 0;
   padding: 0;
 }
 
 .uitkGridTextCellEditor input {
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   width: 100%;
   outline: none;
   box-sizing: border-box;

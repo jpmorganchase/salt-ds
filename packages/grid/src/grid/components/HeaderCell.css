@@ -9,8 +9,8 @@
   font-size: var(--grid-fontSize);
   font-weight: normal;
 
-  height: var(--grid-rowHeight);
-  line-height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
+  line-height: var(--grid-row-height);
 
   position: relative;
   box-sizing: border-box;
@@ -22,7 +22,7 @@
 }
 
 .uitkGridHeaderCell-valueContainer {
-  line-height: var(--grid-rowHeight);
+  line-height: var(--grid-row-height);
   padding: var(--grid-cell-padding);
   position: absolute;
   top: 0;
@@ -33,7 +33,7 @@
 }
 
 .uitkGridHeaderCell-autosizeContainer {
-  line-height: var(--grid-rowHeight);
+  line-height: var(--grid-row-height);
   padding: 0;
   position: absolute;
   top: 0;

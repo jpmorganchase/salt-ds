@@ -128,7 +128,7 @@
 /* .hwListItemHeader {
     background-color: var(--list-item-header-bg);
     color: var(--list-item-header-color);
-    font-weight: var(--list-item-header-font-weight);
+    font-weight: var(--list-item-header-fontWeight);
   
   
   .hwListItemHeader[data-sticky='true'] {

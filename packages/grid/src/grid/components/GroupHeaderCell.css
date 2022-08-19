@@ -10,7 +10,7 @@
   color: var(--grid-groupHeader-color);
   overflow: hidden;
   white-space: nowrap;
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
 }
 
 .uitkGridGroupHeaderCell-text {

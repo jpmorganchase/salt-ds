@@ -31,7 +31,7 @@
   --pill-text-color-disabled: var(--uitkPill-text-color-disabled, var(--uitk-taggable-foreground-disabled));
 
   /* Button API */
-  --uitkButton-font-weight: var(--uitkPill-button-fontWeight, var(--uitk-text-fontWeight));
+  --uitkButton-fontWeight: var(--uitkPill-button-fontWeight, var(--uitk-text-fontWeight));
   --uitkButton-padding: var(--uitkPill-button-padding, 0);
   --uitkButton-textTransform: var(--uitkPill-button-textTransform, unset);
   --uitkButton-cursor: normal;

@@ -9,5 +9,5 @@
 }
 
 .uitkGridItem-area {
-  grid-area: var(--grid-item-grid-area);
+  grid-area: var(--grid-item-gridArea);
 }

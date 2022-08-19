@@ -11,7 +11,7 @@
   white-space: nowrap;
   position: relative;
 
-  height: var(--grid-rowHeight);
+  height: var(--grid-row-height);
   border-bottom-color: var(--grid-cell-borderColor);
   border-top-color: transparent;
   font-size: var(--grid-fontSize);
@@ -64,5 +64,5 @@
   padding: var(--grid-cell-padding);
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: var(--grid-rowHeight);
+  line-height: var(--grid-row-height);
 }

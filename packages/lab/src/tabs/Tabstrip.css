@@ -22,7 +22,7 @@
   --tabstrip-activation-indicator-borderStyle: none none solid none;
   --tabstrip-activation-indicator-height: 1px;
   --tabstrip-activation-indicator-inset: auto 0px 0px 0px;
-  --tabstrip-activation-indicator-transition-property: left;
+  --tabstrip-activation-indicator-transitionProperty: left;
   --tabstrip-activation-thumb-height: 2px;
   --tabstrip-activation-thumb-inset: -1px 0 0 0;
 }
@@ -32,7 +32,7 @@
   --uitkTabActivationIndicator-transition: top 0.3s ease;
   --tabstrip-activation-indicator-borderStyle: none solid none none;
   --tabstrip-activation-indicator-inset: 0px 0px 0px auto;
-  --tabstrip-activation-indicator-transition-property: top;
+  --tabstrip-activation-indicator-transitionProperty: top;
   --tabstrip-activation-indicator-width: 1px;
   --tabstrip-activation-thumb-inset: 0 0 0 -1px;
   --tabstrip-activation-thumb-width: 2px;
