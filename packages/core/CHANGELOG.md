@@ -1,5 +1,20 @@
 # @jpmorganchase/uitk-core
 
+## 0.4.0
+
+### Minor Changes
+
+- 4ba8654a: Use React's own useId implementation when available
+- 5ca5d9da: Change FlexLayout component to wrap by default
+- d5e334e9: Add leading option to debounce util
+
+### Patch Changes
+
+- 34af2268: Fix styling for focused state when FormField has helper text
+- e1472d61: Prevent AriaAnnouncer breaking full height layouts
+- 68c4493b: Fix click being called by Button when focusWhenDisabled and disabled are true.
+- bb99c30b: Add TooltipProps to Pill
+
 ## 0.3.0
 
 ### Minor Changes
