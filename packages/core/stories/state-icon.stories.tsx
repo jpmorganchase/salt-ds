@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   StateIcon,
-  ValidationState,
   FlowLayout,
+  VALIDATION_NAMED_STATES as states,
 } from "@jpmorganchase/uitk-core";
 import { ICON_NAMED_SIZES } from "@jpmorganchase/uitk-icons";
 
@@ -17,8 +17,6 @@ export default {
     },
   },
 } as ComponentMeta<typeof StateIcon>;
-
-const states: ValidationState[] = ["error", "success", "warning", "info"];
 
 const DefaultStateIconStory: ComponentStory<typeof StateIcon> = (args) => {
   return <StateIcon {...args} />;
