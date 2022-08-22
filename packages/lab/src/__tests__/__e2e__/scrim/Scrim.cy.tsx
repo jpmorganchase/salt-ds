@@ -1,4 +1,4 @@
-import { Scrim } from "@jpmorganchase/uitk-lab";
+import { Scrim } from "@jpmorganchase/uitk-core";
 import { useEffect, useRef, useState } from "react";
 
 // TODO lighter variant test
