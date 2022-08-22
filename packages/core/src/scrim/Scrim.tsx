@@ -1,9 +1,3 @@
-import {
-  makePrefixer,
-  ownerDocument,
-  useForkRef,
-  useId,
-} from "@jpmorganchase/uitk-core";
 import { hideOthers } from "aria-hidden";
 import classnames from "classnames";
 import noScroll from "no-scroll";
@@ -16,6 +10,7 @@ import {
   useEffect,
   useRef,
 } from "react";
+import { makePrefixer, ownerDocument, useForkRef, useId } from "../utils";
 import { FocusManager, FocusManagerProps } from "../focus-manager";
 import { preventFocusOthers } from "./internal/PreventFocus";
 import { ScrimContext } from "./ScrimContext";

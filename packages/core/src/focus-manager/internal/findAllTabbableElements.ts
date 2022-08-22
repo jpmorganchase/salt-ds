@@ -1,4 +1,4 @@
-import { ownerWindow } from "../../utils";
+import { ownerWindow } from "@jpmorganchase/uitk-lab";
 
 /**
  * Used to reduce the number of initial nodes that are checked to see if tabbable.

@@ -1,8 +1,4 @@
 import {
-  ownerDocument,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-import {
   FocusEvent,
   ReactNode,
   RefObject,
@@ -10,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { ownerDocument, useIsomorphicLayoutEffect } from "../utils";
 import { findAllTabbableElements } from "./internal/findAllTabbableElements";
 import { useReturnFocus, UseReturnFocusProps } from "./internal/useReturnFocus";
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "../../utils";
 
 function getActiveElement(doc: DocumentOrShadowRoot): HTMLElement | null {
   if (!doc) {
