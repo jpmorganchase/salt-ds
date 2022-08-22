@@ -3,6 +3,8 @@ import {
   FlexItem,
   FlowLayout,
   StackLayout,
+  Card,
+  FormField,
 } from "@jpmorganchase/uitk-core";
 import {
   Accordion,
@@ -12,6 +14,9 @@ import {
   Metric,
   MetricHeader,
   MetricContent,
+  Dropdown,
+  ButtonBar,
+  OrderedButton,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
@@ -22,6 +27,7 @@ import {
   ComplexFormThree,
   ComplexFormFour,
 } from "./stack-layout.stories";
+import { ContactDetailsExample } from "./flex-layout.stories";
 
 export default {
   title: "Core/Layout/FlowLayout",
@@ -40,7 +46,7 @@ export default {
       control: { type: "select" },
     },
   },
-  excludeStories: ["MetricExample"],
+  excludeStories: ["MetricExample", "DashboardExample"],
 } as ComponentMeta<typeof FlowLayout>;
 
 const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
@@ -56,7 +62,7 @@ export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
 DefaultFlowLayout.args = {};
 
 export const MetricExample = () => (
-  <Metric direction="up">
+  <Metric direction="up" size="large">
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
   </Metric>
@@ -140,4 +146,60 @@ export const FlowLayoutComposite = Form.bind({});
 
 FlowLayoutComposite.args = {
   separators: true,
+};
+
+const dropdownExampleData = [
+  "Lorem ipsum dolor",
+  "Commodo laboris",
+  "Ipsum incididunt",
+];
+
+export const DashboardExample: ComponentStory<typeof FlowLayout> = (args) => {
+  return (
+    <FlowLayout className="flow-dashboard-container" {...args}>
+      <FlexItem grow={1}>
+        <Card>
+          <FlowLayout>
+            {Array.from({ length: 3 }, (_, index) => (
+              <MetricExample key={index} />
+            ))}
+          </FlowLayout>
+        </Card>
+      </FlexItem>
+      <FlexItem
+        shrink={{ xs: 0, sm: 0, md: 1, lg: 1, xl: 1 }}
+        grow={{ xs: 1, sm: 1, md: 0, lg: 0, xl: 0 }}
+      >
+        <Card>
+          <StackLayout>
+            {Array.from({ length: 5 }, (_, index) => (
+              <ContactDetailsExample key={index} index={index} />
+            ))}
+          </StackLayout>
+        </Card>
+      </FlexItem>
+      <FlexItem grow={1}>
+        <Card>
+          <StackLayout>
+            {Array.from({ length: 6 }, (_, index) => (
+              <FormField
+                label="Preference 1"
+                helperText="Help text appears here"
+                key={index}
+              >
+                <Dropdown
+                  defaultSelected={dropdownExampleData[0]}
+                  source={dropdownExampleData}
+                />
+              </FormField>
+            ))}
+            <ButtonBar>
+              <OrderedButton variant="cta">Save</OrderedButton>
+              <OrderedButton>Cancel</OrderedButton>
+            </ButtonBar>
+          </StackLayout>
+        </Card>
+      </FlexItem>
+    </FlowLayout>
+  );
 };
