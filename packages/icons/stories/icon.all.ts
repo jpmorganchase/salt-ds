@@ -145,7 +145,7 @@ import {
   VisibleSolidIcon,
   WarningIcon,
   WarningSecondaryIcon,
-  XlsIcon
+  XlsIcon,
 } from "@jpmorganchase/uitk-icons";
 
 export const allIconNamePairs = [
@@ -295,5 +295,5 @@ export const allIconNamePairs = [
   ["visible solid", VisibleSolidIcon],
   ["warning", WarningIcon],
   ["warning secondary", WarningSecondaryIcon],
-  ["xls", XlsIcon]
+  ["xls", XlsIcon],
 ] as const;

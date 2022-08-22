@@ -55,7 +55,7 @@ glob(path.join(basePath, "*.tsx"), options, function (er, fileNames) {
     {
       parser: "babel-ts",
       singleQuote: false,
-      trailingComma: "none",
+      trailingComma: "all",
       printWidth: 80,
       proseWrap: "always",
     }
