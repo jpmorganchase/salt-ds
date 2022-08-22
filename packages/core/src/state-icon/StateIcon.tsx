@@ -36,7 +36,7 @@ export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
     return (
       <IconComponent
         className={classnames(withBaseName(), withBaseName(state), className)}
-        size={24}
+        size={size}
         {...restProps}
         ref={ref}
       />
