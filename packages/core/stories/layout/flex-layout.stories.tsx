@@ -5,6 +5,11 @@ import {
   FlexItem,
   FlexLayout,
   LAYOUT_DIRECTION,
+  FormField,
+  Input,
+  StackLayout,
+  FlowLayout,
+  Pill,
 } from "@jpmorganchase/uitk-core";
 import {
   Metric,
@@ -17,6 +22,8 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
+  ButtonBar,
+  OrderedButton,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
@@ -50,7 +57,12 @@ export default {
       control: "boolean",
     },
   },
-  excludeStories: ["ContactDetailsExample", "FlexLayoutNestedExample"],
+  excludeStories: [
+    "ContactDetailsExample",
+    "FlexLayoutNestedExample",
+    "SectionForm",
+    "Blog",
+  ],
 } as ComponentMeta<typeof FlexLayout>;
 
 const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
@@ -125,17 +137,20 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
 
 export const ContactDetailsExample = ({ index }: { index: number }) => (
-  <ContactDetails embedded={true}>
+  <ContactDetails embedded={true} stackAtBreakpoint={0}>
     <ContactAvatar />
     <ContactPrimaryInfo text={`Contact ${index + 1}`} />
-    <ContactSecondaryInfo text="Blackrock Advisors (UK) Limited" />
-    <ContactTertiaryInfo text="SPN 2188538" />
+    <ContactSecondaryInfo text="Commodo nisi officia consectetur" />
+    <ContactTertiaryInfo text="SPN 123456789" />
     <ContactMetadata collapsible={true}>
       <ContactMetadataItem value="Analyst" label="Role" />
       <ContactMetadataItem value="London, GBR" label="Location" />
-      <ContactMetadataItem value="+44 2077 431102" label="Office" />
+      <ContactMetadataItem value="+44 1234 123456" label="Office" />
 
-      <ContactMetadataItem value="alex.brailescu@blackrock.com" label="Email" />
+      <ContactMetadataItem
+        value="cillum.est.exercitation@cupidatat.com"
+        label="Email"
+      />
     </ContactMetadata>
   </ContactDetails>
 );
@@ -178,3 +193,136 @@ FlexLayoutNested.args = {
   disableWrap: true,
   gap: 6,
 };
+
+const FormFieldExample = () => (
+  <FormField label="Label" helperText="Help text appears here">
+    <Input />
+  </FormField>
+);
+
+const sectionFormContent = (
+  <StackLayout>
+    <h3>Section title</h3>
+    {Array.from({ length: 3 }, (_, index) => (
+      <>
+        <FlexLayout disableWrap key={index}>
+          {Array.from({ length: 2 }, (_, index) => (
+            <FormFieldExample key={index} />
+          ))}
+        </FlexLayout>
+        <FormFieldExample />
+      </>
+    ))}
+    <FormFieldExample />
+  </StackLayout>
+);
+
+export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <StackLayout>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing
+        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat.
+      </p>
+      <StackLayout>
+        <FlexItem grow={1}>{sectionFormContent}</FlexItem>
+        <ButtonBar>
+          <OrderedButton variant="cta">Submit</OrderedButton>
+          <OrderedButton>Cancel</OrderedButton>
+        </ButtonBar>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const Blog = () => (
+  <StackLayout>
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
+      <FlexItem grow={1}>
+        <div className="flex-blog-image flex-blog-image-one" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
+          <h3>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          </h3>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+            qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
+            sed quia non numquam eius modi tempora incidunt ut labore et dolore
+            magnam aliquam quaerat voluptatem.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
+
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
+      <FlexItem grow={1}>
+        <div className="flex-blog-image flex-blog-image-two" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
+          <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
+          <p>
+            At vero eos et accusamus et iusto odio dignissimos ducimus qui
+            blanditiis praesentium voluptatum deleniti atque corrupti quos
+            dolores et quas molestias excepturi sint occaecati cupiditate non
+            provident, similique sunt in culpa qui officia deserunt mollitia
+            animi.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
+
+    <FlexLayout
+      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
+    >
+      <FlexItem grow={1}>
+        <div className="flex-blog-image flex-blog-image-three" />
+      </FlexItem>
+      <FlexItem>
+        <StackLayout>
+          <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
+          </p>
+          <FlowLayout gap={1}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <Pill label="Lorem" key={index} />
+            ))}
+          </FlowLayout>
+        </StackLayout>
+      </FlexItem>
+    </FlexLayout>
+  </StackLayout>
+);
