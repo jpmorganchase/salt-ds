@@ -1,5 +1,11 @@
 # @jpmorganchase/uitk-icons
 
+## 0.3.0
+
+### Minor Changes
+
+- f6919e32: Modify sideEffects to css related files from package.json
+
 ## 0.2.0
 
 ### Minor Changes
