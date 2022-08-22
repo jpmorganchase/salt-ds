@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { allIcons } from "./icon.all";
+import { allIconNamePairs } from "./icon.all";
 import { QAContainer } from "docs/components";
 import { Meta, Story } from "@storybook/react";
 
@@ -21,7 +21,7 @@ export const AllIcons: Story = () => {
             padding: "6px 0",
           }}
         >
-          {allIcons.map((iconComponent, i) =>
+          {allIconNamePairs.map(([, iconComponent], i) =>
             createElement(iconComponent, { key: i, size })
           )}
         </div>
@@ -52,7 +52,7 @@ export const CompareWithOriginalToolkit: Story = () => {
               padding: "6px 0",
             }}
           >
-            {allIcons.map((iconComponent, i) =>
+            {allIconNamePairs.map(([, iconComponent], i) =>
               createElement(iconComponent, { key: i, size })
             )}
           </div>

@@ -1,4 +1,4 @@
-import { allIcons } from "@jpmorganchase/uitk-icons/stories/icon.all";
+import { allIconNamePairs } from "@jpmorganchase/uitk-icons/stories/icon.all";
 import { createElement } from "react";
 
 export const AllIcons = () => {
@@ -11,7 +11,7 @@ export const AllIcons = () => {
         padding: "6px 0",
       }}
     >
-      {allIcons.map((iconComponent, i) =>
+      {allIconNamePairs.map(([, iconComponent], i) =>
         createElement(iconComponent, { key: i })
       )}
     </div>
