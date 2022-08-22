@@ -1,7 +1,10 @@
 .carousel-container .uitkCarouselSlide-fixedContainer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: calc(var(--uitk-size-unit) * 2) 0;
+  width: 70vw;
+  gap: calc(var(--uitk-size-unit) * 1);
 }
 
 .carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
@@ -29,10 +32,12 @@
 .carousel-image-placeholder {
   height: 520px;
   width: 70vw;
-  min-width: 415px;
   font-size: 4em;
   color: var(--uitk-color-grey-200);
   white-space: normal;
+}
+.carousel-image-placeholder span {
+  padding: calc(var(--uitk-size-unit) * 3);
 }
 
 .carousel-image-placeholder-1 {
