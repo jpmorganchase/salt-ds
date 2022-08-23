@@ -55,7 +55,14 @@ glob(globPath, options, function (error, filenames) {
       console.log("processing", fileName, "to", newFileName);
 
       let iconTitle = componentName;
-      const document = htmlparser2.parseDocument(svgString);
+
+      // Some icon svg contains `fill="#4c505b"` which will break CSS var styling
+      const svgFillRemoved = svgString.replaceAll(
+        new RegExp(`fill=\\"#\\w*\\"`, "g"),
+        ""
+      );
+
+      const document = htmlparser2.parseDocument(svgFillRemoved);
       htmlparser2.DomUtils.find(
         (node) => {
           if (node.name === "title" && node.children.length > 0) {
