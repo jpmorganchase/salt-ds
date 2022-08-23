@@ -15,7 +15,7 @@ export const makePrefixer =
   (...names: string[]): string =>
     [prefix, ...names].join("-");
 
-const ICON_NAMED_SIZES = ["small", "medium", "large"] as const;
+export const ICON_NAMED_SIZES = ["small", "medium", "large"] as const;
 
 const withBaseName = makePrefixer("uitkIcon");
 
@@ -32,31 +32,33 @@ export interface IconProps extends HTMLAttributes<HTMLSpanElement> {
   size?: IconSize | number;
 }
 
+export const DEFAULT_ICON_SIZE = "small";
+
 export const Icon = forwardRef<HTMLSpanElement, IconProps>(function Icon(
   {
     children,
     className,
-    size: sizeProp = "small",
+    size = DEFAULT_ICON_SIZE,
     style: styleProp,
     SVGProps,
     ...rest
   },
   ref
 ) {
-  const isNamedSize = ICON_NAMED_SIZES.indexOf(sizeProp as IconSize) !== -1;
+  const isNamedSize = ICON_NAMED_SIZES.indexOf(size as IconSize) !== -1;
 
   const style = isNamedSize
     ? styleProp
     : {
         ...styleProp,
-        "--uitkIcon-size": `${sizeProp}px`,
+        "--uitkIcon-size": `${size}px`,
       };
 
   return (
     <span
       className={cx(
         withBaseName(),
-        { [withBaseName(sizeProp as string)]: isNamedSize },
+        { [withBaseName(size as string)]: isNamedSize },
         className
       )}
       style={style}
