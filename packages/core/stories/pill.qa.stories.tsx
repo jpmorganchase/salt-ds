@@ -9,26 +9,23 @@ export default {
 } as ComponentMeta<typeof Pill>;
 
 export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+  const { className, ...rest } = props;
   return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...props}>
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
       <Pill className="backwardsCompat" label="Default Pill" />
+      <Pill className={className} label="Closable Pill" variant="closable" />
       <Pill
-        className="backwardsCompat"
-        label="Closable Pill"
-        variant="closable"
-      />
-      <Pill
-        className="backwardsCompat"
+        className={className}
         label="Selectable Pill"
         variant="selectable"
       />
-      <Pill className="backwardsCompat" disabled label="Disabled Pill" />
+      <Pill className={className} disabled label="Disabled Pill" />
       <Pill
-        className="backwardsCompat"
+        className={className}
         label="Extra extra long Pill label example."
       />
       <Pill
-        className="backwardsCompat"
+        className={className}
         checked
         label="Selectable Pill"
         variant="selectable"
@@ -41,8 +38,19 @@ ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+export const BackwardsCompatGrid: Story = () => {
+  return <ExamplesGrid className="backwardsCompat" />;
+};
+
+BackwardsCompatGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <ExamplesGrid imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png" />
+    <ExamplesGrid
+      className="backwardsCompat"
+      imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png"
+    />
   );
 };
