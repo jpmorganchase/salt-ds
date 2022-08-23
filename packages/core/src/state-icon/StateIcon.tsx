@@ -4,6 +4,7 @@ import {
   InfoIcon,
   SuccessTickIcon,
   WarningIcon,
+  DEFAULT_ICON_SIZE,
 } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { forwardRef } from "react";
@@ -26,14 +27,16 @@ export interface StateIconProps extends IconProps {
 const withBaseName = makePrefixer("uitkStateIcon");
 
 export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
-  (props, ref) => {
-    const { className, state, ...restProps } = props;
+  function StateIcon(
+    { className, state, size = DEFAULT_ICON_SIZE, ...restProps },
+    ref
+  ) {
     const IconComponent = icons[state];
 
     return (
       <IconComponent
         className={classnames(withBaseName(), withBaseName(state), className)}
-        size={24}
+        size={size}
         {...restProps}
         ref={ref}
       />
