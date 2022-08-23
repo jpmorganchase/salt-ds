@@ -1,9 +1,15 @@
 import { Scrim } from "@jpmorganchase/uitk-core";
 import { useRef, useState } from "react";
 
-// TODO lighter variant test
-
 describe("Given a Scrim", () => {
+  it("SHOULD not have any accessibility violations on load", () => {
+    cy.mount(
+      <Scrim open closeWithEscape>
+        <button>Button</button>
+      </Scrim>
+    );
+    cy.checkAxeComponent();
+  });
   describe("WHEN autoFocusRef is set", () => {
     it("THEN it should autofocus that element after mount", () => {
       function TestComponent() {
