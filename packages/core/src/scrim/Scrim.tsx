@@ -118,10 +118,7 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
-  props,
-  ref
-) {
-  const {
+  {
     autoFocusRef,
     closeWithEscape = false,
     className,
@@ -139,8 +136,9 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     tabEnabledSelectors = defaultSelector,
     zIndex,
     ...rest
-  } = props;
-
+  },
+  ref
+) {
   const scrimRef = useRef<HTMLDivElement>(null);
   const setWrapperRef = useForkRef(ref, scrimRef);
   const undoAria = useRef(noop);
