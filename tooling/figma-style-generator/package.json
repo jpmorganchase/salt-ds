@@ -13,7 +13,7 @@
     "@jpmorganchase/theme-editor": "*"
   },
   "devDependencies": {
-    "@figma/plugin-typings": "*",
+    "@figma/plugin-typings": "^1.55.1",
     "typescript": "*"
   }
 }

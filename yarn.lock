@@ -2896,7 +2896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@figma/plugin-typings@npm:*":
+"@figma/plugin-typings@npm:^1.55.1":
   version: 1.55.1
   resolution: "@figma/plugin-typings@npm:1.55.1"
   checksum: 86040561a4017cf4b66f4cd54890ce60db302fd58adfac8b1164cc32145f01e4af4dc233694db7b21bbd2817711ceff84bc6622eb7f39553f37f3788c83a9d4f
@@ -12978,7 +12978,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "figma-style-generator@workspace:tooling/figma-style-generator"
   dependencies:
-    "@figma/plugin-typings": "*"
+    "@figma/plugin-typings": ^1.55.1
     "@jpmorganchase/theme-editor": "*"
     typescript: "*"
   languageName: unknown
