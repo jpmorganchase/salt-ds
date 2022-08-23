@@ -259,9 +259,8 @@ export const App = () => {
       />
 
       <Button
-        {...getTriggerProps<typeof Button>({
-          "data-testid": "tooltip-trigger",
-        })}
+        data-testid="tooltip-trigger"
+        {...getTriggerProps<typeof Button>()}
       >
         Hover
       </Button>

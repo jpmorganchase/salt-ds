@@ -3,6 +3,7 @@ import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import "./ToolbarButton.css";
 
 export type ToolbarButtonProps = ButtonProps & {
+  overflowLabel?: string;
   label?: string;
 };
 
