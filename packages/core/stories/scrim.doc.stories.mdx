@@ -40,19 +40,15 @@ The Scrim provides a modal experience by obscuring the underlying content. It al
 When triggered, the basic Scrim fills the application window and blocks user interaction with the underlying content, until it’s closed. It is often displayed as the backdrop to another component, as demonstrated in this example.
 
 <Canvas>
-  <Story name="Default" decorators={[withFlexGap]}>
-    <DefaultScrim />
-  </Story>
+  <Story id="core-scrim--default-scrim" />
 </Canvas>
 
 ## Closable Scrim
 
-When triggered, the basic Scrim fills the application window and blocks user interaction with the underlying content, until it’s closed. It is often displayed as the backdrop to another component, as demonstrated in this example.
+If required for your particular use case, you can configure the Scrim to be closable on mouse click or keyboard interaction.
 
 <Canvas>
-  <Story name="Closable Scrim" decorators={[withFlexGap]}>
-    <ClosableScrim />
-  </Story>
+  <Story id="core-scrim--closable-scrim" />
 </Canvas>
 
 ## Scrim in a container
@@ -60,9 +56,7 @@ When triggered, the basic Scrim fills the application window and blocks user int
 You can display a Scrim within a container such as a [Card](/docs/documentation-core-card--card) or to temporarily block interaction while the container content is loading or unavailable.
 
 <Canvas>
-  <Story name="Scrim Container" decorators={[withFlexGap]}>
-    <ScrimContainer />
-  </Story>
+  <Story id="core-scrim--scrim-container" />
 </Canvas>
 
 # API
