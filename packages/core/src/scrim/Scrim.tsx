@@ -18,14 +18,15 @@ import "./Scrim.css";
 
 const scrims = new Set();
 
-const defaultParent = typeof document !== "undefined" ? document.body : null;
+const defaultParent = () =>
+  typeof document !== "undefined" ? document.body : null;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 const withBaseName = makePrefixer("uitkScrim");
 
-function preventSelection(parent = defaultParent): () => void {
+function preventSelection(parent = defaultParent()): () => void {
   if (parent) {
     const previous = parent.style.userSelect;
     parent.style.userSelect = "none";
