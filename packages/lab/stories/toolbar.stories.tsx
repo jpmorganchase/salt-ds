@@ -1,6 +1,8 @@
 import type { ComponentMeta, Story } from "@storybook/react";
 import {
   Button,
+  FlexLayout,
+  FlexItem,
   Input,
   Pill,
   StaticInputAdornment,
@@ -8,6 +10,7 @@ import {
 import {
   AddIcon,
   ChatIcon,
+  CloseSmallIcon,
   ColumnChooserIcon,
   CsvIcon,
   DoubleChevronDownIcon,
@@ -33,6 +36,8 @@ import {
 import {
   Avatar,
   Dropdown,
+  Slider,
+  SliderProps,
   ToggleButton,
   Toolbar,
   ToolbarButton,
@@ -253,6 +258,148 @@ export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
     </AdjustableFlexbox>
   );
 };
+
+export const VerticalToolbar = () => {
+  const [height, setHeight] = useState<SliderProps["value"]>(500);
+
+  return (
+    <FlexLayout direction="column" style={{ height: 800 }}>
+      <FlexItem>
+        <Slider
+          label="Adjust Toolbar Height"
+          min={10}
+          max={600}
+          onChange={setHeight}
+          value={height}
+        />
+      </FlexItem>
+      <FlexItem>
+        <Toolbar
+          aria-label="vertical toolbar"
+          data-resizeable
+          orientation="vertical"
+          style={{ height: height as number }}
+        >
+          <ToolbarField>
+            <Avatar size="medium" />
+          </ToolbarField>
+          <ToolbarButton>
+            <InfoIcon /> View Description
+          </ToolbarButton>
+          <ToolbarButton>
+            <ChatIcon /> Add Comment
+          </ToolbarButton>
+          <ToolbarButton>
+            <SuccessTickIcon /> Add Task
+          </ToolbarButton>
+          <ToolbarButton disabled>
+            <VisibleIcon /> Watch
+          </ToolbarButton>
+          <ToolbarButton data-align-start>
+            <NotificationIcon /> Set Reminder
+          </ToolbarButton>
+          <ToolbarButton>
+            <SettingsIcon /> Settings
+          </ToolbarButton>
+          <ToolbarButton>
+            <TearOutIcon /> Expand
+          </ToolbarButton>
+        </Toolbar>
+      </FlexItem>
+    </FlexLayout>
+  );
+};
+
+export const WithTooltray = () => {
+  return (
+    <AdjustableFlexbox containerWidth={1000} height={200} width={1000}>
+      <h4>Instant Collapse</h4>
+      <ToolbarWithInstantCollapseTooltrays />
+      <br />
+      <h4>Dynamic Collapse</h4>
+      <ToolbarWithDynamicCollapseTooltrays />
+      <br />
+      <h4>No Tooltray Collapse</h4>
+      <ToolbarWithNonCollapsingTooltrays />
+    </AdjustableFlexbox>
+  );
+};
+
+export const WithVerticalTooltray = () => {
+  const statusData = ["All", "Open", "Closed", "Blocked", "Pending"];
+  const assignData = [
+    "You",
+    "Alex Brailescu",
+    "Edmund Padilla",
+    "Vincent Ayram",
+  ];
+  const pendingData = ["Accounts", "Internal", "External", "Legal"];
+
+  const [height, setHeight] = useState<SliderProps["value"]>(500);
+  const [status, setStatus] = useState(statusData[1]);
+  const [assign, setAssign] = useState(assignData[0]);
+  const [pending, setPending] = useState(pendingData[1]);
+
+  return (
+    <FlexLayout direction="column" style={{ height: 800 }}>
+      <FlexItem>
+        <Slider
+          label="Adjust Toolbar Height"
+          min={10}
+          max={600}
+          onChange={setHeight}
+          value={height}
+        />
+      </FlexItem>
+      <FlexItem>
+        <Toolbar
+          aria-label="vertical toolbar"
+          data-resizeable
+          orientation="vertical"
+          style={{ height: height as number }}
+        >
+          <Tooltray>
+            <ToolbarField label="status">
+              <Dropdown
+                defaultSelected={status}
+                onSelect={(_, item) => setStatus(item)}
+                source={statusData}
+              />
+            </ToolbarField>
+            <ToolbarField label="Assign to">
+              <Dropdown
+                defaultSelected={assign}
+                onSelect={(_, item) => setAssign(item)}
+                source={assignData}
+              />
+            </ToolbarField>
+            <ToolbarField label="Pending with">
+              <Dropdown
+                defaultSelected={pending}
+                onSelect={(_, item) => setPending(item)}
+                source={pendingData}
+              />
+            </ToolbarField>
+          </Tooltray>
+          <Tooltray>
+            <ToolbarButton>Edit</ToolbarButton>
+            <ToolbarButton>Link</ToolbarButton>
+            <ToolbarButton>Message</ToolbarButton>
+          </Tooltray>
+          <Tooltray>
+            <ToolbarButton>
+              <SuccessTickIcon /> Complete
+            </ToolbarButton>
+            <ToolbarButton>
+              <CloseSmallIcon /> Discard
+            </ToolbarButton>
+          </Tooltray>
+        </Toolbar>
+      </FlexItem>
+    </FlexLayout>
+  );
+};
+
 export const ToolbarOverflowLargeOverflowIndicator: Story<
   AdjustableFlexboxProps
 > = ({ width = 900 }) => {
@@ -457,23 +604,6 @@ export const TooltrayNonCollapsingTooltrays: Story<AdjustableFlexboxProps> = ({
 }) => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
-      <ToolbarWithNonCollapsingTooltrays />
-    </AdjustableFlexbox>
-  );
-};
-
-export const TooltrayCollapseComparison = () => {
-  const viewsData = ["No view selected", "Outstanding", "Closed"];
-
-  return (
-    <AdjustableFlexbox containerWidth={1000} height={200} width={1000}>
-      <h4>Instant Collapse</h4>
-      <ToolbarWithInstantCollapseTooltrays />
-      <br />
-      <h4>Dynamic Collapse</h4>
-      <ToolbarWithDynamicCollapseTooltrays />
-      <br />
-      <h4>No Tooltray Collapse</h4>
       <ToolbarWithNonCollapsingTooltrays />
     </AdjustableFlexbox>
   );
@@ -802,42 +932,6 @@ export const WithDynamicCollapseVariants = ({ initialWidth = 500 }) => {
         </Tooltray>
       </Toolbar>
     </AdjustableFlexbox>
-  );
-};
-
-export const VerticalToolbar = () => {
-  return (
-    <Toolbar
-      aria-label="vertical toolbar"
-      data-resizeable
-      orientation="vertical"
-      style={{ minHeight: "500px" }}
-    >
-      <ToolbarField>
-        <Avatar size="medium" />
-      </ToolbarField>
-      <ToolbarButton>
-        <InfoIcon /> View Description
-      </ToolbarButton>
-      <ToolbarButton>
-        <ChatIcon /> Add Comment
-      </ToolbarButton>
-      <ToolbarButton>
-        <SuccessTickIcon /> Add Task
-      </ToolbarButton>
-      <ToolbarButton disabled>
-        <VisibleIcon /> Watch
-      </ToolbarButton>
-      <ToolbarButton data-align-start>
-        <NotificationIcon /> Set Reminder
-      </ToolbarButton>
-      <ToolbarButton>
-        <SettingsIcon /> Settings
-      </ToolbarButton>
-      <ToolbarButton>
-        <TearOutIcon /> Expand
-      </ToolbarButton>
-    </Toolbar>
   );
 };
 

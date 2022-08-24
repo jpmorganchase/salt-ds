@@ -1,8 +1,5 @@
-/* .uitkToolbarButton {
-    outline: none !important;
-} */
 
-.uitkToolbarButton:not([data-is-inside-panel]) {
+.uitkToolbarButton:not([data-is-inside-panel]):not(.uitkToolbarButton-vertical) {
   --uitkButton-fontSize: 0;
   --uitkButton-letterSpacing: 0;
 }

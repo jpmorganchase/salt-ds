@@ -26,23 +26,20 @@
   align-items: center;
   display: flex;
   flex: 1;
+  flex-direction: var(--uitkTooltray-flexDirection, row);
   flex-wrap: nowrap;
   gap: 0 !important;
   justify-content: inherit;
 }
 
-/* .uitkTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
+.uitkTooltray-vertical > .Responsive-inner {
+  align-items: stretch;
+}
+
 .uitkTooltray-horizontal > .Responsive-inner > * {
   margin-top: var(--uitk-size-unit);
   margin-right: var(--uitk-size-unit);
 }
-
-/* .uitkTooltray-horizontal:first-child {
-  padding-left: var(--uitk-size-unit);
-} */
-/* .uitkTooltray-horizontal:last-child {
-  padding-right: var(--uitk-size-unit);
-} */
 
 .uitkTooltray-horizontal:not(:first-child) {
   margin-left: var(--uitk-size-unit);
@@ -56,6 +53,10 @@
   left: 0;
   width: 1px;
   height: 28px;
+}
+
+.uitkTooltray-vertical > .Responsive-inner > * {
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .uitkTooltray > .Responsive-inner > .uitkToolbarField {

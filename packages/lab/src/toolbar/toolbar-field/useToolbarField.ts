@@ -1,5 +1,6 @@
+import { FormFieldLabelPlacement } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import {
+import React, {
   isValidElement,
   MouseEvent,
   ReactElement,
@@ -37,14 +38,15 @@ const getChildElementName = (element: ReactNode): string => {
 
 // ToolbarButton gets special styling treatment in the OverflowPanel but styling is
 // applied to the FormField, so we need to target those FormFields hosting ToolbarButtons.
-const isToolbarButton = (element: ReactElement): boolean =>
+const getIsToolbarButton = (element: ReactNode): boolean =>
   isValidElement(element) && element.type === ToolbarButton;
 
 // Some props for Toolbar FormFields depend on the control hosted by
 // the FormField.
 export const getToolbarFormFieldProps = (
   child: ReactNode,
-  isOverflowPanel = false
+  isOverflowPanel = false,
+  isToolbarButton = false
 ): ToolbarFieldProps => {
   let activationIndicator: ActivationIndicator = NullActivationIndicator;
   let emphasis: ToolbarFormFieldEmphasis = "uitkEmphasisLow";
@@ -59,8 +61,7 @@ export const getToolbarFormFieldProps = (
   return {
     ActivationIndicatorComponent: activationIndicator,
     className: cx(emphasis, {
-      "uitkFormField-toolbarButton":
-        isOverflowPanel && isToolbarButton(element),
+      "uitkFormField-toolbarButton": isOverflowPanel && isToolbarButton,
     }),
     fullWidth: false,
   };
@@ -69,26 +70,38 @@ export const getToolbarFormFieldProps = (
 // Eventually this list needs to be configurable at the Toolbar level
 const InteractiveComponents = ["Input", "Dropdown"];
 
+const getLabelPlacement = (
+  inOverflowPanel: boolean,
+  orientation: "horizontal" | "vertical"
+): FormFieldLabelPlacement => {
+  if (inOverflowPanel || orientation === "vertical") {
+    return "top";
+  } else {
+    return "left";
+  }
+};
+
 export const useToolbarField = (
   props: ToolbarFieldProps
 ): ToolbarFieldProps => {
   const {
     ActivationIndicatorComponent: ActivationIndicatorComponentProp,
+    children: childrenProp,
     className: classNameProp,
-    inOverflowPanel,
+    inOverflowPanel = false,
     labelPlacement: labelPlacementProp,
     onClick,
+    orientation = "horizontal",
     ...rest
   } = props;
 
-  const childElementName = getChildElementName(props.children);
+  const childElementName = getChildElementName(childrenProp);
+  const isToolbarButton = getIsToolbarButton(childrenProp);
+  const isVertical = orientation === "vertical";
   const { className, ActivationIndicatorComponent, ...calculatedProps } =
-    getToolbarFormFieldProps(props.children, inOverflowPanel);
+    getToolbarFormFieldProps(props.children, inOverflowPanel, isToolbarButton);
 
-  const labelPlacement =
-    labelPlacementProp ?? (inOverflowPanel ? "top" : "left");
-
-  // disableFocusRing ???
+  const labelPlacement = getLabelPlacement(inOverflowPanel, orientation);
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
@@ -98,6 +111,15 @@ export const useToolbarField = (
     },
     [childElementName, onClick]
   );
+
+  const children =
+    isToolbarButton && (isVertical || inOverflowPanel)
+      ? React.cloneElement(childrenProp as ReactElement, {
+          orientation,
+          inOverflowPanel,
+        })
+      : childrenProp;
+
   return {
     ActivationIndicatorComponent:
       ActivationIndicatorComponentProp ?? ActivationIndicatorComponent,
@@ -106,5 +128,6 @@ export const useToolbarField = (
     onClick: handleClick,
     ...rest,
     ...calculatedProps,
+    children,
   };
 };
