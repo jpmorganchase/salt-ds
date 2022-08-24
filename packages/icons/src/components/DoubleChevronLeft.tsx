@@ -2,7 +2,8 @@ import { createIcon } from "../icon/createIcon";
 
 export const DoubleChevronLeftIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="DoubleChevronLeftIcon">
-    <path d="M5.4 11.502.503 6 5.4.498l1.103 1.003-4.004 4.498 4.004 4.498L5.4 11.5zm5.057-.002L5.002 6 10.457.5l1.045 1.055L7.094 6l4.408 4.445-1.045 1.055z" />
+    <path d="M11.5 10.401 7.192 6 11.5 1.599 10.508.5 5 6l5.508 5.5.992-1.099z" />
+    <path d="M7 10.401 2.692 6 7 1.599 6.008.5.5 6l5.508 5.5L7 10.401z" />
   </svg>,
   "DoubleChevronLeft",
   "double chevron left"

@@ -2,7 +2,8 @@ import { createIcon } from "../icon/createIcon";
 
 export const CloneIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="CloneIcon">
-    <path d="M12 3v9H3v-2h1v1h7V4.002L4 4v1H3V3h9zM0 8V5h1v2h5V5l3 2.5L6 10V8H0zm4-8v1H1v2H0V0h4zm6 0v2H9V1H6V0h4z" />
+    <path d="M0 3h1V1h3V0H0v3zm3 2h1V4h7v7H4v-1H3v2h9V3H3v2zm3-4V0h4v2H9V1H6z" />
+    <path d="M0 5h1v2h5V5l3 2.5L6 10V8H0V5z" />
   </svg>,
   "Clone",
   "clone"

@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const PivotIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="PivotIcon">
-    <path d="M12 0v12H0V0h12zM8.486 1H1v10h2.995l-2.97-2.475 3-2.5v1.841h3.974V3.999L6 4l2.486-3zM11 1H8.488L11 4H8.999L9 8.866H4.024L4.025 11H11V1z" />
+    <path d="M12 0v12H0V0h12zM1 11h3L1 8.5V11zm3-2v2h7V1H1v7.5L4 6v2h4V4H6l2.5-3L11 4H9v5H4z" />
   </svg>,
   "Pivot",
   "pivot"

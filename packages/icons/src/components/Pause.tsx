@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const PauseIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="PauseIcon">
-    <path d="M2 1h3v10H2V1zm1 1v8h1V2H3zm4-1h3v10H7V1zm1 1v8h1V2H8z" />
+    <path d="M2 0h3.003v12H2V0zm.997 1v10h.997V1h-.997zm4-1H10v12H6.997V0zm1.009 1v10h.997V1h-.997z" />
   </svg>,
   "Pause",
   "pause"

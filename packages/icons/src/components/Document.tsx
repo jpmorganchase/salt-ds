@@ -2,9 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const DocumentIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="DocumentIcon">
-    <path d="M7 5V1h1v3h3v1H7z" />
-    <path d="M9 0v1H2v11H1V0h8zm2 2v2h-1V2h1zm-1-1v1H9V1h1z" />
-    <path d="M1 11h10v1H1v-1zm9-6h1v6h-1V5z" />
+    <path d="M1.5.5V0H1v12h10V2.293L8.707 0H1.5v.5zM2 11V1h5v3h3v7H2zm8-8H8V1h.293L10 2.707V3z" />
   </svg>,
   "Document",
   "document"
