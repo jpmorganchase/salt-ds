@@ -1,27 +1,27 @@
 .uitk-light .uitkGridRowSelectionCheckboxCellValue {
   --checkbox-outline-color: var(--uitk-color-grey-90);
-  --checkbox-solid-color: var(--uitk-color-blue-500);
+  --checkbox-fill: var(--uitk-color-blue-500);
   --checkbox-outline-color-hover: var(--uitk-color-blue-400);
   --checkbox-tick-color: var(--uitk-color-white);
 }
 
 .uitk-dark .uitkGridRowSelectionCheckboxCellValue {
   --checkbox-outline-color: var(--uitk-color-grey-100);
-  --checkbox-solid-color: var(--uitk-color-blue-400);
+  --checkbox-fill: var(--uitk-color-blue-400);
   --checkbox-outline-color-hover: var(--uitk-color-blue-300);
   --checkbox-tick-color: var(--uitk-color-grey-800);
 }
 
 .uitk-light .uitkGridRowSelectionCheckboxHeaderValue {
   --checkbox-outline-color: var(--uitk-color-grey-90);
-  --checkbox-solid-color: var(--uitk-color-blue-500);
+  --checkbox-fill: var(--uitk-color-blue-500);
   --checkbox-outline-color-hover: var(--uitk-color-blue-400);
   --checkbox-tick-color: var(--uitk-color-white);
 }
 
 .uitk-dark .uitkGridRowSelectionCheckboxHeaderValue {
   --checkbox-outline-color: var(--uitk-color-grey-100);
-  --checkbox-solid-color: var(--uitk-color-blue-400);
+  --checkbox-fill: var(--uitk-color-blue-400);
   --checkbox-outline-color-hover: var(--uitk-color-blue-300);
   --checkbox-tick-color: var(--uitk-color-grey-800);
 }
@@ -42,7 +42,7 @@
   height: var(--checkbox-size);
   width: var(--checkbox-size);
   stroke: var(--checkbox-outline-color);
-  fill: var(--checkbox-solid-color);
+  fill: var(--checkbox-fill);
 }
 
 .uitkGridRowSelectionCheckboxCellValue-checkedIcon-tick {
@@ -73,7 +73,7 @@
   width: var(--checkbox-size);
   overflow: visible;
   stroke: var(--checkbox-outline-color);
-  fill: var(--checkbox-solid-color);
+  fill: var(--checkbox-fill);
 }
 
 .uitkGridRowSelectionCheckboxHeaderValue-checkedIcon-tick {

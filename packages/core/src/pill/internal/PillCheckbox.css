@@ -7,8 +7,8 @@
 
   --uitkCheckboxIcon-stroke: var(--uitk-selectable-borderColor);
   --uitkCheckboxIcon-stroke-hover: var(--uitk-selectable-borderColor);
-  --uitkCheckboxIcon-solid-color: none;
-  --uitkCheckboxIcon-solid-color-checked: none;
+  --uitkCheckboxIcon-fill: none;
+  --uitkCheckboxIcon-fill-checked: none;
   --uitkCheckboxIcon-borderWidth-checked: var(--uitk-selectable-borderWidth);
   --uitkCheckboxIcon-tick-color: var(--uitk-taggable-foreground);
 }
