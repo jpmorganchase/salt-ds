@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const BuildReportIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="BuildReportIcon">
-    <path d="M9 1v2h3v9H0V3h3V1h6zm2 6H8v1H4V7H1v4h10V7zm0-3H1v2h3V5h4v1h3V4zM8 2H4v1h4V2z" />
+    <path d="M0 3v9h12V3H9V1H3v2H0zm1 1h10v2H8V5H4v1H1V4zm0 7V7h3v1h4V7h3v4H1zm7-9v1H4V2h4z" />
   </svg>,
   "BuildReport",
   "build report"

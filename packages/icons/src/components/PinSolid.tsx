@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const PinSolidIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="PinSolidIcon">
-    <path d="M7.904 0 12 4.155l-1.536-.105L7.29 7.271l-.206 3.532-2.377-2.411-3.219 3.006L0 11.999l.651-1.436 3.034-3.208-2.336-2.37 3.38-.103 3.38-3.43-.205-1.453z" />
+    <path d="M8.033.134v1.354L4.614 4.907H1.493l2.298 2.298-3.005 3.359-.707 1.414 1.414-.707 3.359-3.005 2.237 2.237V7.382L10.5 4h1.423L8.034.134z" />
   </svg>,
   "PinSolid",
   "pin solid"

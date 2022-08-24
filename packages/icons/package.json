@@ -8,7 +8,8 @@
     "**/*.css.js"
   ],
   "scripts": {
-    "build": "node ./scripts/generateIconComponent.js '*.svg' && node ./scripts/generateIconIndex.js"
+    "build": "node ./scripts/generateIconComponent.js '*.svg' && node ./scripts/generateIconIndex.js",
+    "generateIconAll": "node ./scripts/generateIconAll.js"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.6",

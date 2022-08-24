@@ -2,7 +2,7 @@ import { createIcon } from "../icon/createIcon";
 
 export const CloseIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="CloseIcon">
-    <path d="m10.066 1 .934.934L6.934 6 11 10.066l-.934.934L6 6.934 1.934 11 1 10.066 5.066 6 1 1.934 1.934 1 6 5.066 10.066 1z" />
+    <path d="M1.407.343.346 1.404 4.942 6 .346 10.596l1.061 1.061 4.596-4.596 4.596 4.596 1.061-1.061L7.064 6l4.596-4.596L10.599.343 6.003 4.939 1.407.343z" />
   </svg>,
   "Close",
   "close"

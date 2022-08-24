@@ -55,7 +55,14 @@ glob(globPath, options, function (error, filenames) {
       console.log("processing", fileName, "to", newFileName);
 
       let iconTitle = componentName;
-      const document = htmlparser2.parseDocument(svgString);
+
+      // Some icon svg contains `fill="#4c505b"` which will break CSS var styling
+      const svgFillRemoved = svgString.replaceAll(
+        new RegExp(`fill=\\"#\\w*\\"`, "g"),
+        ""
+      );
+
+      const document = htmlparser2.parseDocument(svgFillRemoved);
       htmlparser2.DomUtils.find(
         (node) => {
           if (node.name === "title" && node.children.length > 0) {
@@ -75,9 +82,15 @@ glob(globPath, options, function (error, filenames) {
 
       // It is unnecessary for inner svg elements or inside HTML documents.
       // https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg
-      svg.attribs["xmlns"] = undefined;
+      delete svg.attribs.xmlns;
+
+      // `width` and `height` will be provided by CSS.
+      // Also, if these exists, svgo will optimizes out `viewBox` which is more important for us
+      delete svg.attribs.width;
+      delete svg.attribs.height;
+
       svg.attribs["data-testid"] = `${componentName}Icon`;
-      const svgOutput = render(document);
+      const svgOutput = render(svg);
 
       const result = optimize(svgOutput, {
         plugins: ["preset-default"],
