@@ -83,11 +83,11 @@
 }
 
 .uitkTreeNode:not([aria-expanded]) {
-  --padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+  padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
-  --padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+  padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] {

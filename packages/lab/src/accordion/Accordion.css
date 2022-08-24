@@ -17,67 +17,54 @@
 }
 
 .uitk-density-high .uitkAccordionSection {
-  --summary-padding-left: 20px;
-  --details-padding: 3px 4px 5px 20px;
+  --accordion-summary-padding-left: 20px;
+  --accordion-details-padding: 3px 4px 5px 20px;
 }
 
 .uitk-density-medium .uitkAccordionSection {
-  --summary-padding-left: 28px;
-  --details-padding: 8px 8px 9px 28px;
+  --accordion-summary-padding-left: 28px;
+  --accordion-details-padding: 8px 8px 9px 28px;
 }
 
 .uitk-density-low .uitkAccordionSection {
-  --summary-padding-left: 36px;
-  --details-padding: 12px 12px 13px 38px;
+  --accordion-summary-padding-left: 36px;
+  --accordion-details-padding: 12px 12px 13px 38px;
 }
 
 .uitk-density-touch .uitkAccordionSection {
-  --summary-padding-left: 44px;
-  --details-padding: 18px 16px 17px 44px;
+  --accordion-summary-padding-left: 44px;
+  --accordion-details-padding: 18px 16px 17px 44px;
 }
 
 .uitkAccordionSection {
-  --summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
-  --summary-fontWeight: var(--uitkAccordionSummary-fontWeight, initial);
+  --accordion-summary-height: var(--uitkAccordionSummary-height, var(--uitk-size-stackable));
+  --accordion-summary-fontWeight: var(--uitkAccordionSummary-fontWeight, initial);
 
-  --summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
-  --summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
-  --summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
-  --summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
+  --accordion-summary-background: var(--uitkAccordionSummary-background, var(--uitk-container-background-medium));
+  --accordion-summary-background-active: var(--uitkAccordionSummary-background-active, var(--uitk-container-background-medium));
+  --accordion-summary-background-disabled: var(--uitkAccordionSummary-background-disabled, var(--uitk-container-background-medium));
+  --accordion-summary-background-hover: var(--uitkAccordionSummary-background-hover, var(--uitk-actionable-primary-background-hover));
 
-  --summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-foreground));
-  --summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
-  --summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
-  --summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
+  --accordion-summary-text-color: var(--uitkAccordionSummary-text-color, var(--uitk-text-primary-foreground));
+  --accordion-summary-text-color-active: var(--uitkAccordionSummary-text-color-active, var(--uitk-text-primary-foreground));
+  --accordion-summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
+  --accordion-summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
 
-  --section-border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-borderColor));
-  --section-border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
-  --section-border-top-width: var(--uitkAccordionSection-border-top-width, 0);
-  --section-border-right-width: var(--uitkAccordionSection-border-right-width, 0);
-  --section-border-bottom-width: var(--uitkAccordionSection-border-bottom-width, 1px);
-  --section-border-left-width: var(--uitkAccordionSection-border-left-width, 0);
+  --accordion-summary-focus-outline-style: var(--uitk-focused-outlineStyle);
+  --accordion-summary-focus-outline-width: var(--uitk-focused-outlineWidth);
+  --accordion-summary-focus-outline-color: var(--uitk-focused-outlineColor);
+  --accordion-summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
 
-  --section-margin-top: var(--uitkAccordionSection-margin-top, 0);
-  --section-margin-right: var(--uitkAccordionSection-margin-right, 0);
-  --section-margin-bottom: var(--uitkAccordionSection-margin-bottom, 0);
-  --section-margin-left: var(--uitkAccordionSection-margin-left, 0);
-
-  --summary-focus-outline-style: var(--uitk-focused-outlineStyle);
-  --summary-focus-outline-width: var(--uitk-focused-outlineWidth);
-  --summary-focus-outline-color: var(--uitk-focused-outlineColor);
-  --summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
-
-  --summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
-  --summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--summary-icon-transition-default));
+  --accordion-summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --accordion-summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
+  --accordion-summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--accordion-summary-icon-transition-default));
 }
 
 .uitkAccordionSection {
-  border-color: var(--section-border-color);
-  border-style: solid;
-  --border-width: var(--section-border-top-width) var(--section-border-right-width) var(--section-border-bottom-width) var(--section-border-left-width);
-  border-width: var(--uitkAccordionSection-border-width, var(--border-width));
-  margin: var(--section-margin-top) var(--section-margin-right) var(--section-margin-bottom) var(--section-margin-left);
+  border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-borderColor));
+  border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
+  border-width: var(--uitkAccordionSection-border-width, 0 0 1px 0);
+  margin: var(--uitkAccordionSection-margin, 0);
   position: relative;
 }
 
@@ -92,38 +79,38 @@
 }
 
 .uitkAccordionSummary {
-  height: var(--summary-height);
-  line-height: var(--summary-height);
-  font-weight: var(--summary-fontWeight);
-  background: var(--summary-background);
-  color: var(--summary-text-color);
+  height: var(--accordion-summary-height);
+  line-height: var(--accordion-summary-height);
+  font-weight: var(--accordion-summary-fontWeight);
+  background: var(--accordion-summary-background);
+  color: var(--accordion-summary-text-color);
   font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-fontSize));
   font-family: var(--uitkAccordionSummary-font-family, var(--uitk-text-fontFamily));
-  padding-left: var(--summary-padding-left);
+  padding-left: var(--accordion-summary-padding-left);
   position: relative;
 }
 
 .uitkAccordionSummary:focus-visible {
-  outline-style: var(--summary-focus-outline-style);
-  outline-width: var(--summary-focus-outline-width);
-  outline-color: var(--summary-focus-outline-color);
-  outline-offset: var(--summary-focus-outline-offset);
+  outline-style: var(--accordion-summary-focus-outline-style);
+  outline-width: var(--accordion-summary-focus-outline-width);
+  outline-color: var(--accordion-summary-focus-outline-color);
+  outline-offset: var(--accordion-summary-focus-outline-offset);
 }
 
 .uitkAccordionSummary:hover:not(.uitkAccordionSummary-disabled) {
-  background: var(--summary-background-hover);
-  color: var(--summary-text-color-hover);
+  background: var(--accordion-summary-background-hover);
+  color: var(--accordion-summary-text-color-hover);
   cursor: pointer;
 }
 
 .uitkAccordionSummary-expanded {
-  background: var(--summary-background-active);
-  color: var(--summary-text-color-active);
+  background: var(--accordion-summary-background-active);
+  color: var(--accordion-summary-text-color-active);
 }
 
 .uitkAccordionSummary-disabled {
-  background: var(--summary-background-disabled);
-  color: var(--summary-text-color-disabled);
+  background: var(--accordion-summary-background-disabled);
+  color: var(--accordion-summary-text-color-disabled);
 }
 
 .uitkAccordionSummary-icon {
@@ -131,16 +118,16 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--summary-padding-left);
+  width: var(--accordion-summary-padding-left);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition: var(--summary-icon-transition);
+  transition: var(--accordion-summary-icon-transition);
 }
 
 .uitkAccordionSummary-expanded .uitkAccordionSummary-icon {
-  transform: var(--summary-icon-transform);
+  transform: var(--accordion-summary-icon-transform);
 }
 
 .uitkAccordionDetails {
@@ -149,7 +136,7 @@
 }
 
 .uitkAccordionDetails-content {
-  padding: var(--uitkAccordionDetails-padding, var(--details-padding));
+  padding: var(--uitkAccordionDetails-padding, var(--accordion-details-padding));
 }
 
 .uitkAccordionDetails-disabled {

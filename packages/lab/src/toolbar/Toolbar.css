@@ -7,7 +7,7 @@
 .uitkToolbar {
   --toolbar-size: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 
-  background-color: var(--uitkToolbar-background-color, var(--toolbar-background));
+  background: var(--uitkToolbar-background, var(--toolbar-background));
   box-sizing: border-box;
   font-size: var(--toolbar-font-size);
   justify-content: flex-start;
