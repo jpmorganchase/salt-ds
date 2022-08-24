@@ -193,6 +193,32 @@ describe("Given a Scrim", () => {
     });
   });
 
+  describe("WHEN disableReturnFocus is true", () => {
+    it("THEN should NOT return focus to the last focused element before", () => {
+      function TestComponent() {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <Scrim open={open} disableReturnFocus>
+              <button onClick={() => setOpen((old) => !old)}>
+                CLOSE SCRIM
+              </button>
+            </Scrim>
+            <button onClick={() => setOpen((old) => !old)}>OPEN SCRIM</button>
+          </>
+        );
+      }
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "OPEN SCRIM" }).click();
+      cy.findByRole("button", { name: "CLOSE SCRIM" })
+        .should("have.focus")
+        .realClick();
+      cy.wait(50);
+      cy.findByRole("button", { name: "OPEN SCRIM" }).should("not.have.focus");
+    });
+  });
+
   describe("WHEN in a container state", () => {
     it("THEN should prevent selection to siblings and niblings", () => {
       function TestComponent() {
