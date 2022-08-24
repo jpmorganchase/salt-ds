@@ -60,13 +60,6 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   closeWithEscape?: boolean;
   /**
-   * Prop to enable container use case.
-   * It also sets the different z-index for usage in containers.
-   * If present it will also override FocusTrap for Scrim.
-   * Default value of containerFix is false.
-   */
-  containerFix?: boolean;
-  /**
    * If `true`, the trap focus will not automatically shift focus to itself when it opens, and
    * replace it to the last focused element when it closes.
    */
@@ -99,9 +92,10 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   open?: boolean;
   /**
-   * Parent react ref which needs to be passed in container use case.
+   * Prop to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
+   * It also sets the different z-index and overrides FocusTrap for Scrim. Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
    */
-  parentRef?: RefObject<HTMLElement>;
+  containerRef?: RefObject<HTMLElement>;
   /**
    * Prop to return focus to active element of when Scrim is closed.
    * The default value is true.
@@ -123,7 +117,6 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     closeWithEscape = false,
     className,
     children,
-    containerFix = false,
     disableAutoFocus,
     disableEnforceFocus,
     disableReturnFocus,
@@ -131,7 +124,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     onBackDropClick,
     onClose,
     open,
-    parentRef,
+    containerRef,
     returnFocus = true,
     tabEnabledSelectors = defaultSelector,
     zIndex,
@@ -147,7 +140,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   const scrimId = useId();
 
   useEffect(() => {
-    if (open && !containerFix) {
+    if (open && !containerRef?.current) {
       scrims.add(scrimId);
       noScroll.on();
     }
@@ -160,11 +153,11 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         }
       }
     };
-  }, [containerFix, open, scrimId]);
+  }, [open, containerRef, scrimId]);
 
   useEffect(() => {
     if (open) {
-      const parent = parentRef?.current as HTMLElement;
+      const parent = containerRef?.current || undefined;
 
       if (scrimRef.current) {
         undoAria.current = hideOthers(scrimRef.current, parent);
@@ -174,13 +167,13 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     return () => {
       undoAria.current?.();
     };
-  }, [containerFix, open, parentRef]);
+  }, [open, containerRef]);
 
   useEffect(() => {
     if (open) {
-      const parent = parentRef?.current;
+      const parent = containerRef?.current;
 
-      if (containerFix && parent) {
+      if (parent) {
         undoSelection.current = preventSelection(parent);
         undoTabIndex.current = preventFocusOthers(
           scrimRef.current,
@@ -194,7 +187,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
       undoSelection.current?.();
       undoTabIndex.current?.();
     };
-  }, [containerFix, open, parentRef, tabEnabledSelectors]);
+  }, [open, containerRef, tabEnabledSelectors]);
 
   useEffect(() => {
     if (closeWithEscape && open && scrimRef.current) {
@@ -219,9 +212,9 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
 
   return (
     <div
-      aria-modal={!containerFix}
+      aria-modal={!containerRef?.current}
       className={classnames(className, withBaseName(), {
-        [withBaseName(`containerFix`)]: containerFix,
+        [withBaseName(`containerFix`)]: containerRef?.current,
       })}
       data-testid="scrim"
       onClick={onBackDropClick}
@@ -236,7 +229,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         active={open}
         autoFocusRef={autoFocusRef}
         disableAutoFocus={disableAutoFocus}
-        disableEnforceFocus={disableEnforceFocus || containerFix}
+        disableEnforceFocus={disableEnforceFocus || !!containerRef?.current}
         disableReturnFocus={disableReturnFocus}
         returnFocus={returnFocus}
         tabEnabledSelectors={tabEnabledSelectors}

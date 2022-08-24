@@ -146,10 +146,9 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
       <Scrim
         aria-label="Example Scrim"
         closeWithEscape
-        containerFix
         onClose={handleClose}
         open={open}
-        parentRef={parentRef}
+        containerRef={parentRef}
         className="uitkEmphasisLow"
         zIndex={2}
       >

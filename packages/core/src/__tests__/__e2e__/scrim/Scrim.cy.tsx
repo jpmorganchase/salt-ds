@@ -131,7 +131,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div ref={parentRef}>
-            <Scrim containerFix open={open} parentRef={parentRef}>
+            <Scrim open={open} containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -175,7 +175,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div data-testid="parent" ref={parentRef}>
-            <Scrim containerFix open={open} parentRef={parentRef}>
+            <Scrim open={open} containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -193,10 +193,21 @@ describe("Given a Scrim", () => {
     });
 
     it("THEN should have `aria-modal=false` and `role=dialog`", () => {
-      cy.mount(<Scrim containerFix open />);
+      function TestComponent() {
+        const parentRef = useRef<HTMLDivElement>(null);
+        return (
+          <div data-testid="parent" ref={parentRef}>
+            <Scrim open containerRef={parentRef}>
+              <button>button</button>
+            </Scrim>
+          </div>
+        );
+      }
+      cy.mount(<TestComponent />);
       cy.findByRole("dialog")
         .should("exist")
-        .and("have.attr", "aria-modal", "false");
+        .and("have.attr", "aria-modal", "false")
+        .and("have.attr", "role", "dialog");
     });
   });
 
