@@ -97,7 +97,6 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
           shift({ limiter: limitShift() }),
           size({
             apply({ availableHeight }) {
-              console.log({ availableHeight });
               setMaxPopupHeight(availableHeight);
             },
           }),
