@@ -1,14 +1,14 @@
 /* Style applied to the root element */
 .uitkButton {
-  --button-focused-outlineStyle: var(--uitkButton-focused-outline-style, var(--uitk-focused-outlineStyle));
-  --button-focused-outlineWidth: var(--uitkButton-focused-outline-width, var(--uitk-focused-outlineWidth));
-  --button-focused-outlineColor: var(--uitkButton-focused-outline-color, var(--uitk-focused-outlineColor));
-  --button-focused-outlineOffset: var(--uitkButton-focused-outline-offset, var(--uitk-focused-outlineOffset));
+  --button-focused-outlineStyle: var(--uitkButton-focused-outlineStyle, var(--uitk-focused-outlineStyle));
+  --button-focused-outlineWidth: var(--uitkButton-focused-outlineWidth, var(--uitk-focused-outlineWidth));
+  --button-focused-outlineColor: var(--uitkButton-focused-outlineColor, var(--uitk-focused-outlineColor));
+  --button-focused-outlineOffset: var(--uitkButton-focused-outlineOffset, var(--uitk-focused-outlineOffset));
 }
 
 /* Icon API @ignore */
 .uitkButton {
-  --uitkIcon-letter-spacing: 0;
+  --uitkIcon-letterSpacing: 0;
 }
 
 /* Styles applied to the root element if variant="cta" */

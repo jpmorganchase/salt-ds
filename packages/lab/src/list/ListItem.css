@@ -2,14 +2,14 @@
   /* Color */
   --list-item-text-color: var(--uitk-selectable-foreground);
   --list-item-background: var(--uitkListItem-background, var(--uitk-selectable-background));
-  --list-item-selected-focus-visible-outline-color: var(--uitk-color-white);
+  --list-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
-  --list-item-align-items: center;
+  --list-item-alignItems: center;
 }
 
 .uitkListItem.uitkHighlighted {
-  --uitkCheckboxIcon-outline-color: var(--uitk-selectable-borderColor-hover);
+  --uitkCheckboxIcon-outlineColor: var(--uitk-selectable-borderColor-hover);
   --list-item-background: var(--uitk-selectable-background-hover);
 }
 
@@ -40,7 +40,7 @@
   display: flex;
   position: relative;
   box-sizing: border-box;
-  align-items: var(--list-item-align-items);
+  align-items: var(--list-item-alignItems);
   white-space: nowrap;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox).uitkFocusVisible {
-  outline-color: var(--list-item-selected-focus-visible-outline-color);
+  outline-color: var(--list-item-selected-focus-visible-outlineColor);
 }
 
 .uitkListItem-textWrapper {

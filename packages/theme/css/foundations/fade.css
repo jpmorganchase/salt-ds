@@ -18,7 +18,7 @@
   --uitk-color-grey-300-fade-border: rgba(76, 80, 91, var(--uitk-palette-opacity-border));
   --uitk-color-grey-600-fade-border: rgba(47, 49, 54, var(--uitk-palette-opacity-border));
 
-  --uitk-color-grey-90-fade-border-readonly: rgba(132, 135, 142, var(--uitk-palette-opacity-border-readOnly));
+  --uitk-color-grey-90-fade-border-readOnly: rgba(132, 135, 142, var(--uitk-palette-opacity-border-readOnly));
 
   --uitk-color-blue-600-fade-background: rgba(21, 92, 147, var(--uitk-palette-opacity-background));
   --uitk-color-blue-700-fade-background: rgba(0, 71, 123, var(--uitk-palette-opacity-background));

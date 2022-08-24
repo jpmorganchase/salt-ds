@@ -12,7 +12,7 @@
   --list-item-padding: var(--hw-list-item-padding, 0 6px);
   --list-item-header-bg: var(--hw-list-item-header-bg, black);
   --list-item-header-color: var(--hw-list-item-header-color, white);
-  --list-item-header-font-weight: bold;
+  --list-item-header-fontWeight: bold;
   --list-item-header-twisty-color: black;
   --list-item-header-twisty-content: "";
   --list-item-header-twisty-top: 50%;
@@ -20,11 +20,11 @@
   --list-item-header-twisty-right: auto;
   --list-item-selected-color: white;
   --list-item-text-color: var(--hw-gray-800);
-  --focus-visible-border-color: var(--hw-focus-visible-border-color, rgb(141, 154, 179));
+  --focus-visible-borderColor: var(--hw-focus-visible-borderColor, rgb(141, 154, 179));
 
   margin: 0;
   padding: 0 1px;
-  font-size: var(--uitkTree-font-size, 14px);
+  font-size: var(--uitkTree-fontSize, 14px);
   max-height: inherit;
   outline: none;
   overflow-y: auto;

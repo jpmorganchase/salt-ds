@@ -2,24 +2,24 @@
 .uitkOverlay {
   --overlay-text-color: var(--uitk-text-primary-foreground);
   --overlay-spacing: var(--uitk-size-unit);
-  --overlay-font-size: var(--uitk-text-fontSize);
+  --overlay-fontSize: var(--uitk-text-fontSize);
   --overlay-background: var(--uitk-container-background-medium);
-  --overlay-border-color: var(--uitk-container-borderColor-medium);
+  --overlay-borderColor: var(--uitk-container-borderColor-medium);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zIndex-tooltip);
 }
 
 .uitkEmphasisHigh.uitkOverlay {
   --overlay-background: var(--uitk-container-background-high);
-  --overlay-border-color: var(--uitk-container-borderColor-high);
+  --overlay-borderColor: var(--uitk-container-borderColor-high);
 }
 
 .uitkOverlay-content {
   display: flex;
   padding: calc(var(--overlay-spacing) * 2);
-  font-size: var(--overlay-font-size);
+  font-size: var(--overlay-fontSize);
 
-  border: 1px solid var(--overlay-border-color);
+  border: 1px solid var(--overlay-borderColor);
   box-shadow: var(--uitk-overlayable-shadow-popout);
   line-height: var(--uitk-text-lineHeight);
   background: var(--overlay-background);
@@ -42,22 +42,22 @@
 }
 
 .uitkOverlay[data-placement^="top"] .uitkOverlay-arrow {
-  border-top-color: var(--overlay-border-color);
+  border-top-color: var(--overlay-borderColor);
   bottom: -17px;
 }
 
 .uitkOverlay[data-placement^="bottom"] .uitkOverlay-arrow {
-  border-bottom-color: var(--overlay-border-color);
+  border-bottom-color: var(--overlay-borderColor);
   top: -17px;
 }
 
 .uitkOverlay[data-placement^="left"] .uitkOverlay-arrow {
-  border-left-color: var(--overlay-border-color);
+  border-left-color: var(--overlay-borderColor);
   right: -17px;
 }
 
 .uitkOverlay[data-placement^="right"] .uitkOverlay-arrow {
-  border-right-color: var(--overlay-border-color);
+  border-right-color: var(--overlay-borderColor);
   left: -17px;
 }
 

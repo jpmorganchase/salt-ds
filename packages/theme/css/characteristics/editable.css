@@ -22,7 +22,7 @@
   --uitk-editable-borderColor-active: var(--uitk-palette-interact-border-active);
   --uitk-editable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
   --uitk-editable-borderColor-hover: var(--uitk-palette-interact-border-hover);
-  --uitk-editable-borderColor-readonly: var(--uitk-palette-interact-border-readonly);
+  --uitk-editable-borderColor-readonly: var(--uitk-palette-interact-border-readOnly);
 
   --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
