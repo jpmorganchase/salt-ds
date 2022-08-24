@@ -21,7 +21,7 @@
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton {
-  height: var(--uitk-size-toggle-button);
+  height: var(--uitk-size-toggleGroupButton);
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {
