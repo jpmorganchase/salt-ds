@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { FormField, Input } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -8,22 +9,31 @@ export default {
 } as ComponentMeta<typeof FormField>;
 
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+  const { imgSrc, className } = props;
   return (
-    <QAContainer {...props}>
-      <FormField label="Default Form Field description label">
-        <Input value="Value" />
-      </FormField>
-
+    <QAContainer imgSrc={imgSrc}>
       <FormField
-        className="uitkEmphasisHigh"
+        className={cx(className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
       </FormField>
-      <FormField label="Label aligned left" labelPlacement="left">
+
+      <FormField
+        className={cx("uitkEmphasisHigh", className)}
+        label="Default Form Field description label"
+      >
         <Input value="Value" />
       </FormField>
       <FormField
+        className={cx(className)}
+        label="Label aligned left"
+        labelPlacement="left"
+      >
+        <Input value="Value" />
+      </FormField>
+      <FormField
+        className={cx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationState="warning"
@@ -31,7 +41,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisHigh"
+        className={cx("uitkEmphasisHigh", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationState="warning"
@@ -39,7 +49,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisLow"
+        className={cx("uitkEmphasisLow", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -48,6 +58,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
+        className={cx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationState="error"
@@ -55,7 +66,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisHigh"
+        className={cx("uitkEmphasisHigh", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationState="error"
@@ -63,7 +74,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisLow"
+        className={cx("uitkEmphasisLow", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -79,8 +90,19 @@ AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+export const BackwardsCompatGrid: Story = () => {
+  return <AllExamplesGrid className="backwardsCompat" />;
+};
+
+BackwardsCompatGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <AllExamplesGrid imgSrc="/visual-regression-screenshots/FormField-vr-snapshot.png" />
+    <AllExamplesGrid
+      className="backwardsCompat"
+      imgSrc="/visual-regression-screenshots/FormField-vr-snapshot.png"
+    />
   );
 };
