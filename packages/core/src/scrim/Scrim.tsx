@@ -67,7 +67,7 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * If `true`, the trap focus will not prevent focus from leaving the trap focus while open.
    */
-  disableEnforceFocus?: boolean;
+  disableFocusTrap?: boolean;
   /**
    * If `true`, the trap focus will not restore focus to previously focused element once
    * trap focus is hidden.
@@ -118,7 +118,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     className,
     children,
     disableAutoFocus,
-    disableEnforceFocus,
+    disableFocusTrap,
     disableReturnFocus,
     fallbackFocusRef,
     onBackDropClick,
@@ -229,7 +229,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         active={open}
         autoFocusRef={autoFocusRef}
         disableAutoFocus={disableAutoFocus}
-        disableEnforceFocus={disableEnforceFocus || !!containerRef?.current}
+        disableFocusTrap={disableFocusTrap || !!containerRef?.current}
         disableReturnFocus={disableReturnFocus}
         returnFocus={returnFocus}
         tabEnabledSelectors={tabEnabledSelectors}

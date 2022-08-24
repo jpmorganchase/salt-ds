@@ -168,6 +168,31 @@ describe("Given a Scrim", () => {
     });
   });
 
+  describe("WHEN disableFocusTrap is true", () => {
+    it("THEN should allow focus to leave the focus trap", () => {
+      function TestComponent() {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <Scrim open={open} disableFocusTrap>
+              <button onClick={() => setOpen((old) => !old)}>
+                CLOSE SCRIM
+              </button>
+            </Scrim>
+            <button onClick={() => setOpen((old) => !old)}>OPEN SCRIM</button>
+          </>
+        );
+      }
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "OPEN SCRIM" }).click();
+      cy.findByRole("button", { name: "CLOSE SCRIM" }).should("have.focus");
+      cy.findByRole("button", { name: "CLOSE SCRIM" }).realPress("Tab");
+      // findByRole doesn't work here because FocusManager puts aria-hidden on all the elements outside its scope
+      cy.contains("button", "OPEN SCRIM").should("have.focus");
+    });
+  });
+
   describe("WHEN in a container state", () => {
     it("THEN should prevent selection to siblings and niblings", () => {
       function TestComponent() {

@@ -28,7 +28,7 @@ export interface FocusManagerProps {
   children?: ReactNode;
   className?: string;
   disableAutoFocus?: boolean;
-  disableEnforceFocus?: boolean;
+  disableFocusTrap?: boolean;
   disableReturnFocus?: boolean;
   fallbackFocusRef?: RefObject<HTMLElement>;
   tabEnabledSelectors?: string;
@@ -63,7 +63,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     children,
     className,
     disableAutoFocus,
-    disableEnforceFocus,
+    disableFocusTrap,
     disableReturnFocus,
     fallbackFocusRef,
     tabEnabledSelectors = defaultSelector,
@@ -195,7 +195,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     fallbackFocusRef,
   ]);
 
-  const enforceFocus = active && !disableEnforceFocus;
+  const enforceFocus = active && !disableFocusTrap;
 
   return (
     <div
