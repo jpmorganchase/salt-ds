@@ -132,7 +132,7 @@
 
 /* Styles applied to the inner element wrapping children of the component */
 .uitkButton-label {
-  font-weight: var(--uitkButton-label-fontWeight, var(--button-fontWeight));
+  font-weight: var(--uitkButton-fontWeight, var(--button-fontWeight));
   align-items: center;
   display: flex;
   height: 100%;
