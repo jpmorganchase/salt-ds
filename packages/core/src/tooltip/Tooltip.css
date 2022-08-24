@@ -59,8 +59,8 @@
   position: relative;
 }
 
-/* Styles applied to title */
-.uitkTooltip-title {
+/* Styles applied to body */
+.uitkTooltip-body {
   overflow: hidden;
 }
 
