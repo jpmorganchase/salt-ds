@@ -101,8 +101,8 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const ToolkitFlexLayoutResponsive = Responsive.bind({});
-ToolkitFlexLayoutResponsive.args = {
+export const FlexLayoutUsingResponsiveProps = Responsive.bind({});
+FlexLayoutUsingResponsiveProps.args = {
   justify: "center",
   direction: {
     xs: "column",
@@ -147,10 +147,7 @@ export const ContactDetailsExample = ({ index }: { index: number }) => (
       <ContactMetadataItem value="London, GBR" label="Location" />
       <ContactMetadataItem value="+44 1234 123456" label="Office" />
 
-      <ContactMetadataItem
-        value="cillum.est.exercitation@cupidatat.com"
-        label="Email"
-      />
+      <ContactMetadataItem value="cillum@cupidatat.com" label="Email" />
     </ContactMetadata>
   </ContactDetails>
 );
@@ -160,7 +157,7 @@ const ContactCards: ComponentStory<typeof FlexLayout> = (args) => {
     <FlexLayout {...args}>
       {Array.from({ length: 12 }, (_, index) => (
         <FlexItem grow={1} key={index}>
-          <Card style={{ minWidth: 360 }}>
+          <Card>
             <ContactDetailsExample key={index} index={index} />
           </Card>
         </FlexItem>
