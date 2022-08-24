@@ -250,64 +250,6 @@ export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
           </ToolbarField>
         </Tooltray>
       </Toolbar>
-      <br />
-      <Toolbar style={{ minWidth: "100px" }}>
-        <Tooltray
-          aria-label="views tooltray"
-          data-collapsible="dynamic"
-          data-priority={3}
-          overflowButtonLabel="Views"
-        >
-          <ToolbarField label="Views" labelPlacement="left">
-            <Dropdown
-              onSelect={(_, item) => setView(item)}
-              selected={view}
-              source={viewsData}
-              style={{ width: 132 }}
-            />
-          </ToolbarField>
-          <ToolbarField>
-            <Button>Save</Button>
-          </ToolbarField>
-
-          <ToolbarField>
-            <Button>Save as...</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button disabled>Reset</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="colsButton">
-              Select Columns <ColumnChooserIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray
-          aria-label="actions tooltray"
-          data-collapsible="dynamic"
-          data-priority={2}
-          overflowButtonLabel="actions"
-        >
-          <ToolbarField>
-            <Button>create instruction</Button>
-          </ToolbarField>
-          <ToolbarField>
-            <Button>create net</Button>
-          </ToolbarField>
-        </Tooltray>
-        <Tooltray aria-label="export tooltray" data-priority={4}>
-          <ToolbarField>
-            <ToolbarButton id="pdfButton">
-              Export PDF <PdfIcon />
-            </ToolbarButton>
-          </ToolbarField>
-          <ToolbarField>
-            <ToolbarButton id="csvButton">
-              Export CSV <CsvIcon />
-            </ToolbarButton>
-          </ToolbarField>
-        </Tooltray>
-      </Toolbar>
     </AdjustableFlexbox>
   );
 };
