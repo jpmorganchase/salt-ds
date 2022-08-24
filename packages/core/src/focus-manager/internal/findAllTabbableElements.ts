@@ -1,4 +1,4 @@
-import { ownerWindow } from "../../utils/ownerWindow";
+import { ownerWindow } from "../../utils";
 
 /**
  * Used to reduce the number of initial nodes that are checked to see if tabbable.
