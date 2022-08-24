@@ -3,7 +3,7 @@
   --scrim-background: var(--uitk-overlayable-background-medium);
 }
 
-/* Apply this className to the element to achieve the lighter color variant */
+/* Apply this className to the element to achieve the lighter color variant. The default is `medium` emphasis. */
 .uitkEmphasisLow {
   --scrim-background: var(--uitk-overlayable-background-low);
 }

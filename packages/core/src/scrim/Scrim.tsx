@@ -83,7 +83,7 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * By default, an error will be thrown if the focus trap contains no elements in its tab order.
    * With this option you can specify a fallback element to programmatically receive focus if no other tabbable elements are found.
-   * For example, you may want a popover's <div> to receive focus if the popover's content includes no tabbable elements.
+   * For example, you may want a popover's `<div>` to receive focus if the popover's content includes no tabbable elements.
    */
   fallbackFocusRef?: FocusManagerProps["fallbackFocusRef"];
   /**
