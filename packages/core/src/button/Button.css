@@ -108,7 +108,7 @@
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
   display: inline-block;
-  justify-content: (--uitkButton-justifyContent, center);
+  justify-content: var(--uitkButton-justifyContent, center);
   font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
   line-height: var(--uitkButton-lineHeight, var(--uitk-text-base-lineHeight));
