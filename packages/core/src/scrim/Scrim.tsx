@@ -97,10 +97,9 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   containerRef?: RefObject<HTMLElement>;
   /**
-   * Prop to return focus to active element of when Scrim is closed.
-   * The default value is true.
+   * Options object to pass to the `focus()` method that is called on the previously focused element when Scrim is closed.
    */
-  returnFocus?: FocusManagerProps["returnFocus"];
+  returnFocusOptions?: FocusManagerProps["returnFocusOptions"];
   /**
    * comma separated string of query selectors which may need to be overridden for edge cases.
    */
@@ -125,7 +124,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     onClose,
     open,
     containerRef,
-    returnFocus = true,
+    returnFocusOptions,
     tabEnabledSelectors = defaultSelector,
     zIndex,
     ...rest
@@ -231,7 +230,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         disableAutoFocus={disableAutoFocus}
         disableFocusTrap={disableFocusTrap || !!containerRef?.current}
         disableReturnFocus={disableReturnFocus}
-        returnFocus={returnFocus}
+        returnFocusOptions={returnFocusOptions}
         tabEnabledSelectors={tabEnabledSelectors}
       >
         <ScrimContext.Provider value={onClose}>

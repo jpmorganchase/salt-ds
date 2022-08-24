@@ -19,7 +19,7 @@ export interface UseReturnFocusProps {
   active?: boolean;
   disabled?: boolean;
   document: DocumentOrShadowRoot;
-  focusOptions?: FocusOptions | boolean;
+  focusOptions?: FocusOptions;
 }
 
 export function useReturnFocus({

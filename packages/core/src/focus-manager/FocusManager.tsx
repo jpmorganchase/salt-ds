@@ -32,7 +32,7 @@ export interface FocusManagerProps {
   disableReturnFocus?: boolean;
   fallbackFocusRef?: RefObject<HTMLElement>;
   tabEnabledSelectors?: string;
-  returnFocus?: UseReturnFocusProps["focusOptions"];
+  returnFocusOptions?: UseReturnFocusProps["focusOptions"];
 }
 
 function tryFocus(node?: HTMLElement) {
@@ -67,7 +67,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     disableReturnFocus,
     fallbackFocusRef,
     tabEnabledSelectors = defaultSelector,
-    returnFocus,
+    returnFocusOptions,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -77,7 +77,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
   const [hasFocus, setHasFocus] = useState(false);
 
   useReturnFocus({
-    focusOptions: returnFocus,
+    focusOptions: returnFocusOptions,
     disabled: disableReturnFocus || disableAutoFocus,
     active,
     document: ownerDocument(containerRef.current),
