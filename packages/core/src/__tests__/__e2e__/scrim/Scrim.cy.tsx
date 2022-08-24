@@ -1,15 +1,15 @@
 import { Scrim } from "@jpmorganchase/uitk-core";
 import { useRef, useState } from "react";
+import { composeStories } from "@storybook/testing-react";
+import * as scrimStories from "@stories/scrim.stories";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+
+const composedStories = composeStories(scrimStories);
+const { ScrimWithContentStatus } = composedStories;
 
 describe("Given a Scrim", () => {
-  it("SHOULD not have any accessibility violations on load", () => {
-    cy.mount(
-      <Scrim open closeWithEscape>
-        <button>Button</button>
-      </Scrim>
-    );
-    cy.checkAxeComponent();
-  });
+  checkAccessibility({ ScrimWithContentStatus });
+
   describe("WHEN autoFocusRef is set", () => {
     it("THEN it should autofocus that element after mount", () => {
       function TestComponent() {

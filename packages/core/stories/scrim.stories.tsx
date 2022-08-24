@@ -19,7 +19,7 @@ export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
   return (
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
-      <Scrim open={open} returnFocus>
+      <Scrim aria-label="Example Scrim" open={open} returnFocus>
         <Button onClick={handleClose}>CLOSE SCRIM</Button>
       </Scrim>
     </>
@@ -38,6 +38,7 @@ export const ClosableScrim: ComponentStory<typeof Scrim> = () => {
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
         onBackDropClick={handleClose}
         onClose={handleClose}
@@ -63,6 +64,7 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
         className="uitkEmphasisLow"
         onBackDropClick={handleClose}
@@ -77,7 +79,7 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
 
 export const ScrimWithContentStatus: ComponentStory<typeof Scrim> = () => {
   return (
-    <Scrim open>
+    <Scrim aria-label="Example Scrim" open>
       <ContentStatus status="loading" />
     </Scrim>
   );
@@ -142,6 +144,7 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         <Button onClick={handleRequestOpen}>CLICK TO OPEN SCRIM</Button>
       </div>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
         containerFix
         onClose={handleClose}
