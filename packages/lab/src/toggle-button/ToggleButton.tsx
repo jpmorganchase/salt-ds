@@ -113,6 +113,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
           withBaseName(),
           withBaseName(orientation),
           {
+            [withBaseName("primary")]: variant === "primary",
             [withBaseName("cta")]: variant === "cta",
             [withBaseName("secondary")]: variant === "secondary",
             [withBaseName("toggled")]: toggled,
