@@ -4,7 +4,6 @@ import noScroll from "no-scroll";
 import {
   forwardRef,
   HTMLAttributes,
-  MouseEventHandler,
   RefObject,
   SyntheticEvent,
   useEffect,
@@ -21,6 +20,7 @@ const scrims = new Set();
 
 const defaultParent = typeof document !== "undefined" ? document.body : null;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 const withBaseName = makePrefixer("uitkScrim");
@@ -211,13 +211,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         doc.removeEventListener("keydown", escapeHandler);
       };
     }
-
-    return undefined;
   }, [closeWithEscape, onClose, open]);
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    onBackDropClick?.(event);
-  };
 
   if (!open) {
     return null;
@@ -230,7 +224,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         [withBaseName(`containerFix`)]: containerFix,
       })}
       data-testid="scrim"
-      onClick={handleClick}
+      onClick={onBackDropClick}
       ref={setWrapperRef}
       role="dialog"
       style={{
