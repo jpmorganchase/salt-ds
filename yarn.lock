@@ -4143,7 +4143,6 @@ __metadata:
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
     axe-core: ^4.3.5
-    changeset: ^0.2.6
     chromatic: next
     ci-info: ^3.3.1
     classnames: ^2.2.6
@@ -9929,16 +9928,6 @@ __metadata:
     snake-case: ^3.0.4
     tslib: ^2.0.3
   checksum: e4bc4a093a1f7cce8b33896665cf9e456e3bc3cc0def2ad7691b1994cfca99b3188d0a513b16855b01a6bd20692fcde12a7d4d87a5615c4c515bbbf0e651f116
-  languageName: node
-  linkType: hard
-
-"changeset@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "changeset@npm:0.2.6"
-  dependencies:
-    udc: ^1.0.0
-    underscore: ^1.8.3
-  checksum: bb916eff7dc8d281f91762a4e0d324cc3a527535263fd4d0345be9def20e1b112184c29e4312bec4de34814574b33c271ca5d759c4466acd5dc9b9f1733b434f
   languageName: node
   linkType: hard
 
@@ -26028,13 +26017,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"udc@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "udc@npm:1.0.1"
-  checksum: 302b4bd08feab3f75683bcebfe0dde9eabdb2579400ef3feef09132169842ea83e64441e075b0523c91be3ba1f4668fbb8c7d6918e3032be56a967629c4e7db2
-  languageName: node
-  linkType: hard
-
 "uglify-js@npm:^3.1.4":
   version: 3.15.1
   resolution: "uglify-js@npm:3.15.1"
@@ -26065,13 +26047,6 @@ __metadata:
     has-symbols: ^1.0.3
     which-boxed-primitive: ^1.0.2
   checksum: b7a1cf5862b5e4b5deb091672ffa579aa274f648410009c81cca63fed3b62b610c4f3b773f912ce545bb4e31edc3138975b5bc777fc6e4817dca51affb6380e9
-  languageName: node
-  linkType: hard
-
-"underscore@npm:^1.8.3":
-  version: 1.13.4
-  resolution: "underscore@npm:1.13.4"
-  checksum: 6b04f66cd454e8793a552dc49c71e24e5208a29b9d9c0af988a96948af79103399c36fb15db43f3629bfed152f8b1fe94f44e1249e9d196069c0fc7edfadb636
   languageName: node
   linkType: hard
 

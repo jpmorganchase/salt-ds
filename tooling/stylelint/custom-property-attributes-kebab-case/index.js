@@ -48,6 +48,12 @@ const meta = {
   url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
+const cssAttributes = properties
+  .filter((x) => !x.startsWith("-")) /* e.g. -webkit- */
+  .filter((x) =>
+    x.includes("-")
+  ); /* only need to check properting needing kebab case */
+
 /**
  * Test whether a property contains CSS attr
  */
@@ -62,10 +68,6 @@ const includesCssAttribute = function (property) {
     )
   );
 };
-
-const cssAttributes = properties
-  .filter((x) => !x.startsWith("-"))
-  .filter((x) => x.includes("-"));
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -95,7 +97,7 @@ module.exports = stylelint.createPlugin(
           verboseLog && console.log({ nodes });
 
           if (!firstNode || check(firstNode.value)) return;
-          console.log(firstNode.value)
+
           complain(
             declarationValueIndex(decl) + firstNode.sourceIndex,
             firstNode.value.length,
@@ -104,7 +106,7 @@ module.exports = stylelint.createPlugin(
         });
 
         if (check(prop)) return;
-        console.log(prop)
+
         verboseLog && console.log({ prop });
 
         complain(0, prop.length, decl);
