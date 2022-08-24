@@ -24,7 +24,8 @@
   --checkbox-borderWidth: var(--uitk-selectable-borderWidth);
   --checkbox-tick-fill: var(--uitkCheckboxIcon-tick-color, var(--uitk-selectable-primary-foreground-selected));
   --checkbox-viewbox: 14px; /* do not change, matches value in svg viewBox */
-  --checkbox-box-size: calc(var(--checkbox-viewbox) - var(--checkbox-borderWidth));
+  --checkbox-height: calc(var(--checkbox-viewbox) - var(--checkbox-borderWidth));
+  --checkbox-width: calc(var(--checkbox-viewbox) - var(--checkbox-borderWidth));
   --checkbox-box-offset: calc(var(--checkbox-borderWidth) / 2);
 
   fill: var(--uitkCheckboxIcon-solid-color, var(--uitk-selectable-background));
@@ -61,9 +62,9 @@
 
 /* Styles applied to box */
 .uitkCheckboxIcon-box {
-  height: var(--checkbox-box-size);
+  height: var(--checkbox-height);
   stroke-width: var(--checkbox-borderWidth);
-  width: var(--checkbox-box-size);
+  width: var(--checkbox-width);
   x: var(--checkbox-box-offset);
   y: var(--checkbox-box-offset);
 }
