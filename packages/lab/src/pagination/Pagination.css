@@ -1,21 +1,21 @@
 .uitk-density-medium .uitkPagination {
-  --button-size: 28px;
-  --font-size: 12px;
+  --pagination-button-size: 28px;
+  --pagination-fontSize: 12px;
 }
 
 .uitk-density-high .uitkPagination {
-  --button-size: 20px;
-  --font-size: 11px;
+  --pagination-button-size: 20px;
+  --pagination-fontSize: 11px;
 }
 
 .uitk-density-low .uitkPagination {
-  --button-size: 36px;
-  --font-size: 14px;
+  --pagination-button-size: 36px;
+  --pagination-fontSize: 14px;
 }
 
 .uitk-density-touch .uitkPagination {
-  --button-size: 44px;
-  --font-size: 16px;
+  --pagination-button-size: 44px;
+  --pagination-fontSize: 16px;
 }
 
 .uitkPagination {
@@ -24,8 +24,8 @@
 }
 
 .uitkPagination-arrowButton {
-  width: var(--button-size);
-  height: var(--button-size);
+  width: var(--pagination-button-size);
+  height: var(--pagination-button-size);
 }
 
 .uitkPagination-previousButton {
@@ -37,8 +37,8 @@
 }
 
 .uitkPagination-pageButton {
-  min-width: var(--button-size);
-  height: var(--button-size);
+  min-width: var(--pagination-button-size);
+  height: var(--pagination-button-size);
   --uitkButton-font-weight: var(--uitk-text-fontWeight);
 }
 
@@ -52,8 +52,8 @@
 }
 
 .uitkPagination-ellipsis {
-  width: var(--button-size);
-  height: var(--button-size);
+  width: var(--pagination-button-size);
+  height: var(--pagination-button-size);
   text-align: center;
 }
 
@@ -72,21 +72,21 @@
 }
 
 .uitkPagination-compactInput {
-  height: var(--button-size);
+  height: var(--pagination-button-size);
   min-width: unset;
 }
 
 .uitkPagination-compactInputFixed {
-  min-width: var(--button-size);
-  width: var(--button-size);
+  min-width: var(--pagination-button-size);
+  width: var(--pagination-button-size);
 }
 
 .uitkPagination-compactSeparator {
-  height: var(--button-size);
-  width: var(--button-size);
+  height: var(--pagination-button-size);
+  width: var(--pagination-button-size);
   text-align: center;
-  font-size: var(--font-size);
-  line-height: var(--button-size);
+  font-size: var(--pagination-fontSize);
+  line-height: var(--pagination-button-size);
 }
 
 .uitkPagination-goToInputWrapper {
@@ -105,11 +105,11 @@
 }
 
 .uitkPagination-goToInput {
-  height: var(--button-size);
+  height: var(--pagination-button-size);
   min-width: unset;
 }
 
 .uitkPagination-goToInputFixed {
-  min-width: var(--button-size);
-  width: var(--button-size);
+  min-width: var(--pagination-button-size);
+  width: var(--pagination-button-size);
 }

@@ -1,8 +1,8 @@
 /* CSS Variables for the Skip Link */
 .uitkSkipLink {
-  --skipLink--padding: var(--uitkSkipLink-padding, var(--uitk-size-unit));
-  --skipLink--margin: var(--uitkSkipLink-margin, var(--uitk-size-unit));
-  --skipLink--background: var(--uitkSkipLink-background, var(--uitk-actionable-primary-background));
+  --skipLink-padding: var(--uitkSkipLink-padding, var(--uitk-size-unit));
+  --skipLink-margin: var(--uitkSkipLink-margin, var(--uitk-size-unit));
+  --skipLink-background: var(--uitkSkipLink-background, var(--uitk-actionable-primary-background));
   --skipLink-color: var(--uitkSkipLink-color, var(--uitk-text-primary-foreground));
 }
 
@@ -33,9 +33,9 @@
   width: auto;
   height: auto;
   white-space: nowrap;
-  margin: var(--skipLink--margin);
-  padding: calc(var(--skipLink--padding) - 1px) var(--skipLink--padding) var(--skipLink--padding);
-  background: var(--skipLink--background);
+  margin: var(--skipLink-margin);
+  padding: calc(var(--skipLink-padding) - 1px) var(--skipLink-padding) var(--skipLink-padding);
+  background: var(--skipLink-background);
   color: var(--skipLink-color);
   box-shadow: var(--uitk-overlayable-shadow-popout);
 }
