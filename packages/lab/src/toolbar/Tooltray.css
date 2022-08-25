@@ -17,6 +17,7 @@
   height: var(--tooltray-height);
 }
 
+
 .uitkTooltray > .Responsive-inner > .uitkToolbarField {
   /* --uitkButton-focused-outline-style: none; */
   flex-shrink: 0;
@@ -45,6 +46,7 @@
   margin-left: var(--uitk-size-unit);
   padding-left: calc(var(--uitk-size-unit) * 2);
 }
+
 .uitkTooltray-horizontal:not(:first-child):before {
   content: "";
   position: absolute;
@@ -55,7 +57,34 @@
   height: 28px;
 }
 
+.uitkTooltray-vertical:not(:first-child):before {
+  content: "";
+  position: absolute;
+  background: #c5c9d0;
+  left: var(--uitk-size-unit);
+  top: 0px;
+  width: calc(100% - 2 * var(--uitk-size-unit));
+  height: 1px;
+}
+
 .uitkTooltray-vertical > .Responsive-inner > * {
+  margin-bottom: var(--uitk-size-unit);
+  margin-left: var(--uitk-size-unit);
+  margin-right: var(--uitk-size-unit);
+}
+
+.uitkTooltray-vertical > .Responsive-inner > *:first-child {
+  margin-top: calc( 2 * var(--uitk-size-unit));
+}
+
+.uitkTooltray-vertical:first-child > .Responsive-inner > *:first-child {
+  margin-top: var(--uitk-size-unit);
+}
+
+.uitkTooltray-vertical > .Responsive-inner > *:last-child {
+  margin-bottom: calc( 2 * var(--uitk-size-unit));
+}
+.uitkTooltray-vertical:last-child > .Responsive-inner > *:last-child {
   margin-bottom: var(--uitk-size-unit);
 }
 

@@ -3,3 +3,8 @@
   --uitkButton-fontSize: 0;
   --uitkButton-letterSpacing: 0;
 }
+
+.uitkToolbar-buttonOnly[aria-orientation="vertical"] .uitkToolbarButton {
+  --uitkButton-fontSize: 0;
+  --uitkButton-letterSpacing: 0;
+}

@@ -280,9 +280,9 @@ export const VerticalToolbar = () => {
           orientation="vertical"
           style={{ height: height as number }}
         >
-          <ToolbarField>
+          <ToolbarButton>
             <Avatar size="medium" />
-          </ToolbarField>
+          </ToolbarButton>
           <ToolbarButton>
             <InfoIcon /> View Description
           </ToolbarButton>
@@ -462,8 +462,8 @@ const ToolbarWithInstantCollapseTooltrays = () => {
         <Button>Save</Button>
         <Button>Save as...</Button>
         <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
+        <ToolbarButton>
+          <ColumnChooserIcon /> Select Columns
         </ToolbarButton>
       </Tooltray>
       <Tooltray
@@ -476,11 +476,11 @@ const ToolbarWithInstantCollapseTooltrays = () => {
         <Button>create net</Button>
       </Tooltray>
       <Tooltray aria-label="export tooltray" data-priority={4}>
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
+        <ToolbarButton>
+          <PdfIcon /> Export PDF
         </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
+        <ToolbarButton>
+          <CsvIcon /> Export CSV
         </ToolbarButton>
       </Tooltray>
     </Toolbar>
@@ -523,8 +523,8 @@ const ToolbarWithDynamicCollapseTooltrays = () => {
         <Button>Save</Button>
         <Button>Save as...</Button>
         <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
+        <ToolbarButton>
+          <ColumnChooserIcon /> Select Columns
         </ToolbarButton>
       </Tooltray>
       <Tooltray
@@ -537,11 +537,11 @@ const ToolbarWithDynamicCollapseTooltrays = () => {
         <Button>create net</Button>
       </Tooltray>
       <Tooltray aria-label="export tooltray">
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
+        <ToolbarButton>
+          <PdfIcon /> Export PDF
         </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
+        <ToolbarButton>
+          <CsvIcon /> Export CSV
         </ToolbarButton>
       </Tooltray>
     </Toolbar>
@@ -579,8 +579,8 @@ const ToolbarWithNonCollapsingTooltrays = () => {
         <Button>Save</Button>
         <Button>Save as...</Button>
         <Button disabled>Reset</Button>
-        <ToolbarButton overflowLabel="Select Columns">
-          <ColumnChooserIcon />
+        <ToolbarButton>
+          <ColumnChooserIcon /> Select Columns
         </ToolbarButton>
       </Tooltray>
       <Tooltray aria-label="actions tooltray">
@@ -588,11 +588,11 @@ const ToolbarWithNonCollapsingTooltrays = () => {
         <Button>create net</Button>
       </Tooltray>
       <Tooltray aria-label="export tooltray">
-        <ToolbarButton overflowLabel="Export PDF">
-          <PdfIcon />
+        <ToolbarButton>
+          <PdfIcon /> Export PDF
         </ToolbarButton>
-        <ToolbarButton overflowLabel="Export CSV">
-          <CsvIcon />
+        <ToolbarButton>
+          <CsvIcon /> Export CSV
         </ToolbarButton>
       </Tooltray>
     </Toolbar>

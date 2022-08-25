@@ -39,11 +39,4 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
    * Placement of the Overflow, default is 'end'
    */
   overflowButtonPlacement?: "start" | "end";
-  /**
-   * If `true`, toolbar will adapt to the size of its container. It adds and removes toolbar buttons
-   * from the overflow menu automatically as the size of the container changes.
-   *
-   * The default is `true`. Set it to `false` to revert back to non-responsive version.
-   */
-  responsive?: boolean;
 }

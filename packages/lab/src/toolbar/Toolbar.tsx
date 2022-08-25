@@ -17,6 +17,7 @@ import {
   useOverflowLayout,
 } from "../responsive";
 import { renderToolbarItems } from "./internal/renderToolbarItems";
+import { allItemsAreToolbarButtons } from "./internal/toolbarUtils";
 import { ToolbarProps } from "./ToolbarProps";
 import { Tooltray } from "./Tooltray";
 import { TooltrayProps } from "./TooltrayProps";
@@ -25,9 +26,6 @@ import "./Toolbar.css";
 
 const classBase = "uitkToolbar";
 
-/**
- * The core Toolbar implementation, without the external wrapper provided by Toolbar.js
- */
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(props, ref) {
     const {
@@ -40,7 +38,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       overflowButtonIcon,
       overflowButtonLabel,
       overflowButtonPlacement = "end",
-      responsive = true,
       disabled = false,
       orientation = "horizontal",
       ...restProp
@@ -48,21 +45,19 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
 
     const toolbarId = useIdMemo(idProp);
     const containerRef = useRef<HTMLDivElement>(null);
-
     const setContainerRef = useForkRef(ref, containerRef);
+    const isVertical = orientation === "vertical";
 
     const collectionHook = useOverflowCollectionItems({
       children,
       id: toolbarId,
       orientation,
-      label: "Toolbar",
     });
 
     const [innerContainerRef] = useOverflowLayout({
       collectionHook,
       id: toolbarId,
       orientation,
-      label: "Toolbar",
     });
 
     const overflowedItems = collectionHook.data.filter(isOverflowed);
@@ -101,6 +96,11 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       (i) => i.isOverflowIndicator
     );
 
+    // We give special styling treatment to ToolbarButtons in a Vertical Toolbar
+    // when there are no other contents other than ToolbarButtons
+    const isToolbarButtonOnly =
+      isVertical && allItemsAreToolbarButtons(collectionHook.data);
+
     const overflowPanel = overflowIndicator ? (
       <OverflowPanel
         className={cx("uitkToolbarField")}
@@ -115,8 +115,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       </OverflowPanel>
     ) : null;
 
-    //TODO when we drive this from the overflowItems, the overflowIndicator will
-    // be an overflowItem
     return (
       <div
         aria-label={ariaLabel}
@@ -127,8 +125,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         aria-orientation={orientation}
         className={cx(classBase, className, {
           [`${classBase}-disabled`]: disabled,
-          // TODO whats this for ?
-          [`${classBase}-nonResponsive`]: !responsive,
+          [`${classBase}-buttonOnly`]: isToolbarButtonOnly,
         })}
         id={toolbarId}
         ref={setContainerRef}
