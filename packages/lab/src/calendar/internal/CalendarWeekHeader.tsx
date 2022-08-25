@@ -14,6 +14,7 @@ export const CalendarWeekHeader = forwardRef<
   CalendarWeekHeaderProps
 >(function CalendarWeekHeader({ className, ...rest }, ref) {
   const weekdaysShort = daysForLocale("narrow");
+  const weekdaysLong = daysForLocale("long");
 
   return (
     <div
@@ -22,10 +23,10 @@ export const CalendarWeekHeader = forwardRef<
       ref={ref}
       {...rest}
     >
-      {weekdaysShort.map((day) => (
+      {weekdaysShort.map((day, index) => (
         <small
           aria-hidden="true"
-          key={day}
+          key={weekdaysLong[index]}
           className={withBaseName("dayOfWeek")}
         >
           {day}
