@@ -146,8 +146,7 @@ export const ContactDetailsExample = ({ index }: { index: number }) => (
       <ContactMetadataItem value="Analyst" label="Role" />
       <ContactMetadataItem value="London, GBR" label="Location" />
       <ContactMetadataItem value="+44 1234 123456" label="Office" />
-
-      <ContactMetadataItem value="cillum@cupidatat.com" label="Email" />
+      <ContactMetadataItem value="lorem@ipsum.com" label="Email" />
     </ContactMetadata>
   </ContactDetails>
 );
