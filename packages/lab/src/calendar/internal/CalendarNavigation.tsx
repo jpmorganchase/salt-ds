@@ -20,15 +20,7 @@ import { ListItem, ListItemType } from "../../list";
 import { useCalendarContext } from "./CalendarContext";
 
 import "./CalendarNavigation.css";
-import {
-  DateValue,
-  endOfMonth,
-  endOfYear,
-  isSameMonth,
-  isSameYear,
-  startOfMonth,
-  startOfYear,
-} from "@internationalized/date";
+import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { SelectionChangeHandler } from "../../common-hooks";
 
@@ -140,7 +132,7 @@ const ListItemWithTooltip: ListItemType<DropdownItem> = ({
       {label}
       <Tooltip
         {...getTooltipProps({
-          title: "Out of range",
+          title: "This month is out of range",
         })}
       />
     </ListItem>
@@ -224,6 +216,22 @@ export const CalendarNavigation = forwardRef<
     return formatDate(date.value, { year: "numeric" });
   };
 
+  const {
+    getTriggerProps: getPreviousButtonProps,
+    getTooltipProps: getPreviousButtonTooltipProps,
+  } = useTooltip({
+    placement: "top",
+    disabled: canNavigatePrevious,
+  });
+
+  const {
+    getTriggerProps: getNextButtonProps,
+    getTooltipProps: getNextButtonTooltipProps,
+  } = useTooltip({
+    placement: "top",
+    disabled: canNavigateNext,
+  });
+
   return (
     <div
       className={cx(
@@ -235,10 +243,13 @@ export const CalendarNavigation = forwardRef<
       {...rest}
     >
       <Button
-        disabled={!canNavigatePrevious}
-        variant="secondary"
-        onClick={handleNavigatePrevious}
-        className={withBaseName("previousButton")}
+        {...getPreviousButtonProps<typeof Button>({
+          disabled: !canNavigatePrevious,
+          variant: "secondary",
+          onClick: handleNavigatePrevious,
+          className: withBaseName("previousButton"),
+          focusableWhenDisabled: true,
+        })}
       >
         <ChevronLeftIcon
           aria-label={`Previous Month, ${formatDate(
@@ -246,6 +257,11 @@ export const CalendarNavigation = forwardRef<
           )}`}
         />
       </Button>
+      <Tooltip
+        {...getPreviousButtonTooltipProps({
+          title: "Past dates are out of range",
+        })}
+      />
       <Dropdown<DropdownItem>
         source={months}
         id={monthDropdownId}
@@ -273,10 +289,13 @@ export const CalendarNavigation = forwardRef<
         />
       )}
       <Button
-        disabled={!canNavigateNext}
-        variant="secondary"
-        onClick={handleNavigateNext}
-        className={withBaseName("nextButton")}
+        {...getNextButtonProps<typeof Button>({
+          disabled: !canNavigateNext,
+          variant: "secondary",
+          onClick: handleNavigateNext,
+          className: withBaseName("nextButton"),
+          focusableWhenDisabled: true,
+        })}
       >
         <ChevronRightIcon
           aria-label={`Next Month, ${formatDate(
@@ -284,6 +303,11 @@ export const CalendarNavigation = forwardRef<
           )}`}
         />
       </Button>
+      <Tooltip
+        {...getNextButtonTooltipProps({
+          title: "Future dates are out of range",
+        })}
+      />
     </div>
   );
 });
