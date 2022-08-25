@@ -1,5 +1,5 @@
 import { useControlled } from "@jpmorganchase/uitk-core";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
   DateValue,
   endOfMonth,
@@ -20,8 +20,8 @@ import {
 } from "./internal/useSelection";
 
 export type UnselectableInfo =
-  | { emphasis: "high"; tooltip?: string }
-  | { emphasis: "low" };
+  | { emphasis: "medium"; tooltip: string }
+  | { emphasis: "low"; tooltip?: string };
 
 interface BaseUseCalendarProps {
   defaultVisibleMonth?: DateValue;
@@ -29,9 +29,10 @@ interface BaseUseCalendarProps {
     event: SyntheticEvent,
     visibleMonth: DateValue
   ) => void;
-  isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean;
+  isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean | void;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
+  hideYearDropdown?: boolean;
   minDate?: DateValue;
   maxDate?: DateValue;
 }
@@ -44,20 +45,25 @@ export type useCalendarProps = (
 ) &
   BaseUseCalendarProps;
 
-const defaultIsDayUnselectable = (): UnselectableInfo | boolean => false;
+const defaultIsDayUnselectable = (): UnselectableInfo | false => false;
 
 export function useCalendar(props: useCalendarProps) {
   const {
     selectedDate,
     defaultSelectedDate,
     visibleMonth: visibleMonthProp,
+    hideYearDropdown,
     hideOutOfRangeDates,
     defaultVisibleMonth = today(getLocalTimeZone()),
     onSelectedDateChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
-    minDate,
-    maxDate,
+    minDate = hideYearDropdown
+      ? startOfYear(today(getLocalTimeZone()))
+      : undefined,
+    maxDate = hideYearDropdown
+      ? endOfYear(today(getLocalTimeZone()))
+      : undefined,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
@@ -65,8 +71,35 @@ export function useCalendar(props: useCalendarProps) {
     // endDateOffset,
   } = props;
 
-  const isDaySelectable = (date?: DateValue) =>
-    !(date && isDayUnselectable(date));
+  const isOutsideAllowedDates = useCallback(
+    (date: DateValue) => {
+      return (
+        (minDate != null && date.compare(minDate) < 0) ||
+        (maxDate != null && date.compare(maxDate) > 0)
+      );
+    },
+    [maxDate, minDate]
+  );
+
+  const isOutsideAllowedMonths = (date: DateValue) => {
+    return (
+      (minDate != null && endOfMonth(date).compare(minDate) < 0) ||
+      (maxDate != null && startOfMonth(date).compare(maxDate) > 0)
+    );
+  };
+
+  const isOutsideAllowedYears = (date: DateValue) => {
+    return (
+      (minDate != null && endOfYear(date).compare(minDate) < 0) ||
+      (maxDate != null && startOfYear(date).compare(maxDate) > 0)
+    );
+  };
+
+  const isDaySelectable = useCallback(
+    (date?: DateValue) =>
+      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+    [isDayUnselectable, isOutsideAllowedDates]
+  );
 
   const selectionManager = useSelectionCalendar({
     defaultSelectedDate: defaultSelectedDate,
@@ -99,64 +132,55 @@ export function useCalendar(props: useCalendarProps) {
     startOfMonth(visibleMonth)
   );
 
-  const isDayVisible = (date: DateValue) => {
-    const startInsideDays = startOfMonth(visibleMonth);
+  const isDayVisible = useCallback(
+    (date: DateValue) => {
+      const startInsideDays = startOfMonth(visibleMonth);
 
-    if (date.compare(startInsideDays) < 0) return false;
+      if (date.compare(startInsideDays) < 0) return false;
 
-    const endInsideDays = endOfMonth(visibleMonth);
+      const endInsideDays = endOfMonth(visibleMonth);
 
-    return !(date.compare(endInsideDays) > 0);
-  };
+      return !(date.compare(endInsideDays) > 0);
+    },
+    [visibleMonth]
+  );
 
-  const isOutsideAllowedDates = (date: DateValue) => {
-    return (
-      (minDate != null && date.compare(minDate) < 0) ||
-      (maxDate != null && date.compare(maxDate) > 0)
-    );
-  };
+  const setVisibleMonth = useCallback(
+    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+      setVisibleMonthState(newVisibleMonth);
+      onVisibleMonthChange?.(event, newVisibleMonth);
+    },
+    [onVisibleMonthChange, setVisibleMonthState]
+  );
 
-  const isOutsideAllowedMonths = (date: DateValue) => {
-    return (
-      (minDate != null && endOfMonth(date).compare(minDate) < 0) ||
-      (maxDate != null && startOfMonth(date).compare(maxDate) > 0)
-    );
-  };
+  const setFocusedDate = useCallback(
+    (event: SyntheticEvent, date: DateValue) => {
+      if (isSameDay(date, focusedDate) || isOutsideAllowedDates(date)) return;
 
-  const isOutsideAllowedYears = (date: DateValue) => {
-    return (
-      (minDate != null && endOfYear(date).compare(minDate) < 0) ||
-      (maxDate != null && startOfYear(date).compare(maxDate) > 0)
-    );
-  };
+      setFocusedDateState(date);
 
-  const setFocusedDate = (event: SyntheticEvent, date: DateValue) => {
-    if (isSameDay(date, focusedDate) || isOutsideAllowedDates(date)) return;
-
-    setFocusedDateState(date);
-
-    const shouldTransition =
-      !isDayVisible(date) &&
-      isDaySelectable(date) &&
-      !isOutsideAllowedDates(date);
-    if (shouldTransition) {
-      setVisibleMonth(event, startOfMonth(date));
-    }
-  };
-
-  const setVisibleMonth = (
-    event: SyntheticEvent,
-    newVisibleMonth: DateValue
-  ) => {
-    setVisibleMonthState(newVisibleMonth);
-    onVisibleMonthChange?.(event, newVisibleMonth);
-  };
+      const shouldTransition =
+        !isDayVisible(date) &&
+        isDaySelectable(date) &&
+        !isOutsideAllowedDates(date);
+      if (shouldTransition) {
+        setVisibleMonth(event, startOfMonth(date));
+      }
+    },
+    [
+      focusedDate,
+      isDaySelectable,
+      isDayVisible,
+      isOutsideAllowedDates,
+      setVisibleMonth,
+    ]
+  );
 
   useEffect(() => {
     if (!isDayVisible(focusedDate)) {
       setFocusedDateState(startOfMonth(visibleMonth));
     }
-  }, [isDayVisible, focusedDate, visibleMonth, setFocusedDate]);
+  }, [isDayVisible, focusedDate, visibleMonth]);
 
   return {
     state: {
