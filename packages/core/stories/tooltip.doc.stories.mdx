@@ -1,0 +1,69 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { Tooltip } from "@jpmorganchase/uitk-core";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CSSClassTable,
+  CSSVariableTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import { CustomStyling } from "./tooltip.stories";
+
+<Meta
+  title="Documentation/Core/Tooltip"
+  component={Tooltip}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Tooltip
+
+A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a certain amount of time.
+
+## Default
+
+<Canvas>
+  <Story id="core-tooltip--default" />
+</Canvas>
+
+# API
+
+```
+import { Tooltip } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Tooltip} />
+
+## CSS Class
+
+<CSSClassTable of={Tooltip} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Tooltip} />
+
+## Customising styles
+
+<Canvas>
+  <Story name="Custom Styling" decorators={[withFlexGap]}>
+    <CustomStyling />
+  </Story>
+</Canvas>
+
+```css
+/* from the file Tooltip.stories.newapp-tooltip.css */
+
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkTooltip-borderColor: var(--uitk-color-teal-40);
+}
+
+.uitk-newapp .uitkTooltip-warning {
+  --uitkTooltip-icon-color: var(--uitk-color-purple-40);
+  --uitkTooltip-text-color: var(--uitk-color-purple-40);
+  --uitkTooltip-borderColor: var(--uitk-color-purple-40);
+}
+```
