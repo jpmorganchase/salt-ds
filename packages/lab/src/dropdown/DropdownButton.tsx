@@ -77,7 +77,8 @@ export const DropdownButton = forwardRef(function DropdownButton(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { inFormField } = useFormFieldProps();
-
+  // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
+  // tool's false alarm on role of 'listbox'
   return (
     <DivButton
       className={classnames(
@@ -88,8 +89,6 @@ export const DropdownButton = forwardRef(function DropdownButton(
         },
         className
       )}
-      // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
-      // tool's false alarm on role of 'listbox'
       data-testid="dropdown-button"
       disabled={disabled}
       variant="secondary"
