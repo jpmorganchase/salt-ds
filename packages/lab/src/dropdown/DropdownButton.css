@@ -13,7 +13,8 @@
 }
 
 .uitkDropdownButton:active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-text-color);
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
+  --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
 }
 
 .uitkDropdownButton-fullwidth {
