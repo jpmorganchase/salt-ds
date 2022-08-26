@@ -34,8 +34,6 @@
 
 /* Class applied to the helper text container */
 .uitkFormFieldHelperText {
-  --formField-helperText-fontSize: var(--uitkFormField-helperText-fontSize, var(--uitk-text-help-fontSize));
-
   color: var(--uitkFormFieldHelperText-color, var(--uitk-text-secondary-foreground));
   font-size: var(--formField-helperText-fontSize);
   font-style: var(--uitkFormFieldHelperText-fontStyle, var(--uitk-text-help-fontStyle));
