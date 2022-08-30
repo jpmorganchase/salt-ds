@@ -20,3 +20,11 @@ body {
 uitk-theme {
   display: contents;
 }
+
+.uitk-light {
+  color-scheme: light;
+}
+
+.uitk-dark {
+  color-scheme: dark;
+}
