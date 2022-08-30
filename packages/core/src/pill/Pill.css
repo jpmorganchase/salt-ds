@@ -21,6 +21,7 @@
   --pill-background-disabled: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background-hover));
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-pill) - 2px));
+  --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-caption-fontSize));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
   --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
@@ -43,7 +44,7 @@
   border-radius: var(--uitkPill-borderRadius, 0);
   color: var(--pill-text-color);
   display: inline-flex;
-  font-size: var(--uitkPill-fontSize, var(--uitk-text-help-fontSize));
+  font-size: var(--pill-fontSize);
   height: var(--uitkPill-height, var(--pill-checkbox-size));
   letter-spacing: var(--uitkPill-letterSpacing, 0);
   line-height: var(--uitkPill-lineHeight, var(--uitk-text-base-lineHeight));
@@ -245,14 +246,20 @@
   color: var(--pill-text-color-disabled);
 }
 
-/* TK1 Backwards compat styling light mode */
-.uitk-light .backwardsCompat.uitkPill {
-  --pill-background: var(--uitk-color-grey-40);
-  --pill-background-hover: var(--uitk-color-grey-40);
+/* TK1 backwards compat styling */
+
+.uitk-light {
+  --backwardsCompat-pill-background: var(--uitk-color-grey-40);
+  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-40);
 }
 
-/* TK1 Backwards compat styling dark mode */
-.uitk-dark .backwardsCompat.uitkPill {
-  --pill-background: var(--uitk-color-grey-500);
-  --pill-background-hover: var(--uitk-color-grey-500);
+.uitk-dark {
+  --backwardsCompat-pill-background: var(--uitk-color-grey-500);
+  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-500);
+}
+
+.backwardsCompat.uitkPill {
+  --pill-fontSize: var(--backwardsCompat-text-caption-fontSize);
+  --pill-background: var(--backwardsCompat-pill-background);
+  --pill-background-hover: var(--backwardsCompat-pill-background-hover);
 }

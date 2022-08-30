@@ -54,6 +54,7 @@
   --slider-clickable-padding-left: var(--uitkSlider-clickable-padding-left, calc(var(--uitk-size-base) * 0.5));
   --slider-clickable-padding-right: var(--uitkSlider-clickable-padding-right, calc(var(--uitk-size-base) * 0.5));
 
+  --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
   --slider-label-padding-left: var(--uitlSlider-label-padding-left, 0);
   --slider-label-padding-right: var(--uitkSlider-label-padding-right, 0);
 }
@@ -139,7 +140,7 @@
 
 .uitkSliderMarkLabels-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
-  font-size: var(--uitkSlider-label-font-size, var(--uitk-text-caption-fontSize));
+  font-size: var(--slider-label-fontSize);
   margin-top: var(--uitkSlider-label-margin-top);
   line-height: var(--uitkSlider-label-line-height, var(--uitk-text-lineHeight));
 
@@ -200,7 +201,7 @@
 
 .uitkSlider-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
-  font-size: var(--uitkSlider-label-font-size, var(--uitk-text-caption-fontSize));
+  font-size: var(--slider-label-fontSize);
   margin-top: var(--uitkSlider-label-margin-top);
   line-height: var(--uitkSlider-label-line-height, var(--uitk-text-lineHeight));
 
@@ -209,4 +210,8 @@
   box-sizing: border-box;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.backwardsCompat.uitkSlider {
+  --slider-label-fontSize: var(--backwardsCompat-text-caption-fontSize);
 }

@@ -274,8 +274,7 @@
   width: var(--contactDetails-icon-size);
 }
 
-/* backwardsCompat */
-
+/* TODO: backwards compat shouldn't be bound directly to density */
 .uitk-density-touch .backwardsCompat.uitkContactDetails-default .uitkContactPrimaryInfo {
   font-size: 30px;
 }
