@@ -4,12 +4,19 @@ import {
   useIsomorphicLayoutEffect,
   polymorphicRef,
 } from "@jpmorganchase/uitk-core";
-import { useCallback, useRef, useState, ElementType } from "react";
+import { useCallback, useRef, useState, ElementType, Ref } from "react";
 import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
 
 // this guards against text underline which adds 1px on scrollHeight
 const VELOCITY = 1;
+
+type UseTruncationType = {
+  setContainerRef?: Ref<ElementType> | null | undefined;
+  hasTooltip?: boolean;
+  tooltipTextDefault: string;
+  rows?: number;
+};
 
 export const useTruncation = (
   {
@@ -19,7 +26,7 @@ export const useTruncation = (
     onOverflowChange,
   }: Partial<TextProps>,
   ref: polymorphicRef<ElementType>
-) => {
+): UseTruncationType => {
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();

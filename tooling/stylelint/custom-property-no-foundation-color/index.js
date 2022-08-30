@@ -61,6 +61,7 @@ const isUitkThemeCustomProperty = function (property) {
 
 const allAllowedKeys = [
   // characteristics
+  "accent",
   "actionable",
   "container",
   "differential",
@@ -83,6 +84,8 @@ const allAllowedKeys = [
   "palette", // currently for opacity purposes
   "size",
   "opacity",
+  "separator",
+  "typography",
   "zIndex", // to be added to overlayable
 ];
 

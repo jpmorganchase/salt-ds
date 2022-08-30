@@ -10,6 +10,10 @@ export default {
 } as ComponentMeta<typeof ContentStatus>;
 
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+  const handleActionClick = () => {
+    console.log("Action triggered");
+  };
+
   return (
     <QAContainer cols={4} height={1050} {...props}>
       <ContentStatus
@@ -18,7 +22,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         message="Supplementary content can go here if required."
         status="warning"
         title="No permission to access [content]"
-        onActionClick={() => {}}
+        onActionClick={handleActionClick}
       />
       <ContentStatus
         className={props.className}
@@ -31,14 +35,14 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         status="error"
         title="There's been a system error"
         actionLabel="RELOAD"
-        onActionClick={() => {}}
+        onActionClick={handleActionClick}
       />
       <ContentStatus
         className={props.className}
         actionLabel="[CUSTOM ACTION]"
         message="Supplementary content can go here if required."
         title="No [content] available"
-        onActionClick={() => {}}
+        onActionClick={handleActionClick}
       />
       <ContentStatus
         className={props.className}
