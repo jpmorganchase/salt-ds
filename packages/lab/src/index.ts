@@ -1,6 +1,8 @@
 import {
   SelectionChangeHandler,
+  SelectHandler,
   SelectionStrategy,
+  ScrollingAPI,
   useCollectionItems,
 } from "./common-hooks";
 
@@ -64,5 +66,7 @@ export type {
   ListChangeHandlerDeprecated,
   ListSelectHandlerDeprecated,
   SelectionChangeHandler,
+  SelectHandler,
+  ScrollingAPI,
   SelectionStrategy,
 };
