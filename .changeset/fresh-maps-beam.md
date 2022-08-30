@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-lab": minor
 ---
 
-Use characteristics and other component API's for ToggleButton rather than resetting them
+Use Icon and Button's public tokens and direct usage of characteristics for ToggleButton styling
