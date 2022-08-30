@@ -6,4 +6,7 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Use lint rule to ensure CSS attributes in token are kebab case, e.g. -border-color to -borderColor
+Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
+--uitkDialog-border-color -> --uitkDialog-borderColor
+--accordion-summary-padding-left -> --accordion-summary-paddingLeft
+--grid-item-grid-row-end -> --grid-item-gridRowEnd
