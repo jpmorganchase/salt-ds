@@ -1,0 +1,17 @@
+.uitk-light.uitk-newapp,
+.uitk-dark.uitk-newapp {
+  --uitkTooltip-borderColor: var(--uitk-color-teal-40);
+  --uitkTooltip-icon-marginRight: 10px;
+}
+
+.uitk-newapp.uitk-light .uitkTooltip-warning {
+  --uitkTooltip-icon-color: var(--uitk-color-purple-400);
+  --uitkTooltip-text-color: var(--uitk-color-purple-400);
+  --uitkTooltip-borderColor: var(--uitk-color-purple-400);
+}
+
+.uitk-newapp.uitk-dark .uitkTooltip-warning {
+  --uitkTooltip-icon-color: var(--uitk-color-purple-40);
+  --uitkTooltip-text-color: var(--uitk-color-purple-40);
+  --uitkTooltip-borderColor: var(--uitk-color-purple-40);
+}

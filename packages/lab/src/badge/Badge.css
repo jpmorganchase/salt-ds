@@ -7,6 +7,7 @@
   --badge-content-borderRadius: 16px;
   --badge-content-lineHeight: 15px;
   --badge-content-padding: 0px 4px;
+  --badge-fontSize: var(--uitkBadge-fontSize, var(--uitk-text-caption-fontSize));
 
   /* Derived */
   /* Same as content padding in x */
@@ -38,7 +39,7 @@
   box-sizing: border-box;
   display: inline-block;
   font-weight: 700; /* TODO: Use characteristic once aligned */
-  font-size: var(--uitk-text-caption-fontSize);
+  font-size: var(--badge-fontSize);
   /* default small type */
   width: auto;
   min-width: 15px;
@@ -64,4 +65,8 @@
   align-content: center;
   flex-direction: row;
   justify-content: center;
+}
+
+.backwardsCompat.uitkBadge {
+  --badge-fontSize: var(--backwardsCompat-text-caption-fontSize);
 }
