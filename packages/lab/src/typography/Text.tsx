@@ -89,7 +89,7 @@ const TruncatingText = forwardRef(function TruncatingText<
     ...restProps
   }: TextProps = props;
   const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
-    useTruncation<T>(props, ref);
+    useTruncation(props, ref);
 
   const { getTooltipProps, getTriggerProps } = useTooltip({
     enterDelay: 150,
