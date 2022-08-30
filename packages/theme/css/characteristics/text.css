@@ -86,24 +86,25 @@
 
 /* Sizes by density */
 .uitk-density-touch {
-  --uitk-text-h1-fontSize: 36px;
+  --uitk-text-h1-fontSize: 42px;
   --uitk-text-h1-lineHeight: auto;
 
-  --uitk-text-h2-fontSize: 28px;
+  --uitk-text-h2-fontSize: 32px;
   --uitk-text-h2-lineHeight: 36px;
 
-  --uitk-text-h3-fontSize: 18px;
+  --uitk-text-h3-fontSize: 24px;
   --uitk-text-h3-lineHeight: 26px;
 
   --uitk-text-h4-fontSize: 16px;
   --uitk-text-h4-lineHeight: 22px;
 
-  --uitk-text-caption-fontSize: 12px;
+  --uitk-text-caption-fontSize: 14px;
   --uitk-text-caption-lineHeight: 16px;
   --uitk-text-caption-minHeight: 16px;
 
-  --uitk-text-help-fontSize: 12px;
+  --uitk-text-help-fontSize: 14px;
   --uitk-text-help-lineHeight: 16px;
+  --uitk-text-help-minHeight: 16px;
 
   --uitk-text-fontSize: 16px;
   --uitk-text-lineHeight: 22px;
@@ -123,12 +124,13 @@
   --uitk-text-h4-fontSize: 14px;
   --uitk-text-h4-lineHeight: 18px;
 
-  --uitk-text-caption-fontSize: 11px;
+  --uitk-text-caption-fontSize: 12px;
   --uitk-text-caption-lineHeight: 14px;
   --uitk-text-caption-minHeight: 14px;
 
-  --uitk-text-help-fontSize: 11px;
+  --uitk-text-help-fontSize: 12px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 14px;
   --uitk-text-lineHeight: 18px;
@@ -136,9 +138,6 @@
 }
 
 .uitk-density-medium {
-  --uitk-text-fontSize: 12px;
-  --uitk-text-lineHeight: 16px;
-
   --uitk-text-h1-fontSize: 24px;
   --uitk-text-h1-lineHeight: 31px;
 
@@ -157,6 +156,11 @@
 
   --uitk-text-help-fontSize: 11px;
   --uitk-text-help-lineHeight: 14px;
+  --uitk-text-help-minHeight: 14px;
+
+  --uitk-text-fontSize: 12px;
+  --uitk-text-lineHeight: 16px;
+  --uitk-text-minHeight: 16px;
 }
 
 .uitk-density-high {
@@ -178,8 +182,44 @@
 
   --uitk-text-help-fontSize: 10px;
   --uitk-text-help-lineHeight: 13px;
+  --uitk-text-help-minHeight: 14px;
 
   --uitk-text-fontSize: 11px;
   --uitk-text-lineHeight: 14px;
   --uitk-text-minHeight: 14px;
+}
+
+/* TK1 backwards compat */
+
+/* Not changed for HD and MD, defined to avoid nesting issues */
+.uitk-density-high,
+.uitk-density-medium {
+  --backwardsCompat-text-h1-fontSize: var(--uitk-text-h1-fontSize);
+  --backwardsCompat-text-h2-fontSize: var(--uitk-text-h2-fontSize);
+  --backwardsCompat-text-h3-fontSize: var(--uitk-text-h3-fontSize);
+  --backwardsCompat-text-caption-fontSize: var(--uitk-text-caption-fontSize);
+  --backwardsCompat-text-help-fontSize: var(--uitk-text-help-fontSize);
+}
+
+.uitk-density-touch {
+  --backwardsCompat-text-h1-fontSize: 40px;
+  --backwardsCompat-text-h2-fontSize: 28px;
+  --backwardsCompat-text-h3-fontSize: 22px;
+  --backwardsCompat-text-caption-fontSize: 12px;
+  --backwardsCompat-text-help-fontSize: 12px;
+}
+
+.uitk-density-low {
+  --backwardsCompat-text-h1-fontSize: 31px;
+  --backwardsCompat-text-h2-fontSize: var(--uitk-text-h2-fontSize);
+  --backwardsCompat-text-h3-fontSize: var(--uitk-text-h3-fontSize);
+  --backwardsCompat-text-caption-fontSize: 11px;
+  --backwardsCompat-text-help-fontSize: 11px;
+}
+
+.uitk-density-high,
+.uitk-density-medium,
+.uitk-density-low,
+.uitk-density-touch {
+  --backwardsCompat-text-lineHeight: var(--uitk-text-base-lineHeight); /* 1.3 */
 }

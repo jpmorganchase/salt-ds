@@ -59,6 +59,13 @@ const isUitkThemeCustomProperty = function (property) {
   return property.startsWith("--uitk-");
 };
 
+/**
+ * Test whether a property value is for backwards compatibility
+ */
+const isBackwardsCompatToken = function (property) {
+  return property.startsWith("--backwardsCompat-");
+};
+
 const allAllowedKeys = [
   // characteristics
   "accent",
@@ -101,7 +108,9 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isUitkThemeCustomProperty(property) || regexpPattern.test(property);
+          !isUitkThemeCustomProperty(property) ||
+          regexpPattern.test(property) ||
+          !isBackwardsCompatToken(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
