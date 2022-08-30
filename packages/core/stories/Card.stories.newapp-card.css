@@ -9,10 +9,6 @@
   --uitkCard-boxShadow: var(--uitk-overlayable-shadow-default);
 }
 
-.uitk-newapp.uitkPanel {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .uitk-light.uitk-newapp .uitkCard {
   color: var(--uitk-color-white);
 }
