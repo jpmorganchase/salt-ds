@@ -3,7 +3,7 @@ import cx from "classnames";
 import { makePrefixer } from "../utils";
 
 import "./Button.css";
-import { useButton } from "./useActiveStyle";
+import { useButton } from "./useButton";
 
 const withBaseName = makePrefixer("uitkButton");
 

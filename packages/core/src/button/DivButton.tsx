@@ -9,7 +9,7 @@ import { makePrefixer } from "../utils";
 
 import "./Button.css";
 import { ButtonVariant } from "./Button";
-import { useButton } from "./useActiveStyle";
+import { useButton } from "./useButton";
 
 const withBaseName = makePrefixer("uitkButton");
 
