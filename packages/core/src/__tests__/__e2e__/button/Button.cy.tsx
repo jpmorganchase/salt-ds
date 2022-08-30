@@ -3,7 +3,8 @@ import * as buttonStories from "@stories/button.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);
-const { FeatureButton, FocusableWhenDisabled } = composedStories;
+const { FeatureButton, FocusableWhenDisabled, DivElementButton } =
+  composedStories;
 
 describe("Given a Button", () => {
   checkAccessibility(composedStories);
@@ -25,5 +26,14 @@ describe("Given a Button", () => {
     cy.get("@clickSpy").should("not.be.called");
     cy.findByRole("button").realClick();
     cy.get("@clickSpy").should("not.be.called");
+  });
+});
+
+describe("Given a DivButton", () => {
+  it("should render text as children", () => {
+    cy.mount(<DivElementButton />);
+    cy.findByText(DivElementButton.args?.children as string).should(
+      "be.visible"
+    );
   });
 });

@@ -82,9 +82,6 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
       onKeyUp: handleKeyUp,
     } = buttonProps;
 
-    // Allow an explicit null value to be passed by user to suppress role
-    const role = roleProp !== undefined ? roleProp : "button";
-
     return (
       <div
         aria-disabled={ariaDisabled}
@@ -97,7 +94,8 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
-        role={role}
+        // Allow an explicit null value to be passed by user to suppress role
+        role={roleProp !== undefined ? roleProp : "button"}
         {...restProps}
         ref={ref}
       >
