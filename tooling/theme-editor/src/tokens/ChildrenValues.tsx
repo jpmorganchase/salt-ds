@@ -53,7 +53,6 @@ export const ChildrenValuesWithinSection = ({
               onUpdateJSON={onUpdateJSON}
               patternName={patternName}
               scope={scope}
-              inSection={true}
             />
           ) : (
             <ValueEditor
@@ -120,7 +119,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
                 onUpdateJSON={props.onUpdateJSON}
                 patternName={props.patternName}
                 scope={props.scope}
-                value={props.children.value}
+                value={props.children.value!}
                 valueName={props.fieldName}
               />
             )

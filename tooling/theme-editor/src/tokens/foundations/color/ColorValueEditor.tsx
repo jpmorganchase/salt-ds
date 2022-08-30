@@ -131,14 +131,12 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
     if (value.includes("fade")) {
       const color = value.split("-fade")[0];
       const opacity = `uitk-opacity-${value.split("fade-")[1]}`;
-      const rgba = `${extractValue(color)
+      const [r, g, b, a] = `${extractValue(color)
         .replace("rgb(", "")
-        .replace(")", "")}, ${extractValue(opacity)}`;
-      setSelectedColor(
-        Color.makeColorFromRGB(
-          ...rgba.split(",").map((n) => parseFloat(n.replace(" ", "")))
-        )
-      );
+        .replace(")", "")}, ${extractValue(opacity)}`
+        .split(",")
+        .map((n) => parseFloat(n.replace(" ", "")));
+      setSelectedColor(Color.makeColorFromRGB(r, g, b, a));
     } else {
       setSelectedColor(Color.makeColorFromHex(extractValue(value)));
     }

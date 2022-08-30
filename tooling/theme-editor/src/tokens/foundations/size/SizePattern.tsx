@@ -87,7 +87,7 @@ export const SizePattern = (props: SizePatternProps): ReactElement => {
                           onUpdateJSON={props.onUpdateJSON}
                           patternName={props.patternName}
                           scope={props.scope}
-                          value={values[val].value}
+                          value={values[val].value!}
                           valueName={val}
                         />
                       )
