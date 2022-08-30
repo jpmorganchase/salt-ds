@@ -2,7 +2,6 @@ import {
   Button,
   ButtonProps,
   Density,
-  DivButton,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import { NotificationIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
@@ -80,17 +79,6 @@ export const Primary: ComponentStory<typeof Button> = () => {
 
 export const Secondary: ComponentStory<typeof Button> = () => {
   return <ButtonGrid variant="secondary" label="Secondary" />;
-};
-
-export const DivElementButton: ComponentStory<typeof DivButton> = (props) => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <DivButton {...props} />
-    </div>
-  );
-};
-DivElementButton.args = {
-  children: "Div Button",
 };
 
 const ButtonVariant = ({
