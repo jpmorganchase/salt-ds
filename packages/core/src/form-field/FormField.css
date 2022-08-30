@@ -84,7 +84,7 @@
 /* Class applied when helper text is provided */
 .uitkFormField-withHelperText {
   --formField-helperText-fontSize: var(--uitkFormField-helperText-fontSize, var(--uitk-text-fontSize));
-  --formField-helperText-baseHeight: calc(var(--uitk-text-base-lineHeight) * var(--formField-helperText-fontSize));
+  --formField-helperText-baseHeight: calc(var(--uitk-text-lineHeight) * var(--formField-helperText-fontSize));
   --formField-helperText-calculatedHeight: max(var(--uitk-text-help-minHeight), var(--formField-helperText-baseHeight));
   --formField-helperText-height: calc(var(--formField-helperText-calculatedHeight) + var(--formField-helperText-marginTop));
 }

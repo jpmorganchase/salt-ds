@@ -25,7 +25,7 @@
   font-family: var(--uitkInput-fontFamily, var(--uitk-text-fontFamily));
   font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
-  line-height: var(--uitk-text-base-lineHeight);
+  line-height: var(--uitk-text-lineHeight);
   min-height: var(--uitkInput-minHeight, var(--uitk-size-base));
   min-width: var(--uitkInput-minWidth, 8em);
   padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
