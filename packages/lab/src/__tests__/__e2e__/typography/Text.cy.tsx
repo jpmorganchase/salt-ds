@@ -82,7 +82,7 @@ describe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
       const Component = component;
 
       cy.mount(
-        <Component truncate={true} maxRows={2}>
+        <Component truncate maxRows={2}>
           {textExample}
         </Component>
       );
@@ -105,11 +105,11 @@ describe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
 // Truncation + No Tooltip
 describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=false ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should display only 2 rows but should not show Tooltip on focus`, () => {
+    it(`${name} should display only 2 rows but should NOT show Tooltip on focus`, () => {
       const Component = component;
 
       cy.mount(
-        <Component truncate={true} maxRows={2} showTooltip={false}>
+        <Component truncate maxRows={2} showTooltip={false}>
           {textExample}
         </Component>
       );
@@ -119,6 +119,9 @@ describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=f
 
       cy.realPress("Tab");
       cy.findByRole("tooltip").should("not.exist");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("not.exist");
     });
   });
 });
@@ -126,15 +129,23 @@ describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=f
 // Size restricted by parent container
 describe("GIVEN Text component with parent height 100px and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should be truncated`, () => {
+    it(`${name} should be truncated and show tooltip`, () => {
       const Component = component;
 
       cy.mount(
         <div style={{ width: 200, height: 100 }}>
-          <Component truncate={true}>{textExample}</Component>
+          <Component truncate>{textExample}</Component>
         </div>
       );
       cy.get(".uitkText").should("have.class", "uitkText-lineClamp");
+
+      cy.realPress("Tab");
+      cy.findByRole("tooltip").should("be.visible");
+
+      cy.realPress("Escape");
+
+      cy.get(".uitkText").realHover();
+      cy.findByRole("tooltip").should("be.visible");
     });
   });
 });
@@ -146,7 +157,9 @@ describe("GIVEN Text component with styleAs=h1", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h1">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-h1");
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-h1")
+        .and("have.css", "font-size", "24px");
     });
   });
 });
@@ -156,7 +169,9 @@ describe("GIVEN Text component with styleAs=h2", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h2">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-h2");
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-h2")
+        .and("have.css", "font-size", "18px");
     });
   });
 });
@@ -166,7 +181,9 @@ describe("GIVEN Text component with styleAs=h3", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h3">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-h3");
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-h3")
+        .and("have.css", "font-size", "14px");
     });
   });
 });
@@ -176,7 +193,21 @@ describe("GIVEN Text component with styleAs=h4", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h4">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-h4");
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-h4")
+        .and("have.css", "font-size", "12px");
+    });
+  });
+});
+describe("GIVEN Text component with styleAs=label", () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} should be styled as label`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="label">{textExample}</Component>);
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-label")
+        .and("have.css", "font-size", "11px");
     });
   });
 });
