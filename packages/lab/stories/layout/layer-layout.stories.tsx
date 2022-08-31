@@ -196,7 +196,32 @@ const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
     <div className="custom-layer-container">
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} className="custom-animation" {...args}>
-        <LayerContentExample onClick={hide} />
+        <StackLayout className="layer-example">
+          <FlexItem grow={1}>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
+              lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis
+              dui at nisl faucibus, id maximus urna pellentesque. Praesent
+              consequat vulputate dolor, a mattis metus suscipit vitae. Donec
+              ullamcorper, neque sit amet laoreet ornare, diam eros posuere
+              metus, id consectetur tellus nisl id ipsum. Fusce sit amet cursus
+              mauris, vel scelerisque enim. Quisque eu dolor tortor. Nulla
+              facilisi. Vestibulum at neque sit amet neque facilisis porttitor a
+              ac risus.
+            </p>
+            <p>
+              Mauris consequat sollicitudin commodo. Vestibulum ac diam
+              vulputate, condimentum purus non, eleifend erat. Nunc auctor
+              iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
+              vehicula iaculis. Morbi faucibus volutpat tellus, sit amet
+              fringilla dui rhoncus a. Suspendisse nunc nulla, mattis sed
+              commodo ac, cursus ut augue.
+            </p>
+          </FlexItem>
+          <FlowLayout justify="end">
+            <Button onClick={hide}>Close layer</Button>
+          </FlowLayout>
+        </StackLayout>
       </LayerLayout>
     </div>
   );

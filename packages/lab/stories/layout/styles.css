@@ -46,14 +46,16 @@
   background-color: var(--uitk-color-grey-40);
 }
 
-.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
-.custom-layer-container .uitkScrim.uitkLayerLayout-enter-animation {
+.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-slide-in-top);
 }
 
-.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
-.custom-layer-container .uitkScrim.uitkLayerLayout-exit-animation {
+.custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-slide-out-top);
+}
+
+.custom-layer-container .uitkScrim.uitkLayerLayout-exit-animation {
+  animation: fade-out-back 1s ease-out both;
 }
 
 @media (prefers-reduced-motion) {
