@@ -4,7 +4,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 const composedStories = composeStories(flexStories);
-const { DefaultFlexLayout, ToolkitFlexLayoutResponsive, FlexLayoutNested } =
+const { DefaultFlexLayout, FlexLayoutUsingResponsiveProps, FlexLayoutNested } =
   composedStories;
 
 describe("GIVEN a Flex", () => {
@@ -83,7 +83,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
+        cy.mount(<FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
       }
@@ -96,7 +96,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
+        cy.mount(<FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -109,7 +109,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
+        cy.mount(<FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -122,7 +122,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 600,
       },
       () => {
-        cy.mount(<ToolkitFlexLayoutResponsive disableWrap={disableWrap} />);
+        cy.mount(<FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />);
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -155,7 +155,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
+            <FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -172,7 +172,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
+            <FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -189,7 +189,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
+            <FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
@@ -206,7 +206,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitFlexLayoutResponsive disableWrap={disableWrap} />
+            <FlexLayoutUsingResponsiveProps disableWrap={disableWrap} />
           </ToolkitProvider>
         );
 
