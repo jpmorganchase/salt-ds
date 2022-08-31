@@ -85,7 +85,9 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
         className={cx(className, withBaseName(), {
           [withBaseName("separator")]: separatorAlignment,
           [withBaseName(
-            `separator-${flexDirection || "row"}-${separatorAlignment}`
+            `separator-${flexDirection || "row"}-${
+              separatorAlignment || "center"
+            }`
           )]: separatorAlignment,
           [withBaseName(`separator-${flexDirection || "row"}`)]:
             separatorAlignment,

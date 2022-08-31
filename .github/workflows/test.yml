@@ -21,6 +21,8 @@ jobs:
         run: yarn
       # Enable lint when all errors are fixed
       # - run: yarn run lint
+      # Slowly enabling linting back. Start small for now.
+      - run: yarn run lint:core
       - run: yarn run prettier:ci
       - run: yarn run lint:style
   dependency-check:

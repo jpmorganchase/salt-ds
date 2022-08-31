@@ -88,7 +88,7 @@
 
 /* Styles applied to the Form Field FormLabel component */
 .uitkRadioButtonGroup-legend.uitkFormLabel {
-  padding-left: var(--uitkRadioButtonGroup-formLabel-padding-left, 0px);
+  padding-left: var(--uitkRadioButtonGroup-formLabel-paddingLeft, 0px);
 }
 
 /* Styles applied  to legend if `row={true}` */

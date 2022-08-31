@@ -1,82 +1,157 @@
-/* TODO: Styling is all implemented incorrectly here */
-.uitk-light .uitkToggleButton {
-  --uitk-actionable-primary-background: transparent;
-  --uitk-actionable-primary-foreground: var(--uitk-color-grey-300);
-  --uitk-actionable-cta-foreground: var(--uitk-color-grey-900);
-  --uitk-actionable-cta-background: transparent;
+.uitk-density-touch {
+  --toggleButton-icon-padding: 11px;
 }
 
-.uitk-light .uitkToggleButton.uitkToggleButton-toggled {
-  --uitk-actionable-primary-background: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-primary-foreground: var(--uitk-color-white);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-secondary-background: var(--uitk-color-grey-200);
-  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-200);
-  --uitk-actionable-secondary-foreground: var(--uitk-color-white);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-white);
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
-  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
+.uitk-density-low {
+  --toggleButton-icon-padding: 7px;
 }
 
-.uitk-dark .uitkToggleButton {
-  --uitk-actionable-primary-background: transparent;
-  --uitk-actionable-cta-background: transparent;
+.uitk-density-medium {
+  --toggleButton-icon-padding: 5px;
 }
 
-.uitk-dark .uitkToggleButton.uitkToggleButton-toggled {
-  --uitk-actionable-primary-background: var(--uitk-color-grey-80);
-  --uitk-actionable-primary-background-hover: var(--uitk-color-grey-80);
-  --uitk-actionable-primary-foreground: var(--uitk-color-grey-900);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-background: var(--uitk-color-grey-80);
-  --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-80);
-  --uitk-actionable-secondary-foreground: var(--uitk-color-grey-900);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-color-grey-900);
-  --uitk-actionable-cta-background: var(--uitk-color-blue-600);
-  --uitk-actionable-cta-foreground: var(--uitk-color-white);
+.uitk-density-high {
+  --toggleButton-icon-padding: 1px;
 }
 
-.uitk-density-touch .uitkToggleButton {
-  --toggle-button-icon-padding: 11px;
+.uitkToggleButton-horizontal.uitkToggleButton-iconOnly {
+  padding: var(--uitkToggleButton-icon-padding, var(--toggleButton-icon-padding));
 }
 
-.uitk-density-low .uitkToggleButton {
-  --toggle-button-icon-padding: 7px;
+/* CTA */
+.uitkToggleButton-cta {
+  --uitkButton-background: var(--uitk-selectable-background);
+  --uitkButton-background-hover: var(--uitk-selectable-cta-background-hover);
+  --uitkButton-background-active: var(--uitk-selectable-cta-background-selected);
+  --uitkButton-background-disabled: var(--uitk-selectable-background-disabled);
+
+  --uitkButton-text-color: var(--uitk-selectable-cta-foreground);
+  --uitkButton-text-color-hover: var(--uitk-selectable-cta-foreground-hover);
+  --uitkButton-text-color-active: var(--uitk-selectable-cta-foreground-selected);
+  --uitkButton-text-color-disabled: var(--uitk-selectable-cta-foreground-disabled);
+
+  --uitkIcon-color: var(--uitk-selectable-cta-foreground);
+}
+.uitkToggleButton-cta.uitkToggleButton-disabled.uitkButton-disabled {
+  --uitkButton-background-hover: var(--uitk-selectable-background-disabled);
+  --uitkButton-background-active: var(--uitk-selectable-cta-background-disabled);
+
+  --uitkButton-text-color-hover: var(--uitk-selectable-cta-foreground-disabled);
+  --uitkButton-text-color-active: var(--uitk-selectable-cta-foreground-disabled);
+
+  --uitkIcon-color: var(--uitk-selectable-cta-foreground-disabled);
+}
+.uitkToggleButton-cta.uitkToggleButton-disabled {
+  --uitkButton-background-active: var(--uitk-selectable-cta-background-selectedDisabled);
+  --uitkButton-text-color-active: var(--uitk-selectable-cta-foreground-selectedDisabled);
+  --uitkIcon-color-active: var(--uitk-selectable-cta-foreground-selectedDisabled);
+}
+.uitkToggleButton-cta.uitkToggleButton-toggled {
+  --uitkButton-background: var(--uitk-selectable-cta-background-selected);
+  --uitkButton-background-hover: var(--uitk-selectable-cta-background-selected);
+
+  --uitkButton-text-color: var(--uitk-selectable-cta-foreground-selected);
+  --uitkButton-text-color-hover: var(--uitk-selectable-cta-foreground-selected);
+
+  --uitkIcon-color: var(--uitk-selectable-cta-foreground-selected);
+}
+.uitkToggleButton-cta.uitkToggleButton-toggled.uitkToggleButton-disabled {
+  --uitkButton-background-disabled: var(--uitk-selectable-cta-background-selectedDisabled);
+  --uitkButton-background-hover: var(--uitk-selectable-cta-background-selectedDisabled);
+
+  --uitkButton-text-color-disabled: var(--uitk-selectable-cta-foreground-selectedDisabled);
+  --uitkButton-text-color-hover: var(--uitk-selectable-cta-foreground-selectedDisabled);
+
+  --uitkIcon-color: var(--uitk-selectable-cta-foreground-selectedDisabled);
 }
 
-.uitk-density-medium .uitkToggleButton {
-  --toggle-button-icon-padding: 5px;
+/* Primary */
+.uitkToggleButton-primary {
+  --uitkButton-background: var(--uitk-selectable-background);
+  --uitkButton-background-hover: var(--uitk-selectable-primary-background-hover);
+  --uitkButton-background-active: var(--uitk-selectable-primary-background-selected);
+  --uitkButton-background-disabled: var(--uitk-selectable-primary-background-disabled);
+
+  --uitkButton-text-color: var(--uitk-selectable-primary-foreground);
+  --uitkButton-text-color-hover: var(--uitk-selectable-primary-foreground-hover);
+  --uitkButton-text-color-active: var(--uitk-selectable-primary-foreground-selected);
+  --uitkButton-text-color-disabled: var(--uitk-selectable-primary-foreground-disabled);
+
+  --uitkIcon-color: var(--uitk-selectable-primary-foreground);
+}
+.uitkToggleButton-primary.uitkToggleButton-disabled.uitkButton-disabled {
+  --uitkButton-background-active: var(--uitk-selectable-primary-background-disabled);
+  --uitkButton-background-hover: var(--uitk-selectable-background-disabled);
+
+  --uitkButton-text-color-hover: var(--uitk-selectable-primary-foreground-disabled);
+  --uitkButton-text-color-active: var(--uitk-selectable-primary-foreground-disabled);
+
+  --uitkIcon-color: var(--uitk-selectable-primary-foreground-disabled);
+}
+.uitkToggleButton-primary.uitkToggleButton-disabled.uitkButton-active {
+  --uitkButton-background-active: var(--uitk-selectable-primary-background-selectedDisabled);
+  --uitkButton-text-color-active: var(--uitk-selectable-primary-foreground-selectedDisabled);
+}
+.uitkToggleButton-primary.uitkToggleButton-toggled {
+  --uitkButton-background: var(--uitk-selectable-primary-background-selected);
+  --uitkButton-background-hover: var(--uitk-selectable-primary-background-selected);
+
+  --uitkButton-text-color: var(--uitk-selectable-primary-foreground-selected);
+  --uitkButton-text-color-hover: var(--uitk-selectable-primary-foreground-selected);
+
+  --uitkIcon-color: var(--uitk-selectable-primary-foreground-selected);
+}
+.uitkToggleButton-primary.uitkToggleButton-toggled.uitkToggleButton-disabled {
+  --uitkButton-background-disabled: var(--uitk-selectable-primary-background-selectedDisabled);
+  --uitkButton-background-hover: var(--uitk-selectable-primary-background-selectedDisabled);
+
+  --uitkButton-text-color-disabled: var(--uitk-selectable-primary-foreground-selectedDisabled);
+  --uitkButton-text-color-hover: var(--uitk-selectable-primary-foreground-selectedDisabled);
+
+  --uitkIcon-color: var(--uitk-selectable-primary-foreground-selectedDisabled);
 }
 
-.uitk-density-high .uitkToggleButton {
-  --toggle-button-icon-padding: 1px;
-}
+/* Secondary */
+.uitkToggleButton-secondary {
+  --uitkButton-background: var(--uitk-selectable-background);
+  --uitkButton-background-hover: var(--uitk-selectable-secondary-background-hover);
+  --uitkButton-background-active: var(--uitk-selectable-secondary-background-selected);
+  --uitkButton-background-disabled: var(--uitk-selectable-background-disabled);
 
-.uitkToggleButton.uitkToggleButton-horizontal.uitkToggleButton-iconOnly {
-  padding: var(--toggle-button-icon-padding);
-}
+  --uitkButton-text-color: var(--uitk-selectable-secondary-foreground);
+  --uitkButton-text-color-hover: var(--uitk-selectable-secondary-foreground-hover);
+  --uitkButton-text-color-active: var(--uitk-selectable-secondary-foreground-selected);
+  --uitkButton-text-color-disabled: var(--uitk-selectable-secondary-foreground-disabled);
 
-.uitkToggleButton.uitkToggleButton-disabled {
-  opacity: var(--uitk-palette-opacity-foreground);
+  --uitkIcon-color: var(--uitk-selectable-secondary-foreground);
 }
+.uitkToggleButton-secondary.uitkToggleButton-disabled.uitkButton-disabled {
+  --uitkButton-background-active: var(--uitk-selectable-secondary-background-disabled);
+  --uitkButton-background-hover: var(--uitk-selectable-background-disabled);
 
-.uitk-light .uitkToggleButton.uitkToggleButton-toggled.uitkToggleButton-disabled {
-  color: var(--uitk-color-grey-900);
-  background-color: var(--uitk-color-grey-200);
+  --uitkButton-text-color-active: var(--uitk-selectable-secondary-foreground-disabled);
+  --uitkButton-text-color-hover: var(--uitk-selectable-secondary-foreground-disabled);
+
+  --uitkIcon-color: var(--uitk-selectable-secondary-foreground-disabled);
 }
-
-.uitk-light .uitkToggleButton-cta.uitkToggleButton-toggled.uitkToggleButton-disabled {
-  color: var(--uitk-color-white);
-  background-color: var(--uitk-color-blue-600);
+.uitkToggleButton-secondary.uitkToggleButton-disabled.uitkButton-active {
+  --uitkButton-background-active: var(--uitk-selectable-secondary-background-selectedDisabled);
+  --uitkButton-text-color-active: var(--uitk-selectable-secondary-foreground-selectedDisabled);
+  --uitkIcon-color-active: var(--uitk-selectable-secondary-foreground-selectedDisabled);
 }
+.uitkToggleButton-secondary.uitkToggleButton-toggled {
+  --uitkButton-background: var(--uitk-selectable-secondary-background-selected);
+  --uitkButton-background-hover: var(--uitk-selectable-secondary-background-selected);
 
-.uitk-dark .uitkToggleButton.uitkToggleButton-toggled.uitkToggleButton-disabled {
-  color: var(--uitk-color-white);
-  background-color: var(--uitk-color-grey-80);
+  --uitkButton-text-color: var(--uitk-selectable-secondary-foreground-selected);
+  --uitkButton-text-color-hover: var(--uitk-selectable-secondary-foreground-selected);
+
+  --uitkIcon-color: var(--uitk-selectable-secondary-foreground-selected);
 }
-
-.uitk-dark .uitkToggleButton-cta.uitkToggleButton-toggled.uitkToggleButton-disabled {
-  color: var(--uitk-color-white);
-  background-color: var(--uitk-color-blue-600);
+.uitkToggleButton-secondary.uitkToggleButton-toggled.uitkToggleButton-disabled {
+  --uitkButton-background-disabled: var(--uitk-selectable-secondary-background-selectedDisabled);
+  --uitkButton-background-hover: var(--uitk-selectable-secondary-background-selectedDisabled);
+  --uitkButton-text-color-disabled: var(--uitk-selectable-secondary-foreground-selectedDisabled);
+  --uitkButton-text-color-hover: var(--uitk-selectable-secondary-foreground-selectedDisabled);
+  --uitkIcon-color: var(--uitk-selectable-secondary-foreground-selectedDisabled);
 }

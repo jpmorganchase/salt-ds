@@ -1,6 +1,6 @@
 .uitkMenuTrigger {
   --button-open-color: var(--uitkMenuTrigger-button-open-color, var(--uitk-actionable-primary-foreground-active));
-  --icon-margin-left: var(--uitkMenuTrigger-icon-margin-left, var(--uitk-size-unit));
+  --icon-marginLeft: var(--uitkMenuTrigger-icon-marginLeft, var(--uitk-size-unit));
 }
 
 .uitkMenuTrigger {
@@ -25,5 +25,5 @@
 }
 
 .uitkMenuTrigger-caretIcon {
-  margin-left: var(--icon-margin-left);
+  margin-left: var(--icon-marginLeft);
 }

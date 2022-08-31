@@ -27,7 +27,7 @@
   --uitkGrid-padding: 4px;
   --uitkGrid-fontSize: 12px;
   /*Checkbox*/
-  --checkbox-font-size: 11px;
+  --checkbox-fontSize: 11px;
   /*CheckboxIcon*/
   --checkbox-density-bar-y: 5px;
   --checkbox-density-bar-height: 3px;
@@ -184,7 +184,7 @@
 }
 /*ToggleButton*/
 .uitk-density-ultrahigh .uitkGrid .uitkToggleButton {
-  --toggle-button-icon-padding: 1px;
+  --toggleButton-icon-padding: 1px;
 }
 
 .uitkGrid {

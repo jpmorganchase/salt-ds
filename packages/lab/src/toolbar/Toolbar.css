@@ -1,6 +1,6 @@
 .uitkToolbar {
   --toolbar-background: var(--uitk-container-background-high);
-  --toolbar-font-size: var(--uitk-text-fontSize);
+  --toolbar-fontSize: var(--uitk-text-fontSize);
   /* --uitkFormActivationIndicator-size: 0; */
 }
 
@@ -9,7 +9,7 @@
 
   background: var(--uitkToolbar-background, var(--toolbar-background));
   box-sizing: border-box;
-  font-size: var(--toolbar-font-size);
+  font-size: var(--toolbar-fontSize);
   justify-content: flex-start;
   overflow: hidden;
   position: relative;

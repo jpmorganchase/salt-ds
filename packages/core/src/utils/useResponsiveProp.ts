@@ -17,7 +17,7 @@ export const getCurrentBreakpoint = (
   const [currentBreakpoint] = (
     breakpointList as [keyof Breakpoints, number][]
   ).reduce((acc, val) => {
-    const [_, accWidth] = acc;
+    const [, accWidth] = acc;
     const [breakpoint, breakpointWidth] = val;
     if (breakpointWidth < width && breakpointWidth > accWidth) {
       return [breakpoint, breakpointWidth];
@@ -48,6 +48,7 @@ export const useOrderedBreakpoints = () => {
 
 const isObject = <T>(
   value: T
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): value is Record<string | number | symbol, any> => {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");
@@ -68,9 +69,7 @@ const getResponsiveValue = <T>(
   viewport: keyof Breakpoints,
   defaultValue: T
 ) => {
-  const value = Object.entries(breakpointValues).reduce<
-    [number, T] | [never, unknown]
-  >(
+  const value = Object.entries(breakpointValues).reduce<[number, T]>(
     (acc, val) => {
       const [accWidth] = acc;
       const [breakpoint, breakpointValue] = val;

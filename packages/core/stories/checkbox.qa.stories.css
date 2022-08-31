@@ -1,8 +1,8 @@
 .uitkCheckboxQA.uitkDocGrid,
 .uitkCheckboxQA .uitkDocGrid {
   --uitkDocGrid-gap: 8px;
-  --uitkDocGrid-padding-block-start: 8px;
-  --uitkDocGrid-padding-block-end: 8px;
+  --uitkDocGrid-paddingBlockStart: 8px;
+  --uitkDocGrid-paddingBlockEnd: 8px;
   --uitkDocGrid-height: 496px;
   --uitkDocGrid-width: 1145px;
 }
