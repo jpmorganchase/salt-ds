@@ -19,7 +19,7 @@ export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
   return (
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
-      <Scrim aria-label="Example Scrim" open={open} returnFocus>
+      <Scrim aria-label="Example Scrim" open={open}>
         <Button onClick={handleClose}>CLOSE SCRIM</Button>
       </Scrim>
     </>
@@ -146,10 +146,9 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
       <Scrim
         aria-label="Example Scrim"
         closeWithEscape
-        containerFix
         onClose={handleClose}
         open={open}
-        parentRef={parentRef}
+        containerRef={parentRef}
         className="uitkEmphasisLow"
         zIndex={2}
       >

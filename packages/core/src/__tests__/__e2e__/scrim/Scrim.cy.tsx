@@ -131,7 +131,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div ref={parentRef}>
-            <Scrim containerFix open={open} parentRef={parentRef}>
+            <Scrim open={open} containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -168,6 +168,57 @@ describe("Given a Scrim", () => {
     });
   });
 
+  describe("WHEN disableFocusTrap is true", () => {
+    it("THEN should allow focus to leave the focus trap", () => {
+      function TestComponent() {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <Scrim open={open} disableFocusTrap>
+              <button onClick={() => setOpen((old) => !old)}>
+                CLOSE SCRIM
+              </button>
+            </Scrim>
+            <button onClick={() => setOpen((old) => !old)}>OPEN SCRIM</button>
+          </>
+        );
+      }
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "OPEN SCRIM" }).click();
+      cy.findByRole("button", { name: "CLOSE SCRIM" }).should("have.focus");
+      cy.findByRole("button", { name: "CLOSE SCRIM" }).realPress("Tab");
+      // findByRole doesn't work here because FocusManager puts aria-hidden on all the elements outside its scope
+      cy.contains("button", "OPEN SCRIM").should("have.focus");
+    });
+  });
+
+  describe("WHEN disableReturnFocus is true", () => {
+    it("THEN should NOT return focus to the last focused element before", () => {
+      function TestComponent() {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <Scrim open={open} disableReturnFocus>
+              <button onClick={() => setOpen((old) => !old)}>
+                CLOSE SCRIM
+              </button>
+            </Scrim>
+            <button onClick={() => setOpen((old) => !old)}>OPEN SCRIM</button>
+          </>
+        );
+      }
+      cy.mount(<TestComponent />);
+
+      cy.findByRole("button", { name: "OPEN SCRIM" }).click();
+      cy.findByRole("button", { name: "CLOSE SCRIM" })
+        .should("have.focus")
+        .realClick();
+      cy.wait(50);
+      cy.findByRole("button", { name: "OPEN SCRIM" }).should("not.have.focus");
+    });
+  });
+
   describe("WHEN in a container state", () => {
     it("THEN should prevent selection to siblings and niblings", () => {
       function TestComponent() {
@@ -175,7 +226,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div data-testid="parent" ref={parentRef}>
-            <Scrim containerFix open={open} parentRef={parentRef}>
+            <Scrim open={open} containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -193,10 +244,21 @@ describe("Given a Scrim", () => {
     });
 
     it("THEN should have `aria-modal=false` and `role=dialog`", () => {
-      cy.mount(<Scrim containerFix open />);
+      function TestComponent() {
+        const parentRef = useRef<HTMLDivElement>(null);
+        return (
+          <div data-testid="parent" ref={parentRef}>
+            <Scrim open containerRef={parentRef}>
+              <button>button</button>
+            </Scrim>
+          </div>
+        );
+      }
+      cy.mount(<TestComponent />);
       cy.findByRole("dialog")
         .should("exist")
-        .and("have.attr", "aria-modal", "false");
+        .and("have.attr", "aria-modal", "false")
+        .and("have.attr", "role", "dialog");
     });
   });
 
