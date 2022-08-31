@@ -1,4 +1,4 @@
-/* Main css class. Body style */
+/* Main css class. Style for body text */
 .uitkText {
   color: var(--uitk-text-primary-foreground);
   font-size: var(--uitk-text-fontSize);

@@ -11,6 +11,9 @@ import {
   LabelCaption,
   P,
   Span,
+  Figure1,
+  Figure2,
+  Figure3,
 } from "@jpmorganchase/uitk-lab";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { withFlexGap } from "docs/decorators/withFlexGap";
@@ -23,16 +26,11 @@ import {
 
 # Typography
 
-We've created a Text component that contains our key typography styles which can improve the effeiciency when building UI components that have typography styles.
-Text component is the base of all typography components. This way any text can benefit of the base functionality like truncation and tooltip.
-
-## Props
-
-<ArgsTable of={Text} />
+We've created a base Text component (that contains our key typography styles and functionality) and more typography components which derive from it: H1, H2, H3, H4, Div, Span, P, LabelCaption, Code etc. Using the Text components will guarantee that the typography styles are consistent throughout the app.
 
 ## Typography components
 
-We've created a set of components that are most commonly used, but it's easy to generate your own by passing the tag you want to be returned into the `elementType` prop.
+We've created a set of components that are most commonly used, but it's easy to generate your own by passing the tag you want to be returned into the `elementType` prop. The base Text component is generating a `div` by default
 
 ### Default Text
 
@@ -42,6 +40,18 @@ We've created a set of components that are most commonly used, but it's easy to 
       <div>
         <h4>Default</h4>
         <Text>This is a text example</Text>
+      </div>
+      <div>
+        <h4>Strong</h4>
+        <Text>
+          <strong>This is a text example</strong>
+        </Text>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <Text>
+          <small>This is a text example</small>
+        </Text>
       </div>
       <div>
         <h4>Truncated</h4>
@@ -65,12 +75,22 @@ We've created a set of components that are most commonly used, but it's easy to 
         <H1>This is a text example</H1>
       </div>
       <div>
+        <h4>Strong</h4>
+        <H1>
+          <strong>This is a text example</strong>
+        </H1>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <H1>
+          <small>This is a text example</small>
+        </H1>
+      </div>
+      <div>
         <h4>Truncated</h4>
-        <div style={{ width: 100 }}>
-          <H1 truncate maxRows={1}>
-            This is a text example
-          </H1>
-        </div>
+        <H1 truncate maxRows={1}>
+          This is a text example
+        </H1>
       </div>
     </div>
   </Story>
@@ -86,8 +106,20 @@ We've created a set of components that are most commonly used, but it's easy to 
         <H2>This is a text example</H2>
       </div>
       <div>
+        <h4>Strong</h4>
+        <H2>
+          <strong>This is a text example</strong>
+        </H2>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <H2>
+          <small>This is a text example</small>
+        </H2>
+      </div>
+      <div>
         <h4>Truncated</h4>
-        <div style={{ width: 100 }}>
+        <div style={{ width: 130 }}>
           <H2 truncate maxRows={1}>
             This is a text example
           </H2>
@@ -105,6 +137,18 @@ We've created a set of components that are most commonly used, but it's easy to 
       <div>
         <h4>Default</h4>
         <H3>This is a text example</H3>
+      </div>
+      <div>
+        <h4>Strong</h4>
+        <H3>
+          <strong>This is a text example</strong>
+        </H3>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <H3>
+          <small>This is a text example</small>
+        </H3>
       </div>
       <div>
         <h4>Truncated</h4>
@@ -128,6 +172,18 @@ We've created a set of components that are most commonly used, but it's easy to 
         <H4>This is a text example</H4>
       </div>
       <div>
+        <h4>Strong</h4>
+        <H4>
+          <strong>This is a text example</strong>
+        </H4>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <H4>
+          <small>This is a text example</small>
+        </H4>
+      </div>
+      <div>
         <h4>Truncated</h4>
         <div style={{ width: 100 }}>
           <H4 truncate maxRows={1}>
@@ -147,6 +203,18 @@ We've created a set of components that are most commonly used, but it's easy to 
       <div>
         <h4>Default</h4>
         <Div>This is a text example</Div>
+      </div>
+      <div>
+        <h4>Strong</h4>
+        <Div>
+          <strong>This is a text example</strong>
+        </Div>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <Div>
+          <small>This is a text example</small>
+        </Div>
       </div>
       <div>
         <h4>Truncated</h4>
@@ -170,6 +238,18 @@ We've created a set of components that are most commonly used, but it's easy to 
         <Span>This is a text example</Span>
       </div>
       <div>
+        <h4>Strong</h4>
+        <Span>
+          <strong>This is a text example</strong>
+        </Span>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <Span>
+          <small>This is a text example</small>
+        </Span>
+      </div>
+      <div>
         <h4>Truncated</h4>
         <div style={{ width: 100 }}>
           <Span truncate maxRows={1}>
@@ -189,6 +269,18 @@ We've created a set of components that are most commonly used, but it's easy to 
       <div>
         <h4>Default</h4>
         <P>This is a text example</P>
+      </div>
+      <div>
+        <h4>Strong</h4>
+        <P>
+          <strong>This is a text example</strong>
+        </P>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <P>
+          <small>This is a text example</small>
+        </P>
       </div>
       <div>
         <h4>Truncated</h4>
@@ -212,6 +304,18 @@ We've created a set of components that are most commonly used, but it's easy to 
         <LabelCaption>This is a text example</LabelCaption>
       </div>
       <div>
+        <h4>Strong</h4>
+        <LabelCaption>
+          <strong>This is a text example</strong>
+        </LabelCaption>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <LabelCaption>
+          <small>This is a text example</small>
+        </LabelCaption>
+      </div>
+      <div>
         <h4>Truncated</h4>
         <div style={{ width: 100 }}>
           <LabelCaption truncate maxRows={1}>
@@ -231,6 +335,18 @@ We've created a set of components that are most commonly used, but it's easy to 
       <div>
         <h4>Default</h4>
         <HelpText>This is a text example</HelpText>
+      </div>
+      <div>
+        <h4>Strong</h4>
+        <HelpText>
+          <strong>This is a text example</strong>
+        </HelpText>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <HelpText>
+          <small>This is a text example</small>
+        </HelpText>
       </div>
       <div>
         <h4>Truncated</h4>
@@ -254,8 +370,20 @@ We've created a set of components that are most commonly used, but it's easy to 
         <Code>This is a text example</Code>
       </div>
       <div>
+        <h4>Strong</h4>
+        <Code>
+          <strong>This is a text example</strong>
+        </Code>
+      </div>
+      <div>
+        <h4>Small</h4>
+        <Code>
+          <small>This is a text example</small>
+        </Code>
+      </div>
+      <div>
         <h4>Truncated</h4>
-        <div style={{ width: 100 }}>
+        <div style={{ width: 130 }}>
           <Code truncate maxRows={1}>
             This is a text example
           </Code>
@@ -264,3 +392,92 @@ We've created a set of components that are most commonly used, but it's easy to 
     </div>
   </Story>
 </Canvas>
+
+### Figure1
+
+<Canvas>
+  <Story name="Figure1" decorators={[withFlexGap]}>
+    <Figure1>$801.9B</Figure1>
+  </Story>
+</Canvas>
+
+### Figure2
+
+<Canvas>
+  <Story name="Figure2" decorators={[withFlexGap]}>
+    <Figure2>$801.9B</Figure2>
+  </Story>
+</Canvas>
+
+### Figure3
+
+<Canvas>
+  <Story name="Figure3" decorators={[withFlexGap]}>
+    <Figure3>$801.9B</Figure3>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Text, H1, H2, H3, H4, Div, Span, P, LabelCaption, HelpText, Code, Figure1, Figure2, Figure3 } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Text} />
+
+## HTML Anatomy of a Text component
+
+<Canvas>
+  <ComponentAnatomy>
+    <Text>Default</Text>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <H1>H1</H1>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <H2>H2</H2>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <H3>H3</H3>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <H4>H4</H4>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Div>Div</Div>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Span>Span</Span>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <P>P</P>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <LabelCaption>LabelCaption</LabelCaption>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <HelpText>HelpText</HelpText>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Code>Code</Code>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Figure1>$801.9B</Figure1>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Figure2>$801.9B</Figure2>
+  </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Figure3>$801.9B</Figure3>
+  </ComponentAnatomy>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Text} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Text} />
