@@ -67,11 +67,11 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
           "No main section has been found. A main section should be provided."
         );
       }
-    }, [children]);
+    }, [borderAreas, children]);
 
     const borderLayoutStyles = {
       ...style,
-      "--grid-layout-grid-template": gridTemplateAreas,
+      "--grid-layout-gridTemplate": gridTemplateAreas,
     };
 
     return (

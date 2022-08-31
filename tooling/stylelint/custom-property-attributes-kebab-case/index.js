@@ -1,7 +1,8 @@
 "use strict";
 
-const valueParser = require("postcss-value-parser");
+const properties = require("known-css-properties").all;
 const stylelint = require("stylelint");
+const valueParser = require("postcss-value-parser");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -36,11 +37,10 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundation-color";
+const ruleName = "uitk/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
-    `No foundation or palette color should be used in component`, // Can encode option in error message if needed
+  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -48,57 +48,26 @@ const meta = {
   url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
-/**
- * Test whether a property value is from theme.
- *
- * We have 2 type of `--uitk` prefixes
- * - `--uitk-xyz` from theme
- * - `--uitkAbc` from a component
- */
-const isUitkThemeCustomProperty = function (property) {
-  return property.startsWith("--uitk-");
-};
+const cssAttributes = properties
+  .filter((x) => !x.startsWith("-")) /* e.g. -webkit- */
+  .filter((x) =>
+    x.includes("-")
+  ); /* only need to check properting needing kebab case */
 
 /**
- * Test whether a property value is for backwards compatibility
+ * Test whether a property contains CSS attr
  */
-const isBackwardsCompatToken = function (property) {
-  return property.startsWith("--backwardsCompat-");
+const includesCssAttribute = function (property) {
+  return (
+    property.startsWith("--") &&
+    cssAttributes.find(
+      (attr) =>
+        property.includes(`-${attr}-`) ||
+        (property.endsWith(`-${attr}`) &&
+          property !== `--uitk-${attr}`) /* --uitk-animation-duration */
+    )
+  );
 };
-
-const allAllowedKeys = [
-  // characteristics
-  "accent",
-  "actionable",
-  "container",
-  "differential",
-  "draggable",
-  "droptarget",
-  "editable",
-  "focused",
-  "measured",
-  "navigable",
-  "overlayable",
-  "ratable",
-  "selectable",
-  "separable",
-  "status",
-  "taggable",
-  "text",
-  // additional to decide
-  "animation",
-  "delay", // to be merged with animation
-  "palette", // currently for opacity purposes
-  "size",
-  "opacity",
-  "separator",
-  "typography",
-  "zIndex", // to be added to overlayable
-];
-
-const regexpPattern = new RegExp(
-  `--uitk(w+)?-(${allAllowedKeys.join("|")})-.+`
-);
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -107,23 +76,11 @@ module.exports = stylelint.createPlugin(
       const verboseLog = primary.logLevel === "verbose";
 
       function check(property) {
-        const checkResult =
-          !isUitkThemeCustomProperty(property) ||
-          regexpPattern.test(property) ||
-          !isBackwardsCompatToken(property);
+        const checkResult = includesCssAttribute(property);
         verboseLog && console.log("Checking", checkResult, property);
-        return checkResult;
+        return !checkResult;
       }
-
       root.walkDecls((decl) => {
-        if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
@@ -148,9 +105,9 @@ module.exports = stylelint.createPlugin(
           );
         });
 
-        verboseLog && console.log({ prop });
-
         if (check(prop)) return;
+
+        verboseLog && console.log({ prop });
 
         complain(0, prop.length, decl);
       });

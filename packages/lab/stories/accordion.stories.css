@@ -19,14 +19,14 @@
   --uitkAccordionSummary-background: rgb(237, 237, 237);
   --uitkAccordionSummary-background-active: rgb(237, 237, 237);
   --uitkAccordionDetails-padding: 1rem;
-  --uitkAccordionSection-border-color: #6c6e6e;
-  --uitkAccordionSection-border-width: 1px;
-  --uitkAccordionSection-margin-bottom: 1rem;
+  --uitkAccordionSection-borderColor: #6c6e6e;
+  --uitkAccordionSection-borderWidth: 1px;
+  --uitkAccordionSection-marginBottom: 1rem;
   --uitkAccordionSummary-icon-expand-transform: scaleY(-1);
   --uitkAccordionSummary-icon-transition: transform 300ms ease;
-  --uitkAccordion-border-style: solid;
-  --uitkAccordion-border-color: #6c6e6e;
-  --uitkAccordion-border-width: 2px;
+  --uitkAccordion-borderStyle: solid;
+  --uitkAccordion-borderColor: #6c6e6e;
+  --uitkAccordion-borderWidth: 2px;
   --uitkAccordion-padding: 1rem;
-  --uitkAccordion-border-radius: 4px;
+  --uitkAccordion-borderRadius: 4px;
 }

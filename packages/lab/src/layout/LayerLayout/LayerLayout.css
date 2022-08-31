@@ -2,7 +2,7 @@
   --layerLayout-borderColor: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderColor-medium));
   --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
   --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
-  --layerLayout-borderWidth: var(--uitkLayerLayout-border-color, var(--uitk-container-border-width));
+  --layerLayout-borderWidth: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderWidth));
   --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
   --layerLayout-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
   --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));

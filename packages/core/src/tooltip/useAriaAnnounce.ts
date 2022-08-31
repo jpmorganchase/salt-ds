@@ -10,11 +10,13 @@ function getDocument(floating: HTMLElement | null) {
   return floating?.ownerDocument ?? document;
 }
 
+// TODO: Check whether can be anything more restrictive than `any`
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getWindow(value: any) {
   return getDocument(value).defaultView ?? window;
 }
 
-function isElement(value: any): value is HTMLElement {
+function isElement(value: unknown): value is HTMLElement {
   return value ? value instanceof getWindow(value).Element : false;
 }
 

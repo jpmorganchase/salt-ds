@@ -21,7 +21,7 @@
 }
 
 .uitkGridLayout-area {
-  grid-template: var(--grid-layout-grid-template);
+  grid-template: var(--grid-layout-gridTemplate);
   grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content 1fr min-content;
 }

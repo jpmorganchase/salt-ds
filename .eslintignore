@@ -9,6 +9,7 @@ node_modules
 /coverage
 
 # production
+/dist
 /packages/*/build
 /packages/*/dist-cjs/
 /packages/*/dist-es/

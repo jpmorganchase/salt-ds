@@ -32,8 +32,8 @@ For layouts where you need to control the two dimensions, see [Grid layout](?pat
 
 ## How you can use Flex layout
 
-Out of the box, flex layout will spread items horizontally disabling them to wrap unless responsive props are passed.
-FlexLayout is useful when you want a layout that flows in a single dimension where the dimension changes dependant on something external like viewport size.
+Out of the box, flex layout will spread items horizontally allowing them to wrap unless responsive props are passed.
+FlexLayout is useful when you want a layout that flows in a single dimension where the dimension changes depending on something external like viewport size.
 
 If you want your layout to have a constant direction, we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page) or [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page)
 
@@ -45,7 +45,7 @@ import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-core";
 
 ## Props
 
-**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes
+**ResponsiveProp** refers to a prop than take either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes.
 For the following example, we can think about a layout that will change direction from rows to columns as the breakpoints change.
 
 ```
@@ -58,7 +58,7 @@ direction={{ xs: "row", sm: "column", lg: "row", md: "column", xl: "row" }}
 
 ### Flex Item inside default flex layout
 
-A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and it's alignment.
+A flex item allows more complex controls to the default behaviour of a flex child, like defining the priority with which an element grows/shrink and its alignment.
 
 <Canvas>
   <Story id="core-layout-flexlayout-flexitem--flex-item-wrapper" />
@@ -76,16 +76,16 @@ The Flex layout gap will apply to both sides of the separator line.
 
 ### Responsive
 
-The flex layout supports the use of responsive props, so you can defined different behaviours based on viewport size.
-You can use the default breakpoints or pass in you own.
+The flex layout supports the use of responsive props, so you can define different behaviours based on viewport size.
+You can use the default breakpoints or pass in your own.
 
 <Canvas>
-  <Story id="core-layout-flexlayout--toolkit-flex-layout-responsive" />
+  <Story id="core-layout-flexlayout--flex-layout-using-responsive-props" />
 </Canvas>
 
 ### Simple Usage
 
-The simple usage examples shows a group of elements inside a flex container with `wrap`
+The simple usage example shows a group of elements inside a flex container with `wrap`
 
 <Canvas>
   <Story id="core-layout-flexlayout--flex-layout-simple-usage" />
@@ -99,7 +99,7 @@ The simple usage examples shows a group of elements inside a flex container with
 
 ## Related components
 
-The flex layout is used in the following components
+The flex layout is used in the following components:
 
 - [Split layout](?path=/docs/documentation-core-layout-splitlayout--page)
 - [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page)

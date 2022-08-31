@@ -46,7 +46,20 @@ const ToggleButtonTemplate: ComponentStory<typeof ToggleButton> = ({
   );
 };
 
-export const DefaultButton = ToggleButtonTemplate.bind({});
+export const PrimaryButton = ToggleButtonTemplate.bind({});
+PrimaryButton.args = {
+  variant: "primary",
+};
+
+export const CTAButton = ToggleButtonTemplate.bind({});
+CTAButton.args = {
+  variant: "cta",
+};
+
+export const SecondaryButton = ToggleButtonTemplate.bind({});
+SecondaryButton.args = {
+  variant: "secondary",
+};
 
 export const DisabledButton = ToggleButtonTemplate.bind({});
 DisabledButton.args = {
@@ -418,7 +431,7 @@ export const VerticalButtonGroupDisabledWithFocus: ComponentStory<
       orientation="vertical"
       selectedIndex={1}
     >
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton toggled={true} ariaLabel="alert" tooltipText="Alert">
         <NotificationIcon /> Alert
       </ToggleButton>
       <ToggleButton ariaLabel="home" tooltipText="Home">

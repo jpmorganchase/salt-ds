@@ -23,7 +23,7 @@
 
 /* Styles applied to status actions */
 .uitkContentStatus-actions {
-  margin-top: var(--uitkContentStatus-actions-margin-top, var(--uitk-size-unit));
+  margin-top: var(--uitkContentStatus-actions-marginTop, var(--uitk-size-unit));
 }
 
 /* Styles applied if `status="error"` */

@@ -16,7 +16,7 @@ import { ViewportProvider } from "../viewport";
 
 export const DEFAULT_DENSITY = "medium";
 
-// TODDO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
+// TODO this forces anyone using ToolkitContext directly to deal with themes (as opposed to theme)
 // needs more thought
 export interface ToolkitContextProps {
   density?: Density;
@@ -54,7 +54,6 @@ const createThemedChildren = (
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: cx(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           children.props?.className,
           ...themeNames.map((themeName) => `uitk-${themeName}`),
           `uitk-density-${density}`

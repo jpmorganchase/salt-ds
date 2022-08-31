@@ -34,7 +34,7 @@
   color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-foreground));
   display: block;
   font-size: var(--formLabel-fontSize);
-  margin-bottom: var(--uitkFormLabel-margin-Bottom, var(--formLabel-marginBottom));
+  margin-bottom: var(--uitkFormLabel-marginBottom, var(--formLabel-marginBottom));
   min-height: var(--uitkFormLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
   margin-top: var(--uitkFormLabel-marginTop, 0px);
   line-height: var(--uitkFormLabel-lineHeight, var(--uitk-text-lineHeight));
