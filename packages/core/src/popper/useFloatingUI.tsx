@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import type { Props } from "@floating-ui/react-dom-interactions";
 import {
   autoUpdate,
   flip,
@@ -6,7 +6,6 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react-dom-interactions";
-import type { Props } from "@floating-ui/react-dom-interactions";
 import { isDesktop } from "../window";
 
 export type UseFloatingUIProps = Partial<

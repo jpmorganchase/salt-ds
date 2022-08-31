@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Calendar, CalendarProps } from "@jpmorganchase/uitk-lab";
 import {
-  getDayOfWeek,
   getLocalTimeZone,
   today,
   DateFormatter,
   DateValue,
+  getDayOfWeek,
+  isSameDay,
+  parseDate,
+  startOfMonth,
+  endOfMonth,
 } from "@internationalized/date";
+import { getHolidays } from "nyse-holidays";
 
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
@@ -30,17 +35,27 @@ const Template: ComponentStory<typeof Calendar> = (args) => {
 
 export const DefaultCalendar = Template.bind({});
 
-export const UnselectableHighEmphasisDates = Template.bind({});
-UnselectableHighEmphasisDates.args = {
-  isDayUnselectable: (day) =>
-    today(localTimeZone).compare(day) > 0
-      ? { emphasis: "high", tooltip: "Date is in the past." }
-      : false,
-};
+export const UnselectableDates = Template.bind({});
+UnselectableDates.args = {
+  isDayUnselectable: (day) => {
+    const nyseHolidays = getHolidays(day.year);
+    // Saturday & Sunday
+    if (getDayOfWeek(day, currentLocale) >= 5) {
+      return {
+        emphasis: "low",
+      };
+    }
 
-export const UnselectableLowEmphasisDates = Template.bind({});
-UnselectableLowEmphasisDates.args = {
-  isDayUnselectable: (day) => getDayOfWeek(day, currentLocale) >= 5,
+    const holiday = nyseHolidays.find((h) =>
+      isSameDay(parseDate(h.dateString), day)
+    );
+    if (holiday) {
+      return {
+        emphasis: "medium",
+        tooltip: `This is a NYSE Holiday (${holiday.name})`,
+      };
+    }
+  },
 };
 
 function renderDayContents(day: DateValue) {
@@ -54,6 +69,8 @@ CustomDayRender.args = {
   renderDayContents,
 };
 
+console.log(today(localTimeZone));
+
 export const FadeMonthAnimation = Template.bind({});
 FadeMonthAnimation.args = {
   className: "FadeMonthAnimation",
@@ -62,8 +79,8 @@ FadeMonthAnimation.args = {
 export const NavigationBlocked = Template.bind({});
 
 NavigationBlocked.args = {
-  minDate: today(localTimeZone).subtract({ months: 2 }),
-  maxDate: today(localTimeZone).add({ months: 2 }),
+  minDate: startOfMonth(today(localTimeZone)),
+  maxDate: endOfMonth(today(localTimeZone)),
 };
 
 export const RangeSelection = Template.bind({});
@@ -74,8 +91,7 @@ RangeSelection.args = {
 export const OffsetSelection = Template.bind({});
 OffsetSelection.args = {
   selectionVariant: "offset",
-  startDateOffset: (date) => date.subtract({ days: 2 }),
-  endDateOffset: (date) => date.add({ days: 2 }),
+  endDateOffset: (date) => date.add({ days: 4 }),
 };
 
 export const MultiSelection = Template.bind({});
@@ -104,7 +120,7 @@ export const TwinCalendars: ComponentStory<typeof Calendar> = () => {
     };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", gap: 16 }}>
       <Calendar
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
@@ -118,6 +134,7 @@ export const TwinCalendars: ComponentStory<typeof Calendar> = () => {
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
+        defaultVisibleMonth={today(localTimeZone).add({ months: 1 })}
       />
     </div>
   );

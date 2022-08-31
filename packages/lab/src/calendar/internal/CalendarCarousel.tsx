@@ -51,6 +51,7 @@ export const CalendarCarousel = forwardRef<
     } else {
       containerRef.current?.classList.add(withBaseName("shouldAnimate"));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formatDate(visibleMonth), formatDate(previousVisibleMonth)]);
 
   useIsomorphicLayoutEffect(() => {

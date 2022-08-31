@@ -1,0 +1,56 @@
+diff --git a/dist-cjs/check/verifyWorkspaceDependencies.js b/dist-cjs/check/verifyWorkspaceDependencies.js
+index 409f458d7e1757ccd6569d92a5d368c8dadccd9b..f3e8c4423cc8a8805139216e3592c22bfcf3806b 100644
+--- a/dist-cjs/check/verifyWorkspaceDependencies.js
++++ b/dist-cjs/check/verifyWorkspaceDependencies.js
+@@ -40,11 +40,6 @@ async function check(target) {
+       valid = false;
+     }
+ 
+-    if (!packageInfo.location.startsWith('packages')) {
+-      logger.error(`${packageName} is not located within the "/packages" directory in the repository, instead found "${packageInfo.location}"`);
+-      valid = false;
+-    }
+-
+     if (!(0, _isModularType.isValidModularType)(path.join(modularRoot, packageInfo.location))) {
+       logger.error(`${packageName} at ${packageInfo.location} is not a valid modular type - Found ${(0, _isModularType.getModularType)(packageInfo.location)}`);
+       valid = false;
+diff --git a/dist-cjs/typecheck.js b/dist-cjs/typecheck.js
+index 862bc50e7be846106cd3647be9dd50f747eb2b15..9f78bf7620f32e4044a2d9b58a4f555ba2d23ef0 100644
+--- a/dist-cjs/typecheck.js
++++ b/dist-cjs/typecheck.js
+@@ -36,7 +36,7 @@ async function typecheck() {
+     ...rest
+   } = typescriptConfig;
+   const tsConfig = { ...rest,
+-    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', '**/__fixtures__'],
++    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', '**/__fixtures__', ...(Array.isArray(rest.exclude) ? rest.exclude : [])],
+     compilerOptions: {
+       noEmit: true
+     }
+diff --git a/dist-cjs/utils/getPackageMetadata.js b/dist-cjs/utils/getPackageMetadata.js
+index f77a29810ef1ccaf429c0ea69f9154a2da1ea6ce..9677fbddefa821702ddd464239aff3236b4fd125 100644
+--- a/dist-cjs/utils/getPackageMetadata.js
++++ b/dist-cjs/utils/getPackageMetadata.js
+@@ -64,7 +64,7 @@ async function getPackageMetadata() {
+   Object.assign(typescriptConfig, configObject, {
+     // TODO: should probably include the original exclude in this
+     exclude: distinct([// all TS test files, regardless whether co-located or in test/ etc
+-    '**/*.stories.ts', '**/*.stories.tsx', '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
++    '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
+     'node_modules', 'bower_components', 'jspm_packages', 'tmp', // Casting so that configObject.exclude is set to the correct typing
+     // Since configObject is a index type all values are "any" implicitly.
+     ...(configObject.exclude || [])])
+diff --git a/react-scripts/config/paths.js b/react-scripts/config/paths.js
+index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..8c7003618ad4724b75c38a1aabe9417fb19fe09f 100644
+--- a/react-scripts/config/paths.js
++++ b/react-scripts/config/paths.js
+@@ -88,6 +88,9 @@ module.exports = {
+   appSrc: resolveApp('src'),
+   modularSrc: [
+     resolveModular('packages'),
++    resolveModular('playground'),
++    resolveModular('tooling'),
++    resolveModular('docs'),
+     resolveModular('node_modules/.modular'),
+   ],
+   appTsConfig: resolveApp('tsconfig.json'),

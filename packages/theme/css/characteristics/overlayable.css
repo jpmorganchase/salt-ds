@@ -1,7 +1,7 @@
 .uitk-light,
 .uitk-dark {
   --uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);
-  --uitk-overlayable-shadow-border-region: var(--uitk-shadow-2);
+  --uitk-overlayable-shadow-borderRegion: var(--uitk-shadow-2);
   --uitk-overlayable-shadow: var(--uitk-shadow-2);
   --uitk-overlayable-shadow-hover: var(--uitk-shadow-3);
   --uitk-overlayable-shadow-popout: var(--uitk-shadow-4);

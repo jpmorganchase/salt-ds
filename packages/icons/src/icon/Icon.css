@@ -5,7 +5,7 @@
 
 .uitkIcon {
   fill: var(--uitkIcon-color, var(--icon-color));
-  letter-spacing: var(--uitkIcon-letter-spacing, normal);
+  letter-spacing: var(--uitkIcon-letterSpacing, normal);
   speak: none;
   display: inline-block;
   margin: var(--uitkIcon-margin, 0);

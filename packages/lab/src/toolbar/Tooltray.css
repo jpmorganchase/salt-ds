@@ -18,7 +18,7 @@
 }
 
 .uitkTooltray > .Responsive-inner > .uitkToolbarField {
-  /* --uitkButton-focused-outline-style: none; */
+  /* --uitkButton-focused-outlineStyle: none; */
   flex-shrink: 0;
   flex-grow: 0;
 }

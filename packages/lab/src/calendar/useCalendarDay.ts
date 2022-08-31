@@ -21,7 +21,7 @@ export type DayStatus = {
   outOfRange?: boolean;
   selected?: boolean;
   today?: boolean;
-  unselectable?: "high" | "low" | false;
+  unselectable?: "medium" | "low" | false;
   focused?: boolean;
   hidden?: boolean;
 };
@@ -76,10 +76,7 @@ export function useCalendarDay(
   const unselectableResult =
     isDayUnselectable(date) || (outOfRange && isOutsideAllowedMonths(date));
   const unselectableReason =
-    typeof unselectableResult !== "boolean" &&
-    unselectableResult.emphasis === "high"
-      ? unselectableResult?.tooltip
-      : "";
+    typeof unselectableResult !== "boolean" ? unselectableResult?.tooltip : "";
   const unselectable =
     typeof unselectableResult !== "boolean"
       ? unselectableResult.emphasis

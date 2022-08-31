@@ -60,7 +60,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
           {days.map((day) => {
             return (
               <CalendarDay
-                key={formatDate(date)}
+                key={formatDate(day.date)}
                 day={day.date}
                 renderDayContents={renderDayContents}
                 month={date}

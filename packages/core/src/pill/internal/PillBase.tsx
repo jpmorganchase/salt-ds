@@ -135,9 +135,13 @@ export const PillBase = forwardRef(function PillBase(
   const clickKeys = ["Enter", " "];
 
   const pillIcon =
+    // FIXME: icon type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon && isValidElement<any>(icon)
       ? cloneElement(icon, {
           ...icon.props,
+          // FIXME: icon.props is any
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           className: cn(withBaseName("icon"), icon.props.className),
         })
       : icon;
@@ -161,10 +165,14 @@ export const PillBase = forwardRef(function PillBase(
   const Component = deletable || clickable ? DivButton : "div";
 
   const renderDeleteIcon = () => {
+    // FIXME: deleteIconProp type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (deleteIconProp && isValidElement<any>(deleteIconProp)) {
       return cloneElement(deleteIconProp, {
         className: cn(
           withBaseName(`deleteButton`),
+          // FIXME: deleteIconProp.props is any
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           deleteIconProp.props.className
         ),
         disabled,

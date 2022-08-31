@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundation-color";
+const ruleName = "uitk/custom-property-no-foundations";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
@@ -57,6 +57,13 @@ const meta = {
  */
 const isUitkThemeCustomProperty = function (property) {
   return property.startsWith("--uitk-");
+};
+
+/**
+ * Test whether a property value is for backwards compatibility
+ */
+const isBackwardsCompatToken = function (property) {
+  return property.startsWith("--backwardsCompat-");
 };
 
 const allAllowedKeys = [
@@ -98,7 +105,9 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isUitkThemeCustomProperty(property) || regexpPattern.test(property);
+          !isUitkThemeCustomProperty(property) ||
+          regexpPattern.test(property) ||
+          !isBackwardsCompatToken(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }

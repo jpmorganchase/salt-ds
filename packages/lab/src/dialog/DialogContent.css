@@ -1,9 +1,9 @@
 .uitkDialogContent {
-  --dialog-content-font-size: var(--uitkDialogContent-font-size, var(--uitk-text-fontSize));
-  --dialog-content-line-height: var(--uitkDialogContent-line-height, var(--uitk-text-lineHeight));
-  --dialog-content-padding-top: var(--uitkDialogContent-padding-top, calc(var(--uitk-size-unit) * 2));
-  --dialog-content-padding-bottom: var(--uitkDialogContent-padding-bottom, calc(var(--uitk-size-unit) * 3));
-  --dialog-content-min-height: var(--uitkDialogContent-min-height, var(--dialog-content-font-size));
+  --dialog-content-fontSize: var(--uitkDialogContent-fontSize, var(--uitk-text-fontSize));
+  --dialog-content-lineHeight: var(--uitkDialogContent-lineHeight, var(--uitk-text-lineHeight));
+  --dialog-content-paddingTop: var(--uitkDialogContent-paddingTop, calc(var(--uitk-size-unit) * 2));
+  --dialog-content-paddingBottom: var(--uitkDialogContent-paddingBottom, calc(var(--uitk-size-unit) * 3));
+  --dialog-content-minHeight: var(--uitkDialogContent-minHeight, var(--dialog-content-fontSize));
   --dialog-content-color: var(--uitkDialogContent-color, var(--uitk-text-primary-foreground));
 }
 
@@ -11,11 +11,11 @@
   flex: 1 1 auto;
   overflow: visible;
   font-weight: var(--uitk-text-fontWeight);
-  font-size: var(--dialog-content-font-size);
-  padding-top: var(--dialog-content-padding-top);
-  padding-bottom: var(--dialog-content-padding-bottom);
-  min-height: var(--dialog-content-min-height);
-  line-height: var(--dialog-content-line-height);
+  font-size: var(--dialog-content-fontSize);
+  padding-top: var(--dialog-content-paddingTop);
+  padding-bottom: var(--dialog-content-paddingBottom);
+  min-height: var(--dialog-content-minHeight);
+  line-height: var(--dialog-content-lineHeight);
   color: var(--dialog-content-color);
 }
 

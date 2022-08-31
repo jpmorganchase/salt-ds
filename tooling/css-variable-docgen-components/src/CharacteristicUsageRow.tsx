@@ -21,7 +21,7 @@ export const CharacteristicUsageRow: FC<CharacteristicUsageRowProps> = (
       <td>
         {tokens &&
           tokens.map((token) => (
-            <Description>
+            <Description key={token}>
               <Markdown>{token}</Markdown>
             </Description>
           ))}

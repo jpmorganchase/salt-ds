@@ -25,8 +25,8 @@
   --formField-focused-outlineOffset: var(--uitkFormField-focused-outlineOffset, var(--uitk-focused-outlineOffset));
   --formField-focused-outlineStyle: var(--uitkFormField-focused-outlineStyle, var(--uitk-focused-outlineStyle));
   --formField-focused-outlineWidth: var(--uitkFormField-focused-outlineWidth, var(--uitk-focused-outlineWidth));
+  /* Set to 0 until helper text class provided */
   --formField-helperText-height: 0px;
-  --formField-helperText-lineHeight: var(--uitk-text-base-lineHeight);
 }
 
 .uitkEmphasisLow.uitkFormField {
@@ -71,22 +71,27 @@
 
 /* Class applied when helper text is provided */
 .uitkFormField-withHelperText {
+  --formField-helperText-marginTop: var(--formField-helperText-marginTop-default);
   --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
-  --formField-withHelperText-marginTop: var(--formField-helperText-marginTop);
-  --formField-helperText-baseHeight: calc(var(--formField-helperText-lineHeight) * var(--uitk-text-help-fontSize));
-  --formField-helperText-calculatedHeight: max(var(--uitk-text-caption-minHeight), var(--formField-helperText-baseHeight));
-  --formField-helperText-height: calc(var(--formField-helperText-calculatedHeight) + var(--formField-withHelperText-marginTop));
+}
+
+/* Class applied if `fullWidth={true}` and helper text is provided */
+.uitkFormField-fullWidth.uitkFormField-withHelperText {
+  --formField-helperText-marginTop: var(--formField-helperText-marginTop-fullWidth);
+  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
+}
+
+/* Class applied when helper text is provided */
+.uitkFormField-withHelperText {
+  --formField-helperText-fontSize: var(--uitkFormField-helperText-fontSize, var(--uitk-text-fontSize));
+  --formField-helperText-baseHeight: calc(var(--uitk-text-base-lineHeight) * var(--formField-helperText-fontSize));
+  --formField-helperText-calculatedHeight: max(var(--uitk-text-help-minHeight), var(--formField-helperText-baseHeight));
+  --formField-helperText-height: calc(var(--formField-helperText-calculatedHeight) + var(--formField-helperText-marginTop));
 }
 
 /* Class applied to the root element if `fillWidth={true}` */
 .uitkFormField-fullWidth {
   width: 100%;
-}
-
-/* Class applied if `fullWidth={true}` and helper text is provided */
-.uitkFormField-fullWidth.uitkFormField-withHelperText {
-  --formField-withHelperText-marginTop: var(--formField-helperText-marginTop-fullWidth);
-  --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
 }
 
 /* Class applied to the root element if `disabled={true}` */
@@ -136,7 +141,7 @@
   --formLabel-paddingLeft: var(--uitk-size-unit);
   --formLabel-paddingRight: var(--uitk-size-unit);
   /* Uses density invariant value unless helper text provided */
-  --formField-background-offset-height: calc(var(--formField-withHelperText-marginTop, 0px) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
+  --formField-background-offset-height: calc(var(--formField-helperText-marginTop, 0px) + var(--uitkFormFieldHelperText-lineHeight, var(--formField-helperText-height)));
 
   background: linear-gradient(to top, transparent var(--formField-background-offset-height), var(--uitkFormField-background, var(--formField-background)) var(--formField-background-offset-height));
 }
@@ -206,7 +211,7 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: var(--formField-helperText-height);
+  bottom: var(--formField-helperText-height, 0px);
   outline-color: var(--uitkFormField-focused-outlineColor, var(--formField-focused-outlineColor));
   outline-style: var(--uitkFormField-focused-outlineStyle, var(--formField-focused-outlineStyle));
   outline-width: var(--uitkFormField-focused-outlineWidth, var(--formField-focused-outlineWidth));
@@ -257,4 +262,9 @@
 
 .uitkFormField-labelLeft > .uitkFormLabel ~ :not(.uitkFormFieldHelperText) {
   background: var(--uitkFormField-background, var(--formField-background));
+}
+
+/* TK1 backwards compat styling */
+.backwardsCompat.uitkFormField-withHelperText {
+  --formField-helperText-fontSize: var(--backwardsCompat-text-help-fontSize);
 }

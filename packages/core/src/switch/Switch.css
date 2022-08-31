@@ -64,7 +64,7 @@
 /* Styles applied to outer ControlLabel component's text */
 .uitkSwitch-label .uitkControlLabel-text {
   color: var(--uitkSwitch-label-color, var(--switch-label-color));
-  line-height: var(--uitkSwitch-label-line-height, var(--uitk-text-lineHeight));
+  line-height: var(--uitkSwitch-label-lineHeight, var(--uitk-text-lineHeight));
   text-align: right;
 }
 

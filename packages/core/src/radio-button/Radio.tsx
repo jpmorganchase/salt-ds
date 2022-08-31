@@ -61,7 +61,7 @@ export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
     ...rest
   } = props;
 
-  const { inFormField } = useFormFieldProps();
+  useFormFieldProps();
 
   const radioGroup = useRadioGroup();
 
