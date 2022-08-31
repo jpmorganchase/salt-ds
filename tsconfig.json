@@ -1,7 +1,8 @@
 {
   "extends": "modular-scripts/tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "jsx": "react-jsx"
   },
   "include": [
     "modular",
@@ -9,8 +10,7 @@
     "integration/toolkit",
     "docs",
     "tooling",
-    "playground",
-    "cypress.config.ts"
+    "playground"
   ],
   "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]
 }

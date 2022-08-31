@@ -1,7 +1,3 @@
-.uitkOrderedButton {
-  margin-right: var(--uitk-size-unit);
-}
-
 .uitkOrderedButton-alignLeft {
   margin-right: auto;
 }

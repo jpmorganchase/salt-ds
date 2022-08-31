@@ -37,7 +37,7 @@ export class Theme {
   ): string | null {
     const cssVariableName = `--uitk-${characteristicName}-${variant}`;
     const scopeTarget =
-      scopeElement || document.body.querySelector(`.uitk-${this.id}`);
+      scopeElement || document.body.querySelector(`.uitk-${this.name}`);
     if (scopeTarget) {
       const style = getComputedStyle(scopeTarget);
       const variableValue = style.getPropertyValue(cssVariableName);
