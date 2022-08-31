@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/testing-react";
 import * as cascadingMenuStories from "@stories/cascading-menu.stories";
+import { version } from "react";
 
 const { DefaultCascadingMenu } = composeStories(cascadingMenuStories);
 
@@ -50,15 +51,21 @@ describe("GIVEN a CascadingMenu component", () => {
   });
 
   describe("Sub menus navigation", () => {
-    specify("By Enter key", () => {
-      cy.mount(<DefaultCascadingMenu />);
-      cy.findByTestId("cascading-menu-trigger").focus();
-      cy.realPress("{downarrow}");
-      cy.realPress("{enter}");
-      cy.realPress("{downarrow}");
-      cy.realPress("{enter}");
-      cy.findAllByRole("menu").should("have.length", 3);
-    });
+    specify(
+      "By Enter key",
+      // Unstable in React 18
+      !version.startsWith("18")
+        ? () => {
+            cy.mount(<DefaultCascadingMenu />);
+            cy.findByTestId("cascading-menu-trigger").focus();
+            cy.realPress("{downarrow}");
+            cy.realPress("{enter}");
+            cy.realPress("{downarrow}");
+            cy.realPress("{enter}");
+            cy.findAllByRole("menu").should("have.length", 3);
+          }
+        : undefined
+    );
 
     specify("By Right Arrow key", () => {
       cy.mount(<DefaultCascadingMenu />);
