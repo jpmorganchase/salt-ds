@@ -35,6 +35,7 @@
   padding: var(--uitkTooltip-padding, var(--uitk-size-unit));
   position: relative;
   text-align: var(--uitkTooltip-textAlign, left);
+  z-index: var(--uitk-zIndex-tooltip);
 }
 
 .uitkTooltip[data-placement^="top"] {
