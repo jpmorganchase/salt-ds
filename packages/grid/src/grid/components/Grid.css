@@ -184,7 +184,7 @@
 }
 /*ToggleButton*/
 .uitk-density-ultrahigh .uitkGrid .uitkToggleButton {
-  --toggle-button-icon-padding: 1px;
+  --toggleButton-icon-padding: 1px;
 }
 
 .uitkGrid {
