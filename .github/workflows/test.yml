@@ -118,6 +118,13 @@ jobs:
         with:
           install: false
           command: yarn run test:components
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage/coverage-final.json
+          flags: react${{ matrix.react }}-chrome
+          fail_ci_if_error: true
+          verbose: true
   desktop-integration:
     continue-on-error: true
     runs-on: ubuntu-latest
