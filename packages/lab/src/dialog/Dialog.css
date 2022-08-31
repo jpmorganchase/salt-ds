@@ -1,20 +1,20 @@
 .uitkDialog {
   --dialog-background: var(--uitkDialog-background, var(--uitk-container-background-medium));
-  --dialog-border-bottom-width: var(--uitkDialog-border-bottom-width, 2px);
-  --dialog-border-color: var(--uitkDialog-border-color, var(--uitk-container-borderColor-medium));
-  --dialog-border-style: var(--uitkDialog-border-style, var(--uitk-container-borderStyle));
-  --dialog-border-width: var(--uitkDialog-border-color, var(--uitk-container-borderWidth));
-  --dialog-box-shadow: var(--uitkDialog-box-shadow, var(--uitk-overlayable-shadow-modal));
+  --dialog-borderBottomWidth: var(--uitkDialog-borderBottomWidth, 2px);
+  --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-borderColor-medium));
+  --dialog-borderStyle: var(--uitkDialog-borderStyle, var(--uitk-container-borderStyle));
+  --dialog-borderWidth: var(--uitkDialog-borderColor, var(--uitk-container-borderWidth));
+  --dialog-boxShadow: var(--uitkDialog-boxShadow, var(--uitk-overlayable-shadow-modal));
   --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
   --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
 }
 
 .uitkDialog {
   background: var(--dialog-background);
-  border-color: var(--dialog-border-color);
-  border-width: var(--dialog-border-width);
-  border-style: var(--dialog-border-style);
-  border-bottom-width: var(--dialog-border-bottom-width);
+  border-color: var(--dialog-borderColor);
+  border-width: var(--dialog-borderWidth);
+  border-style: var(--dialog-borderStyle);
+  border-bottom-width: var(--dialog-borderBottomWidth);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -24,6 +24,6 @@
   overflow: auto;
   padding: var(--dialog-padding);
   position: relative;
-  box-shadow: var(--uitkDialog-box-shadow, var(--dialog-box-shadow));
+  box-shadow: var(--uitkDialog-boxShadow, var(--dialog-boxShadow));
   margin: var(--uitkDialog-margin, var(--dialog-margin));
 }

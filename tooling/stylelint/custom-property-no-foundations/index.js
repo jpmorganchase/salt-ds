@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundation-color";
+const ruleName = "uitk/custom-property-no-foundations";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>

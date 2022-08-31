@@ -5,17 +5,17 @@
   --link-color-focus: var(--uitkLink-color-focus, --link-color-hover);
   --link-color-disabled: var(--uitk-text-link-foreground-disabled);
 
-  --link-text-decoration: var(--uitk-text-link-textDecoration);
+  --link-textDecoration: var(--uitk-text-link-textDecoration);
 
-  --link-font-family: var(--uitk-text-fontFamily);
+  --link-fontFamily: var(--uitk-text-fontFamily);
   --link-focus-outline: var(--uitk-focused-outline);
 }
 
 .uitkLink {
   color: var(--link-color);
   letter-spacing: 0px;
-  text-decoration: var(--link-text-decoration);
-  font-family: var(--link-font-family);
+  text-decoration: var(--link-textDecoration);
+  font-family: var(--link-fontFamily);
 }
 
 .uitkLink-icon {

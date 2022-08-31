@@ -39,13 +39,13 @@
 .uitkCheckbox:not(.uitkCheckbox-disabled):hover .uitkCheckboxIcon,
 .uitkCheckboxIcon:not(.uitkCheckboxIcon-disabled):hover {
   stroke: var(--uitkCheckboxIcon-stroke-hover, var(--uitk-selectable-borderColor-hover));
-  stroke-width: var(--uitkCheckboxIcon-stroke-width-hover, var(--uitk-selectable-borderWidth-hover));
+  stroke-width: var(--uitkCheckboxIcon-strokeWidth-hover, var(--uitk-selectable-borderWidth-hover));
 }
 
 /* Styles applied if `disabled={true}` */
 .uitkCheckboxIcon-disabled {
   stroke: var(--uitkCheckboxIcon-stroke-disabled, var(--uitk-selectable-borderColor-disabled));
-  stroke-width: var(--uitkCheckboxIcon-stroke-width-disabled, var(--uitk-selectable-borderWidth));
+  stroke-width: var(--uitkCheckboxIcon-strokeWidth-disabled, var(--uitk-selectable-borderWidth));
 }
 
 /* Styles applied if `checked={true}` */

@@ -1,20 +1,20 @@
 .uitkList {
   --list-background: var(--uitk-container-background-medium);
-  --list-border-style: var(--uitk-container-borderStyle);
+  --list-borderStyle: var(--uitk-container-borderStyle);
   --list-borderWidth: var(--uitk-container-borderWidth);
   --list-height: auto;
   --list-item-gap: 0px;
-  --list-max-height: 100%;
+  --list-maxHeight: 100%;
 
   --uitkListItem-height: var(--uitkList-item-height, var(--uitk-size-stackable));
 
   background: var(--list-background);
   border-color: var(--uitk-container-borderColor-medium);
-  border-style: var(--list-border-style);
+  border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
   box-sizing: border-box;
   height: var(--uitkList-height, var(--list-height));
-  max-height: var(--list-max-height);
+  max-height: var(--list-maxHeight);
   outline: none;
   overflow-y: auto;
   position: relative;
@@ -23,14 +23,14 @@
 }
 
 .uitkList-borderless {
-  --list-border-style: none;
+  --list-borderStyle: none;
 }
 
 /* virtualised list */
 .uitkList-viewport {
   --list-item-height: 30px;
   box-sizing: border-box;
-  max-height: calc(var(--list-max-height) - 2 * var(--list-borderWidth));
+  max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));
   overflow: auto;
 }
 
@@ -47,8 +47,8 @@
 }
 
 .uitkList-collapsible .uitkListItemHeader:after {
-  border-width: var(--checkbox-border-width);
-  border-color: var(--checkbox-border-color);
+  border-width: var(--checkbox-borderWidth);
+  border-color: var(--checkbox-borderColor);
   content: var(--list-item-header-twisty-content);
   -webkit-mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
   mask: var(--svg-chevron-down) center center/12px 12px no-repeat;

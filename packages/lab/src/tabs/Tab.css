@@ -3,7 +3,7 @@
   --uitkFocusVisible-inset: 2px 2px 4px 2px;
   --uitkEditableLabel-padding: 0;
   --uitkEditableLabel-height: var(--tabstrip-height);
-  --uitkInput-min-width: 4em;
+  --uitkInput-minWidth: 4em;
   --uitk-text-link-textDecoration: none;
   --uitk-text-link-textDecoration: none;
   --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
