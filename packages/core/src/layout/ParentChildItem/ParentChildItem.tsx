@@ -27,7 +27,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem(
     {
       disableAnimations = false,
-      direction,
+      direction = "left",
       isStacked,
       children,
       className,

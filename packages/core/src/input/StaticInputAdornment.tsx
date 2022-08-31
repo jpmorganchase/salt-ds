@@ -4,8 +4,7 @@ import { makePrefixer } from "../utils";
 
 import "./StaticInputAdornment.css";
 
-export interface StaticInputAdornmentProps
-  extends HTMLAttributes<HTMLDivElement> {}
+export type StaticInputAdornmentProps = HTMLAttributes<HTMLDivElement>;
 
 const withBaseName = makePrefixer("uitkStaticInputAdornment");
 

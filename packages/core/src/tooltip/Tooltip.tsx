@@ -21,9 +21,11 @@ export type TooltipState = "error" | "info" | "success" | "warning";
 const withBaseName = makePrefixer("uitkTooltip");
 const defaultIconProps = { size: 12, className: withBaseName("icon") };
 
-// TODO: Fix types
+// FIXME: Fix types
 export interface TooltipRenderProp {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Icon: any; // typeof Icon;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getIconProps: any; // StateAndPropGetterFunction<IconProps>;
 }
 

@@ -165,10 +165,14 @@ export function useTooltip(props?: UseTooltipProps) {
   const getTriggerProps = <
     Element extends
       | keyof JSX.IntrinsicElements
+      // TODO: whether restrict `any`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       | JSXElementConstructor<any> = "div"
   >(
     userProps?: ComponentPropsWithoutRef<Element>
   ) => {
+    // FIXME: types from useInteractions
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return getReferenceProps({
       ...userProps,
       ref: reference,
@@ -181,9 +185,13 @@ export function useTooltip(props?: UseTooltipProps) {
       getTriggerProps: <
         Element extends
           | keyof JSX.IntrinsicElements
+          // TODO: whether restrict `any`
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           | JSXElementConstructor<any> = "div"
       >(
         args?: ComponentPropsWithRef<Element>
+        // FIXME: types from useInteractions
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       ) => args as ComponentPropsWithRef<Element>,
     };
   }
