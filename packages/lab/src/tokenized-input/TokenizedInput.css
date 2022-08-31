@@ -136,7 +136,7 @@
 
 /* Styles applied to the last visible Pill when all visible */
 .uitkTokenizedInput .uitkInputPill-pillLastVisible {
-  margin-right: var(--uitkTokenizedInput-pill-last-visible-margin-right, var(--tokenized-input-last-pill-margin));
+  margin-right: var(--uitkTokenizedInput-pill-last-visible-marginRight, var(--tokenized-input-last-pill-margin));
 }
 
 /* Styles applied to a Pill when active */

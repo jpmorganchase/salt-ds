@@ -2,10 +2,10 @@
   --appheader-background: var(--uitk-container-background-medium);
   --appheader-height: var(--uitk-appheader-size, var(--uitk-size-toolbar));
   --appheader-separable-bar: var(--uitk-separable-secondary-borderColor);
-  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-overlayable-shadow-border-region));
+  --appheader-shadow: var(--uitk-appheader-shadow, var(--uitk-overlayable-shadow-borderRegion));
   --appheader-padding: calc(var(--uitk-size-unit) * 3);
-  --appheader-padding-left: 8px;
-  --appheader-padding-right: var(--appheader-padding);
+  --appheader-paddingLeft: 8px;
+  --appheader-paddingRight: var(--appheader-padding);
 
   --uitkTabstrip-height: var(--appheader-height);
   --uitkToolbar-width: auto;
@@ -21,7 +21,7 @@
   flex: 0 0 auto;
   height: var(--appheader-height);
   overflow: hidden;
-  padding: 0 var(--appheader-padding-right) 0 var(--appheader-padding-left);
+  padding: 0 var(--appheader-paddingRight) 0 var(--appheader-paddingLeft);
   width: 100%;
 }
 

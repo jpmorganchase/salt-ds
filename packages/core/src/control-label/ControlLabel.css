@@ -2,7 +2,7 @@
   align-items: center;
   cursor: pointer;
   display: inline-flex;
-  /* margin-top: var(--label-margin-top, 0);*/
+  /* margin-top: var(--label-marginTop, 0);*/
 }
 
 .uitkControlLabel-label,

@@ -3,17 +3,17 @@
   /* Color */
   --list-background: var(--uitk-container-background-medium);
   /* Border */
-  --list-border-color: var(--uitk-container-borderColor-medium);
-  --list-border-style: var(--uitk-container-borderStyle);
-  --list-border-width: var(--uitk-container-borderWidth);
-  --list-border-radius: var(--uitk-container-borderRadius);
+  --list-borderColor: var(--uitk-container-borderColor-medium);
+  --list-borderStyle: var(--uitk-container-borderStyle);
+  --list-borderWidth: var(--uitk-container-borderWidth);
+  --list-borderRadius: var(--uitk-container-borderRadius);
 
   /* Text, Font */
   /* TODO: Do we necessary want to set this? Should rely on inheritance? */
-  /* --list-font-family: var(--uitk-typography-fontFamily); */
+  /* --list-fontFamily: var(--uitk-typography-fontFamily); */
 
   /* Misc. */
-  --list-box-shadow: none;
+  --list-boxShadow: none;
   --list-content-box: border-box;
   --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
 }
@@ -24,7 +24,7 @@
 
 .uitkListDeprecated {
   box-sizing: border-box;
-  /* font-family: var(--list-font-family); */
+  /* font-family: var(--list-fontFamily); */
   overflow-y: auto;
 }
 .uitkListDeprecated:focus {
@@ -32,14 +32,14 @@
 }
 
 .uitkListDeprecated-wrapper:not(.uitkListDeprecated-borderless) {
-  border-color: var(--list-border-color);
-  border-style: var(--list-border-style);
-  border-width: var(--list-border-width);
-  border-radius: var(--list-border-radius);
+  border-color: var(--list-borderColor);
+  border-style: var(--list-borderStyle);
+  border-width: var(--list-borderWidth);
+  border-radius: var(--list-borderRadius);
 }
 .uitkListDeprecated-wrapper {
   background: var(--list-background);
-  box-shadow: var(--list-box-shadow);
+  box-shadow: var(--list-boxShadow);
   box-sizing: var(--list-content-box);
   position: relative;
 }

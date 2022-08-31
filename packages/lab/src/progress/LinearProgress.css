@@ -8,19 +8,19 @@
 
 .uitkLinearProgress-large {
   --linear-progress-after-top: 3px;
-  --linear-progress-value-padding-left: 12px;
+  --linear-progress-value-paddingLeft: 12px;
   --linear-progress-height: 7px;
 }
 
 .uitkLinearProgress-medium {
   --linear-progress-after-top: 2px;
-  --linear-progress-value-padding-left: 8px;
+  --linear-progress-value-paddingLeft: 8px;
   --linear-progress-height: 5px;
 }
 
 .uitkLinearProgress-small {
   --linear-progress-after-top: 1px;
-  --linear-progress-value-padding-left: 4px;
+  --linear-progress-value-paddingLeft: 4px;
   --linear-progress-height: 3px;
 }
 
@@ -102,7 +102,7 @@
   color: inherit;
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--linear-progress-value-padding-left);
+  padding-left: var(--linear-progress-value-paddingLeft);
 }
 
 @keyframes Indeterminate1 {

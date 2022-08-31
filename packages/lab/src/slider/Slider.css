@@ -1,29 +1,29 @@
 .uitk-density-high {
-  --slider-clickable-padding-top: var(--uitkSlider-clickable-padding-top, 2px);
-  --slider-clickable-padding-bottom: var(--uitkSlider-clickable-padding-bottom, 2px);
-  --slider-padding-top: var(--uitkSlider-padding-top, 3px);
-  --slider-padding-bottom: var(--uitkSlider-padding-bottom, 0);
+  --slider-clickable-paddingTop: var(--uitkSlider-clickable-paddingTop, 2px);
+  --slider-clickable-paddingBottom: var(--uitkSlider-clickable-paddingBottom, 2px);
+  --slider-paddingTop: var(--uitkSlider-paddingTop, 3px);
+  --slider-paddingBottom: var(--uitkSlider-paddingBottom, 0);
 }
 
 .uitk-density-medium {
-  --slider-clickable-padding-top: var(--uitkSlider-clickable-padding-top, 4px);
-  --slider-clickable-padding-bottom: var(--uitkSlider-clickable-padding-bottom, 4px);
-  --slider-padding-top: var(--uitkSlider-padding-top, 6px);
-  --slider-padding-bottom: var(--uitkSlider-padding-bottom, 0);
+  --slider-clickable-paddingTop: var(--uitkSlider-clickable-paddingTop, 4px);
+  --slider-clickable-paddingBottom: var(--uitkSlider-clickable-paddingBottom, 4px);
+  --slider-paddingTop: var(--uitkSlider-paddingTop, 6px);
+  --slider-paddingBottom: var(--uitkSlider-paddingBottom, 0);
 }
 
 .uitk-density-low {
-  --slider-clickable-padding-top: var(--uitkSlider-clickable-padding-top, 8px);
-  --slider-clickable-padding-bottom: var(--uitkSlider-clickable-padding-bottom, 8px);
-  --slider-padding-top: var(--uitkSlider-padding-top, 9px);
-  --slider-padding-bottom: var(--uitkSlider-padding-bottom, 0);
+  --slider-clickable-paddingTop: var(--uitkSlider-clickable-paddingTop, 8px);
+  --slider-clickable-paddingBottom: var(--uitkSlider-clickable-paddingBottom, 8px);
+  --slider-paddingTop: var(--uitkSlider-paddingTop, 9px);
+  --slider-paddingBottom: var(--uitkSlider-paddingBottom, 0);
 }
 
 .uitk-density-touch {
-  --slider-clickable-padding-top: var(--uitkSlider-clickable-padding-top, 12px);
-  --slider-clickable-padding-bottom: var(--uitkSlider-clickable-padding-bottom, 12px);
-  --slider-padding-top: var(--uitkSlider-padding-top, 12px);
-  --slider-padding-bottom: var(--uitkSlider-padding-bottom, 0);
+  --slider-clickable-paddingTop: var(--uitkSlider-clickable-paddingTop, 12px);
+  --slider-clickable-paddingBottom: var(--uitkSlider-clickable-paddingBottom, 12px);
+  --slider-paddingTop: var(--uitkSlider-paddingTop, 12px);
+  --slider-paddingBottom: var(--uitkSlider-paddingBottom, 0);
 }
 
 .uitkSlider {
@@ -37,49 +37,49 @@
   --slider-selection-height: var(--uitkSlider-selection-height, 2px);
 
   --slider-handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-base) * 0.5));
-  --slider-handle-outline-style: var(--uitkSlider-handle-outline-style, var(--uitk-focused-outlineStyle));
-  --slider-handle-outline-width: var(--uitkSlider-handle-outline-width, var(--uitk-focused-outlineWidth));
-  --slider-handle-outline-color: var(--uitkSlider-handle-outline-color, var(--uitk-focused-outlineColor));
-  --slider-handle-outline-offset: var(--uitkSlider-handle-outline-offset, var(--uitk-focused-outlineOffset));
+  --slider-handle-outlineStyle: var(--uitkSlider-handle-outlineStyle, var(--uitk-focused-outlineStyle));
+  --slider-handle-outlineWidth: var(--uitkSlider-handle-outlineWidth, var(--uitk-focused-outlineWidth));
+  --slider-handle-outlineColor: var(--uitkSlider-handle-outlineColor, var(--uitk-focused-outlineColor));
+  --slider-handle-outlineOffset: var(--uitkSlider-handle-outlineOffset, var(--uitk-focused-outlineOffset));
 
   --slider-arrow-height: var(--uitkSlider-arrow-height, 6px);
   --slider-arrow-width: var(--uitkSlider-arrow-width, 8px);
   --slider-arrow-color: var(--uitkSlider-arrow-color, var(--slider-selection-color));
 
-  --slider-border-style: var(--uitkSlider-border-style, none);
-  --slider-border-width: var(--uitkSlider-border-width, 0);
-  --slider-border-color: var(--uitkSlider-border-color, transparent);
+  --slider-borderStyle: var(--uitkSlider-borderStyle, none);
+  --slider-borderWidth: var(--uitkSlider-borderWidth, 0);
+  --slider-borderColor: var(--uitkSlider-borderColor, transparent);
   --slider-width: var(--uitkSlider-width, 300px);
 
-  --slider-clickable-padding-left: var(--uitkSlider-clickable-padding-left, calc(var(--uitk-size-base) * 0.5));
-  --slider-clickable-padding-right: var(--uitkSlider-clickable-padding-right, calc(var(--uitk-size-base) * 0.5));
+  --slider-clickable-paddingLeft: var(--uitkSlider-clickable-paddingLeft, calc(var(--uitk-size-base) * 0.5));
+  --slider-clickable-paddingRight: var(--uitkSlider-clickable-paddingRight, calc(var(--uitk-size-base) * 0.5));
 
   --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
-  --slider-label-padding-left: var(--uitlSlider-label-padding-left, 0);
-  --slider-label-padding-right: var(--uitkSlider-label-padding-right, 0);
+  --slider-label-paddingLeft: var(--uitlSlider-label-paddingLeft, 0);
+  --slider-label-paddingRight: var(--uitkSlider-label-paddingRight, 0);
 }
 
 .uitkSlider {
   width: var(--slider-width);
-  border-style: var(--slider-border-style);
-  border-width: var(--slider-border-width);
-  border-color: var(--slider-border-color);
+  border-style: var(--slider-borderStyle);
+  border-width: var(--slider-borderWidth);
+  border-color: var(--slider-borderColor);
 
   display: flex;
   flex-direction: column;
   align-items: stretch;
 
-  padding-top: var(--slider-padding-top);
-  padding-bottom: var(--slider-padding-bottom);
+  padding-top: var(--slider-paddingTop);
+  padding-bottom: var(--slider-paddingBottom);
 }
 
 .uitkSlider-disabled {
 }
 
 .uitkSlider-clickable {
-  padding: var(--slider-clickable-padding-top) var(--slider-clickable-padding-right) var(--slider-clickable-padding-bottom) var(--slider-clickable-padding-left);
-  margin-right: calc(-1 * var(--slider-clickable-padding-right));
-  margin-left: calc(-1 * var(--slider-clickable-padding-left));
+  padding: var(--slider-clickable-paddingTop) var(--slider-clickable-paddingRight) var(--slider-clickable-paddingBottom) var(--slider-clickable-paddingLeft);
+  margin-right: calc(-1 * var(--slider-clickable-paddingRight));
+  margin-left: calc(-1 * var(--slider-clickable-paddingLeft));
 
   display: flex;
   flex-direction: column;
@@ -141,8 +141,8 @@
 .uitkSliderMarkLabels-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
   font-size: var(--slider-label-fontSize);
-  margin-top: var(--uitkSlider-label-margin-top);
-  line-height: var(--uitkSlider-label-line-height, var(--uitk-text-lineHeight));
+  margin-top: var(--uitkSlider-label-marginTop);
+  line-height: var(--uitkSlider-label-lineHeight, var(--uitk-text-lineHeight));
 
   white-space: nowrap;
 }
@@ -173,10 +173,10 @@
 }
 
 .uitkSliderHandle-box:focus-visible {
-  outline-style: var(--slider-handle-outline-style);
-  outline-width: var(--slider-handle-outline-width);
-  outline-color: var(--slider-handle-outline-color);
-  outline-offset: var(--slider-handle-outline-offset);
+  outline-style: var(--slider-handle-outlineStyle);
+  outline-width: var(--slider-handle-outlineWidth);
+  outline-color: var(--slider-handle-outlineColor);
+  outline-offset: var(--slider-handle-outlineOffset);
 }
 
 .uitkSliderHandle {
@@ -202,11 +202,11 @@
 .uitkSlider-label {
   color: var(--uitkSlider-label-text-color, var(--uitk-text-secondary-foreground));
   font-size: var(--slider-label-fontSize);
-  margin-top: var(--uitkSlider-label-margin-top);
-  line-height: var(--uitkSlider-label-line-height, var(--uitk-text-lineHeight));
+  margin-top: var(--uitkSlider-label-marginTop);
+  line-height: var(--uitkSlider-label-lineHeight, var(--uitk-text-lineHeight));
 
-  padding-left: var(--slider-label-padding-left);
-  padding-right: var(--slider-label-padding-right);
+  padding-left: var(--slider-label-paddingLeft);
+  padding-right: var(--slider-label-paddingRight);
   box-sizing: border-box;
   white-space: nowrap;
   text-overflow: ellipsis;
