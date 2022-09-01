@@ -167,13 +167,13 @@
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
-/* Pseudo-class applied to the root element on hover when Button is not active*/
+/* Pseudo-class applied to the root element on hover when Button is not active or disabled */
 .uitkButton:hover {
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
-/* Pseudo-class applied to the root element when Button is active */
+/* Pseudo-class applied to the root element when Button is active and not disabled */
 .uitkButton:active,
 .uitkButton-active {
   background: var(--uitkButton-background-active, var(--button-background-active));
