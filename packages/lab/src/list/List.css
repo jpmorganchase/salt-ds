@@ -50,8 +50,8 @@
   border-width: var(--checkbox-borderWidth);
   border-color: var(--checkbox-borderColor);
   content: var(--list-item-header-twisty-content);
-  -webkit-mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
-  mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
+  -webkit-mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
+  mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
   background-color: var(--list-item-header-twisty-color);
   height: 12px;
   left: var(--list-item-header-twisty-left);

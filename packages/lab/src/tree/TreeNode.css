@@ -3,9 +3,9 @@
   --tree-item-text-color: var(--uitk-selectable-text-color);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
-  --tree-item-selected-focus-visible-outlineColor: var(--uitk-white);
+  --tree-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
 
-  --tree-node-height: var(--uitkTreeNode-height, 24px);
+  --tree-node-height: var(--uitkTreeNode-height, var(--uitk-size-stackable));
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
   --tree-node-paddingLeft: 6px;
@@ -69,8 +69,8 @@
   --checkbox-borderColor: black;
   --checkbox-borderWidth: 1px;
   --checkbox-tick: black;
-  /* --svg-toggle: var(--svg-chevron-down); */
-  --svg-toggle: var(--tree-node-collapse);
+  /* --list-svg-toggle: var(--list-svg-chevron-down); */
+  --list-svg-toggle: var(--tree-node-collapse);
 
   color: var(--list-item-text-color);
   flex-wrap: nowrap;
@@ -115,7 +115,7 @@
 
 .uitkTreeNode:not(.focusVisible):not(.hwListItemHeader):not([aria-expanded])[data-highlighted],
 .uitkTreeNode:not(.focusVisible):not(.hwListItemHeader)[aria-expanded][data-highlighted] > div:first-child {
-  background-color: var(--list-hilited-bg);
+  background: var(--list-background-highlighted);
 }
 
 .uitkTree-toggle {
@@ -139,7 +139,7 @@
   } */
 
 .uitkTreeNode:not(.focusVisible):focus {
-  background-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .uitkTreeNode:not([aria-expanded]).focusVisible:before,
@@ -147,27 +147,27 @@
   content: "";
   position: absolute;
   top: 0px;
-  left: var(--tree-focus-offset, 0px);
+  left: var(--tree-offset-left-focusVisible, 0px);
   right: 0;
   bottom: 0px;
-  border: dotted var(--focus-visible-borderColor) 2px;
-  background-color: var(--list-hilited-bg);
+  border: dotted var(--tree-borderColor-focusVisible) 2px;
+  background: var(--list-background-highlighted);
 }
 
 /* .uitkTreeNode[aria-level='2'] {
-    --tree-focus-offset: -13px;
+    --tree-offset-left-focusVisible: -13px;
   }
   
   .uitkTreeNode[aria-level='3'] {
-    --tree-focus-offset: -24px;
+    --tree-offset-left-focusVisible: -24px;
   }
   
   .uitkTreeNode[aria-level='4'] {
-    --tree-focus-offset: -36px;
+    --tree-offset-left-focusVisible: -36px;
   } */
 
 .uitkTreeNode[aria-expanded="false"] > *:first-child:after {
-  --svg-toggle: var(--tree-node-expand);
+  --list-svg-toggle: var(--tree-node-expand);
 }
 
 .uitkTreeNode[aria-expanded="true"] > *:first-child:after {
@@ -180,7 +180,7 @@
 .uitkTree:not(.checkbox-only) .uitkTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
   --checkbox-borderColor: var(--list-item-selected-color);
   --checkbox-tick: var(--list-item-selected-color);
-  --focus-visible-borderColor: var(--list-item-selected-color);
+  --tree-borderColor-focusVisible: var(--list-item-selected-color);
   background-color: var(--list-item-selected-bg);
   color: var(--list-item-selected-color);
 }
