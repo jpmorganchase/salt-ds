@@ -161,28 +161,33 @@
   outline-offset: var(--button-focused-outlineOffset);
 }
 
-/* Pseudo-class applied to the root element on focus when Button is not active and not disabled
-   (focus ring will still be visible if button is focusable when disabled) */
-.uitkButton:focus-visible:not(:active):not(.uitkButton-active):not(.uitkButton-disabled) {
+/* Pseudo-class applied to the root element on focus when Button is not active */
+.uitkButton:focus-visible:not(:active):not(.uitkButton-active) {
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
-/* Pseudo-class applied to the root element on hover when Button is not active or disabled */
-.uitkButton:hover:not(.uitkButton-disabled) {
+/* Pseudo-class applied to the root element on hover when Button is not active*/
+.uitkButton:hover {
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
-/* Pseudo-class applied to the root element when Button is active and not disabled */
-.uitkButton:active:not(.uitkButton-disabled),
+/* Pseudo-class applied to the root element when Button is active */
+.uitkButton:active,
 .uitkButton-active {
   background: var(--uitkButton-background-active, var(--button-background-active));
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
 
-/* Pseudo-class applied to the root element if disabled={true} */
-.uitkButton-disabled {
+.uitkButton:disabled,
+  /* Pseudo-class applied to the root element if disabled={true} */
+.uitkButton-disabled,
+  /* Overrides to apply the disabled style when the button is focusable while also disabled */
+.uitkButton-disabled:active,
+.uitkButton-disabled:focus-visible,
+.uitkButton-disabled:hover,
+.uitkButton-disabled:focus-visible:not(:active):not(.uitkButton-active) {
   background: var(--uitkButton-background-disabled, var(--button-background-disabled));
   color: var(--uitkButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--uitkButton-cursor-disabled, var(--uitk-actionable-cursor-disabled));
