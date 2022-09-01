@@ -10,7 +10,7 @@
   --list-background-highlighted: rgba(1, 1, 1, 0.1);
   --list-item-height: 30px;
   --list-item-padding: 0 6px;
-  --list-item-header-bg: black;
+  --list-item-header-background: black;
   --list-item-header-color: white;
   --list-item-header-fontWeight: bold;
   --list-item-header-twisty-color: black;

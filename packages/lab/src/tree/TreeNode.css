@@ -127,7 +127,7 @@
 }
 
 /* .hwListItemHeader {
-    background-color: var(--list-item-header-bg);
+    background-color: var(--list-item-header-background);
     color: var(--list-item-header-color);
     font-weight: var(--list-item-header-fontWeight);
   
@@ -181,7 +181,7 @@
   --checkbox-borderColor: var(--list-item-selected-color);
   --checkbox-tick: var(--list-item-selected-color);
   --tree-borderColor-focusVisible: var(--list-item-selected-color);
-  background-color: var(--list-item-selected-bg);
+  background: var(--list-item-background-active);
   color: var(--list-item-selected-color);
 }
 

@@ -1,17 +1,17 @@
 .uitkTabActivationIndicator-no-background {
-  --activation-indicator-bg: transparent !important;
+  --tabs-activation-indicator-background: transparent !important;
 }
 
 .uitkTabActivationIndicator {
-  --activation-indicator-bg: var(--uitk-container-borderColor-medium); /* TODO: Check token */
+  --tabs-activation-indicator-background: var(--uitk-container-borderColor-medium); /* TODO: Check token */
 
-  background-color: var(--uitkTabActivationIndicator-bg, var(--activation-indicator-bg));
+  background-color: var(--uitkTabActivationIndicator-background, var(--tabs-activation-indicator-background));
   bottom: 0;
   box-sizing: border-box;
-  height: var(--tabstrip-activation-indicator-height, auto);
-  inset: var(--tabstrip-activation-indicator-inset);
+  height: var(--tabs-activation-indicator-height, auto);
+  inset: var(--tabs-activation-indicator-inset);
   position: absolute;
-  width: var(--tabstrip-activation-indicator-width, auto);
+  width: var(--tabs-activation-indicator-width, auto);
 }
 
 /* the Active Tab indicator, uses navigable styles */
