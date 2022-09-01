@@ -3,21 +3,21 @@
   --tree-item-text-color: var(--uitk-selectable-text-color);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
-  --tree-item-selected-focus-visible-outline-color: var(--uitk-white);
+  --tree-item-selected-focus-visible-outlineColor: var(--uitk-white);
 
   --tree-node-height: var(--uitkTreeNode-height, 24px);
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
-  --tree-node-padding-left: 6px;
+  --tree-node-paddingLeft: 6px;
 
   --tree-item-background: var(--uitk-selectable-background);
 
   align-items: flex-start;
   min-height: var(--tree-node-height, auto);
-  line-height: var(--uitk-text-line-height);
+  line-height: var(--uitk-text-lineHeight);
   list-style: none;
   position: relative;
-  text-align: var(--list-item-text-align);
+  text-align: var(--list-item-textAlign);
 }
 
 .uitkTreeNode-highlighted {
@@ -39,7 +39,7 @@
   background: var(--tree-item-background);
   display: flex;
   height: var(--tree-node-height);
-  padding-left: calc(var(--tree-node-padding-left) + var(--tree-node-indent));
+  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-node-indent));
   position: relative;
 }
 
@@ -66,8 +66,8 @@
 /* Leaf node or the div child of a collapsible node */
 /* .uitkTreeNode:not([aria-expanded="true"]), */
 .uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
-  --checkbox-border-color: black;
-  --checkbox-border-width: 1px;
+  --checkbox-borderColor: black;
+  --checkbox-borderWidth: 1px;
   --checkbox-tick: black;
   /* --svg-toggle: var(--svg-chevron-down); */
   --svg-toggle: var(--tree-node-collapse);
@@ -83,11 +83,11 @@
 }
 
 .uitkTreeNode:not([aria-expanded]) {
-  padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
-  padding-left: calc(var(--tree-node-padding-left) + var(--tree-toggle-width) + var(--tree-node-indent));
+  padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
 .uitkTreeNode[aria-expanded] {
@@ -129,7 +129,7 @@
 /* .hwListItemHeader {
     background-color: var(--list-item-header-bg);
     color: var(--list-item-header-color);
-    font-weight: var(--list-item-header-font-weight);
+    font-weight: var(--list-item-header-fontWeight);
   
   
   .hwListItemHeader[data-sticky='true'] {
@@ -150,7 +150,7 @@
   left: var(--tree-focus-offset, 0px);
   right: 0;
   bottom: 0px;
-  border: dotted var(--focus-visible-border-color) 2px;
+  border: dotted var(--focus-visible-borderColor) 2px;
   background-color: var(--list-hilited-bg);
 }
 
@@ -178,9 +178,9 @@
 
 .uitkTree:not(.checkbox-only) .uitkTreeNode:not([aria-expanded])[aria-selected="true"],
 .uitkTree:not(.checkbox-only) .uitkTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
-  --checkbox-border-color: var(--list-item-selected-color);
+  --checkbox-borderColor: var(--list-item-selected-color);
   --checkbox-tick: var(--list-item-selected-color);
-  --focus-visible-border-color: var(--list-item-selected-color);
+  --focus-visible-borderColor: var(--list-item-selected-color);
   background-color: var(--list-item-selected-bg);
   color: var(--list-item-selected-color);
 }
@@ -191,8 +191,8 @@
 
 .with-checkbox .uitkTreeNode:before {
   border-style: solid;
-  border-width: var(--checkbox-border-width);
-  border-color: var(--checkbox-border-color);
+  border-width: var(--checkbox-borderWidth);
+  border-color: var(--checkbox-borderColor);
   content: "";
   height: 12px;
   left: 3px;

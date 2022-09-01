@@ -1,38 +1,38 @@
 .uitkAccordion {
-  --accordion-border-style: var(--uitkAccordion-border-style, none);
-  --accordion-border-color: var(--uitkAccordion-border-color, transparent);
-  --accordion-border-width: var(--uitkAccordion-border-width, 0);
-  --accordion-border-radius: var(--uitkAccordion-border-radius, 0);
+  --accordion-borderStyle: var(--uitkAccordion-borderStyle, none);
+  --accordion-borderColor: var(--uitkAccordion-borderColor, transparent);
+  --accordion-borderWidth: var(--uitkAccordion-borderWidth, 0);
+  --accordion-borderRadius: var(--uitkAccordion-borderRadius, 0);
   --accordion-padding: var(--uitkAccordion-padding, 0);
   --accordion-margin: var(--uitkAccordion-margin, 0);
 }
 
 .uitkAccordion {
-  border-style: var(--accordion-border-style);
-  border-color: var(--accordion-border-color);
-  border-width: var(--accordion-border-width);
+  border-style: var(--accordion-borderStyle);
+  border-color: var(--accordion-borderColor);
+  border-width: var(--accordion-borderWidth);
   padding: var(--accordion-padding);
   margin: var(--accordion-margin);
-  border-radius: var(--accordion-border-radius);
+  border-radius: var(--accordion-borderRadius);
 }
 
 .uitk-density-high .uitkAccordionSection {
-  --accordion-summary-padding-left: 20px;
+  --accordion-summary-paddingLeft: 20px;
   --accordion-details-padding: 3px 4px 5px 20px;
 }
 
 .uitk-density-medium .uitkAccordionSection {
-  --accordion-summary-padding-left: 28px;
+  --accordion-summary-paddingLeft: 28px;
   --accordion-details-padding: 8px 8px 9px 28px;
 }
 
 .uitk-density-low .uitkAccordionSection {
-  --accordion-summary-padding-left: 36px;
+  --accordion-summary-paddingLeft: 36px;
   --accordion-details-padding: 12px 12px 13px 38px;
 }
 
 .uitk-density-touch .uitkAccordionSection {
-  --accordion-summary-padding-left: 44px;
+  --accordion-summary-paddingLeft: 44px;
   --accordion-details-padding: 18px 16px 17px 44px;
 }
 
@@ -50,10 +50,10 @@
   --accordion-summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
   --accordion-summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
 
-  --accordion-summary-focus-outline-style: var(--uitk-focused-outlineStyle);
-  --accordion-summary-focus-outline-width: var(--uitk-focused-outlineWidth);
-  --accordion-summary-focus-outline-color: var(--uitk-focused-outlineColor);
-  --accordion-summary-focus-outline-offset: var(--uitk-focused-outlineOffset);
+  --accordion-summary-focus-outlineStyle: var(--uitk-focused-outlineStyle);
+  --accordion-summary-focus-outlineWidth: var(--uitk-focused-outlineWidth);
+  --accordion-summary-focus-outlineColor: var(--uitk-focused-outlineColor);
+  --accordion-summary-focus-outlineOffset: var(--uitk-focused-outlineOffset);
 
   --accordion-summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --accordion-summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
@@ -61,9 +61,9 @@
 }
 
 .uitkAccordionSection {
-  border-color: var(--uitkAccordionSection-border-color, var(--uitk-separable-secondary-borderColor));
-  border-style: var(--uitkAccordionSection-border-style, var(--uitk-container-borderStyle));
-  border-width: var(--uitkAccordionSection-border-width, 0 0 1px 0);
+  border-color: var(--uitkAccordionSection-borderColor, var(--uitk-separable-secondary-borderColor));
+  border-style: var(--uitkAccordionSection-borderStyle, var(--uitk-container-borderStyle));
+  border-width: var(--uitkAccordionSection-borderWidth, 0 0 1px 0);
   margin: var(--uitkAccordionSection-margin, 0);
   position: relative;
 }
@@ -86,7 +86,7 @@
   color: var(--accordion-summary-text-color);
   font-size: var(--uitkAccordionSummary-font-size, var(--uitk-text-fontSize));
   font-family: var(--uitkAccordionSummary-font-family, var(--uitk-text-fontFamily));
-  padding-left: var(--accordion-summary-padding-left);
+  padding-left: var(--accordion-summary-paddingLeft);
   position: relative;
 }
 
@@ -118,7 +118,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--accordion-summary-padding-left);
+  width: var(--accordion-summary-paddingLeft);
   display: flex;
   flex-direction: row;
   justify-content: center;

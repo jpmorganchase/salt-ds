@@ -6,7 +6,7 @@
   --tabstrip-tab-background: transparent;
 
   align-items: flex-start;
-  align-self: var(--uitkTabstrip-align-self, stretch);
+  align-self: var(--uitkTabstrip-alignSelf, stretch);
   box-sizing: border-box;
   font-size: var(--uitk-text-fontSize, 12px);
   font-weight: var(--uitk-text-fontWeight);
@@ -19,10 +19,10 @@
 
 /* Tabstrip orientation is horizontal */
 .uitkTabstrip-horizontal {
-  --tabstrip-activation-indicator-border-style: none none solid none;
+  --tabstrip-activation-indicator-borderStyle: none none solid none;
   --tabstrip-activation-indicator-height: 1px;
   --tabstrip-activation-indicator-inset: auto 0px 0px 0px;
-  --tabstrip-activation-indicator-transition-property: left;
+  --tabstrip-activation-indicator-transitionProperty: left;
   --tabstrip-activation-thumb-height: 2px;
   --tabstrip-activation-thumb-inset: -1px 0 0 0;
 }
@@ -30,9 +30,9 @@
 /* Tabstrip orientation is vertical */
 .uitkTabstrip-vertical {
   --uitkTabActivationIndicator-transition: top 0.3s ease;
-  --tabstrip-activation-indicator-border-style: none solid none none;
+  --tabstrip-activation-indicator-borderStyle: none solid none none;
   --tabstrip-activation-indicator-inset: 0px 0px 0px auto;
-  --tabstrip-activation-indicator-transition-property: top;
+  --tabstrip-activation-indicator-transitionProperty: top;
   --tabstrip-activation-indicator-width: 1px;
   --tabstrip-activation-thumb-inset: 0 0 0 -1px;
   --tabstrip-activation-thumb-width: 2px;

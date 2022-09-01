@@ -11,8 +11,8 @@
   --uitkSlider-arrow-height: 12px;
   --uitkSlider-arrow-width: 8px;
 
-  --uitkSlider-border-style: solid;
-  --uitkSlider-border-width: 1px 0 1px 0;
-  --uitkSlider-border-color: var(--uitk-color-grey-200);
+  --uitkSlider-borderStyle: solid;
+  --uitkSlider-borderWidth: 1px 0 1px 0;
+  --uitkSlider-borderColor: var(--uitk-color-grey-200);
   --uitkSlider-flex-direction: column-reverse;
 }
