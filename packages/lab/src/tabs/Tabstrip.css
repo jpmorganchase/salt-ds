@@ -140,7 +140,7 @@
 }
 
 .uitkTabstrip-overflowMenu-dropTarget:after {
-  background-color: var(--uitk-palette-interact-background-active);
+  background: var(--uitk-palette-interact-background-active);
   content: "";
   position: absolute;
   height: 2px;

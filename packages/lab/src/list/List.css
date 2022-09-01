@@ -52,7 +52,7 @@
   content: var(--list-item-header-twisty-content);
   -webkit-mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
   mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
-  background-color: var(--list-item-header-twisty-color);
+  background: var(--list-item-header-twisty-color);
   height: 12px;
   left: var(--list-item-header-twisty-left);
   right: var(--list-item-header-twisty-right);

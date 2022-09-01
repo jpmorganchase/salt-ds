@@ -35,7 +35,7 @@
 }
 
 .uitkColorChooser-overlayButton {
-  background-color: transparent;
+  background: transparent;
   text-transform: none;
   justify-content: flex-start;
 }
@@ -51,7 +51,7 @@
 
 .uitkColorChooser-defaultButton {
   float: right;
-  background-color: transparent;
+  background: transparent;
   padding: 6px 2px 6px 2px;
   height: var(--uitk-size-stackable);
 }

@@ -16,7 +16,7 @@
   inset: var(--tabstrip-activation-thumb-inset);
   position: absolute;
   height: var(--tabstrip-activation-thumb-height, auto);
-  background-color: var(--uitk-navigable-indicator-color-active);
+  background: var(--uitk-navigable-indicator-color-active);
   transition: var(--uitkActivationIndicator-transition, var(--tabs-activation-indicator-transitionProperty) var(--tabs-activation-indicator-transitionDuration) ease);
   width: var(--tabstrip-activation-thumb-width, auto);
   z-index: 1;
