@@ -161,20 +161,21 @@
   outline-offset: var(--button-focused-outlineOffset);
 }
 
-/* Pseudo-class applied to the root element on focus when Button is not active */
-.uitkButton:focus-visible:not(:active):not(.uitkButton-active) {
+/* Pseudo-class applied to the root element on focus when Button is not active and not disabled
+   (focus ring will still be visible if button is focusable when disabled) */
+.uitkButton:focus-visible:not(:active):not(.uitkButton-active):not(.uitkButton-disabled) {
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
 /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
-.uitkButton:hover {
+.uitkButton:hover:not(.uitkButton-disabled) {
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
-.uitkButton:active,
+.uitkButton:active:not(.uitkButton-disabled),
 .uitkButton-active {
   background: var(--uitkButton-background-active, var(--button-background-active));
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
