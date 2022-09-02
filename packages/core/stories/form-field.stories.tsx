@@ -490,22 +490,22 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
     <style>{`
       .carbon {
         --uitkFormField-focused-outlineStyle: none;
-        --uitkFormFieldHelperText-fontStyle: normal;
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-400);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-200);
-        --uitkFormLabel-marginBottom: 6px;
-        --uitkFormLabel-text-color: var(--uitk-color-purple-800);
+        --uitkFormField-helperText-fontStyle: normal;
+        --uitkFormField-activationIndicator-borderColor: var(--uitk-color-purple-400);
+        --uitkFormField-activationIndicator-icon-color: var(--uitk-color-purple-200);
+        --uitkFormField-label-marginBottom: 6px;
+        --uitkFormField-label-text-color: var(--uitk-color-purple-800);
       }
       .carbon .uitkFormField-focused {
-        --uitkFormActivationIndicator-size: 3px;
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
-        --uitkFormActivationIndicator-borderStyle: dotted;
+        --uitkFormField-activationIndicator-size: 3px;
+        --uitkFormField-activationIndicator-borderColor: var(--uitk-color-purple-200);
+        --uitkFormField-activationIndicator-icon-color: var(--uitk-color-purple-50);
+        --uitkFormField-activationIndicator-borderStyle: dotted;
       }
       .carbon.uitkFormField:not(.uitkFormField-readOnly):not(.uitkFormField-disabled):hover {
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
-        --uitkFormActivationIndicator-borderStyle: dashed;
+        --uitkFormField-activationIndicator-borderColor: var(--uitk-color-purple-200);
+        --uitkFormField-activationIndicator-icon-color: var(--uitk-color-purple-50);
+        --uitkFormField-activationIndicator-borderStyle: dashed;
       }
       .carbon.uitkFormField-focused:after {
         outline-style: solid;

@@ -10,29 +10,29 @@
 .uitk-density-low,
 .uitk-density-medium,
 .uitk-density-high {
-  --swatch-density-high-size: calc(5 * var(--uitk-size-unit));
-  --swatch-density-medium-size: calc(3 * var(--uitk-size-unit));
-  --swatch-density-low-size: calc(3 * var(--uitk-size-unit));
-  --swatch-density-touch-size: calc(2 * var(--uitk-size-unit));
+  --colorChooser-swatch-density-high-size: calc(5 * var(--uitk-size-unit));
+  --colorChooser-swatch-density-medium-size: calc(3 * var(--uitk-size-unit));
+  --colorChooser-swatch-density-low-size: calc(3 * var(--uitk-size-unit));
+  --colorChooser-swatch-density-touch-size: calc(2 * var(--uitk-size-unit));
 }
 
 .uitk-density-touch {
-  --swatch-size-unit: var(--swatch-density-touch-size);
+  --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-touch-size);
 }
 .uitk-density-low {
-  --swatch-size-unit: var(--swatch-density-low-size);
+  --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-low-size);
 }
 .uitk-density-medium {
-  --swatch-size-unit: var(--swatch-density-medium-size);
+  --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-medium-size);
 }
 .uitk-density-high {
-  --swatch-size-unit: var(--swatch-density-high-size);
+  --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-high-size);
 }
 
 .uitkColorChooserSwatch-swatch,
 .uitk-light .uitkColorChooserSwatch-greySwatch {
-  width: var(--swatch-size-unit);
-  height: var(--swatch-size-unit);
+  width: var(--colorChooser-swatch-size-unit);
+  height: var(--colorChooser-swatch-size-unit);
 }
 
 .uitkColorChooserSwatch-whiteSwatch {
@@ -47,8 +47,8 @@
 
 .uitk-light .uitkColorChooserSwatch-whiteSwatch,
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
-  width: calc(var(--swatch-size-unit) - 2);
-  height: calc(var(--swatch-size-unit) - 2);
+  width: calc(var(--colorChooser-swatch-size-unit) - 2);
+  height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
 .uitk-dark .uitkColorChooserSwatch-whiteSwatch,
@@ -57,8 +57,8 @@
 }
 
 .uitk-dark .uitkColorChooserSwatch-whiteSwatch {
-  width: calc(var(--swatch-size-unit) - 2);
-  height: calc(var(--swatch-size-unit) - 2);
+  width: calc(var(--colorChooser-swatch-size-unit) - 2);
+  height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
 .uitk-dark .uitkColorChooserSwatch-greySwatch {
@@ -68,8 +68,8 @@
 .uitkColorChooserSwatch-active {
   outline: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
   border: var(--uitk-focused-outlineWidth) var(--uitk-container-borderStyle) var(--uitk-actionable-cta-foreground-active) !important;
-  width: calc(var(--swatch-size-unit) - 4px) !important;
-  height: calc(var(--swatch-size-unit) - 4px) !important;
+  width: calc(var(--colorChooser-swatch-size-unit) - 4px) !important;
+  height: calc(var(--colorChooser-swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
@@ -77,8 +77,8 @@
 
 .uitkColorChooserSwatch-transparent {
   border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-negative-foreground) !important;
-  width: calc(var(--swatch-size-unit) - 2px) !important;
-  height: calc(var(--swatch-size-unit) - 2px) !important;
+  width: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
+  height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   background: linear-gradient(

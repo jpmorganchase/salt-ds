@@ -5,7 +5,7 @@
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
   --tree-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
 
-  --tree-node-height: var(--uitkTreeNode-height, var(--uitk-size-stackable));
+  --tree-node-height: var(--uitkTreeNode-height, 24px);
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
   --tree-node-paddingLeft: 6px;

@@ -9,4 +9,4 @@
 Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
 --uitkDialog-border-color -> --uitkDialog-borderColor
 --accordion-summary-padding-left -> --accordion-summary-paddingLeft
---grid-item-grid-row-end -> --grid-item-gridRowEnd
+--gridLayout-item-grid-row-end -> --gridLayout-item-gridRowEnd

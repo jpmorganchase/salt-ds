@@ -115,8 +115,8 @@
   --uitkButton-background-hover: var(--pill-background-disabled);
   --uitkButton-text-color-active: var(--pill-text-color);
   --uitkButton-text-color-hover: var(--pill-text-color);
-  --uitkCheckboxIcon-tick-color: var(--uitk-taggable-foreground-disabled);
-  --uitkCheckboxIcon-stroke-hover: var(--uitk-selectable-borderColor-disabled);
+  --uitkCheckbox-icon-tick-color: var(--uitk-taggable-foreground-disabled);
+  --uitkCheckbox-icon-stroke-hover: var(--uitk-selectable-borderColor-disabled);
 
   background: var(--pill-background-disabled);
   cursor: var(--uitk-selectable-cursor-disabled);
@@ -124,9 +124,9 @@
 
 /* Checkbox styles for selectable Pill when `disabled={true}` */
 .uitkPill-disabled .uitkPill-checkbox {
-  --uitkCheckboxIcon-tick-color: var(--uitk-taggable-foreground-disabled);
-  --uitkCheckboxIcon-stroke: var(--uitk-selectable-borderColor-disabled);
-  --uitkCheckboxIcon-stroke-hover: var(--uitk-selectable-borderColor-disabled);
+  --uitkCheckbox-icon-tick-color: var(--uitk-taggable-foreground-disabled);
+  --uitkCheckbox-icon-stroke: var(--uitk-selectable-borderColor-disabled);
+  --uitkCheckbox-icon-stroke-hover: var(--uitk-selectable-borderColor-disabled);
 }
 
 /* Style applied to Pill label */

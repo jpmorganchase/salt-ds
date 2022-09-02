@@ -97,7 +97,7 @@ module.exports = stylelint.createPlugin(
           verboseLog && console.log({ nodes });
 
           if (!firstNode || check(firstNode.value)) return;
-
+          console.log(firstNode.value)
           complain(
             declarationValueIndex(decl) + firstNode.sourceIndex,
             firstNode.value.length,

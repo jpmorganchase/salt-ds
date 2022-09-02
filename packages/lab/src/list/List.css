@@ -6,7 +6,7 @@
   --list-item-gap: 0px;
   --list-maxHeight: 100%;
 
-  --uitkListItem-height: var(--uitkList-item-height, var(--uitk-size-stackable));
+  --uitkList-item-height: var(--uitkList-item-height, var(--uitk-size-stackable));
 
   background: var(--list-background);
   border-color: var(--uitk-container-borderColor-medium);
@@ -35,12 +35,12 @@
 }
 
 .uitkListItemHeader {
-  --uitkListItem-background: var(--list-item-header-background);
+  --uitkList-item-background: var(--list-item-header-background);
   color: var(--list-item-header-color);
 }
 
 .uitkListItemHeader[data-sticky="true"] {
-  --uitkListItem-background: var(--list-background);
+  --uitkList-item-background: var(--list-background);
   position: sticky;
   top: 0;
   z-index: 1;
