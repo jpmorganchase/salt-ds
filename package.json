@@ -24,7 +24,7 @@
     "build:ag-grid-theme": "cd packages/ag-grid-theme && yarn build",
     "test": "modular test",
     "test:components": "cypress run --component --browser chrome --headless",
-    "test:components:local": "cypress open --component --browser chrome",
+    "test:components:local": "cypress open --component --browser electron",
     "lint": "modular lint",
     "lint:core": "yarn eslint \"packages/core/src/**/*.{ts,tsx}\" --ignore-pattern \"**/__tests__/**\"",
     "prettier": "prettier --write . --ignore-path .gitignore",
