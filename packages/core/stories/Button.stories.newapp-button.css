@@ -12,7 +12,7 @@
 .uitk-newapp .uitkButton-cta:hover:not(:active):not(.uitkButton-disabled) {
   --uitkButton-borderColor: var(--uitk-actionable-cta-topline-color-hover) transparent var(--uitk-actionable-cta-baseline-color-hover) transparent;
 }
-.uitk-newapp .uitkButton-cta:active {
+.uitk-newapp .uitkButton-cta:active:not(.uitkButton-disabled) {
   --uitkButton-borderColor: var(--uitk-actionable-cta-topline-color-active) transparent var(--uitk-actionable-cta-baseline-color-active) transparent;
 }
 .uitk-newapp .uitkButton-cta.uitkButton-disabled {
@@ -25,7 +25,7 @@
 .uitk-newapp .uitkButton-primary:hover:not(:active):not(.uitkButton-disabled):not([data-readonly]) {
   --uitkButton-borderColor: var(--uitk-actionable-primary-topline-color-hover) transparent var(--uitk-actionable-primary-baseline-color-hover) transparent;
 }
-.uitk-newapp .uitkButton-primary:active {
+.uitk-newapp .uitkButton-primary:active:not(.uitkButton-disabled) {
   --uitkButton-borderColor: var(--uitk-actionable-primary-topline-color-active) transparent var(--uitk-actionable-primary-baseline-color-active) transparent;
 }
 
