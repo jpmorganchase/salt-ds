@@ -1,11 +1,12 @@
 import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
 import cx from "classnames";
 
-import { Scrim, ScrimProps } from "@jpmorganchase/uitk-core";
 import {
   makePrefixer,
   Breakpoints,
   useIsViewportLargerThanBreakpoint,
+  Scrim,
+  ScrimProps,
 } from "@jpmorganchase/uitk-core";
 import "./LayerLayout.css";
 import { usePrevious } from "../../utils";
