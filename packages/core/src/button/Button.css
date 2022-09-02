@@ -180,8 +180,14 @@
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
 
-/* Pseudo-class applied to the root element if disabled={true} */
-.uitkButton-disabled {
+.uitkButton:disabled,
+  /* Pseudo-class applied to the root element if disabled={true} */
+.uitkButton-disabled,
+  /* Overrides to apply the disabled style when the button is focusable while also disabled */
+.uitkButton-disabled:active,
+.uitkButton-disabled:focus-visible,
+.uitkButton-disabled:hover,
+.uitkButton-disabled:focus-visible:not(:active):not(.uitkButton-active) {
   background: var(--uitkButton-background-disabled, var(--button-background-disabled));
   color: var(--uitkButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--uitkButton-cursor-disabled, var(--uitk-actionable-cursor-disabled));
