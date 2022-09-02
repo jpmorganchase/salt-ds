@@ -4,6 +4,6 @@
 }
 
 .uitkTabs.backwardsCompat {
-  --uitkTabs-tab-letterSpacing: -0.1px;
-  --uitkTabs-tab-top: -1px;
+  --uitkTab-letterSpacing: -0.1px;
+  --uitkTab-top: -1px;
 }

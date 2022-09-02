@@ -2,7 +2,7 @@
 .uitkTabstrip-activationIndicator {
   --tabs-activationIndicator-transitionDuration: 0.2s;
   --tabs-activationIndicator-transitionProperty: var(--tabs-activationIndicator-transitionProperty, left);
-  border: var(--uitkTabstrip-activationIndicator-border, var(--uitk-navigable-border));
+  border: var(--uitkTabs-activationIndicator-border, var(--uitk-navigable-border));
   border-style: var(--tabs-activationIndicator-borderStyle);
   box-sizing: border-box;
   height: var(--tabs-activationIndicator-height, auto);
@@ -13,11 +13,11 @@
 
 /* the Active Tab indicator, uses navigable styles */
 .uitkTabstrip-activationIndicatorThumb {
-  inset: var(--tabstrip-activation-thumb-inset);
+  inset: var(--tabs-activationIndicator-thumb-inset);
   position: absolute;
-  height: var(--tabstrip-activation-thumb-height, auto);
+  height: var(--tabs-activationIndicator-thumb-height, auto);
   background: var(--uitk-navigable-indicator-color-active);
   transition: var(--uitkTabs-activationIndicator-transition, var(--tabs-activationIndicator-transitionProperty) var(--tabs-activationIndicator-transitionDuration) ease);
-  width: var(--tabstrip-activation-thumb-width, auto);
+  width: var(--tabs-activationIndicator-thumb-width, auto);
   z-index: 1;
 }
