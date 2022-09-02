@@ -45,10 +45,10 @@
 /* TK1 Backwards compatibility */
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop1,
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--backwardsCompat-measure-fill-stopColor);
+  stop-color: var(--backwardsCompat-measured-fill-stopColor);
 }
 
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop2,
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--backwardsCompat-measure-fill-startColor);
+  stop-color: var(--backwardsCompat-measured-fill-startColor);
 }

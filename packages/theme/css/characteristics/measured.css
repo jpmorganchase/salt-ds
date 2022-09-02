@@ -19,11 +19,11 @@
 
 /* TK1 Backwards compatibility */
 .uitk-light {
-  --backwardsCompat-measure-fill-startColor: var(--uitk-color-teal-500);
-  --backwardsCompat-measure-fill-stopColor: var(--uitk-color-blue-500);
+  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-500);
+  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-500);
 }
 
 .uitk-dark {
-  --backwardsCompat-measure-fill-startColor: var(--uitk-color-teal-300);
-  --backwardsCompat-measure-fill-stopColor: var(--uitk-color-blue-300);
+  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-300);
+  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-300);
 }

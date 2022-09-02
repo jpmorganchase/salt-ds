@@ -110,9 +110,9 @@
 /* TK1 Backwards compatibility */
 
 .backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStart {
-  stop-color: var(--backwardsCompat-measure-fill-startColor);
+  stop-color: var(--backwardsCompat-measured-fill-startColor);
 }
 
 .backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStop {
-  stop-color: var(--backwardsCompat-measure-fill-stopColor);
+  stop-color: var(--backwardsCompat-measured-fill-stopColor);
 }
