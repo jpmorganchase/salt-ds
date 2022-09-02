@@ -5,3 +5,4 @@
 ---
 
 ensure tokens start with -componentName or -uitkComponentName
+e.g. --radioIcon --> --radioButton-icon
