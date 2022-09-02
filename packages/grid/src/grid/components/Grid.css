@@ -1,28 +1,28 @@
-.uitk-density-touch .uitkGrid {
+.uitk-density-touch {
   --uitkGrid-rowHeight: 60px;
   --uitkGrid-padding: 16px;
   --uitkGrid-fontSize: 16px;
 }
 
-.uitk-density-low .uitkGrid {
+.uitk-density-low {
   --uitkGrid-rowHeight: 48px;
   --uitkGrid-padding: 12px;
   --uitkGrid-fontSize: 14px;
 }
 
-.uitk-density-medium .uitkGrid {
+.uitk-density-medium {
   --uitkGrid-rowHeight: 36px;
   --uitkGrid-padding: 8px;
   --uitkGrid-fontSize: 12px;
 }
 
-.uitk-density-high .uitkGrid {
+.uitk-density-high {
   --uitkGrid-rowHeight: 24px;
   --uitkGrid-padding: 8px;
   --uitkGrid-fontSize: 12px;
 }
 
-.uitk-density-ultrahigh .uitkGrid {
+.uitk-density-ultrahigh {
   --uitkGrid-rowHeight: 20px;
   --uitkGrid-padding: 4px;
   --uitkGrid-fontSize: 12px;
@@ -157,39 +157,40 @@
   --uitk-zIndex-tooltip: 1500;
 }
 
-/*ControlLabel*/
-.uitk-density-ultrahigh .uitkGrid .uitkControlLabel-labelRight {
-  margin-left: 3px;
-  margin-right: 0;
-}
-.uitk-density-ultrahigh .uitkGrid .backwardCompat .uitkControlLabel-label {
-  margin-right: 4px;
-}
+.uitk-density-ultrahigh {
+  --grid-controlLabel-right-marginLeft: 3px;
+  --grid-controlLabel-right-marginRight: 0;
 
-/*Input*/
-.uitk-density-ultrahigh .uitkGrid .uitkInput {
-  --input-button-inset: 2px;
-}
+  --grid-input-button-inset: 2px;
 
-/*Tooltip*/
-.uitk-density-ultrahigh .uitkGrid .uitkTooltip {
-  --icon-top: 1px;
-}
+  --grid-tooltip-icon-top: 1px;
+  --grid-tokenizedInput-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
+  --grid-tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
+  --grid-tokenizedInput-last-pill-margin: var(--uitk-size-unit);
 
-/*TokenizedInput*/
-.uitk-density-ultrahigh .uitkGrid .uitkTokenizedInput {
-  --tokenized-input-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
-  --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenized-input-last-pill-margin: var(--uitk-size-unit);
-}
-/*ToggleButton*/
-.uitk-density-ultrahigh .uitkGrid .uitkToggleButton {
-  --toggleButton-icon-padding: 1px;
+  --grid-toggleButton-icon-padding: 1px;
+
+  --backwardsCompat-controlLabel-right-marginRight: 4px;
 }
 
 .uitkGrid {
   --uitkGrid-scrollBar-size: 15px;
   --uitkGrid-cell-padding: 0 var(--uitkGrid-padding) 0 var(--uitkGrid-padding);
+
+  /* --grid- tokens below only defined for ultrahigh density, otherwise use default */
+  --uitkControlLabel-right-marginLeft: var(--grid-controlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
+  --uitkControlLabel-right-marginRight: var(--grid-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
+  --uitkInput-button-inset: var(--grid-input-button-inset, var(--input-button-inset));
+  --uitkToggleButton-icon-padding: var(--grid-toggleButton-icon-padding, var(--toggleButton-icon-padding));
+  --uitkTokenizedInput-gutter-size: var(--grid-tokenizedInput-gutter-size, var(--tokenizedInput-gutter-size));
+  --uitkTokenizedInput-pill-group-y-padding: var(--grid-tokenizedInput-pill-group-y-padding, var(--tokenizedInput-pill-group-y-padding));
+  --uitkTokenizedInput-last-pill-margin: var(--grid-tokenizedInput-last-pill-margin, var(--tokenizedInput-last-pill-margin));
+  --uitkTooltip-icon-top: var(--grid-tooltip-icon-top, var(--tooltip-icon-top));
+}
+
+.uitkGrid.backwardsCompat {
+  /* --backwardsCompat token only defined for ultrahigh density, otherwise use default */
+  --uitkControlLabel-right-marginRight: var(--backwardsCompat-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
 
 .uitk-light .uitkGrid {
