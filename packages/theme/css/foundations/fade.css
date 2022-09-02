@@ -43,6 +43,4 @@
   --uitk-color-blue-400-fade-fill: rgba(46, 132, 198, var(--uitk-palette-opacity-fill));
   --uitk-color-blue-500-fade-fill: rgba(38, 112, 169, var(--uitk-palette-opacity-fill));
   --uitk-color-blue-600-fade-fill: rgba(21, 92, 147, var(--uitk-palette-opacity-fill));
-  --uitk-color-teal-300-fade-fill: rgba(73, 160, 172, var(--uitk-palette-opacity-fill));
-  --uitk-color-teal-500-fade-fill: rgba(0, 130, 151, var(--uitk-palette-opacity-fill));
 }
