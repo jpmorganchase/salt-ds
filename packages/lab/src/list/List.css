@@ -35,7 +35,7 @@
 }
 
 .uitkListItemHeader {
-  --uitkListItem-background: var(--list-item-header-bg);
+  --uitkListItem-background: var(--list-item-header-background);
   color: var(--list-item-header-color);
 }
 
@@ -50,9 +50,9 @@
   border-width: var(--checkbox-borderWidth);
   border-color: var(--checkbox-borderColor);
   content: var(--list-item-header-twisty-content);
-  -webkit-mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
-  mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
-  background-color: var(--list-item-header-twisty-color);
+  -webkit-mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
+  mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
+  background: var(--list-item-header-twisty-color);
   height: 12px;
   left: var(--list-item-header-twisty-left);
   right: var(--list-item-header-twisty-right);

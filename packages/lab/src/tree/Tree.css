@@ -1,17 +1,17 @@
 .uitkTree {
-  --uitkTreeNode-height: var(--uitkTree-node-height, var(--uitk-size-stackable-unit));
-
-  --tree-node-collapse: var(--uitkTree-toggle-collapse, var(--svg-tree-node-collapse));
-  --tree-node-expand: var(--uitkTree-toggle-expand, var(--svg-tree-node-expand));
-  --tree-toggle-width: 12px;
+  --tree-borderColor-focusVisible: rgb(141, 154, 179);
+  --tree-node-collapse: var(--uitkTree-node-collapse, var(--list-svg-tree-node-collapse));
+  --tree-node-expand: var(--uitkTree-node-expand, var(--list-svg-tree-node-expand));
   --tree-node-expanded-transform: var(--uitkTree-node-expanded-transform, none);
   --tree-node-indent: 0px;
+  --tree-toggle-width: 12px;
 
-  --list-hilited-bg: var(--hw-list-hilited-bg, rgba(0, 0, 0, 0.1));
-  --list-item-height: var(--hw-list-item-height, 30px);
-  --list-item-padding: var(--hw-list-item-padding, 0 6px);
-  --list-item-header-bg: var(--hw-list-item-header-bg, black);
-  --list-item-header-color: var(--hw-list-item-header-color, white);
+  /* TODO: Use appropriate characteristics */
+  --list-background-highlighted: rgba(1, 1, 1, 0.1);
+  --list-item-height: 30px;
+  --list-item-padding: 0 6px;
+  --list-item-header-background: black;
+  --list-item-header-color: white;
   --list-item-header-fontWeight: bold;
   --list-item-header-twisty-color: black;
   --list-item-header-twisty-content: "";
@@ -19,8 +19,6 @@
   --list-item-header-twisty-left: -18px;
   --list-item-header-twisty-right: auto;
   --list-item-selected-color: white;
-  --list-item-text-color: var(--hw-gray-800);
-  --focus-visible-borderColor: var(--hw-focus-visible-borderColor, rgb(141, 154, 179));
 
   margin: 0;
   padding: 0 1px;
