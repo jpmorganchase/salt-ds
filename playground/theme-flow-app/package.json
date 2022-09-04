@@ -5,8 +5,12 @@
   "modular": {
     "type": "app"
   },
+  "homepage": "http://abc.def.io/theme-flow-app/",
   "dependencies": {
-    "@jpmorganchase/theme-editor": ">=1.0.0",
+    "@jpmorganchase/uitk-core": "*",
+    "@jpmorganchase/uitk-icons": "*",
+    "@jpmorganchase/uitk-theme": "*",
+    "@jpmorganchase/theme-editor": "*",
     "css-tree": "^2.0.4",
     "react-flow-renderer": "^10.0.0"
   },
