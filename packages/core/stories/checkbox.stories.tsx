@@ -1,13 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import {
-  Checkbox,
-  CheckboxGroup,
-  Panel,
-  ToolkitProvider,
-} from "@jpmorganchase/uitk-core";
-
-import "./Checkbox.stories.new-app-checkbox.css";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Checkbox, CheckboxGroup } from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Core/Checkbox",
@@ -190,18 +183,3 @@ export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
     </CheckboxGroup>
   );
 };
-
-export const CustomStyling: ComponentStory<typeof CheckboxGroup> = () => (
-  <div style={{ display: "flex" }}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel>
-        <Default />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Panel>
-        <Default />
-      </Panel>
-    </ToolkitProvider>
-  </div>
-);
