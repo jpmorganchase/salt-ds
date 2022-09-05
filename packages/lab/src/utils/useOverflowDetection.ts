@@ -1,6 +1,9 @@
 import { useState, useRef, Ref, DependencyList, useCallback } from "react";
-import { debounce, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
-import { ownerWindow } from "./ownerWindow";
+import {
+  debounce,
+  ownerWindow,
+  useIsomorphicLayoutEffect,
+} from "@jpmorganchase/uitk-core";
 
 export function useOverflowDetection<Element extends HTMLElement>(
   dependencies: DependencyList = []

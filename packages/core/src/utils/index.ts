@@ -5,6 +5,7 @@ export * from "./inferElementType";
 export * from "./makePrefixer";
 export * from "./marginMiddleware";
 export * from "./ownerDocument";
+export * from "./ownerWindow";
 export * from "./polymorphicRef";
 export * from "./setRef";
 export * from "./useControlled";
