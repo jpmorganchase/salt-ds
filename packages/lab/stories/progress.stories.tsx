@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
 import { useProgressingValue } from "./useProgressingValue";
@@ -231,31 +231,6 @@ export const LinearAll: ComponentStory<typeof LinearProgress> = () => (
     </ToolkitProvider>
   </div>
 );
-
-export const LinearCustomStyles: ComponentStory<typeof LinearProgress> = () => {
-  return (
-    <>
-      <div style={{ padding: "5px 0 5px 0" }}>
-        <LinearProgress
-          className="uitk-LinearCustomStyles-styles1"
-          value={20}
-        />
-      </div>
-      <div style={{ padding: "5px 0 5px 0" }}>
-        <LinearProgress
-          className="uitk-LinearCustomStyles-styles2"
-          value={30}
-        />
-      </div>
-      <div style={{ padding: "5px 0 5px 0" }}>
-        <LinearProgress
-          className="uitk-LinearCustomStyles-styles3"
-          value={60}
-        />
-      </div>
-    </>
-  );
-};
 
 export const LinearDefault: ComponentStory<typeof LinearProgress> = () => (
   <div>
