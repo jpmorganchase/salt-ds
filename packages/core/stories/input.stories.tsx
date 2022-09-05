@@ -15,11 +15,8 @@ import {
   UserIcon,
 } from "@jpmorganchase/uitk-icons";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./input.qa.stories.css";
-
-import "./input.qa.stories.css";
-import "./Input.stories.newapp-input.css";
 
 export default {
   title: "Core/Input",
@@ -292,14 +289,3 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
     </>
   );
 };
-
-export const CustomStyling: ComponentStory<typeof Input> = () => (
-  <div style={{ display: "flex" }}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <FeatureInput defaultValue="High density input" />
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <FeatureInput defaultValue="Medium density input" />
-    </ToolkitProvider>
-  </div>
-);
