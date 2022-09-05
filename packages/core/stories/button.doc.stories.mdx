@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   DownloadIcon,
   SearchIcon,
@@ -8,7 +8,6 @@ import {
   SettingsSolidIcon,
 } from "@jpmorganchase/uitk-icons";
 import { withFlexGap } from "docs/decorators/withFlexGap";
-import { CustomStylingExample } from "./button.stories";
 import {
   CSSClassTable,
   CSSVariableTable,
@@ -114,14 +113,7 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 Below is an illustration of some of the buttons used in a new application. Compared to the default UI Toolkit buttons, there are several complexities:
 
 - not just three variants but six. Besides `CTA`, `Primary` and `Secondary`, we have (abbreviating) `Final`, `Bid` and `Ask`.
-- an additional display state - `readonly`.
 - visual treatments not present on standard toolkit buttons - background gradients, border styling
-
-<Canvas>
-  <Story name="Custom Button Styling" decorators={[withFlexGap]}>
-    <CustomStylingExample density={"high"} />
-  </Story>
-</Canvas>
 
 We will assume the name `New App` for our application and we will use the identifier `newapp` to label custom stylesheets and theme.
 
@@ -165,7 +157,7 @@ Note that we scope these variables to the combined class name `.uitk-light.uitk-
   --uitk-actionable-bid-baseline-color: var(--uitk-color-blue-300);
 ```
 
-Following toolkit conventions, we have implemented the Button component styles in a separate stylesheet, extract below. Note: we only have to provide styling for the new custom variants, plus the new state `readonly`. All the existing variants will be handled already, they are characteristic-driven and we have provided new values for the characteristics. If it were not for the fact that we have these new custom vartiants, we might not need a custom component css stylesheet at all.
+Following toolkit conventions, we have implemented the Button component styles in a separate stylesheet, extract below. Note: we only have to provide styling for the new custom variants. All the existing variants will be handled already, they are characteristic-driven and we have provided new values for the characteristics. If it were not for the fact that we have these new custom vartiants, we might not need a custom component css stylesheet at all.
 
 ```css
 /* from the file Button.stories.newapp-button.css */
