@@ -1,0 +1,78 @@
+/* Styles applied to root element */
+.uitk-density-touch {
+  --formLabel-default-top: 11px;
+  --formLabel-left-top: 16px;
+  --formLabel-minHeight: 16px;
+}
+.uitk-density-low {
+  --formLabel-default-top: 7px;
+  --formLabel-left-top: 12px;
+}
+.uitk-density-medium {
+  --formLabel-default-top: 5px;
+  --formLabel-left-top: 8px;
+}
+.uitk-density-high {
+  --formLabel-default-top: 3px;
+  --formLabel-left-top: 4px;
+}
+
+.uitkFormFieldLabel {
+  --formLabel-fontSize: var(--uitkFormFieldLabel-fontSize, var(--uitk-text-caption-fontSize));
+  --formLabel-top: var(--formLabel-default-top);
+  --formLabel-width: 100%;
+}
+
+.uitkFormField-labelLeft .uitkFormFieldLabel {
+  --formLabel-top: var(--formLabel-left-top);
+  --formLabel-width: auto;
+}
+
+.uitkFormFieldLabel {
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--uitkFormFieldLabel-text-color, var(--uitk-text-secondary-foreground));
+  display: block;
+  font-size: var(--formLabel-fontSize);
+  margin-bottom: var(--uitkFormFieldLabel-marginBottom, var(--formLabel-marginBottom));
+  min-height: var(--uitkFormFieldLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
+  margin-top: var(--uitkFormFieldLabel-marginTop, 0px);
+  line-height: var(--uitkFormFieldLabel-lineHeight, var(--uitk-text-base-lineHeight));
+  overflow: hidden;
+  padding-left: var(--uitkFormFieldLabel-paddingLeft, var(--formLabel-paddingLeft));
+  padding-right: var(--uitkFormFieldLabel-paddingRight, var(--formLabel-paddingRight));
+  padding-top: var(--uitkFormFieldLabel-paddingTop, 0);
+  padding-bottom: var(--uitkFormFieldLabel-paddingBottom, 0);
+  text-overflow: ellipsis;
+  top: var(--uitkFormFieldLabel-top, var(--formLabel-top));
+  transform: translate(var(--uitkFormFieldLabel-transform-x, 0), var(--uitkFormFieldLabel-transform-y, var(--formLabel-top)));
+  white-space: nowrap;
+  width: var(--uitkFormFieldLabel-width, var(--formLabel-width, 100%));
+}
+
+.uitkFormFieldLabel ~ * {
+  z-index: 1;
+}
+
+/* Styles applied when `disabled={true}` */
+.uitkFormFieldLabel-disabled {
+  color: var(--uitkFormFieldLabel-text-color-disabled, var(--uitk-text-secondary-foreground-disabled));
+  cursor: var(--uitk-editable-cursor-disabled);
+}
+
+/* Styles applied when displayedNecessity or necessityText provided */
+.uitkFormFieldLabel-necessityIndicator {
+  font-style: var(--uitkFormFieldLabel-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
+  margin-left: 1ch;
+}
+
+/* Styles applied if `hasStatusIndicator={true}` */
+.uitkFormFieldLabel-statusIndicator {
+  margin-left: 6px;
+  vertical-align: top;
+}
+
+.backwardsCompat.uitkFormField .uitkFormFieldLabel,
+.backwardsCompat.uitkRadioButtonGroup .uitkFormFieldLabel {
+  --formLabel-fontSize: var(--backwardsCompat-text-caption-fontSize);
+}

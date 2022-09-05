@@ -4,7 +4,7 @@ import {
   Button,
   FormField,
   Input,
-  StaticInputAdornment,
+  InputStaticAdornment,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import {
@@ -162,9 +162,9 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         style={styles.input}
         {...args}
         startAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CallIcon />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <div style={{ height: "15px" }} />
@@ -172,7 +172,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         defaultValue="Prefix: Text"
         style={styles.input}
         {...args}
-        startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
+        startAdornment={<InputStaticAdornment>+1</InputStaticAdornment>}
       />
       <div style={{ height: "15px" }} />
       <Input
@@ -180,9 +180,9 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         style={styles.input}
         {...args}
         endAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CalendarIcon size="small" />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <div style={{ height: "15px" }} />
@@ -190,7 +190,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         defaultValue="Suffix: Text"
         style={styles.input}
         {...args}
-        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+        endAdornment={<InputStaticAdornment>KG</InputStaticAdornment>}
       />
       <div style={{ height: "15px" }} />
       <Input
@@ -210,11 +210,11 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         startAdornment={
           <>
-            <StaticInputAdornment>
+            <InputStaticAdornment>
               {/* Phone --> Call */}
               <CallIcon size="small" />
-            </StaticInputAdornment>
-            <StaticInputAdornment>+1</StaticInputAdornment>
+            </InputStaticAdornment>
+            <InputStaticAdornment>+1</InputStaticAdornment>
           </>
         }
       />
@@ -234,7 +234,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         endAdornment={
           <>
-            <StaticInputAdornment>KG</StaticInputAdornment>
+            <InputStaticAdornment>KG</InputStaticAdornment>
             <Button variant="secondary">
               <CloseIcon aria-label="clear input" size="small" />
             </Button>
@@ -277,16 +277,16 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         endAdornment={
           <>
-            <StaticInputAdornment>0/100</StaticInputAdornment>
+            <InputStaticAdornment>0/100</InputStaticAdornment>
             <Button variant="primary">
               <SendIcon size="small" />
             </Button>
           </>
         }
         startAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <UserIcon size="small" />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
     </>

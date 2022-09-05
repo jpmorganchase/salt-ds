@@ -4,7 +4,7 @@ import {
   Input,
   FormField,
   Pill,
-  StaticInputAdornment,
+  InputStaticAdornment,
 } from "@jpmorganchase/uitk-core";
 import {
   AddIcon,
@@ -81,9 +81,9 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       <FormField data-close-on-click={false}>
         <Input
           startAdornment={
-            <StaticInputAdornment>
+            <InputStaticAdornment>
               <FilterIcon />
-            </StaticInputAdornment>
+            </InputStaticAdornment>
           }
           style={{ width: 180 }}
           value=""

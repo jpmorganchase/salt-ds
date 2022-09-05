@@ -3,7 +3,7 @@ import {
   Button,
   Input,
   Pill,
-  StaticInputAdornment,
+  InputStaticAdornment,
 } from "@jpmorganchase/uitk-core";
 import {
   AddIcon,
@@ -119,9 +119,9 @@ export const TooltrayAlignment: Story = () => {
         <ToolbarField data-close-on-click={false}>
           <Input
             startAdornment={
-              <StaticInputAdornment>
+              <InputStaticAdornment>
                 <FilterIcon />
-              </StaticInputAdornment>
+              </InputStaticAdornment>
             }
             style={{ width: 180 }}
             defaultValue=""

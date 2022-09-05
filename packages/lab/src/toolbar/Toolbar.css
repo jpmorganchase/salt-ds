@@ -111,7 +111,7 @@
   flex-grow: 0;
 }
 
-.uitkToolbarField.uitkFormField-labelLeft > .uitkFormLabel {
+.uitkToolbarField.uitkFormField-labelLeft > .uitkFormFieldLabel {
   padding-left: var(--uitk-size-unit);
 }
 

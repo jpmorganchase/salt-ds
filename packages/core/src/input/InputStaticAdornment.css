@@ -1,16 +1,16 @@
-.uitkStaticInputAdornment {
+.uitkInputStaticAdornment {
   --adornment-padding: var(--uitk-size-unit);
 }
 
-.uitkStaticInputAdornment {
+.uitkInputStaticAdornment {
   display: flex;
   align-items: center;
 }
 
-.uitkInput-prefixContainer .uitkStaticInputAdornment {
+.uitkInput-prefixContainer .uitkInputStaticAdornment {
   padding-left: var(--adornment-padding);
 }
 
-.uitkInput-suffixContainer .uitkStaticInputAdornment {
+.uitkInput-suffixContainer .uitkInputStaticAdornment {
   padding-right: var(--adornment-padding);
 }

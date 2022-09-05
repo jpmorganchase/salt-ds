@@ -190,7 +190,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
             })}
           >
             {!props.isStateValue && (
-              <div className={cn(withBaseName("field"), "uitkFormLabel")}>
+              <div className={cn(withBaseName("field"), "uitkFormFieldLabel")}>
                 {formFieldLabel}
               </div>
             )}
@@ -208,7 +208,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 <div
                   {...getTriggerProps({
                     className: cn(
-                      "uitkFormLabel",
+                      "uitkFormFieldLabel",
                       withBaseName("colorStatesField")
                     ),
                   })}

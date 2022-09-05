@@ -1,19 +1,19 @@
 import { ComponentPropsWithoutRef } from "react";
 import { FormFieldProps } from "./FormField";
 
-import "./FormHelperText.css";
+import "./FormFieldHelperText.css";
 
-export type FormHelperTextProps<E extends React.ElementType = "p"> =
+export type FormFieldHelperTextProps<E extends React.ElementType = "p"> =
   ComponentPropsWithoutRef<E> & {
     helperText: FormFieldProps["helperText"];
     helperTextPlacement: FormFieldProps["helperTextPlacement"];
   };
 
-export const FormHelperText = <E extends React.ElementType = "p">({
+export const FormFieldHelperText = <E extends React.ElementType = "p">({
   helperText,
   helperTextPlacement,
   ...restProps
-}: FormHelperTextProps<E>) => {
+}: FormFieldHelperTextProps<E>) => {
   if (helperText) {
     if (helperTextPlacement === "bottom") {
       return (

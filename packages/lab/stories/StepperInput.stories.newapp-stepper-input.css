@@ -13,8 +13,8 @@
   --newapp-stepperInput-formLabel-padding: 4px;
 }
 
-.uitk-newapp .uitkFormField-withStepperInput .uitkFormLabel {
-  --uitkFormLabel-paddingBottom: var(--newapp-stepperInput-formLabel-padding);
+.uitk-newapp .uitkFormField-withStepperInput .uitkFormFieldLabel {
+  --uitkFormFieldLabel-paddingBottom: var(--newapp-stepperInput-formLabel-padding);
 }
 
 .uitk-newapp .uitkStepperInput-input,

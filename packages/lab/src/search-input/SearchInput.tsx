@@ -11,7 +11,7 @@ import {
   Button,
   Input,
   InputProps,
-  StaticInputAdornment,
+  InputStaticAdornment,
   useControlled,
   useForkRef,
 } from "@jpmorganchase/uitk-core";
@@ -116,9 +116,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         onKeyUp={handleKeyUp}
         startAdornment={
           IconComponent && (
-            <StaticInputAdornment>
+            <InputStaticAdornment>
               <IconComponent className={`${baseName}-icon`} />
-            </StaticInputAdornment>
+            </InputStaticAdornment>
           )
         }
         value={value || ""}

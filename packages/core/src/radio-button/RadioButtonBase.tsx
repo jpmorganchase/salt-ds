@@ -15,13 +15,16 @@ import {
   useIsFocusVisible,
 } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
-import { RadioIcon as DefaultRadioIcon, RadioIconProps } from "./RadioIcon";
+import {
+  RadioButtonIcon as DefaultRadioIcon,
+  RadioButtonIconProps,
+} from "./RadioButtonIcon";
 
-import "./Radio.css";
+import "./RadioButtonBase.css";
 
 const withBaseName = makePrefixer("uitkRadio");
 
-export interface RadioProps {
+export interface RadioButtonBaseProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
@@ -29,7 +32,7 @@ export interface RadioProps {
   /**
    * custom icon component
    */
-  icon?: FC<RadioIconProps>;
+  icon?: FC<RadioButtonIconProps>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   name?: string;
   defaultChecked?: boolean;
@@ -41,10 +44,10 @@ export interface RadioProps {
   tabIndex?: number;
 }
 
-export const Radio = forwardRef<HTMLSpanElement, RadioProps>(function RadioBase(
-  props,
-  ref
-) {
+export const RadioButtonBase = forwardRef<
+  HTMLSpanElement,
+  RadioButtonBaseProps
+>(function RadioBase(props, ref) {
   const {
     checked: checkedProp,
     defaultChecked,

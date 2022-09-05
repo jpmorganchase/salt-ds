@@ -16,13 +16,16 @@ import { Tooltip, useTooltip } from "../tooltip";
 import { makePrefixer, useForkRef, useId } from "../utils";
 import { classBase } from "./constant";
 import {
-  FormActivationIndicator,
-  FormActivationIndicatorProps,
-} from "./FormActivationIndicator";
-import { FormHelperText, FormHelperTextProps } from "./FormHelperText";
-import { FormLabel, FormLabelProps } from "./FormLabel";
-import { NecessityIndicatorOptions } from "./NecessityIndicator";
-import { StatusIndicatorProps } from "./StatusIndicator";
+  FormFieldActivationIndicator,
+  FormFieldActivationIndicatorProps,
+} from "./FormFieldActivationIndicator";
+import {
+  FormFieldHelperText,
+  FormFieldHelperTextProps,
+} from "./FormFieldHelperText";
+import { FormFieldLabel, FormFieldLabelProps } from "./FormFieldLabel";
+import { NecessityIndicatorOptions } from "./internal/NecessityIndicator";
+import { StatusIndicatorProps } from "./internal/StatusIndicator";
 
 import "./FormField.css";
 
@@ -57,7 +60,7 @@ export interface FormFieldProps
   /**
    * The component used for activation indicator. Default to `FormActivationIndicator`.
    */
-  ActivationIndicatorComponent?: ElementType<FormActivationIndicatorProps>;
+  ActivationIndicatorComponent?: ElementType<FormFieldActivationIndicatorProps>;
   /**
    * Outer focus ring focus will not be applied. Defaults to false.
    */
@@ -77,9 +80,9 @@ export interface FormFieldProps
    */
   helperText?: string;
   /**
-   * The component used for the helper text. Default to `FormHelperText`.
+   * The component used for the helper text. Default to `FormFieldHelperText`.
    */
-  HelperTextComponent?: ElementType<FormHelperTextProps>;
+  HelperTextComponent?: ElementType<FormFieldHelperTextProps>;
   /**
    * Location the helperText, values: 'bottom' (default) or 'tooltip'.
    */
@@ -87,15 +90,15 @@ export interface FormFieldProps
   /**
    * Props to be applied to the `HelperTextComponent`.
    *
-   * Generic on `FormHelperTextProps` is omitted.
+   * Generic on `FormFieldHelperTextProps` is omitted.
    */
-  HelperTextProps?: Partial<FormHelperTextProps>;
+  HelperTextProps?: Partial<FormFieldHelperTextProps>;
   /**
    * The label value for the FormField
    */
   label?: string;
   /**
-   * The component used for the label. Default to `FormLabel`.
+   * The component used for the label. Default to `FormFieldLabel`.
    */
   LabelComponent?: ElementType;
   /**
@@ -105,7 +108,7 @@ export interface FormFieldProps
   /**
    * Props to be applied to the `LabelComponent`
    */
-  LabelProps?: Partial<FormLabelProps>;
+  LabelProps?: Partial<FormFieldLabelProps>;
   /**
    * Override props to be used with the StatusIndicator component
    */
@@ -187,19 +190,19 @@ const withBaseName = makePrefixer(classBase);
 export const FormField = forwardRef(
   (
     {
-      ActivationIndicatorComponent = FormActivationIndicator,
+      ActivationIndicatorComponent = FormFieldActivationIndicator,
       children,
       className,
       disabled,
       disableFocusRing = false,
       fullWidth = true,
       hasStatusIndicator,
-      HelperTextComponent = FormHelperText,
+      HelperTextComponent = FormFieldHelperText,
       HelperTextProps,
       helperText,
       helperTextPlacement = "bottom",
       label,
-      LabelComponent = FormLabel,
+      LabelComponent = FormFieldLabel,
       labelPlacement = "top",
       LabelProps = { displayedNecessity: "required" },
       onBlur,

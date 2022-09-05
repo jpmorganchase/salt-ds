@@ -2,16 +2,16 @@ import cx from "classnames";
 import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "../utils";
 
-import "./StaticInputAdornment.css";
+import "./InputStaticAdornment.css";
 
-export type StaticInputAdornmentProps = HTMLAttributes<HTMLDivElement>;
+export type InputStaticAdornmentProps = HTMLAttributes<HTMLDivElement>;
 
-const withBaseName = makePrefixer("uitkStaticInputAdornment");
+const withBaseName = makePrefixer("uitkInputStaticAdornment");
 
-export const StaticInputAdornment = forwardRef<
+export const InputStaticAdornment = forwardRef<
   HTMLDivElement,
-  StaticInputAdornmentProps
->(function StaticInputAdornment(props, ref) {
+  InputStaticAdornmentProps
+>(function InputStaticAdornment(props, ref) {
   const { children, className, ...other } = props;
 
   return (

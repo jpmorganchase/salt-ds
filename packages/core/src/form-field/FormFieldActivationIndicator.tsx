@@ -2,7 +2,7 @@ import { SVGAttributes } from "react";
 import { makePrefixer } from "../utils";
 import { FormFieldProps } from "./FormField";
 
-import "./FormActivationIndicator.css";
+import "./FormFieldActivationIndicator.css";
 
 const ErrorIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   return (
@@ -30,7 +30,7 @@ const WarningIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   );
 };
 
-const withBaseName = makePrefixer("uitkFormActivationIndicator");
+const withBaseName = makePrefixer("uitkFormFieldActivationIndicator");
 
 const ActivationIndicatorIcon = ({
   validationState,
@@ -46,15 +46,15 @@ const ActivationIndicatorIcon = ({
 };
 
 // Removed `enabled` prop, it's better to let parent to control render
-export interface FormActivationIndicatorProps
+export interface FormFieldActivationIndicatorProps
   extends Pick<FormFieldProps, "validationState"> {
   hasIcon?: boolean;
 }
 
-export const FormActivationIndicator: React.FC<
-  FormActivationIndicatorProps
-> = ({ hasIcon, validationState }: FormActivationIndicatorProps) => {
-  const rootClass = "uitkFormActivationIndicator";
+export const FormFieldActivationIndicator: React.FC<
+  FormFieldActivationIndicatorProps
+> = ({ hasIcon, validationState }: FormFieldActivationIndicatorProps) => {
+  const rootClass = "uitkFormFieldActivationIndicator";
 
   return (
     <div className={withBaseName()}>

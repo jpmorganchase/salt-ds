@@ -1,4 +1,4 @@
-import { Button, Input, StaticInputAdornment } from "@jpmorganchase/uitk-core";
+import { Button, Input, InputStaticAdornment } from "@jpmorganchase/uitk-core";
 import {
   CalendarIcon,
   CallIcon,
@@ -65,26 +65,26 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       <Input
         defaultValue="Prefix: Icon"
         startAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CallIcon />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <Input
         defaultValue="Prefix: Text"
-        startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
+        startAdornment={<InputStaticAdornment>+1</InputStaticAdornment>}
       />
       <Input
         defaultValue="Suffix: Icon"
         endAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CalendarIcon size="small" />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <Input
         defaultValue="Suffix: Text"
-        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+        endAdornment={<InputStaticAdornment>KG</InputStaticAdornment>}
       />
       <Input
         defaultValue="Suffix: Button"
@@ -98,11 +98,11 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Prefix: Icon + Text"
         startAdornment={
           <>
-            <StaticInputAdornment>
+            <InputStaticAdornment>
               {/* Phone --> Call */}
               <CallIcon size="small" />
-            </StaticInputAdornment>
-            <StaticInputAdornment>+1</StaticInputAdornment>
+            </InputStaticAdornment>
+            <InputStaticAdornment>+1</InputStaticAdornment>
           </>
         }
       />
@@ -116,7 +116,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Text + Button"
         endAdornment={
           <>
-            <StaticInputAdornment>KG</StaticInputAdornment>
+            <InputStaticAdornment>KG</InputStaticAdornment>
             <Button variant="secondary">
               <CloseIcon aria-label="clear input" size="small" />
             </Button>
@@ -150,16 +150,16 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue={"Suffix: Static + Button\n\n"}
         endAdornment={
           <>
-            <StaticInputAdornment>0/100</StaticInputAdornment>
+            <InputStaticAdornment>0/100</InputStaticAdornment>
             <Button variant="primary">
               <SendIcon size="small" />
             </Button>
           </>
         }
         startAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <UserIcon size="small" />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
     </QAContainer>

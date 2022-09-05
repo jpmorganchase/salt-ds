@@ -2,7 +2,7 @@ import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import {
   FormField,
   Input,
-  StaticInputAdornment,
+  InputStaticAdornment,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import { CallIcon, CalendarIcon } from "@jpmorganchase/uitk-icons";
@@ -73,24 +73,24 @@ Icons and text can be used as adornments at the start or end of the component.
       <Input
         defaultValue="Prefix: Icon"
         startAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CallIcon />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Icon"
         endAdornment={
-          <StaticInputAdornment>
+          <InputStaticAdornment>
             <CalendarIcon size="small" />
-          </StaticInputAdornment>
+          </InputStaticAdornment>
         }
       />
       <div style={{ height: "15px" }} />
       <Input
         defaultValue="Suffix: Text"
-        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+        endAdornment={<InputStaticAdornment>KG</InputStaticAdornment>}
       />
     </div>
   </Story>
@@ -135,16 +135,16 @@ import { Input } from "@jpmorganchase/uitk-core";
     <Input
       defaultValue="Prefix: Icon"
       startAdornment={
-        <StaticInputAdornment>
+        <InputStaticAdornment>
           <CallIcon />
-        </StaticInputAdornment>
+        </InputStaticAdornment>
       }
     />
   </ComponentAnatomy>
   <ComponentAnatomy>
     <Input
       defaultValue="Suffix: Text"
-      endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
+      endAdornment={<InputStaticAdornment>KG</InputStaticAdornment>}
     />
   </ComponentAnatomy>
 </Canvas>

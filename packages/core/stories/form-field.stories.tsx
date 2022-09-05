@@ -493,8 +493,8 @@ export const CustomStyling: ComponentStory<typeof FormField> = () => (
         --uitkFormFieldHelperText-fontStyle: normal;
         --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-400);
         --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-200);
-        --uitkFormLabel-marginBottom: 6px;
-        --uitkFormLabel-text-color: var(--uitk-color-purple-800);
+        --uitkFormFieldLabel-marginBottom: 6px;
+        --uitkFormFieldLabel-text-color: var(--uitk-color-purple-800);
       }
       .carbon .uitkFormField-focused {
         --uitkFormActivationIndicator-size: 3px;

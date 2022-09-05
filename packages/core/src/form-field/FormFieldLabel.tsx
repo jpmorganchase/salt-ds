@@ -5,13 +5,16 @@ import { FormFieldValidationState } from "./FormField";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   NecessityIndicatorOptions,
-} from "./NecessityIndicator";
-import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
+} from "./internal/NecessityIndicator";
+import {
+  StatusIndicator,
+  StatusIndicatorProps,
+} from "./internal/StatusIndicator";
 
-import "./FormLabel.css";
+import "./FormFieldLabel.css";
 
-const withBaseName = makePrefixer("uitkFormLabel");
-export interface FormLabelProps
+const withBaseName = makePrefixer("uitkFormFieldLabel");
+export interface FormFieldLabelProps
   extends HTMLAttributes<HTMLLabelElement>,
     NecessityIndicatorOptions {
   /**
@@ -23,7 +26,7 @@ export interface FormLabelProps
    */
   hasStatusIndicator?: boolean;
   /**
-   * The label value for the FormLabel
+   * The label value for the FormFieldLabel
    */
   label?: string;
   /**
@@ -48,7 +51,7 @@ export interface FormLabelProps
   tooltipText?: string;
 }
 
-export const FormLabel = ({
+export const FormFieldLabel = ({
   label,
   NecessityIndicator = DefaultNecessityIndicator,
   required,
@@ -62,7 +65,7 @@ export const FormLabel = ({
   readOnly,
   tooltipText,
   ...restProps
-}: FormLabelProps) => (
+}: FormFieldLabelProps) => (
   <label
     className={cx(withBaseName(), className, {
       [withBaseName("disabled")]: disabled,

@@ -66,28 +66,28 @@
 }
 
 /* Styles applied when `row=false OR undefined` */
-.uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormLabel {
+.uitkRadioButtonGroup-vertical .uitkRadioButtonGroup-legend.uitkFormFieldLabel {
   margin-bottom: var(--uitkRadioButtonGroup-vertical-label-marginBottom, var(--radioButtonGroup-vertical-label-marginBottom));
   margin-top: var(--uitkRadioButtonGroup-vertical-label-marginTop, 0px);
 
-  --uitkFormLabel-paddingRight: var(--radioButtonGroup-vertical-formLabel-paddingRight);
-  --uitkFormLabel-marginBottom: var(--radioButtonGroup-vertical-formLabel-marginBottom);
-  --uitkFormLabel-transform: var(--radioButtonGroup-vertical-formLabel-transform);
+  --uitkFormFieldLabel-paddingRight: var(--radioButtonGroup-vertical-formLabel-paddingRight);
+  --uitkFormFieldLabel-marginBottom: var(--radioButtonGroup-vertical-formLabel-marginBottom);
+  --uitkFormFieldLabel-transform: var(--radioButtonGroup-vertical-formLabel-transform);
 }
 
-/* Styles applied to the FormField FormLabel component */
-.uitkRadioButtonGroup-legend.uitkFormLabel {
-  --uitkFormLabel-transform: var(--radioButtonGroup-formLabel-transform);
+/* Styles applied to the FormField FormFieldLabel component */
+.uitkRadioButtonGroup-legend.uitkFormFieldLabel {
+  --uitkFormFieldLabel-transform: var(--radioButtonGroup-formLabel-transform);
 }
 
-/* Styles applied to the Form Field FormLabel component if `row={true}` */
-.uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend.uitkFormLabel {
+/* Styles applied to the Form Field FormFieldLabel component if `row={true}` */
+.uitkRadioButtonGroup-horizontal .uitkRadioButtonGroup-legend.uitkFormFieldLabel {
   --formLabel-width: auto;
   float: left;
 }
 
-/* Styles applied to the Form Field FormLabel component */
-.uitkRadioButtonGroup-legend.uitkFormLabel {
+/* Styles applied to the Form Field FormFieldLabel component */
+.uitkRadioButtonGroup-legend.uitkFormFieldLabel {
   padding-left: var(--uitkRadioButtonGroup-formLabel-paddingLeft, 0px);
 }
 
