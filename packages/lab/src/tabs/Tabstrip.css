@@ -1,13 +1,13 @@
 /* Component class applied to the root element */
 .uitkTabstrip {
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
-  --tabstrip-tag-dragging-display: none;
-  --tabstrip-tab-display: inline-flex;
-  --tabstrip-tab-background: transparent;
+  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-tabstrip-dragging-display: none;
+  --tabs-tabstrip-display: inline-flex;
+  --tabs-tabstrip-background: transparent;
 
   align-items: flex-start;
-  align-self: var(--uitkTabstrip-alignSelf, stretch);
-  font-size: var(--uitk-text-fontSize, 12px);
+  align-self: var(--uitkTabs-tabstrip-alignSelf, stretch);
+  font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-text-fontWeight);
   position: relative;
   overflow: hidden;
@@ -18,29 +18,30 @@
 
 /* Tabstrip orientation is horizontal */
 .uitkTabstrip-horizontal {
-  --tab-activationIndicator-borderStyle: none none solid none;
-  --tab-activationIndicator-height: 1px;
-  --tab-activationIndicator-inset: auto 0px 0px 0px;
-  --tab-activationIndicator-transitionProperty: left;
-  --tab-activationIndicator-thumb-height: 2px;
-  --tab-activationIndicator-thumb-inset: -1px 0 0 0;
+  --tabs-activationIndicator-borderStyle: none none solid none;
+  --tabs-activationIndicator-height: 1px;
+  --tabs-activationIndicator-inset: auto 0px 0px 0px;
+  --tabs-activationIndicator-transitionProperty: left;
+  --tabs-activationIndicator-thumb-height: 2px;
+  --tabs-activationIndicator-thumb-inset: -1px 0 0 0;
 }
 
 /* Tabstrip orientation is vertical */
 .uitkTabstrip-vertical {
-  --uitkTab-activationIndicator-transition: top 0.3s ease;
-  --tab-activationIndicator-borderStyle: none solid none none;
-  --tab-activationIndicator-inset: 0px 0px 0px auto;
-  --tab-activationIndicator-transitionProperty: top;
-  --tab-activationIndicator-width: 1px;
-  --tab-activationIndicator-thumb-inset: 0 0 0 -1px;
-  --tab-activationIndicator-thumb-width: 2px;
+  --tabs-activationIndicator-transition: top 0.3s ease;
+  --tabs-activationIndicator-borderStyle: none solid none none;
+  --tabs-activationIndicator-inset: 0px 0px 0px auto;
+  --tabs-activationIndicator-transitionProperty: top;
+  --tabs-activationIndicator-width: 1px;
+  --tabs-activationIndicator-thumb-inset: 0 0 0 -1px;
+  --tabs-activationIndicator-thumb-width: 2px;
+
   align-self: flex-start;
   display: inline-flex;
 }
 
 .uitkTabstrip-draggingTab {
-  --uitkTab-activationIndicator-transition: none;
+  --uitkTabs-activationIndicator-transition: none;
 }
 
 .uitkTabstrip-draggingTab .uitkTab {
@@ -49,7 +50,7 @@
 
 /* Tabstrip orientation is horizontal */
 .uitkTabstrip-horizontal {
-  height: var(--tabstrip-height);
+  height: var(--tabs-tabstrip-height);
 }
 
 .uitkTabstrip-addButton,
@@ -60,11 +61,6 @@
 .uitkTabstrip-overflowMenu.uitkDropdown {
   --uitkIcon-padding: 0;
 }
-
-/* .uitkTabstrip-overflowMenu [aria-expanded="true"] {
-  --uitk-actionable-secondary-background: var(--uitk-actionable-secondary-background-active);
-  --uitk-actionable-secondary-icon: var(--uitk-actionable-secondary-icon-color-active);
-} */
 
 .uitkTabstrip-overflowMenu-open {
   --uitkButton-background: var(--uitk-actionable-secondary-background-active);
@@ -84,7 +80,7 @@
   flex-shrink: 1;
   flex-wrap: wrap;
   justify-content: flex-start;
-  line-height: var(--tabstrip-height);
+  line-height: var(--tabs-tabstrip-height);
 }
 
 .uitkTabstrip-vertical .uitkTabstrip-inner {
@@ -98,35 +94,36 @@
 
 /* Styling applied to Draggable wrapper when used to drag a Tab */
 .uitkDraggable[class*="tabstrip"] {
-  --uitkTab-cursor: var(--uitk-draggable-grab-cursor-active);
-  --uitkTab-background: var(--uitk-navigable-background-hover-medium);
-  --uitkTab-position: static;
-  --tabstrip-tab-display: flex;
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
-  --tabstrip-tab-dragging-display: block;
-  --tab-bar-color: var(--uitk-grey-90);
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  --tabs-tabstrip-display: flex;
+  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-tabstrip-dragging-display: block;
+  
+  --tabs-tab-background: var(--uitk-navigable-background-hover-medium);
+  --tabs-tab-before-content: "";
+  --tabs-tab-before-background: var(--uitk-navigable-indicator-hover);
+  --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
+  --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
+  --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
+  --tabs-tab-cursor: var(--uitk-draggable-grab-cursor-active);
+  --tabs-tab-position: static;
 
-  --tab-before-content: "";
-  --tab-before-background: var(--uitk-navigable-indicator-hover);
-  --tab-before-height: var(--tab-activationIndicator-thumb-height);
-  --tab-before-inset: var(--tab-activationIndicator-inset);
-  --tab-before-width: var(--tab-activationIndicator-thumb-width);
+  font-size: var(--uitk-typography-size-regular-unit, 12px);
 }
 
 .uitkDraggable-tabstrip-horizontal {
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
-  --tab-activationIndicator-thumb-height: 2px;
-  --tab-activationIndicator-inset: auto 0px 0px 0px;
-  line-height: var(--tabstrip-height);
+  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-activationIndicator-thumb-height: 2px;
+  --tabs-activationIndicator-inset: auto 0px 0px 0px;
+  
+  line-height: var(--tabs-tabstrip-height);
 }
 .uitkDraggable-tabstrip-vertical {
-  --tab-activationIndicator-inset: 0px 0px 0px auto;
-  --tab-activationIndicator-thumb-width: 2px;
+  --tabs-activationIndicator-inset: 0px 0px 0px auto;
+  --tabs-activationIndicator-thumb-width: 2px;
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab[aria-selected="true"]:before {
-  --tab-before-background: var(--uitk-navigable-indicator-active);
+  --tabs-tab-before-background: var(--uitk-navigable-indicator-active);
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab {
@@ -149,6 +146,6 @@
 }
 
 .uitkTabstrip.backwardsCompat {
-  --uitkTab-letterSpacing: -0.1px;
-  --uitkTab-top: -1px;
+  --tabs-tab-letterSpacing: -0.1px;
+  --tabs-tab-top: -1px;
 }

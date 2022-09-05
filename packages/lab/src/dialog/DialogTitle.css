@@ -15,8 +15,9 @@
 }
 
 .uitkDialogTitle {
-  --dialog-close-button-padding: var(--uitkDialog-title-close-button-padding, var(--uitk-size-unit));
-  --dialog-close-button-offset: var(--uitkDialog-title-close-button-offset, calc(var(--dialog-padding) * -1));
+  --dialog-closeButton-padding: var(--uitkDialog-closeButton-padding, var(--uitk-size-unit));
+  --dialog-closeButton-offset: var(--uitkDialog-closeButton-offset, calc(var(--dialog-padding) * -1));
+
   --dialog-title-lineHeight: var(--uitkDialog-title-lineHeight, var(--uitk-text-lineHeight));
   --dialog-title-fontWeight: var(--uitkDialog-title-fontWeight, var(--uitk-text-fontWeight-strong));
   --dialog-title-icon-marginRight: var(--uitkDialog-title-icon-marginRight, 8px);
@@ -35,10 +36,10 @@
 
 .uitkDialogTitle-close {
   position: absolute;
-  padding-top: var(--dialog-close-button-padding);
-  padding-bottom: var(--dialog-close-button-padding);
-  right: var(--dialog-close-button-offset);
-  top: var(--dialog-close-button-offset);
+  padding-top: var(--dialog-closeButton-padding);
+  padding-bottom: var(--dialog-closeButton-padding);
+  right: var(--dialog-closeButton-offset);
+  top: var(--dialog-closeButton-offset);
 }
 
 .uitkDialogTitle-statusIcon {

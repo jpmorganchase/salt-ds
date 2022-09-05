@@ -1,20 +1,20 @@
-import React, { forwardRef, ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 import classnames from "classnames";
 import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
-import "./MenuTrigger.css";
+import "./MenuButtonTrigger.css";
 
-const withBaseName = makePrefixer("uitkMenuTrigger");
+const withBaseName = makePrefixer("uitkMenuButtonTrigger");
 
-export interface MenuTriggerProps extends ButtonProps {
+export interface MenuButtonTriggerProps extends ButtonProps {
   className?: string;
   hideCaret?: boolean;
   isMenuOpen?: boolean;
   children?: ReactNode;
 }
 
-export const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(
-  function MenuTrigger(
+export const MenuButtonTrigger = forwardRef<HTMLButtonElement, MenuButtonTriggerProps>(
+  function MenuButtonTrigger(
     { className, hideCaret, isMenuOpen, children, ...rest },
     ref
   ) {
@@ -24,14 +24,14 @@ export const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(
         className={classnames(withBaseName(), className, {
           [withBaseName("buttonOpen")]: isMenuOpen,
         })}
-        data-testid="menu-trigger-button"
+        data-testid="menu-button-trigger"
         {...rest}
       >
         {children}
         {!hideCaret && (
           <ChevronDownIcon
             className={withBaseName("caretIcon")}
-            data-testid="menu-trigger-button-caret"
+            data-testid="menu-button-trigger-caret"
           />
         )}
       </Button>

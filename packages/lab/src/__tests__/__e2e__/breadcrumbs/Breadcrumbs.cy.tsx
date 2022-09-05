@@ -58,7 +58,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.findByText("Test").should("exist");
-      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByTestId("menu-button-trigger").should("exist");
       cy.findByText("Test2").should("not.exist");
       cy.findByText("Test3").should("not.exist");
       cy.findByText("Test4").should("exist");
@@ -76,7 +76,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.findByText("Test").should("exist");
-      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByTestId("menu-button-trigger").should("exist");
       cy.findByText("Test2").should("not.exist");
       cy.findByText("Test3").should("exist");
     });
@@ -95,7 +95,7 @@ describe("GIVEN a Breadcrumbs component", () => {
 
       cy.findByText("Test").should("exist");
       cy.findByText("Test2").should("exist");
-      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByTestId("menu-button-trigger").should("exist");
       cy.findByText("Test3").should("not.exist");
       cy.findByText("Test4").should("exist");
     });
@@ -113,7 +113,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.findByText("Test").should("exist");
-      cy.findByTestId("menu-trigger-button").should("exist");
+      cy.findByTestId("menu-button-trigger").should("exist");
       cy.findByText("Test2").should("not.exist");
       cy.findByText("Test3").should("exist");
       cy.findByText("Test4").should("exist");
@@ -132,7 +132,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.findByText("Test").should("exist");
-      cy.findByTestId("menu-trigger-button").should("not.exist");
+      cy.findByTestId("menu-button-trigger").should("not.exist");
       cy.findByText("Test2").should("exist");
       cy.findByText("Test3").should("exist");
       cy.findByText("Test4").should("exist");
@@ -151,7 +151,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       );
 
       cy.findByText("Test").should("exist");
-      cy.findByTestId("menu-trigger-button").should("not.exist");
+      cy.findByTestId("menu-button-trigger").should("not.exist");
       cy.findByText("Test2").should("exist");
       cy.findByText("Test3").should("exist");
       cy.findAllByText("Separator").should("have.length", 2);

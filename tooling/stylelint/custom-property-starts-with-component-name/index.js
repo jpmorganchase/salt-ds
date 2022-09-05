@@ -53,6 +53,7 @@ const components = [
   "AppHeader",
   "Avatar",
   "Badge",
+  "Banner",
   "BorderItem",
   "BorderLayout",
   "Breadcrumbs",
@@ -74,7 +75,7 @@ const components = [
   "EditableLabel",
   "FileDropZone",
   "FlexItem",
-  "FlowLayout",
+  "FlexLayout",
   "FlowLayout",
   "FormField",
   "FormGroup",
@@ -112,7 +113,6 @@ const components = [
   "StepperInput",
   "Switch",
   "Tabs",
-  "Tabstrip",
   "Text",
   "ToggleButton",
   "TokenizedInput",
@@ -131,7 +131,7 @@ const componentsFormatted = components.map(
  * Starts with `--componentName-`
  */
 const isComponentCustomProperty = function (property) {
-  return componentsFormatted.find((component) =>
+  return componentsFormatted.some((component) =>
     property.startsWith(`--${component}-`)
   );
 };
@@ -142,7 +142,7 @@ const isComponentCustomProperty = function (property) {
  * Starts with `--uitkComponentName-`
  */
 const isCssApi = function (property) {
-  return components.find((component) =>
+  return components.some((component) =>
     property.startsWith(`--uitk${component}-`)
   );
 };
