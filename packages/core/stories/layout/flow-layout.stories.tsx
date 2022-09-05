@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
@@ -12,6 +13,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   Metric,
+  MetricProps,
   MetricHeader,
   MetricContent,
   Dropdown,
@@ -61,8 +63,10 @@ const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
 export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
 DefaultFlowLayout.args = {};
 
-export const MetricExample = () => (
-  <Metric direction="up" size="large">
+type MetricExampleType = { metricSize?: MetricProps["size"] };
+
+export const MetricExample: FC<MetricExampleType> = ({ metricSize }) => (
+  <Metric direction="up" size={metricSize}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
   </Metric>
@@ -161,7 +165,7 @@ export const DashboardExample: ComponentStory<typeof FlowLayout> = (args) => {
         <Card>
           <FlowLayout>
             {Array.from({ length: 3 }, (_, index) => (
-              <MetricExample key={index} />
+              <MetricExample key={index} metricSize="large" />
             ))}
           </FlowLayout>
         </Card>
