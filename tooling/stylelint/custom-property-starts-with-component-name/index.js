@@ -154,8 +154,8 @@ module.exports = stylelint.createPlugin(
         const checkResult =
           isCssApi(property) ||
           isComponentCustomProperty(property) ||
-          property.startsWith("--backwardsCompat-") ||     // Do not check backwardsCompat CSS
-          property.startsWith("--svg-");   // FIXME: Do not check SVG tokens for now
+          property.startsWith("--backwardsCompat-") || // Do not check backwardsCompat CSS
+          property.startsWith("--svg-"); // FIXME: Do not check SVG tokens for now
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
@@ -201,7 +201,8 @@ module.exports = stylelint.createPlugin(
 
         verboseLog && console.log({ prop });
 
-        if (!prop.startsWith("--") || prop.startsWith("--uitk-") || check(prop)) return;
+        if (!prop.startsWith("--") || prop.startsWith("--uitk-") || check(prop))
+          return;
 
         complain(0, prop.length, decl);
       });
