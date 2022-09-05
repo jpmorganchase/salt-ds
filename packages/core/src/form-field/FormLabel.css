@@ -1,52 +1,52 @@
 /* Styles applied to root element */
 .uitk-density-touch {
-  --formLabel-default-top: 11px;
-  --formLabel-left-top: 16px;
-  --formLabel-minHeight: 16px;
+  --formField-label-default-top: 11px;
+  --formField-label-left-top: 16px;
+  --formField-label-minHeight: 16px;
 }
 .uitk-density-low {
-  --formLabel-default-top: 7px;
-  --formLabel-left-top: 12px;
+  --formField-label-default-top: 7px;
+  --formField-label-left-top: 12px;
 }
 .uitk-density-medium {
-  --formLabel-default-top: 5px;
-  --formLabel-left-top: 8px;
+  --formField-label-default-top: 5px;
+  --formField-label-left-top: 8px;
 }
 .uitk-density-high {
-  --formLabel-default-top: 3px;
-  --formLabel-left-top: 4px;
+  --formField-label-default-top: 3px;
+  --formField-label-left-top: 4px;
 }
 
 .uitkFormLabel {
-  --formLabel-fontSize: var(--uitkFormLabel-fontSize, var(--uitk-text-caption-fontSize));
-  --formLabel-top: var(--formLabel-default-top);
-  --formLabel-width: 100%;
+  --formField-label-fontSize: var(--uitkFormField-label-fontSize, var(--uitk-text-caption-fontSize));
+  --formField-label-top: var(--formField-label-default-top);
+  --formField-label-width: 100%;
 }
 
 .uitkFormField-labelLeft .uitkFormLabel {
-  --formLabel-top: var(--formLabel-left-top);
-  --formLabel-width: auto;
+  --formField-label-top: var(--formField-label-left-top);
+  --formField-label-width: auto;
 }
 
 .uitkFormLabel {
   align-items: center;
-  color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-foreground));
+  color: var(--uitkFormField-label-text-color, var(--uitk-text-secondary-foreground));
   display: block;
-  font-size: var(--formLabel-fontSize);
-  margin-bottom: var(--uitkFormLabel-marginBottom, var(--formLabel-marginBottom));
-  min-height: var(--uitkFormLabel-minHeight, var(--formLabel-minHeight, var(--uitk-text-caption-minHeight)));
-  margin-top: var(--uitkFormLabel-marginTop, 0px);
-  line-height: var(--uitkFormLabel-lineHeight, var(--uitk-text-base-lineHeight));
+  font-size: var(--formField-label-fontSize);
+  margin-bottom: var(--uitkFormField-label-marginBottom, var(--formField-label-marginBottom));
+  min-height: var(--uitkFormField-label-minHeight, var(--formField-label-minHeight, var(--uitk-text-caption-minHeight)));
+  margin-top: var(--uitkFormField-label-marginTop, 0px);
+  line-height: var(--uitkFormField-label-lineHeight, var(--uitk-text-base-lineHeight));
   overflow: hidden;
-  padding-left: var(--uitkFormLabel-paddingLeft, var(--formLabel-paddingLeft));
-  padding-right: var(--uitkFormLabel-paddingRight, var(--formLabel-paddingRight));
-  padding-top: var(--uitkFormLabel-paddingTop, 0);
-  padding-bottom: var(--uitkFormLabel-paddingBottom, 0);
+  padding-left: var(--uitkFormField-label-paddingLeft, var(--formField-label-paddingLeft));
+  padding-right: var(--uitkFormField-label-paddingRight, var(--formField-label-paddingRight));
+  padding-top: var(--uitkFormField-label-paddingTop, 0);
+  padding-bottom: var(--uitkFormField-label-paddingBottom, 0);
   text-overflow: ellipsis;
-  top: var(--uitkFormLabel-top, var(--formLabel-top));
-  transform: translate(var(--uitkFormLabel-transform-x, 0), var(--uitkFormLabel-transform-y, var(--formLabel-top)));
+  top: var(--uitkFormField-label-top, var(--formField-label-top));
+  transform: translate(var(--uitkFormField-label-transform-x, 0), var(--uitkFormField-label-transform-y, var(--formField-label-top)));
   white-space: nowrap;
-  width: var(--uitkFormLabel-width, var(--formLabel-width, 100%));
+  width: var(--uitkFormField-label-width, var(--formField-label-width, 100%));
 }
 
 .uitkFormLabel ~ * {
@@ -55,13 +55,13 @@
 
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
-  color: var(--uitkFormLabel-text-color-disabled, var(--uitk-text-secondary-foreground-disabled));
+  color: var(--uitkFormField-label-text-color-disabled, var(--uitk-text-secondary-foreground-disabled));
   cursor: var(--uitk-editable-cursor-disabled);
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
-  font-style: var(--uitkFormLabel-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
+  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
   margin-left: 1ch;
 }
 
@@ -73,5 +73,5 @@
 
 .backwardsCompat.uitkFormField .uitkFormLabel,
 .backwardsCompat.uitkRadioButtonGroup .uitkFormLabel {
-  --formLabel-fontSize: var(--backwardsCompat-text-caption-fontSize);
+  --formField-label-fontSize: var(--backwardsCompat-text-caption-fontSize);
 }

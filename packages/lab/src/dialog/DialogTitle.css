@@ -15,12 +15,12 @@
 }
 
 .uitkDialogTitle {
-  --dialog-close-button-padding: var(--uitkDialogTitle-close-button-padding, var(--uitk-size-unit));
-  --dialog-close-button-offset: var(--uitkDialogTitle-close-button-offset, calc(var(--dialog-padding) * -1));
-  --dialog-title-lineHeight: var(--uitkDialogTitle-lineHeight, var(--uitk-text-lineHeight));
-  --dialog-title-fontWeight: var(--uitkDialogTitle-fontWeight, var(--uitk-text-fontWeight-strong));
-  --dialog-title-icon-marginRight: var(--uitkDialogTitle-icon-marginRight, 8px);
-  --dialog-title-color: var(--uitkDialogTitle-color, var(--uitk-text-primary-foreground));
+  --dialog-close-button-padding: var(--uitkDialog-title-close-button-padding, var(--uitk-size-unit));
+  --dialog-close-button-offset: var(--uitkDialog-title-close-button-offset, calc(var(--dialog-padding) * -1));
+  --dialog-title-lineHeight: var(--uitkDialog-title-lineHeight, var(--uitk-text-lineHeight));
+  --dialog-title-fontWeight: var(--uitkDialog-title-fontWeight, var(--uitk-text-fontWeight-strong));
+  --dialog-title-icon-marginRight: var(--uitkDialog-title-icon-marginRight, 8px);
+  --dialog-title-color: var(--uitkDialog-title-color, var(--uitk-text-primary-foreground));
 }
 
 .uitkDialogTitle {

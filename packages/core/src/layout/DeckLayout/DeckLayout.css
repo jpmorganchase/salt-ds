@@ -7,13 +7,13 @@
 }
 
 .uitkDeckLayout-slide-horizontal {
-  width: var(--deck-layout-width);
+  width: var(--deckLayout-width);
   transition: transform var(--uitk-animation-duration);
-  transform: translateX(var(--deck-layout-transform-value));
+  transform: translateX(var(--deckLayout-transform-value));
 }
 
 .uitkDeckLayout-slide-vertical {
-  height: var(--deck-layout-height);
+  height: var(--deckLayout-height);
   transition: transform var(--uitk-animation-duration);
-  transform: translateY(var(--deck-layout-transform-value));
+  transform: translateY(var(--deckLayout-transform-value));
 }

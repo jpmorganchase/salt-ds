@@ -72,11 +72,11 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
     const flexWrap = useResponsiveProp(wrap, false);
     const flexLayoutStyles = {
       ...style,
-      "--flex-layout-align": align && addPrefix(align),
-      "--flex-layout-direction": flexDirection,
-      "--flex-layout-gap-multiplier": flexGap,
-      "--flex-layout-justify": justify && addPrefix(justify),
-      "--flex-layout-wrap": flexWrap ? "wrap" : "nowrap",
+      "--flexLayout-align": align && addPrefix(align),
+      "--flexLayout-direction": flexDirection,
+      "--flexLayout-gap-multiplier": flexGap,
+      "--flexLayout-justify": justify && addPrefix(justify),
+      "--flexLayout-wrap": flexWrap ? "wrap" : "nowrap",
     };
 
     return (

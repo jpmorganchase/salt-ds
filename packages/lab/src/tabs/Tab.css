@@ -1,9 +1,10 @@
 /* class applied to root Tab element */
 .uitkTab {
-  --uitkFocusVisible-inset: 2px 2px 4px 2px;
+  --uitk-focused-outlineInset: 2px 2px 4px 2px;
   --uitkEditableLabel-padding: 0;
   --uitkEditableLabel-height: var(--tabstrip-height);
   --uitkInput-minWidth: 4em;
+  --uitk-text-link-textDecoration: none;
   --uitk-text-link-textDecoration: none;
   --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
   --tab-cursor: pointer;
@@ -30,9 +31,9 @@
 }
 
 .uitkTab[aria-selected="true"] {
-  color: var(--uitk-text-primary-foreground);
+  color: var(--uitk-navigable-link-color-active);
   /* should be fontWeight-active, but nor sure where that belongs */
-  font-weight: var(--uitk-navigable-fontWeight-active);
+  font-weight: var(--uitk-typography-weight-semiBold);
 }
 
 .uitkTab-dragAway {
@@ -149,20 +150,20 @@
 
 .uitkTabstrip-draggingTab .uitkTab[aria-selected="true"]:before {
   --tab-before-content: "";
-  --tab-before-background: var(--uitk-navigable-indicator-active);
-  --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabs-activation-indicator-inset);
-  --tab-before-width: var(--tabstrip-activation-thumb-width);
+  --tab-before-background: var(--uitk-navigable-indicator-color-active);
+  --tab-before-height: var(--tab-activationIndicator-thumb-height);
+  --tab-before-inset: var(--tab-activationIndicator-inset);
+  --tab-before-width: var(--tab-activationIndicator-thumb-width);
 }
 
 /* Hover styling */
 .uitkTab:not([aria-selected="true"]).uitkFocusVisible:before,
 .uitkTab:hover:not([aria-selected="true"]):before {
-  --tab-before-content: "";
+  --tab-tab-before-content: "";
   --tab-before-background: var(--uitk-navigable-indicator-hover);
-  --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabs-activation-indicator-inset);
-  --tab-before-width: var(--tabstrip-activation-thumb-width);
+  --tab-before-height: var(--tab-activationIndicator-thumb-height);
+  --tab-before-inset: var(--tab-activationIndicator-inset);
+  --tab-before-width: var(--tab-activationIndicator-thumb-width);
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {

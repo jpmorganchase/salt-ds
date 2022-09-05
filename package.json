@@ -31,6 +31,7 @@
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
     "lint:style": "yarn lint:style:core && yarn lint:style:icon",
     "lint:style:core": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
+    "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && build-storybook",

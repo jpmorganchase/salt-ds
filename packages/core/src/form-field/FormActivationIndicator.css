@@ -21,25 +21,25 @@
 /* Styles applied to the indication bar */
 .uitkFormActivationIndicator-bar {
   bottom: 0px;
-  border-color: var(--uitkFormActivationIndicator-borderColor, var(--formField-activationIndicator-color));
-  border-bottom-width: var(--uitkFormActivationIndicator-borderWidth, var(--formField-activationIndicator-size));
-  border-bottom-style: var(--uitkFormActivationIndicator-borderStyle, var(--formField-activationIndicator-style));
+  border-color: var(--uitkFormField-activationIndicator-borderColor, var(--formField-activationIndicator-color));
+  border-bottom-width: var(--uitkFormField-activationIndicator-borderWidth, var(--formField-activationIndicator-size));
+  border-bottom-style: var(--uitkFormField-activationIndicator-borderStyle, var(--formField-activationIndicator-style));
   height: 0;
-  opacity: var(--uitkFormActivationIndicator-opacity, 1);
+  opacity: var(--uitkFormField-activationIndicator-opacity, 1);
   position: absolute;
   width: 100%;
 }
 
 /* Styles applied to the indication icon */
 .uitkFormActivationIndicator-icon {
-  width: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
-  height: var(--uitkFormActivationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
-  fill: var(--uitkFormActivationIndicator-icon-color, var(--formField-activationIndicator-color));
+  width: var(--uitkFormField-activationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
+  height: var(--uitkFormField-activationIndicator-icon-size, var(--formField-activationIndicator-icon-size));
+  fill: var(--uitkFormField-activationIndicator-icon-color, var(--formField-activationIndicator-color));
   /** 
  * It's only a solid icon showing different color for validation states. 
  * Applying opacity instead of re-defining all colors.
  */
-  opacity: var(--uitkFormActivationIndicator-opacity, 1);
+  opacity: var(--uitkFormField-activationIndicator-opacity, 1);
   position: absolute;
   bottom: 3px;
   right: 2px;

@@ -1,25 +1,25 @@
 .uitkTabActivationIndicator-no-background {
-  --tabs-activation-indicator-background: transparent !important;
+  --tab-activationIndicator-background: transparent !important;
 }
 
 .uitkTabActivationIndicator {
-  --tabs-activation-indicator-background: var(--uitk-container-borderColor-medium); /* TODO: Check token */
+  --tab-activationIndicator-background: var(--uitk-container-borderColor-medium); /* TODO: Check token */
 
-  background: var(--uitkTabActivationIndicator-background, var(--tabs-activation-indicator-background));
+  background: var(--uitkTab-activationIndicator-background, var(--tab-activationIndicator-background));
   bottom: 0;
-  height: var(--tabs-activation-indicator-height, auto);
-  inset: var(--tabs-activation-indicator-inset);
+  height: var(--tab-activationIndicator-height, auto);
+  inset: var(--tab-activationIndicator-inset);
   position: absolute;
-  width: var(--tabs-activation-indicator-width, auto);
+  width: var(--tab-activationIndicator-width, auto);
 }
 
 /* the Active Tab indicator, uses navigable styles */
 .uitkTabActivationIndicator-thumb {
-  inset: var(--tabstrip-activation-thumb-inset);
+  inset: var(--tab-activationIndicator-thumb-inset);
   position: absolute;
-  height: var(--tabstrip-activation-thumb-height, auto);
+  height: var(--tab-activationIndicator-thumb-height, auto);
   background: var(--uitk-navigable-indicator-active);
-  transition: var(--uitkTabActivationIndicator-transition, left 0.3s ease);
-  width: var(--tabstrip-activation-thumb-width, auto);
+  transition: var(--uitkTab-activationIndicator-transition, left 0.3s ease);
+  width: var(--tab-activationIndicator-thumb-width, auto);
   z-index: 1;
 }

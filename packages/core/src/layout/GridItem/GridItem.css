@@ -1,13 +1,13 @@
 /* Style applied to the root element */
 .uitkGridItem {
-  justify-self: var(--grid-item-justifySelf);
-  align-self: var(--grid-item-alignSelf);
-  grid-row-start: var(--grid-item-gridRowStart);
-  grid-column-start: var(--grid-item-gridColumnStart);
-  grid-row-end: var(--grid-item-gridRowEnd);
-  grid-column-end: var(--grid-item-gridColumnEnd);
+  justify-self: var(--gridItem-justifySelf);
+  align-self: var(--gridItem-alignSelf);
+  grid-row-start: var(--gridItem-gridRowStart);
+  grid-column-start: var(--gridItem-gridColumnStart);
+  grid-row-end: var(--gridItem-gridRowEnd);
+  grid-column-end: var(--gridItem-gridColumnEnd);
 }
 
 .uitkGridItem-area {
-  grid-area: var(--grid-item-gridArea);
+  grid-area: var(--gridItem-gridArea);
 }

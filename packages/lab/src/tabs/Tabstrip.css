@@ -18,29 +18,29 @@
 
 /* Tabstrip orientation is horizontal */
 .uitkTabstrip-horizontal {
-  --tabs-activation-indicator-borderStyle: none none solid none;
-  --tabs-activation-indicator-height: 1px;
-  --tabs-activation-indicator-inset: auto 0px 0px 0px;
-  --tabs-activation-indicator-transitionProperty: left;
-  --tabstrip-activation-thumb-height: 2px;
-  --tabstrip-activation-thumb-inset: -1px 0 0 0;
+  --tab-activationIndicator-borderStyle: none none solid none;
+  --tab-activationIndicator-height: 1px;
+  --tab-activationIndicator-inset: auto 0px 0px 0px;
+  --tab-activationIndicator-transitionProperty: left;
+  --tab-activationIndicator-thumb-height: 2px;
+  --tab-activationIndicator-thumb-inset: -1px 0 0 0;
 }
 
 /* Tabstrip orientation is vertical */
 .uitkTabstrip-vertical {
-  --uitkTabActivationIndicator-transition: top 0.3s ease;
-  --tabs-activation-indicator-borderStyle: none solid none none;
-  --tabs-activation-indicator-inset: 0px 0px 0px auto;
-  --tabs-activation-indicator-transitionProperty: top;
-  --tabs-activation-indicator-width: 1px;
-  --tabstrip-activation-thumb-inset: 0 0 0 -1px;
-  --tabstrip-activation-thumb-width: 2px;
+  --uitkTab-activationIndicator-transition: top 0.3s ease;
+  --tab-activationIndicator-borderStyle: none solid none none;
+  --tab-activationIndicator-inset: 0px 0px 0px auto;
+  --tab-activationIndicator-transitionProperty: top;
+  --tab-activationIndicator-width: 1px;
+  --tab-activationIndicator-thumb-inset: 0 0 0 -1px;
+  --tab-activationIndicator-thumb-width: 2px;
   align-self: flex-start;
   display: inline-flex;
 }
 
 .uitkTabstrip-draggingTab {
-  --uitkTabActivationIndicator-transition: none;
+  --uitkTab-activationIndicator-transition: none;
 }
 
 .uitkTabstrip-draggingTab .uitkTab {
@@ -68,7 +68,7 @@
 
 .uitkTabstrip-overflowMenu-open {
   --uitkButton-background: var(--uitk-actionable-secondary-background-active);
-  --uitkButton-text-color: var(--uitk-actionable-secondary-foreground-active);
+  --uitkButton-text-color: var(--uitk-actionable-secondary-text-color-active);
 }
 
 .uitkTabstrip-overflowMenu-open .uitkButton {
@@ -102,27 +102,27 @@
   --uitkTab-background: var(--uitk-navigable-background-hover-medium);
   --uitkTab-position: static;
   --tabstrip-tab-display: flex;
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable, 36px));
+  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
   --tabstrip-tab-dragging-display: block;
-  --tab-bar-color: var(--uitk-color-grey-90);
-  font-size: var(--uitk-text-fontSize, 12px);
+  --tab-bar-color: var(--uitk-grey-90);
+  font-size: var(--uitk-typography-size-regular-unit, 12px);
 
   --tab-before-content: "";
   --tab-before-background: var(--uitk-navigable-indicator-hover);
-  --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabs-activation-indicator-inset);
-  --tab-before-width: var(--tabstrip-activation-thumb-width);
+  --tab-before-height: var(--tab-activationIndicator-thumb-height);
+  --tab-before-inset: var(--tab-activationIndicator-inset);
+  --tab-before-width: var(--tab-activationIndicator-thumb-width);
 }
 
 .uitkDraggable-tabstrip-horizontal {
-  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable, 36px));
-  --tabstrip-activation-thumb-height: 2px;
-  --tabs-activation-indicator-inset: auto 0px 0px 0px;
+  --tabstrip-height: var(--uitkTabstrip-height, var(--uitk-size-stackable));
+  --tab-activationIndicator-thumb-height: 2px;
+  --tab-activationIndicator-inset: auto 0px 0px 0px;
   line-height: var(--tabstrip-height);
 }
 .uitkDraggable-tabstrip-vertical {
-  --tabs-activation-indicator-inset: 0px 0px 0px auto;
-  --tabstrip-activation-thumb-width: 2px;
+  --tab-activationIndicator-inset: 0px 0px 0px auto;
+  --tab-activationIndicator-thumb-width: 2px;
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab[aria-selected="true"]:before {
