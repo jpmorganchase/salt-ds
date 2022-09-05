@@ -152,7 +152,7 @@
   grid-column-start: 1;
   grid-column-end: -2;
   height: var(--slider-selection-height);
-  background-color: var(--slider-selection-color);
+  background: var(--slider-selection-color);
 }
 
 .uitkSliderSelection-range {
@@ -160,7 +160,7 @@
   grid-column-start: 2;
   grid-column-end: -2;
   height: var(--slider-selection-height);
-  background-color: var(--slider-selection-color);
+  background: var(--slider-selection-color);
 }
 
 .uitkSliderHandle-box {

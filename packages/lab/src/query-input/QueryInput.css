@@ -14,7 +14,7 @@
 
 .uitkQueryInputBody-separator {
   width: 1px;
-  background-color: var(--uitk-separable-secondary-borderColor);
+  background: var(--uitk-separable-secondary-borderColor);
   margin: 0 var(--uitk-size-unit);
   align-self: stretch;
 }

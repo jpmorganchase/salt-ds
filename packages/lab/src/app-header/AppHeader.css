@@ -13,7 +13,7 @@
 
 .uitkAppHeader {
   align-items: flex-start;
-  background-color: var(--appheader-background);
+  background: var(--appheader-background);
   border-bottom: var(--uitk-container-borderStyle) var(--uitk-container-borderWidth) var(--uitk-container-borderColor-medium);
   box-shadow: var(--appheader-shadow);
   box-sizing: content-box;
