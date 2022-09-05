@@ -1,14 +1,14 @@
 /* the Tabstrip Activation Indicator, uses navigable styles */
 .uitkTabstrip-activationIndicator {
-  --activation-indicator-transitionDuration: 0.2s;
-  --activation-indicator-transitionProperty: var(--tabstrip-activation-indicator-transitionProperty, left);
+  --tabs-activation-indicator-transitionDuration: 0.2s;
+  --tabs-activation-indicator-transitionProperty: var(--tabs-activation-indicator-transitionProperty, left);
   border: var(--uitkTabstrip-activationIndicator-border, var(--uitk-navigable-border));
-  border-style: var(--tabstrip-activation-indicator-borderStyle);
+  border-style: var(--tabs-activation-indicator-borderStyle);
   box-sizing: border-box;
-  height: var(--tabstrip-activation-indicator-height, auto);
-  inset: var(--tabstrip-activation-indicator-inset);
+  height: var(--tabs-activation-indicator-height, auto);
+  inset: var(--tabs-activation-indicator-inset);
   position: absolute;
-  width: var(--tabstrip-activation-indicator-width, auto);
+  width: var(--tabs-activation-indicator-width, auto);
 }
 
 /* the Active Tab indicator, uses navigable styles */
@@ -16,8 +16,8 @@
   inset: var(--tabstrip-activation-thumb-inset);
   position: absolute;
   height: var(--tabstrip-activation-thumb-height, auto);
-  background-color: var(--uitk-navigable-indicator-color-active);
-  transition: var(--uitkActivationIndicator-transition, var(--activation-indicator-transitionProperty) var(--activation-indicator-transitionDuration) ease);
+  background: var(--uitk-navigable-indicator-color-active);
+  transition: var(--uitkActivationIndicator-transition, var(--tabs-activation-indicator-transitionProperty) var(--tabs-activation-indicator-transitionDuration) ease);
   width: var(--tabstrip-activation-thumb-width, auto);
   z-index: 1;
 }

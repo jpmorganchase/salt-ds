@@ -49,12 +49,9 @@
   stroke-width: 1px;
 }
 
-.uitkCircularProgress-gradientStart {
-  stop-color: var(--uitk-measured-fill-startColor);
-}
-
+.uitkCircularProgress-gradientStart,
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-fill-stopColor);
+  stop-color: var(--uitk-measured-fill);
 }
 
 .uitkCircularProgress-container {
@@ -108,4 +105,14 @@
     stroke-dasharray: 100px, 200px;
     stroke-dashoffset: -125px;
   }
+}
+
+/* TK1 Backwards compatibility */
+
+.backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStart {
+  stop-color: var(--backwardsCompat-measured-fill-startColor);
+}
+
+.backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStop {
+  stop-color: var(--backwardsCompat-measured-fill-stopColor);
 }
