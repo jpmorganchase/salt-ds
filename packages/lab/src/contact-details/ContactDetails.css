@@ -133,7 +133,7 @@
 .uitkContactDetails-noAvatar-indicator {
   grid-area: noAvatar;
   width: var(--contactDetails-noAvatar-indicator-width);
-  background-color: var(--contactDetails-noAvatar-color);
+  background: var(--contactDetails-noAvatar-color);
   margin-right: var(--uitk-size-unit);
 }
 

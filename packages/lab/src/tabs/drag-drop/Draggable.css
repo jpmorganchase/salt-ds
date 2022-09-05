@@ -1,5 +1,5 @@
 .uitkDraggable {
-  background-color: transparent;
+  background: transparent;
   box-shadow: var(--uitk-draggable-boxShadow);
   cursor: var(--uitk-draggable-cursor-active);
   position: absolute;
