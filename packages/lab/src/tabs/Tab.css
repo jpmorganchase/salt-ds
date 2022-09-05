@@ -42,7 +42,7 @@
 
 /* main content aria of Tab */
 .uitkTab-main {
-  background-color: inherit;
+  background: inherit;
   border: none;
   color: inherit;
   cursor: inherit;
@@ -135,7 +135,7 @@
 }
 
 .uitkTab.uitkFocusVisible {
-  background-color: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
 }
 
 .uitkTab:before {
@@ -153,7 +153,7 @@
   --tab-before-height: 2px;
   --tab-before-background: var(--uitk-navigable-indicator-color-active);
   --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabstrip-activation-indicator-inset);
+  --tab-before-inset: var(--tabs-activation-indicator-inset);
   --tab-before-width: var(--tabstrip-activation-thumb-width);
 }
 
@@ -163,10 +163,10 @@
   --tab-before-content: "";
   --tab-before-background: var(--uitk-navigable-indicator-hover);
   --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabstrip-activation-indicator-inset);
+  --tab-before-inset: var(--tabs-activation-indicator-inset);
   --tab-before-width: var(--tabstrip-activation-thumb-width);
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
-  background-color: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
 }

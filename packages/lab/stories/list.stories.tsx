@@ -1152,7 +1152,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 //   }, []);
 
 //   const style = {
-//     "--hwList-maxHeight": "300px",
+//     "--list-maxHeight": "300px",
 //     boxSizing: "content-box",
 //     width: 200,
 //   };
