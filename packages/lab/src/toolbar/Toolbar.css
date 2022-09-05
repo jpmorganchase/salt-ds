@@ -127,16 +127,16 @@
 }
 
 /* .Responsive-inner > [data-collapsed='true'] {
-  background-color: brown;
+  background: brown;
 }
 .Responsive-inner > [data-collapsing='true'] {
-  background-color: pink;
+  background: pink;
 } */
 
 /* .uitkToolbar > .Responsive-inner > .uitkOverflowPanel {
-  background-color: pink;;
+  background: pink;;
 }
 
 .uitkTooltray > .Responsive-inner > .uitkOverflowPanel {
-  background-color: yellow;
+  background: yellow;
 } */

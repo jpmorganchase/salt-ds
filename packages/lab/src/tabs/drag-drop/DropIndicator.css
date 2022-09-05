@@ -1,5 +1,5 @@
 .uitkDropIndicator {
-  background-color: var(--uitk-accent-background);
+  background: var(--uitk-accent-background);
   cursor: move;
   position: absolute;
   transform: translate(-4px, 0);
