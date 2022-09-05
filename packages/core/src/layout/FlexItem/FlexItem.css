@@ -1,16 +1,16 @@
 /* Default variables applied to the root element */
 .uitkFlexItem {
-  --uitkFlexLayout-item-item-alignment: auto;
-  --uitkFlexLayout-item-shrink: 1;
-  --uitkFlexLayout-item-grow: 0;
+  --uitkFlexItem-alignment: auto;
+  --uitkFlexItem-shrink: 1;
+  --uitkFlexItem-grow: 0;
 }
 
 /* Style applied to the root element */
 .uitkFlexItem {
   position: relative;
-  align-self: var(--uitkFlexLayout-item-item-alignment);
-  flex-grow: var(--uitkFlexLayout-item-grow);
-  flex-shrink: var(--uitkFlexLayout-item-shrink);
+  align-self: var(--uitkFlexItem-alignment);
+  flex-grow: var(--uitkFlexItem-grow);
+  flex-shrink: var(--uitkFlexItem-shrink);
 }
 
 .uitkFlexItem-stacked {

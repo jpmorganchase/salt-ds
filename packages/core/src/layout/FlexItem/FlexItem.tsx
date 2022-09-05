@@ -38,9 +38,9 @@ export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
     const flexItemGrow = useResponsiveProp(grow, 0);
 
     const itemStyle = {
-      "--uitkFlexLayout-item-item-alignment": align,
-      "--uitkFlexLayout-item-shrink": flexItemShrink,
-      "--uitkFlexLayout-item-grow": flexItemGrow,
+      "--uitkFlexItem-alignment": align,
+      "--uitkFlexItem-shrink": flexItemShrink,
+      "--uitkFlexItem-grow": flexItemGrow,
       ...style,
     };
     return (
