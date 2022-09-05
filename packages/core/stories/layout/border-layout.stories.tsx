@@ -109,8 +109,8 @@ const Template: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const ToolkitBorderLayout = Template.bind({});
-ToolkitBorderLayout.args = {};
+export const BorderLayoutAllPanels = Template.bind({});
+BorderLayoutAllPanels.args = {};
 
 const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
@@ -131,8 +131,8 @@ const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const ToolkitBorderLayoutNoRightPanel = NoRightPanel.bind({});
-ToolkitBorderLayoutNoRightPanel.args = {};
+export const BorderLayoutNoRightPanel = NoRightPanel.bind({});
+BorderLayoutNoRightPanel.args = {};
 
 const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
@@ -153,8 +153,8 @@ const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const ToolkitBorderLayoutNoLeftPanel = NoLeftPanel.bind({});
-ToolkitBorderLayoutNoLeftPanel.args = {};
+export const BorderLayoutNoLeftPanel = NoLeftPanel.bind({});
+BorderLayoutNoLeftPanel.args = {};
 
 const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
   return (
@@ -175,8 +175,8 @@ const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const ToolkitBorderLayoutNoHeader = NoHeader.bind({});
-ToolkitBorderLayoutNoHeader.args = {};
+export const BorderLayoutNoHeader = NoHeader.bind({});
+BorderLayoutNoHeader.args = {};
 
 const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   return (
@@ -200,8 +200,8 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const ToolkitBorderLayoutFixedPanels = FixedPanels.bind({});
-ToolkitBorderLayoutFixedPanels.args = {};
+export const BorderLayoutFixedPanels = FixedPanels.bind({});
+BorderLayoutFixedPanels.args = {};
 
 const Header = () => {
   const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];
