@@ -2,6 +2,7 @@ import {
   useControlled,
   useDensity,
   useForkRef,
+  ownerWindow,
 } from "@jpmorganchase/uitk-core";
 import {
   cloneElement,
@@ -15,7 +16,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ownerWindow, useEventCallback, usePrevious } from "../utils";
+import { useEventCallback, usePrevious } from "../utils";
 import { CascadingMenuProps } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";

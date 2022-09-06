@@ -3,7 +3,6 @@ export * from "./escapeRegExp";
 export * from "./isEmail";
 export * from "./forwardCallbackProps";
 export * from "./isPlainObject";
-export * from "./ownerWindow";
 export * from "./partition";
 export * from "./useClickOutside";
 export * from "./useEventCallback";

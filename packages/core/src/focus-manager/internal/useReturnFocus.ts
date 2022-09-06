@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "../../utils";
 
 function getActiveElement(doc: DocumentOrShadowRoot): HTMLElement | null {
   if (!doc) {
@@ -19,7 +19,7 @@ export interface UseReturnFocusProps {
   active?: boolean;
   disabled?: boolean;
   document: DocumentOrShadowRoot;
-  focusOptions?: FocusOptions | boolean;
+  focusOptions?: FocusOptions;
 }
 
 export function useReturnFocus({

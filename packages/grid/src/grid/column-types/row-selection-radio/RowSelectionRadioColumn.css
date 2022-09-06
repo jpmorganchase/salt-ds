@@ -6,27 +6,27 @@
   justify-content: center;
 }
 
-.uitk-density-medium .uitkGridRowSelectionRadioHeaderValue {
-  --radio-size: 14px;
+.uitk-density-medium {
+  --grid-rowSelection-radio-size: 14px;
 }
 
-.uitk-density-high .uitkGridRowSelectionRadioHeaderValue {
-  --radio-size: 12px;
+.uitk-density-high {
+  --grid-rowSelection-radio-size: 12px;
 }
 
-.uitk-density-ultrahigh .uitkGridRowSelectionRadioHeaderValue {
-  --radio-size: 12px;
+.uitk-density-ultrahigh {
+  --grid-rowSelection-radio-size: 12px;
 }
 
-.uitk-density-low .uitkGridRowSelectionRadioHeaderValue {
-  --radio-size: 16px;
+.uitk-density-low {
+  --grid-rowSelection-radio-size: 16px;
 }
 
-.uitk-density-touch .uitkGridRowSelectionRadioHeaderValue {
-  --radio-size: 18px;
+.uitk-density-touch {
+  --grid-rowSelection-radio-size: 18px;
 }
 
 .uitkGridRowSelectionRadioHeaderValue {
   height: var(--uitkGrid-rowHeight);
-  width: var(--radio-size);
+  width: var(--grid-rowSelection-radio-size);
 }

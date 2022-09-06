@@ -1,8 +1,4 @@
 import {
-  ownerDocument,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-import {
   FocusEvent,
   ReactNode,
   RefObject,
@@ -10,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { ownerDocument, useIsomorphicLayoutEffect } from "../utils";
 import { findAllTabbableElements } from "./internal/findAllTabbableElements";
 import { useReturnFocus, UseReturnFocusProps } from "./internal/useReturnFocus";
 
@@ -31,11 +28,11 @@ export interface FocusManagerProps {
   children?: ReactNode;
   className?: string;
   disableAutoFocus?: boolean;
-  disableEnforceFocus?: boolean;
+  disableFocusTrap?: boolean;
   disableReturnFocus?: boolean;
   fallbackFocusRef?: RefObject<HTMLElement>;
   tabEnabledSelectors?: string;
-  returnFocus?: UseReturnFocusProps["focusOptions"];
+  returnFocusOptions?: UseReturnFocusProps["focusOptions"];
 }
 
 function tryFocus(node?: HTMLElement) {
@@ -66,11 +63,11 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     children,
     className,
     disableAutoFocus,
-    disableEnforceFocus,
+    disableFocusTrap,
     disableReturnFocus,
     fallbackFocusRef,
     tabEnabledSelectors = defaultSelector,
-    returnFocus,
+    returnFocusOptions,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,7 +77,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
   const [hasFocus, setHasFocus] = useState(false);
 
   useReturnFocus({
-    focusOptions: returnFocus,
+    focusOptions: returnFocusOptions,
     disabled: disableReturnFocus || disableAutoFocus,
     active,
     document: ownerDocument(containerRef.current),
@@ -190,9 +187,15 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
         tryFocus(nodeToFocus);
       }
     }
-  }, [active, disableAutoFocus, getFirstElement, autoFocusRef]);
+  }, [
+    active,
+    disableAutoFocus,
+    getFirstElement,
+    autoFocusRef,
+    fallbackFocusRef,
+  ]);
 
-  const enforceFocus = active && !disableEnforceFocus;
+  const enforceFocus = active && !disableFocusTrap;
 
   return (
     <div

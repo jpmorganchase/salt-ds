@@ -26,37 +26,44 @@
   color: var(--uitkControlLabel-color-disabled, var(--uitk-text-primary-foreground-disabled));
 }
 
-.uitk-density-medium .uitkControlLabel-labelRight {
-  margin-left: 6px;
-  margin-right: 0px;
+.uitk-density-medium {
+  --controlLabel-right-marginLeft: 6px;
+  --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-high .uitkControlLabel-labelRight {
-  margin-left: 3px;
-  margin-right: 0px;
+.uitk-density-high {
+  --controlLabel-right-marginLeft: 3px;
+  --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-low .uitkControlLabel-labelRight {
-  margin-left: 9px;
-  margin-right: 0px;
+.uitk-density-low {
+  --controlLabel-right-marginLeft: 9px;
+  --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-touch .uitkControlLabel-labelRight {
-  margin-left: 12px;
-  margin-right: 0px;
+.uitk-density-touch {
+  --controlLabel-right-marginLeft: 12px;
+  --controlLabel-right-marginRight: 0px;
 }
 
-/* Backwards compatable styling for TK1 */
-.uitk-density-medium .backwardsCompat .uitkControlLabel-label {
-  margin-right: 6px;
+.uitkControlLabel-labelRight {
+  margin-left: var(--uitkControlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
+  margin-right: var(--uitkControlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
-.uitk-density-high .backwardsCompat .uitkControlLabel-label {
-  margin-right: 4px;
+
+/* TK1 backwards compatible styling */
+
+.uitk-density-medium {
+  --backwardsCompat-controlLabel-marginRight: 6px;
 }
-.uitk-density-low .backwardsCompat .uitkControlLabel-label {
-  margin-right: 9px;
+.uitk-density-high {
+  --backwardsCompat-controlLabel-marginRight: 4px;
 }
-.uitk-density-touch .backwardsCompat .uitkControlLabel-label {
-  margin-right: 12px;
+.uitk-density-low {
+  --backwardsCompat-controlLabel-marginRight: 9px;
+}
+.uitk-density-touch {
+  --backwardsCompat-controlLabel-marginRight: 12px;
 }
 
 .backwardsCompat .uitkControlLabel-label {
-  line-height: 1.3;
+  line-height: var(--uitk-text-base-lineHeight);
+  margin-right: var(--backwardsCompat-controlLabel-marginRight);
 }
