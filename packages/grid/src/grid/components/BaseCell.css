@@ -3,7 +3,6 @@
 
 .uitkGridBaseCell {
   border-collapse: collapse;
-  box-sizing: border-box;
   overflow: hidden;
   margin: 0;
   border-width: 1px 0 1px 0;

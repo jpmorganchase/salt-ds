@@ -13,7 +13,6 @@
   border-color: var(--layerLayout-borderColor);
   border-width: var(--layerLayout-borderWidth);
   border-style: var(--layerLayout-borderStyle);
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   max-height: 100%;

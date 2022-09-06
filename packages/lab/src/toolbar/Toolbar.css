@@ -8,7 +8,6 @@
   --toolbar-size: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 
   background: var(--uitkToolbar-background, var(--toolbar-background));
-  box-sizing: border-box;
   font-size: var(--toolbar-fontSize);
   justify-content: flex-start;
   overflow: hidden;

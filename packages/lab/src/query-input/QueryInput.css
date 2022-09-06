@@ -42,7 +42,6 @@
   left: -1000px;
   top: 0;
   border: solid 1px black;
-  box-sizing: border-box;
 }
 
 .uitkCategoryList-category {

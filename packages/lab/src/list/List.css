@@ -12,7 +12,6 @@
   border-color: var(--uitk-container-borderColor-medium);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
-  box-sizing: border-box;
   height: var(--uitkList-height, var(--list-height));
   max-height: var(--list-maxHeight);
   outline: none;
@@ -29,7 +28,6 @@
 /* virtualised list */
 .uitkList-viewport {
   --list-item-height: 30px;
-  box-sizing: border-box;
   max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));
   overflow: auto;
 }
