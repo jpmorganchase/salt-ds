@@ -1,12 +1,11 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -119,9 +118,3 @@ a custom class name to override RadioButton styling. They will always take prece
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={RadioButton} />
-
-## Customising RadioButton styles
-
-<Canvas>
-  <Story name="Custom RadioButton Styling" decorators={[withFlexGap]}></Story>
-</Canvas>

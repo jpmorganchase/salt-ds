@@ -1,7 +1,6 @@
 import { Button, Card, Checkbox } from "@jpmorganchase/uitk-core";
 import { Slider, SliderProps } from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
-import "./slider.stories.css";
 
 export default {
   title: "Lab/Slider",
@@ -35,8 +34,6 @@ export const SimpleSlider = SliderTemplate.bind({});
 
 export const RangeSlider = SliderTemplate.bind({});
 
-export const CustomSlider = SliderTemplate.bind({});
-
 export const SliderStacked = SliderOnACardTemplate.bind({});
 
 SimpleSlider.args = {
@@ -55,26 +52,6 @@ RangeSlider.args = {
   step: 5,
   pageStep: 25,
   label: "Range slider",
-};
-
-CustomSlider.args = {
-  className: "custom-slider",
-  label: "CSS Variables Customisation",
-  min: 0,
-  max: 100,
-  step: 5,
-  marks: [
-    { value: 0, label: "Off" },
-    10,
-    20,
-    { value: 50, label: "Half" },
-    80,
-    90,
-    { value: 100, label: "Full" },
-  ],
-  hideMarkLabels: false,
-  hideMarks: false,
-  defaultValue: [20, 40, 50],
 };
 
 SliderStacked.args = {

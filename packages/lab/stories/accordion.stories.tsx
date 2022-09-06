@@ -9,7 +9,6 @@ import {
   AccordionSummary,
   AccordionSummaryProps,
 } from "@jpmorganchase/uitk-lab";
-import { TriangleUpIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 
@@ -123,23 +122,6 @@ const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
   );
 };
 
-const StyledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
-  const dummySectionsProps = {
-    summaryProps: { icon: <TriangleUpIcon /> },
-  };
-  return (
-    <div className="story-root">
-      <Accordion
-        maxExpandedItems={1}
-        disabled={props.disabled}
-        className="accordion-styled"
-      >
-        {renderDummySections(dummySectionsProps)}
-      </Accordion>
-    </div>
-  );
-};
-
 const MultiAccordionTemplate: Story<AccordionProps> = (props) => {
   return (
     <div className="story-root">
@@ -205,8 +187,6 @@ export const DefaultMultiAccordion = MultiAccordionTemplate.bind({});
 
 export const AccordionInAccordion = AccordionInAccordionTemplate.bind({});
 
-export const StyledAccordion = StyledAccordionTemplate.bind({});
-
 export const AccordionWithCustomSummary = CustomSummaryTemplate.bind({});
 
 DefaultAccordion.args = {
@@ -216,5 +196,3 @@ DefaultAccordion.args = {
 DefaultMultiAccordion.args = {
   maxExpandedItems: 2,
 };
-
-StyledAccordion.args = {};

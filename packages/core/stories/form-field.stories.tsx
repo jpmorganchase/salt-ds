@@ -1,7 +1,7 @@
 import {
-  Input,
   FormField,
   FormFieldProps,
+  Input,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
@@ -475,64 +475,6 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       />
     </div>
   </>
-);
-
-export const CustomStyling: ComponentStory<typeof FormField> = () => (
-  <div
-    style={{
-      display: "grid",
-      rowGap: "20px",
-      columnGap: "20px",
-      gridTemplateColumns: "auto auto",
-      padding: "20px 20px",
-    }}
-  >
-    <style>{`
-      .carbon {
-        --uitkFormField-focused-outlineStyle: none;
-        --uitkFormFieldHelperText-fontStyle: normal;
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-400);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-200);
-        --uitkFormLabel-marginBottom: 6px;
-        --uitkFormLabel-text-color: var(--uitk-color-purple-800);
-      }
-      .carbon .uitkFormField-focused {
-        --uitkFormActivationIndicator-size: 3px;
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
-        --uitkFormActivationIndicator-borderStyle: dotted;
-      }
-      .carbon.uitkFormField:not(.uitkFormField-readOnly):not(.uitkFormField-disabled):hover {
-        --uitkFormActivationIndicator-borderColor: var(--uitk-color-purple-200);
-        --uitkFormActivationIndicator-icon-color: var(--uitk-color-purple-50);
-        --uitkFormActivationIndicator-borderStyle: dashed;
-      }
-      .carbon.uitkFormField-focused:after {
-        outline-style: solid;
-        outline-color: var(--uitk-color-purple-50);
-      }
-    `}</style>
-    <div style={{ width: "200px" }}>
-      <h3>Default</h3>
-      <FormField
-        className="carbon"
-        label="Carbon form field"
-        helperText="Helper text value"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
-      <h3>High emphasis</h3>
-      <FormField
-        className="carbon"
-        label="Carbon form field"
-        helperText="Helper text value"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
-  </div>
 );
 
 export const Variants: ComponentStory<typeof FormField> = () => (
