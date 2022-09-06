@@ -82,7 +82,8 @@ export const useButton = <T extends Element>({
   };
 
   const buttonProps = {
-    "aria-disabled": disabled,
+    // when 'disabled' is set to true, aria-disabled is ignored
+    "aria-disabled": disabled && focusableWhenDisabled ? true : undefined,
     disabled: disabled && !focusableWhenDisabled,
     tabIndex: disabled && !focusableWhenDisabled ? -1 : 0,
     onBlur: handleBlur,

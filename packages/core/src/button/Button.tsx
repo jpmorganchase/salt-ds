@@ -51,10 +51,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onBlur,
       onClick,
     });
-
+    // we do not want to spread tab index in this case because the button element
+    // does not require tabindex="0" attribute
+    const { tabIndex, ...restButtonProps } = buttonProps;
     return (
       <button
-        {...buttonProps}
+        {...restButtonProps}
         className={cx(withBaseName(), className, withBaseName(variant), {
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
