@@ -38,6 +38,10 @@ export const ToolkitIcon: ComponentStory<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
 );
 
+export const CustomSizeViaProp: ComponentStory<typeof Icon> = () => (
+  <AddDocumentIcon size={64} />
+);
+
 export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
   const CustomIcon = useMemo(
     () => (props: IconProps) => {

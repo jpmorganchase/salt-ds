@@ -1,10 +1,10 @@
 .uitkIcon {
   --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
-  --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
+  --icon-size: var(--uitkIcon-size, var(--uitk-size-graphic-small));
 }
 
 .uitkIcon {
-  fill: var(--uitkIcon-color, var(--icon-color));
+  fill: var(--icon-color);
   letter-spacing: var(--uitkIcon-letterSpacing, normal);
   speak: none;
   display: inline-block;
@@ -25,10 +25,6 @@
   --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
 }
 
-.uitkIcon-content {
-  display: block;
-}
-
 .uitkIcon-small {
   --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
 }
@@ -42,6 +38,7 @@
 }
 
 .uitkIcon .uitkIcon-content {
+  display: block;
   /* We don't want any font size impacting the size of Icon span */
   font-size: 0;
 }
