@@ -5,8 +5,9 @@ import {
   makePrefixer,
   Breakpoints,
   useIsViewportLargerThanBreakpoint,
+  Scrim,
+  ScrimProps,
 } from "@jpmorganchase/uitk-core";
-import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
 import { usePrevious } from "../../utils";
 

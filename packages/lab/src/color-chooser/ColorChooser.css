@@ -3,10 +3,6 @@
   height: calc(2 * var(--uitk-size-unit));
   width: calc(2 * var(--uitk-size-unit));
 }
-.uitk-density-high .uitkColorChooser-overlayButtonSwatch {
-  height: calc(3 * var(--uitk-size-unit));
-  width: calc(3 * var(--uitk-size-unit));
-}
 
 .uitkColorChooser-overlayButtonSwatchWithBorder {
   border: 0.2px solid var(--uitk-editable-borderColor);

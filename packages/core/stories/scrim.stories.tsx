@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Scrim } from "@jpmorganchase/uitk-lab";
+import { Button, Scrim } from "@jpmorganchase/uitk-core";
+import { ContentStatus } from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {
-  title: "Lab/Scrim",
+  title: "Core/Scrim",
   component: Scrim,
 } as ComponentMeta<typeof Scrim>;
 
@@ -19,12 +19,30 @@ export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
   return (
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
+      <Scrim aria-label="Example Scrim" open={open}>
+        <Button onClick={handleClose}>CLOSE SCRIM</Button>
+      </Scrim>
+    </>
+  );
+};
+
+export const ClosableScrim: ComponentStory<typeof Scrim> = () => {
+  const [open, setOpen] = useState(false);
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <>
+      <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
         onBackDropClick={handleClose}
         onClose={handleClose}
         open={open}
-        returnFocus
       >
         <p style={{ color: "#fff" }}>
           Click or press Escape to close the Scrim
@@ -46,18 +64,24 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
     <>
       <Button onClick={handleRequestOpen}>click to open scrim</Button>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
-        className="uitkEmphasisMedium"
+        className="uitkEmphasisLow"
         onBackDropClick={handleClose}
         onClose={handleClose}
         open={open}
-        returnFocus
       >
-        <p style={{ color: "#000" }}>
-          Click or press Escape to close the Scrim
-        </p>
+        <p>Click or press Escape to close the Scrim</p>
       </Scrim>
     </>
+  );
+};
+
+export const ScrimWithContentStatus: ComponentStory<typeof Scrim> = () => {
+  return (
+    <Scrim aria-label="Example Scrim" open>
+      <ContentStatus status="loading" />
+    </Scrim>
   );
 };
 
@@ -120,12 +144,12 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         <Button onClick={handleRequestOpen}>CLICK TO OPEN SCRIM</Button>
       </div>
       <Scrim
+        aria-label="Example Scrim"
         closeWithEscape
-        containerFix
         onClose={handleClose}
         open={open}
-        parentRef={parentRef}
-        className="uitkEmphasisMedium"
+        containerRef={parentRef}
+        className="uitkEmphasisLow"
         zIndex={2}
       >
         <Button onClick={handleClose}>CLOSE SCRIM</Button>
