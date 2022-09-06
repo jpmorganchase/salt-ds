@@ -1,13 +1,9 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Tooltip } from "@jpmorganchase/uitk-core";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
-  CSSClassTable,
-  CSSVariableTable,
   CharacteristicUsage,
+  CSSClassTable,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./tooltip.stories";
 
 <Meta
   title="Documentation/Core/Tooltip"
@@ -44,26 +40,3 @@ import { Tooltip } from "@jpmorganchase/uitk-core";
 ## Characteristics Used
 
 <CharacteristicUsage of={Tooltip} />
-
-## Customising styles
-
-<Canvas>
-  <Story name="Custom Styling" decorators={[withFlexGap]}>
-    <CustomStyling />
-  </Story>
-</Canvas>
-
-```css
-/* from the file Tooltip.stories.newapp-tooltip.css */
-
-.uitk-light.uitk-newapp,
-.uitk-dark.uitk-newapp {
-  --uitkTooltip-borderColor: var(--uitk-color-teal-40);
-}
-
-.uitk-newapp .uitkTooltip-warning {
-  --uitkTooltip-icon-color: var(--uitk-color-purple-40);
-  --uitkTooltip-text-color: var(--uitk-color-purple-40);
-  --uitkTooltip-borderColor: var(--uitk-color-purple-40);
-}
-```

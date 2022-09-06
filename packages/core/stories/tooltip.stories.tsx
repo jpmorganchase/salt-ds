@@ -5,13 +5,9 @@ import {
   useForkRef,
   useTooltip,
   UseTooltipProps,
-  ToolkitProvider,
-  Panel,
 } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
-
-import "./Tooltip.stories.newapp-tooltip.css";
 
 export default {
   title: "Core/Tooltip",
@@ -126,28 +122,3 @@ export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
     </>
   );
 };
-
-export const CustomStyling: ComponentStory<typeof Tooltip> = () => (
-  <>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel>
-        <Default />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["light", "newapp"]}>
-      <Panel>
-        <WarningTooltip />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="low" theme={["dark", "newapp"]}>
-      <Panel>
-        <Default />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="touch" theme={["dark", "newapp"]}>
-      <Panel>
-        <WarningTooltip />
-      </Panel>
-    </ToolkitProvider>
-  </>
-);

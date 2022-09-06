@@ -1,13 +1,11 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { Checkbox, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Checkbox } from "@jpmorganchase/uitk-core";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./checkbox.stories";
 
 <Meta
   title="Documentation/Core/Checkbox"
@@ -113,23 +111,3 @@ a custom class name to override card styling. They will always take precedence o
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Checkbox} />
-
-## Customising Checkbox styles
-
-<Canvas>
-  <Story name="Custom Styling" decorators={[withFlexGap]}>
-    <CustomStyling />
-  </Story>
-</Canvas>
-
-The CSS is as simple as below:
-
-```css
-/* from the file Checkbox.stories.newapp-checkbox.css */
-
-.uitk-light.uitk-newapp,
-.uitk-dark.uitk-newapp {
-  --uitkCheckboxIcon-tick-fill: var(--uitk-color-purple-40);
-  --uitkCheckboxIcon-fill-checked: var(--uitk-color-purple-300);
-}
-```
