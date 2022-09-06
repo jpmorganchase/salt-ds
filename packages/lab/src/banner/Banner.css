@@ -1,54 +1,74 @@
 
+.uitk-density-touch {
+  --banner-icon-top: 6px;
+}
+
+.uitk-density-low {
+  --banner-icon-top: 4px;
+}
+
+.uitk-density-medium {
+  --banner-icon-top: 10px;
+}
+
+.uitk-density-high {
+  --banner-icon-top: 1px;
+}
 
 /* Styles applied to root component */
 .uitkBanner {
   --banner-background: var(--uitkBanner-background, var(--uitk-container-background-medium));
   --banner-fontSize: var(--uitkBanner-fontSize, var(--uitk-text-fontSize));
   --banner-lineHeight: var(--uitkBanner-lineHeight, var(--uitk-text-lineHeight));
+  --banner-padding: var(--uitkBanner-padding, var(--uitk-size-unit));
 }
 
 .uitkBanner {
   background: var(--banner-background);
-  border-color: var(--uitkBanner-borderColor, var(--tooltip-status-borderColor));
+  border-color: var(--uitkBanner-borderColor, var(--banner-status-borderColor));
   border-width: var(--uitkBanner-borderWidth, var(--uitk-container-borderWidth));
   border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
+  border-bottom: 2px solid var(--uitkBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;
   /*color: ;*/
-  display: flex;
-  flex-direction: row;
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  padding: 0 var(--banner-padding);
   position: relative;
+  min-height: 36px;
   width: 100%;
 }
 
 /* Styles applied to status icon */
 .uitkBanner-icon {
-  color: var(--uitkBanner-icon-color, var(--tooltip-status-icon-color));
-  fill: var(--uitkBanner-icon-color, var(--tooltip-status-icon-color));
-  margin-right: var(--uitkBanner-icon-marginRight, 6px);
-  top: var(--tooltip-icon-top);
+  color: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
+  fill: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
+  margin-right: var(--uitkTooltip-icon-marginRight, 6px);
+  top: var(--banner-icon-top);
+  padding-top: var(--banner-icon-top);
   vertical-align: top;
 }
 
 /* Styles applied when state = "info" */
 .uitkBanner-info {
-  --tooltip-status-borderColor: var(--uitk-status-info-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-info-foreground);
+  --banner-status-borderColor: var(--uitk-status-info-borderColor);
+  --banner-status-icon-color: var(--uitk-status-info-foreground);
 }
 
 /* Styles applied when state = "error" */
 .uitkBanner-error {
-  --tooltip-status-borderColor: var(--uitk-status-error-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-error-foreground);
+  --banner-status-borderColor: var(--uitk-status-error-borderColor);
+  --banner-status-icon-color: var(--uitk-status-error-foreground);
 }
 
 /* Styles applied when state = "warning" */
 .uitkBanner-warning {
-  --tooltip-status-borderColor: var(--uitk-status-warning-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-warning-foreground);
+  --banner-status-borderColor: var(--uitk-status-warning-borderColor);
+  --banner-status-icon-color: var(--uitk-status-warning-foreground);
 }
 
 /* Styles applied when state = "success" */
 .uitkBanner-success {
-  --tooltip-status-borderColor: var(--uitk-status-success-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-success-foreground);
+  --banner-status-borderColor: var(--uitk-status-success-borderColor);
+  --banner-status-icon-color: var(--uitk-status-success-foreground);
 }

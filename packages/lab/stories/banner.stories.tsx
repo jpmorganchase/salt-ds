@@ -16,15 +16,17 @@ export const Default: ComponentStory<typeof Banner> = () => {
   };
 
   return (
-    <>
-      {/* eslint-disable-next-line no-script-url */}
-      <Banner
-        LinkProps={{ href: "javascript:void(0)" }}
-        onClose={handleClose}
-        state="info"
-      >
-        test
-      </Banner>
-    </>
+    <div style={{ width: "95%", minWidth: "60vw" }}>
+      {showBanner && (
+        <Banner
+          //eslint-disable-next-line no-script-url
+          LinkProps={{ href: "javascript:void(0)" }}
+          onClose={handleClose}
+          state="success"
+        >
+          test
+        </Banner>
+      )}
+    </div>
   );
 };
