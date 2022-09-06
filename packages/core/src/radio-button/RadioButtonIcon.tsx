@@ -1,18 +1,18 @@
 import { FC, ReactElement } from "react";
 import { makePrefixer } from "../utils";
 import classnames from "classnames";
-import "./RadioIcon.css";
+import "./RadioButtonIcon.css";
 
-const withBaseName = makePrefixer("uitkRadioIcon");
+const withBaseName = makePrefixer("uitkRadioButtonIcon");
 
-export interface RadioIconProps {
+export interface RadioButtonIconProps {
   checked?: boolean;
 }
 
 /**
  * Default radio icon
  */
-export const RadioIcon: FC<RadioIconProps> = ({ checked }) => {
+export const RadioButtonIcon: FC<RadioButtonIconProps> = ({ checked }) => {
   return (
     <svg
       className={classnames(withBaseName(), {
@@ -37,6 +37,6 @@ export const makeRadioIcon =
   (
     iconChecked: ReactElement | null,
     iconUnchecked: ReactElement | null
-  ): FC<RadioIconProps> =>
-  (props: RadioIconProps) =>
+  ): FC<RadioButtonIconProps> =>
+  (props: RadioButtonIconProps) =>
     props.checked ? iconChecked : iconUnchecked;

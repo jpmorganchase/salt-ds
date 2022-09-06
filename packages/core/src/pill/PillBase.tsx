@@ -13,15 +13,15 @@ import {
   useRef,
   useState,
 } from "react";
-import { DivButton } from "../../button";
-import { TooltipProps, useTooltip, useTooltipContext } from "../../tooltip";
+import { DivButton } from "../button";
+import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
 import {
   makePrefixer,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "../../utils";
-import { pillBaseName } from "../constants";
-import { DeleteButton } from "./DeleteButton";
+} from "../utils";
+import { pillBaseName } from "./constants";
+import { DeleteButton } from "./internal/DeleteButton";
 
 import "../Pill.css";
 
