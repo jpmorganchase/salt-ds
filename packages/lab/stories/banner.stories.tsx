@@ -1,0 +1,30 @@
+import { Banner } from "@jpmorganchase/uitk-lab";
+
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { useState } from "react";
+
+export default {
+  title: "Lab/Banner",
+  component: Banner,
+} as ComponentMeta<typeof Banner>;
+
+export const Default: ComponentStory<typeof Banner> = () => {
+  const [showBanner, setShowBanner] = useState(true);
+
+  const handleClose = () => {
+    setShowBanner(false);
+  };
+
+  return (
+    <>
+      {/* eslint-disable-next-line no-script-url */}
+      <Banner
+        LinkProps={{ href: "javascript:void(0)" }}
+        onClose={handleClose}
+        state="info"
+      >
+        test
+      </Banner>
+    </>
+  );
+};

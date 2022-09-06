@@ -5,8 +5,8 @@ import {
 } from "./common-hooks";
 
 import {
-  ListItemBase as ListItemBaseDeprecated,
   ListChangeHandler as ListChangeHandlerDeprecated,
+  ListItemBase as ListItemBaseDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
@@ -15,6 +15,7 @@ export * from "./accordion";
 export * from "./app-header";
 export * from "./avatar";
 export * from "./badge";
+export * from "./banner";
 export * from "./breadcrumbs";
 export * from "./buttonbar";
 export * from "./calendar";

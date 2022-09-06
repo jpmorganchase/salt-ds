@@ -1,0 +1,54 @@
+
+
+/* Styles applied to root component */
+.uitkBanner {
+  --banner-background: var(--uitkBanner-background, var(--uitk-container-background-medium));
+  --banner-fontSize: var(--uitkBanner-fontSize, var(--uitk-text-fontSize));
+  --banner-lineHeight: var(--uitkBanner-lineHeight, var(--uitk-text-lineHeight));
+}
+
+.uitkBanner {
+  background: var(--banner-background);
+  border-color: var(--uitkBanner-borderColor, var(--tooltip-status-borderColor));
+  border-width: var(--uitkBanner-borderWidth, var(--uitk-container-borderWidth));
+  border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
+  box-sizing: border-box;
+  /*color: ;*/
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+}
+
+/* Styles applied to status icon */
+.uitkBanner-icon {
+  color: var(--uitkBanner-icon-color, var(--tooltip-status-icon-color));
+  fill: var(--uitkBanner-icon-color, var(--tooltip-status-icon-color));
+  margin-right: var(--uitkBanner-icon-marginRight, 6px);
+  top: var(--tooltip-icon-top);
+  vertical-align: top;
+}
+
+/* Styles applied when state = "info" */
+.uitkBanner-info {
+  --tooltip-status-borderColor: var(--uitk-status-info-borderColor);
+  --tooltip-status-icon-color: var(--uitk-status-info-foreground);
+}
+
+/* Styles applied when state = "error" */
+.uitkBanner-error {
+  --tooltip-status-borderColor: var(--uitk-status-error-borderColor);
+  --tooltip-status-icon-color: var(--uitk-status-error-foreground);
+}
+
+/* Styles applied when state = "warning" */
+.uitkBanner-warning {
+  --tooltip-status-borderColor: var(--uitk-status-warning-borderColor);
+  --tooltip-status-icon-color: var(--uitk-status-warning-foreground);
+}
+
+/* Styles applied when state = "success" */
+.uitkBanner-success {
+  --tooltip-status-borderColor: var(--uitk-status-success-borderColor);
+  --tooltip-status-icon-color: var(--uitk-status-success-foreground);
+}
