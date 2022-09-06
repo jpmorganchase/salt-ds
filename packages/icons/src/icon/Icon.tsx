@@ -55,28 +55,18 @@ export const Icon = forwardRef<HTMLSpanElement, IconProps>(function Icon(
       };
 
   return (
-    <span
-      className={cx(
-        withBaseName(),
-        { [withBaseName(size as string)]: isNamedSize },
-        className
-      )}
-      style={style}
-      {...rest}
-      ref={ref}
-    >
-      <span aria-hidden="true" className={withBaseName("content")}>
-        {isValidElement(children)
-          ? cloneElement(children, {
-              ...SVGProps,
-              className: cx(
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                children.props.className,
-                withBaseName("Svg-content")
-              ),
-            })
-          : children}
-      </span>
-    </span>
+    <>
+      {isValidElement(children)
+        ? cloneElement(children, {
+            ref,
+            style,
+            className: cx(className, withBaseName(), {
+              [withBaseName(size as string)]: isNamedSize,
+            }),
+            ...SVGProps,
+            ...rest,
+          })
+        : children}
+    </>
   );
 });

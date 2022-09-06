@@ -25,10 +25,6 @@
   --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
 }
 
-.uitkIcon-content {
-  display: block;
-}
-
 .uitkIcon-small {
   --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
 }
@@ -41,17 +37,14 @@
   --icon-size: var(--uitkIcon-size-large, var(--uitk-size-graphic-large));
 }
 
-.uitkIcon .uitkIcon-content {
+.uitkIcon {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
   /* We don't want any font size impacting the size of Icon span */
   font-size: 0;
 }
 
-.uitkIcon .uitkIcon-Svg-content {
-  width: var(--icon-size, 24px);
-  height: var(--icon-size, 24px);
-}
-
-.uitkIcon .uitkIcon-Svg-content > img {
+.uitkIcon > img {
   width: var(--icon-size, 24px);
   height: var(--icon-size, 24px);
 }
