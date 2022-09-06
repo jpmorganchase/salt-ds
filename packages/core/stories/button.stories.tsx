@@ -1,15 +1,7 @@
 import { ReactNode } from "react";
-import {
-  Button,
-  ButtonProps,
-  Density,
-  ToolkitProvider,
-} from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import { NotificationIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-
-import "./Theme.stories.newapp-theme.css";
-import "./Button.stories.newapp-button.css";
 
 export default {
   title: "Core/Button",
@@ -185,70 +177,6 @@ const ButtonSet = (props: ButtonProps) => (
     <ButtonVariant {...props} className="uitkButton-bid" />
     <ButtonVariant {...props} className="uitkButton-ask" />
   </div>
-);
-
-export const CustomStylingExample = (props: {
-  density: Density;
-}): JSX.Element => {
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
-  return (
-    <ToolkitProvider density={props.density} theme={["light", "newapp"]}>
-      <div style={{ width: 900, lineHeight: 3 }}>
-        <div style={{ display: "flex" }}>
-          <div
-            style={{
-              flex: "0 0 120px",
-              padding: "44px 12px 12px 0",
-              textAlign: "right",
-            }}
-          >
-            <div>CTA</div>
-            <div>Primary</div>
-            <div>Secondary</div>
-            <div>Final Execution</div>
-            <div>Bid / Buy</div>
-            <div>Ask / Sell</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flex: "1 1 0",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ display: "flex", flex: "0 0 32px", gap: 50 }}>
-              <div style={{ flex: "1 1 0" }}>Regular</div>
-              <div style={{ flex: "1 1 0" }}>Disabled</div>
-              <div style={{ flex: "1 1 0" }}>Read-Only</div>
-            </div>
-            <div
-              style={{
-                background: "#eaedef",
-                display: "flex",
-                gap: 50,
-                flex: "1 1 auto",
-                padding: 12,
-              }}
-            >
-              <ButtonSet onClick={handleClick} />
-              <ButtonSet disabled />
-              <ButtonSet data-readonly />
-            </div>
-          </div>
-        </div>
-      </div>
-    </ToolkitProvider>
-  );
-};
-
-export const CustomStyling: ComponentStory<typeof Button> = () => (
-  <>
-    <CustomStylingExample density="medium" />
-    <CustomStylingExample density="high" />
-  </>
 );
 
 export const FeatureButton = SingleButtonTemplate.bind({});
