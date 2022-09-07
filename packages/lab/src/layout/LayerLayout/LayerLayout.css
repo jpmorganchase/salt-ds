@@ -1,18 +1,12 @@
 .uitkLayerLayout {
-  --layerLayout-borderColor: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderColor-medium));
   --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
   --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
-  --layerLayout-borderWidth: var(--uitkLayerLayout-borderColor, var(--uitk-container-borderWidth));
   --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
-  --layerLayout-borderStyle: var(--uitkLayerLayout-borderStyle, var(--uitk-container-borderStyle));
   --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
 }
 
 .uitkLayerLayout {
   background: var(--layerLayout-background);
-  border-color: var(--layerLayout-borderColor);
-  border-width: var(--layerLayout-borderWidth);
-  border-style: var(--layerLayout-borderStyle);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -38,12 +32,14 @@
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-enter-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
+.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
+.uitkScrim.uitkLayerLayout-enter-animation {
   animation: var(--uitk-animation-fade-in-center);
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-exit-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
+.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
+.uitkScrim.uitkLayerLayout-exit-animation {
   animation: var(--uitk-animation-fade-out-back);
 }
 

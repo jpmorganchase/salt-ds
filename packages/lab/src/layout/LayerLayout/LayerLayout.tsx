@@ -5,8 +5,9 @@ import {
   makePrefixer,
   Breakpoints,
   useIsViewportLargerThanBreakpoint,
+  Scrim,
+  ScrimProps,
 } from "@jpmorganchase/uitk-core";
-import { Scrim, ScrimProps } from "../../scrim";
 import "./LayerLayout.css";
 import { usePrevious } from "../../utils";
 
@@ -121,7 +122,10 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     ) : (
       <Scrim
         open={showComponent}
-        className="uitkEmphasisMedium"
+        className={cx("uitkEmphasisMedium", {
+          [withBaseName("enter-animation")]: enterAnimation,
+          [withBaseName("exit-animation")]: exitAnimation,
+        })}
         {...scrimProps}
       >
         {layerLayout}

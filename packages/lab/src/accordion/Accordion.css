@@ -16,22 +16,22 @@
   border-radius: var(--accordion-borderRadius);
 }
 
-.uitk-density-high .uitkAccordionSection {
+.uitk-density-high {
   --accordion-summary-paddingLeft: 20px;
   --accordion-details-padding: 3px 4px 5px 20px;
 }
 
-.uitk-density-medium .uitkAccordionSection {
+.uitk-density-medium {
   --accordion-summary-paddingLeft: 28px;
   --accordion-details-padding: 8px 8px 9px 28px;
 }
 
-.uitk-density-low .uitkAccordionSection {
+.uitk-density-low {
   --accordion-summary-paddingLeft: 36px;
   --accordion-details-padding: 12px 12px 13px 38px;
 }
 
-.uitk-density-touch .uitkAccordionSection {
+.uitk-density-touch {
   --accordion-summary-paddingLeft: 44px;
   --accordion-details-padding: 18px 16px 17px 44px;
 }

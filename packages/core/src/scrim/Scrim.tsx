@@ -1,21 +1,15 @@
-import {
-  makePrefixer,
-  ownerDocument,
-  useForkRef,
-  useId,
-} from "@jpmorganchase/uitk-core";
 import { hideOthers } from "aria-hidden";
 import classnames from "classnames";
 import noScroll from "no-scroll";
 import {
   forwardRef,
   HTMLAttributes,
-  MouseEventHandler,
   RefObject,
   SyntheticEvent,
   useEffect,
   useRef,
 } from "react";
+import { makePrefixer, ownerDocument, useForkRef, useId } from "../utils";
 import { FocusManager, FocusManagerProps } from "../focus-manager";
 import { preventFocusOthers } from "./internal/PreventFocus";
 import { ScrimContext } from "./ScrimContext";
@@ -24,13 +18,15 @@ import "./Scrim.css";
 
 const scrims = new Set();
 
-const defaultParent = typeof document !== "undefined" ? document.body : null;
+const getDefaultParent = () =>
+  typeof document !== "undefined" ? document.body : null;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 const withBaseName = makePrefixer("uitkScrim");
 
-function preventSelection(parent = defaultParent): () => void {
+function preventSelection(parent = getDefaultParent()): () => void {
   if (parent) {
     const previous = parent.style.userSelect;
     parent.style.userSelect = "none";
@@ -65,13 +61,6 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   closeWithEscape?: boolean;
   /**
-   * Prop to enable container use case.
-   * It also sets the different z-index for usage in containers.
-   * If present it will also override FocusTrap for Scrim.
-   * Default value of containerFix is false.
-   */
-  containerFix?: boolean;
-  /**
    * If `true`, the trap focus will not automatically shift focus to itself when it opens, and
    * replace it to the last focused element when it closes.
    */
@@ -79,7 +68,7 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * If `true`, the trap focus will not prevent focus from leaving the trap focus while open.
    */
-  disableEnforceFocus?: boolean;
+  disableFocusTrap?: boolean;
   /**
    * If `true`, the trap focus will not restore focus to previously focused element once
    * trap focus is hidden.
@@ -88,7 +77,7 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * By default, an error will be thrown if the focus trap contains no elements in its tab order.
    * With this option you can specify a fallback element to programmatically receive focus if no other tabbable elements are found.
-   * For example, you may want a popover's <div> to receive focus if the popover's content includes no tabbable elements.
+   * For example, you may want a popover's `<div>` to receive focus if the popover's content includes no tabbable elements.
    */
   fallbackFocusRef?: FocusManagerProps["fallbackFocusRef"];
   /**
@@ -104,14 +93,14 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   open?: boolean;
   /**
-   * Parent react ref which needs to be passed in container use case.
+   * Prop to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
+   * It also sets the different z-index and overrides FocusTrap for Scrim. Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
    */
-  parentRef?: RefObject<HTMLElement>;
+  containerRef?: RefObject<HTMLElement>;
   /**
-   * Prop to return focus to active element of when Scrim is closed.
-   * The default value is true.
+   * Options object to pass to the `focus()` method that is called on the previously focused element when Scrim is closed.
    */
-  returnFocus?: FocusManagerProps["returnFocus"];
+  returnFocusOptions?: FocusManagerProps["returnFocusOptions"];
   /**
    * comma separated string of query selectors which may need to be overridden for edge cases.
    */
@@ -123,29 +112,26 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
-  props,
-  ref
-) {
-  const {
+  {
     autoFocusRef,
     closeWithEscape = false,
     className,
     children,
-    containerFix = false,
     disableAutoFocus,
-    disableEnforceFocus,
+    disableFocusTrap,
     disableReturnFocus,
     fallbackFocusRef,
     onBackDropClick,
     onClose,
     open,
-    parentRef,
-    returnFocus = true,
+    containerRef,
+    returnFocusOptions,
     tabEnabledSelectors = defaultSelector,
     zIndex,
     ...rest
-  } = props;
-
+  },
+  ref
+) {
   const scrimRef = useRef<HTMLDivElement>(null);
   const setWrapperRef = useForkRef(ref, scrimRef);
   const undoAria = useRef(noop);
@@ -154,7 +140,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   const scrimId = useId();
 
   useEffect(() => {
-    if (open && !containerFix) {
+    if (open && !containerRef?.current) {
       scrims.add(scrimId);
       noScroll.on();
     }
@@ -167,11 +153,11 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         }
       }
     };
-  }, [containerFix, open, scrimId]);
+  }, [open, containerRef, scrimId]);
 
   useEffect(() => {
     if (open) {
-      const parent = parentRef?.current as HTMLElement;
+      const parent = containerRef?.current || undefined;
 
       if (scrimRef.current) {
         undoAria.current = hideOthers(scrimRef.current, parent);
@@ -181,13 +167,13 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     return () => {
       undoAria.current?.();
     };
-  }, [containerFix, open, parentRef]);
+  }, [open, containerRef]);
 
   useEffect(() => {
     if (open) {
-      const parent = parentRef?.current;
+      const parent = containerRef?.current;
 
-      if (containerFix && parent) {
+      if (parent) {
         undoSelection.current = preventSelection(parent);
         undoTabIndex.current = preventFocusOthers(
           scrimRef.current,
@@ -201,7 +187,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
       undoSelection.current?.();
       undoTabIndex.current?.();
     };
-  }, [containerFix, open, parentRef, tabEnabledSelectors]);
+  }, [open, containerRef, tabEnabledSelectors]);
 
   useEffect(() => {
     if (closeWithEscape && open && scrimRef.current) {
@@ -218,13 +204,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         doc.removeEventListener("keydown", escapeHandler);
       };
     }
-
-    return undefined;
   }, [closeWithEscape, onClose, open]);
-
-  const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    onBackDropClick?.(event);
-  };
 
   if (!open) {
     return null;
@@ -232,12 +212,12 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
 
   return (
     <div
-      aria-modal={!containerFix}
+      aria-modal={!containerRef?.current}
       className={classnames(className, withBaseName(), {
-        [withBaseName(`containerFix`)]: containerFix,
+        [withBaseName(`containerFix`)]: containerRef?.current,
       })}
       data-testid="scrim"
-      onClick={handleClick}
+      onClick={onBackDropClick}
       ref={setWrapperRef}
       role="dialog"
       style={{
@@ -249,9 +229,9 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         active={open}
         autoFocusRef={autoFocusRef}
         disableAutoFocus={disableAutoFocus}
-        disableEnforceFocus={disableEnforceFocus || containerFix}
+        disableFocusTrap={disableFocusTrap || !!containerRef?.current}
         disableReturnFocus={disableReturnFocus}
-        returnFocus={returnFocus}
+        returnFocusOptions={returnFocusOptions}
         tabEnabledSelectors={tabEnabledSelectors}
       >
         <ScrimContext.Provider value={onClose}>

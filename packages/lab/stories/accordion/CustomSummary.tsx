@@ -2,35 +2,23 @@ import { FC } from "react";
 
 import "./CustomSummary.css";
 import { useAccordionSectionContext } from "@jpmorganchase/uitk-lab";
-
-const PlusIcon = () => (
-  <div className="plus icon">
-    <div>
-      <div />
-      <div />
-    </div>
-  </div>
-);
-
-const MinusIcon = () => (
-  <div className="minus icon">
-    <div>
-      <div />
-    </div>
-  </div>
-);
+import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 
 export const CustomSummary: FC = ({ children }) => {
   const { isDisabled, isExpanded, onToggle } = useAccordionSectionContext();
 
   return (
     <div
-      className={"custom-accordion-summary"}
+      className="custom-accordion-summary"
       onClick={isDisabled ? undefined : onToggle}
       tabIndex={0}
     >
       <div className={"content"}>{children}</div>
-      {isExpanded ? <MinusIcon /> : <PlusIcon />}
+      {isExpanded ? (
+        <ChevronUpIcon className="custom-accordion-summary-icon" />
+      ) : (
+        <ChevronDownIcon className="custom-accordion-summary-icon" />
+      )}
     </div>
   );
 };

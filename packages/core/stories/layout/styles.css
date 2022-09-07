@@ -94,8 +94,9 @@
 
 .border-layout-pill {
   margin: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
-  background: var(--uitk-status-success-foreground);
-  color: var(--uitk-color-white);
+  --uitkPill-background: var(--uitk-status-success-foreground);
+  --uitkPill-text-color: var(--uitk-color-white);
+  --uitkPill-borderRadius: 10px;
 }
 
 .border-layout-form-header,

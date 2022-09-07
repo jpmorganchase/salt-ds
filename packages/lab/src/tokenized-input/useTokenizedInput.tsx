@@ -5,6 +5,7 @@ import {
   useDensity,
   useFormFieldProps,
   useId,
+  ownerWindow,
 } from "@jpmorganchase/uitk-core";
 import copy from "clipboard-copy";
 import {
@@ -22,7 +23,7 @@ import {
   useState,
 } from "react";
 import warning from "warning";
-import { escapeRegExp, ownerWindow, useEventCallback } from "../utils";
+import { escapeRegExp, useEventCallback } from "../utils";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";

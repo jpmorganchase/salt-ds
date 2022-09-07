@@ -1,13 +1,12 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { Switch, ToolkitProvider, FormField } from "@jpmorganchase/uitk-core";
+import { Switch } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./switch.stories";
 
 <Meta
   title="Documentation/Core/Switch"
@@ -105,11 +104,3 @@ a custom class name to override Switch styling. They will always take precedence
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Switch} />
-
-## Customising Switch styles
-
-<Canvas>
-  <Story name="Custom Switch Styling" decorators={[withFlexGap]}>
-    <CustomStyling />
-  </Story>
-</Canvas>

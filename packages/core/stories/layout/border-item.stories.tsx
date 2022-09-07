@@ -85,5 +85,5 @@ const Template: ComponentStory<typeof BorderItem> = (args) => {
   );
 };
 
-export const ToolkitBorderItem = Template.bind({});
-ToolkitBorderItem.args = { position: "left", sticky: true };
+export const BorderItemWrapper = Template.bind({});
+BorderItemWrapper.args = { position: "left", sticky: true };
