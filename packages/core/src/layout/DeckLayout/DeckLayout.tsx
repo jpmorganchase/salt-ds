@@ -9,7 +9,7 @@ import {
 import { makePrefixer, useIsomorphicLayoutEffect } from "../../utils";
 import { LayoutAnimation, LayoutAnimationDirection } from "../types";
 import { DeckItem } from "../DeckItem";
-import { useWidth } from "@jpmorganchase/uitk-lab";
+import { useWidth } from "../../responsive";
 import "./DeckLayout.css";
 
 import cx from "classnames";
