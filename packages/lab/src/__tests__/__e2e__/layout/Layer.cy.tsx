@@ -5,10 +5,10 @@ const composedStories = composeStories(layerStories);
 
 const {
   DefaultLayerLayout,
-  ToolkitLayerLayoutTop,
-  ToolkitLayerLayoutRight,
-  ToolkitLayerLayoutLeft,
-  ToolkitLayerLayoutBottom,
+  LayerLayoutTop,
+  LayerLayoutRight,
+  LayerLayoutLeft,
+  LayerLayoutBottom,
 } = composedStories;
 
 describe("GIVEN a Layer", () => {
@@ -44,7 +44,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN a position is provided", () => {
     it("THEN it should render at the top", () => {
-      cy.mount(<ToolkitLayerLayoutTop />);
+      cy.mount(<LayerLayoutTop />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -52,7 +52,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render on the right hand side", () => {
-      cy.mount(<ToolkitLayerLayoutRight />);
+      cy.mount(<LayerLayoutRight />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -60,7 +60,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render on the left hand side", () => {
-      cy.mount(<ToolkitLayerLayoutLeft />);
+      cy.mount(<LayerLayoutLeft />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -68,7 +68,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render at the bottom", () => {
-      cy.mount(<ToolkitLayerLayoutBottom />);
+      cy.mount(<LayerLayoutBottom />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
