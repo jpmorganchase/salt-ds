@@ -31,8 +31,6 @@ export * from "./Clone";
 export * from "./Close";
 export * from "./CloseSmall";
 export * from "./ColumnChooser";
-export * from "./ColumnChooserSingle";
-export * from "./ColumnChooserSingleSolid";
 export * from "./ColumnChooserSolid";
 export * from "./Commentary";
 export * from "./CommentarySolid";

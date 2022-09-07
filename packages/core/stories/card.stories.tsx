@@ -1,13 +1,11 @@
 import { FC, ReactNode } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Link } from "@jpmorganchase/uitk-lab";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
 } from "./story-layout/ColumnLayout";
-
-import "./Card.stories.newapp-card.css";
 
 export default {
   title: "Core/Card",
@@ -100,15 +98,4 @@ export const All: ComponentStory<typeof Card> = () => (
       <Examples />
     </ToolkitProvider>
   </div>
-);
-
-export const CustomStyling: ComponentStory<typeof Card> = () => (
-  <>
-    <ToolkitProvider density="low" theme={["light", "newapp"]}>
-      <DefaultCard />
-    </ToolkitProvider>
-    <ToolkitProvider density="touch" theme={["dark", "newapp"]}>
-      <DefaultCard />
-    </ToolkitProvider>
-  </>
 );

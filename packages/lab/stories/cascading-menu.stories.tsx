@@ -1,10 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { useMemo, useState, MouseEvent } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import { Button } from "@jpmorganchase/uitk-core";
-import { UserIcon, CallIcon } from "@jpmorganchase/uitk-icons";
+import { CallIcon, UserIcon } from "@jpmorganchase/uitk-icons";
 import { CascadingMenu, MenuDescriptor } from "@jpmorganchase/uitk-lab";
-
-import "./cascading-menu.stories.css";
 
 const initialSource: MenuDescriptor = {
   menuItems: [
@@ -197,75 +195,6 @@ export const CascadingMenuWithSeparators: ComponentStory<
 
   return (
     <CascadingMenu
-      initialSource={initialSource}
-      itemToString={(item) => item?.title}
-      onItemClick={(sourceItem) => {
-        console.log(`You clicked: ${sourceItem.title}`);
-      }}
-    >
-      <Button data-testid="cascading-menu-trigger">
-        Open/Close Cascading Menu
-      </Button>
-    </CascadingMenu>
-  );
-};
-
-// See cascading-menu.stories.css for style overrides
-export const CascadingMenuCustomStyling: ComponentStory<
-  typeof CascadingMenu
-> = () => {
-  const initialSource = {
-    menuItems: [
-      {
-        title: "Level 1 Menu Item",
-      },
-      {
-        title: "Level 1 Menu Item 2",
-        menuItems: [
-          {
-            title: "Level 2 Menu Item",
-          },
-          {
-            title: "Level 2 Menu Item",
-            menuItems: [
-              {
-                title: "Level 3 Menu Item",
-              },
-              {
-                title: "Level 3 Menu Item",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        title: "Level 1 Menu Item 2",
-        menuItems: [
-          {
-            title: "Level 2 Menu Item",
-          },
-          {
-            title: "Level 2 Menu Item",
-          },
-          {
-            title: "Level 2 Menu Item",
-            menuItems: [
-              {
-                title: "Level 3 Menu Item",
-              },
-              {
-                title: "Level 3 Menu Item",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
-
-  return (
-    <CascadingMenu
-      className="custom-styles"
       initialSource={initialSource}
       itemToString={(item) => item?.title}
       onItemClick={(sourceItem) => {

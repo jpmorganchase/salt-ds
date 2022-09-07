@@ -6,12 +6,10 @@
  * Refresh of a page is needed.
  */
 
-import { useState, SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Pill, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { FavoriteIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-
-import "./Pill.stories.newapp-pill.css";
 
 export default {
   title: "Core/Pill",
@@ -154,14 +152,3 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
     </div>
   );
 };
-
-export const CustomStyling: ComponentStory<typeof Pill> = () => (
-  <div style={{ display: "flex" }}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <FeaturePill />
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <FeaturePill />
-    </ToolkitProvider>
-  </div>
-);

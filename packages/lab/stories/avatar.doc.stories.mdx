@@ -1,14 +1,12 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Avatar } from "@jpmorganchase/uitk-lab";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./avatar.stories";
 
 <Meta
   title="Documentation/Lab/Avatar"
@@ -97,46 +95,3 @@ a custom class name to override avatar styling. They will always take precedence
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Avatar} />
-
-# Customising Avatar styles
-
-<Canvas>
-  <Story name="Custom Avatar Styling" decorators={[withFlexGap]}>
-    <>
-      <ToolkitProvider theme={["light", "newapp"]}>
-        <Avatar size="small">SB</Avatar>
-      </ToolkitProvider>
-      <ToolkitProvider theme={["light", "newapp"]}>
-        <Avatar size="medium" alt="Logo" src="/docs/assets/placeholder.svg" />
-      </ToolkitProvider>
-      <ToolkitProvider theme={["light", "newapp"]}>
-        <Avatar size="large" />
-      </ToolkitProvider>
-      <ToolkitProvider theme={["dark", "newapp"]}>
-        <Avatar size="small">SB</Avatar>
-      </ToolkitProvider>
-      <ToolkitProvider theme={["dark", "newapp"]}>
-        <Avatar size="medium" alt="Logo" src="/docs/assets/placeholder.svg" />
-      </ToolkitProvider>
-      <ToolkitProvider theme={["dark", "newapp"]}>
-        <Avatar size="large" />
-      </ToolkitProvider>
-    </>
-  </Story>
-</Canvas>
-
-The CSS is as simple as below:
-
-```css
-/* from the file avatar.stories.newapp-avatar.css */
-
-.uitk-light.uitk-newapp .uitkAvatar {
-  --uitkAvatar-background: var(--uitk-color-grey-20);
-  --uitkAvatar-foreground: var(--uitk-color-blue-800);
-}
-
-.uitk-dark.uitk-newapp .uitkAvatar {
-  --uitkAvatar-background: var(--uitk-color-green-600);
-  --uitkAvatar-foreground: var(--uitk-color-grey-10);
-}
-```
