@@ -3,4 +3,4 @@
 ---
 
 Remove border from layer component
-Add fade animations to scrim
+Add fade animations to `LayerLayout`
