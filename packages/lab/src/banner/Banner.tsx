@@ -122,13 +122,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   });
 
   const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
-    className,
+    className: withBaseName("label"),
     ...restProps,
   });
 
   const getLinkProps = ({ className, href, ...restProps }: LinkProps = {}) => ({
     children: "Link",
-    className,
+    className: cx(withBaseName("link")),
     href,
     ...restProps,
   });
@@ -147,8 +147,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       <>
         {state ? <StateIcon {...getIconProps()} /> : null}
         <span {...getLabelProps()}>
-          {children}
-          {LinkProps && <Link {...getLinkProps(LinkProps)} />}
+          {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
         </span>
       </>
     );

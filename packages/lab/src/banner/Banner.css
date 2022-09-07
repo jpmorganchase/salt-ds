@@ -30,13 +30,17 @@
   border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
   border-bottom: 2px solid var(--uitkBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;
-  /*color: ;*/
-  /*display: flex;*/
-  /*flex-direction: row;*/
+  display: flex;
+  flex-direction: row;
   padding: 0 var(--banner-padding);
   position: relative;
   min-height: 36px;
   width: 100%;
+}
+
+.uitkBanner-label {
+  flex: 1 0;
+  padding:  var(--banner-padding);
 }
 
 /* Styles applied to status icon */
@@ -44,9 +48,12 @@
   color: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
   fill: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
   margin-right: var(--uitkTooltip-icon-marginRight, 6px);
-  top: var(--banner-icon-top);
   padding-top: var(--banner-icon-top);
+  align-self: flex-start;
+  top: auto;
   vertical-align: top;
+  display: inline-flex;
+  flex: 0 0 auto;
 }
 
 /* Styles applied when state = "info" */
