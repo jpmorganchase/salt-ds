@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card } from "@jpmorganchase/uitk-core";
-import { DeckLayout, Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
+import { Card, DeckLayout } from "@jpmorganchase/uitk-core";
+import { Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
 
 import "./styles.css";
 
 export default {
-  title: "Lab/Layout/DeckLayout",
+  title: "Core/Layout/DeckLayout",
   component: DeckLayout,
   argTypes: {
     activeIndex: {

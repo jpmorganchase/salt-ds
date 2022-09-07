@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "../../utils";
 import "./DeckItem.css";
 import cx from "classnames";
-import { LayoutAnimation } from "@jpmorganchase/uitk-core/src/layout/types";
+import { LayoutAnimation } from "../types";
 
 const withBaseName = makePrefixer("uitkDeckItem");
 

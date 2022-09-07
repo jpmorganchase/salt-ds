@@ -6,15 +6,10 @@ import {
   useCallback,
   CSSProperties,
 } from "react";
-import {
-  makePrefixer,
-  LayoutAnimation,
-  LayoutAnimationDirection,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-
+import { makePrefixer, useIsomorphicLayoutEffect } from "../../utils";
+import { LayoutAnimation, LayoutAnimationDirection } from "../types";
 import { DeckItem } from "../DeckItem";
-import { useWidth } from "../../responsive";
+import { useWidth } from "@jpmorganchase/uitk-lab";
 import "./DeckLayout.css";
 
 import cx from "classnames";
