@@ -1,6 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { DeckLayout, DeckItem } from "@jpmorganchase/uitk-lab";
+import { DeckLayout, DeckItem } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
   CSSVariableTable,
@@ -22,7 +22,7 @@ It allows motion customisation (`slide` or `fade`) and a custom direction for th
 This layout component also allows you to assign the initial page to be rendered via the `activeIndex` prop.
 
 <Canvas>
-  <Story id="lab-layout-decklayout--default-deck-layout" />
+  <Story id="core-layout-decklayout--default-deck-layout" />
 </Canvas>
 
 ## How you can use deck layout
@@ -32,7 +32,7 @@ Use this component by passing it a collection of children (pages). You may also 
 ## API
 
 ```
-import { DeckLayout } from "@jpmorganchase/uitk-lab";
+import { DeckLayout } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -46,7 +46,7 @@ import { DeckLayout } from "@jpmorganchase/uitk-lab";
 This example shows how the deck layout can be used in conjunction with `Tabstrip`. You can enable animations by setting the `animation` prop.
 
 <Canvas>
-  <Story id="lab-layout-decklayout--deck-in-tabstrip" />
+  <Story id="core-layout-decklayout--deck-in-tabstrip" />
 </Canvas>
 
 ## Anatomy
