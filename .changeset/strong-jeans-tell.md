@@ -1,5 +1,4 @@
 ---
-"docs": minor
 "@jpmorganchase/uitk-ag-grid-theme": minor
 "@jpmorganchase/uitk-core": minor
 "@jpmorganchase/uitk-grid": minor
