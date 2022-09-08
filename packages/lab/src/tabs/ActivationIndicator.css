@@ -4,7 +4,6 @@
   --tabs-activation-indicator-transitionProperty: var(--tabs-activation-indicator-transitionProperty, left);
   border: var(--uitkTabstrip-activationIndicator-border, var(--uitk-navigable-border));
   border-style: var(--tabs-activation-indicator-borderStyle);
-  box-sizing: border-box;
   height: var(--tabs-activation-indicator-height, auto);
   inset: var(--tabs-activation-indicator-inset);
   position: absolute;

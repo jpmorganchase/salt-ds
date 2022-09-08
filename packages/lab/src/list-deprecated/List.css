@@ -14,7 +14,6 @@
 
   /* Misc. */
   --list-boxShadow: none;
-  --list-content-box: border-box;
   --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
 }
 
@@ -23,7 +22,6 @@
 }
 
 .uitkListDeprecated {
-  box-sizing: border-box;
   /* font-family: var(--list-fontFamily); */
   overflow-y: auto;
 }
@@ -40,7 +38,6 @@
 .uitkListDeprecated-wrapper {
   background: var(--list-background);
   box-shadow: var(--list-boxShadow);
-  box-sizing: var(--list-content-box);
   position: relative;
 }
 

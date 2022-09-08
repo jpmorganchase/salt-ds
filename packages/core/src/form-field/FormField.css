@@ -38,7 +38,6 @@
 }
 
 .uitkFormField {
-  box-sizing: border-box;
   border: 0;
   display: inline-grid;
   font-size: var(--uitkFormField-fontSize, var(--uitk-text-fontSize));
@@ -191,7 +190,6 @@
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */
 .uitkFormField:not(.uitkFormField-withHelperText):not(.uitkFormField-labelLeft).uitkFormField-focused:before {
-  box-sizing: border-box;
   content: " ";
   position: absolute;
   top: 0;
@@ -205,7 +203,6 @@
 
 /* Class applied on focus with `labelTop={true}` and helper text provided */
 .uitkFormField-withHelperText:not(.uitkFormField-labelLeft).uitkFormField-focused:before {
-  box-sizing: border-box;
   content: " ";
   position: absolute;
   top: 0;
@@ -223,7 +220,6 @@
 
 /* Class applied on focus with `labelLeft={true}` */
 .uitkFormField-labelLeft.uitkFormField-focused > *:before {
-  box-sizing: border-box;
   content: " ";
   position: absolute;
   top: 0;

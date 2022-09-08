@@ -571,7 +571,6 @@
 
   [class^="ag-"]:focus {
     outline: none;
-    box-sizing: border-box;
   }
 
   .ag-set-filter-list .ag-virtual-list-viewport {
@@ -632,7 +631,6 @@
       left: 0;
       height: var(--agGrid-switch-height);
       width: var(--agGrid-switch-height);
-      box-sizing: border-box;
     }
     &.ag-checked {
       border-color: var(--agGrid-toggle-background-checked);
@@ -672,7 +670,6 @@
     border-left: 3px solid transparent;
     &:focus {
       border: 2px dotted #2d81bd;
-      box-sizing: border-box;
       outline: none;
     }
   }
