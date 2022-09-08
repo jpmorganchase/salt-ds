@@ -26,6 +26,10 @@ export interface StateIconProps extends IconProps {
 
 const withBaseName = makePrefixer("uitkStateIcon");
 
+const stateToAriaLabel = {
+  success: "success",
+};
+
 export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
   function StateIcon(
     { className, state, size = DEFAULT_ICON_SIZE, ...restProps },
@@ -37,7 +41,7 @@ export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
       <IconComponent
         className={classnames(withBaseName(), withBaseName(state), className)}
         size={size}
-        {...(state === "success" && { "aria-label": "success" })}
+        {...(state === "success" && { "aria-label": stateToAriaLabel[state] })}
         {...restProps}
         ref={ref}
       />
