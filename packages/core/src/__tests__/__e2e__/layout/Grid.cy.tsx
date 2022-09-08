@@ -5,9 +5,9 @@ import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 const composedStories = composeStories(gridStories);
 const {
-  ToolkitGridLayout,
-  ToolkitGridLayoutMultipleRows,
-  ToolkitGridLayoutResponsiveView,
+  DefaultGridLayout,
+  GridLayoutMultipleRows,
+  GridLayoutResponsiveView,
   GridLayoutNested,
 } = composedStories;
 
@@ -19,7 +19,7 @@ describe("GIVEN a Grid", () => {
 
   describe("WHEN no props are provided", () => {
     it("THEN it should render 12 columns and 1 row", () => {
-      cy.mount(<ToolkitGridLayout />);
+      cy.mount(<DefaultGridLayout />);
 
       cy.get(".uitkGridLayout")
         .invoke("css", "grid-template-columns")
@@ -31,7 +31,7 @@ describe("GIVEN a Grid", () => {
     });
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<ToolkitGridLayout />);
+      cy.mount(<DefaultGridLayout />);
 
       cy.get(".uitkGridLayout").should("have.css", "column-gap", "24px");
 
@@ -67,7 +67,7 @@ describe("GIVEN a Grid", () => {
     const rows = 3;
 
     it("THEN it should render multiple columns and rows", () => {
-      cy.mount(<ToolkitGridLayoutMultipleRows columns={columns} rows={rows} />);
+      cy.mount(<GridLayoutMultipleRows columns={columns} rows={rows} />);
 
       cy.get(".uitkGridLayout")
         .invoke("css", "grid-template-columns")
@@ -90,9 +90,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(
-          <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
-        );
+        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -111,9 +109,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(
-          <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
-        );
+        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -132,9 +128,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(
-          <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
-        );
+        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -153,9 +147,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 600,
       },
       () => {
-        cy.mount(
-          <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
-        );
+        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -189,7 +181,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
+            <GridLayoutResponsiveView columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -212,7 +204,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
+            <GridLayoutResponsiveView columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -235,7 +227,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
+            <GridLayoutResponsiveView columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -258,7 +250,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <ToolkitGridLayoutResponsiveView columns={columns} rows={rows} />
+            <GridLayoutResponsiveView columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
