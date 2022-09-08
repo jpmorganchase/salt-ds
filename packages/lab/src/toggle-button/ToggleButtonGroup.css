@@ -10,7 +10,6 @@
   --toggleButton-group-borderStyle: var(--uitkToggleButton-group-borderWidth, var(--uitk-container-borderStyle));
 
   display: inline-flex;
-  box-sizing: border-box;
   overflow: hidden;
   padding: 2px;
   border: var(--toggleButton-group-borderWidth) var(--toggleButton-group-borderStyle) var(--toggleButton-group-borderColor);

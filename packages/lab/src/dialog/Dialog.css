@@ -15,7 +15,6 @@
   border-width: var(--dialog-borderWidth);
   border-style: var(--dialog-borderStyle);
   border-bottom-width: var(--dialog-borderBottomWidth);
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   inset: 0; /* what does this do ? */

@@ -43,7 +43,6 @@
 /* Styles applied to container of pills */
 .uitkTokenizedInput-pillGroup {
   align-content: flex-start;
-  box-sizing: border-box;
   display: flex;
   flex: 1;
   flex-wrap: wrap;
