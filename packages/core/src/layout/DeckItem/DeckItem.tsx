@@ -34,7 +34,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         : activeIndex < index
         ? "next"
         : "previous";
-    }, [activeIndex]);
+    }, [activeIndex, index]);
 
     const classesIndex = animation && position === "current" ? 0 : 1;
 
