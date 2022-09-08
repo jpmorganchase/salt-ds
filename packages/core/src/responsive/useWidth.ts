@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "../utils";
 import { useResizeObserver, WidthOnly } from "./";
 
 const NONE: string[] = [];
