@@ -43,7 +43,6 @@
   right: 0;
   display: flex;
   position: relative;
-  box-sizing: border-box;
   align-items: var(--list-item-alignItems);
   white-space: nowrap;
 }

@@ -104,7 +104,6 @@
   border-style: var(--uitkButton-borderStyle, solid);
   border-width: var(--uitkButton-borderWidth, 0);
   border-radius: var(--uitkButton-borderRadius, var(--uitk-container-borderRadius));
-  box-sizing: border-box;
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
   display: inline-block;

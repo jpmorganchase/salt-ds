@@ -188,6 +188,7 @@ export const PillBase = forwardRef(function PillBase(
   const { ref: triggerRef, ...triggerProps } = getTriggerProps<
     typeof Component
   >({
+    "aria-disabled": disabled || undefined,
     "aria-roledescription": ariaRoledescription,
     className: cn(
       withBaseName(),
