@@ -37,6 +37,7 @@ export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
       <IconComponent
         className={classnames(withBaseName(), withBaseName(state), className)}
         size={size}
+        {...(state === "success" && { "aria-label": "success" })}
         {...restProps}
         ref={ref}
       />
