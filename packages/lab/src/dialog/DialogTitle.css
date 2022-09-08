@@ -41,6 +41,6 @@
   top: var(--dialog-close-button-offset);
 }
 
-.uitkDialogTitle-stateIcon {
+.uitkDialogTitle-statusIcon {
   margin-right: var(--dialog-title-icon-marginRight);
 }

@@ -9,9 +9,9 @@ import {
 import classnames from "classnames";
 import { forwardRef } from "react";
 import { makePrefixer } from "../utils";
-import { ValidationState } from "./ValidationState";
+import { ValidationStatus } from "./ValidationStatus";
 
-import "./StateIcon.css";
+import "./StatusIcon.css";
 
 const icons = {
   error: ErrorIcon,
@@ -20,22 +20,22 @@ const icons = {
   info: InfoIcon,
 };
 
-export interface StateIconProps extends IconProps {
-  state: ValidationState;
+export interface StatusIconProps extends IconProps {
+  status: ValidationStatus;
 }
 
-const withBaseName = makePrefixer("uitkStateIcon");
+const withBaseName = makePrefixer("uitkStatusIcon");
 
-export const StateIcon = forwardRef<HTMLSpanElement, StateIconProps>(
-  function StateIcon(
-    { className, state, size = DEFAULT_ICON_SIZE, ...restProps },
+export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
+  function StatusIcon(
+    { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
     ref
   ) {
-    const IconComponent = icons[state];
+    const IconComponent = icons[status];
 
     return (
       <IconComponent
-        className={classnames(withBaseName(), withBaseName(state), className)}
+        className={classnames(withBaseName(), withBaseName(status), className)}
         size={size}
         {...(state === "success" && { "aria-label": "success" })}
         {...restProps}
