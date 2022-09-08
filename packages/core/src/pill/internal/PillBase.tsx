@@ -26,10 +26,10 @@ import "../Pill.css";
 import { Button } from "../../button";
 
 const useEllipsisIsActive = (): [
-  MutableRefObject<HTMLButtonElement | null>,
+  MutableRefObject<HTMLDivElement | null>,
   boolean
 ] => {
-  const labelRef = useRef<HTMLButtonElement | null>(null);
+  const labelRef = useRef<HTMLDivElement | null>(null);
   const [showEllipsis, setShowEllipsis] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -46,7 +46,7 @@ const noop = () => undefined;
 
 const withBaseName = makePrefixer(pillBaseName);
 
-export interface PillBaseProps extends HTMLAttributes<HTMLButtonElement> {
+export interface PillBaseProps extends HTMLAttributes<HTMLElement> {
   /**
    * Props passed to the tooltip
    */
@@ -91,7 +91,7 @@ export interface PillBaseProps extends HTMLAttributes<HTMLButtonElement> {
   /**
    * Callback function fired when pill is clicked.
    */
-  onClick?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onClick?: (event: SyntheticEvent<HTMLElement>) => void;
   /**
    * Callback function fired when the delete icon is clicked. Used when `deletable` is true.
    */
@@ -140,19 +140,19 @@ export const PillBase = forwardRef(function PillBase(
         })
       : icon;
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     onKeyDown(event);
     if (!disabled && !deletable && clickKeys.indexOf(event.key) !== -1) {
       setActive(true);
     }
   };
 
-  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyUp = (event: KeyboardEvent<HTMLElement>) => {
     onKeyUp(event);
     setActive(false);
   };
 
-  const handleClick = (event: SyntheticEvent<HTMLButtonElement, Event>) => {
+  const handleClick = (event: SyntheticEvent<HTMLElement, Event>) => {
     onClick(event);
   };
 
@@ -216,9 +216,9 @@ export const PillBase = forwardRef(function PillBase(
       <Tooltip {...getTooltipProps({ title: label, ...TooltipProps })} />
       <Component ref={handleRef} {...triggerProps}>
         {pillIcon || null}
-        <button className={withBaseName("label")} ref={labelRef}>
+        <div className={withBaseName("label")} ref={labelRef}>
           <span className={withBaseName("innerLabel")}>{label}</span>
-        </button>
+        </div>
         {deletable ? renderDeleteIcon() : null}
       </Component>
     </>

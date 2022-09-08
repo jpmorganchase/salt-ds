@@ -33,7 +33,7 @@ export const ClosablePill = forwardRef(function ClosablePill(
     deleteIcon,
     ...rest
   }: PillBaseProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   const [active, setActive] = useState(false);
 

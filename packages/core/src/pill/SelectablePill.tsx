@@ -35,7 +35,7 @@ export const SelectablePill = forwardRef(function SelectablePill(
     disabled = false,
     ...rest
   }: SelectablePillProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   const [checked, setChecked] = useControlled({
     controlled: checkedProp,
