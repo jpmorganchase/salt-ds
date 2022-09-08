@@ -55,7 +55,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     ...restProps
   } = props;
 
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLButtonElement | null>(null);
   const isRemovable = Boolean(onDelete);
 
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
