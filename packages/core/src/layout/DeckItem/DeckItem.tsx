@@ -39,8 +39,8 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     const classesIndex = animation && position === "current" ? 0 : 1;
 
     const getActiveClasses = [
-      `${animation}-in`, // in-right
-      `${animation}-out`, // out-left
+      `${animation || "fade"}-in`, // in-right
+      `${animation || "fade"}-out`, // out-left
     ];
 
     // TODO: add aria attributes (labelledby, roledescription, hidden)

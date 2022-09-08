@@ -46,7 +46,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
   ) {
     const [deckItemRef, deckItemWidth] = useWidth<HTMLDivElement>(true);
 
-    const [deckItemHeight, setDeckItemHeight] = useState<number>();
+    const [deckItemHeight, setDeckItemHeight] = useState<number>(0);
 
     const handleResize = useCallback(function handleResize(
       contentRect: DOMRect
@@ -97,7 +97,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
               [withBaseName("animate")]: animation,
             },
             {
-              [withBaseName(`${animation}-${direction}`)]: animation,
+              [withBaseName(`${animation || "slide"}-${direction}`)]: animation,
             }
           )}
           style={innerStyles}
