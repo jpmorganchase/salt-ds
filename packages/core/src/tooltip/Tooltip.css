@@ -23,7 +23,6 @@
 
 .uitkTooltip {
   background: var(--tooltip-background);
-  box-sizing: border-box;
   border-color: var(--uitkTooltip-borderColor, var(--tooltip-status-borderColor));
   border-width: var(--uitkTooltip-borderWidth, var(--uitk-container-borderWidth));
   border-style: var(--uitkTooltip-borderStyle, var(--uitk-container-borderStyle));
@@ -79,7 +78,6 @@
 .uitkTooltip-arrow::after {
   border: var(--uitk-size-sharktooth-height) solid transparent;
   position: absolute;
-  box-sizing: border-box;
 }
 
 .uitkTooltip-arrow::after {

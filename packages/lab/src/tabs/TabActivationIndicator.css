@@ -7,7 +7,6 @@
 
   background: var(--uitkTabActivationIndicator-background, var(--tabs-activation-indicator-background));
   bottom: 0;
-  box-sizing: border-box;
   height: var(--tabs-activation-indicator-height, auto);
   inset: var(--tabs-activation-indicator-inset);
   position: absolute;

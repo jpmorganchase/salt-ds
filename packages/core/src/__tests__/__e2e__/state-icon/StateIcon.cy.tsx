@@ -18,11 +18,7 @@ describe("Given a State Icon", () => {
     it("should render a success icon", () => {
       cy.mount(<DefaultStateIcon state="success" />);
       cy.get(".uitkStateIcon").should("have.class", "uitkStateIcon-success");
-      cy.get(".uitkStateIcon").should(
-        "have.attr",
-        "aria-label",
-        "success tick"
-      );
+      cy.get(".uitkStateIcon").should("have.attr", "aria-label", "success");
     });
 
     it("should render a warning icon", () => {

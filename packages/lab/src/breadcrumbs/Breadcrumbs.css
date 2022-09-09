@@ -48,4 +48,5 @@
 
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
   margin-right: var(--backwardsCompat-breadcrumbs-ol-li-marginRight);
+  box-sizing: content-box;
 }

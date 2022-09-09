@@ -13,7 +13,6 @@
   color: var(--uitkFileDropZone-text-color, var(--fileDropZone-text-color));
   display: inline-flex;
   background: var(--uitkFileDropZone-background, var(--fileDropZone-background));
-  box-sizing: border-box;
   text-align: center;
   align-items: stretch;
   justify-content: center;
