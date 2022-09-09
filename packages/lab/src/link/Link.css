@@ -1,7 +1,7 @@
 .uitkLink {
   --link-color-hover: var(--uitk-text-link-foreground-hover);
   --link-color-active: var(--uitk-text-link-foreground-hover);
-  --link-color-focus: var(--uitkLink-color-focus, --link-color-hover);
+  --link-color-focus: var(--uitkLink-color-focus, var(--link-color-hover));
   --link-color-disabled: var(--uitk-text-primary-foreground-disabled);
 
   --link-textDecoration: var(--uitk-text-link-textDecoration);
