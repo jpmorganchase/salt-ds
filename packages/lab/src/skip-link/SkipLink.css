@@ -43,7 +43,7 @@
 .uitkSkipLink {
   font-size: var(--uitk-text-fontSize);
   font-family: var(--uitkSkipLink-fontFamily, var(--uitk-typography-fontFamily));
-  line-height: var(--uitkSkipLink-lineHeight, var(--uitk-typography-lineHeight));
+  line-height: var(--uitkSkipLink-lineHeight, var(--uitk-text-base-lineHeight));
 }
 
 /*Styles applied to the skip link focus target*/
