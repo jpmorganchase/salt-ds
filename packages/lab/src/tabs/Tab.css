@@ -31,9 +31,7 @@
 }
 
 .uitkTab[aria-selected="true"] {
-  color: var(--uitk-navigable-link-color-active);
-  /* should be fontWeight-active, but nor sure where that belongs */
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-navigable-fontWeight-active);
 }
 
 .uitkTab-dragAway {
