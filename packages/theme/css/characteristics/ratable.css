@@ -20,5 +20,5 @@
   --uitk-ratable-border-active: var(--uitk-palette-rate-border-active);
   --uitk-ratable-border-disabled: var(--uitk-palette-rate-border-disabled);
   --uitk-ratable-border-hover: var(--uitk-palette-rate-border-hover);
-  --uitk-ratable-border: var(--uitk-palette-rate-border-undo);
+  --uitk-ratable-border-undo: var(--uitk-palette-rate-border-undo);
 }
