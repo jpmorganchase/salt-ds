@@ -166,6 +166,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         <Button
           aria-label="close"
           {...CloseButtonProps}
+          className={withBaseName("closeButton")}
           onClick={onClose}
           ref={closeRef}
           variant="secondary"

@@ -24,7 +24,7 @@ export const Default: ComponentStory<typeof Banner> = () => {
           onClose={handleClose}
           state="success"
         >
-          test
+          Clear Transact.
         </Banner>
       )}
     </div>
