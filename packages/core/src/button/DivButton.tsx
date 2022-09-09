@@ -5,13 +5,11 @@ import {
   ReactElement,
 } from "react";
 import cx from "classnames";
-import {
-  ButtonVariant,
-  makePrefixer,
-  useButton,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../utils";
 
-import "./DivButton.css";
+import "./Button.css";
+import { ButtonVariant } from "./Button";
+import { useButton } from "./useButton";
 
 const withBaseName = makePrefixer("uitkButton");
 

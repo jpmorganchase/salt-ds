@@ -1,10 +1,14 @@
-import { makePrefixer, useFormFieldProps } from "@jpmorganchase/uitk-core";
+import {
+  DivButton,
+  DivButtonProps,
+  makePrefixer,
+  useFormFieldProps,
+} from "@jpmorganchase/uitk-core";
 import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
 import "./DropdownButton.css";
-import { DivButton, DivButtonProps } from "../divbutton";
 
 export interface DropdownButtonProps extends DivButtonProps {
   /**

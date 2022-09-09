@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { DivButton } from "../../button";
 import { TooltipProps, useTooltip, useTooltipContext } from "../../tooltip";
 import {
   makePrefixer,
@@ -23,13 +24,12 @@ import { pillBaseName } from "../constants";
 import { DeleteButton } from "./DeleteButton";
 
 import "../Pill.css";
-import { Button } from "../../button";
 
 const useEllipsisIsActive = (): [
-  MutableRefObject<HTMLButtonElement | null>,
+  MutableRefObject<HTMLDivElement | null>,
   boolean
 ] => {
-  const labelRef = useRef<HTMLButtonElement | null>(null);
+  const labelRef = useRef<HTMLDivElement | null>(null);
   const [showEllipsis, setShowEllipsis] = useState(false);
 
   useIsomorphicLayoutEffect(() => {
@@ -46,7 +46,7 @@ const noop = () => undefined;
 
 const withBaseName = makePrefixer(pillBaseName);
 
-export interface PillBaseProps extends HTMLAttributes<HTMLButtonElement> {
+export interface PillBaseProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Props passed to the tooltip
    */
@@ -91,7 +91,7 @@ export interface PillBaseProps extends HTMLAttributes<HTMLButtonElement> {
   /**
    * Callback function fired when pill is clicked.
    */
-  onClick?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onClick?: (event: SyntheticEvent<HTMLDivElement>) => void;
   /**
    * Callback function fired when the delete icon is clicked. Used when `deletable` is true.
    */
@@ -120,7 +120,7 @@ export const PillBase = forwardRef(function PillBase(
     onKeyUp = noop,
     ...rest
   }: PillBaseProps,
-  ref: ForwardedRef<HTMLButtonElement>
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
 
@@ -140,23 +140,23 @@ export const PillBase = forwardRef(function PillBase(
         })
       : icon;
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyDown(event);
     if (!disabled && !deletable && clickKeys.indexOf(event.key) !== -1) {
       setActive(true);
     }
   };
 
-  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const handleKeyUp = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyUp(event);
     setActive(false);
   };
 
-  const handleClick = (event: SyntheticEvent<HTMLButtonElement, Event>) => {
+  const handleClick = (event: SyntheticEvent<HTMLDivElement, Event>) => {
     onClick(event);
   };
 
-  const Component = deletable || clickable ? Button : "button";
+  const Component = deletable || clickable ? DivButton : "div";
 
   const renderDeleteIcon = () => {
     // FIXME: deleteIconProp type
@@ -184,7 +184,6 @@ export const PillBase = forwardRef(function PillBase(
     leaveDelay,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { ref: triggerRef, ...triggerProps } = getTriggerProps<
     typeof Component
   >({
@@ -217,9 +216,9 @@ export const PillBase = forwardRef(function PillBase(
       <Tooltip {...getTooltipProps({ title: label, ...TooltipProps })} />
       <Component ref={handleRef} {...triggerProps}>
         {pillIcon || null}
-        <button className={withBaseName("label")} ref={labelRef}>
+        <div className={withBaseName("label")} ref={labelRef}>
           <span className={withBaseName("innerLabel")}>{label}</span>
-        </button>
+        </div>
         {deletable ? renderDeleteIcon() : null}
       </Component>
     </>
