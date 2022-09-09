@@ -10,5 +10,7 @@
 
 /* Styles applied to root component if `row={true}` */
 .uitkCheckboxGroup-horizontal {
+  --uitkControlLabel-right-marginRight: calc(var(--uitk-size-unit) * 3);
+
   display: block;
 }

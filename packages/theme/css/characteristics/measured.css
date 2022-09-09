@@ -9,7 +9,7 @@
   --uitk-measured-borderStyle: solid;
   --uitk-measured-borderWidth: 1px;
 
-  --uitk-measured-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-measured-fontWeight: var(--uitk-typography-weight-semiBold);
 
   --uitk-measured-background: var(--uitk-palette-measure-background);
 

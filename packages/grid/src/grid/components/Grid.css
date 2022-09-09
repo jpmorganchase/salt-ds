@@ -182,9 +182,9 @@
   --uitkControlLabel-right-marginRight: var(--grid-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
   --uitkInput-button-inset: var(--grid-input-button-inset, var(--input-button-inset));
   --uitkToggleButton-icon-padding: var(--grid-toggleButton-icon-padding, var(--toggleButton-icon-padding));
-  --uitkTokenizedInput-gutter-size: var(--grid-tokenizedInput-gutter-size, var(--tokenizedInput-gutter-size));
-  --uitkTokenizedInput-pill-group-y-padding: var(--grid-tokenizedInput-pill-group-y-padding, var(--tokenizedInput-pill-group-y-padding));
-  --uitkTokenizedInput-last-pill-margin: var(--grid-tokenizedInput-last-pill-margin, var(--tokenizedInput-last-pill-margin));
+  --uitkTokenizedInput-gutter-size: var(--grid-tokenizedInput-gutter-size, var(--tokenized-input-gutter-size));
+  --uitkTokenizedInput-pill-group-y-padding: var(--grid-tokenizedInput-pill-group-y-padding, var(--tokenized-input-pill-group-y-padding));
+  --uitkTokenizedInput-last-pill-margin: var(--grid-tokenizedInput-last-pill-margin, var(--tokenized-input-last-pill-margin));
   --uitkTooltip-icon-top: var(--grid-tooltip-icon-top, var(--tooltip-icon-top));
 }
 
