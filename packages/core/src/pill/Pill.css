@@ -75,7 +75,6 @@
 .uitkPill:focus {
   outline-color: var(--uitkPill-focused-outlineColor, var(--uitk-focused-outlineColor));
   outline-style: var(--uitkPill-focused-outlineStyle, var(--uitk-focused-outlineStyle));
-  outline-style: dotted;
   outline-width: var(--uitk-focused-outlineWidth);
   outline-offset: var(--uitk-focused-outlineOffset);
 }
