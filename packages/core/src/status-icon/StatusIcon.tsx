@@ -37,7 +37,7 @@ export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
       <IconComponent
         className={classnames(withBaseName(), withBaseName(status), className)}
         size={size}
-        {...(state === "success" && { "aria-label": "success" })}
+        {...(status === "success" && { "aria-label": "success" })}
         {...restProps}
         ref={ref}
       />
