@@ -1,14 +1,14 @@
 /* Styles applied to the root element dependent on density */
-.uitk-density-touch .uitkInput {
+.uitk-density-touch {
   --input-button-inset: 4px;
 }
-.uitk-density-low .uitkInput {
+.uitk-density-low {
   --input-button-inset: 4px;
 }
-.uitk-density-medium .uitkInput {
+.uitk-density-medium {
   --input-button-inset: 2px;
 }
-.uitk-density-high .uitkInput {
+.uitk-density-high {
   --input-button-inset: 2px;
 }
 
@@ -18,7 +18,6 @@
   background: var(--uitkInput-background, none);
   border: var(--uitkInput-border, none);
   border-radius: var(--uitkInput-borderRadius, 0);
-  box-sizing: border-box;
   color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
   cursor: var(--uitkInput-cursor, default);
   display: inline-flex;

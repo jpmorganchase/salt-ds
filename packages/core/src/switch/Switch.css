@@ -99,7 +99,6 @@
 .uitkSwitch-track {
   background: var(--uitkSwitch-track-color, var(--switch-track-color));
   border-radius: var(--uitkSwitch-track-borderRadius, 0);
-  box-sizing: border-box;
   height: var(--uitkSwitch-track-height, var(--uitk-size-switch));
   min-height: var(--uitkSwitch-track-minHeight, 16px);
   margin-top: 0;

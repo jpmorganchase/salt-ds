@@ -1,4 +1,4 @@
-import { ownerDocument } from "@jpmorganchase/uitk-core";
+import { ownerDocument } from "./ownerDocument";
 
 export function ownerWindow(node: Node | null | undefined): Window {
   const doc = ownerDocument(node);

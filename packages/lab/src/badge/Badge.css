@@ -36,7 +36,6 @@
 /* Style applied to the badge in the corner of the node */
 .uitkBadge-badge {
   color: var(--badge-content-text-color);
-  box-sizing: border-box;
   display: inline-block;
   font-weight: 700; /* TODO: Use characteristic once aligned */
   font-size: var(--badge-fontSize);

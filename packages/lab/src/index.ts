@@ -41,7 +41,6 @@ export * from "./pagination";
 export * from "./progress";
 export * from "./query-input";
 export * from "./responsive";
-export * from "./scrim";
 export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";

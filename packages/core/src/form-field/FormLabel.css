@@ -30,7 +30,6 @@
 
 .uitkFormLabel {
   align-items: center;
-  box-sizing: border-box;
   color: var(--uitkFormLabel-text-color, var(--uitk-text-secondary-foreground));
   display: block;
   font-size: var(--formLabel-fontSize);

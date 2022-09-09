@@ -13,7 +13,6 @@
   line-height: var(--uitkGrid-rowHeight);
 
   position: relative;
-  box-sizing: border-box;
 
   background-color: var(--uitkGrid-header-backgroundColor);
   color: var(--uitkGrid-header-color);

@@ -1,22 +1,22 @@
 /* Styles applied to root component (TokenizedInput) */
-.uitk-density-medium .uitkTokenizedInput {
+.uitk-density-medium {
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2);
   --tokenized-input-last-pill-margin: var(--uitk-size-unit);
 }
-.uitk-density-touch .uitkTokenizedInput {
+.uitk-density-touch {
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 2px);
   --tokenized-input-last-pill-margin: calc(var(--uitk-size-unit) / 2);
 }
 
-.uitk-density-low .uitkTokenizedInput {
+.uitk-density-low {
   --tokenized-input-gutter-size: var(--uitk-size-basis-unit);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
   --tokenized-input-last-pill-margin: calc(var(--uitk-size-unit) / 2);
 }
 
-.uitk-density-high .uitkTokenizedInput {
+.uitk-density-high {
   --tokenized-input-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
   --tokenized-input-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
   --tokenized-input-last-pill-margin: var(--uitk-size-unit);
@@ -43,7 +43,6 @@
 /* Styles applied to container of pills */
 .uitkTokenizedInput-pillGroup {
   align-content: flex-start;
-  box-sizing: border-box;
   display: flex;
   flex: 1;
   flex-wrap: wrap;

@@ -85,7 +85,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  box-sizing: border-box;
 }
 
 .uitkSlider-track {
@@ -112,7 +111,6 @@
   grid-column-start: 1;
   grid-column-end: -1;
   /*height: var(--markedRail-height);*/
-  box-sizing: border-box;
   display: grid;
   grid-template-rows: auto;
 }
@@ -152,7 +150,7 @@
   grid-column-start: 1;
   grid-column-end: -2;
   height: var(--slider-selection-height);
-  background-color: var(--slider-selection-color);
+  background: var(--slider-selection-color);
 }
 
 .uitkSliderSelection-range {
@@ -160,7 +158,7 @@
   grid-column-start: 2;
   grid-column-end: -2;
   height: var(--slider-selection-height);
-  background-color: var(--slider-selection-color);
+  background: var(--slider-selection-color);
 }
 
 .uitkSliderHandle-box {
@@ -169,7 +167,6 @@
   left: calc(var(--slider-handle-size) * -0.5);
   height: var(--slider-handle-size);
   width: var(--slider-handle-size);
-  box-sizing: border-box;
 }
 
 .uitkSliderHandle-box:focus-visible {
@@ -207,7 +204,6 @@
 
   padding-left: var(--slider-label-paddingLeft);
   padding-right: var(--slider-label-paddingRight);
-  box-sizing: border-box;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

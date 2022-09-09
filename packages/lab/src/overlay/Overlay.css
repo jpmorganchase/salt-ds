@@ -34,7 +34,6 @@
 .uitkOverlay-arrow::after {
   border: 8px solid transparent;
   position: absolute;
-  box-sizing: border-box;
 }
 
 .uitkOverlay-arrow::after {

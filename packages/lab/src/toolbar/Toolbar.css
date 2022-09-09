@@ -8,7 +8,6 @@
   --toolbar-size: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
 
   background: var(--uitkToolbar-background, var(--toolbar-background));
-  box-sizing: border-box;
   font-size: var(--toolbar-fontSize);
   justify-content: flex-start;
   overflow: hidden;
@@ -127,16 +126,16 @@
 }
 
 /* .Responsive-inner > [data-collapsed='true'] {
-  background-color: brown;
+  background: brown;
 }
 .Responsive-inner > [data-collapsing='true'] {
-  background-color: pink;
+  background: pink;
 } */
 
 /* .uitkToolbar > .Responsive-inner > .uitkOverflowPanel {
-  background-color: pink;;
+  background: pink;;
 }
 
 .uitkTooltray > .Responsive-inner > .uitkOverflowPanel {
-  background-color: yellow;
+  background: yellow;
 } */

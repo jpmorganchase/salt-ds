@@ -12,7 +12,6 @@
   border-color: var(--uitk-container-borderColor-medium);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
-  box-sizing: border-box;
   height: var(--uitkList-height, var(--list-height));
   max-height: var(--list-maxHeight);
   outline: none;
@@ -29,13 +28,12 @@
 /* virtualised list */
 .uitkList-viewport {
   --list-item-height: 30px;
-  box-sizing: border-box;
   max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));
   overflow: auto;
 }
 
 .uitkListItemHeader {
-  --uitkListItem-background: var(--list-item-header-bg);
+  --uitkListItem-background: var(--list-item-header-background);
   color: var(--list-item-header-color);
 }
 
@@ -50,9 +48,9 @@
   border-width: var(--checkbox-borderWidth);
   border-color: var(--checkbox-borderColor);
   content: var(--list-item-header-twisty-content);
-  -webkit-mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
-  mask: var(--svg-chevron-down) center center/12px 12px no-repeat;
-  background-color: var(--list-item-header-twisty-color);
+  -webkit-mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
+  mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;
+  background: var(--list-item-header-twisty-color);
   height: 12px;
   left: var(--list-item-header-twisty-left);
   right: var(--list-item-header-twisty-right);

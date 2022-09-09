@@ -1,8 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Panel, Switch, ToolkitProvider } from "@jpmorganchase/uitk-core";
-
-import "./Switch.stories.newapp-switch.css";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Core/Switch",
@@ -57,29 +55,3 @@ export const Controlled: ComponentStory<typeof Switch> = (args) => {
 Controlled.args = {
   label: "Controlled",
 };
-
-export const CustomStyling: ComponentStory<typeof Switch> = () => (
-  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel>
-        <FeatureSwitch label="Custom styling" />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Panel>
-        <FeatureSwitch label="Custom styling" defaultChecked />
-      </Panel>
-    </ToolkitProvider>
-
-    <ToolkitProvider density="low" theme={["light", "newapp"]}>
-      <Panel>
-        <FeatureSwitch label="Custom styling" />
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="touch" theme={["dark", "newapp"]}>
-      <Panel>
-        <FeatureSwitch label="Custom styling" defaultChecked />
-      </Panel>
-    </ToolkitProvider>
-  </div>
-);

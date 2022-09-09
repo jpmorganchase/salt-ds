@@ -1,14 +1,12 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Pill, SelectablePill } from "@jpmorganchase/uitk-core";
 import { UserBadgeIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./pill.stories";
 
 <Meta
   title="Documentation/Core/Pill"
@@ -274,11 +272,3 @@ a custom class name to override Pill styling. They will always take precedence o
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Pill} />
-
-## Customising Pill styles
-
-<Canvas>
-  <Story name="Custom Pill Styling" decorators={[withFlexGap]}>
-    <CustomStyling />
-  </Story>
-</Canvas>

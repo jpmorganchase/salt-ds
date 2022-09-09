@@ -1,20 +1,16 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Badge } from "@jpmorganchase/uitk-lab";
 import {
-  MessageIcon,
   ClockIcon,
-  SettingsSolidIcon,
+  MessageIcon,
   UserBadgeIcon,
 } from "@jpmorganchase/uitk-icons";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { CustomStyling } from "./badge.stories";
 
 <Meta
   title="Documentation/Lab/Badge"
@@ -117,58 +113,3 @@ a custom class name to override badge styling. They will always take precedence 
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
 
 <CSSVariableTable of={Badge} />
-
-## Customising Badge styles
-
-<Canvas>
-  <Story name="Custom Badge Styling" decorators={[withFlexGap]}>
-    <>
-      <ToolkitProvider theme={["light", "newapp"]}>
-        <Badge badgeContent={1} max={100} className="uitkBadge-success">
-          <MessageIcon />
-        </Badge>
-      </ToolkitProvider>
-      <ToolkitProvider theme={["light", "newapp"]}>
-        <Badge badgeContent="Text" className="uitkBadge-error">
-          Text Badge
-        </Badge>
-      </ToolkitProvider>
-      <ToolkitProvider theme={["dark", "newapp"]}>
-        <Badge badgeContent={1} max={100} className="uitkBadge-success">
-          <MessageIcon />
-        </Badge>
-      </ToolkitProvider>
-      <ToolkitProvider theme={["dark", "newapp"]}>
-        <Badge badgeContent="Text" className="uitkBadge-error">
-          Text Badge
-        </Badge>
-      </ToolkitProvider>
-    </>
-  </Story>
-</Canvas>
-
-The CSS is as simple as below:
-
-```css
-/* from the file Badge.stories.newapp-badge.css */
-
-.uitk-light.uitk-newapp .uitkBadge-success {
-  --uitkBadge-content-icon-color: var(--uitk-color-green-10);
-  --uitkBadge-content-text-color: var(--uitk-color-black);
-}
-
-.uitk-light.uitk-newapp .uitkBadge-error {
-  --uitkBadge-content-icon-color: var(--uitk-color-red-10);
-  --uitkBadge-content-text-color: var(--uitk-color-black);
-}
-
-.uitk-dark.uitk-newapp .uitkBadge-success {
-  --uitkBadge-content-icon-color: var(--uitk-status-success-foreground);
-  --uitkBadge-content-text-color: var(--uitk-color-white);
-}
-
-.uitk-dark.uitk-newapp .uitkBadge-error {
-  --uitkBadge-content-icon-color: var(--uitk-status-error-foreground);
-  --uitkBadge-content-text-color: var(--uitk-color-white);
-}
-```

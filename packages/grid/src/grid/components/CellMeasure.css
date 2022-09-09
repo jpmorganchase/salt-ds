@@ -13,7 +13,6 @@
 
 .uitkGridCellMeasure th {
   border-collapse: collapse;
-  box-sizing: border-box;
   height: var(--uitkGrid-rowHeight);
   overflow: hidden;
 

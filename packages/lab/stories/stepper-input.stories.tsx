@@ -7,8 +7,6 @@ import { StepperInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { FC, ReactNode, useEffect, useState } from "react";
 
-import "./StepperInput.stories.newapp-stepper-input.css";
-
 export default {
   title: "Lab/Stepper Input",
   component: StepperInput,
@@ -339,45 +337,4 @@ export const RefreshButton: Story = () => (
       />
     </FormField>
   </ToolkitProvider>
-);
-
-export const CustomStyling: Story<typeof StepperInput> = () => (
-  <div style={{ display: "flex" }}>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel>
-        <FormField
-          className="uitkFormField-withStepperInput"
-          helperText="Please enter a number between -5 and 10"
-          label="Default Stepper Input"
-        >
-          <StepperInput
-            decimalPlaces={2}
-            defaultValue={0.5}
-            max={10}
-            min={-5}
-            showRefreshButton
-            step={0.5}
-          />
-        </FormField>
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Panel>
-        <FormField
-          className="uitkFormField-withStepperInput"
-          helperText="Please enter a number between -5 and 10"
-          label="Default Stepper Input"
-        >
-          <StepperInput
-            decimalPlaces={2}
-            defaultValue={0.5}
-            max={10}
-            min={-5}
-            showRefreshButton
-            step={0.5}
-          />
-        </FormField>
-      </Panel>
-    </ToolkitProvider>
-  </div>
 );

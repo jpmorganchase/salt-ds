@@ -18,10 +18,10 @@ export const AllExamplesGrid: Story<
   const { className } = props;
   return (
     <QAContainer cols={4} {...props}>
-      <Switch label="Default" />
-      <Switch checked label="Default" />
-      <Switch disabled label="Default" />
-      <Switch checked disabled label="Default" />
+      <Switch className={className} label="Default" />
+      <Switch className={className} checked label="Default" />
+      <Switch className={className} disabled label="Default" />
+      <Switch className={className} checked disabled label="Default" />
     </QAContainer>
   );
 };
@@ -41,6 +41,9 @@ BackwardsCompatGrid.parameters = {
 
 export const CompareWithOriginalToolkit: Story = () => {
   return (
-    <BackwardsCompatGrid imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png" />
+    <BackwardsCompatGrid
+      className="backwardsCompat"
+      imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
+    />
   );
 };

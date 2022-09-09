@@ -1,30 +1,9 @@
-.uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-measured-fill-stopColor);
-}
-.uitkSvgSpinner-gradientStop2 {
-  stop-color: var(--uitk-measured-fill-stopColor);
-}
-.uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--uitk-measured-fill-startColor);
-}
+.uitkSvgSpinner-gradientStop1,
+.uitkSvgSpinner-gradientStop2,
+.uitkSvgSpinner-gradientStop3,
 .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitk-measured-fill-startColor);
+  stop-color: var(--uitk-measured-fill);
 }
-
-/* Not yet sure about procedure for implementing themes */
-
-/* .uitk-dark .uitkSvgSpinner-gradientStop1 {
-  stop-color: var(--uitk-measured-fill-stopColor);
-}
-.uitk-dark .uitkSvgSpinner-gradientStop2 {
-   stop-color: var(--uitk-measured-fill-startColor);
-}
-.uitk-dark .uitkSvgSpinner-gradientStop3 {
- stop-color: var(--uitk-measured-fill-stopColor);
-}
-.uitk-dark .uitkSvgSpinner-gradientStop4 {
-stop-color: var(--uitk-measured-fill-startColor);
-} */
 
 .uitkSvgSpinner {
   position: relative;
@@ -61,4 +40,15 @@ stop-color: var(--uitk-measured-fill-startColor);
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* TK1 Backwards compatibility */
+.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop1,
+.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop3 {
+  stop-color: var(--backwardsCompat-measured-fill-stopColor);
+}
+
+.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop2,
+.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop4 {
+  stop-color: var(--backwardsCompat-measured-fill-startColor);
 }

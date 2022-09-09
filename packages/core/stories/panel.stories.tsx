@@ -1,8 +1,6 @@
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { Panel } from "@jpmorganchase/uitk-core";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
-
-import "./Panel.stories.newapp-panel.css";
 
 export default {
   title: "Core/Panel",
@@ -40,18 +38,3 @@ export const All: ComponentStory<typeof Panel> = (props) => {
 All.args = {
   children: <p>Lorem Ipsum</p>,
 };
-
-export const CustomStyling: ComponentStory<typeof Panel> = () => (
-  <>
-    <ToolkitProvider density="high" theme={["light", "newapp"]}>
-      <Panel className="uitk-newapp-panelStory">
-        This is a panel with some text.
-      </Panel>
-    </ToolkitProvider>
-    <ToolkitProvider density="medium" theme={["dark", "newapp"]}>
-      <Panel className="uitk-newapp-panelStory">
-        This is a panel with some text.
-      </Panel>
-    </ToolkitProvider>
-  </>
-);

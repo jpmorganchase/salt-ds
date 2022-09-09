@@ -6,16 +6,9 @@
   border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-medium));
   border-radius: var(--uitkCard-borderRadius, var(--uitk-container-borderRadius));
   box-shadow: var(--uitkCard-boxShadow, var(--uitk-overlayable-shadow));
-  box-sizing: border-box;
   color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
   overflow: hidden;
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.uitkCard *,
-*:before,
-*:after {
-  box-sizing: inherit;
 }
 
 /* Styles applied to Card content */

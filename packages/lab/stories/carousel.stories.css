@@ -1,8 +1,60 @@
 .carousel-container .uitkCarouselSlide-fixedContainer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  padding: calc(var(--uitk-size-unit) * 2) 0;
+  width: 70vw;
+  gap: calc(var(--uitk-size-unit) * 1);
 }
 
 .carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
   margin-right: 0;
+}
+
+.carousel-container .uitkCarouselSlide-textContainerLeft {
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.carousel-container .uitkCarouselSlide-titleContainer {
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-h4-fontWeight);
+}
+
+.carousel-container .uitkCarouselSlide-descriptionContainer {
+  font-size: var(--uitk-text-fontSize);
+}
+
+.carousel-container .uitkCarousel-prev-button,
+.carousel-container .uitkCarousel-next-button {
+  max-height: 520px;
+}
+
+.carousel-image-placeholder {
+  height: 520px;
+  width: 70vw;
+  font-size: 4em;
+  color: var(--uitk-color-grey-200);
+  white-space: normal;
+}
+.carousel-image-placeholder span {
+  padding: calc(var(--uitk-size-unit) * 3);
+}
+
+.carousel-image-placeholder-1 {
+  background-color: var(--uitk-color-orange-20);
+}
+
+.carousel-image-placeholder-2 {
+  background-color: var(--uitk-color-grey-40);
+}
+.carousel-image-placeholder-3 {
+  background-color: var(--uitk-color-teal-30);
+}
+
+.carousel-image-placeholder-4 {
+  background-color: var(--uitk-color-red-30);
+}
+
+.carousel-image-placeholder-5 {
+  background-color: var(--uitk-color-purple-30);
 }

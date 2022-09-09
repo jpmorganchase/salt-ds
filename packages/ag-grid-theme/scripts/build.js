@@ -5,8 +5,6 @@ const { pathToFileURL } = require("url");
 const del = require("del");
 const sass = require("sass");
 
-const pgkNodeModules = path.resolve(__dirname, "../../../node_modules/");
-
 function buildStyles(entry) {
   const sourceFileName = path.basename(entry);
   const outputFileName = sourceFileName.replace(/\.scss$/, ".css");
@@ -24,10 +22,16 @@ function buildStyles(entry) {
         // `node_modules`.
         findFileUrl(url) {
           if (!url.startsWith("~")) return null;
-          const fileUrl = pathToFileURL(
-            path.join(pgkNodeModules, url.substring(1))
+
+          const nonPrefixedUrl = url.substring(1);
+          const resolvedFile = require.resolve(
+            nonPrefixedUrl.substring(0, nonPrefixedUrl.indexOf("/"))
           );
-          return fileUrl;
+          const fileUrl = pathToFileURL(
+            resolvedFile.substring(0, resolvedFile.indexOf("node_modules") + 13)
+          );
+
+          return new URL(nonPrefixedUrl, fileUrl);
         },
       },
     ],

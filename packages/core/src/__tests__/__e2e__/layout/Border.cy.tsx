@@ -4,15 +4,14 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { BORDER_POSITION as borderAreas } from "../../../layout/BorderItem";
 
 const composedStories = composeStories(borderStories);
-const { ToolkitBorderLayout } = composedStories;
+const { BorderLayoutAllPanels } = composedStories;
 
 describe("GIVEN a Border", () => {
-  // TODO: Fix accessibility issues in AppHeader
-  // checkAccessibility(composedStories);
+  checkAccessibility(composedStories);
 
   describe("WHEN border items are provided", () => {
     it("THEN it should render them in the right positions", () => {
-      cy.mount(<ToolkitBorderLayout />);
+      cy.mount(<BorderLayoutAllPanels />);
 
       cy.get(".uitkBorderLayout").should(
         "have.css",
@@ -48,7 +47,7 @@ describe("GIVEN a Border", () => {
 
   describe("WHEN no gap values are provided", () => {
     it("THEN it should not display a gap by default", () => {
-      cy.mount(<ToolkitBorderLayout />);
+      cy.mount(<BorderLayoutAllPanels />);
 
       cy.get(".uitkBorderLayout").should("have.css", "column-gap", "0px");
 

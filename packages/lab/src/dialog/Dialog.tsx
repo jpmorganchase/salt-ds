@@ -4,6 +4,8 @@ import {
   useId,
   useWindow,
   ValidationState,
+  Scrim,
+  ScrimProps,
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
@@ -14,7 +16,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { Scrim, ScrimProps } from "../scrim";
 import { DialogContext } from "./internal/DialogContext";
 
 import "./Dialog.css";
