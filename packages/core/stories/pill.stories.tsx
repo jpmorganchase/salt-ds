@@ -17,7 +17,7 @@ export default {
 } as ComponentMeta<typeof Pill>;
 
 const Template: ComponentStory<typeof Pill> = (args) => {
-  const handleClick = (e: SyntheticEvent<HTMLElement>) => {
+  const handleClick = (e: SyntheticEvent<HTMLDivElement>) => {
     console.log("clicked");
     args.onClick?.(e);
   };

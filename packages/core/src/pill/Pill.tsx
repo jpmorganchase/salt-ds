@@ -32,7 +32,7 @@ const getVariant = (deletable?: boolean, variantProp?: PillVariant) => {
 
 export const Pill = forwardRef(function Pill(
   { variant: variantProp, ...restProps }: PillProps,
-  ref: ForwardedRef<HTMLButtonElement>
+  ref: ForwardedRef<HTMLDivElement>
 ) {
   const variant = getVariant(restProps.deletable, variantProp);
   if (variant === "selectable") {
@@ -43,5 +43,5 @@ export const Pill = forwardRef(function Pill(
     return <PillBase clickable {...restProps} ref={ref} />;
   }
 }) as <T extends PillVariant = "basic">(
-  p: PillProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
+  p: PillProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
 ) => ReactElement<PillProps<T>>;
