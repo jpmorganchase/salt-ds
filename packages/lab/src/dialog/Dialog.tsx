@@ -3,7 +3,7 @@ import {
   Portal,
   useId,
   useWindow,
-  ValidationState,
+  ValidationStatus,
   Scrim,
   ScrimProps,
 } from "@jpmorganchase/uitk-core";
@@ -25,7 +25,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   height?: string | number;
   onClose?: () => void;
   open?: boolean;
-  state?: ValidationState;
+  state?: ValidationStatus;
   width?: string | number;
   enableBackdropClick?: boolean;
   disablePortal?: boolean;
