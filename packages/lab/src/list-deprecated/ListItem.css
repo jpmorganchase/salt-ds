@@ -9,7 +9,7 @@
   --list-item-background-active: var(--uitk-selectable-background-selected);
 
   /* Text, Font */
-  --list-item-textAlign: var(--uitk-selectable-textAlign);
+  --list-item-textAlign: var(--uitk-text-textAlign);
   --list-item-fontSize: var(--uitk-text-fontSize);
   --list-item-lineHeight: var(--uitk-text-lineHeight);
 
@@ -29,7 +29,7 @@
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
-  --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
+  --list-item-disabled-regular-opacity: var(--uitk-palette-opacity-foreground);
 }
 
 .uitkListItemDeprecated {

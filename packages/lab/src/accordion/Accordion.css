@@ -91,10 +91,10 @@
 }
 
 .uitkAccordionSummary:focus-visible {
-  outline-style: var(--accordion-summary-focus-outline-style);
-  outline-width: var(--accordion-summary-focus-outline-width);
-  outline-color: var(--accordion-summary-focus-outline-color);
-  outline-offset: var(--accordion-summary-focus-outline-offset);
+  outline-style: var(--accordion-summary-focus-outlineStyle);
+  outline-width: var(--accordion-summary-focus-outlineWidth);
+  outline-color: var(--accordion-summary-focus-outlineColor);
+  outline-offset: var(--accordion-summary-focus-outlineOffset);
 }
 
 .uitkAccordionSummary:hover:not(.uitkAccordionSummary-disabled) {

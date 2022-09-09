@@ -33,7 +33,7 @@
   --slider-rail-mark-height: var(--uitkSlider-rail-mark-height, 7px);
   --slider-rail-mark-color: var(--uitkSlider-rail-mark-color, var(--slider-rail-color));
 
-  --slider-selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-fill-stopColor));
+  --slider-selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-fill));
   --slider-selection-height: var(--uitkSlider-selection-height, 2px);
 
   --slider-handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-base) * 0.5));
