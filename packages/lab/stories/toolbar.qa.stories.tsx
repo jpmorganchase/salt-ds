@@ -126,13 +126,13 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
         </Button>
       </Tooltray>
       <Tooltray aria-label="buttons tooltray">
-        <ToolbarButton itemID="exportButton" overflowLabel="Export">
+        <ToolbarButton id="exportButton" overflowLabel="Export">
           <ExportIcon />
         </ToolbarButton>
-        <ToolbarButton itemID="colsButton" overflowLabel="Select Columns">
+        <ToolbarButton id="colsButton" overflowLabel="Select Columns">
           <ColumnChooserIcon />
         </ToolbarButton>
-        <ToolbarButton itemID="settingsButton" overflowLabel="Settings">
+        <ToolbarButton id="settingsButton" overflowLabel="Settings">
           <SettingsIcon />
         </ToolbarButton>
       </Tooltray>
