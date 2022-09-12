@@ -1,0 +1,22 @@
+.uitkStatusIcon {
+  --status-warning-icon-color: var(--uitk-status-warning-foreground);
+  --status-info-icon-color: var(--uitk-status-info-foreground);
+  --status-success-icon-color: var(--uitk-status-success-foreground);
+  --status-error-icon-color: var(--uitk-status-error-foreground);
+}
+
+.uitkStatusIcon-warning {
+  fill: var(--status-warning-icon-color);
+}
+
+.uitkStatusIcon-info {
+  fill: var(--status-info-icon-color);
+}
+
+.uitkStatusIcon-success {
+  fill: var(--status-success-icon-color);
+}
+
+.uitkStatusIcon-error {
+  fill: var(--status-error-icon-color);
+}
