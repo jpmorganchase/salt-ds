@@ -20,8 +20,6 @@ const config: ExtendedConfig = {
   stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   staticDirs: ["../docs/public"],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-a11y",
     {
       name: "@storybook/addon-essentials",
       options: {
@@ -29,9 +27,13 @@ const config: ExtendedConfig = {
         backgrounds: false,
       },
     },
+    "@storybook/addon-links",
+    "@storybook/addon-a11y",
+    "./theme-switch/preset", //👈 Custom theme switch on the toolbar
     // Keep in mind this is not v1 yet. Might encounter bugs. It's from atlassian labs, so not too much concern.
     // Temporarily disable this due to run time error "Cannot read property 'context' of undefined" from Topbar
     // 'storybook-addon-performance/register',
+    "@storybook/addon-storysource",
   ],
   core: {
     builder: "@storybook/builder-vite",
