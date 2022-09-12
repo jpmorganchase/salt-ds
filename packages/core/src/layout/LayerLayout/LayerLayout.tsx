@@ -3,13 +3,13 @@ import cx from "classnames";
 
 import {
   makePrefixer,
-  Breakpoints,
   useIsViewportLargerThanBreakpoint,
-  Scrim,
-  ScrimProps,
-} from "@jpmorganchase/uitk-core";
+  usePrevious,
+} from "../../utils";
+
+import { Scrim, ScrimProps } from "../../scrim";
+import { Breakpoints } from "../../breakpoints";
 import "./LayerLayout.css";
-import { usePrevious } from "../../utils";
 
 export const LAYER_POSITIONS = [
   "center",

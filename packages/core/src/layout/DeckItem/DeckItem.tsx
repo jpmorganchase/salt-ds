@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "../../utils";
 import "./DeckItem.css";
 import cx from "classnames";
-import { LayoutAnimation } from "@jpmorganchase/uitk-core/src/layout/types";
+import { LayoutAnimation } from "../types";
 
 const withBaseName = makePrefixer("uitkDeckItem");
 
@@ -34,13 +34,13 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         : activeIndex < index
         ? "next"
         : "previous";
-    }, [activeIndex]);
+    }, [activeIndex, index]);
 
     const classesIndex = animation && position === "current" ? 0 : 1;
 
     const getActiveClasses = [
-      `${animation}-in`, // in-right
-      `${animation}-out`, // out-left
+      `${animation || "fade"}-in`, // in-right
+      `${animation || "fade"}-out`, // out-left
     ];
 
     // TODO: add aria attributes (labelledby, roledescription, hidden)

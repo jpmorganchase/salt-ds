@@ -179,8 +179,8 @@
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
 
+/* Pseudo-class applied to the root element if disabled={true} */
 .uitkButton:disabled,
-  /* Pseudo-class applied to the root element if disabled={true} */
 .uitkButton-disabled,
   /* Overrides to apply the disabled style when the button is focusable while also disabled */
 .uitkButton-disabled:active,

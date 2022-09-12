@@ -1,10 +1,5 @@
 import { useState, MouseEvent } from "react";
-import {
-  LayerLayout,
-  LAYER_POSITIONS,
-  ContentStatus,
-  ContentStatusProps,
-} from "@jpmorganchase/uitk-lab";
+import { ContentStatus, ContentStatusProps } from "@jpmorganchase/uitk-lab";
 import {
   Button,
   FlowLayout,
@@ -14,13 +9,15 @@ import {
   Input,
   FlexLayout,
   Card,
+  LayerLayout,
+  LAYER_POSITIONS,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ContactDetailsExample } from "../../../core/stories/layout/flex-layout.stories";
 import "./styles.css";
 
 export default {
-  title: "Lab/Layout/LayerLayout",
+  title: "Core/Layout/LayerLayout",
   component: LayerLayout,
   argTypes: {
     position: {

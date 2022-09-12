@@ -10,7 +10,7 @@ import {
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
-import { usePrevious } from "../../utils";
+import { usePrevious } from "@jpmorganchase/uitk-core";
 import { useCalendarContext } from "./CalendarContext";
 
 import "./CalendarCarousel.css";
