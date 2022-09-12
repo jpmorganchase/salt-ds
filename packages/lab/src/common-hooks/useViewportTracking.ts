@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { CollectionItem } from "./collectionTypes";
-import { useResizeObserver } from "../responsive/useResizeObserver";
+import { useResizeObserver } from "@jpmorganchase/uitk-core";
 
 const HeightOnly = ["height"];
 const HeightWithScroll = ["height", "scrollHeight"];

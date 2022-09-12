@@ -4,6 +4,7 @@ import {
   useId,
   RadioButtonGroup,
   GridLayout,
+  DeckLayout,
 } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
@@ -17,7 +18,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import warning from "warning";
 import cx from "classnames";
 import "./Carousel.css";
-import { DeckLayout } from "../layout";
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
 

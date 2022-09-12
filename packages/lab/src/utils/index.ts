@@ -9,5 +9,4 @@ export * from "./useEventCallback";
 export * from "./useLayoutEffectOnce";
 export * from "./useLayoutEffectSkipFirst";
 export * from "./useOverflowDetection";
-export * from "./usePrevious";
 export * from "./useSlideSelection";

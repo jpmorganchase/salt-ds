@@ -14,6 +14,7 @@ export * from "./pill";
 export * from "./popper";
 export * from "./portal";
 export * from "./radio-button";
+export * from "./responsive";
 export * from "./scrim";
 export * from "./status-icon";
 export * from "./switch";
