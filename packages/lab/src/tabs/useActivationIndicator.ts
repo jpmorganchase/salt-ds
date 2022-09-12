@@ -1,5 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { useResizeObserver, orientationType, WidthOnly } from "../responsive";
+import { orientationType } from "../responsive";
+import { useResizeObserver, WidthOnly } from "@jpmorganchase/uitk-core";
 
 type activationIndicatorStyles = {
   height?: number;

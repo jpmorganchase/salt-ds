@@ -1,4 +1,10 @@
-import { useControlled, useFormFieldProps } from "@jpmorganchase/uitk-core";
+import {
+  useControlled,
+  useFormFieldProps,
+  measurements,
+  useResizeObserver,
+  WidthOnly,
+} from "@jpmorganchase/uitk-core";
 import {
   FocusEvent,
   HTMLAttributes,
@@ -8,11 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  measurements,
-  useResizeObserver,
-  WidthOnly,
-} from "../responsive/useResizeObserver";
+
 import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 import { useClickAway } from "./useClickAway";
 const NO_OBSERVER: string[] = [];

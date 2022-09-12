@@ -6,6 +6,4 @@ export * from "./useOverflowCollectionItems";
 export * from "./useOverflowLayout";
 export * from "./overflowTypes";
 export * from "./overflowUtils";
-export * from "./useResizeObserver";
 export * from "./utils";
-export * from "./useWidth";
