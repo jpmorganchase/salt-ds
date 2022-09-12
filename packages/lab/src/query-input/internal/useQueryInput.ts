@@ -15,7 +15,7 @@ import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { QueryInputBodyProps } from "./QueryInputBody";
 import { usePopperStatus } from "./usePopperStatus";
 import { ValueSelectorProps } from "./ValueSelector";
-import { useWidth } from "../../responsive";
+import { useWidth } from "@jpmorganchase/uitk-core";
 
 export type BooleanOperator = "or" | "and";
 
