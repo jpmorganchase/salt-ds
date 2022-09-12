@@ -1,5 +1,29 @@
 # @jpmorganchase/uitk-theme
 
+## 0.4.0
+
+### Minor Changes
+
+- 58adde30: Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
+  --uitkDialog-border-color -> --uitkDialog-borderColor
+  --accordion-summary-padding-left -> --accordion-summary-paddingLeft
+  --grid-item-grid-row-end -> --grid-item-gridRowEnd
+- 6259041e: Changes to text characteristic fontSize tokens
+
+  TD:
+  H1 36px -> 42px
+  H2 28px -> 32px
+  H3 18px -> 24px
+  Caption 12px -> 14px
+  Help 12px -> 14px
+
+  LD:
+  Caption 11px -> 12px
+  Help 11px -> 12px
+
+- 1269d30f: Gradient from palette and measured characteristic fill values replaced with solid blue color in line with design change; backwards compatibility classes added to CircularProgress and Spinner
+- dd8c7646: Add global css box-sizing as border-box, and remove from components
+
 ## 0.3.1
 
 ### Patch Changes
