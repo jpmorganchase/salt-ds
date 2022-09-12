@@ -3,10 +3,9 @@
   --list-borderStyle: var(--uitk-container-borderStyle);
   --list-borderWidth: var(--uitk-container-borderWidth);
   --list-height: auto;
+  --list-item-height: var(--uitk-size-stackable);
   --list-item-gap: 0px;
   --list-maxHeight: 100%;
-
-  --uitkList-item-height: var(--uitkList-item-height, var(--uitk-size-stackable));
 
   background: var(--list-background);
   border-color: var(--uitk-container-borderColor-medium);

@@ -28,7 +28,7 @@
   cursor: var(--uitkList-item-cursor, pointer);
   background: var(--uitkList-item-background, var(--list-item-background));
   font-size: var(--uitk-text-fontSize);
-  text-align: left;
+  text-align: var(--uitk-text-textAlign);
   line-height: var(--uitk-text-lineHeight);
   height: var(--uitkList-item-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */

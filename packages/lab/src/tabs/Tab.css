@@ -84,7 +84,7 @@
   display: inline-block;
   position: relative;
   overflow: hidden;
-  text-align: center;
+  text-align: var(--uitk-text-textAlign-embedded);
   text-overflow: ellipsis;
   top: var(--uitkTabs-tab-top, var(--tabs-tab-top, auto));
   white-space: nowrap;
@@ -93,7 +93,7 @@
 }
 
 .uitkTab-vertical .uitkTab-text {
-  text-align: left;
+  text-align: var(--uitk-text-textAlign);
 }
 
 .uitkTab .uitkTab-text:before {

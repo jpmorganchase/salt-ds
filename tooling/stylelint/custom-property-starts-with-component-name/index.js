@@ -2,6 +2,8 @@
 
 const valueParser = require("postcss-value-parser");
 const stylelint = require("stylelint");
+const fs = require("fs");
+const path = require("path");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -48,80 +50,54 @@ const meta = {
   url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
-const components = [
-  "Accordion",
-  "AppHeader",
-  "Avatar",
-  "Badge",
-  "Banner",
-  "BorderItem",
-  "BorderLayout",
-  "Breadcrumbs",
-  "Button",
-  "ButtonBar",
-  "Calendar",
-  "Card",
-  "Carousel",
-  "CascadingMenu",
-  "Checkbox",
-  "ColorChooser",
-  "ComboBox",
-  "ContactDetails",
-  "ContentStatus",
-  "ControlLabel",
-  "DeckLayout",
-  "Dialog",
-  "Dropdown",
-  "EditableLabel",
-  "FileDropZone",
-  "FlexItem",
-  "FlexLayout",
-  "FlowLayout",
-  "FormField",
-  "FormGroup",
-  "FormattedInput",
-  "Grid",
-  "GridItem",
-  "GridLayout",
-  "Icon",
-  "Input",
-  "LayerLayout",
-  "LinearProgress",
-  "Link",
-  "List",
-  "Logo",
-  "MenuButton",
-  "Metric",
-  "Overlay",
-  "Pagination",
-  "Panel",
-  "ParentChildItem",
-  "ParentChildLayout",
-  "Pill",
-  "Popper",
-  "Portal",
-  "QueryInput",
-  "RadioButton",
-  "Scrim",
-  "SearchInput",
-  "SkipLink",
-  "Slider",
-  "Spinner",
-  "SplitLayout",
-  "StackLayout",
-  "StateIcon",
-  "StepperInput",
-  "Switch",
-  "Tabs",
-  "Text",
-  "ToggleButton",
-  "TokenizedInput",
-  "Toolbar",
-  "Tooltip",
-  "Tree",
-];
+function capitalize(folderName) {
+  let parts = folderName.split("-");
 
-const componentsFormatted = components.map(
+  return parts.map((value) => value[0].toUpperCase() + value.slice(1)).join("");
+}
+
+let components = []; 
+
+function getComponentName(path) {
+  const componentFolder = path.split("/").slice(-2)[0];
+  return componentFolder
+    .split("-")
+    .map((part, index) => {
+      return index === 0 ? part : capitalize(part);
+    })
+    .join("");
+}
+
+const getFilesRecursively = (directorys) => {
+  for (var dir of directorys) {
+    const filesInDirectory = fs.readdirSync(dir);
+    for (const file of filesInDirectory) {
+      if (!file.startsWith("__")) {
+        // ignore test folders
+        const parentFolder = path.join(dir, file);
+        if (fs.statSync(parentFolder).isDirectory()) {
+          getFilesRecursively([parentFolder]);
+        } else if (file.endsWith(".css")) {
+          const fileName = file.split(".css")[0];
+          const component = getComponentName(parentFolder); // formats e.g. radio-button to RadioButton
+          if (capitalize(component) === fileName) {
+            // matches folder name to file name
+            components.push(fileName);
+          }
+        }
+      }
+    }
+  }
+  return components;
+};
+
+const allowedNames = getFilesRecursively([
+  `./packages/core/src`,
+  `./packages/icons/src`,
+  `./packages/grid/src`,
+  `./packages/lab/src`,
+]);
+const allowedNamesFormatted = allowedNames.map(
   (component) => `${component[0].toLowerCase()}${component.slice(1)}`
 );
 
@@ -131,7 +107,7 @@ const componentsFormatted = components.map(
  * Starts with `--componentName-`
  */
 const isComponentCustomProperty = function (property) {
-  return componentsFormatted.some((component) =>
+  return allowedNamesFormatted.some((component) =>
     property.startsWith(`--${component}-`)
   );
 };
@@ -142,7 +118,7 @@ const isComponentCustomProperty = function (property) {
  * Starts with `--uitkComponentName-`
  */
 const isCssApi = function (property) {
-  return components.some((component) =>
+  return allowedNames.some((component) =>
     property.startsWith(`--uitk${component}-`)
   );
 };
@@ -150,7 +126,6 @@ const isCssApi = function (property) {
 module.exports = stylelint.createPlugin(
   ruleName,
   (primary, secondaryOptionObject, context) => {
-    let count = 0;
     return (root, result) => {
       const verboseLog = primary.logLevel === "verbose";
 
