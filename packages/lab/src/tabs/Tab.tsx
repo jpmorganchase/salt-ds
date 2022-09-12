@@ -1,7 +1,7 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
 import {
-  Button,
-  ButtonProps,
+  DivButton,
+  DivButtonProps,
   makePrefixer,
   useForkRef,
 } from "@jpmorganchase/uitk-core";
@@ -28,12 +28,11 @@ const noop = () => undefined;
 const withBaseName = makePrefixer("uitkTab");
 
 //TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
-const CloseTabButton: React.FC<ButtonProps<"div">> = (props) => (
-  <Button
+const CloseTabButton: React.FC<DivButtonProps> = (props) => (
+  <DivButton
     {...props}
     aria-label="Close Tab (Delete or Backspace)"
     className={withBaseName("closeButton")}
-    elementType="div"
     tabIndex={undefined}
     title="Close Tab (Delete or Backspace)"
     variant="secondary"
@@ -46,7 +45,7 @@ const CloseTabButton: React.FC<ButtonProps<"div">> = (props) => (
       aria-label="Close Tab (Delete or Backspace)"
       className={withBaseName("close-icon-small")}
     />
-  </Button>
+  </DivButton>
 );
 
 export const Tab = forwardRef(function Tab(
