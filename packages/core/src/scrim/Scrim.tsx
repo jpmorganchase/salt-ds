@@ -93,6 +93,14 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   open?: boolean;
   /**
+   * Set to true to enable the container use case. If true the Scrim will be bound to a container ref you pass via the `parentRef` prop.
+   * Default value is false, and the default behavior is for Scrim to be bound to the document viewport.
+   */
+  enableContainerMode?: boolean;
+  /**
+      * Prop necessary to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
+      * Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
+  /**
    * Prop to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
    * It also sets the different z-index and overrides FocusTrap for Scrim. Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
    */
@@ -125,6 +133,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     onClose,
     open,
     containerRef,
+    enableContainerMode = false,
     returnFocusOptions,
     tabEnabledSelectors = defaultSelector,
     zIndex,
@@ -212,9 +221,9 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
 
   return (
     <div
-      aria-modal={!containerRef?.current}
+      aria-modal={!enableContainerMode}
       className={classnames(className, withBaseName(), {
-        [withBaseName(`containerFix`)]: containerRef?.current,
+        [withBaseName(`containerFix`)]: enableContainerMode,
       })}
       data-testid="scrim"
       onClick={onBackDropClick}
@@ -229,7 +238,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         active={open}
         autoFocusRef={autoFocusRef}
         disableAutoFocus={disableAutoFocus}
-        disableFocusTrap={disableFocusTrap || !!containerRef?.current}
+        disableFocusTrap={disableFocusTrap || !!enableContainerMode}
         disableReturnFocus={disableReturnFocus}
         returnFocusOptions={returnFocusOptions}
         tabEnabledSelectors={tabEnabledSelectors}

@@ -131,7 +131,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div ref={parentRef}>
-            <Scrim open={open} containerRef={parentRef}>
+            <Scrim open={open} enableContainerMode containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -226,7 +226,7 @@ describe("Given a Scrim", () => {
         const [open, setOpen] = useState(false);
         return (
           <div data-testid="parent" ref={parentRef}>
-            <Scrim open={open} containerRef={parentRef}>
+            <Scrim open={open} enableContainerMode containerRef={parentRef}>
               <button onClick={() => setOpen((old) => !old)}>
                 CLOSE SCRIM
               </button>
@@ -248,7 +248,7 @@ describe("Given a Scrim", () => {
         const parentRef = useRef<HTMLDivElement>(null);
         return (
           <div data-testid="parent" ref={parentRef}>
-            <Scrim open containerRef={parentRef}>
+            <Scrim open enableContainerMode containerRef={parentRef}>
               <button>button</button>
             </Scrim>
           </div>
