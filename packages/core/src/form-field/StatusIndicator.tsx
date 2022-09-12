@@ -1,7 +1,7 @@
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ElementType } from "react";
-import { StateIcon } from "../state-icon";
+import { StatusIcon } from "../status-icon";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 export type StateIndicatorState = "error" | "info" | "warning" | "success";
@@ -44,14 +44,14 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
           ...TooltipProps,
         })}
       />
-      <StateIcon
-        {...getTriggerProps<typeof StateIcon>({
-          state,
+      <StatusIcon
+        {...getTriggerProps<typeof StatusIcon>({
+          status: state,
           size: 12,
           ...restProps,
           ...IconProps,
           className: cx(
-            "uitkStatusIndicator-stateIcon",
+            "uitkStatusIndicator-statusIcon",
             className,
             IconProps?.className
           ),

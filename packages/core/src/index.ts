@@ -15,7 +15,7 @@ export * from "./popper";
 export * from "./portal";
 export * from "./radio-button";
 export * from "./scrim";
-export * from "./state-icon";
+export * from "./status-icon";
 export * from "./switch";
 export * from "./theme";
 export * from "./toolkit-provider";
