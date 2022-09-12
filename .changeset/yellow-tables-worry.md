@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-core": minor
 ---
 
-Removed polymorphic types from Button
+Removed the elementType prop from Button, making it non-polymorphic.
