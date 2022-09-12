@@ -1,5 +1,17 @@
 # @jpmorganchase/uitk-icons
 
+## 0.4.0
+
+### Minor Changes
+
+- 46bcdec9: Add new icon and update existing onces with updated design
+- 58adde30: Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
+  --uitkDialog-border-color -> --uitkDialog-borderColor
+  --accordion-summary-padding-left -> --accordion-summary-paddingLeft
+  --grid-item-grid-row-end -> --grid-item-gridRowEnd
+- 1c1d5b1e: Remove unsupported ColumnChooserSingle and ColumnChooserSingleSolid icons
+- dd8c7646: Add global css box-sizing as border-box, and remove from components
+
 ## 0.3.0
 
 ### Minor Changes
