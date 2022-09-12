@@ -19,7 +19,10 @@ interface ExtendedConfig extends StorybookConfig {
 
 const config: ExtendedConfig = {
   framework: "@storybook/react",
-  stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  stories:
+    process.env.STORYBOOK_UITK_MODE === "doc-only"
+      ? ["../packages/*/stories/**/*.doc.stories.mdx"]
+      : ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   staticDirs: ["../docs/public"],
   addons: [
     "@storybook/addon-links",
