@@ -18,7 +18,7 @@ import {
 } from "@jpmorganchase/uitk-lab";
 
 export default {
-  title: "Lab/Typography",
+  title: "Lab/Text",
   component: Text,
   parameters: {
     controls: {

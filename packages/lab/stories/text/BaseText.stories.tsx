@@ -4,7 +4,7 @@ import { Text, TextProps } from "@jpmorganchase/uitk-lab";
 import { useEffect, useState } from "react";
 
 export default {
-  title: "Lab/Typography",
+  title: "Lab/Text",
   component: Text,
   argTypes: {
     children: {
