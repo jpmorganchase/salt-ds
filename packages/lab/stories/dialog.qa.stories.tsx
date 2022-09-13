@@ -25,9 +25,9 @@ const densityDialogWidths = {
   high: 500,
 };
 
-type BasicDialogExampleProps = Pick<DialogProps, "state">;
+type BasicDialogExampleProps = Pick<DialogProps, "status">;
 
-const BasicDialogExample: FC<BasicDialogExampleProps> = ({ state }) => {
+const BasicDialogExample: FC<BasicDialogExampleProps> = ({ status }) => {
   const density = useDensity();
   const densityBreakpoint = density === "touch" ? "xl" : "xs";
 
@@ -35,7 +35,7 @@ const BasicDialogExample: FC<BasicDialogExampleProps> = ({ state }) => {
     <Dialog
       open
       width={densityDialogWidths[density]}
-      state={state}
+      status={status}
       disablePortal={true}
     >
       <DialogTitle>Controlled Dialog</DialogTitle>
@@ -58,10 +58,10 @@ const BasicDialogExample: FC<BasicDialogExampleProps> = ({ state }) => {
   );
 };
 
-const BasicDialog = () => <BasicDialogExample state={"info"} />;
-const ErrorDialog = () => <BasicDialogExample state={"error"} />;
-const WarningDialog = () => <BasicDialogExample state={"warning"} />;
-const SuccessDialog = () => <BasicDialogExample state={"success"} />;
+const BasicDialog = () => <BasicDialogExample status={"info"} />;
+const ErrorDialog = () => <BasicDialogExample status={"error"} />;
+const WarningDialog = () => <BasicDialogExample status={"warning"} />;
+const SuccessDialog = () => <BasicDialogExample status={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <div className={"examples-container"}>

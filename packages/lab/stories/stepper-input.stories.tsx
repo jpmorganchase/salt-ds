@@ -183,7 +183,7 @@ export const Default: Story = () => {
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Default Stepper Input"
         style={{ width: 292 }}
-        validationState={isOutOfRange ? "error" : undefined}
+        validationStatus={isOutOfRange ? "error" : undefined}
       >
         <StepperInput
           defaultValue={0}
@@ -225,7 +225,7 @@ export const Error: Story = () => {
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Error validation state"
         style={{ width: 292 }}
-        validationState={isOutOfRange ? "error" : undefined}
+        validationStatus={isOutOfRange ? "error" : undefined}
       >
         <StepperInput
           decimalPlaces={3}
@@ -274,7 +274,7 @@ export const LiveDefaultValue: Story = () => {
         helperText={`Current live 'value' prop: ${formatValue(value)}`}
         label="Live Default Value"
         style={{ width: 292 }}
-        validationState={isOutOfRange ? "error" : undefined}
+        validationStatus={isOutOfRange ? "error" : undefined}
       >
         <StepperInput
           decimalPlaces={decimalPlaces}

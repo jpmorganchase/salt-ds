@@ -33,12 +33,12 @@ const WarningIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
 const withBaseName = makePrefixer("uitkFormActivationIndicator");
 
 const ActivationIndicatorIcon = ({
-  validationState,
+  validationStatus,
   ...restSvgProps
-}: Pick<FormFieldProps, "validationState"> & SVGAttributes<SVGSVGElement>) => {
-  if (validationState === "error") {
+}: Pick<FormFieldProps, "validationStatus"> & SVGAttributes<SVGSVGElement>) => {
+  if (validationStatus === "error") {
     return <ErrorIndicatorIcon {...restSvgProps} />;
-  } else if (validationState === "warning") {
+  } else if (validationStatus === "warning") {
     return <WarningIndicatorIcon {...restSvgProps} />;
   } else {
     return null;
@@ -47,22 +47,22 @@ const ActivationIndicatorIcon = ({
 
 // Removed `enabled` prop, it's better to let parent to control render
 export interface FormActivationIndicatorProps
-  extends Pick<FormFieldProps, "validationState"> {
+  extends Pick<FormFieldProps, "validationStatus"> {
   hasIcon?: boolean;
 }
 
 export const FormActivationIndicator: React.FC<
   FormActivationIndicatorProps
-> = ({ hasIcon, validationState }: FormActivationIndicatorProps) => {
+> = ({ hasIcon, validationStatus }: FormActivationIndicatorProps) => {
   const rootClass = "uitkFormActivationIndicator";
 
   return (
     <div className={withBaseName()}>
       <div className={withBaseName("bar")}>
-        {hasIcon && validationState && (
+        {hasIcon && validationStatus && (
           <ActivationIndicatorIcon
             className={`${rootClass}-icon`}
-            validationState={validationState}
+            validationStatus={validationStatus}
           />
         )}
       </div>

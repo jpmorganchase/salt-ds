@@ -64,7 +64,7 @@ const CloseTabWarningDialog = ({
   onConfirm: () => void;
   open?: boolean;
 }) => (
-  <Dialog open={open} state="warning" onClose={onClose}>
+  <Dialog open={open} status="warning" onClose={onClose}>
     <DialogTitle onClose={onClose}>Do you want to close this tab?</DialogTitle>
     <DialogContent>
       {`Closing the tab will cause any changes made to

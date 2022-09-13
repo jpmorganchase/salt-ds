@@ -107,7 +107,7 @@ export const HelperText: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const ValidationStates: ComponentStory<typeof FormField> = () => (
+export const ValidationStatus: ComponentStory<typeof FormField> = () => (
   <div
     style={{
       columnGap: 20,
@@ -118,13 +118,13 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
     }}
   >
     <div>
-      <FormField label="No validation state" helperText="Helper text value">
+      <FormField label="No validation status" helperText="Helper text value">
         <Input defaultValue="Value" />
       </FormField>
     </div>
     <div>
       <FormField
-        label="No validation state"
+        label="No validation status"
         helperText="Helper text value"
         className="uitkEmphasisHigh"
       >
@@ -133,18 +133,18 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
     </div>
     <div>
       <FormField
-        label="Warning validation state"
+        label="Warning validation status"
         helperText="Helper text value"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input defaultValue="Value" />
       </FormField>
     </div>
     <div>
       <FormField
-        label="Warning validation state"
+        label="Warning validation status"
         helperText="Helper text value"
-        validationState="warning"
+        validationStatus="warning"
         className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
@@ -152,18 +152,18 @@ export const ValidationStates: ComponentStory<typeof FormField> = () => (
     </div>
     <div>
       <FormField
-        label="Error validation state"
+        label="Error validation status"
         helperText="Helper text value"
-        validationState="error"
+        validationStatus="error"
       >
         <Input defaultValue="Value" />
       </FormField>
     </div>
     <div>
       <FormField
-        label="Error validation state"
+        label="Error validation status"
         helperText="Helper text value"
-        validationState="error"
+        validationStatus="error"
         className="uitkEmphasisHigh"
       >
         <Input defaultValue="Value" />
@@ -303,7 +303,7 @@ const ErrorState = (props?: Partial<FormFieldProps>) => {
       helperText="helperText"
       label="Error status FormField"
       labelPlacement="top"
-      validationState="error"
+      validationStatus="error"
       // statusIndicatorContent={['Error']}
       StatusIndicatorProps={{
         tooltipText: "Error",
@@ -328,7 +328,7 @@ const WarningState = (props?: Partial<FormFieldProps>) => {
       helperText="helperText"
       label="Warning status FormField"
       labelPlacement="top"
-      validationState="warning"
+      validationStatus="warning"
       // statusIndicatorContent={['Warning']}
       StatusIndicatorProps={{
         tooltipText: "Warning",
@@ -411,7 +411,7 @@ const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldProps>) => {
         },
       }}
       {...props}
-      validationState="error"
+      validationStatus="error"
     >
       <Input
         onChange={(e) => {

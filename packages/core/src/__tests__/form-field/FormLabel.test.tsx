@@ -68,23 +68,23 @@ describe("GIVEN a FormLabel", () => {
       expect(screen.getByTestId(/InfoIcon/i)).toBeInTheDocument();
     });
 
-    test("THEN warning icon is rendered when validationState is warning", () => {
+    test("THEN warning icon is rendered when validationStatus is warning", () => {
       render(
         <FormLabel
           label={labelText}
           hasStatusIndicator
-          validationState="warning"
+          validationStatus="warning"
         />
       );
       expect(screen.getByTestId(/WarningIcon/i)).toBeInTheDocument();
     });
 
-    test("THEN error icon is rendered when validationState is error", () => {
+    test("THEN error icon is rendered when validationStatus is error", () => {
       render(
         <FormLabel
           label={labelText}
           hasStatusIndicator
-          validationState="error"
+          validationStatus="error"
         />
       );
       expect(screen.getByTestId(/ErrorIcon/i)).toBeInTheDocument();

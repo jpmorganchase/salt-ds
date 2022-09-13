@@ -36,7 +36,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         className={cx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -44,7 +44,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         className={cx("uitkEmphasisHigh", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -53,7 +53,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -61,7 +61,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         className={cx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>
@@ -69,7 +69,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         className={cx("uitkEmphasisHigh", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>
@@ -78,7 +78,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>

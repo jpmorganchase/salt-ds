@@ -214,7 +214,7 @@ export const WithValidation: ComponentStory<typeof TokenizedInput> = () => {
         helperText={exceptions.join(", ")}
         label="No duplication"
         style={{ maxWidth: 292 }}
-        validationState={exceptions.length > 0 ? "error" : undefined}
+        validationStatus={exceptions.length > 0 ? "error" : undefined}
       >
         <TokenizedInput
           onChange={handleChange}
