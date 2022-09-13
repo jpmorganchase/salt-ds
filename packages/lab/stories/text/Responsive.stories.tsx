@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Text, P, Span, Div } from "@jpmorganchase/uitk-lab";
 
 export default {
-  title: "Lab/Typography",
+  title: "Lab/Text",
   component: Text,
 } as ComponentMeta<typeof Text>;
 
