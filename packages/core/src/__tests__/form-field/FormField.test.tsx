@@ -175,11 +175,11 @@ describe("GIVEN a FormField", () => {
     });
   });
 
-  describe("When validation state is 'error'", () => {
+  describe("When validation status is 'error'", () => {
     test("THEN error indicator icon should be rendered", () => {
       const { queryByTestId } = renderFormField({
         label,
-        validationState: "error",
+        validationStatus: "error",
       });
       expect(queryByTestId("ErrorIndicatorIcon")).toBeInTheDocument();
     });
@@ -187,18 +187,18 @@ describe("GIVEN a FormField", () => {
     test("THEN error indicator icon should not be rendered if hasStatusIndicator", () => {
       const { queryByTestId } = renderFormField({
         label,
-        validationState: "error",
+        validationStatus: "error",
         hasStatusIndicator: true,
       });
       expect(queryByTestId("ErrorIndicatorIcon")).not.toBeInTheDocument();
     });
   });
 
-  describe("When validation state is 'warning'", () => {
+  describe("When validation status is 'warning'", () => {
     test("THEN warning indicator icon should be rendered", () => {
       const { queryByTestId } = renderFormField({
         label,
-        validationState: "warning",
+        validationStatus: "warning",
       });
       expect(queryByTestId("WarningIndicatorIcon")).toBeInTheDocument();
     });
@@ -206,7 +206,7 @@ describe("GIVEN a FormField", () => {
     test("THEN warning indicator icon should not be rendered if hasStatusIndicator", () => {
       const { queryByTestId } = renderFormField({
         label,
-        validationState: "warning",
+        validationStatus: "warning",
         hasStatusIndicator: true,
       });
       expect(queryByTestId("WarningIndicatorIcon")).not.toBeInTheDocument();

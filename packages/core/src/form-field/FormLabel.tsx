@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ElementType, HTMLAttributes } from "react";
 import { makePrefixer } from "../utils";
-import { FormFieldValidationState } from "./FormField";
+import { FormFieldValidationStatus } from "./FormField";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   NecessityIndicatorOptions,
@@ -39,9 +39,9 @@ export interface FormLabelProps
    */
   StatusIndicatorProps?: Partial<StatusIndicatorProps>;
   /**
-   * The state for the FormField: Must be one of: 'error'|'warning'|undefined
+   * The status for the FormField: Must be one of: 'error'|'warning'|undefined
    */
-  validationState?: FormFieldValidationState;
+  validationStatus?: FormFieldValidationStatus;
   /**
    * Text to be shown in the Tooltip.
    */
@@ -55,7 +55,7 @@ export const FormLabel = ({
   displayedNecessity,
   hasStatusIndicator = false,
   StatusIndicatorProps,
-  validationState,
+  validationStatus,
   necessityText,
   className,
   disabled,
@@ -80,7 +80,7 @@ export const FormLabel = ({
     {hasStatusIndicator && (
       <StatusIndicator
         className={withBaseName("statusIndicator")}
-        state={validationState}
+        status={validationStatus}
         tooltipText={tooltipText}
         hasTooltip
         {...StatusIndicatorProps}
