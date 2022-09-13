@@ -3,7 +3,6 @@
   --tree-item-text-color: var(--uitk-selectable-foreground);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
-  --tree-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
 
   --tree-node-height: var(--uitkTreeNode-height, var(--uitk-size-stackable));
   --tree-node-icon-size: 12px;
@@ -136,7 +135,7 @@
   left: var(--tree-offset-left-focusVisible, 0px);
   right: 0;
   bottom: 0px;
-  border: dotted var(--tree-borderColor-focusVisible) 2px;
+  border: dotted rgb(141, 154, 179) 2px; /* FIXME: Needs checking */
   background: var(--list-background-highlighted);
 }
 

@@ -25,7 +25,6 @@
 .uitkTokenizedInput {
   --tokenized-input-spacing: var(--uitk-size-unit);
   --tokenized-input-height: var(--uitk-size-base);
-  --tokenized-input-focused-outline: var(--uitk-focused-outline);
 }
 
 .uitkTokenizedInput {
@@ -58,7 +57,7 @@
 
 /* Styles applied to root component if `focused={true}` */
 .uitkTokenizedInput-focused {
-  outline: var(--uitkTokenizedInput-focused-outline, var(--tokenized-input-focused-outline));
+  outline: var(--uitk-focused-outline);
 }
 
 /* Styles applied to root component if `expanded={true}` */
