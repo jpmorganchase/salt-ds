@@ -35,31 +35,28 @@ export const FlexContent = ({
   ...rest
 }: FlexContentProps) => (
   <div className={classname || "layout-content"} {...rest}>
-    {children || (
-      <p>
-        {number && `${number}. `}Lorem ipsum dolor sit amet, consectetur
-        adipisicing.
-      </p>
-    )}
+    {children || <p>Item {number && number}</p>}
   </div>
 );
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout disableWrap>
+    <FlexLayout>
       <FlexItem {...args}>
-        <FlexContent classname={"layout-active-content"} />
-      </FlexItem>
-      <FlexItem>
-        <FlexContent>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+        <FlexContent classname={"layout-active-content"}>
+          <p>Item</p>
         </FlexContent>
       </FlexItem>
       <FlexItem>
         <FlexContent>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+          <p>This is a larger item</p>
+          <p>This is a larger item</p>
+        </FlexContent>
+      </FlexItem>
+      <FlexItem>
+        <FlexContent>
+          <p>This is a larger item</p>
+          <p>This is a larger item</p>
         </FlexContent>
       </FlexItem>
     </FlexLayout>

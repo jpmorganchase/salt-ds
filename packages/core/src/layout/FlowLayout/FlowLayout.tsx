@@ -3,7 +3,7 @@ import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 
 export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Defines the default behavior for how flex items are laid out along the cross axis on the current line, , default is "stretch".
+   * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
    */
   align?: FlexLayoutProps["align"];
   /**
@@ -21,8 +21,6 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout({ ...rest }, ref) {
-    return (
-      <FlexLayout direction="row" ref={ref} disableWrap={false} {...rest} />
-    );
+    return <FlexLayout direction="row" ref={ref} wrap={true} {...rest} />;
   }
 );
