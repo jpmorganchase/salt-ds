@@ -50,11 +50,6 @@
   --accordion-summary-text-color-disabled: var(--uitkAccordionSummary-text-color-disabled, var(--uitk-text-primary-foreground-disabled));
   --accordion-summary-text-color-hover: var(--uitkAccordionSummary-text-color-hover, var(--uitk-text-primary-foreground));
 
-  --accordion-summary-focus-outlineStyle: var(--uitk-focused-outlineStyle);
-  --accordion-summary-focus-outlineWidth: var(--uitk-focused-outlineWidth);
-  --accordion-summary-focus-outlineColor: var(--uitk-focused-outlineColor);
-  --accordion-summary-focus-outlineOffset: var(--uitk-focused-outlineOffset);
-
   --accordion-summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --accordion-summary-icon-transform: var(--uitkAccordionSummary-icon-expand-transform, rotate(90deg));
   --accordion-summary-icon-transition: var(--uitkAccordionSummary-icon-transition, var(--accordion-summary-icon-transition-default));
@@ -91,10 +86,10 @@
 }
 
 .uitkAccordionSummary:focus-visible {
-  outline-style: var(--accordion-summary-focus-outlineStyle);
-  outline-width: var(--accordion-summary-focus-outlineWidth);
-  outline-color: var(--accordion-summary-focus-outlineColor);
-  outline-offset: var(--accordion-summary-focus-outlineOffset);
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 .uitkAccordionSummary:hover:not(.uitkAccordionSummary-disabled) {
