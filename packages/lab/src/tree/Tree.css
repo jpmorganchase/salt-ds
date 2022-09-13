@@ -1,5 +1,4 @@
 .uitkTree {
-  --tree-borderColor-focusVisible: rgb(141, 154, 179);
   --tree-node-collapse: var(--uitkTree-node-collapse, var(--list-svg-tree-node-collapse));
   --tree-node-expand: var(--uitkTree-node-expand, var(--list-svg-tree-node-expand));
   --tree-node-expanded-transform: var(--uitkTree-node-expanded-transform, none);
