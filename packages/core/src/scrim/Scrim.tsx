@@ -98,11 +98,8 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   enableContainerMode?: boolean;
   /**
-      * Prop necessary to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
-      * Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
-  /**
-   * Prop to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
-   * It also sets the different z-index and overrides FocusTrap for Scrim. Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
+   * Prop necessary to enable container use case. Pass the parent element ref that you want Scrim to be bound to.
+   * Default value is undefined, and the default behavior is for Scrim to be bound to the document viewport.
    */
   containerRef?: RefObject<HTMLElement>;
   /**
