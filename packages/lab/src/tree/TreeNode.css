@@ -1,6 +1,6 @@
 .uitkTreeNode {
   /* Color */
-  --tree-item-text-color: var(--uitk-selectable-text-color);
+  --tree-item-text-color: var(--uitk-selectable-foreground);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
   --tree-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
@@ -9,8 +9,6 @@
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
   --tree-node-paddingLeft: 6px;
-
-  --tree-item-background: var(--uitk-selectable-background);
 
   align-items: flex-start;
   min-height: var(--tree-node-height, auto);
@@ -25,9 +23,9 @@
 }
 
 .uitkTreeNode-item[aria-selected="true"] {
-  background: var(--uitk-selectable-background-active);
-  color: var(--uitk-selectable-text-color-active);
-  --uitkIcon-color: var(--uitk-selectable-icon-color-active);
+  background: var(--uitk-selectable-background-selected);
+  color: var(--uitk-selectable-foreground-selected);
+  --uitkIcon-color: var(--uitk-selectable-foreground-selected);
 }
 
 .uitkTreeNode[aria-expanded="true"] {
@@ -60,7 +58,7 @@
   align-items: center;
   display: inline-flex;
   height: var(--tree-node-height);
-  padding-left: var(--uitk-spacing-unit);
+  padding-left: var(--uitk-size-unit);
 }
 
 /* Leaf node or the div child of a collapsible node */
@@ -145,11 +143,11 @@
 /* .uitkTreeNode[aria-level='2'] {
     --tree-offset-left-focusVisible: -13px;
   }
-  
+
   .uitkTreeNode[aria-level='3'] {
     --tree-offset-left-focusVisible: -24px;
   }
-  
+
   .uitkTreeNode[aria-level='4'] {
     --tree-offset-left-focusVisible: -36px;
   } */

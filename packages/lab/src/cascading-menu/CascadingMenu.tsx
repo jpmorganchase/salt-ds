@@ -16,7 +16,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { useEventCallback, usePrevious } from "../utils";
+import { useEventCallback } from "../utils";
+import { usePrevious } from "@jpmorganchase/uitk-core";
 import { CascadingMenuProps } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";

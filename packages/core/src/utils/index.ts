@@ -14,4 +14,5 @@ export * from "./useId";
 export * from "./useIsFocusVisible";
 export * from "./useIsomorphicLayoutEffect";
 export * from "./useIsViewportLargerThanBreakpoint";
+export * from "./usePrevious";
 export * from "./useResponsiveProp";

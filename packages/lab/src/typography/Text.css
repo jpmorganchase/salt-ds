@@ -1,10 +1,10 @@
 /* Body emphasis */
 .uitkText strong {
-  font-weight: var(--uitk-text-weight-strong);
+  font-weight: var(--uitk-text-fontWeight-strong);
 }
 .uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-weight-small);
+  font-weight: var(--uitk-text-fontWeight-small);
 }
 
 /* Main css class */

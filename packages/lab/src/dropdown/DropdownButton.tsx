@@ -1,6 +1,6 @@
 import {
-  Button,
-  ButtonProps,
+  DivButton,
+  DivButtonProps,
   makePrefixer,
   useFormFieldProps,
 } from "@jpmorganchase/uitk-core";
@@ -10,7 +10,7 @@ import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
 import "./DropdownButton.css";
 
-export interface DropdownButtonProps extends ButtonProps<"div"> {
+export interface DropdownButtonProps extends DivButtonProps {
   /**
    * Replace the default Icon component
    */
@@ -77,9 +77,10 @@ export const DropdownButton = forwardRef(function DropdownButton(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { inFormField } = useFormFieldProps();
-
+  // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
+  // tool's false alarm on role of 'listbox'
   return (
-    <Button
+    <DivButton
       className={classnames(
         withBaseName(),
         {
@@ -88,9 +89,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
         },
         className
       )}
-      // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
-      // tool's false alarm on role of 'listbox'
-      elementType="div"
+      data-testid="dropdown-button"
       disabled={disabled}
       variant="secondary"
       {...rest}
@@ -115,6 +114,6 @@ export const DropdownButton = forwardRef(function DropdownButton(
           aria-hidden="true"
         />
       </div>
-    </Button>
+    </DivButton>
   );
 });

@@ -1,5 +1,75 @@
 # @jpmorganchase/uitk-lab
 
+## 0.5.0
+
+### Minor Changes
+
+- 92f49f0f: Use Icon and Button's public tokens and direct usage of characteristics for ToggleButton styling
+- 58adde30: Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
+  --uitkDialog-border-color -> --uitkDialog-borderColor
+  --accordion-summary-padding-left -> --accordion-summary-paddingLeft
+  --grid-item-grid-row-end -> --grid-item-gridRowEnd
+- efb2cf60: List: omit `defaultValue` HTML attribute to avoid confusion
+- a5330bf9: - Update the Calendar stories
+  - Change the unselectable high emphasis to medium
+  - Add tooltip to previous and next month buttons
+  - Prevent a month only calendar wrapping to the next or previous year
+- 6259041e: Changes to text characteristic fontSize tokens
+
+  TD:
+  H1 36px -> 42px
+  H2 28px -> 32px
+  H3 18px -> 24px
+  Caption 12px -> 14px
+  Help 12px -> 14px
+
+  LD:
+  Caption 11px -> 12px
+  Help 11px -> 12px
+
+- b07baa66: Fix for class names in selectors causing nesting issues when design tokens are density specific
+- 35bb2ca8: Remove border from layer component
+  Add fade animations to `LayerLayout`
+- 4719e62b: Checkbox:
+  -box-size -> -height and -width
+
+  Pagination/Accordion:
+  —pagination and —accordion prefixes added
+
+  Tree node:
+  —padding-left token changed to padding-left attribute: fixed typo
+
+  Dialog/Toolbar:
+  background-color changed to background as standard
+
+  Skip link:
+  —skipLink-- (double dash) changed to —skipLink-
+
+- 1269d30f: Gradient from palette and measured characteristic fill values replaced with solid blue color in line with design change; backwards compatibility classes added to CircularProgress and Spinner
+- e6164788: **BREAKING CHANGES:**
+
+  - Move Scrim to core
+    `import {Scrim} from "@jpmorganchase/uitk-core";`
+  - Refactor `containerFix` and `parentRef` in to a single prop `containerRef`
+  - Rename `disableEnforceFocus` prop to `disableFocusTrap`
+  - Rename `returnFocus` prop to `returnFocusOptions`
+
+- dd8c7646: Add global css box-sizing as border-box, and remove from components
+
+### Patch Changes
+
+- 60a04bce: Fix Dropdown button active text and icon color
+- 80eb0078: Fix z-index for ComboBox, Dropdown and LayerLayout due to CSS variable name mismatch
+- f21c02c9: Fix OrderedButton applying a right margin incorrectly
+- 6a49e142: - Fix Accordion focus ring not appearing
+  - Fix Link disabled color
+  - Fix Link focus color
+  - Fix Link active color
+  - Fix Slider track not appearing
+  - Fix selected Tab text color
+  - Fix Text strong and small font weights
+  - Fix ContactDetails favourite toggle color
+
 ## 0.4.0
 
 ### Minor Changes
