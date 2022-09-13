@@ -9,7 +9,7 @@
     - `FormLabel`
       - Rename `validationState` prop to `validationStatus`
     - `StatusIndicator`
-      - Rename `StateIndicatorState` type to `StateIndicatorStatus`
+      - Rename `StateIndicatorState` type to `StatusIndicatorStatus`
       - Rename `state` prop to `status`
 - `Tooltip`
   - Rename `TooltipState` type to `TooltipStatus`

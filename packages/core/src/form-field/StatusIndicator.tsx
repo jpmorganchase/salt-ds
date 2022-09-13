@@ -4,14 +4,14 @@ import { ElementType } from "react";
 import { StatusIcon } from "../status-icon";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
-export type StatusIndicatorState = "error" | "info" | "warning" | "success";
+export type StatusIndicatorStatus = "error" | "info" | "warning" | "success";
 
 // `statusIndicatorContent` is removed. It's not a very restrictive API only allowing string array.
 // User always have ability to override `tooltipText` for string, or `TooltipProps.render` for complex structure.
 export interface StatusIndicatorProps extends IconProps {
   hasTooltip?: boolean;
   IconProps?: Partial<IconProps>;
-  status?: StatusIndicatorState;
+  status?: StatusIndicatorStatus;
   TooltipComponent?: ElementType<TooltipProps>;
   TooltipProps?: Partial<TooltipProps>;
   tooltipText?: string;
