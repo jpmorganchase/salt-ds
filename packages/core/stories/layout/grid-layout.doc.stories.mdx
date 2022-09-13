@@ -22,7 +22,7 @@ The grid layout defaults to a twelve column grid with 1 row but you can customis
 For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--toolkit-grid-layout" />
+  <Story id="core-layout-gridlayout--default-grid-layout" />
 </Canvas>
 
 ## How you can use Grid layout
@@ -36,7 +36,7 @@ If you want to control the flow in a single dimension, we recommend you having a
 ## API
 
 ```
-import { GridLayout, GridItem } from "@jpmorganchase/uitk-lab";
+import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 ```
 
 ## Props
@@ -66,22 +66,22 @@ You have an item that needs to take the space of more than one row/column or whe
 
 ### Responsive
 
-The grid supports the use of responsive props, so you can defined different behaviours based on viewport size.
+The grid supports the use of responsive props, so you can define different behaviours based on viewport size.
 All grid props are responsive, and their values can be individually customised per breakpoint.  
-You can use the default breakpoints or pass in you own
+You can use the default breakpoints or pass in you own.
 
 #### Use when
 
 The flow of the grid is dependant on the viewport size.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--toolkit-grid-layout-responsive-view" />
+  <Story id="core-layout-gridlayout--grid-layout-responsive-view" />
 </Canvas>
 
 ### Simple Usage
 
 <Canvas>
-  <Story id="core-layout-gridlayout--toolkit-grid-layout-footer" />
+  <Story id="core-layout-gridlayout--grid-layout-footer" />
 </Canvas>
 
 ### Composite Usage
