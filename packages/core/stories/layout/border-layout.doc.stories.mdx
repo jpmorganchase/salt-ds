@@ -5,6 +5,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "../help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/BorderLayout"
@@ -15,7 +16,7 @@ import {
   }}
 />
 
-# Border Layout
+# Border layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
 The border layout is built using [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
@@ -24,19 +25,17 @@ The border layout is built using [Grid layout](?path=/docs/documentation-core-la
   <Story id="core-layout-borderlayout--border-layout-all-panels" />
 </Canvas>
 
-## API
+## Use Border layout when...
 
-```
-import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-core";
-```
+You want a fixed layout with a flexible main region.
 
-## Props
+### Don't use Border layout when...
 
-<ArgsTable of={BorderLayout} />
+You want a customised layout that you can control in both row and column dimensions. In this case we recommend you having a look at [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page).
 
-## Examples
+### Examples
 
-### Border Item inside default border layout
+#### Border Item inside default border layout
 
 The border item wrapper allows you to select the right position for your content to be displayed at - `header`, `left`, `main`, `right` or `bottom`.  
 It also provides access to other properties such as alignment and sticky behaviour.
@@ -45,7 +44,7 @@ It also provides access to other properties such as alignment and sticky behavio
   <Story id="core-layout-borderlayout-borderitem--border-item-wrapper" />
 </Canvas>
 
-### Fixed panels
+#### Fixed panels
 
 You can have a responsive `main` region while the `left` and `right` panels remain with a fixed width as the content changes.
 
@@ -53,13 +52,25 @@ You can have a responsive `main` region while the `left` and `right` panels rema
   <Story id="core-layout-borderlayout--border-layout-fixed-panels" />
 </Canvas>
 
-### Composite Usage
+#### Composite usage
 
 The composite usage combines examples from other layout components nested to give a better example of a complex implementation of the border component.
 
 <Canvas>
   <Story id="core-layout-borderlayout--border-layout-form-composite" />
 </Canvas>
+
+## Configuring Border layout
+
+### API
+
+```
+import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={BorderLayout} />
 
 ## Anatomy
 
@@ -76,3 +87,5 @@ The composite usage combines examples from other layout components nested to giv
 #### Item
 
 <CSSClassTable of={BorderItem} />
+
+<HelpAndSupport />

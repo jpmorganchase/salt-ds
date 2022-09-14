@@ -6,6 +6,7 @@ import {
   CSSVariableTable,
 } from "css-variable-docgen-components";
 import { DefaultStackLayout } from "./stack-layout.stories";
+import HelpAndSupport from "../help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/StackLayout"
@@ -15,7 +16,7 @@ import { DefaultStackLayout } from "./stack-layout.stories";
   }}
 />
 
-# Stack Layout
+# Stack layout
 
 Stack layout dictates a vertical order and direction for UI elements.
 It builds from flex layout, the height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
@@ -26,39 +27,43 @@ It can be used for cases in which the direction needs to be consistently vertica
   <Story id="core-layout-stacklayout--default-stack-layout" />
 </Canvas>
 
-## How you can use Stack layout
+## Use Stack layout when...
 
-Stack is responsive by default and will break into two columns as soon as there is not enough space.
+You need a layout that is responsive by default and will break into two columns as soon as there is not enough space.
 
-If you want the direction to have more complex customization, we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+### Don't use Stack layout when...
 
-## API
+You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
 
-```
-import { StackLayout } from "@jpmorganchase/uitk-core";
-```
+### Examples
 
-## Props
+#### Simple usage
 
-<ArgsTable of={StackLayout} />
-
-## Examples
-
-### Simple Usage
-
-the simple usage example shows a group of panels stacked.
+The simple usage example shows a group of panels stacked.
 
 <Canvas>
   <Story id="core-layout-stacklayout--stack-layout-simple-usage" />
 </Canvas>
 
-### Composite Usage
+#### Composite usage
 
 The composite usage example shows a group of formfields stacked.
 
 <Canvas>
   <Story id="core-layout-stacklayout--stack-layout-composite" />
 </Canvas>
+
+## Configuring Stack layout
+
+### API
+
+```
+import { StackLayout } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={StackLayout} />
 
 ## Anatomy
 
@@ -70,3 +75,5 @@ The composite usage example shows a group of formfields stacked.
     </StackLayout>
   </ComponentAnatomy>
 </Canvas>
+
+<HelpAndSupport />
