@@ -2988,7 +2988,6 @@ __metadata:
     axe-core: ^4.4.3
     chokidar: ^3.5.3
     chromatic: next
-    ci-info: ^3.3.1
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
@@ -8640,7 +8639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^3.1.0, ci-info@npm:^3.2.0, ci-info@npm:^3.3.1":
+"ci-info@npm:^3.1.0, ci-info@npm:^3.2.0":
   version: 3.3.1
   resolution: "ci-info@npm:3.3.1"
   checksum: 244546317cca96955860d2cb8d0bf47dd66d9078bbe83a215fa87464ab24b352c6fc6f56027d1c82f002e3f833be253f1320d35ed7199bd81134f7788c657f3a
