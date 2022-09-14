@@ -21,6 +21,7 @@ export * from "./switch";
 export * from "./theme";
 export * from "./toolkit-provider";
 export * from "./tooltip";
+export * from "./tooltip-new";
 export * from "./utils";
 export * from "./viewport";
 export * from "./window";
