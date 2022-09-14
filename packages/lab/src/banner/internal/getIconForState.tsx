@@ -5,7 +5,10 @@ import {
   SuccessTickIcon,
   WarningIcon,
 } from "@jpmorganchase/uitk-icons";
-import { TooltipState } from "@jpmorganchase/uitk-core";
+
+// Keep in order of preference. First items are used as default
+
+export type BannerState = "error" | "info" | "success" | "warning";
 
 export const State = {
   error: "error",
@@ -22,7 +25,7 @@ const icons = {
   [State.info]: InfoIcon,
 };
 
-export function getIconForState(state: TooltipState) {
+export function getIconForState(state: BannerState) {
   return (props: IconProps) => {
     const StateIcon = icons[state];
     if (StateIcon) {

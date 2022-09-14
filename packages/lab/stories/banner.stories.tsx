@@ -126,10 +126,11 @@ export const Render = () => {
       {showBanner && (
         <Banner
           onClose={handleClose}
-          render={({ getLabelProps, getIconProps }) => (
+          render={({ getLabelProps, getIconProps, getLinkProps }) => (
             <>
               <SuccessTickIcon {...getIconProps()} aria-label={"Success"} />
               <span {...getLabelProps()}>Example custom renderer</span>
+              <a {...getLinkProps()}>link</a>
             </>
           )}
           state="success"
