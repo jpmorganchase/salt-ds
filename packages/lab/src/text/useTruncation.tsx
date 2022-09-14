@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { TextProps } from "../typography";
+import { TextProps } from "./Text";
 import { getComputedStyles } from "./getComputedStyles";
 
 // this guards against text underline which adds 1px on scrollHeight

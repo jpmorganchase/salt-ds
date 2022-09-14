@@ -3,7 +3,7 @@ import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import warning from "warning";
 import { Link, LinkProps } from "../link";
-import { Div } from "../typography";
+import { Div } from "../text";
 import { useMetricContext } from "./internal";
 import "./MetricHeader.css";
 

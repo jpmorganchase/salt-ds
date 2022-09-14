@@ -2,7 +2,7 @@
   /* Color */
   --list-item-text-color: var(--uitk-selectable-foreground);
   --list-item-background: var(--uitkListItem-background, var(--uitk-selectable-background));
-  --list-item-selected-focus-visible-outlineColor: var(--uitk-color-white);
+  --list-item-selected-focus-outlineColor: var(--uitk-color-white); /* TODO: Check token with design */
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
   --list-item-alignItems: center;
@@ -30,7 +30,7 @@
   font-size: var(--uitk-text-fontSize);
   text-align: var(--uitk-text-textAlign);
   line-height: var(--uitk-text-lineHeight);
-  height: var(--uitkListItem-height, auto);
+  height: var(--uitkListItem-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);
   padding: 0 var(--uitk-size-unit);
@@ -74,7 +74,7 @@
 }
 
 .uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox).uitkFocusVisible {
-  outline-color: var(--list-item-selected-focus-visible-outlineColor);
+  outline-color: var(--list-item-selected-focus-outlineColor);
 }
 
 .uitkListItem-textWrapper {

@@ -306,7 +306,7 @@ const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
         <FormField
           helperText="This is some help text"
           label="ADA compliant label"
-          validationState="warning"
+          validationStatus="warning"
         >
           <RadioButtonGroup
             aria-label="Uncontrolled Example"
@@ -325,7 +325,7 @@ const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
         <FormField
           helperText="This is some help text"
           label="ADA compliant label"
-          validationState="error"
+          validationStatus="error"
         >
           <RadioButtonGroup
             aria-label="Uncontrolled Example"
@@ -439,7 +439,7 @@ const GroupFormFieldVerticalExamples = () => (
       <FormField
         helperText="This is some help text"
         label="ADA compliant label"
-        validationState="warning"
+        validationStatus="warning"
       >
         <RadioButtonGroup
           aria-label="Uncontrolled Example"
@@ -457,7 +457,7 @@ const GroupFormFieldVerticalExamples = () => (
       <FormField
         helperText="This is some help text"
         label="ADA compliant label"
-        validationState="error"
+        validationStatus="error"
       >
         <RadioButtonGroup
           aria-label="Uncontrolled Example"

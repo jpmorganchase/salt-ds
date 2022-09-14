@@ -34,7 +34,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         className="uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -42,7 +42,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         className="uitkEmphasisHigh uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -51,7 +51,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="warning"
+        validationStatus="warning"
       >
         <Input />
       </FormField>
@@ -59,7 +59,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         className="uitkEmphasisLow uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>
@@ -67,7 +67,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         className="uitkEmphasisHigh uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>
@@ -76,7 +76,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
-        validationState="error"
+        validationStatus="error"
       >
         <Input />
       </FormField>

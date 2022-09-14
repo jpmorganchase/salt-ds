@@ -28,7 +28,7 @@ import "./FormField.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
-export type FormFieldValidationState = "error" | "warning";
+export type FormFieldValidationStatus = "error" | "warning";
 
 export interface A11yValueProps
   extends Pick<NecessityIndicatorOptions, "required"> {
@@ -113,7 +113,7 @@ export interface FormFieldProps
   /**
    * The state for the FormField: Must be one of: 'error'|'warning'|undefined
    */
-  validationState?: FormFieldValidationState;
+  validationStatus?: FormFieldValidationStatus;
 }
 
 export interface useA11yValueValue {
@@ -207,7 +207,7 @@ export const FormField = forwardRef(
       readOnly,
       required,
       StatusIndicatorProps,
-      validationState,
+      validationStatus,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -235,8 +235,8 @@ export const FormField = forwardRef(
     const hasLabel = label !== undefined;
     const labelTop = hasLabel && labelPlacement === "top";
     const labelLeft = hasLabel && labelPlacement === "left";
-    const isWarning = validationState === "warning";
-    const isError = validationState === "error";
+    const isWarning = validationStatus === "warning";
+    const isError = validationStatus === "error";
     const focusClass = disableFocusRing
       ? "lowFocused"
       : "focused"; /* Low emphasis will override this */
@@ -290,7 +290,7 @@ export const FormField = forwardRef(
             {hasLabel && (
               <LabelComponent
                 {...LabelProps}
-                validationState={validationState}
+                validationStatus={validationStatus}
                 hasStatusIndicator={hasStatusIndicator}
                 StatusIndicatorProps={StatusIndicatorProps}
                 className={LabelProps.className}
@@ -305,7 +305,7 @@ export const FormField = forwardRef(
             {children}
             <ActivationIndicatorComponent
               hasIcon={!hasStatusIndicator}
-              validationState={validationState}
+              validationStatus={validationStatus}
             />
             {renderHelperText && (
               <HelperTextComponent

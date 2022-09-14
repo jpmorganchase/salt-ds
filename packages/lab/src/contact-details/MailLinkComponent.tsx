@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "../link";
-import { Div } from "../typography";
+import { Div } from "../text";
 import { ValueComponentProps } from "./internal";
 import { isEmail } from "../utils";
 

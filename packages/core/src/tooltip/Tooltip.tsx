@@ -10,13 +10,13 @@ import {
 import { Portal, PortalProps } from "../portal";
 import { makePrefixer } from "../utils";
 import { useWindow } from "../window";
-import { getIconForState } from "./getIconForState";
+import { getIconForStatus } from "./getIconForStatus";
 
 import "./Tooltip.css";
 
 // Keep in order of preference. First items are used as default
 
-export type TooltipState = "error" | "info" | "success" | "warning";
+export type TooltipStatus = "error" | "info" | "success" | "warning";
 
 const withBaseName = makePrefixer("uitkTooltip");
 const defaultIconProps = { size: 12, className: withBaseName("icon") };
@@ -48,9 +48,9 @@ export interface TooltipProps
    */
   render?: (props: TooltipRenderProp) => ReactNode;
   /**
-   * A string to determine the current state of the tooltip
+   * A string to determine the current status of the tooltip
    */
-  state?: TooltipState;
+  status?: TooltipStatus;
   title?: string;
   /**
    * This prop is used to help implement the accessibility logic.
@@ -72,7 +72,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       hideIcon,
       open,
       render,
-      state = "info",
+      status = "info",
       title,
       ...rest
     },
@@ -83,12 +83,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         if (hideIcon) {
           return null;
         }
-        const StateIcon = getIconForState(state);
-        return StateIcon ? (
-          <StateIcon {...iconProps} {...defaultIconProps} />
+        const StatusIcon = getIconForStatus(status);
+        return StatusIcon ? (
+          <StatusIcon {...iconProps} {...defaultIconProps} />
         ) : null;
       },
-      [state, hideIcon]
+      [status, hideIcon]
     );
 
     const Window = useWindow();
@@ -100,7 +100,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <Portal disablePortal={disablePortal} container={container}>
         <Window
-          className={cn(withBaseName(), withBaseName(state), classNameProp)}
+          className={cn(withBaseName(), withBaseName(status))}
           ref={ref}
           {...rest}
         >
