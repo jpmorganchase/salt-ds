@@ -35,9 +35,22 @@ const IconWithTooltip = (props: {
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   const { className } = props;
   return (
-    <QAContainer height={500} itemPadding={45} width={1200} {...props}>
-      <IconWithTooltip title="Hello, World" />
-      <IconWithTooltip status="error" title="Uh oh, world" />
+    <QAContainer itemPadding={50} cols={3} height={1000} {...props}>
+      <IconWithTooltip
+        className={className}
+        placement="top"
+        title="Hello, world"
+      />
+      <IconWithTooltip
+        className={className}
+        placement="bottom"
+        title="Hello, world"
+      />
+      <IconWithTooltip
+        className={className}
+        placement="left"
+        title="Hello, world"
+      />
       <IconWithTooltip
         className={className}
         placement="right"
@@ -45,7 +58,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       />
       <IconWithTooltip
         className={className}
-        state="error"
+        status="error"
         title="Uh oh, world"
       />
       <IconWithTooltip
