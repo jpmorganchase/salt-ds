@@ -24,9 +24,12 @@ import {
 
 # Button
 
-A Button executes an action when clicked. Button labels should use only one or two words, and begin with an active verb. There are three Button variants: Primary is the most commonly-used button; Secondary performs an action less likely to be triggered; Call-To-Action (a.k.a. CTA) performs a critical action on the screen.
+A Button executes an action when clicked. Button labels should use only one or two words and begin with an active verb. There are three Button variants:  
+- **Primary** is the most commonly-used button.
+- **Secondary** performs an action less likely to be triggered.
+- **Call-To-Action** (a.k.a. CTA) performs a critical action on the screen.
 
-## Button Variants
+## Button variants
 
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
@@ -59,17 +62,20 @@ Icons can be put before or after text, or used alone.
   </Story>
 </Canvas>
 
-# API
+## Configuring Button
 
+### API
+
+Use the following call to import Button.
 ```
 import { Button } from "@jpmorganchase/uitk-core";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={Button} />
 
-## HTML Anatomy of a Button
+### HTML Anatomy of a Button
 
 export const Link = ({ children, to, ...props }) => (
   <a {...props} href={to}>
@@ -89,21 +95,29 @@ export const Link = ({ children, to, ...props }) => (
   </ComponentAnatomy>
 </Canvas>
 
-## CSS Class
+### CSS Class
 
 <CSSClassTable of={Button} />
 
-## Characteristics Used
+### Characteristics used
 
 <CharacteristicUsage of={Button} />
 
-## --uitkButton CSS Custom Property API
+### --uitkButton CSS custom property API
 
 The default styling values for most Button attributes are provided by the theme variables. A smaller number of attributes
 use hard-coded values local to Button. Both of these can be overridden, see Theme documentation for detailed usage guidance.
 
 The CSS custom properties below are consumed by Button, but not defined by Button. They can be defined via a container or
 a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
 <CSSVariableTable of={Button} />
+
+# Help and support
+
+Please check the [issues section of our github repository](https://github.com/jpmorganchase/uitk/issues) for any design or development issues you have.
+
+If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior. 
+
+If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.
