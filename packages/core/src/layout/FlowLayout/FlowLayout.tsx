@@ -21,6 +21,6 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout({ ...rest }, ref) {
-    return <FlexLayout direction="row" ref={ref} wrap={true} {...rest} />;
+    return <FlexLayout direction="row" ref={ref} wrap {...rest} />;
   }
 );
