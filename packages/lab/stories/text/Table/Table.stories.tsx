@@ -5,7 +5,7 @@ import { transactions } from "./transactions";
 import "./Table.css";
 
 export default {
-  title: "Lab/Typography",
+  title: "Lab/Text",
   component: Text,
   parameters: {
     controls: {

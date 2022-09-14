@@ -12,7 +12,7 @@ const withBaseName = makePrefixer("uitkDialogContent");
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { children, className, ...rest } = props;
-    const { state, dialogId, setContentElement } = useContext(DialogContext);
+    const { status, dialogId, setContentElement } = useContext(DialogContext);
 
     const handleRef = useForkRef(ref, setContentElement);
 
@@ -23,7 +23,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
           withBaseName(),
           className,
           {
-            [withBaseName("leftGutter")]: !!state,
+            [withBaseName("leftGutter")]: !!status,
           },
           className
         )}

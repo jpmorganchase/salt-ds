@@ -2,7 +2,7 @@ import { makePrefixer, TooltipProps } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { Div } from "../typography";
+import { Div } from "../text";
 import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";

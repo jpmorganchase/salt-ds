@@ -1,11 +1,3 @@
-/* Style applied to the root element */
-.uitkButton {
-  --button-focused-outlineStyle: var(--uitkButton-focused-outlineStyle, var(--uitk-focused-outlineStyle));
-  --button-focused-outlineWidth: var(--uitkButton-focused-outlineWidth, var(--uitk-focused-outlineWidth));
-  --button-focused-outlineColor: var(--uitkButton-focused-outlineColor, var(--uitk-focused-outlineColor));
-  --button-focused-outlineOffset: var(--uitkButton-focused-outlineOffset, var(--uitk-focused-outlineOffset));
-}
-
 /* Icon API @ignore */
 .uitkButton {
   --uitkIcon-letterSpacing: 0;
@@ -143,10 +135,10 @@
 
 /* Added .uitkButton:focus for browsers don't support :focus-visible, like Firefox */
 .uitkButton:focus {
-  outline-style: var(--button-focused-outlineStyle);
-  outline-width: var(--button-focused-outlineWidth);
-  outline-color: var(--button-focused-outlineColor);
-  outline-offset: var(--button-focused-outlineOffset);
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 .uitkButton:focus:not(:focus-visible) {
@@ -154,10 +146,10 @@
 }
 
 .uitkButton:focus-visible {
-  outline-style: var(--button-focused-outlineStyle);
-  outline-width: var(--button-focused-outlineWidth);
-  outline-color: var(--button-focused-outlineColor);
-  outline-offset: var(--button-focused-outlineOffset);
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 /* Pseudo-class applied to the root element on focus when Button is not active */
@@ -179,8 +171,8 @@
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
 
+/* Pseudo-class applied to the root element if disabled={true} */
 .uitkButton:disabled,
-  /* Pseudo-class applied to the root element if disabled={true} */
 .uitkButton-disabled,
   /* Overrides to apply the disabled style when the button is focusable while also disabled */
 .uitkButton-disabled:active,

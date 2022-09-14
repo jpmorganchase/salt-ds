@@ -1,7 +1,7 @@
 import { forwardRef, useCallback } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
-import { Text, TextProps } from "../typography";
+import { Text, TextProps } from "../text";
 
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Link.css";

@@ -19,7 +19,7 @@ export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
 
   const defaultProps = getTooltipProps({
     title: "I am a tooltip",
-    state: "info",
+    status: "info",
   });
 
   return (
@@ -35,7 +35,7 @@ export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
 
   const openProps = getTooltipProps({
     title: "I am a tooltip",
-    state: "info",
+    status: "info",
     open: true,
   });
 
@@ -84,13 +84,13 @@ ScrollTooltip.args = {
 };
 
 export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
-  const { state = "error", ...rest } = props;
+  const { status = "error", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
   return (
     <>
       <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      <Tooltip {...getTooltipProps({ title: "We found an issue", state })} />
+      <Tooltip {...getTooltipProps({ title: "We found an issue", status })} />
     </>
   );
 };
@@ -98,13 +98,13 @@ export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
 export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
   props
 ) => {
-  const { state = "warning", ...rest } = props;
+  const { status = "warning", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
   return (
     <>
       <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      <Tooltip {...getTooltipProps({ title: "Are you sure?", state })} />
+      <Tooltip {...getTooltipProps({ title: "Are you sure?", status })} />
     </>
   );
 };
@@ -112,13 +112,13 @@ export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
 export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
   props
 ) => {
-  const { state = "success", ...rest } = props;
+  const { status = "success", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
   return (
     <>
       <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      <Tooltip {...getTooltipProps({ title: "Well done", state })} />
+      <Tooltip {...getTooltipProps({ title: "Well done", status })} />
     </>
   );
 };

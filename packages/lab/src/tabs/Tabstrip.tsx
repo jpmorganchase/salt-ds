@@ -409,7 +409,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
             {...getTooltipProps({
               title: "Active Tab cannot be moved into overflow list",
               open: true,
-              state: "warning",
+              status: "warning",
             })}
             key="tooltip"
           />

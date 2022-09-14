@@ -1,6 +1,10 @@
 module.exports = {
-  extends: ["modular-app", "plugin:storybook/recommended"],
   overrides: [
+    {
+      files: ["*"],
+      excludedFiles: ["*.cy.tsx"],
+      extends: ["modular-app", "plugin:storybook/recommended"],
+    },
     {
       files: ["*.ts", "*.tsx"],
       parserOptions: {
@@ -23,9 +27,9 @@ module.exports = {
         "import/no-anonymous-default-export": "off",
       },
     },
+    {
+      files: ["*.cy.tsx"],
+      extends: ["plugin:cypress/recommended"],
+    },
   ],
-  plugins: ["cypress"],
-  env: {
-    "cypress/globals": true,
-  },
 };

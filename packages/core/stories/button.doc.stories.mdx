@@ -59,38 +59,6 @@ Icons can be put before or after text, or used alone.
   </Story>
 </Canvas>
 
-## Button as link, div etc
-
-Sometimes a link must be styled as a button. The HTML must use the correct element, in order that browser built-in features function as expected.
-In this case, "Open link in new tab" should be available in the context menu. This is achieved with the `elementType` prop.
-
-<Canvas>
-  <Story name="Button as Link">
-    <Button
-      elementType="a"
-      href={window.location.href}
-      target="_blank"
-      aria-label="Button with HREF, opens in new window"
-    >
-      Link
-    </Button>
-  </Story>
-</Canvas>
-
-This is also useful where Button elements might otherwise be nested, a structure which would be flagged by accessibility tests as an error. An inner button can be
-rendered as a `div`.
-
-<Canvas>
-  <Story name="Button as Div">
-    <Button elementType="div" aria-label="Button as Div">
-      Div Button
-    </Button>
-  </Story>
-</Canvas>
-
-TypeScript users, note that in the above examples, strict typing is still enforced, so if `elementType` is set to `a` then the Component will be be TypeChecked as
-an `anchor` element and the attributes validated accordingly.
-
 # API
 
 ```
@@ -115,41 +83,11 @@ export const Link = ({ children, to, ...props }) => (
   </ComponentAnatomy>
   <br />
   <ComponentAnatomy>
-    <Button elementType="div" aria-label="Button as Div" variant="secondary">
-      Secondary Div
-    </Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
     <Button variant="cta" aria-label="CTA with Icon">
       CTA with Icon <SendIcon size={12} />
     </Button>
   </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button
-      elementType={Link}
-      to="/"
-      aria-label="Link as elementType"
-      role={null}
-    >
-      Custom Link
-    </Button>
-  </ComponentAnatomy>
 </Canvas>
-
-The Custom Link example above uses a simplified `Link` component defined as below. In reality, this might be A
-`RouterLink` from a routing library, for example. In this case, the `Button` does not know what root element will
-be rendered by the custom Component, by default it will add the `button` role. We suppress this by explicitly
-setting role = null. It will be rare to need to do this.
-
-```javascript
-export const Link = ({ children, to, ...props }) => (
-  <a {...props} href={to}>
-    {children}
-  </a>
-);
-```
 
 ## CSS Class
 

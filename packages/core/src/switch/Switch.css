@@ -181,10 +181,10 @@
   display: block;
   height: var(--uitkSwitch-focused-height, var(--uitk-size-switch));
   left: var(--uitkSwitch-focused-left, -2px);
-  outline-style: var(--uitkSwitch-focused-outlineStyle, var(--uitk-focused-outlineStyle));
-  outline-width: var(--uitkSwitch-focused-outlineWidth, var(--uitk-focused-outlineWidth));
-  outline-color: var(--uitkSwitch-focused-outlineColor, var(--uitk-focused-outlineColor));
-  outline-offset: var(--uitkSwitch-focused-outlineOffset, var(--uitk-focused-outlineOffset));
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
   position: absolute;
   top: var(--uitkSwitch-focused-top, -2px);
   width: var(--uitkSwitch-focused-width, var(--switch-width));
