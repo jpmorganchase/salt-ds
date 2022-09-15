@@ -361,7 +361,7 @@ const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
           </p>
-          <FlexLayout disableWrap>
+          <FlexLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <FormFieldExample key={index} />
             ))}
