@@ -1,40 +1,23 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
 import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
-import { QAContainer } from "docs/components";
+import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Progress/QA",
-  component: CircularProgress,
+  component: LinearProgress,
 } as ComponentMeta<typeof CircularProgress>;
 
-export const AllExamplesGrid: Story = (props: {
-  className?: string;
-  imgSrc?: string;
-}) => {
+export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+  const { className } = props;
   return (
-    <QAContainer cols={3} imgSrc={props.imgSrc}>
-      <LinearProgress className={props.className} size="small" value={38} />
-      <LinearProgress className={props.className} size="medium" value={38} />
-      <LinearProgress className={props.className} size="large" value={38} />
-      <LinearProgress
-        className={props.className}
-        disabled
-        size="small"
-        value={38}
-      />
-      <LinearProgress
-        className={props.className}
-        disabled
-        size="medium"
-        value={38}
-      />
-      <LinearProgress
-        className={props.className}
-        disabled
-        size="large"
-        value={38}
-      />
+    <QAContainer cols={3} {...props}>
+      <LinearProgress className={className} size="small" value={38} />
+      <LinearProgress className={className} size="medium" value={38} />
+      <LinearProgress className={className} size="large" value={38} />
+      <LinearProgress className={className} disabled size="small" value={38} />
+      <LinearProgress className={className} disabled size="medium" value={38} />
+      <LinearProgress className={className} disabled size="large" value={38} />
       <CircularProgress aria-label="Download" size="small" value={38} />
       <CircularProgress aria-label="Download" size="medium" value={38} />
       <CircularProgress aria-label="Download" size="large" value={38} />
@@ -60,7 +43,7 @@ export const AllExamplesGrid: Story = (props: {
   );
 };
 
-AllExamplesGrid.parameters = {
+ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
