@@ -64,17 +64,8 @@ AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
-CompareWithOriginalToolkit.args = {
-  className: "backwardsCompat",
-  imgSrc: "/visual-regression-screenshots/Progress-vr-snapshot.png",
+export const CompareWithOriginalToolkit: Story = () => {
+  return (
+    <ExamplesGrid imgSrc="/visual-regression-screenshots/Progress-vr-snapshot.png" />
+  );
 };

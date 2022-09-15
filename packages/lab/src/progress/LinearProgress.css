@@ -134,17 +134,3 @@
     right: -8%;
   }
 }
-
-/* --- backwards compatible --- */
-
-.backwardsCompat.uitkLinearProgress-small {
-  font-size: 11px;
-}
-
-.backwardsCompat.uitkLinearProgress-medium {
-  font-size: 14px;
-}
-
-.backwardsCompat.uitkLinearProgress-large {
-  font-size: 16px;
-}
