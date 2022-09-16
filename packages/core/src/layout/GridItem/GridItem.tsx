@@ -70,12 +70,12 @@ export const GridItem = forwardRef<HTMLDivElement, GridItemProps>(
 
     const gridStyles = {
       ...style,
-      "--grid-item-justifySelf": horizontalAlignment,
-      "--grid-item-alignSelf": verticalAlignment,
-      "--grid-item-gridRowStart": gridRowStart,
-      "--grid-item-gridColumnStart": gridColumnStart,
-      "--grid-item-gridRowEnd": gridRowEnd,
-      "--grid-item-gridColumnEnd": gridColumnEnd,
+      "--gridItem-justifySelf": horizontalAlignment,
+      "--gridItem-alignSelf": verticalAlignment,
+      "--gridItem-gridRowStart": gridRowStart,
+      "--gridItem-gridColumnStart": gridColumnStart,
+      "--gridItem-gridRowEnd": gridRowEnd,
+      "--gridItem-gridColumnEnd": gridColumnEnd,
     };
 
     return (

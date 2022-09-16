@@ -23,9 +23,6 @@
 }
 
 .uitk-density-ultrahigh {
-  --uitkGrid-rowHeight: 20px;
-  --uitkGrid-padding: 4px;
-  --uitkGrid-fontSize: 12px;
   /*Checkbox*/
   --checkbox-fontSize: 11px;
   /*CheckboxIcon*/
@@ -157,6 +154,11 @@
 }
 
 .uitk-density-ultrahigh {
+  /* FIXME: these 3 should be --grid local tokens */
+  --uitkGrid-rowHeight: 20px;
+  --uitkGrid-padding: 4px;
+  --uitkGrid-fontSize: 12px;
+
   --grid-controlLabel-right-marginLeft: 3px;
   --grid-controlLabel-right-marginRight: 0;
 

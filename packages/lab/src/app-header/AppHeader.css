@@ -1,27 +1,27 @@
 .uitkAppHeader {
-  --appheader-background: var(--uitk-container-background-medium);
-  --appheader-height: var(--uitkAppHeader-height, var(--uitk-size-toolbar));
-  --appheader-separable-bar: var(--uitk-separable-secondary-borderColor);
-  --appheader-shadow: var(--uitkAppHeader-shadow, var(--uitk-overlayable-shadow-borderRegion));
-  --appheader-padding: calc(var(--uitk-size-unit) * 3);
-  --appheader-paddingLeft: 8px;
-  --appheader-paddingRight: var(--appheader-padding);
+  --appHeader-background: var(--uitk-container-background-medium);
+  --appHeader-height: var(--uitkAppHeader-height, var(--uitk-size-toolbar));
+  --appHeader-separable-bar: var(--uitk-separable-secondary-borderColor);
+  --appHeader-shadow: var(--uitkAppHeader-shadow, var(--uitk-overlayable-shadow-borderRegion));
+  --appHeader-padding: calc(var(--uitk-size-unit) * 3);
+  --appHeader-paddingLeft: 8px;
+  --appHeader-paddingRight: var(--appHeader-padding);
 
-  --uitkTabstrip-height: var(--appheader-height);
+  --uitkTabs-tabstrip-height: var(--appHeader-height);
   --uitkToolbar-width: auto;
 }
 
 .uitkAppHeader {
   align-items: flex-start;
-  background: var(--appheader-background);
+  background: var(--appHeader-background);
   border-bottom: var(--uitk-container-borderStyle) var(--uitk-container-borderWidth) var(--uitk-container-borderColor-medium);
-  box-shadow: var(--appheader-shadow);
+  box-shadow: var(--appHeader-shadow);
   box-sizing: content-box;
   display: flex;
   flex: 0 0 auto;
-  height: var(--appheader-height);
+  height: var(--appHeader-height);
   overflow: hidden;
-  padding: 0 var(--appheader-paddingRight) 0 var(--appheader-paddingLeft);
+  padding: 0 var(--appHeader-paddingRight) 0 var(--appHeader-paddingLeft);
   width: 100%;
 }
 
@@ -33,12 +33,12 @@
   align-items: center;
   /* justify-content: space-between; */
   flex: 1;
-  min-height: var(--appheader-height);
+  min-height: var(--appHeader-height);
 }
 
 .uitkAppHeader > .Responsive-inner > .responsive-pillar {
   width: 0;
-  height: var(--appheader-height);
+  height: var(--appHeader-height);
 }
 
 .uitkAppHeader-navMenu {
@@ -53,7 +53,7 @@
   bottom: 0;
   content: "";
   position: absolute;
-  background: var(--appheader-separable-bar);
+  background: var(--appHeader-separable-bar);
 }
 
 .uitkAppHeader .uitkLogo:not(.uitkLogo-compact) {

@@ -56,10 +56,10 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
 
     const gridLayoutStyles = {
       ...style,
-      "--grid-layout-columns": gridColumns,
-      "--grid-layout-rows": gridRows,
-      "--grid-layout-columnGap": gridColumnGap || gridGap,
-      "--grid-layout-rowGap": gridRowGap || gridGap,
+      "--gridLayout-columns": gridColumns,
+      "--gridLayout-rows": gridRows,
+      "--gridLayout-columnGap": gridColumnGap || gridGap,
+      "--gridLayout-rowGap": gridRowGap || gridGap,
     };
 
     return (

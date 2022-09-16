@@ -1,7 +1,7 @@
 .uitkToolbar {
   --toolbar-background: var(--uitk-container-background-high);
   --toolbar-fontSize: var(--uitk-text-fontSize);
-  /* --uitkFormActivationIndicator-size: 0; */
+  /* --uitkFormField-activationIndicator-size: 0; */
 }
 
 .uitkToolbar {
