@@ -29,7 +29,7 @@
     "lint:core": "yarn eslint \"packages/core/src/**/*.{ts,tsx}\" --ignore-pattern \"**/__tests__/**\"",
     "prettier": "prettier --write . --ignore-path .gitignore",
     "prettier:ci": "prettier --check . --ignore-path .gitignore",
-    "lint:style": "yarn lint:style:core && yarn lint:style:icon && lint:style:lab",
+    "lint:style": "yarn lint:style:core && yarn lint:style:icon && yarn lint:style:lab",
     "lint:style:core": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
