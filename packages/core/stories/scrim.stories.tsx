@@ -148,6 +148,7 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         closeWithEscape
         onClose={handleClose}
         open={open}
+        enableContainerMode
         containerRef={parentRef}
         className="uitkEmphasisLow"
         zIndex={2}
