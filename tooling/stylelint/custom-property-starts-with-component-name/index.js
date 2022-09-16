@@ -56,7 +56,7 @@ function capitalize(folderName) {
   return parts.map((value) => value[0].toUpperCase() + value.slice(1)).join("");
 }
 
-let components = []; 
+let components = [];
 
 function getComponentName(path) {
   const componentFolder = path.split("/").slice(-2)[0];
