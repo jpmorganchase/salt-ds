@@ -21,6 +21,7 @@
   --banner-fontSize: var(--uitkBanner-fontSize, var(--uitk-text-fontSize));
   --banner-lineHeight: var(--uitkBanner-lineHeight, var(--uitk-text-lineHeight));
   --banner-padding: var(--uitkBanner-padding, var(--uitk-size-unit));
+  --banner-label-color: var(--uitkBanner-label-color, var(--uitk-text-primary-foreground));
 }
 
 .uitkBanner {
@@ -48,6 +49,7 @@
   font-weight: var(--uitk-typography-weight-semiBold);
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight);
+  color: var(--banner-label-color);
 }
 
 /* Styles applied to status icon */

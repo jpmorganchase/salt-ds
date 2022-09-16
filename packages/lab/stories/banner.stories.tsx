@@ -1,13 +1,12 @@
-import { Banner, State } from "@jpmorganchase/uitk-lab";
+import { Banner, BannerProps, Link, State } from "@jpmorganchase/uitk-lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, RefAttributes, useState } from "react";
 import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   ColumnLayoutContainer,
   ColumnLayoutItem,
 } from "@jpmorganchase/uitk-core/stories";
-import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
   title: "Lab/Banner",
@@ -45,17 +44,17 @@ const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
 
 const Examples = () => (
   <>
-    <ExampleRow name="Info">
-      <Info />
-    </ExampleRow>
     <ExampleRow name="Error">
       <Error />
+    </ExampleRow>
+    <ExampleRow name="Success">
+      <Success />
     </ExampleRow>
     <ExampleRow name="Warning">
       <Warning />
     </ExampleRow>
-    <ExampleRow name="Success">
-      <Success />
+    <ExampleRow name="Info">
+      <Info />
     </ExampleRow>
   </>
 );
@@ -114,7 +113,9 @@ export const Success: ComponentStory<typeof Banner> = () => {
   return <ExampleBanner state={"success"} />;
 };
 
-export const Render = () => {
+export const Render = (
+  props: JSX.IntrinsicAttributes & BannerProps & RefAttributes<HTMLDivElement>
+) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const handleClose = () => {
@@ -126,14 +127,17 @@ export const Render = () => {
       {showBanner && (
         <Banner
           onClose={handleClose}
-          render={({ getLabelProps, getIconProps, getLinkProps }) => (
+          render={({ Icon, getIconProps, getLabelProps, getLinkProps }) => (
             <>
-              <SuccessTickIcon {...getIconProps()} aria-label={"Success"} />
-              <span {...getLabelProps()}>Example custom renderer</span>
-              <a {...getLinkProps()}>link</a>
+              <Icon {...getIconProps()} aria-label={"Success"} />
+              <span {...getLabelProps()}>
+                Example custom renderer
+                <Link {...getLinkProps()}>link</Link>
+              </span>
             </>
           )}
           state="success"
+          {...props}
         />
       )}
     </div>

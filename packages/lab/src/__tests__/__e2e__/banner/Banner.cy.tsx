@@ -39,4 +39,17 @@ describe("GIVEN a Banner", () => {
 
     cy.get("[aria-live]").contains(message);
   });
+
+  describe("WHEN using additional LinkProps", () => {
+    it("THEN they should be applied", () => {
+      cy.mount(
+        <Banner LinkProps={{ href: "some-link", children: "Go to Dashboard" }}>
+          Default Banner State
+        </Banner>
+      );
+
+      cy.findByText("Link").should("not.exist");
+      cy.findByText("Go to Dashboard").should("exist");
+    });
+  });
 });

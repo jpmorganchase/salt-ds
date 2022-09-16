@@ -13,6 +13,7 @@ import {
   ButtonProps,
   Density,
   makePrefixer,
+  StateIcon,
   useAriaAnnouncer,
   useForkRef,
 } from "@jpmorganchase/uitk-core";
@@ -21,7 +22,6 @@ import { Link, LinkProps } from "../link";
 import getInnerText from "./internal/getInnerText";
 import { CloseIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import { getIconForState } from "./internal/getIconForState";
 
 import "./Banner.css";
 
@@ -117,24 +117,24 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
   const getIconProps = ({ className, ...restProps }: IconProps = {}) => ({
-    className: withBaseName("icon"),
+    className: cx(withBaseName("icon"), state, className),
     ...restProps,
   });
 
   const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
-    className: withBaseName("label"),
+    className: cx(withBaseName("label"), state, className),
     ...restProps,
   });
 
   const getLinkProps = ({ className, href, ...restProps }: LinkProps = {}) => ({
     children: "Link",
-    className: cx(withBaseName("link")),
+    className: cx(withBaseName("link"), state, className),
     href,
     ...restProps,
   });
 
   const getStateAndPropsGetters = (): GetStateAndPropGetters => ({
-    Icon: getIconForState(state),
+    Icon: (props) => <StateIcon {...props} state={state} />,
     getIconProps,
     getLabelProps,
     getLinkProps,
@@ -142,17 +142,16 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   let contentElement;
   if (!render) {
-    const StateIcon = getIconForState(state);
     contentElement = (
       <>
-        {state ? <StateIcon {...getIconProps()} /> : null}
+        <StateIcon {...getIconProps()} state={state}></StateIcon>
         <span {...getLabelProps()}>
           {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
         </span>
       </>
     );
   } else {
-    contentElement = render(getStateAndPropsGetters()) || null;
+    contentElement = render(getStateAndPropsGetters());
   }
 
   return (
