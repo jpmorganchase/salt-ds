@@ -1,18 +1,19 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import { forwardRef, ForwardedRef, ReactElement, useRef } from "react";
+import { ForwardedRef, forwardRef, ReactElement, useRef } from "react";
 import {
   CollectionIndexer,
   isSelected,
   SelectionStrategy,
   useCollectionItems,
+  useImperativeScrollingAPI,
 } from "../common-hooks";
 import { useListHeight } from "./useListHeight";
 
 import { ListItem, ListItemProxy } from "./ListItem";
+import { ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { Row, useVirtualization } from "./useVirtualization";
-import { ListProps } from "./listTypes";
 
 import "./List.css";
 
@@ -55,6 +56,7 @@ export const VirtualizedList = forwardRef(function List<
     restoreLastFocus,
     selected: selectedProp,
     selectionStrategy,
+    scrollingApiRef,
     // TODO do we still need these ?
     selectionKeys,
     showEmptyMessage = false,
@@ -97,6 +99,7 @@ export const VirtualizedList = forwardRef(function List<
     highlightedIndex,
     listControlProps,
     listHandlers,
+    scrollIntoView,
     selected,
   } = useList<Item, Selection>({
     collapsibleHeaders,
@@ -134,6 +137,15 @@ export const VirtualizedList = forwardRef(function List<
     viewportRef: rootRef,
     data: collectionHook.data,
     itemGapSize,
+  });
+
+  // FIXME: useImperativeScrollingAPI doesn't work when element is not rendered beyond `renderBuffer`
+  // One potential way: pass `scrollIntoView` to `useVirtualization` and update rows before original `scrollIntoView` been called
+  useImperativeScrollingAPI({
+    collectionHook,
+    forwardedRef: scrollingApiRef,
+    scrollableRef: rootRef,
+    scrollIntoView,
   });
 
   function addItem(
@@ -201,6 +213,7 @@ export const VirtualizedList = forwardRef(function List<
   };
 
   const sizeStyles = {
+    "--list-item-gap": itemGapSize ? `${itemGapSize}px` : undefined,
     minWidth,
     minHeight,
     width: width ?? "100%",

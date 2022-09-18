@@ -17,6 +17,7 @@ import {
   FlexItem,
   FormField,
   useDensity,
+  StackLayout,
 } from "@jpmorganchase/uitk-core";
 import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
 
@@ -403,37 +404,47 @@ export const TabToSelect: Story<ListProps> = () => {
 
 export const ScrollToIndex: Story<ListProps> = () => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<ListScrollHandles<string>>(null);
+  const listScrollRef = useRef<ListScrollHandles<string>>(null);
+  const virtualizedListScrollRef = useRef<ListScrollHandles<string>>(null);
   const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const inputValue = event.target.value;
 
-    if (NUMBER_REGEX.test(inputValue) && listRef.current) {
-      listRef.current.scrollToIndex(parseInt(inputValue, 10) || 0);
+    if (NUMBER_REGEX.test(inputValue)) {
+      listScrollRef.current?.scrollToIndex(parseInt(inputValue, 10) || 0);
+      virtualizedListScrollRef.current?.scrollToIndex(
+        parseInt(inputValue, 10) || 0
+      );
     }
   };
 
   return (
-    <FlexLayout direction="column" style={{ width: 292 }}>
-      <FlexItem>
-        <FormField label="Type an index to scroll to" ref={inputFieldRef}>
-          <Input
-            inputProps={{
-              min: 0,
-              max: usa_states.length - 1,
-            }}
-            onChange={handleInputChange}
-            type="number"
-          />
-        </FormField>
+    <StackLayout style={{ width: 292 * 2 }}>
+      <FormField label="Type an index to scroll to" ref={inputFieldRef}>
+        <Input
+          inputProps={{
+            min: 0,
+            max: usa_states.length - 1,
+          }}
+          onChange={handleInputChange}
+          type="number"
+        />
+      </FormField>
+      <FlexLayout>
         <List
           aria-label="ScrollToIndex List example"
-          ref={listRef}
+          scrollingApiRef={listScrollRef}
           source={usa_states}
         />
-      </FlexItem>
-    </FlexLayout>
+
+        <VirtualizedList
+          aria-label="ScrollToIndex VirtualizedList example"
+          scrollingApiRef={virtualizedListScrollRef}
+          source={usa_states}
+        />
+      </FlexLayout>
+    </StackLayout>
   );
 };
 
@@ -686,7 +697,7 @@ export const WithTextHighlight: Story<ListProps> = () => {
 
 export const DisableTypeToSelect: Story<ListProps> = () => {
   const handleChange: SelectionChangeHandler = (evt, selected) => {
-    console.log(`selectionChanged ${selected}`);
+    console.log(`selectionChanged`, selected);
   };
 
   return (

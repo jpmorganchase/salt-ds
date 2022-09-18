@@ -1,5 +1,6 @@
 import React, {
   FocusEventHandler,
+  ForwardedRef,
   HTMLAttributes,
   KeyboardEvent,
   KeyboardEventHandler,
@@ -14,6 +15,7 @@ import {
   CollectionItem,
   ListHandlers,
   NavigationHookResult,
+  ScrollingAPI,
   SelectHandler,
   SelectionChangeHandler,
   SelectionHookResult,
@@ -167,6 +169,7 @@ export interface ListProps<
    */
   restoreLastFocus?: boolean;
 
+  scrollingApiRef?: ForwardedRef<ScrollingAPI<Item>>;
   /**
    * The keyboard keys used to effect selection, defaults to SPACE and ENTER
    * TODO maybe this belongs on the SelectionProps interface ?
