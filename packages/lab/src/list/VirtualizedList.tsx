@@ -160,7 +160,7 @@ export const VirtualizedList = forwardRef(function List<
         aria-setsize={collectionHook.data.length}
         aria-posinset={pos}
         className={cx(className, {
-          "uitkListItem-highlighted": index === highlightedIndex,
+          uitkHighlighted: index === highlightedIndex,
           uitkFocusVisible: focusVisible === index,
         })}
         data-idx={index}
