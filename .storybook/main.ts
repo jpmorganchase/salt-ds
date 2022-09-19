@@ -31,7 +31,6 @@ const config: ExtendedConfig = {
         backgrounds: false,
       },
     },
-    "./theme-switch/preset", //👈 Custom theme switch on the toolbar
     // Keep in mind this is not v1 yet. Might encounter bugs. It's from atlassian labs, so not too much concern.
     // Temporarily disable this due to run time error "Cannot read property 'context' of undefined" from Topbar
     // 'storybook-addon-performance/register',
