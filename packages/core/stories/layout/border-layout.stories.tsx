@@ -52,7 +52,7 @@ type ItemProps = { width?: number | string; height?: number | string };
 
 const HeaderItem = ({ width, height }: ItemProps) => (
   <div className="border-item border-header" style={{ width, height }}>
-    <p>Header</p>
+    <p>Top</p>
   </div>
 );
 
@@ -71,7 +71,7 @@ const MainItem = ({ width, height }: ItemProps) => (
       height,
     }}
   >
-    <p>Main</p>
+    <p>Main section</p>
   </div>
 );
 
@@ -267,6 +267,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem
         position="header"
+        as="header"
         sticky
         className="border-layout-form-header"
       >
@@ -287,7 +288,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
         </div>
       </BorderItem>
 
-      <BorderItem position="main">
+      <BorderItem position="main" as="main">
         <div
           className={cx({
             "border-layout-custom-form": checked,
@@ -299,6 +300,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
 
       <BorderItem
         position="bottom"
+        as="footer"
         sticky
         className="border-layout-form-footer"
       >
@@ -314,18 +316,26 @@ BorderLayoutFormComposite.args = {};
 const Contacts: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header" className="border-layout-form-header">
+      <BorderItem
+        position="header"
+        as="header"
+        className="border-layout-form-header"
+      >
         <Header />
       </BorderItem>
 
-      <BorderItem position="main">
+      <BorderItem position="main" as="main">
         <div className="border-layout-contacts">
           <h2>My contacts</h2>
           <FlexLayoutComposite wrap />
         </div>
       </BorderItem>
 
-      <BorderItem position="bottom" className="border-layout-contacts-footer">
+      <BorderItem
+        position="bottom"
+        as="footer"
+        className="border-layout-contacts-footer"
+      >
         <ButtonBar>
           <OrderedButton variant="cta">Edit</OrderedButton>
           <OrderedButton>Cancel</OrderedButton>

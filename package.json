@@ -140,6 +140,9 @@
   "jest": {
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/csstree-validator"
+    ],
+    "testPathIgnorePatterns": [
+      "packages/core/src/__tests__/@typings"
     ]
   },
   "packageManager": "yarn@3.2.4",
