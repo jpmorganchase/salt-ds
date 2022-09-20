@@ -76,12 +76,12 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
 
     const deckLayoutStyles = {
       ...style,
-      "--deck-layout-width": `${deckItemWidth}px`,
-      "--deck-layout-height": `${deckItemHeight}px`,
+      "--deckLayout-width": `${deckItemWidth}px`,
+      "--deckLayout-height": `${deckItemHeight}px`,
     };
 
     const innerStyles = {
-      "--deck-layout-transform-value": `-${activeIndex * 100}%`,
+      "--deckLayout-transform-value": `-${activeIndex * 100}%`,
     } as CSSProperties;
 
     return (

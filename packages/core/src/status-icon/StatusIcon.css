@@ -1,22 +1,22 @@
 .uitkStatusIcon {
-  --status-warning-icon-color: var(--uitk-status-warning-foreground);
-  --status-info-icon-color: var(--uitk-status-info-foreground);
-  --status-success-icon-color: var(--uitk-status-success-foreground);
-  --status-error-icon-color: var(--uitk-status-error-foreground);
+  --statusIcon-warning-color: var(--uitk-status-warning-foreground);
+  --statusIcon-info-color: var(--uitk-status-info-foreground);
+  --statusIcon-success-color: var(--uitk-status-success-foreground);
+  --statusIcon-error-color: var(--uitk-status-error-foreground);
 }
 
 .uitkStatusIcon-warning {
-  fill: var(--status-warning-icon-color);
+  fill: var(--statusIcon-warning-color);
 }
 
 .uitkStatusIcon-info {
-  fill: var(--status-info-icon-color);
+  fill: var(--statusIcon-info-color);
 }
 
 .uitkStatusIcon-success {
-  fill: var(--status-success-icon-color);
+  fill: var(--statusIcon-success-color);
 }
 
 .uitkStatusIcon-error {
-  fill: var(--status-error-icon-color);
+  fill: var(--statusIcon-error-color);
 }

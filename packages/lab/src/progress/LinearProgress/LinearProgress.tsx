@@ -9,7 +9,7 @@ import classnames from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./LinearProgress.css";
 
-import { Info as DefaultInfo } from "./Info";
+import { Info as DefaultInfo } from "../Info";
 
 const withBaseName = makePrefixer("uitkLinearProgress");
 

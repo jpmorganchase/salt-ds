@@ -1,15 +1,15 @@
 .uitkEditableLabel {
   --uitkInput-minWidth: 14px;
   --uitkInput-position: absolute;
-  --editable-label-padding: var(--uitkEditableLabel-padding, 6px);
-  --editable-label-height: var(--uitkEditableLabel-height, 26px);
+  --editableLabel-padding: var(--uitkEditableLabel-padding, 6px);
+  --editableLabel-height: var(--uitkEditableLabel-height, 26px);
   color: inherit;
   display: flex;
   flex-direction: column;
   font-size: var(--uitk-text-fontSize);
-  height: var(--editable-label-height);
+  height: var(--editableLabel-height);
   justify-content: center;
-  padding: 0 var(--editable-label-padding);
+  padding: 0 var(--editableLabel-padding);
   position: relative;
   z-index: var(--uitk-zIndex-default);
 }
@@ -24,10 +24,10 @@
 
 .uitkEditableLabel .uitkInput {
   font-weight: var(--uitk-text-fontWeight);
-  left: var(--editable-label-padding, 0);
+  left: var(--editableLabel-padding, 0);
   padding: 0;
   outline-style: none;
-  right: var(--editable-label-padding, 0);
+  right: var(--editableLabel-padding, 0);
 }
 
 .uitkEditableLabel-input {

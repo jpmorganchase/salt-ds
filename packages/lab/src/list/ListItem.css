@@ -1,7 +1,7 @@
 .uitkListItem {
   /* Color */
   --list-item-text-color: var(--uitk-selectable-foreground);
-  --list-item-background: var(--uitkListItem-background, var(--uitk-selectable-background));
+  --list-item-background: var(--uitkList-item-background, var(--uitk-selectable-background));
   --list-item-selected-focus-outlineColor: var(--uitk-color-white); /* TODO: Check token with design */
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
@@ -9,7 +9,7 @@
 }
 
 .uitkListItem.uitkHighlighted {
-  --uitkCheckboxIcon-outlineColor: var(--uitk-selectable-borderColor-hover);
+  --uitkCheckbox-icon-outlineColor: var(--uitk-selectable-borderColor-hover);
   --list-item-background: var(--uitk-selectable-background-hover);
 }
 
@@ -25,12 +25,12 @@
 
 .uitkListItem {
   color: var(--list-item-text-color);
-  cursor: var(--uitkListItem-cursor, pointer);
-  background: var(--uitkListItem-background, var(--list-item-background));
+  cursor: var(--uitkList-item-cursor, pointer);
+  background: var(--uitkList-item-background, var(--list-item-background));
   font-size: var(--uitk-text-fontSize);
   text-align: var(--uitk-text-textAlign);
   line-height: var(--uitk-text-lineHeight);
-  height: var(--uitkListItem-height, var(--list-item-height, auto));
+  height: var(--uitkList-item-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);
   padding: 0 var(--uitk-size-unit);
