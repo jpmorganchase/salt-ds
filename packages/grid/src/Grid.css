@@ -205,7 +205,7 @@
 }
 
 .uitk-light .uitkGrid {
-  --grid-backgroundColor-primary: var(--uitk-color-white);
+  --grid-background-primary: var(--uitk-color-white);
   --grid-background-secondary: var(--uitk-color-grey-20);
   --grid-zebraColor: var(--uitk-color-grey-20);
 
@@ -238,7 +238,7 @@
 }
 
 .uitk-dark .uitkGrid {
-  --grid-backgroundColor-primary: var(--uitk-color-grey-800);
+  --grid-background-primary: var(--uitk-color-grey-800);
   --grid-background-secondary: #2f3136;
   --grid-zebraColor: rgba(255, 255, 255, 0.05);
 
@@ -293,7 +293,7 @@
 }
 
 .uitkGrid-primaryBackground {
-  background-color: var(--grid-backgroundColor-primary);
+  background-color: var(--grid-background-primary);
 }
 
 .uitkGrid-secondaryBackground {

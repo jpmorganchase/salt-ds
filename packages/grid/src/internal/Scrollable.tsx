@@ -43,7 +43,6 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
       return;
     }
     const { scrollLeft, scrollTop } = scrollerRef.current;
-
     const top = topRef.current;
     const bottom = bottomRef.current;
     if (top) {
@@ -100,7 +99,12 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
   ]);
 
   return (
-    <div ref={scrollerRef} className={withBaseName()} onScroll={onScroll}>
+    <div
+      ref={scrollerRef}
+      className={withBaseName()}
+      onScroll={onScroll}
+      data-testid="grid-scrollable"
+    >
       <div className={withBaseName("space")} />
     </div>
   );

@@ -726,6 +726,7 @@ export const Grid = function <T>(props: GridProps<T>) {
                     onMouseDown={onMouseDown}
                     // onCopy={onCopy}
                     data-name="grid-root"
+                    role="grid"
                   >
                     <CellMeasure setRowHeight={setRowHeight} />
                     <Scrollable

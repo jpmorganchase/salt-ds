@@ -31,7 +31,11 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
   } = props;
 
   return (
-    <div ref={middleRef} className={withBaseName()}>
+    <div
+      ref={middleRef}
+      className={withBaseName()}
+      data-testid="grid-middle-part"
+    >
       <div className={withBaseName("space")}>
         <table onWheel={onWheel}>
           <TableColGroup columns={columns} gap={midGap} />

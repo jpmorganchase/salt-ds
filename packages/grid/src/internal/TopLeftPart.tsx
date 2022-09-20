@@ -24,6 +24,7 @@ export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
       className={cx(withBaseName(), {
         [withBaseName("raised")]: isRaised,
       })}
+      data-testid="grid-top-left-part"
     >
       <table onWheel={onWheel}>
         <TableColGroup columns={columns} />

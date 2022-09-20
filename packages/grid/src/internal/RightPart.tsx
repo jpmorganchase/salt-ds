@@ -37,6 +37,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
       className={cn(withBaseName(), {
         [withBaseName("raised")]: isRaised,
       })}
+      data-testid="grid-right-part"
     >
       <div className={withBaseName("space")}>
         <table onWheel={onWheel}>

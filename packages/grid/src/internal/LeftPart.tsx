@@ -38,7 +38,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
         [withBaseName("raised")]: isRaised,
       })}
     >
-      <div className={withBaseName("space")}>
+      <div className={withBaseName("space")} data-testid="grid-left-part">
         <table onWheel={onWheel}>
           <TableColGroup columns={columns} />
           <TableBody

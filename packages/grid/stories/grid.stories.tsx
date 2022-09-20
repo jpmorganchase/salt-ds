@@ -400,6 +400,7 @@ const LotsOfColumnGroupsTemplate: Story<{}> = (props) => {
       rowKeyGetter={rowIdGetter}
       className="table"
       columnSeparators={true}
+      rowSelectionMode={"none"}
     >
       {dummyGroups.map((group) => (
         <ColumnGroup key={group.name} name={group.name} id={group.name}>
@@ -679,24 +680,9 @@ const CustomCellsTemplate: Story<{}> = (props) => {
           cellValueComponent={CustomCell}
           pinned="left"
         />
-        <GridColumn
-          id="a"
-          name="A"
-          defaultWidth={100}
-          getValue={(x) => x.a}
-        />
-        <GridColumn
-          id="b"
-          name="B"
-          defaultWidth={200}
-          getValue={(x) => x.b}
-        />
-        <GridColumn
-          id="c"
-          name="C"
-          defaultWidth={250}
-          getValue={(x) => x.c}
-        />
+        <GridColumn id="a" name="A" defaultWidth={100} getValue={(x) => x.a} />
+        <GridColumn id="b" name="B" defaultWidth={200} getValue={(x) => x.b} />
+        <GridColumn id="c" name="C" defaultWidth={250} getValue={(x) => x.c} />
       </Grid>
     </CustomCellsStoryContext.Provider>
   );
