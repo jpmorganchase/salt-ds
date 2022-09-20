@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils";
-import { useResizeObserver, WidthOnly } from "./";
+import { useResizeObserver, WidthOnly } from "./useResizeObserver";
 
 const NONE: string[] = [];
 

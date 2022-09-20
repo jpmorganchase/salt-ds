@@ -4,7 +4,7 @@
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
 
-  --tree-node-height: var(--uitkTreeNode-height, var(--uitk-size-stackable));
+  --tree-node-height: var(--uitkTree-node-height, var(--uitk-size-stackable));
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
   --tree-node-paddingLeft: 6px;

@@ -1,0 +1,28 @@
+.uitkMenuButtonTrigger {
+  --menuButton-trigger-open-color: var(--uitkMenuButton-trigger-open-color, var(--uitk-actionable-primary-foreground-active));
+}
+
+.uitkMenuButtonTrigger {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.uitkMenuButtonTrigger-buttonOpen {
+  background: var(--uitkMenuButton-trigger-open-background, var(--uitk-actionable-primary-background-active));
+  color: var(--menuButton-trigger-open-color);
+}
+
+.uitkMenuButtonTrigger-buttonOpen:not(:hover) .uitkMenuButtonTrigger-caretIcon {
+  color: var(--menuButton-trigger-open-color);
+}
+
+.uitkMenuButtonTrigger-buttonOpen:not(:hover) .uitkMenuButtonTrigger-icon {
+  color: var(--menuButton-trigger-open-color);
+}
+
+.uitkMenuButtonTrigger-icon {
+}
+
+.uitkMenuButtonTrigger-caretIcon {
+  --uitkIcon-margin: 0 0 0 var(--uitk-size-unit);
+}

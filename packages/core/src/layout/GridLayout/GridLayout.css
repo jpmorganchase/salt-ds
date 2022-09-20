@@ -1,27 +1,27 @@
 .uitk-density-touch {
-  --grid-layout-gap-density-multiplier: 2;
+  --gridLayout-gap-density-multiplier: 2;
 }
 
 /* Default variables applied to the root element */
 .uitkGridLayout {
-  --grid-layout-space: 1fr;
-  --grid-layout-rowGap: var(--grid-layout-gap-density-multiplier, 3);
-  --grid-layout-columnGap: var(--grid-layout-gap-density-multiplier, 3);
+  --gridLayout-space: 1fr;
+  --gridLayout-rowGap: var(--gridLayout-gap-density-multiplier, 3);
+  --gridLayout-columnGap: var(--gridLayout-gap-density-multiplier, 3);
 }
 
 /* Style applied to the root element */
 .uitkGridLayout {
   display: grid;
-  column-gap: calc(var(--uitk-size-unit) * var(--grid-layout-columnGap));
-  row-gap: calc(var(--uitk-size-unit) * var(--grid-layout-rowGap));
-  grid-template-columns: repeat(var(--grid-layout-columns), var(--grid-layout-space));
-  grid-template-rows: repeat(var(--grid-layout-rows), var(--grid-layout-space));
+  column-gap: calc(var(--uitk-size-unit) * var(--gridLayout-columnGap));
+  row-gap: calc(var(--uitk-size-unit) * var(--gridLayout-rowGap));
+  grid-template-columns: repeat(var(--gridLayout-columns), var(--gridLayout-space));
+  grid-template-rows: repeat(var(--gridLayout-rows), var(--gridLayout-space));
   grid-auto-columns: auto;
   grid-auto-rows: auto;
 }
 
 .uitkGridLayout-area {
-  grid-template: var(--grid-layout-gridTemplate);
+  grid-template: var(--gridLayout-gridTemplate);
   grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content 1fr min-content;
 }

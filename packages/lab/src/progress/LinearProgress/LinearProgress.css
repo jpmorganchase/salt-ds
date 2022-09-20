@@ -7,24 +7,24 @@
 }
 
 .uitkLinearProgress-large {
-  --linear-progress-after-top: 3px;
-  --linear-progress-value-paddingLeft: 12px;
-  --linear-progress-height: 7px;
-  --linear-progress-fontSize: var(--uitk-measured-fontSize-high);
+  --linearProgress-after-top: 3px;
+  --linearProgress-value-paddingLeft: 12px;
+  --linearProgress-height: 7px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-high);
 }
 
 .uitkLinearProgress-medium {
-  --linear-progress-after-top: 2px;
-  --linear-progress-value-paddingLeft: 8px;
-  --linear-progress-height: 5px;
-  --linear-progress-fontSize: var(--uitk-measured-fontSize-medium);
+  --linearProgress-after-top: 2px;
+  --linearProgress-value-paddingLeft: 8px;
+  --linearProgress-height: 5px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-medium);
 }
 
 .uitkLinearProgress-small {
-  --linear-progress-after-top: 1px;
-  --linear-progress-value-paddingLeft: 4px;
-  --linear-progress-height: 3px;
-  --linear-progress-fontSize: var(--uitk-measured-fontSize-low);
+  --linearProgress-after-top: 1px;
+  --linearProgress-value-paddingLeft: 4px;
+  --linearProgress-height: 3px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-low);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-bar {
@@ -45,12 +45,12 @@
   position: relative;
   width: calc(100% - 10px);
   overflow: hidden;
-  height: var(--linear-progress-height);
+  height: var(--linearProgress-height);
 }
 
 /* Horizontal line under the progress indicator bar */
 .uitkLinearProgress-barContainer:after {
-  top: var(--linear-progress-after-top);
+  top: var(--linearProgress-after-top);
   background: var(--uitk-measured-background);
   content: "";
   display: block;
@@ -105,7 +105,7 @@
   color: inherit;
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--linear-progress-value-paddingLeft);
+  padding-left: var(--linearProgress-value-paddingLeft);
 }
 
 @keyframes Indeterminate1 {

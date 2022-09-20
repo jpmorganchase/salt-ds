@@ -1,7 +1,7 @@
-import React, { forwardRef, ReactNode, useCallback, useState } from "react";
+import { forwardRef, ReactNode, useCallback, useState } from "react";
 import { ButtonProps } from "@jpmorganchase/uitk-core";
 import { CascadingMenu, CascadingMenuProps } from "../cascading-menu";
-import { MenuTrigger } from "./internal/MenuTrigger";
+import { MenuButtonTrigger } from "./MenuButtonTrigger";
 
 export interface MenuButtonProps extends ButtonProps {
   CascadingMenuProps: CascadingMenuProps;
@@ -41,7 +41,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
         onOpen={handleOpen}
         {...restMenuProps}
       >
-        <MenuTrigger
+        <MenuButtonTrigger
           aria-expanded={isMenuOpen}
           aria-haspopup
           isMenuOpen={isMenuOpen}
@@ -50,7 +50,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
           {...restProps}
         >
           {children}
-        </MenuTrigger>
+        </MenuButtonTrigger>
       </CascadingMenu>
     );
   }

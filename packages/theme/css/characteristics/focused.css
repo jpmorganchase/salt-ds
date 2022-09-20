@@ -15,7 +15,7 @@
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
-  inset: var(--uitkFocusVisible-inset, var(--uitk-focused-outlineInset));
+  inset: var(--uitk-focused-outlineInset);
   outline-color: var(--uitk-focused-outlineColor);
   outline-offset: var(--uitk-focused-outlineOffset);
   outline-style: var(--uitk-focused-outlineStyle);
