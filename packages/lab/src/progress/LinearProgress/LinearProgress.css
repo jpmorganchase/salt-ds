@@ -3,7 +3,7 @@
   color: var(--uitk-text-primary-foreground);
   display: flex;
   min-width: 200px;
-  font-size: var(--linear-progress-fontSize);
+  font-size: var(--linearProgress-fontSize);
 }
 
 .uitkLinearProgress-large {

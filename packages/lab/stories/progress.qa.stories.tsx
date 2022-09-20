@@ -5,8 +5,8 @@ import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Progress/QA",
-  component: LinearProgress,
-} as ComponentMeta<typeof CircularProgress>;
+  component: CircularProgress,
+} as ComponentMeta<typeof CircularProgress | typeof LinearProgress>;
 
 export const ExamplesGrid: Story<QAContainerProps> = (props) => {
   const { className } = props;
