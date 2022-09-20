@@ -3,7 +3,7 @@ import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { Div } from "../text";
 import { ValueComponentProps } from "./internal";
-import { MailLinkComponent } from "./";
+import { MailLinkComponent } from "./MailLinkComponent";
 
 const withBaseName = makePrefixer("uitkContactMetadataItem");
 
