@@ -28,9 +28,7 @@
 }
 
 /* Overrides characteristic used in uitkFocusVisible */
-.uitkTab.uitkFocusVisible:after,
-.uitkTab.focused:focus:after,
-.uitkTab.focused:focus-visible:after {
+.uitkTab.uitkFocusVisible:after {
   inset: 2px 2px 4px 2px;
 }
 
