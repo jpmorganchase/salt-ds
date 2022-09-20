@@ -39,23 +39,23 @@ const SuccessBanner = () => <BasicBannerExample state={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <div className={"examples-container"}>
-    <ToolkitProvider applyClassesToChild density={"high"} theme={"dark"}>
-      <div>
+    <ToolkitProvider applyClassesToChild density={"high"} theme={"light"}>
+      <div className="uitkBannerContainerExample">
         <InfoBanner />
       </div>
     </ToolkitProvider>
     <ToolkitProvider applyClassesToChild density={"medium"} theme={"dark"}>
-      <div>
+      <div className="uitkBannerContainerExample">
         <ErrorBanner />
       </div>
     </ToolkitProvider>
     <ToolkitProvider applyClassesToChild density={"low"} theme={"light"}>
-      <div>
+      <div className="uitkBannerContainerExample">
         <WarningBanner />
       </div>
     </ToolkitProvider>
     <ToolkitProvider applyClassesToChild density={"touch"} theme={"dark"}>
-      <div>
+      <div className="uitkBannerContainerExample">
         <SuccessBanner />
       </div>
     </ToolkitProvider>
