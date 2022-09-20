@@ -1,0 +1,48 @@
+.uitkGridTableRow {
+  height: var(--grid-row-height);
+  /* Row border doesn't render properly in Chrome on Windows. Applying borders to cells */
+  --grid-row-borderColor: var(--grid-rowDivider-color);
+}
+
+.uitkGridTableRow th {
+  border-style: solid;
+  border-color: var(--grid-row-borderColor);
+  border-width: 1px 0 0 0;
+}
+
+.uitkGridTableRow-selected + .uitkGridTableRow {
+  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+}
+
+.uitkGridTableRow-divided {
+  --grid-row-borderColor: var(--grid-rowDivider-color-divided);
+}
+
+.uitkGridTableRow-zebra {
+  background: var(--grid-zebraColor);
+}
+
+.uitkGridTableRow-hover {
+  background: var(--grid-row-background-hover);
+}
+
+.uitkGridTableRow-selected {
+  background: var(--grid-row-background-selected);
+  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+}
+
+.uitkGridTableRow-zebra.uitkGridTableRow-selected {
+  background: var(--grid-row-background-selected);
+}
+
+.uitkGridTableRow-zebra.uitkGridTableRow-hover {
+  background: var(--grid-row-background-hover);
+}
+
+.uitkGridTableRow-zebra.uitkGridTableRow-selected.uitkGridTableRow-hover {
+  background: var(--grid-row-background-hover);
+}
+
+.uitkGridTableRow-selected.uitkGridTableRow-hover {
+  background: var(--grid-row-background-hover);
+}

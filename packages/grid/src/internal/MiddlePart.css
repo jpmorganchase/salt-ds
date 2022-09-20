@@ -1,0 +1,25 @@
+.uitkGridMiddlePart {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  right: var(--grid-scrollBar-width);
+  bottom: var(--grid-scrollBar-height);
+  left: 0;
+  clip-path: inset(var(--grid-topPart-height) var(--grid-rightPart-width) 0 var(--grid-leftPart-width));
+}
+
+.uitkGridMiddlePart-space {
+  position: relative;
+  height: var(--grid-total-height);
+  width: var(--grid-total-width);
+}
+
+.uitkGridMiddlePart table {
+  table-layout: fixed;
+  position: absolute;
+
+  width: var(--grid-bodyVisibleColumn-width);
+  top: var(--grid-bodyVisibleArea-top);
+  left: var(--grid-bodyVisibleArea-left);
+}
