@@ -40,6 +40,16 @@ describe("GIVEN a Banner", () => {
     cy.get("[aria-live]").contains(message);
   });
 
+  it("THEN should call onClose when interacted with", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(<Banner onClose={clickSpy}>On Close example</Banner>);
+    cy.realPress("Tab");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("be.called");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("be.called");
+  });
+
   describe("WHEN using additional LinkProps", () => {
     it("THEN they should be applied", () => {
       cy.mount(
