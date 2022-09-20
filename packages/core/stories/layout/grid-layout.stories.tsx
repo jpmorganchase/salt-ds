@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useRef } from "react";
 import {
   Card,
   GridLayout,
@@ -412,3 +412,20 @@ const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = (args) => {
 };
 export const GridLayoutNested = GridLayoutNestedExample.bind({});
 GridLayoutNested.args = {};
+
+export const GridLayoutPolymorphicContainer: ComponentStory<
+  typeof GridLayout
+> = (args) => {
+  const ref = useRef<HTMLAnchorElement | null>(null);
+  return (
+    <GridLayout {...args} as="a" href="www.example.com" ref={ref}>
+      {Array.from({ length: 12 }, (_, index) => (
+        <GridItem key={index}>
+          <div className="layout-content">
+            <p>{`GridItem ${index + 1}`}</p>
+          </div>
+        </GridItem>
+      ))}
+    </GridLayout>
+  );
+};
