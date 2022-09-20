@@ -34,7 +34,6 @@ export const AllExamplesOriginalContent: Story<
       itemPadding={10}
       itemWidthAuto
       {...props}
-      className="uitkCardQA"
     >
       <Card className={className}>
         <h1 style={{ margin: 0 }}>Card with density</h1>

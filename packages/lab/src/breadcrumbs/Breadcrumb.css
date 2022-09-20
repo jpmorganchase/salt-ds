@@ -56,11 +56,8 @@
   text-decoration: underline;
 }
 
-/* --- backwards compatible --- */
+/* TK1 Backwards compatible styling */
 
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb {
-  padding: 0px;
-}
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon {
   margin-left: 1px;
 }
