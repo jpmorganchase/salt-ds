@@ -47,14 +47,14 @@ a:focus .uitkCard-interactable,
 
 /* Styles applied on hover if `interactable={true}` and `disabled={true}` */
 a:focus .uitkCard-interactable.uitkCard-disabled,
-.uitkCard-interactable.uitkCard-disabled:hover, 
+.uitkCard-interactable.uitkCard-disabled:hover,
 .uitkCard-interactable.uitkCard-disabled:active {
   box-shadow: var(--uitkCard-boxShadow-hover-disabled, var(--uitk-overlayable-shadow));
 }
 
 /* Styles applied if `disabled={true}` */
-.uitkCard-disabled, 
-.uitkCard-disabled.uitkCard-interactable, 
+.uitkCard-disabled,
+.uitkCard-disabled.uitkCard-interactable,
 a:focus .uitkCard-interactable.uitkCard-disabled {
   border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-disabled-medium));
   cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
