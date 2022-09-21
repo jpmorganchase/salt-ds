@@ -1,7 +1,4 @@
 .uitkGridGroupHeaderCell {
-}
-
-.uitkGridGroupHeaderCell {
   text-align: left;
   padding: var(--grid-cell-padding);
   position: relative;
@@ -11,7 +8,8 @@
 }
 
 .uitkGridGroupHeaderCell-text {
-  font-size: var(--grid-fontSize);
+  font-size: var(--grid-header-fontSize);
+  font-weight: var(--uitk-text-caption-fontWeight-strong);
 }
 
 .uitkGridGroupHeaderCell-rowSeparator {

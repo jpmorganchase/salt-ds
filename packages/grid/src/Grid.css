@@ -2,6 +2,7 @@
   --grid-row-height: 61px;
   --grid-padding: 16px;
   --grid-fontSize: 16px;
+  --grid-header-fontSize: 16px;
   --grid-dividerGap: 20px;
 }
 
@@ -9,6 +10,7 @@
   --grid-row-height: 49px;
   --grid-padding: 12px;
   --grid-fontSize: 14px;
+  --grid-header-fontSize: 14px;
   --grid-dividerGap: 16px;
 }
 
@@ -16,6 +18,7 @@
   --grid-row-height: 37px;
   --grid-padding: 8px;
   --grid-fontSize: 12px;
+  --grid-header-fontSize: 11px;
   --grid-dividerGap: 12px;
 }
 
@@ -23,6 +26,7 @@
   --grid-row-height: 25px;
   --grid-padding: 8px;
   --grid-fontSize: 11px;
+  --grid-header-fontSize: 11px;
   --grid-dividerGap: 8px;
 }
 
@@ -162,10 +166,9 @@
 }
 
 .uitk-density-ultrahigh {
-  /* FIXME: these 3 should be --grid local tokens */
-  --uitkGrid-rowHeight: 20px;
-  --uitkGrid-padding: 4px;
-  --uitkGrid-fontSize: 12px;
+  --grid-rowHeight: 20px;
+  --grid-padding: 4px;
+  --grid-fontSize: 12px;
 
   --grid-controlLabel-right-marginLeft: 3px;
   --grid-controlLabel-right-marginRight: 0;
@@ -220,13 +223,13 @@
   --grid-editableCell-color-active: var(--uitk-color-grey-900);
   /*--grid-header-borderColor: var(--uitk-color-grey-90);*/
 
-  --grid-header-color: var(--uitk-color-grey-300);
+  --grid-header-color: var(--uitk-color-grey-200);
 
   --grid-headerColumnSeparator-color: rgba(0, 0, 0, 0.1);
   --grid-headerRowSeparator-color: rgba(0, 0, 0, 0.3);
   --grid-groupHeaderRowSeparator-color: rgba(0, 0, 0, 0.1);
 
-  --grid-groupHeader-color: var(--uitk-color-grey-600);
+  --grid-groupHeader-color: var(--uitk-color-grey-200);
   --grid-shadow-color: rgba(0, 0, 0, 0.2);
   --grid-columnDropTarget-color: var(--uitk-color-blue-500);
   --grid-cursor-borderColor: #00477b;
@@ -253,13 +256,13 @@
   --grid-editableCell-color-active: var(--uitk-color-white);
   /*--grid-header-borderColor: var(--uitk-color-grey-100);*/
 
-  --grid-header-color: var(--uitk-color-grey-50);
+  --grid-header-color: var(--uitk-color-grey-70);
 
   --grid-headerColumnSeparator-color: rgba(255, 255, 255, 0.1);
   --grid-headerRowSeparator-color: rgba(255, 255, 255, 0.3);
   --grid-groupHeaderRowSeparator-color: rgba(255, 255, 255, 0.1);
 
-  --grid-groupHeader-color: var(--uitk-color-grey-10);
+  --grid-groupHeader-color: var(--uitk-color-grey-70);
   --grid-shadow-color: rgba(255, 255, 255, 0.4);
   --grid-columnDropTarget-color: var(--uitk-color-blue-100);
   --grid-cursor-borderColor: #7dc3f2;

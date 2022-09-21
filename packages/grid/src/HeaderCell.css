@@ -1,7 +1,7 @@
 .uitkGridHeaderCell {
   text-align: left;
-  font-size: var(--grid-fontSize);
-  font-weight: normal;
+  font-size: var(--grid-header-fontSize);
+  font-weight: var(--uitk-text-caption-fontWeight-strong);
   line-height: var(--grid-row-height);
   position: relative;
   box-sizing: border-box;
@@ -42,6 +42,7 @@
 }
 
 .uitkGridHeaderCell-text {
+  color: var(--grid-header-color);
 }
 
 .uitkGridHeaderCell-regularSeparator {
@@ -73,18 +74,4 @@
   background-color: transparent;
   cursor: col-resize;
   z-index: 2;
-}
-
-.uitkGridHeaderCell-moveHandle {
-  position: absolute;
-  right: 32px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background-color: transparent;
-  cursor: move;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
