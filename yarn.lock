@@ -2985,7 +2985,7 @@ __metadata:
     ag-grid-react: ^27.3.0
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
-    axe-core: ^4.3.5
+    axe-core: ^4.4.3
     chokidar: ^3.5.3
     chromatic: next
     ci-info: ^3.3.1
@@ -7595,10 +7595,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0, axe-core@npm:^4.3.5":
-  version: 4.4.1
-  resolution: "axe-core@npm:4.4.1"
-  checksum: ad14c5b71059dc3d24ef2519b8cd96e98b4a572379396201ce449d1c4262181821d6ca9550df65b22371faf06d28bbe94d391fe5675f2a08e6550f7b5da8416d
+"axe-core@npm:^4.2.0, axe-core@npm:^4.3.5, axe-core@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "axe-core@npm:4.4.3"
+  checksum: c3ea000d9ace3ba0bc747c8feafc24b0de62a0f7d93021d0f77b19c73fca15341843510f6170da563d51535d6cfb7a46c5fc0ea36170549dbb44b170208450a2
   languageName: node
   linkType: hard
 
