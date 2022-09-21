@@ -109,8 +109,6 @@ jobs:
         run: yarn
       - name: Setup react
         run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
-      - name: Build packages
-        run: yarn run build
       - name: Cypress Components
         uses: cypress-io/github-action@v4
         env:
