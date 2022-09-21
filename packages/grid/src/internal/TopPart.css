@@ -20,7 +20,7 @@
   position: absolute;
   top: 0;
 
-  width: var(--grid-headerVisibleColumn-width);
+  width: var(--grid-headerVisibleColumns-width);
   height: var(--grid-topPart-height);
   left: var(--grid-headerVisibleArea-left);
 }

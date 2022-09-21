@@ -19,7 +19,7 @@
   table-layout: fixed;
   position: absolute;
 
-  width: var(--grid-bodyVisibleColumn-width);
+  width: var(--grid-bodyVisibleColumns-width);
   top: var(--grid-bodyVisibleArea-top);
   left: var(--grid-bodyVisibleArea-left);
 }
