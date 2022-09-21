@@ -3,17 +3,43 @@ import * as buttonStories from "@stories/grid.stories";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);
-const { GridExample, LotsOfColumns, SingleRowSelect } = composedStories;
+const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
+  composedStories;
+
+const findCell = (row: number, col: number) => {
+  return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
+};
 
 const clickCell = (row: number, col: number) => {
-  cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`).click({
-    force: true,
+  findCell(row, col).click({ force: true });
+};
+
+const checkRowSelected = (row: number, expectedSelected: boolean) => {
+  cy.get(`tr[data-row-index="${row}"]`).should(
+    expectedSelected ? "have.class" : "not.have.class",
+    "uitkGridTableRow-selected"
+  );
+};
+
+const resizeColumn = (col: number, dx: number) => {
+  cy.findByTestId(`column-${col}-resize-handle`).then(($el) => {
+    const { x, y } = $el[0].getBoundingClientRect();
+    console.log(x, y);
+    cy.findByTestId(`column-${col}-resize-handle`)
+      .trigger("mousedown", "topLeft")
+      .trigger("mousemove", { screenX: x + dx, screenY: y })
+      .trigger("mouseup");
+  });
+};
+
+const expectFakeColumnWidth = (w: number) => {
+  cy.findByTestId(`grid-fake-column-header`).should(($el) => {
+    expect($el[0].getBoundingClientRect().width).equal(w);
   });
 };
 
 describe("Grid", () => {
   // TODO checkAccessibility(composedStories);
-
   it("Rendering", () => {
     cy.mount(<GridExample />);
     cy.findByTestId("grid-left-part").should("exist");
@@ -108,13 +134,6 @@ describe("Grid", () => {
   it("Single row selection mode", () => {
     cy.mount(<SingleRowSelect />);
 
-    const checkRowSelected = (row: number, expectedSelected: boolean) => {
-      cy.get(`tr[data-row-index="${row}"]`).should(
-        expectedSelected ? "have.class" : "not.have.class",
-        "uitkGridTableRow-selected"
-      );
-    };
-
     clickCell(5, 1);
     checkRowSelected(5, true);
     clickCell(7, 2);
@@ -122,16 +141,41 @@ describe("Grid", () => {
     checkRowSelected(7, true);
   });
 
-  // TODO multi-row selection mode
-  // TODO column resize
-  // TODO fake column
+  it("Multi-row selection mode", () => {
+    cy.mount(<GridExample />);
+    findCell(2, 3).click({ force: true });
+    findCell(10, 2).click({ force: true, shiftKey: true });
+    checkRowSelected(2, true);
+    checkRowSelected(10, true);
+    checkRowSelected(7, true);
+    checkRowSelected(1, false);
+    checkRowSelected(11, false);
+    findCell(4, 2).click({ force: true, ctrlKey: true });
+    checkRowSelected(2, true);
+    checkRowSelected(4, false);
+    checkRowSelected(5, true);
+  });
+
+  it("Column resize", () => {
+    cy.mount(<LotsOfColumns />);
+    resizeColumn(2, 100);
+    findCell(3, 2).should(($el) => {
+      expect($el[0].getBoundingClientRect().width).equal(160);
+    });
+  });
+
+  it("Fake column", () => {
+    cy.mount(<SmallGrid />);
+    expectFakeColumnWidth(220);
+    resizeColumn(1, -10);
+    expectFakeColumnWidth(230);
+    resizeColumn(2, -10);
+    expectFakeColumnWidth(240);
+  });
+
+  // it("Text editor", () => {});
+
   // TODO column drag-n-drop
-  // TODO zebra
-  // TODO variants (primary/secondary)
-  // TODO column separators
-  // TODO density changes (including auto-size columns)
-  // TODO auto scrollbars
-  // TODO pinned columns
   // TODO editors
   // TODO clipboard
 });

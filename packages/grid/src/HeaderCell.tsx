@@ -48,6 +48,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       </div>
       <HeaderCellSeparator separatorType={separator} />
       <div
+        data-testid={`column-${column.index}-resize-handle`}
         className={withBaseName("resizeHandle")}
         onMouseDown={onResizeHandleMouseDown}
       />
