@@ -19,17 +19,6 @@
   padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
 }
 
-/* Styles applied if `disabled={true}` */
-.uitkCard-disabled {
-  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
-}
-
-/* Styles applied to nested divs if `disabled={true}` */
-.uitkCard-disabled div {
-  pointer-events: none;
-}
-
 /* Styles applied if `interactable={true}` */
 .uitkCard-interactable {
   display: block;
@@ -50,15 +39,32 @@ a:focus .uitkCard-interactable,
 .uitkCard-interactable:active {
   border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-selected));
   box-shadow: var(--uitkCard-boxShadow-active, var(--uitk-overlayable-shadow-hover));
-  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-selected));
-}
-
-/* Styles applied on focus-visible */
-.uitkCard:focus-visible {
   outline-style: var(--uitk-focused-outlineStyle);
   outline-width: var(--uitk-focused-outlineWidth);
   outline-color: var(--uitk-focused-outlineColor);
   outline-offset: var(--uitk-focused-outlineOffset);
+}
+
+/* Styles applied on hover if `interactable={true}` and `disabled={true}` */
+a:focus .uitkCard-interactable.uitkCard-disabled,
+.uitkCard-interactable.uitkCard-disabled:hover,
+.uitkCard-interactable.uitkCard-disabled:active {
+  box-shadow: var(--uitkCard-boxShadow-hover-disabled, var(--uitk-overlayable-shadow));
+}
+
+/* Styles applied if `disabled={true}` */
+.uitkCard-disabled,
+.uitkCard-disabled.uitkCard-interactable,
+a:focus .uitkCard-interactable.uitkCard-disabled {
+  border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-disabled-medium));
+  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
+  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
+  outline: none;
+}
+
+/* Styles applied to nested divs if `disabled={true}` */
+.uitkCard-disabled div {
+  pointer-events: none;
 }
 
 /* TK1 backwards compat styling */

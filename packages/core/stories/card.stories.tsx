@@ -89,6 +89,22 @@ export const Interactable: ComponentStory<typeof Card> = () => (
   </Link>
 );
 
+export const InteractableDisabled: ComponentStory<typeof Card> = () => (
+  <Link
+    disabled
+    href="https://google.com"
+    style={{ display: "inline-block", textDecoration: "none" }}
+    tab-index="0"
+    target="_parent"
+  >
+    <Card interactable disabled>
+      <div>
+        <p>Visit Google</p>
+      </div>
+    </Card>
+  </Link>
+);
+
 export const All: ComponentStory<typeof Card> = () => (
   <div style={{ marginTop: -200 }}>
     <ToolkitProvider theme="light">

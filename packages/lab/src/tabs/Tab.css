@@ -1,37 +1,43 @@
-/* class applied to root Tab element */
+/* Class applied to root Tab element */
 .uitkTab {
-  --uitkFocusVisible-inset: 2px 2px 4px 2px;
   --uitkEditableLabel-padding: 0;
-  --uitkEditableLabel-height: var(--tabstrip-height);
+  --uitkEditableLabel-height: var(--tabs-tabstrip-height);
   --uitkInput-minWidth: 4em;
-  --uitk-text-link-textDecoration: none;
-  --tab-bar-color: var(--uitkTab-bar-color, var(--uitk-color-grey-90));
-  --tab-cursor: pointer;
-  --tab-spacing: var(--uitk-size-unit);
 
+  --tabs-tab-background: var(--uitk-navigable-background-medium);
+  --tabs-tab-cursor: pointer;
+  --tabs-tab-spacing: var(--uitk-size-unit);
+  --tabs-tab-position: relative;
+}
+
+.uitkTab {
   align-items: center;
   align-self: stretch;
-  background: var(--uitkTab-background, var(--tabstrip-tab-background));
+  background: var(--uitkTabs-tab-background, var(--tabs-tab-background));
   border: none;
   border-radius: 0;
   color: var(--uitk-text-primary-foreground);
-  cursor: var(--uitkTab-cursor, pointer);
-  display: var(--tabstrip-tab-display);
-  height: var(--uitkTab-height, var(--tabstrip-height));
-  letter-spacing: var(--uitkTab-letterSpacing, 0);
-  min-width: var(--uitkTab-minWidth, 40px);
+  cursor: var(--uitkTabs-tab-cursor, var(--tabs-tab-cursor));
+  display: var(--tabs-tabstrip-display);
+  height: var(--uitkTabs-tab-height, var(--tabs-tabstrip-height));
+  letter-spacing: var(--uitkTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing, 0));
+  min-width: var(--uitkTabs-tab-minWidth, 40px);
   outline: none;
-  position: var(--uitkTab-position, relative);
+  position: var(--uitkTabs-tab-position, var(--tabs-tab-position));
   user-select: none;
 }
 
+/* Overrides characteristic used in uitkFocusVisible */
+.uitkTab.uitkFocusVisible:after {
+  inset: 2px 2px 4px 2px;
+}
+
 .uitkTab:not(.uitkTab-vertical) {
-  margin: 0 var(--tab-spacing) 0 0;
+  margin: 0 var(--tabs-tab-spacing) 0 0;
 }
 
 .uitkTab[aria-selected="true"] {
   color: var(--uitk-text-primary-foreground);
-  /* should be fontWeight-active, but nor sure where that belongs */
   font-weight: var(--uitk-navigable-fontWeight-active);
 }
 
@@ -50,7 +56,7 @@
   font-weight: inherit;
   height: var(--uitk-size-stackable);
   outline: none;
-  padding: 0 var(--tab-spacing);
+  padding: 0 var(--tabs-tab-spacing);
   position: relative;
 }
 
@@ -83,16 +89,16 @@
   display: inline-block;
   position: relative;
   overflow: hidden;
-  text-align: center;
+  text-align: var(--uitk-text-textAlign-embedded);
   text-overflow: ellipsis;
-  top: var(--uitkTab-top, auto);
+  top: var(--uitkTabs-tab-top, var(--tabs-tab-top, auto));
   white-space: nowrap;
-  /* ensure content sita above focus ring */
+  /* ensure content sits above focus ring */
   z-index: var(--uitk-zIndex-default);
 }
 
 .uitkTab-vertical .uitkTab-text {
-  text-align: left;
+  text-align: var(--uitk-text-textAlign);
 }
 
 .uitkTab .uitkTab-text:before {
@@ -100,11 +106,10 @@
   content: attr(data-text);
   display: block;
   visibility: hidden;
-  /* must match font weight of selected tab styling */
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-navigable-fontWeight-active);
 }
 
-/* Editing  - these are focusVisible styles, just assign uitkFocusVisible*/
+/* FIXME: these are all focusVisible styles, but with a bespoke inset */
 .uitkTab-editing:after {
   content: "";
   position: absolute;
@@ -112,13 +117,10 @@
   left: 0;
   right: 0;
   bottom: 2px;
-  /* border: dotted cornflowerblue 2px;
-   */
+  outline-color: var(--uitk-focused-outlineColor);
   outline-style: var(--uitk-focused-outlineStyle);
   outline-width: var(--uitk-focused-outlineWidth);
   outline-offset: -2px;
-  /* outline-offset: var(--uitk-focused-outlineOffset); */
-  outline-color: var(--uitk-focused-outlineColor);
 }
 
 .uitkTab-vertical.uitkTab-editing:after {
@@ -134,37 +136,37 @@
 }
 
 .uitkTab.uitkFocusVisible {
-  background: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-background-hover-medium));
 }
 
 .uitkTab:before {
-  content: var(--tab-before-content, none);
-  background: var(--tab-before-background);
-  height: var(--tab-before-height);
-  inset: var(--tab-before-inset);
+  content: var(--tabs-tab-before-content, none);
+  background: var(--tabs-tab-before-background);
+  height: var(--tabs-tab-before-height);
+  inset: var(--tabs-tab-before-inset);
   position: absolute;
-  width: var(--tab-before-width);
+  width: var(--tabs-tab-before-width);
   z-index: 1;
 }
 
 .uitkTabstrip-draggingTab .uitkTab[aria-selected="true"]:before {
-  --tab-before-content: "";
-  --tab-before-background: var(--uitk-navigable-indicator-active);
-  --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabs-activation-indicator-inset);
-  --tab-before-width: var(--tabstrip-activation-thumb-width);
+  --tabs-tab-before-content: "";
+  --tabs-tab-before-background: var(--uitk-navigable-indicator-color-active);
+  --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
+  --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
+  --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
 }
 
 /* Hover styling */
 .uitkTab:not([aria-selected="true"]).uitkFocusVisible:before,
 .uitkTab:hover:not([aria-selected="true"]):before {
-  --tab-before-content: "";
-  --tab-before-background: var(--uitk-navigable-indicator-hover);
-  --tab-before-height: var(--tabstrip-activation-thumb-height);
-  --tab-before-inset: var(--tabs-activation-indicator-inset);
-  --tab-before-width: var(--tabstrip-activation-thumb-width);
+  --tabs-tab-before-content: "";
+  --tabs-tab-before-background: var(--uitk-navigable-indicator-hover);
+  --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
+  --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
+  --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
-  background: var(--uitkTab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-background-hover-medium));
 }

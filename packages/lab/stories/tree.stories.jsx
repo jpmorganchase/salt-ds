@@ -144,8 +144,8 @@ export const DefaultTree = () => {
 
 const iconTreeStyle = `
   .arrow-toggle {
-    --uitkTree-node-collapse: var(--list-svg-triangle-right);
-    --uitkTree-node-expand: var(--list-svg-triangle-right);
+    --uitkTree-toggle-collapse: var(--svg-triangle-right);
+    --uitkTree-toggle-expand: var(--svg-triangle-right);
     --uitkTree-node-expanded-transform: rotate(45deg) translate(1px, 1px);
    }
 `;

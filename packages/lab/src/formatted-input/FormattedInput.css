@@ -1,7 +1,7 @@
 /* TODO check multiline styles */
 
 .uitkFormattedInput {
-  --formatted-input-mask-color: var(--uitk-text-secondary-foreground);
+  --formattedInput-mask-color: var(--uitk-text-secondary-foreground);
 }
 
 .uitkFormattedInput-inputWrapper {
@@ -12,7 +12,7 @@
 
 .uitkFormattedInput-mask {
   position: absolute;
-  color: var(--formatted-input-mask-color);
+  color: var(--formattedInput-mask-color);
   pointer-events: none;
   display: flex;
   align-items: center;

@@ -42,7 +42,7 @@ export const BorderItem = forwardRef<HTMLDivElement, BorderItemProps>(
   ) {
     const gridItemStyles = {
       ...style,
-      "--grid-item-gridArea": position,
+      "--gridItem-gridArea": position,
     };
 
     return (

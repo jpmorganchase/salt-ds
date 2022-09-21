@@ -71,7 +71,7 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
 
     const borderLayoutStyles = {
       ...style,
-      "--grid-layout-gridTemplate": gridTemplateAreas,
+      "--gridLayout-gridTemplate": gridTemplateAreas,
     };
 
     return (
