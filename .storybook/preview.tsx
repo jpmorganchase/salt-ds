@@ -3,10 +3,9 @@ import type { GlobalTypes } from "@storybook/csf";
 import "@jpmorganchase/uitk-theme/index.css";
 
 import { ComponentProps } from "react";
-import { withThemeBackground } from "./theme-switch/helpers";
+import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
-import { withToolkitProvider } from "docs/decorators/withToolkitProvider";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
@@ -19,9 +18,22 @@ const DEFAULT_THEME = "light";
 export const globalTypes: GlobalTypes = {
   theme: {
     name: "Theme",
-    description: "Global theme for components",
+    description: "Set the color theme",
     defaultValue: DEFAULT_THEME,
-    // We used a custom toolbar implementation in ./theme-switch
+    toolbar: {
+      // show the theme name once selected in the toolbar
+      dynamicTitle: true,
+      items: [
+        { value: "light", right: "⚪", title: "Light" },
+        { value: "dark", right: "⚫", title: "Dark" },
+        {
+          value: "side-by-side",
+          icon: "sidebaralt",
+          title: "Side by side",
+        },
+        { value: "stacked", icon: "bottombar", title: "Stacked" },
+      ],
+    },
   },
   density: {
     name: "Density",
@@ -114,9 +126,8 @@ export const parameters: Parameters = {
 export const decorators = [
   // When theme provider alone is outside of density provider, some variables can't be resolved. Use withToolkitProvider
   withResponsiveWrapper,
-  withThemeBackground,
   withTestIdWrapper,
-  withToolkitProvider,
+  withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
 ];

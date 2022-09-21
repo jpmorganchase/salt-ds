@@ -19,7 +19,7 @@
   position: absolute;
   height: var(--tabs-activationIndicator-thumb-height, auto);
   background: var(--uitk-navigable-indicator-active);
-  transition: var(--uitkTabs-activationIndicator-transition, var(--tabs-activationIndicator-transition, left 0.3 ease));
+  transition: var(--uitkTabs-activationIndicator-transition, var(--tabs-activationIndicator-transition, left 0.3s ease));
   width: var(--tabs-activationIndicator-thumb-width, auto);
   z-index: 1;
 }

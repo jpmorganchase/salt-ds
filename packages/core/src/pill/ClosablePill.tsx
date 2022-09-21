@@ -8,7 +8,7 @@ import {
 } from "react";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
-import { PillBase, PillBaseProps } from "./internal/PillBase";
+import { PillBase, PillBaseProps } from "./PillBase";
 import { makePrefixer } from "../utils";
 
 const deleteKeys = ["Enter", "Delete", "Backspace"];

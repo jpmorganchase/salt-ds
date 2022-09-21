@@ -25,13 +25,6 @@ jobs:
       - run: yarn run lint:core
       - run: yarn run prettier:ci
       - run: yarn run lint:style
-  author-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verified Github Authors
-        uses: joshwooding/verified-github-author-action@v0
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   dependency-check:
     runs-on: ubuntu-latest
     steps:

@@ -1,4 +1,4 @@
-import { makePrefixer, RadioIcon } from "@jpmorganchase/uitk-core";
+import { makePrefixer, RadioButtonIcon } from "@jpmorganchase/uitk-core";
 import { CellValueProps } from "../../model";
 import { useGridContext } from "../../GridContext";
 import { MouseEventHandler, useCallback } from "react";
@@ -22,7 +22,7 @@ export const RowSelectionRadioCellValue = function RowSelecitonRadioCellValue<
 
   return (
     <div className={withBaseName()} onMouseDown={onMouseDown}>
-      <RadioIcon checked={isSelected} />
+      <RadioButtonIcon checked={isSelected} />
     </div>
   );
 };
