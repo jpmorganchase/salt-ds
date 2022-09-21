@@ -13,17 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { DivButton } from "../../button";
-import { TooltipProps, useTooltip, useTooltipContext } from "../../tooltip";
-import {
-  makePrefixer,
-  useForkRef,
-  useIsomorphicLayoutEffect,
-} from "../../utils";
-import { pillBaseName } from "../constants";
-import { DeleteButton } from "./DeleteButton";
+import { DivButton } from "../button";
+import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
+import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import { pillBaseName } from "./constants";
+import { DeleteButton } from "./internal/DeleteButton";
 
-import "../Pill.css";
+import "./Pill.css";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,

@@ -44,19 +44,19 @@
   --radioButton-label-marginTop: 3px;
   --radioButton-row-marginRight: 12px;
   /*RadioButtonGroup*/
-  --radioButtonGroup-vertical-label-marginBottom: 4px;
-  --radioButtonGroup-legend-minHeight: 14px;
-  --radioButtonGroup-legend-paddingRight: 16px;
-  --radioButtonGroup-horizontal-legend-marginTop: 2px;
-  --radioButtonGroup-horizontal-legend-marginRight: 12px;
-  --radioButtonGroup-horizontal-legend-paddingRight: 4px;
-  --radioButtonGroup-horizontal-legend-marginBottom: 0px;
-  --radioButtonGroup-vertical-formLabel-paddingRight: 4px;
-  --radioButtonGroup-vertical-formLabel-marginBottom: 4px;
-  --radioButtonGroup-vertical-formLabel-transform: translate(0px, 3px);
-  --radioButtonGroup-formLabel-transform: translate(0px, 3px);
+  --radioButton-group-vertical-label-marginBottom: 4px;
+  --radioButton-group-legend-minHeight: 14px;
+  --radioButton-group-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginTop: 2px;
+  --radioButton-group-horizontal-legend-marginRight: 12px;
+  --radioButton-group-horizontal-legend-paddingRight: 4px;
+  --radioButton-group-horizontal-legend-marginBottom: 0px;
+  --radioButton-group-vertical-formLabel-paddingRight: 4px;
+  --radioButton-group-vertical-formLabel-marginBottom: 4px;
+  --radioButton-group-vertical-formLabel-transform: translate(0px, 3px);
+  --radioButton-group-formLabel-transform: translate(0px, 3px);
   /*RadioIcon*/
-  --radioIcon-size: 12px;
+  --radioButton-icon-size: 12px;
   /*Switch*/
   --switch-width: 30px;
   --switch-thumb-margin: 2px 0 0 2px;
