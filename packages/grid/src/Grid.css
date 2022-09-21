@@ -296,11 +296,11 @@
 }
 
 .uitkGrid-primaryBackground {
-  background-color: var(--grid-background-primary);
+  background: var(--grid-background-primary);
 }
 
 .uitkGrid-secondaryBackground {
-  background-color: var(--grid-background-secondary);
+  background: var(--grid-background-secondary);
 }
 
 .uitkGrid.uitkGrid-zebra {

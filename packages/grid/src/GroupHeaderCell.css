@@ -18,7 +18,7 @@
   right: 4px;
   bottom: 0;
   height: 1px;
-  background-color: var(--grid-groupHeaderRowSeparator-color);
+  background: var(--grid-groupHeaderRowSeparator-color);
 }
 
 .uitkGridGroupHeaderCell-firstGroupRowSeparator {
@@ -27,7 +27,7 @@
   right: 4px;
   bottom: 0;
   height: 1px;
-  background-color: var(--grid-groupHeaderRowSeparator-color);
+  background: var(--grid-groupHeaderRowSeparator-color);
 }
 
 .uitkGridGroupHeaderCell-lastGroupRowSeparator {
@@ -36,7 +36,7 @@
   right: 0;
   bottom: 0;
   height: 1px;
-  background-color: var(--grid-groupHeaderRowSeparator-color);
+  background: var(--grid-groupHeaderRowSeparator-color);
 }
 
 .uitkGridGroupHeaderCell-columnSeparator {
@@ -45,5 +45,5 @@
   top: 4px;
   bottom: 0;
   width: 1px;
-  background-color: var(--grid-headerColumnSeparator-color);
+  background: var(--grid-headerColumnSeparator-color);
 }

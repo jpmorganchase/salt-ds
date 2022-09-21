@@ -17,11 +17,11 @@
 }
 
 .uitkGridBaseCell-selectedCell {
-  background-color: var(--grid-cell-background-selected);
+  background: var(--grid-cell-background-selected);
 }
 
 .uitkGridBaseCell-secondary {
-  background-color: var(--grid-background-secondary);
+  background: var(--grid-background-secondary);
 }
 
 .uitkGridBaseCell-valueContainer {
@@ -41,7 +41,7 @@
 }
 
 .uitkGridBaseCell-selected {
-  background-color: var(--grid-cell-background-selected);
+  background: var(--grid-cell-background-selected);
 }
 
 .uitkGridBaseCell-editable {

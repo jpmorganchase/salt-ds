@@ -46,7 +46,7 @@
 }
 
 .uitkGridHeaderCell-regularSeparator {
-  background-color: var(--grid-headerColumnSeparator-color);
+  background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
   position: absolute;
@@ -56,7 +56,7 @@
 }
 
 .uitkGridHeaderCell-edgeSeparator {
-  background-color: var(--grid-headerColumnSeparator-color);
+  background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
   position: absolute;
@@ -71,7 +71,7 @@
   top: 0;
   bottom: 0;
   width: 16px;
-  background-color: transparent;
+  background: transparent;
   cursor: col-resize;
   z-index: 2;
 }

@@ -30,6 +30,6 @@
   padding: 0 calc(var(--grid-padding) - 2px);
   font-size: var(--grid-fontSize);
   font-family: inherit;
-  background-color: var(--grid-editableCell-background-active);
+  background: var(--grid-editableCell-background-active);
   color: var(--grid-editableCell-color-active);
 }
