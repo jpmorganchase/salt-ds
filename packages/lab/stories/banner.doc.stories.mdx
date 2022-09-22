@@ -1,12 +1,18 @@
-import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import {
+  ArgsTable,
+  Canvas,
+  Meta
+} from "@storybook/addon-docs";
+import {
+  ComponentAnatomy
+} from "docs/components/ComponentAnatomy";
 import {
   Banner
 } from "@jpmorganchase/uitk-lab";
 import {
+  CharacteristicUsage,
   CSSClassTable,
   CSSVariableTable,
-  CharacteristicUsage,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -21,6 +27,74 @@ import {
 
 The Banner component lets your users know about an err, warning, a successfully completed or an information update. The banner should relate to the current workflow
 and span the page or container horizontally to give quick and non-disruptive feedback.
+
+
+# When to use Banner features
+
+# When you need to display general information
+
+you should use the information Banner to draw attention to inform your user was unaware of.
+
+<Canvas>
+    <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+    >
+      Banners appear inline on the page
+    </Banner>
+</Canvas>
+
+# When you need to let users know about an issue
+
+If your users have a problem that prevents them from completing a task, such as a system error 
+or technical failure, the error Banner will guide them to the right action to resolve it.
+
+<Canvas>
+    <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+      state="error"
+    >
+      There has been an update to the terms and conditions
+    </Banner>
+</Canvas>
+
+You should use the warning Banner to let users know about an issue that won't prevent them from
+continuing the task, but may cause errors if it's not addressed, such as a restriction due to entitlements
+or current system status.
+
+<Canvas>
+    <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+      state="warning"
+    >
+      Action failed
+    </Banner>
+</Canvas>
+
+# When you need to reassure your users
+
+You should use the success Banner to reassure your users that an event or process related to the user's current
+task has been successfully completed.
+
+<Canvas>
+    <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+      state="success"
+    >
+      Database updated
+    </Banner>
+</Canvas>
+
+# Accessibility
+
+Banner is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+
+By default, Banner's content is spoken by screen readers. If you want screen readers to read the
+surrounding page content instead, we recommend you turn this feature off with the `disableAnnouncer`
+prop.
 
 # API
 
@@ -37,6 +111,20 @@ import { Banner } from "@jpmorganchase/uitk-lab";
 <Canvas>
   <ComponentAnatomy>
     <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+    >
+      Banners appear inline on the page
+    </Banner>
+  </ComponentAnatomy>
+</Canvas>
+
+## HTML Anatomy of Badge component with onClose defined
+
+<Canvas>
+  <ComponentAnatomy>
+    <Banner
+      onClose={()=>{}}
       //eslint-disable-next-line no-script-url
       LinkProps={{ href: "javascript:void(0)" }}
     >
