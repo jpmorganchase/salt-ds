@@ -32,7 +32,7 @@
 
 .uitkRadioButton-disabled {
   --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
-  
+
   pointer-events: visible;
 }
 

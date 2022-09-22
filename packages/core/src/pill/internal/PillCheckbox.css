@@ -16,7 +16,7 @@
 /* TK1 Backwards compat styling */
 
 .uitk-light {
-  --backwardsCompat-pill-checkbox-icon-stroke: var(--uitk-color-grey-100);  
+  --backwardsCompat-pill-checkbox-icon-stroke: var(--uitk-color-grey-100);
   --backwardsCompat-pill-checkbox-icon-tick-color: var(--uitk-color-grey-300);
 }
 .uitk-dark {

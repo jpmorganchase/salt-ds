@@ -62,16 +62,16 @@
 
 /* Styles applied to RadioButtonIcon border if `disabled={true}` or in a disabled FormField */
 .uitkRadioButton-disabled .uitkRadioButtonIcon-border,
-.uitkFormField-disabled .uitkRadioButton .uitkRadioButtonIcon-border, 
-.uitkRadioButton-disabled:hover .uitkRadioButtonIcon-border ,
+.uitkFormField-disabled .uitkRadioButton .uitkRadioButtonIcon-border,
+.uitkRadioButton-disabled:hover .uitkRadioButtonIcon-border,
 .uitkFormField-disabled .uitkRadioButton:hover .uitkRadioButtonIcon-border {
   fill: var(--uitkRadioButton-icon-fill-disabled, var(--radioButton-icon-fill));
   stroke: var(--uitkRadioButton-icon-strokeColor-disabled, var(--radioButton-icon-strokeColor-disabled));
 }
 
 /* Styles applied to RadioButtonIcon border if `checked={true}` when `disabled={true}` or in a disabled FormField  */
-.uitkFormField-disabled .uitkRadioButton .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border, 
-.uitkFormField-disabled .uitkRadioButton:hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border, 
+.uitkFormField-disabled .uitkRadioButton .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
+.uitkFormField-disabled .uitkRadioButton:hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
 .uitkRadioButton-disabled .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
 .uitkRadioButton-disabled:hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border {
   fill: var(--uitkRadioButton-icon-fill-checked-disabled, var(--radioButton-icon-fill-checked-disabled));
@@ -114,7 +114,7 @@
   fill: var(--backwardsCompat-radioButton-icon-inner-checked-fill);
 }
 
-.backwardsCompat.uitkRadioButton .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border, 
-.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border  {
+.backwardsCompat.uitkRadioButton .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
+.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border {
   fill: var(--backwardsCompat-radioButton-icon-border-fill-checked-hover);
 }
