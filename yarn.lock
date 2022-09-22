@@ -2985,7 +2985,7 @@ __metadata:
     ag-grid-react: ^27.3.0
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
-    axe-core: ^4.3.5
+    axe-core: ^4.4.3
     chokidar: ^3.5.3
     chromatic: next
     ci-info: ^3.3.1
@@ -3018,7 +3018,6 @@ __metadata:
     react-router-dom: ^6.2.1
     react-window: ^1.8.6
     rifm: ^0.12.0
-    rxjs: ^7.5.5
     sass: ^1.52.3
     stylelint: ^14.9.1
     svgo: ^2.3.0
@@ -3027,8 +3026,6 @@ __metadata:
     typescript: 4.6.4
     vite: ^3.1.0
     vite-plugin-istanbul: ^3.0.1
-    vite-plugin-optimize-persist: ^0.1.2
-    vite-plugin-package-config: ^0.1.1
     vite-tsconfig-paths: ^3.5.0
     warning: ^4.0.3
     webpack: 5.73.0
@@ -7595,10 +7592,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0, axe-core@npm:^4.3.5":
-  version: 4.4.1
-  resolution: "axe-core@npm:4.4.1"
-  checksum: ad14c5b71059dc3d24ef2519b8cd96e98b4a572379396201ce449d1c4262181821d6ca9550df65b22371faf06d28bbe94d391fe5675f2a08e6550f7b5da8416d
+"axe-core@npm:^4.2.0, axe-core@npm:^4.3.5, axe-core@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "axe-core@npm:4.4.3"
+  checksum: c3ea000d9ace3ba0bc747c8feafc24b0de62a0f7d93021d0f77b19c73fca15341843510f6170da563d51535d6cfb7a46c5fc0ea36170549dbb44b170208450a2
   languageName: node
   linkType: hard
 
@@ -25265,30 +25262,6 @@ __metadata:
     picocolors: ^1.0.0
     test-exclude: ^6.0.0
   checksum: e89c492ed7396b66ece98b0b439d9c7bac7fe0c9856c224da641672586f5adb627a289a6234a11754c8e12746a32373a117e1606a8b69568873e1ca807e9a082
-  languageName: node
-  linkType: hard
-
-"vite-plugin-optimize-persist@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "vite-plugin-optimize-persist@npm:0.1.2"
-  dependencies:
-    debug: ^4.3.2
-    fs-extra: ^10.0.0
-  peerDependencies:
-    vite: ^2.0.0
-    vite-plugin-package-config: ^0.1.0
-  checksum: b5f0009d7a54d55b155b8c21d9e2a04d88c16da7da8b514652d6bbf04b412818594f812ad6035089731cf28e7cfa0307b2ac55912025f72d56bd1eabf6b7a6ed
-  languageName: node
-  linkType: hard
-
-"vite-plugin-package-config@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "vite-plugin-package-config@npm:0.1.1"
-  dependencies:
-    debug: ^4.3.3
-  peerDependencies:
-    vite: ^2.0.0
-  checksum: 7d9524c1371d5aed97ffef4069abd63dd714dfdb115500a5f05af785dd393aba519e2d1c21992588aa663afbddbd3a57b0cf3c20fc69d082cc02fdbd355b913b
   languageName: node
   linkType: hard
 
