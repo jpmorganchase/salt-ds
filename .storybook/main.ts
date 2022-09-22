@@ -1,8 +1,6 @@
 import type { StorybookConfig } from "@storybook/react/types";
 import type { UserConfig } from "vite";
 import { mergeConfig } from "vite";
-import PkgConfig from "vite-plugin-package-config";
-import OptimizationPersist from "vite-plugin-optimize-persist";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 
@@ -49,13 +47,7 @@ const config: ExtendedConfig = {
     // customize the Vite config here
 
     const customConfig: UserConfig = {
-      plugins: [
-        PkgConfig({
-          packageJsonPath: "optimizedDeps.json",
-        }),
-        OptimizationPersist(),
-        cssVariableDocgen(),
-      ],
+      plugins: [cssVariableDocgen()],
     };
 
     if (configType === "PRODUCTION") {

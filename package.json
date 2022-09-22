@@ -117,8 +117,6 @@
     "typescript": "4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-istanbul": "^3.0.1",
-    "vite-plugin-optimize-persist": "^0.1.2",
-    "vite-plugin-package-config": "^0.1.1",
     "vite-tsconfig-paths": "^3.5.0",
     "warning": "^4.0.3",
     "webpack": "5.73.0"
