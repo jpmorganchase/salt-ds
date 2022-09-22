@@ -1,0 +1,45 @@
+.uitkGridSelectCellEditor {
+  margin: 0;
+  padding: 0;
+  height: var(--grid-row-height);
+  position: relative;
+  font-size: var(--grid-fontSize);
+}
+
+/* TODO this is currently the same as uitkGridBaseCell-valueContainer. Update when UX is available. */
+.uitkGridSelectCellEditor-currentValue {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: calc(var(--grid-row-height) - 4px);
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
+
+  padding: 0 calc(var(--grid-padding) - 3px);
+}
+
+.uitkGridSelectCellEditor-selectContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+
+  border-style: dotted;
+  border-width: 2px;
+  border-color: var(--grid-cursor-borderColor);
+
+  padding: 0;
+}
+
+.uitkGridSelectCellEditor-dropdown {
+  /*height: 100%;*/
+  /*width: 100%;*/
+}

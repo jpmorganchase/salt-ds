@@ -1,0 +1,34 @@
+.table {
+  height: 600px;
+  width: 800px;
+}
+
+.smallGrid {
+  height: 600px;
+  width: 800px;
+  /*border: solid 1px var(--uitk-container-borderColor-high);*/
+}
+
+.customHeader {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.customHeaderText {
+  padding-left: var(--uitk-size-unit);
+  flex-grow: 1;
+}
+
+.customTreeCell {
+  padding: var(--grid-cell-padding);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.treeNodeName {
+  padding-left: var(--uitk-size-unit);
+}
