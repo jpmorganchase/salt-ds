@@ -15,4 +15,4 @@ export * from "./GridContext";
 export * from "./RowSelectionColumn";
 
 export * from "./TextCellEditor";
-export * from "./SelectCellEditor";
+export * from "./DropdownCellEditor";

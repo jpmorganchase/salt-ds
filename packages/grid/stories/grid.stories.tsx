@@ -2,13 +2,13 @@ import { Story } from "@storybook/react";
 import "./grid.stories.css";
 import {
   ColumnGroup,
-  RowSelectionColumn,
+  DropdownCellEditor,
   Grid,
   GridCellValueProps,
   GridColumn,
   GridHeaderValueProps,
+  RowSelectionColumn,
   RowSelectionRadioColumn,
-  SelectCellEditor,
   TextCellEditor,
 } from "../src";
 import { randomAmount, randomString, randomText } from "./utils";
@@ -143,7 +143,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
           onChange={onLocationChange}
         >
           <CellEditor>
-            <SelectCellEditor options={allLocations} />
+            <DropdownCellEditor options={allLocations} />
           </CellEditor>
         </GridColumn>
         <GridColumn

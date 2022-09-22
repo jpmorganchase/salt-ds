@@ -495,9 +495,21 @@ export const Grid = function <T>(props: GridProps<T>) {
       if (key === "Tab") {
         if (!event.ctrlKey && !event.metaKey && !event.altKey) {
           if (!event.shiftKey) {
-            moveCursor(cursorRowIdx, cursorColIdx + 1);
+            if (cursorColIdx < cols.length - 1) {
+              moveCursor(cursorRowIdx, cursorColIdx + 1);
+            } else {
+              if (cursorRowIdx < rowData.length - 1) {
+                moveCursor(cursorRowIdx + 1, 0);
+              }
+            }
           } else {
-            moveCursor(cursorRowIdx, cursorColIdx - 1);
+            if (cursorColIdx > 0) {
+              moveCursor(cursorRowIdx, cursorColIdx - 1);
+            } else {
+              if (cursorRowIdx > 0) {
+                moveCursor(cursorRowIdx - 1, cols.length - 1);
+              }
+            }
           }
           event.preventDefault();
           event.stopPropagation();
@@ -516,6 +528,10 @@ export const Grid = function <T>(props: GridProps<T>) {
           event.stopPropagation();
           return;
         }
+      }
+      if (key === "Escape") {
+        cancelEditMode();
+        return;
       }
       if (key === " ") {
         selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
