@@ -2992,7 +2992,6 @@ __metadata:
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
-    css-validator: ^0.10.0
     csstree-validator: ^3.0.0
     cypress: ^10.8.0
     cypress-axe: ^1.0.0
@@ -7358,7 +7357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.0, async@npm:~3.2.0":
+"async@npm:^3.2.0":
   version: 3.2.3
   resolution: "async@npm:3.2.3"
   checksum: c4bee57ab2249af3dc83ca3ef9acfa8e822c0d5e5aa41bae3eaf7f673648343cd64ecd7d26091ffd357f3f044428b17b5f00098494b6cf8b6b3e9681f0636ca1
@@ -9118,13 +9117,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:~7.1.0":
-  version: 7.1.0
-  resolution: "commander@npm:7.1.0"
-  checksum: 99c120b939b610b1fb4a14424b48dc6431643ec46836f251a26434ad77b1eed22577a36378cfd66ed4b56fc69f98553f7dcb30f1539e3685874fd77cfb6e52fb
-  languageName: node
-  linkType: hard
-
 "common-path-prefix@npm:^3.0.0":
   version: 3.0.0
   resolution: "common-path-prefix@npm:3.0.0"
@@ -9766,22 +9758,6 @@ __metadata:
     mdn-data: 2.0.27
     source-map-js: ^1.0.1
   checksum: 254c66a76f6a01d5161605162b17c1792fb3f96966d1cabec3435c551372707c02f6ca6c15f967bee7699f0b254437037c3fdb5eea0cd76ac2377cc8ac1f1d1d
-  languageName: node
-  linkType: hard
-
-"css-validator@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "css-validator@npm:0.10.0"
-  dependencies:
-    async: ~3.2.0
-    commander: ~7.1.0
-    form-data: ~4.0.0
-    obj-extend: ~0.1.0
-    readable-stream: ~3.6.0
-    sax: ~1.2.4
-  bin:
-    css-validator: bin/css-validator
-  checksum: 48a8c2b03d5233b91916e40cc0340c38ab300654679307870547cfeb6ba00d67765e927fc13c686eefc137bb7aa942045446112748a72b5a1f04c3cccfc25215
   languageName: node
   linkType: hard
 
@@ -12934,17 +12910,6 @@ __metadata:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 10c1780fa13dbe1ff3100114c2ce1f9307f8be10b14bf16e103815356ff567b6be39d70fc4a40f8990b9660012dc24b0f5e1dde1b6426166eb23a445ba068ca3
-  languageName: node
-  linkType: hard
-
-"form-data@npm:~4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
-  dependencies:
-    asynckit: ^0.4.0
-    combined-stream: ^1.0.8
-    mime-types: ^2.1.12
-  checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
   languageName: node
   linkType: hard
 
@@ -18578,13 +18543,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"obj-extend@npm:~0.1.0":
-  version: 0.1.0
-  resolution: "obj-extend@npm:0.1.0"
-  checksum: f6f5193fd0ddea6fb03c96a100daf8b05bcade87fedefd178c16a515be7c2646a962d79676167f1709f68a6f9b780f1c0bff9d59fc55317f24980b7bd2574bdf
-  languageName: node
-  linkType: hard
-
 "object-assign@npm:^4.0.1, object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
@@ -21376,7 +21334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^3.0.6, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0, readable-stream@npm:~3.6.0":
+"readable-stream@npm:^3.0.6, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -22304,13 +22262,6 @@ __metadata:
   bin:
     sass: sass.js
   checksum: bb6aead09764de450a02b9a66e4ee538f0ba6bc8f2fc3905c71b2c302b5f47e089b510b86cfa7ef2d4139c210c8abf99fe157e7a5bd356c057f10d29e6c4b44c
-  languageName: node
-  linkType: hard
-
-"sax@npm:~1.2.4":
-  version: 1.2.4
-  resolution: "sax@npm:1.2.4"
-  checksum: d3df7d32b897a2c2f28e941f732c71ba90e27c24f62ee918bd4d9a8cfb3553f2f81e5493c7f0be94a11c1911b643a9108f231dd6f60df3fa9586b5d2e3e9e1fe
   languageName: node
   linkType: hard
 
