@@ -31,12 +31,12 @@
   flex-wrap: wrap;
 }
 
-.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-li {
+.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-li,
+.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-separator {
   --breadcrumbs-ol-wrap-li-marginBottom: 0px;
 
   margin-bottom: var(--breadcrumbs-ol-wrap-li-marginBottom);
 }
-
 
 /* TK1 Backwards compatibility */
 
@@ -67,7 +67,7 @@
   box-sizing: content-box;
 }
 
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator  {
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator {
   --breadcrumbs-separator-marginRight: var(--backwardsCompat-breadcrumbs-li-marginRight);
   box-sizing: content-box;
 }
