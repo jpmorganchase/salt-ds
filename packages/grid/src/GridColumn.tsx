@@ -53,7 +53,7 @@ export interface GridColumnProps<T = any> {
   headerComponent?: ComponentType<HeaderCellProps<T>>;
   headerValueComponent?: ComponentType<GridHeaderValueProps<T>>;
   editable?: boolean;
-  onChange?: (rowKey: string, rowIndex: number, value: string) => void;
+  onChange?: (row: T, rowIndex: number, value: string) => void;
   children?: ReactNode;
 }
 

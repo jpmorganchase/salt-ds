@@ -194,11 +194,11 @@ export function useLeftScrolledOutWidth<T>(
 
 // Row positions by row keys.
 export function useRowIdxByKey<T>(rowKeyGetter: RowKeyGetter<T>, rowData: T[]) {
-  return useMemo(
-    () =>
-      new Map<string, number>(rowData.map((r, i) => [rowKeyGetter(r, i), i])),
-    [rowData, rowKeyGetter]
-  );
+  return useMemo(() => {
+    return new Map<string, number>(
+      rowData.map((r, i) => [rowKeyGetter(r, i), i])
+    );
+  }, [rowData, rowKeyGetter]);
 }
 
 export type SetState<T> = (v: T | ((p: T) => T)) => void;
@@ -632,97 +632,90 @@ export function useColumnRegistry<T>(children: ReactNode) {
 export function useRowSelection<T>(
   rowKeyGetter: RowKeyGetter<T>,
   rowData: T[],
-  rowIdxByKey: Map<string, number>,
   defaultSelectedRowKeys?: Set<string>,
   rowSelectionMode?: GridRowSelectionMode,
-  onRowSelected?: (selectedRows: T[]) => void
+  onRowSelected?: (selectedRowIdxs: number[]) => void
 ) {
-  const [selRowKeys, setSelRowKeys] = useState<Set<string>>(
-    defaultSelectedRowKeys || new Set()
-  );
-
-  const [lastSelRowKey, setLastSelRowKey] = useState<string | undefined>(
+  const [selRowIdxs, setSelRowIdxs] = useState<Set<number>>(new Set());
+  const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
     undefined
   );
 
   const selectRows = useCallback(
     (rowIdx: number, shift: boolean, meta: boolean) => {
-      const rowKey = rowKeyGetter(rowData[rowIdx], rowIdx);
       const idxFrom =
-        rowSelectionMode === "multi" && lastSelRowKey !== undefined && shift
-          ? rowIdxByKey.get(lastSelRowKey)
+        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && shift
+          ? lastSelRowIdx
           : undefined;
 
-      let nextSelRowKeys: Set<string> | undefined = undefined;
-      let nextLastSelRowKey: string | undefined = undefined;
+      let nextSelRowIdxs: Set<number> | undefined = undefined;
+      let nextLastSelRowIdx: number | undefined = undefined;
 
       if (idxFrom === undefined) {
         if (rowSelectionMode !== "multi" || !meta) {
-          nextSelRowKeys = new Set([rowKey]);
-          nextLastSelRowKey = rowKey;
+          nextSelRowIdxs = new Set([rowIdx]);
+          nextLastSelRowIdx = rowIdx;
         } else {
-          const n = new Set<string>(selRowKeys);
-          if (n.has(rowKey)) {
-            n.delete(rowKey);
-            nextLastSelRowKey = undefined;
+          const n = new Set<number>(selRowIdxs);
+          if (n.has(rowIdx)) {
+            n.delete(rowIdx);
+            nextLastSelRowIdx = undefined;
           } else {
-            n.add(rowKey);
-            nextLastSelRowKey = rowKey;
+            n.add(rowIdx);
+            nextLastSelRowIdx = rowIdx;
           }
-          nextSelRowKeys = n;
+          nextSelRowIdxs = n;
         }
       } else {
-        const s = meta ? new Set<string>(selRowKeys) : new Set<string>();
-        const idxs = [rowIdxByKey.get(rowKey)!, idxFrom];
+        const s = meta ? new Set<number>(selRowIdxs) : new Set<number>();
+        const idxs = [rowIdx, idxFrom];
         idxs.sort((a, b) => a - b);
-        const rowKeys = [];
+        const rowIdxs: number[] = [];
         for (let i = idxs[0]; i <= idxs[1]; ++i) {
-          rowKeys.push(rowKeyGetter(rowData[i], i));
+          rowIdxs.push(i);
         }
-        if (selRowKeys.has(rowKey)) {
-          rowKeys.forEach((k) => s.delete(k));
+        if (selRowIdxs.has(rowIdx)) {
+          rowIdxs.forEach((k) => s.delete(k));
         } else {
-          rowKeys.forEach((k) => s.add(k));
+          rowIdxs.forEach((k) => s.add(k));
         }
-        nextSelRowKeys = s;
-        nextLastSelRowKey = rowKey;
+        nextSelRowIdxs = s;
+        nextLastSelRowIdx = rowIdx;
       }
 
-      setSelRowKeys(nextSelRowKeys);
-      setLastSelRowKey(nextLastSelRowKey);
+      setSelRowIdxs(nextSelRowIdxs);
+      setLastSelRowIdx(nextLastSelRowIdx);
       if (onRowSelected) {
-        onRowSelected(
-          [...nextSelRowKeys.keys()].map((k) => rowData[rowIdxByKey.get(k)!])
-        );
+        onRowSelected(Array.from(nextSelRowIdxs.keys()));
       }
     },
     [
-      lastSelRowKey,
-      setSelRowKeys,
-      setLastSelRowKey,
+      lastSelRowIdx,
+      setSelRowIdxs,
+      setLastSelRowIdx,
       rowData,
-      rowIdxByKey,
       rowKeyGetter,
       onRowSelected,
     ]
   );
 
-  const isAllSelected = selRowKeys.size === rowData.length;
-  const isAnySelected = selRowKeys.size > 0;
+  const isAllSelected = selRowIdxs.size === rowData.length;
+  const isAnySelected = selRowIdxs.size > 0;
 
   const selectAll = useCallback(() => {
-    setSelRowKeys(new Set(rowData.map((d, i) => rowKeyGetter(d, i))));
+    const allRowIdxs = [...new Array(rowData.length).keys()].map((_, i) => i);
+    setSelRowIdxs(new Set(allRowIdxs));
     if (onRowSelected) {
-      onRowSelected(rowData);
+      onRowSelected(allRowIdxs);
     }
-  }, [rowData, setSelRowKeys]);
+  }, [rowData, setSelRowIdxs]);
 
   const unselectAll = useCallback(() => {
-    setSelRowKeys(new Set());
+    setSelRowIdxs(new Set());
     if (onRowSelected) {
       onRowSelected([]);
     }
-  }, [setSelRowKeys]);
+  }, [setSelRowIdxs]);
 
   const onMouseDown = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -740,7 +733,7 @@ export function useRowSelection<T>(
 
   return {
     onMouseDown,
-    selRowKeys,
+    selRowIdxs,
     isAllSelected,
     isAnySelected,
     selectRows,

@@ -21,11 +21,11 @@ export interface TableRowProps<T> {
   isHoverOver?: boolean;
   zebra?: boolean;
   columns: GridColumnModel<T>[];
-  cursorColKey?: string;
+  cursorColIdx?: number;
   onMouseEnter?: MouseEventHandler<HTMLTableRowElement>;
   onMouseLeave?: MouseEventHandler<HTMLTableRowElement>;
   gap?: number;
-  editorColKey?: string;
+  editorColIdx?: number;
   isCellSelected?: (rowIdx: number, colIdx: number) => boolean;
 }
 
@@ -38,9 +38,9 @@ export function TableRow<T>(props: TableRowProps<T>) {
     columns,
     onMouseEnter,
     onMouseLeave,
-    cursorColKey,
+    cursorColIdx,
     gap,
-    editorColKey,
+    editorColIdx,
     isCellSelected,
   } = props;
 
@@ -65,7 +65,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     >
       {columns.map((column, i) => {
         const colKey = column.info.props.id;
-        if (editorColKey === colKey) {
+        if (editorColIdx === column.index) {
           const editorInfo = grid.getEditor(column.info.props.id);
           if (editorInfo) {
             if (isValidElement(editorInfo.children)) {
@@ -81,10 +81,11 @@ export function TableRow<T>(props: TableRowProps<T>) {
         const Cell = column.info.props.cellComponent || BaseCell;
         const CellValue =
           column.info.props.cellValueComponent || DefaultCellValue;
-        const value = column.info.props.getValue
-          ? column.info.props.getValue(row.data)
-          : null;
-        const isFocused = cursorColKey === colKey;
+        const value =
+          column.info.props.getValue && row.data
+            ? column.info.props.getValue(row.data)
+            : null;
+        const isFocused = cursorColIdx === column.index;
         const isSelected =
           isCellSelected && isCellSelected(row.index, column.index);
 

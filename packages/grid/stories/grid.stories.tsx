@@ -7,6 +7,7 @@ import {
   GridCellValueProps,
   GridColumn,
   GridHeaderValueProps,
+  RowKeyGetter,
   RowSelectionColumn,
   RowSelectionRadioColumn,
   TextCellEditor,
@@ -106,11 +107,11 @@ const dummyInvestors = createDummyInvestors();
 
 const rowKeyGetter = (rowData: Investor) => rowData.name;
 
-const onAmountChange = (rowKey: string, rowIndex: number, value: string) => {
+const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].amount = parseFloat(value);
 };
 
-const onLocationChange = (rowKey: string, rowIndex: number, value: string) => {
+const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].location = value;
 };
 
@@ -769,6 +770,90 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   );
 };
 
+const serverSideDataRowKeyGetter: RowKeyGetter<Investor> = (row, index) =>
+  `Row${index}`;
+
+const serverSideRowCount = 200000;
+
+const ServerSideDataStoryTemplate: Story<{}> = (props) => {
+  const [rows, setRows] = useState<Investor[]>(() => {
+    const rowData: Investor[] = [];
+    rowData.length = serverSideRowCount;
+    return rowData;
+  });
+
+  const onVisibleRowRangeChange = useCallback((start: number, end: number) => {
+    console.log(`onVisibleRowRangeChange(${start}, ${end}).`);
+    setRows((oldRows) => {
+      const nextRows: Investor[] = [];
+      nextRows.length = serverSideRowCount;
+      for (let i = start; i < end; ++i) {
+        if (oldRows[i]) {
+          nextRows[i] = oldRows[i];
+        } else {
+          nextRows[i] = {
+            name: `Name ${i}`,
+            addedInvestors: [],
+            location: `Location ${i}`,
+            cohort: [`Cohort ${i}`],
+            strategy: [`Strategy ${i}`],
+            notes: "",
+            amount: randomAmount(100, 300, 4),
+          };
+        }
+      }
+      return nextRows;
+    });
+  }, []);
+
+  return (
+    <Grid
+      rowData={rows}
+      rowKeyGetter={serverSideDataRowKeyGetter}
+      className="table"
+      zebra={true}
+      columnSeparators={true}
+      onVisibleRowRangeChange={onVisibleRowRangeChange}
+    >
+      <RowSelectionColumn id="rowSelection" />
+      <GridColumn
+        name="Name"
+        id="name"
+        defaultWidth={200}
+        getValue={(x) => x.name}
+      />
+      <GridColumn
+        name="Location"
+        id="location"
+        defaultWidth={150}
+        getValue={(x) => x.location}
+        editable={true}
+        onChange={onLocationChange}
+      />
+      <GridColumn
+        name="Cohort"
+        id="cohort"
+        defaultWidth={200}
+        getValue={(x) => x.cohort}
+      />
+      <GridColumn
+        name="Amount"
+        id="amount"
+        defaultWidth={200}
+        getValue={(x) => x.amount.toFixed(4)}
+        editable={true}
+        align="right"
+        onChange={onAmountChange}
+      />
+      <GridColumn
+        name="Strategy"
+        id="strategy"
+        getValue={(x) => x.strategy.join(", ")}
+      />
+    </Grid>
+  );
+};
+
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
 export const SmallGrid = SmallTemplate.bind({});
@@ -778,5 +863,6 @@ export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
 export const CustomHeaders = CustomHeadersTemplate.bind({});
 export const CustomCells = CustomCellsTemplate.bind({});
 export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
+export const ServerSideData = ServerSideDataStoryTemplate.bind({});
 
 GridExample.args = {};

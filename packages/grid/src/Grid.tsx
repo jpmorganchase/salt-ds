@@ -4,6 +4,7 @@ import React, {
   MouseEventHandler,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -80,10 +81,11 @@ export interface GridProps<T = any> {
   style?: CSSProperties;
   variant?: "primary" | "secondary";
   rowSelectionMode?: GridRowSelectionMode;
-  onRowSelected?: (selectedRows: T[]) => void;
+  onRowSelected?: (selectedRowIdxs: number[]) => void;
   columnDnD?: boolean;
   onColumnMoved?: (fromIndex: number, toIndex: number) => void;
   cellSelectionMode?: GridCellSelectionMode;
+  onVisibleRowRangeChange?: (start: number, end: number) => void;
 }
 
 export interface GridRowModel<T> {
@@ -129,6 +131,7 @@ export const Grid = function <T>(props: GridProps<T>) {
     columnDnD,
     onColumnMoved,
     cellSelectionMode = "range",
+    onVisibleRowRangeChange,
   } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -153,10 +156,10 @@ export const Grid = function <T>(props: GridProps<T>) {
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
-  const [cursorRowKey, setCursorRowKey] = useState<string | undefined>(
+  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(
     undefined
   );
-  const [cursorColKey, setCursorColKey] = useState<string | undefined>(
+  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(
     undefined
   );
 
@@ -171,7 +174,6 @@ export const Grid = function <T>(props: GridProps<T>) {
     },
     [setClientHeight, setClientWidth, setScrollBarHeight, setScrollBarWidth]
   );
-  const rowIdxByKey = useRowIdxByKey(rowKeyGetter, rowData);
 
   const {
     leftCols, // Columns pinned to left
@@ -344,11 +346,6 @@ export const Grid = function <T>(props: GridProps<T>) {
     [cols]
   );
 
-  const cursorColIdx =
-    cursorColKey === undefined ? 0 : colIdxByKey.get(cursorColKey) || 0;
-  const cursorRowIdx =
-    cursorRowKey === undefined ? 0 : rowIdxByKey.get(cursorRowKey) || 0;
-
   const scroll = useCallback(
     (left?: number, top?: number, source?: "user" | "table") => {
       setScrollSource(source || "user");
@@ -373,7 +370,7 @@ export const Grid = function <T>(props: GridProps<T>) {
   );
 
   const startEditMode = (text?: string) => {
-    if (editMode) {
+    if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
     }
     const r = rowData[cursorRowIdx];
@@ -389,11 +386,14 @@ export const Grid = function <T>(props: GridProps<T>) {
     if (!editMode) {
       return;
     }
+    if (cursorColIdx == undefined) {
+      console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
+      return;
+    }
     const c = cols[cursorColIdx];
     const handler = c.info.props.onChange;
-    const rowKey = cursorRowKey;
-    if (rowKey === undefined) {
-      console.error(`endEditMode: cursorRowKey is undefined in edit mode`);
+    if (cursorRowIdx == undefined) {
+      console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
       return;
     }
     if (!handler) {
@@ -401,7 +401,7 @@ export const Grid = function <T>(props: GridProps<T>) {
         `onChange is not specified for editable column "${c.info.props.id}".`
       );
     } else {
-      handler(rowKey, cursorRowIdx, value);
+      handler(rowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
     if (rootRef.current) {
@@ -420,21 +420,21 @@ export const Grid = function <T>(props: GridProps<T>) {
   };
 
   const moveCursor = useCallback(
-    (rowIdx: number, colIdx: number) => {
+    (rowIdx?: number, colIdx?: number) => {
       cancelEditMode();
       if (rowData.length < 1 || cols.length < 1) {
         return;
       }
       rowIdx = clamp(rowIdx, 0, rowData.length - 1);
       colIdx = clamp(colIdx, 0, cols.length - 1);
-      setCursorRowKey(rowKeyGetter(rowData[rowIdx], rowIdx));
-      setCursorColKey(cols[colIdx].info.props.id);
+      setCursorRowIdx(rowIdx);
+      setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
       rootRef.current?.focus();
     },
     [
-      setCursorRowKey,
-      setCursorColKey,
+      setCursorRowIdx,
+      setCursorColIdx,
       rowData,
       rowKeyGetter,
       cols,
@@ -449,27 +449,27 @@ export const Grid = function <T>(props: GridProps<T>) {
       // console.log(`onKeyDown. key: ${event.key}`);
       const { key } = event;
       if (key === "ArrowLeft") {
-        moveCursor(cursorRowIdx, cursorColIdx - 1);
+        moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
         return;
       }
       if (key === "ArrowRight") {
-        moveCursor(cursorRowIdx, cursorColIdx + 1);
+        moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
         return;
       }
       if (key === "ArrowUp") {
-        moveCursor(cursorRowIdx - 1, cursorColIdx);
+        moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
         return;
       }
       if (key === "ArrowDown") {
-        moveCursor(cursorRowIdx + 1, cursorColIdx);
+        moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
         return;
       }
       if (key === "PageUp") {
-        moveCursor(cursorRowIdx - PAGE_SIZE, cursorColIdx);
+        moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
         return;
       }
       if (key === "PageDown") {
-        moveCursor(cursorRowIdx + PAGE_SIZE, cursorColIdx);
+        moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
         return;
       }
       if (key === "Home") {
@@ -494,20 +494,24 @@ export const Grid = function <T>(props: GridProps<T>) {
       }
       if (key === "Tab") {
         if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-          if (!event.shiftKey) {
-            if (cursorColIdx < cols.length - 1) {
-              moveCursor(cursorRowIdx, cursorColIdx + 1);
-            } else {
-              if (cursorRowIdx < rowData.length - 1) {
-                moveCursor(cursorRowIdx + 1, 0);
-              }
-            }
+          if (cursorColIdx == undefined || cursorRowIdx == undefined) {
+            moveCursor(0, 0);
           } else {
-            if (cursorColIdx > 0) {
-              moveCursor(cursorRowIdx, cursorColIdx - 1);
+            if (!event.shiftKey) {
+              if (cursorColIdx < cols.length - 1) {
+                moveCursor(cursorRowIdx, cursorColIdx + 1);
+              } else {
+                if (cursorRowIdx < rowData.length - 1) {
+                  moveCursor(cursorRowIdx + 1, 0);
+                }
+              }
             } else {
-              if (cursorRowIdx > 0) {
-                moveCursor(cursorRowIdx - 1, cols.length - 1);
+              if (cursorColIdx > 0) {
+                moveCursor(cursorRowIdx, cursorColIdx - 1);
+              } else {
+                if (cursorRowIdx > 0) {
+                  moveCursor(cursorRowIdx - 1, cols.length - 1);
+                }
               }
             }
           }
@@ -523,7 +527,11 @@ export const Grid = function <T>(props: GridProps<T>) {
           !event.altKey &&
           !event.shiftKey
         ) {
-          moveCursor(cursorRowIdx + 1, cursorColIdx);
+          if (cursorRowIdx == undefined) {
+            moveCursor(0, 0);
+          } else {
+            moveCursor(cursorRowIdx + 1, cursorColIdx);
+          }
           event.preventDefault();
           event.stopPropagation();
           return;
@@ -534,7 +542,9 @@ export const Grid = function <T>(props: GridProps<T>) {
         return;
       }
       if (key === " ") {
-        selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
+        if (cursorRowIdx != undefined) {
+          selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
+        }
         return;
       }
       if (
@@ -621,7 +631,7 @@ export const Grid = function <T>(props: GridProps<T>) {
   );
 
   const {
-    selRowKeys,
+    selRowIdxs,
     isAllSelected,
     isAnySelected,
     selectAll,
@@ -631,7 +641,6 @@ export const Grid = function <T>(props: GridProps<T>) {
   } = useRowSelection(
     rowKeyGetter,
     rowData,
-    rowIdxByKey,
     defaultSelectedRowKeys,
     rowSelectionMode,
     onRowSelected
@@ -639,11 +648,11 @@ export const Grid = function <T>(props: GridProps<T>) {
 
   const cursorContext: CursorContext = useMemo(
     () => ({
-      cursorRowKey,
-      cursorColKey,
+      cursorRowIdx,
+      cursorColIdx,
       moveCursor,
     }),
-    [cursorRowKey, cursorColKey, moveCursor]
+    [cursorRowIdx, cursorColIdx, moveCursor]
   );
 
   const onColumnMove = (fromIndex: number, toIndex: number) => {
@@ -694,7 +703,7 @@ export const Grid = function <T>(props: GridProps<T>) {
 
   const selectionContext: SelectionContext = useMemo(
     () => ({
-      selRowKeys,
+      selRowIdxs,
       selectRows,
       isAllSelected,
       isAnySelected,
@@ -703,7 +712,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       selectedCellRange,
     }),
     [
-      selRowKeys,
+      selRowIdxs,
       selectRows,
       isAllSelected,
       isAnySelected,
@@ -712,6 +721,12 @@ export const Grid = function <T>(props: GridProps<T>) {
       selectedCellRange,
     ]
   );
+
+  useEffect(() => {
+    if (onVisibleRowRangeChange) {
+      onVisibleRowRangeChange(visRowRng.start, visRowRng.end);
+    }
+  }, [onVisibleRowRangeChange, visRowRng]);
 
   return (
     <GridContext.Provider value={contextValue}>
