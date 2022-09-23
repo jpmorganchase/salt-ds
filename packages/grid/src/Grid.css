@@ -202,11 +202,6 @@
   --grid-cell-zIndex: 2;
 }
 
-.backwardsCompat.uitkGrid {
-  /* --backwardsCompat token only defined for ultrahigh density, otherwise use default */
-  --uitkControlLabel-right-marginRight: var(--backwardsCompat-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
-}
-
 .uitk-light .uitkGrid {
   --grid-background-primary: var(--uitk-color-white);
   --grid-background-secondary: var(--uitk-color-grey-20);
@@ -309,4 +304,11 @@
 
 .uitkGrid-hidden {
   visibility: hidden;
+}
+
+/* TK1 Backwards compatibility */
+
+.backwardsCompat.uitkGrid {
+  /* --backwardsCompat token only defined for ultrahigh density, otherwise use default */
+  --uitkControlLabel-right-marginRight: var(--backwardsCompat-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }

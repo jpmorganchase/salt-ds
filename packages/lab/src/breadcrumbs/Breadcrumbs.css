@@ -1,19 +1,29 @@
 .uitkBreadcrumbs-ol {
+  --breadcrumbs-ol-gap: var(--uitk-size-unit);
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0;
   margin: 0;
-  gap: var(--uitk-size-unit);
+  gap: var(--breadcrumbs-ol-gap);
 }
 
 .uitkBreadcrumbs-li {
+  --breadcrumbs-li-marginRight: 0px;
+  --breadcrumbs-li-padding: 0px;
+
   flex: 0 1 auto;
   list-style: none;
+  margin-right: var(--breadcrumbs-li-marginRight);
+  padding: var(--breadcrumbs-li-padding);
 }
 
 .uitkBreadcrumbs-separator {
+  --breadcrumbs-separator-marginRight: 0px;
+
   display: flex;
+  margin-right: var(--breadcrumbs-separator-marginRight);
   user-select: none;
 }
 
@@ -21,32 +31,43 @@
   flex-wrap: wrap;
 }
 
+.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-li {
+  --breadcrumbs-ol-wrap-li-marginBottom: 0px;
+
+  margin-bottom: var(--breadcrumbs-ol-wrap-li-marginBottom);
+}
+
+
 /* TK1 Backwards compatibility */
 
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
-  gap: 0;
-}
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol-wrap li:not(:last-child) {
-  margin-bottom: calc(var(--uitk-size-unit) / 2 - 2px);
-}
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
-  padding: 2px;
-}
-
 .uitk-density-medium {
-  --backwardsCompat-breadcrumbs-ol-li-marginRight: 6px;
+  --backwardsCompat-breadcrumbs-li-marginRight: 6px;
 }
 .uitk-density-high {
-  --backwardsCompat-breadcrumbs-ol-li-marginRight: 2px;
+  --backwardsCompat-breadcrumbs-li-marginRight: 2px;
 }
 .uitk-density-low {
-  --backwardsCompat-breadcrumbs-ol-li-marginRight: 10px;
+  --backwardsCompat-breadcrumbs-li-marginRight: 10px;
 }
 .uitk-density-touch {
-  --backwardsCompat-breadcrumbs-ol-li-marginRight: 14px;
+  --backwardsCompat-breadcrumbs-li-marginRight: 14px;
 }
 
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol li {
-  margin-right: var(--backwardsCompat-breadcrumbs-ol-li-marginRight);
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
+  --breadcrumbs-ol-gap: 0px;
+}
+
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol-wrap li:not(:last-child) {
+  --breadcrumbs-ol-wrap-li-marginBottom: calc(var(--uitk-size-unit) / 2 - 2px);
+}
+
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
+  --breadcrumbs-li-padding: 2px;
+  --breadcrumbs-li-marginRight: var(--backwardsCompat-breadcrumbs-li-marginRight);
+  box-sizing: content-box;
+}
+
+.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator  {
+  --breadcrumbs-separator-marginRight: var(--backwardsCompat-breadcrumbs-li-marginRight);
   box-sizing: content-box;
 }
