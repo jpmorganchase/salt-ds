@@ -1,5 +1,4 @@
 import { defineConfig } from "cypress";
-import { addMatchImageSnapshotPlugin } from "cypress-image-snapshot/plugin";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import IstanbulPlugin from "vite-plugin-istanbul";
@@ -71,7 +70,6 @@ export default defineConfig({
           return null;
         },
       });
-      addMatchImageSnapshotPlugin(on, config);
       return config;
     },
     devServer: {
