@@ -31,7 +31,7 @@ and span the page or container horizontally to give quick and non-disruptive fee
 
 # When to use Banner features
 
-# When you need to display general information
+## When you need to display general information
 
 you should use the information Banner to draw attention to inform your user was unaware of.
 
@@ -44,7 +44,7 @@ you should use the information Banner to draw attention to inform your user was 
     </Banner>
 </Canvas>
 
-# When you need to let users know about an issue
+## When you need to let users know about an issue
 
 If your users have a problem that prevents them from completing a task, such as a system error 
 or technical failure, the error Banner will guide them to the right action to resolve it.
@@ -73,7 +73,7 @@ or current system status.
     </Banner>
 </Canvas>
 
-# When you need to reassure your users
+## When you need to reassure your users
 
 You should use the success Banner to reassure your users that an event or process related to the user's current
 task has been successfully completed.
@@ -82,6 +82,23 @@ task has been successfully completed.
     <Banner
       //eslint-disable-next-line no-script-url
       LinkProps={{ href: "javascript:void(0)" }}
+      state="success"
+    >
+      Database updated
+    </Banner>
+</Canvas>
+
+
+# Emphasis
+
+Banner has two emphasis levels, medium and high. The high emphasis banner uses a background color that is matches the
+state for further emphasis on the banner message.
+
+<Canvas>
+    <Banner
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+      emphasis="high"
       state="success"
     >
       Database updated

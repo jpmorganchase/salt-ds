@@ -94,3 +94,18 @@
   --banner-status-borderColor: var(--uitk-status-success-borderColor);
   --banner-status-icon-color: var(--uitk-status-success-foreground);
 }
+
+.uitkEmphasisHigh.uitkBanner-info {
+  --banner-background: var(--uitk-palette-info-background-high)
+}
+
+.uitkEmphasisHigh.uitkBanner-error {
+  --banner-background: var(--uitk-palette-error-background-high)
+}
+
+.uitkEmphasisHigh.uitkBanner-warning {
+  --banner-background: var(--uitk-palette-warning-background-high)
+}
+.uitkEmphasisHigh.uitkBanner-success {
+  --banner-background: var(--uitk-palette-success-background-high)
+}

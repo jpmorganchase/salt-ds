@@ -1,4 +1,4 @@
-import { Banner, BannerProps, Link, State } from "@jpmorganchase/uitk-lab";
+import { Banner, BannerProps, Link } from "@jpmorganchase/uitk-lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
@@ -74,7 +74,7 @@ export const All: ComponentStory<typeof Banner> = () => (
   </div>
 );
 
-const ExampleBanner = ({ state }: { state: State }) => {
+const ExampleBanner = ({ state, emphasis }: BannerProps) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const handleClose = () => {
@@ -89,6 +89,7 @@ const ExampleBanner = ({ state }: { state: State }) => {
           LinkProps={{ href: "javascript:void(0)" }}
           onClose={handleClose}
           state={state}
+          emphasis={emphasis}
         >
           Banners appear inline on the page
         </Banner>
@@ -111,6 +112,10 @@ export const Warning: ComponentStory<typeof Banner> = () => {
 
 export const Success: ComponentStory<typeof Banner> = () => {
   return <ExampleBanner state={"success"} />;
+};
+
+export const HighEmphasis: ComponentStory<typeof Banner> = () => {
+  return <ExampleBanner emphasis="high" state={"success"} />;
 };
 
 export const Render = (
