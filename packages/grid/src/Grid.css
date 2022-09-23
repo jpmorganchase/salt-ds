@@ -202,7 +202,7 @@
   --grid-cell-zIndex: 2;
 }
 
-.uitkGrid.backwardsCompat {
+.backwardsCompat.uitkGrid {
   /* --backwardsCompat token only defined for ultrahigh density, otherwise use default */
   --uitkControlLabel-right-marginRight: var(--backwardsCompat-controlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
