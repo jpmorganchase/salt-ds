@@ -3013,7 +3013,6 @@ __metadata:
     react: ^17.0.1
     react-color: ^2.19.3
     react-dom: ^17.0.1
-    react-fast-compare: ^3.2.0
     react-router-dom: ^6.2.1
     react-window: ^1.8.6
     rifm: ^0.12.0
@@ -21083,13 +21082,6 @@ __metadata:
   version: 6.0.9
   resolution: "react-error-overlay@npm:6.0.9"
   checksum: 695853bc885e798008a00c10d8d94e5ac91626e8130802fea37345f9c037f41b80104345db2ee87f225feb4a4ef71b0df572b17c378a6d397b6815f6d4a84293
-  languageName: node
-  linkType: hard
-
-"react-fast-compare@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "react-fast-compare@npm:3.2.0"
-  checksum: 8ef272c825ae329f61633ce4ce7f15aa5b84e5214d88bc0823880236e03e985a13195befa2c7a4eda7db3b017dc7985729152d88445823f652403cf36c2b86aa
   languageName: node
   linkType: hard
 
