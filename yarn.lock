@@ -22271,20 +22271,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.67.2":
-  version: 2.67.2
-  resolution: "rollup@npm:2.67.2"
-  dependencies:
-    fsevents: ~2.3.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 9aca5251ba4b441064183cde2394b91567259002d68086bdd3906db66d55dd148ab27e57c51eb53830d7b9b813c2d4e834b7735d65e2a869780bc639d4a20c38
-  languageName: node
-  linkType: hard
-
 "rollup@npm:2.75.5":
   version: 2.75.5
   resolution: "rollup@npm:2.75.5"
@@ -22296,6 +22282,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: fa3e61959efbc88cda75315dc22f035489be9dda3ae7d45a3a474f19efc3661ef6f9849486c7ca51e1a3e2aedef91f4e3223e8123bbeaf155913533d071994d1
+  languageName: node
+  linkType: hard
+
+"rollup@npm:2.79.1":
+  version: 2.79.1
+  resolution: "rollup@npm:2.79.1"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
   languageName: node
   linkType: hard
 
@@ -23853,7 +23853,7 @@ __metadata:
   resolution: "swc-plugin@workspace:tooling/swc-plugin"
   dependencies:
     "@swc/core": ^1.2.160
-    rollup: 2.67.2
+    rollup: 2.79.1
   languageName: unknown
   linkType: soft
 

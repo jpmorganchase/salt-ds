@@ -6,6 +6,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@swc/core": "^1.2.160",
-    "rollup": "2.67.2"
+    "rollup": "2.79.1"
   }
 }
