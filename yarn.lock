@@ -2992,7 +2992,7 @@ __metadata:
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
-    css-validator: ^0.10.0
+    css-validator: ^0.11.0
     csstree-validator: ^3.0.0
     cypress: ^10.8.0
     cypress-axe: ^1.0.0
@@ -9769,9 +9769,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-validator@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "css-validator@npm:0.10.0"
+"css-validator@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "css-validator@npm:0.11.0"
   dependencies:
     async: ~3.2.0
     commander: ~7.1.0
@@ -9781,7 +9781,7 @@ __metadata:
     sax: ~1.2.4
   bin:
     css-validator: bin/css-validator
-  checksum: 48a8c2b03d5233b91916e40cc0340c38ab300654679307870547cfeb6ba00d67765e927fc13c686eefc137bb7aa942045446112748a72b5a1f04c3cccfc25215
+  checksum: 1f95821465f22ad1bd306c8ff3049ea136493a5b6a9d59f07778e8658fdd8074f24a56d5c35e1adf88bf58c402f772ea7d80f538a809e97575eeb53d64be4cbd
   languageName: node
   linkType: hard
 
