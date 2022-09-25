@@ -1,8 +1,8 @@
 import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
-import { isPlainObject } from "../../utils";
-import { useCalendarContext } from "./CalendarContext";
+import { isPlainObject } from "../utils";
+import { useCalendarContext } from "./internal/CalendarContext";
 import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 
 interface BaseUseSelectionCalendarProps<SelectionVariantType> {
