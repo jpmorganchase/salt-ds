@@ -9,7 +9,7 @@ export type {
   ListChangeHandler as ListChangeHandlerDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
 } from "./list-deprecated";
-export type {
+export {
   ListItemBase as ListItemBaseDeprecated,
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";

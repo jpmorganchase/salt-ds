@@ -15,11 +15,8 @@ import { SliderSelection } from "./internal/SliderSelection";
 import { createHandleStyles, createTrackStyle } from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
-import {
-  SliderChangeHandler,
-  SliderValue,
-  useValueUpdater,
-} from "./internal/utils";
+import { useValueUpdater } from "./internal/utils";
+import { SliderChangeHandler, SliderValue } from "./types";
 
 import "./Slider.css";
 
