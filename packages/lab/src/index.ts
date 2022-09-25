@@ -1,10 +1,11 @@
-import {
+export type {
+  SelectHandler,
   SelectionChangeHandler,
   SelectionStrategy,
   useCollectionItems,
 } from "./common-hooks";
 
-import {
+export type {
   ListItemBase as ListItemBaseDeprecated,
   ListChangeHandler as ListChangeHandlerDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
@@ -53,14 +54,3 @@ export * from "./tree";
 export * from "./text";
 export * from "./window";
 export * from "./utils";
-
-export { ListItemBaseDeprecated };
-
-export { useCollectionItems, useListItemDeprecated };
-
-export type {
-  ListChangeHandlerDeprecated,
-  ListSelectHandlerDeprecated,
-  SelectionChangeHandler,
-  SelectionStrategy,
-};
