@@ -6,9 +6,11 @@ export type {
 } from "./common-hooks";
 
 export type {
-  ListItemBase as ListItemBaseDeprecated,
   ListChangeHandler as ListChangeHandlerDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
+} from "./list-deprecated";
+export type {
+  ListItemBase as ListItemBaseDeprecated,
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 
