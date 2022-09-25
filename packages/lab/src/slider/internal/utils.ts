@@ -1,8 +1,6 @@
 import { useMemo } from "react";
+import { SliderValue } from "../types";
 import { LabeledMark, SliderMark } from "./SliderRailMarks";
-
-export type SliderValue = number | number[];
-export type SliderChangeHandler = (value: SliderValue) => void;
 
 const updateValueItemNotPushable = (
   oldValue: number[],
