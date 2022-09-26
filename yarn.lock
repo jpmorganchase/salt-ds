@@ -2980,9 +2980,9 @@ __metadata:
     "@types/tinycolor2": ^1.4.3
     "@types/warning": ^3.0.0
     "@vitejs/plugin-react": ^2.1.0
-    ag-grid-community: ^27.3.0
-    ag-grid-enterprise: ^27.3.0
-    ag-grid-react: ^27.3.0
+    ag-grid-community: ^28.0.0
+    ag-grid-enterprise: ^28.0.0
+    ag-grid-react: ^28.0.0
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
     axe-core: ^4.4.3
@@ -6643,30 +6643,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-community@npm:27.3.0"
-  checksum: 3041c188239c50b875d45f82e4de1adfc7170c7338d0c18e504bc4d57bf71906bf291aaee0c59149ad65900e7308268ed5db32ad7f5f2368ef8e9e6b2c156a02
+"ag-grid-community@npm:^28.0.0":
+  version: 28.1.1
+  resolution: "ag-grid-community@npm:28.1.1"
+  checksum: ff8b55a4611ef99b64b347a66bfdb8a12c86cd3c58c7308f3e76370568db1fdaa93a9681f3deaf4dfaba70cd95d4f80c8fec443579ec5ee01aabcd731d81902e
   languageName: node
   linkType: hard
 
-"ag-grid-enterprise@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-enterprise@npm:27.3.0"
-  checksum: 4b85ca1d5dbd6bc652d373fc076824ada49d15d592ce061ee40aea880294db65516415eeb61d66bb61c437174fab2a71146abae94e299c5504e3d6d877a50d9a
+"ag-grid-enterprise@npm:^28.0.0":
+  version: 28.1.3
+  resolution: "ag-grid-enterprise@npm:28.1.3"
+  checksum: 6f79a6d8c9a8ff7830ed421263360878d308acb432a85228308f9ed260256449c35791f8492f28ce5f0dfee7503583679fe6c24f994d8cec3a7842cdb0c9ec13
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-react@npm:27.3.0"
+"ag-grid-react@npm:^28.0.0":
+  version: 28.1.1
+  resolution: "ag-grid-react@npm:28.1.1"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    ag-grid-community: ~27.3.0
+    ag-grid-community: ~28.1.0
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
+  checksum: e4f04ac40460feb36bcabbe61e269faa83ea22e6a4b92bdf186fcda57542e041f0e001d797064e8e7fa340fdc889dd64a10224e1a7d51ff4284d8b47adf12c58
   languageName: node
   linkType: hard
 
