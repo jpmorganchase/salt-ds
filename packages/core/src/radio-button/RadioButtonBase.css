@@ -1,0 +1,51 @@
+/* Styles applied to root component */
+.uitkRadioButtonBase {
+  color: var(--uitk-text-secondary-foreground);
+  padding: 1px 0;
+  flex: 0 0 auto;
+  overflow: visible;
+  text-align: center;
+  border-radius: 50%;
+  border: 0;
+  margin: 0;
+  display: inline-flex;
+  outline: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Styles applied to container of Radio input and icon */
+.uitkRadioButtonBase-radioContainer {
+  width: 100%;
+  display: flex;
+  align-items: inherit;
+  justify-content: inherit;
+}
+
+/* Styles applied to input component */
+.uitkRadioButtonBase-input {
+  cursor: inherit;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  z-index: var(--uitk-zIndex-default);
+}
+
+/* Styles applied to root component when state `focusVisible={true}` */
+.uitkRadioButtonBase-focusVisible,
+.uitkRadioButtonBase:focus {
+  outline: var(--uitk-focused-outline);
+  outline-offset: var(--uitk-focused-outlineOffset);
+}

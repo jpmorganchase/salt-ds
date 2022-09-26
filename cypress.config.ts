@@ -1,9 +1,6 @@
 import { defineConfig } from "cypress";
-import { addMatchImageSnapshotPlugin } from "cypress-image-snapshot/plugin";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
-import PkgConfig from "vite-plugin-package-config";
-import OptimizationPersist from "vite-plugin-optimize-persist";
 import IstanbulPlugin from "vite-plugin-istanbul";
 import { isCI } from "ci-info";
 import path from "path";
@@ -12,15 +9,7 @@ import { mergeConfig, UserConfig } from "vite";
 import installCoverageTask from "@cypress/code-coverage/task";
 
 let viteConfig: UserConfig = {
-  plugins: [
-    react(),
-    tsconfigPaths(),
-    IstanbulPlugin(),
-    PkgConfig({
-      packageJsonPath: "optimizedDeps.json",
-    }),
-    OptimizationPersist(),
-  ],
+  plugins: [react(), tsconfigPaths(), IstanbulPlugin()],
   server: {
     watch: {
       ignored: ["**/coverage"],
@@ -81,7 +70,6 @@ export default defineConfig({
           return null;
         },
       });
-      addMatchImageSnapshotPlugin(on, config);
       return config;
     },
     devServer: {

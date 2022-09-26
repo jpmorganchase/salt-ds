@@ -1,4 +1,4 @@
-const watch = require("watch");
+const chokidar = require("chokidar");
 const path = require("path");
 const fs = require("fs");
 const { pathToFileURL } = require("url");
@@ -73,10 +73,8 @@ process.argv.forEach((p) => {
 });
 
 if (isWatch) {
-  watch.createMonitor(path.resolve(__dirname, "../css/"), function (monitor) {
-    monitor.on("changed", function (f, curr, prev) {
-      console.log(`"${f}" changed. Rebuilding "${entry}"`);
-      tryBuildStyles();
-    });
+  chokidar.watch(path.resolve(__dirname, "../css/")).on("change", (path) => {
+    console.log(`"${path}" changed. Rebuilding "${entry}"`);
+    tryBuildStyles();
   });
 }

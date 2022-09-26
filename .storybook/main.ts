@@ -1,8 +1,6 @@
 import type { StorybookConfig } from "@storybook/react/types";
 import type { UserConfig } from "vite";
 import { mergeConfig } from "vite";
-import PkgConfig from "vite-plugin-package-config";
-import OptimizationPersist from "vite-plugin-optimize-persist";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 
@@ -22,8 +20,6 @@ const config: ExtendedConfig = {
   stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   staticDirs: ["../docs/public"],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-a11y",
     {
       name: "@storybook/addon-essentials",
       options: {
@@ -31,7 +27,9 @@ const config: ExtendedConfig = {
         backgrounds: false,
       },
     },
-    "./theme-switch/preset", //👈 Custom theme switch on the toolbar
+    "@storybook/addon-links",
+    "@storybook/addon-a11y",
+    "@storybook/addon-storysource",
     // Keep in mind this is not v1 yet. Might encounter bugs. It's from atlassian labs, so not too much concern.
     // Temporarily disable this due to run time error "Cannot read property 'context' of undefined" from Topbar
     // 'storybook-addon-performance/register',
@@ -50,13 +48,7 @@ const config: ExtendedConfig = {
     // customize the Vite config here
 
     const customConfig: UserConfig = {
-      plugins: [
-        PkgConfig({
-          packageJsonPath: "optimizedDeps.json",
-        }),
-        OptimizationPersist(),
-        cssVariableDocgen(),
-      ],
+      plugins: [cssVariableDocgen()],
     };
 
     if (configType === "PRODUCTION") {

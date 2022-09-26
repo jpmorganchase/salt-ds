@@ -1,6 +1,6 @@
 /* Default variables applied to the root element */
 .uitkFlexItem {
-  --uitkFlexItem-item-alignment: auto;
+  --uitkFlexItem-alignment: auto;
   --uitkFlexItem-shrink: 1;
   --uitkFlexItem-grow: 0;
 }
@@ -8,7 +8,7 @@
 /* Style applied to the root element */
 .uitkFlexItem {
   position: relative;
-  align-self: var(--uitkFlexItem-item-alignment);
+  align-self: var(--uitkFlexItem-alignment);
   flex-grow: var(--uitkFlexItem-grow);
   flex-shrink: var(--uitkFlexItem-shrink);
 }

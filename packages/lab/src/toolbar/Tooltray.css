@@ -1,5 +1,5 @@
 .uitkTooltray {
-  --tooltray-height: var(--toolbar-size);
+  --toolbar-tooltray-height: var(--toolbar-size);
 }
 
 .uitkTooltray {
@@ -13,7 +13,7 @@
 }
 
 .uitkTooltray-horizontal {
-  height: var(--tooltray-height);
+  height: var(--toolbar-tooltray-height);
 }
 
 .uitkTooltray > .Responsive-inner > .uitkToolbarField {

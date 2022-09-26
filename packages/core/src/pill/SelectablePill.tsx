@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, { ForwardedRef, forwardRef, useCallback } from "react";
 import { pillBaseName } from "./constants";
-import { PillBase, PillBaseProps } from "./internal/PillBase";
+import { PillBase, PillBaseProps } from "./PillBase";
 import { PillCheckbox } from "./internal/PillCheckbox";
 import { makePrefixer, useControlled } from "../utils";
 

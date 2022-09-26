@@ -1,0 +1,28 @@
+.uitkGridRightPart {
+  position: absolute;
+  top: 0;
+  right: var(--grid-scrollBar-width);
+  bottom: var(--grid-scrollBar-height);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index: 2;
+  clip-path: inset(var(--grid-topPart-height) 0 0 -10px);
+}
+
+.uitkGridRightPart-raised {
+  box-shadow: -6px 0 4px -4px var(--grid-shadow-color);
+}
+
+.uitkGridRightPart-space {
+  position: relative;
+  height: var(--grid-total-height);
+  width: var(--grid-rightPart-width);
+}
+
+.uitkGridRightPart table {
+  table-layout: fixed;
+  position: absolute;
+
+  top: var(--grid-bodyVisibleArea-top);
+  width: var(--grid-rightPart-width);
+}
