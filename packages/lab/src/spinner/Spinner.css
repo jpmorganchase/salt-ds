@@ -1,11 +1,14 @@
+
 .uitkSvgSpinner-gradientStop1,
 .uitkSvgSpinner-gradientStop2,
 .uitkSvgSpinner-gradientStop3,
 .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitk-measured-fill);
+  stop-color: var(--uitkSpinner-gradient-color, var(--spinner-gradient-color));
 }
 
 .uitkSvgSpinner {
+  --spinner-gradient-color: var(--uitk-measured-fill);
+  
   position: relative;
 }
 
@@ -43,12 +46,13 @@
 }
 
 /* TK1 Backwards compatibility */
+
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop1,
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop3 {
-  stop-color: var(--backwardsCompat-measured-fill-stopColor);
+  --spinner-gradient-color: var(--backwardsCompat-measured-fill-stopColor);
 }
 
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop2,
 .backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--backwardsCompat-measured-fill-startColor);
+  --spinner-gradient-color: var(--backwardsCompat-measured-fill-startColor);
 }

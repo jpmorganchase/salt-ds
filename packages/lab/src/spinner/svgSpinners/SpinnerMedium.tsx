@@ -2,6 +2,7 @@ import { SVGAttributes } from "react";
 
 const baseName = "uitkSvgSpinner";
 
+// Note: the structure here is mainly for backwards compatibility where 2 colors were used
 export const SpinnerMedium = (props: SVGAttributes<SVGSVGElement>) => (
   <svg className={`${baseName}-spinner`} viewBox="0 0 24 24" {...props}>
     <defs>
@@ -12,7 +13,7 @@ export const SpinnerMedium = (props: SVGAttributes<SVGSVGElement>) => (
         y1="75.6597923%"
         y2="75.6597923%"
       >
-        <stop className={`${baseName}-gradientStop1`} offset="0%" />
+        <stop className={`${baseName}-gradientStop1`} offset="0%" />  
         <stop className={`${baseName}-gradientStop2`} offset="100%" />
       </linearGradient>
       <linearGradient
