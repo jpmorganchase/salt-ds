@@ -62,4 +62,16 @@ describe("GIVEN a Banner", () => {
       cy.findByText("Go to Dashboard").should("exist");
     });
   });
+
+  describe("WHEN using high emphasis", () => {
+    it("THEN uitkEmphasisHigh should be applied to the banner", () => {
+      cy.mount(
+        <Banner data-testid="bannerRoot" emphasis="high">
+          Default Banner State
+        </Banner>
+      );
+
+      cy.findByTestId("bannerRoot").should("have.class", "uitkEmphasisHigh");
+    });
+  });
 });

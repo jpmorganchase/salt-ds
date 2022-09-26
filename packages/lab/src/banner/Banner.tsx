@@ -13,7 +13,7 @@ import {
   ButtonProps,
   Density,
   makePrefixer,
-  StateIcon,
+  StatusIcon,
   useAriaAnnouncer,
   useForkRef,
 } from "@jpmorganchase/uitk-core";
@@ -139,7 +139,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   });
 
   const getStateAndPropsGetters = (): GetStateAndPropGetters => ({
-    Icon: (props) => <StateIcon {...props} state={state} />,
+    Icon: (props) => <StatusIcon {...props} status={state} />,
     getIconProps,
     getLabelProps,
     getLinkProps,
@@ -149,7 +149,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   if (!render) {
     contentElement = (
       <>
-        <StateIcon {...getIconProps()} state={state}></StateIcon>
+        <StatusIcon {...getIconProps()} status={state}></StatusIcon>
         <span {...getLabelProps()}>
           {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
         </span>
