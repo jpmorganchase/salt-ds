@@ -46,7 +46,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   CloseButtonProps?: ButtonProps;
   /**
-   * Props to pass to Link
+   * Props to pass to Link, Link will not be rendered if this is undefined
    */
   LinkProps?: LinkProps;
   /**
@@ -70,7 +70,8 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasis?: "medium" | "high";
   /**
-   * onClose callback when the close icon is clicked
+   * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
+   * not defined
    */
   onClose?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
@@ -78,7 +79,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   render?: (props: GetStateAndPropGetters) => ReactNode;
   /**
-   *  state
+   *  A string to determine the current state of the Banner
    */
   state?: State;
 }

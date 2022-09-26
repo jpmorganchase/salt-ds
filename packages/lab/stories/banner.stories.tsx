@@ -2,11 +2,7 @@ import { Banner, BannerProps, Link } from "@jpmorganchase/uitk-lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import {
-  ColumnLayoutContainer,
-  ColumnLayoutItem,
-} from "@jpmorganchase/uitk-core/stories";
+import { Panel, StackLayout, ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Lab/Banner",
@@ -21,24 +17,16 @@ interface ExampleRowProps {
 const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
   <Panel style={{ height: "unset" }}>
     <h1>{name} - ( Touch, Low, Medium, High )</h1>
-    <ColumnLayoutContainer>
-      <ColumnLayoutItem>
-        Touch
-        <ToolkitProvider density="touch">{children}</ToolkitProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        Low
-        <ToolkitProvider density="low">{children}</ToolkitProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        Medium
-        <ToolkitProvider density="medium">{children}</ToolkitProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        High
-        <ToolkitProvider density="high">{children}</ToolkitProvider>
-      </ColumnLayoutItem>
-    </ColumnLayoutContainer>
+    <StackLayout gap={2}>
+      Touch
+      <ToolkitProvider density="touch">{children}</ToolkitProvider>
+      Low
+      <ToolkitProvider density="low">{children}</ToolkitProvider>
+      Medium
+      <ToolkitProvider density="medium">{children}</ToolkitProvider>
+      High
+      <ToolkitProvider density="high">{children}</ToolkitProvider>
+    </StackLayout>
   </Panel>
 );
 

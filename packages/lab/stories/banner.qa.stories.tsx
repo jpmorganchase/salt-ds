@@ -1,9 +1,7 @@
 import { FC } from "react";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { StackLayout, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Banner, BannerProps, Link } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
-
-import "./banner.qa.stories.css";
 
 export default {
   title: "Lab/Banner/QA",
@@ -38,7 +36,7 @@ const WarningBanner = () => <BasicBannerExample state={"warning"} />;
 const SuccessBanner = () => <BasicBannerExample state={"success"} />;
 
 export const ExamplesGrid: Story = () => (
-  <div className={"examples-container"}>
+  <StackLayout gap={2}>
     <ToolkitProvider applyClassesToChild density={"high"} theme={"light"}>
       <div className="uitkBannerContainerExample">
         <InfoBanner />
@@ -59,7 +57,7 @@ export const ExamplesGrid: Story = () => (
         <SuccessBanner />
       </div>
     </ToolkitProvider>
-  </div>
+  </StackLayout>
 );
 
 ExamplesGrid.parameters = {
