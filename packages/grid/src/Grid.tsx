@@ -58,6 +58,7 @@ import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
+import { range } from "./Rng";
 
 const withBaseName = makePrefixer("uitkGrid");
 
@@ -376,8 +377,6 @@ export const Grid = function <T>(props: GridProps<T>) {
     const r = rowData[cursorRowIdx];
     const c = cols[cursorColIdx];
     if (c.info.props.editable) {
-      // const v = c.info.props.getValue!(r);
-      // setEditorText(text === undefined ? v : text);
       setEditMode(true);
     }
   };
@@ -419,6 +418,24 @@ export const Grid = function <T>(props: GridProps<T>) {
     }
   };
 
+  const {
+    selRowIdxs,
+    isAllSelected,
+    isAnySelected,
+    selectAll,
+    selectRows,
+    unselectAll,
+    onMouseDown: onRowSelectionMouseDown,
+  } = useRowSelection(
+    rowKeyGetter,
+    rowData,
+    defaultSelectedRowKeys,
+    rowSelectionMode,
+    onRowSelected
+  );
+
+  const rangeSelection = useRangeSelection(cellSelectionMode);
+
   const moveCursor = useCallback(
     (rowIdx?: number, colIdx?: number) => {
       cancelEditMode();
@@ -431,6 +448,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
       rootRef.current?.focus();
+      rangeSelection.onCursorMove({ rowIdx, colIdx });
     },
     [
       setCursorRowIdx,
@@ -441,13 +459,128 @@ export const Grid = function <T>(props: GridProps<T>) {
       rootRef.current,
       scrollToCell,
       endEditMode,
+      rangeSelection.onCursorMove,
     ]
+  );
+
+  const rows = useRowModels(rowKeyGetter, rowData, visRowRng);
+
+  const isLeftRaised = scrollLeft > 0;
+  const isRightRaised = scrollLeft + clientMidWidth < midWidth;
+
+  const resizeColumn = useCallback(
+    (colIdx: number, width: number) => {
+      const col = cols[colIdx];
+      col.info.onWidthChanged(width);
+    },
+    [cols]
+  );
+
+  const onResizeHandleMouseDown = useColumnResize(resizeColumn);
+
+  const sizingContext: SizingContext = useMemo(
+    () => ({
+      resizeColumn,
+      rowHeight,
+      onResizeHandleMouseDown,
+    }),
+    [resizeColumn, rowHeight, onResizeHandleMouseDown]
+  );
+
+  const layoutContext: LayoutContext = useMemo(
+    () => ({
+      totalHeight,
+      totalWidth,
+      clientWidth,
+      clientHeight,
+    }),
+    [totalHeight, totalWidth]
+  );
+
+  const editorContext: EditorContext = useMemo(
+    () => ({
+      editMode,
+      startEditMode,
+      endEditMode,
+      cancelEditMode,
+    }),
+    [editMode, startEditMode, endEditMode, cancelEditMode]
+  );
+
+  const cursorContext: CursorContext = useMemo(
+    () => ({
+      cursorRowIdx,
+      cursorColIdx,
+      moveCursor,
+    }),
+    [cursorRowIdx, cursorColIdx, moveCursor]
+  );
+
+  const onColumnMove = (fromIndex: number, toIndex: number) => {
+    if (onColumnMoved && fromIndex !== toIndex) {
+      onColumnMoved(fromIndex, toIndex);
+    }
+  };
+
+  const { dragState, onColumnMoveHandleMouseDown, activeTarget } =
+    useColumnMove(
+      columnDnD,
+      rootRef,
+      leftCols,
+      midCols,
+      rightCols,
+      scrollLeft,
+      clientMidWidth,
+      onColumnMove
+    );
+
+  const columnDragContext: ColumnDragContext = useMemo(
+    () => ({
+      columnDnD,
+      onColumnMoveHandleMouseDown,
+    }),
+    [columnDnD, onColumnMoveHandleMouseDown]
+  );
+
+  const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
+    onRowSelectionMouseDown(event);
+    rangeSelection.onCellMouseDown(event);
+
+    const target = event.target as HTMLElement;
+    try {
+      const [rowIdx, colIdx] = getCellPosition(target);
+      if (colIdx >= 0) {
+        moveCursor(rowIdx, colIdx);
+      }
+      // event.preventDefault();
+      // event.stopPropagation();
+    } catch (e) {
+      // TODO
+    }
+  };
+
+  const onKeyUp: KeyboardEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      const { key } = event;
+      if (key === "Shift") {
+        rangeSelection.onKeyboardRangeSelectionEnd();
+      }
+    },
+    [rangeSelection.onKeyboardRangeSelectionEnd]
   );
 
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
     (event) => {
-      // console.log(`onKeyDown. key: ${event.key}`);
       const { key } = event;
+      // console.log(`onKeyDown. key: ${event.key}`);
+
+      if (key === "Shift") {
+        rangeSelection.onKeyboardRangeSelectionStart({
+          rowIdx: cursorRowIdx || 0,
+          colIdx: cursorColIdx || 0,
+        });
+        return;
+      }
       if (key === "ArrowLeft") {
         moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
         return;
@@ -558,10 +691,10 @@ export const Grid = function <T>(props: GridProps<T>) {
         return;
       }
       if (key === "c" && (event.ctrlKey || event.metaKey)) {
-        if (!selectedCellRange) {
+        if (!rangeSelection.selectedCellRange) {
           return;
         }
-        const { start, end } = selectedCellRange;
+        const { start, end } = rangeSelection.selectedCellRange;
         const c = (x: number, y: number) => x - y;
         const [minRow, maxRow] = [start.rowIdx, end.rowIdx].sort(c);
         const [minCol, maxCol] = [start.colIdx, end.colIdx].sort(c);
@@ -586,121 +719,6 @@ export const Grid = function <T>(props: GridProps<T>) {
     [cursorRowIdx, cursorColIdx, moveCursor, startEditMode, rowData, cols]
   );
 
-  const rows = useRowModels(rowKeyGetter, rowData, visRowRng);
-
-  const isLeftRaised = scrollLeft > 0;
-  const isRightRaised = scrollLeft + clientMidWidth < midWidth;
-
-  const resizeColumn = useCallback(
-    (colIdx: number, width: number) => {
-      const col = cols[colIdx];
-      col.info.onWidthChanged(width);
-    },
-    [cols]
-  );
-
-  const onResizeHandleMouseDown = useColumnResize(resizeColumn);
-
-  const sizingContext: SizingContext = useMemo(
-    () => ({
-      resizeColumn,
-      rowHeight,
-      onResizeHandleMouseDown,
-    }),
-    [resizeColumn, rowHeight, onResizeHandleMouseDown]
-  );
-
-  const layoutContext: LayoutContext = useMemo(
-    () => ({
-      totalHeight,
-      totalWidth,
-      clientWidth,
-      clientHeight,
-    }),
-    [totalHeight, totalWidth]
-  );
-
-  const editorContext: EditorContext = useMemo(
-    () => ({
-      editMode,
-      startEditMode,
-      endEditMode,
-      cancelEditMode,
-    }),
-    [editMode, startEditMode, endEditMode, cancelEditMode]
-  );
-
-  const {
-    selRowIdxs,
-    isAllSelected,
-    isAnySelected,
-    selectAll,
-    selectRows,
-    unselectAll,
-    onMouseDown: onRowSelectionMouseDown,
-  } = useRowSelection(
-    rowKeyGetter,
-    rowData,
-    defaultSelectedRowKeys,
-    rowSelectionMode,
-    onRowSelected
-  );
-
-  const cursorContext: CursorContext = useMemo(
-    () => ({
-      cursorRowIdx,
-      cursorColIdx,
-      moveCursor,
-    }),
-    [cursorRowIdx, cursorColIdx, moveCursor]
-  );
-
-  const onColumnMove = (fromIndex: number, toIndex: number) => {
-    if (onColumnMoved && fromIndex !== toIndex) {
-      onColumnMoved(fromIndex, toIndex);
-    }
-  };
-
-  const { dragState, onColumnMoveHandleMouseDown, activeTarget } =
-    useColumnMove(
-      columnDnD,
-      rootRef,
-      leftCols,
-      midCols,
-      rightCols,
-      scrollLeft,
-      clientMidWidth,
-      onColumnMove
-    );
-
-  const columnDragContext: ColumnDragContext = useMemo(
-    () => ({
-      columnDnD,
-      onColumnMoveHandleMouseDown,
-    }),
-    [columnDnD, onColumnMoveHandleMouseDown]
-  );
-
-  const { onCellMouseDown: onCellSelectionMouseDown, selectedCellRange } =
-    useRangeSelection(cellSelectionMode);
-
-  const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    onRowSelectionMouseDown(event);
-    onCellSelectionMouseDown(event);
-
-    const target = event.target as HTMLElement;
-    try {
-      const [rowIdx, colIdx] = getCellPosition(target);
-      if (colIdx >= 0) {
-        moveCursor(rowIdx, colIdx);
-      }
-      // event.preventDefault();
-      // event.stopPropagation();
-    } catch (e) {
-      // TODO
-    }
-  };
-
   const selectionContext: SelectionContext = useMemo(
     () => ({
       selRowIdxs,
@@ -709,7 +727,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       isAnySelected,
       selectAll,
       unselectAll,
-      selectedCellRange,
+      selectedCellRange: rangeSelection?.selectedCellRange,
     }),
     [
       selRowIdxs,
@@ -718,7 +736,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       isAnySelected,
       selectAll,
       unselectAll,
-      selectedCellRange,
+      rangeSelection?.selectedCellRange,
     ]
   );
 
@@ -754,6 +772,7 @@ export const Grid = function <T>(props: GridProps<T>) {
                     ref={rootRef}
                     tabIndex={0}
                     onKeyDown={onKeyDown}
+                    onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
                     // onCopy={onCopy}
                     data-name="grid-root"

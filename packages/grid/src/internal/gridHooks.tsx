@@ -989,14 +989,23 @@ export function cellRangeEquals(
 // TODO test the use case when cellSelectionMode changes during dnd.
 // Cell range selection. This is experimental.
 export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
-  const ref = useRef<{
+  const mouseSelectionRef = useRef<{
     unsubscribe: () => void;
     start: CellPosition;
   }>();
 
-  if (cellSelectionMode !== "range" && ref.current) {
-    ref.current.unsubscribe();
-    ref.current = undefined;
+  const keyboardSelectionRef = useRef<{
+    start: CellPosition;
+  }>();
+
+  if (cellSelectionMode !== "range") {
+    if (mouseSelectionRef.current) {
+      mouseSelectionRef.current.unsubscribe();
+      mouseSelectionRef.current = undefined;
+    }
+    if (keyboardSelectionRef.current) {
+      keyboardSelectionRef.current = undefined;
+    }
   }
 
   const [selectedCellRange, setSelectedCellRange] = useState<
@@ -1010,7 +1019,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
       const [rowIdx, colIdx] = getCellPosition(element);
 
       setSelectedCellRange((old) => {
-        const { start } = ref.current!;
+        const { start } = mouseSelectionRef.current!;
         const p: CellRange = { start, end: { rowIdx, colIdx } };
         return cellRangeEquals(old, p) ? old : p;
       });
@@ -1018,11 +1027,11 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   }, []);
 
   const onMouseUp = useCallback((event: MouseEvent) => {
-    if (!ref.current) {
+    if (!mouseSelectionRef.current) {
       throw new Error(`useRangeSelection state is not initialized`);
     }
-    ref.current.unsubscribe();
-    ref.current = undefined;
+    mouseSelectionRef.current.unsubscribe();
+    mouseSelectionRef.current = undefined;
   }, []);
 
   const onCellMouseDown = useCallback(
@@ -1036,7 +1045,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
         document.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
         const pos: CellPosition = { rowIdx, colIdx };
-        ref.current = {
+        mouseSelectionRef.current = {
           start: pos,
           unsubscribe: () => {
             document.removeEventListener("mouseup", onMouseUp);
@@ -1044,10 +1053,38 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
           },
         };
         setSelectedCellRange({ start: pos, end: pos });
+        9;
       } catch (exc) {}
     },
     [cellSelectionMode]
   );
 
-  return { selectedCellRange, onCellMouseDown };
+  const onKeyboardRangeSelectionStart = useCallback((pos: CellPosition) => {
+    keyboardSelectionRef.current = {
+      start: pos,
+    };
+  }, []);
+
+  const onKeyboardRangeSelectionEnd = useCallback(() => {
+    keyboardSelectionRef.current = undefined;
+  }, []);
+
+  const onCursorMove = useCallback((pos: CellPosition) => {
+    if (!keyboardSelectionRef.current) {
+      return;
+    }
+    setSelectedCellRange((old) => {
+      const { start } = keyboardSelectionRef.current!;
+      const p: CellRange = { start, end: pos };
+      return cellRangeEquals(old, p) ? old : p;
+    });
+  }, []);
+
+  return {
+    selectedCellRange,
+    onCellMouseDown,
+    onKeyboardRangeSelectionStart,
+    onKeyboardRangeSelectionEnd,
+    onCursorMove,
+  };
 }
