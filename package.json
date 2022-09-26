@@ -141,6 +141,7 @@
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
-    "stylelint": "^14.9.1"
+    "stylelint": "^14.9.1",
+    "tsd": "^0.24.1"
   }
 }
