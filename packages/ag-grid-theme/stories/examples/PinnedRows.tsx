@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -40,9 +39,15 @@ type PinnedRowsExampleProps = AgGridReactProps & {
   showHeader: boolean;
 };
 
-const PinnedRowsExample = function PinnedRowsExample(
-  props: PinnedRowsExampleProps
-) {
+const PinnedRowsExample = function PinnedRowsExample({
+  aggregate = "sum",
+  aggregateColumn = "population",
+  columnDefs = dataGridExampleColumns,
+  rowData = dataGridExampleData,
+  showFooter = true,
+  showHeader = true,
+  ...rest
+}: PinnedRowsExampleProps) {
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
@@ -52,14 +57,14 @@ const PinnedRowsExample = function PinnedRowsExample(
   }, [isGridReady]);
 
   const getColumnData = () => {
-    return fields(props.aggregateColumn, props.rowData!).filter(
+    return fields(aggregateColumn, rowData!).filter(
       (field) => typeof field === "number"
     );
   };
 
   const footerRow = () => {
     const columnData = getColumnData();
-    const fn = aggregates[props.aggregate];
+    const fn = aggregates[aggregate];
     const population = fn(columnData);
     return [
       {
@@ -75,35 +80,20 @@ const PinnedRowsExample = function PinnedRowsExample(
     return headerRow;
   };
 
-  const pinnedBottomRowData = props.showFooter ? footerRow() : undefined;
-  const pinnedTopRowData = props.showHeader ? getHeaderRow() : undefined;
+  const pinnedBottomRowData = showFooter ? footerRow() : undefined;
+  const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
   return (
     <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
       <AgGridReact
         {...agGridProps}
-        {...props}
+        {...rest}
+        columnDefs={columnDefs}
+        rowData={rowData}
         pinnedBottomRowData={pinnedBottomRowData}
         pinnedTopRowData={pinnedTopRowData}
       />
     </div>
   );
-};
-
-PinnedRowsExample.propTypes = {
-  aggregate: PropTypes.string,
-  aggregateColumn: PropTypes.string,
-  rowData: PropTypes.arrayOf(PropTypes.object),
-  showFooter: PropTypes.bool,
-  showHeader: PropTypes.bool,
-};
-
-PinnedRowsExample.defaultProps = {
-  aggregate: "sum",
-  aggregateColumn: "population",
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-  showFooter: true,
-  showHeader: true,
 };
 
 export default function PinnedRows(props: PinnedRowsExampleProps) {
