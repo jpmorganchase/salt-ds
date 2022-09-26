@@ -319,6 +319,7 @@ export const FormField = forwardRef(
                 hasIcon={!hasStatusIndicator}
                 validationStatus={validationStatus}
               />
+            )}
             {renderHelperText && (
               <HelperTextComponent
                 helperText={helperText}
