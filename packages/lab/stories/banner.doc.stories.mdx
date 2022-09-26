@@ -28,6 +28,19 @@ import {
 The Banner component lets your users know about an err, warning, a successfully completed or an information update. The banner should relate to the current workflow
 and span the page or container horizontally to give quick and non-disruptive feedback.
 
+# How to use Banner
+
+You should always position the Banner component in the main content area, directly below
+the navigation or in the related container component.
+
+You should configure it to close when:
+- The user performs an action that fixes an issue, for example they correct a validation error.
+- The system status that triggered the notification is resolved, for example, a server connection is restored
+
+## How does it behave in its layout?
+
+By default, the Banner is dismissable. Your users can click the embedded "X" button to close it. If you want to make Banner non-dismissible,
+just hide the "X" button.
 
 # When to use Banner features
 
@@ -40,7 +53,7 @@ you should use the information Banner to draw attention to inform your user was 
       //eslint-disable-next-line no-script-url
       LinkProps={{ href: "javascript:void(0)" }}
     >
-      Banners appear inline on the page
+      There has been an update to the terms and conditions
     </Banner>
 </Canvas>
 
@@ -55,7 +68,7 @@ or technical failure, the error Banner will guide them to the right action to re
       LinkProps={{ href: "javascript:void(0)" }}
       state="error"
     >
-      There has been an update to the terms and conditions
+      Action failed
     </Banner>
 </Canvas>
 
@@ -69,7 +82,7 @@ or current system status.
       LinkProps={{ href: "javascript:void(0)" }}
       state="warning"
     >
-      Action failed
+      System is under increased load
     </Banner>
 </Canvas>
 
