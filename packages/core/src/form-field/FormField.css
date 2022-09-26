@@ -137,6 +137,17 @@
   background: linear-gradient(to top, transparent var(--formField-background-offset-height), var(--uitkFormField-background, var(--formField-background)) var(--formField-background-offset-height));
 }
 
+.uitkFormField-notFullySupportedInput {
+  --formField-label-marginBottom: calc(2 * var(--formField-label-top-marginBottom));
+  --formField-label-paddingLeft: 0;
+  --formField-label-paddingRight: 0;
+}
+
+.uitkFormField-notFullySupportedInput .uitkFormFieldHelperText {
+  --uitkFormField-helperText-paddingLeft: 0;
+  --uitkFormField-helperText-paddingRight: 0;
+}
+
 /* Class applied if `labelPlacement="top"` and helper text is provided */
 .uitkFormField-labelTop.uitkFormField-withHelperText {
   /* Uses density aware value from FormHelperText */

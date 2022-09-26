@@ -1,6 +1,16 @@
 import cx from "classnames";
-import { FormField, Input } from "@jpmorganchase/uitk-core";
-import { ComponentMeta, Story } from "@storybook/react";
+import {
+  FormField,
+  Input,
+  Checkbox,
+  CheckboxGroup,
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  Switch,
+  FlexLayout,
+} from "@jpmorganchase/uitk-core";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -104,5 +114,90 @@ export const CompareWithOriginalToolkit: Story = () => {
       className="backwardsCompat"
       imgSrc="/visual-regression-screenshots/FormField-vr-snapshot.png"
     />
+  );
+};
+
+export const WrappingInputs: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FlexLayout gap={4}>
+      <StackLayout gap={4}>
+        <FormField label="Form Field with Input" {...props}>
+          <Input defaultValue="Value" />
+        </FormField>
+
+        <FormField label="Form Field with CheckboxGroup" {...props}>
+          <CheckboxGroup legend="Uncontrolled CheckboxGroup">
+            <Checkbox defaultChecked label="option 1" value="option-1" />
+            <Checkbox defaultChecked label="option 2" value="option-2" />
+            <Checkbox label="option 3" value="option-3" />
+          </CheckboxGroup>
+        </FormField>
+
+        <FormField label="Form Field with RadioButtonGroup" {...props}>
+          <RadioButtonGroup legend="Uncontrolled RadioButtonGroup">
+            <RadioButton label="option 1" value="option-1" />
+            <RadioButton label="option 2" value="option-2" />
+            <RadioButton label="option 3" value="option-3" />
+          </RadioButtonGroup>
+        </FormField>
+
+        <FormField label="Form Field with Switch" {...props}>
+          <Switch label="Uncontrolled Switch" defaultValue="Value" />
+        </FormField>
+
+        <FormField label="Form Field with Labelless Switch" {...props}>
+          <Switch defaultValue="Value" />
+        </FormField>
+      </StackLayout>
+      <StackLayout gap={4}>
+        <FormField
+          helperText="Some help text"
+          label="Form Field with Input"
+          {...props}
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          label="Form Field with CheckboxGroup"
+          {...props}
+        >
+          <CheckboxGroup legend="Uncontrolled CheckboxGroup">
+            <Checkbox defaultChecked label="option 1" value="option-1" />
+            <Checkbox defaultChecked label="option 2" value="option-2" />
+            <Checkbox label="option 3" value="option-3" />
+          </CheckboxGroup>
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          label="Form Field with RadioButtonGroup"
+          {...props}
+        >
+          <RadioButtonGroup legend="Uncontrolled RadioButtonGroup">
+            <RadioButton label="option 1" value="option-1" />
+            <RadioButton label="option 2" value="option-2" />
+            <RadioButton label="option 3" value="option-3" />
+          </RadioButtonGroup>
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          label="Form Field with Switch"
+          {...props}
+        >
+          <Switch label="Uncontrolled Switch" defaultValue="Value" />
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          label="Form Field with Labelless Switch"
+          {...props}
+        >
+          <Switch defaultValue="Value" />
+        </FormField>
+      </StackLayout>
+    </FlexLayout>
   );
 };

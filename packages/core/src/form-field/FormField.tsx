@@ -25,6 +25,9 @@ import { NecessityIndicatorOptions } from "./NecessityIndicator";
 import { StatusIndicatorProps } from "./StatusIndicator";
 
 import "./FormField.css";
+import { Checkbox, CheckboxGroup } from "../checkbox";
+import { RadioButton, RadioButtonGroup } from "../radio-button";
+import { Switch } from "../switch";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
@@ -251,6 +254,13 @@ export const FormField = forwardRef(
       disabled: !tooltipHelperText,
     });
 
+    const isInputNotFullySupported =
+      !children ||
+      [Checkbox, CheckboxGroup, RadioButton, RadioButtonGroup, Switch].includes(
+        // @ts-ignore
+        children.type
+      );
+
     const { ref: triggerRef, ...triggerProps } = getTriggerProps({
       className: cx(
         withBaseName(),
@@ -263,7 +273,8 @@ export const FormField = forwardRef(
           [withBaseName(focusClass)]: states.focused,
           [withBaseName("labelTop")]: labelTop,
           [withBaseName("labelLeft")]: labelLeft,
-          [withBaseName(`withHelperText`)]: inlineHelperText,
+          [withBaseName("withHelperText")]: inlineHelperText,
+          [withBaseName("notFullySupportedInput")]: isInputNotFullySupported,
         },
         className
       ),
@@ -303,10 +314,11 @@ export const FormField = forwardRef(
               />
             )}
             {children}
-            <ActivationIndicatorComponent
-              hasIcon={!hasStatusIndicator}
-              validationStatus={validationStatus}
-            />
+            {isInputNotFullySupported ? null : (
+              <ActivationIndicatorComponent
+                hasIcon={!hasStatusIndicator}
+                validationStatus={validationStatus}
+              />
             {renderHelperText && (
               <HelperTextComponent
                 helperText={helperText}
