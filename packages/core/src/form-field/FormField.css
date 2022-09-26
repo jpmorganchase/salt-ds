@@ -91,6 +91,8 @@
   --formField-activationIndicator-opacity: var(--uitk-palette-opacity-foreground);
   --formField-helperText-opacity: var(--uitk-palette-opacity-foreground);
 
+  --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
+
   cursor: var(--uitk-editable-cursor-disabled);
 }
 

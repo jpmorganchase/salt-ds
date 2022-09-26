@@ -251,7 +251,6 @@
   --backwardsCompat-pill-background: var(--uitk-color-grey-40);
   --backwardsCompat-pill-background-hover: var(--uitk-color-grey-40);
 }
-
 .uitk-dark {
   --backwardsCompat-pill-background: var(--uitk-color-grey-500);
   --backwardsCompat-pill-background-hover: var(--uitk-color-grey-500);

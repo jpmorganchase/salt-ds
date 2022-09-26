@@ -43,7 +43,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = props;
 
     return (
-      <div className={classnames(withBaseName())}>
+      <div
+        className={classnames(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+          },
+          className
+        )}
+        {...rest}
+      >
         <ControlLabel
           {...LabelProps}
           className={classnames(
@@ -58,24 +67,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           labelPlacement="right"
           ref={ref}
         >
-          <div
-            className={classnames(
-              withBaseName(),
-              {
-                [withBaseName("disabled")]: disabled,
-              },
-              className
-            )}
-            {...rest}
-          >
-            <Radio
-              checked={checked}
-              disabled={disabled}
-              value={value}
-              onChange={onChange}
-              icon={icon}
-            />
-          </div>
+          <Radio
+            checked={checked}
+            disabled={disabled}
+            value={value}
+            onChange={onChange}
+            icon={icon}
+          />
         </ControlLabel>
       </div>
     );
