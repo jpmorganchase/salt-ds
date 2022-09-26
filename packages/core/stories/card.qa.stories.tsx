@@ -30,12 +30,7 @@ export const AllExamplesOriginalContent: Story<
 > = (props) => {
   const { className } = props;
   return (
-    <QAContainer
-      itemPadding={10}
-      itemWidthAuto
-      {...props}
-      className="uitkCardQA"
-    >
+    <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <Card className={className}>
         <h1 style={{ margin: 0 }}>Card with density</h1>
         <span>Content</span>
