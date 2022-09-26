@@ -198,6 +198,60 @@ export const WrappingInputs: ComponentStory<typeof FormField> = (props) => {
           <Switch defaultValue="Value" />
         </FormField>
       </StackLayout>
+      <StackLayout gap={4}>
+        <FormField
+          helperText="Some help text"
+          labelPlacement="left"
+          label="Form Field with Input"
+          {...props}
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          labelPlacement="left"
+          label="Form Field with CheckboxGroup"
+          {...props}
+        >
+          <CheckboxGroup legend="Uncontrolled CheckboxGroup">
+            <Checkbox defaultChecked label="option 1" value="option-1" />
+            <Checkbox defaultChecked label="option 2" value="option-2" />
+            <Checkbox label="option 3" value="option-3" />
+          </CheckboxGroup>
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          labelPlacement="left"
+          label="Form Field with RadioButtonGroup"
+          {...props}
+        >
+          <RadioButtonGroup legend="Uncontrolled RadioButtonGroup">
+            <RadioButton label="option 1" value="option-1" />
+            <RadioButton label="option 2" value="option-2" />
+            <RadioButton label="option 3" value="option-3" />
+          </RadioButtonGroup>
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          labelPlacement="left"
+          label="Form Field with Switch"
+          {...props}
+        >
+          <Switch label="Uncontrolled Switch" defaultValue="Value" />
+        </FormField>
+
+        <FormField
+          helperText="Some help text"
+          labelPlacement="left"
+          label="Form Field with Labelless Switch"
+          {...props}
+        >
+          <Switch defaultValue="Value" />
+        </FormField>
+      </StackLayout>
     </FlexLayout>
   );
 };
