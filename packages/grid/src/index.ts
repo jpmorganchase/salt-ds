@@ -16,3 +16,5 @@ export * from "./RowSelectionColumn";
 
 export * from "./TextCellEditor";
 export * from "./DropdownCellEditor";
+
+export * from "./NumericColumn";

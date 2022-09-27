@@ -376,7 +376,8 @@ export const Grid = function <T>(props: GridProps<T>) {
     }
     const r = rowData[cursorRowIdx];
     const c = cols[cursorColIdx];
-    if (c.info.props.editable) {
+    const isEditable = !!contextValue.getEditor(c.info.props.id);
+    if (isEditable) {
       setEditMode(true);
     }
   };

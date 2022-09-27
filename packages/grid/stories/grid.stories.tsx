@@ -7,6 +7,8 @@ import {
   GridCellValueProps,
   GridColumn,
   GridHeaderValueProps,
+  NumericCellEditor,
+  NumericColumn,
   RowKeyGetter,
   RowSelectionColumn,
   RowSelectionRadioColumn,
@@ -140,7 +142,6 @@ const GridStoryTemplate: Story<{}> = (props) => {
           id="location"
           defaultWidth={150}
           getValue={(x) => x.location}
-          editable={true}
           onChange={onLocationChange}
         >
           <CellEditor>
@@ -155,19 +156,17 @@ const GridStoryTemplate: Story<{}> = (props) => {
         />
       </ColumnGroup>
       <ColumnGroup id="groupThree" name="Group Three">
-        <GridColumn
-          name="Amount"
+        <NumericColumn
+          precision={2}
           id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
-          align="right"
+          name="Amount"
+          getValue={(x: Investor) => x.amount}
           onChange={onAmountChange}
         >
           <CellEditor>
-            <TextCellEditor />
+            <NumericCellEditor />
           </CellEditor>
-        </GridColumn>
+        </NumericColumn>
       </ColumnGroup>
       <ColumnGroup id="groupFour" name="Group Four">
         <GridColumn
@@ -220,7 +219,6 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
           id="amount"
           defaultWidth={200}
           getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
           align="right"
           onChange={onAmountChange}
         />
@@ -308,7 +306,6 @@ const PinnedColumnsTemplate: Story<{}> = (props) => {
           id="amount"
           defaultWidth={200}
           getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
           align="right"
           onChange={onAmountChange}
         />
@@ -827,7 +824,6 @@ const ServerSideDataStoryTemplate: Story<{}> = (props) => {
         id="location"
         defaultWidth={150}
         getValue={(x) => x.location}
-        editable={true}
         onChange={onLocationChange}
       />
       <GridColumn
@@ -841,7 +837,6 @@ const ServerSideDataStoryTemplate: Story<{}> = (props) => {
         id="amount"
         defaultWidth={200}
         getValue={(x) => x.amount.toFixed(4)}
-        editable={true}
         align="right"
         onChange={onAmountChange}
       />

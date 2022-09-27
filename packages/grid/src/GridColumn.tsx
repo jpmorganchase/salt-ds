@@ -21,6 +21,7 @@ export interface GridCellProps<T> {
   style?: CSSProperties;
   isFocused?: boolean;
   isSelected?: boolean;
+  isEditable?: boolean;
   children?: ReactNode;
 }
 

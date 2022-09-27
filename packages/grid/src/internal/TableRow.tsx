@@ -65,12 +65,15 @@ export function TableRow<T>(props: TableRowProps<T>) {
     >
       {columns.map((column, i) => {
         const colKey = column.info.props.id;
+        const editorInfo = grid.getEditor(column.info.props.id);
+        const isEditable = !!editorInfo;
+
         if (editorColIdx === column.index) {
-          const editorInfo = grid.getEditor(column.info.props.id);
-          if (editorInfo) {
+          if (isEditable) {
             if (isValidElement(editorInfo.children)) {
               const editorElement = Children.only(editorInfo.children);
               return cloneElement(editorElement, {
+                key: colKey,
                 row,
                 column,
               } as any);
@@ -96,6 +99,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             column={column}
             isFocused={isFocused}
             isSelected={isSelected}
+            isEditable={isEditable}
           >
             <CellValue column={column} row={row} value={value} />
           </Cell>
