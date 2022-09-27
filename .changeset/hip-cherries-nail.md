@@ -5,4 +5,4 @@
 ---
 
 Remove import directly from `src` so consumers won't encounter
-TS error if `skipLibCheck` is set to false. 
+TS error if `skipLibCheck` is set to false.
