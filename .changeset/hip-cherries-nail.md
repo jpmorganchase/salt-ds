@@ -4,4 +4,5 @@
 "@jpmorganchase/uitk-lab": patch
 ---
 
-Remove import directly from `src` so consumers won't encounter TS error if `skipLibCheck` is set to false. 
+Remove import directly from `src` so consumers won't encounter
+TS error if `skipLibCheck` is set to false. 
