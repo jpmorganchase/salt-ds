@@ -62,7 +62,12 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   }, [triggerRef.current]);
 
   const triggerComponent = (
-    <div tabIndex={0} ref={triggerRef} className={withBaseName("currentValue")}>
+    <div
+      tabIndex={0}
+      ref={triggerRef}
+      className={withBaseName("currentValue")}
+      data-testid="grid-cell-editor-trigger"
+    >
       {value}
     </div>
   );

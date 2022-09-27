@@ -6,6 +6,8 @@ import {
   FocusEventHandler,
   KeyboardEventHandler,
   ReactNode,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import { useEditorContext } from "./EditorContext";
@@ -39,6 +41,8 @@ export interface NumericEditorProps<T> {
 
 export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { column, row } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const initialSelectionRef = useRef(false);
   const [editorText, setEditorText] = useState<string>(
     column!.info.props.getValue!(row!.data)
   );
@@ -64,10 +68,19 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current && !initialSelectionRef.current) {
+      inputRef.current.select();
+      initialSelectionRef.current = true;
+    }
+  }, [inputRef.current]);
+
   return (
     <td className="uitkGridNumericCellEditor">
       <div className="uitkGridNumericCellEditor-inputContainer">
         <input
+          ref={inputRef}
+          data-testid="grid-cell-editor-input"
           autoFocus={true}
           value={editorText}
           onChange={onChange}
