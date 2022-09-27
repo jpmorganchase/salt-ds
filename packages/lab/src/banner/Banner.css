@@ -1,4 +1,3 @@
-
 .uitk-density-touch {
   --banner-icon-top: 23px;
 }
@@ -39,7 +38,7 @@
   width: 100%;
 }
 
-.uitkBanner-closeButton{
+.uitkBanner-closeButton {
   margin: calc(var(--uitk-size-unit) * 0.5) auto calc(var(--uitk-size-unit) * 0.5) var(--uitk-size-unit);
 }
 
@@ -96,16 +95,16 @@
 }
 
 .uitkEmphasisHigh.uitkBanner-info {
-  --banner-background: var(--uitk-palette-info-background-high)
+  --banner-background: var(--uitk-palette-info-background-high);
 }
 
 .uitkEmphasisHigh.uitkBanner-error {
-  --banner-background: var(--uitk-palette-error-background-high)
+  --banner-background: var(--uitk-palette-error-background-high);
 }
 
 .uitkEmphasisHigh.uitkBanner-warning {
-  --banner-background: var(--uitk-palette-warning-background-high)
+  --banner-background: var(--uitk-palette-warning-background-high);
 }
 .uitkEmphasisHigh.uitkBanner-success {
-  --banner-background: var(--uitk-palette-success-background-high)
+  --banner-background: var(--uitk-palette-success-background-high);
 }

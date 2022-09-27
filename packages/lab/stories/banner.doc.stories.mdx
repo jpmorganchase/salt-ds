@@ -1,19 +1,12 @@
 import {
-  ArgsTable,
   Canvas,
   Meta
 } from "@storybook/addon-docs";
 import {
-  ComponentAnatomy
-} from "docs/components/ComponentAnatomy";
-import {
-  Banner
+  Banner,
+  Link
 } from "@jpmorganchase/uitk-lab";
 import {
-  CharacteristicUsage,
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components"; import {
   StackLayout
 } from "@jpmorganchase/uitk-core";
 
@@ -33,16 +26,13 @@ and span the page or container horizontally to give quick and non-disruptive fee
 ## How you can use Banner
 
 The Banner itself is only a presentational component, it does not provide the logic for deciding whether to render
-or not. You will need to provide state management for deciding when to render a Banner. 
+or not. You will need to provide state management for deciding when to render a Banner.
 
 You should always position the Banner component in the main content area, directly below
 the navigation or in the related container component.
 
 <Canvas>
-  <Banner
-  >
-    Banners appear inline on the page
-  </Banner>
+  <Banner>Banners appear inline on the page</Banner>
 </Canvas>
 
 If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner
@@ -56,25 +46,10 @@ Banner contains four states `info`, `warning`, `error` and `success`. If not spe
 
 <Canvas>
   <StackLayout gap={2}>
-    <Banner
-    >
-      Banners appear inline on the page
-    </Banner>
-    <Banner
-      state="warning"
-    >
-      Banners appear inline on the page
-    </Banner>
-    <Banner
-      state="error"
-    >
-      Banners appear inline on the page
-    </Banner>
-    <Banner
-      state="success"
-    >
-      Banners appear inline on the page
-    </Banner>
+    <Banner>Banners appear inline on the page</Banner>
+    <Banner state="warning">Banners appear inline on the page</Banner>
+    <Banner state="error">Banners appear inline on the page</Banner>
+    <Banner state="success">Banners appear inline on the page</Banner>
   </StackLayout>
 </Canvas>
 
@@ -84,29 +59,16 @@ Banner has two emphasis levels; medium (default) and high.
 
 <Canvas>
   <StackLayout gap={2}>
-  <Banner
-    emphasis="high"
-  >
-    High emphasis
-  </Banner>
-  <Banner
-    emphasis="high"
-    state="warning"
-  >
-    High emphasis
-  </Banner>
-  <Banner
-    emphasis="high"
-    state="error"
-  >
-    High emphasis
-  </Banner>
-  <Banner
-    emphasis="high"
-    state="success"
-  >
-    High emphasis
-  </Banner>
+    <Banner emphasis="high">High emphasis</Banner>
+    <Banner emphasis="high" state="warning">
+      High emphasis
+    </Banner>
+    <Banner emphasis="high" state="error">
+      High emphasis
+    </Banner>
+    <Banner emphasis="high" state="success">
+      High emphasis
+    </Banner>
   </StackLayout>
 </Canvas>
 
@@ -117,13 +79,16 @@ to the onClose prop.
 
 <Canvas>
   <Banner
-    onClose={()=>{console.log("Dismissed")}}
+    onClose={() => {
+      console.log("Dismissed");
+    }}
   >
     Dismissible
   </Banner>
 </Canvas>
 
 You should configure Banner to close when:
+
 - The user performs an action that fixes an issue, for example they correct a validation error.
 - The system status that triggered the notification is resolved, for example, a server connection is restored
 
@@ -141,6 +106,36 @@ guide the user to part of the application that requires action.
   </Banner>
 </Canvas>
 
+## Render
+
+Banner uses the render props pattern to enable you to customize the rendered content.
+
+The render callback can be configured either by providing a function the `children` property
+or an explicit method using the `render` property.
+
+The render callback has the following props:
+
+- getIcon function callback that returns the default icon for the current state with the default Icon Props
+- getIconProps function callback that returns the icon props to apply on a custom icon
+- getLabelProps function callback that returns the label props
+- getLinkProps function callback that returns the link props
+
+<Canvas>
+  <Banner
+    render={({ Icon, getIconProps, getLabelProps, getLinkProps }) => (
+      <>
+        <Icon {...getIconProps()} aria-label={"Success"} />
+        <span {...getLabelProps()}>
+          Example custom renderer
+          <Link {...getLinkProps()}>custom example link</Link>
+        </span>
+      </>
+    )}
+    state="success"
+    {...props}
+  />
+</Canvas>
+
 ## When to use Banner features
 
 ### Displaying general information
@@ -148,27 +143,27 @@ guide the user to part of the application that requires action.
 You should use the information Banner to draw attention to inform your user was unaware of, for example a link to updated terms and conditions.
 
 <Canvas>
-    <Banner
-      //eslint-disable-next-line no-script-url
-      LinkProps={{ href: "javascript:void(0)" }}
-    >
-      There has been an update to the terms and conditions
-    </Banner>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+  >
+    There has been an update to the terms and conditions
+  </Banner>
 </Canvas>
 
 ### Letting users know about an issue
 
-If your users have a problem that prevents them from completing a task, such as a system error 
+If your users have a problem that prevents them from completing a task, such as a system error
 or technical failure, the error Banner will guide them to the right action to resolve it.
 
 <Canvas>
-    <Banner
-      //eslint-disable-next-line no-script-url
-      LinkProps={{ href: "javascript:void(0)" }}
-      state="error"
-    >
-      Action failed
-    </Banner>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="error"
+  >
+    Action failed
+  </Banner>
 </Canvas>
 
 You should use the warning Banner to let users know about an issue that won't prevent them from
@@ -176,13 +171,13 @@ continuing the task, but may cause errors if it's not addressed, such as a restr
 or current system status.
 
 <Canvas>
-    <Banner
-      //eslint-disable-next-line no-script-url
-      LinkProps={{ href: "javascript:void(0)" }}
-      state="warning"
-    >
-      System is under increased load
-    </Banner>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="warning"
+  >
+    System is under increased load
+  </Banner>
 </Canvas>
 
 ### Reassuring your users
@@ -191,13 +186,13 @@ You should use the success Banner to reassure your users that an event or proces
 task has been successfully completed.
 
 <Canvas>
-    <Banner
-      //eslint-disable-next-line no-script-url
-      LinkProps={{ href: "javascript:void(0)" }}
-      state="success"
-    >
-      Database updated
-    </Banner>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="success"
+  >
+    Database updated
+  </Banner>
 </Canvas>
 
 ## Configuring Banner
@@ -211,7 +206,7 @@ task has been successfully completed.
 <Canvas>
   <ComponentAnatomy>
     <Banner
-      onClose={()=>{}}
+      onClose={() => {}}
       //eslint-disable-next-line no-script-url
       LinkProps={{ href: "javascript:void(0)" }}
     >
@@ -230,7 +225,6 @@ task has been successfully completed.
 
 ### --uitkBanner CSS Custom Property API
 
-
 <CSSVariableTable of={Banner} />
 
 ## Accessibility
@@ -243,7 +237,6 @@ prop.
 
 The following keyboard interaction applies to the Banner component:
 
-| Key               | Function                                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Key                                  | Function                                                                  |
+| ------------------------------------ | ------------------------------------------------------------------------- |
 | <kbd>Enter</kbd> or <kbd>Space</kbd> | If focus is on the "X" button, activates the button and closes the Banner |
-

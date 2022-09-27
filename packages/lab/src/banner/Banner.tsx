@@ -29,8 +29,8 @@ export type State = "error" | "info" | "success" | "warning";
 
 export type LabelProps = { className?: string };
 
-type StateAndPropsGetterFunction<TInjectedProps> = (
-  props?: TInjectedProps
+type StateAndPropsGetterFunction<TInjectedProps> = <T>(
+  props?: T
 ) => TInjectedProps;
 
 export interface GetStateAndPropGetters {
@@ -122,10 +122,12 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
-  const getIconProps = ({ className, ...restProps }: IconProps = {}) => ({
-    className: cx(withBaseName("icon"), state, className),
-    ...restProps,
-  });
+  const getIconProps = ({ className, ...restProps }: IconProps = {}) => {
+    return {
+      className: cx(withBaseName("icon"), state, className),
+      ...restProps,
+    };
+  };
 
   const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
     className: cx(withBaseName("label"), state, className),
