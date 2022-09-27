@@ -15,6 +15,7 @@
 .uitkCard-content {
   font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
   letter-spacing: var(--uitkCard-content-letterSpacing, normal);
+  line-height: var(--uitk-text-base-lineHeight);
   min-height: var(--uitkCard-content-minHeight, var(--uitk-text-minHeight));
   padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
 }
@@ -65,9 +66,4 @@ a:focus .uitkCard-interactable.uitkCard-disabled {
 /* Styles applied to nested divs if `disabled={true}` */
 .uitkCard-disabled div {
   pointer-events: none;
-}
-
-/* TK1 backwards compat styling */
-.backwardsCompat.uitkCard .uitkCard-content {
-  line-height: var(--uitk-text-base-lineHeight);
 }
