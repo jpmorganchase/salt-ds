@@ -1,4 +1,3 @@
-
 .uitkSvgSpinner-gradientStop1,
 .uitkSvgSpinner-gradientStop2,
 .uitkSvgSpinner-gradientStop3,
@@ -8,7 +7,7 @@
 
 .uitkSvgSpinner {
   --spinner-gradient-color: var(--uitk-measured-fill);
-  
+
   position: relative;
 }
 

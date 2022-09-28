@@ -13,7 +13,7 @@ export const SpinnerMedium = (props: SVGAttributes<SVGSVGElement>) => (
         y1="75.6597923%"
         y2="75.6597923%"
       >
-        <stop className={`${baseName}-gradientStop1`} offset="0%" />  
+        <stop className={`${baseName}-gradientStop1`} offset="0%" />
         <stop className={`${baseName}-gradientStop2`} offset="100%" />
       </linearGradient>
       <linearGradient
