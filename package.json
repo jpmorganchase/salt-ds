@@ -115,7 +115,7 @@
     "vite-plugin-istanbul": "^3.0.1",
     "vite-tsconfig-paths": "^3.5.0",
     "warning": "^4.0.3",
-    "webpack": "5.73.0"
+    "webpack": "5.74.0"
   },
   "resolutions": {
     "esbuild": "0.14.51"
