@@ -3,7 +3,7 @@ import {
   Portal,
   useId,
   useWindow,
-  ValidationState,
+  ValidationStatus,
   Scrim,
   ScrimProps,
 } from "@jpmorganchase/uitk-core";
@@ -25,7 +25,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   height?: string | number;
   onClose?: () => void;
   open?: boolean;
-  state?: ValidationState;
+  status?: ValidationStatus;
   width?: string | number;
   enableBackdropClick?: boolean;
   disablePortal?: boolean;
@@ -49,7 +49,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     id,
     onClose,
     open: openProp,
-    state,
+    status,
     width,
     enableBackdropClick,
     disablePortal,
@@ -87,7 +87,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   }
 
   return (
-    <DialogContext.Provider value={{ state, dialogId, setContentElement }}>
+    <DialogContext.Provider value={{ status, dialogId, setContentElement }}>
       <Portal disablePortal={disablePortal}>
         <Scrim
           autoFocusRef={autoFocusRef}
@@ -103,7 +103,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
             <div
               {...rest}
               className={classnames(withBaseName(), className, {
-                [withBaseName("infoShadow")]: state === "info",
+                [withBaseName("infoShadow")]: status === "info",
               })}
               style={{ width }}
               ref={ref}

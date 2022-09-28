@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef, memo, ReactNode } from "react";
-import { Icon, IconProps } from "../icon";
+import { Icon, IconProps } from "./Icon";
 
 /**
  * Private utility.

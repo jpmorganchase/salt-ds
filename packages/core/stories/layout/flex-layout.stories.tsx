@@ -53,7 +53,7 @@ export default {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
-    disableWrap: {
+    wrap: {
       control: "boolean",
     },
   },
@@ -96,7 +96,11 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 6 }, (_, index) => (
-        <FlexContent key={index} number={index + 1} />
+        <FlexContent
+          key={index}
+          number={index + 1}
+          style={{ minWidth: 200, textAlign: "center" }}
+        />
       ))}
     </FlexLayout>
   );
@@ -108,9 +112,9 @@ FlexLayoutUsingResponsiveProps.args = {
     xs: "column",
     md: "row",
   },
-  disableWrap: {
-    xs: false,
-    lg: true,
+  wrap: {
+    xs: true,
+    lg: false,
   },
 };
 
@@ -135,6 +139,9 @@ const FlexLayoutStorySimpleUsage: ComponentStory<typeof FlexLayout> = (
   );
 };
 export const FlexLayoutSimpleUsage = FlexLayoutStorySimpleUsage.bind({});
+FlexLayoutSimpleUsage.args = {
+  wrap: true,
+};
 
 export const ContactDetailsExample = ({ index }: { index: number }) => (
   <ContactDetails embedded={true} stackAtBreakpoint={0}>
@@ -165,6 +172,9 @@ const ContactCards: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const FlexLayoutComposite = ContactCards.bind({});
+FlexLayoutComposite.args = {
+  wrap: true,
+};
 
 const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   return (
@@ -186,7 +196,7 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
 FlexLayoutNested.args = {
   justify: "space-between",
-  disableWrap: true,
+  wrap: true,
   gap: 6,
 };
 
@@ -201,7 +211,7 @@ const sectionFormContent = (
     <h3>Section title</h3>
     {Array.from({ length: 3 }, (_, index) => (
       <>
-        <FlexLayout disableWrap key={index}>
+        <FlexLayout key={index}>
           {Array.from({ length: 2 }, (_, index) => (
             <FormFieldExample key={index} />
           ))}
@@ -238,9 +248,7 @@ export const SectionForm: ComponentStory<typeof FlexLayout> = (args) => {
 
 export const Blog = () => (
   <StackLayout>
-    <FlexLayout
-      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
-    >
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-one" />
       </FlexItem>
@@ -269,9 +277,7 @@ export const Blog = () => (
       </FlexItem>
     </FlexLayout>
 
-    <FlexLayout
-      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
-    >
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-two" />
       </FlexItem>
@@ -294,9 +300,7 @@ export const Blog = () => (
       </FlexItem>
     </FlexLayout>
 
-    <FlexLayout
-      disableWrap={{ xs: false, sm: false, md: true, lg: true, xl: true }}
-    >
+    <FlexLayout wrap={{ xs: true, sm: true, md: false, lg: false, xl: false }}>
       <FlexItem grow={1}>
         <div className="flex-blog-image flex-blog-image-three" />
       </FlexItem>

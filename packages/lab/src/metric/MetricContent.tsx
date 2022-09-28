@@ -6,7 +6,7 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Div, Figure1, Figure2, Figure3 } from "../typography";
+import { Div, Figure1, Figure2, Figure3 } from "../text";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";

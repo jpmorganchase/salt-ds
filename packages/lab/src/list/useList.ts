@@ -170,7 +170,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
     ]
   );
 
-  // This is only appropriate whan we are directly controlling a List,
+  // This is only appropriate when we are directly controlling a List,
   // not when a control is manipulating the list
   const { isScrolling, scrollIntoView } = useViewportTracking({
     containerRef,

@@ -33,7 +33,7 @@
   --slider-rail-mark-height: var(--uitkSlider-rail-mark-height, 7px);
   --slider-rail-mark-color: var(--uitkSlider-rail-mark-color, var(--slider-rail-color));
 
-  --slider-selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-fill-stopColor));
+  --slider-selection-color: var(--uitkSlider-selection-color, var(--uitk-measured-fill));
   --slider-selection-height: var(--uitkSlider-selection-height, 2px);
 
   --slider-handle-size: var(--uitkSlider-handle-size, calc(var(--uitk-size-base) * 0.5));
@@ -55,7 +55,7 @@
   --slider-clickable-paddingRight: var(--uitkSlider-clickable-paddingRight, calc(var(--uitk-size-base) * 0.5));
 
   --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
-  --slider-label-paddingLeft: var(--uitlSlider-label-paddingLeft, 0);
+  --slider-label-paddingLeft: var(--uitkSlider-label-paddingLeft, 0);
   --slider-label-paddingRight: var(--uitkSlider-label-paddingRight, 0);
 }
 
@@ -85,7 +85,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  box-sizing: border-box;
 }
 
 .uitkSlider-track {
@@ -112,7 +111,6 @@
   grid-column-start: 1;
   grid-column-end: -1;
   /*height: var(--markedRail-height);*/
-  box-sizing: border-box;
   display: grid;
   grid-template-rows: auto;
 }
@@ -169,7 +167,6 @@
   left: calc(var(--slider-handle-size) * -0.5);
   height: var(--slider-handle-size);
   width: var(--slider-handle-size);
-  box-sizing: border-box;
 }
 
 .uitkSliderHandle-box:focus-visible {
@@ -207,7 +204,6 @@
 
   padding-left: var(--slider-label-paddingLeft);
   padding-right: var(--slider-label-paddingRight);
-  box-sizing: border-box;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

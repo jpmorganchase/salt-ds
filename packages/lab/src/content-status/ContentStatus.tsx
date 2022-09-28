@@ -15,7 +15,7 @@ import {
 } from "react";
 import { CircularProgressProps } from "../progress";
 import { SpinnerProps } from "../spinner";
-import { Div } from "../typography";
+import { Div } from "../text";
 import { renderStatusIndicator } from "./internal/renderStatusIndicator";
 
 import "./ContentStatus.css";

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Link } from "../link";
-import { Div } from "../typography";
-import { ValueComponentProps } from "./internal";
+import { Div } from "../text";
 import { isEmail } from "../utils";
+import { ValueComponentProps } from "./types";
 
 export const MailLinkComponent: FC<ValueComponentProps> = (props) => {
   const { value, ...restProps } = props;

@@ -10,6 +10,10 @@ import {
 import { KeySet } from "./keyset";
 import { CollectionItem } from "../common-hooks";
 
+/**
+ * [ item key, total height before the item, next row index, CollectionItem<Item>]
+ * e.g. first item: [0, 0, 1, data[0]]
+ */
 export type Row<Item> = [number, number, number, CollectionItem<Item>];
 
 const byKey = ([k1]: Row<unknown>, [k2]: Row<unknown>) => k1 - k2;
@@ -36,17 +40,17 @@ export const useVirtualization = <Item>({
   const viewportMeasures = useRef({
     contentHeight: 10000,
     firstVisibleRow: 0,
-    rowCount: 1,
+    rowCount: 0,
     rowHeight: 0,
     scrollPos: 0,
   });
-  const [rows, setRows] = useState<Row<Item>[]>([[0, 0, 1, data[0]]]);
+  const [rows, setRows] = useState<Row<Item>[]>([]);
   const keys = useMemo(() => new KeySet(0, 1), []);
 
   const updateRows = useCallback(
-    (from, to) => {
+    (from: number, to: number) => {
       const { rowHeight } = viewportMeasures.current;
-      const totalRowHeight = rowHeight + itemGapSize;
+      const rowHeightWithGap = rowHeight + itemGapSize;
       const lo = Math.max(0, from - renderBuffer);
       const hi = Math.min(data.length, to + renderBuffer);
       keys.reset(lo, hi);
@@ -56,7 +60,7 @@ export const useVirtualization = <Item>({
           (value, idx) =>
             [
               keys.keyFor(idx + lo),
-              (idx + lo) * totalRowHeight,
+              (idx + lo) * rowHeightWithGap,
               idx + lo + 1,
               value,
             ] as Row<Item>
@@ -64,7 +68,7 @@ export const useVirtualization = <Item>({
         .sort(byKey);
       setRows(newRows);
     },
-    [data, keys]
+    [data, itemGapSize, keys]
   );
 
   useLayoutEffect(() => {
@@ -85,9 +89,10 @@ export const useVirtualization = <Item>({
   }, [data, itemGapSize, keys, updateRows]);
 
   const handleVerticalScroll = useCallback(
-    (e) => {
+    (e: UIEvent<HTMLElement>) => {
       const viewport = viewportMeasures.current;
-      const scrollTop = e.target.scrollTop;
+      // TODO: check `as` cast
+      const scrollTop = (e.target as HTMLElement).scrollTop;
       if (scrollTop !== viewport.scrollPos) {
         viewport.scrollPos = scrollTop;
         const firstRow = Math.floor(scrollTop / viewport.rowHeight);

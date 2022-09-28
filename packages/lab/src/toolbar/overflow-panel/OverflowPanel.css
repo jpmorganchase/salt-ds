@@ -8,8 +8,8 @@
   --uitkButton-justifyContent: flex-start;
   --uitkDropdown-popup-maxHeight: auto;
   align-items: stretch;
-  color: var(--uitk-container-color);
-  border: var(--uitk-container-borderWidth) var(--uitk-container-borderStyle) var(--uitk-container-borderColor);
+  color: var(--uitk-text-primary-foreground);
+  border: var(--uitk-container-borderWidth) var(--uitk-container-borderStyle) var(--uitk-container-borderColor-medium);
   display: flex;
   flex-direction: column;
   padding: calc(var(--uitk-size-unit) * 1.5) 0;
@@ -19,7 +19,7 @@
 .uitkOverflowPanel [aria-expanded="true"] {
   --uitkButton-background: var(--uitk-actionable-secondary-background-active);
   --uitkButton-background-hover: var(--uitk-actionable-secondary-background-active);
-  --uitkIcon-color: var(--uitk-actionable-secondary-icon-color-active);
+  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-active);
 }
 
 .uitkOverflowPanel.uitkDropdown {

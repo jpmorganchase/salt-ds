@@ -1,5 +1,71 @@
 # @jpmorganchase/uitk-core
 
+## 0.5.0
+
+### Minor Changes
+
+- 643d8fd7: Fix Checkbox horizontal group spacing
+- 28c01314: Tooltip characteristics and docs update
+- 9b4964ae: Change checkbox -solid-color token to -fill
+- 58adde30: Ensure CSS attributes in all private and public tokens are always kebab case, e.g.:
+  --uitkDialog-border-color -> --uitkDialog-borderColor
+  --accordion-summary-padding-left -> --accordion-summary-paddingLeft
+  --grid-item-grid-row-end -> --grid-item-gridRowEnd
+- 60ec66b7: remove empty stylesheet from `BorderLayout`
+  add custom styles to pill used in `BorderLayout` storybook composite example
+- 6259041e: Changes to text characteristic fontSize tokens
+
+  TD:
+  H1 36px -> 42px
+  H2 28px -> 32px
+  H3 18px -> 24px
+  Caption 12px -> 14px
+  Help 12px -> 14px
+
+  LD:
+  Caption 11px -> 12px
+  Help 11px -> 12px
+
+- b07baa66: Fix for class names in selectors causing nesting issues when design tokens are density specific
+- 4719e62b: Checkbox:
+  -box-size -> -height and -width
+
+  Pagination/Accordion:
+  —pagination and —accordion prefixes added
+
+  Tree node:
+  —padding-left token changed to padding-left attribute: fixed typo
+
+  Dialog/Toolbar:
+  background-color changed to background as standard
+
+  Skip link:
+  —skipLink-- (double dash) changed to —skipLink-
+
+- 23550f22: Replace default value for success aria label in StateIcon
+- e6164788: **BREAKING CHANGES:**
+
+  - Move Scrim to core
+    `import {Scrim} from "@jpmorganchase/uitk-core";`
+  - Refactor `containerFix` and `parentRef` in to a single prop `containerRef`
+  - Rename `disableEnforceFocus` prop to `disableFocusTrap`
+  - Rename `returnFocus` prop to `returnFocusOptions`
+
+- dd8c7646: Add global css box-sizing as border-box, and remove from components
+
+### Patch Changes
+
+- 690e4aec: Fixed issue where disabled button would still appear to be clickable
+- 4aa187b2: Fix theme getCharacteristicValue function.
+- 3dff3d3b: Apply
+  aria-disabled
+  to
+  Pill
+  when
+  it's
+  disabled
+- 791e8b10: Fix Button `justify-content` invalid css value
+
 ## 0.4.0
 
 ### Minor Changes

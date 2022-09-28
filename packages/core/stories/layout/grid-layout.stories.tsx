@@ -43,10 +43,10 @@ const Template: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const ToolkitGridLayout = Template.bind({});
-ToolkitGridLayout.args = {};
+export const DefaultGridLayout = Template.bind({});
+DefaultGridLayout.args = {};
 
-const DefaultGridLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
+const MultipleRowsStory: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args}>
       {Array.from({ length: 12 }, (_, index) => (
@@ -59,8 +59,8 @@ const DefaultGridLayoutStory: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const ToolkitGridLayoutMultipleRows = DefaultGridLayoutStory.bind({});
-ToolkitGridLayoutMultipleRows.args = {
+export const GridLayoutMultipleRows = MultipleRowsStory.bind({});
+GridLayoutMultipleRows.args = {
   columns: 4,
   rows: 3,
 };
@@ -107,8 +107,8 @@ const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const ToolkitGridLayoutResponsiveView = ResponsiveView.bind({});
-ToolkitGridLayoutResponsiveView.args = {
+export const GridLayoutResponsiveView = ResponsiveView.bind({});
+GridLayoutResponsiveView.args = {
   columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
   rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
 };
@@ -153,8 +153,9 @@ const CustomBreakpoints: ComponentStory<typeof GridLayout> = (args) => {
     </ToolkitProvider>
   );
 };
-export const ToolkitGridLayoutCustomBreakpoints = CustomBreakpoints.bind({});
-ToolkitGridLayoutCustomBreakpoints.args = {
+export const GridLayoutCustomBreakpoints = CustomBreakpoints.bind({});
+
+GridLayoutCustomBreakpoints.args = {
   columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
   rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
 };
@@ -210,8 +211,8 @@ const Border: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const ToolkitGridLayoutBorder = Border.bind({});
-ToolkitGridLayoutBorder.args = {
+export const GridLayoutBorder = Border.bind({});
+GridLayoutBorder.args = {
   columns: 4,
   rows: 3,
   gap: 0,
@@ -274,8 +275,8 @@ const Footer: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const ToolkitGridLayoutFooter = Footer.bind({});
-ToolkitGridLayoutFooter.args = {
+export const GridLayoutFooter = Footer.bind({});
+GridLayoutFooter.args = {
   columns: 6,
   columnGap: 8,
 };

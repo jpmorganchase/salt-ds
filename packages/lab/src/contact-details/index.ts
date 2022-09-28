@@ -9,3 +9,4 @@ export * from "./ContactSecondaryInfo";
 export * from "./ContactTertiaryInfo";
 export * from "./ContactFavoriteToggle";
 export * from "./MailLinkComponent";
+export * from "./types";

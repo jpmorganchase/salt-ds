@@ -1,14 +1,13 @@
-import { makePrefixer, useIdMemo } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef, useIdMemo } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
 import {
   cloneElement,
-  forwardRef,
   ForwardedRef,
+  forwardRef,
   isValidElement,
   ReactElement,
   useRef,
 } from "react";
-import cx from "classnames";
-import { forwardCallbackProps } from "../utils";
 import {
   CollectionIndexer,
   CollectionItem,
@@ -19,12 +18,12 @@ import {
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
-
-import { useListHeight } from "./useListHeight";
+import { forwardCallbackProps } from "../utils";
 
 import { ListItem as DefaultListItem, ListItemProxy } from "./ListItem";
-import { useList } from "./useList";
 import { ListItemProps, ListProps } from "./listTypes";
+import { useList } from "./useList";
+import { useListHeight } from "./useListHeight";
 
 import "./List.css";
 
@@ -72,6 +71,7 @@ export const List = forwardRef(function List<
     selected: selectedProp,
     selectionStrategy,
     checkable = selectionStrategy === "multiple",
+    scrollingApiRef,
     // TODO do we still need these ?
     selectionKeys,
     showEmptyMessage = false,
@@ -82,7 +82,7 @@ export const List = forwardRef(function List<
     width,
     ...htmlAttributes
   }: ListProps<Item, Selection>,
-  forwardedRef?: ForwardedRef<ScrollingAPI<Item>>
+  forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
   const id = useIdMemo(idProp);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -152,7 +152,7 @@ export const List = forwardRef(function List<
 
   useImperativeScrollingAPI({
     collectionHook,
-    forwardedRef,
+    forwardedRef: scrollingApiRef,
     scrollableRef: rootRef,
     scrollIntoView,
   });
@@ -325,7 +325,7 @@ export const List = forwardRef(function List<
         [withBaseName("collapsible")]: collapsibleHeaders,
       })}
       id={`${id}`}
-      ref={rootRef}
+      ref={useForkRef<HTMLDivElement>(rootRef, forwardedRef)}
       role="listbox"
       style={{ ...styleProp, ...sizeStyles }}
       tabIndex={listDisabled || disableFocus ? undefined : 0}

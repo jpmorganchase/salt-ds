@@ -3,13 +3,13 @@
   --list-item-text-color: var(--uitk-selectable-foreground);
   --list-item-background: var(--uitk-selectable-background);
   --list-item-background-hover: var(--uitk-selectable-background-hover);
-  --list-item-selected-focus-visible-outlineColor: var(--uitk-accent-foreground); /* TODO: Check token with design */
+  --list-item-selected-focus-outlineColor: var(--uitk-accent-foreground); /* TODO: Check token with design */
 
   --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
   --list-item-background-active: var(--uitk-selectable-background-selected);
 
   /* Text, Font */
-  --list-item-textAlign: var(--uitk-selectable-textAlign);
+  --list-item-textAlign: var(--uitk-text-textAlign);
   --list-item-fontSize: var(--uitk-text-fontSize);
   --list-item-lineHeight: var(--uitk-text-lineHeight);
 
@@ -17,19 +17,13 @@
   --list-item-padding: 0 var(--uitk-size-unit);
 
   /* Misc. */
-
-  --list-item-focus-visible-outlineStyle: var(--uitk-focused-outlineStyle);
-  --list-item-focus-visible-outlineWidth: var(--uitk-focused-outlineWidth);
-  --list-item-focus-visible-outlineColor: var(--uitk-focused-outlineColor);
-  --list-item-focus-visible-outlineOffset: var(--uitk-focused-outlineOffset);
-
   --list-item-gap: 0px;
   --list-item-alignItems: center;
   --list-item-selectable-cursor: pointer;
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--uitk-selectable-cursor-disabled);
-  --list-item-disabled-regular-opacity: var(--uitk-opacity-foreground);
+  --list-item-disabled-regular-opacity: var(--uitk-palette-opacity-foreground);
 }
 
 .uitkListItemDeprecated {
@@ -43,7 +37,6 @@
   right: 0;
   display: flex;
   position: relative;
-  box-sizing: border-box;
   align-items: var(--list-item-alignItems);
   white-space: nowrap;
 }
@@ -92,12 +85,12 @@
   content: "";
   position: absolute;
 
-  outline-style: var(--list-item-focus-visible-outlineStyle);
-  outline-width: var(--list-item-focus-visible-outlineWidth);
-  outline-color: var(--list-item-focus-visible-outlineColor);
-  outline-offset: var(--list-item-focus-visible-outlineOffset);
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 .uitkListItemDeprecated-focusVisible.uitkListItemDeprecated-selected:after {
-  outline-color: var(--list-item-selected-focus-visible-outlineColor);
+  outline-color: var(--list-item-selected-focus-outlineColor);
 }

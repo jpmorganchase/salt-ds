@@ -309,7 +309,7 @@ describe.skip("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("not.have.class", "uitkListItem-highlighted");
+          .should("not.have.class", "uitkHighlighted");
       });
     });
 
@@ -370,14 +370,14 @@ describe.skip("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alabama" })
-          .should("have.class", "uitkListItem-highlighted")
+          .should("have.class", "uitkHighlighted")
           .and("have.class", "uitkFocusVisible");
 
         cy.realPress("ArrowDown");
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alaska" })
-          .should("have.class", "uitkListItem-highlighted")
+          .should("have.class", "uitkHighlighted")
           .and("have.class", "uitkFocusVisible");
       });
     });
@@ -458,7 +458,7 @@ describe.skip("A multi-select combo box", () => {
         cy.findByRole("listbox")
           .findByRole("option", { name: "Arizona" })
           .should("have.attr", "aria-selected", "true")
-          .and("have.class", "uitkListItem-highlighted");
+          .and("have.class", "uitkHighlighted");
       });
     });
 
@@ -557,7 +557,7 @@ describe.skip("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("not.have.class", "uitkListItem-highlighted");
+          .should("not.have.class", "uitkHighlighted");
       });
     });
 

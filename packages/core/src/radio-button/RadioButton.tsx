@@ -2,8 +2,8 @@ import classnames from "classnames";
 import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
 import { ControlLabel, ControlLabelProps } from "../control-label";
 import { makePrefixer } from "../utils";
-import { Radio } from "./Radio";
-import { RadioIconProps } from "./RadioIcon";
+import { RadioButtonBase as Radio } from "./RadioButtonBase";
+import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButton.css";
 
@@ -17,7 +17,7 @@ export interface RadioButtonProps
   /**
    * Custom icon component
    */
-  icon?: FC<RadioIconProps>;
+  icon?: FC<RadioButtonIconProps>;
   /**
    * The label to be shown next to the radio
    */
@@ -43,7 +43,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = props;
 
     return (
-      <div className={classnames(withBaseName())}>
+      <div
+        className={classnames(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+          },
+          className
+        )}
+        {...rest}
+      >
         <ControlLabel
           {...LabelProps}
           className={classnames(
@@ -58,24 +67,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           labelPlacement="right"
           ref={ref}
         >
-          <div
-            className={classnames(
-              withBaseName(),
-              {
-                [withBaseName("disabled")]: disabled,
-              },
-              className
-            )}
-            {...rest}
-          >
-            <Radio
-              checked={checked}
-              disabled={disabled}
-              value={value}
-              onChange={onChange}
-              icon={icon}
-            />
-          </div>
+          <Radio
+            checked={checked}
+            disabled={disabled}
+            value={value}
+            onChange={onChange}
+            icon={icon}
+          />
         </ControlLabel>
       </div>
     );

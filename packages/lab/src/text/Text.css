@@ -1,0 +1,167 @@
+/* Body emphasis */
+.uitkText strong {
+  font-weight: var(--uitk-text-fontWeight-strong);
+}
+.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-fontWeight-small);
+}
+
+/* Main css class */
+.uitkText {
+  color: var(--uitk-text-primary-foreground);
+  font-size: var(--uitk-text-fontSize);
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.uitkText-lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--text-max-rows);
+  overflow: hidden;
+  word-break: break-word;
+}
+
+/* Heading 1 */
+
+h1.uitkText,
+.uitkText-h1.uitkText {
+  font-size: var(--uitk-text-h1-fontSize);
+  font-weight: var(--uitk-text-h1-fontWeight);
+  line-height: var(--uitk-text-h1-lineHeight);
+}
+
+/* H1 emphasis */
+h1.uitkText strong,
+.uitkText-h1.uitkText strong {
+  font-weight: var(--uitk-text-h1-fontWeight-strong);
+}
+h1.uitkText small,
+.uitkText-h1.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h1-fontWeight-small);
+}
+
+/* Heading 2 */
+
+h2.uitkText,
+.uitkText-h2.uitkText {
+  font-size: var(--uitk-text-h2-fontSize);
+  font-weight: var(--uitk-text-h2-fontWeight);
+  line-height: var(--uitk-text-h2-lineHeight);
+}
+
+/* H2 emphasis */
+h2.uitkText strong,
+.uitkText-h2.uitkText strong {
+  font-weight: var(--uitk-text-h2-fontWeight-strong);
+}
+h2.uitkText small,
+.uitkText-h2.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h2-fontWeight-small);
+}
+
+/* Heading 3 */
+h3.uitkText,
+.uitkText-h3.uitkText {
+  font-size: var(--uitk-text-h3-fontSize);
+  font-weight: var(--uitk-text-h3-fontWeight);
+  line-height: var(--uitk-text-h3-lineHeight);
+}
+
+/* H3 emphasis */
+h3.uitkText strong,
+.uitkText-h3.uitkText strong {
+  font-weight: var(--uitk-text-h3-fontWeight-strong);
+}
+h3.uitkText small,
+.uitkText-h3.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h3-fontWeight-small);
+}
+
+/* Heading 4 */
+h4.uitkText,
+.uitkText-h4.uitkText {
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-h4-fontWeight);
+  line-height: var(--uitk-text-h4-lineHeight);
+}
+
+/* H4 emphasis */
+h4.uitkText strong,
+.uitkText-h4.uitkText strong {
+  font-weight: var(--uitk-text-h4-fontWeight-strong);
+}
+h4.uitkText small,
+.uitkText-h4.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-h4-fontWeight-small);
+}
+
+/* Label-Caption */
+label.uitkText,
+.uitkText-label {
+  font-size: var(--uitk-text-caption-fontSize);
+  line-height: var(--uitk-text-caption-lineHeight);
+}
+
+/* Help text */
+.uitkText-helpText.uitkText {
+  color: var(--uitk-text-secondary-foreground);
+  font-style: var(--uitk-text-help-fontStyle);
+  font-size: var(--uitk-text-help-fontSize);
+  line-height: var(--uitk-text-help-lineHeight);
+}
+
+/* Figure 1 */
+.uitkText-figure1.uitkText {
+  font-size: var(--uitk-text-figure1-fontSize);
+  font-weight: var(--uitk-text-figure1-fontWeight);
+  line-height: var(--uitk-text-figure1-lineHeight);
+}
+
+/* Figure 2 */
+.uitkText-figure2.uitkText {
+  line-height: var(--uitk-text-figure2-lineHeight);
+  font-size: var(--uitk-text-figure2-fontSize);
+  font-weight: var(--uitk-text-figure2-fontWeight);
+}
+
+/* Figure 3 */
+.uitkText-figure3.uitkText {
+  line-height: var(--uitk-text-figure3-lineHeight);
+  font-size: var(--uitk-text-figure3-fontSize);
+  font-weight: var(--uitk-text-figure3-fontWeight);
+}
+
+/* TK1 Backwards compatibility */
+
+.backwardsCompat h1.uitkText,
+.backwardsCompat .uitkText-h1.uitkText {
+  font-size: var(--backwardsCompat-text-h1-fontSize);
+}
+
+.backwardsCompat h2.uitkText,
+.backwardsCompat .uitkText-h2.uitkText {
+  font-size: var(--backwardsCompat-text-h2-fontSize);
+}
+
+.backwardsCompat h3.uitkText,
+.backwardsCompat .uitkText-h3.uitkText {
+  font-size: var(--backwardsCompat-text-h3-fontSize);
+}
+
+.backwardsCompat label.uitkText,
+.backwardsCompat .uitkText-label {
+  font-size: var(--backwardsCompat-text-caption-fontSize);
+}
+
+.backwardsCompat .uitkText-helpText.uitkText {
+  font-size: var(--backwardsCompat-text-help-fontSize);
+}
+
+.backwardsCompat .uitkText {
+  line-height: var(--backwardsCompat-text-lineHeight);
+}

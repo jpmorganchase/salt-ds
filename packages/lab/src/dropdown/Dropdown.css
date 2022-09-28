@@ -1,7 +1,6 @@
 .uitkDropdown {
   --uitkIcon-margin: 2px 0 0 0;
   --uitkIcon-padding: 0 0 0 8px;
-  box-sizing: border-box;
   display: inline-block;
   line-height: 0;
   position: relative;

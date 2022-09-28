@@ -1,13 +1,16 @@
-import {
+export type {
+  SelectHandler,
   SelectionChangeHandler,
   SelectionStrategy,
   useCollectionItems,
 } from "./common-hooks";
 
-import {
-  ListItemBase as ListItemBaseDeprecated,
+export type {
   ListChangeHandler as ListChangeHandlerDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
+} from "./list-deprecated";
+export {
+  ListItemBase as ListItemBaseDeprecated,
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 
@@ -30,7 +33,6 @@ export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
 export * from "./formatted-input";
-export * from "./layout";
 export * from "./link";
 export * from "./list";
 export * from "./logo";
@@ -51,17 +53,6 @@ export * from "./toggle-button";
 export * from "./toolbar";
 export * from "./tokenized-input";
 export * from "./tree";
-export * from "./typography";
+export * from "./text";
 export * from "./window";
 export * from "./utils";
-
-export { ListItemBaseDeprecated };
-
-export { useCollectionItems, useListItemDeprecated };
-
-export type {
-  ListChangeHandlerDeprecated,
-  ListSelectHandlerDeprecated,
-  SelectionChangeHandler,
-  SelectionStrategy,
-};

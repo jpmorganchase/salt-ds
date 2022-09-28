@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 
 import { ClosablePill, ClosablePillProps } from "./ClosablePill";
-import { PillBase, PillBaseProps } from "./internal/PillBase";
+import { PillBase, PillBaseProps } from "./PillBase";
 import { SelectablePill, SelectablePillProps } from "./SelectablePill";
 
 import "./Pill.css";

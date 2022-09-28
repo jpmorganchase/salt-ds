@@ -1,6 +1,6 @@
-/** 
+/**
  * Have some global styles to simulate more realistic app. Currently only for Storybook.
- * We don't have a universal set of styling on each component, e.g. some component set font-family some don't. 
+ * We don't have a universal set of styling on each component, e.g. some component set font-family some don't.
  *
  * It would be nice to do these as a global reset, so each component doesn't need to set these.
  * - font-family

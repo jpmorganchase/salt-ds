@@ -82,12 +82,12 @@ export const BasicDialog = DialogTemplate.bind({});
 export const InfoDialog = DialogTemplate.bind({});
 
 InfoDialog.args = {
-  state: "info",
+  status: "info",
 };
 
 export const WarningDialog = DialogTemplate.bind({});
 WarningDialog.args = {
-  state: "warning",
+  status: "warning",
 };
 
 export const CloseDialog: ComponentStory<typeof Dialog> = () => {

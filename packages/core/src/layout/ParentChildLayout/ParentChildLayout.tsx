@@ -111,12 +111,7 @@ export const ParentChildLayout = forwardRef<
   };
 
   return (
-    <FlexLayout
-      className={cx(className, withBaseName())}
-      ref={ref}
-      disableWrap
-      {...rest}
-    >
+    <FlexLayout className={cx(className, withBaseName())} ref={ref} {...rest}>
       {stackedView ? (
         stackedViewChildren[stackedViewElement]
       ) : (

@@ -1,13 +1,13 @@
 .uitkDraggable {
   background: transparent;
-  box-shadow: var(--uitk-draggable-boxShadow);
-  cursor: var(--uitk-draggable-cursor-active);
+  box-shadow: var(--uitk-overlayable-shadow-drag);
+  cursor: var(--uitk-draggable-grab-cursor-active);
   position: absolute;
 }
 
 .uitkDraggable-spacer {
   display: inline-block;
-  height: var(--tabstrip-height);
+  height: var(--tabs-tabstrip-height);
   transition: width 0.4s ease;
   width: 0;
 }

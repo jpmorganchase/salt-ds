@@ -1,0 +1,15 @@
+.uitkGridScrollable {
+  overflow-y: auto;
+  overflow-x: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.uitkGridScrollable-space {
+  position: relative;
+  height: var(--grid-total-height);
+  width: var(--grid-total-width);
+}

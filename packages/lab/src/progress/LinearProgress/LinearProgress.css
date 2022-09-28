@@ -1,0 +1,139 @@
+.uitkLinearProgress {
+  align-items: center;
+  color: var(--uitk-text-primary-foreground);
+  display: flex;
+  min-width: 200px;
+  font-size: var(--linearProgress-fontSize);
+}
+
+.uitkLinearProgress-large {
+  --linearProgress-after-top: 3px;
+  --linearProgress-value-paddingLeft: 12px;
+  --linearProgress-height: 7px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-high);
+}
+
+.uitkLinearProgress-medium {
+  --linearProgress-after-top: 2px;
+  --linearProgress-value-paddingLeft: 8px;
+  --linearProgress-height: 5px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-medium);
+}
+
+.uitkLinearProgress-small {
+  --linearProgress-after-top: 1px;
+  --linearProgress-value-paddingLeft: 4px;
+  --linearProgress-height: 3px;
+  --linearProgress-fontSize: var(--uitk-measured-fontSize-low);
+}
+
+.uitkLinearProgress-disabled .uitkLinearProgress-bar {
+  background: var(--uitk-measured-fill-disabled);
+}
+
+.uitkLinearProgress-disabled .uitkLinearProgress-barContainer :after {
+  background: var(--uitk-measured-fill-disabled);
+}
+
+.uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
+  color: var(--uitk-text-primary-foreground-disabled);
+  cursor: var(--uitk-selectable-cursor-disabled);
+}
+
+.uitkLinearProgress-barContainer {
+  background: none;
+  position: relative;
+  width: calc(100% - 10px);
+  overflow: hidden;
+  height: var(--linearProgress-height);
+}
+
+/* Horizontal line under the progress indicator bar */
+.uitkLinearProgress-barContainer:after {
+  top: var(--linearProgress-after-top);
+  background: var(--uitk-measured-background);
+  content: "";
+  display: block;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.uitkLinearProgress-determinate {
+}
+
+.uitkLinearProgress-indeterminate {
+}
+
+.uitkLinearProgress-query {
+  transform: rotate(180deg);
+}
+
+.uitkLinearProgress-bar {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  transition: transform 0.2s linear;
+  transform-origin: left;
+  background: var(--uitk-measured-fill);
+  z-index: 2;
+}
+
+.uitkLinearProgress-determinate .uitkLinearProgress-bar1 {
+  transition: transform 0.4s linear;
+}
+
+.uitkLinearProgress-indeterminate .uitkLinearProgress-bar1 {
+  width: auto;
+  animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.uitkLinearProgress-query .uitkLinearProgress-bar1 {
+  width: auto;
+  animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.uitkLinearProgress-bar2 {
+  width: auto;
+  animation: Indeterminate2 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
+}
+
+.uitkLinearProgress-progressValue {
+  color: inherit;
+  margin: 0;
+  white-space: nowrap;
+  padding-left: var(--linearProgress-value-paddingLeft);
+}
+
+@keyframes Indeterminate1 {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes Indeterminate2 {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}

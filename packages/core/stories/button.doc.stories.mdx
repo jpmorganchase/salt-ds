@@ -24,9 +24,13 @@ import {
 
 # Button
 
-A Button executes an action when clicked. Button labels should use only one or two words, and begin with an active verb. There are three Button variants: Primary is the most commonly-used button; Secondary performs an action less likely to be triggered; Call-To-Action (a.k.a. CTA) performs a critical action on the screen.
+A Button executes an action when clicked. Button labels should use only one or two words and begin with an active verb. There are three Button variants:
 
-## Button Variants
+- **Call-To-Action** (a.k.a. CTA) performs a critical action on the screen.
+- **Primary** is the most commonly-used button.
+- **Secondary** performs an action less likely to be triggered.
+
+## Button variants
 
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
@@ -59,49 +63,21 @@ Icons can be put before or after text, or used alone.
   </Story>
 </Canvas>
 
-## Button as link, div etc
+## Configuring Button
 
-Sometimes a link must be styled as a button. The HTML must use the correct element, in order that browser built-in features function as expected.
-In this case, "Open link in new tab" should be available in the context menu. This is achieved with the `elementType` prop.
+### API
 
-<Canvas>
-  <Story name="Button as Link">
-    <Button
-      elementType="a"
-      href={window.location.href}
-      target="_blank"
-      aria-label="Button with HREF, opens in new window"
-    >
-      Link
-    </Button>
-  </Story>
-</Canvas>
-
-This is also useful where Button elements might otherwise be nested, a structure which would be flagged by accessibility tests as an error. An inner button can be
-rendered as a `div`.
-
-<Canvas>
-  <Story name="Button as Div">
-    <Button elementType="div" aria-label="Button as Div">
-      Div Button
-    </Button>
-  </Story>
-</Canvas>
-
-TypeScript users, note that in the above examples, strict typing is still enforced, so if `elementType` is set to `a` then the Component will be be TypeChecked as
-an `anchor` element and the attributes validated accordingly.
-
-# API
+Use the following call to import Button.
 
 ```
 import { Button } from "@jpmorganchase/uitk-core";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={Button} />
 
-## HTML Anatomy of a Button
+### HTML Anatomy of a Button
 
 export const Link = ({ children, to, ...props }) => (
   <a {...props} href={to}>
@@ -115,57 +91,35 @@ export const Link = ({ children, to, ...props }) => (
   </ComponentAnatomy>
   <br />
   <ComponentAnatomy>
-    <Button elementType="div" aria-label="Button as Div" variant="secondary">
-      Secondary Div
-    </Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
     <Button variant="cta" aria-label="CTA with Icon">
       CTA with Icon <SendIcon size={12} />
     </Button>
   </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button
-      elementType={Link}
-      to="/"
-      aria-label="Link as elementType"
-      role={null}
-    >
-      Custom Link
-    </Button>
-  </ComponentAnatomy>
 </Canvas>
 
-The Custom Link example above uses a simplified `Link` component defined as below. In reality, this might be A
-`RouterLink` from a routing library, for example. In this case, the `Button` does not know what root element will
-be rendered by the custom Component, by default it will add the `button` role. We suppress this by explicitly
-setting role = null. It will be rare to need to do this.
-
-```javascript
-export const Link = ({ children, to, ...props }) => (
-  <a {...props} href={to}>
-    {children}
-  </a>
-);
-```
-
-## CSS Class
+### CSS Class
 
 <CSSClassTable of={Button} />
 
-## Characteristics Used
+### Characteristics used
 
 <CharacteristicUsage of={Button} />
 
-## --uitkButton CSS Custom Property API
+### --uitkButton CSS custom property API
 
 The default styling values for most Button attributes are provided by the theme variables. A smaller number of attributes
 use hard-coded values local to Button. Both of these can be overridden, see Theme documentation for detailed usage guidance.
 
 The CSS custom properties below are consumed by Button, but not defined by Button. They can be defined via a container or
 a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
 <CSSVariableTable of={Button} />
+
+# Help and support
+
+Please check the [issues section of our github repository](https://github.com/jpmorganchase/uitk/issues) for any design or development issues you have.
+
+If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior.
+
+If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.

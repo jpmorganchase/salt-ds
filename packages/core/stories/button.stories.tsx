@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
 import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import { NotificationIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
+import { SearchIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -54,36 +53,12 @@ const ButtonGrid = ({
       </div>
       <br />
       <div>
-        <Button
-          elementType="a"
-          onClick={handleClick}
-          href={window.location.href}
-          target="_blank"
-          variant={variant}
-          aria-label={`${label} Button with HREF, opens in new window`}
-        >
-          {`${label} Button with HREF`}
-        </Button>
-      </div>
-      <br />
-      <div>
         <Button variant={variant} onClick={handleClick} disabled>
           {`${buttonLabel} (disabled)`}
         </Button>
       </div>
     </>
   );
-};
-
-const Link = ({
-  to,
-  children,
-}: {
-  to: string;
-  children: ReactNode;
-  blah?: number;
-}) => {
-  return <a href={to}>{children}</a>;
 };
 
 export const CTA: ComponentStory<typeof Button> = () => {
@@ -97,87 +72,6 @@ export const Primary: ComponentStory<typeof Button> = () => {
 export const Secondary: ComponentStory<typeof Button> = () => {
   return <ButtonGrid variant="secondary" label="Secondary" />;
 };
-
-export const PolymorphicButtons: ComponentStory<typeof Button> = () => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <Button elementType="span">Span Button</Button>
-      <Button elementType="a" href="test">
-        Anchor Button
-      </Button>
-      <Button elementType="div">Div Button</Button>
-      <Button elementType={Link} to="/">
-        Custom Link
-      </Button>
-    </div>
-  );
-};
-
-const ButtonVariant = ({
-  className = "",
-  onClick,
-  variant,
-  ...props
-}: ButtonProps) => (
-  <div
-    style={{
-      flex: "1 1 0",
-      display: "flex",
-      gap: 10,
-    }}
-  >
-    <Button
-      {...props}
-      className={className}
-      variant={variant}
-      onClick={onClick}
-    >
-      <NotificationIcon size={12} /> LORM
-    </Button>
-    <Button
-      {...props}
-      className={className}
-      variant={variant}
-      onClick={onClick}
-    >
-      <NotificationIcon size={12} />
-    </Button>
-    <Button
-      {...props}
-      className={className}
-      variant={variant}
-      onClick={onClick}
-    >
-      LORM
-    </Button>
-    <Button
-      {...props}
-      className={className}
-      variant={variant}
-      onClick={onClick}
-    >
-      LORM <NotificationIcon size={12} />
-    </Button>
-  </div>
-);
-
-const ButtonSet = (props: ButtonProps) => (
-  <div
-    style={{
-      display: "flex",
-      flex: "1 1 0",
-      flexDirection: "column",
-      gap: 10,
-    }}
-  >
-    <ButtonVariant {...props} variant="cta" />
-    <ButtonVariant {...props} variant="primary" />
-    <ButtonVariant {...props} variant="secondary" />
-    <ButtonVariant {...props} className="uitkButton-final-execution" />
-    <ButtonVariant {...props} className="uitkButton-bid" />
-    <ButtonVariant {...props} className="uitkButton-ask" />
-  </div>
-);
 
 export const FeatureButton = SingleButtonTemplate.bind({});
 FeatureButton.args = {
