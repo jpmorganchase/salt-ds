@@ -33,6 +33,8 @@ import {
   FavoriteIcon,
 } from "../../icons";
 import { CellEditor } from "../src/CellEditor";
+import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
+import { FlexLayout } from "../../core";
 
 export default {
   title: "Grid/New Grid",
@@ -849,6 +851,60 @@ const ServerSideDataStoryTemplate: Story<{}> = (props) => {
   );
 };
 
+const PaginationStoryTemplate: Story<{}> = (props) => {
+  const [page, setPage] = useState<number>(1);
+  const pageSize = 7;
+  const pageCount = Math.ceil(dummyInvestors.length / pageSize);
+
+  const onPageChange = (page: number) => {
+    setPage(page);
+  };
+
+  const rowData = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    const end = Math.min(start + pageSize, dummyInvestors.length);
+    return dummyInvestors.slice(start, end);
+  }, [pageSize, page]);
+
+  return (
+    <FlexLayout direction={"column"} align={"end"}>
+      <Grid
+        rowData={rowData}
+        rowKeyGetter={serverSideDataRowKeyGetter}
+        className="paginatedGrid"
+        zebra={true}
+        columnSeparators={true}
+      >
+        <RowSelectionColumn id="rowSelection" />
+        <GridColumn
+          name="Name"
+          id="name"
+          defaultWidth={200}
+          getValue={(x) => x.name}
+        />
+        <GridColumn
+          name="Location"
+          id="location"
+          defaultWidth={150}
+          getValue={(x) => x.location}
+          onChange={onLocationChange}
+        />
+        <GridColumn
+          name="Amount"
+          id="amount"
+          defaultWidth={200}
+          getValue={(x) => x.amount.toFixed(4)}
+          align="right"
+          onChange={onAmountChange}
+        />
+      </Grid>
+      <Pagination page={page} onPageChange={onPageChange} count={pageCount}>
+        <Paginator />
+      </Pagination>
+    </FlexLayout>
+  );
+};
+
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
 export const SmallGrid = SmallTemplate.bind({});
@@ -859,5 +915,6 @@ export const CustomHeaders = CustomHeadersTemplate.bind({});
 export const CustomCells = CustomCellsTemplate.bind({});
 export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
 export const ServerSideData = ServerSideDataStoryTemplate.bind({});
+export const GridPagination = PaginationStoryTemplate.bind({});
 
 GridExample.args = {};

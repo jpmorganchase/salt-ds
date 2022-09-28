@@ -35,6 +35,7 @@ const withBaseName = makePrefixer("uitkGridDropdownCellEditor");
 
 export interface DropdownCellEditorProps<T> {
   options: string[];
+  // Row and column are provided by the grid. See TableRow.tsx
   row?: GridRowModel<T>;
   column?: GridColumnModel<T>;
 }
