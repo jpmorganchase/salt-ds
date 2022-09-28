@@ -1,6 +1,7 @@
 import { CSSProperties } from "react";
-import { isLabeledMark, SliderValue } from "./utils";
+import { SliderValue } from "../types";
 import { SliderMark } from "./SliderRailMarks";
+import { isLabeledMark } from "./utils";
 
 function widthToPercentage(w: number, range: number) {
   return `${Math.round((1000 * w) / range) * 0.1}%`;

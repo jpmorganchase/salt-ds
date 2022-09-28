@@ -3,7 +3,8 @@ import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import { Div } from "../text";
-import { useContactDetailsContext, ValueComponentProps } from "./internal";
+import { useContactDetailsContext } from "./internal";
+import { ValueComponentProps } from "./types";
 
 const withBaseName = makePrefixer("uitkContactSecondaryInfo");
 

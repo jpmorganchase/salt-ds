@@ -19,8 +19,8 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   Slider,
+  SliderValue,
 } from "@jpmorganchase/uitk-lab";
-import { SliderValue } from "@jpmorganchase/uitk-lab/src/slider/internal/utils";
 import { Story } from "@storybook/react";
 
 import { useState } from "react";

@@ -5,13 +5,8 @@ import {
   useEffect,
   useRef,
 } from "react";
-import {
-  clampValue,
-  roundValue,
-  SliderChangeHandler,
-  SliderValue,
-  UpdateValueItem,
-} from "./utils";
+import { SliderChangeHandler, SliderValue } from "../types";
+import { clampValue, roundValue, UpdateValueItem } from "./utils";
 
 interface MouseContext {
   min: number;
