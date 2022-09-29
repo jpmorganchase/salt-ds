@@ -18,7 +18,7 @@ import {
   GridCellSelectionMode,
 } from "../Grid";
 import { ColumnGroupProps } from "../ColumnGroup";
-import { Rng } from "../Rng";
+import { NumberRange } from "../NumberRange";
 import { GridColumnInfo, GridColumnPin } from "../GridColumn";
 import {
   getAttribute,
@@ -46,7 +46,7 @@ export function useSum(source: number[]) {
 }
 
 // Sum width of the given range of columns.
-function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
+function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: NumberRange) {
   let w = 0;
   range.forEach((i) => {
     w += columns[i].info.width;
@@ -55,7 +55,10 @@ function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
 }
 
 // Sum width of the given range of columns wrapped in useMemo.
-export function useSumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
+export function useSumRangeWidth<T>(
+  columns: GridColumnModel<T>[],
+  range: NumberRange
+) {
   return useMemo(() => sumRangeWidth(columns, range), [columns, range]);
 }
 
@@ -65,10 +68,10 @@ export function useProd(source: number[]) {
 }
 
 // Range memoization using Rng.equals comparator.
-function useMemoRng(fn: () => Rng, deps: any[]) {
-  const prevRef = useRef<Rng>(Rng.empty);
+function useMemoRng(fn: () => NumberRange, deps: any[]) {
+  const prevRef = useRef<NumberRange>(NumberRange.empty);
   const range = useMemo(fn, deps);
-  if (!Rng.equals(prevRef.current, range)) {
+  if (!NumberRange.equals(prevRef.current, range)) {
     prevRef.current = range;
   }
   return prevRef.current;
@@ -79,10 +82,10 @@ export function useBodyVisibleColumnRange<T>(
   midColumns: GridColumnModel<T>[],
   scrollLeft: number,
   clientMidWidth: number
-): Rng {
+): NumberRange {
   return useMemoRng(() => {
     if (clientMidWidth === 0 || midColumns.length === 0) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     let width = scrollLeft;
     let start = 0;
@@ -108,7 +111,7 @@ export function useBodyVisibleColumnRange<T>(
     if (end > midColumns.length) {
       end = midColumns.length;
     }
-    return new Rng(start, end);
+    return new NumberRange(start, end);
   }, [midColumns, scrollLeft, clientMidWidth]);
 }
 
@@ -139,7 +142,7 @@ export function useClientMidHeight(
 // Y coordinate of the visible area within the virtual space.
 export function useBodyVisibleAreaTop<T>(
   rowHeight: number,
-  visibleRowRange: Rng,
+  visibleRowRange: NumberRange,
   topHeight: number
 ) {
   return useMemo(
@@ -157,7 +160,7 @@ export function useVisibleRowRange(
 ) {
   return useMemoRng(() => {
     if (rowHeight < 1) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     const start = Math.floor(scrollTop / rowHeight);
     let end = Math.max(
@@ -167,13 +170,13 @@ export function useVisibleRowRange(
     if (end > rowCount) {
       end = rowCount;
     }
-    return new Rng(start, end);
+    return new NumberRange(start, end);
   }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 }
 
 export function useColumnRange<T>(
   columns: GridColumnModel<T>[],
-  range: Rng
+  range: NumberRange
 ): GridColumnModel<T>[] {
   return useMemo(() => columns.slice(range.start, range.end), [columns, range]);
 }
@@ -181,7 +184,7 @@ export function useColumnRange<T>(
 // Total width of the columns scrolled out to the left of the visible area.
 export function useLeftScrolledOutWidth<T>(
   midColumns: GridColumnModel<T>[],
-  bodyVisibleColumnRange: Rng
+  bodyVisibleColumnRange: NumberRange
 ) {
   return useMemo(() => {
     let w = 0;
@@ -207,7 +210,7 @@ export type SetState<T> = (v: T | ((p: T) => T)) => void;
 export function useRowModels<T>(
   getKey: RowKeyGetter<T>,
   rowData: T[],
-  visibleRowRange: Rng
+  visibleRowRange: NumberRange
 ) {
   return useMemo(() => {
     const rows: GridRowModel<T>[] = [];
@@ -252,23 +255,23 @@ export const PAGE_SIZE = 10;
 
 // Visible range of column groups.
 export function useVisibleColumnGroupRange<T>(
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   midCols: GridColumnModel<T>[],
   midGrpByColId: Map<string, GridColumnGroupModel>,
   leftGrpCount: number
-): Rng {
+): NumberRange {
   return useMemoRng(() => {
     if (bodyVisColRng.length === 0) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     const firstVisibleCol = midCols[bodyVisColRng.start];
     const lastVisibleCol = midCols[bodyVisColRng.end - 1];
     const firstVisibleGroup = midGrpByColId.get(firstVisibleCol.info.props.id);
     const lastVisibleGroup = midGrpByColId.get(lastVisibleCol.info.props.id);
     if (!firstVisibleGroup || !lastVisibleGroup) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
-    return new Rng(
+    return new NumberRange(
       firstVisibleGroup.index - leftGrpCount,
       lastVisibleGroup.index + 1 - leftGrpCount
     );
@@ -281,7 +284,7 @@ export function last<T>(source: T[]): T {
 
 // Range of columns visible in the header.
 export function useHeadVisibleColumnRange<T>(
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   visColGrps: GridColumnGroupModel[],
   midColsById: Map<string, GridColumnModel<T>>,
   leftColCount: number
@@ -297,9 +300,12 @@ export function useHeadVisibleColumnRange<T>(
     const firstColIdx = midColsById.get(firstColId)?.index;
     const lastColIdx = midColsById.get(lastColId)?.index;
     if (firstColIdx === undefined || lastColIdx === undefined) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
-    return new Rng(firstColIdx - leftColCount, lastColIdx + 1 - leftColCount);
+    return new NumberRange(
+      firstColIdx - leftColCount,
+      lastColIdx + 1 - leftColCount
+    );
   }, [bodyVisColRng, visColGrps, midColsById, leftColCount]);
 }
 
@@ -325,11 +331,11 @@ export function useCols<T>(
 
 // Returns a function that scrolls the grid to the given cell.
 export function useScrollToCell<T>(
-  visRowRng: Rng,
+  visRowRng: NumberRange,
   rowHeight: number,
   clientMidHt: number,
   midCols: GridColumnModel<T>[],
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   clientMidWidth: number,
   scroll: (left?: number, top?: number, source?: "user" | "table") => void
 ) {
@@ -1080,11 +1086,16 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     });
   }, []);
 
+  const selectRange = useCallback((range: CellRange) => {
+    setSelectedCellRange(range);
+  }, []);
+
   return {
     selectedCellRange,
     onCellMouseDown,
     onKeyboardRangeSelectionStart,
     onKeyboardRangeSelectionEnd,
     onCursorMove,
+    selectRange,
   };
 }

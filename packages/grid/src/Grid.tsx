@@ -58,7 +58,7 @@ import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
-import { range } from "./Rng";
+import { range } from "./NumberRange";
 
 const withBaseName = makePrefixer("uitkGrid");
 
@@ -676,19 +676,18 @@ export const Grid = function <T>(props: GridProps<T>) {
         return;
       }
       if (key === " ") {
-        if (cursorRowIdx != undefined) {
-          selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
+        if (event.ctrlKey) {
+          if (cursorColIdx != undefined) {
+            rangeSelection.selectRange({
+              start: { rowIdx: 0, colIdx: cursorColIdx },
+              end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+            });
+          }
+        } else {
+          if (cursorRowIdx != undefined) {
+            selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
+          }
         }
-        return;
-      }
-      if (
-        !editMode &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey &&
-        /^[\w\d ]$/.test(key)
-      ) {
-        startEditMode("");
         return;
       }
       if (key === "c" && (event.ctrlKey || event.metaKey)) {
@@ -711,6 +710,26 @@ export const Grid = function <T>(props: GridProps<T>) {
           text.push(rowText.join("\t"));
         }
         navigator.clipboard.writeText(text.join("\n"));
+        return;
+      }
+      if (key === "a" && (event.ctrlKey || event.metaKey)) {
+        rangeSelection.selectRange({
+          start: { rowIdx: 0, colIdx: 0 },
+          end: { rowIdx: rowData.length, colIdx: cols.length },
+        });
+        selectAll();
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+      if (
+        !editMode &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey &&
+        /^[\w\d ]$/.test(key)
+      ) {
+        startEditMode("");
         return;
       }
       // TODO Ctrl + D copies from the first cell to the selection down

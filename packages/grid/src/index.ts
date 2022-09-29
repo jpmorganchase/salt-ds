@@ -3,7 +3,7 @@ export * from "./ColumnGroup";
 export * from "./GroupHeaderCell";
 export * from "./HeaderCell";
 export * from "./HeaderCellValue";
-export * from "./Rng";
+export * from "./NumberRange";
 export * from "./RowSelectionCheckboxHeaderCell";
 export * from "./RowSelectionCheckboxCellValue";
 export * from "./RowSelectionRadioColumn";
