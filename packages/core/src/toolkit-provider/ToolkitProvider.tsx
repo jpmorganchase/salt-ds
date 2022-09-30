@@ -41,7 +41,7 @@ declare global {
 export const ToolkitContext = createContext<ToolkitContextProps>({
   density: undefined,
   themes: [],
-  breakpoints: {} as Breakpoints,
+  breakpoints: DEFAULT_BREAKPOINTS,
 });
 
 const createThemedChildren = (
