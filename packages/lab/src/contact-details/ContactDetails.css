@@ -39,7 +39,7 @@
   --contactDetails-label-color: var(--uitk-text-secondary-foreground);
   --contactDetails-noAvatar-color: var(--uitk-accent-background);
   --contactDetails-noAvatar-indicator-width: 4px;
-  --contactDetails-favoriteToggle-fill: none;
+  --contactDetails-favoriteToggle-fill: var(--contactDetails-deselected-icon-color);
   --contactDetails-favoriteToggle-marginRight: 0px;
   --contactDetails-favoriteToggle-marginTop: 0px;
   --contactDetails-mini-secondaryInfo-marginLeft: var(--uitk-size-unit);
@@ -48,10 +48,6 @@
 
   /* TODO: Check below tokens with design */
   --contactDetails-separator-color: var(--uitk-separable-secondary-borderColor);
-  --contactDetails-deselected-icon-color: var(--uitk-ratable-border);
-  --contactDetails-deselecting-icon-color: var(--uitk-ratable-border);
-  --contactDetails-selected-icon-color: var(--uitk-ratable-background-active);
-  --contactDetails-selecting-icon-color: var(--uitk-ratable-background-hover);
 }
 
 .uitkContactDetails {
@@ -245,12 +241,15 @@
 
 .uitkContactFavoriteToggle {
   align-self: start;
-  fill: var(--contactDetails-favoriteToggle-fill);
   grid-area: favorite;
   justify-self: center;
   line-height: var(--contactDetails-primary-fontSize);
   margin-right: var(--contactDetails-favoriteToggle-marginRight);
   margin-top: var(--contactDetails-favoriteToggle-marginTop);
+}
+
+.uitkContactFavoriteToggle-svg {
+  fill: var(--contactDetails-favoriteToggle-fill);
 }
 
 .uitkContactFavoriteToggle-focusVisible {
@@ -262,19 +261,19 @@
 }
 
 .uitkContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--contactDetails-deselected-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
 }
 
 .uitkContactFavoriteToggle-selecting {
-  --contactDetails-favoriteToggle-fill: var(--contactDetails-selecting-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-hover);
 }
 
 .uitkContactFavoriteToggle-selected {
-  --contactDetails-favoriteToggle-fill: var(--contactDetails-selected-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-active);
 }
 
 .uitkContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--contactDetails-deselecting-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
 }
 
 .uitkContactFavoriteToggle-svg {
