@@ -4,7 +4,7 @@ import {
   makePrefixer,
   Tooltip,
   useForkRef,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
@@ -99,51 +99,54 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
 
     const tabIndex = toggled && !disabled ? 0 : -1;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      disabled: disableTooltip,
-      placement: orientation === "horizontal" ? "bottom" : "right",
-    });
+    // const { getTooltipProps, getTriggerProps } = useTooltip({
+    //   disabled: disableTooltip,
+    //   placement: orientation === "horizontal" ? "bottom" : "right",
+    // });
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
-      {
-        "aria-checked": toggled,
-        "aria-label": ariaLabel,
-        "aria-posinset": index !== undefined ? index + 1 : undefined,
-        className: cx(
-          withBaseName(),
-          withBaseName(orientation),
-          {
-            [withBaseName("primary")]: variant === "primary",
-            [withBaseName("cta")]: variant === "cta",
-            [withBaseName("secondary")]: variant === "secondary",
-            [withBaseName("toggled")]: toggled,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("iconOnly")]: iconOnly,
-          },
-          className
-        ),
-        onClick: handleToggle,
-        disabled,
-        focusableWhenDisabled,
-        role: groupContext ? "radio" : "checkbox",
-        tabIndex: groupContext ? tabIndex : undefined,
-        variant,
-        ...restProps,
-      }
-    );
+    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
+    //   {
+    //     "aria-checked": toggled,
+    //     "aria-label": ariaLabel,
+    //     "aria-posinset": index !== undefined ? index + 1 : undefined,
+    //     className: cx(
+    //       withBaseName(),
+    //       withBaseName(orientation),
+    //       {
+    //         [withBaseName("primary")]: variant === "primary",
+    //         [withBaseName("cta")]: variant === "cta",
+    //         [withBaseName("secondary")]: variant === "secondary",
+    //         [withBaseName("toggled")]: toggled,
+    //         [withBaseName("disabled")]: disabled,
+    //         [withBaseName("iconOnly")]: iconOnly,
+    //       },
+    //       className
+    //     ),
+    //     onClick: handleToggle,
+    //     disabled,
+    //     focusableWhenDisabled,
+    //     role: groupContext ? "radio" : "checkbox",
+    //     tabIndex: groupContext ? tabIndex : undefined,
+    //     variant,
+    //     ...restProps,
+    //   }
+    // );
 
-    const handleButtonRef = useForkRef(ref, buttonRef);
-    const handleIconOnlyButtonRef = useForkRef(
-      handleIconOnlyButton,
-      handleButtonRef
-    );
-    const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
+    // const handleButtonRef = useForkRef(ref, buttonRef);
+    // const handleIconOnlyButtonRef = useForkRef(
+    //   handleIconOnlyButton,
+    //   handleButtonRef
+    // );
+    // const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
 
     return (
-      <>
-        <Tooltip {...getTooltipProps({ title: tooltipText })} />
-        <Button {...triggerProps} ref={handleRef} />
-      </>
+      <Tooltip
+      // {...getTooltipProps({ title: tooltipText })}
+      >
+        <Button
+        // {...triggerProps} ref={handleRef}
+        />
+      </Tooltip>
     );
   }
 );

@@ -3,7 +3,7 @@ import {
   Tooltip,
   TooltipProps,
   useForkRef,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
@@ -43,45 +43,46 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     );
     const { outOfRange, today, unselectable, hidden } = status;
 
-    const { getTriggerProps, getTooltipProps } = useTooltip({
-      disabled: !unselectableReason,
-      placement: "top",
-      enterDelay: 300,
-    });
+    // const { getTriggerProps, getTooltipProps } = useTooltip({
+    //   disabled: !unselectableReason,
+    //   placement: "top",
+    //   enterDelay: 300,
+    // });
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
-      "aria-label": formatDate(day),
-      ...dayProps,
-      ...rest,
-      className: cx(
-        withBaseName(),
-        {
-          [withBaseName("hidden")]: hidden,
-          [withBaseName("outOfRange")]: outOfRange,
-          [withBaseName("today")]: today,
-          [withBaseName("unselectable")]: !!unselectable,
-          uitkEmphasisLow: unselectable === "low",
-          uitkEmphasisMedium: unselectable === "medium",
-        },
-        dayProps.className,
-        className
-      ),
-    });
+    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
+    //   "aria-label": formatDate(day),
+    //   ...dayProps,
+    //   ...rest,
+    //   className: cx(
+    //     withBaseName(),
+    //     {
+    //       [withBaseName("hidden")]: hidden,
+    //       [withBaseName("outOfRange")]: outOfRange,
+    //       [withBaseName("today")]: today,
+    //       [withBaseName("unselectable")]: !!unselectable,
+    //       uitkEmphasisLow: unselectable === "low",
+    //       uitkEmphasisMedium: unselectable === "medium",
+    //     },
+    //     dayProps.className,
+    //     className
+    //   ),
+    // });
 
-    const handleTriggerRef = useForkRef(triggerRef, dayRef);
-    const handleRef = useForkRef(handleTriggerRef, ref);
+    // const handleTriggerRef = useForkRef(triggerRef, dayRef);
+    // const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (
-      <>
-        <Tooltip
-          {...getTooltipProps({
-            hideIcon: true,
-            status: "error",
-            title: unselectableReason,
-            ...TooltipProps,
-          })}
-        />
-        <button {...triggerProps} ref={handleRef}>
+      <Tooltip
+      // {...getTooltipProps({
+      //   hideIcon: true,
+      //   status: "error",
+      //   title: unselectableReason,
+      //   ...TooltipProps,
+      // })}
+      >
+        <button
+        // {...triggerProps} ref={handleRef}
+        >
           {unselectable === "medium" && (
             <CloseIcon
               aria-hidden
@@ -94,7 +95,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
             ? renderDayContents(day, status)
             : formatDate(day, { day: "numeric" })}
         </button>
-      </>
+      </Tooltip>
     );
   }
 );

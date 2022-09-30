@@ -4,7 +4,7 @@ import {
   Portal,
   Tooltip,
   useDensity,
-  useTooltip,
+  // useTooltip,
   useWindow,
   WindowContext,
 } from "@jpmorganchase/uitk-core";
@@ -189,7 +189,7 @@ export const App = () => {
   const anchorEl = useRef(null);
   const toolbarAnchorEl = useRef(null);
 
-  const { getTriggerProps, getTooltipProps } = useTooltip();
+  // const { getTriggerProps, getTooltipProps } = useTooltip();
 
   const [selectedItem, setSelectedItem] = useState("Alabama");
 
@@ -258,14 +258,16 @@ export const App = () => {
         onClear={onClear}
       />
 
-      <Button
-        data-testid="tooltip-trigger"
-        {...getTriggerProps<typeof Button>()}
+      <Tooltip
+      // {...getTooltipProps({ title: "I am a tooltip" })}
       >
-        Hover
-      </Button>
-      <Tooltip {...getTooltipProps({ title: "I am a tooltip" })} />
-
+        <Button
+          data-testid="tooltip-trigger"
+          // {...getTriggerProps<typeof Button>()}
+        >
+          Hover
+        </Button>
+      </Tooltip>
       <Button ref={anchorEl} onClick={() => setOpenPopper(!openPopper)}>
         Toggle Popper
       </Button>

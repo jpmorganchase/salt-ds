@@ -1,7 +1,7 @@
 import {
   makePrefixer,
   useForkRef,
-  useTooltip,
+  // useTooltip,
   useTooltipContext,
 } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
@@ -72,37 +72,40 @@ export const ListItemBase = memo(
       }
     }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      placement,
-      open: openTooltip,
-      disabled: !isOverflowed,
-    });
+    // const { getTooltipProps, getTriggerProps } = useTooltip({
+    //   placement,
+    //   open: openTooltip,
+    //   disabled: !isOverflowed,
+    // });
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      "aria-label": typeof children === "string" ? children : undefined,
-      ...restProps,
-      className: cn(
-        withBaseName(),
-        {
-          [withBaseName("deselectable")]: deselectable,
-          [withBaseName("highlighted")]: highlighted,
-          [withBaseName("selected")]: selected,
-          [withBaseName("focusVisible")]: focusVisible,
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      ),
-    });
+    // const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+    //   "aria-label": typeof children === "string" ? children : undefined,
+    //   ...restProps,
+    //   className: cn(
+    //     withBaseName(),
+    //     {
+    //       [withBaseName("deselectable")]: deselectable,
+    //       [withBaseName("highlighted")]: highlighted,
+    //       [withBaseName("selected")]: selected,
+    //       [withBaseName("focusVisible")]: focusVisible,
+    //       [withBaseName("disabled")]: disabled,
+    //     },
+    //     className
+    //   ),
+    // });
 
-    const handleRef = useForkRef(
-      triggerRef,
-      detectTruncation ? ref : setItemRef
-    );
+    // const handleRef = useForkRef(
+    //   triggerRef,
+    //   detectTruncation ? ref : setItemRef
+    // );
 
     return (
-      <>
-        <Tooltip {...getTooltipProps({ title: tooltipText })} />
-        <div ref={handleRef} {...triggerProps}>
+      <Tooltip
+      // {...getTooltipProps({ title: tooltipText })}
+      >
+        <div
+        // ref={handleRef} {...triggerProps}
+        >
           {detectTruncation ? (
             <span className={withBaseName("textWrapper")} ref={overflowRef}>
               {itemTextHighlightPattern == null ? (
@@ -118,7 +121,7 @@ export const ListItemBase = memo(
             children
           )}
         </div>
-      </>
+      </Tooltip>
     );
   })
 );

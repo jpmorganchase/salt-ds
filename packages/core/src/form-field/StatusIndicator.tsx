@@ -2,7 +2,7 @@ import { IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ElementType } from "react";
 import { StatusIcon } from "../status-icon";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
+import { Tooltip, TooltipProps } from "../tooltip";
 
 export type StatusIndicatorStatus = "error" | "info" | "warning" | "success";
 
@@ -29,34 +29,46 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
     ...restProps
   } = props;
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "top",
-    disabled: !hasTooltip,
-  });
+  // const { getTriggerProps, getTooltipProps } = useTooltip({
+  //   placement: "top",
+  //   disabled: !hasTooltip,
+  // });
 
   return (
-    <>
-      <TooltipComponent
-        {...getTooltipProps({
-          hideIcon: true,
-          status,
-          title: tooltipText,
-          ...TooltipProps,
-        })}
-      />
+    <TooltipComponent
+      hideIcon={true}
+      status={status}
+      title={tooltipText}
+      {...TooltipProps}
+      // {...getTooltipProps({
+      //   hideIcon: true,
+      //   status,
+      //   title: tooltipText,
+      //   ...TooltipProps,
+      // })}
+    >
       <StatusIcon
-        {...getTriggerProps<typeof StatusIcon>({
-          status,
-          size: 12,
-          ...restProps,
-          ...IconProps,
-          className: cx(
-            "uitkStatusIndicator-statusIcon",
-            className,
-            IconProps?.className
-          ),
-        })}
+        status={status}
+        size={12}
+        {...restProps}
+        {...IconProps}
+        className={cx(
+          "uitkStatusIndicator-statusIcon",
+          className,
+          IconProps?.className
+        )}
+        // {...getTriggerProps<typeof StatusIcon>({
+        //   status,
+        //   size: 12,
+        //   ...restProps,
+        //   ...IconProps,
+        //   className: cx(
+        //     "uitkStatusIndicator-statusIcon",
+        //     className,
+        //     IconProps?.className
+        //   ),
+        // })}
       />
-    </>
+    </TooltipComponent>
   );
 };

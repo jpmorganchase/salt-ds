@@ -12,7 +12,7 @@ import {
   useState,
 } from "react";
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Tooltip } from "../tooltip";
 import { makePrefixer, useForkRef, useId } from "../utils";
 import { classBase } from "./constant";
 import {
@@ -247,36 +247,53 @@ export const FormField = forwardRef(
       helperTextPlacement === "tooltip" &&
       !hasStatusIndicator;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      disabled: !tooltipHelperText,
-    });
+    // const { getTooltipProps, getTriggerProps } = useTooltip({
+    //   disabled: !tooltipHelperText,
+    // });
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      className: cx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("readOnly")]: readOnly,
-          [withBaseName("warning")]: isWarning,
-          [withBaseName("error")]: isError,
-          [withBaseName("fullWidth")]: fullWidth,
-          [withBaseName(focusClass)]: states.focused,
-          [withBaseName("labelTop")]: labelTop,
-          [withBaseName("labelLeft")]: labelLeft,
-          [withBaseName(`withHelperText`)]: inlineHelperText,
-        },
-        className
-      ),
-      ...eventHandlers,
-      ...restProps,
-    });
+    // const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+    //   className: cx(
+    //     withBaseName(),
+    //     {
+    //       [withBaseName("disabled")]: disabled,
+    //       [withBaseName("readOnly")]: readOnly,
+    //       [withBaseName("warning")]: isWarning,
+    //       [withBaseName("error")]: isError,
+    //       [withBaseName("fullWidth")]: fullWidth,
+    //       [withBaseName(focusClass)]: states.focused,
+    //       [withBaseName("labelTop")]: labelTop,
+    //       [withBaseName("labelLeft")]: labelLeft,
+    //       [withBaseName(`withHelperText`)]: inlineHelperText,
+    //     },
+    //     className
+    //   ),
+    //   ...eventHandlers,
+    //   ...restProps,
+    // });
 
-    const handleTriggerRef = useForkRef(triggerRef, rootRef);
-    const handleRef = useForkRef(handleTriggerRef, ref);
+    // const handleTriggerRef = useForkRef(triggerRef, rootRef);
+    // const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (
-      <>
-        <div ref={handleRef} {...triggerProps}>
+      <Tooltip title={helperText} disabled={!tooltipHelperText}>
+        <div
+          className={cx(
+            withBaseName(),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("readOnly")]: readOnly,
+              [withBaseName("warning")]: isWarning,
+              [withBaseName("error")]: isError,
+              [withBaseName("fullWidth")]: fullWidth,
+              [withBaseName(focusClass)]: states.focused,
+              [withBaseName("labelTop")]: labelTop,
+              [withBaseName("labelLeft")]: labelLeft,
+              [withBaseName(`withHelperText`)]: inlineHelperText,
+            },
+            className
+          )}
+          {...restProps}
+        >
           <FormFieldContext.Provider
             value={{
               ...states,
@@ -317,8 +334,8 @@ export const FormField = forwardRef(
             )}
           </FormFieldContext.Provider>
         </div>
-        <Tooltip {...getTooltipProps({ title: helperText })} />
-      </>
+        {/* <Tooltip {...getTooltipProps({ title: helperText })} /> */}
+      </Tooltip>
     );
   }
 );

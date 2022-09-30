@@ -2,7 +2,7 @@ import {
   makePrefixer,
   ToolkitProvider,
   Tooltip,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import {
   capitalize,
@@ -162,9 +162,9 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "top-start",
-  });
+  // const { getTriggerProps, getTooltipProps } = useTooltip({
+  //   placement: "top-start",
+  // });
 
   return (
     <div
@@ -195,23 +195,22 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
               </div>
             )}
             {props.isStateValue && (
-              <>
-                <Tooltip
-                  {...getTooltipProps({
-                    title:
-                      formFieldLabel === "Color" ||
-                      formFieldLabel === "Background"
-                        ? "Regular"
-                        : formFieldLabel,
-                  })}
-                />
+              <Tooltip
+              // {...getTooltipProps({
+              //   title:
+              //     formFieldLabel === "Color" ||
+              //     formFieldLabel === "Background"
+              //       ? "Regular"
+              //       : formFieldLabel,
+              // })}
+              >
                 <div
-                  {...getTriggerProps({
-                    className: cn(
-                      "uitkFormLabel",
-                      withBaseName("colorStatesField")
-                    ),
-                  })}
+                // {...getTriggerProps({
+                //   className: cn(
+                //     "uitkFormLabel",
+                //     withBaseName("colorStatesField")
+                //   ),
+                // })}
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
@@ -224,7 +223,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                     <RegularIcon />
                   )}
                 </div>
-              </>
+              </Tooltip>
             )}
             <div
               className={cn({

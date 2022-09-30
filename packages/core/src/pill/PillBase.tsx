@@ -14,7 +14,11 @@ import {
   useState,
 } from "react";
 import { DivButton } from "../button";
-import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
+import {
+  TooltipProps,
+  // useTooltip
+  useTooltipContext,
+} from "../tooltip";
 import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
@@ -173,50 +177,54 @@ export const PillBase = forwardRef(function PillBase(
     }
   };
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    disabled: !ellipsis && disabled,
-    enterDelay,
-    placement,
-    leaveDelay,
-  });
+  // const { getTriggerProps, getTooltipProps } = useTooltip({
+  //   disabled: !ellipsis && disabled,
+  //   enterDelay,
+  //   placement,
+  //   leaveDelay,
+  // });
 
-  const { ref: triggerRef, ...triggerProps } = getTriggerProps<
-    typeof Component
-  >({
-    "aria-disabled": disabled || undefined,
-    "aria-roledescription": ariaRoledescription,
-    className: cn(
-      withBaseName(),
-      {
-        [withBaseName("clickable")]: clickable,
-        [withBaseName("deletable")]: deletable && !disabled,
-        [withBaseName("disabled")]: disabled,
-        [withBaseName("active")]: active,
-      },
-      className
-    ),
-    // @ts-ignore
-    "data-testid": "pill",
-    onKeyDown: disabled ? undefined : handleKeyDown,
-    onKeyUp: disabled ? undefined : handleKeyUp,
-    onClick: disabled ? undefined : handleClick,
-    role: "button",
-    tabIndex: disabled ? -1 : 0,
-    ...rest,
-  });
+  // const { ref: triggerRef, ...triggerProps } = getTriggerProps<
+  //   typeof Component
+  // >({
+  //   "aria-disabled": disabled || undefined,
+  //   "aria-roledescription": ariaRoledescription,
+  //   className: cn(
+  //     withBaseName(),
+  //     {
+  //       [withBaseName("clickable")]: clickable,
+  //       [withBaseName("deletable")]: deletable && !disabled,
+  //       [withBaseName("disabled")]: disabled,
+  //       [withBaseName("active")]: active,
+  //     },
+  //     className
+  //   ),
+  //   // @ts-ignore
+  //   "data-testid": "pill",
+  //   onKeyDown: disabled ? undefined : handleKeyDown,
+  //   onKeyUp: disabled ? undefined : handleKeyUp,
+  //   onClick: disabled ? undefined : handleClick,
+  //   role: "button",
+  //   tabIndex: disabled ? -1 : 0,
+  //   ...rest,
+  // });
 
-  const handleRef = useForkRef(triggerRef, ref);
+  // const handleRef = useForkRef(triggerRef, ref);
 
   return (
-    <>
-      <Tooltip {...getTooltipProps({ title: label, ...TooltipProps })} />
-      <Component ref={handleRef} {...triggerProps}>
+    <Tooltip
+    // {...getTooltipProps({ title: label, ...TooltipProps })}
+    >
+      <Component
+      //  ref={handleRef}
+      // {...triggerProps}
+      >
         {pillIcon || null}
         <div className={withBaseName("label")} ref={labelRef}>
           <span className={withBaseName("innerLabel")}>{label}</span>
         </div>
         {deletable ? renderDeleteIcon() : null}
       </Component>
-    </>
+    </Tooltip>
   );
 });

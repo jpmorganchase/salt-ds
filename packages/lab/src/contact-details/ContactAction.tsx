@@ -4,7 +4,7 @@ import {
   Tooltip,
   TooltipProps,
   useForkRef,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef } from "react";
@@ -29,29 +29,30 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
 
     const Icon = icon!;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      placement: "top",
-      disabled: !accessibleText,
-    });
+    // const { getTooltipProps, getTriggerProps } = useTooltip({
+    //   placement: "top",
+    //   disabled: !accessibleText,
+    // });
 
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
-      {
-        variant: "secondary",
-        ...restProps,
-      }
-    );
+    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
+    //   {
+    //     variant: "secondary",
+    //     ...restProps,
+    //   }
+    // );
 
-    const handleRef = useForkRef(triggerRef, ref);
+    // const handleRef = useForkRef(triggerRef, ref);
 
     return (
-      <>
-        <Button {...triggerProps} ref={handleRef}>
+      <Tooltip
+      // {...getTooltipProps({ title: accessibleText, ...tooltipProps })}
+      >
+        <Button
+        // {...triggerProps} ref={handleRef}
+        >
           {label ? label : <Icon />}
         </Button>
-        <Tooltip
-          {...getTooltipProps({ title: accessibleText, ...tooltipProps })}
-        />
-      </>
+      </Tooltip>
     );
   }
 );

@@ -1,39 +1,32 @@
 import {
   Button,
-  TooltipNew,
-  TooltipNewProps,
+  Tooltip,
+  TooltipProps,
   useForkRef,
-  useTooltip,
-  UseTooltipProps,
+  // useTooltip,
+  // UseTooltipProps,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
-  title: "Core/TooltipNew",
-  component: TooltipNew,
-} as ComponentMeta<typeof TooltipNew>;
+  title: "Core/Tooltip",
+  component: Tooltip,
+} as ComponentMeta<typeof Tooltip>;
 
-export const Default: Story<TooltipNewProps & UseTooltipProps> = (props) => (
-  <TooltipNew
-    title="I am a tooltip"
-    status="success"
-    placement="top"
-    {...props}
-  >
+export const Default: Story<TooltipProps> = (props) => (
+  <Tooltip title="I am a tooltip" status="success" placement="top" {...props}>
     <Button>Hover</Button>
-  </TooltipNew>
+  </Tooltip>
 );
 
-export const OpenTooltip: Story<TooltipNewProps & UseTooltipProps> = (
-  props
-) => (
-  <TooltipNew title="I am a tooltip" status="info" open={true} {...props}>
+export const OpenTooltip: Story<TooltipProps> = (props) => (
+  <Tooltip title="I am a tooltip" status="info" open={true} {...props}>
     <Button>Hover</Button>
-  </TooltipNew>
+  </Tooltip>
 );
 
-// export const ScrollTooltip: Story<TooltipNewProps & UseTooltipProps> = (
+// export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (
 //   props
 // ) => {
 //   // const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
@@ -51,9 +44,9 @@ export const OpenTooltip: Story<TooltipNewProps & UseTooltipProps> = (
 //         width: "300vw",
 //       }}
 //     >
-//       <TooltipNew {...props}>
+//       <Tooltip {...props}>
 //         <Button>Hover</Button>
-//       </TooltipNew>
+//       </Tooltip>
 //     </div>
 //   );
 // };
@@ -63,44 +56,38 @@ export const OpenTooltip: Story<TooltipNewProps & UseTooltipProps> = (
 //   placement: "top",
 // };
 
-export const ErrorTooltip: Story<TooltipNewProps & UseTooltipProps> = (
-  props
-) => {
+export const ErrorTooltip: Story<TooltipProps> = (props) => {
   const { status = "error", title = "We found an issue", ...rest } = props;
 
   return (
     <>
-      <TooltipNew status={status} title={title} {...rest}>
+      <Tooltip status={status} title={title} {...rest}>
         <Button>Hover</Button>
-      </TooltipNew>
+      </Tooltip>
     </>
   );
 };
 
-export const WarningTooltip: Story<TooltipNewProps & UseTooltipProps> = (
-  props
-) => {
+export const WarningTooltip: Story<TooltipProps> = (props) => {
   const { status = "warning", title = "Are you sure?", ...rest } = props;
 
   return (
     <>
-      <TooltipNew status={status} title={title} {...rest}>
+      <Tooltip status={status} title={title} {...rest}>
         <Button>Hover</Button>
-      </TooltipNew>
+      </Tooltip>
     </>
   );
 };
 
-export const SuccessTooltip: Story<TooltipNewProps & UseTooltipProps> = (
-  props
-) => {
+export const SuccessTooltip: Story<TooltipProps> = (props) => {
   const { status = "success", title = "Well done!", ...rest } = props;
 
   return (
     <>
-      <TooltipNew status={status} title={title} {...rest}>
+      <Tooltip status={status} title={title} {...rest}>
         <Button>Hover</Button>
-      </TooltipNew>
+      </Tooltip>
     </>
   );
 };

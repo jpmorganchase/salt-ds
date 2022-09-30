@@ -4,7 +4,7 @@ import {
   Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
@@ -182,7 +182,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     ]
   );
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({});
+  // const { getTriggerProps, getTooltipProps } = useTooltip({});
 
   const { activeTabIndex, activateTab, addTab, ...tabstripHook } = useTabstrip({
     activeTabIndex: activeTabIndexProp,
@@ -365,7 +365,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     const [injectedItem] = collectionHook.data.filter((i) => i.isInjectedItem);
 
     if (overflowIndicator) {
-      const triggerProps = getTriggerProps<typeof Button>();
+      // const triggerProps = getTriggerProps<typeof Button>();
       content.push(
         <Dropdown<OverflowItem>
           className={cx(withBaseName("overflowMenu"), {
@@ -390,7 +390,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           selected={null}
           triggerComponent={
             <Button
-              {...triggerProps}
+              // {...triggerProps}
               aria-label={`Tabs overflow menu ${overflowCount} item${
                 overflowCount === 1 ? "" : "s"
               }`}
@@ -406,11 +406,11 @@ export const Tabstrip = forwardRef(function Tabstrip(
       if (showTooltip) {
         content.push(
           <Tooltip
-            {...getTooltipProps({
-              title: "Active Tab cannot be moved into overflow list",
-              open: true,
-              status: "warning",
-            })}
+            // {...getTooltipProps({
+            //   title: "Active Tab cannot be moved into overflow list",
+            //   open: true,
+            //   status: "warning",
+            // })}
             key="tooltip"
           />
         );

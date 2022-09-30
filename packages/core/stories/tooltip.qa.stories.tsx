@@ -1,8 +1,9 @@
 import {
   Tooltip,
   TooltipProps,
-  TooltipStatus,
-  useTooltip,
+  // TooltipStatus,
+  // useTooltip,
+  ValidationStatus,
 } from "@jpmorganchase/uitk-core";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
@@ -15,20 +16,22 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 const IconWithTooltip = (props: {
-  status?: TooltipStatus;
-  title?: string;
+  status?: ValidationStatus;
+  text?: string;
   placement?: Placement;
   className?: string;
   render?: TooltipProps["render"];
 }) => {
-  const { title = "hello", status, render, ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+  // const { title = "hello", ...rest } = props;
+  // const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+  console.log("--- props", props);
 
   return (
-    <>
-      <InfoIcon {...getTriggerProps<typeof InfoIcon>()} />
-      <Tooltip {...getTooltipProps({ render, title, status })} open />
-    </>
+    <Tooltip open text="I am a tooltip" status="info">
+      <InfoIcon />
+      {/* <InfoIcon {...getTriggerProps<typeof InfoIcon>()} /> */}
+      {/* <Tooltip {...getTooltipProps({ render, title, status })} open /> */}
+    </Tooltip>
   );
 };
 
@@ -39,30 +42,31 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       <IconWithTooltip
         className={className}
         placement="top"
-        title="Hello, world"
+        text="Hello, world"
       />
       <IconWithTooltip
         className={className}
         placement="bottom"
-        title="Hello, world"
+        text="Hello, world"
       />
       <IconWithTooltip
         className={className}
         placement="left"
-        title="Hello, world"
+        text="Hello, world"
       />
       <IconWithTooltip
         className={className}
         placement="right"
-        title="Hello, world"
+        text="Hello, world"
       />
       <IconWithTooltip
         className={className}
         status="error"
-        title="Uh oh, world"
+        text="Uh oh, world"
       />
       <IconWithTooltip
         className={className}
+        text="Hello, world"
         render={() => (
           <div style={{ background: "#ccc", width: 60, height: 20 }} />
         )}

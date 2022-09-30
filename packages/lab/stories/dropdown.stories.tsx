@@ -5,7 +5,7 @@ import {
   Button,
   FormField,
   Tooltip,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
@@ -139,17 +139,22 @@ const ListItemWithTooltip: ListItemType<string> = ({
   item = "uknown",
   ...props
 }) => {
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "right",
-  });
-  const { ref: triggerRef, ...triggerProps } =
-    getTriggerProps<typeof ListItem>(props);
+  // const { getTriggerProps, getTooltipProps } = useTooltip({
+  //   placement: "right",
+  // });
+  // const { ref: triggerRef, ...triggerProps } =
+  //   getTriggerProps<typeof ListItem>(props);
 
   return (
-    <ListItem ref={triggerRef} {...triggerProps}>
-      <label style={{ width: "100%" }}>{item}</label>
-      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
-    </ListItem>
+    <Tooltip
+    // {...getTooltipProps({ title: `I am a tooltip for ${item}` })}
+    >
+      <ListItem
+      // ref={triggerRef} {...triggerProps}
+      >
+        <label style={{ width: "100%" }}>{item}</label>
+      </ListItem>
+    </Tooltip>
   );
 };
 

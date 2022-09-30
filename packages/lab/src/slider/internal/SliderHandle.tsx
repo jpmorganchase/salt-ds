@@ -1,4 +1,8 @@
-import { makePrefixer, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  Tooltip,
+  // useTooltip
+} from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";
@@ -20,7 +24,7 @@ export interface SliderHandleProps {
 export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { min, max, value, disabled, valueLength, index, style } = props;
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
+  // const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
 
   return (
     <div
@@ -39,13 +43,13 @@ export function SliderHandle(props: SliderHandleProps): JSX.Element {
       aria-label={getSliderAriaLabel(valueLength, index)}
     >
       <Tooltip
-        {...getTooltipProps({ title: `${value}`, disablePortal: true })}
+      // {...getTooltipProps({ title: `${value}`, disablePortal: true })}
       />
       <div
-        {...getTriggerProps<"div">({
-          className: withBaseName("box"),
-          tabIndex: 0,
-        })}
+      // {...getTriggerProps<"div">({
+      //   className: withBaseName("box"),
+      //   tabIndex: 0,
+      // })}
       />
     </div>
   );

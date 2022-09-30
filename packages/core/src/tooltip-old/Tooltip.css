@@ -128,25 +128,25 @@
   top: calc(100% - var(--uitk-size-sharktooth-height));
 }
 
-/* Styles applied when state = "info" */
+/* Styles applied when status = "info" */
 .uitkTooltip-info {
   --tooltip-status-borderColor: var(--uitk-status-info-borderColor);
   --tooltip-status-icon-color: var(--uitk-status-info-foreground);
 }
 
-/* Styles applied when state = "error" */
+/* Styles applied when status = "error" */
 .uitkTooltip-error {
   --tooltip-status-borderColor: var(--uitk-status-error-borderColor);
   --tooltip-status-icon-color: var(--uitk-status-error-foreground);
 }
 
-/* Styles applied when state = "warning" */
+/* Styles applied when status = "warning" */
 .uitkTooltip-warning {
   --tooltip-status-borderColor: var(--uitk-status-warning-borderColor);
   --tooltip-status-icon-color: var(--uitk-status-warning-foreground);
 }
 
-/* Styles applied when state = "success" */
+/* Styles applied when status = "success" */
 .uitkTooltip-success {
   --tooltip-status-borderColor: var(--uitk-status-success-borderColor);
   --tooltip-status-icon-color: var(--uitk-status-success-foreground);

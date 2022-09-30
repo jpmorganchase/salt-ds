@@ -1,8 +1,8 @@
 import {
-  TooltipNew,
-  TooltipNewProps,
+  Tooltip,
+  TooltipProps,
   // TooltipState,
-  useTooltip,
+  // useTooltip,
   ValidationStatus,
 } from "@jpmorganchase/uitk-core";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -11,21 +11,21 @@ import { InfoIcon } from "@jpmorganchase/uitk-icons";
 import { Placement } from "@floating-ui/react-dom-interactions";
 
 export default {
-  title: "Core/TooltipNew/QA",
-  component: TooltipNew,
-} as ComponentMeta<typeof TooltipNew>;
+  title: "Core/Tooltip/QA",
+  component: Tooltip,
+} as ComponentMeta<typeof Tooltip>;
 
 const IconWithTooltip = (props: {
   status?: ValidationStatus;
   title?: string;
   placement?: Placement;
   className?: string;
-  render?: TooltipNewProps["render"];
+  render?: TooltipProps["render"];
 }) => {
   const { title = "hello", status, className, placement, ...rest } = props;
 
   return (
-    <TooltipNew
+    <Tooltip
       className={className}
       title={title}
       status={status}
@@ -34,7 +34,7 @@ const IconWithTooltip = (props: {
       open
     >
       <InfoIcon />
-    </TooltipNew>
+    </Tooltip>
   );
 };
 

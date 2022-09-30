@@ -12,7 +12,6 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
-import { useAriaAnnounce } from "./useAriaAnnounce";
 import { margin, useControlled } from "../utils";
 import {
   ComponentPropsWithoutRef,
@@ -21,6 +20,7 @@ import {
   useCallback,
   useRef,
 } from "react";
+import { useAriaAnnounce } from "./useAriaAnnounce";
 import { TooltipProps } from "./Tooltip";
 import { isDesktop } from "../window";
 
@@ -135,17 +135,16 @@ export function useTooltip(props?: UseTooltipProps) {
     }),
   ]);
 
-  const getTooltipProps = (userProps?: TooltipProps): TooltipProps => {
-    const arrowProps = {
-      ref: handleArrowRef,
-      style: {
-        left: middlewareData.arrow?.x ?? "",
-        top: middlewareData.arrow?.y ?? "",
-      },
-    };
+  const arrowProps = {
+    ref: handleArrowRef,
+    style: {
+      left: middlewareData.arrow?.x ?? "",
+      top: middlewareData.arrow?.y ?? "",
+    },
+  };
 
+  const getTooltipProps = (userProps?: TooltipProps): TooltipProps => {
     return {
-      arrowProps,
       open,
       ...getFloatingProps({
         // @ts-ignore
@@ -179,24 +178,27 @@ export function useTooltip(props?: UseTooltipProps) {
     }) as ComponentPropsWithRef<Element>;
   };
 
-  if (disabled) {
-    return {
-      getTooltipProps: (args?: TooltipProps) => args,
-      getTriggerProps: <
-        Element extends
-          | keyof JSX.IntrinsicElements
-          // TODO: whether restrict `any`
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          | JSXElementConstructor<any> = "div"
-      >(
-        args?: ComponentPropsWithRef<Element>
-        // FIXME: types from useInteractions
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      ) => args as ComponentPropsWithRef<Element>,
-    };
-  }
+  // if (disabled) {
+  //   return {
+  //     getTooltipProps: (args?: TooltipProps) => args as TooltipProps,
+  //     getTriggerProps: <
+  //       Element extends
+  //         | keyof JSX.IntrinsicElements
+  //         // TODO: whether restrict `any`
+  //         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //         | JSXElementConstructor<any> = "div"
+  //     >(
+  //       args?: ComponentPropsWithRef<Element>
+  //       // FIXME: types from useInteractions
+  //       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  //     ) => args as ComponentPropsWithRef<Element>,
+  //   };
+  // }
 
   return {
+    arrowProps,
+    getFloatingProps,
+    getReferenceProps,
     getTooltipProps,
     getTriggerProps,
   };

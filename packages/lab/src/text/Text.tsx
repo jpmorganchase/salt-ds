@@ -3,7 +3,7 @@ import {
   Tooltip,
   TooltipProps,
   useForkRef,
-  useTooltip,
+  // useTooltip,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
@@ -86,41 +86,42 @@ const TruncatingText = forwardRef<
   const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
     useTruncation(props, ref);
 
-  const { getTooltipProps, getTriggerProps } = useTooltip({
-    enterDelay: 150,
-    placement: "top",
-    disabled: !hasTooltip,
-  });
+  // const { getTooltipProps, getTriggerProps } = useTooltip({
+  //   enterDelay: 150,
+  //   placement: "top",
+  //   disabled: !hasTooltip,
+  // });
 
-  const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-    className: cx(withBaseName(), className, withBaseName("lineClamp"), {
-      [withBaseName(styleAs || "")]: styleAs,
-    }),
-    tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
-    style: {
-      ...style,
-      // @ts-ignore
-      "--text-max-rows": rows,
-    },
-    ...restProps,
-  });
+  // const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+  //   className: cx(withBaseName(), className, withBaseName("lineClamp"), {
+  //     [withBaseName(styleAs || "")]: styleAs,
+  //   }),
+  //   tabIndex: hasTooltip || elementType === "a" ? 0 : -1,
+  //   style: {
+  //     ...style,
+  //     // @ts-ignore
+  //     "--text-max-rows": rows,
+  //   },
+  //   ...restProps,
+  // });
 
-  const handleRef = useForkRef(triggerRef, setContainerRef);
+  // const handleRef = useForkRef(triggerRef, setContainerRef);
 
   const Component: ElementType = elementType;
 
   return (
-    <>
-      <Component {...triggerProps} ref={handleRef}>
+    <Tooltip
+    // {...getTooltipProps({
+    //   title: tooltipText || tooltipTextDefault,
+    //   ...tooltipProps,
+    // })}
+    >
+      <Component
+      // {...triggerProps} ref={handleRef}
+      >
         {children}
       </Component>
-      <Tooltip
-        {...getTooltipProps({
-          title: tooltipText || tooltipTextDefault,
-          ...tooltipProps,
-        })}
-      />
-    </>
+    </Tooltip>
   );
 });
 

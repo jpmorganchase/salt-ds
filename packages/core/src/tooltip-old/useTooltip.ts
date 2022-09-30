@@ -12,6 +12,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
+import { useAriaAnnounce } from "./useAriaAnnounce";
 import { margin, useControlled } from "../utils";
 import {
   ComponentPropsWithoutRef,
@@ -20,7 +21,7 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { TooltipNewProps } from "./Tooltip";
+import { TooltipProps } from "./Tooltip";
 import { isDesktop } from "../window";
 
 export interface UseTooltipProps
@@ -126,24 +127,25 @@ export function useTooltip(props?: UseTooltipProps) {
     useFocus(context, { enabled: !disableFocusListener }),
     useRole(context, { role: "tooltip" }),
     useDismiss(context, { ancestorScroll: true }),
-    // useAriaAnnounce(context, {
-    //   delay: {
-    //     open: enterDelay,
-    //     close: leaveDelay,
-    //   },
-    // }),
+    useAriaAnnounce(context, {
+      delay: {
+        open: enterDelay,
+        close: leaveDelay,
+      },
+    }),
   ]);
 
-  const arrowProps = {
-    ref: handleArrowRef,
-    style: {
-      left: middlewareData.arrow?.x ?? "",
-      top: middlewareData.arrow?.y ?? "",
-    },
-  };
+  const getTooltipProps = (userProps?: TooltipProps): TooltipProps => {
+    const arrowProps = {
+      ref: handleArrowRef,
+      style: {
+        left: middlewareData.arrow?.x ?? "",
+        top: middlewareData.arrow?.y ?? "",
+      },
+    };
 
-  const getTooltipProps = (userProps?: TooltipNewProps): TooltipNewProps => {
     return {
+      arrowProps,
       open,
       ...getFloatingProps({
         // @ts-ignore
@@ -157,7 +159,7 @@ export function useTooltip(props?: UseTooltipProps) {
           ...(userProps?.style || {}),
         },
       }),
-    } as TooltipNewProps;
+    } as TooltipProps;
   };
 
   const getTriggerProps = <
@@ -179,7 +181,7 @@ export function useTooltip(props?: UseTooltipProps) {
 
   if (disabled) {
     return {
-      getTooltipProps: (args?: TooltipNewProps) => args as TooltipNewProps,
+      getTooltipProps: (args?: TooltipProps) => args,
       getTriggerProps: <
         Element extends
           | keyof JSX.IntrinsicElements
@@ -195,7 +197,6 @@ export function useTooltip(props?: UseTooltipProps) {
   }
 
   return {
-    arrowProps,
     getTooltipProps,
     getTriggerProps,
   };
