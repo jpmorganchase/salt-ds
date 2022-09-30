@@ -67,12 +67,12 @@
 
 /* TK1 Backwards compatibility */
 
-.backwardsCompat.uitkAvatar-medium, 
+.backwardsCompat.uitkAvatar-medium,
 .backwardsCompat.uitkContactDetails .uitkAvatar-medium {
   --avatar-container-size: 28px;
 }
 
-.backwardsCompat.uitkAvatar-large, 
-.backwardsCompat.uitkContactDetails .uitkAvatar-large  {
+.backwardsCompat.uitkAvatar-large,
+.backwardsCompat.uitkContactDetails .uitkAvatar-large {
   --avatar-container-size: 44px;
 }
