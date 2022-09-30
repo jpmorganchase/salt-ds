@@ -42,6 +42,9 @@
   --contactDetails-favoriteToggle-fill: none;
   --contactDetails-favoriteToggle-marginRight: 0px;
   --contactDetails-favoriteToggle-marginTop: 0px;
+  --contactDetails-mini-secondaryInfo-marginLeft: var(--uitk-size-unit);
+  --contactDetails-mini-stacked-secondaryInfo-marginLeft: calc(var(--uitk-size-unit) * 2);
+  --contactDetails-compact-tertiaryInfo-marginLeft: var(--uitk-size-unit);
 
   /* TODO: Check below tokens with design */
   --contactDetails-separator-color: var(--uitk-separable-secondary-borderColor);
@@ -164,9 +167,6 @@
 }
 
 .uitkContactSecondaryInfo {
-  --contactDetails-mini-secondaryInfo-marginLeft: var(--uitk-size-unit);
-  --contactDetails-mini-stacked-secondaryInfo-marginLeft: calc(var(--uitk-size-unit) * 2);
-
   grid-area: secondary;
 }
 
@@ -188,8 +188,6 @@
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
-  --contactDetails-compact-tertiaryInfo-marginLeft: var(--uitk-size-unit);
-
   margin-left: var(--contactDetails-compact-tertiaryInfo-marginLeft);
 }
 
@@ -323,4 +321,11 @@
 .backwardsCompat.uitkContactDetails-default {
   --contactDetails-favoriteToggle-marginRight: var(--backwardsCompat-contactDetails-default-toggle-marginRight);
   --contactDetails-favoriteToggle-marginTop: var(--backwardsCompat-contactDetails-default-toggle-marginTop);
+}
+
+.backwardsCompat.uitkContactDetails .uitkContactMetadataItem-label {
+  display: block; 
+  overflow:visible;
+  word-break: normal;
+  text-overflow: ellipsis;
 }
