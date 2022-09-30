@@ -324,8 +324,8 @@
 }
 
 .backwardsCompat.uitkContactDetails .uitkContactMetadataItem-label {
-  display: block; 
-  overflow:visible;
+  display: block;
+  overflow: visible;
   word-break: normal;
   text-overflow: ellipsis;
 }
