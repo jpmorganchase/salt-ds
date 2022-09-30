@@ -39,13 +39,15 @@
   --contactDetails-label-color: var(--uitk-text-secondary-foreground);
   --contactDetails-noAvatar-color: var(--uitk-accent-background);
   --contactDetails-noAvatar-indicator-width: 4px;
+  --contactDetails-favoriteToggle-fill: var(--contactDetails-deselected-icon-color);
+  --contactDetails-favoriteToggle-marginRight: 0px;
+  --contactDetails-favoriteToggle-marginTop: 0px;
+  --contactDetails-mini-secondaryInfo-marginLeft: var(--uitk-size-unit);
+  --contactDetails-mini-stacked-secondaryInfo-marginLeft: calc(var(--uitk-size-unit) * 2);
+  --contactDetails-compact-tertiaryInfo-marginLeft: var(--uitk-size-unit);
 
   /* TODO: Check below tokens with design */
   --contactDetails-separator-color: var(--uitk-separable-secondary-borderColor);
-  --contactDetails-deselected-icon-color: var(--uitk-ratable-border);
-  --contactDetails-deselecting-icon-color: var(--uitk-ratable-border);
-  --contactDetails-selected-icon-color: var(--uitk-ratable-background-active);
-  --contactDetails-selecting-icon-color: var(--uitk-ratable-background-hover);
 }
 
 .uitkContactDetails {
@@ -165,12 +167,12 @@
 }
 
 .uitkContactDetails-mini .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-size-unit));
+  margin-left: var(--contactDetails-mini-secondaryInfo-marginLeft);
 }
 
 /* TODO Mini-stacked does not really look "stacked". Is it a bug? */
 .uitkContactDetails-mini-stacked .uitkContactSecondaryInfo {
-  margin-left: calc(var(--uitk-size-unit) * 2);
+  margin-left: var(--contactDetails-mini-stacked-secondaryInfo-marginLeft);
 }
 
 .uitkContactSecondaryInfo-icon {
@@ -182,7 +184,7 @@
 }
 
 .uitkContactDetails-compact .uitkContactTertiaryInfo {
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--contactDetails-compact-tertiaryInfo-marginLeft);
 }
 
 .uitkContactTertiaryInfo-icon {
@@ -238,10 +240,16 @@
 }
 
 .uitkContactFavoriteToggle {
+  align-self: start;
   grid-area: favorite;
   justify-self: center;
-  align-self: start;
   line-height: var(--contactDetails-primary-fontSize);
+  margin-right: var(--contactDetails-favoriteToggle-marginRight);
+  margin-top: var(--contactDetails-favoriteToggle-marginTop);
+}
+
+.uitkContactFavoriteToggle-svg {
+  fill: var(--contactDetails-favoriteToggle-fill);
 }
 
 .uitkContactFavoriteToggle-focusVisible {
@@ -253,19 +261,19 @@
 }
 
 .uitkContactFavoriteToggle-deselected {
-  fill: var(--contactDetails-deselected-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
 }
 
 .uitkContactFavoriteToggle-selecting {
-  fill: var(--contactDetails-selecting-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-hover);
 }
 
 .uitkContactFavoriteToggle-selected {
-  fill: var(--contactDetails-selected-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-active);
 }
 
 .uitkContactFavoriteToggle-deselecting {
-  fill: var(--contactDetails-deselecting-icon-color);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
 }
 
 .uitkContactFavoriteToggle-svg {
@@ -303,23 +311,20 @@
   font-size: var(--backwardsCompat-contactDetails-h4-fontSize);
 }
 
-.backwardsCompat.uitkContactDetails-compact .uitkContactTertiaryInfo {
-  margin-left: 16px;
+.backwardsCompat.uitkContactDetails {
+  --contactDetails-compact-tertiaryInfo-marginLeft: 16px;
+  --contactDetails-mini-stacked-secondaryInfo-marginLeft: var(--uitk-size-unit);
+  --contactDetails-favoriteToggle-fill: var(--uitk-text-secondary-foreground);
 }
 
-.backwardsCompat.uitkContactDetails-mini .uitkContactSecondaryInfo,
-.backwardsCompat.uitkContactDetails-mini-stacked .uitkContactSecondaryInfo {
-  margin-left: var(--uitk-size-unit);
+.backwardsCompat.uitkContactDetails-default {
+  --contactDetails-favoriteToggle-marginRight: var(--backwardsCompat-contactDetails-default-toggle-marginRight);
+  --contactDetails-favoriteToggle-marginTop: var(--backwardsCompat-contactDetails-default-toggle-marginTop);
 }
 
-.backwardsCompat.uitkContactDetails-default .uitkContactFavoriteToggle {
-  margin-right: var(--backwardsCompat-contactDetails-default-toggle-marginRight);
-  margin-top: var(--backwardsCompat-contactDetails-default-toggle-marginTop);
-}
-
-.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-deselected,
-.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-selecting,
-.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-selected,
-.backwardsCompat.uitkContactDetails .uitkContactFavoriteToggle-deselecting {
-  fill: var(--uitk-text-secondary-foreground);
+.backwardsCompat.uitkContactDetails .uitkContactMetadataItem-label {
+  display: block;
+  overflow: visible;
+  word-break: normal;
+  text-overflow: ellipsis;
 }
