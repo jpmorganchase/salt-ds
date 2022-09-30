@@ -2,6 +2,7 @@ import { SVGAttributes } from "react";
 
 const baseName = "uitkSvgSpinner";
 
+// Note: the structure here is mainly for backwards compatibility where 2 colors were used
 export const SpinnerMedium = (props: SVGAttributes<SVGSVGElement>) => (
   <svg className={`${baseName}-spinner`} viewBox="0 0 24 24" {...props}>
     <defs>

@@ -1,5 +1,3 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
   DateValue,
   endOfMonth,
@@ -10,6 +8,8 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
+import { useControlled } from "@jpmorganchase/uitk-core";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,
@@ -17,7 +17,7 @@ import {
   useSelectionCalendar,
   useSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
-} from "./internal/useSelection";
+} from "./useSelection";
 
 export type UnselectableInfo =
   | { emphasis: "medium"; tooltip: string }

@@ -1,4 +1,6 @@
 .uitkCircularProgress {
+  --circularProgress-gradient-color: var(--uitk-measured-fill);
+
   color: var(--uitk-text-primary-foreground);
   display: inline-flex;
   position: relative;
@@ -51,7 +53,7 @@
 
 .uitkCircularProgress-gradientStart,
 .uitkCircularProgress-gradientStop {
-  stop-color: var(--uitk-measured-fill);
+  stop-color: var(--uitkCircularProgress-gradient-color, var(--circularProgress-gradient-color));
 }
 
 .uitkCircularProgress-container {
@@ -110,9 +112,9 @@
 /* TK1 Backwards compatibility */
 
 .backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStart {
-  stop-color: var(--backwardsCompat-measured-fill-startColor);
+  --circularProgress-gradient-color: var(--backwardsCompat-measured-fill-startColor);
 }
 
 .backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStop {
-  stop-color: var(--backwardsCompat-measured-fill-stopColor);
+  --circularProgress-gradient-color: var(--backwardsCompat-measured-fill-stopColor);
 }

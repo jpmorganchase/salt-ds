@@ -1,3 +1,5 @@
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FilterIcon } from "@jpmorganchase/uitk-icons";
 import {
   ChangeEventHandler,
   FocusEventHandler,
@@ -7,22 +9,19 @@ import {
   SyntheticEvent,
   useMemo,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { FilterIcon } from "@jpmorganchase/uitk-icons";
 
-import {
-  ChangeHandler,
-  StringToItem,
-  TokenizedInput,
-} from "../../tokenized-input";
 import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "../../toggle-button";
+import {
+  ChangeHandler,
+  StringToItem,
+  TokenizedInput,
+} from "../../tokenized-input";
 import { QueryInputItem } from "../queryInputTypes";
-
-import { BooleanOperator } from "./useQueryInput";
+import { BooleanOperator } from "../useQueryInput";
 
 const withBaseName = makePrefixer("uitkQueryInputBody");
 

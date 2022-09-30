@@ -4,6 +4,5 @@ export * from "./CategoryListItem";
 export * from "./QueryInputBody";
 export * from "./SearchList";
 export * from "./usePopperStatus";
-export * from "./useQueryInput";
 export * from "./ValueList";
 export * from "./ValueSelector";
