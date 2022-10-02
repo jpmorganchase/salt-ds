@@ -78,3 +78,6 @@
   right: 0;
   will-change: transform;
 }
+.uitkList.uitkFocusVisible:after {
+  inset: 2px;
+}
