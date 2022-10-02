@@ -269,9 +269,6 @@ export const Tabstrip = forwardRef(function Tabstrip(
 
   const handleMouseDown = useCallback(
     (evt: MouseEvent<HTMLDivElement>) => {
-      console.log("handleMouseDown ", {
-        evt,
-      });
       onMouseDown?.(evt);
       tabstripHookMouseDown?.(evt);
     },
