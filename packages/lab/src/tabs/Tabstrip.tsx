@@ -12,6 +12,7 @@ import React, {
   ForwardedRef,
   forwardRef,
   KeyboardEvent,
+  MouseEvent,
   RefObject,
   useCallback,
   useImperativeHandle,
@@ -77,6 +78,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     onCloseTab,
     onEnterEditMode,
     onExitEditMode,
+    onMouseDown,
     onMoveTab,
     orientation = "horizontal",
     overflowMenu: overflowMenuProp = true,
@@ -184,7 +186,13 @@ export const Tabstrip = forwardRef(function Tabstrip(
 
   const { getTriggerProps, getTooltipProps } = useTooltip({});
 
-  const { activeTabIndex, activateTab, addTab, ...tabstripHook } = useTabstrip({
+  const {
+    activeTabIndex,
+    activateTab,
+    addTab,
+    onMouseDown: tabstripHookMouseDown,
+    ...tabstripHook
+  } = useTabstrip({
     activeTabIndex: activeTabIndexProp,
     allowDragDrop,
     collectionHook,
@@ -252,9 +260,23 @@ export const Tabstrip = forwardRef(function Tabstrip(
     [tabstripHook.navigationProps]
   );
 
-  const handleOverflowMenuOpen = useCallback((open) => {
-    setShowOverflowMenu(open);
-  }, []);
+  const handleOverflowMenuOpen = useCallback(
+    (open) => {
+      setShowOverflowMenu(open);
+    },
+    [setShowOverflowMenu]
+  );
+
+  const handleMouseDown = useCallback(
+    (evt: MouseEvent<HTMLDivElement>) => {
+      console.log("handleMouseDown ", {
+        evt,
+      });
+      onMouseDown?.(evt);
+      tabstripHookMouseDown?.(evt);
+    },
+    [onMouseDown, tabstripHookMouseDown]
+  );
 
   // shouldn't we use ref for this ?
   useIsomorphicLayoutEffect(() => {
@@ -320,7 +342,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           ...tabstripHook.navigationProps,
           id: item.id,
           key: index,
-          onMouseDown: tabstripHook.onMouseDown,
+          onMouseDown: handleMouseDown,
           tabIndex,
         };
 

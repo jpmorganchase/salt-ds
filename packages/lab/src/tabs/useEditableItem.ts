@@ -18,12 +18,12 @@ export interface Editable {
   onExitEditMode: ExitEditModeHandler;
   setEditing: (value: boolean) => void;
 }
-interface EditableItemHookProps extends Partial<Editable> {
+export interface EditableItemHookProps extends Partial<Editable> {
   highlightedIdx: number;
   indexPositions: OverflowItem[];
 }
 
-interface EditableItemHookResult extends Editable {
+export interface EditableItemHookResult extends Editable {
   onKeyDown: (evt: KeyboardEvent) => void;
 }
 
@@ -77,7 +77,6 @@ export const useEditableItem = ({
   return {
     editing,
     onKeyDown,
-    // careful what do we use these for ?
     onEnterEditMode,
     onExitEditMode,
     setEditing,
