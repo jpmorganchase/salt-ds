@@ -12,6 +12,9 @@ let viteConfig: UserConfig = {
     watch: {
       ignored: ["**/coverage"],
     },
+    headers: {
+      "cache-control": "max-age=31536000,immutable",
+    },
   },
   build: {
     sourcemap: true,
