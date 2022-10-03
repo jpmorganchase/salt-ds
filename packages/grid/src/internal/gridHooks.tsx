@@ -638,11 +638,13 @@ export function useColumnRegistry<T>(children: ReactNode) {
 export function useRowSelection<T>(
   rowKeyGetter: RowKeyGetter<T>,
   rowData: T[],
-  defaultSelectedRowKeys?: Set<string>,
+  defaultSelectedRowIdxs?: Set<number>,
   rowSelectionMode?: GridRowSelectionMode,
   onRowSelected?: (selectedRowIdxs: number[]) => void
 ) {
-  const [selRowIdxs, setSelRowIdxs] = useState<Set<number>>(new Set());
+  const [selRowIdxs, setSelRowIdxs] = useState<Set<number>>(
+    defaultSelectedRowIdxs || new Set()
+  );
   const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
     undefined
   );

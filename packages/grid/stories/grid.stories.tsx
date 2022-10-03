@@ -10,7 +10,7 @@ import {
   NumericCellEditor,
   NumericColumn,
   RowKeyGetter,
-  RowSelectionColumn,
+  RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
   TextCellEditor,
 } from "../src";
@@ -130,7 +130,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
       // hideHeader={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
-        <RowSelectionColumn id="rowSelection" />
+        <RowSelectionCheckboxColumn id="rowSelection" />
         <GridColumn
           name="Name"
           id="name"
@@ -508,7 +508,7 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
         columnSeparators={true}
         zebra={true}
       >
-        <RowSelectionColumn id="rowSelector" />
+        <RowSelectionCheckboxColumn id="rowSelector" />
         {customHeadersColumnNames.map((name) => (
           <GridColumn
             key={name}
@@ -814,7 +814,7 @@ const ServerSideDataStoryTemplate: Story<{}> = (props) => {
       columnSeparators={true}
       onVisibleRowRangeChange={onVisibleRowRangeChange}
     >
-      <RowSelectionColumn id="rowSelection" />
+      <RowSelectionCheckboxColumn id="rowSelection" />
       <GridColumn
         name="Name"
         id="name"
@@ -875,7 +875,7 @@ const PaginationStoryTemplate: Story<{}> = (props) => {
         zebra={true}
         columnSeparators={true}
       >
-        <RowSelectionColumn id="rowSelection" />
+        <RowSelectionCheckboxColumn id="rowSelection" />
         <GridColumn
           name="Name"
           id="name"

@@ -77,7 +77,7 @@ export interface GridProps<T = any> {
   columnSeparators?: boolean;
   rowData: T[];
   rowKeyGetter?: RowKeyGetter<T>;
-  defaultSelectedRowKeys?: Set<string>;
+  defaultSelectedRowIdxs?: Set<number>;
   className?: string;
   style?: CSSProperties;
   variant?: "primary" | "secondary";
@@ -125,7 +125,7 @@ export const Grid = function <T>(props: GridProps<T>) {
     style,
     rowKeyGetter = defaultRowKeyGetter,
     children,
-    defaultSelectedRowKeys,
+    defaultSelectedRowIdxs,
     variant = "primary",
     rowSelectionMode = "multi",
     onRowSelected,
@@ -332,6 +332,8 @@ export const Grid = function <T>(props: GridProps<T>) {
         s.scrollLeft += deltaX;
         s.scrollTop += deltaY;
       }
+      event.preventDefault();
+      event.stopPropagation();
     },
     [scrollableRef.current]
   );
@@ -430,7 +432,7 @@ export const Grid = function <T>(props: GridProps<T>) {
   } = useRowSelection(
     rowKeyGetter,
     rowData,
-    defaultSelectedRowKeys,
+    defaultSelectedRowIdxs,
     rowSelectionMode,
     onRowSelected
   );

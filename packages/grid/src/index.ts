@@ -12,7 +12,7 @@ export * from "./SizingContext";
 export * from "./Grid";
 export * from "./GridColumn";
 export * from "./GridContext";
-export * from "./RowSelectionColumn";
+export * from "./RowSelectionCheckboxColumn";
 
 export * from "./TextCellEditor";
 export * from "./DropdownCellEditor";
