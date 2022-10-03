@@ -38,7 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onBlur,
       onClick,
       role: roleProp,
-      type: typeProp,
+      type = "button",
       variant = "primary",
       ...restProps
     },
@@ -65,7 +65,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         role={roleProp}
         {...restProps}
         ref={ref}
-        type={typeProp || "button"}
+        type={type}
       >
         <span className={withBaseName("label")}>{children}</span>
       </button>
