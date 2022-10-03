@@ -7,7 +7,11 @@ import { UserConfig } from "vite";
 import installCoverageTask from "@cypress/code-coverage/task";
 
 const viteConfig: UserConfig = {
-  plugins: [react(), tsconfigPaths(), IstanbulPlugin()],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    IstanbulPlugin({ include: "packages/*", cypress: true }),
+  ],
   server: {
     watch: {
       ignored: ["**/coverage"],
