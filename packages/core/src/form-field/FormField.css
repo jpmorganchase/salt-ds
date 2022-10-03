@@ -43,7 +43,7 @@
 }
 
 /* Class applied to the root element on hover */
-.uitkFormField:not(.uitkFormField-readOnly):not(.uitkFormField-warning):not(.uitkFormField-error):not(.uitkFormField-disabled):not(.uitkFormField-focused):hover {
+.uitkFormField:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-hover);
   --formField-activationIndicator-size: var(--uitk-editable-borderWidth-hover);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-hover);
@@ -51,9 +51,11 @@
   --uitkInput-cursor: var(--uitk-editable-cursor-hover);
 }
 
-/* Class applied to the root element on focus */
+/* Class applied to the root element when focused */
 .uitkFormField-focused,
-.uitkFormField-lowFocused {
+.uitkFormField-lowFocused, 
+.uitkFormField.uitkFormField-focused:hover, 
+.uitkFormField.uitkFormField-lowFocused:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-active);
   --formField-activationIndicator-size: var(--uitk-editable-borderWidth-active);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-active);
@@ -88,12 +90,24 @@
 
 /* Class applied to the root element if `disabled={true}` */
 .uitkFormField-disabled {
+  --formField-activationIndicator-color: var(--uitk-editable-borderColor-disabled);
   --formField-activationIndicator-opacity: var(--uitk-palette-opacity-foreground);
+  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-disabled);
+  --formField-activationIndicator-style: var(--uitk-editable-borderStyle-disabled);
   --formField-helperText-opacity: var(--uitk-palette-opacity-foreground);
 
   --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
 
-  cursor: var(--uitk-editable-cursor-disabled);
+  --uitkInput-cursor: var(--uitk-editable-cursor-disabled);
+}
+
+/* Class applied to the root element on hover if `disabled={true}` */
+.uitkFormField.uitkFormField-disabled:hover {
+  --formField-activationIndicator-color: var(--uitk-editable-borderColor-disabled);
+  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-disabled);
+  --formField-activationIndicator-style: var(--uitk-editable-borderStyle-disabled);
+
+  --uitkInput-cursor: var(--uitk-editable-cursor-disabled);
 }
 
 /* Class applied to the root element on warning state */
@@ -102,9 +116,19 @@
   --formField-activationIndicator-color: var(--uitk-status-warning-borderColor);
 }
 
+/* Class applied to the root element on warning state on hover */
+.uitkFormField.uitkFormField-warning:hover {
+  --formField-activationIndicator-color: var(--uitk-status-warning-borderColor);
+}
+
 /* Class applied to the root element on error state */
 .uitkFormField.uitkFormField-error {
   --formField-focused-outlineColor: var(--uitk-status-error-borderColor);
+  --formField-activationIndicator-color: var(--uitk-status-error-borderColor);
+}
+
+/* Class applied to the root element on error state on hover */
+.uitkFormField.uitkFormField-error:hover {
   --formField-activationIndicator-color: var(--uitk-status-error-borderColor);
 }
 
@@ -180,6 +204,17 @@
 /* Class applied if `readOnly={true}"` */
 .uitkFormField-readOnly {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-readonly);
+
+  --uitkInput-cursor: var(--uitk-editable-cursor-readonly);
+}
+
+/* Class applied to the root element if `readOnly={true}"` on hover */
+.uitkFormField.uitkFormField-readOnly:hover {
+  --formField-activationIndicator-color: var(--uitk-editable-borderColor-readonly);
+  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-readonly);
+  --formField-activationIndicator-style: var(--uitk-editable-borderStyle-readonly);
+
+  --uitkInput-cursor: var(--uitk-editable-cursor-readonly);
 }
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */
