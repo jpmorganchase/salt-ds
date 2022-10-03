@@ -68,13 +68,18 @@
   text-align: right;
 }
 
-/* Styles applied to track on hover if `disabled={false}` */
-.uitkSwitch-label:hover:not(.uitkSwitch-disabled) .uitkSwitch-track {
+/* Styles applied to track on hover  */
+.uitkSwitch-label:hover .uitkSwitch-track {
   background: var(--uitkSwitch-track-color-hover, var(--switch-track-color-hover));
 }
 
-/* Styles applied to track on hover when checked if `disabled={false}` */
-.uitkSwitch-label:hover:not(.uitkSwitch-disabled) .uitkSwitch-checked + .uitkSwitch-track {
+/* Styles applied to track on hover if `disabled={true}` */
+.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-track {
+  background: var(--uitkSwitch-track-color-disabled, var(--switch-track-color-disabled));
+}
+
+/* Styles applied to track on hover when checked  */
+.uitkSwitch-label:hover .uitkSwitch-checked + .uitkSwitch-track {
   background: var(--uitkSwitch-track-color-checked-hover, var(--switch-track-color-checked));
 }
 
@@ -196,14 +201,15 @@
 }
 
 /* Styles applied to track if `disabled={true}` */
-.uitkSwitch-disabled .uitkSwitch-base:not(.uitkSwitch-checked) + .uitkSwitch-track {
+.uitkSwitch-disabled .uitkSwitch-base + .uitkSwitch-track {
   background: var(--switch-track-color-disabled);
   border: transparent;
 }
 
 /* Styles applied to track if `disabled={true}` and `checked={true}` */
-.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
-  background: var(--switch-track-color-checked-disabled);
+.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track, 
+.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-checked + .uitkSwitch-track {
+  background: var(--uitkSwitch-track-color-checked-disabled, var(--switch-track-color-checked-disabled));
   border: transparent;
 }
 
