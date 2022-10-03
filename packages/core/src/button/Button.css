@@ -184,8 +184,7 @@
   /* Overrides to apply the disabled style when the button is focusable while also disabled */
 .uitkButton-disabled:active,
 .uitkButton-disabled:focus-visible,
-.uitkButton-disabled:hover,
-.uitkButton-disabled:focus-visible:not(:active):not(.uitkButton-active) {
+.uitkButton-disabled:hover {
   background: var(--uitkButton-background-disabled, var(--button-background-disabled));
   color: var(--uitkButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--uitkButton-cursor-disabled, var(--uitk-actionable-cursor-disabled));
