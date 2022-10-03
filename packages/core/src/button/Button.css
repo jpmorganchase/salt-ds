@@ -159,7 +159,7 @@
 }
 
 /* Pseudo-class applied to the root element on focus when Button is active */
-.uitkButton.uitkButton-active:focus-visible, 
+.uitkButton.uitkButton-active:focus-visible,
 .uitkButton:focus-visible(:active) {
   background: var(--uitkButton-background-active-hover, var(--button-background));
   color: var(--uitkButton-text-color-active-hover, var(--button-text-color));

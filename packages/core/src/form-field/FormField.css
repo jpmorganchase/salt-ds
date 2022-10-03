@@ -53,8 +53,8 @@
 
 /* Class applied to the root element when focused */
 .uitkFormField-focused,
-.uitkFormField-lowFocused, 
-.uitkFormField.uitkFormField-focused:hover, 
+.uitkFormField-lowFocused,
+.uitkFormField.uitkFormField-focused:hover,
 .uitkFormField.uitkFormField-lowFocused:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-active);
   --formField-activationIndicator-size: var(--uitk-editable-borderWidth-active);
