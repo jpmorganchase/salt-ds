@@ -2,7 +2,12 @@ import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Button } from "@jpmorganchase/uitk-core";
 import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
-import { GridVariantExample, GridAnatomyExample, GridColumnGroupExample, RowSelectionModesExample } from "./grid.examples";
+import {
+  GridVariantExample,
+  GridAnatomyExample,
+  GridColumnGroupExample,
+  RowSelectionModesExample,
+} from "./grid.examples";
 import {
   DownloadIcon,
   SearchIcon,
@@ -37,9 +42,9 @@ Zebra can be enabled for the `primary` variant.
 
 <Canvas>
   <Story name="Grid Variants" decorators={[withFlexGap]}>
-    <GridVariantExample variant="primary"/>      
-    <GridVariantExample variant="secondary"/>
-    <GridVariantExample zebra={true}/>
+    <GridVariantExample variant="primary" />
+    <GridVariantExample variant="secondary" />
+    <GridVariantExample zebra={true} />
   </Story>
 </Canvas>
 
@@ -49,9 +54,9 @@ Column separators can be enabled using `columnSeparators` property.
 
 <Canvas>
   <Story name="Grid with column separators" decorators={[withFlexGap]}>
-    <GridVariantExample variant="primary" columnSeparators={true}/>      
-    <GridVariantExample variant="secondary" columnSeparators={true}/>
-    <GridVariantExample zebra={true} columnSeparators={true}/>
+    <GridVariantExample variant="primary" columnSeparators={true} />
+    <GridVariantExample variant="secondary" columnSeparators={true} />
+    <GridVariantExample zebra={true} columnSeparators={true} />
   </Story>
 </Canvas>
 
@@ -74,6 +79,7 @@ import { Grid } from "@jpmorganchase/uitk-grid";
 Grid columns can be configured using `GridColumn` component.
 
 Grid package contains the following types of predefined columns:
+
 - RowSelectionCheckboxColumn
 - RowSelectionRadioColumn
 - NumericColumn
@@ -82,11 +88,13 @@ Every one of them renders a `GridColumn` with a specific set of props.
 Users can easily create any project-specific column types using the same approach.
 
 #### GridColumn props
-<ArgsTable of={GridColumn} /> 
+
+<ArgsTable of={GridColumn} />{" "}
 
 ### Column groups
 
 Columns can be grouped using the `ColumnGroup` component.
+
 <Canvas>
   <Story name="Grid with grouped columns" decorators={[withFlexGap]}>
     <GridColumnGroupExample />
@@ -102,6 +110,7 @@ In combination with `onVisibleRowRangeChange` callback this allows lazy loading 
 ### Row selection
 
 Grid supports three variants of row selection:
+
 - Single row selection
 - Multi-row selection
 - None (rows cannot be selected)
@@ -111,9 +120,9 @@ Both are optional though.
 
 <Canvas>
   <Story name="Grid row selection modes" decorators={[withFlexGap]}>
-    <RowSelectionModesExample rowSelectionMode="single"/>      
-    <RowSelectionModesExample rowSelectionMode="multi"/>
-    <RowSelectionModesExample rowSelectionMode="none"/>
+    <RowSelectionModesExample rowSelectionMode="single" />
+    <RowSelectionModesExample rowSelectionMode="multi" />
+    <RowSelectionModesExample rowSelectionMode="none" />
   </Story>
 </Canvas>
 
