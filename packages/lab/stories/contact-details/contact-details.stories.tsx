@@ -29,8 +29,8 @@ import {
   Overlay,
   SelectionChangeHandler,
   useOverlay,
+  ValueComponentProps,
 } from "@jpmorganchase/uitk-lab";
-import { ValueComponentProps } from "@jpmorganchase/uitk-lab/src/contact-details/internal";
 import { Story } from "@storybook/react";
 import { FC, forwardRef, Fragment } from "react";
 

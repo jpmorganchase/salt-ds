@@ -1,8 +1,8 @@
+import cx from "classnames";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { makePrefixer, useForkRef } from "../../utils";
-import "./DeckItem.css";
-import cx from "classnames";
 import { LayoutAnimation } from "../types";
+import "./DeckItem.css";
 
 const withBaseName = makePrefixer("uitkDeckItem");
 

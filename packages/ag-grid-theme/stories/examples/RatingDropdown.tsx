@@ -1,13 +1,6 @@
+import { Dropdown, SelectHandler } from "@jpmorganchase/uitk-lab";
 import { ICellEditorParams } from "ag-grid-community";
-import React, {
-  forwardRef,
-  useState,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-} from "react";
-import { Dropdown } from "@jpmorganchase/uitk-lab";
-import { SelectHandler } from "@jpmorganchase/uitk-lab/src/common-hooks";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 type SourceItem = {
   value: number;
@@ -76,7 +69,7 @@ const RatingDropdown = forwardRef<HTMLDivElement, ICellEditorParams>(
     const itemToString = ({ text }: SourceItem) => text;
 
     const onSelect: SelectHandler<SourceItem> = (_event, item) => {
-      setSelectedItem(item as SourceItem);
+      setSelectedItem(item);
       setSelectionMade(true);
     };
 

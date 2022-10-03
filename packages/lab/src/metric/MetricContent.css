@@ -1,13 +1,15 @@
 .uitkMetricContent {
   display: flex;
   flex-direction: column;
+  margin-top: var(--metric-content-marginTop, 0px);
 }
 
 .uitkMetricContent-value-container {
+  align-items: baseline;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
   gap: calc(var(--uitk-size-unit) / 2);
+  margin-top: var(--metric-content-valueContainer-marginTop, 0px);
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
@@ -22,6 +24,10 @@
 }
 .uitkMetric-direction-down .uitkMetricContent-subvalue {
   color: var(--uitk-differential-negative-foreground);
+}
+
+.uitkMetricContent-subvalue {
+  margin-top: var(--metric-content-subvalue-marginTop, 0px);
 }
 
 .uitkMetric-align-left .uitkMetricContent {
@@ -45,11 +51,11 @@
   --backwardsCompat-metric-horizontal-medium-subvalue-marginTop: -5px;
   --backwardsCompat-metric-horizontal-large-subvalue-marginTop: -11px;
 
-  --backwardsCompat-metric-vertical-small-value-container-marginTop: 1px;
+  --backwardsCompat-metric-vertical-small-valueContainer-marginTop: 1px;
   --backwardsCompat-metric-vertical-small-subvalue-marginTop: 2px;
-  --backwardsCompat-metric-vertical-medium-value-container-marginTop: 1px;
+  --backwardsCompat-metric-vertical-medium-valueContainer-marginTop: 1px;
   --backwardsCompat-metric-vertical-medium-subvalue-marginTop: 2px;
-  --backwardsCompat-metric-vertical-large-value-container-marginTop: 1px;
+  --backwardsCompat-metric-vertical-large-valueContainer-marginTop: 1px;
   --backwardsCompat-metric-vertical-large-subvalue-marginTop: 1px;
 }
 .uitk-density-medium {
@@ -57,11 +63,11 @@
   --backwardsCompat-metric-horizontal-medium-subvalue-marginTop: -4px;
   --backwardsCompat-metric-horizontal-large-subvalue-marginTop: -10px;
 
-  --backwardsCompat-metric-vertical-small-value-container-marginTop: 2px;
+  --backwardsCompat-metric-vertical-small-valueContainer-marginTop: 2px;
   --backwardsCompat-metric-vertical-small-subvalue-marginTop: 2px;
-  --backwardsCompat-metric-vertical-medium-value-container-marginTop: 2px;
+  --backwardsCompat-metric-vertical-medium-valueContainer-marginTop: 2px;
   --backwardsCompat-metric-vertical-medium-subvalue-marginTop: 2px;
-  --backwardsCompat-metric-vertical-large-value-container-marginTop: 2px;
+  --backwardsCompat-metric-vertical-large-valueContainer-marginTop: 2px;
   --backwardsCompat-metric-vertical-large-subvalue-marginTop: 2px;
 }
 .uitk-density-low {
@@ -69,11 +75,11 @@
   --backwardsCompat-metric-horizontal-medium-subvalue-marginTop: -3px;
   --backwardsCompat-metric-horizontal-large-subvalue-marginTop: -9px;
 
-  --backwardsCompat-metric-vertical-small-value-container-marginTop: 3px;
+  --backwardsCompat-metric-vertical-small-valueContainer-marginTop: 3px;
   --backwardsCompat-metric-vertical-small-subvalue-marginTop: 3px;
-  --backwardsCompat-metric-vertical-medium-value-container-marginTop: 3px;
+  --backwardsCompat-metric-vertical-medium-valueContainer-marginTop: 3px;
   --backwardsCompat-metric-vertical-medium-subvalue-marginTop: 3px;
-  --backwardsCompat-metric-vertical-large-value-container-marginTop: 3px;
+  --backwardsCompat-metric-vertical-large-valueContainer-marginTop: 3px;
   --backwardsCompat-metric-vertical-large-subvalue-marginTop: 3px;
 }
 .uitk-density-touch {
@@ -81,56 +87,56 @@
   --backwardsCompat-metric-horizontal-medium-subvalue-marginTop: -2px;
   --backwardsCompat-metric-horizontal-large-subvalue-marginTop: -8px;
 
-  --backwardsCompat-metric-vertical-small-value-container-marginTop: 4px;
+  --backwardsCompat-metric-vertical-small-valueContainer-marginTop: 4px;
   --backwardsCompat-metric-vertical-small-subvalue-marginTop: 4px;
-  --backwardsCompat-metric-vertical-medium-value-container-marginTop: 4px;
+  --backwardsCompat-metric-vertical-medium-valueContainer-marginTop: 4px;
   --backwardsCompat-metric-vertical-medium-subvalue-marginTop: 4px;
-  --backwardsCompat-metric-vertical-large-value-container-marginTop: 4px;
+  --backwardsCompat-metric-vertical-large-valueContainer-marginTop: 4px;
   --backwardsCompat-metric-vertical-large-subvalue-marginTop: 4px;
 }
 
 /* HORIZONTAL */
 
-/* Size small */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-horizontal-small-subvalue-marginTop);
+/* Size S */
+.backwardsCompat.uitkMetric-orientation-horizontal.uitkMetric-size-small .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-horizontal-small-subvalue-marginTop);
 }
 
-/* Size medium */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-horizontal-medium-subvalue-marginTop);
+/* Size M */
+.backwardsCompat.uitkMetric-orientation-horizontal.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-horizontal-medium-subvalue-marginTop);
 }
 
-/* Size large */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent {
-  margin-top: -1px;
+/* Size L */
+.backwardsCompat.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent {
+  --metric-content-marginTop: -1px;
 }
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-horizontal-large-subvalue-marginTop);
+.backwardsCompat.uitkMetric-orientation-horizontal.uitkMetric-size-large .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-horizontal-large-subvalue-marginTop);
 }
 
 /* VERTICAL */
 
-/* Size small */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
-  margin-top: var(--backwardsCompat-metric-vertical-small-value-container-marginTop);
+/* Size S */
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-value-container {
+  --metric-content-valueContainer-marginTop: var(--backwardsCompat-metric-vertical-small-valueContainer-marginTop);
 }
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-vertical-small-subvalue-marginTop);
-}
-
-/* Size medium */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
-  margin-top: var(--backwardsCompat-metric-vertical-medium-value-container-marginTop);
-}
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-vertical-medium-subvalue-marginTop);
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-small .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-vertical-small-subvalue-marginTop);
 }
 
-/* Size large */
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
-  margin-top: var(--backwardsCompat-metric-vertical-large-value-container-marginTop);
+/* Size M */
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-value-container {
+  --metric-content-valueContainer-marginTop: var(--backwardsCompat-metric-vertical-medium-valueContainer-marginTop);
 }
-.backwardsCompat.uitkMetric.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
-  margin-top: var(--backwardsCompat-metric-vertical-large-subvalue-marginTop);
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-medium .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-vertical-medium-subvalue-marginTop);
+}
+
+/* Size L */
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-value-container {
+  --metric-content-valueContainer-marginTop: var(--backwardsCompat-metric-vertical-large-valueContainer-marginTop);
+}
+.backwardsCompat.uitkMetric-orientation-vertical.uitkMetric-size-large .uitkMetricContent-subvalue {
+  --metric-content-subvalue-marginTop: var(--backwardsCompat-metric-vertical-large-subvalue-marginTop);
 }

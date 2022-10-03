@@ -217,7 +217,19 @@
   --switch-thumb-background: var(--uitk-selectable-primary-foreground-selectedDisabled);
 }
 
-.uitk-dark .backwardsCompat.uitkSwitch .uitkSwitch-iconTick {
-  --uitkSwitch-icon-color-checked: rgb(255, 255, 255);
-  --uitkSwitch-icon-color-checked-disabled: rgba(255, 255, 255, 0.4);
+/* TK1 Backwards compatibility */
+
+.uitk-light {
+  --backwardsCompat-switch-tick-color: var(--uitk-selectable-borderColor-selected);
+  --backwardsCompat-switch-tick-color-disabled: var(--uitk-selectable-borderColor-selectedDisabled);
+}
+
+.uitk-dark {
+  --backwardsCompat-switch-tick-color: rgb(255, 255, 255);
+  --backwardsCompat-switch-tick-color-disabled: rgba(255, 255, 255, 0.4);
+}
+
+.backwardsCompat.uitkSwitch {
+  --switch-tick-color: var(--backwardsCompat-switch-tick-color);
+  --switch-tick-color-disabled: var(--backwardsCompat-switch-tick-color-disabled);
 }

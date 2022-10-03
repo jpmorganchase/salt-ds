@@ -1,9 +1,8 @@
+import { SliderChangeHandler, SliderValue } from "../types";
 import {
   clampValue,
   getHandleIndex,
   roundValue,
-  SliderChangeHandler,
-  SliderValue,
   UpdateValueItem,
 } from "./utils";
 
