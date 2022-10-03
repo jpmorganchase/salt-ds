@@ -103,7 +103,7 @@
   color: var(--accordion-summary-text-color-active);
 }
 
-.uitkAccordionSummary-disabled, 
+.uitkAccordionSummary-disabled,
 .uitkAccordionSummary.uitkAccordionSummary-disabled:hover {
   background: var(--accordion-summary-background-disabled);
   color: var(--accordion-summary-text-color-disabled);

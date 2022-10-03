@@ -207,7 +207,7 @@
 }
 
 /* Styles applied to track if `disabled={true}` and `checked={true}` */
-.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track, 
+.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track,
 .uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-checked + .uitkSwitch-track {
   background: var(--uitkSwitch-track-color-checked-disabled, var(--switch-track-color-checked-disabled));
   border: transparent;
