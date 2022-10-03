@@ -2,13 +2,11 @@ import { defineConfig } from "cypress";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import IstanbulPlugin from "vite-plugin-istanbul";
-import { isCI } from "ci-info";
-import path from "path";
-import { mergeConfig, UserConfig } from "vite";
+import { UserConfig } from "vite";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 
-let viteConfig: UserConfig = {
+const viteConfig: UserConfig = {
   plugins: [react(), tsconfigPaths(), IstanbulPlugin()],
   server: {
     watch: {
@@ -27,33 +25,6 @@ let viteConfig: UserConfig = {
     },
   },
 };
-if (isCI) {
-  viteConfig = mergeConfig(viteConfig, {
-    resolve: {
-      alias: {
-        "@jpmorganchase/uitk-core": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-core"
-        ),
-        "@jpmorganchase/uitk-lab": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-lab"
-        ),
-        "@jpmorganchase/uitk-icons": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-icons"
-        ),
-      },
-    },
-    optimizeDeps: {
-      include: [
-        "@jpmorganchase/uitk-core",
-        "@jpmorganchase/uitk-lab",
-        "@jpmorganchase/uitk-icons",
-      ],
-    },
-  } as UserConfig);
-}
 
 export default defineConfig({
   viewportWidth: 1280,
