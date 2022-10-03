@@ -92,10 +92,10 @@
   outline-offset: var(--uitk-focused-outlineOffset);
 }
 
-.uitkAccordionSummary:hover:not(.uitkAccordionSummary-disabled) {
+.uitkAccordionSummary:hover {
   background: var(--accordion-summary-background-hover);
   color: var(--accordion-summary-text-color-hover);
-  cursor: pointer;
+  cursor: var(--uitk-selectable-cursor-hover);
 }
 
 .uitkAccordionSummary-expanded {
@@ -103,9 +103,11 @@
   color: var(--accordion-summary-text-color-active);
 }
 
-.uitkAccordionSummary-disabled {
+.uitkAccordionSummary-disabled, 
+.uitkAccordionSummary.uitkAccordionSummary-disabled:hover {
   background: var(--accordion-summary-background-disabled);
   color: var(--accordion-summary-text-color-disabled);
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 .uitkAccordionSummary-icon {
