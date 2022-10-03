@@ -52,7 +52,7 @@
 }
 
 /* Styles applied if `disabled={true}` on hover */
-.uitkCheckboxIcon.uitkCheckboxIcon-disabled:hover, 
+.uitkCheckboxIcon.uitkCheckboxIcon-disabled:hover,
 .uitkCheckbox.uitkCheckbox-disabled:hover .uitkCheckboxIcon {
   stroke: var(--uitkCheckbox-icon-stroke-disabled, var(--uitk-selectable-borderColor-disabled));
   stroke-width: var(--uitkCheckbox-icon-strokeWidth-disabled, var(--uitk-selectable-borderWidth));
