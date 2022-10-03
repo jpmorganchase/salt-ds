@@ -41,19 +41,66 @@ export interface GridEditorProps<T> {
 }
 
 export interface GridColumnProps<T = any> {
+  /**
+   * Unique identifier of the column.
+   * */
   id: string; // TODO make optional
+  /**
+   * Name is displayed on the column header by default.
+   * */
   name?: string;
+  /**
+   * Default width of the column.
+   * */
   defaultWidth?: number;
+  /**
+   * Callback invoked when the user resizes the column.
+   * */
   onWidthChanged?: (width: number) => void;
+  /**
+   * Whether the column should be pinned `left` or `right`. By default columns
+   * are unpinned.
+   * */
   pinned?: GridColumnPin;
+  /**
+   * Text align for the header and cells.
+   * */
   align?: "left" | "right";
+  /**
+   * Component to render for every cell in the column. Useful when major
+   * customization is needed. Use this only if `cellValueComponent` is not
+   * sufficient. Default implementation of cell component takes care of
+   * selection, hover, focus and other basic grid features.
+   * */
   cellComponent?: ComponentType<GridCellProps<T>>;
+  /**
+   * Component to render inside every cell. This is the preferred way of
+   * customizing grid cells.
+   * */
   cellValueComponent?: ComponentType<GridCellValueProps<T>>;
+  /**
+   * Cell value getter. Should return the value to be displayed in the cell
+   * for the given row data item.
+   * */
   getValue?: (rowData: T) => any;
+  /**
+   * CSS class to be applied to the column header.
+   * Useful for minor customizations
+   * */
   headerClassName?: string;
+  /**
+   * Custom header component. Use this when `headerValueComponent` doesn't
+   * provide enough flexibility.
+   * */
   headerComponent?: ComponentType<HeaderCellProps<T>>;
+  /**
+   * Renders the content of the column header. This is the preferred way of
+   * customizing column headers.
+   * */
   headerValueComponent?: ComponentType<GridHeaderValueProps<T>>;
-  editable?: boolean;
+  /**
+   * A callback to be invoked when the user modifies a cell value.
+   * */
   onChange?: (row: T, rowIndex: number, value: string) => void;
   children?: ReactNode;
 }

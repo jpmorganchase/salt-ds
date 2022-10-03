@@ -72,19 +72,52 @@ export type RowKeyGetter<T> = (row: T, index: number) => string;
 
 export interface GridProps<T = any> {
   children: ReactNode;
+  /**
+   * If `true`, zebra stripes are enabled (odd/even rows have alternate colours)
+   * */
   zebra?: boolean;
+  /**
+   * If `true`, grid header is hidden.
+   * */
   hideHeader?: boolean;
+  /**
+   * If `true`, column separators are rendered.
+   * */
   columnSeparators?: boolean;
+  /**
+   * Row data objects. Sparse arrays are supported.
+   * */
   rowData: T[];
+  /**
+   * Should return unique string for a given row data object.
+   * If rowData is sparse then this function should work with undefined row data
+   * objects and create keys based on row index.
+   * */
   rowKeyGetter?: RowKeyGetter<T>;
+  /**
+   * Rows with these indices are selected by default.
+   * */
   defaultSelectedRowIdxs?: Set<number>;
   className?: string;
   style?: CSSProperties;
+  /**
+   * The variant to use. Options are `primary` and `secondary`. Default value is
+   * `primary`. `secondary` variant changes grid background to reduce contrast.
+   * */
   variant?: "primary" | "secondary";
+  /**
+   * Options are `single`, `multi` and `none`.
+   * */
   rowSelectionMode?: GridRowSelectionMode;
   onRowSelected?: (selectedRowIdxs: number[]) => void;
+  /**
+   * If `true`, user will be able to move columns using drag and drop.
+   * */
   columnDnD?: boolean;
   onColumnMoved?: (fromIndex: number, toIndex: number) => void;
+  /**
+   * Options are `range` and `none`.
+   * */
   cellSelectionMode?: GridCellSelectionMode;
   onVisibleRowRangeChange?: (start: number, end: number) => void;
 }
