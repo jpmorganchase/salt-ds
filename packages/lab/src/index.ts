@@ -10,10 +10,6 @@ export type {
   ListItemBase as ListItemBaseDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
 } from "./list-deprecated";
-export {
-  ListItemBase as ListItemBaseDeprecated,
-  useListItem as useListItemDeprecated,
-} from "./list-deprecated";
 
 export * from "./accordion";
 export * from "./app-header";
