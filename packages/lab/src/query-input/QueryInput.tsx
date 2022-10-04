@@ -1,16 +1,11 @@
-import "./QueryInput.css";
-import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-
+import { forwardRef, HTMLAttributes } from "react";
+import { QueryInputBody, ValueSelector } from "./internal";
 import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
+import { BooleanOperator, useQueryInput } from "./useQueryInput";
 
-import {
-  BooleanOperator,
-  QueryInputBody,
-  useQueryInput,
-  ValueSelector,
-} from "./internal";
+import "./QueryInput.css";
 
 const withBaseName = makePrefixer("uitkQueryInput");
 

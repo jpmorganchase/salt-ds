@@ -7,7 +7,8 @@
 
 .uitkMetric-orientation-horizontal {
   flex-direction: row;
-  gap: 16px;
+  gap: var(--metric-horizontal-gap, 16px);
+  margin-top: var(--metric-horizontal-marginTop, 0px);
 }
 
 .uitkMetric-orientation-vertical {
@@ -23,14 +24,14 @@
 }
 
 .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal {
-  gap: calc(var(--uitk-size-unit) * 2);
+  --metric-horizontal-gap: calc(var(--uitk-size-unit) * 2);
 }
 .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small {
-  margin-top: -4px;
+  --metric-horizontal-marginTop: -4px;
 }
 .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium {
-  margin-top: -8px;
+  --metric-horizontal-marginTop: -8px;
 }
 .backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large {
-  margin-top: -14px;
+  --metric-horizontal-marginTop: -14px;
 }

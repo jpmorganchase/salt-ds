@@ -1,4 +1,4 @@
-import { LayoutAnimationTransition } from "@jpmorganchase/uitk-core/src/layout/types";
+import { LayoutAnimationTransition } from "@jpmorganchase/uitk-core";
 import { useState } from "react";
 
 export const useSlideSelection = (
