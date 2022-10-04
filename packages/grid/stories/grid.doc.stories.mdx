@@ -7,6 +7,8 @@ import {
   GridAnatomyExample,
   GridColumnGroupExample,
   RowSelectionModesExample,
+  ControlledRowSelectionExample,
+  CellCustomizationExample
 } from "./grid.examples";
 import {
   DownloadIcon,
@@ -116,12 +118,27 @@ In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintai
 
 #### Controlled mode 
 
-In controlled mode user provides `selectedRowIdxs` and updates it when 
+In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSelected` callback is invoked. 
+Below is an example of two grids with synchronised selections.
+
+<Canvas>
+  <Story name="Grid row selection controlled mode" decorators={[withFlexGap]}>
+    <ControlledRowSelectionExample />
+  </Story>
+</Canvas>
 
 ### Cell selection
 
 In addition to row selection, Grid supports cell range selection using keyboard and mouse.
 Cell range selection is controlled by `cellSelectionMode` property.
+
+### Cell customisation
+
+<Canvas>
+  <Story name="Cell value customization" decorators={[withFlexGap]}>
+    <CellCustomizationExample />
+  </Story>
+</Canvas>
 
 ### HTML Anatomy of a Grid
 
