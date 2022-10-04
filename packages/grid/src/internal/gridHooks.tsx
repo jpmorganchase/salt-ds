@@ -29,6 +29,7 @@ import {
 import { GridContext } from "../GridContext";
 import { SelectionContext } from "../SelectionContext";
 import { CellEditorInfo } from "../CellEditor";
+import { useControlled } from "@jpmorganchase/uitk-core";
 
 // Total width of the given columns.
 function sumWidth<T>(columns: GridColumnModel<T>[]) {
@@ -638,13 +639,32 @@ export function useColumnRegistry<T>(children: ReactNode) {
 export function useRowSelection<T>(
   rowKeyGetter: RowKeyGetter<T>,
   rowData: T[],
-  defaultSelectedRowIdxs?: Set<number>,
+  defaultSelectedRowIdxs?: number[],
+  selectedRowIdxs?: number[],
   rowSelectionMode?: GridRowSelectionMode,
   onRowSelected?: (selectedRowIdxs: number[]) => void
 ) {
-  const [selRowIdxs, setSelRowIdxs] = useState<Set<number>>(
-    defaultSelectedRowIdxs || new Set()
-  );
+  const selectedRowIdxsProp = useMemo(() => {
+    if (selectedRowIdxs == undefined) {
+      return undefined;
+    }
+    return new Set(selectedRowIdxs);
+  }, [selectedRowIdxs]);
+
+  const defaultSelectedRowIdxsProp = useMemo(() => {
+    if (defaultSelectedRowIdxs == undefined) {
+      return new Set([]);
+    }
+    return new Set(defaultSelectedRowIdxs);
+  }, [defaultSelectedRowIdxs]);
+
+  const [selRowIdxs, setSelRowIdxs] = useControlled({
+    controlled: selectedRowIdxsProp,
+    default: defaultSelectedRowIdxsProp,
+    name: "useRowSelection",
+    state: "selRowIdxs",
+  });
+
   const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
     undefined
   );
@@ -768,7 +788,7 @@ export interface Target {
 // Also returns dragState and active target (the drop target nearest to current
 // mouse positions.
 export function useColumnMove<T = any>(
-  columnDnD: boolean | undefined,
+  columnMove: boolean | undefined,
   rootRef: RefObject<HTMLDivElement>,
   leftCols: GridColumnModel<T>[],
   midCols: GridColumnModel<T>[],
@@ -1100,4 +1120,10 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     onCursorMove,
     selectRange,
   };
+}
+function useEffect(
+  arg0: () => void,
+  arg1: (GridRowSelectionMode | undefined)[]
+) {
+  throw new Error("Function not implemented.");
 }

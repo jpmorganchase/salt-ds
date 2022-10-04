@@ -35,34 +35,7 @@ A Grid presents tabular information that has columns and rows.
 Grid is particularly useful if the tabular information is editable or interactive.
 Grid provides users with intuitive and efficient keyboard navigation, content editing, selection, copy and paste.
 
-## Grid variants
-
-Grid contains two variants `primary` and `secondary`. If not specified, the default value is `primary`.
-Zebra can be enabled for the `primary` variant.
-
-<Canvas>
-  <Story name="Grid Variants" decorators={[withFlexGap]}>
-    <GridVariantExample variant="primary" />
-    <GridVariantExample variant="secondary" />
-    <GridVariantExample zebra={true} />
-  </Story>
-</Canvas>
-
-## Column separators
-
-Column separators can be enabled using `columnSeparators` property.
-
-<Canvas>
-  <Story name="Grid with column separators" decorators={[withFlexGap]}>
-    <GridVariantExample variant="primary" columnSeparators={true} />
-    <GridVariantExample variant="secondary" columnSeparators={true} />
-    <GridVariantExample zebra={true} columnSeparators={true} />
-  </Story>
-</Canvas>
-
 ## Configuring Grid
-
-### API
 
 Use the following call to import Grid.
 
@@ -73,6 +46,19 @@ import { Grid } from "@jpmorganchase/uitk-grid";
 ### Props
 
 <ArgsTable of={Grid} />
+
+## Grid variants
+
+Grid contains two variants `primary` and `secondary`. If not specified, the default value is `primary`.
+Zebra can be enabled for the `primary` variant.
+
+Column separators can be enabled using `columnSeparators` property.
+
+<Canvas>
+  <Story name="Grid Variants" decorators={[withFlexGap]}>
+    <GridVariantExample/>
+  </Story>
+</Canvas>
 
 ### Columns
 
@@ -101,7 +87,7 @@ Columns can be grouped using the `ColumnGroup` component.
   </Story>
 </Canvas>
 
-### Row data
+### Rows
 
 Grid rows are created by providing an array of objects as `rowData` property of the grid.
 `rowData` accepts sparse arrays too.
@@ -118,13 +104,19 @@ Grid supports three variants of row selection:
 `RowSelectionCheckboxColumn` is useful in `multi` row selection mode and `RowSelectionRadioColumn` - in `single` row selection mode.
 Both are optional though.
 
+#### Uncontrolled mode
+
+In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintains selection state
+
 <Canvas>
   <Story name="Grid row selection modes" decorators={[withFlexGap]}>
-    <RowSelectionModesExample rowSelectionMode="single" />
-    <RowSelectionModesExample rowSelectionMode="multi" />
-    <RowSelectionModesExample rowSelectionMode="none" />
+    <RowSelectionModesExample />
   </Story>
 </Canvas>
+
+#### Controlled mode 
+
+In controlled mode user provides `selectedRowIdxs` and updates it when 
 
 ### Cell selection
 

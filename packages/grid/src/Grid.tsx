@@ -70,6 +70,12 @@ export type GridCellSelectionMode = "range" | "none";
 
 export type RowKeyGetter<T> = (row: T, index: number) => string;
 
+export type GridColumnMoveHandler = (
+  columnId: string,
+  fromIndex: number,
+  toIndex: number
+) => void;
+
 export interface GridProps<T = any> {
   children: ReactNode;
   /**
@@ -97,7 +103,11 @@ export interface GridProps<T = any> {
   /**
    * Rows with these indices are selected by default.
    * */
-  defaultSelectedRowIdxs?: Set<number>;
+  defaultSelectedRowIdxs?: number[];
+  /**
+   * Selected row indices for controlled mode.
+   * */
+  selectedRowIdxs?: number[];
   className?: string;
   style?: CSSProperties;
   /**
@@ -113,8 +123,8 @@ export interface GridProps<T = any> {
   /**
    * If `true`, user will be able to move columns using drag and drop.
    * */
-  columnDnD?: boolean;
-  onColumnMoved?: (fromIndex: number, toIndex: number) => void;
+  columnMove?: boolean;
+  onColumnMoved?: GridColumnMoveHandler;
   /**
    * Options are `range` and `none`.
    * */
@@ -159,10 +169,11 @@ export const Grid = function <T>(props: GridProps<T>) {
     rowKeyGetter = defaultRowKeyGetter,
     children,
     defaultSelectedRowIdxs,
+    selectedRowIdxs,
     variant = "primary",
     rowSelectionMode = "multi",
     onRowSelected,
-    columnDnD,
+    columnMove,
     onColumnMoved,
     cellSelectionMode = "range",
     onVisibleRowRangeChange,
@@ -466,6 +477,7 @@ export const Grid = function <T>(props: GridProps<T>) {
     rowKeyGetter,
     rowData,
     defaultSelectedRowIdxs,
+    selectedRowIdxs,
     rowSelectionMode,
     onRowSelected
   );
@@ -554,13 +566,14 @@ export const Grid = function <T>(props: GridProps<T>) {
 
   const onColumnMove = (fromIndex: number, toIndex: number) => {
     if (onColumnMoved && fromIndex !== toIndex) {
-      onColumnMoved(fromIndex, toIndex);
+      const columnId = cols[fromIndex].info.props.id;
+      onColumnMoved(columnId, fromIndex, toIndex);
     }
   };
 
   const { dragState, onColumnMoveHandleMouseDown, activeTarget } =
     useColumnMove(
-      columnDnD,
+      columnMove,
       rootRef,
       leftCols,
       midCols,
@@ -572,10 +585,10 @@ export const Grid = function <T>(props: GridProps<T>) {
 
   const columnDragContext: ColumnDragContext = useMemo(
     () => ({
-      columnDnD,
+      columnMove,
       onColumnMoveHandleMouseDown,
     }),
-    [columnDnD, onColumnMoveHandleMouseDown]
+    [columnMove, onColumnMoveHandleMouseDown]
   );
 
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {

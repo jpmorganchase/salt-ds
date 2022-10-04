@@ -696,7 +696,11 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     "cohort",
   ]);
 
-  const onColumnMoved = (fromIndex: number, toIndex: number) => {
+  const onColumnMoved = (
+    columnId: string,
+    fromIndex: number,
+    toIndex: number
+  ) => {
     setColumnIds((old) => {
       const col = old[fromIndex];
       if (fromIndex < toIndex) {
@@ -761,7 +765,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
-      columnDnD={true}
+      columnMove={true}
       onColumnMoved={onColumnMoved}
     >
       {columnIds.map((id) => renderColumn(id))}
