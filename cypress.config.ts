@@ -10,7 +10,7 @@ const viteConfig: UserConfig = {
   plugins: [
     react(),
     tsconfigPaths(),
-    IstanbulPlugin({ include: "packages/*", cypress: true }),
+    // IstanbulPlugin({ include: "packages/*", cypress: true }),
   ],
   server: {
     watch: {
