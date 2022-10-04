@@ -9,7 +9,7 @@
 }
 
 .uitkListItem.uitkHighlighted {
-  --uitkCheckbox-icon-outlineColor: var(--uitk-selectable-borderColor-hover);
+  --uitkCheckbox-icon-stroke: var(--uitk-selectable-borderColor-hover);
   --list-item-background: var(--uitk-selectable-background-hover);
 }
 
