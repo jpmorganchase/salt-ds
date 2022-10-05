@@ -18,7 +18,7 @@ import {
   GridCellSelectionMode,
 } from "../Grid";
 import { ColumnGroupProps } from "../ColumnGroup";
-import { Rng } from "../Rng";
+import { NumberRange } from "../NumberRange";
 import { GridColumnInfo, GridColumnPin } from "../GridColumn";
 import {
   getAttribute,
@@ -29,6 +29,7 @@ import {
 import { GridContext } from "../GridContext";
 import { SelectionContext } from "../SelectionContext";
 import { CellEditorInfo } from "../CellEditor";
+import { useControlled } from "@jpmorganchase/uitk-core";
 
 // Total width of the given columns.
 function sumWidth<T>(columns: GridColumnModel<T>[]) {
@@ -46,7 +47,7 @@ export function useSum(source: number[]) {
 }
 
 // Sum width of the given range of columns.
-function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
+function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: NumberRange) {
   let w = 0;
   range.forEach((i) => {
     w += columns[i].info.width;
@@ -55,7 +56,10 @@ function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
 }
 
 // Sum width of the given range of columns wrapped in useMemo.
-export function useSumRangeWidth<T>(columns: GridColumnModel<T>[], range: Rng) {
+export function useSumRangeWidth<T>(
+  columns: GridColumnModel<T>[],
+  range: NumberRange
+) {
   return useMemo(() => sumRangeWidth(columns, range), [columns, range]);
 }
 
@@ -65,10 +69,10 @@ export function useProd(source: number[]) {
 }
 
 // Range memoization using Rng.equals comparator.
-function useMemoRng(fn: () => Rng, deps: any[]) {
-  const prevRef = useRef<Rng>(Rng.empty);
+function useMemoRng(fn: () => NumberRange, deps: any[]) {
+  const prevRef = useRef<NumberRange>(NumberRange.empty);
   const range = useMemo(fn, deps);
-  if (!Rng.equals(prevRef.current, range)) {
+  if (!NumberRange.equals(prevRef.current, range)) {
     prevRef.current = range;
   }
   return prevRef.current;
@@ -79,10 +83,10 @@ export function useBodyVisibleColumnRange<T>(
   midColumns: GridColumnModel<T>[],
   scrollLeft: number,
   clientMidWidth: number
-): Rng {
+): NumberRange {
   return useMemoRng(() => {
     if (clientMidWidth === 0 || midColumns.length === 0) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     let width = scrollLeft;
     let start = 0;
@@ -108,7 +112,7 @@ export function useBodyVisibleColumnRange<T>(
     if (end > midColumns.length) {
       end = midColumns.length;
     }
-    return new Rng(start, end);
+    return new NumberRange(start, end);
   }, [midColumns, scrollLeft, clientMidWidth]);
 }
 
@@ -139,7 +143,7 @@ export function useClientMidHeight(
 // Y coordinate of the visible area within the virtual space.
 export function useBodyVisibleAreaTop<T>(
   rowHeight: number,
-  visibleRowRange: Rng,
+  visibleRowRange: NumberRange,
   topHeight: number
 ) {
   return useMemo(
@@ -157,7 +161,7 @@ export function useVisibleRowRange(
 ) {
   return useMemoRng(() => {
     if (rowHeight < 1) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     const start = Math.floor(scrollTop / rowHeight);
     let end = Math.max(
@@ -167,13 +171,13 @@ export function useVisibleRowRange(
     if (end > rowCount) {
       end = rowCount;
     }
-    return new Rng(start, end);
+    return new NumberRange(start, end);
   }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 }
 
 export function useColumnRange<T>(
   columns: GridColumnModel<T>[],
-  range: Rng
+  range: NumberRange
 ): GridColumnModel<T>[] {
   return useMemo(() => columns.slice(range.start, range.end), [columns, range]);
 }
@@ -181,7 +185,7 @@ export function useColumnRange<T>(
 // Total width of the columns scrolled out to the left of the visible area.
 export function useLeftScrolledOutWidth<T>(
   midColumns: GridColumnModel<T>[],
-  bodyVisibleColumnRange: Rng
+  bodyVisibleColumnRange: NumberRange
 ) {
   return useMemo(() => {
     let w = 0;
@@ -194,11 +198,11 @@ export function useLeftScrolledOutWidth<T>(
 
 // Row positions by row keys.
 export function useRowIdxByKey<T>(rowKeyGetter: RowKeyGetter<T>, rowData: T[]) {
-  return useMemo(
-    () =>
-      new Map<string, number>(rowData.map((r, i) => [rowKeyGetter(r, i), i])),
-    [rowData, rowKeyGetter]
-  );
+  return useMemo(() => {
+    return new Map<string, number>(
+      rowData.map((r, i) => [rowKeyGetter(r, i), i])
+    );
+  }, [rowData, rowKeyGetter]);
 }
 
 export type SetState<T> = (v: T | ((p: T) => T)) => void;
@@ -207,7 +211,7 @@ export type SetState<T> = (v: T | ((p: T) => T)) => void;
 export function useRowModels<T>(
   getKey: RowKeyGetter<T>,
   rowData: T[],
-  visibleRowRange: Rng
+  visibleRowRange: NumberRange
 ) {
   return useMemo(() => {
     const rows: GridRowModel<T>[] = [];
@@ -252,23 +256,23 @@ export const PAGE_SIZE = 10;
 
 // Visible range of column groups.
 export function useVisibleColumnGroupRange<T>(
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   midCols: GridColumnModel<T>[],
   midGrpByColId: Map<string, GridColumnGroupModel>,
   leftGrpCount: number
-): Rng {
+): NumberRange {
   return useMemoRng(() => {
     if (bodyVisColRng.length === 0) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
     const firstVisibleCol = midCols[bodyVisColRng.start];
     const lastVisibleCol = midCols[bodyVisColRng.end - 1];
     const firstVisibleGroup = midGrpByColId.get(firstVisibleCol.info.props.id);
     const lastVisibleGroup = midGrpByColId.get(lastVisibleCol.info.props.id);
     if (!firstVisibleGroup || !lastVisibleGroup) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
-    return new Rng(
+    return new NumberRange(
       firstVisibleGroup.index - leftGrpCount,
       lastVisibleGroup.index + 1 - leftGrpCount
     );
@@ -281,7 +285,7 @@ export function last<T>(source: T[]): T {
 
 // Range of columns visible in the header.
 export function useHeadVisibleColumnRange<T>(
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   visColGrps: GridColumnGroupModel[],
   midColsById: Map<string, GridColumnModel<T>>,
   leftColCount: number
@@ -297,9 +301,12 @@ export function useHeadVisibleColumnRange<T>(
     const firstColIdx = midColsById.get(firstColId)?.index;
     const lastColIdx = midColsById.get(lastColId)?.index;
     if (firstColIdx === undefined || lastColIdx === undefined) {
-      return Rng.empty;
+      return NumberRange.empty;
     }
-    return new Rng(firstColIdx - leftColCount, lastColIdx + 1 - leftColCount);
+    return new NumberRange(
+      firstColIdx - leftColCount,
+      lastColIdx + 1 - leftColCount
+    );
   }, [bodyVisColRng, visColGrps, midColsById, leftColCount]);
 }
 
@@ -325,11 +332,11 @@ export function useCols<T>(
 
 // Returns a function that scrolls the grid to the given cell.
 export function useScrollToCell<T>(
-  visRowRng: Rng,
+  visRowRng: NumberRange,
   rowHeight: number,
   clientMidHt: number,
   midCols: GridColumnModel<T>[],
-  bodyVisColRng: Rng,
+  bodyVisColRng: NumberRange,
   clientMidWidth: number,
   scroll: (left?: number, top?: number, source?: "user" | "table") => void
 ) {
@@ -632,97 +639,111 @@ export function useColumnRegistry<T>(children: ReactNode) {
 export function useRowSelection<T>(
   rowKeyGetter: RowKeyGetter<T>,
   rowData: T[],
-  rowIdxByKey: Map<string, number>,
-  defaultSelectedRowKeys?: Set<string>,
+  defaultSelectedRowIdxs?: number[],
+  selectedRowIdxs?: number[],
   rowSelectionMode?: GridRowSelectionMode,
-  onRowSelected?: (selectedRows: T[]) => void
+  onRowSelected?: (selectedRowIdxs: number[]) => void
 ) {
-  const [selRowKeys, setSelRowKeys] = useState<Set<string>>(
-    defaultSelectedRowKeys || new Set()
-  );
+  const selectedRowIdxsProp = useMemo(() => {
+    if (selectedRowIdxs == undefined) {
+      return undefined;
+    }
+    return new Set(selectedRowIdxs);
+  }, [selectedRowIdxs]);
 
-  const [lastSelRowKey, setLastSelRowKey] = useState<string | undefined>(
+  const defaultSelectedRowIdxsProp = useMemo(() => {
+    if (defaultSelectedRowIdxs == undefined) {
+      return new Set([]);
+    }
+    return new Set(defaultSelectedRowIdxs);
+  }, [defaultSelectedRowIdxs]);
+
+  const [selRowIdxs, setSelRowIdxs] = useControlled({
+    controlled: selectedRowIdxsProp,
+    default: defaultSelectedRowIdxsProp,
+    name: "useRowSelection",
+    state: "selRowIdxs",
+  });
+
+  const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
     undefined
   );
 
   const selectRows = useCallback(
     (rowIdx: number, shift: boolean, meta: boolean) => {
-      const rowKey = rowKeyGetter(rowData[rowIdx], rowIdx);
       const idxFrom =
-        rowSelectionMode === "multi" && lastSelRowKey !== undefined && shift
-          ? rowIdxByKey.get(lastSelRowKey)
+        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && shift
+          ? lastSelRowIdx
           : undefined;
 
-      let nextSelRowKeys: Set<string> | undefined = undefined;
-      let nextLastSelRowKey: string | undefined = undefined;
+      let nextSelRowIdxs: Set<number> | undefined = undefined;
+      let nextLastSelRowIdx: number | undefined = undefined;
 
       if (idxFrom === undefined) {
         if (rowSelectionMode !== "multi" || !meta) {
-          nextSelRowKeys = new Set([rowKey]);
-          nextLastSelRowKey = rowKey;
+          nextSelRowIdxs = new Set([rowIdx]);
+          nextLastSelRowIdx = rowIdx;
         } else {
-          const n = new Set<string>(selRowKeys);
-          if (n.has(rowKey)) {
-            n.delete(rowKey);
-            nextLastSelRowKey = undefined;
+          const n = new Set<number>(selRowIdxs);
+          if (n.has(rowIdx)) {
+            n.delete(rowIdx);
+            nextLastSelRowIdx = undefined;
           } else {
-            n.add(rowKey);
-            nextLastSelRowKey = rowKey;
+            n.add(rowIdx);
+            nextLastSelRowIdx = rowIdx;
           }
-          nextSelRowKeys = n;
+          nextSelRowIdxs = n;
         }
       } else {
-        const s = meta ? new Set<string>(selRowKeys) : new Set<string>();
-        const idxs = [rowIdxByKey.get(rowKey)!, idxFrom];
+        const s = meta ? new Set<number>(selRowIdxs) : new Set<number>();
+        const idxs = [rowIdx, idxFrom];
         idxs.sort((a, b) => a - b);
-        const rowKeys = [];
+        const rowIdxs: number[] = [];
         for (let i = idxs[0]; i <= idxs[1]; ++i) {
-          rowKeys.push(rowKeyGetter(rowData[i], i));
+          rowIdxs.push(i);
         }
-        if (selRowKeys.has(rowKey)) {
-          rowKeys.forEach((k) => s.delete(k));
+        if (selRowIdxs.has(rowIdx)) {
+          rowIdxs.forEach((k) => s.delete(k));
         } else {
-          rowKeys.forEach((k) => s.add(k));
+          rowIdxs.forEach((k) => s.add(k));
         }
-        nextSelRowKeys = s;
-        nextLastSelRowKey = rowKey;
+        nextSelRowIdxs = s;
+        nextLastSelRowIdx = rowIdx;
       }
 
-      setSelRowKeys(nextSelRowKeys);
-      setLastSelRowKey(nextLastSelRowKey);
+      setSelRowIdxs(nextSelRowIdxs);
+      setLastSelRowIdx(nextLastSelRowIdx);
       if (onRowSelected) {
-        onRowSelected(
-          [...nextSelRowKeys.keys()].map((k) => rowData[rowIdxByKey.get(k)!])
-        );
+        onRowSelected(Array.from(nextSelRowIdxs.keys()));
       }
     },
     [
-      lastSelRowKey,
-      setSelRowKeys,
-      setLastSelRowKey,
+      lastSelRowIdx,
+      setSelRowIdxs,
+      setLastSelRowIdx,
       rowData,
-      rowIdxByKey,
       rowKeyGetter,
       onRowSelected,
     ]
   );
 
-  const isAllSelected = selRowKeys.size === rowData.length;
-  const isAnySelected = selRowKeys.size > 0;
+  const isAllSelected = selRowIdxs.size === rowData.length;
+  const isAnySelected = selRowIdxs.size > 0;
 
   const selectAll = useCallback(() => {
-    setSelRowKeys(new Set(rowData.map((d, i) => rowKeyGetter(d, i))));
+    const allRowIdxs = [...new Array(rowData.length).keys()].map((_, i) => i);
+    setSelRowIdxs(new Set(allRowIdxs));
     if (onRowSelected) {
-      onRowSelected(rowData);
+      onRowSelected(allRowIdxs);
     }
-  }, [rowData, setSelRowKeys]);
+  }, [rowData, setSelRowIdxs]);
 
   const unselectAll = useCallback(() => {
-    setSelRowKeys(new Set());
+    setSelRowIdxs(new Set());
     if (onRowSelected) {
       onRowSelected([]);
     }
-  }, [setSelRowKeys]);
+  }, [setSelRowIdxs]);
 
   const onMouseDown = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -740,7 +761,7 @@ export function useRowSelection<T>(
 
   return {
     onMouseDown,
-    selRowKeys,
+    selRowIdxs,
     isAllSelected,
     isAnySelected,
     selectRows,
@@ -767,7 +788,7 @@ export interface Target {
 // Also returns dragState and active target (the drop target nearest to current
 // mouse positions.
 export function useColumnMove<T = any>(
-  columnDnD: boolean | undefined,
+  columnMove: boolean | undefined,
   rootRef: RefObject<HTMLDivElement>,
   leftCols: GridColumnModel<T>[],
   midCols: GridColumnModel<T>[],
@@ -996,14 +1017,23 @@ export function cellRangeEquals(
 // TODO test the use case when cellSelectionMode changes during dnd.
 // Cell range selection. This is experimental.
 export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
-  const ref = useRef<{
+  const mouseSelectionRef = useRef<{
     unsubscribe: () => void;
     start: CellPosition;
   }>();
 
-  if (cellSelectionMode !== "range" && ref.current) {
-    ref.current.unsubscribe();
-    ref.current = undefined;
+  const keyboardSelectionRef = useRef<{
+    start: CellPosition;
+  }>();
+
+  if (cellSelectionMode !== "range") {
+    if (mouseSelectionRef.current) {
+      mouseSelectionRef.current.unsubscribe();
+      mouseSelectionRef.current = undefined;
+    }
+    if (keyboardSelectionRef.current) {
+      keyboardSelectionRef.current = undefined;
+    }
   }
 
   const [selectedCellRange, setSelectedCellRange] = useState<
@@ -1017,7 +1047,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
       const [rowIdx, colIdx] = getCellPosition(element);
 
       setSelectedCellRange((old) => {
-        const { start } = ref.current!;
+        const { start } = mouseSelectionRef.current!;
         const p: CellRange = { start, end: { rowIdx, colIdx } };
         return cellRangeEquals(old, p) ? old : p;
       });
@@ -1025,11 +1055,11 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   }, []);
 
   const onMouseUp = useCallback((event: MouseEvent) => {
-    if (!ref.current) {
+    if (!mouseSelectionRef.current) {
       throw new Error(`useRangeSelection state is not initialized`);
     }
-    ref.current.unsubscribe();
-    ref.current = undefined;
+    mouseSelectionRef.current.unsubscribe();
+    mouseSelectionRef.current = undefined;
   }, []);
 
   const onCellMouseDown = useCallback(
@@ -1043,7 +1073,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
         document.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
         const pos: CellPosition = { rowIdx, colIdx };
-        ref.current = {
+        mouseSelectionRef.current = {
           start: pos,
           unsubscribe: () => {
             document.removeEventListener("mouseup", onMouseUp);
@@ -1056,5 +1086,43 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     [cellSelectionMode]
   );
 
-  return { selectedCellRange, onCellMouseDown };
+  const onKeyboardRangeSelectionStart = useCallback((pos: CellPosition) => {
+    keyboardSelectionRef.current = {
+      start: pos,
+    };
+  }, []);
+
+  const onKeyboardRangeSelectionEnd = useCallback(() => {
+    keyboardSelectionRef.current = undefined;
+  }, []);
+
+  const onCursorMove = useCallback((pos: CellPosition) => {
+    if (!keyboardSelectionRef.current) {
+      return;
+    }
+    setSelectedCellRange((old) => {
+      const { start } = keyboardSelectionRef.current!;
+      const p: CellRange = { start, end: pos };
+      return cellRangeEquals(old, p) ? old : p;
+    });
+  }, []);
+
+  const selectRange = useCallback((range: CellRange) => {
+    setSelectedCellRange(range);
+  }, []);
+
+  return {
+    selectedCellRange,
+    onCellMouseDown,
+    onKeyboardRangeSelectionStart,
+    onKeyboardRangeSelectionEnd,
+    onCursorMove,
+    selectRange,
+  };
+}
+function useEffect(
+  arg0: () => void,
+  arg1: (GridRowSelectionMode | undefined)[]
+) {
+  throw new Error("Function not implemented.");
 }

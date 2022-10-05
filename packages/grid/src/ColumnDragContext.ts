@@ -1,7 +1,7 @@
 import { createContext, MouseEventHandler, useContext } from "react";
 
 export interface ColumnDragContext {
-  columnDnD?: boolean;
+  columnMove?: boolean;
   onColumnMoveHandleMouseDown: MouseEventHandler<HTMLDivElement>;
 }
 

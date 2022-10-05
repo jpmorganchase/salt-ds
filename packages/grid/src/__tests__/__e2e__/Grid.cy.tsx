@@ -173,9 +173,26 @@ describe("Grid", () => {
     expectFakeColumnWidth(240);
   });
 
-  // it("Text editor", () => {});
+  it("Dropdown editor", () => {
+    cy.mount(<GridExample />);
+    findCell(0, 2).dblclick({ force: true });
+    cy.findByTestId("grid-cell-editor-trigger")
+      .should("exist")
+      .type("{downArrow}")
+      .type("{Enter}");
+    findCell(0, 2).should("have.text", "Jersey City, NJ");
+  });
+
+  it("Numeric cell editor", () => {
+    cy.mount(<GridExample />);
+    findCell(0, 4).dblclick({ force: true });
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .type("3.1415")
+      .type("{Enter}");
+    findCell(0, 4).should("have.text", "3.14");
+  });
 
   // TODO column drag-n-drop
-  // TODO editors
   // TODO clipboard
 });

@@ -51,7 +51,10 @@ export const makeMapDeleter =
   (old: Map<K, V>) =>
     deleteMapItem(old, k);
 
-export const clamp = (x: number, min: number, max: number) => {
+export const clamp = (x: number | undefined, min: number, max: number) => {
+  if (x == undefined) {
+    x = 0;
+  }
   if (x < min) {
     return min;
   }

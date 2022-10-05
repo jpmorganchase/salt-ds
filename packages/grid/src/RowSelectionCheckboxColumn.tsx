@@ -2,12 +2,14 @@ import { RowSelectionCheckboxHeaderCell } from "./RowSelectionCheckboxHeaderCell
 import { RowSelectionCheckboxCellValue } from "./RowSelectionCheckboxCellValue";
 import { GridColumn, GridColumnProps } from "./GridColumn";
 
-export type RowSelectionColumnProps<T> = Omit<
+export type RowSelectionCheckboxColumnProps<T> = Omit<
   GridColumnProps<T>,
   "width" | "name"
 >;
 
-export function RowSelectionColumn<T>(props: RowSelectionColumnProps<T>) {
+export function RowSelectionCheckboxColumn<T>(
+  props: RowSelectionCheckboxColumnProps<T>
+) {
   return (
     <GridColumn
       {...props}
