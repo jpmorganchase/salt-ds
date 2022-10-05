@@ -8,7 +8,7 @@ import {
   GridColumnGroupExample,
   RowSelectionModesExample,
   ControlledRowSelectionExample,
-  CellCustomizationExample
+  CellCustomizationExample,
 } from "./grid.examples";
 import {
   DownloadIcon,
@@ -37,6 +37,8 @@ A Grid presents tabular information that has columns and rows.
 Grid is particularly useful if the tabular information is editable or interactive.
 Grid provides users with intuitive and efficient keyboard navigation, content editing, selection, copy and paste.
 
+Grid is virtualized. Only the visible part is rendered to the DOM.
+
 ## Configuring Grid
 
 Use the following call to import Grid.
@@ -58,7 +60,7 @@ Column separators can be enabled using `columnSeparators` property.
 
 <Canvas>
   <Story name="Grid Variants" decorators={[withFlexGap]}>
-    <GridVariantExample/>
+    <GridVariantExample />
   </Story>
 </Canvas>
 
@@ -116,9 +118,9 @@ In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintai
   </Story>
 </Canvas>
 
-#### Controlled mode 
+#### Controlled mode
 
-In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSelected` callback is invoked. 
+In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSelected` callback is invoked.
 Below is an example of two grids with synchronised selections.
 
 <Canvas>
