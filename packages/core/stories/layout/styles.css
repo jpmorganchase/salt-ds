@@ -285,7 +285,7 @@
 }
 
 @media (prefers-reduced-motion) {
-  .reduced-motion.uitkLayerLayout {
+  .reduced-motion .uitkLayerLayout, .reduced-motion .uitkScrim {
     animation: none;
   }
 }

@@ -249,9 +249,9 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
       </p>
-      <div className="layer-container">
+      <div className="layer-container reduced-motion">
         <Button onClick={show}>Open Layer</Button>
-        <LayerLayout isOpen={open} className="reduced-motion" {...args}>
+        <LayerLayout isOpen={open} {...args}>
           <LayerContentExample onClick={hide} />
         </LayerLayout>
       </div>
