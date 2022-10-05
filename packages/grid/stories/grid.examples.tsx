@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Story } from "@storybook/react";
 import {
   Grid,
   GridProps,
@@ -28,6 +29,12 @@ import {
 import { StarIcon } from "../../lab/src/contact-details/internal/StarIcon";
 import { FavoriteIcon, LinkedIcon } from "../../icons";
 
+export default {
+  title: "Examples",
+  component: Grid,
+  argTypes: {},
+};
+
 interface DummyRow {
   id: string;
   a: string;
@@ -45,7 +52,6 @@ const rowData: DummyRow[] = [...new Array(50)].map((_, i) => ({
 }));
 
 export const GridVariantExample = (props: Partial<GridProps<DummyRow>>) => {
-  const variants = [`primary`, `secondary`, `zebra`];
   const [separators, setSeparators] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -146,7 +152,7 @@ export const GridColumnGroupExample = (props: Partial<GridProps<DummyRow>>) => {
   );
 };
 
-export const RowSelectionModesExample = (
+export const RowSelectionModesExampleTemplate: Story<{}> = (
   props: Partial<GridProps<DummyRow>>
 ) => {
   const rowSelectionModes: GridRowSelectionMode[] = ["multi", "single", "none"];
@@ -377,3 +383,8 @@ export const CellCustomizationExample = () => {
     </Grid>
   );
 };
+export const RowSelectionModesExample = RowSelectionModesExampleTemplate.bind(
+  {}
+);
+
+RowSelectionModesExample.args = {};
