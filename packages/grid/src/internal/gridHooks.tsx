@@ -1081,7 +1081,6 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
           },
         };
         setSelectedCellRange({ start: pos, end: pos });
-        9;
       } catch (exc) {}
     },
     [cellSelectionMode]
