@@ -7,6 +7,8 @@ import {
   Children,
   cloneElement,
   isValidElement,
+  memo,
+  useRef,
 } from "react";
 import { useGridContext } from "./GridContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
@@ -111,8 +113,11 @@ export interface GridColumnInfo<T> {
   props: GridColumnProps<T>;
 }
 
-export function GridColumn<T = any>(props: GridColumnProps<T>) {
+export const GridColumn = function GridColumn<T = any>(
+  props: GridColumnProps<T>
+) {
   const { defaultWidth } = props;
+  const indexRef = useRef<number>();
   const [width, setWidth] = useState<number>(
     defaultWidth !== undefined ? defaultWidth : 100
   );
@@ -124,7 +129,8 @@ export function GridColumn<T = any>(props: GridColumnProps<T>) {
     }
   };
 
-  const table = useGridContext();
+  const grid = useGridContext();
+
   const info: GridColumnInfo<T> = {
     width,
     onWidthChanged,
@@ -132,9 +138,10 @@ export function GridColumn<T = any>(props: GridColumnProps<T>) {
   };
 
   useEffect(() => {
-    table.onColumnAdded(info);
+    indexRef.current = grid.getChildIndex(props.id);
+    grid.onColumnAdded(info);
     return () => {
-      table.onColumnRemoved(info);
+      grid.onColumnRemoved(indexRef.current!, info);
     };
   });
 
@@ -147,4 +154,4 @@ export function GridColumn<T = any>(props: GridColumnProps<T>) {
       )}
     </>
   );
-}
+};
