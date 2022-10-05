@@ -16,7 +16,11 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   };
 
   return (
-    <div className="uitkGridCheckboxContainer" onMouseDown={onMouseDown}>
+    <div
+      className="uitkGridCheckboxContainer"
+      data-testid="grid-row-selection-checkbox"
+      onMouseDown={onMouseDown}
+    >
       <CheckboxIcon checked={isSelected} />
     </div>
   );

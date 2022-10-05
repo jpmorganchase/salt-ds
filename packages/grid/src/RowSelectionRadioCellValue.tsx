@@ -1,4 +1,4 @@
-import { makePrefixer, RadioButtonIcon } from "@jpmorganchase/uitk-core";
+import { RadioButtonIcon } from "@jpmorganchase/uitk-core";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import { MouseEventHandler } from "react";
@@ -16,7 +16,11 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
   };
 
   return (
-    <div className="uitkGridCheckboxContainer" onMouseDown={onMouseDown}>
+    <div
+      className="uitkGridCheckboxContainer"
+      onMouseDown={onMouseDown}
+      data-testid="grid-row-selection-radiobox"
+    >
       <RadioButtonIcon checked={isSelected} />
     </div>
   );

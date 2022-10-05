@@ -1,10 +1,14 @@
 import { composeStories } from "@storybook/testing-react";
-import * as buttonStories from "@stories/grid.stories";
+import * as gridStories from "@stories/grid.stories";
+import * as gridExamples from "@stories/grid.examples";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(buttonStories);
+const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
   composedStories;
+
+const composedExample = composeStories(gridExamples);
+const { RowSelectionModesExample } = composedExample;
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -191,6 +195,22 @@ describe("Grid", () => {
       .type("3.1415")
       .type("{Enter}");
     findCell(0, 4).should("have.text", "3.14");
+  });
+
+  it("Handles switching between different selection modes", () => {
+    cy.mount(<RowSelectionModesExample />);
+
+    cy.findByLabelText("multi").click();
+    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 5);
+    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
+
+    cy.findByLabelText("single").click();
+    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 5);
+    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
+
+    cy.findByLabelText("none").click();
+    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
+    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
   });
 
   // TODO column drag-n-drop
