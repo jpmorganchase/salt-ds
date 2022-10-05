@@ -237,8 +237,8 @@
 }
 
 .layer-simple-usage p,
-.layer-simple-usage h1,
-.layer-simple-usage h2 {
+.layer-simple-usage h2,
+.layer-simple-usage h3 {
   margin: 0;
 }
 
