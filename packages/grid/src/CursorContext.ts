@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 
 export interface CursorContext {
-  cursorRowKey: string | undefined;
-  cursorColKey: string | undefined;
+  cursorRowIdx: number | undefined;
+  cursorColIdx: number | undefined;
   moveCursor: (rowIdx: number, colIdx: number) => void;
 }
 

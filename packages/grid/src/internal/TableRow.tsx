@@ -21,11 +21,11 @@ export interface TableRowProps<T> {
   isHoverOver?: boolean;
   zebra?: boolean;
   columns: GridColumnModel<T>[];
-  cursorColKey?: string;
+  cursorColIdx?: number;
   onMouseEnter?: MouseEventHandler<HTMLTableRowElement>;
   onMouseLeave?: MouseEventHandler<HTMLTableRowElement>;
   gap?: number;
-  editorColKey?: string;
+  editorColIdx?: number;
   isCellSelected?: (rowIdx: number, colIdx: number) => boolean;
 }
 
@@ -38,9 +38,9 @@ export function TableRow<T>(props: TableRowProps<T>) {
     columns,
     onMouseEnter,
     onMouseLeave,
-    cursorColKey,
+    cursorColIdx,
     gap,
-    editorColKey,
+    editorColIdx,
     isCellSelected,
   } = props;
 
@@ -65,12 +65,15 @@ export function TableRow<T>(props: TableRowProps<T>) {
     >
       {columns.map((column, i) => {
         const colKey = column.info.props.id;
-        if (editorColKey === colKey) {
-          const editorInfo = grid.getEditor(column.info.props.id);
-          if (editorInfo) {
+        const editorInfo = grid.getEditor(column.info.props.id);
+        const isEditable = !!editorInfo;
+
+        if (editorColIdx === column.index) {
+          if (isEditable) {
             if (isValidElement(editorInfo.children)) {
               const editorElement = Children.only(editorInfo.children);
               return cloneElement(editorElement, {
+                key: colKey,
                 row,
                 column,
               } as any);
@@ -81,10 +84,11 @@ export function TableRow<T>(props: TableRowProps<T>) {
         const Cell = column.info.props.cellComponent || BaseCell;
         const CellValue =
           column.info.props.cellValueComponent || DefaultCellValue;
-        const value = column.info.props.getValue
-          ? column.info.props.getValue(row.data)
-          : null;
-        const isFocused = cursorColKey === colKey;
+        const value =
+          column.info.props.getValue && row.data
+            ? column.info.props.getValue(row.data)
+            : null;
+        const isFocused = cursorColIdx === column.index;
         const isSelected =
           isCellSelected && isCellSelected(row.index, column.index);
 
@@ -95,6 +99,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             column={column}
             isFocused={isFocused}
             isSelected={isSelected}
+            isEditable={isEditable}
           >
             <CellValue column={column} row={row} value={value} />
           </Cell>

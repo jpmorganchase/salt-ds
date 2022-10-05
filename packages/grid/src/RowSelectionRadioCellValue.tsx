@@ -6,9 +6,9 @@ import "./CheckboxCell.css";
 
 export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
   const { row } = props;
-  const { selRowKeys, selectRows } = useSelectionContext();
+  const { selRowIdxs, selectRows } = useSelectionContext();
 
-  const isSelected = selRowKeys.has(row.key);
+  const isSelected = selRowIdxs.has(row.index);
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     selectRows(row.index, false, false);
     event.preventDefault();
