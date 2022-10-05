@@ -1,5 +1,8 @@
 import React, {
+  Children,
+  cloneElement,
   CSSProperties,
+  isValidElement,
   KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
@@ -822,6 +825,9 @@ export const Grid = function <T>(props: GridProps<T>) {
             <CursorContext.Provider value={cursorContext}>
               <SizingContext.Provider value={sizingContext}>
                 <EditorContext.Provider value={editorContext}>
+                  {/*{Children.map(props.children, (ch, index) =>*/}
+                  {/*  isValidElement(ch) ? cloneElement(ch, { index } as any) : ch*/}
+                  {/*)}*/}
                   {props.children}
                   <div
                     className={cx(

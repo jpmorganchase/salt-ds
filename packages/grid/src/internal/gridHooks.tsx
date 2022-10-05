@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   RefObject,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -534,13 +535,19 @@ export function useColumnRegistry<T>(children: ReactNode) {
   };
   chPosById.current = indexChildren();
 
-  const getChildIndex = (id: string): number => {
+  const getChildIndex = useCallback((id: string): number => {
     const idx = chPosById.current.get(id);
     if (idx === undefined) {
+      console.log(`Unknown child id "${id}"`);
+      console.log(
+        `Known ids: ${Array.from(chPosById.current.keys())
+          .map((x) => `"${x}"`)
+          .join(", ")}`
+      );
       throw new Error(`Unknown child id: "${id}"`);
     }
     return idx;
-  };
+  }, []);
 
   const getColMapSet = (pinned?: GridColumnPin) =>
     pinned === "left"
@@ -551,17 +558,21 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnAdded = useCallback((columnInfo: GridColumnInfo<T>) => {
     // console.log(
-    //   `Column added: "${columnInfo.props.name}"; pinned: ${columnInfo.props.pinned}`
+    //   `Column added: "${columnInfo.props.id}"; pinned: ${columnInfo.props.pinned}`
     // );
     const { id, pinned } = columnInfo.props;
-    getColMapSet(pinned)(makeMapAdder(getChildIndex(id), columnInfo));
+    const index = getChildIndex(id);
+    getColMapSet(pinned)(makeMapAdder(index, columnInfo));
   }, []);
 
-  const onColumnRemoved = useCallback((columnInfo: GridColumnInfo<T>) => {
-    const { id, pinned } = columnInfo.props;
-    getColMapSet(pinned)(makeMapDeleter(getChildIndex(id)));
-    // console.log(`Column removed: "${columnProps.name}"`);
-  }, []);
+  const onColumnRemoved = useCallback(
+    (index: number, columnInfo: GridColumnInfo<T>) => {
+      const { id, pinned } = columnInfo.props;
+      getColMapSet(pinned)(makeMapDeleter(index));
+      // console.log(`Column removed: "${columnInfo.props.id}"`);
+    },
+    []
+  );
 
   const getGrpMapSet = (pinned?: GridColumnPin) =>
     pinned === "left"
@@ -577,9 +588,9 @@ export function useColumnRegistry<T>(children: ReactNode) {
   }, []);
 
   const onColumnGroupRemoved = useCallback(
-    (colGroupProps: ColumnGroupProps) => {
+    (index: number, colGroupProps: ColumnGroupProps) => {
       const { id, pinned } = colGroupProps;
-      getGrpMapSet(pinned)(makeMapDeleter(getChildIndex(id)));
+      getGrpMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Group removed: "${colGroupProps.name}"`);
     },
     []
@@ -604,6 +615,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const contextValue: GridContext<T> = useMemo(
     () => ({
+      getChildIndex,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,
@@ -613,6 +625,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
       getEditor,
     }),
     [
+      getChildIndex,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,
@@ -1119,10 +1132,4 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     onCursorMove,
     selectRange,
   };
-}
-function useEffect(
-  arg0: () => void,
-  arg1: (GridRowSelectionMode | undefined)[]
-) {
-  throw new Error("Function not implemented.");
 }
