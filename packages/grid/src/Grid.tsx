@@ -161,7 +161,7 @@ function defaultRowKeyGetter<T>(row: T, index: number): string {
   return `${index}`;
 }
 
-export const Grid = function <T>(props: GridProps<T>) {
+export const Grid = function Grid<T>(props: GridProps<T>) {
   const {
     rowData,
     zebra,
@@ -567,9 +567,12 @@ export const Grid = function <T>(props: GridProps<T>) {
     [cursorRowIdx, cursorColIdx, moveCursor]
   );
 
-  const onColumnMove = (fromIndex: number, toIndex: number) => {
+  const onColumnMove: GridColumnMoveHandler = (
+    columnId,
+    fromIndex,
+    toIndex
+  ) => {
     if (onColumnMoved && fromIndex !== toIndex) {
-      const columnId = cols[fromIndex].info.props.id;
       onColumnMoved(columnId, fromIndex, toIndex);
     }
   };
@@ -581,6 +584,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       leftCols,
       midCols,
       rightCols,
+      cols,
       scrollLeft,
       clientMidWidth,
       onColumnMove

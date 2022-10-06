@@ -1,6 +1,6 @@
 .grid {
   height: 200px;
-  width: 600px;
+  width: 958px;
 }
 
 .grid-small {
@@ -10,7 +10,7 @@
 
 .grid-column-groups {
   height: 200px;
-  width: 600px;
+  width: 958px;
 }
 
 .bidAskCellValue {
@@ -37,4 +37,9 @@
 
 .buttons {
   height: 100%;
+}
+
+.grid-css-customization {
+  height: 800px;
+  width: 958px;
 }

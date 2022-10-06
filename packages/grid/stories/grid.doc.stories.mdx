@@ -9,6 +9,7 @@ import {
   RowSelectionModesExample,
   ControlledRowSelectionExample,
   CellCustomizationExample,
+  CssVariablesExample,
 } from "./grid.examples";
 import {
   DownloadIcon,
@@ -150,12 +151,6 @@ export const Link = ({ children, to, ...props }) => (
   </a>
 );
 
-<Canvas>
-  <ComponentAnatomy>
-    <GridAnatomyExample />
-  </ComponentAnatomy>
-</Canvas>
-
 ### CSS Class
 
 <CSSClassTable of={Grid} />
@@ -170,10 +165,16 @@ The default styling values for most Grid attributes are provided by the theme va
 use hard-coded values local to Grid. Both of these can be overridden, see Theme documentation for detailed usage guidance.
 
 The CSS custom properties below are consumed by Grid, but not defined by Grid. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+a custom class name to override grid styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
-<CSSVariableTable of={Grid} />
+The grid below is editable. Change the values of CSS variables to see the effect of applying them to the grid.
+
+<Canvas>
+  <Story name="CSS variables customization" decorators={[withFlexGap]}>
+    <CssVariablesExample />
+  </Story>
+</Canvas>
 
 # Help and support
 

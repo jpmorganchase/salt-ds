@@ -17,6 +17,7 @@ import {
   GridRowModel,
   GridRowSelectionMode,
   GridCellSelectionMode,
+  GridColumnMoveHandler,
 } from "../Grid";
 import { ColumnGroupProps } from "../ColumnGroup";
 import { NumberRange } from "../NumberRange";
@@ -806,9 +807,10 @@ export function useColumnMove<T = any>(
   leftCols: GridColumnModel<T>[],
   midCols: GridColumnModel<T>[],
   rightCols: GridColumnModel<T>[],
+  cols: GridColumnModel<T>[],
   scrollLeft: number,
   clientMidWidth: number,
-  onColumnMove: (fromIndex: number, toIndex: number) => void
+  onColumnMove: GridColumnMoveHandler
 ) {
   const moveRef = useRef<{
     unsubscribe: () => void;
@@ -818,8 +820,9 @@ export function useColumnMove<T = any>(
     startHeaderY: number;
 
     columnIndex: number;
+    columnId: string;
     dragTriggered: boolean;
-    onColumnMove: (fromIndex: number, toIndex: number) => void;
+    onColumnMove: GridColumnMoveHandler;
   }>();
 
   const activeTargetRef = useRef<Target | undefined>(undefined);
@@ -847,13 +850,15 @@ export function useColumnMove<T = any>(
   const columnDrop = useCallback(() => {
     const toIndex = activeTargetRef.current?.columnIndex;
     const fromIndex = moveRef.current?.columnIndex;
+    const columnId = moveRef.current?.columnId;
     const handler = moveRef.current?.onColumnMove;
     if (
       toIndex !== undefined &&
       fromIndex !== undefined &&
-      handler !== undefined
+      handler !== undefined &&
+      columnId !== undefined
     ) {
-      handler(fromIndex, toIndex);
+      handler(columnId, fromIndex, toIndex);
     }
     setDragState(undefined);
   }, [setDragState]);
@@ -909,6 +914,7 @@ export function useColumnMove<T = any>(
         document.addEventListener("mousemove", onMouseMove);
 
         const columnIndex = parseInt(columnIndexAttribute, 10);
+        const columnId = cols[columnIndex].info.props.id;
 
         const thRect = thElement.getBoundingClientRect();
         const rootRect = rootElement!.getBoundingClientRect();
@@ -926,13 +932,14 @@ export function useColumnMove<T = any>(
           startHeaderX: x,
           startHeaderY: y,
           columnIndex,
+          columnId,
           dragTriggered: false,
           onColumnMove,
         };
 
         event.preventDefault();
       },
-      [columnDragStart]
+      [columnDragStart, cols]
     );
 
   const targets = useMemo(() => {
