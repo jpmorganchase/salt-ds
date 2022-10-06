@@ -1,5 +1,11 @@
 # @jpmorganchase/uitk-icons
 
+## 0.4.1
+
+### Patch Changes
+
+- d208f8b1: Fix circular dependencies warning
+
 ## 0.4.0
 
 ### Minor Changes
