@@ -37,6 +37,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       data-column-index={column.index}
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
+      data-testid="column-header"
     >
       <div
         className={cn(withBaseName("valueContainer"), {
@@ -76,6 +77,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
       data-column-index={column.index}
       className={withBaseName()}
       role="columnheader"
+      data-testid="column-header"
     >
       <div className={withBaseName("autosizeContainer")}>
         <div
