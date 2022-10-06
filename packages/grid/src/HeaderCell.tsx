@@ -70,7 +70,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
     if (width != undefined && width !== column.info.width) {
       resizeColumn(column.index, width);
     }
-  }); //, [valueContainerRef.current, column.info.width, rowHeight]);
+  });
 
   return (
     <th
