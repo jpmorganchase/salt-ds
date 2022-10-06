@@ -14,20 +14,13 @@ export const FormHelperText = <E extends React.ElementType = "p">({
   helperTextPlacement,
   ...restProps
 }: FormHelperTextProps<E>) => {
-  if (helperText) {
-    if (helperTextPlacement === "bottom") {
-      return (
-        <p className={`uitkFormFieldHelperText`} {...restProps}>
-          {helperText}
-        </p>
-      );
-    } else if (helperTextPlacement === "tooltip") {
-      console.warn("helperTextPlacement tooltip has not yet implemented");
-      return null;
-    } else {
-      return null;
-    }
-  } else {
-    return null;
-  }
+  if (!helperText) return null;
+
+  if (helperTextPlacement !== "bottom") return null;
+
+  return (
+    <p className={`uitkFormFieldHelperText`} {...restProps}>
+      {helperText}
+    </p>
+  );
 };
