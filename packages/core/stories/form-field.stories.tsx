@@ -2,6 +2,7 @@ import {
   FormField,
   FormFieldProps,
   Input,
+  StackLayout,
   ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
@@ -46,36 +47,41 @@ export const LowEmphasis: ComponentStory<typeof FormField> = () => (
 );
 
 export const HighEmphasis: ComponentStory<typeof FormField> = () => (
-  <div
-    style={{
-      display: "grid",
-      rowGap: "20px",
-      columnGap: "20px",
-      gridTemplateColumns: "auto auto",
-      padding: "20px 20px",
-    }}
-  >
-    <div style={{ width: "200px" }}>
-      <h3>High emphasis</h3>
-      <FormField
-        label="High emphasis form field"
-        helperText="Helper text value"
-        className="uitkEmphasisHigh"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
-      <h3>High emphasis with disabled outer ring</h3>
-      <FormField
-        label="Low emphasis form field"
-        helperText="Helper text value"
-        disableFocusRing
-        className="uitkEmphasisHigh"
-      >
-        <Input defaultValue="Value" />
-      </FormField>
-    </div>
+  <div style={{ width: "300px" }}>
+    <StackLayout gap={2}>
+      <div>
+        <h3>High emphasis</h3>
+        <FormField
+          label="High emphasis form field"
+          helperText="Helper text value"
+          className="uitkEmphasisHigh"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div>
+        <h3>Disabled outer ring</h3>
+        <FormField
+          label="High emphasis form field"
+          helperText="Helper text value"
+          disableFocusRing
+          className="uitkEmphasisHigh"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+      <div>
+        <h3>Left aligned label</h3>
+        <FormField
+          label="High emphasis form field"
+          helperText="Helper text value"
+          className="uitkEmphasisHigh"
+          labelPlacement="left"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+    </StackLayout>
   </div>
 );
 
@@ -101,9 +107,28 @@ export const Readonly: ComponentStory<typeof FormField> = () => (
 
 export const HelperText: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
-    <FormField label="Helper Text Form Field" helperText="Helper text value">
-      <Input defaultValue="Value" />
-    </FormField>
+    <StackLayout gap={2}>
+      <div>
+        <h3>Default helper text</h3>
+        <FormField
+          label="Helper Text Form Field"
+          helperText="Helper text value"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+
+      <div>
+        <h3>Helper text in tooltip</h3>
+        <FormField
+          label="Helper Text Form Field"
+          helperText="Helper text value"
+          helperTextPlacement="tooltip"
+        >
+          <Input defaultValue="Value" />
+        </FormField>
+      </div>
+    </StackLayout>
   </div>
 );
 
