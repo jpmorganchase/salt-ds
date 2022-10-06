@@ -193,6 +193,7 @@ export const RowSelectionModesExampleTemplate: Story<{}> = (
         columnSeparators={true}
         zebra={true}
         {...props}
+        rowSelectionMode={rowSelectionMode}
       >
         {rowSelectionMode === "multi" && (
           <RowSelectionCheckboxColumn id="checkbox" />
