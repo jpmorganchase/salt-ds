@@ -1,5 +1,44 @@
 # @jpmorganchase/uitk-lab
 
+## 0.6.0
+
+### Minor Changes
+
+- 3aac68ac: Ensure component tokens start with their full name, as well as for any subcomponents, in all private and public tokens. Examples: --uitkCheckboxIcon- -> --uitkCheckbox-icon-, --uitkAccordionSummary- -> --uitkAccordion-summary-, --formHelperText -> --formField-helperText
+- 5d8e5c74: Focus visible API removed from components; always use theme characteristics directly for focus visible styling
+- 320ecdad: - `FormField`
+  - Rename `FormFieldValidationState` type to `FormFieldValidationStatus`
+  - Rename `validationState` prop to `validationStatus`
+    - `FormLabel`
+      - Rename `validationState` prop to `validationStatus`
+    - `StatusIndicator`
+      - Rename `StateIndicatorState` type to `StatusIndicatorStatus`
+      - Rename `state` prop to `status`
+  - `Tooltip`
+    - Rename `TooltipState` type to `TooltipStatus`
+    - Rename `state` prop to `status`
+    - Rename `getIconForState` file to `getIconForStatus`
+  - `Dialog`
+    - Rename `state` prop to `status`
+      - `DialogContext`
+        - Rename `state` context to `status`
+- 52c5afe0: Fix Linear Progress font-size css
+- 9d50a574: Provides higher specificity for characteristic override on component (Tabs) with uitkFocusVisible class
+- 0f69ab38: Rename `StateIcon` component to `StatusIcon`
+  Rename `state` prop in `StatusIcon` to `status`
+- 563ac7ca: Move `Deck` and `Layer` components from Lab to Core
+  Move responsive functions `useResizeObserver` and `useWidth` from Lab to Core
+  Move utils function `usePrevious` from Lab to Core
+- 36f2b09f: - List ref is forwarded to its container HTML element, use `scrollingApiRef` for scrolling
+  - Fix empty source passed to VirtualizedList will throw error
+  - Fixes `uitkHighlighted` className applied to VirtualizedList highlighted item, instead of `uitkListItem-highlighted`
+
+### Patch Changes
+
+- 1f2fc236: Remove import directly from `src` so consumers won't encounter
+  TS error if `skipLibCheck` is set to false.
+- d208f8b1: Fix circular dependencies warning
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @jpmorganchase/uitk-theme
 
+## 0.5.0
+
+### Minor Changes
+
+- 3aac68ac: Ensure component tokens start with their full name, as well as for any subcomponents, in all private and public tokens. Examples: --uitkCheckboxIcon- -> --uitkCheckbox-icon-, --uitkAccordionSummary- -> --uitkAccordion-summary-, --formHelperText -> --formField-helperText
+
 ## 0.4.0
 
 ### Minor Changes
