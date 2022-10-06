@@ -203,14 +203,28 @@ describe("Grid", () => {
     cy.findByLabelText("multi").click();
     cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 5);
     cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
+    cy.findAllByTestId("column-header").should("have.length", 4);
+    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+    cy.findAllByTestId("column-header").eq(3).should("have.text", "");
 
     cy.findByLabelText("single").click();
     cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 5);
     cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
+    cy.findAllByTestId("column-header").should("have.length", 4);
+    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+    cy.findAllByTestId("column-header").eq(3).should("have.text", "");
 
     cy.findByLabelText("none").click();
     cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
     cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
+    cy.findAllByTestId("column-header").should("have.length", 3);
+    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
   });
 
   // TODO column drag-n-drop
