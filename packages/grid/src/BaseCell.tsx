@@ -13,9 +13,16 @@ export function getCellId<T>(rowKey: string, column: GridColumnModel<T>) {
 // Default component for grid cells. Provides selection, on-hover highlighting,
 // cursor etc.
 export function BaseCell<T>(props: GridCellProps<T>) {
-  const { column, className, row, style, isFocused, isSelected, children } =
-    props;
-  const isEditable = column.info.props.editable;
+  const {
+    column,
+    className,
+    row,
+    style,
+    isFocused,
+    isSelected,
+    isEditable,
+    children,
+  } = props;
 
   return (
     <td

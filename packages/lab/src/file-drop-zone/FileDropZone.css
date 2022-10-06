@@ -7,6 +7,8 @@
   --fileDropZone-text-color: var(--uitk-text-primary-foreground);
   --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
   --fileDropZone-padding: calc(var(--uitk-size-unit) * 3);
+  --fileDropZone-title-fontSize: var(--uitk-text-fontSize);
+  --fileDropZone-title-lineHeight: var(--uitk-text-lineHeight);
 }
 
 .uitkFileDropZone {
@@ -64,8 +66,8 @@
 /* Styles applied to title and description */
 .uitkFileDropZone-title,
 .uitkFileDropZone-description {
-  font-size: var(--uitkFileDropZone-title-fontSize, var(--uitk-text-fontSize));
-  line-height: var(--uitkFileDropZone-title-lineHeight, var(--uitk-text-lineHeight));
+  font-size: var(--uitkFileDropZone-title-fontSize, var(--fileDropZone-title-fontSize));
+  line-height: var(--uitkFileDropZone-title-lineHeight, var(--fileDropZone-title-lineHeight));
 }
 
 /* Styles applied to title */
@@ -103,16 +105,16 @@
   --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
 }
 
+/* TK1 Backwards compatibility */
+
 .backwardsCompat.uitkFileDropZone {
-  --uitkFileDropZone-title-lineHeight: 1.3;
+  --fileDropZone-title-lineHeight: var(--uitk-text-base-lineHeight);
 }
 
 .backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-icon,
 .backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-title {
-  --fileDropZone-text-color: var(--uitk-text-primary-foreground);
-  --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
-
-  opacity: 0.4;
+  --fileDropZone-text-color: var(--uitk-text-primary-foreground-disabled);
+  --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
 }
 
 .backwardsCompat.uitkFileDropZone-error {

@@ -17,7 +17,7 @@ export interface TableBodyProps<T> {
 
 export function TableBody<T>(props: TableBodyProps<T>) {
   const { columns, rows, hoverRowKey, setHoverRowKey, gap, zebra } = props;
-  const { selRowKeys, selectedCellRange } = useSelectionContext();
+  const { selRowIdxs, selectedCellRange } = useSelectionContext();
 
   const isCellInSelectedRange = useCallback(
     (rowIdx: number, colIdx: number) => {
@@ -39,7 +39,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     [selectedCellRange]
   );
 
-  const { cursorRowKey, cursorColKey } = useCursorContext();
+  const { cursorRowIdx, cursorColIdx } = useCursorContext();
 
   const { editMode, startEditMode } = useEditorContext();
 
@@ -60,9 +60,9 @@ export function TableBody<T>(props: TableBodyProps<T>) {
   return (
     <tbody onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
       {rows.map((row) => {
-        const isSelected = selRowKeys.has(row.key);
-        const cursorKey = cursorRowKey === row.key ? cursorColKey : undefined;
-        const editorColKey = editMode ? cursorKey : undefined;
+        const isSelected = selRowIdxs.has(row.index);
+        const cursorIdx = cursorRowIdx === row.index ? cursorColIdx : undefined;
+        const editorColIdx = editMode ? cursorIdx : undefined;
         return (
           <TableRow
             key={row.key}
@@ -71,10 +71,10 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             columns={columns}
             isHoverOver={row.key === hoverRowKey}
             isSelected={isSelected}
-            cursorColKey={cursorKey}
+            cursorColIdx={cursorIdx}
             gap={gap}
             zebra={zebra && row.index % 2 == 0}
-            editorColKey={editorColKey}
+            editorColIdx={editorColIdx}
             isCellSelected={isCellInSelectedRange}
           />
         );

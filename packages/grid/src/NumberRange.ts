@@ -16,7 +16,7 @@ export function range(
   return [...Array(end - start).keys()].map((i) => start + i * step);
 }
 
-export class Rng {
+export class NumberRange {
   public readonly start: number;
   public readonly end: number;
 
@@ -46,7 +46,7 @@ export class Rng {
     }
   }
 
-  public static equals(a: Rng | undefined, b: Rng | undefined) {
+  public static equals(a: NumberRange | undefined, b: NumberRange | undefined) {
     if (!a) {
       return !b;
     }
@@ -55,11 +55,11 @@ export class Rng {
 
   public update(start: number, end: number) {
     return this.end !== end || this.start !== start
-      ? new Rng(start, end)
+      ? new NumberRange(start, end)
       : this;
   }
 
-  public static empty: Rng = new Rng(0, 0);
+  public static empty: NumberRange = new NumberRange(0, 0);
 
   public toString() {
     return `[${this.start}, ${this.end}]`;

@@ -3,6 +3,7 @@
   --breadcrumbs-crumb-color-hover: var(--uitkBreadcrumbs-crumb-color-hover, var(--uitk-actionable-primary-foreground-hover));
   --breadcrumbs-crumb-color-active: var(--uitkBreadcrumbs-crumb-color-active, var(--uitk-actionable-primary-foreground-active));
   --breadcrumbs-crumb-icon-color: var(--uitkBreadcrumbs-crumb-icon-color, var(--breadcrumbs-crumb-color));
+  --breadcrumbs-crumb-marginLeft: 0px;
 }
 
 .uitkBreadcrumb {
@@ -46,6 +47,7 @@
 
 .uitkBreadcrumb-icon {
   color: var(--breadcrumbs-crumb-icon-color);
+  margin-left: var(--uitkBreadcrumbs-crumb-marginLeft, var(--breadcrumbs-crumb-marginLeft));
 }
 
 .uitkBreadcrumb-justifyContentCenter {
@@ -56,14 +58,12 @@
   text-decoration: underline;
 }
 
-/* --- backwards compatible --- */
+/* TK1 backwards compatibility */
 
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb {
-  padding: 0px;
+.backwardsCompat.uitkBreadcrumbs {
+  --breadcrumbs-crumb-marginLeft: 1px;
 }
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon {
-  margin-left: 1px;
-}
+
 .backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon:only-child {
-  margin: 0;
+  --breadcrumbs-crumb-marginLeft: 0px;
 }
