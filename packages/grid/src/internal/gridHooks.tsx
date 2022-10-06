@@ -683,6 +683,15 @@ export function useRowSelection<T>(
     undefined
   );
 
+  useEffect(() => {
+    if (
+      (rowSelectionMode === "none" && selRowIdxs.size > 0) ||
+      (rowSelectionMode === "single" && selRowIdxs.size > 1)
+    ) {
+      setSelRowIdxs(new Set());
+    }
+  }, [rowSelectionMode, selRowIdxs, setSelRowIdxs]);
+
   const selectRows = useCallback(
     (rowIdx: number, shift: boolean, meta: boolean) => {
       const idxFrom =
@@ -770,7 +779,7 @@ export function useRowSelection<T>(
         selectRows(rowIdx, event.shiftKey, event.metaKey || event.ctrlKey);
       } catch (e) {}
     },
-    [selectRows]
+    [selectRows, rowSelectionMode]
   );
 
   return {
