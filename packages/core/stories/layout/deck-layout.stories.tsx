@@ -18,7 +18,7 @@ export default {
 const deckCards = (slides: number) =>
   Array.from({ length: slides }, (_, index) => (
     <Card key={index}>
-      <h2>{`Deck Item ${index + 1}`}</h2>
+      <h2 id="deck_item_title">{`Deck Item ${index + 1}`}</h2>
       <p>
         We can implement your cross-border liquidity model in just a few months,
         depending on the options, scope and complexity.
@@ -48,7 +48,14 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
     <>
       <button onClick={handleDecrease}>Previous</button>
       <button onClick={handleIncrease}>Next</button>
-      <DeckLayout {...args} activeIndex={currentIndex}>
+      <DeckLayout
+        {...args}
+        activeIndex={currentIndex}
+        deckItemProps={{
+          "aria-roledescription": "slide",
+          "aria-labelledby": "deck_item_title",
+        }}
+      >
         {deckCards(slides)}
       </DeckLayout>
     </>
@@ -75,7 +82,11 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
           <Tab label={label} key={i} />
         ))}
       </Tabstrip>
-      <DeckLayout activeIndex={activeTabIndex} {...args}>
+      <DeckLayout
+        activeIndex={activeTabIndex}
+        deckItemProps={{ role: "tabpanel" }}
+        {...args}
+      >
         {tabs.map((tab, index) => {
           return (
             <Card key={index}>
