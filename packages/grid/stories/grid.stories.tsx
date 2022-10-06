@@ -701,6 +701,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     fromIndex: number,
     toIndex: number
   ) => {
+    console.log(`Column "${columnId}" moved from ${fromIndex} to ${toIndex}`);
     setColumnIds((old) => {
       const col = old[fromIndex];
       if (fromIndex < toIndex) {

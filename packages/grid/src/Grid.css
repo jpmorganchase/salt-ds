@@ -185,6 +185,7 @@
   --backwardsCompat-controlLabel-right-marginRight: 4px;
 }
 
+/* Styles applied to the root element */
 .uitkGrid {
   --grid-cell-padding: 0 var(--grid-padding);
 
@@ -269,8 +270,6 @@
 }
 
 .uitkGrid {
-  /*height: 600px;*/
-  /*width: 800px;*/
   position: relative;
   outline: none;
   user-select: none;
@@ -290,14 +289,17 @@
   border: solid 1px var(--grid-borderColor);
 }
 
+/* Styles applied to the root element if variant="primary" */
 .uitkGrid-primaryBackground {
   background: var(--grid-background-primary);
 }
 
+/* Styles applied to the root element if variant="secondary" */
 .uitkGrid-secondaryBackground {
   background: var(--grid-background-secondary);
 }
 
+/* Styles applied to the root element if zebra is enabled */
 .uitkGrid.uitkGrid-zebra {
   --grid-rowDivider-color: transparent;
 }

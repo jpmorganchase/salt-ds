@@ -1,7 +1,7 @@
 .uitkGridTableRow {
   height: var(--grid-row-height);
   /* Row border doesn't render properly in Chrome on Windows. Applying borders to cells */
-  --grid-row-borderColor: var(--grid-rowDivider-color);
+  --grid-row-borderColor: var(--uitkGrid-rowDivider-color, var(--grid-rowDivider-color));
 }
 
 .uitkGridTableRow th {
@@ -11,38 +11,38 @@
 }
 
 .uitkGridTableRow-selected + .uitkGridTableRow {
-  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+  --grid-row-borderColor: var(--uitkGrid-row-borderColor-selected, var(--grid-row-borderColor-selected));
 }
 
 .uitkGridTableRow-divided {
-  --grid-row-borderColor: var(--grid-rowDivider-color-divided);
+  --grid-row-borderColor: var(--uitkGrid-rowDivider-color-divided, var(--grid-rowDivider-color-divided));
 }
 
 .uitkGridTableRow-zebra {
-  background: var(--grid-zebraColor);
+  background: var(--uitkGrid-zebraColor, var(--grid-zebraColor));
 }
 
 .uitkGridTableRow-hover {
-  background: var(--grid-row-background-hover);
+  background: var(--uitkGrid-row-background-hover, var(--grid-row-background-hover));
 }
 
 .uitkGridTableRow-selected {
-  background: var(--grid-row-background-selected);
-  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+  background: var(--uitkGrid-row-background-selected, var(--grid-row-background-selected));
+  --grid-row-borderColor: var(--uitkGrid-row-borderColor-selected, var(--grid-row-borderColor-selected));
 }
 
 .uitkGridTableRow-zebra.uitkGridTableRow-selected {
-  background: var(--grid-row-background-selected);
+  background: var(--uitkGrid-row-background-selected, var(--grid-row-background-selected));
 }
 
 .uitkGridTableRow-zebra.uitkGridTableRow-hover {
-  background: var(--grid-row-background-hover);
+  background: var(--uitkGrid-row-background-hover, var(--grid-row-background-hover));
 }
 
 .uitkGridTableRow-zebra.uitkGridTableRow-selected.uitkGridTableRow-hover {
-  background: var(--grid-row-background-hover);
+  background: var(--uitkGrid-row-background-hover, var(--grid-row-background-hover));
 }
 
 .uitkGridTableRow-selected.uitkGridTableRow-hover {
-  background: var(--grid-row-background-hover);
+  background: var(--uitkGrid-row-background-hover, var(--grid-row-background-hover));
 }

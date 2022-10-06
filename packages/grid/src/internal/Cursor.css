@@ -3,7 +3,7 @@
 }
 
 .uitkGridCursor {
-  border: var(--grid-cursor-border);
+  border: var(--uitkGrid-cursor-border, var(--grid-cursor-border));
   position: absolute;
   top: 0;
   right: 0;

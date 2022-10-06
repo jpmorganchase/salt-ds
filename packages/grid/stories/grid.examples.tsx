@@ -377,3 +377,72 @@ export const CellCustomizationExample = () => {
     </Grid>
   );
 };
+
+export const CssVariablesExample = (props: Partial<GridProps<DummyRow>>) => {
+  const variants = [`primary`, `secondary`, `zebra`];
+  const [separators, setSeparators] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  const onChange: ToggleButtonGroupChangeEventHandler = (
+    event,
+    index,
+    toggled
+  ) => {
+    setIndex(index);
+  };
+
+  const onSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setSeparators(checked);
+  };
+
+  return (
+    <FlexLayout direction="column">
+      <FlexItem>
+        <FlexLayout direction="row">
+          <FlexItem>
+            <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
+              <ToggleButton ariaLabel="primary" tooltipText="Primary">
+                Primary
+              </ToggleButton>
+              <ToggleButton ariaLabel="secondary" tooltipText="Secondary">
+                Secondary
+              </ToggleButton>
+              <ToggleButton ariaLabel="zebra" tooltipText="Zebra">
+                Zebra
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FlexItem>
+          <FlexItem>
+            <Checkbox
+              checked={separators}
+              label="Column separators"
+              onChange={onSeparatorsChange}
+            />
+          </FlexItem>
+        </FlexLayout>
+      </FlexItem>
+      <Grid
+        rowData={rowData}
+        rowKeyGetter={rowKeyGetter}
+        className="grid-css-customization"
+        variant={index === 1 ? "secondary" : "primary"}
+        zebra={index === 2 ? true : false}
+        columnSeparators={separators}
+        {...props}
+      >
+        <RowSelectionCheckboxColumn id="s" />
+        <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />
+        <NumericColumn
+          name="B"
+          id="b"
+          defaultWidth={100}
+          precision={2}
+          getValue={(r: DummyRow) => r.b}
+          align={"right"}
+        />
+        <GridColumn name="C" id="c" defaultWidth={50} getValue={(r) => r.c} />
+      </Grid>
+    </FlexLayout>
+  );
+};

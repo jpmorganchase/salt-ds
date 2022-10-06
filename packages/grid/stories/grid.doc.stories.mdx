@@ -9,6 +9,7 @@ import {
   RowSelectionModesExample,
   ControlledRowSelectionExample,
   CellCustomizationExample,
+  CssVariablesExample
 } from "./grid.examples";
 import {
   DownloadIcon,
@@ -174,6 +175,12 @@ a custom class name to override button styling. They will always take precedence
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
 <CSSVariableTable of={Grid} />
+
+<Canvas>
+  <Story name="CSS variables customization" decorators={[withFlexGap]}>
+    <CssVariablesExample />
+  </Story>
+</Canvas>
 
 # Help and support
 

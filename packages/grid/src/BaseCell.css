@@ -5,23 +5,23 @@
   padding: 0;
 
   border-style: solid;
-  border-top-color: var(--grid-row-borderColor);
-  border-right-color: var(--grid-columnSeparator-color);
+  border-top-color: var(--uitkGrid-row-borderColor, var(--grid-row-borderColor));
+  border-right-color: var(--uitkGrid-columnSeparator-color, var(--grid-columnSeparator-color));
   border-width: 1px 1px 0 0;
 
   white-space: nowrap;
   position: relative;
-  font-size: var(--grid-fontSize);
-  font-weight: normal;
+  font-size: var(--uitkGrid-fontSize, var(--grid-fontSize));
+  font-weight: var(--uitkGrid-fontWeight, normal);
   z-index: var(--grid-cell-zIndex);
 }
 
 .uitkGridBaseCell-selectedCell {
-  background: var(--grid-cell-background-selected);
+  background: var(--uitkGrid-cell-background-selected, var(--grid-cell-background-selected));
 }
 
 .uitkGridBaseCell-secondary {
-  background: var(--grid-background-secondary);
+  background: var(--uitkGrid-background-secondary, var(--grid-background-secondary));
 }
 
 .uitkGridBaseCell-valueContainer {
@@ -41,25 +41,25 @@
 }
 
 .uitkGridBaseCell-selected {
-  background: var(--grid-cell-background-selected);
+  background: var(--uitkGrid-cell-background-selected, var(--grid-cell-background-selected));
 }
 
 .uitkGridBaseCell-editable {
   border-style: solid;
   border-width: 1px;
-  border-color: var(--grid-editableCell-borderColor);
+  border-color: var(--uitkGrid-editableCell-borderColor, var(--grid-editableCell-borderColor));
 }
 
 .uitkGridBaseCell-focused {
   border-style: dotted;
   border-width: 2px;
-  border-color: var(--grid-cursor-borderColor);
+  border-color: var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor));
   line-height: calc(var(--grid-row-height) - 4px);
   --grid-cell-padding: 0 calc(var(--grid-padding) - 2px);
 }
 
 .uitkGridBaseCell-editable:hover {
-  border-color: var(--grid-editableCell-borderColor-hover);
+  border-color: var(--uitkGrid-editableCell-borderColor-hover, var(--grid-editableCell-borderColor-hover));
 }
 
 .uitkGridBaseCell-cornerTag {
@@ -69,7 +69,7 @@
   width: 0;
   height: 0;
   border-top: 0 solid transparent;
-  border-left: 8px solid var(--grid-cursor-borderColor);
+  border-left: 8px solid var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor));
   border-bottom: 8px solid transparent;
   z-index: 10;
 }
