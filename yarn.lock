@@ -24846,7 +24846,7 @@ __metadata:
   dependencies:
     ts-morph: ^15.1.0
   peerDependencies:
-    vite: ^2.9.0
+    vite: ^3.0.0
   languageName: unknown
   linkType: soft
 
