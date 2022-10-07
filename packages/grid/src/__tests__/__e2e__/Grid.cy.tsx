@@ -197,34 +197,76 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
-  it("Handles switching between different selection modes", () => {
-    cy.mount(<RowSelectionModesExample />);
+  describe("Switching selection modes", () => {
+    it("Shows correct columns", () => {
+      cy.mount(<RowSelectionModesExample />);
 
-    cy.findByLabelText("multi").click();
-    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 5);
-    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
-    cy.findAllByTestId("column-header").should("have.length", 4);
-    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-    cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+      cy.findByLabelText("multi").click();
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        5
+      );
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 4);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
 
-    cy.findByLabelText("single").click();
-    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 5);
-    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
-    cy.findAllByTestId("column-header").should("have.length", 4);
-    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-    cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+      cy.findByLabelText("single").click();
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        5
+      );
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 4);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
 
-    cy.findByLabelText("none").click();
-    cy.findAllByTestId("grid-row-selection-checkbox").should("have.length", 0);
-    cy.findAllByTestId("grid-row-selection-radiobox").should("have.length", 0);
-    cy.findAllByTestId("column-header").should("have.length", 3);
-    cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-    cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-    cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      cy.findByLabelText("none").click();
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 3);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+    });
+
+    it("Selects rows correctly", () => {
+      cy.mount(<RowSelectionModesExample />);
+
+      cy.findByLabelText("multi").click();
+      findCell(2, 3).click({ force: true });
+      findCell(3, 3).click({ force: true, shiftKey: true });
+      checkRowSelected(2, true);
+      checkRowSelected(3, true);
+
+      cy.findByLabelText("single").click();
+      findCell(2, 3).click({ force: true });
+      findCell(3, 3).click({ force: true, shiftKey: true });
+      checkRowSelected(2, false);
+      checkRowSelected(3, true);
+
+      cy.findByLabelText("none").click();
+      findCell(2, 2).click({ force: true });
+      findCell(3, 2).click({ force: true, shiftKey: true });
+      checkRowSelected(2, false);
+      checkRowSelected(3, false);
+    });
   });
 
   // TODO column drag-n-drop
