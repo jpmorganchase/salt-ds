@@ -134,7 +134,7 @@
   - Move ValidationState and StateIcon to Core
   - Move `createContext` and `useId` to Core
 - b10b5d1: Moved BorderItem, BorderLayout, ParentChildItem, ParentChildLayout and SplitLayout from lab to core
-- 0093d6e: Characteristic changes - text characteristic, no direct usage of typography and opacty, rename tokens to use camel case
+- 0093d6e: Characteristic changes - text characteristic, no direct usage of typography and opacity, rename tokens to use camel case
 - c2b610b: Move Switch to Core
 
 ### Patch Changes

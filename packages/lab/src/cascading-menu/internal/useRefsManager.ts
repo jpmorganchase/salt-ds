@@ -18,9 +18,9 @@ export function useRefsManager(): refsManager {
   }, []);
 
   const values = useCallback(() => {
-    const vals: HTMLElement[] = [];
-    refs.current.forEach((value) => vals.push(value));
-    return vals;
+    const values: HTMLElement[] = [];
+    refs.current.forEach((value) => values.push(value));
+    return values;
   }, []);
 
   return useMemo(() => ({ get, set, values }), [get, set, values]);

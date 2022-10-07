@@ -551,15 +551,15 @@ export function useTokenizedInput<Item>(
       const win = ownerWindow(event.target as HTMLElement);
       const supportClipboard = win.navigator && win.navigator.clipboard;
 
-      switch (event.key.toUpperCase()) {
-        case "A":
+      switch (event.key) {
+        case "a":
           // Select all
           setHighlightedIndex(undefined);
           setActiveIndices(
             Array.from({ length: selectedItems.length }, (_, index) => index)
           );
           break;
-        case "C":
+        case "c":
           // Copy
           copy(
             activeIndices
@@ -576,22 +576,22 @@ export function useTokenizedInput<Item>(
               warning(false, error);
             });
           break;
-        case "V":
+        case "v":
           // Paste - do nothing and let handleChange deal with it
           break;
-        case "ARROWLEFT":
+        case "ArrowLeft":
           pillGroupKeyDownHandlers.ArrowLeft(event);
           break;
-        case "ARROWRIGHT":
+        case "ArrowRight":
           pillGroupKeyDownHandlers.ArrowRight(event);
           break;
-        case "BACKSPACE":
+        case "Backspace":
           if (cursorAtInputStart()) {
             handleRemoveItem(selectedItems.length - 1);
           }
           break;
-        case "CONTROL":
-        case "META":
+        case "Control":
+        case "Meta":
           // Do nothing
           break;
         default:
@@ -601,12 +601,12 @@ export function useTokenizedInput<Item>(
     };
 
   const handleCommonKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const eventKey = event.key.toUpperCase();
+    const eventKey = event.key;
 
-    if (eventKey === "ESCAPE") {
+    if (eventKey === "Escape") {
       event.preventDefault();
       resetInput();
-    } else if (eventKey === "TAB" && !disableAddOnBlur) {
+    } else if (eventKey === "Tab" && !disableAddOnBlur) {
       // Pressing Tab adds a new value
       handleAddItems(value);
     }
@@ -624,7 +624,7 @@ export function useTokenizedInput<Item>(
     if (
       event.ctrlKey ||
       event.metaKey ||
-      ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
+      ["Control", "Meta"].indexOf(event.key) !== -1
     ) {
       handleCtrlModifierKeyDown(event);
     } else {

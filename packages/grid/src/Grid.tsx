@@ -79,7 +79,7 @@ export type GridColumnMoveHandler = (
 export interface GridProps<T = any> {
   children: ReactNode;
   /**
-   * If `true`, zebra stripes are enabled (odd/even rows have alternate colours)
+   * If `true`, zebra stripes are enabled (odd/even rows have alternate colors)
    * */
   zebra?: boolean;
   /**
@@ -293,13 +293,13 @@ export const Grid = function <T>(props: GridProps<T>) {
     leftGroups.length
   );
 
-  const visColGrps = useMemo(() => {
+  const visColGroups = useMemo(() => {
     return midGroups.slice(visColGrpRng.start, visColGrpRng.end);
   }, [visColGrpRng, midGroups]);
 
   const headVisColRng = useHeadVisibleColumnRange(
     bodyVisColRng,
-    visColGrps,
+    visColGroups,
     midColsById,
     leftCols.length
   );
@@ -873,7 +873,7 @@ export const Grid = function <T>(props: GridProps<T>) {
                     {!hideHeader && (
                       <TopPart
                         columns={headVisibleColumns}
-                        columnGroups={visColGrps}
+                        columnGroups={visColGroups}
                         topRef={topRef}
                         onWheel={onWheel}
                         midGap={midGap}

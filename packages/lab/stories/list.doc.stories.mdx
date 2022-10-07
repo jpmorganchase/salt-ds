@@ -18,7 +18,7 @@ import {
 
 #### How are the dimensions of List calculated
 
-Default behaviour
+Default behavior
 If no styles are set explicitly and no props are set to manipulate the height/width, then the width will default to 100%. The height will likewise default to 100% **but** a maxHeight will also be imposed to limit the number of rows rendered. This is determined by the `displayedItemCount` and it defaults to 10. Thus when no props are explicitly set, the List has width 100% and maxHeight sufficient to display exactly 10 rows (and a vertical scrollbar, assuming more than 10 rows exist). If there are less than 10 rows in the List, then the maxHeight will be set to exactly accommodate the number of rows present (and no scrollbar will be required). Note that because row height varies by density, the maxHeight assigned to a List in this scenario will also vary by density. A List with 10 rows will have a greater maxHeight at medium density than at high density.
 
 ##### Example: Default List sizing - 100% width, 10 rows
@@ -37,7 +37,7 @@ If no styles are set explicitly and no props are set to manipulate the height/wi
       <ListItem>Florida</ListItem>
       <ListItem>Georgia</ListItem>
       <ListItem>Hawaii</ListItem>
-      <ListItem>Ihado</ListItem>
+      <ListItem>Idaho</ListItem>
     </List>
   </ToolkitProvider>
 </Canvas>

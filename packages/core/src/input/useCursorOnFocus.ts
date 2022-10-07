@@ -127,7 +127,7 @@ export function useCursorOnFocus(
 
   useEffect(() => {
     if (cursorPositionOnFocus != null || highlightOnFocus != null) {
-      const handleFocusBehaviour = () => {
+      const handleFocusBehavior = () => {
         if (!inputRef.current) {
           return;
         }
@@ -170,7 +170,7 @@ export function useCursorOnFocus(
         }
 
         if (cursorPositionOnFocus != null || highlightOnFocus != null) {
-          handleFocusBehaviour();
+          handleFocusBehavior();
         }
       };
 

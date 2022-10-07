@@ -12,11 +12,6 @@ import { Dropdown, SelectionStrategy } from "@jpmorganchase/uitk-lab";
 
 const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
 
-/**
- * getByTestId 'dropdown-button' and 'dropdownlist' are used for the convenience of
- * not needing to differentiate between 'listbox' and 'option' roles where both the
- * button and the list shares them.
- */
 ["", "MultiSelect"].forEach((type) => {
   const isMultiSelect = !!type;
   const selectionStrategy = isMultiSelect

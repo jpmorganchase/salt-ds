@@ -40,7 +40,7 @@ interface JSONHistory {
 export const ThemeEditorApp = (props: {
   initialTheme?: ThemeMode;
   isLoading?: boolean;
-  loadPageinElectron?: (url: string) => void;
+  loadPageInElectron?: (url: string) => void;
   sendCSStoElectron?: (cssByPattern: CSSByPattern[]) => void;
   saveCSSInElectron?: () => void;
   switchBrowserViewMode?: (mode: string) => void;
@@ -209,7 +209,7 @@ export const ThemeEditorApp = (props: {
   useEffect(() => navigate("/"), []);
 
   const onUpdateURL = (url: string | undefined) => {
-    if (props.loadPageinElectron && url) props.loadPageinElectron(url);
+    if (props.loadPageInElectron && url) props.loadPageInElectron(url);
   };
 
   const onModeChange = useCallback((mode: ThemeMode) => {

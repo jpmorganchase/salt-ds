@@ -14,7 +14,7 @@ describe("A list", () => {
     cy.findByText("list item 2").should("exist");
     cy.findByText("list item 3").should("exist");
   });
-  it("should render with a customised id", () => {
+  it("should render with a customized id", () => {
     cy.mount(<List id="my-list" source={ITEMS} />);
     cy.findAllByRole("option")
       .eq(0)
@@ -26,21 +26,21 @@ describe("A list", () => {
       .eq(2)
       .should("have.attr", "id", "my-list-item-2");
   });
-  it('should render with a customised "getItemId"', () => {
+  it('should render with a customized "getItemId"', () => {
     const getItemId = (index: number) => `my-item-${index}`;
     cy.mount(<List getItemId={getItemId} id="my-list" source={ITEMS} />);
     cy.findAllByRole("option").eq(0).should("have.attr", "id", "my-item-0");
     cy.findAllByRole("option").eq(1).should("have.attr", "id", "my-item-1");
     cy.findAllByRole("option").eq(2).should("have.attr", "id", "my-item-2");
   });
-  it('should render with a customised "displayedItemCount"', () => {
+  it('should render with a customized "displayedItemCount"', () => {
     cy.mount(
       <List borderless displayedItemCount={2} itemHeight={10} source={ITEMS} />
     );
     // 20 = itemHeight * displayedItemCount + gaps (1 gap * 0)
     cy.findByRole("listbox").should("have.css", "max-height", "20px");
   });
-  it("should respectgap size", () => {
+  it("should respect gap size", () => {
     cy.mount(
       <List
         borderless
@@ -68,13 +68,13 @@ describe("A list", () => {
     cy.findByRole("listbox").should("have.css", "width", "600px");
   });
 
-  it('should render with a customised "itemToString"', () => {
+  it('should render with a customized "itemToString"', () => {
     cy.mount(<List itemToString={(item) => item.value} source={ITEMS} />);
     cy.findByText("item 1").should("exist");
     cy.findByText("item 2").should("exist");
     cy.findByText("item 3").should("exist");
   });
-  it.skip("should render with a customised indexer", () => {
+  it.skip("should render with a customized indexer", () => {
     type ItemType = { label: string; value: string };
     const items: ItemType[] = [
       { label: "list item 1", value: "item 1" },
@@ -95,7 +95,7 @@ describe("A list", () => {
     cy.findByText("list item 2").should("exist");
     cy.findByText("list item 3").should("exist");
   });
-  it('should render with a customised "getItemHeight"', () => {
+  it('should render with a customized "getItemHeight"', () => {
     const height: { [key: number]: number } = {
       0: 20,
       1: 30,
@@ -137,7 +137,7 @@ describe("A list", () => {
     cy.findByText("list item 1").realClick();
     cy.get("@mouseDownHandler").should("not.have.been.called");
   });
-  describe.skip('with a customised "itemHeight"', () => {
+  describe.skip('with a customized "itemHeight"', () => {
     it("should render with numeric value", () => {
       cy.mount(<List itemHeight={50} source={ITEMS} />);
       cy.findAllByRole("option").eq(0).should("have.css", "height", "50px");

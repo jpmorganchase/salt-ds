@@ -91,7 +91,7 @@ export const useCollectionItems = <Item>({
           : item.expanded ?? isExpanded(id);
         //TODO dev time check - if id is provided by user, make sure
         // hierarchical pattern is consistent
-        const normalisedItem: CollectionItem<Item> = {
+        const normalizedItem: CollectionItem<Item> = {
           ...item,
           childNodes: undefined,
           count:
@@ -106,8 +106,8 @@ export const useCollectionItems = <Item>({
           expanded,
           level,
         };
-        results.push(normalisedItem);
-        flattenedCollection.push(normalisedItem);
+        results.push(normalizedItem);
+        flattenedCollection.push(normalizedItem);
         flattenedSource.push(items[i].value);
 
         indexer.value += 1;
@@ -123,7 +123,7 @@ export const useCollectionItems = <Item>({
             flattenedCollection,
             flattenedSource
           );
-          normalisedItem.childNodes = children;
+          normalizedItem.childNodes = children;
         }
       });
       return [results, flattenedSource, flattenedCollection];
@@ -387,7 +387,7 @@ export const useCollectionItems = <Item>({
     inheritedCollectionHook || {
       collapseGroupItem,
       data: dataRef.current,
-      expandGroupItem, // why not toggle, or just rely on setdata ?
+      expandGroupItem, // why not toggle, or just rely on setData ?
       setFilterPattern,
       itemById,
       itemToId,

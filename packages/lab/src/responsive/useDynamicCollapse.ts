@@ -16,11 +16,11 @@ import {
   measureElementSize,
 } from "./overflowUtils";
 
-const UNCOLLAPSED_DYNAMIC_ITEMS =
+const EXPANDED_DYNAMIC_ITEMS =
   '[data-collapsible="dynamic"]:not([data-collapsed="true"]):not([data-collapsing="true"])';
 
-const hasUncollapsedDynamicItems = (containerRef: ElementRef) =>
-  containerRef.current!.querySelector(UNCOLLAPSED_DYNAMIC_ITEMS) !== null;
+const hasExpandedDynamicItems = (containerRef: ElementRef) =>
+  containerRef.current!.querySelector(EXPANDED_DYNAMIC_ITEMS) !== null;
 
 const thereAreCollapsibleItemsAndTheyAreAllCollapsed = (
   items: OverflowItem[]
@@ -82,11 +82,11 @@ export const useDynamicCollapse = ({
         return;
       }
       if (collapsedChild && !collapsingChild) {
-        // TODO do we need a check to see whether we now have enough space to completely uncollapse the item ?
-        // We may be able to uncollapse one or more items before the one we set to collapsing
+        // TODO do we need a check to see whether we now have enough space to completely expand the item ?
+        // We may be able to expand one or more items before the one we set to collapsing
 
         dispatch({
-          type: "uncollapse-dynamic-item",
+          type: "expand-dynamic-item",
           overflowItem: collapsedChild,
         });
       } else if (collapsingChild) {
@@ -169,7 +169,7 @@ export const useDynamicCollapse = ({
 
   const resetMeasurements = useCallback(() => {
     const { current: managedItems } = managedItemsRef;
-    const hasDynamicItems = hasUncollapsedDynamicItems(ref);
+    const hasDynamicItems = hasExpandedDynamicItems(ref);
     if (hasDynamicItems) {
       const collapsingItem = nextItemToCollapse(managedItems);
       setNewCollapsingItem(collapsingItem);

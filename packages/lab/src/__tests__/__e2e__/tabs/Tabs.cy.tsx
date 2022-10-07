@@ -100,7 +100,7 @@ describe("Navigation, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN the tabstrip is first rendered", () => {
       describe("WHEN the tabstrip receives keyboard focus", () => {
-        it("THEN focus will be transfered to the first tab", () => {
+        it("THEN focus will be transferred to the first tab", () => {
           cy.mount(<SimpleTabstrip width={400} />);
           cy.findByTestId("tabstop-1").focus();
           cy.realPress("Tab");
@@ -109,7 +109,7 @@ describe("Navigation, Given a Tabstrip", () => {
             .should("be.focusVisible");
         });
         describe("WHEN the right arrow key is pressed", () => {
-          it("THEN focus will be transfered to the next tab", () => {
+          it("THEN focus will be transferred to the next tab", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.findByTestId("tabstop-1").focus();
             cy.realPress("Tab");
@@ -126,7 +126,7 @@ describe("Navigation, Given a Tabstrip", () => {
       });
 
       describe("WHEN the selected tab is clicked", () => {
-        it("THEN focus will be transfered to the selected tab", () => {
+        it("THEN focus will be transferred to the selected tab", () => {
           cy.mount(<SimpleTabstrip width={400} />);
           cy.findByTestId("tabstop-1").focus();
           cy.get(".uitkTabstrip-inner > *:first-child").realClick();
@@ -152,7 +152,7 @@ describe("Navigation, Given a Tabstrip", () => {
         });
 
         describe("WHEN the right arrow key is pressed", () => {
-          it("THEN focus will be transfered to the next tab", () => {
+          it("THEN focus will be transferred to the next tab", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.get(".uitkTabstrip-inner > *:first-child").realClick();
             cy.wait(100); // ArrowRight need some time to move focus after click
@@ -193,7 +193,7 @@ describe("Navigation, Given a Tabstrip", () => {
         });
 
         describe("WHEN the right arrow key is pressed repeatedly", () => {
-          it("THEN focus will be transfered until last tab is reached", () => {
+          it("THEN focus will be transferred until last tab is reached", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.get(".uitkTabstrip-inner > *:first-child").realClick();
             cy.realPress("ArrowRight");

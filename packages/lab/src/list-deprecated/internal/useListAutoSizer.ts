@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback, Ref } from "react";
 import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
-export interface ListAutosizerProps {
+export interface ListAutoSizerProps {
   responsive: boolean;
   height?: number | string;
   width?: number | string;
@@ -13,7 +13,7 @@ interface size {
 }
 
 export function useListAutoSizer<Element extends HTMLElement>(
-  props: ListAutosizerProps
+  props: ListAutoSizerProps
 ): [Ref<Element>, size] {
   const { responsive, width, height } = props;
   const [size, setSize] = useState({ width, height });

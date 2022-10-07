@@ -7,7 +7,7 @@ import {
   Ref,
 } from "react";
 
-export interface ListAutosizerProps {
+export interface ListAutoSizerProps {
   containerRef: RefObject<Element>;
   responsive: boolean;
   height?: number | string;
@@ -20,7 +20,7 @@ interface size {
 }
 
 export function useAutoSizer<Element extends HTMLElement>(
-  props: ListAutosizerProps
+  props: ListAutoSizerProps
 ): size {
   const { containerRef: ref, responsive, width, height } = props;
   const [size, setSize] = useState({ width, height });

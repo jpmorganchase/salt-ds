@@ -73,9 +73,9 @@
   display: none;
 }
 
-/** 
+/**
   Styles applied to inner Input component
-  Used to be .inputRoot 
+  Used to be .inputRoot
 **/
 .uitkTokenizedInput-input {
   align-items: flex-start;
@@ -106,8 +106,8 @@
   height: auto;
 }
 
-/* TODO: Adjust specificity of .InputPill depending on styling solution. 
-  This is an example of internal sub-component naming convension. */
+/* TODO: Adjust specificity of .InputPill depending on styling solution.
+  This is an example of internal sub-component naming convention. */
 .uitkTokenizedInput .uitkInputPill,
 .uitkTokenizedInput-expandButton,
 .uitkTokenizedInput-input,

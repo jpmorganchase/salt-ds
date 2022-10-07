@@ -62,8 +62,8 @@ export function useTypeSelect(options) {
       event.stopPropagation();
     }
 
-    // When typing same character sebsequently and *quickly*, we treat it as cyling through items
-    // starting with that char instead of seaching for double character, because in most cases
+    // When typing same character subsequently and *quickly*, we treat it as cycling through items
+    // starting with that char instead of searching for double character, because in most cases
     // there won't be any option having same characters at the beginning. This should be only
     // impacting beginning of the words because length of `character` would be 1.
     if (character !== state.search) {
@@ -87,7 +87,7 @@ export function useTypeSelect(options) {
     if (index != null) {
       setFocusVisible(true);
       // TODO: Maybe we can repurpose this setHighlightedIndex so that the user controls it's meant to set
-      // hightlighted index when expanded v.s. selected item when collapsed
+      // highlighted index when expanded v.s. selected item when collapsed
       setHighlightedIndex(index);
       if (onTypeSelect) {
         onTypeSelect(index);

@@ -84,7 +84,7 @@ export const App = () => {
           }
           switchBrowserViewMode={switchBrowserViewMode}
           saveCSSInElectron={saveCSS}
-          loadPageinElectron={setBrowserViewURL}
+          loadPageInElectron={setBrowserViewURL}
         />
       </BrowserRouter>
     </WindowContext.Provider>

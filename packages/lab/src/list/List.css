@@ -24,7 +24,7 @@
   --list-borderStyle: none;
 }
 
-/* virtualised list */
+/* virtualized list */
 .uitkList-viewport {
   --list-item-height: 30px;
   max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));

@@ -54,7 +54,7 @@ describe("SwatchesPicker", () => {
 
   describe("Swatch", () => {
     const color = "#333";
-    it("Should render a div with a coloured background and an alpha channel if alpha is not 1", () => {
+    it("Should render a div with a colored background and an alpha channel if alpha is not 1", () => {
       const onClickSpy = jest.fn();
       const element = render(
         <Swatch
@@ -68,7 +68,7 @@ describe("SwatchesPicker", () => {
       const swatch = element.getByTestId("swatch-#333");
       expect(swatch.style.background).toEqual("rgba(51, 51, 51, 0.102)");
     });
-    it("Should render a div with a coloured background", () => {
+    it("Should render a div with a colored background", () => {
       const onClickSpy = jest.fn();
       const element = render(
         <Swatch

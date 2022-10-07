@@ -97,7 +97,7 @@ const RealContent = (props: { messages: string[] }) => {
   const { messages } = props;
   const { announce } = useAriaAnnouncer();
 
-  // We want to announce the message so screenreader can get it
+  // We want to announce the message so screen reader can get it
   // If the real content contains tons of content, e.g. a grid, we would not want to announce everything.
   announce(messages.join(" "));
 

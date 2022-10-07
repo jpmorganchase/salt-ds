@@ -24,33 +24,6 @@ export default {
   component: Tabstrip,
 };
 
-type colourMap = { [key: string]: string };
-const _colours = [
-  "yellow",
-  "red",
-  "cornflowerblue",
-  "brown",
-  "green",
-  "purple",
-  "orange",
-  "lime",
-  "silver",
-  "maroon",
-];
-
-const getTabColours = (tabs: string[] | TabDescriptor[]): colourMap => {
-  const tabStrings: string[] = tabs.map((tab: string | TabDescriptor) =>
-    typeof tab === "string" ? tab : tab.label
-  );
-  return tabStrings.reduce(
-    (map: colourMap, tab: string, i: number) => ({
-      ...map,
-      [tab]: _colours[i],
-    }),
-    {} as colourMap
-  );
-};
-
 const CloseTabWarningDialog = ({
   closedTab,
   onCancel,
@@ -82,10 +55,6 @@ const CloseTabWarningDialog = ({
 const useTabSelection = (initialValue?: number) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
   const handleTabSelection = (tabIndex: number) => {
-    // console.log(
-    //   `%ctabstrip.story setSelectedTab ${tabIndex}`,
-    //   "color:red;font-weight: bold;"
-    // );
     setSelectedTab(tabIndex);
   };
   return [selectedTab, handleTabSelection] as const;
@@ -93,7 +62,6 @@ const useTabSelection = (initialValue?: number) => {
 
 interface TabPanelProps {
   tabs: string[] | TabDescriptor[];
-  colours?: colourMap;
   activeTabIndex: number;
 }
 
@@ -545,7 +513,6 @@ export const TabstripControlledAddAndDelete = () => {
 
   const handleCloseTab = (tabIndex: number) => {
     newTabCount.current += 1;
-    // colours.splice(tabIndex, 1);
     setTabs((state) => state.filter((tab, i) => i !== tabIndex));
     if (activeTabIndex > tabIndex) {
       setSelectedTabIndex(activeTabIndex - 1);
@@ -697,8 +664,6 @@ export const TabstripCloseConfigured = ({ height }: { height: number }) => {
   ]);
   const handleCloseTab = (tabIndex: number) => {
     console.log(`deleteTab ${tabIndex}`);
-    // remove the color as well, else they will appear on different tabs
-    // colours.splice(tabIndex, 1);
     setTabs((state) => state.filter((tab, i) => i !== tabIndex));
   };
 
@@ -738,8 +703,6 @@ export const TabstripCloseDeclarative = ({
   ]);
   const handleDeleteTab = (tabIndex: number) => {
     console.log(`handle delete in story`);
-    // remove the color as well, else they will appear on different tabs
-    // colours.splice(tabIndex, 1);
     setTabs((state) => state.filter((tab, i) => i !== tabIndex));
   };
 
@@ -774,8 +737,6 @@ export const TabstripCloseWithConfirmationDialog = () => {
     { label: "More Services", closeable: true },
   ]);
   const handleDeleteTab = (tabIndex: number) => {
-    // remove the color as well, else they will appear on different tabs
-    // colours.splice(tabIndex, 1);
     setTabs((state) => state.filter((tab, i) => i !== tabIndex));
   };
 
@@ -1035,13 +996,11 @@ export const DraggableTabsWithOverflow = () => {
     "More Services",
   ]);
 
-  const tabColours = useMemo(() => getTabColours(tabs), []);
-
   const handleDrop = useCallback(
     (fromIndex: number, toIndex: number) => {
       const tab = tabs[fromIndex];
       const newTabs = tabs.filter((t) => t !== tab);
-      console.log(`handleDrop from ${fromIndex} to ${toIndex} 
+      console.log(`handleDrop from ${fromIndex} to ${toIndex}
         existing tabs ${tabs.join(",")}
       `);
       if (toIndex === -1) {
@@ -1071,11 +1030,7 @@ export const DraggableTabsWithOverflow = () => {
       >
         {childTabs}
       </Tabstrip>
-      <TabPanel
-        colours={tabColours}
-        tabs={tabs}
-        activeTabIndex={activeTabIndex}
-      />
+      <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
     </div>
   );
 };

@@ -107,7 +107,7 @@
   - Fix Slider track not appearing
   - Fix selected Tab text color
   - Fix Text strong and small font weights
-  - Fix ContactDetails favourite toggle color
+  - Fix ContactDetails favorite toggle color
 
 ## 0.4.0
 
@@ -177,7 +177,7 @@
   - Move ValidationState and StateIcon to Core
   - Move `createContext` and `useId` to Core
 - 50dcb9a: Pill style uses characteristics
-- 0093d6e: Characteristic changes - text characteristic, no direct usage of typography and opacty, rename tokens to use camel case
+- 0093d6e: Characteristic changes - text characteristic, no direct usage of typography and opacity, rename tokens to use camel case
 - c2b610b: Move Switch to Core
 - fe868ab: Add layer layout component to lab
 - b71a4d9: StepperInput styling

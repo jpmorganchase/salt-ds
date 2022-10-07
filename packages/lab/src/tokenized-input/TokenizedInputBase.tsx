@@ -136,7 +136,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   const expandButtonId = `${id}-expand-button`;
   const clearButtonId = `${id}-clear-button`;
 
-  // TODO: Use proper machanism to get variable values from theme in React. Something like below
+  // TODO: Use proper mechanism to get variable values from theme in React. Something like below
   // getComputedStyle(document.documentElement)
   // .getPropertyValue('--my-variable-name'); // #999999
   const pillGroupPadding = 16;
@@ -211,14 +211,14 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     const singleChar = event.key.length === 1;
     const triggerExpand =
       [
-        "CONTROL",
-        "META",
-        "ENTER",
-        "BACKSPACE",
-        "ARROWDOWN",
-        "ARROWLEFT",
-        "ARROWRIGHT",
-      ].indexOf(event.key.toUpperCase()) !== -1;
+        "Control",
+        "Meta",
+        "Enter",
+        "Backspace",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+      ].indexOf(event.key) !== -1;
 
     if ((singleChar || triggerExpand) && hasHelpers(helpers)) {
       if (event.key === "Enter" || event.key === " ") {
@@ -231,7 +231,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   };
 
   const handleInputKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
-    // Call keydown again if the initail event has been used to expand the input
+    // Call keydown again if the initial event has been used to expand the input
     if (keydownExpandButton.current && "Enter" !== event.key) {
       keydownExpandButton.current = false;
 

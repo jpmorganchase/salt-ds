@@ -14,7 +14,7 @@ const NOT_OVERFLOW_IND = `:not([data-overflow-indicator="true"])`;
 const OVERFLOWED = `[data-overflowed="true"]`;
 const NOT_OVERFLOWED = `:not([data-overflowed="true"])`;
 
-describe("GIVEN a Toolbar component, with overflow behaviour", () => {
+describe("GIVEN a Toolbar component, with overflow behavior", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
       it("THEN all the content items will be visible", () => {
@@ -563,7 +563,7 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         : undefined
     );
   });
-  describe("WHEN resized to trigger collapse, then restored to original size, collapsed items are uncollapsed", () => {
+  describe("WHEN resized to trigger collapse, then restored to original size, collapsed items are expanded", () => {
     it("THEN all items will collapse and overflow indicator will be present", () => {
       // Test with the default overflow indicator
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);

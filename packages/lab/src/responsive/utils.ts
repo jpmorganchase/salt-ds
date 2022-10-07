@@ -24,8 +24,8 @@ const collapsibleValue = (value: string) => COLLAPSIBLE_VALUE[value] ?? "none";
 type AnyProps = Record<string, unknown>;
 type ResponsivePropsTuple = [AnyProps, AnyProps];
 /**
- * data- attributes can be used to manage item overflow behaviour. Users may
- * speficy these attributes directly on a Toolbar component, which ultimately
+ * data-attributes can be used to manage item overflow behaviors. Users may
+ * specify these attributes directly on a Toolbar component, which ultimately
  * gets wrapped by a FormField. We need to 'lift' these attributes to the form
  * field and remove them from the props of the nested component.
  * @param props

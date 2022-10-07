@@ -1,4 +1,4 @@
-import tinycolor from "tinycolor2";
+import tinycolor2 from "tinycolor2";
 
 export type RGBAValue = {
   r: number;
@@ -8,7 +8,7 @@ export type RGBAValue = {
 };
 
 export class Color {
-  private color: tinycolor.Instance = tinycolor();
+  private color: tinycolor2.Instance = tinycolor2();
 
   public get hex(): string {
     return this.color.getAlpha() === 1
@@ -27,7 +27,7 @@ export class Color {
 
   static makeColorFromHex(hexValue: string | undefined): Color | undefined {
     const colorObj = new Color();
-    colorObj.color = tinycolor(hexValue);
+    colorObj.color = tinycolor2(hexValue);
 
     if (colorObj.color.isValid()) {
       return colorObj;
@@ -38,7 +38,7 @@ export class Color {
 
   static makeColorFromRGB(r: number, g: number, b: number, a?: number): Color {
     const colorObj = new Color();
-    colorObj.color = tinycolor({ r: r, g: g, b: b, a: a });
+    colorObj.color = tinycolor2({ r: r, g: g, b: b, a: a });
     return colorObj;
   }
 

@@ -25,7 +25,7 @@ export const AllExamplesGrid: Story = (props: {
     >
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
       >
         <Breadcrumb href="#">Root Level Entity</Breadcrumb>
         <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
@@ -33,7 +33,7 @@ export const AllExamplesGrid: Story = (props: {
       </Breadcrumbs>
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
       >
         <Breadcrumb href="#" Icon={HomeIcon} overflowLabel="Home" />
         <Breadcrumb href="#" Icon={TreeIcon} overflowLabel="Level 2 Entity">
@@ -45,7 +45,7 @@ export const AllExamplesGrid: Story = (props: {
       </Breadcrumbs>
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
         itemsMaxWidth={60}
       >
         <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -54,7 +54,7 @@ export const AllExamplesGrid: Story = (props: {
       </Breadcrumbs>
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
         style={{ width: 250 }}
         wrap
       >
@@ -64,7 +64,7 @@ export const AllExamplesGrid: Story = (props: {
       </Breadcrumbs>
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
         maxItems={2}
       >
         <Breadcrumb
@@ -106,7 +106,7 @@ export const AllExamplesGrid: Story = (props: {
       </Breadcrumbs>
       <Breadcrumbs
         className={props.className}
-        data-jpmui-test="breadcrumbs-example"
+        data-testid="breadcrumbs-example"
         itemsBeforeCollapse={0}
         maxItems={2}
       >

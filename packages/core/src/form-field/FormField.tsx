@@ -62,7 +62,7 @@ export interface FormFieldProps
    * Outer focus ring focus will not be applied. Defaults to false.
    */
   disableFocusRing?: boolean;
-  // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behaviour)
+  // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behavior)
   // we should also support 'auto' or explicit numeric values
   /**
    * Whether the form field is occupying full width.

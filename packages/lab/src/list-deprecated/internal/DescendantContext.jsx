@@ -9,7 +9,7 @@ import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 //
 // This is all to avoid cloneElement. If we can avoid cloneElement then people
 // can have arbitrary markup around MenuItems.  This basically takes advantage
-// of react's render lifecycles to let us "register" descendants to an
+// of react's render lifecycle to let us "register" descendants to an
 // ancestor, so that we can track all the descendants and manage focus on them,
 // etc.  The super hacks here are for the child to know it's index as well, so
 // that it can set attributes, match against state from above, etc.

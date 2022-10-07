@@ -12,7 +12,7 @@
   --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
 }
 
-.uitkDropdownButton-fullwidth {
+.uitkDropdownButton-fullWidth {
   width: 100%;
 }
 

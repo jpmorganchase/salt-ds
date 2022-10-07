@@ -101,7 +101,7 @@ describe("GIVEN an Input", () => {
     });
 
     describe("AND empty", () => {
-      it("THEN should render an emdash by default", () => {
+      it("THEN should render an em dash by default", () => {
         render(<Input readOnly />);
         expect(screen.getByRole("textbox")).toHaveValue("—");
       });

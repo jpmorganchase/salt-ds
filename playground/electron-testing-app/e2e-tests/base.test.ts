@@ -125,21 +125,21 @@ test("Opens the dialog in a new child window", async () => {
   expect(childWindowSize).toStrictEqual([501, 212]);
 });
 
-test("Opens the colour chooser in a new child window", async () => {
+test("Opens the color chooser in a new child window", async () => {
   page = await electronApp.firstWindow();
-  // Open ColourChooser
+  // Open ColorChooser
   await page.locator("data-testid=color-chooser-overlay-button").click();
   expect(electronApp.windows().length).toBe(2);
-  const colourPickerPage = electronApp.windows()[1];
-  expect(colourPickerPage).toBeTruthy();
+  const colorPickerPage = electronApp.windows()[1];
+  expect(colorPickerPage).toBeTruthy();
   // Will need to find a way to wait for event
   await page.waitForTimeout(200);
 
-  const colourPickerHandle = await electronApp.browserWindow(colourPickerPage);
+  const colorPickerHandle = await electronApp.browserWindow(colorPickerPage);
   const mainWindowHandle = await electronApp.browserWindow(page);
 
   const { childWindowSize, childWindowPosition } = await getChildWindowBounds(
-    colourPickerHandle,
+    colorPickerHandle,
     mainWindowHandle
   );
 
@@ -148,7 +148,7 @@ test("Opens the colour chooser in a new child window", async () => {
   expect(childWindowSize).toStrictEqual([458, 382]);
 
   //Click orange
-  await colourPickerPage.locator("data-testid=swatch-#d65513").click();
+  await colorPickerPage.locator("data-testid=swatch-#d65513").click();
 
   expect(electronApp.windows().length).toBe(1);
 });
@@ -236,13 +236,13 @@ test.skip("Opens the toolbar", async () => {
     .locator("data-testid=toolbar-handle")
     .elementHandle();
   // @ts-ignore
-  const toolbarHandlebox = await toolboxHandle.boundingBox();
+  const toolbarHandleBox = await toolboxHandle.boundingBox();
 
   // @ts-ignore
   await toolboxHandle.hover();
   await page.mouse.down();
   // @ts-ignore
-  await page.mouse.move(toolbarHandlebox.x, toolbarHandlebox.y + 100);
+  await page.mouse.move(toolbarHandleBox.x, toolbarHandleBox.y + 100);
   await page.mouse.up();
 
   const {

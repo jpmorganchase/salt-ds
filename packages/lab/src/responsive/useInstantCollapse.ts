@@ -28,14 +28,14 @@ const findItemToCollapse = (items: OverflowItem[]) => {
   for (let i = items.length - 1; i >= 0; i--) {
     const item = items[i];
     if (item.collapsible === "instant" && !item.collapsed) {
-      // We only ever collapse 1 item at a time. We don'tknow how much space
+      // We only ever collapse 1 item at a time. We don't know how much space
       //this has saved until it re-renders and we can re-measure
       return item;
     }
   }
 };
 
-const uncollapseItems = (items: OverflowItem[], containerSize: number) => {
+const expandItems = (items: OverflowItem[], containerSize: number) => {
   const visibleContentSize = items.reduce(allExceptOverflowIndicator, 0);
   let diff = containerSize - visibleContentSize;
 
@@ -87,11 +87,11 @@ export const useInstantCollapse = ({
           });
         }
       } else {
-        const uncollapsedItems = uncollapseItems(managedItems, containerSize);
-        if (uncollapsedItems.length) {
+        const expandedItems = expandItems(managedItems, containerSize);
+        if (expandedItems.length) {
           dispatch({
             type: "update-items",
-            overflowItems: uncollapsedItems,
+            overflowItems: expandedItems,
           });
         }
       }

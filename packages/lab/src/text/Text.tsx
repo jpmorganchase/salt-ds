@@ -39,7 +39,7 @@ interface TextPropsBase<E extends ElementType> {
    */
   showTooltip?: boolean;
   /**
-   * Customise Tooltip
+   * Customize Tooltip
    */
   tooltipProps?: Partial<TooltipProps>;
   /**
@@ -47,7 +47,7 @@ interface TextPropsBase<E extends ElementType> {
    */
   tooltipText?: string;
   /**
-   * Customise styling.
+   * Customize styling.
    */
   style?: CSSProperties;
   /**

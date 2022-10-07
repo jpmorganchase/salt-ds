@@ -121,7 +121,7 @@ describe("GIVEN an Input", () => {
     });
 
     describe("AND empty", () => {
-      it("THEN should cy.mount an emdash by default", () => {
+      it("THEN should cy.mount an em dash by default", () => {
         cy.mount(<Input readOnly />);
         cy.findByRole("textbox").should("have.value", "—");
       });

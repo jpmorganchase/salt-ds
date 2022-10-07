@@ -320,7 +320,7 @@ export const useOverflow = ({
   //     const willOverflow = renderedSize > size;
 
   //     console.log(
-  //       `useOverflow handleResize size ${size} rebnderedSize=${renderedSize} isOverflowing ${isOverflowing} willOverflow ${willOverflow}`
+  //       `useOverflow handleResize size ${size} renderedSize=${renderedSize} isOverflowing ${isOverflowing} willOverflow ${willOverflow}`
   //     );
 
   //     if (!isOverflowing && willOverflow) {

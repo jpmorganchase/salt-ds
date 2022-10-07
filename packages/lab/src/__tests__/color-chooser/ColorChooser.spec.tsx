@@ -313,7 +313,7 @@ describe("ColorChooser", () => {
     expect(element.queryByText("Color Picker")).not.toBeInTheDocument();
   });
 
-  it("Renders the SwatchesPicker with Swatches created from UITK colours", async () => {
+  it("Renders the SwatchesPicker with Swatches created from UITK colors", async () => {
     const element = render(
       <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
     );

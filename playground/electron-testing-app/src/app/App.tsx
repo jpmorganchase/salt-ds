@@ -92,7 +92,7 @@ const initialSource: MenuDescriptor = {
   ],
 };
 const DefaultToolbar = ({ initialWidth = 315 }) => {
-  const typeData = ["Open", "Close", "Discarted", "Resolved"];
+  const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",
     "Yesterday",

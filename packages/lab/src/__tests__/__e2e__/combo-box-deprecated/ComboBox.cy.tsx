@@ -130,11 +130,11 @@ describe("A combo box", () => {
 
       cy.findByRole("combobox").realClick();
 
-      cy.realType("Connec");
+      cy.realType("Connec"); // cspell:disable-line
 
       cy.findAllByRole("option").should("have.length", 1);
 
-      cy.findByText("Connec").should("have.class", "uitkHighlighter-highlight");
+      cy.findByText("Connec").should("have.class", "uitkHighlighter-highlight"); // cspell:disable-line
     });
   });
 });

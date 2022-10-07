@@ -14,7 +14,7 @@ export type FilesValidator<ErrorType = string> = (
  * Factory method for creating a common file type validator.
  *
  * @param {string} accept - It is the same as 'accept' attribute for HTML <input>.
- * @param {function} getError - A callback function for generating a customised user error.
+ * @param {function} getError - A callback function for generating a customized user error.
  */
 export function createFileTypeValidator<ErrorType = string>({
   accept,
@@ -40,7 +40,7 @@ export function createFileTypeValidator<ErrorType = string>({
  * Factory method for creating a common total selection size validator.
  *
  * @param {number} maxSize - Max selection size in bytes.
- * @param {function} getError - A callback function for generating a customised user error.
+ * @param {function} getError - A callback function for generating a customized user error.
  */
 export function createTotalSizeValidator<ErrorType = string>({
   maxSize,

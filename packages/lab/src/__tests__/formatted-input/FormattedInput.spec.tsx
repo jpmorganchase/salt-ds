@@ -113,12 +113,12 @@ describe("GIVEN FormattedInput", () => {
       render(
         <FormattedInput
           mask="XX-XX-XX"
-          inputProps={{ "aria-label": "fakelabel" }}
+          inputProps={{ "aria-label": "fake label" }}
         />
       );
       expect(screen.getByRole("textbox")).not.toHaveAttribute(
         "aria-label",
-        "fakelabel"
+        "fake label"
       );
     });
   });

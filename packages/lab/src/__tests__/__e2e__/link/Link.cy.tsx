@@ -1,3 +1,4 @@
+// cspell:disable
 import { Link } from "@jpmorganchase/uitk-lab";
 
 describe("GIVEN a link", () => {

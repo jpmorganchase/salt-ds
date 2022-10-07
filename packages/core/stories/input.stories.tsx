@@ -102,7 +102,7 @@ export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
 export const Spellcheck: ComponentStory<typeof Input> = () => {
   return (
     <Input
-      defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
+      defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect." // cspell:disable-line
       style={{ width: "292px" }}
       inputProps={{ spellCheck: true }}
     />

@@ -362,7 +362,7 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  // describe("WHEN customising the compact prop", () => {
+  // describe("WHEN customizing the compact prop", () => {
   //   describe("AND setting it to medium screens", () => {
   //     let matchMediaInstances;
   //
@@ -404,7 +404,7 @@ describe("GIVEN an Pagination", () => {
   //   });
   // });
 
-  describe("WHEN customising the siblingCount", () => {
+  describe("WHEN customizing the siblingCount", () => {
     describe("AND setting it to `3`", () => {
       it("THEN should render 11 buttons when the count is 11", () => {
         const { queryAllByRole } = render(

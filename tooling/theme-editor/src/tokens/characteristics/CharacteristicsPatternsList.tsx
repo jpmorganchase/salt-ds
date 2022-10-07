@@ -38,7 +38,7 @@ export const CharacteristicPatternsList = (
   );
 
   const patternValuesInScope: JSONObj = useMemo(() => {
-    const patternvals: JSONObj = {};
+    const patternValues: JSONObj = {};
     props.patternsInScope.forEach((pattern) => {
       const values: JSONObj = {};
       for (const s of jsonByScopeInView) {
@@ -52,10 +52,10 @@ export const CharacteristicPatternsList = (
           });
       }
 
-      patternvals[pattern] = values[pattern];
+      patternValues[pattern] = values[pattern];
     });
 
-    return patternvals;
+    return patternValues;
   }, [props.patternsInScope, jsonByScopeInView]);
 
   const uitkColorOverrides = useMemo(() => {

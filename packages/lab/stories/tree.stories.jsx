@@ -223,7 +223,7 @@ export const SimpleTreeWithAnatomy = () => {
         { label: "Pears" },
       ],
     },
-    { label: "Vegatables" },
+    { label: "Vegetables" },
     { label: "Grain" },
   ];
 

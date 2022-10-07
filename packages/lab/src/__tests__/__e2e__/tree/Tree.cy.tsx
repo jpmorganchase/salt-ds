@@ -1913,8 +1913,8 @@ describe("GIVEN a Tree", () => {
   //         <Tree
   //           initialSource={[
   //             {
-  //               id: "usethis",
-  //               name: "usethis",
+  //               id: "use-this",
+  //               name: "use this",
   //               childNodes: [],
   //             },
   //           ]}
@@ -1928,8 +1928,8 @@ describe("GIVEN a Tree", () => {
   //           onExpandToggle={onExpandToggleSpy}
   //           source={[
   //             {
-  //               id: "dontuse",
-  //               name: "dontuse",
+  //               id: "ignore-this",
+  //               name: "ignore-this",
   //               childNodes: [],
   //             },
   //           ]}
@@ -1952,7 +1952,7 @@ describe("GIVEN a Tree", () => {
 
   //   it("THEN it should use the initialSource only", () => {
   //     expect(wrapper.find(TreeListItem).first().props().name).toEqual(
-  //       "usethis"
+  //       "use this"
   //     );
   //   });
   // });
@@ -2090,8 +2090,8 @@ describe("GIVEN a Tree", () => {
   //         <Tree
   //           initialSource={[
   //             {
-  //               id: "usethis",
-  //               name: "usethis",
+  //               id: "use-this",
+  //               name: "use this",
   //               expanded: true,
   //               childNodes: [],
   //             },

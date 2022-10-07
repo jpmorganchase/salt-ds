@@ -68,8 +68,8 @@ function getComponentName(path) {
     .join("");
 }
 
-const getFilesRecursively = (directorys) => {
-  for (var dir of directorys) {
+const getFilesRecursively = (directories) => {
+  for (var dir of directories) {
     const filesInDirectory = fs.readdirSync(dir);
     for (const file of filesInDirectory) {
       if (!file.startsWith("__")) {

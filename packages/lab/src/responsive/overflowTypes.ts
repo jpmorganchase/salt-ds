@@ -48,7 +48,7 @@ export type InjectedItem = InjectedChildItem | InjectedSourceItem;
 
 export type overflowItemType = "source" | "child";
 // TODO I think this should extend CollectionItem
-// TODO type this so that it can have a child elment OR a source item
+// TODO type this so that it can have a child element OR a source item
 // TODO OR do we use ReactElement | T as the generic type
 export type OverflowItem<T extends overflowItemType = "child"> = {
   collapsed?: boolean;

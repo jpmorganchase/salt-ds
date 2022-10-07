@@ -30,7 +30,7 @@ const getChildElementName = (element: ReactNode): string => {
     }
   } else {
     throw Error(
-      "useToolbarField, child of ToolbarField is not valid ReactElememnt"
+      "useToolbarField, child of ToolbarField is not valid ReactElement"
     );
   }
 };

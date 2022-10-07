@@ -36,7 +36,7 @@ export const useButton = <T extends Element>({
   onClick,
   onBlur,
 }: ButtonHookProps<T>): ButtonHookResult<T> => {
-  const [keyIsDown, setkeyIsDown] = useState("");
+  const [keyIsDown, setKeyIsDown] = useState("");
   const [active, setActive] = useState(false);
 
   const enter = "Enter";
@@ -57,7 +57,7 @@ export const useButton = <T extends Element>({
   }, [active, keyIsDown]);
 
   const handleKeyUp = (event: KeyboardEvent<T>) => {
-    setkeyIsDown("");
+    setKeyIsDown("");
     setActive(false);
     onKeyUp?.(event);
   };
@@ -74,7 +74,7 @@ export const useButton = <T extends Element>({
 
   const handleKeyDown = (event: KeyboardEvent<T>) => {
     if (event.key === enter || event.key === space) {
-      setkeyIsDown(event.key);
+      setKeyIsDown(event.key);
       setActive(true);
     }
 

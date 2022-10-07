@@ -187,7 +187,7 @@ export interface ListProps<
   selectionVariant?: Variant;
   /**
    * When set to `true`, 'Tab' key selects current highlighted item before focus is blurred away
-   * from the component. This would be the desirable behaviour for any dropdown menu based
+   * from the component. This would be the desirable behaviors for any dropdown menu based
    * components like dropdown, combobox.
    *
    * @default false

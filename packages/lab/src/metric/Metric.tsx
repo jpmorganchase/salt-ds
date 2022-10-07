@@ -14,7 +14,7 @@ export interface MetricProps
    * The aria-level attribute to be applied to the heading component. The default is 2.
    *
    * As an ADA requirement, the heading component should be the first valid component inside the Metric. It is the title
-   * if <MetricHeader/> is placed before <MerticContent/>. It is the main value if <MerticContent/> is placed before <MetricHeader/>.
+   * if <MetricHeader/> is placed before <MetricContent/>. It is the main value if <MetricContent/> is placed before <MetricHeader/>.
    */
   headingAriaLevel?: number;
   /**

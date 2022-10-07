@@ -248,7 +248,7 @@ export const WithCustomIndicator: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithCustomIndicatorColour: ComponentStory<typeof Metric> = () => (
+export const WithCustomIndicatorColor: ComponentStory<typeof Metric> = () => (
   <div
     style={{
       display: "flex",

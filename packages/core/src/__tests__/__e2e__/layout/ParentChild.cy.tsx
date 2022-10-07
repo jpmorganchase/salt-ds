@@ -43,7 +43,7 @@ describe("GIVEN a Parent and Child", () => {
 
   describe("WHEN no stackedAtBreakpoint value is provided", () => {
     it(
-      "THEN it should render both components on larger viewports",
+      "THEN it should render both components on a larger viewport",
       {
         viewportHeight: 900,
         viewportWidth: 1921,
@@ -55,7 +55,7 @@ describe("GIVEN a Parent and Child", () => {
     );
 
     it(
-      "THEN it should render only one component on small viewports",
+      "THEN it should render only one component on a small viewport",
       {
         viewportHeight: 900,
         viewportWidth: 700,

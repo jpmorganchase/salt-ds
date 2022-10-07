@@ -15,7 +15,7 @@ export interface PillVariantProps<T extends PillVariant = "basic"> {
   variant?: T;
 }
 
-// Generic checks makes sure that incompatiable props like `onChange` can be inferred correctly when using different variants
+// Generic checks makes sure that incompatible props like `onChange` can be inferred correctly when using different variants
 export type PillProps<T extends PillVariant = "basic"> = T extends "closable"
   ? ClosablePillProps & PillVariantProps<T>
   : T extends "basic"

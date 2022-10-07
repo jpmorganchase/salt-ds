@@ -18,11 +18,11 @@ import {
 } from "./overflowTypes";
 import { measureOverflowItems } from "./overflowUtils";
 import {
-  reducerInitialiser,
+  reducerInitializer,
   OverflowAction,
   overflowReducer,
   OverflowReducer,
-  OverflowReducerInitialisationProps,
+  OverflowReducerInitializationProps,
 } from "./OverflowReducer";
 
 const defaultOptions: OverflowCollectionOptions = {};
@@ -92,7 +92,7 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
 
   const [data, dispatch] = useReducer<
     OverflowReducer,
-    OverflowReducerInitialisationProps
+    OverflowReducerInitializationProps
   >(
     overflowReducer,
     {
@@ -102,7 +102,7 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
       idRoot,
       options,
     },
-    reducerInitialiser
+    reducerInitializer
   );
 
   dataRef.current = data;
@@ -173,7 +173,7 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
 
   useIsomorphicLayoutEffect(() => {
     if (previousIdentityRef.current !== "") {
-      const overflowItems = reducerInitialiser({
+      const overflowItems = reducerInitializer({
         children,
         source: source || defaultSource,
         injectedItems,

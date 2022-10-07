@@ -42,7 +42,7 @@ const rangeData = [
   "Last Year",
 ];
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
-const typeData = ["Open", "Close", "Discarted", "Resolved"];
+const typeData = ["Open", "Close", "Discarded", "Resolved"];
 
 export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={1} itemPadding={3} imgSrc={imgSrc} itemWidthAuto>
@@ -104,7 +104,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
           <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
         </FormField>
         <FormField>
-          <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+          <Pill label="DOLOR" onClick={() => console.log("dolor.")} />
         </FormField>
       </Tooltray>
       <Tooltray aria-label="status tooltray" data-pad-end>

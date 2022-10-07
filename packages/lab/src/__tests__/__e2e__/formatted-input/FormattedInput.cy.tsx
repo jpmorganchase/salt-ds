@@ -126,13 +126,13 @@ describe("GIVEN FormattedInput", () => {
       cy.mount(
         <FormattedInput
           mask="XX-XX-XX"
-          inputProps={{ "aria-label": "fakelabel" }}
+          inputProps={{ "aria-label": "fake label" }}
         />
       );
       cy.findByRole("textbox").should(
         "not.have.attr",
         "aria-label",
-        "fakelabel"
+        "fake label"
       );
     });
   });

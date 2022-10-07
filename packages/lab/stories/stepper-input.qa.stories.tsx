@@ -9,7 +9,7 @@ export default {
 } as ComponentMeta<typeof StepperInput>;
 
 const Example = () => (
-  <div data-jpmui-test="stepper-input">
+  <div data-testid="stepper-input">
     <StepperInput
       decimalPlaces={2}
       defaultValue={0.5}

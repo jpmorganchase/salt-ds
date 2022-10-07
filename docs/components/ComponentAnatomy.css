@@ -1,20 +1,20 @@
-.RenderVisualiser {
+.RenderVisualizer {
   display: flex;
   gap: 50px;
   width: 800px;
 }
 
-.RenderVisualiser-component {
+.RenderVisualizer-component {
   flex: 0 0 200px;
 }
 
-.RenderVisualiser-view {
+.RenderVisualizer-view {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
 }
 
-.RenderVisualiser-header {
+.RenderVisualizer-header {
   align-items: flex-start;
   border-bottom: solid 2px lightgray;
   display: flex;
@@ -22,14 +22,14 @@
   margin-bottom: 12px;
 }
 
-.RenderVisualiser-header .actions {
+.RenderVisualizer-header .actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   margin-left: auto;
 }
 
-.RenderVisualiser-header .actions input {
+.RenderVisualizer-header .actions input {
   vertical-align: bottom;
 }
 
@@ -37,7 +37,7 @@
   font-size: 16px;
 }
 
-.RenderVisualiser-content {
+.RenderVisualizer-content {
   flex: 1 1 auto;
 }
 
@@ -61,7 +61,7 @@
   padding-left: 12px;
 }
 
-.RenderVisualiser-content > .RenderedElement + .RenderedElement {
+.RenderVisualizer-content > .RenderedElement + .RenderedElement {
   margin-top: 50px;
 }
 

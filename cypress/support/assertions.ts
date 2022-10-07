@@ -57,7 +57,7 @@ declare global {
        * */
       (chainer: "announce"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkHighlighted className has been applied.
+       * Checks if the appropriate uitkHighlighted className has been applied.
        *
        * @example
        ```
@@ -66,7 +66,7 @@ declare global {
        * */
       (chainer: "be.highlighted"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkHighlighted className has been applied.
+       * Checks if the appropriate uitkHighlighted className has been applied.
        *
        * @example
        ```
@@ -93,7 +93,7 @@ declare global {
        * */
       (chainer: "not.have.ariaSelected"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkFocusVisible className has been applied.
+       * Checks if the appropriate uitkFocusVisible className has been applied.
        *
        * @example
        ```
@@ -103,7 +103,7 @@ declare global {
       (chainer: "be.focusVisible"): Chainable<Subject>;
       (chainer: "have.focusVisible"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkFocusVisible className has been applied.
+       * Checks if the appropriate uitkFocusVisible className has been applied.
        *
        * @example
        ```

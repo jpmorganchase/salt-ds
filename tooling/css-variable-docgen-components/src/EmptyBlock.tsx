@@ -19,5 +19,5 @@ const Wrapper = styled.div(withReset, ({ theme }) => ({
 }));
 
 export const EmptyBlock = (props: ComponentProps<typeof Wrapper>) => (
-  <Wrapper {...props} className="docblock-emptyblock" />
+  <Wrapper {...props} className="docblock-emptyBlock" />
 );

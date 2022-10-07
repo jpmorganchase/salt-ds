@@ -78,7 +78,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN no fullScreenAtBreakpoint value is provided", () => {
     it(
-      "THEN it should take up the whole screen on small viewports",
+      "THEN it should take up the whole screen on a small viewport",
       {
         viewportHeight: 900,
         viewportWidth: 700,
@@ -98,7 +98,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN a fullScreenAtBreakpoint value is provided", () => {
     it(
-      "THEN it should take up the whole screen on medium viewports",
+      "THEN it should take up the whole screen on a medium viewport",
       {
         viewportHeight: 900,
         viewportWidth: 961,
@@ -116,7 +116,7 @@ describe("GIVEN a Layer", () => {
     );
 
     it(
-      "THEN it should take up the whole screen on extra large viewports",
+      "THEN it should take up the whole screen on an extra large viewport",
       {
         viewportHeight: 900,
         viewportWidth: 1821,

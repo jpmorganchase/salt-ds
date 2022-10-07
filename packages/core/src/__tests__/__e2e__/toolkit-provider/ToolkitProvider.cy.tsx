@@ -165,7 +165,7 @@ describe("Given a ToolkitProvider", () => {
   });
 
   // describe("when a theme is available", () => {
-  //   it("provides programatic access to CSS variables", () => {
+  //   it("provides programmatic access to CSS variables", () => {
   //     cy.mount(
   //       <ToolkitProvider density="high" theme="dark">
   //         <TestComponent displayVariableValue={["spacing", "unit"]} />

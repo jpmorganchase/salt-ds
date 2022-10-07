@@ -107,9 +107,6 @@ describe('Given a Tree', () => {
     const multiSelect = v === 'multiSelect';
 
     describe(`keyboard navigation with ${v} variant`, () => {
-      // {arrowdown} is not supported by the userEvent version we use <v12.5.0
-      // so specify these ourselves
-
       const arrowUp = { code: 'ArrowUp', key: 'ArrowUp', keyCode: 38 };
       const arrowDown = { code: 'ArrowDown', key: 'ArrowDown', keyCode: 40 };
       const arrowLeft = { code: 'ArrowLeft', key: 'ArrowLeft', keyCode: 37 };
@@ -333,7 +330,7 @@ describe('Given a Tree', () => {
       describe('tab sequence', () => {
         /**
          * Below test is skipped as it doesn't work with the unit test infrastructure, however it's
-         * worth to leave it in here to convey the intent of testing Shift + Tab. The behaviour works
+         * worth to leave it in here to convey the intent of testing Shift + Tab. The behavior works
          * in the browser and can be tested in e2e when our cypress setup supports it (e.g. real event)
          */
         test.skip('once focused shift tab should move focus to the previous interactive element available', () => {
@@ -360,8 +357,6 @@ describe('Given a Tree', () => {
           assertItemHasFocus(/item 1/i);
           const itemA = screen.getByRole('treeitem', { name: /item 1/i });
 
-          // {arrowdown} is not supported by the userEvent version we use
-          // userEvent.type(itemA, '{arrowdown}'); // Available from 12.5.0
           fireEvent.keyDown(itemA, {
             code: 'ArrowDown',
             key: 'ArrowDown',
@@ -396,8 +391,6 @@ describe('Given a Tree', () => {
           assertItemHasFocus(/item 1/i);
 
           const item1 = screen.getByRole('treeitem', { name: /item 1/i });
-          // {arrowdown} is not supported by the userEvent version we use
-          // userEvent.type(itemA, '{arrowdown}'); // Available from 12.5.0
           fireEvent.keyDown(item1, {
             code: 'ArrowDown',
             key: 'ArrowDown',

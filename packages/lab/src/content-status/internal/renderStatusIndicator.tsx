@@ -92,7 +92,7 @@ export function renderStatusIndicator({
     <Icon
       aria-label={status}
       className={className}
-      data-jpmui-test={`icon-${iconName}-${id!}`}
+      data-testid={`icon-${iconName}-${id!}`}
       role="img"
       size="medium"
     />

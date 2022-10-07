@@ -52,7 +52,7 @@ const cssAttributes = properties
   .filter((x) => !x.startsWith("-")) /* e.g. -webkit- */
   .filter((x) =>
     x.includes("-")
-  ); /* only need to check properting needing kebab case */
+  ); /* only need to check kebab case properties */
 
 /**
  * Test whether a property contains CSS attr

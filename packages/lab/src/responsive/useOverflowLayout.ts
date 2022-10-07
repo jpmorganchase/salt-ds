@@ -98,7 +98,7 @@ export const useOverflowLayout = ({
       if (typeof size === "number") {
         const { innerContainerSize } = measurement.current;
         const sizeDiff = size - innerContainerSize;
-        // Tiny size diffs seem to be down to the relative sub-pixel innaccuracy of
+        // Tiny size diffs seem to be down to the relative sub-pixel inaccuracy of
         // ResizeObserver vs getBoundingClientRect
         if (Math.abs(sizeDiff) > 0.5) {
           measurement.current.innerContainerSize = size;
@@ -166,14 +166,14 @@ export const useOverflowLayout = ({
 
   // Important that we register our resize handler before we measure and
   // initialize. The initialization may trigger changes which we want the
-  // resize observer to detect (when we have nested overflowables).
+  // resize observer to detect (when we have nested overflows).
   useResizeObserver(
     overflowContainerRef,
     MONITORED_DIMENSIONS[disableOverflow ? "none" : orientation],
     resizeHandler
   );
 
-  // This hook runs after a measurememnt cycle, not after every single change to
+  // This hook runs after a measurement cycle, not after every single change to
   // collection data. The version attribute has been introduced specifically for this.
   useEffect(() => {
     if (!disableOverflow) {

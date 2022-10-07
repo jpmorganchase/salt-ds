@@ -286,16 +286,16 @@ export function last<T>(source: T[]): T {
 // Range of columns visible in the header.
 export function useHeadVisibleColumnRange<T>(
   bodyVisColRng: NumberRange,
-  visColGrps: GridColumnGroupModel[],
+  visColGroups: GridColumnGroupModel[],
   midColsById: Map<string, GridColumnModel<T>>,
   leftColCount: number
 ) {
   return useMemoRng(() => {
-    if (visColGrps.length === 0) {
+    if (visColGroups.length === 0) {
       return bodyVisColRng;
     }
-    const firstVisibleGroup = visColGrps[0];
-    const lastVisibleGroup = last(visColGrps);
+    const firstVisibleGroup = visColGroups[0];
+    const lastVisibleGroup = last(visColGroups);
     const firstColId = firstVisibleGroup.childrenIds[0];
     const lastColId = last(lastVisibleGroup.childrenIds);
     const firstColIdx = midColsById.get(firstColId)?.index;
@@ -307,7 +307,7 @@ export function useHeadVisibleColumnRange<T>(
       firstColIdx - leftColCount,
       lastColIdx + 1 - leftColCount
     );
-  }, [bodyVisColRng, visColGrps, midColsById, leftColCount]);
+  }, [bodyVisColRng, visColGroups, midColsById, leftColCount]);
 }
 
 // Creates column models.

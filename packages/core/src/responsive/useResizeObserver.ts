@@ -68,7 +68,7 @@ const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
 // TODO use an optional lag (default to false) to ask to fire onResize
 // with initial size
 // Note asking for scrollHeight alone will not trigger onResize, this is only triggered by height,
-// with scrollHeight returned as an auxilliary value
+// with scrollHeight returned as an auxiliary value
 export function useResizeObserver(
   ref: RefObject<Element | HTMLElement | null>,
   dimensions: string[],
@@ -127,7 +127,7 @@ export function useResizeObserver(
       // TODO might we want multiple callers to attach a listener to the same element ?
       if (observedMap.has(target)) {
         throw Error(
-          "useResizeObserver attemping to observe same element twice"
+          "useResizeObserver attempting to observe same element twice"
         );
       }
       void registerObserver();
@@ -155,6 +155,6 @@ export function useResizeObserver(
     }
   }, [dimensions, measure, ref, onResize]);
 
-  // TODO might be a good idea to ref and return the current measurememnts. That way, derived hooks
+  // TODO might be a good idea to ref and return the current measurements. That way, derived hooks
   // e.g useBreakpoints don't have to measure and client cn make onResize callback simpler
 }

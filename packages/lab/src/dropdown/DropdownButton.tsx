@@ -84,7 +84,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
       className={classnames(
         withBaseName(),
         {
-          [withBaseName("fullwidth")]: fullWidth,
+          [withBaseName("fullWidth")]: fullWidth,
           [withBaseName("formField")]: inFormField,
         },
         className

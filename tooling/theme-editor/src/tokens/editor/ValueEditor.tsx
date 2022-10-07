@@ -73,7 +73,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
             characteristicsView={props.characteristicsView}
             extractValue={props.extractValue}
             isStateValue={props.isStateValue}
-            key={`colorswatch-${valueName}`}
+            key={`colorSwatch-${valueName}`}
             label={valueName}
             onUpdateJSON={props.onUpdateJSON}
             originalValue={originalValue}

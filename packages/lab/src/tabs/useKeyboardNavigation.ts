@@ -155,10 +155,10 @@ export const useKeyboardNavigation = ({
         const item = indexPositions.find((i) => i.index === tabIndex);
 
         if (item) {
-          const focussableElement = getFocusableElement(
+          const focusableElement = getFocusableElement(
             document.getElementById(item.id)
           );
-          focussableElement?.focus();
+          focusableElement?.focus();
         }
       };
       if (immediateFocus) {
@@ -173,13 +173,13 @@ export const useKeyboardNavigation = ({
   const onFocus = (e: FocusEvent<HTMLElement>) => {
     // If focus is received by keyboard navigation, item with tabindex 0 will receive
     // focus. If the item receiving focus has tabindex -1, then focus has been set
-    // programatically. We must respect this and not reset focus to selected tab.
+    // programmatically. We must respect this and not reset focus to selected tab.
     if (focusedRef.current === -1) {
-      // Focus is entering tabstrip. Assume keyboard - if it'a actually mouse-driven,
+      // Focus is entering tabstrip. Assume keyboard - if it's actually mouse-driven,
       // the click event will have set correct value.
       if (e.target.tabIndex === -1) {
         // Do nothing, assume focus is being passed back to button by closing dialog. Might need
-        // to revisit this and add code here if we may get focus set programatically in other ways.
+        // to revisit this and add code here if we may get focus set programmatically in other ways.
       } else {
         setTimeout(() => {
           // The selected tab will have tabIndex 0 make sure our internal state is aligned.

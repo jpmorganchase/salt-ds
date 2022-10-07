@@ -41,7 +41,7 @@ const toFloat = (inputValue: number | string) => {
   return parseFloat(inputValue.toString());
 };
 
-const santizedInput = (numberString: string) =>
+const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
 const getButtonIcon = (type: Direction) =>
@@ -204,11 +204,11 @@ export const useStepperInput = (
     const changedValue = (event.currentTarget as HTMLInputElement).value;
 
     if (!isControlled) {
-      setCurrentValue(santizedInput(changedValue));
+      setCurrentValue(sanitizedInput(changedValue));
     }
 
     if (onChange) {
-      onChange(santizedInput(changedValue));
+      onChange(sanitizedInput(changedValue));
     }
   };
 
@@ -238,19 +238,19 @@ export const useStepperInput = (
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
   const refreshCurrentValue = () => {
-    const refreshedcurrentValue =
+    const refreshedCurrentValue =
       liveValue !== undefined ? liveValue : defaultValue;
-    if (refreshedcurrentValue === undefined) return;
+    if (refreshedCurrentValue === undefined) return;
 
     setCurrentValue(
-      toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
+      toFixedDecimalPlaces(toFloat(refreshedCurrentValue), decimalPlaces)
     );
 
     inputRef.current?.focus();
 
     if (onChange) {
       onChange(
-        toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
+        toFixedDecimalPlaces(toFloat(refreshedCurrentValue), decimalPlaces)
       );
     }
   };

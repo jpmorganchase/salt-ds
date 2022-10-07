@@ -197,7 +197,7 @@ export const useSelection = <
       const item = indexPositions[highlightedIdx];
       if (isSelectable(item)) {
         if (isSelectionEvent(evt) || (tabToSelect && evt.key === "Tab")) {
-          // We do not inhibit Tab behaviour, if we are selecting on Tab then we apply
+          // We do not inhibit Tab behaviors, if we are selecting on Tab then we apply
           // selection as a side effect of the Tab, not as a replacement for Tabbing.
           if (evt.key !== "Tab") {
             evt.preventDefault();

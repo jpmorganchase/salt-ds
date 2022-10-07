@@ -79,7 +79,7 @@ const ResponsiveTextComponent: ComponentStory<typeof Text> = () => {
       <div style={box}>
         <Div truncate={true} maxRows={2}>
           When the wedding with the king's son was to be celebrated, the two
-          false sisters came and wanted to get into favor with cinderella and
+          false sisters came and wanted to get into favor with Cinderella and
           share her good fortune.
         </Div>
       </div>

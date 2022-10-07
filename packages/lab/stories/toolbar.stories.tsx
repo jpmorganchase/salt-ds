@@ -144,7 +144,7 @@ export const TooltrayAlignment: Story = () => {
             <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
           </ToolbarField>
           <ToolbarField>
-            <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+            <Pill label="DOLOR" onClick={() => console.log("dolor.")} />
           </ToolbarField>
         </Tooltray>
         <Tooltray aria-label="status tooltray" alignStart>
@@ -414,7 +414,7 @@ const ToolbarWithDynamicCollapseTooltrays = () => {
 
   return (
     <Toolbar
-      aria-label="Dynamic collapse tooltbar"
+      aria-label="Dynamic collapse toolbar"
       style={{ minWidth: "100px" }}
     >
       <Tooltray

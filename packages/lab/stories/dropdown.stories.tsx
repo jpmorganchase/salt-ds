@@ -136,7 +136,7 @@ export const CustomRowRenderer: Story<DropdownProps> = () => (
 );
 
 const ListItemWithTooltip: ListItemType<string> = ({
-  item = "uknown",
+  item = "unknown",
   ...props
 }) => {
   const { getTriggerProps, getTooltipProps } = useTooltip({
@@ -232,7 +232,7 @@ export const ControlledOpenDropdown: Story<DropdownProps> = () => {
     console.log({ openChanged: open });
   };
   const toggleDropdown = useCallback(() => {
-    console.log(`toggleDropdoen isOpen = ${isOpen}`);
+    console.log(`toggleDropdown isOpen = ${isOpen}`);
     setIsOpen(!isOpen);
   }, [isOpen]);
   return (

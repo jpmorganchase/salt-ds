@@ -233,7 +233,7 @@ describe("ColorPicker", () => {
     );
     expect(changeSpy).toHaveBeenCalledTimes(0);
     const rgbaInput = element.getAllByDisplayValue("209")[0];
-    fireEvent.change(rgbaInput, { target: { value: "ajwke" } });
+    fireEvent.change(rgbaInput, { target: { value: "all letters" } });
     fireEvent.keyDown(rgbaInput, { key: "Enter", code: "Enter" });
     expect(changeSpy).not.toHaveBeenCalled();
   });

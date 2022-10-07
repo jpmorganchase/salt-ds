@@ -1,4 +1,4 @@
-The UITK provides you with a suite of UI components and a flexible theming system. With no customisation, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities.
+The UITK provides you with a suite of UI components and a flexible theming system. With no customization, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities.
 We have included a theming system which allows you to easily create theme variations, or in fact substitute alternate themes.
 
 The UITK has been developed with the following design goals:

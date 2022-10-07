@@ -206,7 +206,7 @@ export const useTabstrip = ({
   };
 
   const addTab = useCallback(
-    // The -1 is to account for the AddTab button - we shoudn't assume this
+    // The -1 is to account for the AddTab button - we shouldn't assume this
     (indexPosition: number = collectionHook.data.length - 1) => {
       const tabId =
         (pendingNewTab.current = `${idRoot}-${collectionHook.data.length}`);
@@ -263,7 +263,7 @@ export const useTabstrip = ({
         if (collectionHook.data.length > 1) {
           if (
             indexPosition === selectionHook.selected &&
-            //TODO need to exclude oberflow indicator, addButton
+            //TODO need to exclude overflow indicator, addButton
             indexPosition === collectionHook.data.length - 1
           ) {
             selectionHook.activateTab(indexPosition - 1);

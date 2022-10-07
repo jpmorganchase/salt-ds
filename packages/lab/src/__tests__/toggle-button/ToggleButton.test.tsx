@@ -44,7 +44,7 @@ describe("GIVEN a ToggleButton with Icon and Text (uncontrolled)", () => {
 
     onToggleSpy.mockClear();
 
-    // untoggle
+    // toggle
     fireEvent.click(toggleButton[0]);
     rerender({ toggled: false });
     expect(toggleButton[0]).toHaveAttribute("aria-checked", "false");
@@ -65,7 +65,7 @@ describe("GIVEN a ToggleButton with Icon and Text (controlled)", () => {
     expect(toggleButton[0]).toHaveTextContent("Home");
     expect(toggleButton.length).toBe(1);
 
-    // untoggle
+    // toggle
     fireEvent.click(toggleButton[0]);
     rerender({ toggled: false });
     expect(toggleButton[0]).toHaveAttribute("aria-checked", "false");

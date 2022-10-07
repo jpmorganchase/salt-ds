@@ -111,7 +111,7 @@ describe('GIVEN a Tree with a KeyboardController', () => {
       expect(mockEvent.stopPropagation).toHaveBeenCalled();
     });
 
-    it('THEN should prevent default keyboard behaviour', () => {
+    it('THEN should prevent default keyboard behavior', () => {
       expect(mockEvent.preventDefault).toHaveBeenCalled();
     });
 
@@ -165,7 +165,7 @@ describe('GIVEN a Tree with a KeyboardController', () => {
       });
     });
 
-    it('THEN should NOT prevent default keyboard behaviour', () => {
+    it('THEN should NOT prevent default keyboard behavior', () => {
       expect(mockEvent.preventDefault).not.toHaveBeenCalled();
     });
   });
@@ -270,7 +270,7 @@ describe('GIVEN a Tree with a KeyboardController', () => {
       });
     });
 
-    it('THEN should prevent default keyboard behaviour', () => {
+    it('THEN should prevent default keyboard behavior', () => {
       expect(mockEvent.preventDefault).toHaveBeenCalled();
     });
 

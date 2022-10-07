@@ -59,7 +59,7 @@ const NoDataOverlayExample = function NoDataOverlayExample(
   const modal = showModal && (
     <div className="modal" style={getModalStyle}>
       <Card
-        data-jpmui-test="card-default-example"
+        data-testid="card-default-example"
         style={{
           width: "500px",
           height: "160px",
@@ -93,8 +93,8 @@ const NoDataOverlayExample = function NoDataOverlayExample(
                   lineHeight: "1.5em",
                 }}
               >
-                We didn&apos;t find any row data to display. Please try
-                reloading the page or contacting your local help desk.
+                We didn't find any row data to display. Please try reloading the
+                page or contacting your local help desk.
               </p>
             </div>
             <div style={{ position: "absolute", right: "0" }}>

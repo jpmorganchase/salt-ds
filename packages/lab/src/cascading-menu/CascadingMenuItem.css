@@ -40,7 +40,7 @@
   background: #a4d5f4;
 }
 
-/* extra specificity requred to override ListItem selected */
+/* extra specificity required to override ListItem selected */
 .uitkMenuItem.uitkMenuItem-menuItemBlurSelected {
   background: var(--uitk-selectable-background-blurSelected) !important;
 }

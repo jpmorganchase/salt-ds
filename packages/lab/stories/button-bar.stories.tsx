@@ -40,7 +40,7 @@ export const ButtonBarWithSecondaryActions: ComponentStory<
 };
 
 /*
- * We pass the stackAtBreakpoint prop of 0 to disable the stacking behaviour for the purposes of the example.
+ * We pass the stackAtBreakpoint prop of 0 to disable the stacking behavior for the purposes of the example.
  */
 export const FullPageButtonBar: ComponentStory<typeof ButtonBar> = () => {
   return (

@@ -1067,7 +1067,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 
 // export const ControlledList = () => {
 //   const [selected, setSelected] = useState([]);
-//   const [hilitedIdx, setHilitedIdx] = useState(-1);
+//   const [highlightedIdx, setHighlightedIdx] = useState(-1);
 
 //   const handleChangeController = (evt, newSelected) => {
 //     console.log(`handleChangeController`);
@@ -1086,7 +1086,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 //           id="controller"
 //           source={usa_states}
 //           onChange={handleChangeController}
-//           onHighlight={(idx) => setHilitedIdx(idx)}
+//           onHighlight={(idx) => setHighlightedIdx(idx)}
 //         />
 //         <input type="text" />
 //       </div>
@@ -1094,7 +1094,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 //         <input type="text" />
 //         <List
 //           id="controlled"
-//           highlightedIdx={hilitedIdx}
+//           highlightedIdx={highlightedIdx}
 //           selected={selected}
 //           source={usa_states}
 //           onChange={handleChangeControlled}
@@ -1107,7 +1107,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 
 // export const FullyControlledList = () => {
 //   const [selected, setSelected] = useState([]);
-//   const [hilitedIdx, setHilitedIdx] = useState(-1);
+//   const [highlightedIdx, setHighlightedIdx] = useState(-1);
 
 //   const handleChangeController = (evt, newSelected) => {
 //     console.log(`handleChangeController`);
@@ -1119,18 +1119,18 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 //   };
 
 //   const moveUp = () => {
-//     setHilitedIdx((val) => Math.max(0, val - 1));
+//     setHighlightedIdx((val) => Math.max(0, val - 1));
 //   };
 
 //   const selectCurrent = () => {
 //     const [selectedIdx] = selected;
 //     const newSelection =
-//       selectedIdx === hilitedIdx || hilitedIdx === -1 ? [] : [hilitedIdx];
+//       selectedIdx === highlightedIdx || highlightedIdx === -1 ? [] : [highlightedIdx];
 //     setSelected(newSelection);
 //   };
 
 //   const moveDown = () => {
-//     setHilitedIdx((val) => Math.min(usa_states.length - 1, val + 1));
+//     setHighlightedIdx((val) => Math.min(usa_states.length - 1, val + 1));
 //   };
 
 //   return (
@@ -1143,7 +1143,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
 //       <div style={{ height: 600 }}>
 //         <List
 //           id="controlled"
-//           highlightedIdx={hilitedIdx}
+//           highlightedIdx={highlightedIdx}
 //           selected={selected}
 //           source={usa_states}
 //           onChange={handleChangeControlled}

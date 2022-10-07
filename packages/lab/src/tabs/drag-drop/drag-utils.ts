@@ -3,7 +3,7 @@ import { Direction, FWD } from "./dragDropTypes";
 
 const LEFT_RIGHT = ["left", "right"];
 const TOP_BOTTOM = ["top", "bottom"];
-// duplicated in repsonsive
+// duplicated in responsive
 
 export type MeasuredDropTarget = {
   currentIndex: number;

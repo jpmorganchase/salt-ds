@@ -98,7 +98,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
     ]
   );
 
-  // This is only appropriate whan we are directly controlling a List,
+  // This is only appropriate when we are directly controlling a List,
   // not when a control is manipulating the list
   const { isScrolling, scrollIntoView } = useViewportTracking({
     containerRef,
@@ -151,7 +151,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   const listHandlers: ListHandlers = /*listHandlersProp || */ {
     onClick: handleClick,
     // MouseEnter would be much better for this. There is a bug in Cypress
-    // wheby it emits spurious MouseEnter (and MouseOver) events around
+    // where it emits spurious MouseEnter (and MouseOver) events around
     // keypress events, which break many tests.
     onMouseMove: handleMouseMove,
   };

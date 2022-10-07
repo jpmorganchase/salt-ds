@@ -395,7 +395,7 @@ export const useCombobox = <
             console.log("we have a new item");
           }
         }
-        // Hoiw do we check if string is Item
+        // How do we check if string is Item
       }
     },
     [onSelectionChange, selected, stringToItem, stringToCollectionItem, value]

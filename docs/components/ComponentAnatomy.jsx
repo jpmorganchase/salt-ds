@@ -33,7 +33,7 @@ export const ComponentAnatomy = ({
 }) => {
   const root = useRef(null);
   const [tree, setTree] = useState([]);
-  const [renderVisualiserChildren, setRenderVisualiserChildren] =
+  const [renderVisualizerChildren, setRenderVisualizerChildren] =
     useState(undefined);
   const [[showClasses, showRole, showAria, showData], setState] = useState([
     1, 1, 1, 1,
@@ -57,15 +57,15 @@ export const ComponentAnatomy = ({
   };
 
   useEffect(() => {
-    setRenderVisualiserChildren(
-      root.current.querySelector(".RenderVisualiser-component > *")
+    setRenderVisualizerChildren(
+      root.current.querySelector(".RenderVisualizer-component > *")
     );
   }, [root.current]);
 
   const getComponentElement = () =>
     targetId
       ? document.querySelector(`#${targetId}`)
-      : renderVisualiserChildren;
+      : renderVisualizerChildren;
 
   const mutationHandler = useCallback((mutations) => {
     const target = getComponentElement();
@@ -79,16 +79,16 @@ export const ComponentAnatomy = ({
       registerMutationObserver(target, mutationHandler);
       fetchTree(target);
     }
-  }, [mutationHandler, renderVisualiserChildren]);
+  }, [mutationHandler, renderVisualizerChildren]);
 
   return (
-    <div className="RenderVisualiser" ref={root} {...props}>
+    <div className="RenderVisualizer" ref={root} {...props}>
       {children ? (
-        <div className="RenderVisualiser-component">{children}</div>
+        <div className="RenderVisualizer-component">{children}</div>
       ) : null}
-      <div className="RenderVisualiser-view">
+      <div className="RenderVisualizer-view">
         {showControls ? (
-          <div className="RenderVisualiser-header">
+          <div className="RenderVisualizer-header">
             <span className="component-name">{children?.type.displayName}</span>
             <div className="actions">
               <label className="checkbox-classes">
@@ -126,7 +126,7 @@ export const ComponentAnatomy = ({
             </div>
           </div>
         ) : null}
-        <div className="RenderVisualiser-content">{renderTree(tree)}</div>
+        <div className="RenderVisualizer-content">{renderTree(tree)}</div>
       </div>
     </div>
   );
@@ -249,8 +249,8 @@ const splitOutRelatedItems = (arrayOfArrays) => {
 };
 
 const resolveElementChildren = async (childNodesArray) => {
-  const childs = await Promise.all(childNodesArray.map(getElementTree));
-  return splitOutRelatedItems(childs);
+  const children = await Promise.all(childNodesArray.map(getElementTree));
+  return splitOutRelatedItems(children);
 };
 
 async function getElementTree(element) {

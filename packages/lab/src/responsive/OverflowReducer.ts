@@ -45,7 +45,7 @@ interface SingleItemAction {
     | "add-overflow-indicator"
     | "replace-item"
     | "collapsing-item"
-    | "uncollapse-dynamic-item"
+    | "expand-dynamic-item"
     | "collapse-instant-item";
 
   overflowItem: OverflowItem;
@@ -218,7 +218,7 @@ export type OverflowReducer = Reducer<OverflowItems, OverflowAction>;
 
 const defaultOptions = {};
 
-export type OverflowReducerInitialisationProps = {
+export type OverflowReducerInitializationProps = {
   children?: ReactNode;
   source?: OverflowSource[];
   injectedItems?: any[];
@@ -226,8 +226,8 @@ export type OverflowReducerInitialisationProps = {
   options?: OverflowCollectionOptions;
 };
 
-export const reducerInitialiser: (
-  props: OverflowReducerInitialisationProps
+export const reducerInitializer: (
+  props: OverflowReducerInitializationProps
 ) => OverflowItems = ({
   children,
   source,
@@ -260,7 +260,7 @@ const collapsingItem = (
       : item
   );
 
-const uncollapseDynamicItem = (
+const expandDynamicItem = (
   items: OverflowItem[],
   { overflowItem }: SingleItemAction
 ) =>
@@ -336,10 +336,10 @@ const collapseDynamicItem = (
   items: OverflowItem[],
   { overflowItem, collapsedSize = 0, minSize = 0 }: DynamicCollapseAction
 ) => {
-  const remainingUncollpasedItems = items.filter(
+  const remainingExpandedItems = items.filter(
     (i) => i.collapsible === "dynamic" && !i.collapsed && i !== overflowItem
   );
-  const lastUncollapsedItem = remainingUncollpasedItems.pop();
+  const lastExpandedItem = remainingExpandedItems.pop();
 
   return items.map((item) => {
     if (item === overflowItem) {
@@ -351,7 +351,7 @@ const collapseDynamicItem = (
         minSize,
         size: collapsedSize,
       };
-    } else if (item === lastUncollapsedItem) {
+    } else if (item === lastExpandedItem) {
       return {
         ...item,
         collapsing: true,
@@ -431,8 +431,8 @@ export const overflowReducer: OverflowReducer = (state, action) => {
     case "collapse-dynamic-item":
       return collapseDynamicItem(state, action);
 
-    case "uncollapse-dynamic-item":
-      return uncollapseDynamicItem(state, action);
+    case "expand-dynamic-item":
+      return expandDynamicItem(state, action);
 
     case "restore-collapsing-item":
       return restoreCollapsingItem(state);

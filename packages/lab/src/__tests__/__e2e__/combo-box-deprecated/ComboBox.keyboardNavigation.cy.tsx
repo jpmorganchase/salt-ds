@@ -561,7 +561,7 @@ describe("A multi-select combo box", () => {
 
   describe("with selected items", () => {
     describe("when focused", () => {
-      // TODO double check the behaviour of combobox in this scenario - I don't think it's correct
+      // TODO double check the behavior of combobox in this scenario - I don't think it's correct
       it.skip("should not highlight any item with a focus ring", () => {
         cy.mount(<MultiSelectWithInitialSelection />);
 

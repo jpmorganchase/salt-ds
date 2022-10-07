@@ -1,6 +1,6 @@
 import { RefObject, useEffect } from "react";
 
-export type ClickawayHook = (props: {
+export type ClickAwayHook = (props: {
   popperRef: RefObject<HTMLElement>;
   rootRef: RefObject<HTMLElement>;
   isOpen: boolean;
@@ -12,7 +12,7 @@ type KeyboardEventHandler = (e: KeyboardEvent) => void;
 
 const NO_HANDLERS: [MouseEventHandler?, KeyboardEventHandler?] = [];
 
-export const useClickAway: ClickawayHook = ({
+export const useClickAway: ClickAwayHook = ({
   popperRef,
   rootRef,
   isOpen,

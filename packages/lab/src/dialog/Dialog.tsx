@@ -35,7 +35,7 @@ const withBaseName = makePrefixer("uitkDialog");
 
 /**
  * The Dialog is a window that contains text and interactive components.
- * By default, Dialog is non-modal, but supports modal behaviour as well.
+ * By default, Dialog is non-modal, but supports modal behavior as well.
  */
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   props,

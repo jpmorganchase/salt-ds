@@ -62,7 +62,7 @@ const personaB = {
 
 const personaC = {
   name: "Persona C",
-  login: "personac",
+  login: "persona-c",
   role: "Role C",
   location: "Location C",
   email: "personac@example.com",
@@ -638,7 +638,7 @@ const ExportToFileTemplate: Story = () => {
   };
 
   const copyToClipboard = () => {
-    // Check browser support caniuse.com/#search=clipboard
+    // Check browser support https://caniuse.com/#search=clipboard
     navigator.clipboard.writeText(generateCopyText()).then(
       () => {
         console.log("Wrote contact detail to clipboard");

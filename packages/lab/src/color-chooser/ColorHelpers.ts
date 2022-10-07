@@ -15,10 +15,10 @@ export function getColorNameByHexValue(
 
   let colorName = Object.keys(uitkColors).find((key: string) => {
     if (uitkColors[key]) {
-      const rgbVals = uitkColors[key].startsWith("rgba")
+      const rgbValues = uitkColors[key].startsWith("rgba")
         ? uitkColors[key].substring(5, uitkColors[key].length - 1)
         : uitkColors[key].substring(4, uitkColors[key].length - 1);
-      const [r, g, b] = [...rgbVals.replace(" ", "").split(",")];
+      const [r, g, b] = [...rgbValues.replace(" ", "").split(",")];
       return (
         Color.makeColorFromRGB(Number(r), Number(g), Number(b)).hex ===
         hexNoAlpha?.toLowerCase()
@@ -64,10 +64,10 @@ export const isValidHex = (hex: string | undefined): boolean => {
 
 export const convertColorMapValueToHex = (color: string): string => {
   if (!color.startsWith("rgb")) return color;
-  const rgbVals = color.startsWith("rgba")
+  const rgbValues = color.startsWith("rgba")
     ? color.substring(5, color.length - 1)
     : color.substring(4, color.length - 1);
-  const [r, g, b, a] = [...rgbVals.replace(" ", "").split(",")];
+  const [r, g, b, a] = [...rgbValues.replace(" ", "").split(",")];
   return Color.makeColorFromRGB(
     Number(r),
     Number(g),

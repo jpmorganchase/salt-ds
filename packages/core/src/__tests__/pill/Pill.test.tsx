@@ -7,7 +7,7 @@ import { Pill } from "../../pill";
  * Changes applied to the tests after copy over
  *
  * - All snapshot tests are skipped
- * - New API `clickable` `deletable` or variant="x" is added to the relavent test
+ * - New API `clickable` `deletable` or variant="x" is added to the relevant test
  * - Remove `classes={{ active: 'foo' }}` for '.Pill-active'
  * - Use event.key instead of 'keycode' for events
  * - Use userEvent.type instead of fireEvent.keyDown

@@ -19,15 +19,15 @@ will be required to add the CSS to the opened window's document.
 
 One method of style injection would be to copy over the styles present in the parent window,
 This would ensure that all component styles loaded in the parent window are loaded into the
-child window. Those styles can be optimised by querying the children of the window
+child window. Those styles can be optimized by querying the children of the window
 via ReactDOMServer to figure out which styles to add.
 
-This method of optimising will not work for child components that are rendered later such
+This method of optimizing will not work for child components that are rendered later such
 as the OverflowMenu, where the component is rendered into the child window following a measurement
 after the initial render. The dependency of ReactDOMServer also produces multiple warning messages
 regarding useLayoutEffect having no effect on server side rendering.
 
-Without any optimising, this method works because all the component's CSS is injected into the
+Without any optimizing, this method works because all the component's CSS is injected into the
 main application window, even if it is not being rendered initially.
 
 ```ts

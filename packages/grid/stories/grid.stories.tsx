@@ -63,7 +63,7 @@ function createDummyInvestors(): Investor[] {
   const a = [
     "Apple",
     "Orange",
-    "Dragonfruit",
+    "Dragon fruit",
     "Coffee",
     "Fig",
     "Grape",

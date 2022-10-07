@@ -82,7 +82,7 @@ export interface ListProps<
   disabled?: boolean;
   disableFocus?: boolean;
   /**
-   * Use to turn off typeahead search functionality within List. Defaulst to false;
+   * Use to turn off typeahead search functionality within List. Defaults to false;
    */
 
   disableTypeToSelect?: boolean;
@@ -180,7 +180,7 @@ export interface ListProps<
   stickyHeaders?: boolean;
   /**
    * When set to `true`, 'Tab' key selects current highlighted item before focus is blurred away
-   * from the component. This would be the desirable behaviour for any dropdown menu based
+   * from the component. This would be the desirable behaviors for any dropdown menu based
    * components like dropdown, combobox.
    *
    * @default false

@@ -36,7 +36,7 @@ export default {
 //   </Button>
 // );
 
-const colours = [
+const colors = [
   "yellow",
   "red",
   "cornflowerblue",
@@ -117,7 +117,7 @@ export const DefaultAppHeader: ComponentStory<typeof AppHeader> = () => {
         <div
           aria-hidden={selectedTab !== idx}
           key={idx}
-          style={{ borderBottom: `solid 10px ${colours[idx]}` }}
+          style={{ borderBottom: `solid 10px ${colors[idx]}` }}
         />
       ))}
     </Flexbox>

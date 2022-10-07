@@ -1,7 +1,7 @@
 import hasMissingOrDuplicateId from '../internal/hasMissingOrDuplicateId';
 
 describe('GIVEN a hasMissingOrDuplicateId function', () => {
-  it('THEN it should recognise valid data', () =>
+  it('THEN it should recognize valid data', () =>
     expect(hasMissingOrDuplicateId([{ id: 'a' }, { id: 'b' }])).toBe(false));
   it('THEN it should detect missing IDs', () =>
     expect(hasMissingOrDuplicateId([{ id: 'a' }, {}])).toBe(true));

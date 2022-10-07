@@ -31,7 +31,7 @@ const suffixData = ["KG", "lbs", "g"];
 
 const Default = () => (
   <Input
-    data-jpmui-test="input-example"
+    data-testid="input-example"
     defaultValue="Value"
     style={{ width: "292px" }}
   />
@@ -39,7 +39,7 @@ const Default = () => (
 
 const Disabled = () => (
   <Input
-    data-jpmui-test="input-example"
+    data-testid="input-example"
     defaultValue="Disabled"
     disabled
     style={{ width: "292px" }}

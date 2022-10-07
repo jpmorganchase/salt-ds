@@ -291,7 +291,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     const content = collectionHook.data
       .filter((item) => !item.isOverflowIndicator && !item.isInjectedItem)
       .map((item: OverflowItem, index: number) => {
-        // TODO sort out typoing
+        // TODO sort out typing
         const tab = item.source as unknown as TabDescriptor;
         const element = item.element as TabElement;
 

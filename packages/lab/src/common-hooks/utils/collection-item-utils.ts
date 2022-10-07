@@ -11,7 +11,7 @@ import { ListItemHeader } from "../../list/ListItemHeader";
 import { itemToString as defaultItemToString } from "../itemToString";
 
 type NonFocusableElement = ReactElement<{ focusable: false }>;
-type DisablableElement = ReactElement<{ disabled: boolean }>;
+type DisableableElement = ReactElement<{ disabled: boolean }>;
 type SelectableElement = ReactElement<{ selectable: boolean }>;
 
 export const sourceItemHasProp = (
@@ -34,9 +34,9 @@ const childItemHasProp = (item: ReactElement, propertyName: string) => {
 };
 
 export const isDisabled = (item: unknown): boolean => {
-  if (isValidElement(item as DisablableElement)) {
-    if (childItemHasProp(item as DisablableElement, "disabled")) {
-      return (item as DisablableElement).props.disabled === true;
+  if (isValidElement(item as DisableableElement)) {
+    if (childItemHasProp(item as DisableableElement, "disabled")) {
+      return (item as DisableableElement).props.disabled === true;
     }
   } else if (sourceItemHasProp(item, "disabled")) {
     return (item as { disabled: boolean }).disabled === true;

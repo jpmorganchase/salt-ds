@@ -101,7 +101,7 @@ export const useDropdownBase = ({
   const handleKeydown = useCallback(
     (evt: KeyboardEvent<HTMLElement>) => {
       if ((evt.key === "Tab" || evt.key === "Escape") && isOpen) {
-        // No preventDefault here, this behaviour does not need to be exclusive
+        // No preventDefault here, this behaviors does not need to be exclusive
         hideDropdown();
       } else if (
         (evt.key === "Enter" || evt.key === "ArrowDown" || evt.key === " ") &&
@@ -133,7 +133,7 @@ export const useDropdownBase = ({
     }
   };
 
-  // TODO do we use aria-popup - valid values are menu, disloag, grid, tree, listbox
+  // TODO do we use aria-popup - valid values are menu, dialog, grid, tree, listbox
   const triggerProps = {
     ...restA11yProps,
     "aria-expanded": isOpen,

@@ -228,7 +228,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   const listHandlers: ListHandlers = listHandlersProp || {
     onClick: selectionHook.listHandlers.onClick,
     // MouseEnter would be much better for this. There is a bug in Cypress
-    // wheby it emits spurious MouseEnter (and MouseOver) events around
+    // where it emits spurious MouseEnter (and MouseOver) events around
     // keypress events, which break many tests.
     onMouseMove: handleMouseMove,
   };
