@@ -1,5 +1,48 @@
 # @jpmorganchase/uitk-core
 
+## 0.6.0
+
+### Minor Changes
+
+- 3aac68ac: Ensure component tokens start with their full name, as well as for any subcomponents, in all private and public tokens. Examples: --uitkCheckboxIcon- -> --uitkCheckbox-icon-, --uitkAccordionSummary- -> --uitkAccordion-summary-, --formHelperText -> --formField-helperText
+- 5d8e5c74: Focus visible API removed from components; always use theme characteristics directly for focus visible styling
+- affc02c8: Add `enableContainerMode` prop to Scrim to be used in combination with existing containerRef in order to make Scrim have its position fixed to a container element instead of the whole window. This prop was previously removed under the name `containerFix`.
+- 320ecdad: - `FormField`
+  - Rename `FormFieldValidationState` type to `FormFieldValidationStatus`
+  - Rename `validationState` prop to `validationStatus`
+    - `FormLabel`
+      - Rename `validationState` prop to `validationStatus`
+    - `StatusIndicator`
+      - Rename `StateIndicatorState` type to `StatusIndicatorStatus`
+      - Rename `state` prop to `status`
+  - `Tooltip`
+    - Rename `TooltipState` type to `TooltipStatus`
+    - Rename `state` prop to `status`
+    - Rename `getIconForState` file to `getIconForStatus`
+  - `Dialog`
+    - Rename `state` prop to `status`
+      - `DialogContext`
+        - Rename `state` context to `status`
+- 24a9e758: Change the default wrap value in `FlexLayout` to false so it matches css Flexbox and replace `disableWrap` prop with `wrap`
+- 0f69ab38: Rename `StateIcon` component to `StatusIcon`
+  Rename `state` prop in `StatusIcon` to `status`
+- 563ac7ca: Move `Deck` and `Layer` components from Lab to Core
+  Move responsive functions `useResizeObserver` and `useWidth` from Lab to Core
+  Move utils function `usePrevious` from Lab to Core
+- 5ecaf64c: Add active and interactable disabled styling to Card
+- 16624115: Removed the elementType prop from Button, making it non-polymorphic.
+
+### Patch Changes
+
+- ff02377e: Fixes a bug in ToolkitContext which had previously set the default breakpoints to an empty object. Now it is set to a valid Breakpoints object, specifically the default Breakpoints.
+- 1f2fc236: Remove import directly from `src` so consumers won't encounter
+  TS error if `skipLibCheck` is set to false.
+- d208f8b1: Fix circular dependencies warning
+- 60728c1c: PillBase moved to root folder of Pill;
+  RadioButton subcomponents to begin with component name:
+  Radio -> RadioButtonBase
+  RadioIcon -> RadioButtonIcon
+
 ## 0.5.0
 
 ### Minor Changes
