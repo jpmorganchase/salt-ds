@@ -1,7 +1,7 @@
 export const VALIDATION_NAMED_STATUS = [
   "error",
-  "success",
   "warning",
+  "success",
   "info",
 ] as const;
 

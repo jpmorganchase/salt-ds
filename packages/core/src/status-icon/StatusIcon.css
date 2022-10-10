@@ -5,18 +5,18 @@
   --statusIcon-error-color: var(--uitk-status-error-foreground);
 }
 
-.uitkStatusIcon-warning {
-  fill: var(--statusIcon-warning-color);
+.uitkStatusIcon-error {
+  fill: var(--statusIcon-error-color);
 }
 
-.uitkStatusIcon-info {
-  fill: var(--statusIcon-info-color);
+.uitkStatusIcon-warning {
+  fill: var(--statusIcon-warning-color);
 }
 
 .uitkStatusIcon-success {
   fill: var(--statusIcon-success-color);
 }
 
-.uitkStatusIcon-error {
-  fill: var(--statusIcon-error-color);
+.uitkStatusIcon-info {
+  fill: var(--statusIcon-info-color);
 }
