@@ -4,12 +4,13 @@ import { Button } from "@jpmorganchase/uitk-core";
 import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
 import {
   GridVariantExample,
-  GridAnatomyExample,
   GridColumnGroupExample,
   RowSelectionModesExample,
   ControlledRowSelectionExample,
   CellCustomizationExample,
-} from "./grid.examples";
+  HeaderCustomizationExample,
+  CssVariablesExample,
+} from "./examples";
 import {
   DownloadIcon,
   SearchIcon,
@@ -121,7 +122,7 @@ In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintai
 #### Controlled mode
 
 In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSelected` callback is invoked.
-Below is an example of two grids with synchronised selections.
+Below is an example of how to use controlled selection mode to synchronise selection in two grids.
 
 <Canvas>
   <Story name="Grid row selection controlled mode" decorators={[withFlexGap]}>
@@ -136,9 +137,34 @@ Cell range selection is controlled by `cellSelectionMode` property.
 
 ### Cell customisation
 
+Grid allows using any react components for cell rendering.
+
+The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. 
+Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns.
+
 <Canvas>
-  <Story name="Cell value customization" decorators={[withFlexGap]}>
+  <Story name="Cell customization" decorators={[withFlexGap]}>
     <CellCustomizationExample />
+  </Story>
+</Canvas>
+
+Another way to customise cell appearance is the `cellComponent` property.
+Unlike `cellValueComponent` it replaces the entire cell element rather than its content and allows to implement more radical customisation scenarios.
+However all basic functionality typically provided by the default cell implementation needs to be handled by the user if `cellComponent` is overridden.
+Therefore it is recommended to use `cellComponent` only if `cellValueComponent` does not provide enough flexibility. 
+
+### Header customization
+
+Column headers and column group headers can be customised using the `headerValueComponent` property which is demonstrated by the grid below. 
+- "Items sold" column group has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
+- "Item" column group has a button to toggle between pinned and unpinned modes.
+- "Name" and "Price" columns have custom headers that indicate sort direction.
+
+This grid also shows an example of a custom cell displaying a basic chart. Switch the "Items sold" to "summary" mode to see it.
+
+<Canvas>
+  <Story name="Header customization" decorators={[withFlexGap]}>
+    <HeaderCustomizationExample />
   </Story>
 </Canvas>
 
@@ -149,12 +175,6 @@ export const Link = ({ children, to, ...props }) => (
     {children}
   </a>
 );
-
-<Canvas>
-  <ComponentAnatomy>
-    <GridAnatomyExample />
-  </ComponentAnatomy>
-</Canvas>
 
 ### CSS Class
 
@@ -170,10 +190,16 @@ The default styling values for most Grid attributes are provided by the theme va
 use hard-coded values local to Grid. Both of these can be overridden, see Theme documentation for detailed usage guidance.
 
 The CSS custom properties below are consumed by Grid, but not defined by Grid. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+a custom class name to override grid styling. They will always take precedence over default styles, whether from theme variable
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
-<CSSVariableTable of={Grid} />
+The grid below is editable. Change the values of CSS variables to their effect on the grid.
+
+<Canvas>
+  <Story name="CSS variables customization" decorators={[withFlexGap]}>
+    <CssVariablesExample />
+  </Story>
+</Canvas>
 
 # Help and support
 
