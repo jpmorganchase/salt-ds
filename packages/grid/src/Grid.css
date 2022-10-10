@@ -3,7 +3,7 @@
   --grid-padding-default: 16px;
   --grid-fontSize-default: 16px;
   --grid-header-fontSize-default: 14px;
-  --grid-dividerGap-default: 20px;
+  --grid-separatorGap-default: 20px;
 }
 
 .uitk-density-low {
@@ -11,7 +11,7 @@
   --grid-padding-default-default: 12px;
   --grid-fontSize-default: 14px;
   --grid-header-fontSize-default: 12px;
-  --grid-dividerGap-default: 16px;
+  --grid-separatorGap-default: 16px;
 }
 
 .uitk-density-medium {
@@ -19,7 +19,7 @@
   --grid-padding-default: 8px;
   --grid-fontSize-default: 12px;
   --grid-header-fontSize-default: 11px;
-  --grid-dividerGap-default: 12px;
+  --grid-separatorGap-default: 12px;
 }
 
 .uitk-density-high {
@@ -27,7 +27,7 @@
   --grid-padding-default: 8px;
   --grid-fontSize-default: 11px;
   --grid-header-fontSize-default: 10px;
-  --grid-dividerGap-default: 8px;
+  --grid-separatorGap-default: 8px;
 }
 
 /* These ideally should be taken from characteristics */
@@ -58,9 +58,9 @@
   --grid-cursor-borderColor-default: #00477b;
   --grid-borderColor-default: var(--uitk-color-grey-90);
 
-  --grid-rowDivider-color-default: rgba(0, 0, 0, 0.1);
-  --grid-columnDivider-color-default: rgba(0, 0, 0, 0.1);
-  --grid-rowDivider-color-divided-default: rgba(0, 0, 0, 0.2);
+  --grid-rowSeparator-color-default: rgba(0, 0, 0, 0.1);
+  --grid-columnSeparator-color-default: rgba(0, 0, 0, 0.1);
+  --grid-rowSeparator-color-divided-default: rgba(0, 0, 0, 0.2);
 }
 
 .uitk-dark {
@@ -90,9 +90,9 @@
   --grid-cursor-borderColor-default: #7dc3f2;
   --grid-borderColor-default: var(--uitk-color-grey-100);
 
-  --grid-rowDivider-color-default: rgba(255, 255, 255, 0.1);
-  --grid-columnDivider-color-default: rgba(255, 255, 255, 0.1);
-  --grid-rowDivider-color-divided-default: rgba(255, 255, 255, 0.2);
+  --grid-rowSeparator-color-default: rgba(255, 255, 255, 0.1);
+  --grid-columnSeparator-color-default: rgba(255, 255, 255, 0.1);
+  --grid-rowSeparator-color-divided-default: rgba(255, 255, 255, 0.2);
 }
 
 /* Styles applied to the root element */
@@ -100,7 +100,7 @@
   --grid-row-height: var(--uitkGrid-row-height, var(--grid-row-height-default));
   --grid-padding: var(--uitkGrid-padding, var(--grid-padding-default));
   --grid-fontSize: var(--uitkGrid-fontSize, var(--grid-fontSize-default));
-  --grid-dividerGap: var(--uitkGrid-dividerGap, var(--grid-dividerGap-default));
+  --grid-separatorGap: var(--uitkGrid-separatorGap, var(--grid-separatorGap-default));
   --grid-header-fontSize: var(--uitkGrid-header-fontSize, var(--grid-header-fontSize-default));
   --grid-groupHeader-fontSize: var(--uitkGrid-groupHeader-fontSize, var(--grid-header-fontSize));
   --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-caption-fontWeight-strong));
@@ -130,19 +130,24 @@
 
   --grid-headerColumnSeparator-color: var(--uitkGrid-headerColumnSeparator-color, var(--grid-headerColumnSeparator-color-default));
   --grid-headerRowSeparator-color: var(--uitkGrid-headerRowSeparator-color, var(--grid-headerRowSeparator-color-default));
+  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, 4px);
+  --grid-headerRowSeparator-height: var(--uitkGrid-headerRowSeparator-height, 1px);
+  --grid-headerRowSeparator-width: var(--uitkGrid-headerRowSeparator-width, 1px);
   --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--grid-groupHeaderRowSeparator-color-default));
 
   --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--grid-groupHeader-color-default));
   --grid-shadow-color: var(--uitkGrid-shadow-color, var(--grid-shadow-color-default));
   --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--grid-columnDropTarget-color-default));
+  --grid-columnDropTarget-width: var(--uitkGrid-columnDropTarget-width, 2px);
   --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, dotted);
   --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, 2px);
   --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor-default));
   --grid-borderColor: var(--uitkGrid-borderColor, var(--grid-borderColor-default));
 
-  --grid-rowDivider-color: var(--uitkGrid-rowDivider-color, var(--grid-rowDivider-color-default));
-  --grid-columnDivider-color: var(--uitkGrid-columnDivider-color, var(--grid-columnDivider-color-default));
-  --grid-rowDivider-color-divided: var(--uitkGrid-rowDivider-color-divided, var(--grid-rowDivider-color-divided-default));
+  --grid-rowSeparator-width: var(--uitkGrid-rowSeparator-width, 1px);
+  --grid-rowSeparator-color: var(--uitkGrid-rowSeparator-color, var(--grid-rowSeparator-color-default));
+  --grid-columnSeparator-color: var(--uitkGrid-columnSeparator-color, var(--grid-columnSeparator-color-default));
+  --grid-rowSeparator-color-divided: var(--uitkGrid-rowSeparator-color-divided, var(--grid-rowSeparator-color-divided-default));
 }
 
 .uitkGrid {
@@ -152,7 +157,7 @@
 }
 
 .uitkGrid-columnSeparators {
-  --grid-columnSeparator-color: var(--grid-columnDivider-color);
+  --grid-columnSeparator-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGrid table {
@@ -176,7 +181,7 @@
 
 /* Styles applied to the root element if zebra is enabled */
 .uitkGrid.uitkGrid-zebra {
-  --grid-rowDivider-color: transparent;
+  --grid-rowSeparator-color: transparent;
 }
 
 .uitkGrid-hidden {

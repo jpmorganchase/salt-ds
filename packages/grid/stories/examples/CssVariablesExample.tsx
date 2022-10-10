@@ -64,7 +64,7 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
       description: "Column group header font weight",
     },
     {
-      name: "--uitkGrid-dividerGap",
+      name: "--uitkGrid-separatorGap",
       description: "Controls the size of the column header separator",
     },
     {
@@ -135,6 +135,19 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
         "Color of the separator between column group headers and column headers",
     },
     {
+      name: "--grid-headerRowSeparator-gap",
+      description:
+        "Size of the gap between the vertical line separating group header from column headers and vertical column separators",
+    },
+    {
+      name: "--grid-headerRowSeparator-height",
+      description: "Height (thickness) of the row header separator",
+    },
+    {
+      name: "--grid-headerRowSeparator-width",
+      description: "Width of the vertical line separating column headers",
+    },
+    {
       name: "--uitkGrid-groupHeader-color",
       description: "Foreground color of column group headers",
     },
@@ -146,6 +159,10 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
     {
       name: "--uitkGrid-columnDropTarget-color",
       description: "Color of column drop targets",
+    },
+    {
+      name: "--uitkGrid-columnDropTarget-width",
+      description: "Width of column drop targets",
     },
     {
       name: "--uitkGrid-cursor-borderColor",
@@ -164,16 +181,20 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
       description: "Border color of the grid (when framed)",
     },
     {
-      name: "--uitkGrid-rowDivider-color",
+      name: "--uitkGrid-rowSeparator-color",
       description: "Color of row separators",
     },
     {
-      name: "--uitkGrid-columnDivider-color",
+      name: "--uitkGrid-rowSeparator-width",
+      description: "Width of lines between rows",
+    },
+    {
+      name: "--uitkGrid-columnSeparator-color",
       description: "Color of column separators (when enabled)",
     },
     {
-      name: "--uitkGrid-rowDivider-color-divided",
-      description: "Color of row dividers between groups or rows",
+      name: "--uitkGrid-rowSeparator-color-divided",
+      description: "Color of row separators between groups or rows",
     },
   ]);
 

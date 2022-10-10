@@ -12,10 +12,10 @@
 
 .uitkGridGroupHeaderCell-rowSeparator {
   position: absolute;
-  left: 4px;
-  right: 4px;
+  left: var(--grid-headerRowSeparator-gap);
+  right: var(--grid-headerRowSeparator-gap);
   bottom: 0;
-  height: 1px;
+  height: var(--grid-headerRowSeparator-height);
   background: var(--grid-groupHeaderRowSeparator-color);
 }
 
