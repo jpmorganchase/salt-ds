@@ -600,13 +600,13 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const onEditorAdded = useCallback((info: CellEditorInfo<T>) => {
     const { columnId } = info;
     setEditorMap(makeMapAdder(columnId, info));
-    console.log(`Editor added for column ${columnId}`);
+    // console.log(`Editor added for column ${columnId}`);
   }, []);
 
   const onEditorRemoved = useCallback((info: CellEditorInfo<T>) => {
     const { columnId } = info;
     setEditorMap(makeMapDeleter(columnId));
-    console.log(`Editor removed for column ${columnId}`);
+    // console.log(`Editor removed for column ${columnId}`);
   }, []);
 
   const getEditor = useCallback(

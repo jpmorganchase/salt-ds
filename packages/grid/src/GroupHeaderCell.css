@@ -5,11 +5,9 @@
   color: var(--grid-groupHeader-color);
   overflow: hidden;
   white-space: nowrap;
-}
 
-.uitkGridGroupHeaderCell-text {
-  font-size: var(--grid-header-fontSize);
-  font-weight: var(--uitk-text-caption-fontWeight-strong);
+  font-size: var(--grid-groupHeader-fontSize);
+  font-weight: var(--grid-groupHeader-fontWeight);
 }
 
 .uitkGridGroupHeaderCell-rowSeparator {

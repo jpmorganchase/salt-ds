@@ -102,6 +102,9 @@
   --grid-fontSize: var(--uitkGrid-fontSize, var(--grid-fontSize-default));
   --grid-dividerGap: var(--uitkGrid-dividerGap, var(--grid-dividerGap-default));
   --grid-header-fontSize: var(--uitkGrid-header-fontSize, var(--grid-header-fontSize-default));
+  --grid-groupHeader-fontSize: var(--uitkGrid-groupHeader-fontSize, var(--grid-header-fontSize));
+  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-caption-fontWeight-strong));
+
   --grid-cell-padding: 0 var(--grid-padding);
   --grid-rowHover-zIndex: 1;
   --grid-cell-zIndex: 2;
@@ -121,6 +124,7 @@
   --grid-editableCell-borderColor-hover: var(--uitkGrid-editableCell-borderColor-hover, var(--grid-editableCell-borderColor-hover-default));
   --grid-editableCell-background-active: var(--uitkGrid-editableCell-background-active, var(--grid-editableCell-background-active-default));
   --grid-editableCell-color-active: var(--uitkGrid-editableCell-color-active, var(--grid-editableCell-color-active-default));
+  --grid-editableCell-cornerTag-size: var(--uitkGrid-editableCell-cornerTag-size, 8px);
 
   --grid-header-color: var(--uitkGrid-header-color, var(--grid-header-color-default));
 
@@ -131,6 +135,8 @@
   --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--grid-groupHeader-color-default));
   --grid-shadow-color: var(--uitkGrid-shadow-color, var(--grid-shadow-color-default));
   --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--grid-columnDropTarget-color-default));
+  --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, dotted);
+  --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, 2px);
   --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor-default));
   --grid-borderColor: var(--uitkGrid-borderColor, var(--grid-borderColor-default));
 

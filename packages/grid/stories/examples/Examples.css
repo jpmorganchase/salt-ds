@@ -1,5 +1,5 @@
 .grid {
-  height: 200px;
+  height: 300px;
   width: 958px;
 }
 
@@ -42,4 +42,24 @@
 .grid-css-customization {
   height: 800px;
   width: 958px;
+}
+
+.summaryCellValue {
+  padding: 0 var(--grid-padding);
+  display: flex;
+  flex-direction: row;
+}
+
+.miniChart {
+  height: calc(var(--grid-row-height) - 4px);
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.miniChartBar {
+  width: 7%;
+  background-color: var(--uitk-palette-accent-background);
 }

@@ -15,13 +15,17 @@ export interface ColumnGroupCellProps {
   group: GridColumnGroupModel;
 }
 
+export interface ColumnGroupCellValueProps {
+  group: GridColumnGroupModel;
+}
+
 export interface ColumnGroupProps {
   children: ReactNode;
   name: string;
   id: string;
   pinned?: GridColumnPin;
   headerComponent?: ComponentType<ColumnGroupCellProps>;
-  headerValueComponent?: ComponentType<ColumnGroupCellProps>;
+  headerValueComponent?: ComponentType<ColumnGroupCellValueProps>;
 }
 
 export function ColumnGroup(props: ColumnGroupProps) {
