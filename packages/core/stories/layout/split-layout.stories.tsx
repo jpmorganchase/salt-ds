@@ -46,14 +46,14 @@ export default {
 const leftItem = (
   <FlowLayout>
     {Array.from({ length: 3 }, (_, index) => (
-      <ContentBlock key={index}>{`item ${index + 1}`}</ContentBlock>
+      <ContentBlock key={index}>{`Item ${index + 1}`}</ContentBlock>
     ))}
   </FlowLayout>
 );
 
 const rightItem = (
   <FlowLayout>
-    <ContentBlock>item 4</ContentBlock>
+    <ContentBlock>Item 4</ContentBlock>
     <ContentBlock>
       Item
       <br />5
