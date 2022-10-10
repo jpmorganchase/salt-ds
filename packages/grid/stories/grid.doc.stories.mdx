@@ -139,7 +139,7 @@ Cell range selection is controlled by `cellSelectionMode` property.
 
 Grid allows using any react components for cell rendering.
 
-The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. 
+The `cellValueComponent` property of `GridColumn` component is the most convenient extension point.
 Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns.
 
 <Canvas>
@@ -151,11 +151,12 @@ Below is an example of custom components applied to `cellValueComponent` of "Bid
 Another way to customise cell appearance is the `cellComponent` property.
 Unlike `cellValueComponent` it replaces the entire cell element rather than its content and allows to implement more radical customisation scenarios.
 However all basic functionality typically provided by the default cell implementation needs to be handled by the user if `cellComponent` is overridden.
-Therefore it is recommended to use `cellComponent` only if `cellValueComponent` does not provide enough flexibility. 
+Therefore it is recommended to use `cellComponent` only if `cellValueComponent` does not provide enough flexibility.
 
 ### Header customization
 
-Column headers and column group headers can be customised using the `headerValueComponent` property which is demonstrated by the grid below. 
+Column headers and column group headers can be customised using the `headerValueComponent` property which is demonstrated by the grid below.
+
 - "Items sold" column group has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
 - "Item" column group has a button to toggle between pinned and unpinned modes.
 - "Name" and "Price" columns have custom headers that indicate sort direction.
