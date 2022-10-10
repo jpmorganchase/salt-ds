@@ -1,0 +1,41 @@
+.uitkGridDropdownCellEditor {
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+  border-style: solid;
+  border-top-color: var(--grid-row-borderColor);
+  border-right-color: var(--grid-columnSeparator-color);
+  border-width: 1px 1px 0 0;
+
+  position: relative;
+  font-size: var(--grid-fontSize);
+}
+
+.uitkGridDropdownCellEditor-dropdownContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+
+  border-style: dotted;
+  border-width: 2px;
+  border-color: var(--grid-cursor-borderColor);
+  padding: 0;
+}
+
+/* TODO this is currently the same as uitkGridBaseCell-valueContainer. Update when UX is available. */
+.uitkGridDropdownCellEditor-currentValue {
+  height: calc(var(--grid-row-height) - 4px);
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: calc(var(--grid-row-height) - 4px);
+
+  outline: none;
+
+  padding: 0 calc(var(--grid-padding) - 2px);
+}

@@ -29,8 +29,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { separator } = column;
   const { onResizeHandleMouseDown } = useSizingContext();
 
-  const { columnDnD, onColumnMoveHandleMouseDown } = useColumnDragContext();
-  const onMouseDown = columnDnD ? onColumnMoveHandleMouseDown : undefined;
+  const { columnMove, onColumnMoveHandleMouseDown } = useColumnDragContext();
+  const onMouseDown = columnMove ? onColumnMoveHandleMouseDown : undefined;
 
   return (
     <th

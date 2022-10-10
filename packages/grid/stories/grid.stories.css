@@ -3,6 +3,11 @@
   width: 800px;
 }
 
+.paginatedGrid {
+  height: 200px;
+  width: 800px;
+}
+
 .smallGrid {
   height: 600px;
   width: 800px;
@@ -31,4 +36,7 @@
 
 .treeNodeName {
   padding-left: var(--uitk-size-unit);
+}
+
+.paginatedStory {
 }

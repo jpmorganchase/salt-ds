@@ -2,7 +2,7 @@
   --grid-row-height: 61px;
   --grid-padding: 16px;
   --grid-fontSize: 16px;
-  --grid-header-fontSize: 16px;
+  --grid-header-fontSize: 14px;
   --grid-dividerGap: 20px;
 }
 
@@ -10,7 +10,7 @@
   --grid-row-height: 49px;
   --grid-padding: 12px;
   --grid-fontSize: 14px;
-  --grid-header-fontSize: 14px;
+  --grid-header-fontSize: 12px;
   --grid-dividerGap: 16px;
 }
 
@@ -26,7 +26,7 @@
   --grid-row-height: 25px;
   --grid-padding: 8px;
   --grid-fontSize: 11px;
-  --grid-header-fontSize: 11px;
+  --grid-header-fontSize: 10px;
   --grid-dividerGap: 8px;
 }
 
