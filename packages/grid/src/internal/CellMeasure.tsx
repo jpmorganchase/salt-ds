@@ -1,6 +1,6 @@
 import "./CellMeasure.css";
 import { useEffect, useRef } from "react";
-import { makePrefixer, useDensity } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 const withBaseName = makePrefixer("uitkGridCellMeasure");
 
@@ -11,13 +11,10 @@ export interface CellMeasureProps<T> {
 // Renders a cell in invisible location, measures its height and provides it to
 // the grid.
 export function CellMeasure<T>(props: CellMeasureProps<T>) {
-  const cellRef = useRef<HTMLTableCellElement>(null);
   const rowRef = useRef<HTMLTableRowElement>(null);
   const heightRef = useRef<number>(-1);
 
   const { setRowHeight } = props;
-
-  const density = useDensity();
 
   useEffect(() => {
     if (rowRef.current) {
@@ -34,7 +31,7 @@ export function CellMeasure<T>(props: CellMeasureProps<T>) {
       <table>
         <thead>
           <tr ref={rowRef}>
-            <th ref={cellRef}>Invisible Cell</th>
+            <th>Invisible Cell</th>
           </tr>
         </thead>
       </table>
