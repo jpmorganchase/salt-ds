@@ -6,6 +6,7 @@ import {
   CSSVariableTable,
 } from "css-variable-docgen-components";
 import { DefaultLayerLayout } from "./layer-layout.stories";
+import HelpAndSupport from "../help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/LayerLayout"
@@ -25,53 +26,67 @@ It can be used to build dialog or drawer components and it can be positioned in 
   <Story id="core-layout-layerlayout--default-layer-layout" />
 </Canvas>
 
-## How you can use layer layout
+## Use Layer layout when...
 
-Use this component by passing your content as children. You may also choose to control the opening/closing behaviour using something like a button.
+You need your content to be displayed in a specific area of the screen.
 
-The Layer layout displays a scrim and animations by default but you can disable these via props. The `fullScreenAtBreakpoint` prop also allows you to customise the breakpoint at which the layer will take up the whole screen.
+Use this component by passing your content as children. You may also choose to control the opening/closing behavior using something like a button.
 
-## API
+The Layer layout displays a scrim and animations by default but you can disable these via props. The `fullScreenAtBreakpoint` prop also allows you to customize the breakpoint at which the layer will take up the whole screen.
 
-```
-import { LayerLayout } from "@jpmorganchase/uitk-core";
-```
+### Don't use Layer layout when...
 
-## Props
+Instead you want your content to be split between pages or tabs. In this case we recommend you having a look at [Deck layout](?path=/docs/documentation-core-layout-decklayout--page).
 
-<ArgsTable of={LayerLayout} />
+### Examples
 
-## Examples
+#### Layer positioning
 
-### Top positioned
+The component will be displayed in the center position by default but you can customize this via the `position` prop as per the following examples.
+
+##### Top positioned
 
 <Canvas>
   <Story id="core-layout-layerlayout--layer-layout-top" />
 </Canvas>
 
-### Right positioned
+##### Right positioned
 
 <Canvas>
   <Story id="core-layout-layerlayout--layer-layout-right" />
 </Canvas>
 
-### Left positioned
+##### Left positioned
 
 <Canvas>
   <Story id="core-layout-layerlayout--layer-layout-left" />
 </Canvas>
 
-### Bottom positioned
+##### Bottom positioned
 
 <Canvas>
   <Story id="core-layout-layerlayout--layer-layout-bottom" />
 </Canvas>
 
-### Reduced motion
+#### Reduced motion
+
+You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
 <Canvas>
   <Story id="core-layout-layerlayout--layer-reduced-motion" />
 </Canvas>
+
+## Configuring Layer layout
+
+### API
+
+```
+import { LayerLayout } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={LayerLayout} />
 
 ## Anatomy
 
@@ -83,3 +98,5 @@ import { LayerLayout } from "@jpmorganchase/uitk-core";
     />
   </ComponentAnatomy>
 </Canvas>
+
+<HelpAndSupport />
