@@ -25,6 +25,8 @@ import {
   SelectionStrategy,
 } from "./selectionTypes";
 
+export const LIST_FOCUS_VISIBLE = -2;
+
 function nextItemIdx(count: number, key: string, idx: number) {
   if (key === ArrowUp || key === End) {
     if (idx > 0) {
@@ -150,7 +152,6 @@ export const useKeyboardNavigation = <
   disableHighlightOnFocus,
   highlightedIndex: highlightedIndexProp,
   indexPositions,
-  label,
   onHighlight,
   onKeyboardNavigation,
   restoreLastFocus,
@@ -200,35 +201,43 @@ export const useKeyboardNavigation = <
       key = ArrowDown,
       idx: number = key === ArrowDown ? -1 : indexPositions.length
     ) => {
-      const indexOfSelectedItem = getIndexOfSelectedItem(
-        indexPositions,
-        selected
-      );
-      // The start index is generally the highlightedIdx (passed in as idx).
-      // We don't need it for Home and End navigation.
-      // Special case where we have selection, but no highlighting - begin
-      // navigation from selected item.
-      const startIdx = getStartIdx(
-        key,
-        idx,
-        indexOfSelectedItem,
-        indexPositions.length
-      );
+      if (indexPositions.length === 0) {
+        return -1;
+      } else {
+        const indexOfSelectedItem = getIndexOfSelectedItem(
+          indexPositions,
+          selected
+        );
+        // The start index is generally the highlightedIdx (passed in as idx).
+        // We don't need it for Home and End navigation.
+        // Special case where we have selection, but no highlighting - begin
+        // navigation from selected item.
+        const startIdx = getStartIdx(
+          key,
+          idx,
+          indexOfSelectedItem,
+          indexPositions.length
+        );
 
-      let nextIdx = nextItemIdx(indexPositions.length, key, startIdx);
-      // Guard against returning zero, when first item is a header or group
-      if (nextIdx === 0 && key === ArrowUp && !isFocusable(indexPositions[0])) {
-        return idx;
+        let nextIdx = nextItemIdx(indexPositions.length, key, startIdx);
+        // Guard against returning zero, when first item is a header or group
+        if (
+          nextIdx === 0 &&
+          key === ArrowUp &&
+          !isFocusable(indexPositions[0])
+        ) {
+          return idx;
+        }
+        while (
+          (((key === ArrowDown || key === Home) &&
+            nextIdx < indexPositions.length) ||
+            ((key === ArrowUp || key === End) && nextIdx > 0)) &&
+          !isFocusable(indexPositions[nextIdx])
+        ) {
+          nextIdx = nextItemIdx(indexPositions.length, key, nextIdx);
+        }
+        return nextIdx;
       }
-      while (
-        (((key === ArrowDown || key === Home) &&
-          nextIdx < indexPositions.length) ||
-          ((key === ArrowUp || key === End) && nextIdx > 0)) &&
-        !isFocusable(indexPositions[nextIdx])
-      ) {
-        nextIdx = nextItemIdx(indexPositions.length, key, nextIdx);
-      }
-      return nextIdx;
     },
     [indexPositions, selected]
   );
@@ -246,7 +255,9 @@ export const useKeyboardNavigation = <
       } else {
         // If mouse wan't used, then keyboard must have been
         keyboardNavigation.current = true;
-        if (highlightedIndex !== -1) {
+        if (indexPositions.length === 0) {
+          setHighlightedIndex(LIST_FOCUS_VISIBLE);
+        } else if (highlightedIndex !== -1) {
           // We need to force a render here. We're not changing the highlightedIdx, but we want to
           // make sure we render with the correct focusVisible value. We don't store focusVisible
           // in state, as there are places where we would double render, as highlightedIdx also changes.
