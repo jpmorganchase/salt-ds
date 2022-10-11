@@ -2582,43 +2582,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@floating-ui/core@npm:0.7.0"
-  checksum: 79a2f2c1a9b12149008723bc6f3c677ba8cba5f7835a2a4be1d4696816941703769b3809335f9b46c23e2091610d52617459f16b0a1027ac47995dd59134dbee
+"@floating-ui/core@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@floating-ui/core@npm:1.0.1"
+  checksum: c8a5f1a491788e5bebfe747e9372df2c7cbee0d8790ddf95e25149ac91ccf1a2cca8f768029826cfd3d687617c1d0f3241b97f1648bdf2a28d421f39e79c2eee
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@floating-ui/dom@npm:0.5.0"
+"@floating-ui/dom@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "@floating-ui/dom@npm:1.0.2"
   dependencies:
-    "@floating-ui/core": ^0.7.0
-  checksum: e2e592d0a775ed61d6921257e622010cc0f2cd78cd29a945baa34ce14d834d65ac23d492329d2158f81cbe653394f2b1886d753ae4fcff1f94600a65dd025195
+    "@floating-ui/core": ^1.0.1
+  checksum: 4494db572d953f1f0544b91e6c16c63eae890c96befc5a60528e01b8e93182458ac4aec08873d6544c18353fb90d46b1ff4e19407bc48ea8f27a1bce372e48e5
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom-interactions@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "@floating-ui/react-dom-interactions@npm:0.5.0"
+"@floating-ui/react-dom-interactions@npm:^0.10.0":
+  version: 0.10.1
+  resolution: "@floating-ui/react-dom-interactions@npm:0.10.1"
   dependencies:
-    "@floating-ui/react-dom": ^0.7.0
+    "@floating-ui/react-dom": ^1.0.0
     aria-hidden: ^1.1.3
-    use-isomorphic-layout-effect: ^1.1.1
-  checksum: 4c90f4a159b855480135bcd12bfb1f3b3d92c8b3d834c493f429cd4516554ad4088a4aa21b34d3fe6e2b64626bb1f954cd069a797984a75288b6b924f7309c64
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react-dom@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@floating-ui/react-dom@npm:0.7.0"
-  dependencies:
-    "@floating-ui/dom": ^0.5.0
-    use-isomorphic-layout-effect: ^1.1.1
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 46282409a0c69ba993f39f38bb05e173420b819c27f27cf76639a4abf0ac3c3e325cd9f00ff2f8791fe6b2e100e7113f35ef1f82b517fa498c6c3df1a557c373
+  checksum: 6dad13e7d288b0ef72c2ea489570c05309829a00acf4b56a37329aafec6835ceedf61a4e9e97257d74677a7251196e6bd12990f0b491af445e6eb0a34724bda2
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@floating-ui/react-dom@npm:1.0.0"
+  dependencies:
+    "@floating-ui/dom": ^1.0.0
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: d79e3c8570b0eaef5e968cd9c69de2c6bb372a5316e4e69a1cd12dae81771863ef430e81b74a0c21cefba663a2f971d8540c7294d7fb3b9807e32ba2a00c1e76
   languageName: node
   linkType: hard
 
@@ -2952,7 +2953,7 @@ __metadata:
   dependencies:
     "@changesets/cli": ^2.24.2
     "@cypress/code-coverage": ^3.10.0
-    "@floating-ui/react-dom-interactions": ^0.5.0
+    "@floating-ui/react-dom-interactions": ^0.10.0
     "@internationalized/date": ^3.0.0
     "@storybook/addon-a11y": ^6.5.12
     "@storybook/addon-actions": ^6.5.12
@@ -24629,18 +24630,6 @@ __metadata:
     punycode: 1.3.2
     querystring: 0.2.0
   checksum: 50d100d3dd2d98b9fe3ada48cadb0b08aa6be6d3ac64112b867b56b19be4bfcba03c2a9a0d7922bfd7ac17d4834e88537749fe182430dfd9b68e520175900d90
-  languageName: node
-  linkType: hard
-
-"use-isomorphic-layout-effect@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "use-isomorphic-layout-effect@npm:1.1.1"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: fd9061817d4945af37fd79866b1fe96a09cafe873169a66ec699140b609c64db6c60512d94ec3ca90967837026ea6e6d003901c557693708aeee11d392418a9e
   languageName: node
   linkType: hard
 
