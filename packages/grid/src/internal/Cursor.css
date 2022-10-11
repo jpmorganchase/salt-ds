@@ -1,5 +1,5 @@
 .uitkGridCursor {
-  --grid-cursor-border: dotted 2px var(--grid-cursor-borderColor);
+  --grid-cursor-border: var(--grid-cursor-border-style) var(--grid-cursor-border-width) var(--grid-cursor-borderColor);
 }
 
 .uitkGridCursor {

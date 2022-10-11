@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: var(--grid-columnDropTarget-width);
   background: var(--grid-columnDropTarget-color);
   z-index: 3;
 }

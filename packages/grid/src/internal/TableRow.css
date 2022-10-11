@@ -1,13 +1,13 @@
 .uitkGridTableRow {
   height: var(--grid-row-height);
   /* Row border doesn't render properly in Chrome on Windows. Applying borders to cells */
-  --grid-row-borderColor: var(--grid-rowDivider-color);
+  --grid-row-borderColor: var(--grid-rowSeparator-color);
 }
 
 .uitkGridTableRow th {
   border-style: solid;
   border-color: var(--grid-row-borderColor);
-  border-width: 1px 0 0 0;
+  border-width: var(--grid-rowSeparator-width) 0 0 0;
 }
 
 .uitkGridTableRow-selected + .uitkGridTableRow {
@@ -15,7 +15,7 @@
 }
 
 .uitkGridTableRow-divided {
-  --grid-row-borderColor: var(--grid-rowDivider-color-divided);
+  --grid-row-borderColor: var(--grid-rowSeparator-color-divided);
 }
 
 .uitkGridTableRow-zebra {

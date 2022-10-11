@@ -13,6 +13,7 @@ import {
   CollectionItem,
   isSelected,
   itemToString as defaultItemToString,
+  LIST_FOCUS_VISIBLE,
   ScrollingAPI,
   SelectionStrategy,
   useCollectionItems,
@@ -323,6 +324,7 @@ export const List = forwardRef(function List<
         [withBaseName("borderless")]: borderless,
         uitkDisabled: listDisabled,
         [withBaseName("collapsible")]: collapsibleHeaders,
+        uitkFocusVisible: highlightedIndex === LIST_FOCUS_VISIBLE,
       })}
       id={`${id}`}
       ref={useForkRef<HTMLDivElement>(rootRef, forwardedRef)}

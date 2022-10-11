@@ -4,10 +4,15 @@ import { ColumnGroupProps } from "./ColumnGroup";
 import { CellEditorInfo } from "./CellEditor";
 
 export interface GridContext<T> {
+  getChildIndex: (columnId: string) => number;
+
   onColumnAdded: (columnInfo: GridColumnInfo<T>) => void;
-  onColumnRemoved: (columnInfo: GridColumnInfo<T>) => void;
+  onColumnRemoved: (index: number, columnInfo: GridColumnInfo<T>) => void;
   onColumnGroupAdded: (colGroupProps: ColumnGroupProps) => void;
-  onColumnGroupRemoved: (colGroupProps: ColumnGroupProps) => void;
+  onColumnGroupRemoved: (
+    index: number,
+    colGroupProps: ColumnGroupProps
+  ) => void;
 
   onEditorAdded: (editorInfo: CellEditorInfo<T>) => void;
   onEditorRemoved: (editorInfo: CellEditorInfo<T>) => void;
