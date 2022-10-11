@@ -1,7 +1,6 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
-import { RowSelectionModesExample } from "@stories/examples";
-import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
+import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 
 const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
@@ -196,7 +195,7 @@ describe("Grid", () => {
 
   describe("Switching selection modes", () => {
     it("Shows correct columns", () => {
-      cy.mount(<RowSelectionModesExample />);
+      cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
@@ -244,7 +243,7 @@ describe("Grid", () => {
     });
 
     it("Selects rows correctly", () => {
-      cy.mount(<RowSelectionModesExample />);
+      cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
       findCell(2, 3).click({ force: true });

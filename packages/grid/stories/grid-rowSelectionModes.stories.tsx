@@ -7,8 +7,8 @@ import {
   NumericColumn,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
-} from "../../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./GridVariantExample";
+} from "../src";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./grid-variants.stories";
 import { useState } from "react";
 import {
   ToggleButton,
@@ -16,11 +16,15 @@ import {
   ToggleButtonGroupChangeEventHandler,
 } from "@jpmorganchase/uitk-lab";
 import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
-import "./Examples.css";
+import "./grid.stories.css";
 
-export const RowSelectionModesExample = (
-  props: Partial<GridProps<DummyRow>>
-) => {
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
+
+export const RowSelectionModesTemplate: Story<{}> = () => {
   const rowSelectionModes: GridRowSelectionMode[] = ["multi", "single", "none"];
   const [index, setIndex] = useState<number>(0);
 
@@ -56,7 +60,6 @@ export const RowSelectionModesExample = (
         cellSelectionMode="none"
         columnSeparators={true}
         zebra={true}
-        {...props}
         rowSelectionMode={rowSelectionMode}
       >
         {rowSelectionMode === "multi" && (
@@ -79,3 +82,5 @@ export const RowSelectionModesExample = (
     </FlexLayout>
   );
 };
+
+export const RowSelectionModes = RowSelectionModesTemplate.bind({});

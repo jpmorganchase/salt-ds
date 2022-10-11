@@ -3,15 +3,6 @@ import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Button } from "@jpmorganchase/uitk-core";
 import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
 import {
-  GridVariantExample,
-  GridColumnGroupExample,
-  RowSelectionModesExample,
-  ControlledRowSelectionExample,
-  CellCustomizationExample,
-  HeaderCustomizationExample,
-  CssVariablesExample,
-} from "./examples";
-import {
   DownloadIcon,
   SearchIcon,
   SendIcon,
@@ -60,9 +51,7 @@ Zebra can be enabled for the `primary` variant.
 Column separators can be enabled using `columnSeparators` property.
 
 <Canvas>
-  <Story name="Grid Variants" decorators={[withFlexGap]}>
-    <GridVariantExample />
-  </Story>
+  <Story id="grid-new-grid--grid-variants" decorators={[withFlexGap]} />
 </Canvas>
 
 ### Columns
@@ -87,9 +76,7 @@ Users can easily create any project-specific column types using the same approac
 Columns can be grouped using the `ColumnGroup` component.
 
 <Canvas>
-  <Story name="Grid with grouped columns" decorators={[withFlexGap]}>
-    <GridColumnGroupExample />
-  </Story>
+  <Story id="grid-new-grid--column-groups" decorators={[withFlexGap]} />
 </Canvas>
 
 ### Rows
@@ -114,9 +101,7 @@ Both are optional though.
 In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintains selection state
 
 <Canvas>
-  <Story name="Grid row selection modes" decorators={[withFlexGap]}>
-    <RowSelectionModesExample />
-  </Story>
+  <Story id="grid-new-grid--row-selection-modes" decorators={[withFlexGap]} />
 </Canvas>
 
 #### Controlled mode
@@ -125,9 +110,10 @@ In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSe
 Below is an example of how to use controlled selection mode to synchronise selection in two grids.
 
 <Canvas>
-  <Story name="Grid row selection controlled mode" decorators={[withFlexGap]}>
-    <ControlledRowSelectionExample />
-  </Story>
+  <Story
+    id="grid-new-grid--row-selection-controlled"
+    decorators={[withFlexGap]}
+  />
 </Canvas>
 
 ### Cell selection
@@ -143,9 +129,7 @@ The `cellValueComponent` property of `GridColumn` component is the most convenie
 Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns.
 
 <Canvas>
-  <Story name="Cell customization" decorators={[withFlexGap]}>
-    <CellCustomizationExample />
-  </Story>
+  <Story id="grid-new-grid--cell-customization" decorators={[withFlexGap]} />
 </Canvas>
 
 Another way to customise cell appearance is the `cellComponent` property.
@@ -164,9 +148,7 @@ Column headers and column group headers can be customised using the `headerValue
 This grid also shows an example of a custom cell displaying a basic chart. Switch the "Items sold" to "summary" mode to see it.
 
 <Canvas>
-  <Story name="Header customization" decorators={[withFlexGap]}>
-    <HeaderCustomizationExample />
-  </Story>
+  <Story id="grid-new-grid--header-customization" decorators={[withFlexGap]} />
 </Canvas>
 
 ### Editable cells
@@ -205,9 +187,7 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 The grid below is editable. Change the values of CSS variables to their effect on the grid.
 
 <Canvas>
-  <Story name="CSS variables customization" decorators={[withFlexGap]}>
-    <CssVariablesExample />
-  </Story>
+  <Story id="grid-new-grid--css-variables" decorators={[withFlexGap]} />
 </Canvas>
 
 # Help and support

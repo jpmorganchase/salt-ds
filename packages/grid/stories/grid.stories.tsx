@@ -124,7 +124,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyInvestors}
       rowKeyGetter={rowKeyGetter}
-      className="table"
+      className="grid"
       zebra={true}
       columnSeparators={true}
       // hideHeader={true}
@@ -186,7 +186,7 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyInvestors}
       rowKeyGetter={rowKeyGetter}
-      className="table"
+      className="grid"
       zebra={true}
       // columnSeparators={true}
       rowSelectionMode="single"
@@ -275,11 +275,7 @@ const SmallTemplate: Story<{}> = (props) => {
 
 const PinnedColumnsTemplate: Story<{}> = (props) => {
   return (
-    <Grid
-      rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
-      className="table"
-    >
+    <Grid rowData={dummyInvestors} rowKeyGetter={rowKeyGetter} className="grid">
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <GridColumn
           name="Name"
@@ -357,7 +353,7 @@ const LotsOfColumnsTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
-      className="table"
+      className="grid"
       columnSeparators={true}
     >
       {dummyColumnNames.map((name) => (
@@ -398,7 +394,7 @@ const LotsOfColumnGroupsTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
-      className="table"
+      className="grid"
       columnSeparators={true}
       rowSelectionMode={"none"}
     >
@@ -504,7 +500,7 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
       <Grid
         rowData={sortedRows}
         rowKeyGetter={rowIdGetter}
-        className="table"
+        className="grid"
         columnSeparators={true}
         zebra={true}
       >
@@ -668,7 +664,7 @@ const CustomCellsTemplate: Story<{}> = (props) => {
       <Grid
         rowData={visibleRows}
         rowKeyGetter={rowIdGetter}
-        className="table"
+        className="grid"
         columnSeparators={true}
         zebra={true}
       >
@@ -814,7 +810,7 @@ const ServerSideDataStoryTemplate: Story<{}> = (props) => {
     <Grid
       rowData={rows}
       rowKeyGetter={serverSideDataRowKeyGetter}
-      className="table"
+      className="grid"
       zebra={true}
       columnSeparators={true}
       onVisibleRowRangeChange={onVisibleRowRangeChange}

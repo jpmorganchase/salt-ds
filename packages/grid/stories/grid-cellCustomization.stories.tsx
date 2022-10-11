@@ -4,11 +4,18 @@ import {
   GridCellValueProps,
   GridColumn,
   RowSelectionCheckboxColumn,
-} from "../../src";
+} from "../src";
 import { LinearProgress } from "@jpmorganchase/uitk-lab";
 import { Button, FlexLayout } from "@jpmorganchase/uitk-core";
 import { FavoriteIcon, LinkedIcon } from "@jpmorganchase/uitk-icons";
-import "./Examples.css";
+import "./grid.stories.css";
+import { Story } from "@storybook/react";
+
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
 
 export interface BidAskPrice {
   bid: number;
@@ -73,7 +80,7 @@ export const ButtonsCellValue = (
   );
 };
 
-export const CellCustomizationExample = () => {
+export const CellCustomizationTemplate: Story<{}> = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];
@@ -134,3 +141,5 @@ export const CellCustomizationExample = () => {
     </Grid>
   );
 };
+
+export const CellCustomization = CellCustomizationTemplate.bind({});
