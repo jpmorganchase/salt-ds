@@ -1,0 +1,65 @@
+.grid {
+  height: 300px;
+  width: 958px;
+}
+
+.grid-small {
+  height: 200px;
+  width: 300px;
+}
+
+.grid-column-groups {
+  height: 200px;
+  width: 958px;
+}
+
+.bidAskCellValue {
+  text-align: center;
+}
+
+.bid {
+  color: var(--uitk-color-green-800);
+  padding-right: 4px;
+}
+
+.ask {
+  color: var(--uitk-color-red-800);
+  padding-left: 4px;
+}
+
+.percentage {
+  margin: 0 10px 0 10px;
+}
+
+.percentage .uitkLinearProgress {
+  min-width: calc(100% - 20px);
+}
+
+.buttons {
+  height: 100%;
+}
+
+.grid-css-customization {
+  height: 800px;
+  width: 958px;
+}
+
+.summaryCellValue {
+  padding: 0 var(--grid-padding);
+  display: flex;
+  flex-direction: row;
+}
+
+.miniChart {
+  height: calc(var(--grid-row-height) - 4px);
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.miniChartBar {
+  width: 7%;
+  background-color: var(--uitk-palette-accent-background);
+}

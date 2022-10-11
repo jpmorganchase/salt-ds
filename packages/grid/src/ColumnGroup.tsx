@@ -6,11 +6,16 @@ import {
   isValidElement,
   ReactNode,
   useEffect,
+  useRef,
 } from "react";
 import { GridColumnPin } from "./GridColumn";
 import { GridColumnGroupModel } from "./Grid";
 
 export interface ColumnGroupCellProps {
+  group: GridColumnGroupModel;
+}
+
+export interface ColumnGroupCellValueProps {
   group: GridColumnGroupModel;
 }
 
@@ -20,16 +25,18 @@ export interface ColumnGroupProps {
   id: string;
   pinned?: GridColumnPin;
   headerComponent?: ComponentType<ColumnGroupCellProps>;
-  headerValueComponent?: ComponentType<ColumnGroupCellProps>;
+  headerValueComponent?: ComponentType<ColumnGroupCellValueProps>;
 }
 
 export function ColumnGroup(props: ColumnGroupProps) {
   const pinned = props.pinned || null;
-  const table = useGridContext();
+  const indexRef = useRef<number>();
+  const grid = useGridContext();
   useEffect(() => {
-    table.onColumnGroupAdded(props);
+    indexRef.current = grid.getChildIndex(props.id);
+    grid.onColumnGroupAdded(props);
     return () => {
-      table.onColumnGroupRemoved(props);
+      grid.onColumnGroupRemoved(indexRef.current!, props);
     };
   });
   const childrenWithPinnedOverridden = Children.map(props.children, (child) => {

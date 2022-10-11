@@ -6,11 +6,15 @@
 
   border-style: solid;
   border-top-color: var(--grid-row-borderColor);
-  border-right-color: var(--grid-columnSeparator-color);
+  border-right-color: transparent;
   border-width: 1px 1px 0 0;
 
   position: relative;
   font-size: var(--grid-fontSize);
+}
+
+.uitkGrid-columnSeparators .uitkGridDropdownCellEditor {
+  border-right-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGridDropdownCellEditor-dropdownContainer {
