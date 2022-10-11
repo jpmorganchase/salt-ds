@@ -157,7 +157,6 @@
 }
 
 .uitkGrid-columnSeparators {
-  --grid-columnSeparator-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGrid table {

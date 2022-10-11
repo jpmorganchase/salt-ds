@@ -7,7 +7,7 @@
 
   border-style: solid;
   border-top-color: var(--grid-row-borderColor);
-  border-right-color: var(--grid-columnSeparator-color);
+  border-right-color: transparent;
   border-width: 1px 1px 0 0;
 
   white-space: nowrap;
@@ -15,6 +15,10 @@
   font-size: var(--grid-fontSize);
   font-weight: normal;
   z-index: var(--grid-cell-zIndex);
+}
+
+.uitkGrid-columnSeparators .uitkGridBaseCell {
+  border-right-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGridBaseCell-selectedCell {
