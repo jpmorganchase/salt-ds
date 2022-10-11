@@ -201,7 +201,7 @@ describe("Grid", () => {
       cy.findByLabelText("multi").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
-        5
+        8
       );
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
@@ -216,7 +216,7 @@ describe("Grid", () => {
       cy.findByLabelText("single").click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
-        5
+        8
       );
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
