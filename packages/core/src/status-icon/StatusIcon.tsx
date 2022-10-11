@@ -21,6 +21,9 @@ const icons = {
 };
 
 export interface StatusIconProps extends IconProps {
+  /**
+   * Status icon to be displayed.
+   */
   status: ValidationStatus;
 }
 
