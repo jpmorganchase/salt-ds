@@ -80,7 +80,6 @@ export interface ContainerNavigationProps {
   onFocus: FocusEventHandler;
   onMouseDownCapture: MouseEventHandler;
   onMouseLeave: MouseEventHandler;
-  onMouseMove: MouseEventHandler;
 }
 
 interface TabstripNavigationHookProps {
@@ -301,17 +300,8 @@ export const useKeyboardNavigation = ({
         setHasFocus(false);
       }
     },
-    // onClick: handleContainerClick,
-    onMouseDown: handleContainerMouseDown,
+    onMouseDownCapture: handleContainerMouseDown,
     onFocus: handleFocus,
-    // onKeyDown: () => console.log("[useKeyboardNavigation] onKeyDown"),
-    onMouseDownCapture: () => {
-      // console.log("[useKeyboardNavigation onMouseDownCapture")
-    },
-
-    onMouseMove: () => {
-      // console.log("[useKeyboardNavigation onMouseMove");
-    },
     onMouseLeave: () => {
       keyboardNavigation.current = true;
       setHighlightedIdx(-1);

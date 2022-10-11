@@ -100,7 +100,7 @@ export interface responsiveDataAttributes {
 
 export type TabProps = Omit<
   HTMLAttributes<HTMLElement>,
-  "onClick" | "onKeyUp" | "onMouseDown" /*| "children" */
+  "onClick" | "onKeyUp"
 > & {
   ariaControls?: AriaAttributes["aria-controls"];
   closeable?: boolean;
@@ -120,20 +120,8 @@ export type TabProps = Omit<
   onEnterEditMode?: () => void;
   onExitEditMode?: exitEditHandler;
   onKeyUp?: (e: KeyboardEvent, index: number) => void;
-  onMouseDown?: (e: MouseEvent<HTMLElement>, index: number) => void;
   orientation?: "horizontal" | "vertical";
   tabChildIndex?: number;
 };
 
 export type TabElement = ReactElement<TabProps>;
-
-// type TabWithLabel = BaseTabProps & {
-//   label: EditableLabelProps["defaultValue"];
-//   children?: ReactNode;
-// };
-// type TabWithChildren = BaseTabProps & {
-//   children: ReactNode;
-//   label?: EditableLabelProps["defaultValue"];
-// };
-
-// export type TabProps = TabWithChildren | TabWithLabel;

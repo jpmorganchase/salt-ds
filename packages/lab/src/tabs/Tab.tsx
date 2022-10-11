@@ -132,7 +132,7 @@ export const Tab = forwardRef(function Tab(
   };
 
   const handleMouseDown = (e: MouseEvent<HTMLElement>): void => {
-    onMouseDown && onMouseDown(e, index);
+    onMouseDown?.(e);
   };
 
   const getLabel = () => {
