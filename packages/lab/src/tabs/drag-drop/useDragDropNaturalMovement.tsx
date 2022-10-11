@@ -243,7 +243,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
 
   const mouseDownHandler: MouseEventHandler = useCallback(
     (evt) => {
-      if (containerRef.current) {
+      if (containerRef.current && !evt.defaultPrevented) {
         const { POS } = dimensions(orientation);
         const { [POS]: clientPos } = evt;
         startPos.current = clientPos;
