@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
-import * as gridExamples from "@stories/grid.examples";
+import * as gridExamples from "@stories/examples";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(gridStories);
