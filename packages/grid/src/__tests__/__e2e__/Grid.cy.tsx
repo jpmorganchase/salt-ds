@@ -1,14 +1,11 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
-import * as gridExamples from "@stories/examples";
+import { RowSelectionModesExample } from "@stories/examples";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
   composedStories;
-
-const composedExample = composeStories(gridExamples);
-const { RowSelectionModesExample } = composedExample;
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
