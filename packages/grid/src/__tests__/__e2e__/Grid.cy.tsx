@@ -72,10 +72,10 @@ describe("Grid", () => {
         getCol(1).should("not.exist");
         // Column C is the first visible column now
         getCol(2).should("exist");
-        // Column P is the last visible one
-        getCol(15).should("exist");
-        // Column Q is out of view
-        getCol(16).should("not.exist");
+        // Column R is the last visible one
+        getCol(18).should("exist");
+        // Column S is out of view
+        getCol(19).should("not.exist");
       });
   });
 
@@ -98,8 +98,6 @@ describe("Grid", () => {
         getRow(16).should("not.exist");
       });
   });
-
-  // TODO header virtualization in grouped mode
 
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
@@ -193,6 +191,11 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
+  describe("Column groups", () => {
+    it("Shows correct groups", () => {});
+
+    it("Handles header virtualization in grouped mode", () => {});
+  });
   describe("Switching selection modes", () => {
     it("Shows correct columns", () => {
       cy.mount(<RowSelectionModes />);
@@ -264,6 +267,8 @@ describe("Grid", () => {
       checkRowSelected(3, false);
     });
   });
+
+  // TODO header virtualization in grouped mode
 
   // TODO column drag-n-drop
   // TODO clipboard
