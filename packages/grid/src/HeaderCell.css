@@ -73,4 +73,5 @@
   width: 16px;
   background: transparent;
   cursor: col-resize;
+  z-index: 2;
 }
