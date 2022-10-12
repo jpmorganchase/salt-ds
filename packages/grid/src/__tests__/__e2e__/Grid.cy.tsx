@@ -55,7 +55,7 @@ describe("Grid", () => {
       .find(".uitkGridTableRow")
       .should("exist")
       .findAllByRole("gridcell")
-      .should("have.length", 14);
+      .should("have.length", 16);
 
     cy.findByTestId("grid-scrollable")
       .should("exist")
@@ -200,7 +200,7 @@ describe("Grid", () => {
       cy.findByLabelText("multi").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
-        8
+        16
       );
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
@@ -215,7 +215,7 @@ describe("Grid", () => {
       cy.findByLabelText("single").click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
-        8
+        16
       );
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
