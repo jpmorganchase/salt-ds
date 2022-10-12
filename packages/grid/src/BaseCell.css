@@ -14,7 +14,6 @@
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
-  z-index: var(--grid-cell-zIndex);
 }
 
 .uitkGrid-columnSeparators .uitkGridBaseCell {
@@ -76,5 +75,5 @@
   border-top: 0 solid transparent;
   border-left: var(--grid-editableCell-cornerTag-size) solid var(--grid-cursor-borderColor);
   border-bottom: 8px solid transparent;
-  z-index: 10;
+  /*z-index: 10;*/
 }

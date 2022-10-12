@@ -4,7 +4,7 @@ import {
   GridProps,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./grid-variants.stories";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
 import { FlexLayout } from "@jpmorganchase/uitk-core";
 import "./grid.stories.css";
@@ -16,7 +16,7 @@ export default {
   argTypes: {},
 };
 
-export const RowSelectionControlledTemplate: Story<{}> = () => {
+const RowSelectionControlledTemplate: Story<{}> = () => {
   const [selection, setSelection] = useState<number[]>([]);
 
   const onRowSelected = (rowIndices: number[]) => {

@@ -1,14 +1,6 @@
-import {
-  ArgsTable,
-  Canvas,
-  Meta,
-  Story
-} from "@storybook/addon-docs";
-import {
-  Grid,
-  GridColumn
-} from "@jpmorganchase/uitk-grid";
-import {withFlexGap} from "docs/decorators/withFlexGap";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
+import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -83,6 +75,10 @@ Columns can be grouped using the `ColumnGroup` component.
 Grid rows are created by providing an array of objects as `rowData` property of the grid.
 `rowData` accepts sparse arrays too.
 In combination with `onVisibleRowRangeChange` callback this allows lazy loading (server-side data) scenarios.
+
+<Canvas>
+  <Story id="grid-new-grid--server-side-data" />
+</Canvas>
 
 ### Row selection
 
@@ -160,6 +156,14 @@ The child of the `CellEditor` component gets rendered in the focused cell when t
 
 <Canvas>
   <Story id="grid-new-grid--editable-cells" decorators={[withFlexGap]} />
+</Canvas>
+
+### Pagination
+
+Pagination can be implemented using the `Paginator` component. It is not a feature of the grid itself.
+
+<Canvas>
+  <Story id="grid-new-grid--grid-pagination" decorators={[withFlexGap]} />
 </Canvas>
 
 ### HTML Anatomy of a Grid

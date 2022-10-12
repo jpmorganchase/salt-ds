@@ -9,11 +9,10 @@ import {
   GridHeaderValueProps,
   NumericCellEditor,
   NumericColumn,
-  RowKeyGetter,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
 } from "../src";
-import { randomAmount, randomString, randomText } from "./utils";
+import { randomString, randomText } from "./utils";
 
 import {
   createContext,
@@ -32,8 +31,12 @@ import {
   FavoriteIcon,
 } from "../../icons";
 import { CellEditor } from "../src/CellEditor";
-import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
-import { FlexLayout } from "../../core";
+import {
+  allLocations,
+  createDummyInvestors,
+  Investor,
+  investorKeyGetter,
+} from "./dummyData";
 
 export default {
   title: "Grid/New Grid",
@@ -41,74 +44,7 @@ export default {
   argTypes: {},
 };
 
-interface Investor {
-  name: string;
-  addedInvestors: string[];
-  location: string;
-  strategy: string[];
-  cohort: string[];
-  notes: string;
-  amount: number;
-}
-
-const allLocations = [
-  "New York, NY",
-  "Jersey City, NJ",
-  "Boston, MA",
-  "San Francisco, CA",
-];
-
-function createDummyInvestors(): Investor[] {
-  const a = [
-    "Apple",
-    "Orange",
-    "Dragonfruit",
-    "Coffee",
-    "Fig",
-    "Grape",
-    "Hazelnut",
-  ];
-  const b = ["Investment", "Venture Capital", "Private Wealth"];
-  const c = ["", "Inc."];
-  const str = [
-    ["FO"],
-    ["PE"],
-    ["VC"],
-    ["FO", "PE"],
-    ["FO", "PE", "VC"],
-    ["VC", "PE"],
-  ];
-  const coh = [
-    ["Potential Leads"],
-    ["Top VCs"],
-    ["Potential Leads", "Top VCs"],
-  ];
-
-  const investors: Investor[] = [];
-  let i = 0;
-  for (let x of a) {
-    for (let y of b) {
-      for (let z of c) {
-        investors.push({
-          name: [x, y, z].join(" "),
-          addedInvestors: [],
-          location: allLocations[i % allLocations.length],
-          cohort: coh[i % coh.length],
-          strategy: str[i % str.length],
-          notes: "",
-          amount: randomAmount(100, 300, 4),
-        });
-        ++i;
-      }
-    }
-  }
-
-  return investors;
-}
-
 const dummyInvestors = createDummyInvestors();
-
-const rowKeyGetter = (rowData: Investor) => rowData.name;
 
 const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].amount = parseFloat(value);
@@ -122,11 +58,10 @@ const GridStoryTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="grid"
       zebra={true}
       columnSeparators={true}
-      // hideHeader={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionCheckboxColumn id="rowSelection" />
@@ -184,12 +119,10 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="grid"
       zebra={true}
-      // columnSeparators={true}
       rowSelectionMode="single"
-      // hideHeader={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionRadioColumn id="rowSelection" />
@@ -241,12 +174,10 @@ const SmallTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors5}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
-      // rowSelectionMode="single"
-      // hideHeader={true}
     >
       <RowSelectionRadioColumn id="rowSelection" />
       <GridColumn
@@ -274,7 +205,11 @@ const SmallTemplate: Story<{}> = (props) => {
 
 const PinnedColumnsTemplate: Story<{}> = (props) => {
   return (
-    <Grid rowData={dummyInvestors} rowKeyGetter={rowKeyGetter} className="grid">
+    <Grid
+      rowData={dummyInvestors}
+      rowKeyGetter={investorKeyGetter}
+      className="grid"
+    >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <GridColumn
           name="Name"
@@ -374,6 +309,7 @@ const dummyGroups: any[] = [
     columns: [],
   },
 ];
+
 dummyColumnNames.forEach((name) => {
   let groupIdx = dummyGroups.length - 1;
   let group = dummyGroups[groupIdx];
@@ -518,8 +454,6 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
     </CustomHeadersStoryContext.Provider>
   );
 };
-
-/* Custom cells story */
 
 interface TreeRowData {
   id: string;
@@ -683,7 +617,6 @@ const CustomCellsTemplate: Story<{}> = (props) => {
   );
 };
 
-/* Column DnD */
 const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   const [columnIds, setColumnIds] = useState<string[]>([
     "name",
@@ -757,7 +690,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
@@ -766,142 +699,6 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     >
       {columnIds.map((id) => renderColumn(id))}
     </Grid>
-  );
-};
-
-const serverSideDataRowKeyGetter: RowKeyGetter<Investor> = (row, index) =>
-  `Row${index}`;
-
-const serverSideRowCount = 200000;
-
-const ServerSideDataStoryTemplate: Story<{}> = (props) => {
-  const [rows, setRows] = useState<Investor[]>(() => {
-    const rowData: Investor[] = [];
-    rowData.length = serverSideRowCount;
-    return rowData;
-  });
-
-  const onVisibleRowRangeChange = useCallback((start: number, end: number) => {
-    console.log(`onVisibleRowRangeChange(${start}, ${end}).`);
-    setRows((oldRows) => {
-      const nextRows: Investor[] = [];
-      nextRows.length = serverSideRowCount;
-      for (let i = start; i < end; ++i) {
-        if (oldRows[i]) {
-          nextRows[i] = oldRows[i];
-        } else {
-          nextRows[i] = {
-            name: `Name ${i}`,
-            addedInvestors: [],
-            location: `Location ${i}`,
-            cohort: [`Cohort ${i}`],
-            strategy: [`Strategy ${i}`],
-            notes: "",
-            amount: randomAmount(100, 300, 4),
-          };
-        }
-      }
-      return nextRows;
-    });
-  }, []);
-
-  return (
-    <Grid
-      rowData={rows}
-      rowKeyGetter={serverSideDataRowKeyGetter}
-      className="grid"
-      zebra={true}
-      columnSeparators={true}
-      onVisibleRowRangeChange={onVisibleRowRangeChange}
-    >
-      <RowSelectionCheckboxColumn id="rowSelection" />
-      <GridColumn
-        name="Name"
-        id="name"
-        defaultWidth={200}
-        getValue={(x) => x.name}
-      />
-      <GridColumn
-        name="Location"
-        id="location"
-        defaultWidth={150}
-        getValue={(x) => x.location}
-        onChange={onLocationChange}
-      />
-      <GridColumn
-        name="Cohort"
-        id="cohort"
-        defaultWidth={200}
-        getValue={(x) => x.cohort}
-      />
-      <GridColumn
-        name="Amount"
-        id="amount"
-        defaultWidth={200}
-        getValue={(x) => x.amount.toFixed(4)}
-        align="right"
-        onChange={onAmountChange}
-      />
-      <GridColumn
-        name="Strategy"
-        id="strategy"
-        getValue={(x) => x.strategy.join(", ")}
-      />
-    </Grid>
-  );
-};
-
-const PaginationStoryTemplate: Story<{}> = (props) => {
-  const [page, setPage] = useState<number>(1);
-  const pageSize = 7;
-  const pageCount = Math.ceil(dummyInvestors.length / pageSize);
-
-  const onPageChange = (page: number) => {
-    setPage(page);
-  };
-
-  const rowData = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    const end = Math.min(start + pageSize, dummyInvestors.length);
-    return dummyInvestors.slice(start, end);
-  }, [pageSize, page]);
-
-  return (
-    <FlexLayout direction={"column"} align={"end"}>
-      <Grid
-        rowData={rowData}
-        rowKeyGetter={serverSideDataRowKeyGetter}
-        className="paginatedGrid"
-        zebra={true}
-        columnSeparators={true}
-      >
-        <RowSelectionCheckboxColumn id="rowSelection" />
-        <GridColumn
-          name="Name"
-          id="name"
-          defaultWidth={200}
-          getValue={(x) => x.name}
-        />
-        <GridColumn
-          name="Location"
-          id="location"
-          defaultWidth={150}
-          getValue={(x) => x.location}
-          onChange={onLocationChange}
-        />
-        <GridColumn
-          name="Amount"
-          id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          align="right"
-          onChange={onAmountChange}
-        />
-      </Grid>
-      <Pagination page={page} onPageChange={onPageChange} count={pageCount}>
-        <Paginator />
-      </Pagination>
-    </FlexLayout>
   );
 };
 
@@ -914,7 +711,5 @@ export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
 export const CustomHeaders = CustomHeadersTemplate.bind({});
 export const CustomCells = CustomCellsTemplate.bind({});
 export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
-export const ServerSideData = ServerSideDataStoryTemplate.bind({});
-export const GridPagination = PaginationStoryTemplate.bind({});
 
 GridExample.args = {};

@@ -8,7 +8,7 @@ import {
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
 } from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./grid-variants.stories";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
 import {
   ToggleButton,
@@ -24,7 +24,7 @@ export default {
   argTypes: {},
 };
 
-export const RowSelectionModesTemplate: Story<{}> = () => {
+const RowSelectionModesTemplate: Story<{}> = () => {
   const rowSelectionModes: GridRowSelectionMode[] = ["multi", "single", "none"];
   const [index, setIndex] = useState<number>(0);
 

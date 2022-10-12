@@ -17,19 +17,19 @@ export default {
   argTypes: {},
 };
 
-export interface BidAskPrice {
+interface BidAskPrice {
   bid: number;
   ask: number;
   precision: number;
 }
 
-export interface CurrencyPairRow {
+interface CurrencyPairRow {
   currencyPair: string;
   bidAskPrice: BidAskPrice;
   percentage: number;
 }
 
-export const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
+const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   const { row } = props;
 
   const { bid, ask, precision } = row.data.bidAskPrice;
@@ -45,9 +45,7 @@ export const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-export const PercentageCellValue = (
-  props: GridCellValueProps<CurrencyPairRow>
-) => {
+const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   const { row } = props;
 
   const { percentage } = row.data;
@@ -59,9 +57,7 @@ export const PercentageCellValue = (
   );
 };
 
-export const ButtonsCellValue = (
-  props: GridCellValueProps<CurrencyPairRow>
-) => {
+const ButtonsCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   return (
     <FlexLayout
       className="buttons"
@@ -80,7 +76,7 @@ export const ButtonsCellValue = (
   );
 };
 
-export const CellCustomizationTemplate: Story<{}> = () => {
+const CellCustomizationTemplate: Story<{}> = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];

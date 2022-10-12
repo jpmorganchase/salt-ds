@@ -21,6 +21,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
+  MenuButton,
 } from "@jpmorganchase/uitk-lab";
 import { Button, FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
 import {
@@ -28,6 +29,7 @@ import {
   ArrowUpIcon,
   FavoriteIcon,
   LinkedIcon,
+  MenuIcon,
   PinIcon,
 } from "@jpmorganchase/uitk-icons";
 import { randomAmount, randomInt, randomNumber } from "./utils";
@@ -132,6 +134,18 @@ const ItemGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
           <PinIcon />
         </ToggleButton>
       </FlexItem>
+      <FlexItem>
+        <MenuButton
+          variant="secondary"
+          CascadingMenuProps={{
+            initialSource: {
+              menuItems: [{ title: "Menu Item 1" }, { title: "Menu Item 2" }],
+            },
+          }}
+        >
+          <MenuIcon />
+        </MenuButton>
+      </FlexItem>
     </FlexLayout>
   );
 };
@@ -187,7 +201,7 @@ const SummaryCellValue = (props: GridCellValueProps<ExampleRow>) => {
  * An example of how to use the `headerValueComponent` property of columns and
  * column groups.
  * */
-export const HeaderCustomizationTemplate: Story<{}> = () => {
+const HeaderCustomizationTemplate: Story<{}> = () => {
   const rowData: ExampleRow[] = useMemo(() => {
     const names = [
       "Espresso",

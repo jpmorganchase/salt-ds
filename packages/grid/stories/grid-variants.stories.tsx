@@ -15,6 +15,7 @@ import {
 import { Checkbox, FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 
 export default {
   title: "Grid/New Grid",
@@ -22,23 +23,7 @@ export default {
   argTypes: {},
 };
 
-export interface DummyRow {
-  id: string;
-  a: string;
-  b: number;
-  c: string;
-}
-
-export const dummyRowKeyGetter: RowKeyGetter<DummyRow> = (r) => r.id;
-
-export const rowData: DummyRow[] = [...new Array(50)].map((_, i) => ({
-  id: `Row${i}`,
-  a: `A${i}`,
-  b: i * 100,
-  c: `C${i}`,
-}));
-
-export const GridVariantsTemplate: Story<{}> = () => {
+const GridVariantsTemplate: Story<{}> = () => {
   const [separators, setSeparators] = useState(false);
   const [index, setIndex] = useState(0);
 

@@ -1,5 +1,5 @@
 import { ColumnGroup, Grid, GridColumn, GridProps } from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./grid-variants.stories";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
@@ -9,7 +9,7 @@ export default {
   argTypes: {},
 };
 
-export const ColumnGroupsTemplate: Story<{}> = () => {
+const ColumnGroupsTemplate: Story<{}> = () => {
   return (
     <Grid
       rowData={rowData}

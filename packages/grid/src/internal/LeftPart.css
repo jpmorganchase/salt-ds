@@ -5,7 +5,6 @@
   bottom: var(--grid-scrollBar-height);
   overflow-x: hidden;
   overflow-y: hidden;
-  z-index: 2;
   clip-path: inset(var(--grid-topPart-height) -10px 0 0);
 }
 

@@ -39,7 +39,7 @@ interface GridCssVar {
 
 const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 
-export const CssVariablesTemplate: Story<{}> = () => {
+const CssVariablesTemplate: Story<{}> = () => {
   const variants = [`primary`, `secondary`, `zebra`];
   const [separators, setSeparators] = useState(false);
   const [index, setIndex] = useState(0);
@@ -151,10 +151,6 @@ export const CssVariablesTemplate: Story<{}> = () => {
       description: "Height (thickness) of the row header separator",
     },
     {
-      name: "--grid-headerRowSeparator-width",
-      description: "Width of the vertical line separating column headers",
-    },
-    {
       name: "--uitkGrid-groupHeader-color",
       description: "Foreground color of column group headers",
     },
@@ -190,10 +186,6 @@ export const CssVariablesTemplate: Story<{}> = () => {
     {
       name: "--uitkGrid-rowSeparator-color",
       description: "Color of row separators",
-    },
-    {
-      name: "--uitkGrid-rowSeparator-width",
-      description: "Width of lines between rows",
     },
     {
       name: "--uitkGrid-columnSeparator-color",

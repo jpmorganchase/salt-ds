@@ -5,5 +5,5 @@
 .uitkGridHeaderRow th {
   border-style: solid;
   border-color: var(--grid-headerRowSeparator-color);
-  border-width: 0 0 var(--grid-headerRowSeparator-width) 0;
+  border-width: 0 0 var(--grid-headerRowSeparator-height) 0;
 }

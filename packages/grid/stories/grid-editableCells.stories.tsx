@@ -96,7 +96,7 @@ const useExampleDataSource = () => {
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-export const EditableCellsTemplate: Story<{}> = () => {
+const EditableCellsTemplate: Story<{}> = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 
