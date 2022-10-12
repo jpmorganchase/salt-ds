@@ -1,18 +1,17 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
 import {
-  DownloadIcon,
-  SearchIcon,
-  SendIcon,
-  SettingsSolidIcon,
-} from "@jpmorganchase/uitk-icons";
-import { withFlexGap } from "docs/decorators/withFlexGap";
+  ArgsTable,
+  Canvas,
+  Meta,
+  Story
+} from "@storybook/addon-docs";
+import {
+  Grid,
+  GridColumn
+} from "@jpmorganchase/uitk-grid";
+import {withFlexGap} from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -158,6 +157,10 @@ Grid allows editing cell values in place.
 `CellEditor` is a non-rendered component.
 `CellEditor` is expected to have one child representing the specific editor component to use for the column, e.g. `TextCellEditor`, `DropdownCellEditor` or `NumericCellEditor`.
 The child of the `CellEditor` component gets rendered in the focused cell when the grid goes to edit mode.
+
+<Canvas>
+  <Story id="grid-new-grid--editable-cells" decorators={[withFlexGap]} />
+</Canvas>
 
 ### HTML Anatomy of a Grid
 

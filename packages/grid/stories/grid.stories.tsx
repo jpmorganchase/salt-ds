@@ -12,7 +12,6 @@ import {
   RowKeyGetter,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
-  TextCellEditor,
 } from "../src";
 import { randomAmount, randomString, randomText } from "./utils";
 
