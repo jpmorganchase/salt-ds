@@ -91,11 +91,11 @@ describe("Grid", () => {
             .find("tbody")
             .find(`tr [data-row-index="${n}"]`);
 
-        // Rows 1 to 15 should be rendered, everything above and below - not
+        // Rows 1 to 16 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
-        getRow(15).should("exist");
-        getRow(16).should("not.exist");
+        getRow(16).should("exist");
+        getRow(17).should("not.exist");
       });
   });
 
