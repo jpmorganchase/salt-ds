@@ -130,6 +130,7 @@
   border-top: 1px solid;
   border-color: var(--uitk-separable-secondary-borderColor);
   padding: calc(var(--uitk-size-unit) * 3) 0 calc(var(--uitk-size-unit) * 2) 0;
+  text-align: center;
 }
 
 .grid-blog-hero {

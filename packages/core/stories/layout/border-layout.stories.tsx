@@ -204,37 +204,37 @@ export const BorderLayoutFixedPanels = FixedPanels.bind({});
 BorderLayoutFixedPanels.args = {};
 
 const Header = () => {
-  const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];
+  const tabs = ["Home", "Contacts", "FX", "Checks", "Loans"];
   return (
-    <>
-      <AppHeader>
-        <strong>LOGO</strong>
-        <Tabstrip data-index={1} data-priority={2}>
-          {tabs.map((label, i) => (
-            <Tab label={label} key={i} />
-          ))}
-        </Tabstrip>
-        <Tooltray
-          data-collapsible="dynamic"
-          data-index={2}
-          data-priority={1}
-          data-align-end
-          data-reclaim-space
-        >
-          <Button variant="secondary">
+    <AppHeader>
+      <strong>LOGO</strong>
+      <Tabstrip data-index={1} data-priority={2}>
+        {tabs.map((label, i) => (
+          <Tab label={label} key={i} />
+        ))}
+      </Tabstrip>
+      <Tooltray
+        data-collapsible="dynamic"
+        data-index={2}
+        data-priority={1}
+        data-align-end
+        data-reclaim-space
+      >
+        <ButtonBar>
+          <OrderedButton variant="secondary">
             <Badge badgeContent={50}>
               <MessageIcon />
             </Badge>
-          </Button>
-          <Button variant="secondary">
+          </OrderedButton>
+          <OrderedButton variant="secondary">
             <NotificationIcon />
-          </Button>
-          <Button variant="secondary">
+          </OrderedButton>
+          <OrderedButton variant="secondary">
             <SettingsIcon />
-          </Button>
-        </Tooltray>
-      </AppHeader>
-    </>
+          </OrderedButton>
+        </ButtonBar>
+      </Tooltray>
+    </AppHeader>
   );
 };
 
@@ -294,7 +294,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
             "border-layout-custom-form": checked,
           })}
         >
-          <FlexLayoutFormComposite />
+          <FlowLayoutComposite separators />
         </div>
       </BorderItem>
 
@@ -336,10 +336,7 @@ const Contacts: ComponentStory<typeof BorderLayout> = (args) => {
         as="footer"
         className="border-layout-contacts-footer"
       >
-        <ButtonBar>
-          <OrderedButton variant="cta">Edit</OrderedButton>
-          <OrderedButton>Cancel</OrderedButton>
-        </ButtonBar>
+        <p>Contact lists get updated monthly.</p>
       </BorderItem>
     </BorderLayout>
   );
