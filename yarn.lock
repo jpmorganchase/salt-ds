@@ -10288,7 +10288,7 @@ __metadata:
     asar: ^3.1.0
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
-    electron: 17.2.0
+    electron: 17.4.11
     electron-squirrel-startup: ^1.0.0
     esbuild-loader: ^2.19.0
     eslint: ^7.32.0
@@ -10884,29 +10884,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:17.2.0":
-  version: 17.2.0
-  resolution: "electron@npm:17.2.0"
+"electron@npm:17.4.11, electron@npm:^17.2.0":
+  version: 17.4.11
+  resolution: "electron@npm:17.4.11"
   dependencies:
     "@electron/get": ^1.13.0
     "@types/node": ^14.6.2
     extract-zip: ^1.0.3
   bin:
     electron: cli.js
-  checksum: f345311f9c79f0852c3116ede2b83a439e8c1c3b2a40c85e5b5912962571fe1d1c19af8231e0215f47da735ebe6064cbc812ae1bdf4f9638de538912b1f6ab7e
-  languageName: node
-  linkType: hard
-
-"electron@npm:^17.2.0":
-  version: 17.4.7
-  resolution: "electron@npm:17.4.7"
-  dependencies:
-    "@electron/get": ^1.13.0
-    "@types/node": ^14.6.2
-    extract-zip: ^1.0.3
-  bin:
-    electron: cli.js
-  checksum: 1c951299386bbcd7ed73f6cdd60d6cfc6c19f8c6d4128b2b775004c01649249891d2259d39037f0f72168e3a007f66089e1f360f3d6a45f46ed2627877e036cf
+  checksum: 2aad627183577d514ad79cb3f99eaa24e8acdba74e464eb62e699ebfe0ce1c12a7890ee5d6f2d5ab32daed0e449f9e161a21fb61841b3931438f215e1ad8099e
   languageName: node
   linkType: hard
 
