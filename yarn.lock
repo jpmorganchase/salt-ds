@@ -3094,7 +3094,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-icons@workspace:packages/icons"
   dependencies:
-    dom-serializer: ^1.3.2
+    dom-serializer: ^2.0.0
     htmlparser2: ^8.0.0
     mustache: ^4.2.0
   peerDependencies:
@@ -10504,7 +10504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-serializer@npm:^1.0.1, dom-serializer@npm:^1.3.2":
+"dom-serializer@npm:^1.0.1":
   version: 1.3.2
   resolution: "dom-serializer@npm:1.3.2"
   dependencies:
