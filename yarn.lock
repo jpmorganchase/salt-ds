@@ -2973,7 +2973,7 @@ __metadata:
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
     "@types/node": ^14.14.20
-    "@types/react": ^17.0.0
+    "@types/react": ^18.0.0
     "@types/react-color": ^3.0.6
     "@types/react-dom": ^17.0.0
     "@types/react-window": ^1.8.2
@@ -5615,7 +5615,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17, @types/react@npm:^17.0.0, @types/react@npm:^17.0.38":
+"@types/react@npm:*, @types/react@npm:^18.0.0":
+  version: 18.0.21
+  resolution: "@types/react@npm:18.0.21"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 36c1a7c9d507e81e2e629c1ad3db51d7b84d8b010c2d5008da411874286c6a5ccc711ae1d4c470efc0bdc77153cc8804a40e927e929e5164c669ca41b84b846d
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17":
   version: 17.0.45
   resolution: "@types/react@npm:17.0.45"
   dependencies:
@@ -10280,7 +10291,7 @@ __metadata:
     "@electron-forge/maker-zip": ^6.0.0-beta.63
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
     "@playwright/test": ^1.22.2
-    "@types/react": ^17.0.38
+    "@types/react": ^18.0.0
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
@@ -10875,7 +10886,7 @@ __metadata:
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
     "@jpmorganchase/theme-editor": ">=1.0.0"
     "@jpmorganchase/theme-editor-app": ">=0.1.0"
-    "@types/react": ^17.0.38
+    "@types/react": ^18.0.0
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^4.0.0
     "@typescript-eslint/parser": ^4.0.0
