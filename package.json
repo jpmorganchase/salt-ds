@@ -67,7 +67,7 @@
     "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
     "@types/react-color": "^3.0.6",
-    "@types/react-dom": "^17.0.0",
+    "@types/react-dom": "^18.0.0",
     "@types/react-window": "^1.8.2",
     "@types/tinycolor2": "^1.4.3",
     "@types/warning": "^3.0.0",
