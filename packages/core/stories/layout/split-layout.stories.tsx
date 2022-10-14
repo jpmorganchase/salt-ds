@@ -41,8 +41,8 @@ const leftItem = (
 
 const rightItem = (
   <FlowLayout>
-    <FlexContent className="layout-content-right">Item 4</FlexContent>
-    <FlexContent className="layout-content-right">Item 5</FlexContent>
+    <FlexContent classname="layout-content-right">Item 4</FlexContent>
+    <FlexContent classname="layout-content-right">Item 5</FlexContent>
   </FlowLayout>
 );
 
