@@ -6156,10 +6156,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/webpack-asset-relocator-loader@npm:1.7.0":
-  version: 1.7.0
-  resolution: "@vercel/webpack-asset-relocator-loader@npm:1.7.0"
-  checksum: 05f220859aa93303c75cf4f695de67ef36c9470849c0e4fba820bd35fff0899c02a72031747586335931228a327cde3c9a52b3f4fc994e669aed97d8d3f01e7d
+"@vercel/webpack-asset-relocator-loader@npm:1.7.3":
+  version: 1.7.3
+  resolution: "@vercel/webpack-asset-relocator-loader@npm:1.7.3"
+  dependencies:
+    resolve: ^1.10.0
+  checksum: e4d761e82f5f389206b7261874cc232382984c84f9476fb1c90759507782f8cc8a414ec910e24e63075d28ca5999bdf9d8f3ef2b2e41ea05e477188e8b9669d6
   languageName: node
   linkType: hard
 
@@ -10284,7 +10286,7 @@ __metadata:
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
-    "@vercel/webpack-asset-relocator-loader": 1.7.0
+    "@vercel/webpack-asset-relocator-loader": 1.7.3
     asar: ^3.1.0
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
@@ -10879,7 +10881,7 @@ __metadata:
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^4.0.0
     "@typescript-eslint/parser": ^4.0.0
-    "@vercel/webpack-asset-relocator-loader": 1.7.0
+    "@vercel/webpack-asset-relocator-loader": 1.7.3
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
     electron: ^17.2.0
