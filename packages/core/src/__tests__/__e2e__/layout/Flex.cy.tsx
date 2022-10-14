@@ -61,7 +61,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN wrap is set to false", () => {
     it("THEN it should render with no flex wrap", () => {
-      cy.mount(<DefaultFlexLayout wrap={false}/>);
+      cy.mount(<DefaultFlexLayout wrap={false} />);
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
     });
