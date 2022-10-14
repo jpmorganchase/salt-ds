@@ -68,6 +68,7 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   ) {
     return (
       <FlexLayout
+        align={align}
         direction="row"
         ref={ref}
         wrap={wrap}
