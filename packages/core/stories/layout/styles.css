@@ -6,6 +6,10 @@
   background: var(--uitk-color-orange-20);
   padding: 1rem;
 }
+.layout-content-right {
+  background: var(--uitk-color-orange-20);
+  padding: 1.2rem;
+}
 .grid-item {
   padding: 16px;
   height: 100%;
