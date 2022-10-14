@@ -118,7 +118,7 @@
     "webpack": "5.73.0"
   },
   "resolutions": {
-    "esbuild": "0.14.51"
+    "esbuild": "0.15.11"
   },
   "browserslist": {
     "production": [
