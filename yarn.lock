@@ -2993,9 +2993,9 @@ __metadata:
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
     csstree-validator: ^3.0.0
-    cypress: ^10.8.0
+    cypress: ^10.10.0
     cypress-axe: ^1.0.0
-    cypress-real-events: ^1.7.1
+    cypress-real-events: ^1.7.2
     deepmerge: ^4.2.2
     del: ^6.0.0
     dom-accessibility-api: ^0.5.10
@@ -9905,18 +9905,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "cypress-real-events@npm:1.7.1"
+"cypress-real-events@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "cypress-real-events@npm:1.7.2"
   peerDependencies:
     cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x
-  checksum: b31c2facfa03e01e298926cd0925260b12474770fc1a3ce8998da21818db7e6d9fc2f9eb60d1771aa4ce3c29aca63d04da21e1a63e3bb117b1506a72ab0c3eb1
+  checksum: d5b21592c14a2554a050fcc733d0a848382cb3d77360194312c91b8de52d4c356e2dbbfbca5ad9f36ad2619c08b61c86f847e25f35385003dec021f0202a0847
   languageName: node
   linkType: hard
 
-"cypress@npm:^10.8.0":
-  version: 10.8.0
-  resolution: "cypress@npm:10.8.0"
+"cypress@npm:^10.10.0":
+  version: 10.10.0
+  resolution: "cypress@npm:10.10.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -9962,7 +9962,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: c052690049980e7721e6fca563b724fde839d87d83c1478dfe26ce7d230992717c2c4028e7157bfb39ec274473e51929f49e5aab6a23c2b25cde2a439b1c3cf9
+  checksum: 668a32534a527dba79754abbf98af176b80c539a12ec00058932ba2a19c794c7888323e59e738c30f726ad740c5451c31d02548a0cb7c1b1c8ad01c55a984ca2
   languageName: node
   linkType: hard
 
