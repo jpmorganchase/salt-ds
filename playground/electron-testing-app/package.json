@@ -87,7 +87,7 @@
     "esbuild-loader": "^2.19.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.0",
-    "fork-ts-checker-webpack-plugin": "^6.0.1",
+    "fork-ts-checker-webpack-plugin": "^7.0.0",
     "node-loader": "^2.0.0",
     "playwright": "^1.22.2",
     "style-loader": "^3.0.0",
