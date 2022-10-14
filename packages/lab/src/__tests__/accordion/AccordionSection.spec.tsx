@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { Component } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -15,7 +15,7 @@ interface DetailsSpyProps {
   onUpdated: () => void;
 }
 
-class DetailsSpy extends React.Component<DetailsSpyProps> {
+class DetailsSpy extends Component<DetailsSpyProps> {
   render() {
     return <p>Detailed text</p>;
   }
@@ -33,11 +33,15 @@ class DetailsSpy extends React.Component<DetailsSpyProps> {
   }
 }
 
-const AccordionExample: FC<
-  DetailsSpyProps &
-    Pick<AccordionSectionProps, "onChange"> &
-    Pick<AccordionDetailsProps, "preventUnmountOnCollapse">
-> = ({ onChange, preventUnmountOnCollapse, ...restProps }) => {
+type AccordionExampleProps = DetailsSpyProps &
+  Pick<AccordionSectionProps, "onChange"> &
+  Pick<AccordionDetailsProps, "preventUnmountOnCollapse">;
+
+const AccordionExample = ({
+  onChange,
+  preventUnmountOnCollapse,
+  ...restProps
+}: AccordionExampleProps) => {
   return (
     <Accordion>
       <AccordionSection onChange={onChange}>
@@ -98,7 +102,6 @@ describe("GIVEN an AccordionSection", () => {
       });
 
       it("THEN should mount the details only once", () => {
-        const summary = screen.getByRole("button");
         expect(onDetailsMount).toHaveBeenCalledTimes(1);
         expect(onDetailsUnmount).toHaveBeenCalledTimes(0);
       });
@@ -167,7 +170,6 @@ describe("GIVEN an AccordionSection", () => {
       });
 
       it("THEN should not remount the details", () => {
-        const summary = screen.getByRole("button");
         expect(onDetailsMount).toHaveBeenCalledTimes(1);
         expect(onDetailsUnmount).toHaveBeenCalledTimes(0);
       });

@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -35,7 +34,7 @@ const renderControlledSections = (count: number, expandedIndices: number[]) =>
     </AccordionSection>
   ));
 
-const AccordionExample: FC<AccordionProps> = (props) => {
+const AccordionExample = (props: AccordionProps) => {
   return <Accordion {...props}>{renderSections(sectionCount)}</Accordion>;
 };
 

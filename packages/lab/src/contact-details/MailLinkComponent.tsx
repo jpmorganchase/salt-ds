@@ -1,10 +1,9 @@
-import { FC } from "react";
 import { Link } from "../link";
 import { Div } from "../text";
 import { isEmail } from "../utils";
 import { ValueComponentProps } from "./types";
 
-export const MailLinkComponent: FC<ValueComponentProps> = (props) => {
+export const MailLinkComponent = (props: ValueComponentProps) => {
   const { value, ...restProps } = props;
 
   return isEmail(value) ? (

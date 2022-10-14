@@ -37,7 +37,7 @@ export const useWidth = (
   const [width, setWidth] = useState<number>(0);
 
   // use callback ref as some element may not get rendered initially
-  const ref = useCallback((newNode) => {
+  const ref = useCallback((newNode: HTMLElement | null) => {
     if (newNode !== null) {
       setNode(newNode);
     }

@@ -1,5 +1,5 @@
 import { ViewportProvider, useViewport } from "@jpmorganchase/uitk-core";
-import { mount } from "cypress/react";
+import { mount } from "cypress/react18";
 
 const TestComponent = () => {
   const width = useViewport();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   act,
   render,
@@ -17,7 +17,7 @@ const BUTTON_TEXT = "CLICK ME";
 const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
 const ANNOUNCEMENT = "ANNOUNCEMENT";
 
-const TestWrapper: React.FC = ({ children }) => (
+const TestWrapper = ({ children }: { children?: ReactNode }) => (
   <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
 );
 
@@ -28,12 +28,12 @@ interface SimpleTextContentProps {
   getAnnouncement?: Function;
 }
 
-const SimpleTestContent: React.FC<SimpleTextContentProps> = ({
+const SimpleTestContent = ({
   announcement,
   delay,
   debounce,
   getAnnouncement,
-}) => {
+}: SimpleTextContentProps) => {
   const { announce } = useAriaAnnouncer({ debounce });
   const getMessageToAnnounce = () =>
     getAnnouncement ? getAnnouncement() : announcement;
@@ -58,9 +58,7 @@ const SimpleTestContent: React.FC<SimpleTextContentProps> = ({
   );
 };
 
-const AriaAnnounceContent: React.FC<{ announcement: string }> = ({
-  announcement,
-}) => {
+const AriaAnnounceContent = ({ announcement }: { announcement: string }) => {
   const [text, setText] = useState("");
   return (
     <>

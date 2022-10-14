@@ -46,7 +46,7 @@ export const FoundationPatternsList = (
   }, [props.onModeChange]);
 
   const onModeChanged = useCallback(
-    (mode) => {
+    (mode: ThemeMode) => {
       onModeChange(mode);
     },
     [onModeChange]

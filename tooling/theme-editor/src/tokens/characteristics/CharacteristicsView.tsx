@@ -25,7 +25,7 @@ export const CharacteristicsView = (
   }, [props.onModeChanged]);
 
   const onModeChanged = useCallback(
-    (mode) => {
+    (mode: ThemeMode) => {
       onModeChange(mode);
     },
     [onModeChange]

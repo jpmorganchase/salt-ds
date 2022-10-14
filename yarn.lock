@@ -2964,9 +2964,9 @@ __metadata:
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
     "@types/node": ^14.14.20
-    "@types/react": ^17.0.0
+    "@types/react": ^18.0.0
     "@types/react-color": ^3.0.6
-    "@types/react-dom": ^17.0.0
+    "@types/react-dom": ^18.0.0
     "@types/react-window": ^1.8.2
     "@types/tinycolor2": ^1.4.3
     "@types/warning": ^3.0.0
@@ -5599,12 +5599,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*, @types/react-dom@npm:^17.0.0, @types/react-dom@npm:^17.0.11":
+"@types/react-dom@npm:*":
   version: 17.0.16
   resolution: "@types/react-dom@npm:17.0.16"
   dependencies:
     "@types/react": ^17
   checksum: 2f41a45ef955c8f68a7bcd22343715f15e1560a5e5ba941568b3c970d9151f78fe0975ecf4df7f691339af546555e0f23fa423a0a5bcd7ea4dd4f9c245509936
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.0.6":
+  version: 18.0.6
+  resolution: "@types/react-dom@npm:18.0.6"
+  dependencies:
+    "@types/react": "*"
+  checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
   languageName: node
   linkType: hard
 
@@ -5617,7 +5626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17, @types/react@npm:^17.0.0, @types/react@npm:^17.0.38":
+"@types/react@npm:*, @types/react@npm:^17":
   version: 17.0.45
   resolution: "@types/react@npm:17.0.45"
   dependencies:
@@ -5625,6 +5634,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 3cc13a02824c13f6fa4807a83abd065ac1d9943359e76bd995cc7cd2b4148c1176ebd54a30a9f4eb8a0f141ff359d712876f256c4fee707e4290607ef8410b3e
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.0.0, @types/react@npm:^18.0.21":
+  version: 18.0.21
+  resolution: "@types/react@npm:18.0.21"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 36c1a7c9d507e81e2e629c1ad3db51d7b84d8b010c2d5008da411874286c6a5ccc711ae1d4c470efc0bdc77153cc8804a40e927e929e5164c669ca41b84b846d
   languageName: node
   linkType: hard
 
@@ -10285,8 +10305,8 @@ __metadata:
     "@electron-forge/maker-zip": ^6.0.0-beta.63
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
     "@playwright/test": ^1.22.2
-    "@types/react": ^17.0.38
-    "@types/react-dom": ^17.0.11
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
     "@vercel/webpack-asset-relocator-loader": 1.7.3
@@ -10849,8 +10869,8 @@ __metadata:
     "@electron-forge/plugin-webpack": 6.0.0-beta.63
     "@jpmorganchase/theme-editor": ">=1.0.0"
     "@jpmorganchase/theme-editor-app": ">=0.1.0"
-    "@types/react": ^17.0.38
-    "@types/react-dom": ^17.0.11
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
     "@typescript-eslint/eslint-plugin": ^4.0.0
     "@typescript-eslint/parser": ^4.0.0
     "@vercel/webpack-asset-relocator-loader": 1.7.3

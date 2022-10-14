@@ -433,9 +433,11 @@ export function useTokenizedInput<Item>(
   };
 
   const handleRemoveItem = useCallback(
-    (itemIndex) => {
+    (itemIndex: number | undefined) => {
       focusInput();
-      removeItems([itemIndex]);
+      if (itemIndex) {
+        removeItems([itemIndex]);
+      }
     },
     [focusInput, removeItems]
   );

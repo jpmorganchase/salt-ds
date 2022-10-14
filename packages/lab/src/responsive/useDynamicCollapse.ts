@@ -68,7 +68,7 @@ export const useDynamicCollapse = ({
   );
 
   const checkDynamicContent = useCallback(
-    (containerHasGrown) => {
+    (containerHasGrown?: boolean) => {
       const { current: managedItems } = managedItemsRef;
       // The order must matter here
       const collapsingChild = managedItems.find(
@@ -145,7 +145,7 @@ export const useDynamicCollapse = ({
   );
 
   const handleResize = useCallback(
-    (size, containerHasGrown) => {
+    (size: number, containerHasGrown?: boolean) => {
       const { current: managedItems } = managedItemsRef;
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
@@ -186,10 +186,9 @@ export const useDynamicCollapse = ({
 
   useIsomorphicLayoutEffect(() => {
     if (newCollapsingItem) {
-      const { current: managedItems } = managedItemsRef;
       checkDynamicContent(false);
     }
-  }, [checkDynamicContent, managedItemsRef, newCollapsingItem]);
+  }, [checkDynamicContent, newCollapsingItem]);
 
   return {
     onResize: handleResize,

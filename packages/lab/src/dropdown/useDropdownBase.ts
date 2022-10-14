@@ -5,15 +5,7 @@ import {
   useResizeObserver,
   WidthOnly,
 } from "@jpmorganchase/uitk-core";
-import {
-  FocusEvent,
-  HTMLAttributes,
-  KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import { KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 import { useClickAway } from "./useClickAway";
@@ -85,10 +77,12 @@ export const useDropdownBase = ({
   }, [onOpenChange, setIsOpen]);
 
   const handleTriggerToggle = useCallback(
-    (e) => {
+    (e: MouseEvent) => {
       // Do not trigger menu open for 'Enter' and 'SPACE' key as they're handled in `handleKeyDown`
       if (
-        ["Enter", " "].indexOf((e as KeyboardEvent<HTMLDivElement>).key) === -1
+        ["Enter", " "].indexOf(
+          (e as unknown as KeyboardEvent<HTMLDivElement>).key
+        ) === -1
       ) {
         const newIsOpen = !isOpen;
         setIsOpen(newIsOpen);

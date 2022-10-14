@@ -16,7 +16,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
   const context = useContext(AriaAnnouncerContext);
   const mountedRef = useRef(true);
   const baseAnnounce = useCallback(
-    (announcement, delay) => {
+    (announcement: string, delay?: number) => {
       const isReactAnnouncerInstalled = context && context.announce;
 
       warning(

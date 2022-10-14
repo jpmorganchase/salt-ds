@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  Ref,
 } from "react";
 import {
   Button,
@@ -55,7 +56,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * close button ref
    */
-  closeRef?: (ref: ReactNode) => ReactNode;
+  closeRef?: Ref<HTMLButtonElement>;
   /**
    * If true, the built-in ARIA announcer will be disabled
    */
@@ -100,9 +101,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 ) {
   const { announce } = useAriaAnnouncer();
 
-  const [containerNode, setContainerNode] = useState();
+  const [containerNode, setContainerNode] = useState<HTMLDivElement | null>(
+    null
+  );
 
-  const setContainerRef = useCallback((node) => {
+  const setContainerRef = useCallback((node: HTMLDivElement) => {
     if (node) {
       setContainerNode(node);
     }

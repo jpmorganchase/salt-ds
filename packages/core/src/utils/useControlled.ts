@@ -36,9 +36,13 @@ export function useControlled<S = unknown>({
   default: defaultProp,
   name,
   state = "value",
-}: UseControlledProps<S>): [S, Dispatch<SetStateAction<S>>, boolean] {
+}: UseControlledProps<S>): [
+  S,
+  Dispatch<SetStateAction<S | undefined>>,
+  boolean
+] {
   const { current: isControlled } = useRef(controlled !== undefined);
-  const [valueState, setValue] = useState(defaultProp);
+  const [valueState, setValue] = useState<S | undefined>(defaultProp);
   const value = isControlled ? controlled : valueState;
   const { current: defaultValue } = useRef(defaultProp);
 
@@ -80,12 +84,13 @@ export function useControlled<S = unknown>({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [JSON.stringify(defaultProp, ignoreReactElements)]);
 
-  const setValueIfUncontrolled = useCallback((newValue) => {
-    if (!isControlled) {
-      setValue(newValue);
-    }
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
+  const setValueIfUncontrolled: Dispatch<SetStateAction<S | undefined>> =
+    useCallback((newValue) => {
+      if (!isControlled) {
+        setValue(newValue);
+      }
+      /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    }, []);
 
   // FIXME: `value` can be undefined
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

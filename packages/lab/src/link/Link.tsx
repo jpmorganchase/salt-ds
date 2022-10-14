@@ -1,4 +1,4 @@
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, MouseEvent } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
 import { Text, TextProps } from "../text";
@@ -26,7 +26,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { href, className, disabled, children, target = "_self", ...rest },
   ref
 ) {
-  const stopPropagation = useCallback((evt) => evt.stopPropagation(), []);
+  const stopPropagation = useCallback(
+    (evt: MouseEvent<HTMLAnchorElement>) => evt.stopPropagation(),
+    []
+  );
   return (
     <Text
       elementType="a"
