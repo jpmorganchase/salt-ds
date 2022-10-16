@@ -2511,7 +2511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron/get@npm:^1.13.0, @electron/get@npm:^1.6.0, @electron/get@npm:^1.9.0":
+"@electron/get@npm:^1.14.1, @electron/get@npm:^1.6.0, @electron/get@npm:^1.9.0":
   version: 1.14.1
   resolution: "@electron/get@npm:1.14.1"
   dependencies:
@@ -3042,7 +3042,7 @@ __metadata:
   dependencies:
     "@jpmorganchase/theme-editor": ">=1.0.0"
     "@jpmorganchase/theme-editor-app": ">=0.1.0"
-    electron: ^17.2.0
+    electron: ^21.0.0
     electron-is-dev: ^2.0.0
   languageName: unknown
   linkType: soft
@@ -5510,14 +5510,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0":
-  version: 16.11.36
-  resolution: "@types/node@npm:16.11.36"
-  checksum: 878e8e2032869785dd4f73dd862042c7eb588fb9a27199f1b493a7029438ccb58f96e203c35c2e66e08307ca3f9767133cae888958c15e031982f7e9719e5e47
+"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0, @types/node@npm:^16.11.26":
+  version: 16.11.66
+  resolution: "@types/node@npm:16.11.66"
+  checksum: bf190db14d1f32ab10588dd1a1e30bb2e9ba9b78281fce7a81fa80d914f9b3203d48cf1c6a8f96ef6b0edbba281478d2c68d6ebb7719c896f2dd62429c64ef09
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.20, @types/node@npm:^14.14.31, @types/node@npm:^14.6.2":
+"@types/node@npm:^14.14.20, @types/node@npm:^14.14.31":
   version: 14.18.16
   resolution: "@types/node@npm:14.18.16"
   checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24
@@ -9103,7 +9103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concat-stream@npm:^1.5.0, concat-stream@npm:^1.6.2":
+"concat-stream@npm:^1.5.0":
   version: 1.6.2
   resolution: "concat-stream@npm:1.6.2"
   dependencies:
@@ -10290,7 +10290,7 @@ __metadata:
     asar: ^3.1.0
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
-    electron: 17.4.11
+    electron: 21.1.1
     electron-squirrel-startup: ^1.0.0
     esbuild-loader: ^2.19.0
     eslint: ^7.32.0
@@ -10884,7 +10884,7 @@ __metadata:
     "@vercel/webpack-asset-relocator-loader": 1.7.3
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
-    electron: ^17.2.0
+    electron: ^21.0.0
     electron-squirrel-startup: ^1.0.0
     eslint: ^7.32.0
     eslint-plugin-import: ^2.25.0
@@ -10917,16 +10917,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:17.4.11, electron@npm:^17.2.0":
-  version: 17.4.11
-  resolution: "electron@npm:17.4.11"
+"electron@npm:21.1.1, electron@npm:^21.0.0":
+  version: 21.1.1
+  resolution: "electron@npm:21.1.1"
   dependencies:
-    "@electron/get": ^1.13.0
-    "@types/node": ^14.6.2
-    extract-zip: ^1.0.3
+    "@electron/get": ^1.14.1
+    "@types/node": ^16.11.26
+    extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 2aad627183577d514ad79cb3f99eaa24e8acdba74e464eb62e699ebfe0ce1c12a7890ee5d6f2d5ab32daed0e449f9e161a21fb61841b3931438f215e1ad8099e
+  checksum: 5bd00fe7d89f1ade2fbea7399ef34ec8d43a3f44b656bfe3813b660451ee0c0694caa9e31c8b6031065375b1956fd8b700e2be49228440f1005a04e9a5f84758
   languageName: node
   linkType: hard
 
@@ -12269,7 +12269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:2.0.1, extract-zip@npm:^2.0.0":
+"extract-zip@npm:2.0.1, extract-zip@npm:^2.0.0, extract-zip@npm:^2.0.1":
   version: 2.0.1
   resolution: "extract-zip@npm:2.0.1"
   dependencies:
@@ -12283,20 +12283,6 @@ __metadata:
   bin:
     extract-zip: cli.js
   checksum: 8cbda9debdd6d6980819cc69734d874ddd71051c9fe5bde1ef307ebcedfe949ba57b004894b585f758b7c9eeeea0e3d87f2dda89b7d25320459c2c9643ebb635
-  languageName: node
-  linkType: hard
-
-"extract-zip@npm:^1.0.3":
-  version: 1.7.0
-  resolution: "extract-zip@npm:1.7.0"
-  dependencies:
-    concat-stream: ^1.6.2
-    debug: ^2.6.9
-    mkdirp: ^0.5.4
-    yauzl: ^2.10.0
-  bin:
-    extract-zip: cli.js
-  checksum: 011bab660d738614555773d381a6ba4815d98c1cfcdcdf027e154ebcc9fc8c9ef637b3ea5c9b2144013100071ee41722ed041fc9aacc60f6198ef747cac0c073
   languageName: node
   linkType: hard
 
@@ -17602,7 +17588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mkdirp@npm:^0.5.1, mkdirp@npm:^0.5.3, mkdirp@npm:^0.5.4":
+"mkdirp@npm:^0.5.1, mkdirp@npm:^0.5.3":
   version: 0.5.6
   resolution: "mkdirp@npm:0.5.6"
   dependencies:
