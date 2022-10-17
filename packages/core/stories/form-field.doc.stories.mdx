@@ -18,17 +18,41 @@ import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 
 # Form Field
 
-# API
+Form Field is a wrapper that provides an editable component with various states, a descriptive label, help text and optional or required flags. It’s ADA compliant, and is typically used in the context of a form.
+
+<Canvas>
+  <FormField helperText="Sample helper text" label="Default Form Field label">
+    <Input defaultValue="Value" />
+  </FormField>
+</Canvas>
+
+## How you can use Form Field
+
+Use Form Field when you need to display editable components in a form layout—such as a simple form, filter panel or cash ticket. It’s been optimized to work with the following components:
+
+- [Checkbox Group](/TODO:)
+- [Combo Box](/TODO:)
+- [Dropdown](/TODO:)
+- [Formatted Input](/TODO:)
+- [Input](/TODO:)
+- [Radio Button Group](/TODO:)
+- [Rating](/TODO:)
+- [Switch](/TODO:)
+- [Tokenized Input](/TODO:)
+
+We highly recommend using the Form Field component to provide your form elements with the descriptive label and validation feedback required to ensure ADA compliance.
+
+## Configuring Form Field
 
 ```
 import { FormField } from "@jpmorganchase/uitk-core";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={FormField} />
 
-## HTML Anatomy of a Form Field
+### HTML Anatomy of a Form Field
 
 <Canvas>
   <ComponentAnatomy showControls={false}>
@@ -38,14 +62,14 @@ import { FormField } from "@jpmorganchase/uitk-core";
   </ComponentAnatomy>
 </Canvas>
 
-## CSS Class
+### CSS Class
 
 <CSSClassTable of={FormField} />
 
-## Characteristics Used
+### Characteristics Used
 
 <CharacteristicUsage of={FormField} />
 
-## --uitkFormField CSS Custom Property API
+### --uitkFormField CSS Custom Property API
 
 <CSSVariableTable of={FormField} />
