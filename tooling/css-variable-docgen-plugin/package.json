@@ -16,7 +16,7 @@
     "polished": "^4.0.5"
   },
   "devDependencies": {
-    "@types/css-tree": "^1.0.7"
+    "@types/css-tree": "^2.0.0"
   },
   "peerDependencies": {
     "vite": ">2.0.0-0"

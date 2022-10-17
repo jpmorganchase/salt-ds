@@ -5211,10 +5211,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/css-tree@npm:^1.0.7":
-  version: 1.0.7
-  resolution: "@types/css-tree@npm:1.0.7"
-  checksum: 65aa89e5c8c6f01374272373e783c42d91faf534dfff0c9959cada9916d8435e16805320ebe08559c4a458e034925455147770ad411423b6c1e3c0c2adb36fca
+"@types/css-tree@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/css-tree@npm:2.0.0"
+  checksum: 52d89f5c52c6ec5feac674a3f28f35994211f26c662cc8718f21ebabad992329e8c810da1e070aa61c49f89e92cd5ef7b460e81de52f0d0f5973618d87ebc3ae
   languageName: node
   linkType: hard
 
@@ -6156,10 +6156,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/webpack-asset-relocator-loader@npm:1.7.0":
-  version: 1.7.0
-  resolution: "@vercel/webpack-asset-relocator-loader@npm:1.7.0"
-  checksum: 05f220859aa93303c75cf4f695de67ef36c9470849c0e4fba820bd35fff0899c02a72031747586335931228a327cde3c9a52b3f4fc994e669aed97d8d3f01e7d
+"@vercel/webpack-asset-relocator-loader@npm:1.7.3":
+  version: 1.7.3
+  resolution: "@vercel/webpack-asset-relocator-loader@npm:1.7.3"
+  dependencies:
+    resolve: ^1.10.0
+  checksum: e4d761e82f5f389206b7261874cc232382984c84f9476fb1c90759507782f8cc8a414ec910e24e63075d28ca5999bdf9d8f3ef2b2e41ea05e477188e8b9669d6
   languageName: node
   linkType: hard
 
@@ -9674,7 +9676,7 @@ __metadata:
   dependencies:
     "@storybook/components": ^6.5.12
     "@storybook/theming": ^6.5.12
-    "@types/css-tree": ^1.0.7
+    "@types/css-tree": ^2.0.0
     css-tree: ^2.0.4
     glob: ^8.0.0
     glob-promise: ^5.0.0
@@ -10284,7 +10286,7 @@ __metadata:
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
-    "@vercel/webpack-asset-relocator-loader": 1.7.0
+    "@vercel/webpack-asset-relocator-loader": 1.7.3
     asar: ^3.1.0
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
@@ -10879,7 +10881,7 @@ __metadata:
     "@types/react-dom": ^17.0.11
     "@typescript-eslint/eslint-plugin": ^4.0.0
     "@typescript-eslint/parser": ^4.0.0
-    "@vercel/webpack-asset-relocator-loader": 1.7.0
+    "@vercel/webpack-asset-relocator-loader": 1.7.3
     babel-loader: ^8.2.3
     css-loader: ^6.0.0
     electron: ^17.2.0
