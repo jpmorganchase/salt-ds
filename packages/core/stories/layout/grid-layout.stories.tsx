@@ -20,13 +20,17 @@ export default {
   subcomponents: { GridItem },
   argTypes: {
     columnGap: { type: "number" },
-    columns: { type: "number", defaultValue: 12 },
+    columns: { type: "number" },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
     rowGap: { type: "number" },
-    rows: { type: "number", defaultValue: 1 },
+    rows: { type: "number" },
+  },
+  args: {
+    columns: 12,
+    gap: 3,
+    rows: 1,
   },
 } as ComponentMeta<typeof GridLayout>;
 
