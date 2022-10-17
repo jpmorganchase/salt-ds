@@ -6,25 +6,26 @@
   font-size: var(--linearProgress-fontSize);
 }
 
+/* TODO: Odyssey now has only 2 sizes */
 .uitkLinearProgress-large {
   --linearProgress-after-top: 3px;
   --linearProgress-value-paddingLeft: 12px;
   --linearProgress-height: 7px;
-  --linearProgress-fontSize: var(--uitk-measured-fontSize-high);
+  --linearProgress-fontSize: 16px;
 }
 
 .uitkLinearProgress-medium {
   --linearProgress-after-top: 2px;
   --linearProgress-value-paddingLeft: 8px;
   --linearProgress-height: 5px;
-  --linearProgress-fontSize: var(--uitk-measured-fontSize-medium);
+  --linearProgress-fontSize: 14px;
 }
 
 .uitkLinearProgress-small {
   --linearProgress-after-top: 1px;
   --linearProgress-value-paddingLeft: 4px;
   --linearProgress-height: 3px;
-  --linearProgress-fontSize: var(--uitk-measured-fontSize-low);
+  --linearProgress-fontSize: 11px;
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-bar {
@@ -136,4 +137,14 @@
     left: 107%;
     right: -8%;
   }
+}
+
+.backwardsCompat.uitkLinearProgress-large {
+  --linearProgress-fontSize: 16px;
+}
+.backwardsCompat.uitkLinearProgress-medium {
+  --linearProgress-fontSize: 14px;
+}
+.backwardsCompat.uitkLinearProgress-small {
+  --linearProgress-fontSize: 11px;
 }
