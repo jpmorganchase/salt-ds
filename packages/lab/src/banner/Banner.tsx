@@ -24,7 +24,7 @@ import cx from "classnames";
 
 import "./Banner.css";
 
-export type Status = "error" | "info" | "success" | "warning";
+export type BannerStatus = "error" | "info" | "success" | "warning";
 
 export type LabelProps = { className?: string };
 
@@ -76,7 +76,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    *  A string to determine the current state of the Banner
    */
-  status?: Status;
+  status?: BannerStatus;
 }
 
 const withBaseName = makePrefixer("uitkBanner");
