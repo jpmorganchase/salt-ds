@@ -62,7 +62,7 @@ export const All: ComponentStory<typeof Banner> = () => (
   </div>
 );
 
-const ExampleBanner = ({ state, emphasis }: BannerProps) => {
+const ExampleBanner = ({ status, emphasis }: BannerProps) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const handleClose = () => {
@@ -76,7 +76,7 @@ const ExampleBanner = ({ state, emphasis }: BannerProps) => {
           //eslint-disable-next-line no-script-url
           LinkProps={{ href: "javascript:void(0)" }}
           onClose={handleClose}
-          state={state}
+          status={status}
           emphasis={emphasis}
         >
           Banners appear inline on the page
@@ -87,23 +87,23 @@ const ExampleBanner = ({ state, emphasis }: BannerProps) => {
 };
 
 export const Info: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner state={"info"} />;
+  return <ExampleBanner status={"info"} />;
 };
 
 export const Error: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner state={"error"} />;
+  return <ExampleBanner status={"error"} />;
 };
 
 export const Warning: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner state={"warning"} />;
+  return <ExampleBanner status={"warning"} />;
 };
 
 export const Success: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner state={"success"} />;
+  return <ExampleBanner status={"success"} />;
 };
 
 export const HighEmphasis: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner emphasis="high" state={"success"} />;
+  return <ExampleBanner emphasis="high" status={"success"} />;
 };
 
 export const Render = (
@@ -129,7 +129,7 @@ export const Render = (
               </span>
             </>
           )}
-          state="success"
+          status="success"
           {...props}
         />
       )}
