@@ -1,5 +1,5 @@
 import { Dispatch, FocusEventHandler, RefObject, SetStateAction } from "react";
-import { useA11yValueValue } from "../form-field";
+import { useA11yValueValue, FormFieldValidationStatus } from "../form-field";
 import { createContext } from "../utils";
 export interface FormFieldContextValue {
   inFormField: true;
@@ -9,6 +9,7 @@ export interface FormFieldContextValue {
   setFocused: Dispatch<SetStateAction<boolean>>;
   onBlur: FocusEventHandler<HTMLElement>;
   onFocus: FocusEventHandler<HTMLElement>;
+  validationStatus?: FormFieldValidationStatus;
 }
 
 export const FormFieldContext = createContext(

@@ -3,6 +3,7 @@ import { makePrefixer } from "../utils";
 import { FormFieldProps } from "./FormField";
 
 import "./FormActivationIndicator.css";
+import { useFormFieldProps } from "../form-field-context";
 
 const ErrorIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   return (
@@ -54,15 +55,15 @@ export interface FormActivationIndicatorProps
 export const FormActivationIndicator: React.FC<
   FormActivationIndicatorProps
 > = ({ hasIcon, validationStatus }: FormActivationIndicatorProps) => {
-  const rootClass = "uitkFormActivationIndicator";
+  const { validationStatus: formFieldValidationStatus } = useFormFieldProps();
 
   return (
     <div className={withBaseName()}>
       <div className={withBaseName("bar")}>
         {hasIcon && validationStatus && (
           <ActivationIndicatorIcon
-            className={`${rootClass}-icon`}
-            validationStatus={validationStatus}
+            className="uitkFormActivationIndicator-icon"
+            validationStatus={validationStatus || formFieldValidationStatus}
           />
         )}
       </div>

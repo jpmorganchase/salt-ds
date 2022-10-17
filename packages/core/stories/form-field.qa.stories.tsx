@@ -65,7 +65,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         label="Warning Form Field"
         validationStatus="warning"
       >
-        <Input />
+        <Input hasStatusIndicator />
       </FormField>
       <FormField
         className={cx(className)}
@@ -90,7 +90,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         label="Warning Form Field"
         validationStatus="error"
       >
-        <Input />
+        <Input hasStatusIndicator />
       </FormField>
     </QAContainer>
   );

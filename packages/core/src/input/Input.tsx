@@ -20,6 +20,8 @@ import { makePrefixer, useControlled, useForkRef } from "../utils";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./Input.css";
+import { FormActivationIndicator } from "../form-field/FormActivationIndicator";
+import { FormFieldValidationStatus } from "../form-field";
 
 const withBaseName = makePrefixer("uitkInput");
 
@@ -56,6 +58,15 @@ export interface InputProps
    * e.g. [0,1] will highlight the first character.
    */
   highlightOnFocus?: boolean | number[];
+  /**
+   * Whether to show the StatusIndicator component for validation states.
+   * Defaults to false.
+   */
+  hasStatusIndicator?: boolean;
+  /**
+   * The state for the Input: Must be one of: 'error'|'warning'|undefined
+   */
+  validationStatus?: FormFieldValidationStatus;
   /**
    * The HTML element to render the Input, e.g. 'input', a custom React component.
    */
@@ -133,6 +144,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     emptyReadOnlyMarker = "—",
     endAdornment,
     highlightOnFocus,
+    hasStatusIndicator = false,
+    validationStatus,
     id,
     inputComponent: InputComponent = "input",
     inputProps: inputPropsProp,
@@ -167,6 +180,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     } = {},
     setFocused: setFormFieldFocused,
     inFormField,
+    validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
   const [focused, setFocused] = useState(false);
@@ -237,48 +251,56 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   };
 
   return (
-    <div
-      className={cx(
-        withBaseName(),
-        {
-          [withBaseName(`${textAlign}TextAlign`)]: textAlign,
-          [withBaseName("formField")]: inFormField,
-          [withBaseName("focused")]: focused && !inFormField,
-          [withBaseName("disabled")]: isDisabled,
-          [withBaseName("inputAdornedStart")]: startAdornment,
-          [withBaseName("inputAdornedEnd")]: endAdornment,
-        },
-        classNameProp
-      )}
-      style={style}
-      {...other}
-    >
-      {startAdornment && (
-        <div className={withBaseName("prefixContainer")}>{startAdornment}</div>
-      )}
-      <InputComponent
-        type={type}
-        id={id}
-        {...inputProps}
-        className={cx(withBaseName("input"), inputProps?.className)}
-        disabled={isDisabled}
-        ref={handleRef}
-        value={value}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-        onFocus={handleFocus}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        readOnly={isReadOnly}
+    <div>
+      <div
+        className={cx(
+          withBaseName(),
+          {
+            [withBaseName(`${textAlign}TextAlign`)]: textAlign,
+            [withBaseName("formField")]: inFormField,
+            [withBaseName("focused")]: focused && !inFormField,
+            [withBaseName("disabled")]: isDisabled,
+            [withBaseName("inputAdornedStart")]: startAdornment,
+            [withBaseName("inputAdornedEnd")]: endAdornment,
+          },
+          classNameProp
+        )}
+        style={style}
+        {...other}
+      >
+        {startAdornment && (
+          <div className={withBaseName("prefixContainer")}>
+            {startAdornment}
+          </div>
+        )}
+        <InputComponent
+          type={type}
+          id={id}
+          {...inputProps}
+          className={cx(withBaseName("input"), inputProps?.className)}
+          disabled={isDisabled}
+          ref={handleRef}
+          value={value}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
+          onFocus={handleFocus}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          readOnly={isReadOnly}
+        />
+        {endAdornment && (
+          <div className={withBaseName("suffixContainer")}>{endAdornment}</div>
+        )}
+        {/* TODO: Confirm implementation of suffix */}
+        {renderSuffix?.({ disabled, focused })}
+      </div>
+      <FormActivationIndicator
+        validationStatus={validationStatus || formFieldValidationStatus}
+        hasIcon={hasStatusIndicator}
       />
-      {endAdornment && (
-        <div className={withBaseName("suffixContainer")}>{endAdornment}</div>
-      )}
-      {/* TODO: Confirm implementation of suffix */}
-      {renderSuffix?.({ disabled, focused })}
     </div>
   );
 });

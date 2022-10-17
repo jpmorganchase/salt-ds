@@ -262,22 +262,6 @@ export const FormField = forwardRef(
       );
 
     const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      className: cx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("readOnly")]: readOnly,
-          [withBaseName("warning")]: isWarning,
-          [withBaseName("error")]: isError,
-          [withBaseName("fullWidth")]: fullWidth,
-          [withBaseName(focusClass)]: states.focused,
-          [withBaseName("labelTop")]: labelTop,
-          [withBaseName("labelLeft")]: labelLeft,
-          [withBaseName("withHelperText")]: inlineHelperText,
-          [withBaseName("notFullySupportedInput")]: isInputNotFullySupported,
-        },
-        className
-      ),
       ...eventHandlers,
       ...restProps,
     });
@@ -285,9 +269,38 @@ export const FormField = forwardRef(
     const handleTriggerRef = useForkRef(triggerRef, rootRef);
     const handleRef = useForkRef(handleTriggerRef, ref);
 
+    const helperTextComponent = (
+      <HelperTextComponent
+        helperText={helperText}
+        helperTextPlacement={helperTextPlacement}
+        {...HelperTextProps}
+        id={helperTextId}
+      />
+    );
+
     return (
       <>
-        <div ref={handleRef} {...triggerProps}>
+        <div
+          ref={handleRef}
+          {...triggerProps}
+          className={cx(
+            withBaseName(),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("readOnly")]: readOnly,
+              [withBaseName("warning")]: isWarning,
+              [withBaseName("error")]: isError,
+              [withBaseName("fullWidth")]: fullWidth,
+              [withBaseName(focusClass)]: states.focused,
+              [withBaseName("labelTop")]: labelTop,
+              [withBaseName("labelLeft")]: labelLeft,
+              [withBaseName("withHelperText")]: inlineHelperText,
+              [withBaseName("notFullySupportedInput")]:
+                isInputNotFullySupported,
+            },
+            className
+          )}
+        >
           <FormFieldContext.Provider
             value={{
               ...states,
@@ -296,38 +309,35 @@ export const FormField = forwardRef(
               a11yProps: a11yValue,
               inFormField: true,
               ref: rootRef,
+              validationStatus,
             }}
           >
-            {hasLabel && (
-              <LabelComponent
-                {...LabelProps}
-                validationStatus={validationStatus}
-                hasStatusIndicator={hasStatusIndicator}
-                StatusIndicatorProps={StatusIndicatorProps}
-                className={LabelProps.className}
-                label={label}
-                disabled={disabled}
-                readOnly={readOnly}
-                required={required}
-                tooltipText={helperText}
-                id={labelId}
-              />
-            )}
-            {children}
-            {isInputNotFullySupported ? null : (
-              <ActivationIndicatorComponent
-                hasIcon={!hasStatusIndicator}
-                validationStatus={validationStatus}
-              />
-            )}
-            {renderHelperText && (
-              <HelperTextComponent
-                helperText={helperText}
-                helperTextPlacement={helperTextPlacement}
-                {...HelperTextProps}
-                id={helperTextId}
-              />
-            )}
+            <div className={withBaseName("inner")}>
+              {hasLabel && (
+                <LabelComponent
+                  {...LabelProps}
+                  validationStatus={validationStatus}
+                  hasStatusIndicator={hasStatusIndicator}
+                  StatusIndicatorProps={StatusIndicatorProps}
+                  className={LabelProps.className}
+                  label={label}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  required={required}
+                  tooltipText={helperText}
+                  id={labelId}
+                />
+              )}
+              <div>
+                <div className={withBaseName("inputWrapper")}>{children}</div>
+                {renderHelperText &&
+                  labelPlacement === "left" &&
+                  helperTextComponent}
+              </div>
+            </div>
+            {renderHelperText &&
+              labelPlacement === "top" &&
+              helperTextComponent}
           </FormFieldContext.Provider>
         </div>
         <Tooltip {...getTooltipProps({ title: helperText })} />

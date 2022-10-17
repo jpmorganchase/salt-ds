@@ -75,8 +75,8 @@ export const HighEmphasis: ComponentStory<typeof FormField> = () => (
         <FormField
           label="High emphasis form field"
           helperText="Helper text value"
-          className="uitkEmphasisHigh"
           labelPlacement="left"
+          className="uitkEmphasisHigh"
         >
           <Input defaultValue="Value" />
         </FormField>
