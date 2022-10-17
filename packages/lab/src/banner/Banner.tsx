@@ -11,7 +11,6 @@ import {
 import {
   Button,
   ButtonProps,
-  Density,
   makePrefixer,
   StatusIcon,
   useAriaAnnouncer,
@@ -25,7 +24,7 @@ import cx from "classnames";
 
 import "./Banner.css";
 
-export type State = "error" | "info" | "success" | "warning";
+export type Status = "error" | "info" | "success" | "warning";
 
 export type LabelProps = { className?: string };
 
@@ -58,10 +57,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   closeRef?: (ref: ReactNode) => ReactNode;
   /**
-   * Determines the density of the component, Myst be one of: 'low', 'medium', 'high' or 'touch'
-   */
-  density?: Density;
-  /**
    * If true, the built-in ARIA announcer will be disabled
    */
   disableAnnouncer?: boolean;
@@ -81,7 +76,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    *  A string to determine the current state of the Banner
    */
-  state?: State;
+  status?: Status;
 }
 
 const withBaseName = makePrefixer("uitkBanner");
@@ -98,7 +93,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     emphasis = "medium",
     onClose,
     render,
-    state = "info",
+    status = "info",
     ...rest
   },
   ref
@@ -124,25 +119,25 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   const getIconProps = ({ className, ...restProps }: IconProps = {}) => {
     return {
-      className: cx(withBaseName("icon"), state, className),
+      className: cx(withBaseName("icon"), status, className),
       ...restProps,
     };
   };
 
   const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
-    className: cx(withBaseName("label"), state, className),
+    className: cx(withBaseName("label"), status, className),
     ...restProps,
   });
 
   const getLinkProps = ({ className, href, ...restProps }: LinkProps = {}) => ({
     children: "Link",
-    className: cx(withBaseName("link"), state, className),
+    className: cx(withBaseName("link"), status, className),
     href,
     ...restProps,
   });
 
   const getStateAndPropsGetters = (): GetStateAndPropGetters => ({
-    Icon: (props) => <StatusIcon {...props} status={state} />,
+    Icon: (props) => <StatusIcon {...props} status={status} />,
     getIconProps,
     getLabelProps,
     getLinkProps,
@@ -152,7 +147,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   if (!render) {
     contentElement = (
       <>
-        <StatusIcon {...getIconProps()} status={state}></StatusIcon>
+        <StatusIcon {...getIconProps()} status={status}></StatusIcon>
         <span {...getLabelProps()}>
           {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
         </span>
@@ -164,7 +159,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   return (
     <div
-      className={cx(withBaseName(), withBaseName(state), className, {
+      className={cx(withBaseName(), withBaseName(status), className, {
         uitkEmphasisHigh: emphasis === "high",
       })}
       ref={handleRef}
