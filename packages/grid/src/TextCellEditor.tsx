@@ -44,11 +44,6 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
     }
   };
 
-  const onBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-    console.log(`input onBlur`);
-    // debugger;
-  };
-
   return (
     <td className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
@@ -57,7 +52,6 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
           value={editorText}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          onBlur={onBlur}
         />
       </div>
     </td>

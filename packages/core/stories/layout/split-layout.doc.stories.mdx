@@ -6,6 +6,7 @@ import {
   CSSVariableTable,
 } from "css-variable-docgen-components";
 import { DefaultSplitLayout } from "./split-layout.stories";
+import HelpAndSupport from "../help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/SplitLayout"
@@ -19,36 +20,41 @@ import { DefaultSplitLayout } from "./split-layout.stories";
 
 Defines left and right regions for UI elements within a span, such as a button bar.
 By default the Split layout will break into a second row with the elements on the right hand side as soon as it finds limited space.
-For layouts that require more than 2 regions please see [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page).
 
 <Canvas>
   <Story id="core-layout-splitlayout--default-split-layout" />
 </Canvas>
 
-## How you can use Split layout
+## Use Split layout when...
 
-Use Split layout when there are 2 defined areas that require to be in the opposite horizontal ends of a container,
+There are 2 defined areas that are required to be in the opposite horizontal ends of a container,
 for example if 2 `ButtonBar` components need to be in a header.
 
-## API
+### Don't use Split layout when...
 
-```
-import { SplitLayout } from "@jpmorganchase/uitk-core";
-```
+Your layout requires more than 2 regions. In this case we recommend you having a look at [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page).
 
-## Props
+### Examples
 
-<ArgsTable of={SplitLayout} />
-
-## Examples
-
-### Simple Usage
+#### Simple usage
 
 The simple usage examples shows 2 groups of buttons inside a Split layout.
 
 <Canvas>
   <Story id="core-layout-splitlayout--split-layout-simple-usage" />
 </Canvas>
+
+## Configuring Split layout
+
+### API
+
+```
+import { SplitLayout } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={SplitLayout} />
 
 ## Anatomy
 
@@ -69,3 +75,5 @@ The simple usage examples shows 2 groups of buttons inside a Split layout.
 ### Classes
 
 <CSSClassTable of={SplitLayout} />
+
+<HelpAndSupport />

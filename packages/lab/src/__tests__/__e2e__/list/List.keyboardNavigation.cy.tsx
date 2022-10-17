@@ -38,11 +38,26 @@ const ITEMS_PER_PAGE = 2;
       });
 
       describe("when focused", () => {
-        it("should highlight the first item with a focus ring", () => {
-          cy.findByRole("listbox").focus();
-          cy.get(`#list-item-0`)
-            .should("be.highlighted")
-            .should("have.focusVisible");
+        describe("with ListItems", () => {
+          it("should highlight the first item with a focus ring", () => {
+            cy.findByRole("listbox").focus();
+            cy.get(`#list-item-0`)
+              .should("be.highlighted")
+              .should("have.focusVisible");
+          });
+        });
+        describe("with no ListItems", () => {
+          it("should highlight List itself with a focus ring", () => {
+            cy.mount(
+              isDeclarative ? (
+                <List />
+              ) : (
+                <List<ItemWithLabel, "deselectable"> source={[]} />
+              )
+            );
+            cy.findByRole("listbox").focus();
+            cy.findByRole("listbox").should("have.focusVisible");
+          });
         });
       });
 

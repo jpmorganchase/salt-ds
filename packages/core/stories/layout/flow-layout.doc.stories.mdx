@@ -6,6 +6,7 @@ import {
   CSSVariableTable,
 } from "css-variable-docgen-components";
 import { DefaultFlowLayout } from "./flow-layout.stories";
+import HelpAndSupport from "../help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/FlowLayout"
@@ -15,7 +16,7 @@ import { DefaultFlowLayout } from "./flow-layout.stories";
   }}
 />
 
-# Flow Layout
+# Flow layout
 
 Flow layout dictates a horizontal order and direction for UI elements.
 It builds from flex layout, the height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
@@ -26,25 +27,17 @@ It can be used for cases in which the direction needs to be consistently horizon
   <Story id="core-layout-flowlayout--default-flow-layout" />
 </Canvas>
 
-## How you can use Flow layout
+## Use Flow layout when...
 
-Flow is responsive by default and will break into two rows as soon as there is not enough space.
+You want to build responsive layouts that will wrap into two rows as soon as there is not enough space on the viewport.
 
-If you want the direction to have more complex customization, we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+### Don't use Flow layout when...
 
-## API
+You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
 
-```
-import { FlowLayout } from "@jpmorganchase/uitk-lab";
-```
+### Examples
 
-## Props
-
-<ArgsTable of={FlowLayout} />
-
-## Examples
-
-### Simple Usage
+#### Simple usage
 
 The simple usage example shows a group of elements inside a flow wrapper that wraps by default.
 
@@ -52,13 +45,25 @@ The simple usage example shows a group of elements inside a flow wrapper that wr
   <Story id="core-layout-flowlayout--flow-layout-simple-usage" />
 </Canvas>
 
-### Composite Usage
+#### Composite usage
 
 The composite usage example shows 2 columns divided by a separator achieved with `FlowLayout`, with a nested `StackLayout`.
 
 <Canvas>
   <Story id="core-layout-flowlayout--flow-layout-composite" />
 </Canvas>
+
+## Configuring Flow layout
+
+### API
+
+```
+import { FlowLayout } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={FlowLayout} />
 
 ## Anatomy
 
@@ -70,3 +75,5 @@ The composite usage example shows 2 columns divided by a separator achieved with
     </FlowLayout>
   </ComponentAnatomy>
 </Canvas>
+
+<HelpAndSupport />

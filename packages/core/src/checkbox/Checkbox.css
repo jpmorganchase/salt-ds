@@ -38,11 +38,6 @@
   min-height: var(--uitkCheckbox-label-minHeight, var(--uitk-text-minHeight));
 }
 
-/* Styles applied to icon on hover state */
-.uitkCheckbox:hover:not(.uitkCheckbox-disabled):not(.uitkCheckboxIcon-indeterminate) {
-  --uitkCheckbox-icon-outlineColor: var(--uitkCheckbox-outlineColor-hover, var(--uitk-selectable-borderColor-hover));
-}
-
 .uitkCheckbox-disabled {
   --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
 }

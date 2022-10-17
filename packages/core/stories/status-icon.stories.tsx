@@ -13,8 +13,10 @@ export default {
     size: {
       options: ICON_NAMED_SIZES,
       control: { type: "select" },
-      defaultValue: ICON_NAMED_SIZES[0],
     },
+  },
+  args: {
+    size: ICON_NAMED_SIZES[0],
   },
 } as ComponentMeta<typeof StatusIcon>;
 

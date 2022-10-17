@@ -1,0 +1,219 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+import { Button } from "@jpmorganchase/uitk-core";
+import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
+import {
+  GridVariantExample,
+  GridColumnGroupExample,
+  RowSelectionModesExample,
+  ControlledRowSelectionExample,
+  CellCustomizationExample,
+  HeaderCustomizationExample,
+  CssVariablesExample,
+} from "./examples";
+import {
+  DownloadIcon,
+  SearchIcon,
+  SendIcon,
+  SettingsSolidIcon,
+} from "@jpmorganchase/uitk-icons";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Grid/Grid"
+  component={Grid}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Grid
+
+A Grid presents tabular information that has columns and rows.
+Grid is particularly useful if the tabular information is editable or interactive.
+Grid provides users with intuitive and efficient keyboard navigation, content editing, selection, copy and paste.
+
+Grid is virtualized. Only the visible part is rendered to the DOM.
+
+## Configuring Grid
+
+Use the following call to import Grid.
+
+```
+import { Grid } from "@jpmorganchase/uitk-grid";
+```
+
+### Props
+
+<ArgsTable of={Grid} />
+
+## Grid variants
+
+Grid contains two variants `primary` and `secondary`. If not specified, the default value is `primary`.
+Zebra can be enabled for the `primary` variant.
+
+Column separators can be enabled using `columnSeparators` property.
+
+<Canvas>
+  <Story name="Grid Variants" decorators={[withFlexGap]}>
+    <GridVariantExample />
+  </Story>
+</Canvas>
+
+### Columns
+
+Grid columns can be configured using `GridColumn` component.
+
+Grid package contains the following types of predefined columns:
+
+- RowSelectionCheckboxColumn
+- RowSelectionRadioColumn
+- NumericColumn
+
+Every one of them renders a `GridColumn` with a specific set of props.
+Users can easily create any project-specific column types using the same approach.
+
+#### GridColumn props
+
+<ArgsTable of={GridColumn} />{" "}
+
+### Column groups
+
+Columns can be grouped using the `ColumnGroup` component.
+
+<Canvas>
+  <Story name="Grid with grouped columns" decorators={[withFlexGap]}>
+    <GridColumnGroupExample />
+  </Story>
+</Canvas>
+
+### Rows
+
+Grid rows are created by providing an array of objects as `rowData` property of the grid.
+`rowData` accepts sparse arrays too.
+In combination with `onVisibleRowRangeChange` callback this allows lazy loading (server-side data) scenarios.
+
+### Row selection
+
+Grid supports three variants of row selection:
+
+- Single row selection
+- Multi-row selection
+- None (rows cannot be selected)
+
+`RowSelectionCheckboxColumn` is useful in `multi` row selection mode and `RowSelectionRadioColumn` - in `single` row selection mode.
+Both are optional though.
+
+#### Uncontrolled mode
+
+In uncontrolled mode user provides `defaultSelectedRowIdxs` and the grid maintains selection state
+
+<Canvas>
+  <Story name="Grid row selection modes" decorators={[withFlexGap]}>
+    <RowSelectionModesExample />
+  </Story>
+</Canvas>
+
+#### Controlled mode
+
+In controlled mode user provides `selectedRowIdxs` and updates it when `onRowsSelected` callback is invoked.
+Below is an example of how to use controlled selection mode to synchronise selection in two grids.
+
+<Canvas>
+  <Story name="Grid row selection controlled mode" decorators={[withFlexGap]}>
+    <ControlledRowSelectionExample />
+  </Story>
+</Canvas>
+
+### Cell selection
+
+In addition to row selection, Grid supports cell range selection using keyboard and mouse.
+Cell range selection is controlled by `cellSelectionMode` property.
+
+### Cell customisation
+
+Grid allows using any react components for cell rendering.
+
+The `cellValueComponent` property of `GridColumn` component is the most convenient extension point.
+Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns.
+
+<Canvas>
+  <Story name="Cell customization" decorators={[withFlexGap]}>
+    <CellCustomizationExample />
+  </Story>
+</Canvas>
+
+Another way to customise cell appearance is the `cellComponent` property.
+Unlike `cellValueComponent` it replaces the entire cell element rather than its content and allows to implement more radical customisation scenarios.
+However all basic functionality typically provided by the default cell implementation needs to be handled by the user if `cellComponent` is overridden.
+Therefore it is recommended to use `cellComponent` only if `cellValueComponent` does not provide enough flexibility.
+
+### Header customization
+
+Column headers and column group headers can be customised using the `headerValueComponent` property which is demonstrated by the grid below.
+
+- "Items sold" column group has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
+- "Item" column group has a button to toggle between pinned and unpinned modes.
+- "Name" and "Price" columns have custom headers that indicate sort direction.
+
+This grid also shows an example of a custom cell displaying a basic chart. Switch the "Items sold" to "summary" mode to see it.
+
+<Canvas>
+  <Story name="Header customization" decorators={[withFlexGap]}>
+    <HeaderCustomizationExample />
+  </Story>
+</Canvas>
+
+### Editable cells
+
+Grid allows editing cell values in place.
+`CellEditor` component used as a child of `GridColumn` makes the column editable.
+`CellEditor` is a non-rendered component.
+`CellEditor` is expected to have one child representing the specific editor component to use for the column, e.g. `TextCellEditor`, `DropdownCellEditor` or `NumericCellEditor`.
+The child of the `CellEditor` component gets rendered in the focused cell when the grid goes to edit mode.
+
+### HTML Anatomy of a Grid
+
+export const Link = ({ children, to, ...props }) => (
+  <a {...props} href={to}>
+    {children}
+  </a>
+);
+
+### CSS Class
+
+<CSSClassTable of={Grid} />
+
+### Characteristics used
+
+<CharacteristicUsage of={Grid} />
+
+### --uitkGrid CSS custom property API
+
+The default styling values for most Grid attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Grid. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Grid, but not defined by Grid. They can be defined via a container or
+a custom class name to override grid styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
+
+The grid below is editable. Change the values of CSS variables to their effect on the grid.
+
+<Canvas>
+  <Story name="CSS variables customization" decorators={[withFlexGap]}>
+    <CssVariablesExample />
+  </Story>
+</Canvas>
+
+# Help and support
+
+Please check the [issues section of our github repository](https://github.com/jpmorganchase/uitk/issues) for any design or development issues you have.
+
+If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior.
+
+If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.

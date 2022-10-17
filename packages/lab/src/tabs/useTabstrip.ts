@@ -2,7 +2,6 @@ import {
   createElement,
   KeyboardEvent,
   MouseEvent,
-  MouseEventHandler,
   RefObject,
   useEffect,
   useCallback,
@@ -15,7 +14,11 @@ import {
 } from "./useKeyboardNavigation";
 import { dragStrategy, useDragDrop, DragHookResult } from "./drag-drop";
 import { useSelection } from "./useSelection";
-import { ExitEditModeHandler, useEditableItem } from "./useEditableItem";
+import {
+  ExitEditModeHandler,
+  useEditableItem,
+  EditableItemHookResult,
+} from "./useEditableItem";
 import { OverflowCollectionHookResult } from "../responsive";
 
 import {
@@ -47,22 +50,20 @@ interface tabstripHookProps {
   tabs?: TabDescriptor[] | TabElement[];
 }
 
-interface tabstripHookResult {
+interface tabstripHookResult
+  extends DragHookResult,
+    Pick<EditableItemHookResult, "editing"> {
   activateTab: (tabIndex: number) => void;
   activeTabIndex: number;
   addTab: (indexPosition?: number) => void;
   closeTab: (indexPosition: number) => void;
   containerProps: ContainerNavigationProps;
   controlledSelection: boolean;
-  editing?: boolean;
   highlightedIdx: number;
   focusVisible: number;
   focusIsWithinComponent: boolean;
   focusTab: (tabIndex: number, immediateFocus?: boolean) => void;
-  isDragging?: boolean;
   navigationProps: navigationProps;
-  onMouseDown?: MouseEventHandler;
-  revealOverflowedItems: boolean;
   tabProps: composableTabProps;
 }
 
@@ -190,9 +191,6 @@ export const useTabstrip = ({
     [keyboardHook, selectionHook, editableHook]
   );
 
-  // const { tabProps: dragTabProps, ...dragProps } = dragDropHook;
-  const dragProps = dragDropHook;
-
   const navigationProps = {
     onFocus: keyboardHook.onFocus,
     onKeyDown: handleKeyDown,
@@ -202,7 +200,6 @@ export const useTabstrip = ({
     onClick: handleClick,
     onEnterEditMode: editableHook.onEnterEditMode,
     onExitEditMode: handleExitEditMode,
-    // ...dragTabProps,
   };
 
   const addTab = useCallback(
@@ -295,6 +292,7 @@ export const useTabstrip = ({
     closeTab,
     containerProps: keyboardHook.containerProps,
     controlledSelection: selectionHook.isControlled,
+    editing: editableHook.editing,
     focusTab: keyboardHook.focusTab,
     focusIsWithinComponent: keyboardHook.focusIsWithinComponent,
     focusVisible: keyboardHook.focusVisible,
@@ -302,7 +300,6 @@ export const useTabstrip = ({
     activeTabIndex: selectionHook.selected,
     navigationProps,
     tabProps,
-    ...dragProps,
-    ...editableHook,
+    ...dragDropHook,
   };
 };

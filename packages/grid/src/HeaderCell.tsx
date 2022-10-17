@@ -29,14 +29,15 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { separator } = column;
   const { onResizeHandleMouseDown } = useSizingContext();
 
-  const { columnDnD, onColumnMoveHandleMouseDown } = useColumnDragContext();
-  const onMouseDown = columnDnD ? onColumnMoveHandleMouseDown : undefined;
+  const { columnMove, onColumnMoveHandleMouseDown } = useColumnDragContext();
+  const onMouseDown = columnMove ? onColumnMoveHandleMouseDown : undefined;
 
   return (
     <th
       data-column-index={column.index}
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
+      data-testid="column-header"
     >
       <div
         className={cn(withBaseName("valueContainer"), {
@@ -69,13 +70,14 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
     if (width != undefined && width !== column.info.width) {
       resizeColumn(column.index, width);
     }
-  }, [valueContainerRef.current, column.info.width, rowHeight]);
+  });
 
   return (
     <th
       data-column-index={column.index}
       className={withBaseName()}
       role="columnheader"
+      data-testid="column-header"
     >
       <div className={withBaseName("autosizeContainer")}>
         <div

@@ -2,13 +2,16 @@ import { Story } from "@storybook/react";
 import "./grid.stories.css";
 import {
   ColumnGroup,
-  RowSelectionColumn,
+  DropdownCellEditor,
   Grid,
   GridCellValueProps,
   GridColumn,
   GridHeaderValueProps,
+  NumericCellEditor,
+  NumericColumn,
+  RowKeyGetter,
+  RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
-  SelectCellEditor,
   TextCellEditor,
 } from "../src";
 import { randomAmount, randomString, randomText } from "./utils";
@@ -30,6 +33,8 @@ import {
   FavoriteIcon,
 } from "../../icons";
 import { CellEditor } from "../src/CellEditor";
+import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
+import { FlexLayout } from "../../core";
 
 export default {
   title: "Grid/New Grid",
@@ -106,11 +111,11 @@ const dummyInvestors = createDummyInvestors();
 
 const rowKeyGetter = (rowData: Investor) => rowData.name;
 
-const onAmountChange = (rowKey: string, rowIndex: number, value: string) => {
+const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].amount = parseFloat(value);
 };
 
-const onLocationChange = (rowKey: string, rowIndex: number, value: string) => {
+const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].location = value;
 };
 
@@ -125,7 +130,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
       // hideHeader={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
-        <RowSelectionColumn id="rowSelection" />
+        <RowSelectionCheckboxColumn id="rowSelection" />
         <GridColumn
           name="Name"
           id="name"
@@ -139,11 +144,10 @@ const GridStoryTemplate: Story<{}> = (props) => {
           id="location"
           defaultWidth={150}
           getValue={(x) => x.location}
-          editable={true}
           onChange={onLocationChange}
         >
           <CellEditor>
-            <SelectCellEditor options={allLocations} />
+            <DropdownCellEditor options={allLocations} />
           </CellEditor>
         </GridColumn>
         <GridColumn
@@ -154,19 +158,17 @@ const GridStoryTemplate: Story<{}> = (props) => {
         />
       </ColumnGroup>
       <ColumnGroup id="groupThree" name="Group Three">
-        <GridColumn
-          name="Amount"
+        <NumericColumn
+          precision={2}
           id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
-          align="right"
+          name="Amount"
+          getValue={(x: Investor) => x.amount}
           onChange={onAmountChange}
         >
           <CellEditor>
-            <TextCellEditor />
+            <NumericCellEditor />
           </CellEditor>
-        </GridColumn>
+        </NumericColumn>
       </ColumnGroup>
       <ColumnGroup id="groupFour" name="Group Four">
         <GridColumn
@@ -219,7 +221,6 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
           id="amount"
           defaultWidth={200}
           getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
           align="right"
           onChange={onAmountChange}
         />
@@ -307,7 +308,6 @@ const PinnedColumnsTemplate: Story<{}> = (props) => {
           id="amount"
           defaultWidth={200}
           getValue={(x) => x.amount.toFixed(4)}
-          editable={true}
           align="right"
           onChange={onAmountChange}
         />
@@ -508,7 +508,7 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
         columnSeparators={true}
         zebra={true}
       >
-        <RowSelectionColumn id="rowSelector" />
+        <RowSelectionCheckboxColumn id="rowSelector" />
         {customHeadersColumnNames.map((name) => (
           <GridColumn
             key={name}
@@ -696,7 +696,12 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     "cohort",
   ]);
 
-  const onColumnMoved = (fromIndex: number, toIndex: number) => {
+  const onColumnMoved = (
+    columnId: string,
+    fromIndex: number,
+    toIndex: number
+  ) => {
+    console.log(`Column "${columnId}" moved from ${fromIndex} to ${toIndex}`);
     setColumnIds((old) => {
       const col = old[fromIndex];
       if (fromIndex < toIndex) {
@@ -761,11 +766,147 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
-      columnDnD={true}
+      columnMove={true}
       onColumnMoved={onColumnMoved}
     >
       {columnIds.map((id) => renderColumn(id))}
     </Grid>
+  );
+};
+
+const serverSideDataRowKeyGetter: RowKeyGetter<Investor> = (row, index) =>
+  `Row${index}`;
+
+const serverSideRowCount = 200000;
+
+const ServerSideDataStoryTemplate: Story<{}> = (props) => {
+  const [rows, setRows] = useState<Investor[]>(() => {
+    const rowData: Investor[] = [];
+    rowData.length = serverSideRowCount;
+    return rowData;
+  });
+
+  const onVisibleRowRangeChange = useCallback((start: number, end: number) => {
+    console.log(`onVisibleRowRangeChange(${start}, ${end}).`);
+    setRows((oldRows) => {
+      const nextRows: Investor[] = [];
+      nextRows.length = serverSideRowCount;
+      for (let i = start; i < end; ++i) {
+        if (oldRows[i]) {
+          nextRows[i] = oldRows[i];
+        } else {
+          nextRows[i] = {
+            name: `Name ${i}`,
+            addedInvestors: [],
+            location: `Location ${i}`,
+            cohort: [`Cohort ${i}`],
+            strategy: [`Strategy ${i}`],
+            notes: "",
+            amount: randomAmount(100, 300, 4),
+          };
+        }
+      }
+      return nextRows;
+    });
+  }, []);
+
+  return (
+    <Grid
+      rowData={rows}
+      rowKeyGetter={serverSideDataRowKeyGetter}
+      className="table"
+      zebra={true}
+      columnSeparators={true}
+      onVisibleRowRangeChange={onVisibleRowRangeChange}
+    >
+      <RowSelectionCheckboxColumn id="rowSelection" />
+      <GridColumn
+        name="Name"
+        id="name"
+        defaultWidth={200}
+        getValue={(x) => x.name}
+      />
+      <GridColumn
+        name="Location"
+        id="location"
+        defaultWidth={150}
+        getValue={(x) => x.location}
+        onChange={onLocationChange}
+      />
+      <GridColumn
+        name="Cohort"
+        id="cohort"
+        defaultWidth={200}
+        getValue={(x) => x.cohort}
+      />
+      <GridColumn
+        name="Amount"
+        id="amount"
+        defaultWidth={200}
+        getValue={(x) => x.amount.toFixed(4)}
+        align="right"
+        onChange={onAmountChange}
+      />
+      <GridColumn
+        name="Strategy"
+        id="strategy"
+        getValue={(x) => x.strategy.join(", ")}
+      />
+    </Grid>
+  );
+};
+
+const PaginationStoryTemplate: Story<{}> = (props) => {
+  const [page, setPage] = useState<number>(1);
+  const pageSize = 7;
+  const pageCount = Math.ceil(dummyInvestors.length / pageSize);
+
+  const onPageChange = (page: number) => {
+    setPage(page);
+  };
+
+  const rowData = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    const end = Math.min(start + pageSize, dummyInvestors.length);
+    return dummyInvestors.slice(start, end);
+  }, [pageSize, page]);
+
+  return (
+    <FlexLayout direction={"column"} align={"end"}>
+      <Grid
+        rowData={rowData}
+        rowKeyGetter={serverSideDataRowKeyGetter}
+        className="paginatedGrid"
+        zebra={true}
+        columnSeparators={true}
+      >
+        <RowSelectionCheckboxColumn id="rowSelection" />
+        <GridColumn
+          name="Name"
+          id="name"
+          defaultWidth={200}
+          getValue={(x) => x.name}
+        />
+        <GridColumn
+          name="Location"
+          id="location"
+          defaultWidth={150}
+          getValue={(x) => x.location}
+          onChange={onLocationChange}
+        />
+        <GridColumn
+          name="Amount"
+          id="amount"
+          defaultWidth={200}
+          getValue={(x) => x.amount.toFixed(4)}
+          align="right"
+          onChange={onAmountChange}
+        />
+      </Grid>
+      <Pagination page={page} onPageChange={onPageChange} count={pageCount}>
+        <Paginator />
+      </Pagination>
+    </FlexLayout>
   );
 };
 
@@ -778,5 +919,7 @@ export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
 export const CustomHeaders = CustomHeadersTemplate.bind({});
 export const CustomCells = CustomCellsTemplate.bind({});
 export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
+export const ServerSideData = ServerSideDataStoryTemplate.bind({});
+export const GridPagination = PaginationStoryTemplate.bind({});
 
 GridExample.args = {};

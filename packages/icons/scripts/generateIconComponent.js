@@ -37,7 +37,7 @@ const template = fs.readFileSync(
   path.join(__dirname, "./templateIcon.mustache"),
   "utf-8"
 );
-const globPath = path.join(basePath, `./SVG/+(${fileArg})`);
+const globPath = path.join(basePath, `./SVG/+(${fileArg})`).replace(/\\/g, "/");
 console.log("globPath", globPath);
 glob(globPath, options, function (error, filenames) {
   filenames.forEach((fileName) => {
