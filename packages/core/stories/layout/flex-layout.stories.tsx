@@ -43,7 +43,6 @@ export default {
     },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
     justify: {
       options: FLEX_CONTENT_ALIGNMENT_BASE,
@@ -56,6 +55,9 @@ export default {
     wrap: {
       control: "boolean",
     },
+  },
+  args: {
+    gap: 3,
   },
   excludeStories: [
     "ContactDetailsExample",

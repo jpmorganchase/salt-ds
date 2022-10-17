@@ -21,6 +21,7 @@ export const globalTypes: GlobalTypes = {
     description: "Set the color theme",
     defaultValue: DEFAULT_THEME,
     toolbar: {
+      title: "Theme",
       // show the theme name once selected in the toolbar
       dynamicTitle: true,
       items: [
@@ -61,7 +62,7 @@ export const globalTypes: GlobalTypes = {
       "Applies styles meeting minimum required for WCAG 1.4.12 Text Spacing",
     defaultValue: "disable",
     toolbar: {
-      showName: true,
+      title: "Text Spacing",
       items: ["disable", "enable"],
     },
   },
@@ -71,7 +72,7 @@ export const globalTypes: GlobalTypes = {
     defaultValue: "enable",
     toolbar: {
       items: ["disable", "enable"],
-      showName: true,
+      title: "Strict Mode",
     },
   },
 };
