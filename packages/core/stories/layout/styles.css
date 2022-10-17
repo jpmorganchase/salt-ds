@@ -8,7 +8,7 @@
 }
 .layout-content-right {
   background: var(--uitk-color-orange-20);
-  padding: 1.2rem;
+  padding: 2rem 1rem;
 }
 .grid-item {
   padding: 16px;
