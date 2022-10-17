@@ -3,5 +3,5 @@ export default function getInnerText(element: HTMLElement): string {
   if (element) {
     innerText = element.innerText;
   }
-  return innerText.replace(/(\r\n|\n|\r)/gm, " ").trim();
+  return innerText.replace(/(\r?\n)/gm, " ").trim();
 }

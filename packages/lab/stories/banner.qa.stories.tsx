@@ -8,7 +8,7 @@ export default {
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
-const BasicBannerExample: FC<BannerProps> = ({ state }) => {
+const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
     <div style={{ width: "95%", minWidth: "60vw" }}>
       {
@@ -23,17 +23,17 @@ const BasicBannerExample: FC<BannerProps> = ({ state }) => {
               </span>
             </>
           )}
-          state={state}
+          status={status}
         />
       }
     </div>
   );
 };
 
-const InfoBanner = () => <BasicBannerExample state={"info"} />;
-const ErrorBanner = () => <BasicBannerExample state={"error"} />;
-const WarningBanner = () => <BasicBannerExample state={"warning"} />;
-const SuccessBanner = () => <BasicBannerExample state={"success"} />;
+const InfoBanner = () => <BasicBannerExample status={"info"} />;
+const ErrorBanner = () => <BasicBannerExample status={"error"} />;
+const WarningBanner = () => <BasicBannerExample status={"warning"} />;
+const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <StackLayout gap={2}>
