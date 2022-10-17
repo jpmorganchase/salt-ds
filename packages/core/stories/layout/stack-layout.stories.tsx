@@ -25,8 +25,10 @@ export default {
     },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
+  },
+  args: {
+    gap: 3,
   },
   excludeStories: [
     "ComplexFormOne",

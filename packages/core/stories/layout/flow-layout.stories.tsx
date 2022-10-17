@@ -41,12 +41,14 @@ export default {
     },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
     separators: {
       options: ["start", "center", "end", true],
       control: { type: "select" },
     },
+  },
+  args: {
+    gap: 3,
   },
   excludeStories: ["MetricExample", "DashboardExample"],
 } as ComponentMeta<typeof FlowLayout>;

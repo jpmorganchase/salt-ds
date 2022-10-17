@@ -13,26 +13,30 @@ const options = {};
 
 const basePath = path.join(__dirname, "../src/components");
 
-glob(path.join(basePath, "*.tsx"), options, function (er, fileNames) {
-  // glob gives files in order so we don't need to sort
+glob(
+  path.join(basePath, "*.tsx").replace(/\\/g, "/"),
+  options,
+  function (er, fileNames) {
+    // glob gives files in order so we don't need to sort
 
-  const content = fileNames.map((filename) => {
-    const filenameWithoutExtension = path.parse(filename).name;
-    return `export * from './${filenameWithoutExtension}';`;
-  });
+    const content = fileNames.map((filename) => {
+      const filenameWithoutExtension = path.parse(filename).name;
+      return `export * from './${filenameWithoutExtension}';`;
+    });
 
-  const prettier = require("prettier");
-  const formattedResult = prettier.format(content.join("\n"), {
-    parser: "babel-ts",
-    singleQuote: false,
-    trailingComma: "none",
-    printWidth: 80,
-    proseWrap: "always",
-  });
+    const prettier = require("prettier");
+    const formattedResult = prettier.format(content.join("\n"), {
+      parser: "babel-ts",
+      singleQuote: false,
+      trailingComma: "none",
+      printWidth: 80,
+      proseWrap: "always",
+    });
 
-  const outputFile = path.join(basePath, "index.ts");
-  console.log(`Writing ${outputFile}`);
-  fs.writeFile(outputFile, formattedResult, "utf8", function (err) {
-    if (err) return console.log(err);
-  });
-});
+    const outputFile = path.join(basePath, "index.ts");
+    console.log(`Writing ${outputFile}`);
+    fs.writeFile(outputFile, formattedResult, "utf8", function (err) {
+      if (err) return console.log(err);
+    });
+  }
+);
