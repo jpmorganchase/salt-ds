@@ -130,7 +130,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
 
       return cloneElement(
         trigger,
-        forwardCallbackProps(ownProps, {
+        forwardCallbackProps(ownProps as any, {
           ...restTriggerProps,
           id,
           role,
