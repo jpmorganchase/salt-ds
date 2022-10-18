@@ -24,17 +24,17 @@ export default {
 interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   caption?: string;
-  classname?: string;
+  className?: string;
   number?: number;
 }
 
 export const FlexContent = ({
   children,
-  classname,
+  className,
   number,
   ...rest
 }: FlexContentProps) => (
-  <div className={classname || "layout-content"} {...rest}>
+  <div className={className || "layout-content"} {...rest}>
     {children || <p>Item {number && number}</p>}
   </div>
 );
@@ -43,7 +43,7 @@ const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
     <FlexLayout>
       <FlexItem {...args}>
-        <FlexContent classname={"layout-active-content"}>
+        <FlexContent className={"layout-active-content"}>
           <p>Item</p>
         </FlexContent>
       </FlexItem>

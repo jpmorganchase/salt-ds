@@ -1,9 +1,6 @@
 import { forwardRef, ReactNode, HTMLAttributes } from "react";
 import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
-
-import { makePrefixer } from "../../utils";
 import "./SplitLayout.css";
-import cx from "classnames";
 
 export interface SplitItemProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -39,8 +36,6 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   rightSplitItem: ReactNode;
 }
 
-const withBaseName = makePrefixer("uitkSplitLayout");
-
 const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
   { children, ...rest },
   ref
@@ -68,12 +63,14 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   ) {
     return (
       <FlexLayout
+        align={align}
         direction="row"
         ref={ref}
         wrap={wrap}
         gap={gap}
+        justify="space-between"
         separators={separators}
-        className={cx(withBaseName(), className)}
+        className={className}
         {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>

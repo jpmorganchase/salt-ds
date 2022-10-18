@@ -77,7 +77,9 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
-
+DefaultFlexLayout.args = {
+  wrap: true,
+};
 const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
@@ -92,6 +94,7 @@ const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
 FlexLayoutWithSeparators.args = {
   separators: "center",
+  wrap: true,
 };
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
