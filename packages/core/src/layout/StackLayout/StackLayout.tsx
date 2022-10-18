@@ -17,7 +17,7 @@ export interface StackLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const StackLayout = forwardRef<HTMLDivElement, StackLayoutProps>(
-  function StackLayout({ ...rest }, ref) {
-    return <FlexLayout direction="column" ref={ref} {...rest} />;
+  function StackLayout(props, ref) {
+    return <FlexLayout direction="column" ref={ref} {...props} />;
   }
 );
