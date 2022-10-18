@@ -1,0 +1,110 @@
+.uitk-density-touch {
+  --banner-icon-top: 23px;
+}
+
+.uitk-density-low {
+  --banner-icon-top: 17px;
+}
+
+.uitk-density-medium {
+  --banner-icon-top: 10px;
+}
+
+.uitk-density-high {
+  --banner-icon-top: 5px;
+}
+
+/* Styles applied to root component */
+.uitkBanner {
+  --banner-background: var(--uitkBanner-background, var(--uitk-container-background-medium));
+  --banner-fontSize: var(--uitkBanner-fontSize, var(--uitk-text-fontSize));
+  --banner-lineHeight: var(--uitkBanner-lineHeight, var(--uitk-text-lineHeight));
+  --banner-padding: var(--uitkBanner-padding, var(--uitk-size-unit));
+  --banner-label-color: var(--uitkBanner-label-color, var(--uitk-text-primary-foreground));
+}
+
+.uitkBanner {
+  background: var(--banner-background);
+  border-color: var(--uitkBanner-borderColor, var(--banner-status-borderColor));
+  border-width: var(--uitkBanner-borderWidth, var(--uitk-container-borderWidth));
+  border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
+  border-bottom: 2px solid var(--uitkBanner-borderColor, var(--banner-status-borderColor));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  padding: 0 var(--banner-padding);
+  position: relative;
+  /*min-height: 36px;*/
+  width: 100%;
+}
+
+.uitkBanner-closeButton {
+  margin: calc(var(--uitk-size-unit) * 0.5) auto calc(var(--uitk-size-unit) * 0.5) var(--uitk-size-unit);
+}
+
+.uitkBanner-label {
+  flex: 1 0;
+  padding: calc(var(--banner-padding) + 2px) 0 calc(var(--banner-padding));
+  font-weight: var(--uitk-typography-weight-semiBold);
+  font-size: var(--uitk-text-fontSize);
+  line-height: var(--uitk-text-lineHeight);
+  color: var(--banner-label-color);
+}
+
+/* Styles applied to status icon */
+.uitkBanner-icon {
+  color: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
+  fill: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
+  margin-right: var(--uitkTooltip-icon-marginRight, 6px);
+  padding-top: var(--banner-icon-top);
+  margin-top: 2px;
+  align-self: flex-start;
+  top: auto;
+  vertical-align: top;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.uitkBanner-link {
+  font-weight: var(--uitk-typography-weight-semiBold);
+  margin-left: 1ch;
+}
+
+/* Styles applied when state = "info" */
+.uitkBanner-info {
+  --banner-status-borderColor: var(--uitk-status-info-borderColor);
+  --banner-status-icon-color: var(--uitk-status-info-foreground);
+}
+
+/* Styles applied when state = "error" */
+.uitkBanner-error {
+  --banner-status-borderColor: var(--uitk-status-error-borderColor);
+  --banner-status-icon-color: var(--uitk-status-error-foreground);
+}
+
+/* Styles applied when state = "warning" */
+.uitkBanner-warning {
+  --banner-status-borderColor: var(--uitk-status-warning-borderColor);
+  --banner-status-icon-color: var(--uitk-status-warning-foreground);
+}
+
+/* Styles applied when state = "success" */
+.uitkBanner-success {
+  --banner-status-borderColor: var(--uitk-status-success-borderColor);
+  --banner-status-icon-color: var(--uitk-status-success-foreground);
+}
+
+.uitkEmphasisHigh.uitkBanner-info {
+  --banner-background: var(--uitk-palette-info-background-high);
+}
+
+.uitkEmphasisHigh.uitkBanner-error {
+  --banner-background: var(--uitk-palette-error-background-high);
+}
+
+.uitkEmphasisHigh.uitkBanner-warning {
+  --banner-background: var(--uitk-palette-warning-background-high);
+}
+.uitkEmphasisHigh.uitkBanner-success {
+  --banner-background: var(--uitk-palette-success-background-high);
+}
