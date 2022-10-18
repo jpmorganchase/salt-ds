@@ -36,7 +36,11 @@ export const getIsOverflowed = (managedItems: OverflowItem[]) =>
 export const measureContainer = (
   ref: ElementRef,
   orientation: orientationType = "horizontal"
-): { innerContainerSize: number; rootContainerDepth: number } => {
+): {
+  innerContainerSize: number;
+  rootContainerDepth: number;
+  innerContainerDepth?: number;
+} => {
   const innerElement = ref.current as HTMLElement;
   const container = innerElement.parentElement;
   if (container) {
@@ -44,7 +48,11 @@ export const measureContainer = (
       innerElement.getBoundingClientRect();
     const { width, height } = container.getBoundingClientRect();
     if (orientation === "horizontal") {
-      return { innerContainerSize: innerWidth, rootContainerDepth: height };
+      return {
+        innerContainerSize: innerWidth,
+        rootContainerDepth: height,
+        innerContainerDepth: innerHeight,
+      };
     } else {
       return { innerContainerSize: innerHeight, rootContainerDepth: width };
     }
@@ -62,16 +70,18 @@ export const measureContainerOverflow = (
   rootContainerDepth: number;
 } => {
   const innerElement = ref.current as HTMLElement;
-  const { innerContainerSize, rootContainerDepth } = measureContainer(
-    ref,
-    orientation
-  );
+  const {
+    innerContainerSize,
+    rootContainerDepth,
+    innerContainerDepth = 0,
+  } = measureContainer(ref, orientation);
   const scrollDepth =
     orientation === "horizontal"
-      ? innerElement.scrollHeight
+      ? innerContainerDepth
       : innerElement.scrollWidth;
 
   const isOverflowing = rootContainerDepth < scrollDepth;
+
   return { isOverflowing, innerContainerSize, rootContainerDepth };
 };
 

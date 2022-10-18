@@ -2,7 +2,6 @@ import { useCallback, useRef } from "react";
 import {
   addAll,
   allExceptOverflowIndicator,
-  getIsOverflowed,
   getOverflowIndicator,
   isOverflowed,
   measureContainerOverflow,
@@ -311,39 +310,6 @@ export const useOverflow = ({
       updateOverflow,
     ]
   );
-  // const handleResize = useCallback(
-  //   (size: number, containerHasGrown?: boolean) => {
-  //     const { current: managedItems } = overflowItemsRef;
-  //     const isOverflowing = getIsOverflowed(managedItems);
-  //     innerContainerSizeRef.current = size;
-  //     const renderedSize = managedItems.reduce(allExceptOverflowIndicator, 0);
-  //     const willOverflow = renderedSize > size;
-
-  //     console.log(
-  //       `useOverflow handleResize size ${size} rebnderedSize=${renderedSize} isOverflowing ${isOverflowing} willOverflow ${willOverflow}`
-  //     );
-
-  //     if (!isOverflowing && willOverflow) {
-  //       // entering overflow
-  //       // TODO if client is not using an overflow indicator, there is nothing to do here,
-  //       // just let nature take its course. How do we know this ?
-  //       // This is when we need to add width to measurements we are tracking
-  //       resetMeasurements(true, size);
-  //     } else if (isOverflowing && containerHasGrown) {
-  //       // Note: it must have been previously overflowing, too
-  //       // check to see if we can reinstate one or more items
-  //       removeOverflow(size);
-  //     } else if (isOverflowing && willOverflow) {
-  //       // Note: container must have shrunk
-  //       // still overflowing, possibly more overflowing than before
-  //       const renderedSize = managedItems
-  //         .filter(notOverflowed)
-  //         .reduce(addAll, 0);
-  //       updateOverflow(size, renderedSize);
-  //     }
-  //   },
-  //   [overflowItemsRef, removeOverflow, resetMeasurements, updateOverflow]
-  // );
 
   return {
     onResize: handleResize,
