@@ -92,11 +92,11 @@
     "del": "^6.0.0",
     "dom-accessibility-api": "^0.5.10",
     "eslint": "^7.32.0",
-    "eslint-config-modular-app": "3.0.1",
+    "eslint-config-modular-app": "3.0.2",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-storybook": "^0.6.0",
     "glob": "^8.0.0",
-    "modular-scripts": "patch:modular-scripts@npm:3.2.0#.yarn/patches/modular-scripts-npm-3.2.0-e33fd9241b.patch",
+    "modular-scripts": "patch:modular-scripts@npm:3.4.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch",
     "no-scroll": "^2.1.1",
     "nyse-holidays": "^1.2.0",
     "prettier": "^2.6.2",
@@ -115,7 +115,7 @@
     "vite-plugin-istanbul": "^3.0.1",
     "vite-tsconfig-paths": "^3.5.0",
     "warning": "^4.0.3",
-    "webpack": "5.73.0"
+    "webpack": "5.74.0"
   },
   "resolutions": {
     "esbuild": "0.14.51"
