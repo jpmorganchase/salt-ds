@@ -24,7 +24,7 @@ import "./Dropdown.css";
 // Any component may be passed as our trigger or popup component.
 // Define the common props that we will act on, if present,
 // so we can type them.
-type MaybeProps = {
+export type MaybeChildProps = {
   className?: string;
   id?: string;
   role?: string;
@@ -126,7 +126,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         id = defaultId,
         role = defaultRole,
         ...ownProps
-      } = trigger.props as MaybeProps;
+      } = trigger.props as MaybeChildProps;
 
       return cloneElement(
         trigger,
@@ -145,7 +145,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         id = defaultId,
         width: ownWidth,
         ...ownProps
-      } = popupComponent.props as MaybeProps;
+      } = popupComponent.props as MaybeChildProps;
       return cloneElement(popupComponent, {
         ...ownProps,
         ...restComponentProps,

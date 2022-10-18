@@ -19,10 +19,11 @@ import {
 } from "../common-hooks";
 import { List } from "../list/List";
 import { ListProps } from "../list/listTypes";
-import { DropdownBase } from "./DropdownBase";
+import { DropdownBase, MaybeChildProps } from "./DropdownBase";
 import { DropdownButton } from "./DropdownButton";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdown } from "./useDropdown";
+import { forwardCallbackProps } from "../utils";
 
 export interface DropdownProps<
   Item = "string",
@@ -134,10 +135,14 @@ export const Dropdown = forwardRef(function Dropdown<
       "aria-label": ariaLabel,
     };
     if (triggerComponent) {
-      return cloneElement(triggerComponent, {
-        ...listControlProps,
-        ...ariaProps,
-      });
+      const ownProps = triggerComponent.props as MaybeChildProps;
+      return cloneElement(
+        triggerComponent,
+        forwardCallbackProps(ownProps, {
+          ...listControlProps,
+          ...ariaProps,
+        })
+      );
     } else {
       return (
         <DropdownButton
