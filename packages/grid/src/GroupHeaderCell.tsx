@@ -2,11 +2,13 @@ import cn from "classnames";
 import "./GroupHeaderCell.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnGroupModel } from "./Grid";
+import { ReactNode } from "react";
 
 const withBaseName = makePrefixer("uitkGridGroupHeaderCell");
 
 export interface GroupHeaderCellProps {
   group: GridColumnGroupModel;
+  children: ReactNode;
 }
 
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
@@ -16,7 +18,7 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
 
   return (
     <th className={withBaseName()} colSpan={colSpan}>
-      <span className={withBaseName("text")}>{name}</span>
+      {props.children}
       <div
         className={cn({
           [withBaseName("rowSeparator")]: rowSeparator === "regular",

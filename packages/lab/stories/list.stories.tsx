@@ -779,6 +779,53 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
   );
 };
 
+export const EmptyList: Story<ListProps> = (props) => {
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const NO_DATA = useMemo<string[]>(() => [], []);
+  const [data, setData] = useState<string[]>(NO_DATA);
+
+  const resetData = () => {
+    if (data === NO_DATA) {
+      setData(usa_states);
+    } else {
+      setData(NO_DATA);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        maxWidth: 292,
+      }}
+    >
+      <div>
+        When List has no data, focusVisible is applied to the List itself. When
+        data is present, ListItems receive focusVisible.
+      </div>
+      <div
+        ref={buttonsRef}
+        style={{ display: "flex", justifyContent: "flex-end", zIndex: 1 }}
+      >
+        <Button onClick={resetData}>
+          {data === NO_DATA ? "Load Data" : "Clear Data"}
+        </Button>
+      </div>
+      <div>
+        <List
+          aria-label="Controlled List example"
+          height={400}
+          source={data}
+          {...props}
+        />
+      </div>
+    </div>
+  );
+};
+
 // export const SimpleListDefaultHighlight = () => {
 //   return (
 //     <div

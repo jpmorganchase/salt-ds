@@ -50,4 +50,14 @@ describe("Given a Button", () => {
     cy.findByRole("button").realClick();
     cy.get("@clickSpy").should("not.be.called");
   });
+
+  it("should apply type prop to button element", () => {
+    cy.mount(<FeatureButton type="submit" />);
+    cy.findByRole("button").should("have.attr", "type", "submit");
+  });
+
+  it("should apply default type prop to button element", () => {
+    cy.mount(<FeatureButton />);
+    cy.findByRole("button").should("have.attr", "type", "button");
+  });
 });
