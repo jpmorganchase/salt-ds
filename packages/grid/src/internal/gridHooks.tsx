@@ -11,13 +11,13 @@ import React, {
   useState,
 } from "react";
 import {
-  RowKeyGetter,
+  GridCellSelectionMode,
   GridColumnGroupModel,
   GridColumnModel,
+  GridColumnMoveHandler,
   GridRowModel,
   GridRowSelectionMode,
-  GridCellSelectionMode,
-  GridColumnMoveHandler,
+  RowKeyGetter,
 } from "../Grid";
 import { ColumnGroupProps } from "../ColumnGroup";
 import { NumberRange } from "../NumberRange";
@@ -29,9 +29,28 @@ import {
   makeMapDeleter,
 } from "./utils";
 import { GridContext } from "../GridContext";
-import { SelectionContext } from "../SelectionContext";
 import { CellEditorInfo } from "../CellEditor";
 import { useControlled } from "@jpmorganchase/uitk-core";
+
+// Attaches active onWheel event to a table element
+// Grid needs to prevent default onWheel event handling for situations when a
+// scrollable grid is on a scrollable page. Page should not scroll when the grid
+// is being scrolled.
+export function useActiveOnWheel(onWheel: EventListener) {
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  useEffect(() => {
+    const table = tableRef.current;
+    if (table && onWheel) {
+      table.addEventListener("wheel", onWheel, { passive: false });
+      return () => {
+        table.removeEventListener("wheel", onWheel);
+      };
+    }
+  }, [tableRef.current]);
+
+  return tableRef;
+}
 
 // Total width of the given columns.
 function sumWidth<T>(columns: GridColumnModel<T>[]) {
