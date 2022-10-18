@@ -2,6 +2,6 @@
 "@jpmorganchase/uitk-grid": patch
 ---
 
-Grid docs
-Stories refactoring
-Minor css cleanup
+Improve Grid documentation
+Minor CSS cleanup
+Fix scrolling on the Grid also scrolling the page
