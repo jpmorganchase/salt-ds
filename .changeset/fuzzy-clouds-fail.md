@@ -2,6 +2,6 @@
 "@jpmorganchase/uitk-grid": patch
 ---
 
-Grid docs 
+Grid docs
 Stories refactoring
 Minor css cleanup
