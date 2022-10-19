@@ -189,6 +189,5 @@ export * from "./VolumeDown";
 export * from "./VolumeOff";
 export * from "./VolumeUp";
 export * from "./Warning";
-export * from "./WarningSecondary";
 export * from "./Xls";
 export * from "./Zip";
