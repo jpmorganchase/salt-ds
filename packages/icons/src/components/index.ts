@@ -57,7 +57,6 @@ export * from "./Edit";
 export * from "./EditSolid";
 export * from "./Error";
 export * from "./ErrorExecute";
-export * from "./ErrorSecondary";
 export * from "./Expand";
 export * from "./Export";
 export * from "./ExportSolid";
