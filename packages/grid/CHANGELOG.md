@@ -1,5 +1,17 @@
 # @jpmorganchase/uitk-grid
 
+## 0.3.1
+
+### Patch Changes
+
+- 2d57cb73: Selection modes can be changed in runtime
+  Tests updated
+  CSS variables added
+  Docs updated
+- 282fce7a: Improve Grid documentation
+  Minor CSS cleanup
+  Fix scrolling on the Grid also scrolling the page
+
 ## 0.3.0
 
 ### Minor Changes
