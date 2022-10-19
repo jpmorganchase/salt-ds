@@ -3,15 +3,20 @@ import {
   GridColumn,
   GridProps,
   RowSelectionCheckboxColumn,
-} from "../../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./GridVariantExample";
+} from "../src";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
 import { FlexLayout } from "@jpmorganchase/uitk-core";
-import "./Examples.css";
+import "./grid.stories.css";
+import { Story } from "@storybook/react";
 
-export const ControlledRowSelectionExample = (
-  props: Partial<GridProps<DummyRow>>
-) => {
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
+
+const RowSelectionControlledTemplate: Story<{}> = () => {
   const [selection, setSelection] = useState<number[]>([]);
 
   const onRowSelected = (rowIndices: number[]) => {
@@ -30,7 +35,6 @@ export const ControlledRowSelectionExample = (
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
-        {...props}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />
@@ -45,7 +49,6 @@ export const ControlledRowSelectionExample = (
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
-        {...props}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />
@@ -54,3 +57,5 @@ export const ControlledRowSelectionExample = (
     </FlexLayout>
   );
 };
+
+export const RowSelectionControlled = RowSelectionControlledTemplate.bind({});

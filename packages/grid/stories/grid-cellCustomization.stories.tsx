@@ -4,25 +4,32 @@ import {
   GridCellValueProps,
   GridColumn,
   RowSelectionCheckboxColumn,
-} from "../../src";
+} from "../src";
 import { LinearProgress } from "@jpmorganchase/uitk-lab";
 import { Button, FlexLayout } from "@jpmorganchase/uitk-core";
 import { FavoriteIcon, LinkedIcon } from "@jpmorganchase/uitk-icons";
-import "./Examples.css";
+import "./grid.stories.css";
+import { Story } from "@storybook/react";
 
-export interface BidAskPrice {
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
+
+interface BidAskPrice {
   bid: number;
   ask: number;
   precision: number;
 }
 
-export interface CurrencyPairRow {
+interface CurrencyPairRow {
   currencyPair: string;
   bidAskPrice: BidAskPrice;
   percentage: number;
 }
 
-export const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
+const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   const { row } = props;
 
   const { bid, ask, precision } = row.data.bidAskPrice;
@@ -38,9 +45,7 @@ export const BidAskCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-export const PercentageCellValue = (
-  props: GridCellValueProps<CurrencyPairRow>
-) => {
+const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   const { row } = props;
 
   const { percentage } = row.data;
@@ -52,9 +57,7 @@ export const PercentageCellValue = (
   );
 };
 
-export const ButtonsCellValue = (
-  props: GridCellValueProps<CurrencyPairRow>
-) => {
+const ButtonsCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   return (
     <FlexLayout
       className="buttons"
@@ -73,7 +76,7 @@ export const ButtonsCellValue = (
   );
 };
 
-export const CellCustomizationExample = () => {
+const CellCustomizationTemplate: Story<{}> = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];
@@ -134,3 +137,5 @@ export const CellCustomizationExample = () => {
     </Grid>
   );
 };
+
+export const CellCustomization = CellCustomizationTemplate.bind({});

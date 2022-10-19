@@ -1,15 +1,16 @@
-import { RefObject, WheelEventHandler } from "react";
+import { RefObject } from "react";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./MiddlePart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnModel, GridRowModel } from "../Grid";
+import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridMiddlePart");
 
 export interface MiddlePartProps<T> {
   middleRef: RefObject<HTMLDivElement>;
-  onWheel: WheelEventHandler<HTMLTableElement>;
+  onWheel: EventListener;
   columns: GridColumnModel<T>[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
@@ -30,6 +31,8 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
     zebra,
   } = props;
 
+  const tableRef = useActiveOnWheel(onWheel);
+
   return (
     <div
       ref={middleRef}
@@ -37,7 +40,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
       data-testid="grid-middle-part"
     >
       <div className={withBaseName("space")}>
-        <table onWheel={onWheel}>
+        <table ref={tableRef}>
           <TableColGroup columns={columns} gap={midGap} />
           <TableBody
             columns={columns}

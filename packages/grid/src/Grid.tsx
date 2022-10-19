@@ -1,8 +1,5 @@
 import React, {
-  Children,
-  cloneElement,
   CSSProperties,
-  isValidElement,
   KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
@@ -11,7 +8,6 @@ import React, {
   useMemo,
   useRef,
   useState,
-  WheelEventHandler,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnInfo } from "./GridColumn";
@@ -41,7 +37,6 @@ import {
   useLeftScrolledOutWidth,
   useProd,
   useRangeSelection,
-  useRowIdxByKey,
   useRowModels,
   useRowSelection,
   useScrollToCell,
@@ -61,7 +56,6 @@ import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
-import { range } from "./NumberRange";
 
 const withBaseName = makePrefixer("uitkGrid");
 
@@ -367,9 +361,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     ]
   );
 
-  const onWheel: WheelEventHandler<HTMLTableElement> = useCallback(
+  const onWheel: EventListener = useCallback(
     (event) => {
-      let { deltaX, deltaY, shiftKey } = event;
+      let { deltaX, deltaY, shiftKey } = event as WheelEvent;
       if (deltaX === 0 && shiftKey) {
         deltaX = deltaY;
         deltaY = 0;

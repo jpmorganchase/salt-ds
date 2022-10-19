@@ -1,15 +1,21 @@
-import { ColumnGroup, Grid, GridColumn, GridProps } from "../../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./GridVariantExample";
-import "./Examples.css";
+import { ColumnGroup, Grid, GridColumn, GridProps } from "../src";
+import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import "./grid.stories.css";
+import { Story } from "@storybook/react";
 
-export const GridColumnGroupExample = (props: Partial<GridProps<DummyRow>>) => {
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
+
+const ColumnGroupsTemplate: Story<{}> = () => {
   return (
     <Grid
       rowData={rowData}
       rowKeyGetter={dummyRowKeyGetter}
       className="grid-column-groups"
       zebra={true}
-      {...props}
     >
       <ColumnGroup name="Group One" id="group_one">
         <GridColumn id="a" name="A" getValue={(r) => r.a} />
@@ -21,3 +27,5 @@ export const GridColumnGroupExample = (props: Partial<GridProps<DummyRow>>) => {
     </Grid>
   );
 };
+
+export const ColumnGroups = ColumnGroupsTemplate.bind({});

@@ -7,7 +7,7 @@ import {
   RowKeyGetter,
   RowSelectionCheckboxColumn,
   TextCellEditor,
-} from "../../src";
+} from "../src";
 import { ChangeEvent, useMemo, useState } from "react";
 import {
   ToggleButton,
@@ -21,8 +21,15 @@ import {
   FlexLayout,
 } from "@jpmorganchase/uitk-core";
 import { DeleteIcon, UndoIcon } from "@jpmorganchase/uitk-icons";
-import "./Examples.css";
-import { DefaultIcon } from "../../../lab/stories/search-input.stories";
+import "./grid.stories.css";
+import { DefaultIcon } from "@jpmorganchase/uitk-lab/stories/search-input.stories";
+import { Story } from "@storybook/react";
+
+export default {
+  title: "Grid/New Grid",
+  component: Grid,
+  argTypes: {},
+};
 
 interface GridCssVar {
   name: string;
@@ -32,7 +39,7 @@ interface GridCssVar {
 
 const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 
-export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
+const CssVariablesTemplate: Story<{}> = () => {
   const variants = [`primary`, `secondary`, `zebra`];
   const [separators, setSeparators] = useState(false);
   const [index, setIndex] = useState(0);
@@ -144,10 +151,6 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
       description: "Height (thickness) of the row header separator",
     },
     {
-      name: "--grid-headerRowSeparator-width",
-      description: "Width of the vertical line separating column headers",
-    },
-    {
       name: "--uitkGrid-groupHeader-color",
       description: "Foreground color of column group headers",
     },
@@ -183,10 +186,6 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
     {
       name: "--uitkGrid-rowSeparator-color",
       description: "Color of row separators",
-    },
-    {
-      name: "--uitkGrid-rowSeparator-width",
-      description: "Width of lines between rows",
     },
     {
       name: "--uitkGrid-columnSeparator-color",
@@ -295,7 +294,6 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
         zebra={index === 2 ? true : false}
         columnSeparators={separators}
         style={style}
-        {...props}
       >
         <ColumnGroup id="group_one" name="Group One">
           <GridColumn
@@ -328,3 +326,5 @@ export const CssVariablesExample = (props: Partial<GridProps<GridCssVar>>) => {
     </FlexLayout>
   );
 };
+
+export const CssVariables = CssVariablesTemplate.bind({});
