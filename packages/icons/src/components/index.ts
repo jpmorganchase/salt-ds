@@ -87,7 +87,6 @@ export * from "./ImportSolid";
 export * from "./Inbox";
 export * from "./InboxSolid";
 export * from "./Info";
-export * from "./InfoSecondary";
 export * from "./LineChart";
 export * from "./LineChartSolid";
 export * from "./Linked";
