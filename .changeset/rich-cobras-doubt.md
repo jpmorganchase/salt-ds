@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-icons": minor
 ---
 
-Delete HelpSecondary Icon
+Delete HelpSecondaryIcon
