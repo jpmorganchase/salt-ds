@@ -1,9 +1,13 @@
 import { createIcon } from "../icon/createIcon";
 
 export const ErrorIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="ErrorIcon">
-    <path d="M3 0 0 3v6l3 3h6l3-3V3L9 0H3zm2 2h2v5H5V2zm2 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+  <svg viewBox="0 0 12 12" fill="none" data-testid="ErrorIcon">
+    <path d="M5 2h2v5H5V2Zm2 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+    <path
+      clip-rule="evenodd"
+      d="M3 0h6l3 3v6l-3 3H3L0 9V3l3-3ZM1 3.414 3.414 1h5.172L11 3.414v5.172L8.586 11H3.414L1 8.586V3.414Z"
+    />
   </svg>,
   "Error",
-  "error"
+  "Error"
 );
