@@ -1,5 +1,15 @@
 # @jpmorganchase/uitk-icons
 
+## 0.5.0
+
+### Minor Changes
+
+- 5b9a50db: Delete WarningSecondaryIcon
+- eda3b744: Delete ErrorSecondaryIcon
+- ae1591ae: Delete HelpSecondaryIcon
+- 926cfb2e: Delete SuccessSecondaryIcon
+- 7d5afa66: Delete InfoSecondaryIcon
+
 ## 0.4.1
 
 ### Patch Changes

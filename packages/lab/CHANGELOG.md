@@ -1,5 +1,11 @@
 # @jpmorganchase/uitk-lab
 
+## 0.7.1
+
+### Patch Changes
+
+- 91f8c665: use of scrollHeight to detect overflow doesn't work correctly. Fix for horizontal overflow containers
+
 ## 0.7.0
 
 ### Minor Changes
