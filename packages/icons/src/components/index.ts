@@ -154,7 +154,6 @@ export * from "./StepSuccess";
 export * from "./Storage";
 export * from "./StorageSolid";
 export * from "./Success";
-export * from "./SuccessSecondary";
 export * from "./SuccessTick";
 export * from "./Sum";
 export * from "./SumSolid";
