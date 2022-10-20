@@ -1,5 +1,19 @@
 # @jpmorganchase/uitk-core
 
+## 0.7.0
+
+### Minor Changes
+
+- 919e3931: Only trigger ParentChildItem animations when a direction is passed
+- 63c64c98: - Change characteristics order for consistency
+  - Add explanatory text to status prop
+  - Change validation name status order for consistency
+- ce778adc: Set button's default type attribute to "button" rather than "submit"
+
+### Patch Changes
+
+- fdb9dd63: Fix missing prop "align" in SplitLayout
+
 ## 0.6.0
 
 ### Minor Changes

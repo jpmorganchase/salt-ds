@@ -1,5 +1,14 @@
 # @jpmorganchase/uitk-lab
 
+## 0.7.0
+
+### Minor Changes
+
+- 153f23f0: Added Banner component to lab
+- 2ae6c9e0: Bug: List should not throw a runtime exception if focused when empty
+- 1f70bb7f: Fix onMouseDown prop on Tabstrip being ignored.
+  Improve TypeScript types for Tabs
+
 ## 0.6.0
 
 ### Minor Changes
