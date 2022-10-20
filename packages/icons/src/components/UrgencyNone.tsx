@@ -5,5 +5,5 @@ export const UrgencyNoneIcon = createIcon(
     <path d="M11 4H1v1h10V4Zm0 3H1v1h10V7Z" />
   </svg>,
   "UrgencyNone",
-  "UrgencyNone"
+  "urgency none"
 );

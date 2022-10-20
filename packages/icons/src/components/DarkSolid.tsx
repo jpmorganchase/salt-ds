@@ -6,5 +6,5 @@ export const DarkSolidIcon = createIcon(
     <path d="M6.387 2.899H7.45V3.91H6.387V2.9ZM9.58.876h1.065v1.011H9.58V.876Zm0 4.046h1.065v1.011H9.58V4.922Z" />
   </svg>,
   "DarkSolid",
-  "DarkSolid"
+  "dark solid"
 );

@@ -54,7 +54,7 @@ glob(globPath, options, function (error, filenames) {
 
       console.log("processing", fileName, "to", newFileName);
 
-      let iconTitle = componentName;
+      let iconTitle = filenameWithoutExtension.split("-").join(" ").toLowerCase();
 
       const document = htmlparser2.parseDocument(svgString);
       htmlparser2.DomUtils.find(

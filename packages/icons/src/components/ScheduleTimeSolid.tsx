@@ -6,5 +6,5 @@ export const ScheduleTimeSolidIcon = createIcon(
     <path d="M8.707 0H1v12h10V2.293L8.707 0ZM7 1h1v2h2v1H7V1Zm1.5 6.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
   </svg>,
   "ScheduleTimeSolid",
-  "ScheduleTimeSolid"
+  "schedule time solid"
 );

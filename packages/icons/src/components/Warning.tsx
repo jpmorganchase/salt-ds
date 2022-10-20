@@ -6,5 +6,5 @@ export const WarningIcon = createIcon(
     <path d="m6 0 6 12H0L6 0ZM1.618 11 6 2.236 10.382 11H1.618Z" />
   </svg>,
   "Warning",
-  "Warning"
+  "warning"
 );

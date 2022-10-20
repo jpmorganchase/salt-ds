@@ -5,5 +5,5 @@ export const BookmarkSolidIcon = createIcon(
     <path d="m6 10 4 2V0H2v12l4-2Z" />
   </svg>,
   "BookmarkSolid",
-  "BookmarkSolid"
+  "bookmark solid"
 );

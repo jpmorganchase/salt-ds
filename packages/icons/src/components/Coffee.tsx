@@ -6,5 +6,5 @@ export const CoffeeIcon = createIcon(
     <path d="M8 2H2v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V2Zm1-1v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V1h8Z" />
   </svg>,
   "Coffee",
-  "Coffee"
+  "coffee"
 );

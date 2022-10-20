@@ -6,5 +6,5 @@ export const ProgressClosedIcon = createIcon(
     <path d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12ZM3 9V3h6v6H3Z" />
   </svg>,
   "ProgressClosed",
-  "ProgressClosed"
+  "progress closed"
 );

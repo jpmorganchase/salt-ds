@@ -7,5 +7,5 @@ export const TagClearSolidIcon = createIcon(
     <path d="M10.286 11 8.5 9.214 6.714 11 6 10.286 7.786 8.5 6 6.714 6.714 6 8.5 7.786 10.286 6l.714.714L9.214 8.5 11 10.286l-.714.714Z" />
   </svg>,
   "TagClearSolid",
-  "TagClearSolid"
+  "tag clear solid"
 );

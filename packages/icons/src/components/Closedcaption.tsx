@@ -6,5 +6,5 @@ export const ClosedcaptionIcon = createIcon(
     <path d="M0 11V1h12v10H0Zm1-9h10v8H1V2Z" />
   </svg>,
   "Closedcaption",
-  "Closedcaption"
+  "closedcaption"
 );

@@ -7,5 +7,5 @@ export const BuildingsIcon = createIcon(
     <path d="M2 3h1v1H2V3Zm0 2h1v1H2V5Zm0 2h1v1H2V7Zm2-4h1v1H4V3Zm0 2h1v1H4V5Zm0 2h1v1H4V7Zm-1 4V9h1v2H3Z" />
   </svg>,
   "Buildings",
-  "Buildings"
+  "buildings"
 );

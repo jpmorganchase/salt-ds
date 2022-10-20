@@ -6,5 +6,5 @@ export const LocationIcon = createIcon(
     <path d="M6 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
   </svg>,
   "Location",
-  "Location"
+  "location"
 );

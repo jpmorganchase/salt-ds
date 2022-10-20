@@ -6,5 +6,5 @@ export const HelpIcon = createIcon(
     <path d="M12 12V0H0v12h12ZM.996 1.008h10.008v9.996H.996V1.008Z" />
   </svg>,
   "Help",
-  "Help"
+  "help"
 );

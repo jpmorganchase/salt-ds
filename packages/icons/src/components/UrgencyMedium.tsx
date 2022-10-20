@@ -6,5 +6,5 @@ export const UrgencyMediumIcon = createIcon(
     <path d="M11.3 8.684 6 5 .7 8.684l.575.816L6 6.215 10.725 9.5l.575-.816Z" />
   </svg>,
   "UrgencyMedium",
-  "UrgencyMedium"
+  "urgency medium"
 );
