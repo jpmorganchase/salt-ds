@@ -56,13 +56,7 @@ glob(globPath, options, function (error, filenames) {
 
       let iconTitle = componentName;
 
-      // Some icon svg contains `fill="#4c505b"` which will break CSS var styling
-      const svgFillRemoved = svgString.replaceAll(
-        new RegExp(`fill=\\"#\\w*\\"`, "g"),
-        ""
-      );
-
-      const document = htmlparser2.parseDocument(svgFillRemoved);
+      const document = htmlparser2.parseDocument(svgString);
       htmlparser2.DomUtils.find(
         (node) => {
           if (node.name === "title" && node.children.length > 0) {
@@ -73,6 +67,26 @@ glob(globPath, options, function (error, filenames) {
         true,
         1
       );
+
+      // Some icon svg contain fill attributes which will break CSS var styling
+      htmlparser2.DomUtils.findAll(
+        (node) => {
+          if (node.attribs.fill) {
+            delete node.attribs.fill;
+          }
+        },
+        document.children,
+        true
+      );
+
+      // This strips fill-rule and clip-rule from the paths
+      htmlparser2.DomUtils.getElementsByTagName("path", document.children).forEach(node => {
+        Object.keys(node.attribs).forEach((key) => {
+          if(key !== 'd'){
+            delete node.attribs[key];
+          }
+        });
+      });
 
       const svg = htmlparser2.DomUtils.findOne(
         (node) => node.name === "svg",
