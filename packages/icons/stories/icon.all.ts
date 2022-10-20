@@ -190,7 +190,6 @@ import {
   VolumeOffIcon,
   VolumeUpIcon,
   WarningIcon,
-  WarningSecondaryIcon,
   XlsIcon,
   ZipIcon,
 } from "@jpmorganchase/uitk-icons";
@@ -387,7 +386,6 @@ export const allIcons = [
   VolumeOffIcon,
   VolumeUpIcon,
   WarningIcon,
-  WarningSecondaryIcon,
   XlsIcon,
   ZipIcon,
 ];
