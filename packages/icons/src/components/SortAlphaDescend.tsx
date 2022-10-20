@@ -1,4 +1,4 @@
-import { createIcon } from '../icon/createIcon';
+import { createIcon } from "../icon/createIcon";
 
 export const SortAlphaDescendIcon = createIcon(
   <svg viewBox="0 0 12 13" data-testid="SortAlphaDescendIcon">

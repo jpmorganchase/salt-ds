@@ -1,4 +1,4 @@
-import { createIcon } from '../icon/createIcon';
+import { createIcon } from "../icon/createIcon";
 
 export const LightSolidIcon = createIcon(
   <svg viewBox="0 0 12 12" data-testid="LightSolidIcon">

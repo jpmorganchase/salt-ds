@@ -54,7 +54,10 @@ glob(globPath, options, function (error, filenames) {
 
       console.log("processing", fileName, "to", newFileName);
 
-      let iconTitle = filenameWithoutExtension.split("-").join(" ").toLowerCase();
+      let iconTitle = filenameWithoutExtension
+        .split("-")
+        .join(" ")
+        .toLowerCase();
 
       const document = htmlparser2.parseDocument(svgString);
       htmlparser2.DomUtils.find(
@@ -80,9 +83,12 @@ glob(globPath, options, function (error, filenames) {
       );
 
       // This strips fill-rule and clip-rule from the paths
-      htmlparser2.DomUtils.getElementsByTagName("path", document.children).forEach(node => {
+      htmlparser2.DomUtils.getElementsByTagName(
+        "path",
+        document.children
+      ).forEach((node) => {
         Object.keys(node.attribs).forEach((key) => {
-          if(key !== 'd'){
+          if (key !== "d") {
             delete node.attribs[key];
           }
         });
