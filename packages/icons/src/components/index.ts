@@ -79,7 +79,6 @@ export * from "./GridSolid";
 export * from "./GuideClosed";
 export * from "./GuideOpen";
 export * from "./Help";
-export * from "./HelpSecondary";
 export * from "./Hidden";
 export * from "./Home";
 export * from "./HomeSolid";
