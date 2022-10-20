@@ -107,7 +107,6 @@
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
     "sass": "^1.52.3",
-    "svgo": "^2.3.0",
     "tinycolor2": "^1.4.2",
     "ts-node": "^10.4.0",
     "typescript": "4.6.4",
