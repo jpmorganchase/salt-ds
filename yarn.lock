@@ -2963,7 +2963,7 @@ __metadata:
     "@types/classnames": ^2.2.11
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
-    "@types/node": ^14.14.20
+    "@types/node": ^16.0.0
     "@types/react": ^17.0.0
     "@types/react-color": ^3.0.6
     "@types/react-dom": ^17.0.0
@@ -5501,14 +5501,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0":
-  version: 16.11.36
-  resolution: "@types/node@npm:16.11.36"
-  checksum: 878e8e2032869785dd4f73dd862042c7eb588fb9a27199f1b493a7029438ccb58f96e203c35c2e66e08307ca3f9767133cae888958c15e031982f7e9719e5e47
+"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0, @types/node@npm:^16.0.0":
+  version: 16.11.68
+  resolution: "@types/node@npm:16.11.68"
+  checksum: a35293b6b8867e10ab9e10b6cd5f0e4224a86256d5ef102581dcb9f79f35f255ad87443e8584ddf8dce1229ee28885c58187e41822cf8d1e82495e7897c47c3f
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.20, @types/node@npm:^14.14.31, @types/node@npm:^14.6.2":
+"@types/node@npm:^14.14.31, @types/node@npm:^14.6.2":
   version: 14.18.16
   resolution: "@types/node@npm:14.18.16"
   checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24
