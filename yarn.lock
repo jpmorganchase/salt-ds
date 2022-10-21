@@ -3042,7 +3042,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
   dependencies:
-    js-beautify: 1.14.6
+    js-beautify: 1.14.7
     tinycolor2: 1.4.2
   languageName: unknown
   linkType: soft
@@ -16029,9 +16029,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-beautify@npm:1.14.6":
-  version: 1.14.6
-  resolution: "js-beautify@npm:1.14.6"
+"js-beautify@npm:1.14.7":
+  version: 1.14.7
+  resolution: "js-beautify@npm:1.14.7"
   dependencies:
     config-chain: ^1.1.13
     editorconfig: ^0.15.3
@@ -16041,7 +16041,7 @@ __metadata:
     css-beautify: js/bin/css-beautify.js
     html-beautify: js/bin/html-beautify.js
     js-beautify: js/bin/js-beautify.js
-  checksum: 2e61c1183c73d7464ec7d5354763ee9e17ecb4b5c7a3744e9a9dc2e9c406fc6e0c37399130d1ee48313ff502e03e8a949dce96acdaee309dc44317249565934d
+  checksum: 1950d0d3f05f8ad06b73eb77b9aac602d00b24eab7d8a6d8ea0b1841ab9c730acecd5a6f3926e360dce7a2583481bc77caf6d024490a58fa9897cbbbdfc35984
   languageName: node
   linkType: hard
 
