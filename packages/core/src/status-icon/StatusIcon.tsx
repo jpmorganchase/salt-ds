@@ -1,10 +1,10 @@
 import {
-  ErrorIcon,
-  IconProps,
-  InfoIcon,
-  SuccessTickIcon,
-  WarningIcon,
   DEFAULT_ICON_SIZE,
+  ErrorSolidIcon,
+  IconProps,
+  InfoSolidIcon,
+  SuccessTickIcon,
+  WarningSolidIcon,
 } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { forwardRef } from "react";
@@ -14,10 +14,10 @@ import { ValidationStatus } from "./ValidationStatus";
 import "./StatusIcon.css";
 
 const icons = {
-  error: ErrorIcon,
+  error: ErrorSolidIcon,
   success: SuccessTickIcon,
-  warning: WarningIcon,
-  info: InfoIcon,
+  warning: WarningSolidIcon,
+  info: InfoSolidIcon,
 };
 
 export interface StatusIconProps extends IconProps {
