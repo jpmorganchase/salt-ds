@@ -65,8 +65,6 @@
 
 /* Styles applied to status icon */
 .uitkTooltip-icon {
-  color: var(--uitkTooltip-icon-color, var(--tooltip-status-icon-color));
-  fill: var(--uitkTooltip-icon-color, var(--tooltip-status-icon-color));
   margin-right: var(--uitkTooltip-icon-marginRight, 6px);
   top: var(--tooltip-icon-top);
   vertical-align: top;
@@ -130,23 +128,19 @@
 /* Styles applied when status = "info" */
 .uitkTooltip-info {
   --tooltip-status-borderColor: var(--uitk-status-info-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-info-foreground);
 }
 
 /* Styles applied when status = "error" */
 .uitkTooltip-error {
   --tooltip-status-borderColor: var(--uitk-status-error-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-error-foreground);
 }
 
 /* Styles applied when status = "warning" */
 .uitkTooltip-warning {
   --tooltip-status-borderColor: var(--uitk-status-warning-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-warning-foreground);
 }
 
 /* Styles applied when status = "success" */
 .uitkTooltip-success {
   --tooltip-status-borderColor: var(--uitk-status-success-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-success-foreground);
 }
