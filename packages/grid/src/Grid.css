@@ -24,7 +24,7 @@
 
 .uitk-density-high {
   --grid-row-height-default: 25px;
-  --grid-padding-default: 8px;
+  --grid-padding-default: 4px;
   --grid-fontSize-default: 11px;
   --grid-header-fontSize-default: 10px;
   --grid-separatorGap-default: 8px;
@@ -55,7 +55,7 @@
   --grid-groupHeader-color-default: var(--uitk-color-grey-200);
   --grid-shadow-color-default: rgba(0, 0, 0, 0.2);
   --grid-columnDropTarget-color-default: var(--uitk-color-blue-500);
-  --grid-cursor-borderColor-default: #00477b;
+  --grid-cursor-borderColor-default: var(--uitk-color-blue-400);
   --grid-borderColor-default: var(--uitk-color-grey-90);
 
   --grid-rowSeparator-color-default: rgba(0, 0, 0, 0.1);
@@ -65,8 +65,8 @@
 
 .uitk-dark {
   --grid-background-primary-default: var(--uitk-color-grey-800);
-  --grid-background-secondary-default: #2f3136;
-  --grid-zebraColor-default: rgba(255, 255, 255, 0.05);
+  --grid-background-secondary-default: var(--uitk-color-grey-600);
+  --grid-zebraColor-default: var(--uitk-color-grey-600);
 
   --grid-row-background-hover-default: var(--uitk-color-blue-900);
   --grid-row-background-selected-default: var(--uitk-color-blue-800);
@@ -87,7 +87,7 @@
   --grid-groupHeader-color-default: var(--uitk-color-grey-70);
   --grid-shadow-color-default: rgba(255, 255, 255, 0.4);
   --grid-columnDropTarget-color-default: var(--uitk-color-blue-100);
-  --grid-cursor-borderColor-default: #7dc3f2;
+  --grid-cursor-borderColor-default: var(--uitk-color-blue-400);
   --grid-borderColor-default: var(--uitk-color-grey-100);
 
   --grid-rowSeparator-color-default: rgba(255, 255, 255, 0.1);
