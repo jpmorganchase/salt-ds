@@ -1,23 +1,21 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-container-borderWidth: 1px;
-  --uitk-container-borderStyle: solid;
   --uitk-container-borderRadius: 0;
-  --uitk-container-textAlign: center;
+  --uitk-container-borderStyle: solid;
+  --uitk-container-borderWidth: 1px;
 
   --uitk-container-cta-borderColor: var(--uitk-palette-neutral-cta-border);
   --uitk-container-primary-borderColor: var(--uitk-palette-neutral-primary-border);
   --uitk-container-secondary-borderColor: var(--uitk-palette-neutral-secondary-border);
 
   --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
+  --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
+  --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
+  
   --uitk-container-borderColor-low: transparent;
   --uitk-container-borderColor-disabled-low: transparent;
-
-  --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
   --uitk-container-borderColor-medium: var(--uitk-palette-neutral-border-medium);
   --uitk-container-borderColor-disabled-medium: var(--uitk-palette-neutral-border-disabled-medium);
-
-  --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
   --uitk-container-borderColor-high: var(--uitk-palette-neutral-border-high);
   --uitk-container-borderColor-disabled-high: var(--uitk-palette-neutral-border-disabled-high);
 }

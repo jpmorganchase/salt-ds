@@ -3,8 +3,8 @@
   --uitk-navigable-cursor-active: pointer;
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-disabled: not-allowed;
-  --uitk-navigable-cursor-edit: text;
-
+  --uitk-navigable-cursor-edit: text; 
+  
   --uitk-navigable-fontWeight: var(--uitk-typography-fontWeight-regular);
   --uitk-navigable-fontWeight-hover: var(--uitk-typography-fontWeight-regular);
   --uitk-navigable-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);
@@ -12,15 +12,14 @@
 
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
+  --uitk-navigable-indicator-disabled: var(--uitk-palette-navigate-indicator-disabled);
 
   --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
   --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);
   --uitk-navigable-background-active-low: var(--uitk-palette-navigate-background-active-low);
-
   --uitk-navigable-background-medium: var(--uitk-palette-navigate-background-medium);
   --uitk-navigable-background-hover-medium: var(--uitk-palette-navigate-background-hover-medium);
   --uitk-navigable-background-active-medium: var(--uitk-palette-navigate-background-active-medium);
-
   --uitk-navigable-background-high: var(--uitk-palette-navigate-background-high);
   --uitk-navigable-background-hover-high: var(--uitk-palette-navigate-background-hover-high);
   --uitk-navigable-background-active-high: var(--uitk-palette-navigate-background-active-high);
