@@ -1,0 +1,52 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Icon, AddDocumentIcon } from "@jpmorganchase/uitk-icons";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Icons/Icon"
+  component={Icon}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Icon
+
+Icon is an important visual representation of an application, a capability, or some other concept or specific entity with meaning on a interface. It is expected to help user to recognize and understand a content or an action regardless languages or culture boundaries.
+We have 3 sizes of icon set for users to choose in terms of different platforms or device size.
+
+If an icon is interactive, use [Button](?path=/docs/documentation-core-button--button-variants) (`CTA`, `Primary` or `Secondary` variant).
+
+<Canvas>
+  <Story id="icons-icon--toolkit-icon" />
+</Canvas>
+
+## Configuring Icon
+
+### API
+
+```
+import { Icon } from "@jpmorganchase/uitk-icons";
+```
+
+### Props
+
+<ArgsTable of={Icon} />
+
+## Anatomy
+
+<Canvas>
+  <ComponentAnatomy showControls={false}>
+    <AddDocumentIcon/>
+  </ComponentAnatomy>
+</Canvas>
+
+### Classes
+
+<CSSClassTable of={Icon} />
+
+<HelpAndSupport />
