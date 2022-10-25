@@ -7,7 +7,7 @@ import { OpacityBlock } from "docs/components/OpacityBlock";
 
 # Palette
 
-There is a special layer which sits in between the foundations and characteristics: the palette. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
+The palette sits in between the foundations and characteristics. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
 
 | Semantic | Appropriate usage                                               | Example token                                            | UITK Theme value<br /> (light mode) |
 | -------- | --------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------- |
@@ -26,7 +26,7 @@ There is a special layer which sits in between the foundations and characteristi
 
 # Usage
 
-The palette is intended to provide meaning to the colors used throughout the characteristics. Whilst a component only has to care that their background color is `--uitk-actionable-cta-background`, rather than this token directly pointing to the foundation token `--uitk-color-blue-500`, this value instead resolves to the palette token `--uitk-interact-cta-background`. Similarly, selectable backgrounds result to the same palette token. This ensures anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
+The palette provides meaning to the colors used throughout the characteristics. For a component with a background color set to `--uitk-actionable-cta-background`, rather than this token directly pointing to the foundation token `--uitk-color-blue-500`, this value instead resolves to the palette token `--uitk-interact-cta-background`. Similarly, selectable backgrounds resolve to the same palette token. This ensures that anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
 
 Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_** &#8594; Foundation token &#8594; Raw RGBA Value
 
@@ -34,16 +34,16 @@ Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_**
 
 Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>-<emphasis>`
 
-1. Always begin with `--uitk-palette-`
-2. Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
-3. Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
-4. Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
-5. Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
-6. Finally, add **_emphasis_** if applicable, e.g.: `--uitk-palette-neutral-border-medium`
+* Always begin with `--uitk-palette-`
+* Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
+* Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
+* Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
+* Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
+* Finally, add **_emphasis_** if applicable, e.g.: `--uitk-palette-neutral-border-medium`
 
 # Emphasis
 
-Some tokens below have `-low`, `-medium`, or `-high` suffixes. This means that they are values which should change with emphasis. For example,
+Some tokens below have `-low`, `-medium`, or `-high` suffixes. These are values which should change with emphasis. For example,
 
 The characteristic `--uitk-overlayable-background-medium` resolves to `--uitk-palette-neutral-scrim-medium` whilst the characteristic `--uitk-overlayable-background-low` resolves to `--uitk-palette-neutral-scrim-low`.
 
