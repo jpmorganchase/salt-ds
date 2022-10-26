@@ -1,14 +1,14 @@
 import {
-  ComponentType,
-  CSSProperties,
-  ReactNode,
-  useEffect,
-  useState,
   Children,
   cloneElement,
+  ComponentType,
+  CSSProperties,
   isValidElement,
-  memo,
+  KeyboardEvent,
+  ReactNode,
+  useEffect,
   useRef,
+  useState,
 } from "react";
 import { useGridContext } from "./GridContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
@@ -104,6 +104,10 @@ export interface GridColumnProps<T = any> {
    * A callback to be invoked when the user modifies a cell value.
    * */
   onChange?: (row: T, rowIndex: number, value: string) => void;
+  /**
+   * A callback to be invoked on key down when the focus is in this column.
+   */
+  onKeyDown?: (event: KeyboardEvent<HTMLDivElement>, rowIndex: number) => void;
   children?: ReactNode;
 }
 

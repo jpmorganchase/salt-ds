@@ -826,14 +826,22 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
     (event) => {
-      [
-        navigationKeyHandler,
-        clipboardKeyHandler,
-        selectionKeyHandler,
-        editModeKeyHandler,
-      ].find((handler) => {
-        return handler(event);
-      });
+      if (cursorColIdx != undefined && cursorRowIdx != undefined) {
+        const column = cols[cursorColIdx];
+        if (column.info.props.onKeyDown) {
+          column.info.props.onKeyDown(event, cursorRowIdx);
+        }
+      }
+      if (!event.isPropagationStopped()) {
+        [
+          navigationKeyHandler,
+          clipboardKeyHandler,
+          selectionKeyHandler,
+          editModeKeyHandler,
+        ].find((handler) => {
+          return handler(event);
+        });
+      }
     },
     [
       navigationKeyHandler,
