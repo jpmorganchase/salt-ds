@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Density, useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
 
 const safeParseFloat = (target?: string) => parseFloat(target || "0");
@@ -36,18 +36,11 @@ export const useWidth = (
   const [node, setNode] = useState<HTMLElement | null>(null);
   const [width, setWidth] = useState<number>(0);
 
-  // use callback ref as some element may not get rendered initially
-  const ref = useCallback((newNode: HTMLElement | null) => {
-    if (newNode !== null) {
-      setNode(newNode);
-    }
-  }, []);
-
   useIsomorphicLayoutEffect(() => {
     if (node !== null) {
       setWidth(getWidth(node));
     }
   }, [node, density]);
 
-  return [ref, width];
+  return [setNode, width];
 };

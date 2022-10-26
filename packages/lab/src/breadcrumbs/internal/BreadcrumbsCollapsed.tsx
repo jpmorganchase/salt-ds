@@ -1,16 +1,17 @@
 import {
   Children,
   isValidElement,
-  ReactElement,
   ReactNode,
   useCallback,
   MouseEvent,
   KeyboardEvent,
+  Component,
 } from "react";
 import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
 import { useFocusMenuRemount } from "./useFocusMenuRemount";
 import { MenuButton, MenuButtonProps } from "../../menu-button";
+import { BreadcrumbProps } from "../Breadcrumb";
 
 export interface BreadcrumbsCollapsedProps
   extends Omit<MenuButtonProps, "CascadingMenuProps"> {
@@ -37,7 +38,7 @@ export const BreadcrumbsCollapsed = ({
   const { ref, shouldFocusOnMount } =
     useFocusMenuRemount<HTMLButtonElement>(key);
 
-  const itemToString = useCallback((child: ReactElement) => {
+  const itemToString = useCallback((child: Component<BreadcrumbProps>) => {
     if (!child) {
       return "";
     }

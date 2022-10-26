@@ -67,13 +67,13 @@ export const useCollapsibleGroups = <Item>({
   );
 
   const handleClick = useCallback(
-    (evt: MouseEvent) => {
+    (evt: MouseEvent<HTMLElement>) => {
       console.log(`useCollapsibleGroups idx=${highlightedIdx}`);
       const item = collectionHook.data[highlightedIdx];
       if (
         item &&
         canToggleItem(item) &&
-        (!canSelectItem(item) || toggleIconClicked(evt.target as HTMLElement))
+        (!canSelectItem(item) || toggleIconClicked(evt.currentTarget))
       ) {
         evt.stopPropagation();
         evt.preventDefault();

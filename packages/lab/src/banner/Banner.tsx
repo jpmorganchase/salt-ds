@@ -4,7 +4,6 @@ import {
   HTMLAttributes,
   MouseEvent,
   ReactNode,
-  useCallback,
   useEffect,
   useState,
   Ref,
@@ -105,13 +104,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     null
   );
 
-  const setContainerRef = useCallback((node: HTMLDivElement) => {
-    if (node) {
-      setContainerNode(node);
-    }
-  }, []);
-
-  const handleRef = useForkRef<HTMLDivElement>(setContainerRef, ref);
+  const handleRef = useForkRef<HTMLDivElement>(setContainerNode, ref);
 
   useEffect(() => {
     if (!disableAnnouncer && containerNode) {
