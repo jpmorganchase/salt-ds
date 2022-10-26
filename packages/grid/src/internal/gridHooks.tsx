@@ -1149,7 +1149,10 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
       return;
     }
     setSelectedCellRange((old) => {
-      const { start } = keyboardSelectionRef.current!;
+      if (!keyboardSelectionRef.current) {
+        return old;
+      }
+      const { start } = keyboardSelectionRef.current;
       const p: CellRange = { start, end: pos };
       return cellRangeEquals(old, p) ? old : p;
     });
