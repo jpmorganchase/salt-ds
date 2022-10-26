@@ -42,10 +42,6 @@ export default {
     gap: {
       type: "number",
     },
-    separators: {
-      options: ["start", "center", "end", true],
-      control: { type: "select" },
-    },
   },
   args: {
     gap: 3,
@@ -90,7 +86,7 @@ const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
 
 export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
 
-const RightForm = () => (
+export const RightForm = () => (
   <Accordion>
     {Array.from({ length: 6 }, (_, index) => (
       <AccordionSection key={index} defaultExpanded={index === 0}>
@@ -120,7 +116,7 @@ const leftFormContent = (
   </>
 );
 
-const LeftForm = () => (
+export const LeftForm = () => (
   <>
     {leftFormContent}
     {leftFormContent}
@@ -149,10 +145,6 @@ const Form: ComponentStory<typeof FlowLayout> = (args) => {
   );
 };
 export const FlowLayoutComposite = Form.bind({});
-
-FlowLayoutComposite.args = {
-  separators: true,
-};
 
 const dropdownExampleData = [
   "Lorem ipsum dolor",
