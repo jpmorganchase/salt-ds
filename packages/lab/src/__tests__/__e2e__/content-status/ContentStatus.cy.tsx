@@ -1,7 +1,4 @@
-import {
-  useAriaAnnouncer,
-  AriaAnnouncerProvider,
-} from "@jpmorganchase/uitk-core";
+import { AriaAnnouncerProvider } from "@jpmorganchase/uitk-core";
 import { ContentStatus } from "@jpmorganchase/uitk-lab";
 
 describe("GIVEN Content Status", () => {
@@ -9,7 +6,7 @@ describe("GIVEN Content Status", () => {
     cy.mount(<ContentStatus id="1" />);
 
     cy.findByRole("region").should("not.exist"); // the content
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
   });
 
   it("renders the spinner WHEN the LOADING status is passed", () => {
@@ -35,7 +32,7 @@ describe("GIVEN Content Status", () => {
     );
 
     cy.findByRole("region").should("not.exist"); // the content
-    cy.findByTestId("WarningIcon").should("exist");
+    cy.findByTestId("WarningSolidIcon").should("exist");
 
     cy.get('[aria-live="assertive"]').should("contain", "warning");
   });
@@ -48,7 +45,7 @@ describe("GIVEN Content Status", () => {
     );
 
     cy.findByRole("region").should("not.exist"); // the content
-    cy.findByTestId("ErrorIcon").should("exist");
+    cy.findByTestId("ErrorSolidIcon").should("exist");
 
     cy.get('[aria-live="assertive"]').should("contain", "error");
   });
@@ -75,7 +72,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").children().should("have.length", 1);
     cy.findByText("Test Title").should("exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
 
     cy.get('[aria-live="assertive"]').should("contain", "Test Title info");
   });
@@ -89,7 +86,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").children().should("have.length", 1);
     cy.findByText("Test message").should("exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
 
     cy.get('[aria-live="assertive"]').should("contain", "Test message info");
   });
@@ -107,7 +104,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").children().should("have.length", 1);
     cy.findByText("My Label").should("exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
 
     cy.findByText("My Label").click();
     cy.get("@onActionClickSpy").should("have.been.calledOnce");
@@ -122,7 +119,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").should("not.exist");
     cy.findByText("My Label").should("not.exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
 
     cy.get("@onActionClickSpy").should("not.have.been.called");
   });
@@ -132,7 +129,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").should("not.exist");
     cy.findByText("My Label").should("not.exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
   });
 
   it("render children as actions WHEN they are passed", () => {
@@ -144,7 +141,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").children().should("have.length", 1);
     cy.findByText("Test Children").should("exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
   });
 
   it("buttonRef callback function is called WHEN the button is mounted", () => {
@@ -159,7 +156,7 @@ describe("GIVEN Content Status", () => {
 
     cy.findByRole("region").children().should("have.length", 1);
     cy.get("button").should("exist");
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
 
     cy.get("@buttonRefSpy").should("have.been.calledOnce");
   });
