@@ -1,7 +1,7 @@
 .uitkDropdownButton {
   --uitkButton-background-hover: var(--uitk-actionable-secondary-background);
   --uitkButton-background-active: var(--uitk-actionable-secondary-background);
-  --uitkButton-fontWeight: var(--uitk-typography-weight-medium);
+  --uitkButton-fontWeight: var(--uitk-typography-fontWeight-medium);
   --uitkButton-textAlign: left;
   --uitkButton-textTransform: none;
   --uitkButton-width: 100%;
