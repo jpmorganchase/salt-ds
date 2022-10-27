@@ -9,14 +9,16 @@
  *
  */
 
-const fs = require("fs");
-const path = require("path");
-const glob = require("glob");
-const { optimize } = require("svgo");
-const prettier = require("prettier");
-const Mustache = require("mustache");
-const htmlparser2 = require("htmlparser2");
-const render = require("dom-serializer").default;
+import fs from "fs";
+import path, { dirname } from "path";
+import glob from "glob";
+import prettier from "prettier";
+import Mustache from "mustache";
+import { convertSvgToJsx } from "@svgo/jsx";
+import { optimize } from "svgo";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** Change kebab casing to Pascal casing */
 function pascalCase(str) {
@@ -54,49 +56,45 @@ glob(globPath, options, function (error, filenames) {
 
       console.log("processing", fileName, "to", newFileName);
 
-      let iconTitle = componentName;
+      let iconTitle = filenameWithoutExtension
+        .split("-")
+        .join(" ")
+        .toLowerCase();
 
-      // Some icon svg contains `fill="#4c505b"` which will break CSS var styling
-      const svgFillRemoved = svgString.replaceAll(
-        new RegExp(`fill=\\"#\\w*\\"`, "g"),
-        ""
-      );
-
-      const document = htmlparser2.parseDocument(svgFillRemoved);
-      htmlparser2.DomUtils.find(
-        (node) => {
-          if (node.name === "title" && node.children.length > 0) {
-            iconTitle = node.children[0].data.replace(/-/g, " ");
-          }
-        },
-        document.children,
-        true,
-        1
-      );
-
-      const svg = htmlparser2.DomUtils.findOne(
-        (node) => node.name === "svg",
-        document.children,
-        true
-      );
-
-      // It is unnecessary for inner svg elements or inside HTML documents.
-      // https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg
-      delete svg.attribs.xmlns;
-
-      // `width` and `height` will be provided by CSS.
-      // Also, if these exists, svgo will optimizes out `viewBox` which is more important for us
-      delete svg.attribs.width;
-      delete svg.attribs.height;
-
-      svg.attribs["data-testid"] = `${componentName}Icon`;
-      const svgOutput = render(svg);
-
-      const result = optimize(svgOutput, {
-        plugins: ["preset-default"],
+      // SVGO is a separate step to enable multi-pass optimizations.
+      const optimizedSvg = optimize(svgString, {
+        plugins: [
+          {
+            name: "addAttributesToSVGElement",
+            params: {
+              attribute: { "data-testid": `${componentName}Icon` },
+            },
+          },
+          {
+            name: "preset-default",
+            params: {
+              overrides: {
+                // makes icons scaled into width/height box
+                removeViewBox: false,
+              },
+            },
+          },
+          { name: "removeXMLNS" },
+          {
+            name: "removeAttrs",
+            params: {
+              attrs: "(fill|width|height)",
+            },
+          },
+        ],
         multipass: true,
       });
-      const optimizedSvgString = result.data;
+
+      const result = convertSvgToJsx({
+        svg: optimizedSvg.data,
+      });
+
+      const optimizedSvgString = result.jsx;
 
       const fileContents = Mustache.render(template, {
         svg: optimizedSvgString,
