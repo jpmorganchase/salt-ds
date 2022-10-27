@@ -18,17 +18,18 @@ You can use styling attributes from the UITK theme to style many elements of you
 ### Explaining our approach
 
 For the Toolkit, our design system is built simply from vanilla CSS. There are a number of factors for this decision, including the following:
-* Since we don't rely on any third party styling dependencies, we have been completely free in our approach to styling.
-* There has been a lot of innovation in the CSS world over the last few years and CSS custom properties are one of the most powerful of the new features. Our theming mechanism is built 100% on CSS custom properties. 
-* While CSS-in-JS solutions have improved in terms of performance most still involve some runtime overhead, embracing vanilla CSS removes this overhead.
-* With vanilla CSS making up the foundation of a Toolkit theme, the theme itself can be published and consumed independently from the component libraries. It can be used in contexts where Toolkit components are not even used, e.g. static code deployment in CMS type systems. 
-* Separation of styling into CSS files also reduces the tie-in with React, which might not be important in the short term, but longer term opens up the possibility that we could share styling assets with non-react components.
-The pattern adopted by the UI Toolkit for styling provides not only the mechanism by which Toolkit components
-themselves are styled, it also provides a consistent approach for styling all elements of your application. Most
-applications will probably contain some mix of Toolkit components, plain HTML infrastructure, often for layout purposes,
-custom components you build yourself, and maybe some third party components. You should be able to make use of the
-styling primitives offered by the Toolkit theme to help style all of these. The goal is to make it as easy as possible to
-achieve consistency of styling across your entire application.
+
+- Since we don't rely on any third party styling dependencies, we have been completely free in our approach to styling.
+- There has been a lot of innovation in the CSS world over the last few years and CSS custom properties are one of the most powerful of the new features. Our theming mechanism is built 100% on CSS custom properties.
+- While CSS-in-JS solutions have improved in terms of performance most still involve some runtime overhead, embracing vanilla CSS removes this overhead.
+- With vanilla CSS making up the foundation of a Toolkit theme, the theme itself can be published and consumed independently from the component libraries. It can be used in contexts where Toolkit components are not even used, e.g. static code deployment in CMS type systems.
+- Separation of styling into CSS files also reduces the tie-in with React, which might not be important in the short term, but longer term opens up the possibility that we could share styling assets with non-react components.
+  The pattern adopted by the UI Toolkit for styling provides not only the mechanism by which Toolkit components
+  themselves are styled, it also provides a consistent approach for styling all elements of your application. Most
+  applications will probably contain some mix of Toolkit components, plain HTML infrastructure, often for layout purposes,
+  custom components you build yourself, and maybe some third party components. You should be able to make use of the
+  styling primitives offered by the Toolkit theme to help style all of these. The goal is to make it as easy as possible to
+  achieve consistency of styling across your entire application.
 
 The CSS comprises the following two kinds of declarations:
 
@@ -50,17 +51,19 @@ A simple example will help to illustrate some of the key concepts:
 ```
 
 ### Theme CSS + Component CSS
+
 The styling of our UI Toolkit componentry is defined in the following two places, which operate together at runtime:
 
-* Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes
-* Component styles - each component contributes its own stylesheet. Many of the CSS declarations in here will reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
+- Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes
+- Component styles - each component contributes its own stylesheet. Many of the CSS declarations in here will reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
 
 #### Theme styles
 
-A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories: 
-* foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
-* characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
-* an in-between palette - The palette is a carefully selected group of color tokens which are aliased to give semantic meaning; allowing for a more consistent look and feel when used by characteristics, rather than foundation colors directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
+A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories:
+
+- foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
+- characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
+- an in-between palette - The palette is a carefully selected group of color tokens which are aliased to give semantic meaning; allowing for a more consistent look and feel when used by characteristics, rather than foundation colors directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
 
 Foundational tokens can broken into the following groups:
 
@@ -118,10 +121,11 @@ And finally, the palette:
 #### Token naming conventions
 
 Comparing the tokens above, you may have noticed the following conventions we have applied to token naming:
-* CSS variables in the UI Toolkit theme are prefixed `--uitk-`. This is a rule with no exceptions.
-* Foundation tokens all use CSS constant values.
-* Characteristic tokens use a mixture of CSS values and references to foundation tokens. It is possible for characteristic tokens to also reference other characteristic tokens.
-* Foundation and characteristic token names all begin `--uitk-<foundation/characteristic name>-`. This again is a rule with no exceptions.
+
+- CSS variables in the UI Toolkit theme are prefixed `--uitk-`. This is a rule with no exceptions.
+- Foundation tokens all use CSS constant values.
+- Characteristic tokens use a mixture of CSS values and references to foundation tokens. It is possible for characteristic tokens to also reference other characteristic tokens.
+- Foundation and characteristic token names all begin `--uitk-<foundation/characteristic name>-`. This again is a rule with no exceptions.
 
 #### Theme scoping - how CSS variables work
 
@@ -210,14 +214,15 @@ We have already mentioned that components will reference Theme variables, the ex
   font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
 }
 ```
-* All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
-* The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
-* A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
-   var(--primary-variable-value, var(--fallback-value))
-* The fallback value can equally be a simple constant CSS value
-   var(--primary-variable-value, 12px);
 
-In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--uitk-text-fontSize`.  Providing that a UI Toolkit theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+- All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
+- The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
+- A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
+  var(--primary-variable-value, var(--fallback-value))
+- The fallback value can equally be a simple constant CSS value
+  var(--primary-variable-value, 12px);
+
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--uitk-text-fontSize`. Providing that a UI Toolkit theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
 Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a `CSS API variable`. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
 
