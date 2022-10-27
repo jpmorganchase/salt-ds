@@ -45,7 +45,7 @@
 .uitkBanner-label {
   flex: 1 0;
   padding: calc(var(--banner-padding) + 2px) 0 calc(var(--banner-padding));
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-typography-fontWeight-semiBold);
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight);
   color: var(--banner-label-color);
@@ -66,7 +66,7 @@
 }
 
 .uitkBanner-link {
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-typography-fontWeight-semiBold);
   margin-left: 1ch;
 }
 

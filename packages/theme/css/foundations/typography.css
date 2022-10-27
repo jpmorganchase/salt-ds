@@ -5,12 +5,12 @@
   --uitk-typography-fontFamily: uitk-sans;
   --uitk-typography-fontFamily-code: "PT Mono";
 
-  --uitk-typography-weight-light: 300;
-  --uitk-typography-weight-regular: 400;
-  --uitk-typography-weight-medium: 500;
-  --uitk-typography-weight-semiBold: 600;
-  --uitk-typography-weight-bold: 700;
-  --uitk-typography-weight-extraBold: 800;
+  --uitk-typography-fontWeight-light: 300;
+  --uitk-typography-fontWeight-regular: 400;
+  --uitk-typography-fontWeight-medium: 500;
+  --uitk-typography-fontWeight-semiBold: 600;
+  --uitk-typography-fontWeight-bold: 700;
+  --uitk-typography-fontWeight-extraBold: 800;
 
   /**
     The below size values are now deprecated.
