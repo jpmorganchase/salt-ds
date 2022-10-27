@@ -14,7 +14,7 @@ p {
 }
 
 body {
-  font-family: var(--uitk-typography-fontFamily);
+  font-family: "uitk-sans";
 }
 
 uitk-theme {
