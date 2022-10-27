@@ -13,7 +13,14 @@ del.sync([buildFolder], { force: true });
 esbuild
   .build({
     absWorkingDir: path.resolve(__dirname, ".."),
-    entryPoints: ["index.css"],
+    entryPoints: [
+      "index.css",
+      // Expose theme, font and global css separately to offer a choice to users if they don't want certain part of index.css.
+      // e.g. when `--uitk-typography-fontFamily` is overridden
+      "css/uitk-sans.css",
+      "css/theme.css",
+      "css/global.css",
+    ],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
     loader: {
