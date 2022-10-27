@@ -1,7 +1,7 @@
-import { useCallback, MouseEvent } from "react";
+import { MouseEvent, useCallback } from "react";
 import { ArrowLeft, ArrowRight, Enter } from "./keyUtils";
 import { ListHandlers } from "./selectionTypes";
-import { CollectionItem, CollectionHookResult } from "./collectionTypes";
+import { CollectionHookResult, CollectionItem } from "./collectionTypes";
 
 const NO_HANDLERS = {};
 const canToggleItem = (item: CollectionItem<unknown>) =>
@@ -10,10 +10,10 @@ const canToggleItem = (item: CollectionItem<unknown>) =>
 const canSelectItem = (item: CollectionItem<unknown>) => true;
 
 const toggleIconClicked = (el: HTMLElement) => {
-  const closestToggle = el.querySelector(
+  const closestToggle = el.closest(
     "[data-toggle],[aria-expanded]"
-  ) as HTMLElement | null;
-  return closestToggle?.dataset.toggle === "true";
+  ) as HTMLElement;
+  return closestToggle.dataset.toggle === "true";
 };
 
 interface CollapsibleHookProps<Item> {
@@ -74,7 +74,7 @@ export const useCollapsibleGroups = <Item>({
       if (
         item &&
         canToggleItem(item) &&
-        (!canSelectItem(item) || toggleIconClicked(evt.currentTarget))
+        (!canSelectItem(item) || toggleIconClicked(evt.target as HTMLElement))
       ) {
         evt.stopPropagation();
         evt.preventDefault();
