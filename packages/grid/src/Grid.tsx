@@ -386,12 +386,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [leftCols, midCols, rightCols]
   );
 
-  const colIdxByKey = useMemo(
-    () =>
-      new Map<string, number>(cols.map((c, i) => [c.info.props.id, c.index])),
-    [cols]
-  );
-
   const scroll = useCallback(
     (left?: number, top?: number, source?: "user" | "table") => {
       setScrollSource(source || "user");

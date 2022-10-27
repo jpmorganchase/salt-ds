@@ -1,6 +1,7 @@
 import { Story } from "@storybook/react";
 import "./grid.stories.css";
 import {
+  CellEditor,
   ColumnGroup,
   DropdownCellEditor,
   Grid,
@@ -29,7 +30,6 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "../../icons";
-import { CellEditor } from "../src/CellEditor";
 import {
   allLocations,
   createDummyInvestors,
