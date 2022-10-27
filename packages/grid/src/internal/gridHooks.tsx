@@ -760,6 +760,7 @@ export function useRowSelection<T>(
       }
     },
     [
+      selRowIdxs,
       lastSelRowIdx,
       setSelRowIdxs,
       setLastSelRowIdx,
