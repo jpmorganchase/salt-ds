@@ -77,9 +77,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
         });
         if (isExpanded) {
           setExpandedSectionIds((oldExpandedSectionIds) => {
-            const newExpandedSectionIds = ([] as string[]).concat(
-              oldExpandedSectionIds ?? []
-            );
+            const newExpandedSectionIds = [...oldExpandedSectionIds];
             newExpandedSectionIds.push(sectionId);
             return newExpandedSectionIds;
           });
@@ -92,7 +90,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       console.log(`Section "${sectionId}" unregistered`);
       if (expandedSectionIds.includes(sectionId)) {
         setExpandedSectionIds((oldValue) =>
-          oldValue?.filter((id) => id !== sectionId)
+          oldValue.filter((id) => id !== sectionId)
         );
       }
       setSectionIds((sectionIds) => {

@@ -2,21 +2,21 @@ import {
   Dispatch,
   isValidElement,
   SetStateAction,
+  useCallback,
+  useEffect,
   useRef,
   useState,
-  useEffect,
-  useCallback,
 } from "react";
 
-export interface UseControlledProps<T = unknown> {
+export interface UseControlledProps<T> {
   /**
    * Holds the component value when it's controlled.
    */
-  controlled: T | undefined;
+  controlled?: T;
   /**
    * The default value when uncontrolled.
    */
-  default: T | undefined;
+  default: T;
   /**
    * The component name displayed in warnings.
    */
@@ -31,19 +31,15 @@ export interface UseControlledProps<T = unknown> {
  * Copied from MUI (v5) useControlled hook with one additional returned value
  * @see https://github.com/mui-org/material-ui/blob/0979e6a54ba47c278d1f535953c0520a86349811/packages/material-ui-utils/src/useControlled.js
  */
-export function useControlled<S = unknown>({
+export function useControlled<S>({
   controlled,
   default: defaultProp,
   name,
   state = "value",
-}: UseControlledProps<S>): [
-  S,
-  Dispatch<SetStateAction<S | undefined>>,
-  boolean
-] {
+}: UseControlledProps<S>): [S, Dispatch<SetStateAction<S>>, boolean] {
   const { current: isControlled } = useRef(controlled !== undefined);
-  const [valueState, setValue] = useState<S | undefined>(defaultProp);
-  const value = isControlled ? controlled : valueState;
+  const [valueState, setValue] = useState<S>(defaultProp);
+  const value = controlled !== undefined ? controlled : valueState;
   const { current: defaultValue } = useRef(defaultProp);
 
   useEffect(() => {
@@ -84,17 +80,16 @@ export function useControlled<S = unknown>({
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [JSON.stringify(defaultProp, ignoreReactElements)]);
 
-  const setValueIfUncontrolled: Dispatch<SetStateAction<S | undefined>> =
-    useCallback((newValue) => {
+  const setValueIfUncontrolled: Dispatch<SetStateAction<S>> = useCallback(
+    (newValue) => {
       if (!isControlled) {
         setValue(newValue);
       }
-      /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, []);
+    },
+    [isControlled]
+  );
 
-  // FIXME: `value` can be undefined
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return [value!, setValueIfUncontrolled, isControlled];
+  return [value, setValueIfUncontrolled, isControlled];
 }
 
 // Ignore ReactElements in JSON, they contain circular refs

@@ -1,22 +1,24 @@
 import {
   ownerDocument,
-  useForkRef,
   useControlled,
+  useForkRef,
   useId,
   useIsFocusVisible,
 } from "@jpmorganchase/uitk-core";
 
 import {
-  useEffect,
-  useCallback,
-  useRef,
-  useState,
+  AriaAttributes,
+  Dispatch,
   FocusEvent,
-  MouseEvent,
   KeyboardEvent,
   KeyboardEventHandler,
+  MouseEvent,
   Ref,
-  AriaAttributes,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 import {
   ListMultiSelectionVariant,
@@ -53,11 +55,11 @@ export interface ListHelpers<
   Variant extends ListSelectionVariant = "default"
 > {
   setFocusVisible: (visible: boolean) => void;
-  setSelectedItem: (
-    selectedItem?: Variant extends ListMultiSelectionVariant
-      ? Array<Item>
-      : Item
-  ) => void;
+  setSelectedItem: Dispatch<
+    SetStateAction<
+      (Variant extends ListMultiSelectionVariant ? Item[] : Item) | undefined
+    >
+  >;
   setHighlightedIndex: (highlightedIndex?: number) => void;
   handleSelect: (
     event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
@@ -150,7 +152,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   const [lastFocusedIndex, setLastFocusedIndex] = useState(-1);
 
   const [selectedItem, setSelectedItem] = useControlled<
-    Variant extends ListMultiSelectionVariant ? Item[] : Item
+    undefined | (Variant extends ListMultiSelectionVariant ? Item[] : Item)
   >({
     controlled: selectedItemProp,
     default:

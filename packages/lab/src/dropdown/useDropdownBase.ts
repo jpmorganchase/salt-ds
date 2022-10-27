@@ -1,7 +1,7 @@
 import {
+  measurements,
   useControlled,
   useFormFieldProps,
-  measurements,
   useResizeObserver,
   WidthOnly,
 } from "@jpmorganchase/uitk-core";
@@ -9,6 +9,7 @@ import { KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 import { useClickAway } from "./useClickAway";
+
 const NO_OBSERVER: string[] = [];
 
 export const useDropdownBase = ({
@@ -34,7 +35,7 @@ export const useDropdownBase = ({
   }, []);
   const [isOpen, setIsOpen] = useControlled({
     controlled: isOpenProp,
-    default: defaultIsOpen,
+    default: Boolean(defaultIsOpen),
     name: "useDropdown",
     state: "isOpen",
   });

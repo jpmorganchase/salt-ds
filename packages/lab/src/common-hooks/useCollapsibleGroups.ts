@@ -10,10 +10,10 @@ const canToggleItem = (item: CollectionItem<unknown>) =>
 const canSelectItem = (item: CollectionItem<unknown>) => true;
 
 const toggleIconClicked = (el: HTMLElement) => {
-  const closestToggle = el.closest(
+  const closestToggle = el.querySelector(
     "[data-toggle],[aria-expanded]"
-  ) as HTMLElement;
-  return closestToggle.dataset.toggle === "true";
+  ) as HTMLElement | null;
+  return closestToggle?.dataset.toggle === "true";
 };
 
 interface CollapsibleHookProps<Item> {
@@ -70,6 +70,7 @@ export const useCollapsibleGroups = <Item>({
     (evt: MouseEvent<HTMLElement>) => {
       console.log(`useCollapsibleGroups idx=${highlightedIdx}`);
       const item = collectionHook.data[highlightedIdx];
+      console.log(evt.target, evt.currentTarget);
       if (
         item &&
         canToggleItem(item) &&

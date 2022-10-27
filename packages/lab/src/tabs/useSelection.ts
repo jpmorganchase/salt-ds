@@ -26,7 +26,7 @@ export const useSelection = ({
 } => {
   const [selected, setSelected, isControlled] = useControlled({
     controlled: selectedProp,
-    default: defaultSelected ?? (selectedProp === undefined ? 0 : undefined),
+    default: defaultSelected ?? 0,
     name: "Tabstrip",
     state: "value",
   });
