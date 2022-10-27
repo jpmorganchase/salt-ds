@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Changes to Measured characteristic values; minor token updates
+Alignment with Figma characteristics
