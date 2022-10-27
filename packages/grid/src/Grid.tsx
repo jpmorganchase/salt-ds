@@ -173,7 +173,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     onRowSelected,
     columnMove,
     onColumnMoved,
-    cellSelectionMode = "range",
+    cellSelectionMode = "none",
     onVisibleRowRangeChange,
   } = props;
 
