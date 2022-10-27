@@ -50,7 +50,7 @@ export const ToggleTheme = () => {
             <ToggleButton ariaLabel="light theme">Light</ToggleButton>
             <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
-          <p>This Card is wrapped with a ToolkitProvider, theme is light.</p>
+          <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[outerTheme]}`}</p>
 
           <Checkbox label="Example Choice 1" />
           <Checkbox defaultChecked label="Example Choice 2" />
