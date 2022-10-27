@@ -13,6 +13,7 @@ import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
 import { DEFAULT_THEME, Density, getTheme, Theme } from "../theme";
 import { ViewportProvider } from "../viewport";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -48,9 +49,12 @@ const createThemedChildren = (
   children: ReactNode,
   themeNames: string[],
   density: Density,
+  applyClassesToBody: boolean,
   applyClassesToChild: boolean
 ) => {
-  if (applyClassesToChild) {
+  if (applyClassesToBody) {
+    return children;
+  } else if (applyClassesToChild) {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: cx(
@@ -85,6 +89,7 @@ interface ToolkitProviderThatAppliesClassesToChild {
   children: ReactElement;
   density?: Density;
   theme?: ThemeNameType;
+  applyClassesToBody?: false;
   applyClassesToChild?: true;
   breakpoints?: Breakpoints;
 }
@@ -94,13 +99,24 @@ interface ToolkitProviderThatInjectsThemeElement {
   children: ReactNode;
   density?: Density;
   theme?: ThemeNameType;
+  applyClassesToBody?: false;
+  applyClassesToChild?: false;
+  breakpoints?: Breakpoints;
+}
+
+interface ToolkitProviderThatAppliesClassesToBody {
+  children: ReactNode;
+  density?: Density;
+  theme?: ThemeNameType;
+  applyClassesToBody?: true;
   applyClassesToChild?: false;
   breakpoints?: Breakpoints;
 }
 
 type toolkitProvider =
   | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement;
+  | ToolkitProviderThatInjectsThemeElement
+  | ToolkitProviderThatAppliesClassesToBody;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
@@ -116,6 +132,7 @@ const getThemeName = (
 };
 
 export const ToolkitProvider: FC<toolkitProvider> = ({
+  applyClassesToBody = false,
   applyClassesToChild = false,
   children,
   density: densityProp,
@@ -137,8 +154,32 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
     children,
     themes.map((theme) => theme.name),
     density,
+    applyClassesToBody,
     applyClassesToChild
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (applyClassesToBody) {
+      if (isRoot) {
+        // First remove all our applied styles
+        document.body.classList.remove(
+          ...Array.from(document.body.classList.values()).filter((className) =>
+            className.includes("uitk")
+          )
+        );
+
+        // Then add the styles we want to apply
+        document.body.classList.add(
+          ...themes.map((theme) => `uitk-${theme.name}`),
+          `uitk-density-${density}`
+        );
+      } else {
+        console.warn(
+          "\nToolkitProvider can only apply CSS classes to the body if it is the root level ToolkitProvider."
+        );
+      }
+    }
+  }, [applyClassesToBody, density, isRoot, themes]);
 
   const toolkitProvider = (
     <ToolkitContext.Provider value={{ density, themes, breakpoints }}>
