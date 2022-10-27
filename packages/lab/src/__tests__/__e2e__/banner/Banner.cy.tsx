@@ -12,7 +12,7 @@ describe("GIVEN a Banner", () => {
   it("THEN should render info", () => {
     cy.mount(<Info />);
 
-    cy.findByTestId("InfoIcon").should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
   });
 
   it("THEN should render success", () => {
@@ -24,13 +24,13 @@ describe("GIVEN a Banner", () => {
   it("THEN should render warning", () => {
     cy.mount(<Warning />);
 
-    cy.findByTestId("WarningIcon").should("exist");
+    cy.findByTestId("WarningSolidIcon").should("exist");
   });
 
   it("THEN should render error", () => {
     cy.mount(<Error />);
 
-    cy.findByTestId("ErrorIcon").should("exist");
+    cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
   it("THEN should announce the contents of the Banner", () => {

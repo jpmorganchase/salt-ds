@@ -1,10 +1,10 @@
 import {
-  ErrorIcon,
-  IconProps,
-  InfoIcon,
-  SuccessTickIcon,
-  WarningIcon,
   DEFAULT_ICON_SIZE,
+  ErrorSolidIcon,
+  IconProps,
+  InfoSolidIcon,
+  SuccessTickIcon,
+  WarningSolidIcon,
 } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { forwardRef } from "react";
@@ -14,10 +14,10 @@ import { ValidationStatus } from "./ValidationStatus";
 import "./StatusIcon.css";
 
 const icons = {
-  error: ErrorIcon,
+  error: ErrorSolidIcon,
   success: SuccessTickIcon,
-  warning: WarningIcon,
-  info: InfoIcon,
+  warning: WarningSolidIcon,
+  info: InfoSolidIcon,
 };
 
 export interface StatusIconProps extends IconProps {
@@ -27,6 +27,13 @@ export interface StatusIconProps extends IconProps {
   status: ValidationStatus;
 }
 
+const statusToAriaLabelMap = {
+  error: "error",
+  success: "success",
+  warning: "warning",
+  info: "info",
+};
+
 const withBaseName = makePrefixer("uitkStatusIcon");
 
 export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
@@ -35,12 +42,13 @@ export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
     ref
   ) {
     const IconComponent = icons[status];
+    const ariaLabel = statusToAriaLabelMap[status];
 
     return (
       <IconComponent
         className={classnames(withBaseName(), withBaseName(status), className)}
         size={size}
-        {...(status === "success" && { "aria-label": "success" })}
+        aria-label={ariaLabel}
         {...restProps}
         ref={ref}
       />
