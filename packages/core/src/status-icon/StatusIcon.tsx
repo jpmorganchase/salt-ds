@@ -27,6 +27,13 @@ export interface StatusIconProps extends IconProps {
   status: ValidationStatus;
 }
 
+const statusToAriaLabelMap = {
+  error: "error",
+  success: "success",
+  warning: "warning",
+  info: "info",
+};
+
 const withBaseName = makePrefixer("uitkStatusIcon");
 
 export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
@@ -35,12 +42,13 @@ export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
     ref
   ) {
     const IconComponent = icons[status];
+    const ariaLabel = statusToAriaLabelMap[status];
 
     return (
       <IconComponent
         className={classnames(withBaseName(), withBaseName(status), className)}
         size={size}
-        {...(status === "success" && { "aria-label": "success" })}
+        aria-label={ariaLabel}
         {...restProps}
         ref={ref}
       />
