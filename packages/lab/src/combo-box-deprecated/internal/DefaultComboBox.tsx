@@ -18,6 +18,7 @@ import {
   WindowProps,
 } from "@jpmorganchase/uitk-core";
 import {
+  ComponentType,
   HTMLAttributes,
   ReactNode,
   Ref,
@@ -28,6 +29,7 @@ import {
   useState,
 } from "react";
 import {
+  IndexedListItemProps,
   ListBase,
   ListProps,
   ListSelectionVariant,
@@ -58,7 +60,7 @@ export type BaseComboBoxProps<
     | "virtualized"
     | "width"
   > & {
-    ListItem?: ReactNode;
+    ListItem?: ComponentType<IndexedListItemProps<Item>>;
     ListProps?: Partial<ListProps<Item, Variant>>;
     Tooltip?: TooltipContextProps["Tooltip"];
     WindowProps?: Partial<WindowProps>;

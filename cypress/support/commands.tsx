@@ -1,9 +1,6 @@
 import "@testing-library/cypress/add-commands";
-import {
-  mount as cypressMount,
-  MountReturn,
-  MountOptions,
-} from "cypress/react";
+import { mount as cypressMount } from "cypress/react18";
+import type { MountReturn, MountOptions } from "cypress/react";
 import "cypress-axe";
 import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
@@ -47,13 +44,17 @@ declare global {
         options?: Options,
         enableFailures?: boolean
       ): Chainable<void>;
+
       mountPerformance: (
         jsx: ReactNode,
         options?: MountOptions
       ) => Chainable<MountReturn>;
       mount: (jsx: ReactNode, options?: MountOptions) => Chainable<MountReturn>;
+
       getRenderCount(): Chainable<number>;
+
       getRenderTime(): Chainable<number>;
+
       paste(string: string): Chainable<void>;
     }
   }

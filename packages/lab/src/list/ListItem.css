@@ -14,7 +14,7 @@
 }
 
 .uitkListItemHeader {
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: var(--uitk-typography-fontWeight-bold);
 }
 
 .uitkListItemHeader[data-sticky] {

@@ -17,7 +17,7 @@ export const useItemsWithIds = (
   id = "root"
 ): [TabDescriptor[], (id: string) => TabDescriptor] => {
   const normalizeItems = useCallback(
-    (items): [TabDescriptor[], TabMap] => {
+    (items: ReactNode): [TabDescriptor[], TabMap] => {
       const sourceMap: TabMap = {};
       const tabDescriptors: TabDescriptor[] = Children.toArray(items)
         .filter(isValidElement)

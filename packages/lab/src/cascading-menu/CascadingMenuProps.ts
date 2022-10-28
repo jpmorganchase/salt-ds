@@ -1,6 +1,12 @@
 import { UseFloatingUIProps } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
-import { ComponentType, HTMLAttributes, ReactNode } from "react";
+import {
+  ComponentType,
+  HTMLAttributes,
+  ReactNode,
+  MouseEvent,
+  KeyboardEvent,
+} from "react";
 import { ItemToStringFunction } from "../list-deprecated";
 import { CascadingMenuListProps } from "./CascadingMenuList";
 

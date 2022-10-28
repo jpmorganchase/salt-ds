@@ -100,7 +100,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const overflowItemsRef = useRef<OverflowItem[]>([]);
   const [showOverflowMenu, _setShowOverflowMenu] = useState(false);
 
-  const setShowOverflowMenu = useCallback((value) => {
+  const setShowOverflowMenu = useCallback((value: boolean) => {
     _setShowOverflowMenu(value);
   }, []);
 
@@ -261,7 +261,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   );
 
   const handleOverflowMenuOpen = useCallback(
-    (open) => {
+    (open: boolean) => {
       setShowOverflowMenu(open);
     },
     [setShowOverflowMenu]
