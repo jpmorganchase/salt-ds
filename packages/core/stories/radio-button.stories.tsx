@@ -13,20 +13,20 @@ import {
 } from "@jpmorganchase/uitk-core/stories";
 import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ChangeEventHandler, FC, ReactNode, useState } from "react";
+import { ChangeEventHandler, ReactNode, useState } from "react";
 
 export default {
   title: "Core/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 
-type ExampleWithTitle = FC<{
+type ExampleWithTitleProps = {
   title: string;
   density: Density;
   name: string;
-}>;
+};
 
-const Radios: ExampleWithTitle = ({ title, density, name }) => (
+const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
   <ColumnLayoutItem>
     <ToolkitProvider density={density}>
       <div data-testid="radio-button-next-density-example">
@@ -50,7 +50,7 @@ const Radios: ExampleWithTitle = ({ title, density, name }) => (
   </ColumnLayoutItem>
 );
 
-const RowGroup: ExampleWithTitle = ({ title, density, name }) => (
+const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <Panel>
     <ToolkitProvider density={density}>
       <RadioButtonGroup legend={title} name={name} row>
@@ -65,7 +65,7 @@ interface DensityExampleProps {
   name: string;
 }
 
-const DensityExample: FC<DensityExampleProps> = ({ name }) => (
+const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
     <ColumnLayoutContainer>
       <Radios name={`${name}-high`} title="High" density="high" />
@@ -82,7 +82,7 @@ const DensityExample: FC<DensityExampleProps> = ({ name }) => (
   </Panel>
 );
 
-const StoryScroller: FC = (props) => (
+const StoryScroller = (props: { children?: ReactNode }) => (
   <div
     style={{
       height: "100%",
@@ -186,17 +186,17 @@ export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
 
 /* FormField variants */
 
-type ExampleWithTitleAndVariant = FC<{
+type ExampleWithTitleAndVariantProps = {
   name: string;
   title: string;
   className?: string;
-}>;
+};
 
-const FormFieldRadios: ExampleWithTitleAndVariant = ({
+const FormFieldRadios = ({
   name,
   title,
   className,
-}) => (
+}: ExampleWithTitleAndVariantProps) => (
   <div data-testid="radio-button-form-field-variants-example">
     <FormField className={className}>
       <RadioButtonGroup
@@ -262,7 +262,7 @@ interface ExampleRowProps {
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ children, name }) => {
+const ExampleRow = ({ children, name }: ExampleRowProps) => {
   const densities: Density[] = ["touch", "low", "medium", "high"];
   const row = densities.map((density) => {
     const exampleKey = `${density}-${name}`.toLowerCase();
@@ -395,10 +395,10 @@ interface GroupFormFieldExampleRowProps {
   name: string;
 }
 
-const GroupFormFieldVerticalExampleRow: FC<GroupFormFieldExampleRowProps> = ({
+const GroupFormFieldVerticalExampleRow = ({
   children,
   name,
-}) => {
+}: GroupFormFieldExampleRowProps) => {
   const densities: Density[] = ["touch", "low", "medium", "high"];
   const row = densities.map((density) => {
     const exampleKey = `${density}-${name}`.toLowerCase();

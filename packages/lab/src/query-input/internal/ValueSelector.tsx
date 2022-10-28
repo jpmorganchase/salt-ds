@@ -6,7 +6,7 @@ import {
   useIsomorphicLayoutEffect,
   useWindow,
 } from "@jpmorganchase/uitk-core";
-import { Dispatch, FC, Ref, SetStateAction, useMemo } from "react";
+import { Dispatch, Ref, SetStateAction, useMemo } from "react";
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
@@ -39,7 +39,7 @@ export interface ValueSelectorProps {
   setHighlightedValueIndex: Dispatch<SetStateAction<number>>;
 }
 
-export const ValueSelector: FC<ValueSelectorProps> = function (props) {
+export function ValueSelector(props: ValueSelectorProps) {
   const {
     isOpen,
     inputValue,
@@ -143,4 +143,4 @@ export const ValueSelector: FC<ValueSelectorProps> = function (props) {
       </Window>
     </Portal>
   );
-};
+}

@@ -992,7 +992,7 @@ export const DraggableTabs = () => {
 
   const [tabs, setTabs] = useState(tabLabels);
   const handleDrop = useCallback(
-    (fromIndex, toIndex) => {
+    (fromIndex: number, toIndex: number) => {
       const newTabs = tabs.slice();
       const [tab] = newTabs.splice(fromIndex, 1);
       if (toIndex === -1) {
@@ -1041,7 +1041,7 @@ export const DraggableTabsWithOverflow = () => {
     (fromIndex: number, toIndex: number) => {
       const tab = tabs[fromIndex];
       const newTabs = tabs.filter((t) => t !== tab);
-      console.log(`handleDrop from ${fromIndex} to ${toIndex} 
+      console.log(`handleDrop from ${fromIndex} to ${toIndex}
         existing tabs ${tabs.join(",")}
       `);
       if (toIndex === -1) {

@@ -62,7 +62,7 @@ export const useOverflow = ({
   );
 
   const getAllOverflowedItems = useCallback(
-    (renderedSize, availableSpace) => {
+    (renderedSize: number, availableSpace: number) => {
       const { current: allItems } = overflowItemsRef;
       const overflowedItems: OverflowItem[] = [];
       const items = allItems.slice();
@@ -84,7 +84,7 @@ export const useOverflow = ({
   );
 
   const getOverflowedItems = useCallback(
-    (visibleContentSize, containerSize) => {
+    (visibleContentSize: number, containerSize: number) => {
       const newlyOverflowedItems = [];
       const { current: managedItems } = overflowItemsRef;
       const visibleItems = managedItems.filter(notOverflowed);
@@ -111,7 +111,7 @@ export const useOverflow = ({
   );
 
   const getReinstatedItems = useCallback(
-    (containerSize): [number, OverflowItem[]] => {
+    (containerSize: number): [number, OverflowItem[]] => {
       const reinstatedItems: OverflowItem[] = [];
       const { current: managedItems } = overflowItemsRef;
 
@@ -236,7 +236,7 @@ export const useOverflow = ({
   );
 
   const updateOverflow = useCallback(
-    (containerSize, renderedSize) => {
+    (containerSize: number, renderedSize: number) => {
       if (containerSize < renderedSize) {
         const overflowItems = getOverflowedItems(renderedSize, containerSize);
         if (overflowItems.length) {
@@ -251,7 +251,7 @@ export const useOverflow = ({
   );
 
   const removeOverflow = useCallback(
-    (containerSize) => {
+    (containerSize: number) => {
       const [overflowCount, reinstated] = getReinstatedItems(containerSize);
       if (reinstated.length) {
         if (overflowCount === reinstated.length) {

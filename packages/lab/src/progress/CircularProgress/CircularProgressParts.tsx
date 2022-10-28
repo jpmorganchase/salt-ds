@@ -1,11 +1,11 @@
-import React, { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 import "./CircularProgress.css";
 
 export const SIZE = 44;
 
 export const circularGradientId = "uitk-circular-progress-gradient";
 
-export const ViewBox: React.FC = (props) => {
+export const ViewBox = (props: { children?: ReactNode }) => {
   return (
     <svg
       className="uitkCircularProgress-svg"
@@ -16,7 +16,7 @@ export const ViewBox: React.FC = (props) => {
   );
 };
 
-export const LinearGradient: React.FC = () => (
+export const LinearGradient = () => (
   <defs>
     <linearGradient gradientTransform="rotate(90)" id={circularGradientId}>
       <stop className="uitkCircularProgress-gradientStart" offset="0%" />
@@ -31,11 +31,7 @@ export interface CircleProps {
   className?: string;
 }
 
-export const Circle: React.FC<CircleProps> = ({
-  strokeWidth,
-  style,
-  className,
-}) => {
+export const Circle = ({ strokeWidth, style, className }: CircleProps) => {
   return (
     <circle
       cx={SIZE}

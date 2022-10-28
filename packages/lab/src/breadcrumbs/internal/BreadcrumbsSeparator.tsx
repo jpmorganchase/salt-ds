@@ -1,6 +1,5 @@
 import { ChevronRightIcon, IconProps } from "@jpmorganchase/uitk-icons";
-import { FC } from "react";
 
-export const BreadcrumbsSeparator: FC<IconProps> = (props) => (
+export const BreadcrumbsSeparator = (props: IconProps) => (
   <ChevronRightIcon {...props} />
 );

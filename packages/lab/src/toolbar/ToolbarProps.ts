@@ -1,5 +1,5 @@
 import { TooltipProps } from "@jpmorganchase/uitk-core";
-import { FC, HTMLAttributes, ReactNode, Ref } from "react";
+import { ComponentType, HTMLAttributes, ReactNode } from "react";
 
 export type OrientationShape = "vertical" | "horizontal";
 
@@ -13,7 +13,7 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Used by custom elements to render a custom tooltip
    */
-  TooltipComponent?: FC<Partial<TooltipProps>>;
+  TooltipComponent?: ComponentType<Partial<TooltipProps>>;
   /**
    * The content of the component.
    */

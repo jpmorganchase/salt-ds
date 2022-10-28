@@ -1,6 +1,6 @@
 import { useIdMemo } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
-import React, { cloneElement } from "react";
+import { cloneElement } from "react";
 import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 
 import { TooltrayProps } from "./TooltrayProps";
@@ -12,7 +12,7 @@ import { renderTrayTools } from "./internal/renderTrayTools";
 
 import "./Tooltray.css";
 
-export const Tooltray: React.FC<TooltrayProps> = (props) => {
+export const Tooltray = (props: TooltrayProps) => {
   const {
     "aria-label": ariaLabel,
     // Tooltray itself doesn't use these alignment props directly,

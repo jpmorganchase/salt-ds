@@ -1,7 +1,7 @@
-import { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 import { ArrowLeft, ArrowRight, Enter } from "./keyUtils";
 import { ListHandlers } from "./selectionTypes";
-import { CollectionItem, CollectionHookResult } from "./collectionTypes";
+import { CollectionHookResult, CollectionItem } from "./collectionTypes";
 
 const NO_HANDLERS = {};
 const canToggleItem = (item: CollectionItem<unknown>) =>
@@ -35,7 +35,7 @@ export const useCollapsibleGroups = <Item>({
   onToggle,
 }: CollapsibleHookProps<Item>): CollapsibleHookResult<Item> => {
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === ArrowRight || e.key === Enter) {
         const item = collectionHook.data[highlightedIdx];
         if (item) {
@@ -67,13 +67,14 @@ export const useCollapsibleGroups = <Item>({
   );
 
   const handleClick = useCallback(
-    (evt) => {
+    (evt: MouseEvent<HTMLElement>) => {
       console.log(`useCollapsibleGroups idx=${highlightedIdx}`);
       const item = collectionHook.data[highlightedIdx];
+      console.log(evt.target, evt.currentTarget);
       if (
         item &&
         canToggleItem(item) &&
-        (!canSelectItem(item) || toggleIconClicked(evt.target))
+        (!canSelectItem(item) || toggleIconClicked(evt.target as HTMLElement))
       ) {
         evt.stopPropagation();
         evt.preventDefault();

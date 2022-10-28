@@ -1,5 +1,4 @@
 import { FormFieldProps } from "@jpmorganchase/uitk-core";
-import { FC } from "react";
 import { CompactInput } from "./CompactInput";
 import { PageButton } from "./PageButton";
 import { withBaseName } from "./utils";
@@ -11,12 +10,12 @@ export interface CompactControlsProps {
   FormFieldProps?: Partial<FormFieldProps>;
 }
 
-export const CompactControls: FC<CompactControlsProps> = ({
+export const CompactControls = ({
   page,
   count,
   onPageChange,
   FormFieldProps,
-}) => {
+}: CompactControlsProps) => {
   return (
     <>
       <CompactInput
