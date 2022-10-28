@@ -17,6 +17,10 @@ Added:
 --uitk-palette-navigate-indicator-disabled
 
 Removed:
---uitk-actionable-primary/cta/secondary-fontWeight-hover
---uitk-actionable-primary/cta/secondary-fontWeight-active
+--uitk-actionable-primary-fontWeight-hover
+--uitk-actionable-cta-fontWeight-hover
+--uitk-actionable-secondary-fontWeight-hover
+--uitk-actionable-primary-fontWeight-active
+--uitk-actionable-cta-fontWeight-active
+--uitk-actionable-secondary-fontWeight-active
 --uitk-container-textAlign
