@@ -5,37 +5,14 @@
   --uitk-typography-fontFamily: uitk-sans;
   --uitk-typography-fontFamily-code: "PT Mono";
 
+  --uitk-typography-lineHeight: 1.3;
+
   --uitk-typography-fontWeight-light: 300;
   --uitk-typography-fontWeight-regular: 400;
   --uitk-typography-fontWeight-medium: 500;
   --uitk-typography-fontWeight-semiBold: 600;
   --uitk-typography-fontWeight-bold: 700;
   --uitk-typography-fontWeight-extraBold: 800;
-
-  /**
-    The below size values are now deprecated.
-    Use appropriate -text size from characteristic instead
-  **/
-
-  --uitk-typography-size-10: 8px;
-  --uitk-typography-size-30: 10px;
-  --uitk-typography-size-40: 11px;
-  --uitk-typography-size-50: 12px;
-  --uitk-typography-size-60: 14px;
-  --uitk-typography-size-70: 16px;
-  --uitk-typography-size-80: 18px;
-  --uitk-typography-size-90: 20px;
-  --uitk-typography-size-100: 22px;
-  --uitk-typography-size-110: 24px;
-  --uitk-typography-size-120: 26px;
-  --uitk-typography-size-125: 28px;
-  --uitk-typography-size-130: 30px;
-  --uitk-typography-size-140: 32px;
-  --uitk-typography-size-150: 36px;
-  --uitk-typography-size-170: 42px;
-  --uitk-typography-size-180: 44px;
-  --uitk-typography-size-210: 56px;
-  --uitk-typography-size-240: 64px;
 }
 
 /* TODO add uitk top-level identifier */

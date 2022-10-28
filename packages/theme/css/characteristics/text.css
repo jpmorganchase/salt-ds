@@ -1,13 +1,12 @@
 .uitk-light,
 .uitk-dark {
-  /* Body text (default) */
-  --uitk-text-base-lineHeight: 1.3;
+  /* Body text (default), tokens that don't vary by density */
+  --uitk-text-base-lineHeight: var(--uitk-typography-lineHeight);
   --uitk-text-fontFamily: var(--uitk-typography-fontFamily);
   --uitk-text-fontWeight: var(--uitk-typography-fontWeight-regular);
   --uitk-text-fontWeight-small: var(--uitk-typography-fontWeight-light);
   --uitk-text-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-letterSpacing: 0;
-  --uitk-text-lineHeight: 1.3;
   --uitk-text-textAlign: left;
   --uitk-text-textAlign-embedded: center;
   --uitk-text-textDecoration: none;
