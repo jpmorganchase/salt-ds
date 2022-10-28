@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Density,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -21,6 +27,50 @@ const NO_DENSITY = 4;
 
 const THEMES = ["light", "dark"];
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
+
+export const ToggleTheme = () => {
+  const [theme, setTheme] = useState(LIGHT);
+
+  const handleChangeTheme: ToggleButtonGroupChangeEventHandler = (
+    event,
+    index
+  ) => {
+    setTheme(index);
+  };
+
+  return (
+    <ToolkitProvider theme={THEMES[theme]}>
+      <Card>
+        <div>
+          <h1>This Card is wrapped with a ToolkitProvider</h1>
+          <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={theme}>
+            <ToggleButton aria-label="light theme">Light</ToggleButton>
+            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+          </ToggleButtonGroup>
+          <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[theme]}`}</p>
+
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button variant="cta">Continue</Button>
+            <Button>Previous</Button>
+            <Button variant="secondary">Upload File</Button>
+          </div>
+        </div>
+        <br />
+      </Card>
+    </ToolkitProvider>
+  );
+};
 
 export const NestedProviders = () => {
   const [outerTheme, setOuterTheme] = useState(LIGHT);
