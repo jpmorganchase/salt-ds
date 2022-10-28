@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback, useRef } from "react";
+import { KeyboardEvent, useCallback, useRef, MouseEvent } from "react";
 import {
   closestListItemIndex,
   ListHandlers,
@@ -67,7 +67,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   });
 
   const handleClick = useCallback(
-    (evt) => {
+    (evt: MouseEvent) => {
       collapsibleHook?.onClick?.(evt);
       if (!evt.defaultPrevented) {
         selectionHook.listHandlers.onClick?.(evt);
@@ -77,7 +77,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   );
 
   const handleKeyDown = useCallback(
-    (evt) => {
+    (evt: KeyboardEvent) => {
       keyboardHook.listProps.onKeyDown?.(evt);
       if (!evt.defaultPrevented) {
         selectionHook.listHandlers.onKeyDown?.(evt);
@@ -108,7 +108,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   });
 
   const handleMouseMove = useCallback(
-    (evt: React.MouseEvent) => {
+    (evt: MouseEvent) => {
       if (!isScrolling.current && !disabled) {
         keyboardHook.listProps.onMouseMove();
         const idx = closestListItemIndex(evt.target as HTMLElement);

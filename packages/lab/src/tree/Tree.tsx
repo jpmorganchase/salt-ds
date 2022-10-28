@@ -7,18 +7,17 @@ import {
   ReactElement,
   useCallback,
   useRef,
+  MouseEvent,
 } from "react";
 
 import {
   calcPreferredHeight,
   closestListItemIndex,
-  groupSelectionEnabled,
   isSelected,
   CollectionIndexer,
   useCollectionItems,
   GROUP_SELECTION_NONE,
   CollectionItem,
-  selectedType,
   SelectHandler,
   SelectionChangeHandler,
   SelectionStrategy,
@@ -203,7 +202,7 @@ export const Tree = forwardRef(function Tree<
 
   // TODO move into useTree (see useList)
   const defaultItemHandlers = {
-    onMouseEnter: (evt: React.MouseEvent) => {
+    onMouseEnter: (evt: MouseEvent) => {
       // if (!isScrolling.current) {
       const idx = closestListItemIndex(evt.target as HTMLElement);
       highlightItemAtIndex(idx!);

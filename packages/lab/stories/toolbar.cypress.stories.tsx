@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Button } from "@jpmorganchase/uitk-core";
 import {
   DoubleChevronDownIcon,
@@ -21,7 +20,7 @@ import {
   ToolbarProps,
   Tooltray,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentStory } from "@storybook/react";
+import { Story } from "@storybook/react";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
 import "./toolbar.stories.css";
@@ -31,7 +30,7 @@ export default {
   component: Toolbar,
 };
 
-type ToolbarStory = ComponentStory<FC<AdjustableFlexboxProps & ToolbarProps>>;
+type ToolbarStory = Story<AdjustableFlexboxProps & ToolbarProps>;
 
 export const SimpleToolbar: ToolbarStory = ({
   width = 400,

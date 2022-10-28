@@ -1,4 +1,4 @@
-import { FC, KeyboardEventHandler, MouseEventHandler } from "react";
+import { KeyboardEventHandler, MouseEventHandler } from "react";
 import { withBaseName } from "./utils";
 import { Button } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
@@ -10,12 +10,12 @@ export interface PageButtonProps {
   disabled?: boolean;
 }
 
-export const PageButton: FC<PageButtonProps> = ({
+export const PageButton = ({
   page,
   isSelected,
   onPageChange,
   disabled,
-}) => {
+}: PageButtonProps) => {
   const name = `Page ${page}`;
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {

@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { CollectionItem } from "./collectionTypes";
-import { useResizeObserver } from "@jpmorganchase/uitk-core";
+import { ResizeHandler, useResizeObserver } from "@jpmorganchase/uitk-core";
 
 const HeightOnly = ["height"];
 const HeightWithScroll = ["height", "scrollHeight"];
@@ -142,16 +142,19 @@ export const useViewportTracking = <Item>({
     scrollToStart,
   ]);
 
-  const onContainerResize = useCallback(({ height, scrollHeight }) => {
-    if (typeof height === "number") {
-      viewport.current.height = height;
-    }
-    if (typeof scrollHeight === "number") {
-      viewport.current.contentHeight = scrollHeight;
-    }
-  }, []);
+  const onContainerResize: ResizeHandler = useCallback(
+    ({ height, scrollHeight }) => {
+      if (typeof height === "number") {
+        viewport.current.height = height;
+      }
+      if (typeof scrollHeight === "number") {
+        viewport.current.contentHeight = scrollHeight;
+      }
+    },
+    []
+  );
 
-  const onContentResize = useCallback(({ height }) => {
+  const onContentResize: ResizeHandler = useCallback(({ height }) => {
     if (typeof height === "number") {
       viewport.current.contentHeight = height;
     }

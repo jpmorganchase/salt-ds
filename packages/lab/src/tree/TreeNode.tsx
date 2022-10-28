@@ -1,4 +1,4 @@
-import { HTMLAttributes, MouseEventHandler } from "react";
+import { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 import cx from "classnames";
 import { TriangleRightIcon } from "@jpmorganchase/uitk-icons";
 
@@ -9,7 +9,7 @@ import "./TreeNode.css";
 const withBaseName = makePrefixer("uitkTreeNode");
 export interface TreeNodeProps
   extends Omit<HTMLAttributes<HTMLLIElement>, "onMouseEnter"> {
-  children?: React.ReactNode;
+  children?: ReactNode;
   description?: string;
   highlighted?: boolean;
   idx?: number;
