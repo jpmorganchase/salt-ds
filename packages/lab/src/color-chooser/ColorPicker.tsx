@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("uitkColorChooserPicker");
 
 export interface ColorPickerProps {
   disableAlphaChooser: boolean;
-  color: Color | undefined;
+  color?: Color;
   alpha?: number;
   onChange: (
     color: Color | undefined,
@@ -34,7 +34,7 @@ export const ColorPicker = ({
     color?.rgba ?? Color.makeColorFromRGB(0, 0, 0, alpha).rgba;
   const rgbaText = disableAlphaChooser ? "RGB" : "RGBA";
 
-  const onSubmitHex = (hexValue: string | undefined, e?: ChangeEvent): void => {
+  const onSubmitHex = (hexValue?: string, e?: ChangeEvent): void => {
     const newColor = Color.makeColorFromHex(hexValue);
     onChange(newColor, false, e);
   };

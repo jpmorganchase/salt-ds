@@ -21,7 +21,7 @@ const TestWrapper = ({ children }: { children?: ReactNode }) => (
   <AriaAnnouncerProvider>{children}</AriaAnnouncerProvider>
 );
 
-interface SimpleTextContentProps {
+interface SimpleTestContentProps {
   announcement?: string;
   delay?: number;
   debounce?: number;
@@ -33,7 +33,7 @@ const SimpleTestContent = ({
   delay,
   debounce,
   getAnnouncement,
-}: SimpleTextContentProps) => {
+}: SimpleTestContentProps) => {
   const { announce } = useAriaAnnouncer({ debounce });
   const getMessageToAnnounce = () =>
     getAnnouncement ? getAnnouncement() : announcement;

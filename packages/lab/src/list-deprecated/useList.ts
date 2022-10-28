@@ -254,7 +254,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   const handleRangeSelect = useCallback(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
-      index: number | undefined
+      index?: number
     ) => {
       const currentSelection =
         event.ctrlKey || event.metaKey ? selectedItem : ([] as Item[]);
