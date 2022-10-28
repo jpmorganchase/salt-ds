@@ -31,7 +31,7 @@ const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 export const ToggleTheme = () => {
   const [theme, setTheme] = useState(LIGHT);
 
-  const handleChangeOuterTheme: ToggleButtonGroupChangeEventHandler = (
+  const handleChangeTheme: ToggleButtonGroupChangeEventHandler = (
     event,
     index
   ) => {
@@ -43,10 +43,7 @@ export const ToggleTheme = () => {
       <Card>
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
-          <ToggleButtonGroup
-            onChange={handleChangeOuterTheme}
-            selectedIndex={theme}
-          >
+          <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={theme}>
             <ToggleButton ariaLabel="light theme">Light</ToggleButton>
             <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
