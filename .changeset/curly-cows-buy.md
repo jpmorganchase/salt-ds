@@ -6,10 +6,7 @@
 Alignment with Figma characteristics
 
 Added:
---uitk-accent-borderColor
 --uitk-accent-fontWeight
---uitk-actionable-cursor-hover
---uitk-actionable-textTransform
 --uitk-draggable-horizontal-cursor-active
 --uitk-navigable-indicator-disabled
 --uitk-ratable-cursor-disabled
