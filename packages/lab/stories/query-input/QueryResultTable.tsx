@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
 import "./QueryResultTable.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
@@ -16,7 +16,7 @@ export interface QueryResultTableProps extends HTMLAttributes<HTMLDivElement> {
   rows: QueryResultRow[];
 }
 
-export const QueryResultTable: FC<QueryResultTableProps> = (props) => {
+export const QueryResultTable = (props: QueryResultTableProps) => {
   const { rows, className, ...restProps } = props;
   return (
     <div className={cn(withBaseName(), className)} {...restProps}>

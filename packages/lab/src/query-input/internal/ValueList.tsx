@@ -1,5 +1,5 @@
 import { QueryInputCategory } from "../queryInputTypes";
-import { Dispatch, FC, ReactElement, SetStateAction } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
 import { List, ListItem } from "../../list";
@@ -17,7 +17,7 @@ export interface ValueListProps {
   setHighlightedValueIndex: Dispatch<SetStateAction<number>>;
 }
 
-export const ValueList: FC<ValueListProps> = function ValueList(props) {
+export function ValueList(props: ValueListProps) {
   const {
     category,
     rootWidth,
@@ -66,4 +66,4 @@ export const ValueList: FC<ValueListProps> = function ValueList(props) {
       </List>
     </div>
   );
-};
+}

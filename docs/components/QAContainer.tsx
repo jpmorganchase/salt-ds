@@ -4,7 +4,6 @@ import {
   Children,
   CSSProperties,
   DetailedHTMLProps,
-  FC,
   Fragment,
   HTMLAttributes,
 } from "react";
@@ -28,7 +27,7 @@ export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
 const BackgroundBlock = ({
   background = "rgb(36, 37, 38)",
   children,
-}: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+}: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   background?: string;
 }) => (
   <div
@@ -62,7 +61,7 @@ const DensityBlock = ({
   </BackgroundBlock>
 );
 
-export const QAContainer: FC<QAContainerProps> = ({
+export const QAContainer = ({
   children,
   className,
   cols = 3,
@@ -74,7 +73,7 @@ export const QAContainer: FC<QAContainerProps> = ({
   vertical,
   width,
   ...htmlAttributes
-}) => {
+}: QAContainerProps) => {
   const style = {
     "--qaContainer-cols": cols,
     "--qaContainer-height": height === undefined ? undefined : `${height}px`,

@@ -40,7 +40,7 @@ export const useKeyboardNavigation = <Item>({
   highlightItemAtIndex,
 }: TreeNavigationHookProps<Item>): TreeNavigationHookResult => {
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === ArrowLeft) {
         const node = collectionHook.data[highlightedIdx];
         const parentId = getNodeParentPath(node);

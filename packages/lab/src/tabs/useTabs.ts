@@ -31,9 +31,7 @@ export const useTabs = ({
 
   const [activeTabIndex, setActiveTabIndex] = useControlled({
     controlled: activeTabIndexProp,
-    default:
-      defaultActiveTabIndex ??
-      (activeTabIndexProp === undefined ? 0 : undefined),
+    default: defaultActiveTabIndex ?? 0,
     name: "useTabs",
     state: "activeTabIndex",
   });

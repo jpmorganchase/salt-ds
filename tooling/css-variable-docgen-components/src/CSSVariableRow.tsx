@@ -1,4 +1,3 @@
-import { FC } from "react";
 import Markdown from "markdown-to-jsx";
 import { CSSVariable } from "./CSSVariableTable";
 import { Name, Description, StyledTd } from "./common";
@@ -7,7 +6,7 @@ interface CSSVariableRowProps {
   row: CSSVariable;
 }
 
-export const CSSVariableRow: FC<CSSVariableRowProps> = (props) => {
+export const CSSVariableRow = (props: CSSVariableRowProps) => {
   const { row } = props;
   const { name, type, defaultValue } = row;
   const hasType = type != null && type !== "";
