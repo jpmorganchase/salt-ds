@@ -3,8 +3,8 @@
   --uitk-navigable-cursor-active: pointer;
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-disabled: not-allowed;
-  --uitk-navigable-cursor-edit: text; 
-  
+  --uitk-navigable-cursor-edit: text;
+
   --uitk-navigable-fontWeight: var(--uitk-typography-fontWeight-regular);
   --uitk-navigable-fontWeight-hover: var(--uitk-typography-fontWeight-regular);
   --uitk-navigable-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);

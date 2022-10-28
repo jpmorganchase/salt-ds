@@ -11,7 +11,7 @@
   --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
   --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
   --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
-  
+
   --uitk-container-borderColor-low: transparent;
   --uitk-container-borderColor-disabled-low: transparent;
   --uitk-container-borderColor-medium: var(--uitk-palette-neutral-border-medium);
