@@ -44,8 +44,8 @@ export const ToggleTheme = () => {
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
           <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={theme}>
-            <ToggleButton ariaLabel="light theme">Light</ToggleButton>
-            <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
+            <ToggleButton aria-label="light theme">Light</ToggleButton>
+            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
           <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[theme]}`}</p>
 
