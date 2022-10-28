@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import {
   characteristic,
   useAriaAnnouncer,
-  ToolkitContext,
   ToolkitProvider,
   useDensity,
   useTheme,
 } from "@jpmorganchase/uitk-core";
+import { mount } from "cypress/react";
 
 const TestComponent = ({
   id = "test-1",
@@ -159,6 +158,22 @@ describe("Given a ToolkitProvider", () => {
       cy.get("uitk-theme").should("have.length", 1);
 
       cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "class", "uitk-dark uitk-density-high");
+    });
+  });
+
+  describe("when applyClassesToBody is true", () => {
+    it("should apply the given theme and density class names to the body element", () => {
+      mount(
+        <ToolkitProvider density="high" theme="dark" applyClassesToBody>
+          <TestComponent />
+        </ToolkitProvider>
+      );
+
+      cy.get("uitk-theme").should("have.length", 0);
+
+      cy.get("body")
         .should("exist")
         .and("have.attr", "class", "uitk-dark uitk-density-high");
     });
