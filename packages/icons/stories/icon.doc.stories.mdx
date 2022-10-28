@@ -1,6 +1,8 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Icon, AddDocumentIcon } from "@jpmorganchase/uitk-icons";
 import { withFlexGap } from "docs/decorators/withFlexGap";
+import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
+
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -25,6 +27,16 @@ If an icon is interactive, use [Button](?path=/docs/documentation-core-button--b
   <Story id="icons-icon--toolkit-icon" />
 </Canvas>
 
+## Use Icon when...
+- You need a visual representation of a concept.
+- An icon doesn't need to be interactive.
+
+### Icons List
+
+<Canvas>
+  <Story id="icons-icon--all-icons-with-search" />
+</Canvas>
+
 ## Configuring Icon
 
 ### API
@@ -39,8 +51,11 @@ import { Icon } from "@jpmorganchase/uitk-icons";
 
 ## Anatomy
 
+We have default and solid icons.  
+You can supply custom icons as `children` of the `Icon` component, by using `<svg>`.
+
 <Canvas>
-  <ComponentAnatomy showControls={false}>
+  <ComponentAnatomy>
     <AddDocumentIcon/>
   </ComponentAnatomy>
 </Canvas>
@@ -49,4 +64,18 @@ import { Icon } from "@jpmorganchase/uitk-icons";
 
 <CSSClassTable of={Icon} />
 
-<HelpAndSupport />
+## Accessibility
+
+To ensure that icon-only buttons are ADA compliant, you must do the following:
+
+- Display the button’s label in a supporting Tooltip that is revealed on mouse hover or keyboard focus
+- If an icon is interactive, use [Button](?path=/docs/documentation-core-button--button-variants) (`CTA`, `Primary` or `Secondary` variant).
+
+## Help and support
+
+Please check the issues section of the GitHub repository for any development or design related questions or issues you have.
+
+If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior.
+
+If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.
+

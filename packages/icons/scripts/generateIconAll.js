@@ -29,7 +29,12 @@ glob(
       content.join("\n") +
       `\n} from "@jpmorganchase/uitk-icons";\n\n`;
     const exportStatements =
-      "export const allIcons = [" + content.join("\n") + "\n];\n";
+      "export const allIcons = [" +
+      content.join("\n") +
+      "\n];\n" +
+      "export const allIconsNames = [" +
+      content.map((icon) => `{name: \"${icon}\", icon: ${icon}}`) +
+      " ]";
 
     const prettier = require("prettier");
     const formattedResult = prettier.format(

@@ -27,15 +27,17 @@
 .uitkIcon-content {
   display: block;
 }
-
+/* Styles applied to the root element if size="small" */
 .uitkIcon-small {
   --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
 }
 
+/* Styles applied to the root element if size="medium" */
 .uitkIcon-medium {
   --icon-size: var(--uitkIcon-size-medium, var(--uitk-size-graphic-medium));
 }
 
+/* Styles applied to the root element if size="large" */
 .uitkIcon-large {
   --icon-size: var(--uitkIcon-size-large, var(--uitk-size-graphic-large));
 }

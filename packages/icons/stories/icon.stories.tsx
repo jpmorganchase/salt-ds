@@ -1,8 +1,9 @@
-import { createElement, ElementType, useMemo } from "react";
+import { createElement, ElementType, useMemo, useState } from "react";
 import { AddDocumentIcon, Icon, IconProps } from "@jpmorganchase/uitk-icons";
-import { allIcons } from "./icon.all";
+import { allIcons, allIconsNames } from "./icon.all";
 import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { FormField, GridLayout, Input, StackLayout } from "../../core";
 
 export default {
   title: "Icons/Icon",
@@ -81,5 +82,29 @@ export const AllIcons: ComponentStory<typeof Icon> = () => {
         createElement(iconComponent, { key: i, size: 24 })
       )}
     </div>
+  );
+};
+
+export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
+  const [inputText, setInputText] = useState("");
+  return (
+    <StackLayout separators>
+      <FormField
+        label={"search icon"}
+        style={{ marginBlock: "1rem", maxWidth: "300px" }}
+      >
+        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
+      </FormField>
+      <GridLayout>
+        {allIconsNames
+          .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
+          .map(({ icon }, i) => {
+            return createElement(icon, {
+              key: i,
+              size: 24,
+            });
+          })}
+      </GridLayout>
+    </StackLayout>
   );
 };
