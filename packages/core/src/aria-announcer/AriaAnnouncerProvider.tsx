@@ -4,8 +4,8 @@ import {
   useRef,
   useMemo,
   useEffect,
-  FC,
   CSSProperties,
+  ReactNode,
 } from "react";
 
 import { AriaAnnouncerContext } from "./AriaAnnouncerContext";
@@ -13,16 +13,17 @@ import { AriaAnnouncerContext } from "./AriaAnnouncerContext";
 export const ARIA_ANNOUNCE_DELAY = 150;
 
 export interface AriaAnnouncerProviderProps {
+  children?: ReactNode;
   /**
    * Style overrides for the aria-live element
    */
   style?: CSSProperties;
 }
 
-export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
+export function AriaAnnouncerProvider({
   children,
   style,
-}) => {
+}: AriaAnnouncerProviderProps) {
   // announcement that gets rendered inside aria-live and read out by screen readers
   const [currentAnnouncement, setCurrentAnnouncement] = useState("");
   // queue that stores all the requested announcements
@@ -53,7 +54,7 @@ export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
   }, []);
 
   const announce = useCallback(
-    (announcement) => {
+    (announcement: string) => {
       announcementsRef.current.push(announcement);
       if (!isAnnouncingRef.current) {
         announceAll();
@@ -94,4 +95,4 @@ export const AriaAnnouncerProvider: FC<AriaAnnouncerProviderProps> = ({
       </div>
     </AriaAnnouncerContext.Provider>
   );
-};
+}

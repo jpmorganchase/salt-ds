@@ -46,13 +46,13 @@ const GridVariantsTemplate: Story<{}> = () => {
         <FlexLayout direction="row">
           <FlexItem>
             <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-              <ToggleButton ariaLabel="primary" tooltipText="Primary">
+              <ToggleButton aria-label="primary" tooltipText="Primary">
                 Primary
               </ToggleButton>
-              <ToggleButton ariaLabel="secondary" tooltipText="Secondary">
+              <ToggleButton aria-label="secondary" tooltipText="Secondary">
                 Secondary
               </ToggleButton>
-              <ToggleButton ariaLabel="zebra" tooltipText="Zebra">
+              <ToggleButton aria-label="zebra" tooltipText="Zebra">
                 Zebra
               </ToggleButton>
             </ToggleButtonGroup>

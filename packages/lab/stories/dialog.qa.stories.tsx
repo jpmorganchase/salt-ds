@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ToolkitProvider, useDensity } from "@jpmorganchase/uitk-core";
 import {
   ButtonBar,
@@ -27,7 +26,7 @@ const densityDialogWidths = {
 
 type BasicDialogExampleProps = Pick<DialogProps, "status">;
 
-const BasicDialogExample: FC<BasicDialogExampleProps> = ({ status }) => {
+const BasicDialogExample = ({ status }: BasicDialogExampleProps) => {
   const density = useDensity();
   const densityBreakpoint = density === "touch" ? "xl" : "xs";
 

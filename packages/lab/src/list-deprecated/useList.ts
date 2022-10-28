@@ -1,23 +1,24 @@
 import {
   ownerDocument,
-  useForkRef,
   useControlled,
+  useForkRef,
   useId,
   useIsFocusVisible,
 } from "@jpmorganchase/uitk-core";
 
 import {
-  useEffect,
-  useCallback,
-  useRef,
-  useState,
-  ChangeEvent,
+  AriaAttributes,
+  Dispatch,
   FocusEvent,
-  MouseEvent,
   KeyboardEvent,
   KeyboardEventHandler,
+  MouseEvent,
   Ref,
-  AriaAttributes,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
 import {
   ListMultiSelectionVariant,
@@ -54,15 +55,15 @@ export interface ListHelpers<
   Variant extends ListSelectionVariant = "default"
 > {
   setFocusVisible: (visible: boolean) => void;
-  setSelectedItem: (
-    selectedItem?: Variant extends ListMultiSelectionVariant
-      ? Array<Item>
-      : Item
-  ) => void;
+  setSelectedItem: Dispatch<
+    SetStateAction<
+      (Variant extends ListMultiSelectionVariant ? Item[] : Item) | undefined
+    >
+  >;
   setHighlightedIndex: (highlightedIndex?: number) => void;
   handleSelect: (
-    event: ChangeEvent<Element>,
-    index: number,
+    event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+    index: number | undefined,
     item: Item
   ) => void;
   keyDownHandlers: { [key: string]: KeyboardEventHandler };
@@ -126,11 +127,14 @@ export function useList<Item, Variant extends ListSelectionVariant>(
 
   const { current: isExtendedSelect } = useRef(selectionVariant === "extended");
 
-  let getItemIndex = useCallback((item) => source.indexOf(item), [source]);
-  let getItemAtIndex = useCallback((index) => source[index], [source]);
+  let getItemIndex = useCallback(
+    (item: Item) => source.indexOf(item),
+    [source]
+  );
+  let getItemAtIndex = useCallback((index: number) => source[index], [source]);
 
   const indexComparator = useCallback(
-    (a, b) => getItemIndex(a) - getItemIndex(b),
+    (a: Item, b: Item) => getItemIndex(a) - getItemIndex(b),
     [getItemIndex]
   );
 
@@ -148,7 +152,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   const [lastFocusedIndex, setLastFocusedIndex] = useState(-1);
 
   const [selectedItem, setSelectedItem] = useControlled<
-    (Variant extends ListMultiSelectionVariant ? Item[] : Item) | undefined
+    undefined | (Variant extends ListMultiSelectionVariant ? Item[] : Item)
   >({
     controlled: selectedItemProp,
     default:
@@ -172,7 +176,11 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   });
 
   const handleSingleSelect = useCallback(
-    (event, index, item) => {
+    (
+      event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+      index: number | undefined,
+      item: Item
+    ) => {
       const isSelected = item === selectedItem;
       let nextItem;
 
@@ -187,10 +195,15 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         nextItem = null;
       }
 
-      setSelectedItem(nextItem);
+      setSelectedItem(
+        nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item
+      );
 
       if (onChange) {
-        onChange(event, nextItem);
+        onChange(
+          event,
+          nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item
+        );
       }
     },
     [
@@ -203,12 +216,16 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   );
 
   const handleMultiSelect = useCallback(
-    (event, index, item) => {
-      const isSelected = (selectedItem as Item[]).indexOf(item) !== -1;
+    (
+      event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+      index: number | undefined,
+      item: Item
+    ) => {
+      const isSelected = (selectedItem as Item[]).indexOf(item as Item) !== -1;
       let nextItems = selectedItem as Item[];
 
       if (!isSelected) {
-        nextItems = nextItems.concat(item).sort(indexComparator);
+        nextItems = nextItems.concat([item]).sort(indexComparator);
         setHighlightedIndex(index);
       } else {
         nextItems = nextItems.filter((selected: any) => selected !== item);
@@ -235,7 +252,10 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   );
 
   const handleRangeSelect = useCallback(
-    (event: KeyboardEvent<HTMLElement>, index) => {
+    (
+      event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+      index?: number
+    ) => {
       const currentSelection =
         event.ctrlKey || event.metaKey ? selectedItem : ([] as Item[]);
 
@@ -246,8 +266,14 @@ export function useList<Item, Variant extends ListSelectionVariant>(
             )
           : 0;
 
-      const startRegion = Math.min(index, lastSelectedItemIndex);
-      const endRegion = Math.max(index, lastSelectedItemIndex);
+      const startRegion = Math.min(
+        index ?? lastSelectedItemIndex,
+        lastSelectedItemIndex
+      );
+      const endRegion = Math.max(
+        index ?? lastSelectedItemIndex,
+        lastSelectedItemIndex
+      );
       const rangeSelection = source.slice(startRegion, endRegion + 1);
       // concat the current selection with a new selection and remove duplicates for overlaps
       const nextItems = [
@@ -270,10 +296,11 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   );
 
   const handleExtendedSelect = useCallback(
-    (event, index, item) => {
-      console.log("handleExtendedSelect ", {
-        ctrl: event.ctrlKey,
-      });
+    (
+      event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+      index: number | undefined,
+      item: Item
+    ) => {
       let nextItems = selectedItem as Item[];
       if (event.shiftKey) {
         handleRangeSelect(event, index);
@@ -285,7 +312,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         console.log("handleMulti");
         handleMultiSelect(event, index, item);
       } else {
-        nextItems = [item];
+        nextItems = [item] as Item[];
         setSelectedItem(
           nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
         );
@@ -310,8 +337,12 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   );
 
   const handleSelect = useCallback(
-    (event, index, item) => {
-      if (item == null || item.disabled) {
+    (
+      event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
+      index: number | undefined,
+      item: Item | null
+    ) => {
+      if (item == null || (item as any).disabled) {
         return;
       }
 
@@ -390,15 +421,33 @@ export function useList<Item, Variant extends ListSelectionVariant>(
     },
     Enter: (event) => {
       event.preventDefault();
-      handleSelect(event, highlightedIndex, getItemAtIndex(highlightedIndex));
+      handleSelect(
+        event,
+        highlightedIndex,
+        highlightedIndex != null && highlightedIndex > -1
+          ? getItemAtIndex(highlightedIndex)
+          : null
+      );
     },
     " ": (event) => {
       event.preventDefault();
-      handleSelect(event, highlightedIndex, getItemAtIndex(highlightedIndex));
+      handleSelect(
+        event,
+        highlightedIndex,
+        highlightedIndex != null && highlightedIndex > -1
+          ? getItemAtIndex(highlightedIndex)
+          : null
+      );
     },
     Tab: (event) => {
       if (tabToSelect) {
-        handleSelect(event, highlightedIndex, getItemAtIndex(highlightedIndex));
+        handleSelect(
+          event,
+          highlightedIndex,
+          highlightedIndex != null && highlightedIndex > -1
+            ? getItemAtIndex(highlightedIndex)
+            : null
+        );
       } else {
         setHighlightedIndex(undefined);
       }
@@ -431,11 +480,15 @@ export function useList<Item, Variant extends ListSelectionVariant>(
     if (highlightedIndex === undefined) {
       const firstSelectedItem = isMultiSelect
         ? (selectedItem as Item[])[0]
-        : selectedItem;
+        : (selectedItem as Item | undefined);
 
       setHighlightedIndex(
         Math.max(
-          restoreLastFocus ? lastFocusedIndex : getItemIndex(firstSelectedItem),
+          restoreLastFocus
+            ? lastFocusedIndex
+            : firstSelectedItem
+            ? getItemIndex(firstSelectedItem)
+            : -1,
           0
         )
       );

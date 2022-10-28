@@ -88,7 +88,7 @@ export const useSelection = <
   });
 
   const isItemSelected = useCallback(
-    (item) => {
+    (item: collectionItem) => {
       return Array.isArray(selected)
         ? selected.includes(item)
         : selected === item;
@@ -112,7 +112,7 @@ export const useSelection = <
     [isItemSelected, selected]
   );
   const selectRange = useCallback(
-    (idx: number, preserveExistingSelection) => {
+    (idx: number, preserveExistingSelection?: boolean) => {
       const currentSelection = preserveExistingSelection
         ? (selected as collectionItem[])
         : ([] as collectionItem[]);
@@ -226,7 +226,7 @@ export const useSelection = <
   );
 
   const handleKeyboardNavigation = useCallback(
-    (evt: React.KeyboardEvent, currentIndex: number) => {
+    (evt: KeyboardEvent, currentIndex: number) => {
       if (isExtendedSelect && evt.shiftKey) {
         const item = indexPositions[currentIndex];
         if (isSelectable(item)) {

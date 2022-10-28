@@ -91,7 +91,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       </FormField>
       <Tooltray aria-label="filters tooltray">
         <ToggleButton
-          ariaLabel=" AND"
+          aria-label=" AND"
           style={{ width: "100%", minWidth: "60px" }}
           toggled
         >

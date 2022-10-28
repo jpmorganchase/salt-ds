@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState, ReactNode } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -19,7 +19,7 @@ export default {
   component: Accordion,
 } as ComponentMeta<typeof Accordion>;
 
-const DetailsContent: FC = ({ children }) => {
+const DetailsContent = ({ children }: { children?: ReactNode }) => {
   return <div className={"accordion-story-details"}>{children}</div>;
 };
 

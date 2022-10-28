@@ -2,7 +2,7 @@ import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@jpmorganchase/uitk-theme/index.css";
 
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
@@ -111,7 +111,8 @@ export const parameters: Parameters = {
     container: ({
       children,
       context,
-    }: ComponentProps<typeof DocsContainer>) => (
+    }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
+      // @ts-ignore DocsContainer does not support React18 types
       <DocsContainer context={context}>
         <ToolkitProvider theme={context.globals?.theme}>
           {children}

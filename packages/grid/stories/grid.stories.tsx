@@ -17,7 +17,6 @@ import { randomString, randomText } from "./utils";
 import {
   createContext,
   CSSProperties,
-  FC,
   useCallback,
   useContext,
   useMemo,
@@ -370,7 +369,7 @@ const useCustomHeadersStoryContext = () => {
   return c;
 };
 
-const CustomHeader: FC<GridHeaderValueProps<any>> = (props) => {
+const CustomHeader = (props: GridHeaderValueProps<any>) => {
   const { column } = props;
   const { sortBy, sortDesc, sort } = useCustomHeadersStoryContext();
 
@@ -503,7 +502,7 @@ const randomTreeData = (): TreeRowData => {
   };
 };
 
-const CustomCell: FC<GridCellValueProps<TreeRowData>> = (props) => {
+const CustomCell = (props: GridCellValueProps<TreeRowData>) => {
   const { row } = props;
   const { expand } = useCustomCellsStoryContext();
 

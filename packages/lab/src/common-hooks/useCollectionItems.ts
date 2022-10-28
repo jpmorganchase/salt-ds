@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState, isValidElement } from "react";
 import {
   CollectionItem,
   CollectionIndexer,
@@ -51,7 +51,7 @@ export const useCollectionItems = <Item>({
   } = options;
 
   const isExpanded = useCallback(
-    (path) => {
+    (path: string) => {
       // We can't do this here because itemToId won't work until we complete this phase
       // if (Array.isArray(revealSelected)) {
       //   const selectedIds = revealSelected.map(itemToId);
@@ -255,7 +255,7 @@ export const useCollectionItems = <Item>({
       const collectionItem = flattenedDataRef.current.find((i) =>
         // const collectionItem = collectionItemsRef.current.find((i) =>
         //@ts-ignore
-        React.isValidElement(i.value) ? i.label === item : i.value === item
+        isValidElement(i.value) ? i.label === item : i.value === item
       );
       if (collectionItem) {
         return collectionItem;
@@ -315,7 +315,7 @@ export const useCollectionItems = <Item>({
         const collectionItem = flattenedDataRef.current.find((i) =>
           // const collectionItem = collectionItemsRef.current.find((i) =>
           //@ts-ignore
-          React.isValidElement(i.value)
+          isValidElement(i.value)
             ? i.label === item
             : i.value !== null && itemToString(i.value) === item
         );
