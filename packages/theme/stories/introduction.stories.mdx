@@ -33,8 +33,8 @@ For the Toolkit, our design system is built simply from vanilla CSS. There are a
 
 The CSS comprises the following two kinds of declarations:
 
-- CSS Custom Properties declarations a.k.a. CSS Variables
-- traditional CSS selector rules with values assigned to CSS attributes.
+- CSS Custom Properties declarations, also known as CSS Variables which is the phrase we will use in this document.
+- Traditional CSS selector rules with values assigned to CSS attributes.
 
 CSS Variables allow us to declare CSS attribute values in a way that allows them to be re-used across multiple selector rules. This
 is just one feature of CSS Variables which makes them very useful. There are many powerful features, described in more detail below.
@@ -61,9 +61,9 @@ The styling of our UI Toolkit componentry is defined in the following two places
 
 A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories:
 
-- foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
-- characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
-- an in-between palette - The palette is a carefully selected group of color tokens which are aliased to give semantic meaning; allowing for a more consistent look and feel when used by characteristics, rather than foundation colors directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
+- Foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
+- Characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
+- An in-between palette - The palette is a carefully selected group of color tokens which are aliased to give semantic meaning; allowing for a more consistent look and feel when used by characteristics, rather than foundation colors directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
 
 Foundational tokens can broken into the following groups:
 
@@ -218,12 +218,12 @@ We have already mentioned that components will reference Theme variables, the ex
 - All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
 - The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
 - A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
-  var(--primary-variable-value, var(--fallback-value))
+  `var(--primary-variable-value, var(--fallback-value))`
 - The fallback value can equally be a simple constant CSS value
-  var(--primary-variable-value, 12px);
+  `var(--primary-variable-value, 12px);`
 
 In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--uitk-text-fontSize`. Providing that a UI Toolkit theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
-Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a `CSS API variable`. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
+Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a *CSS API variable*. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customisation mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
 
 `TODO` include link to button example, once we have landmark ids in the Button docs.
