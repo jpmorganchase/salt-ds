@@ -1,8 +1,8 @@
 import {
   CSSProperties,
-  FC,
   forwardRef,
   HTMLAttributes,
+  ReactElement,
   ReactNode,
   useEffect,
 } from "react";
@@ -59,9 +59,11 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   /**
    * Render props callback to render info panel.
-   * @param function({ value, unit, getUnitProps, getValueProps })
+   * @param function({ value, unit, getValueProps })
    */
-  renderInfo?: FC<InfoRendererProps<any, any>>;
+  renderInfo?: (
+    props: Pick<InfoRendererProps<any, any>, "value" | "unit" | "getValueProps">
+  ) => ReactElement<InfoRendererProps<any, any>>;
   /**
    * If `true`, the info panel will be displayed.
    */
@@ -95,7 +97,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} unit the unit of the progress info
  * @param {number} value the value of the progress info
  * @param {string} variant the variant to use.
- * @param {function} getUnitProps function callback that returns the unit props
  * @param {function} getValueProps function callback that returns the value props
  */
 export const CircularProgress = forwardRef<

@@ -302,7 +302,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
         sticky
         className="border-layout-form-footer"
       >
-        <SplitLayoutSimpleUsage leftSplitItem={{}} rightSplitItem={{}} />
+        <SplitLayoutSimpleUsage leftSplitItem={""} rightSplitItem={""} />
       </BorderItem>
     </BorderLayout>
   );

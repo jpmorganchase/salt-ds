@@ -175,7 +175,7 @@ export const App = () => {
   const defaultColor = Color.makeColorFromHex("#D1F4C9");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color) => {
+    (color: Color | undefined) => {
       setSelectedColor(color);
     },
     [setSelectedColor]

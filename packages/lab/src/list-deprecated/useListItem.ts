@@ -87,7 +87,7 @@ export function useListItem<Item>(
     : item === selectedItem;
 
   const handleClick = useCallback(
-    (event) => {
+    (event: MouseEvent<HTMLDivElement>) => {
       handleSelect(event, index, item);
 
       if (onClick) {
@@ -98,7 +98,7 @@ export function useListItem<Item>(
   );
 
   const handleMouseMove = useCallback(
-    (event) => {
+    (event: MouseEvent<HTMLDivElement>) => {
       setHighlightedIndex(index);
       setFocusVisible(false);
 

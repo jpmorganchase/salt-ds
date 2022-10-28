@@ -23,7 +23,7 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -48,9 +48,11 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
 
 export const JustColorPicker: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromRGB(10, 40, 67);
-  const [selectedColor, setSelectedColor] = useState(defaultColor);
+  const [selectedColor, setSelectedColor] = useState<Color | undefined>(
+    defaultColor
+  );
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -76,7 +78,7 @@ export const DefaultColorChooser: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -103,7 +105,7 @@ export const ColorChooserWithAlphaDisabled: ComponentStory<
   const defaultColor = Color.makeColorFromHex("#D1F4C9");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -131,7 +133,7 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: Co
   const defaultColor = Color.makeColorFromHex("#8644B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -158,7 +160,7 @@ export const ColorChooserWithDefaultAlpha: ComponentStory<
   const defaultColor = Color.makeColorFromHex("#8224B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -184,9 +186,9 @@ export const ColorChooserWithDefaultAlpha: ComponentStory<
 export const ColorChooserWithNullDefaultColor: ComponentStory<
   typeof ColorChooser
 > = () => {
-  const [selectedColor, setSelectedColor] = useState();
+  const [selectedColor, setSelectedColor] = useState<Color | undefined>();
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -207,7 +209,7 @@ export const ColorChooserWithCustomColors: ComponentStory<
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]
@@ -233,7 +235,7 @@ export const ColorChooserReadOnly: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
-    (color, finalSelection) => {
+    (color?: Color) => {
       setSelectedColor(color);
     },
     [setSelectedColor]

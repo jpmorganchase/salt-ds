@@ -5,10 +5,10 @@
   --uitk-navigable-cursor-disabled: not-allowed;
   --uitk-navigable-cursor-edit: text;
 
-  --uitk-navigable-fontWeight: var(--uitk-typography-weight-regular);
-  --uitk-navigable-fontWeight-hover: var(--uitk-typography-weight-regular);
-  --uitk-navigable-fontWeight-active: var(--uitk-typography-weight-semiBold);
-  --uitk-navigable-fontWeight-edit: var(--uitk-typography-weight-regular);
+  --uitk-navigable-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-navigable-fontWeight-hover: var(--uitk-typography-fontWeight-regular);
+  --uitk-navigable-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-navigable-fontWeight-edit: var(--uitk-typography-fontWeight-regular);
 
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);

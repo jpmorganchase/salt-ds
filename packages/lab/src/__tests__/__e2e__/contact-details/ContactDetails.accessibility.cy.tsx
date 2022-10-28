@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   ContactAction,
   ContactActions,
@@ -42,14 +41,12 @@ const testMetadata = [
   ["Email", personaA.email],
 ] as [string, string][];
 
-const focusedMetadata = testMetadata.slice(3);
-
 type PersonaAContactDetailsProps = Pick<ContactDetailsProps, "variant"> &
   Pick<ContactMetadataProps, "collapsible"> & {
     headingAriaLevel?: number;
   };
 
-const PersonaAContactDetails: FC<PersonaAContactDetailsProps> = (props) => {
+const PersonaAContactDetails = (props: PersonaAContactDetailsProps) => {
   return (
     <ContactDetails variant={props.variant}>
       <ContactAvatar />

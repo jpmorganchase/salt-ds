@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
@@ -63,7 +62,7 @@ DefaultFlowLayout.args = {};
 
 type MetricExampleType = { metricSize?: MetricProps["size"] };
 
-export const MetricExample: FC<MetricExampleType> = ({ metricSize }) => (
+export const MetricExample = ({ metricSize }: MetricExampleType) => (
   <Metric direction="up" size={metricSize}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />

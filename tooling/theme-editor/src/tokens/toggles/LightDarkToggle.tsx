@@ -1,7 +1,11 @@
 import { ReactElement, useCallback, useState } from "react";
 import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ToggleButton, ToggleButtonGroup } from "@jpmorganchase/uitk-lab";
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  ToggleButtonGroupChangeEventHandler,
+} from "@jpmorganchase/uitk-lab";
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 
@@ -15,11 +19,14 @@ export const LightDarkToggle = (props: {
     props.mode === ThemeMode.LIGHT ? 0 : 1
   );
 
-  const onModeChanged = useCallback((e, index) => {
-    const mode = index === 0 ? ThemeMode.LIGHT : ThemeMode.DARK;
-    props.onModeChanged(mode);
-    setSelectedIndex(index);
-  }, []);
+  const onModeChanged: ToggleButtonGroupChangeEventHandler = useCallback(
+    (e, index) => {
+      const mode = index === 0 ? ThemeMode.LIGHT : ThemeMode.DARK;
+      props.onModeChanged(mode);
+      setSelectedIndex(index);
+    },
+    []
+  );
 
   return (
     <div className={cn(withBaseName())}>

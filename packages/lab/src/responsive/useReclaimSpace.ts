@@ -66,7 +66,7 @@ export const useReclaimSpace = ({
   orientation,
 }: OverflowHookProps): OverflowHookResult => {
   const getAllOverflowedItems = useCallback(
-    (visibleContentSize, containerSize) => {
+    (visibleContentSize: number, containerSize: number) => {
       let newlyOverflowedItems = [];
       const { current: managedItems } = managedItemsRef;
       const visibleItems = managedItems.slice();
@@ -104,36 +104,39 @@ export const useReclaimSpace = ({
       });
     }
   }, []);
-  const handleResize = useCallback((size, containerHasGrown) => {
-    const { isOverflowing: willOverflow } = measureContainerOverflow(
-      ref,
-      orientation
-    );
-    const { current: managedItems } = managedItemsRef;
+  const handleResize = useCallback(
+    (size: number, containerHasGrown?: boolean) => {
+      const { isOverflowing: willOverflow } = measureContainerOverflow(
+        ref,
+        orientation
+      );
+      const { current: managedItems } = managedItemsRef;
 
-    if (containerHasGrown && canReleaseReclaimedSpace(size, managedItems)) {
-      releaseReclaimedSpace();
-    } else if (
-      !containerHasGrown &&
-      willOverflow &&
-      mightBeAbleToReclaimSpace(managedItems)
-    ) {
-      const collapsedChild = managedItems.find(canReclaimSpace);
-      if (collapsedChild) {
-        collectionHook.dispatch({
-          type: "replace-item",
-          overflowItem: {
-            ...collapsedChild,
-            collapsed: false,
-            collapsing: true,
-            reclaimedSpace: true,
-            size: collapsedChild.fullSize as number,
-            fullSize: null,
-          },
-        });
+      if (containerHasGrown && canReleaseReclaimedSpace(size, managedItems)) {
+        releaseReclaimedSpace();
+      } else if (
+        !containerHasGrown &&
+        willOverflow &&
+        mightBeAbleToReclaimSpace(managedItems)
+      ) {
+        const collapsedChild = managedItems.find(canReclaimSpace);
+        if (collapsedChild) {
+          collectionHook.dispatch({
+            type: "replace-item",
+            overflowItem: {
+              ...collapsedChild,
+              collapsed: false,
+              collapsing: true,
+              reclaimedSpace: true,
+              size: collapsedChild.fullSize as number,
+              fullSize: null,
+            },
+          });
+        }
       }
-    }
-  }, []);
+    },
+    []
+  );
 
   return {
     onResize: handleResize,
