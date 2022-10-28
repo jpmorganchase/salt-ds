@@ -67,19 +67,19 @@ export const NestedProviders = () => {
             onChange={handleChangeOuterTheme}
             selectedIndex={outerTheme}
           >
-            <ToggleButton ariaLabel="light theme">Light</ToggleButton>
-            <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
-            <ToggleButton ariaLabel="no theme">Not set</ToggleButton>
+            <ToggleButton aria-label="light theme">Light</ToggleButton>
+            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+            <ToggleButton aria-label="no theme">Not set</ToggleButton>
           </ToggleButtonGroup>
           <ToggleButtonGroup
             onChange={handleChangeOuterDensity}
             selectedIndex={outerDensity}
           >
-            <ToggleButton ariaLabel="high density">High</ToggleButton>
-            <ToggleButton ariaLabel="medium density">Medium</ToggleButton>
-            <ToggleButton ariaLabel="low density">Low</ToggleButton>
-            <ToggleButton ariaLabel="touch density">Touch</ToggleButton>
-            <ToggleButton ariaLabel="not set">Not set</ToggleButton>
+            <ToggleButton aria-label="high density">High</ToggleButton>
+            <ToggleButton aria-label="medium density">Medium</ToggleButton>
+            <ToggleButton aria-label="low density">Low</ToggleButton>
+            <ToggleButton aria-label="touch density">Touch</ToggleButton>
+            <ToggleButton aria-label="not set">Not set</ToggleButton>
           </ToggleButtonGroup>
           <p>
             This Card is wrapped with a ToolkitProvider, theme is light, density
@@ -98,20 +98,20 @@ export const NestedProviders = () => {
                 onChange={handleChangeInnerTheme}
                 selectedIndex={innerTheme}
               >
-                <ToggleButton ariaLabel="light theme">Light</ToggleButton>
-                <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
-                <ToggleButton ariaLabel="dark theme">Not set</ToggleButton>
+                <ToggleButton aria-label="light theme">Light</ToggleButton>
+                <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+                <ToggleButton aria-label="dark theme">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <ToggleButtonGroup
                 onChange={handleChangeInnerDensity}
                 selectedIndex={innerDensity}
               >
-                <ToggleButton ariaLabel="high density">High</ToggleButton>
-                <ToggleButton ariaLabel="medium density">Medium</ToggleButton>
-                <ToggleButton ariaLabel="low density">Low</ToggleButton>
-                <ToggleButton ariaLabel="touch density">Touch</ToggleButton>
-                <ToggleButton ariaLabel="not set">Not set</ToggleButton>
+                <ToggleButton aria-label="high density">High</ToggleButton>
+                <ToggleButton aria-label="medium density">Medium</ToggleButton>
+                <ToggleButton aria-label="low density">Low</ToggleButton>
+                <ToggleButton aria-label="touch density">Touch</ToggleButton>
+                <ToggleButton aria-label="not set">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <p>
