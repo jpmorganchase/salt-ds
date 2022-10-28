@@ -43,15 +43,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop1,
-.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop3 {
-  --spinner-gradient-color: var(--backwardsCompat-measured-fill-stopColor);
-}
-
-.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop2,
-.backwardsCompat.uitkSvgSpinner .uitkSvgSpinner-gradientStop4 {
-  --spinner-gradient-color: var(--backwardsCompat-measured-fill-startColor);
-}

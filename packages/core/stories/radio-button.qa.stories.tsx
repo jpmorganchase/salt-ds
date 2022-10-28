@@ -55,21 +55,3 @@ export const AllExamplesGrid: Story<
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/RadioButton-vr-snapshot.png"
-    />
-  );
-};

@@ -41,9 +41,3 @@ export const AllVariantsGrid: Story<QAContainerProps> = (props) => (
 AllVariantsGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllVariantsGrid imgSrc="/visual-regression-screenshots/Button-vr-snapshot.png" />
-  );
-};

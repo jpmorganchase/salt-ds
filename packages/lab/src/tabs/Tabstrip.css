@@ -144,8 +144,3 @@
   right: 0;
   bottom: 0;
 }
-
-.uitkTabstrip.backwardsCompat {
-  --tabs-tab-letterSpacing: -0.1px;
-  --tabs-tab-top: -1px;
-}

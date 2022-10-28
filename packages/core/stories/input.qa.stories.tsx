@@ -10,8 +10,6 @@ import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
-import "./input.qa.stories.css";
-
 export default {
   title: "Core/Input/QA",
   component: Input,
@@ -168,10 +166,4 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png" />
-  );
 };
