@@ -1,14 +1,10 @@
 import { composeStories } from "@storybook/testing-react";
 import * as overlayStories from "@stories/overlay.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(overlayStories);
 const { OverlayTop, OverlayRight, OverlayBottom, OverlayLeft } =
-  composedStories;
+  composeStories(overlayStories);
 
 describe("GIVEN an Overlay", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN mounted top", () => {
     it("THEN it should appear on top of anchor element", () => {
       cy.mount(<OverlayTop open />);

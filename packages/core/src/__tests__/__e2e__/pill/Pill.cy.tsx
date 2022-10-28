@@ -3,8 +3,7 @@ import { CallIcon } from "@jpmorganchase/uitk-icons";
 import { composeStories } from "@storybook/testing-react";
 import * as pillStories from "@stories/pill.stories";
 
-const composedStories = composeStories(pillStories);
-const { CustomTooltipTextPill } = composedStories;
+const { CustomTooltipTextPill } = composeStories(pillStories);
 
 /**
  * Changes applied to the tests after copy over
@@ -115,11 +114,6 @@ describe("GIVEN a Pill", () => {
   it("THEN should render an icon given icon component", () => {
     cy.mount(<Pill icon={<CallIcon />} label="label" />);
     cy.findByTestId(/CallIcon/i).should("exist");
-  });
-
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Pill label="label" />);
-    cy.checkAxeComponent();
   });
 
   it("SHOULD have overridden tooltip title with TooltipProps", () => {

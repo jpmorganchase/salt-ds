@@ -17,9 +17,4 @@ describe("GIVEN a Spinner", () => {
     cy.mount(<Spinner size="small" />);
     cy.findByRole("img").should("have.class", "uitkSvgSpinner-small");
   });
-
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Spinner />);
-    cy.checkAxeComponent();
-  });
 });

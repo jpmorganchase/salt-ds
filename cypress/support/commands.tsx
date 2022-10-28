@@ -1,8 +1,6 @@
 import "@testing-library/cypress/add-commands";
 import { mount as cypressMount } from "cypress/react18";
 import type { MountReturn, MountOptions } from "cypress/react";
-import "cypress-axe";
-import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
@@ -34,27 +32,13 @@ declare global {
        */
       setDensity(theme: SupportedDensity): Chainable<void>;
 
-      /**
-       * Set Density
-       *
-       * @example
-       * cy.checkAxeComponent()
-       */
-      checkAxeComponent(
-        options?: Options,
-        enableFailures?: boolean
-      ): Chainable<void>;
-
       mountPerformance: (
         jsx: ReactNode,
         options?: MountOptions
       ) => Chainable<MountReturn>;
       mount: (jsx: ReactNode, options?: MountOptions) => Chainable<MountReturn>;
-
       getRenderCount(): Chainable<number>;
-
       getRenderTime(): Chainable<number>;
-
       paste(string: string): Chainable<void>;
     }
   }
@@ -75,27 +59,6 @@ Cypress.Commands.add("setDensity", function (density) {
     cy.log("Unsupported density", density);
   }
 });
-
-Cypress.Commands.add(
-  "checkAxeComponent",
-  (options: Options = {}, enableFailures = false) => {
-    cy.injectAxe();
-    cy.checkA11y(
-      //So the region rule does not have to be disabled globally
-      "[data-cy-root]",
-      options,
-      (a11yErrors) => {
-        // Don't output the violations twice
-        if (Cypress.browser.isHeadless) {
-          for (const a11yError of a11yErrors) {
-            cy.task("log", a11yError);
-          }
-        }
-      },
-      !enableFailures
-    );
-  }
-);
 
 Cypress.Commands.add("mount", function (children, options) {
   const handleAnnouncement = (announcement: string) => {

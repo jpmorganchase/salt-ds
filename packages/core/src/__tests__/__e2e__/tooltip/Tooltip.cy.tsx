@@ -1,14 +1,9 @@
 import * as tooltipStories from "@stories/tooltip.stories";
 import { composeStories } from "@storybook/testing-react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(tooltipStories);
-
-const { Default, OpenTooltip } = composedStories;
+const { Default, OpenTooltip } = composeStories(tooltipStories);
 
 describe("GIVEN a Tooltip", () => {
-  checkAccessibility(composedStories);
-
   it('should have the aria role "tooltip"', () => {
     cy.mount(<OpenTooltip />);
     cy.findByRole("tooltip").should("exist");

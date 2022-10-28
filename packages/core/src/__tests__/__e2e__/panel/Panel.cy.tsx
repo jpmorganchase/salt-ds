@@ -1,11 +1,6 @@
 import { Panel } from "@jpmorganchase/uitk-core";
 
 describe("GIVEN a Panel", () => {
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Panel>Content</Panel>);
-    cy.checkAxeComponent();
-  });
-
   describe("children prop", () => {
     describe("AND a string is passed as a child", () => {
       it("THEN should display children", () => {

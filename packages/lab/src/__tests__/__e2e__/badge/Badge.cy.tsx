@@ -46,9 +46,4 @@ describe("GIVEN a Badge", () => {
       });
     });
   });
-
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Badge />);
-    cy.checkAxeComponent();
-  });
 });

@@ -54,15 +54,5 @@ describe("GIVEN an Input", () => {
         "uitkInput-focused"
       );
     });
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(
-        <FormField label="Warning validation status">
-          <Input defaultValue="Value" data-testid="test-id-1" />
-        </FormField>
-      );
-
-      cy.findByRole("textbox").focus();
-      cy.checkAxeComponent();
-    });
   });
 });

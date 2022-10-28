@@ -1,8 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as deckStories from "@stories/layout/deck-layout.stories";
 
-const composedStories = composeStories(deckStories);
-const { DefaultDeckLayout } = composedStories;
+const { DefaultDeckLayout } = composeStories(deckStories);
 
 describe("Given a deck layout", () => {
   describe("WHEN no custom values are provided", () => {

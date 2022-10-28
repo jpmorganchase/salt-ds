@@ -69,8 +69,4 @@ describe("GIVEN a Pill", () => {
     cy.mount(<Pill checked label="Pill text" variant="selectable" />);
     cy.findByRole("checkbox").should("have.attr", "aria-checked", "true");
   });
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Pill label="Pill text" variant="selectable" />);
-    cy.checkAxeComponent();
-  });
 });

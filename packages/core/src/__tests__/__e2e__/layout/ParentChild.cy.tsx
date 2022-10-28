@@ -1,10 +1,8 @@
 import { composeStories } from "@storybook/testing-react";
 import * as parentChildStories from "@stories/layout/parent-child-layout.stories";
 
-const composedStories = composeStories(parentChildStories);
-
 const { DefaultParentChildLayout, ToolkitParentChildLayoutStacked } =
-  composedStories;
+  composeStories(parentChildStories);
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {

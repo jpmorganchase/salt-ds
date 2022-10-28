@@ -1,13 +1,9 @@
 import { composeStories } from "@storybook/testing-react";
 import * as splitStories from "@stories/layout/split-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(splitStories);
-const { DefaultSplitLayout } = composedStories;
+const { DefaultSplitLayout } = composeStories(splitStories);
 
 describe("GIVEN a Split", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN no props are provided", () => {
     it("THEN it should wrap by default", () => {
       cy.mount(<DefaultSplitLayout />);

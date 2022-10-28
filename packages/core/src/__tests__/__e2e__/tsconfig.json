@@ -7,8 +7,7 @@
       "react",
       "cypress",
       "@testing-library/cypress",
-      "cypress-real-events",
-      "cypress-axe"
+      "cypress-real-events"
     ],
     "baseUrl": "../../../",
     "paths": {

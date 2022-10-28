@@ -8,11 +8,6 @@ describe("GIVEN a Search", () => {
       cy.findByRole("textbox").should("have.value", "");
       cy.findByRole("button", { name: "clear input" }).should("not.exist");
     });
-
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<SearchInput />);
-      cy.checkAxeComponent();
-    });
   });
 
   describe("WHEN it is uncontrolled with a default value", () => {
@@ -148,10 +143,6 @@ describe("GIVEN a Search", () => {
     it("THEN should render a disabled input", () => {
       cy.mount(<SearchInput disabled />);
       cy.findByRole("textbox").should("be.disabled");
-    });
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<SearchInput disabled />);
-      cy.checkAxeComponent();
     });
   });
 

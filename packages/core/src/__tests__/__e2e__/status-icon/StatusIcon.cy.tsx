@@ -1,13 +1,9 @@
 import { composeStories } from "@storybook/testing-react";
 import * as statusIconStories from "@stories/status-icon.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(statusIconStories);
-const { DefaultStatusIcon } = composedStories;
+const { DefaultStatusIcon } = composeStories(statusIconStories);
 
 describe("Given a Status Icon", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN a status value is provided", () => {
     it("should render an error icon", () => {
       cy.mount(<DefaultStatusIcon status="error" />);

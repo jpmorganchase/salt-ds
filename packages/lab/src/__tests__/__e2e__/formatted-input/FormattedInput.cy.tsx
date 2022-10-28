@@ -2,11 +2,6 @@ import { FormattedInput } from "@jpmorganchase/uitk-lab";
 import { useState } from "react";
 
 describe("GIVEN FormattedInput", () => {
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<FormattedInput defaultValue="The default value" />);
-    cy.checkAxeComponent();
-  });
-
   describe("When cy.mounted as an uncontrolled component", () => {
     it("THEN should render with the specified defaultValue", () => {
       cy.mount(<FormattedInput defaultValue="The default value" />);
@@ -33,20 +28,12 @@ describe("GIVEN FormattedInput", () => {
         cy.mount(<FormattedInput defaultValue="The default value" disabled />);
         cy.findByRole("textbox").should("be.disabled");
       });
-      it("SHOULD have no a11y violations on load", () => {
-        cy.mount(<FormattedInput defaultValue="The default value" disabled />);
-        cy.checkAxeComponent();
-      });
     });
 
     describe("When FormattedInput is readOnly", () => {
       it("THEN should render readOnly", () => {
         cy.mount(<FormattedInput defaultValue="The default value" readOnly />);
         cy.findByRole("textbox").should("have.attr", "readOnly");
-      });
-      it("SHOULD have no a11y violations on load", () => {
-        cy.mount(<FormattedInput defaultValue="The default value" readOnly />);
-        cy.checkAxeComponent();
       });
     });
   });
@@ -95,11 +82,6 @@ describe("GIVEN FormattedInput", () => {
         cy.mount(<FormattedInput mask="XX-XX-XX" value="12" />);
         cy.get("span").should("have.text", "12-XX-XX");
       });
-    });
-
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<FormattedInput mask="XX-XX-XX" />);
-      cy.checkAxeComponent();
     });
   });
 

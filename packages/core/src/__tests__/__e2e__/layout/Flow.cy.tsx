@@ -1,13 +1,9 @@
 import { composeStories } from "@storybook/testing-react";
 import * as flowStories from "@stories/layout/flow-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(flowStories);
-const { DefaultFlowLayout } = composedStories;
+const { DefaultFlowLayout } = composeStories(flowStories);
 
 describe("GIVEN a Flow", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN no props are provided", () => {
     it("THEN it should wrap by default", () => {
       cy.mount(<DefaultFlowLayout />);

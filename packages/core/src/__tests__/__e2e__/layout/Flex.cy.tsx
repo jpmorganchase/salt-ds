@@ -1,15 +1,11 @@
 import { composeStories } from "@storybook/testing-react";
 import * as flexStories from "@stories/layout/flex-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
-const composedStories = composeStories(flexStories);
 const { DefaultFlexLayout, FlexLayoutUsingResponsiveProps, FlexLayoutNested } =
-  composedStories;
+  composeStories(flexStories);
 
 describe("GIVEN a Flex", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN no props are provided", () => {
     it("THEN it should render with flex direction row", () => {
       cy.mount(<DefaultFlexLayout />);

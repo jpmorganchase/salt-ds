@@ -2,11 +2,6 @@ import { Input } from "@jpmorganchase/uitk-core";
 import { ChangeEvent, useState } from "react";
 
 describe("GIVEN an Input", () => {
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<Input defaultValue="The default value" />);
-    cy.checkAxeComponent();
-  });
-
   describe("WHEN cy.mounted as an uncontrolled component", () => {
     it("THEN it should cy.mount with the specified defaultValue", () => {
       cy.mount(<Input defaultValue="The default value" />);
@@ -103,21 +98,12 @@ describe("GIVEN an Input", () => {
       cy.mount(<Input defaultValue="The default value" disabled />);
       cy.findByRole("textbox").should("be.disabled");
     });
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<Input defaultValue="The default value" disabled />);
-      cy.checkAxeComponent();
-    });
   });
 
   describe("WHEN the Input is read only", () => {
     it("THEN should cy.mount read only", () => {
       cy.mount(<Input defaultValue="The default value" readOnly />);
       cy.findByRole("textbox").should("have.attr", "readonly");
-    });
-
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<Input defaultValue="The default value" readOnly />);
-      cy.checkAxeComponent();
     });
 
     describe("AND empty", () => {

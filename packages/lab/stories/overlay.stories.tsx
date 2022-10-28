@@ -56,12 +56,6 @@ FeatureOverlay.args = {
   open: true,
 };
 
-FeatureOverlay.parameters = {
-  axe: {
-    skip: true,
-  },
-};
-
 export const OverlayTop = OverlayTemplate.bind({});
 OverlayTop.args = {
   placement: "top",

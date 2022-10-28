@@ -1,22 +1,18 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/layout/grid-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
-const composedStories = composeStories(gridStories);
 const {
   DefaultGridLayout,
   GridLayoutMultipleRows,
   GridLayoutResponsiveView,
   GridLayoutNested,
-} = composedStories;
+} = composeStories(gridStories);
 
 const testElementsNumber = (elements: number) =>
   new RegExp(`^(\\d*\\.?\\d*px *){${elements}}$`);
 
 describe("GIVEN a Grid", () => {
-  checkAccessibility(composedStories);
-
   describe("WHEN no props are provided", () => {
     it("THEN it should render 12 columns and 1 row", () => {
       cy.mount(<DefaultGridLayout />);

@@ -2,9 +2,8 @@ import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 
-const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
-  composedStories;
+  composeStories(gridStories);
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -39,7 +38,6 @@ const expectFakeColumnWidth = (w: number) => {
 };
 
 describe("Grid", () => {
-  // TODO checkAccessibility(composedStories);
   it("Rendering", () => {
     cy.mount(<GridExample />);
     cy.findByTestId("grid-left-part").should("exist");

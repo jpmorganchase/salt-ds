@@ -1,15 +1,13 @@
 import { composeStories } from "@storybook/testing-react";
 import * as layerStories from "@stories/layout/layer-layout.stories";
 
-const composedStories = composeStories(layerStories);
-
 const {
   DefaultLayerLayout,
   LayerLayoutTop,
   LayerLayoutRight,
   LayerLayoutLeft,
   LayerLayoutBottom,
-} = composedStories;
+} = composeStories(layerStories);
 
 describe("GIVEN a Layer", () => {
   describe("WHEN scrim is enabled", () => {

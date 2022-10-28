@@ -1,10 +1,8 @@
 import { composeStories } from "@storybook/testing-react";
 import * as skipLinkStories from "@stories/skip-link.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
 
-const composedStories = composeStories(skipLinkStories);
-const { Default, MultipleLinks } = composedStories;
+const { Default, MultipleLinks } = composeStories(skipLinkStories);
 
 export const NoTargetRef = () => {
   return (
@@ -64,7 +62,6 @@ export const NoTargetRef = () => {
 };
 
 describe("GIVEN a SkipLink", () => {
-  checkAccessibility(composedStories);
   describe("WHEN there is a single SkipLink", () => {
     it("THEN it should move focus to the target element when interacted with", () => {
       cy.mount(<Default />);

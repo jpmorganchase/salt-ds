@@ -1,13 +1,9 @@
 import { composeStories } from "@storybook/testing-react";
 import * as buttonStories from "@stories/button.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(buttonStories);
-const { FeatureButton, FocusableWhenDisabled } = composedStories;
+const { FeatureButton, FocusableWhenDisabled } = composeStories(buttonStories);
 
 describe("Given a Button", () => {
-  checkAccessibility(composedStories);
-
   it("should render text as children", () => {
     cy.mount(<FeatureButton />);
     cy.findByText(FeatureButton.args?.children as string).should("be.visible");

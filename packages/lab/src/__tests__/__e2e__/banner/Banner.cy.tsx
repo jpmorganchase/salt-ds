@@ -1,14 +1,10 @@
 import { Banner } from "@jpmorganchase/uitk-lab";
 import { composeStories } from "@storybook/testing-react";
 import * as bannerStories from "@stories/banner.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(bannerStories);
-const { Info, Success, Warning, Error } = composedStories;
+const { Info, Success, Warning, Error } = composeStories(bannerStories);
 
 describe("GIVEN a Banner", () => {
-  checkAccessibility(composedStories);
-
   it("THEN should render info", () => {
     cy.mount(<Info />);
 
