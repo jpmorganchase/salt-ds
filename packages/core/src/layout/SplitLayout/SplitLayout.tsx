@@ -15,7 +15,7 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   align?: FlexLayoutProps["align"];
   /**
-   * Adds a separator between elements.
+   * Adds a separator between elements if wrap is not active, default is false.
    */
   separators?: FlexLayoutProps["separators"];
   /**
