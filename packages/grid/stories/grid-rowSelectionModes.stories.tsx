@@ -42,13 +42,13 @@ const RowSelectionModesTemplate: Story<{}> = () => {
     <FlexLayout direction="column">
       <FlexItem>
         <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-          <ToggleButton ariaLabel="multi" tooltipText="Multi">
+          <ToggleButton aria-label="multi" tooltipText="Multi">
             Multi
           </ToggleButton>
-          <ToggleButton ariaLabel="single" tooltipText="Single">
+          <ToggleButton aria-label="single" tooltipText="Single">
             Single
           </ToggleButton>
-          <ToggleButton ariaLabel="none" tooltipText="None">
+          <ToggleButton aria-label="none" tooltipText="None">
             None
           </ToggleButton>
         </ToggleButtonGroup>
