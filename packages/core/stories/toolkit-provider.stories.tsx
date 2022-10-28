@@ -29,28 +29,28 @@ const THEMES = ["light", "dark"];
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 
 export const ToggleTheme = () => {
-  const [outerTheme, setOuterTheme] = useState(LIGHT);
+  const [theme, setTheme] = useState(LIGHT);
 
   const handleChangeOuterTheme: ToggleButtonGroupChangeEventHandler = (
     event,
     index
   ) => {
-    setOuterTheme(index);
+    setTheme(index);
   };
 
   return (
-    <ToolkitProvider theme={THEMES[outerTheme]}>
+    <ToolkitProvider theme={THEMES[theme]}>
       <Card>
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
           <ToggleButtonGroup
             onChange={handleChangeOuterTheme}
-            selectedIndex={outerTheme}
+            selectedIndex={theme}
           >
             <ToggleButton ariaLabel="light theme">Light</ToggleButton>
             <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
-          <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[outerTheme]}`}</p>
+          <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[theme]}`}</p>
 
           <Checkbox label="Example Choice 1" />
           <Checkbox defaultChecked label="Example Choice 2" />
