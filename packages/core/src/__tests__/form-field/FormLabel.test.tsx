@@ -1,4 +1,4 @@
-import { screen, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import { FormLabel } from "../../form-field";
 
@@ -65,7 +65,7 @@ describe("GIVEN a FormLabel", () => {
   describe("WHEN show status indicator", () => {
     test("THEN info icon is rendered by default", () => {
       render(<FormLabel label={labelText} hasStatusIndicator />);
-      expect(screen.getByTestId(/InfoIcon/i)).toBeInTheDocument();
+      expect(screen.getByTestId(/InfoSolidIcon/i)).toBeInTheDocument();
     });
 
     test("THEN warning icon is rendered when validationStatus is warning", () => {
@@ -76,7 +76,7 @@ describe("GIVEN a FormLabel", () => {
           validationStatus="warning"
         />
       );
-      expect(screen.getByTestId(/WarningIcon/i)).toBeInTheDocument();
+      expect(screen.getByTestId(/WarningSolidIcon/i)).toBeInTheDocument();
     });
 
     test("THEN error icon is rendered when validationStatus is error", () => {
@@ -87,7 +87,7 @@ describe("GIVEN a FormLabel", () => {
           validationStatus="error"
         />
       );
-      expect(screen.getByTestId(/ErrorIcon/i)).toBeInTheDocument();
+      expect(screen.getByTestId(/ErrorSolidIcon/i)).toBeInTheDocument();
     });
   });
 });

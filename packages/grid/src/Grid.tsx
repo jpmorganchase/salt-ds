@@ -8,7 +8,6 @@ import React, {
   useMemo,
   useRef,
   useState,
-  WheelEventHandler,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnInfo } from "./GridColumn";
@@ -38,7 +37,6 @@ import {
   useLeftScrolledOutWidth,
   useProd,
   useRangeSelection,
-  useRowIdxByKey,
   useRowModels,
   useRowSelection,
   useScrollToCell,
@@ -58,7 +56,6 @@ import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
-import { range } from "./NumberRange";
 
 const withBaseName = makePrefixer("uitkGrid");
 
@@ -158,7 +155,7 @@ function defaultRowKeyGetter<T>(row: T, index: number): string {
   return `${index}`;
 }
 
-export const Grid = function <T>(props: GridProps<T>) {
+export const Grid = function Grid<T>(props: GridProps<T>) {
   const {
     rowData,
     zebra,
@@ -364,9 +361,9 @@ export const Grid = function <T>(props: GridProps<T>) {
     ]
   );
 
-  const onWheel: WheelEventHandler<HTMLTableElement> = useCallback(
+  const onWheel: EventListener = useCallback(
     (event) => {
-      let { deltaX, deltaY, shiftKey } = event;
+      let { deltaX, deltaY, shiftKey } = event as WheelEvent;
       if (deltaX === 0 && shiftKey) {
         deltaX = deltaY;
         deltaY = 0;
@@ -564,9 +561,12 @@ export const Grid = function <T>(props: GridProps<T>) {
     [cursorRowIdx, cursorColIdx, moveCursor]
   );
 
-  const onColumnMove = (fromIndex: number, toIndex: number) => {
+  const onColumnMove: GridColumnMoveHandler = (
+    columnId,
+    fromIndex,
+    toIndex
+  ) => {
     if (onColumnMoved && fromIndex !== toIndex) {
-      const columnId = cols[fromIndex].info.props.id;
       onColumnMoved(columnId, fromIndex, toIndex);
     }
   };
@@ -578,6 +578,7 @@ export const Grid = function <T>(props: GridProps<T>) {
       leftCols,
       midCols,
       rightCols,
+      cols,
       scrollLeft,
       clientMidWidth,
       onColumnMove

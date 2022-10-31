@@ -12,5 +12,4 @@
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
-  z-index: var(--grid-cell-zIndex);
 }

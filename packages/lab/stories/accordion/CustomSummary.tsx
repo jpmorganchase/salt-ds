@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { ReactNode } from "react";
 
 import "./CustomSummary.css";
 import { useAccordionSectionContext } from "@jpmorganchase/uitk-lab";
 import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
 
-export const CustomSummary: FC = ({ children }) => {
+export const CustomSummary = ({ children }: { children?: ReactNode }) => {
   const { isDisabled, isExpanded, onToggle } = useAccordionSectionContext();
 
   return (

@@ -15,10 +15,12 @@ import {
   useReducer,
   useRef,
   useState,
+  MouseEvent,
+  KeyboardEvent,
 } from "react";
 import { useEventCallback } from "../utils";
 import { usePrevious } from "@jpmorganchase/uitk-core";
-import { CascadingMenuProps } from "./CascadingMenuProps";
+import { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
@@ -114,7 +116,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
 
     // Controlled opening/closing of the menu
     const openCloseMenu = useCallback(
-      (open) =>
+      (open: boolean) =>
         dispatch({
           type: open
             ? CascadingMenuAction.OPEN_MENU
@@ -173,7 +175,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
 
     // close the menu on item click via mouse
     const onItemClickCallback = useCallback(
-      (sourceItem, event) => {
+      (sourceItem: MenuDescriptor, event: KeyboardEvent | MouseEvent) => {
         onItemClick?.(sourceItem, event);
 
         if (!isNavigatingWithKeyboard) {

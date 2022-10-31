@@ -1,19 +1,7 @@
 import { Button, SplitLayout } from "@jpmorganchase/uitk-core";
 import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { HTMLAttributes, ReactNode } from "react";
-
-interface ContentBlockProps extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode;
-  caption?: string;
-  classname?: string;
-}
-
-const ContentBlock = ({ children, classname, ...rest }: ContentBlockProps) => (
-  <div className={classname || "layout-content"} {...rest}>
-    {children || <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>}
-  </div>
-);
+import { FlexContent } from "./flex-item.stories";
 
 export default {
   title: "Core/Layout/SplitLayout",
@@ -46,18 +34,15 @@ export default {
 const leftItem = (
   <FlowLayout>
     {Array.from({ length: 3 }, (_, index) => (
-      <ContentBlock key={index}>{`Item ${index + 1}`}</ContentBlock>
+      <FlexContent key={index}>{`Item ${index + 1}`}</FlexContent>
     ))}
   </FlowLayout>
 );
 
 const rightItem = (
   <FlowLayout>
-    <ContentBlock>Item 4</ContentBlock>
-    <ContentBlock>
-      Item
-      <br />5
-    </ContentBlock>
+    <FlexContent className="layout-content-right">Item 4</FlexContent>
+    <FlexContent className="layout-content-right">Item 5</FlexContent>
   </FlowLayout>
 );
 

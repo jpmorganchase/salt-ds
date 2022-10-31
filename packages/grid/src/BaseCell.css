@@ -1,3 +1,4 @@
+/* Styles applied to the cell element */
 .uitkGridBaseCell {
   box-sizing: border-box;
   overflow: hidden;
@@ -6,14 +7,17 @@
 
   border-style: solid;
   border-top-color: var(--grid-row-borderColor);
-  border-right-color: var(--grid-columnSeparator-color);
+  border-right-color: transparent;
   border-width: 1px 1px 0 0;
 
   white-space: nowrap;
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
-  z-index: var(--grid-cell-zIndex);
+}
+
+.uitkGrid-columnSeparators .uitkGridBaseCell {
+  border-right-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGridBaseCell-selectedCell {
@@ -51,11 +55,11 @@
 }
 
 .uitkGridBaseCell-focused {
-  border-style: dotted;
-  border-width: 2px;
+  border-style: var(--grid-cursor-border-style);
+  border-width: var(--grid-cursor-border-width);
   border-color: var(--grid-cursor-borderColor);
-  line-height: calc(var(--grid-row-height) - 4px);
-  --grid-cell-padding: 0 calc(var(--grid-padding) - 2px);
+  line-height: calc(var(--grid-row-height) - 2 * var(--grid-cursor-border-width));
+  --grid-cell-padding: 0 calc(var(--grid-padding) - var(--grid-cursor-border-width));
 }
 
 .uitkGridBaseCell-editable:hover {
@@ -69,7 +73,7 @@
   width: 0;
   height: 0;
   border-top: 0 solid transparent;
-  border-left: 8px solid var(--grid-cursor-borderColor);
+  border-left: var(--grid-editableCell-cornerTag-size) solid var(--grid-cursor-borderColor);
   border-bottom: 8px solid transparent;
-  z-index: 10;
+  /*z-index: 10;*/
 }

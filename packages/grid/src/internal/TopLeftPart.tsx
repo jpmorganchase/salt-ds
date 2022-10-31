@@ -1,4 +1,3 @@
-import { WheelEventHandler } from "react";
 import "./TopLeftPart.css";
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
@@ -6,11 +5,12 @@ import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";
+import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridTopLeftPart");
 
 export interface TopLeftPartProps<T> {
-  onWheel: WheelEventHandler<HTMLTableElement>;
+  onWheel: EventListener;
   columns: GridColumnModel<T>[];
   columnGroups: GridColumnGroupModel[];
   isRaised?: boolean;
@@ -19,6 +19,8 @@ export interface TopLeftPartProps<T> {
 export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
   const { onWheel, columns, columnGroups, isRaised } = props;
 
+  const tableRef = useActiveOnWheel(onWheel);
+
   return (
     <div
       className={cx(withBaseName(), {
@@ -26,7 +28,7 @@ export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
       })}
       data-testid="grid-top-left-part"
     >
-      <table onWheel={onWheel}>
+      <table ref={tableRef}>
         <TableColGroup columns={columns} />
         <thead>
           <GroupHeaderRow groups={columnGroups} />

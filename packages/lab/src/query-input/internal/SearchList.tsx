@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { List, ListItem, ListItemGroup } from "../../list";
 
@@ -23,7 +23,7 @@ function itemToString(item: QueryInputItem) {
   return [item.category, item.value].join(": ");
 }
 
-export const SearchList: FC<SearchListProps> = function SearchList(props) {
+export function SearchList(props: SearchListProps) {
   const {
     inputValue,
     selectedItems,
@@ -69,4 +69,4 @@ export const SearchList: FC<SearchListProps> = function SearchList(props) {
       </ListItem>
     </List>
   );
-};
+}

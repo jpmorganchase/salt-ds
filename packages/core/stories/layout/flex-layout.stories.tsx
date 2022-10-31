@@ -27,6 +27,7 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
+import { LeftForm, RightForm } from "./flow-layout.stories";
 
 export default {
   title: "Core/Layout/FlexLayout",
@@ -43,7 +44,6 @@ export default {
     },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
     justify: {
       options: FLEX_CONTENT_ALIGNMENT_BASE,
@@ -57,11 +57,15 @@ export default {
       control: "boolean",
     },
   },
+  args: {
+    gap: 3,
+  },
   excludeStories: [
     "ContactDetailsExample",
     "FlexLayoutNestedExample",
     "SectionForm",
     "Blog",
+    "FlexLayoutFormComposite",
   ],
 } as ComponentMeta<typeof FlexLayout>;
 
@@ -75,11 +79,13 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
-
+DefaultFlexLayout.args = {
+  wrap: true,
+};
 const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
-      {Array.from({ length: 4 }, (_, index) => (
+      {Array.from({ length: 3 }, (_, index) => (
         <FlexItem>
           <FlexContent key={index} number={index + 1} />
         </FlexItem>
@@ -90,6 +96,8 @@ const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
 FlexLayoutWithSeparators.args = {
   separators: "center",
+  wrap: false,
+  direction: { sm: "row", xs: "column" },
 };
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
@@ -326,3 +334,32 @@ export const Blog = () => (
     </FlexLayout>
   </StackLayout>
 );
+
+const Form: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <div className="flow-layout-form-container">
+      <form>
+        <FlexLayout
+          separators
+          {...args}
+          direction={{
+            md: "row",
+            xs: "column",
+          }}
+        >
+          <FlexItem grow={1}>
+            <StackLayout separators>
+              <LeftForm />
+            </StackLayout>
+          </FlexItem>
+          <FlexItem grow={1}>
+            <StackLayout>
+              <RightForm />
+            </StackLayout>
+          </FlexItem>
+        </FlexLayout>
+      </form>
+    </div>
+  );
+};
+export const FlexLayoutFormComposite = Form.bind({});

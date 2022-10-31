@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   FLEX_ALIGNMENT_BASE,
   FlexItem,
@@ -41,12 +40,10 @@ export default {
     },
     gap: {
       type: "number",
-      defaultValue: 3,
     },
-    separators: {
-      options: ["start", "center", "end", true],
-      control: { type: "select" },
-    },
+  },
+  args: {
+    gap: 3,
   },
   excludeStories: ["MetricExample", "DashboardExample"],
 } as ComponentMeta<typeof FlowLayout>;
@@ -65,7 +62,7 @@ DefaultFlowLayout.args = {};
 
 type MetricExampleType = { metricSize?: MetricProps["size"] };
 
-export const MetricExample: FC<MetricExampleType> = ({ metricSize }) => (
+export const MetricExample = ({ metricSize }: MetricExampleType) => (
   <Metric direction="up" size={metricSize}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
@@ -88,7 +85,7 @@ const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
 
 export const FlowLayoutSimpleUsage = FlowLayoutStorySimpleUsage.bind({});
 
-const RightForm = () => (
+export const RightForm = () => (
   <Accordion>
     {Array.from({ length: 6 }, (_, index) => (
       <AccordionSection key={index} defaultExpanded={index === 0}>
@@ -118,7 +115,7 @@ const leftFormContent = (
   </>
 );
 
-const LeftForm = () => (
+export const LeftForm = () => (
   <>
     {leftFormContent}
     {leftFormContent}
@@ -147,10 +144,6 @@ const Form: ComponentStory<typeof FlowLayout> = (args) => {
   );
 };
 export const FlowLayoutComposite = Form.bind({});
-
-FlowLayoutComposite.args = {
-  separators: true,
-};
 
 const dropdownExampleData = [
   "Lorem ipsum dolor",

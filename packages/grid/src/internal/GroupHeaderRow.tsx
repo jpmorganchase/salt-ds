@@ -3,6 +3,7 @@ import { GroupHeaderCell } from "../GroupHeaderCell";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnGroupModel } from "../Grid";
 import { FakeGroupCell } from "./FakeGroupCell";
+import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
 
 const withBaseName = makePrefixer("uitkGridGroupHeaderRow");
 
@@ -21,7 +22,13 @@ export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
     <tr className={withBaseName()}>
       {groups.map((group) => {
         const Cell = group.data.headerComponent || GroupHeaderCell;
-        return <Cell key={group.data.id} group={group} />;
+        const CellValue =
+          group.data.headerValueComponent || GroupHeaderCellValue;
+        return (
+          <Cell key={group.data.id} group={group}>
+            <CellValue group={group} />
+          </Cell>
+        );
       })}
       {gap !== undefined && gap > 0 ? <FakeGroupCell /> : null}
     </tr>

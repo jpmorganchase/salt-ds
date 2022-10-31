@@ -36,7 +36,7 @@ const ToggleButtonTemplate: ComponentStory<typeof ToggleButton> = ({
 
   return (
     <ToggleButton
-      ariaLabel="toggle button"
+      aria-label="toggle button"
       onToggle={handleToggle}
       toggled={toggled}
       {...args}
@@ -82,16 +82,16 @@ export const ButtonGroupWithIconAndText: ComponentStory<
 
   return (
     <ToggleButtonGroup onChange={handleChange} selectedIndex={selectedIndex}>
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton aria-label="alert" tooltipText="Alert">
         <NotificationIcon size={12} /> Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         <HomeIcon size={12} /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
+      <ToggleButton aria-label="search" tooltipText="Search">
         <SearchIcon size={12} /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         <PrintIcon size={12} /> Print
       </ToggleButton>
     </ToggleButtonGroup>
@@ -147,30 +147,30 @@ export const ButtonGroupWithIconOnly: ComponentStory<
         selectedIndex={selectedIndexSecondary}
         variant="secondary"
       >
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
       <ToggleButtonGroup onChange={handleChange} selectedIndex={selectedIndex}>
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
@@ -179,16 +179,16 @@ export const ButtonGroupWithIconOnly: ComponentStory<
         selectedIndex={selectedIndexCta}
         variant="cta"
       >
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
@@ -212,14 +212,14 @@ export const ButtonGroupWithTextOnly: ComponentStory<
 
   return (
     <ToggleButtonGroup onChange={handleChange} selectedIndex={selectedIndex}>
-      <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+      <ToggleButton aria-label="alert" disabled tooltipText="Alert">
         Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         Home
       </ToggleButton>
       <ToggleButton tooltipText="Search">Search</ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         Print
       </ToggleButton>
     </ToggleButtonGroup>
@@ -231,16 +231,16 @@ export const ButtonGroupDisabledWithFocus: ComponentStory<
 > = () => {
   return (
     <ToggleButtonGroup disabled focusableWhenDisabled selectedIndex={1}>
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton aria-label="alert" tooltipText="Alert">
         <NotificationIcon /> Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         <HomeIcon /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
+      <ToggleButton aria-label="search" tooltipText="Search">
         <SearchIcon /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         <PrintIcon /> Print
       </ToggleButton>
     </ToggleButtonGroup>
@@ -268,16 +268,16 @@ export const VerticalButtonGroupWithIconAndText: ComponentStory<
       orientation="vertical"
       selectedIndex={selectedIndex}
     >
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton aria-label="alert" tooltipText="Alert">
         <NotificationIcon size={12} /> Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         <HomeIcon size={12} /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
+      <ToggleButton aria-label="search" tooltipText="Search">
         <SearchIcon size={12} /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         <PrintIcon size={12} /> Print
       </ToggleButton>
     </ToggleButtonGroup>
@@ -333,16 +333,16 @@ export const VerticalButtonGroupWithIconOnly: ComponentStory<
         selectedIndex={selectedIndexSecondary}
         variant="secondary"
       >
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
@@ -351,16 +351,16 @@ export const VerticalButtonGroupWithIconOnly: ComponentStory<
         orientation="vertical"
         selectedIndex={selectedIndex}
       >
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
@@ -370,16 +370,16 @@ export const VerticalButtonGroupWithIconOnly: ComponentStory<
         selectedIndex={selectedIndexCta}
         variant="cta"
       >
-        <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+        <ToggleButton aria-label="alert" disabled tooltipText="Alert">
           <NotificationIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="home" tooltipText="Home">
+        <ToggleButton aria-label="home" tooltipText="Home">
           <HomeIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="search" tooltipText="Search">
+        <ToggleButton aria-label="search" tooltipText="Search">
           <SearchIcon size={12} />
         </ToggleButton>
-        <ToggleButton ariaLabel="print" tooltipText="Print">
+        <ToggleButton aria-label="print" tooltipText="Print">
           <PrintIcon size={12} />
         </ToggleButton>
       </ToggleButtonGroup>
@@ -407,14 +407,14 @@ export const VerticalButtonGroupWithTextOnly: ComponentStory<
       orientation="vertical"
       selectedIndex={selectedIndex}
     >
-      <ToggleButton ariaLabel="alert" disabled tooltipText="Alert">
+      <ToggleButton aria-label="alert" disabled tooltipText="Alert">
         Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         Home
       </ToggleButton>
       <ToggleButton tooltipText="Search">Search</ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         Print
       </ToggleButton>
     </ToggleButtonGroup>
@@ -431,16 +431,16 @@ export const VerticalButtonGroupDisabledWithFocus: ComponentStory<
       orientation="vertical"
       selectedIndex={1}
     >
-      <ToggleButton toggled={true} ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton toggled={true} aria-label="alert" tooltipText="Alert">
         <NotificationIcon /> Alert
       </ToggleButton>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         <HomeIcon /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
+      <ToggleButton aria-label="search" tooltipText="Search">
         <SearchIcon /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         <PrintIcon /> Print
       </ToggleButton>
     </ToggleButtonGroup>

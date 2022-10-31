@@ -7,7 +7,7 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
-import React, {
+import {
   forwardRef,
   FocusEvent,
   ForwardedRef,
@@ -28,7 +28,7 @@ const noop = () => undefined;
 const withBaseName = makePrefixer("uitkTab");
 
 //TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
-const CloseTabButton: React.FC<DivButtonProps> = (props) => (
+const CloseTabButton = (props: DivButtonProps) => (
   <DivButton
     {...props}
     aria-label="Close Tab (Delete or Backspace)"

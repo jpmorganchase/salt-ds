@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState, ReactNode } from "react";
 import "./ResponsiveContainer.css";
 import {
   Slider,
@@ -7,7 +7,7 @@ import {
   ToggleButtonGroup,
 } from "@jpmorganchase/uitk-lab";
 
-export const ResponsiveContainer: FC = ({ children }) => {
+export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
   const [containerWidth, setWidth] = useState(90);
   const [containerHeight, setHeight] = useState(70);
   const [selectedIndex, setSelectedIndex] = useState<number>(1);

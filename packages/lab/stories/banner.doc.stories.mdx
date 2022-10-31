@@ -1,0 +1,234 @@
+import { Canvas, Meta } from "@storybook/addon-docs";
+import { Banner, Link } from "@jpmorganchase/uitk-lab";
+import { StackLayout } from "@jpmorganchase/uitk-core";
+
+<Meta
+  title="Documentation/Lab/Banner"
+  component={Banner}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Banner
+
+The Banner component lets your users know about an error, warning, a successfully completed or an information update. The banner should relate to the current workflow
+and span the page or container horizontally to give quick and non-disruptive feedback.
+
+## How you can use Banner
+
+The Banner itself is only a presentational component, it does not provide the logic for deciding whether to render
+or not. You will need to provide state management for deciding when to render a Banner.
+
+You should always position the Banner component in the main content area, directly below
+the navigation or in the related container component.
+
+<Canvas>
+  <Banner>Banners appear inline on the page</Banner>
+</Canvas>
+
+If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner
+
+If you have multiple notifications of different states, you should stack the respective banners from top to bottom,
+int the following order: Information, Error, Warning, Success.
+
+## Banner States
+
+Banner contains four states `info`, `warning`, `error` and `success`. If not specified, the default value is `info`.
+
+<Canvas>
+  <StackLayout gap={2}>
+    <Banner>Banners appear inline on the page</Banner>
+    <Banner state="warning">Banners appear inline on the page</Banner>
+    <Banner state="error">Banners appear inline on the page</Banner>
+    <Banner state="success">Banners appear inline on the page</Banner>
+  </StackLayout>
+</Canvas>
+
+## Emphasis variants
+
+Banner has two emphasis levels; medium (default) and high.
+
+<Canvas>
+  <StackLayout gap={2}>
+    <Banner emphasis="high">High emphasis</Banner>
+    <Banner emphasis="high" state="warning">
+      High emphasis
+    </Banner>
+    <Banner emphasis="high" state="error">
+      High emphasis
+    </Banner>
+    <Banner emphasis="high" state="success">
+      High emphasis
+    </Banner>
+  </StackLayout>
+</Canvas>
+
+## Dismissible
+
+By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should provide a function
+to the onClose prop.
+
+<Canvas>
+  <Banner
+    onClose={() => {
+      console.log("Dismissed");
+    }}
+  >
+    Dismissible
+  </Banner>
+</Canvas>
+
+You should configure Banner to close when:
+
+- The user performs an action that fixes an issue, for example they correct a validation error.
+- The system status that triggered the notification is resolved, for example, a server connection is restored
+
+## Link
+
+A Banner can render a Link to take the user to the relevant part of the application. The link should
+guide the user to part of the application that requires action.
+
+<Canvas>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+  >
+    There has been an update to the terms and conditions
+  </Banner>
+</Canvas>
+
+## Render
+
+Banner uses the render props pattern to enable you to customize the rendered content.
+
+The render callback can be configured either by providing a function the `children` property
+or an explicit method using the `render` property.
+
+The render callback has the following props:
+
+- getIcon function callback that returns the default icon for the current state with the default Icon Props
+- getIconProps function callback that returns the icon props to apply on a custom icon
+- getLabelProps function callback that returns the label props
+- getLinkProps function callback that returns the link props
+
+<Canvas>
+  <Banner
+    render={({ Icon, getIconProps, getLabelProps, getLinkProps }) => (
+      <>
+        <Icon {...getIconProps()} aria-label={"Success"} />
+        <span {...getLabelProps()}>
+          Example custom renderer
+          <Link {...getLinkProps()}>custom example link</Link>
+        </span>
+      </>
+    )}
+    state="success"
+    {...props}
+  />
+</Canvas>
+
+## When to use Banner features
+
+### Displaying general information
+
+You should use the information Banner to draw attention to inform your user was unaware of, for example a link to updated terms and conditions.
+
+<Canvas>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+  >
+    There has been an update to the terms and conditions
+  </Banner>
+</Canvas>
+
+### Letting users know about an issue
+
+If your users have a problem that prevents them from completing a task, such as a system error
+or technical failure, the error Banner will guide them to the right action to resolve it.
+
+<Canvas>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="error"
+  >
+    Action failed
+  </Banner>
+</Canvas>
+
+You should use the warning Banner to let users know about an issue that won't prevent them from
+continuing the task, but may cause errors if it's not addressed, such as a restriction due to entitlements
+or current system status.
+
+<Canvas>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="warning"
+  >
+    System is under increased load
+  </Banner>
+</Canvas>
+
+### Reassuring your users
+
+You should use the success Banner to reassure your users that an event or process related to the user's current
+task has been successfully completed.
+
+<Canvas>
+  <Banner
+    //eslint-disable-next-line no-script-url
+    LinkProps={{ href: "javascript:void(0)" }}
+    state="success"
+  >
+    Database updated
+  </Banner>
+</Canvas>
+
+## Configuring Banner
+
+### Props
+
+<ArgsTable of={Banner} />
+
+### HTML Anatomy of Banner
+
+<Canvas>
+  <ComponentAnatomy>
+    <Banner
+      onClose={() => {}}
+      //eslint-disable-next-line no-script-url
+      LinkProps={{ href: "javascript:void(0)" }}
+    >
+      Banners appear inline on the page
+    </Banner>
+  </ComponentAnatomy>
+</Canvas>
+
+### CSS Class
+
+<CSSClassTable of={Banner} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={Banner} />
+
+### --uitkBanner CSS Custom Property API
+
+<CSSVariableTable of={Banner} />
+
+## Accessibility
+
+Banner is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+
+By default, Banner's content is spoken by screen readers. If you want screen readers to read the
+surrounding page content instead, we recommend you turn this feature off with the `disableAnnouncer`
+prop.
+
+The following keyboard interaction applies to the Banner component:
+
+| Key                                  | Function                                                                  |
+| ------------------------------------ | ------------------------------------------------------------------------- |
+| <kbd>Enter</kbd> or <kbd>Space</kbd> | If focus is on the "X" button, activates the button and closes the Banner |
