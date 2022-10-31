@@ -173,11 +173,13 @@ export function ToolkitProvider({
       }
     }
     return () => {
-      // When unmounting/remounting, remove the applied styles from the body
-      document.body.classList.remove(
-        ...themes.map((theme) => `uitk-${theme.name}`),
-        `uitk-density-${density}`
-      );
+      if (applyClassesToBody) {
+        // When unmounting/remounting, remove the applied styles from the body
+        document.body.classList.remove(
+          ...themes.map((theme) => `uitk-${theme.name}`),
+          `uitk-density-${density}`
+        );
+      }
     };
   }, [applyClassesToBody, density, isRoot, themes]);
 
