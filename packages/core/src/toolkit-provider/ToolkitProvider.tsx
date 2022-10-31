@@ -113,7 +113,7 @@ interface ToolkitProviderThatInjectsThemeElement {
   breakpoints?: Breakpoints;
 }
 
-type toolkitProvider =
+type ToolkitProviderProps =
   | ToolkitProviderThatAppliesClassesToBody
   | ToolkitProviderThatAppliesClassesToChild
   | ToolkitProviderThatInjectsThemeElement;
@@ -132,6 +132,7 @@ const getThemeName = (
 };
 
 export function ToolkitProvider({
+  applyClassesToBody = false,
   applyClassesToChild = false,
   children,
   density: densityProp,
