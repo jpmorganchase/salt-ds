@@ -19,7 +19,7 @@ export function RowSelectionCheckboxColumn<T>(
     rowIndex: number
   ) => {
     if (event.key === " ") {
-      selectRows(rowIndex, false, true);
+      selectRows({ rowIndex, meta: true });
       event.preventDefault();
       event.stopPropagation();
     }

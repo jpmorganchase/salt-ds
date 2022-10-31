@@ -19,7 +19,7 @@ export function RowSelectionRadioColumn<T>(
     rowIndex: number
   ) => {
     if (event.key === " ") {
-      selectRows(rowIndex, false, false);
+      selectRows({ rowIndex });
       event.preventDefault();
       event.stopPropagation();
     }

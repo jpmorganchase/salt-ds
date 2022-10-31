@@ -668,7 +668,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             }
           } else {
             if (cursorRowIdx != undefined) {
-              selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
+              selectRows({
+                rowIndex: cursorRowIdx,
+                shift: event.shiftKey,
+                meta: event.metaKey,
+              });
             }
           }
           break;
