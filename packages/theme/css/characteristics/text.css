@@ -1,59 +1,58 @@
 .uitk-light,
 .uitk-dark {
-  /* Body text (default) */
-  --uitk-text-base-lineHeight: 1.3;
+  /* Body text (default), tokens that don't vary by density */
+  --uitk-text-base-lineHeight: var(--uitk-typography-lineHeight);
   --uitk-text-fontFamily: var(--uitk-typography-fontFamily);
-  --uitk-text-fontWeight: var(--uitk-typography-weight-regular);
-  --uitk-text-fontWeight-small: var(--uitk-typography-weight-light);
-  --uitk-text-fontWeight-strong: var(--uitk-typography-weight-semiBold);
+  --uitk-text-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-fontWeight-small: var(--uitk-typography-fontWeight-light);
+  --uitk-text-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-letterSpacing: 0;
-  --uitk-text-lineHeight: 1.3;
   --uitk-text-textAlign: left;
   --uitk-text-textAlign-embedded: center;
   --uitk-text-textDecoration: none;
   --uitk-text-textTransform: none;
 
   /* H1 */
-  --uitk-text-h1-fontWeight: var(--uitk-typography-weight-bold);
-  --uitk-text-h1-fontWeight-small: var(--uitk-typography-weight-light);
-  --uitk-text-h1-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h1-fontWeight: var(--uitk-typography-fontWeight-bold);
+  --uitk-text-h1-fontWeight-small: var(--uitk-typography-fontWeight-light);
+  --uitk-text-h1-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
 
   /* H2 */
-  --uitk-text-h2-fontWeight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h2-fontWeight-small: var(--uitk-typography-weight-regular);
-  --uitk-text-h2-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-h2-fontWeight-small: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-h2-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
 
   /* H3 */
-  --uitk-text-h3-fontWeight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h3-fontWeight-small: var(--uitk-typography-weight-regular);
-  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-h3-fontWeight-small: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
 
   /* H4 */
-  --uitk-text-h4-fontWeight: var(--uitk-typography-weight-semiBold);
-  --uitk-text-h4-fontWeight-small: var(--uitk-typography-weight-regular);
-  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-weight-extraBold);
+  --uitk-text-h4-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-h4-fontWeight-small: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
 
   /* Caption */
   --uitk-text-caption-fontStyle: normal;
-  --uitk-text-caption-fontWeight: var(--uitk-typography-weight-regular);
-  --uitk-text-caption-fontWeight-strong: var(--uitk-typography-weight-semiBold);
+  --uitk-text-caption-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-caption-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
 
   /* Help text */
   --uitk-text-help-fontStyle: italic;
-  --uitk-text-help-fontWeight: var(--uitk-typography-weight-regular);
+  --uitk-text-help-fontWeight: var(--uitk-typography-fontWeight-regular);
 
   /* Figure text */
   --uitk-text-figure1-fontSize: 56px;
   --uitk-text-figure1-lineHeight: 74px;
-  --uitk-text-figure1-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-figure1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
   --uitk-text-figure2-fontSize: 36px;
   --uitk-text-figure2-lineHeight: 48px;
-  --uitk-text-figure2-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-figure2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
   --uitk-text-figure3-lineHeight: 32px;
   --uitk-text-figure3-fontSize: 24px;
-  --uitk-text-figure3-fontWeight: var(--uitk-typography-weight-semiBold);
+  --uitk-text-figure3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
   /* Colors */
   --uitk-text-background: transparent;

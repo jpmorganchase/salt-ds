@@ -3,7 +3,6 @@ import React, {
   createContext,
   DetailedHTMLProps,
   DOMAttributes,
-  FC,
   HTMLAttributes,
   ReactElement,
   ReactNode,
@@ -104,6 +103,7 @@ interface ToolkitProviderThatAppliesClassesToChild {
 }
 
 type ThemeNameType = string | Array<string>;
+
 interface ToolkitProviderThatInjectsThemeElement {
   children: ReactNode;
   density?: Density;
@@ -131,14 +131,13 @@ const getThemeName = (
   }
 };
 
-export const ToolkitProvider: FC<toolkitProvider> = ({
-  applyClassesToBody = false,
+export function ToolkitProvider({
   applyClassesToChild = false,
   children,
   density: densityProp,
   theme: themesProp,
   breakpoints: breakpointsProp,
-}) => {
+}: ToolkitProviderProps) {
   const { themes: inheritedThemes, density: inheritedDensity } =
     useContext(ToolkitContext);
 
@@ -192,7 +191,7 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   } else {
     return toolkitProvider;
   }
-};
+}
 
 export const useTheme = (): Theme[] => {
   const { themes = [DEFAULT_THEME] } = useContext(ToolkitContext);

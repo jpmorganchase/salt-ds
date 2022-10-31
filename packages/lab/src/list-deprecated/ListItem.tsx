@@ -21,7 +21,7 @@ function ListItem<Item = string>(
   const {
     children,
     item = props.item === undefined && !isPlainObject(children)
-      ? (children as Item)
+      ? (children as unknown as Item)
       : props.item,
     ...restProps
   } = props;

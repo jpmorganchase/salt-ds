@@ -1,5 +1,89 @@
 # @jpmorganchase/uitk-icons
 
+## 0.6.0
+
+### Minor Changes
+
+- 78f0be6d: Add new icons:
+
+  - Api
+  - Bookmark
+  - BookmarkSolid
+  - Building
+  - Buildings
+  - BuildingSolid
+  - BuildingsSolid
+  - BuildReportSolid
+  - Calculator
+  - CalculatorSolid
+  - Closedcaption
+  - ClosedcaptionDisabled
+  - ClosedcaptionSolid
+  - Cloud
+  - CloudSolid
+  - Coffee
+  - CoffeeSolid
+  - Compass
+  - CompassSolid
+  - Cookie
+  - CookieSolid
+  - CsvSolid
+  - Dark
+  - DarkSolid
+  - Diamond
+  - ErrorSolid
+  - FilterClear
+  - FilterClearSolid
+  - FolderClosedSolid
+  - FolderOpenSolid
+  - GuideClosedSolid
+  - GuideOpenSolid
+  - HelpSolid
+  - Image
+  - ImageSolid
+  - InfoSolid
+  - Key
+  - KeySolid
+  - Light
+  - LightSolid
+  - LocationSolid
+  - PdfSolid
+  - PivotSolid
+  - ProgressCancelled
+  - ProgressClosed
+  - ProgressComplete
+  - ProgressDraft
+  - ProgressInprogress
+  - ProgressOnhold
+  - ProgressPending
+  - ProgressRejected
+  - ProgressTodo
+  - RunReportSolid
+  - ScheduleTimeSolid
+  - SortAlphaAscend
+  - SortAlphaDescend
+  - SortNumAscend
+  - SortNumDescent
+  - SuccessSolid
+  - Tag
+  - TagClear
+  - TagClearSolid
+  - TagSolid
+  - Tails
+  - TailsSolid
+  - Target
+  - UrgencyCritical
+  - UrgencyHigh
+  - UrgencyLow
+  - UrgencyMedium
+  - UrgencyNone
+  - Video
+  - VideoDisabled
+  - VideoSolid
+  - WarningSolid
+  - XlsSolid
+  - ZipSolid
+
 ## 0.5.0
 
 ### Minor Changes

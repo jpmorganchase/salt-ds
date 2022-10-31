@@ -18,7 +18,7 @@
 
 /* Styles applied to status title */
 .uitkContentStatus-title {
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-typography-fontWeight-semiBold);
 }
 
 /* Styles applied to status actions */

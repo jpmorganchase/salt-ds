@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
@@ -15,9 +14,9 @@ interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
 }
 
-const ProgressWithControls: FC<ProgressWithControlsProps> = ({
+const ProgressWithControls = ({
   ProgressComponent: Progress,
-}) => {
+}: ProgressWithControlsProps) => {
   const { handleReset, handleStart, handleStop, isProgressing, value } =
     useProgressingValue();
   return (

@@ -1,7 +1,8 @@
-import { FC, CSSProperties, useRef, useState, useReducer } from "react";
+import { CSSProperties, useRef, useState, useReducer, ReactNode } from "react";
 import { Button, Input, InputProps } from "@jpmorganchase/uitk-core";
 
 export interface AdjustableFlexboxProps {
+  children?: ReactNode;
   containerWidth?: number | string;
   style?: CSSProperties;
   height?: number;
@@ -13,14 +14,14 @@ export interface AdjustableFlexboxProps {
  * Container for testing responsive components - a bit basic, but
  * does the job for now
  */
-export const AdjustableFlexbox: FC<AdjustableFlexboxProps> = ({
+export const AdjustableFlexbox = ({
   children,
   containerWidth = "auto",
   style,
   height = 300,
   row = false,
   width: widthProp = 600,
-}) => {
+}: AdjustableFlexboxProps) => {
   const widthRef = useRef(widthProp);
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const [width, setWidth] = useState(widthProp);

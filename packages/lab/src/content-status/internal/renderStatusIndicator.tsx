@@ -1,11 +1,11 @@
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import {
-  ErrorIcon,
+  ErrorSolidIcon,
   IconProps,
-  InfoIcon,
+  InfoSolidIcon,
   LoaderIcon,
   SuccessIcon,
-  WarningIcon,
+  WarningSolidIcon,
 } from "@jpmorganchase/uitk-icons";
 import { ComponentType, ReactElement } from "react";
 import { ContentStatusProps, ContentStatusStatus } from "../ContentStatus";
@@ -29,7 +29,7 @@ const contentByType = new Map<
   [
     "error",
     {
-      icon: ErrorIcon,
+      icon: ErrorSolidIcon,
       iconName: "error",
       className: withBaseName("error"),
     },
@@ -45,7 +45,7 @@ const contentByType = new Map<
   [
     "warning",
     {
-      icon: WarningIcon,
+      icon: WarningSolidIcon,
       iconName: "warning",
       className: withBaseName("warning"),
     },
@@ -53,7 +53,7 @@ const contentByType = new Map<
   [
     "info",
     {
-      icon: InfoIcon,
+      icon: InfoSolidIcon,
       iconName: "info",
       className: withBaseName("info"),
     },

@@ -30,7 +30,7 @@ export interface TooltipRenderProp {
 }
 
 export interface TooltipProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "title" | "children">,
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title">,
     Pick<PortalProps, "disablePortal" | "container"> {
   arrowProps?: ComponentProps<"div">;
   /**

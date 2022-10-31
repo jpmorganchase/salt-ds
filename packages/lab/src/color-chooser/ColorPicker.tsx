@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { SketchPicker, ColorResult } from "react-color";
 import cn from "classnames";
 import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
@@ -12,12 +13,12 @@ const withBaseName = makePrefixer("uitkColorChooserPicker");
 
 export interface ColorPickerProps {
   disableAlphaChooser: boolean;
-  color: Color | undefined;
+  color?: Color;
   alpha?: number;
   onChange: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    e?: ChangeEvent
   ) => void;
   onDialogClosed: () => void;
 }
@@ -33,20 +34,17 @@ export const ColorPicker = ({
     color?.rgba ?? Color.makeColorFromRGB(0, 0, 0, alpha).rgba;
   const rgbaText = disableAlphaChooser ? "RGB" : "RGBA";
 
-  const onSubmitHex = (
-    hexValue: string | undefined,
-    e?: React.ChangeEvent
-  ): void => {
+  const onSubmitHex = (hexValue?: string, e?: ChangeEvent): void => {
     const newColor = Color.makeColorFromHex(hexValue);
     onChange(newColor, false, e);
   };
 
-  const onSubmitRgb = (rgba: RGBAValue, e?: React.ChangeEvent): void => {
+  const onSubmitRgb = (rgba: RGBAValue, e?: ChangeEvent): void => {
     const newColor = Color.makeColorFromRGB(rgba.r, rgba.g, rgba.b, rgba.a);
     onChange(newColor, false, e);
   };
 
-  const onSubmitAlpha = (alpha: number, e?: React.ChangeEvent): void => {
+  const onSubmitAlpha = (alpha: number, e?: ChangeEvent): void => {
     const newColor = Color.makeColorFromRGB(
       rgbaValue.r,
       rgbaValue.g,
@@ -58,7 +56,7 @@ export const ColorPicker = ({
 
   const onSketchPickerChange = (
     colorResult: ColorResult,
-    e: React.ChangeEvent
+    e: ChangeEvent
   ): void => {
     const newColor = Color.makeColorFromRGB(
       colorResult.rgb.r,
@@ -79,6 +77,7 @@ export const ColorPicker = ({
       data-testid="color-picker"
       className={cn("uitkEmphasisHigh", withBaseName())}
     >
+      {/** @ts-ignore react-color has incorrect types **/}
       <SketchPicker
         className={cn(withBaseName("swatchPickerStyles"), {
           ["rootDisabledAlpha"]: disableAlphaChooser,

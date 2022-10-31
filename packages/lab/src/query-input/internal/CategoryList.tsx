@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 import {
   makePrefixer,
   useIsomorphicLayoutEffect,
@@ -28,9 +21,7 @@ export interface CategoryListProps {
 
 const getCategoryLabel = (category: QueryInputCategory) => category.name;
 
-export const CategoryList: FC<CategoryListProps> = function CategoryList(
-  props
-) {
+export function CategoryList(props: CategoryListProps) {
   const {
     categories,
     rootWidth,
@@ -96,4 +87,4 @@ export const CategoryList: FC<CategoryListProps> = function CategoryList(
       />
     </CategoryListContext.Provider>
   );
-};
+}
