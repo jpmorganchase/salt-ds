@@ -161,14 +161,7 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   useIsomorphicLayoutEffect(() => {
     if (applyClassesToBody) {
       if (isRoot) {
-        // First remove all our applied styles
-        document.body.classList.remove(
-          ...Array.from(document.body.classList.values()).filter((className) =>
-            className.includes("uitk")
-          )
-        );
-
-        // Then add the styles we want to apply
+        // add the styles we want to apply
         document.body.classList.add(
           ...themes.map((theme) => `uitk-${theme.name}`),
           `uitk-density-${density}`
@@ -179,6 +172,13 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
         );
       }
     }
+    return () => {
+      // When unmounting/remounting, remove the applied styles from the body
+      document.body.classList.remove(
+        ...themes.map((theme) => `uitk-${theme.name}`),
+        `uitk-density-${density}`
+      );
+    };
   }, [applyClassesToBody, density, isRoot, themes]);
 
   const toolkitProvider = (
