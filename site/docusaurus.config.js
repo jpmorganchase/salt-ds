@@ -32,7 +32,6 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/jpmorganchase/uitk",
         },
-        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -82,23 +81,6 @@ const config = {
               {
                 label: "Components",
                 to: "/docs/components",
-              },
-            ],
-          },
-          {
-            title: "Community",
-            items: [
-              {
-                label: "Stack Overflow",
-                href: "https://stackoverflow.com/questions/tagged/docusaurus",
-              },
-              {
-                label: "Discord",
-                href: "https://discordapp.com/invite/docusaurus",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/docusaurus",
               },
             ],
           },
