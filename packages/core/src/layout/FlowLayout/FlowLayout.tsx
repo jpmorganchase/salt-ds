@@ -14,10 +14,6 @@ export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the alignment along the main axis, default is "start"
    */
   justify?: FlexLayoutProps["justify"];
-  /**
-   * Adds a separator between elements, default is false.
-   */
-  separators?: FlexLayoutProps["separators"];
 }
 export const FlowLayout = forwardRef<HTMLDivElement, FlowLayoutProps>(
   function FlowLayout({ ...rest }, ref) {

@@ -1,28 +1,32 @@
-import React, {
+import {
   Children,
-  FC,
   isValidElement,
   ReactNode,
   useCallback,
+  MouseEvent,
+  KeyboardEvent,
+  Component,
 } from "react";
 import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
 import { useFocusMenuRemount } from "./useFocusMenuRemount";
-import { MenuButton } from "../../menu-button";
+import { MenuButton, MenuButtonProps } from "../../menu-button";
+import { BreadcrumbProps } from "../Breadcrumb";
 
-export interface BreadcrumbsCollapsedProps {
-  cascadingMenuProps?: CascadingMenuProps;
+export interface BreadcrumbsCollapsedProps
+  extends Omit<MenuButtonProps, "CascadingMenuProps"> {
+  CascadingMenuProps?: CascadingMenuProps;
   accessibleText?: string;
   children: ReactNode;
   className?: string;
 }
 
-export const BreadcrumbsCollapsed: FC<BreadcrumbsCollapsedProps> = ({
+export const BreadcrumbsCollapsed = ({
   children,
-  cascadingMenuProps,
+  CascadingMenuProps,
   accessibleText,
   ...rest
-}) => {
+}: BreadcrumbsCollapsedProps) => {
   const keys = Children.map(children, (child) => {
     if (isValidElement(child)) {
       return child.key;
@@ -34,7 +38,7 @@ export const BreadcrumbsCollapsed: FC<BreadcrumbsCollapsedProps> = ({
   const { ref, shouldFocusOnMount } =
     useFocusMenuRemount<HTMLButtonElement>(key);
 
-  const itemToString = useCallback((child) => {
+  const itemToString = useCallback((child: Component<BreadcrumbProps>) => {
     if (!child) {
       return "";
     }
@@ -67,7 +71,7 @@ export const BreadcrumbsCollapsed: FC<BreadcrumbsCollapsedProps> = ({
         itemToString,
         onItemClick,
         minWidth: 0,
-        ...cascadingMenuProps,
+        ...CascadingMenuProps,
       }}
       hideCaret
       {...rest}

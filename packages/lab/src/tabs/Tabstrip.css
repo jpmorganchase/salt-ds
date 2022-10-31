@@ -107,7 +107,7 @@
   --tabs-tab-cursor: var(--uitk-draggable-grab-cursor-active);
   --tabs-tab-position: static;
 
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-size: 12px;
 }
 
 .uitkDraggable-tabstrip-horizontal {

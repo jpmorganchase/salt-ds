@@ -5,17 +5,19 @@ import React, {
   ReactNode,
   RefObject,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import {
-  RowKeyGetter,
+  GridCellSelectionMode,
   GridColumnGroupModel,
   GridColumnModel,
+  GridColumnMoveHandler,
   GridRowModel,
   GridRowSelectionMode,
-  GridCellSelectionMode,
+  RowKeyGetter,
 } from "../Grid";
 import { ColumnGroupProps } from "../ColumnGroup";
 import { NumberRange } from "../NumberRange";
@@ -27,9 +29,28 @@ import {
   makeMapDeleter,
 } from "./utils";
 import { GridContext } from "../GridContext";
-import { SelectionContext } from "../SelectionContext";
 import { CellEditorInfo } from "../CellEditor";
 import { useControlled } from "@jpmorganchase/uitk-core";
+
+// Attaches active onWheel event to a table element
+// Grid needs to prevent default onWheel event handling for situations when a
+// scrollable grid is on a scrollable page. Page should not scroll when the grid
+// is being scrolled.
+export function useActiveOnWheel(onWheel: EventListener) {
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  useEffect(() => {
+    const table = tableRef.current;
+    if (table && onWheel) {
+      table.addEventListener("wheel", onWheel, { passive: false });
+      return () => {
+        table.removeEventListener("wheel", onWheel);
+      };
+    }
+  }, [tableRef.current]);
+
+  return tableRef;
+}
 
 // Total width of the given columns.
 function sumWidth<T>(columns: GridColumnModel<T>[]) {
@@ -534,13 +555,19 @@ export function useColumnRegistry<T>(children: ReactNode) {
   };
   chPosById.current = indexChildren();
 
-  const getChildIndex = (id: string): number => {
+  const getChildIndex = useCallback((id: string): number => {
     const idx = chPosById.current.get(id);
     if (idx === undefined) {
+      console.log(`Unknown child id "${id}"`);
+      console.log(
+        `Known ids: ${Array.from(chPosById.current.keys())
+          .map((x) => `"${x}"`)
+          .join(", ")}`
+      );
       throw new Error(`Unknown child id: "${id}"`);
     }
     return idx;
-  };
+  }, []);
 
   const getColMapSet = (pinned?: GridColumnPin) =>
     pinned === "left"
@@ -551,17 +578,21 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnAdded = useCallback((columnInfo: GridColumnInfo<T>) => {
     // console.log(
-    //   `Column added: "${columnInfo.props.name}"; pinned: ${columnInfo.props.pinned}`
+    //   `Column added: "${columnInfo.props.id}"; pinned: ${columnInfo.props.pinned}`
     // );
     const { id, pinned } = columnInfo.props;
-    getColMapSet(pinned)(makeMapAdder(getChildIndex(id), columnInfo));
+    const index = getChildIndex(id);
+    getColMapSet(pinned)(makeMapAdder(index, columnInfo));
   }, []);
 
-  const onColumnRemoved = useCallback((columnInfo: GridColumnInfo<T>) => {
-    const { id, pinned } = columnInfo.props;
-    getColMapSet(pinned)(makeMapDeleter(getChildIndex(id)));
-    // console.log(`Column removed: "${columnProps.name}"`);
-  }, []);
+  const onColumnRemoved = useCallback(
+    (index: number, columnInfo: GridColumnInfo<T>) => {
+      const { id, pinned } = columnInfo.props;
+      getColMapSet(pinned)(makeMapDeleter(index));
+      // console.log(`Column removed: "${columnInfo.props.id}"`);
+    },
+    []
+  );
 
   const getGrpMapSet = (pinned?: GridColumnPin) =>
     pinned === "left"
@@ -577,9 +608,9 @@ export function useColumnRegistry<T>(children: ReactNode) {
   }, []);
 
   const onColumnGroupRemoved = useCallback(
-    (colGroupProps: ColumnGroupProps) => {
+    (index: number, colGroupProps: ColumnGroupProps) => {
       const { id, pinned } = colGroupProps;
-      getGrpMapSet(pinned)(makeMapDeleter(getChildIndex(id)));
+      getGrpMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Group removed: "${colGroupProps.name}"`);
     },
     []
@@ -588,13 +619,13 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const onEditorAdded = useCallback((info: CellEditorInfo<T>) => {
     const { columnId } = info;
     setEditorMap(makeMapAdder(columnId, info));
-    console.log(`Editor added for column ${columnId}`);
+    // console.log(`Editor added for column ${columnId}`);
   }, []);
 
   const onEditorRemoved = useCallback((info: CellEditorInfo<T>) => {
     const { columnId } = info;
     setEditorMap(makeMapDeleter(columnId));
-    console.log(`Editor removed for column ${columnId}`);
+    // console.log(`Editor removed for column ${columnId}`);
   }, []);
 
   const getEditor = useCallback(
@@ -604,6 +635,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const contextValue: GridContext<T> = useMemo(
     () => ({
+      getChildIndex,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,
@@ -613,6 +645,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
       getEditor,
     }),
     [
+      getChildIndex,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,
@@ -668,6 +701,15 @@ export function useRowSelection<T>(
   const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
     undefined
   );
+
+  useEffect(() => {
+    if (
+      (rowSelectionMode === "none" && selRowIdxs.size > 0) ||
+      (rowSelectionMode === "single" && selRowIdxs.size > 1)
+    ) {
+      setSelRowIdxs(new Set());
+    }
+  }, [rowSelectionMode, selRowIdxs, setSelRowIdxs]);
 
   const selectRows = useCallback(
     (rowIdx: number, shift: boolean, meta: boolean) => {
@@ -756,7 +798,7 @@ export function useRowSelection<T>(
         selectRows(rowIdx, event.shiftKey, event.metaKey || event.ctrlKey);
       } catch (e) {}
     },
-    [selectRows]
+    [selectRows, rowSelectionMode]
   );
 
   return {
@@ -793,9 +835,10 @@ export function useColumnMove<T = any>(
   leftCols: GridColumnModel<T>[],
   midCols: GridColumnModel<T>[],
   rightCols: GridColumnModel<T>[],
+  cols: GridColumnModel<T>[],
   scrollLeft: number,
   clientMidWidth: number,
-  onColumnMove: (fromIndex: number, toIndex: number) => void
+  onColumnMove: GridColumnMoveHandler
 ) {
   const moveRef = useRef<{
     unsubscribe: () => void;
@@ -805,8 +848,9 @@ export function useColumnMove<T = any>(
     startHeaderY: number;
 
     columnIndex: number;
+    columnId: string;
     dragTriggered: boolean;
-    onColumnMove: (fromIndex: number, toIndex: number) => void;
+    onColumnMove: GridColumnMoveHandler;
   }>();
 
   const activeTargetRef = useRef<Target | undefined>(undefined);
@@ -834,13 +878,15 @@ export function useColumnMove<T = any>(
   const columnDrop = useCallback(() => {
     const toIndex = activeTargetRef.current?.columnIndex;
     const fromIndex = moveRef.current?.columnIndex;
+    const columnId = moveRef.current?.columnId;
     const handler = moveRef.current?.onColumnMove;
     if (
       toIndex !== undefined &&
       fromIndex !== undefined &&
-      handler !== undefined
+      handler !== undefined &&
+      columnId !== undefined
     ) {
-      handler(fromIndex, toIndex);
+      handler(columnId, fromIndex, toIndex);
     }
     setDragState(undefined);
   }, [setDragState]);
@@ -896,6 +942,7 @@ export function useColumnMove<T = any>(
         document.addEventListener("mousemove", onMouseMove);
 
         const columnIndex = parseInt(columnIndexAttribute, 10);
+        const columnId = cols[columnIndex].info.props.id;
 
         const thRect = thElement.getBoundingClientRect();
         const rootRect = rootElement!.getBoundingClientRect();
@@ -913,13 +960,14 @@ export function useColumnMove<T = any>(
           startHeaderX: x,
           startHeaderY: y,
           columnIndex,
+          columnId,
           dragTriggered: false,
           onColumnMove,
         };
 
         event.preventDefault();
       },
-      [columnDragStart]
+      [columnDragStart, cols]
     );
 
   const targets = useMemo(() => {
@@ -1119,10 +1167,4 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     onCursorMove,
     selectRange,
   };
-}
-function useEffect(
-  arg0: () => void,
-  arg1: (GridRowSelectionMode | undefined)[]
-) {
-  throw new Error("Function not implemented.");
 }

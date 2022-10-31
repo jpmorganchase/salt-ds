@@ -2,6 +2,7 @@ import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { StatusIcon } from "@jpmorganchase/uitk-core";
 import { CharacteristicUsage } from "css-variable-docgen-components";
+import HelpAndSupport from "./help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/StatusIcon"
@@ -23,27 +24,23 @@ A status icon can be used on its own or within another component (e.g. `Tooltip`
 
 Use this component by passing in your chosen `status` from the available options.
 
-You can also customise the icon's `size` and pass custom props to the unterlying svg element via `SVGProps`.
+You can also customize the icon's `size` and pass custom props to the underlying SVG element via `SVGProps`.
 
-# API
+## Configuring status icon
+
+### API
 
 ```
 import { StatusIcon } from "@jpmorganchase/uitk-core";
 ```
 
-## Props
+### Props
+
+You can set the icon status and other configurtions via its props.
 
 <ArgsTable of={StatusIcon} />
 
-## Status icons
-
-The status icon offers four severity levels that set a distinctive icon and color.
-
-<Canvas>
-  <Story id="core-statusicon--all-status-icons" />
-</Canvas>
-
-## Anatomy
+### Anatomy
 
 <Canvas>
   <ComponentAnatomy>
@@ -51,6 +48,32 @@ The status icon offers four severity levels that set a distinctive icon and colo
   </ComponentAnatomy>
 </Canvas>
 
+## Features
+
+### Status icons
+
+The status icon offers four severity levels that set a distinctive icon and color.
+
+<Canvas>
+  <Story id="core-statusicon--all-status-icons" />
+</Canvas>
+
+### Use when...
+
+An `error` icon should be used when there is critical information preventing an action.
+
+A `warning` or `info` (depending on the severity) icon should be used when there is important, but non blocking, information to be conveyed to the user.
+
+Use a `success` icon to confirm that an action has been completed.
+
 ## Characteristics Used
 
 <CharacteristicUsage of={StatusIcon} />
+
+## Related components
+
+The status icon component is based on the following component:
+
+- [Icon](?path=/story/documentation-styles-and-theming-foundations-iconography--page)
+
+<HelpAndSupport />

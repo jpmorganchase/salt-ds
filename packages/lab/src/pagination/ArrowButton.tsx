@@ -5,12 +5,7 @@ import {
   IconProps,
 } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
-import {
-  ComponentType,
-  FC,
-  KeyboardEventHandler,
-  MouseEventHandler,
-} from "react";
+import { ComponentType, KeyboardEventHandler, MouseEventHandler } from "react";
 import { withBaseName } from "./utils";
 
 export type ArrowButtonType = "previous" | "next";
@@ -45,13 +40,13 @@ const contentByType = new Map<ArrowButtonType, ButtonContent>([
   ],
 ]);
 
-export const ArrowButton: FC<ArrowButtonProps> = ({
+export const ArrowButton = ({
   arrowButtonType,
   onPress,
   onKeyDown: onKeyDownProp,
   onClick: onClickProp,
   ...restProps
-}) => {
+}: ArrowButtonProps) => {
   const { icon: Icon, name, className } = contentByType.get(arrowButtonType)!;
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {

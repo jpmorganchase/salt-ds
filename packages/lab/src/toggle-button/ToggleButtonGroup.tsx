@@ -35,7 +35,7 @@ export type ToggleButtonGroupChangeEventHandler = (
 
 export interface ToggleButtonGroupProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
-  ariaLabel?: string;
+  "aria-label"?: string;
   disabled?: boolean;
   disableTooltip?: boolean;
   defaultSelectedIndex?: number;
@@ -73,7 +73,7 @@ export const ToggleButtonGroup = forwardRef<
   ToggleButtonGroupProps
 >(function ToggleButtonGroup(
   {
-    ariaLabel = "Toggle options",
+    "aria-label": ariaLabel = "Toggle options",
     children,
     className,
     disabled,

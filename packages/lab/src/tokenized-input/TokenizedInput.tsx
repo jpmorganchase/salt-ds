@@ -1,5 +1,5 @@
 import { useForkRef, UseTooltipProps } from "@jpmorganchase/uitk-core";
-import { ForwardedRef, forwardRef, ReactNode } from "react";
+import { ComponentType, ForwardedRef, forwardRef } from "react";
 import {
   TokenizedInputBase,
   TokenizedInputBaseProps,
@@ -24,7 +24,7 @@ export interface TokenizedInputProps<Item>
     | "helpers"
     | "onRemoveItem"
   > {
-  Tooltip?: ReactNode;
+  Tooltip?: ComponentType;
   delimiter?: string | Array<string>;
   disableAddOnBlur?: boolean;
   initialSelectedItems?: Array<Item>;

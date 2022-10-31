@@ -2,7 +2,6 @@ import { useCallback, useRef } from "react";
 import {
   addAll,
   allExceptOverflowIndicator,
-  getIsOverflowed,
   getOverflowIndicator,
   isOverflowed,
   measureContainerOverflow,
@@ -63,7 +62,7 @@ export const useOverflow = ({
   );
 
   const getAllOverflowedItems = useCallback(
-    (renderedSize, availableSpace) => {
+    (renderedSize: number, availableSpace: number) => {
       const { current: allItems } = overflowItemsRef;
       const overflowedItems: OverflowItem[] = [];
       const items = allItems.slice();
@@ -85,7 +84,7 @@ export const useOverflow = ({
   );
 
   const getOverflowedItems = useCallback(
-    (visibleContentSize, containerSize) => {
+    (visibleContentSize: number, containerSize: number) => {
       const newlyOverflowedItems = [];
       const { current: managedItems } = overflowItemsRef;
       const visibleItems = managedItems.filter(notOverflowed);
@@ -112,7 +111,7 @@ export const useOverflow = ({
   );
 
   const getReinstatedItems = useCallback(
-    (containerSize): [number, OverflowItem[]] => {
+    (containerSize: number): [number, OverflowItem[]] => {
       const reinstatedItems: OverflowItem[] = [];
       const { current: managedItems } = overflowItemsRef;
 
@@ -237,7 +236,7 @@ export const useOverflow = ({
   );
 
   const updateOverflow = useCallback(
-    (containerSize, renderedSize) => {
+    (containerSize: number, renderedSize: number) => {
       if (containerSize < renderedSize) {
         const overflowItems = getOverflowedItems(renderedSize, containerSize);
         if (overflowItems.length) {
@@ -252,7 +251,7 @@ export const useOverflow = ({
   );
 
   const removeOverflow = useCallback(
-    (containerSize) => {
+    (containerSize: number) => {
       const [overflowCount, reinstated] = getReinstatedItems(containerSize);
       if (reinstated.length) {
         if (overflowCount === reinstated.length) {
@@ -311,39 +310,6 @@ export const useOverflow = ({
       updateOverflow,
     ]
   );
-  // const handleResize = useCallback(
-  //   (size: number, containerHasGrown?: boolean) => {
-  //     const { current: managedItems } = overflowItemsRef;
-  //     const isOverflowing = getIsOverflowed(managedItems);
-  //     innerContainerSizeRef.current = size;
-  //     const renderedSize = managedItems.reduce(allExceptOverflowIndicator, 0);
-  //     const willOverflow = renderedSize > size;
-
-  //     console.log(
-  //       `useOverflow handleResize size ${size} rebnderedSize=${renderedSize} isOverflowing ${isOverflowing} willOverflow ${willOverflow}`
-  //     );
-
-  //     if (!isOverflowing && willOverflow) {
-  //       // entering overflow
-  //       // TODO if client is not using an overflow indicator, there is nothing to do here,
-  //       // just let nature take its course. How do we know this ?
-  //       // This is when we need to add width to measurements we are tracking
-  //       resetMeasurements(true, size);
-  //     } else if (isOverflowing && containerHasGrown) {
-  //       // Note: it must have been previously overflowing, too
-  //       // check to see if we can reinstate one or more items
-  //       removeOverflow(size);
-  //     } else if (isOverflowing && willOverflow) {
-  //       // Note: container must have shrunk
-  //       // still overflowing, possibly more overflowing than before
-  //       const renderedSize = managedItems
-  //         .filter(notOverflowed)
-  //         .reduce(addAll, 0);
-  //       updateOverflow(size, renderedSize);
-  //     }
-  //   },
-  //   [overflowItemsRef, removeOverflow, resetMeasurements, updateOverflow]
-  // );
 
   return {
     onResize: handleResize,

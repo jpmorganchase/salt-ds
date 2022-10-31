@@ -2,7 +2,6 @@
   position: absolute;
   top: 0;
   right: var(--grid-scrollBar-width);
-  z-index: 2;
 }
 
 .uitkGridTopRightPart-raised {

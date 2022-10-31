@@ -14,11 +14,11 @@ interface TabActivationIndicatorProps {
 
 const withBaseName = makePrefixer("uitkTabActivationIndicator");
 
-export const TabActivationIndicator: React.FC<TabActivationIndicatorProps> = ({
+export const TabActivationIndicator = ({
   hideThumb = false,
   orientation = "horizontal",
   tabId,
-}) => {
+}: TabActivationIndicatorProps) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const style = useActivationIndicator({
     rootRef,

@@ -1,4 +1,4 @@
-import { useState, useCallback, FC } from "react";
+import { useState, useCallback } from "react";
 
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { useDensity } from "@jpmorganchase/uitk-core";
@@ -349,7 +349,7 @@ interface ResultCardProps {
   result: ResultCardType | undefined;
 }
 
-export const ResultCard: FC<ResultCardProps> = ({ result }) => {
+export const ResultCard = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (

@@ -1,8 +1,8 @@
 import { composeStories } from "@storybook/testing-react";
-import * as buttonStories from "@stories/grid.stories";
-import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
+import * as gridStories from "@stories/grid.stories";
+import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 
-const composedStories = composeStories(buttonStories);
+const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
   composedStories;
 
@@ -55,7 +55,7 @@ describe("Grid", () => {
       .find(".uitkGridTableRow")
       .should("exist")
       .findAllByRole("gridcell")
-      .should("have.length", 14);
+      .should("have.length", 16);
 
     cy.findByTestId("grid-scrollable")
       .should("exist")
@@ -72,10 +72,10 @@ describe("Grid", () => {
         getCol(1).should("not.exist");
         // Column C is the first visible column now
         getCol(2).should("exist");
-        // Column P is the last visible one
-        getCol(15).should("exist");
-        // Column Q is out of view
-        getCol(16).should("not.exist");
+        // Column R is the last visible one
+        getCol(18).should("exist");
+        // Column S is out of view
+        getCol(19).should("not.exist");
       });
   });
 
@@ -91,15 +91,14 @@ describe("Grid", () => {
             .find("tbody")
             .find(`tr [data-row-index="${n}"]`);
 
-        // Rows 1 to 15 should be rendered, everything above and below - not
+        // Rows 1 to 16 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
         getRow(15).should("exist");
         getRow(16).should("not.exist");
+        getRow(17).should("not.exist");
       });
   });
-
-  // TODO header virtualization in grouped mode
 
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
@@ -192,6 +191,85 @@ describe("Grid", () => {
       .type("{Enter}");
     findCell(0, 4).should("have.text", "3.14");
   });
+
+  describe("Column groups", () => {
+    it("Shows correct groups", () => {});
+
+    it("Handles header virtualization in grouped mode", () => {});
+  });
+  describe("Switching selection modes", () => {
+    it("Shows correct columns", () => {
+      cy.mount(<RowSelectionModes />);
+
+      cy.findByLabelText("multi").click();
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        16
+      );
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 4);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+
+      cy.findByLabelText("single").click();
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        16
+      );
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 4);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+
+      cy.findByLabelText("none").click();
+      cy.findAllByTestId("grid-row-selection-checkbox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("grid-row-selection-radiobox").should(
+        "have.length",
+        0
+      );
+      cy.findAllByTestId("column-header").should("have.length", 3);
+      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+    });
+
+    it("Selects rows correctly", () => {
+      cy.mount(<RowSelectionModes />);
+
+      cy.findByLabelText("multi").click();
+      findCell(2, 3).click({ force: true });
+      findCell(3, 3).click({ force: true, shiftKey: true });
+      checkRowSelected(2, true);
+      checkRowSelected(3, true);
+
+      cy.findByLabelText("single").click();
+      findCell(2, 3).click({ force: true });
+      findCell(3, 3).click({ force: true, shiftKey: true });
+      checkRowSelected(2, false);
+      checkRowSelected(3, true);
+
+      cy.findByLabelText("none").click();
+      findCell(2, 2).click({ force: true });
+      findCell(3, 2).click({ force: true, shiftKey: true });
+      checkRowSelected(2, false);
+      checkRowSelected(3, false);
+    });
+  });
+
+  // TODO header virtualization in grouped mode
 
   // TODO column drag-n-drop
   // TODO clipboard

@@ -17,6 +17,12 @@ export function randomText(w: number, min: number, max: number) {
   return text;
 }
 
+export function randomNumber(min: number, max: number, precision: number = 2) {
+  const r = max - min;
+  const m = 10 ** precision;
+  return Math.round((Math.random() * r + min) * m) / m;
+}
+
 export function randomAmount(
   min: number = 0,
   max: number = 10000000,

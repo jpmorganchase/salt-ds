@@ -51,8 +51,8 @@
   height: auto;
   position: absolute;
   right: 0;
-  top: var(--grid-dividerGap);
-  bottom: var(--grid-dividerGap);
+  top: var(--grid-separatorGap);
+  bottom: var(--grid-separatorGap);
 }
 
 .uitkGridHeaderCell-edgeSeparator {
@@ -62,7 +62,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  bottom: var(--grid-dividerGap);
+  bottom: var(--grid-separatorGap);
 }
 
 .uitkGridHeaderCell-resizeHandle {

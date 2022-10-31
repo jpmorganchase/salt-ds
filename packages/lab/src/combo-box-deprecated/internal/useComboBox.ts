@@ -234,7 +234,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
     // Clear the selection when input is cleared
     if (newValue.length === 0) {
-      setSelectedItem();
+      setSelectedItem(undefined);
       onChange && onChange(event, null);
     }
 

@@ -28,7 +28,6 @@ export function NumericCellValue<T>(props: GridCellValueProps<T>) {
   const { column, value, row } = props;
   const columnProps = column.info.props as NumericColumnProps<T>;
   const { precision } = columnProps;
-  // console.log(`Precision: ${precision}`);
   const text = isNumber(value) ? value.toFixed(precision) : "";
   return <div className="uitkGridNumericCellValue">{text}</div>;
 }
