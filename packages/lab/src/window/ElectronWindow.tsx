@@ -4,7 +4,7 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
   Window as ToolkitWindow,
-  windowType,
+  WindowProps,
 } from "@jpmorganchase/uitk-core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
@@ -12,10 +12,10 @@ import ReactDOM from "react-dom";
 import "./ElectronWindow.css";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
 
-const Window: windowType = forwardRef(function ElectronWindow(
+const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   { className, children, id = "dialog", open = true, style = {}, ...rest },
   forwardedRef
-) {
+): JSX.Element | null {
   const { top, left, position, ...styleRest } = style;
 
   const [mountNode, setMountNode] = useState<Element | null>(null);

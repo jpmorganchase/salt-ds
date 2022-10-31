@@ -1,5 +1,20 @@
 # @jpmorganchase/uitk-lab
 
+## 0.7.1
+
+### Patch Changes
+
+- 91f8c665: use of scrollHeight to detect overflow doesn't work correctly. Fix for horizontal overflow containers
+
+## 0.7.0
+
+### Minor Changes
+
+- 153f23f0: Added Banner component to lab
+- 2ae6c9e0: Bug: List should not throw a runtime exception if focused when empty
+- 1f70bb7f: Fix onMouseDown prop on Tabstrip being ignored.
+  Improve TypeScript types for Tabs
+
 ## 0.6.0
 
 ### Minor Changes

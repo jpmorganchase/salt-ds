@@ -1,10 +1,6 @@
 module.exports = {
+  extends: ["modular-app", "plugin:storybook/recommended"],
   overrides: [
-    {
-      files: ["*"],
-      excludedFiles: ["*.cy.tsx"],
-      extends: ["modular-app", "plugin:storybook/recommended"],
-    },
     {
       files: ["*.ts", "*.tsx"],
       parserOptions: {

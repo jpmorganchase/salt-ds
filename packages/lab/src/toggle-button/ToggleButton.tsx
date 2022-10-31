@@ -28,7 +28,7 @@ export type ToggleButtonToggleEventHandler = (
 ) => void;
 
 export interface ToggleButtonProps extends ButtonProps {
-  ariaLabel?: string;
+  "aria-label"?: string;
   "data-button-index"?: number;
   toggled?: boolean;
   tooltipText?: string;
@@ -39,7 +39,7 @@ export interface ToggleButtonProps extends ButtonProps {
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   (props, ref) => {
     const {
-      ariaLabel,
+      "aria-label": ariaLabel,
       className,
       onToggle,
       toggled = false,

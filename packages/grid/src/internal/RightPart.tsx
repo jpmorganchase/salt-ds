@@ -1,16 +1,17 @@
-import { RefObject, WheelEventHandler } from "react";
+import { RefObject } from "react";
 import cn from "classnames";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./RightPart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnModel, GridRowModel } from "../Grid";
+import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridRightPart");
 
 export interface RightPartProps<T> {
   rightRef: RefObject<HTMLDivElement>;
-  onWheel: WheelEventHandler<HTMLTableElement>;
+  onWheel: EventListener;
   isRaised?: boolean;
   columns: GridColumnModel<T>[];
   rows: GridRowModel<T>[];
@@ -31,6 +32,8 @@ export function RightPart<T>(props: RightPartProps<T>) {
     zebra,
   } = props;
 
+  const tableRef = useActiveOnWheel(onWheel);
+
   return (
     <div
       ref={rightRef}
@@ -40,7 +43,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
       data-testid="grid-right-part"
     >
       <div className={withBaseName("space")}>
-        <table onWheel={onWheel}>
+        <table ref={tableRef}>
           <TableColGroup columns={columns} />
           <TableBody
             columns={columns}

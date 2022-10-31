@@ -1,5 +1,9 @@
 import { useMemo, useState, useCallback, RefObject } from "react";
-import { useResizeObserver, HeightOnly } from "@jpmorganchase/uitk-core";
+import {
+  useResizeObserver,
+  HeightOnly,
+  ResizeHandler,
+} from "@jpmorganchase/uitk-core";
 
 export interface ListHeightHookProps {
   borderless?: boolean;
@@ -28,7 +32,9 @@ export const useListHeight = ({
   rowHeightRef,
 }: ListHeightHookProps): HeightHookResult => {
   // TODO default by density
-  const [measuredItemHeight, setMeasuredItemHeight] = useState(36);
+  const [measuredItemHeight, setMeasuredItemHeight] = useState<
+    number | undefined
+  >(36);
 
   const preferredHeight = useMemo(() => {
     let result = borderless ? 0 : 2;
@@ -67,7 +73,7 @@ export const useListHeight = ({
     measuredItemHeight,
   ]);
 
-  const handleRowHeight = useCallback(({ height }) => {
+  const handleRowHeight: ResizeHandler = useCallback(({ height }) => {
     setMeasuredItemHeight(height);
   }, []);
 

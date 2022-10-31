@@ -12,9 +12,13 @@ export function useComponentSize<T extends HTMLElement>(
   const [size, setSize] = useState<ComponentSize>({ width: initialWidth });
   const ref = useRef<T>(null);
 
-  const handleResize = useCallback(function handleResize({ width, height }) {
+  const handleResize = useCallback(function handleResize({
+    width,
+    height,
+  }: DOMRect) {
     setSize({ width, height });
-  }, []);
+  },
+  []);
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {

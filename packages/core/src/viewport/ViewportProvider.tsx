@@ -1,8 +1,14 @@
-import { createContext, FC, useEffect, useState, useContext } from "react";
+import {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  ReactNode,
+} from "react";
 
 const ViewportContext = createContext(0);
 
-const ViewportProvider: FC = ({ children }) => {
+const ViewportProvider = ({ children }: { children?: ReactNode }) => {
   const [viewport, setViewport] = useState(0);
 
   useEffect(() => {

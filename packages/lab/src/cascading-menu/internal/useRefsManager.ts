@@ -10,9 +10,9 @@ export function useRefsManager(): refsManager {
   const refs = useRef(new Map<string, HTMLElement>());
   const [, forceUpdate] = useReducer((x) => !x, false);
 
-  const get = useCallback((key) => refs.current.get(key), []);
+  const get = useCallback((key: string) => refs.current.get(key), []);
 
-  const set = useCallback((key, value) => {
+  const set = useCallback((key: string, value: HTMLElement) => {
     refs.current.set(key, value);
     forceUpdate();
   }, []);

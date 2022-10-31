@@ -2,7 +2,6 @@ import {
   cloneElement,
   forwardRef,
   isValidElement,
-  ReactElement,
   ReactNode,
   useRef,
   useState,
@@ -89,7 +88,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
         ref: handleRef,
       });
     }
-    return children as ReactElement;
+    return <>{children}</>;
   }
 
   if (mounted && portalRef.current && children) {

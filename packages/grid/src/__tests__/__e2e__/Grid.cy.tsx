@@ -1,7 +1,6 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
-import { RowSelectionModesExample } from "@stories/examples";
-import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
+import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 
 const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
@@ -56,7 +55,7 @@ describe("Grid", () => {
       .find(".uitkGridTableRow")
       .should("exist")
       .findAllByRole("gridcell")
-      .should("have.length", 14);
+      .should("have.length", 16);
 
     cy.findByTestId("grid-scrollable")
       .should("exist")
@@ -73,10 +72,10 @@ describe("Grid", () => {
         getCol(1).should("not.exist");
         // Column C is the first visible column now
         getCol(2).should("exist");
-        // Column P is the last visible one
-        getCol(15).should("exist");
-        // Column Q is out of view
-        getCol(16).should("not.exist");
+        // Column R is the last visible one
+        getCol(18).should("exist");
+        // Column S is out of view
+        getCol(19).should("not.exist");
       });
   });
 
@@ -92,15 +91,14 @@ describe("Grid", () => {
             .find("tbody")
             .find(`tr [data-row-index="${n}"]`);
 
-        // Rows 1 to 15 should be rendered, everything above and below - not
+        // Rows 1 to 16 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
         getRow(15).should("exist");
         getRow(16).should("not.exist");
+        getRow(17).should("not.exist");
       });
   });
-
-  // TODO header virtualization in grouped mode
 
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
@@ -194,14 +192,19 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
+  describe("Column groups", () => {
+    it("Shows correct groups", () => {});
+
+    it("Handles header virtualization in grouped mode", () => {});
+  });
   describe("Switching selection modes", () => {
     it("Shows correct columns", () => {
-      cy.mount(<RowSelectionModesExample />);
+      cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
-        8
+        16
       );
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
@@ -216,7 +219,7 @@ describe("Grid", () => {
       cy.findByLabelText("single").click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
-        8
+        16
       );
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
@@ -244,7 +247,7 @@ describe("Grid", () => {
     });
 
     it("Selects rows correctly", () => {
-      cy.mount(<RowSelectionModesExample />);
+      cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
       findCell(2, 3).click({ force: true });
@@ -265,6 +268,8 @@ describe("Grid", () => {
       checkRowSelected(3, false);
     });
   });
+
+  // TODO header virtualization in grouped mode
 
   // TODO column drag-n-drop
   // TODO clipboard

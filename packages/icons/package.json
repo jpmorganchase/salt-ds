@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/uitk-icons",
-  "version": "0.4.1",
+  "version": "0.6.0",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": [
@@ -8,7 +8,7 @@
     "**/*.css.js"
   ],
   "scripts": {
-    "build": "node ./scripts/generateIconComponent.js '*.svg' && node ./scripts/generateIconIndex.js",
+    "build": "node ./scripts/generateIconComponent.mjs '*.svg' && node ./scripts/generateIconIndex.js",
     "generateIconAll": "node ./scripts/generateIconAll.js"
   },
   "peerDependencies": {
@@ -22,9 +22,9 @@
     }
   },
   "devDependencies": {
-    "dom-serializer": "^2.0.0",
-    "htmlparser2": "^8.0.0",
-    "mustache": "^4.2.0"
+    "@svgo/jsx": "^0.3.1",
+    "mustache": "^4.2.0",
+    "svgo": "^2.3.0"
   },
   "publishConfig": {
     "directory": "../../dist/jpmorganchase-uitk-icons"

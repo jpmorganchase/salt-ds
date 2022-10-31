@@ -1,8 +1,8 @@
 import {
   CSSProperties,
-  FC,
   forwardRef,
   HTMLAttributes,
+  ReactElement,
   ReactNode,
 } from "react";
 import classnames from "classnames";
@@ -59,7 +59,12 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * render props callback to render info panel.
    */
-  renderInfo?: FC<InfoRendererProps<any, any>>;
+  renderInfo?: (
+    props: Pick<
+      InfoRendererProps<any, any>,
+      "value" | "unit" | "getValueProps" | "getUnitProps"
+    >
+  ) => ReactElement<InfoRendererProps<any, any>>;
   /**
    * If `true`, the info panel will be displayed.
    */

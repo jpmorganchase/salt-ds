@@ -37,7 +37,7 @@ export interface FlexLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   justify?: FlexContentAlignment;
   /**
-   * Adds a separator between elements, default is false.
+   * Adds a separator between elements if wrap is not active, default is false.
    */
   separators?: LayoutSeparator | true;
   /**
@@ -82,14 +82,14 @@ export const FlexLayout = forwardRef<HTMLDivElement, FlexLayoutProps>(
     return (
       <div
         className={cx(className, withBaseName(), {
-          [withBaseName("separator")]: separatorAlignment,
+          [withBaseName("separator")]: separatorAlignment && !wrap,
           [withBaseName(
             `separator-${flexDirection || "row"}-${
               separatorAlignment || "center"
             }`
-          )]: separatorAlignment,
+          )]: separatorAlignment && !wrap,
           [withBaseName(`separator-${flexDirection || "row"}`)]:
-            separatorAlignment,
+            separatorAlignment && !wrap,
         })}
         ref={ref}
         style={flexLayoutStyles}

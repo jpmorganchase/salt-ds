@@ -17,10 +17,10 @@ describe("GIVEN a Flex", () => {
       cy.get(".uitkFlexLayout").should("have.css", "flex-direction", "row");
     });
 
-    it("THEN it should render with no flex wrap", () => {
+    it("THEN it should render with flex wrap", () => {
       cy.mount(<DefaultFlexLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
@@ -50,7 +50,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN a separator value is provided", () => {
     it("THEN it should render a separator", () => {
-      cy.mount(<DefaultFlexLayout separators />);
+      cy.mount(<DefaultFlexLayout separators wrap={false} />);
 
       cy.get(".uitkFlexLayout").should(
         "have.class",
@@ -59,11 +59,11 @@ describe("GIVEN a Flex", () => {
     });
   });
 
-  describe("WHEN wrap is set to true", () => {
-    it("THEN it should render with flex wrap", () => {
-      cy.mount(<DefaultFlexLayout wrap />);
+  describe("WHEN wrap is set to false", () => {
+    it("THEN it should render with no flex wrap", () => {
+      cy.mount(<DefaultFlexLayout wrap={false} />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
     });
   });
 

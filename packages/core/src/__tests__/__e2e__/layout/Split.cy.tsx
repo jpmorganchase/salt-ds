@@ -12,15 +12,15 @@ describe("GIVEN a Split", () => {
     it("THEN it should wrap by default", () => {
       cy.mount(<DefaultSplitLayout />);
 
-      cy.get(".uitkSplitLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultSplitLayout />);
 
-      cy.get(".uitkSplitLayout").should("have.css", "column-gap", "24px");
+      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkSplitLayout").should("have.css", "row-gap", "24px");
+      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
     });
   });
 
@@ -50,12 +50,12 @@ describe("GIVEN a Split", () => {
         />
       );
 
-      cy.get(".uitkSplitLayout")
+      cy.get(".uitkFlexLayout")
         .children()
         .first()
         .should("have.text", leftItemContent.join(""));
 
-      cy.get(".uitkSplitLayout")
+      cy.get(".uitkFlexLayout")
         .children()
         .last()
         .should("have.text", rightItemContent.join(""));
@@ -68,9 +68,9 @@ describe("GIVEN a Split", () => {
     it("THEN it should render as expected", () => {
       cy.mount(<DefaultSplitLayout leftSplitItem={leftItem} />);
 
-      cy.get(".uitkSplitLayout")
+      cy.get(".uitkFlexLayout")
         .children()
-        .first()
+        .eq(0)
         .should("have.text", leftItem.join(""));
     });
   });
@@ -81,9 +81,9 @@ describe("GIVEN a Split", () => {
     it("THEN it should render as expected", () => {
       cy.mount(<DefaultSplitLayout rightSplitItem={rightItem} />);
 
-      cy.get(".uitkSplitLayout")
+      cy.get(".uitkFlexLayout")
         .children()
-        .last()
+        .eq(1)
         .should("have.text", rightItem.join(""));
     });
   });
@@ -92,9 +92,9 @@ describe("GIVEN a Split", () => {
     it("THEN it should render with a new gap value", () => {
       cy.mount(<DefaultSplitLayout gap={2} />);
 
-      cy.get(".uitkSplitLayout").should("have.css", "column-gap", "16px");
+      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "16px");
 
-      cy.get(".uitkSplitLayout").should("have.css", "row-gap", "16px");
+      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "16px");
     });
   });
 });

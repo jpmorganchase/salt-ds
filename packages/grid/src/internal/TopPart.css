@@ -5,7 +5,6 @@
   right: var(--grid-scrollBar-width);
   overflow-x: hidden;
   overflow-y: hidden;
-  z-index: 2;
 
   clip-path: inset(0 var(--grid-rightPart-width) 0 var(--grid-leftPart-width));
 }
