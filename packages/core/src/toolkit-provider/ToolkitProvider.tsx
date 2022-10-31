@@ -85,6 +85,15 @@ const createThemedChildren = (
   }
 };
 
+interface ToolkitProviderThatAppliesClassesToBody {
+  children: ReactNode;
+  density?: Density;
+  theme?: ThemeNameType;
+  applyClassesToBody?: true;
+  applyClassesToChild?: false;
+  breakpoints?: Breakpoints;
+}
+
 interface ToolkitProviderThatAppliesClassesToChild {
   children: ReactElement;
   density?: Density;
@@ -104,19 +113,10 @@ interface ToolkitProviderThatInjectsThemeElement {
   breakpoints?: Breakpoints;
 }
 
-interface ToolkitProviderThatAppliesClassesToBody {
-  children: ReactNode;
-  density?: Density;
-  theme?: ThemeNameType;
-  applyClassesToBody?: true;
-  applyClassesToChild?: false;
-  breakpoints?: Breakpoints;
-}
-
 type toolkitProvider =
+  | ToolkitProviderThatAppliesClassesToBody
   | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement
-  | ToolkitProviderThatAppliesClassesToBody;
+  | ToolkitProviderThatInjectsThemeElement;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
