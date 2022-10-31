@@ -82,9 +82,23 @@ const createThemedChildren = (
 
 interface ToolkitProviderThatAppliesClassesToChild {
   children: ReactElement;
+  /**
+   * Change density.
+   */
   density?: Density;
+  /**
+   * Change theme.
+   */
   theme?: ThemeNameType;
+  /**
+   * When `false` a `uitk-theme` element will be created to wrap the child elements.
+   *
+   * When `true` the CSS classes for theming will be applied to the child element of the ToolkitProvider.
+   */
   applyClassesToChild?: true;
+  /**
+   * Customise breakpoints object.
+   */
   breakpoints?: Breakpoints;
 }
 
@@ -92,9 +106,23 @@ type ThemeNameType = string | Array<string>;
 
 interface ToolkitProviderThatInjectsThemeElement {
   children: ReactNode;
+  /**
+   * Change density.
+   */
   density?: Density;
+  /**
+   * Change theme.
+   */
   theme?: ThemeNameType;
+  /**
+   * When `false` a `uitk-theme` element will be created to wrap the child elements.
+   *
+   * When `true` the CSS classes for theming will be applied to the child element of the ToolkitProvider.
+   */
   applyClassesToChild?: false;
+  /**
+   * Customise breakpoints object.
+   */
   breakpoints?: Breakpoints;
 }
 

@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { ArgsTable, Meta, Story, Canvas } from "@storybook/addon-docs";
 import {
   Button,
   Card,
@@ -22,7 +22,122 @@ these providers is to inject the appropriate CSS classes into the page so that t
 
 - Theme
 - Density
+- Breakpoints
 - AriaAnnouncer
+
+### API
+
+```js static
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={ToolkitProvider} />
+
+## Theme
+
+You can use the `theme` prop to change the default theme, which is set to `light`. For more details on Theme please go to <a href="?path=/story/documentation-styles-and-theming-introduction--page">Styles and Theming</a>
+
+### useTheme
+
+You can use the `useTheme` hook to access the value which indicates which themes are currently active. The `useTheme` hook returns the array value of the currently set themes in scope. The available themes by default are "uitk-light" and "uitk-dark". You can optionally override these values by providing an array of theme names to `ToolkitProvider` via the `themes` prop.
+
+```tsx
+import { useTheme } from "@jpmorganchase/uitk-core";
+
+function MyComponent() {
+  const [currentTheme] = useTheme();
+  return (
+    <div>{currentTheme === "uitk-light" ? "Light Theme" : "Dark Theme"}</div>
+  );
+}
+```
+
+## Density
+
+You can use the `density` prop to change the default density, which is set to `medium`.
+
+### useDensity
+
+You can use `useDensity` hook to access the currently active density of your app in the provided scope. The useDensity hook returns the string value of the currently set density. The possible values are "touch", "low", "medium", and "high". You can optionally override the value by passing your own value as the first parameter to the function.
+
+#### Example use
+
+```tsx
+import { useDensity } from "@jpmorganchase/uitk-core";
+import cx from "classnames";
+
+function MyComponent() {
+  const [override, setDensityOverride] = useState();
+  const density = useDensity(override);
+  return (
+    <>
+      <div
+        className={cx("myComponent", {
+          "myComponent--touch": density === "touch",
+        })}
+      >
+        Hello World!
+      </div>
+      <button
+        onClick={() => {
+          setOverride("touch");
+        }}
+      >
+        Set Touch Density
+      </button>
+    </>
+  );
+}
+```
+
+## Breakpoints
+
+The `breakpoints` prop on ToolkitProvider can be used to customize the css media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Look for an example in the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation.
+
+The default value is the following breakpoint size mapping object.
+
+```js
+{
+  xs: 0,
+  sm: 600,
+  md: 960,
+  lg: 1280,
+  xl: 1920,
+}
+```
+
+### useBreakpoints
+
+You can use `useBreakpoints` hook to access the current value of `breakpoints` in the ToolkitProvider context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the breakpoints section.
+
+```tsx
+import { useBreakpoints } from "@jpmorganchase/uitk-core";
+
+function MyApp() {
+  return (
+    <ToolkitProvider breakpoints={{ sm: 420, md: 620 }}>
+      <MyComponent />
+    </ToolkitProvider>
+  );
+}
+
+function MyComponent() {
+  const breakpoints = useBreakpoints();
+  // here we can use useBreakpoints to access the value from the ToolkitProvider prop
+  return <div>Hello World!</div>;
+}
+```
+
+## AriaAnnouncer
+
+None of the examples above mention `AriaAnnouncer`. The output it creates in markup is ignored for the sake of simplicity.
+It requires no configuration, but is included in your app when you use a ToolkitProvider. Because only one instance of
+AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
+nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
+
+## ------ before
 
 Here is a `Card` including some very simple content and wrapped with a ToolkitProvider. We set the ToolkitProvider to use the toolkit
 light theme and high density.
@@ -86,127 +201,3 @@ Then we would see the following HTML.
 ```html
 <div class="uitkCard uitk-light uitk-density-medium">...</div>
 ```
-
-#### AriaAnnouncer
-
-None of the examples above mention `AriaAnnouncer`. The output it creates in markup is ignored for the sake of simplicity.
-It requires no configuration, but is included in your app when you use a ToolkitProvider. Because only one instance of
-AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
-nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
-
-## Breakpoints
-
-The `breakpoints` prop on ToolkitProvider can be used to customize the css media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Look for an example in the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation.
-
-The default value is the following breakpoint size mapping object.
-
-```js
-{
-  xs: 0,
-  sm: 600,
-  md: 960,
-  lg: 1280,
-  xl: 1920,
-}
-```
-
-## useDensity
-
-You can use `useDensity` hook to access the currently active density of your app in the provided scope. The useDensity hook returns the string value of the currently set density. The possible values are "touch", "low", "medium", and "high". You can optionally override the value by passing your own value as the first parameter to the function.
-
-### API
-
-```js
-import { useDensity } from "@jpmorganchase/uitk-core";
-```
-
-### Example use
-
-```tsx
-import { useDensity } from "@jpmorganchase/uitk-core";
-import cx from "classnames";
-
-function MyComponent() {
-  const [override, setDensityOverride] = useState();
-  const density = useDensity(override);
-  return (
-    <>
-      <div
-        className={cx("myComponent", {
-          "myComponent--touch": density === "touch",
-        })}
-      >
-        Hello World!
-      </div>
-      <button
-        onClick={() => {
-          setOverride("touch");
-        }}
-      >
-        Set Touch Density
-      </button>
-    </>
-  );
-}
-```
-
-## useTheme
-
-You can use the `useTheme` hook to access the value which indicates which themes are currently active. The `useTheme` hook returns the array value of the currently set themes in scope. The available themes by default are "uitk-light" and "uitk-dark". You can optionally override these values by providing an array of theme names to `ToolkitProvider` via the `themes` prop.
-
-```tsx
-import { useTheme } from "@jpmorganchase/uitk-core";
-
-function MyComponent() {
-  const [currentTheme] = useTheme();
-  return (
-    <div>{currentTheme === "uitk-light" ? "Light Theme" : "Dark Theme"}</div>
-  );
-}
-```
-
-## useBreakpoints
-
-You can use `useBreakpoints` hook to access the current value of `breakpoints` in the ToolkitProvider context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the breakpoints section.
-
-```tsx
-import { useBreakpoints } from "@jpmorganchase/uitk-core";
-
-function MyApp() {
-  return (
-    <ToolkitProvider breakpoints={{ sm: 420, md: 620 }}>
-      <MyComponent />
-    </ToolkitProvider>
-  );
-}
-
-function MyComponent() {
-  const breakpoints = useBreakpoints();
-  // here we can use useBreakpoints to access the value from the ToolkitProvider prop
-  return <div>Hello World!</div>;
-}
-```
-
-<!-- #### Portal
-
-Note: `Portal` is not yet ready for release, the notes below are placeholder only. Need something to position the portal example
-
-`Portal` is a Toolkit component that makes working with React Portals easy. Portals are useful where a popout, dropdown or dialog
-needs to be rendered outside of the current HTML DOM tree. This is done to avoid Z-indexing and clipping issues that local element
-structures might impose. Portal renders contents directly into the document body, employing CSS to manage positioning. This has
-implications for styling. Because CSS Variables operate an inheritance model, a portal-rendered element which sits
-outside the root <`uitk-theme>` node wil be outside the scope of the theme variables. Therefore Portal always wraps rendered content
-with a local ToolkitProvider which echoes the current theme values in effect at the point whetre the Portal is launched. This is easier
-shown than explained.
-
-<Canvas>
-  <Story name="Portal">
-    <ToolkitProvider density="touch">
-      <Button variant="cta">CTA</Button>
-      <Button variant="primary">Primary</Button>
-      <Portal>
-        <Button variant="secondary">Secondary</Button>
-      </Portal>
-    </ToolkitProvider>
-  </Story>
-</Canvas> -->
