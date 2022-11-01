@@ -37,11 +37,11 @@ import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 ## Theme
 
-You can use the `theme` prop to change the default theme, which is set to `light`. For more details on Theme please go to <a href="?path=/story/documentation-styles-and-theming-introduction--page">Styles and Theming</a>
+You can use the `theme` prop to change the default theme (set to `light`) by passing a theme name or an array of theme names. For more details on Theme please go to <a href="?path=/story/documentation-styles-and-theming-introduction--page">Styles and Theming</a>
 
 ### useTheme
 
-You can use the `useTheme` hook to access the value which indicates which themes are currently active. The `useTheme` hook returns the array value of the currently set themes in scope. The available themes by default are "uitk-light" and "uitk-dark". You can optionally override these values by providing an array of theme names to `ToolkitProvider` via the `themes` prop.
+The `useTheme` hook returns an array of the currently set themes in scope. The available themes by default are "uitk-light" and "uitk-dark". You can optionally override these values by providing an array of theme names to `ToolkitProvider` via the `themes` prop.
 
 ```tsx
 import { useTheme } from "@jpmorganchase/uitk-core";
