@@ -62,6 +62,12 @@ const config = {
             label: "Components",
           },
           {
+            type: "doc",
+            docId: "contributing",
+            position: "left",
+            label: "Contributing",
+          },
+          {
             href: "https://github.com/jpmorganchase/uitk",
             label: "GitHub",
             position: "right",
@@ -81,6 +87,10 @@ const config = {
               {
                 label: "Components",
                 to: "/docs/components",
+              },
+              {
+                label: "Contributing",
+                to: "/docs/contributing",
               },
             ],
           },
