@@ -23,7 +23,7 @@ jobs:
         run: yarn
 
       - name: Run build
-        run: yarn build
+        run: yarn build:site
 
       - name: Publish
         uses: cloudflare/pages-action@1
