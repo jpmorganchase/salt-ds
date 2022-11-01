@@ -3,9 +3,7 @@ import {
   ColumnGroup,
   Grid,
   GridColumn,
-  GridProps,
   RowKeyGetter,
-  RowSelectionCheckboxColumn,
   TextCellEditor,
 } from "../src";
 import { ChangeEvent, useMemo, useState } from "react";
@@ -22,7 +20,6 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { DeleteIcon, UndoIcon } from "@jpmorganchase/uitk-icons";
 import "./grid.stories.css";
-import { DefaultIcon } from "@jpmorganchase/uitk-lab/stories/search-input.stories";
 import { Story } from "@storybook/react";
 
 export default {
@@ -194,6 +191,18 @@ const CssVariablesTemplate: Story<{}> = () => {
     {
       name: "--uitkGrid-rowSeparator-color-divided",
       description: "Color of row separators between groups or rows",
+    },
+    {
+      name: "--uitkGrid-columnGhost-borderColor",
+      description: "Border color of the column ghost",
+    },
+    {
+      name: "--uitkGrid-columnGhost-borderWidth",
+      description: "Border width of the column ghost",
+    },
+    {
+      name: "--uitkGrid-columnGhost-boxShadow",
+      description: "Shadow of the column ghost",
     },
   ]);
 

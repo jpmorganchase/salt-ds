@@ -10,7 +10,7 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
 
   const isSelected = selRowIdxs.has(row.index);
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    selectRows(row.index, false, false);
+    selectRows({ rowIndex: row.index });
     event.preventDefault();
     event.stopPropagation();
   };

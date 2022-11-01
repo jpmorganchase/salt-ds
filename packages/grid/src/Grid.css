@@ -143,6 +143,10 @@
   --grid-rowSeparator-color: var(--uitkGrid-rowSeparator-color, var(--grid-rowSeparator-color-default));
   --grid-columnSeparator-color: var(--uitkGrid-columnSeparator-color, var(--grid-columnSeparator-color-default));
   --grid-rowSeparator-color-divided: var(--uitkGrid-rowSeparator-color-divided, var(--grid-rowSeparator-color-divided-default));
+
+  --grid-columnGhost-borderColor: var(--uitkGrid-columnGhost-borderColor, var(--uitk-palette-interact-border-hover));
+  --grid-columnGhost-borderWidth: var(--uitkGrid-columnGhost-borderWidth, 1px);
+  --grid-columnGhost-boxShadow: var(--uitkGrid-columnGhost-boxShadow, var(--uitk-overlayable-shadow-drag));
 }
 
 .uitkGrid {
