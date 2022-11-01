@@ -3,7 +3,6 @@ import "./NumericColumn.css";
 import { GridColumnModel, GridRowModel } from "./Grid";
 import {
   ChangeEventHandler,
-  FocusEventHandler,
   KeyboardEventHandler,
   ReactNode,
   useEffect,
@@ -11,21 +10,17 @@ import {
   useState,
 } from "react";
 import { useEditorContext } from "./EditorContext";
-import { CellEditor } from "./CellEditor";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
 }
 
 function isNumber(value: any): value is number {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return true;
-  }
-  return false;
+  return typeof value === "number" && Number.isFinite(value);
 }
 
 export function NumericCellValue<T>(props: GridCellValueProps<T>) {
-  const { column, value, row } = props;
+  const { column, value } = props;
   const columnProps = column.info.props as NumericColumnProps<T>;
   const { precision } = columnProps;
   const text = isNumber(value) ? value.toFixed(precision) : "";
@@ -41,12 +36,14 @@ export interface NumericEditorProps<T> {
 export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { column, row } = props;
   const inputRef = useRef<HTMLInputElement>(null);
-  const initialSelectionRef = useRef(false);
+
+  const { endEditMode, cancelEditMode, initialText } = useEditorContext();
+
   const [editorText, setEditorText] = useState<string>(
-    column!.info.props.getValue!(row!.data)
+    initialText || column!.info.props.getValue!(row!.data)
   );
 
-  const { endEditMode, cancelEditMode } = useEditorContext();
+  const initialSelectionRef = useRef(!!initialText);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);

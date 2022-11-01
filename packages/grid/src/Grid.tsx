@@ -1,5 +1,6 @@
 import React, {
   CSSProperties,
+  KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
@@ -172,7 +173,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     onRowSelected,
     columnMove,
     onColumnMoved,
-    cellSelectionMode = "range",
+    cellSelectionMode = "none",
     onVisibleRowRangeChange,
   } = props;
 
@@ -206,6 +207,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   );
 
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [initialText, setInitialText] = useState<string | undefined>(undefined);
 
   const resizeClient = useCallback(
     (clW: number, clH: number, sbW: number, sbH: number) => {
@@ -384,12 +386,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [leftCols, midCols, rightCols]
   );
 
-  const colIdxByKey = useMemo(
-    () =>
-      new Map<string, number>(cols.map((c, i) => [c.info.props.id, c.index])),
-    [cols]
-  );
-
   const scroll = useCallback(
     (left?: number, top?: number, source?: "user" | "table") => {
       setScrollSource(source || "user");
@@ -421,6 +417,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     const c = cols[cursorColIdx];
     const isEditable = !!contextValue.getEditor(c.info.props.id);
     if (isEditable) {
+      setInitialText(text);
       setEditMode(true);
     }
   };
@@ -544,12 +541,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const editorContext: EditorContext = useMemo(
     () => ({
+      initialText,
       editMode,
       startEditMode,
       endEditMode,
       cancelEditMode,
     }),
-    [editMode, startEditMode, endEditMode, cancelEditMode]
+    [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
   );
 
   const cursorContext: CursorContext = useMemo(
@@ -619,130 +617,101 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [rangeSelection.onKeyboardRangeSelectionEnd]
   );
 
-  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
-    (event) => {
+  const editModeKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
       const { key } = event;
-      // console.log(`onKeyDown. key: ${event.key}`);
-
-      if (key === "Shift") {
-        rangeSelection.onKeyboardRangeSelectionStart({
-          rowIdx: cursorRowIdx || 0,
-          colIdx: cursorColIdx || 0,
-        });
-        return;
-      }
-      if (key === "ArrowLeft") {
-        moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
-        return;
-      }
-      if (key === "ArrowRight") {
-        moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
-        return;
-      }
-      if (key === "ArrowUp") {
-        moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
-        return;
-      }
-      if (key === "ArrowDown") {
-        moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
-        return;
-      }
-      if (key === "PageUp") {
-        moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
-        return;
-      }
-      if (key === "PageDown") {
-        moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
-        return;
-      }
-      if (key === "Home") {
-        if (!event.ctrlKey) {
-          moveCursor(cursorRowIdx, 0);
-        } else {
-          moveCursor(0, 0);
-        }
-        return;
-      }
-      if (key === "End") {
-        if (!event.ctrlKey) {
-          moveCursor(cursorRowIdx, cols.length - 1);
-        } else {
-          moveCursor(rowData.length - 1, cols.length - 1);
-        }
-        return;
-      }
-      if (key === "F2" || key === "Backspace") {
-        startEditMode();
-        return;
-      }
-      if (key === "Tab") {
-        if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-          if (cursorColIdx == undefined || cursorRowIdx == undefined) {
-            moveCursor(0, 0);
+      switch (key) {
+        case "F2":
+        case "Backspace":
+          startEditMode();
+          break;
+        case "Escape":
+          cancelEditMode();
+          break;
+        default:
+          if (
+            !editMode &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            /^[\w\d ]$/.test(key)
+          ) {
+            startEditMode(key);
           } else {
-            if (!event.shiftKey) {
-              if (cursorColIdx < cols.length - 1) {
-                moveCursor(cursorRowIdx, cursorColIdx + 1);
-              } else {
-                if (cursorRowIdx < rowData.length - 1) {
-                  moveCursor(cursorRowIdx + 1, 0);
-                }
-              }
-            } else {
-              if (cursorColIdx > 0) {
-                moveCursor(cursorRowIdx, cursorColIdx - 1);
-              } else {
-                if (cursorRowIdx > 0) {
-                  moveCursor(cursorRowIdx - 1, cols.length - 1);
-                }
-              }
+            return false;
+          }
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [startEditMode, editMode, cancelEditMode]
+  );
+
+  const selectionKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      switch (key) {
+        case "Shift":
+          rangeSelection.onKeyboardRangeSelectionStart({
+            rowIdx: cursorRowIdx || 0,
+            colIdx: cursorColIdx || 0,
+          });
+          break;
+        case " ":
+          if (event.ctrlKey) {
+            if (cursorColIdx != undefined) {
+              rangeSelection.selectRange({
+                start: { rowIdx: 0, colIdx: cursorColIdx },
+                end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+              });
+            }
+          } else {
+            if (cursorRowIdx != undefined) {
+              selectRows({
+                rowIndex: cursorRowIdx,
+                shift: event.shiftKey,
+                meta: event.metaKey,
+              });
             }
           }
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-      }
-      if (key === "Enter") {
-        if (
-          !event.ctrlKey &&
-          !event.metaKey &&
-          !event.altKey &&
-          !event.shiftKey
-        ) {
-          if (cursorRowIdx == undefined) {
-            moveCursor(0, 0);
-          } else {
-            moveCursor(cursorRowIdx + 1, cursorColIdx);
-          }
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-      }
-      if (key === "Escape") {
-        cancelEditMode();
-        return;
-      }
-      if (key === " ") {
-        if (event.ctrlKey) {
-          if (cursorColIdx != undefined) {
+          break;
+        case "a":
+          if (event.ctrlKey || event.metaKey) {
             rangeSelection.selectRange({
-              start: { rowIdx: 0, colIdx: cursorColIdx },
-              end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+              start: { rowIdx: 0, colIdx: 0 },
+              end: { rowIdx: rowData.length, colIdx: cols.length },
             });
+            selectAll();
           }
-        } else {
-          if (cursorRowIdx != undefined) {
-            selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
-          }
-        }
-        return;
+          break;
+        default:
+          return false;
       }
-      if (key === "c" && (event.ctrlKey || event.metaKey)) {
-        if (!rangeSelection.selectedCellRange) {
-          return;
-        }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [
+      rangeSelection.selectRange,
+      rangeSelection.onKeyboardRangeSelectionStart,
+      selectRows,
+      selectAll,
+      cursorColIdx,
+      cursorRowIdx,
+      rowData.length,
+      cols.length,
+    ]
+  );
+
+  const clipboardKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      if (
+        key === "c" &&
+        (event.ctrlKey || event.metaKey) &&
+        rangeSelection.selectedCellRange
+      ) {
         const { start, end } = rangeSelection.selectedCellRange;
         const c = (x: number, y: number) => x - y;
         const [minRow, maxRow] = [start.rowIdx, end.rowIdx].sort(c);
@@ -759,33 +728,125 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           text.push(rowText.join("\t"));
         }
         navigator.clipboard.writeText(text.join("\n"));
-        return;
-      }
-      if (key === "a" && (event.ctrlKey || event.metaKey)) {
-        rangeSelection.selectRange({
-          start: { rowIdx: 0, colIdx: 0 },
-          end: { rowIdx: rowData.length, colIdx: cols.length },
-        });
-        selectAll();
         event.preventDefault();
         event.stopPropagation();
-        return;
+        return true;
       }
-      if (
-        !editMode &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey &&
-        /^[\w\d ]$/.test(key)
-      ) {
-        startEditMode("");
-        return;
-      }
-      // TODO Ctrl + D copies from the first cell to the selection down
-      // TODO Ctrl + R copies from the first cell to the selection right
-      console.log(`onKeyDown unhandled. key=${key}`);
+      return false;
     },
-    [cursorRowIdx, cursorColIdx, moveCursor, startEditMode, rowData, cols]
+    [rangeSelection.selectedCellRange]
+  );
+
+  const navigationKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      switch (key) {
+        case "ArrowLeft":
+          moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
+          break;
+        case "ArrowRight":
+          moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
+          break;
+        case "ArrowUp":
+          moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
+          break;
+        case "ArrowDown":
+          moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
+          break;
+        case "PageUp":
+          moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
+          break;
+        case "PageDown":
+          moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
+          break;
+        case "Home":
+          if (!event.ctrlKey) {
+            moveCursor(cursorRowIdx, 0);
+          } else {
+            moveCursor(0, 0);
+          }
+          break;
+        case "End":
+          if (!event.ctrlKey) {
+            moveCursor(cursorRowIdx, cols.length - 1);
+          } else {
+            moveCursor(rowData.length - 1, cols.length - 1);
+          }
+          break;
+        case "Tab":
+          if (!event.ctrlKey && !event.metaKey && !event.altKey) {
+            if (cursorColIdx == undefined || cursorRowIdx == undefined) {
+              moveCursor(0, 0);
+            } else {
+              if (!event.shiftKey) {
+                if (cursorColIdx < cols.length - 1) {
+                  moveCursor(cursorRowIdx, cursorColIdx + 1);
+                } else {
+                  if (cursorRowIdx < rowData.length - 1) {
+                    moveCursor(cursorRowIdx + 1, 0);
+                  }
+                }
+              } else {
+                if (cursorColIdx > 0) {
+                  moveCursor(cursorRowIdx, cursorColIdx - 1);
+                } else {
+                  if (cursorRowIdx > 0) {
+                    moveCursor(cursorRowIdx - 1, cols.length - 1);
+                  }
+                }
+              }
+            }
+          }
+          break;
+        case "Enter":
+          if (
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            !event.shiftKey
+          ) {
+            if (cursorRowIdx == undefined) {
+              moveCursor(0, 0);
+            } else {
+              moveCursor(cursorRowIdx + 1, cursorColIdx);
+            }
+          }
+          break;
+        default:
+          return false;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [moveCursor, cursorRowIdx, cursorRowIdx, cols.length, rowData.length]
+  );
+
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      if (cursorColIdx != undefined && cursorRowIdx != undefined) {
+        const column = cols[cursorColIdx];
+        if (column.info.props.onKeyDown) {
+          column.info.props.onKeyDown(event, cursorRowIdx);
+        }
+      }
+      if (!event.isPropagationStopped()) {
+        [
+          navigationKeyHandler,
+          clipboardKeyHandler,
+          selectionKeyHandler,
+          editModeKeyHandler,
+        ].find((handler) => {
+          return handler(event);
+        });
+      }
+    },
+    [
+      navigationKeyHandler,
+      clipboardKeyHandler,
+      selectionKeyHandler,
+      editModeKeyHandler,
+    ]
   );
 
   const selectionContext: SelectionContext = useMemo(
@@ -843,7 +904,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
-                    // onCopy={onCopy}
                     data-name="grid-root"
                     role="grid"
                   >

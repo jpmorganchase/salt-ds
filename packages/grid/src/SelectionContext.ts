@@ -6,7 +6,11 @@ export interface SelectionContext {
   selRowIdxs: Set<number>;
   isAnySelected: boolean;
   isAllSelected: boolean;
-  selectRows: (rowIdx: number, shift: boolean, meta: boolean) => void;
+  selectRows: (args: {
+    rowIndex: number;
+    shift?: boolean;
+    meta?: boolean;
+  }) => void;
   selectAll: () => void;
   unselectAll: () => void;
 }
