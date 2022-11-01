@@ -48,17 +48,16 @@ const createThemedChildren = (
   children: ReactNode,
   themeNames: string[],
   density: Density,
-  applyClassesToBody: boolean,
-  applyClassesToChild: boolean
+  applyClassesTo?: TargetElement
 ) => {
-  if (applyClassesToBody) {
+  if (applyClassesTo === "root") {
     return children;
-  } else if (applyClassesToChild) {
+  } else if (applyClassesTo === "child") {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: cx(
           children.props?.className,
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
+          ...themeNames,
           `uitk-density-${density}`
         ),
       });
@@ -72,51 +71,24 @@ const createThemedChildren = (
     }
   } else {
     return (
-      <uitk-theme
-        class={cx(
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
-          `uitk-density-${density}`
-        )}
-      >
+      <uitk-theme class={cx(...themeNames, `uitk-density-${density}`)}>
         {children}
       </uitk-theme>
     );
   }
 };
 
-interface ToolkitProviderThatAppliesClassesToBody {
-  children: ReactNode;
-  density?: Density;
-  theme?: ThemeNameType;
-  applyClassesToBody?: true;
-  applyClassesToChild?: false;
-  breakpoints?: Breakpoints;
-}
+type ThemeNameType = string | Array<string>;
 
-interface ToolkitProviderThatAppliesClassesToChild {
+type TargetElement = "root" | "child";
+
+type ToolkitProviderProps = {
   children: ReactElement;
   density?: Density;
   theme?: ThemeNameType;
-  applyClassesToBody?: false;
-  applyClassesToChild?: true;
+  applyClassesTo?: TargetElement;
   breakpoints?: Breakpoints;
-}
-
-type ThemeNameType = string | Array<string>;
-
-interface ToolkitProviderThatInjectsThemeElement {
-  children: ReactNode;
-  density?: Density;
-  theme?: ThemeNameType;
-  applyClassesToBody?: false;
-  applyClassesToChild?: false;
-  breakpoints?: Breakpoints;
-}
-
-type ToolkitProviderProps =
-  | ToolkitProviderThatAppliesClassesToBody
-  | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement;
+};
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
@@ -132,8 +104,7 @@ const getThemeName = (
 };
 
 export function ToolkitProvider({
-  applyClassesToBody = false,
-  applyClassesToChild = false,
+  applyClassesTo,
   children,
   density: densityProp,
   theme: themesProp,
@@ -150,20 +121,21 @@ export function ToolkitProvider({
   const themes: Theme[] = getTheme(themeName);
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
+  const themeClassnames = themes.map((theme) => `uitk-${theme.name}`);
+
   const themedChildren = createThemedChildren(
     children,
-    themes.map((theme) => theme.name),
+    themeClassnames,
     density,
-    applyClassesToBody,
-    applyClassesToChild
+    applyClassesTo
   );
 
   useIsomorphicLayoutEffect(() => {
-    if (applyClassesToBody) {
+    if (applyClassesTo === "root") {
       if (isRoot) {
         // add the styles we want to apply
         document.body.classList.add(
-          ...themes.map((theme) => `uitk-${theme.name}`),
+          ...themeClassnames,
           `uitk-density-${density}`
         );
       } else {
@@ -173,15 +145,15 @@ export function ToolkitProvider({
       }
     }
     return () => {
-      if (applyClassesToBody) {
+      if (applyClassesTo === "root") {
         // When unmounting/remounting, remove the applied styles from the body
         document.body.classList.remove(
-          ...themes.map((theme) => `uitk-${theme.name}`),
+          ...themeClassnames,
           `uitk-density-${density}`
         );
       }
     };
-  }, [applyClassesToBody, density, isRoot, themes]);
+  }, [applyClassesTo, density, isRoot, themeClassnames, themes]);
 
   const toolkitProvider = (
     <ToolkitContext.Provider value={{ density, themes, breakpoints }}>

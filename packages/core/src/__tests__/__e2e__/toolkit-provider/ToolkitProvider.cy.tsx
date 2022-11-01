@@ -146,10 +146,10 @@ describe("Given a ToolkitProvider", () => {
     });
   });
 
-  describe("when applyClassesToChild is true", () => {
+  describe("when child is passed to applyClassesTo", () => {
     it("should not create a uitk-theme element", () => {
       cy.mount(
-        <ToolkitProvider density="high" theme="dark" applyClassesToChild>
+        <ToolkitProvider density="high" theme="dark" applyClassesTo={"child"}>
           <TestComponent />
         </ToolkitProvider>
       );
@@ -163,10 +163,10 @@ describe("Given a ToolkitProvider", () => {
     });
   });
 
-  describe("when applyClassesToBody is true", () => {
+  describe("when root is passed to applyClassesTo", () => {
     it("should apply the given theme and density class names to the body element", () => {
       mount(
-        <ToolkitProvider density="high" theme="dark" applyClassesToBody>
+        <ToolkitProvider density="high" theme="dark" applyClassesTo={"root"}>
           <TestComponent />
         </ToolkitProvider>
       );
@@ -175,7 +175,8 @@ describe("Given a ToolkitProvider", () => {
 
       cy.get("body")
         .should("exist")
-        .and("have.attr", "class", "uitk-dark uitk-density-high");
+        .and("have.class", "uitk-dark")
+        .and("have.class", "uitk-density-high");
     });
   });
 

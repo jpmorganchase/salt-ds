@@ -76,7 +76,7 @@ There is (currently) one limitation to this pattern, you must use a single child
 for TypeScript users, via the typings.This would look as follows.
 
 ```jsx
-<ToolkitProvider theme="light" density="dark" applyClassesToChild>
+<ToolkitProvider theme="light" density="dark" applyClassesTo={"child"}>
   <Card>...</Card>
 </ToolkitProvider>
 ```
@@ -86,6 +86,9 @@ Then we would see the following HTML.
 ```html
 <div class="uitkCard uitk-light uitk-density-medium">...</div>
 ```
+
+
+
 
 #### AriaAnnouncer
 
