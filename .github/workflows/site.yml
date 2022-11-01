@@ -37,5 +37,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: "uitk-site"
-          directory: ./dist
+          directory: ./site/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
