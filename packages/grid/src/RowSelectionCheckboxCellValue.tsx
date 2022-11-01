@@ -10,7 +10,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
 
   const isSelected = selRowIdxs.has(row.index);
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    selectRows(row.index, false, true);
+    selectRows({ rowIndex: row.index, meta: true });
     event.preventDefault();
     event.stopPropagation();
   };
