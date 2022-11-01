@@ -21,6 +21,14 @@ uitk-theme {
   display: contents;
 }
 
+.uitk-light {
+  color-scheme: light;
+}
+
+.uitk-dark {
+  color-scheme: dark;
+}
+
 /* Setting every element's box-sizing to border-box ensures the declared width
 of the element is never exceeded due to padding or border. */
 *,
