@@ -21,7 +21,7 @@ There are four packages you can install:
 - @jpmorganchase/uitk-icons contains SVG-based icons you can use in your
   application.
 
-Depending on the package manager you use, edit and run one of the following commands to install the packages you need:
+Depending on the `package manager` you use, edit and run one of the following commands to install the packages you need:
 
 ```sh
 npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-lab @jpmorganchase/uitk-icons
