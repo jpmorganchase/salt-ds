@@ -45,4 +45,5 @@ jobs:
         uses: actions/github-script@v6
         with:
           # result-encoding: string
-          script: core.info(`Step result is: ${{steps.publish.outputs}}`)
+          script: |
+          core.info(`Step result is: ${{steps.publish.outputs}}`)
