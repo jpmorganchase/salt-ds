@@ -1,9 +1,22 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const BookmarkSolidIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="BookmarkSolidIcon">
-    <path fillRule="evenodd" clipRule="evenodd" d="m6 10 4 2V0H2v12l4-2Z" />
-  </svg>,
-  "BookmarkSolid",
-  "bookmark solid"
-);
+import { Icon, IconProps } from "../icon";
+
+export type BookmarkSolidIconProps = IconProps;
+
+export const BookmarkSolidIcon = forwardRef<
+  SVGSVGElement,
+  BookmarkSolidIconProps
+>(function BookmarkSolidIcon(props: BookmarkSolidIconProps, ref) {
+  return (
+    <Icon
+      data-testid="BookmarkSolidIcon"
+      aria-label="bookmark solid"
+      viewBox="0 0 12 12"
+      ref={ref}
+      {...props}
+    >
+      <path fillRule="evenodd" clipRule="evenodd" d="m6 10 4 2V0H2v12l4-2Z" />
+    </Icon>
+  );
+});

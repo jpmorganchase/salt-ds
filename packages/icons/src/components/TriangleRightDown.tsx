@@ -1,9 +1,22 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const TriangleRightDownIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="TriangleRightDownIcon">
-    <path d="M9.5 9.5v-7l-7 7h7z" />
-  </svg>,
-  "TriangleRightDown",
-  "triangle right down"
-);
+import { Icon, IconProps } from "../icon";
+
+export type TriangleRightDownIconProps = IconProps;
+
+export const TriangleRightDownIcon = forwardRef<
+  SVGSVGElement,
+  TriangleRightDownIconProps
+>(function TriangleRightDownIcon(props: TriangleRightDownIconProps, ref) {
+  return (
+    <Icon
+      data-testid="TriangleRightDownIcon"
+      aria-label="triangle right down"
+      viewBox="0 0 12 12"
+      ref={ref}
+      {...props}
+    >
+      <path d="M9.5 9.5v-7l-7 7h7z" />
+    </Icon>
+  );
+});

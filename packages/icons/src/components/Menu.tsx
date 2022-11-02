@@ -1,9 +1,25 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const MenuIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="MenuIcon">
-    <path d="M0 1h12v2H0V1zm0 4h12v2H0V5zm12 4H0v2h12V9z" />
-  </svg>,
-  "Menu",
-  "menu"
+import { Icon, IconProps } from "../icon";
+
+export type MenuIconProps = IconProps;
+
+export const MenuIcon = forwardRef<SVGSVGElement, MenuIconProps>(
+  function MenuIcon(props: MenuIconProps, ref) {
+    return (
+      <Icon
+        data-testid="MenuIcon"
+        aria-label="menu"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <>
+          <path d="M0 1h12v2H0V1z" />
+          <path d="M0 5h12v2H0V5z" />
+          <path d="M12 9H0v2h12V9z" />
+        </>
+      </Icon>
+    );
+  }
 );

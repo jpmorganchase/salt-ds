@@ -1,10 +1,24 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const ExportIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="ExportIcon">
-    <path d="M5 1H1v10h4v-1H2V2h3V1z" />
-    <path d="M3 5h5V3l4 3-4 3V7H3V5z" />
-  </svg>,
-  "Export",
-  "export"
+import { Icon, IconProps } from "../icon";
+
+export type ExportIconProps = IconProps;
+
+export const ExportIcon = forwardRef<SVGSVGElement, ExportIconProps>(
+  function ExportIcon(props: ExportIconProps, ref) {
+    return (
+      <Icon
+        data-testid="ExportIcon"
+        aria-label="export"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <>
+          <path d="M5 1H1v10h4v-1H2V2h3V1z" />
+          <path d="M3 5h5V3l4 3-4 3V7H3V5z" />
+        </>
+      </Icon>
+    );
+  }
 );
