@@ -46,7 +46,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log("${{ steps.publish.outputs.url }}");
             const previewUrl = "${{ steps.publish.outputs.url }}";
             github.rest.issues.createComment({
               issue_number: context.issue.number,
