@@ -42,6 +42,5 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Preview URL
-        uses: actions/github-script@v6
-        with:
-          script: echo "${{join(steps.publish.outputs.*, '\n')}}"
+        # uses: actions/github-script@v6
+        run: echo "${{join(steps.publish.outputs.*, '\n')}}"
