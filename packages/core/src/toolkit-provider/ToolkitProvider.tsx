@@ -3,7 +3,6 @@ import React, {
   createContext,
   DetailedHTMLProps,
   DOMAttributes,
-  FC,
   HTMLAttributes,
   ReactElement,
   ReactNode,
@@ -11,7 +10,7 @@ import React, {
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
-import { DEFAULT_THEME, Density, getTheme, Theme } from "../theme";
+import { Density, getTheme, Theme } from "../theme";
 import { ViewportProvider } from "../viewport";
 
 export const DEFAULT_DENSITY = "medium";
@@ -37,6 +36,13 @@ declare global {
     }
   }
 }
+
+export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
+
+export const ThemeContext = createContext<Theme[]>([]);
+
+export const BreakpointContext =
+  createContext<Breakpoints>(DEFAULT_BREAKPOINTS);
 
 export const ToolkitContext = createContext<ToolkitContextProps>({
   density: undefined,
@@ -90,6 +96,7 @@ interface ToolkitProviderThatAppliesClassesToChild {
 }
 
 type ThemeNameType = string | Array<string>;
+
 interface ToolkitProviderThatInjectsThemeElement {
   children: ReactNode;
   density?: Density;
@@ -98,7 +105,7 @@ interface ToolkitProviderThatInjectsThemeElement {
   breakpoints?: Breakpoints;
 }
 
-type toolkitProvider =
+type ToolkitProviderProps =
   | ToolkitProviderThatAppliesClassesToChild
   | ToolkitProviderThatInjectsThemeElement;
 
@@ -115,15 +122,15 @@ const getThemeName = (
   }
 };
 
-export const ToolkitProvider: FC<toolkitProvider> = ({
+export function ToolkitProvider({
   applyClassesToChild = false,
   children,
   density: densityProp,
   theme: themesProp,
   breakpoints: breakpointsProp,
-}) => {
-  const { themes: inheritedThemes, density: inheritedDensity } =
-    useContext(ToolkitContext);
+}: ToolkitProviderProps) {
+  const inheritedDensity = useContext(DensityContext);
+  const inheritedThemes = useContext(ThemeContext);
 
   const isRoot =
     inheritedThemes === undefined ||
@@ -141,9 +148,13 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   );
 
   const toolkitProvider = (
-    <ToolkitContext.Provider value={{ density, themes, breakpoints }}>
-      <ViewportProvider>{themedChildren}</ViewportProvider>
-    </ToolkitContext.Provider>
+    <DensityContext.Provider value={density}>
+      <ThemeContext.Provider value={themes}>
+        <BreakpointContext.Provider value={breakpoints}>
+          <ViewportProvider>{themedChildren}</ViewportProvider>
+        </BreakpointContext.Provider>
+      </ThemeContext.Provider>
+    </DensityContext.Provider>
   );
 
   if (isRoot) {
@@ -151,22 +162,20 @@ export const ToolkitProvider: FC<toolkitProvider> = ({
   } else {
     return toolkitProvider;
   }
-};
+}
 
 export const useTheme = (): Theme[] => {
-  const { themes = [DEFAULT_THEME] } = useContext(ToolkitContext);
-  return themes;
+  return useContext(ThemeContext);
 };
 
 /**
  * `useDensity` merges density value from 'DensityContext` with the one from component's props.
  */
 export function useDensity(density?: Density): Density {
-  const { density: densityFromContext } = useContext(ToolkitContext);
+  const densityFromContext = useContext(DensityContext);
   return density || densityFromContext || DEFAULT_DENSITY;
 }
 
 export const useBreakpoints = (): Breakpoints => {
-  const { breakpoints } = useContext(ToolkitContext);
-  return breakpoints;
+  return useContext(BreakpointContext);
 };

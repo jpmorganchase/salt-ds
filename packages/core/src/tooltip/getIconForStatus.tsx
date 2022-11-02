@@ -1,8 +1,8 @@
 import {
-  ErrorIcon,
-  SuccessTickIcon,
-  WarningIcon,
+  ErrorSolidIcon,
   IconProps,
+  SuccessTickIcon,
+  WarningSolidIcon,
 } from "@jpmorganchase/uitk-icons";
 import { TooltipStatus } from "./Tooltip";
 
@@ -14,9 +14,9 @@ export const Status = {
 
 const icons = {
   // No icon for Notify status
-  [Status.error]: ErrorIcon,
+  [Status.error]: ErrorSolidIcon,
   [Status.success]: SuccessTickIcon,
-  [Status.warning]: WarningIcon,
+  [Status.warning]: WarningSolidIcon,
 };
 
 export function getIconForStatus(status: TooltipStatus) {

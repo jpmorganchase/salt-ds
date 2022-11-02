@@ -20,16 +20,16 @@ function renderToggleButtonGroup(
     props: Partial<ToggleButtonGroupProps>
   ) => (
     <ToggleButtonGroup onChange={onChangeSpy} {...props}>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
+      <ToggleButton aria-label="home" tooltipText="Home">
         <HomeIcon size={12} /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
+      <ToggleButton aria-label="search" tooltipText="Search">
         <SearchIcon size={12} /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
+      <ToggleButton aria-label="print" tooltipText="Print">
         <PrintIcon size={12} /> Print
       </ToggleButton>
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
+      <ToggleButton aria-label="alert" tooltipText="Alert">
         <NotificationIcon size={12} /> Alert
       </ToggleButton>
     </ToggleButtonGroup>
@@ -63,7 +63,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
   test("THEN it should respect to `aria-label` prop", () => {
     const { getAllByRole } = renderToggleButtonGroup({
-      ariaLabel: "My Toggle Button Group",
+      "aria-label": "My Toggle Button Group",
       children: [],
     });
     const toggleButtonGroup = getAllByRole("radiogroup");

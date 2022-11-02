@@ -1,5 +1,10 @@
 import classnames from "classnames";
-import { ChangeEventHandler, FC, forwardRef, HTMLAttributes } from "react";
+import {
+  ChangeEventHandler,
+  forwardRef,
+  HTMLAttributes,
+  ComponentType,
+} from "react";
 import { ControlLabel, ControlLabelProps } from "../control-label";
 import { makePrefixer } from "../utils";
 import { RadioButtonBase as Radio } from "./RadioButtonBase";
@@ -17,7 +22,7 @@ export interface RadioButtonProps
   /**
    * Custom icon component
    */
-  icon?: FC<RadioButtonIconProps>;
+  icon?: ComponentType<RadioButtonIconProps>;
   /**
    * The label to be shown next to the radio
    */

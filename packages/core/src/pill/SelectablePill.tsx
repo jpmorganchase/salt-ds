@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ForwardedRef, forwardRef, useCallback } from "react";
+import { ForwardedRef, forwardRef, useCallback, SyntheticEvent } from "react";
 import { pillBaseName } from "./constants";
 import { PillBase, PillBaseProps } from "./PillBase";
 import { PillCheckbox } from "./internal/PillCheckbox";
@@ -21,7 +21,7 @@ export interface SelectablePillProps extends Omit<PillBaseProps, "onChange"> {
   /**
    * Callback when checked state is changed
    */
-  onChange?: (event: React.ChangeEvent, checked: boolean) => void;
+  onChange?: (event: SyntheticEvent, checked: boolean) => void;
 }
 
 const withBaseName = makePrefixer(pillBaseName);
@@ -45,7 +45,7 @@ export const SelectablePill = forwardRef(function SelectablePill(
   });
 
   const handleClick = useCallback(
-    (event) => {
+    (event: SyntheticEvent<HTMLDivElement>) => {
       setChecked(!checked);
       onChange(event, !checked);
     },

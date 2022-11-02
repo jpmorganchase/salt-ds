@@ -20,10 +20,10 @@ let viteConfig: UserConfig = {
   },
   resolve: {
     alias: {
-      "cypress/react":
-        process.env.REACT_VERSION === "18"
-          ? "cypress/react18"
-          : "cypress/react",
+      "cypress/react18":
+        process.env.REACT_VERSION !== "18"
+          ? "cypress/react"
+          : "cypress/react18",
     },
   },
 };

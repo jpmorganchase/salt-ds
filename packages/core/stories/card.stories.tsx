@@ -1,11 +1,8 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { Link } from "@jpmorganchase/uitk-lab";
-import {
-  ColumnLayoutContainer,
-  ColumnLayoutItem,
-} from "./story-layout/ColumnLayout";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {
   title: "Core/Card",
@@ -17,7 +14,7 @@ interface ExampleRowProps {
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
+const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset", width: 800 }}>
     <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <ColumnLayoutContainer>

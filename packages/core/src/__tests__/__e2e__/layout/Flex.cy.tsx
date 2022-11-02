@@ -50,7 +50,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN a separator value is provided", () => {
     it("THEN it should render a separator", () => {
-      cy.mount(<DefaultFlexLayout separators />);
+      cy.mount(<DefaultFlexLayout separators wrap={false} />);
 
       cy.get(".uitkFlexLayout").should(
         "have.class",

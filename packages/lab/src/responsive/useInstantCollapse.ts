@@ -76,7 +76,7 @@ export const useInstantCollapse = ({
   const { dispatch } = collectionHook;
 
   const updateCollapse = useCallback(
-    (containerSize, renderedSize) => {
+    (containerSize: number, renderedSize: number | null) => {
       const { current: managedItems } = overflowItemsRef;
       if (renderedSize && containerSize < renderedSize) {
         const overflowItem = findItemToCollapse(managedItems);
@@ -100,7 +100,7 @@ export const useInstantCollapse = ({
   );
 
   const handleResize = useCallback(
-    (size, containerHasGrown) => {
+    (size: number, containerHasGrown?: boolean) => {
       const { current: managedItems } = overflowItemsRef;
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
@@ -139,7 +139,7 @@ export const useInstantCollapse = ({
   );
 
   const resetMeasurements = useCallback(
-    (isOverflowing) => {
+    (isOverflowing?: boolean) => {
       const { current: managedItems } = overflowItemsRef;
       if (isOverflowing) {
         const overflowItem = findItemToCollapse(managedItems);

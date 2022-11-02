@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {
   ChangeEventHandler,
-  FC,
+  ComponentType,
   FocusEventHandler,
   forwardRef,
   Ref,
@@ -32,7 +32,7 @@ export interface RadioButtonBaseProps {
   /**
    * custom icon component
    */
-  icon?: FC<RadioButtonIconProps>;
+  icon?: ComponentType<RadioButtonIconProps>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   name?: string;
   defaultChecked?: boolean;

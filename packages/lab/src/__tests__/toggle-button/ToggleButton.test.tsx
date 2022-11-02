@@ -7,7 +7,7 @@ function renderToggleButton(initialProps: ToggleButtonProps = {}) {
   const onToggleSpy = jest.fn();
   const ToggleButtonComponent = (props: ToggleButtonProps) => (
     <ToggleButton
-      ariaLabel="home"
+      aria-label="home"
       onToggle={onToggleSpy}
       tooltipText="Home"
       {...props}

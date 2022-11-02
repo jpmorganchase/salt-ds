@@ -98,7 +98,7 @@ const SalesGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
       >
         {viewModes.map((m) => {
           return (
-            <ToggleButton ariaLabel={m} tooltipText={m} key={m}>
+            <ToggleButton aria-label={m} tooltipText={m} key={m}>
               {m[0]}
             </ToggleButton>
           );
