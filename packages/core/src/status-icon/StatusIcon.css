@@ -6,17 +6,17 @@
 }
 
 .uitkStatusIcon-error {
-  fill: var(--statusIcon-error-color);
+  --uitkIcon-color: var(--uitkStatusIcon-color, var(--statusIcon-error-color));
 }
 
 .uitkStatusIcon-warning {
-  fill: var(--statusIcon-warning-color);
+  --uitkIcon-color: var(--uitkStatusIcon-color, var(--statusIcon-warning-color));
 }
 
 .uitkStatusIcon-success {
-  fill: var(--statusIcon-success-color);
+  --uitkIcon-color: var(--uitkStatusIcon-color, var(--statusIcon-success-color));
 }
 
 .uitkStatusIcon-info {
-  fill: var(--statusIcon-info-color);
+  --uitkIcon-color: var(--uitkStatusIcon-color, var(--statusIcon-info-color));
 }
