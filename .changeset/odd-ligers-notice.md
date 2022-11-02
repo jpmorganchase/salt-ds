@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-lab": minor
 ---
 
-allow Dropdown highlighting and selection to be controlled
+Allow Dropdown highlighting and selection to be controlled
