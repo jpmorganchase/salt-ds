@@ -13,6 +13,7 @@ jobs:
       contents: read
       deployments: write
       issues: write
+      pull-requests: write
 
     name: Deploy to Cloudflare Pages
 
