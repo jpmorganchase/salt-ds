@@ -116,12 +116,21 @@ describe("Grid", () => {
     cy.findByTestId("grid-scrollable")
       .scrollTo(650, 0, { easing: "linear", duration: 300 })
       .then(() => {
+        const getGroup = (n: number) =>
+          cy
+            .findByTestId("grid-top-part")
+            .find(".uitkGridGroupHeaderRow")
+            .find(`[data-group-index="${n}"]`);
+
+        getGroup(0).should("not.exist");
+        getGroup(1).should("not.exist");
         // Column C is the first visible column now after scroll
-        cy.get(".uitkGridGroupHeaderCell").eq(0).should("have.text", "Group C");
+        getGroup(2).should("exist").should("have.text", "Group C");
+        getGroup(3).should("exist");
+        getGroup(4).should("exist");
         // Column F is the last visible one
-        cy.get(".uitkGridGroupHeaderCell").eq(3).should("have.text", "Group F");
-        // Column S is out of view
-        cy.get(".uitkGridGroupHeaderCell").eq(4).should("not.exist");
+        getGroup(5).should("exist").should("have.text", "Group F");
+        getGroup(6).should("not.exist");
       });
   });
 
@@ -251,11 +260,11 @@ describe("Grid", () => {
       cy.get(".uitkGridGroupHeaderCell")
         .eq(0)
         .should("have.attr", "colspan", 2)
-        .and("have.text", "A");
+        .and("have.text", "Group One");
       cy.get(".uitkGridGroupHeaderCell")
         .eq(1)
         .should("have.attr", "colspan", 1)
-        .and("have.text", "B");
+        .and("have.text", "Group Two");
     });
   });
 
