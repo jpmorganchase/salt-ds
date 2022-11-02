@@ -43,4 +43,4 @@ jobs:
 
       - name: Preview URL
         # uses: actions/github-script@v6
-        run: echo "${{join(steps.publish.outputs.*, '\n')}}"
+        run: echo "${steps.publish.outputs[1]}"
