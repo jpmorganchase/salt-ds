@@ -3,4 +3,23 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Change to measured characteristic: borderSize 1px -> 2px; borderStyle states added (active, complete, incomplete); foreground and borderColor tokens; disabled background token
+Remove following measured characteristics from theme:
+- uitk-measured-fontSize-high
+- uitk-measured-fontSize-medium
+- uitk-measured-fontSize-low
+
+Update following measured characteristics in theme:
+- uitk-measured-borderColor
+- uitk-measured-borderWidth 1px -> 2px
+
+Add following measured characteristics in theme:
+- uitk-measured-borderStyle-active
+- uitk-measured-borderStyle-complete
+- uitk-measured-borderStyle-incomplete
+- uitk-measured-textAlign
+- uitk-measured-background-disabled
+- uitk-measured-borderColor
+- uitk-measured-borderColor-disabled
+- uitk-measured-foreground
+- uitk-measured-foreground-disabled
+
