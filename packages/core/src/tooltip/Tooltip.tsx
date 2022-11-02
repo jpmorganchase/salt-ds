@@ -87,7 +87,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             status={status}
             {...iconProps}
             className={withBaseName("icon")}
-            size={12}
           />
         ) : null;
       },
@@ -113,7 +112,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                 Icon: (passedProps: IconProps) => getIcon(passedProps),
                 getIconProps: () => ({
                   status,
-                  size: 12,
                   className: withBaseName("icon"),
                 }),
               })

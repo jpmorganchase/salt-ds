@@ -177,7 +177,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         endAdornment={
           <StaticInputAdornment>
-            <CalendarIcon size="small" />
+            <CalendarIcon />
           </StaticInputAdornment>
         }
       />
@@ -195,7 +195,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         {...args}
         endAdornment={
           <Button variant="secondary">
-            <CloseIcon aria-label="clear input" size="small" />
+            <CloseIcon aria-label="clear input" />
           </Button>
         }
       />
@@ -208,7 +208,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           <>
             <StaticInputAdornment>
               {/* Phone --> Call */}
-              <CallIcon size="small" />
+              <CallIcon />
             </StaticInputAdornment>
             <StaticInputAdornment>+1</StaticInputAdornment>
           </>
@@ -232,7 +232,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           <>
             <StaticInputAdornment>KG</StaticInputAdornment>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
           </>
         }
@@ -258,10 +258,10 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         endAdornment={
           <>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
             <Button variant="cta">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
@@ -275,13 +275,13 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           <>
             <StaticInputAdornment>0/100</StaticInputAdornment>
             <Button variant="primary">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
         startAdornment={
           <StaticInputAdornment>
-            <UserIcon size="small" />
+            <UserIcon />
           </StaticInputAdornment>
         }
       />

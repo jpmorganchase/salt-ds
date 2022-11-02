@@ -8,7 +8,7 @@ describe("Metric - by default", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("not.exist");
+    cy.get(".uitkMetricContent-indicator").should("not.exist");
   });
 
   it("should render with vertical orientation style", () => {
@@ -46,7 +46,7 @@ describe("Metric - Indicator", () => {
         />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("exist");
+    cy.get(".uitkMetricContent-indicator").should("exist");
   });
   it("should NOT render the indicator if required and IndicatorIconComponent NOT provided", () => {
     cy.mount(
@@ -55,7 +55,7 @@ describe("Metric - Indicator", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("not.exist");
+    cy.get(".uitkMetricContent-indicator").should("not.exist");
   });
 });
 
@@ -90,7 +90,7 @@ describe("Metric - Indicator Position", () => {
       </Metric>
     );
 
-    cy.findByTestId("metric-indicator").then((icon) => {
+    cy.get(".uitkMetricContent-indicator").then((icon) => {
       const iconPos = icon[0].getBoundingClientRect().x;
       cy.findByTestId("metric-value").then((value) => {
         expect(value[0].getBoundingClientRect().x).greaterThan(iconPos);
@@ -106,7 +106,7 @@ describe("Metric - Indicator Position", () => {
       </Metric>
     );
 
-    cy.findByTestId("metric-indicator").then((icon) => {
+    cy.get(".uitkMetricContent-indicator").then((icon) => {
       const iconPos = icon[0].getBoundingClientRect().x;
       cy.findByTestId("metric-value").then((value) => {
         expect(value[0].getBoundingClientRect().x).lessThan(iconPos);
