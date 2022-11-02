@@ -1,13 +1,13 @@
 import {
   ChangeEventHandler,
-  FocusEventHandler,
   KeyboardEventHandler,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import "./TextCellEditor.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { useEditorContext } from "./EditorContext";
-import { GridEditorProps } from "./GridColumn";
 import { GridColumnModel, GridRowModel } from "./Grid";
 
 const withBaseName = makePrefixer("uitkGridTextCellEditor");
@@ -19,11 +19,15 @@ export interface TextCellEditorProps<T> {
 
 export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { column, row } = props;
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const { endEditMode, cancelEditMode, initialText } = useEditorContext();
+
   const [editorText, setEditorText] = useState<string>(
-    column!.info.props.getValue!(row!.data)
+    initialText || column!.info.props.getValue!(row!.data)
   );
 
-  const { endEditMode, cancelEditMode } = useEditorContext();
+  const initialSelectionRef = useRef(!!initialText);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
@@ -44,10 +48,18 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current && !initialSelectionRef.current) {
+      inputRef.current.select();
+      initialSelectionRef.current = true;
+    }
+  }, [inputRef.current]);
+
   return (
     <td className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
         <input
+          ref={inputRef}
           autoFocus={true}
           value={editorText}
           onChange={onChange}
