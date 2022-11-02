@@ -42,5 +42,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Preview URL
-        # uses: actions/github-script@v6
-        run: echo "${steps.publish.outputs[1]}"
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: return steps.publish.outputs
