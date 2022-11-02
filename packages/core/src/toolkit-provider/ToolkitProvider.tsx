@@ -57,6 +57,7 @@ const createThemedChildren = (
     return (
       <div
         className={cx(
+          `uitk-theme`,
           ...themeNames.map((themeName) => `uitk-${themeName}`),
           `uitk-density-${density}`
         )}

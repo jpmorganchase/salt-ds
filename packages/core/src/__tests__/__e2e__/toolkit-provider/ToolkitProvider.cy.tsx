@@ -48,7 +48,7 @@ describe("Given a ToolkitProvider", () => {
         </ToolkitProvider>
       );
 
-      cy.get("div.uitk-light")
+      cy.get("div.uitk-theme")
         .should("have.length", 2)
         .and("have.class", "uitk-density-medium");
     });
@@ -154,7 +154,7 @@ describe("Given a ToolkitProvider", () => {
       );
 
       // cy.mount adds a ToolkitProvider
-      cy.get("div.uitk-light").should("have.length", 1);
+      cy.get("div.uitk-theme").should("have.length", 1);
 
       cy.get("#test-1")
         .should("exist")
