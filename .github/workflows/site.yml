@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       deployments: write
 
     name: Deploy to Cloudflare Pages
