@@ -40,10 +40,3 @@ jobs:
           projectName: "uitk-site"
           directory: ./site/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Preview URL
-        uses: actions/github-script@v6
-        with:
-          # result-encoding: string
-          script: |
-          core.info(`Step result is: ${{steps.publish.outputs}}`)
