@@ -1,9 +1,14 @@
 import { createElement, ElementType, useMemo, useState } from "react";
-import { AddDocumentIcon, Icon, IconProps } from "@jpmorganchase/uitk-icons";
+import {
+  AddDocumentIcon,
+  AddDocumentSolidIcon,
+  Icon,
+  IconProps,
+} from "@jpmorganchase/uitk-icons";
 import { allIcons, allIconsNames } from "./icon.all";
 import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FormField, GridLayout, Input, StackLayout } from "../../core";
+import { FlexLayout, FormField, Input, StackLayout } from "../../core";
 
 export default {
   title: "Icons/Icon",
@@ -37,6 +42,13 @@ const IconGrid = ({
 
 export const ToolkitIcon: ComponentStory<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
+);
+
+export const ToolkitTypes: ComponentStory<typeof Icon> = () => (
+  <FlexLayout wrap gap={2}>
+    <AddDocumentIcon size="medium" />
+    <AddDocumentSolidIcon size="medium" />
+  </FlexLayout>
 );
 
 export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
@@ -95,16 +107,21 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
       >
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
       </FormField>
-      <GridLayout>
+      <FlexLayout wrap gap={1}>
         {allIconsNames
           .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
-          .map(({ icon }, i) => {
-            return createElement(icon, {
-              key: i,
-              size: 24,
-            });
+          .map(({ name, icon }, i) => {
+            return (
+              <StackLayout style={{ width: "150px" }} align="center">
+                {createElement(icon, {
+                  key: i,
+                  size: 24,
+                })}
+                <p>{name.slice(0, -1)}</p>
+              </StackLayout>
+            );
           })}
-      </GridLayout>
+      </FlexLayout>
     </StackLayout>
   );
 };
