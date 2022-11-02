@@ -44,4 +44,4 @@ jobs:
       - name: Preview URL
         uses: actions/github-script@v6
         with:
-          script: console.log(‘${{ steps.publish.outputs.url }}’);
+          script: console.log("${{ steps.publish.outputs.url }}");
