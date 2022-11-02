@@ -44,5 +44,5 @@ jobs:
       - name: Preview URL
         uses: actions/github-script@v6
         with:
-          result-encoding: string
-          script: return steps.publish.outputs
+          # result-encoding: string
+          script: console.log(context)
