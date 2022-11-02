@@ -269,8 +269,36 @@ describe("Grid", () => {
     });
   });
 
-  // TODO header virtualization in grouped mode
+  it("Keyboard events should not leak to the parent component", () => {
+    const onKeyDownSpy = cy.stub().as("onKeyDownSpy");
+    cy.mount(
+      <div onKeyDown={onKeyDownSpy}>
+        <GridExample />
+      </div>
+    );
+    clickCell(0, 1);
+    cy.findByRole(`grid`).type("{rightArrow}");
+    cy.findByRole(`grid`).type("{downArrow}");
+    cy.findByRole(`grid`).type("{leftArrow}");
+    cy.findByRole(`grid`).type("{upArrow}");
+    cy.findByRole(`grid`).type("{end}");
+    cy.findByRole(`grid`).type("{home}");
+    cy.findByRole(`grid`).type(" ");
+    cy.get("@onKeyDownSpy").should("not.have.been.called");
+  });
 
-  // TODO column drag-n-drop
-  // TODO clipboard
+  it("Space on checkbox column should toggle selection", () => {
+    cy.mount(<RowSelectionModes />);
+
+    cy.findByLabelText("multi").realClick();
+    findCell(2, 1).click({ force: true });
+    cy.findByRole(`grid`).type("{downArrow}");
+    cy.findByRole(`grid`).type("{leftArrow}");
+    // Space on any other cell would cancel the previous selection and select
+    // the current row. Space on a checkbox cell should add the row to existing
+    // selection.
+    cy.findByRole(`grid`).type(" ");
+    checkRowSelected(2, true);
+    checkRowSelected(3, true);
+  });
 });

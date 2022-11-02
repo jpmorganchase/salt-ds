@@ -712,7 +712,15 @@ export function useRowSelection<T>(
   }, [rowSelectionMode, selRowIdxs, setSelRowIdxs]);
 
   const selectRows = useCallback(
-    (rowIdx: number, shift: boolean, meta: boolean) => {
+    ({
+      rowIndex,
+      shift = false,
+      meta = false,
+    }: {
+      rowIndex: number;
+      shift?: boolean;
+      meta?: boolean;
+    }) => {
       const idxFrom =
         rowSelectionMode === "multi" && lastSelRowIdx !== undefined && shift
           ? lastSelRowIdx
@@ -723,34 +731,34 @@ export function useRowSelection<T>(
 
       if (idxFrom === undefined) {
         if (rowSelectionMode !== "multi" || !meta) {
-          nextSelRowIdxs = new Set([rowIdx]);
-          nextLastSelRowIdx = rowIdx;
+          nextSelRowIdxs = new Set([rowIndex]);
+          nextLastSelRowIdx = rowIndex;
         } else {
           const n = new Set<number>(selRowIdxs);
-          if (n.has(rowIdx)) {
-            n.delete(rowIdx);
+          if (n.has(rowIndex)) {
+            n.delete(rowIndex);
             nextLastSelRowIdx = undefined;
           } else {
-            n.add(rowIdx);
-            nextLastSelRowIdx = rowIdx;
+            n.add(rowIndex);
+            nextLastSelRowIdx = rowIndex;
           }
           nextSelRowIdxs = n;
         }
       } else {
         const s = meta ? new Set<number>(selRowIdxs) : new Set<number>();
-        const idxs = [rowIdx, idxFrom];
+        const idxs = [rowIndex, idxFrom];
         idxs.sort((a, b) => a - b);
         const rowIdxs: number[] = [];
         for (let i = idxs[0]; i <= idxs[1]; ++i) {
           rowIdxs.push(i);
         }
-        if (selRowIdxs.has(rowIdx)) {
+        if (selRowIdxs.has(rowIndex)) {
           rowIdxs.forEach((k) => s.delete(k));
         } else {
           rowIdxs.forEach((k) => s.add(k));
         }
         nextSelRowIdxs = s;
-        nextLastSelRowIdx = rowIdx;
+        nextLastSelRowIdx = rowIndex;
       }
 
       setSelRowIdxs(nextSelRowIdxs);
@@ -760,6 +768,7 @@ export function useRowSelection<T>(
       }
     },
     [
+      selRowIdxs,
       lastSelRowIdx,
       setSelRowIdxs,
       setLastSelRowIdx,
@@ -794,8 +803,12 @@ export function useRowSelection<T>(
       }
       const target = event.target as HTMLElement;
       try {
-        const [rowIdx] = getCellPosition(target);
-        selectRows(rowIdx, event.shiftKey, event.metaKey || event.ctrlKey);
+        const [rowIndex] = getCellPosition(target);
+        selectRows({
+          rowIndex,
+          shift: event.shiftKey,
+          meta: event.metaKey || event.ctrlKey,
+        });
       } catch (e) {}
     },
     [selectRows, rowSelectionMode]
@@ -1149,7 +1162,10 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
       return;
     }
     setSelectedCellRange((old) => {
-      const { start } = keyboardSelectionRef.current!;
+      if (!keyboardSelectionRef.current) {
+        return old;
+      }
+      const { start } = keyboardSelectionRef.current;
       const p: CellRange = { start, end: pos };
       return cellRangeEquals(old, p) ? old : p;
     });
