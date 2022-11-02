@@ -16,7 +16,9 @@ import prettier from "prettier";
 import Mustache from "mustache";
 import { convertSvgToJsx } from "@svgo/jsx";
 import { optimize } from "svgo";
+import { parseDocument, DomUtils } from "htmlparser2";
 import { fileURLToPath } from "url";
+import render from "dom-serializer";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -61,8 +63,18 @@ glob(globPath, options, function (error, filenames) {
         .join(" ")
         .toLowerCase();
 
+      const document = parseDocument(svgString);
+
+      const svg = DomUtils.findOne(
+        (node) => node.name === "svg",
+        document.children,
+        true
+      );
+
+      const svgElementString = render(svg.children);
+
       // SVGO is a separate step to enable multi-pass optimizations.
-      const optimizedSvg = optimize(svgString, {
+      const optimizedSvg = optimize(svgElementString, {
         plugins: [
           {
             name: "addAttributesToSVGElement",
@@ -97,7 +109,7 @@ glob(globPath, options, function (error, filenames) {
       const optimizedSvgString = result.jsx;
 
       const fileContents = Mustache.render(template, {
-        svg: optimizedSvgString,
+        svgElements: optimizedSvgString,
         componentName,
         ariaLabel: iconTitle,
       });

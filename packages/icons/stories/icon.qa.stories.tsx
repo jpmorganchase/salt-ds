@@ -1,12 +1,12 @@
-import { createElement } from "react";
-import { allIcons } from "./icon.all";
 import { Meta, Story } from "@storybook/react";
+
+import { allIcons } from "./icon.all";
 
 export default {
   title: "Icons/Icon/QA",
 } as Meta;
 
-const sizes = ["small", "medium", "large"] as const;
+const sizes = [1, 2, 3] as const;
 
 export const AllIcons: Story = () => {
   return (
@@ -17,12 +17,12 @@ export const AllIcons: Story = () => {
             display: "grid",
             gridTemplateColumns: "repeat(15, auto)",
             gap: 8,
-            padding: "6px 0",
+            padding: "12px 0",
           }}
         >
-          {allIcons.map((iconComponent, i) =>
-            createElement(iconComponent, { key: i, size })
-          )}
+          {allIcons.map((IconComponent, i) => (
+            <IconComponent key={i} size={size} />
+          ))}
         </div>
       ))}
     </>

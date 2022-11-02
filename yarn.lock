@@ -3821,6 +3821,8 @@ __metadata:
   resolution: "@jpmorganchase/uitk-icons@workspace:packages/icons"
   dependencies:
     "@svgo/jsx": ^0.3.1
+    dom-serializer: ^2.0.0
+    htmlparser2: ^8.0.0
     mustache: ^4.2.0
     svgo: ^2.3.0
   peerDependencies:
@@ -15339,7 +15341,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:^8.0.1":
+"htmlparser2@npm:^8.0.0, htmlparser2@npm:^8.0.1":
   version: 8.0.1
   resolution: "htmlparser2@npm:8.0.1"
   dependencies:
