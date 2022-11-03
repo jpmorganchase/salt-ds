@@ -90,13 +90,33 @@ type ThemeNameType = string | Array<string>;
 
 type TargetElement = "root" | "child";
 
-type ToolkitProviderProps = {
-  children: ReactElement;
+type ToolkitProviderBaseProps = {
+  applyClassesTo?: TargetElement;
   density?: Density;
   theme?: ThemeNameType;
-  applyClassesTo?: TargetElement;
   breakpoints?: Breakpoints;
 };
+
+interface ToolkitProviderThatAppliesClassesToChild
+  extends ToolkitProviderBaseProps {
+  children: ReactElement;
+  applyClassesTo: "child";
+}
+
+interface ToolkitProviderThatInjectsThemeElement
+  extends ToolkitProviderBaseProps {
+  children: ReactNode;
+}
+
+interface ToolkitProviderThatClassesToRoot
+  extends ToolkitProviderThatInjectsThemeElement {
+  applyClassesTo: "root";
+}
+
+type ToolkitProviderProps =
+  | ToolkitProviderThatAppliesClassesToChild
+  | ToolkitProviderThatInjectsThemeElement
+  | ToolkitProviderThatClassesToRoot;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
