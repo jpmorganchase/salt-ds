@@ -121,7 +121,7 @@
   },
   "resolutions": {
     "esbuild": "0.14.51",
-    "webpack-dev-server": "4.9.3"
+    "webpack-dev-server": "4.11.1"
   },
   "browserslist": {
     "production": [
