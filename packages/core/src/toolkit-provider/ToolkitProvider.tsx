@@ -7,6 +7,7 @@ import React, {
   ReactElement,
   ReactNode,
   useContext,
+  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
@@ -125,10 +126,13 @@ export function ToolkitProvider({
     (Array.isArray(inheritedThemes) && inheritedThemes.length === 0);
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
-  const themes: Theme[] = getTheme(themeName);
+  const themes: Theme[] = useMemo(() => getTheme(themeName), [themeName]);
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
-  const themeClassnames = themes.map((theme) => `uitk-${theme.name}`);
+  const themeClassnames = useMemo(
+    () => themes.map((theme) => `uitk-${theme.name}`),
+    [themes]
+  );
 
   const themedChildren = createThemedChildren(
     children,
@@ -141,7 +145,7 @@ export function ToolkitProvider({
     if (applyClassesTo === "root") {
       if (isRoot) {
         // add the styles we want to apply
-        document.body.classList.add(
+        document.documentElement.classList.add(
           ...themeClassnames,
           `uitk-density-${density}`
         );
@@ -154,13 +158,13 @@ export function ToolkitProvider({
     return () => {
       if (applyClassesTo === "root") {
         // When unmounting/remounting, remove the applied styles from the body
-        document.body.classList.remove(
+        document.documentElement.classList.remove(
           ...themeClassnames,
           `uitk-density-${density}`
         );
       }
     };
-  }, [applyClassesTo, density, isRoot, themeClassnames, themes]);
+  }, [applyClassesTo, density, isRoot, themeClassnames]);
 
   const toolkitProvider = (
     <DensityContext.Provider value={density}>
