@@ -101,7 +101,7 @@
   --uitk-palette-measure-background: var(--uitk-color-grey-60);
   --uitk-palette-measure-background-disabled: var(--uitk-color-grey-60-fade-background);
   --uitk-palette-measure-border: var(--uitk-color-grey-90);
-  --uitk-palette-measure-border-disabled: var(--uitk-color-grey-9-fade-border);
+  --uitk-palette-measure-border-disabled: var(--uitk-color-grey-90-fade-border);
 
   /* Navigate */
   --uitk-palette-navigate-background-low: transparent;
