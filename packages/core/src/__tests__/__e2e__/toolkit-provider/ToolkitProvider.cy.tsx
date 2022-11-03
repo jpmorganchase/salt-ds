@@ -164,7 +164,7 @@ describe("Given a ToolkitProvider", () => {
   });
 
   describe("when root is passed to applyClassesTo", () => {
-    it("should apply the given theme and density class names to the body element", () => {
+    it("should apply the given theme and density class names to the html element", () => {
       mount(
         <ToolkitProvider density="high" theme="dark" applyClassesTo={"root"}>
           <TestComponent />
@@ -173,7 +173,7 @@ describe("Given a ToolkitProvider", () => {
 
       cy.get("uitk-theme").should("have.length", 0);
 
-      cy.get("body")
+      cy.get("html")
         .should("exist")
         .and("have.class", "uitk-dark")
         .and("have.class", "uitk-density-high");
