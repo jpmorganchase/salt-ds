@@ -39,7 +39,8 @@ type LayerContentExampleProps = {
 const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
   <StackLayout className="layer-example">
     <FlexItem grow={1}>
-      <p>
+      <h2 id="layer_label">Lorem ipsum</h2>
+      <p id="layer_description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc lacus,
         scelerisque ut elit nec, commodo blandit est. Duis mollis dui at nisl
         faucibus, id maximus urna pellentesque. Praesent consequat vulputate
@@ -47,21 +48,12 @@ const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
         laoreet ornare, diam eros posuere metus, id consectetur tellus nisl id
         ipsum. Fusce sit amet cursus mauris, vel scelerisque enim. Quisque eu
         dolor tortor. Nulla facilisi. Vestibulum at neque sit amet neque
-        facilisis porttitor a ac risus.
-      </p>
-      <p>
-        Mauris consequat sollicitudin commodo. Vestibulum ac diam vulputate,
-        condimentum purus non, eleifend erat. Nunc auctor iaculis mi eu
-        hendrerit. Suspendisse potenti. Cras tristique vehicula iaculis. Morbi
-        faucibus volutpat tellus, sit amet fringilla dui rhoncus a. Suspendisse
-        nunc nulla, mattis sed commodo ac, cursus ut augue. Quisque libero
-        magna, rutrum sit amet elementum eget, pulvinar vel metus. Nam id est id
-        odio rutrum venenatis. Donec sodales est lacinia eros pharetra tempor.
-        Phasellus sodales venenatis tellus, eget tempor ipsum efficitur
-        imperdiet. Sed volutpat porta lorem a fermentum. Curabitur fringilla,
-        justo in vestibulum egestas, lacus felis feugiat orci, a congue tortor
-        lacus sed mi. Quisque quis ante finibus, posuere urna eget, finibus
-        tellus.
+        facilisis porttitor a ac risus.Mauris consequat sollicitudin commodo.
+        Vestibulum ac diam vulputate, condimentum purus non, eleifend erat. Nunc
+        auctor iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
+        vehicula iaculis. Morbi faucibus volutpat tellus, sit amet fringilla dui
+        rhoncus a. Suspendisse nunc nulla, mattis sed commodo ac, cursus ut
+        augue.
       </p>
     </FlexItem>
     <FlowLayout justify="end">
@@ -80,7 +72,12 @@ const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
+      <LayerLayout
+        isOpen={open}
+        aria-labelledby="layer_label"
+        aria-describedby="layer_description"
+        {...args}
+      >
         <LayerContentExample onClick={hide} />
       </LayerLayout>
     </div>
@@ -252,9 +249,9 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
       </p>
-      <div className="layer-container">
+      <div className="layer-container reduced-motion">
         <Button onClick={show}>Open Layer</Button>
-        <LayerLayout isOpen={open} className="reduced-motion" {...args}>
+        <LayerLayout isOpen={open} {...args}>
           <LayerContentExample onClick={hide} />
         </LayerLayout>
       </div>
@@ -285,6 +282,7 @@ const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
       <LayerLayout
         isOpen={open}
         className="layer-simple-usage-center"
+        scrimProps={{ role: "alertdialog" }}
         {...args}
       >
         <FlowLayout justify="center">
@@ -316,10 +314,15 @@ const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
+      <LayerLayout
+        isOpen={open}
+        aria-labelledby="layer_label"
+        aria-describedby="layer_description"
+        {...args}
+      >
         <StackLayout>
-          <h1>Section title</h1>
-          <p>
+          <h2 id="layer_label">Section title</h2>
+          <p id="layer_description">
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
@@ -354,7 +357,7 @@ const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} {...args}>
         <StackLayout>
-          <h1>Section title</h1>
+          <h2>Section title</h2>
           <p>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
@@ -392,7 +395,7 @@ const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout isOpen={open} {...args}>
         <StackLayout>
-          <h1>Section title</h1>
+          <h2>Section title</h2>
           {Array.from({ length: 4 }, (_, index) => (
             <Card key={index}>
               <ContactDetailsExample index={index} />
@@ -415,7 +418,7 @@ LayerLayoutRightSimpleUsage.args = {
 const ArticleExample = () => (
   <StackLayout className="layer-article-container">
     <div className="layer-article-image"></div>
-    <h2>Laborum in sit officia consecte</h2>
+    <h3>Laborum in sit officia consecte</h3>
     <p>
       Do excepteur id ipsum qui dolor irure dolore commodo labore. Minim sunt
       aliquip eiusmod excepteur qui sunt commodo ex cillum ullamco. Quis magna
@@ -435,9 +438,11 @@ const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
+      <LayerLayout isOpen={open} aria-labelledby="layer_label" {...args}>
         <StackLayout>
-          <h1>Section title</h1>
+          <h2 id="layer_label" tabIndex={-1}>
+            Section title
+          </h2>
           <FlowLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <ArticleExample key={index} />
