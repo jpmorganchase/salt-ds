@@ -17,8 +17,8 @@ export default {
 
 const deckCards = (slides: number) =>
   Array.from({ length: slides }, (_, index) => (
-    <Card key={index}>
-      <h2 id="deck_item_title">{`Deck Item ${index + 1}`}</h2>
+    <Card aria-labelledby={`deck_item_title_${index}`} key={index}>
+      <h2 id={`deck_item_title_${index}`}>{`Deck Item ${index + 1}`}</h2>
       <p>
         We can implement your cross-border liquidity model in just a few months,
         depending on the options, scope and complexity.
@@ -53,7 +53,6 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
         activeIndex={currentIndex}
         deckItemProps={{
           "aria-roledescription": "slide",
-          "aria-labelledby": "deck_item_title",
         }}
       >
         {deckCards(slides)}
