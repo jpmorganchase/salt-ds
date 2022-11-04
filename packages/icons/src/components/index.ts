@@ -204,7 +204,7 @@ export * from "./ShareSolid";
 export * from "./SortAlphaAscend";
 export * from "./SortAlphaDescend";
 export * from "./SortNumAscend";
-export * from "./SortNumDescent";
+export * from "./SortNumDescend";
 export * from "./Stackoverflow";
 export * from "./StepActive";
 export * from "./StepDefault";

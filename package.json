@@ -8,13 +8,16 @@
     "packages/**",
     "tooling/**",
     "playground/**",
-    "docs"
+    "docs",
+    "site"
   ],
   "modular": {
     "type": "root"
   },
   "scripts": {
     "start": "yarn storybook",
+    "start:site": "yarn workspace site start",
+    "build:site": "yarn workspace site build",
     "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:theme && yarn build:grid && yarn build:ag-grid-theme",
     "build:core": "modular build @jpmorganchase/uitk-core",
     "build:icons": "modular build @jpmorganchase/uitk-icons",
@@ -117,7 +120,8 @@
     "webpack": "5.74.0"
   },
   "resolutions": {
-    "esbuild": "0.14.51"
+    "esbuild": "0.14.51",
+    "webpack-dev-server": "4.9.3"
   },
   "browserslist": {
     "production": [
