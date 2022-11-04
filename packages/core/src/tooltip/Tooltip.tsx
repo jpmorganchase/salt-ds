@@ -10,7 +10,7 @@ import {
 import { Portal, PortalProps } from "../portal";
 import { makePrefixer } from "../utils";
 import { useWindow } from "../window";
-import { getIconForStatus } from "./getIconForStatus";
+import { StatusIcon } from "../status-icon";
 
 import "./Tooltip.css";
 
@@ -19,7 +19,6 @@ import "./Tooltip.css";
 export type TooltipStatus = "error" | "info" | "success" | "warning";
 
 const withBaseName = makePrefixer("uitkTooltip");
-const defaultIconProps = { size: 12, className: withBaseName("icon") };
 
 // FIXME: Fix types
 export interface TooltipRenderProp {
@@ -83,9 +82,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         if (hideIcon) {
           return null;
         }
-        const StatusIcon = getIconForStatus(status);
-        return StatusIcon ? (
-          <StatusIcon {...iconProps} {...defaultIconProps} />
+        return status !== "info" ? (
+          <StatusIcon
+            status={status}
+            {...iconProps}
+            className={withBaseName("icon")}
+            size={12}
+          />
         ) : null;
       },
       [status, hideIcon]
@@ -108,7 +111,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             {render ? (
               render({
                 Icon: (passedProps: IconProps) => getIcon(passedProps),
-                getIconProps: () => defaultIconProps,
+                getIconProps: () => ({
+                  status,
+                  size: 12,
+                  className: withBaseName("icon"),
+                }),
               })
             ) : (
               <>

@@ -13,5 +13,5 @@ global.process.env = global.process.env || {};
 setGlobalConfig(globalStorybookConfig);
 
 beforeEach(() => {
-  cy.window().focus();
+  cy.window({ log: false }).focus({ log: false });
 });
