@@ -976,12 +976,12 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         isRaised={isRightRaised}
                       />
                     )}
+                    <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}
                       rows={rows}
                       dragState={dragState}
                     />
-                    <ColumnDropTarget x={activeTarget?.x} />
                   </div>
                 </EditorContext.Provider>
               </SizingContext.Provider>
