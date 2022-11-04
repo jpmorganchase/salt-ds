@@ -24,11 +24,11 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import cx from "classnames";
 import { ChangeEvent, useState } from "react";
+import { FlexLayoutComposite } from "./flex-layout.stories";
 import {
-  FlexLayoutComposite,
-  FlexLayoutFormComposite,
-} from "./flex-layout.stories";
-import { FlowLayoutSimpleUsage } from "./flow-layout.stories";
+  FlowLayoutSimpleUsage,
+  FlowLayoutComposite,
+} from "./flow-layout.stories";
 import { SplitLayoutSimpleUsage } from "./split-layout.stories";
 
 export default {
@@ -294,7 +294,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
             "border-layout-custom-form": checked,
           })}
         >
-          <FlowLayoutComposite separators />
+          <FlowLayoutComposite />
         </div>
       </BorderItem>
 
