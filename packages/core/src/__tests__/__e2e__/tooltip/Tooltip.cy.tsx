@@ -37,4 +37,12 @@ describe("GIVEN a Tooltip", () => {
 
     cy.findByRole("tooltip").should("be.visible");
   });
+
+  it("should have z-index applied", () => {
+    cy.mount(<Default />);
+
+    cy.findByRole("button").focus();
+    cy.findByRole("tooltip").should("be.visible");
+    cy.findByRole("tooltip").should("have.css", "z-index", "1500");
+  });
 });
