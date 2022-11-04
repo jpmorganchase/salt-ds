@@ -1,20 +1,22 @@
 .uitk-light,
 .uitk-dark {
-  /* TODO: Font sizes not in Figma, need approving */
-  --uitk-measured-fontSize-low: 11px;
-  --uitk-measured-fontSize-medium: 14px;
-  --uitk-measured-fontSize-high: 16px;
-
-  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
   --uitk-measured-borderStyle: solid;
-  --uitk-measured-borderWidth: 1px;
+  --uitk-measured-borderStyle-active: solid;
+  --uitk-measured-borderStyle-complete: solid;
+  --uitk-measured-borderStyle-incomplete: dotted;
+  --uitk-measured-borderWidth: 2px;
 
   --uitk-measured-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-measured-textAlign: center;
 
   --uitk-measured-background: var(--uitk-palette-measure-background);
-
+  --uitk-measured-background-disabled: var(--uitk-palette-measure-background-disabled);
+  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
+  --uitk-measured-borderColor-disabled: var(--uitk-palette-measure-border-disabled);
   --uitk-measured-fill: var(--uitk-palette-measure-fill);
   --uitk-measured-fill-disabled: var(--uitk-palette-measure-fill-disabled);
+  --uitk-measured-foreground: var(--uitk-palette-measure-foreground);
+  --uitk-measured-foreground-disabled: var(--uitk-palette-measure-foreground-disabled);
 }
 
 /* TK1 Backwards compatibility */
