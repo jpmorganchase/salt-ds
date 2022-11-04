@@ -2,4 +2,4 @@
 "@jpmorganchase/uitk-core": minor
 ---
 
-Add aria attributes to `LayerLayout` when `Scrim` is not being used
+Add `role="dialog"` and `aria-modal="true"` to `LayerLayout` when `Scrim` is not being used
