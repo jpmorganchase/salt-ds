@@ -7,23 +7,19 @@ import { BorderItem } from "@jpmorganchase/uitk-core";
 /*
  * Should allow relevant html attributes
  */
-<BorderItem position="main" as="a" href="www.example.com">
+<BorderItem position="main" as="div">
   Border item content
 </BorderItem>;
 
-<BorderItem position="main" as="link" href="www.example.com">
+<BorderItem position="main" as="main">
   Border item content
 </BorderItem>;
 
-<BorderItem position="main" as="input" checked>
+<BorderItem position="main" as="section">
   Border item content
 </BorderItem>;
 
-<BorderItem position="main" as="option" label="example label">
-  Border item content
-</BorderItem>;
-
-<BorderItem position="main" as="button" name="example name">
+<BorderItem position="main" as="article">
   Border item content
 </BorderItem>;
 

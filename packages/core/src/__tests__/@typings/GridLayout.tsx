@@ -7,25 +7,13 @@ import { GridLayout } from "@jpmorganchase/uitk-core";
 /*
  * Should allow relevant html attributes
  */
-<GridLayout as="a" href="www.example.com">
-  Grid layout content
-</GridLayout>;
+<GridLayout as="div">Grid layout content</GridLayout>;
 
-<GridLayout as="link" href="www.example.com">
-  Grid layout content
-</GridLayout>;
+<GridLayout as="main">Grid layout content</GridLayout>;
 
-<GridLayout as="input" checked>
-  Grid layout content
-</GridLayout>;
+<GridLayout as="section">Grid layout content</GridLayout>;
 
-<GridLayout as="option" label="example label">
-  Grid layout content
-</GridLayout>;
-
-<GridLayout as="button" name="example name">
-  Grid layout content
-</GridLayout>;
+<GridLayout as="article">Grid layout content</GridLayout>;
 
 /*
  * Should not allow unrelated html attributes

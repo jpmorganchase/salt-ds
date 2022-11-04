@@ -7,27 +7,22 @@ import { BorderLayout } from "@jpmorganchase/uitk-core";
 /*
  * Should allow relevant html attributes
  */
-<BorderLayout as="a" href="www.example.com">
+<BorderLayout as="div">
   <p>Border layout content</p>
   <p>Border layout content</p>
 </BorderLayout>;
 
-<BorderLayout as="link" href="www.example.com">
+<BorderLayout as="main">
   <p>Border layout content</p>
   <p>Border layout content</p>
 </BorderLayout>;
 
-<BorderLayout as="input" checked>
+<BorderLayout as="section">
   <p>Border layout content</p>
   <p>Border layout content</p>
 </BorderLayout>;
 
-<BorderLayout as="option" label="example label">
-  <p>Border layout content</p>
-  <p>Border layout content</p>
-</BorderLayout>;
-
-<BorderLayout as="button" name="example name">
+<BorderLayout as="article">
   <p>Border layout content</p>
   <p>Border layout content</p>
 </BorderLayout>;
