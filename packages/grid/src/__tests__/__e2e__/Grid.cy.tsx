@@ -1,6 +1,12 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
+import { GridVariants } from "@stories/grid-variants.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
+import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
+import { CellCustomization } from "@stories/grid-cellCustomization.stories";
+import { HeaderCustomization } from "@stories/grid-headerCustomization.stories";
+import { LotsOfColumnGroups } from "@stories/grid.stories";
+import { ColumnGroups } from "@stories/grid-columnGroups.stories";
 
 const composedStories = composeStories(gridStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
@@ -91,12 +97,40 @@ describe("Grid", () => {
             .find("tbody")
             .find(`tr [data-row-index="${n}"]`);
 
-        // Rows 1 to 16 should be rendered, everything above and below - not
+        // Rows 1 to 15 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
         getRow(15).should("exist");
         getRow(16).should("not.exist");
-        getRow(17).should("not.exist");
+      });
+  });
+
+  it("Header virtualization in grouped mode", () => {
+    cy.mount(<LotsOfColumnGroups />);
+    cy.get(".uitkGridGroupHeaderCell").should("have.length", 4);
+
+    cy.get(".uitkGridGroupHeaderCell").eq(0).should("have.text", "Group A");
+    cy.get(".uitkGridGroupHeaderCell").eq(3).should("have.text", "Group D");
+    cy.get(".uitkGridGroupHeaderCell").eq(4).should("not.exist");
+
+    cy.findByTestId("grid-scrollable")
+      .scrollTo(650, 0, { easing: "linear", duration: 300 })
+      .then(() => {
+        const getGroup = (n: number) =>
+          cy
+            .findByTestId("grid-top-part")
+            .find(".uitkGridGroupHeaderRow")
+            .find(`[data-group-index="${n}"]`);
+
+        getGroup(0).should("not.exist");
+        getGroup(1).should("not.exist");
+        // Column C is the first visible column now after scroll
+        getGroup(2).should("exist").should("have.text", "Group C");
+        getGroup(3).should("exist");
+        getGroup(4).should("exist");
+        // Column F is the last visible one
+        getGroup(5).should("exist").should("have.text", "Group F");
+        getGroup(6).should("not.exist");
       });
   });
 
@@ -192,11 +226,158 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
-  describe("Column groups", () => {
-    it("Shows correct groups", () => {});
+  // Docs Examples
 
-    it("Handles header virtualization in grouped mode", () => {});
+  describe("Grid Variants", () => {
+    it("displays 'Primary' variant by default", () => {
+      cy.mount(<GridVariants />);
+      cy.findByRole("grid")
+        .should("have.class", "uitkGrid-primaryBackground")
+        .and("not.have.class", "uitkGrid-secondaryBackground");
+    });
+
+    it("displays 'Secondary' variant", () => {
+      cy.mount(<GridVariants />);
+      cy.findByLabelText("secondary").click();
+      cy.findByRole("grid").should(
+        "have.class",
+        "uitkGrid-secondaryBackground"
+      );
+    });
+
+    it("displays 'Zebra' variant", () => {
+      cy.mount(<GridVariants />);
+      cy.findByLabelText("zebra").click();
+      cy.findByRole("grid")
+        .should("have.class", "uitkGrid-primaryBackground")
+        .and("have.class", "uitkGrid-zebra");
+    });
   });
+
+  describe("Column Groups", () => {
+    it("Shows correct groups", () => {
+      cy.mount(<ColumnGroups />);
+      cy.get(".uitkGridGroupHeaderCell")
+        .eq(0)
+        .should("have.attr", "colspan", 2)
+        .and("have.text", "Group One");
+      cy.get(".uitkGridGroupHeaderCell")
+        .eq(1)
+        .should("have.attr", "colspan", 1)
+        .and("have.text", "Group Two");
+    });
+  });
+
+  describe("Row Selection", () => {
+    describe("Uncontrolled & switching selection modes", () => {
+      it("Shows correct columns", () => {
+        cy.mount(<RowSelectionModes />);
+
+        cy.findByLabelText("multi").click();
+        cy.findAllByTestId("grid-row-selection-checkbox").should(
+          "have.length",
+          16
+        );
+        cy.findAllByTestId("grid-row-selection-radiobox").should(
+          "have.length",
+          0
+        );
+        cy.findAllByTestId("column-header").should("have.length", 4);
+        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+        cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+
+        cy.findByLabelText("single").click();
+        cy.findAllByTestId("grid-row-selection-radiobox").should(
+          "have.length",
+          16
+        );
+        cy.findAllByTestId("grid-row-selection-checkbox").should(
+          "have.length",
+          0
+        );
+        cy.findAllByTestId("column-header").should("have.length", 4);
+        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+        cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+
+        cy.findByLabelText("none").click();
+        cy.findAllByTestId("grid-row-selection-checkbox").should(
+          "have.length",
+          0
+        );
+        cy.findAllByTestId("grid-row-selection-radiobox").should(
+          "have.length",
+          0
+        );
+        cy.findAllByTestId("column-header").should("have.length", 3);
+        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
+        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
+        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
+      });
+
+      describe("Controlled Mode", () => {
+        it("Handles controlled mode", () => {
+          // This example used controlled selection mode to synchronise selection across two grids.
+          cy.mount(<RowSelectionControlled />);
+
+          // check both are all unselected
+          cy.findAllByRole("grid").should("have.length", 2);
+          cy.findAllByRole("grid")
+            .findAllByTestId("grid-row-selection-checkbox")
+            .should("not.have.class", "uitkGridTableRow-selected");
+
+          // select two rows on the first grid
+          cy.findAllByRole("grid")
+            .eq(0)
+            .findAllByTestId("grid-row-selection-checkbox")
+            .eq(2)
+            .click({ force: true });
+
+          cy.findAllByRole("grid")
+            .eq(0)
+            .findAllByTestId("grid-row-selection-checkbox")
+            .eq(3)
+            .click({ force: true });
+
+          // assert the second grid has the same rows selected
+          cy.findAllByRole("grid")
+            .eq(1)
+            .get(`tr[data-row-index="2"]`)
+            .should("have.class", "uitkGridTableRow-selected");
+
+          cy.findAllByRole("grid")
+            .eq(1)
+            .get(`tr[data-row-index="3"]`)
+            .should("have.class", "uitkGridTableRow-selected");
+        });
+      });
+    });
+  });
+
+  describe("Cell Customisation", () => {
+    it("Renders customised cell values", () => {
+      cy.mount(<CellCustomization />);
+      cy.get(".bidAskCellValue").should("have.length", 16);
+      cy.get(".uitkLinearProgress").should("have.length", 16);
+      cy.get(".uitkButton").should("have.length", 32);
+    });
+  });
+
+  describe("Header Customisation Selection", () => {
+    it("Renders customised cell values", () => {
+      cy.mount(<HeaderCustomization />);
+
+      // check for items sold column, that it has a has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
+
+      // "Item" column group has a button to toggle between pinned and unpinned modes.
+
+      // "Name" and "Price" columns have custom headers that indicate sort direction.
+    });
+  });
+
   describe("Switching selection modes", () => {
     it("Shows correct columns", () => {
       cy.mount(<RowSelectionModes />);
