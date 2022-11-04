@@ -78,7 +78,7 @@ export const Dropdown = forwardRef(function Dropdown<
   });
 
   const {
-    highlightedIndex: highlightedIdx,
+    highlightedIndex,
     triggerLabel,
     listHandlers,
     listControlProps,
@@ -86,14 +86,17 @@ export const Dropdown = forwardRef(function Dropdown<
     ...dropdownListHook
   } = useDropdown<Item, Selection>({
     collectionHook,
+    defaultHighlightedIndex: ListProps?.defaultHighlightedIndex,
     defaultIsOpen,
     defaultSelected: collectionHook.itemToCollectionItem<
       Selection,
       typeof defaultSelected
     >(defaultSelected),
+    highlightedIndex: ListProps?.highlightedIndex,
     isOpen: isOpenProp,
     itemToString,
     label: "Dropdown",
+    onHighlight: ListProps?.onHighlight,
     onOpenChange,
     onSelectionChange,
     selected: collectionHook.itemToCollectionItem<
@@ -116,6 +119,8 @@ export const Dropdown = forwardRef(function Dropdown<
         return itemOrItems.map((i) => i.value) as returnType;
       } else if (itemOrItems) {
         return itemOrItems.value as returnType;
+      } else {
+        return null as returnType;
       }
     },
     []
@@ -159,7 +164,7 @@ export const Dropdown = forwardRef(function Dropdown<
           ListItem={ListItem}
           itemToString={itemToString}
           {...ListProps}
-          highlightedIndex={highlightedIdx}
+          highlightedIndex={highlightedIndex}
           listHandlers={listHandlers}
           onSelectionChange={onSelectionChange}
           selected={collectionItemsToItem(selected)}
