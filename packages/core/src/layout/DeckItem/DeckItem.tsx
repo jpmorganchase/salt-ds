@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
-import { makePrefixer, useForkRef } from "../../utils";
+import { makePrefixer, useForkRef, useIdMemo } from "../../utils";
 import { LayoutAnimation } from "../types";
 import "./DeckItem.css";
 
@@ -22,19 +22,18 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       className,
       index,
       role = "group",
+      id,
       ...rest
     },
     ref
   ) {
     const sliderRef = useRef<HTMLDivElement | null>(null);
 
+    const isCurrent = activeIndex === index;
+
     const position = useMemo(() => {
-      return activeIndex === index
-        ? "current"
-        : activeIndex < index
-        ? "next"
-        : "previous";
-    }, [activeIndex, index]);
+      return isCurrent ? "current" : activeIndex < index ? "next" : "previous";
+    }, [activeIndex, index, isCurrent]);
 
     const classesIndex = animation && position === "current" ? 0 : 1;
 
@@ -43,7 +42,8 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       `${animation || "fade"}-out`, // out-left
     ];
 
-    // TODO: add aria attributes (labelledby, roledescription, hidden)
+    const deckItemId = useIdMemo(id);
+
     return (
       <div
         className={cx(
@@ -57,6 +57,8 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         )}
         ref={useForkRef(ref, sliderRef)}
         role={role}
+        tabIndex={isCurrent ? 0 : -1}
+        id={deckItemId}
         {...rest}
       >
         {children}
