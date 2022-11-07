@@ -17,8 +17,8 @@ export default {
 
 const deckCards = (slides: number) =>
   Array.from({ length: slides }, (_, index) => (
-    <Card aria-labelledby={`deck_item_title_${index}`} key={index}>
-      <h2 id={`deck_item_title_${index}`}>{`Deck Item ${index + 1}`}</h2>
+    <Card key={index}>
+      <h2>{`Deck Item ${index + 1}`}</h2>
       <p>
         We can implement your cross-border liquidity model in just a few months,
         depending on the options, scope and complexity.
