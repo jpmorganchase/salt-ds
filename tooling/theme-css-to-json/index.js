@@ -110,6 +110,58 @@ const getDescriptionFromClasses = (classes) => {
 };
 
 /**
+ * Adds `default` key to token nodes when other key apart from 'value', 'type', and '$' prefixed keys exist,
+ * e.g.
+ * ```
+ * { value: 'a', type: 'color', 'otherState': { value: 'b', type: 'color' } }
+ * ```
+ * becomes
+ * ```
+ * { 'default': {value: 'a', type: 'color'}, 'otherState': { value: 'b', type: 'color' } }
+ * ```
+ * @param {object} obj
+ */
+const remapWithDefault = (obj) => {
+  // console.log("remapWithDefault", obj);
+  const keys = Object.keys(obj);
+  // console.log("remapWithDefault keys", keys);
+  if (
+    typeof obj === "object" &&
+    keys.includes("type") &&
+    keys.includes("value") &&
+    keys.filter((x) => !x.startsWith("$") && !["type", "value"].includes(x))
+      .length > 0
+  ) {
+    console.log("remapping default", obj);
+    const newObj = { default: { value: obj.value, type: obj.type }, ...obj };
+    delete newObj.value;
+    delete newObj.type;
+    return newObj;
+  } else {
+    return obj;
+  }
+};
+
+const walkDownObjToRemap = (obj) => {
+  // console.log("walkDownObjToRemap", obj);
+  if (typeof obj === "object") {
+    const remapped = remapWithDefault(obj);
+    let newObj = {};
+    Object.keys(remapped).forEach((key) => {
+      const value = remapped[key];
+      if (typeof value === "object") {
+        newObj[key] = walkDownObjToRemap(value);
+      } else {
+        newObj[key] = value;
+      }
+    });
+    return newObj;
+  } else {
+    return obj;
+  }
+};
+
+/**
  * Write object to file by stringify it
  *
  * @param {object} obj
@@ -205,7 +257,8 @@ filesArg.forEach((inputFile) => {
             inputFilePath.name + "-" + description + ".json"
           );
 
-          writeObjToFile(resultObj, outputFilePathParts);
+          const remapped = walkDownObjToRemap(resultObj);
+          writeObjToFile(remapped, outputFilePathParts);
         });
       },
       leave(node) {
