@@ -981,6 +981,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       columns={cols}
                       rows={rows}
                       dragState={dragState}
+                      zebra={zebra}
                     />
                   </div>
                 </EditorContext.Provider>
