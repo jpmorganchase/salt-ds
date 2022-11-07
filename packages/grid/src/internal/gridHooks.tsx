@@ -983,6 +983,12 @@ export function useColumnMove<T = any>(
       [columnDragStart, cols]
     );
 
+  const onColumnMoveCancel = useCallback(() => {
+    setDragState(undefined);
+    moveRef.current?.unsubscribe();
+    moveRef.current = undefined;
+  }, [setDragState]);
+
   const targets = useMemo(() => {
     if (!dragState) {
       return undefined;
@@ -1044,7 +1050,12 @@ export function useColumnMove<T = any>(
 
   activeTargetRef.current = activeTarget;
 
-  return { onColumnMoveHandleMouseDown, dragState, activeTarget };
+  return {
+    onColumnMoveHandleMouseDown,
+    dragState,
+    activeTarget,
+    onColumnMoveCancel,
+  };
 }
 
 export interface CellPosition {
