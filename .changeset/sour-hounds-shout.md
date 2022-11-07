@@ -17,7 +17,7 @@ Updated the `<Icon />` component.
 
 - Wrapping span elements have been removed so the root element is the `<svg>` itself. The Icon ref is now type `SVGSVGElement` instead of a `<span>`.
 
-- The size prop has been updated to be a number which is a multiplier of the base value instead of a named size as follows:
+- The size prop has been updated to be a number which is a multiplier of the base value instead of a named size. At high density the following would apply:
 
 ```jsx
 <AddIcon size="small" />
@@ -30,7 +30,7 @@ becomes
 ```jsx
 <AddIcon size={1} />
 <AddIcon size={2} />
-<AddIcon size={3} />
+<AddIcon size={4} />
 ```
 
 - The size of the Icon will now scale with density.
