@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require("fs");
 const path = require("path");
 const { findLast, generate, parse, walk } = require("css-tree");
@@ -32,17 +34,45 @@ const cssVarToReference = (input) =>
     .split("-")
     .join(".");
 
-const writeObjValue = (target, objKeys, value) => {
+/**
+ * Guess token type from path.
+ *
+ * @param {string[]} tokenNameArray
+ * @param {path.ParsedPath} filePath
+ */
+const guessTokenType = (tokenNameArray, filePath) => {
+  if (tokenNameArray.includes("opacity")) {
+    return "opacity";
+  }
+
+  if (filePath.name.includes("palette")) {
+    return "color";
+  }
+
+  return "UNKNOWN";
+};
+
+/**
+ * Write token to obj.
+ *
+ * @param {*} target
+ * @param {string[]} objKeys
+ * @param {*} value
+ * @param {string} value
+ * @returns
+ */
+const writeObjValue = (target, objKeys, value, tokenType) => {
   if (!Array.isArray(objKeys)) return target;
 
   if (objKeys.length > 1) {
     if (target[objKeys[0]] === undefined) {
       target[objKeys[0]] = {};
     }
-    writeObjValue(target[objKeys[0]], objKeys.slice(1), value);
+    writeObjValue(target[objKeys[0]], objKeys.slice(1), value, tokenType);
   } else {
     target[objKeys[0]] = {
       value,
+      type: tokenType,
     };
   }
 };
@@ -79,6 +109,12 @@ const getDescriptionFromClasses = (classes) => {
   }
 };
 
+/**
+ * Write object to file by stringify it
+ *
+ * @param {object} obj
+ * @param {string} filePath
+ */
 const writeObjToFile = (obj, filePath) => {
   const filePathDir = path.dirname(filePath);
   // log({ filePath, filePathDir });
@@ -147,14 +183,15 @@ filesArg.forEach((inputFile) => {
                   // variable reference
                   value = cssVarToReference(value);
                 } else if (value.startsWith("calc")) {
-                  // store the raw formular with prefix removed to be manually edited later
+                  // store the raw formulae with prefix removed to be manually edited later
                   value = removePrefix(value);
                 } else {
                   // raw value
                   // do nothing
                 }
 
-                writeObjValue(resultObj, property, value);
+                const tokenType = guessTokenType(property, inputFilePath);
+                writeObjValue(resultObj, property, value, tokenType);
                 // log(resultObj, property, value);
               } else {
                 // find out what's the situation here
@@ -199,7 +236,8 @@ filesArg.forEach((inputFile) => {
                 // do nothing
               }
 
-              writeObjValue(resultObjFull, property, value);
+              const tokenType = guessTokenType(property, inputFilePath);
+              writeObjValue(resultObjFull, property, value, tokenType);
               // log(resultObj, property, value);
             } else {
               // find out what's the situation here
