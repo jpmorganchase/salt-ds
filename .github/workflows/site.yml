@@ -48,28 +48,25 @@ jobs:
           script: |
             const previewUrl = "${{ steps.publish.outputs.url }}";
             const commentText = `Site Preview Link `;
-
-            // Get the existing comments
             const {data: comments} = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.number,
             });
-            console.log(111, comments);
-
-            // Find existing comment
             const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText)); 
-
-            console.log(222, oldPreviewUrlComment)
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `${commentText} ${previewUrl}`
-            });
-
-# get all issue comments
-# if existing comment with 'Site Preview Link' in body get comment id
-# and update existing comment
-# else create new comment
+            if(!oldPreviewUrlComment) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `${commentText} ${previewUrl}`
+              });
+            } else {
+              github.rest.issues.createComment({
+                comment_id: oldPreviewUrlComment.id.
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `${commentText} ${previewUrl}`
+              });
+            };
