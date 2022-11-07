@@ -3,6 +3,7 @@
   --uitk-ratable-cursor-hover: pointer;
   --uitk-ratable-cursor-active: pointer;
   --uitk-ratable-cursor-undo: pointer;
+  --uitk-ratable-cursor-disabled: not-allowed;
 
   --uitk-ratable-borderWidth: 1px;
   --uitk-ratable-borderWidth-undo: 1px;
