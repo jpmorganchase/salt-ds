@@ -4,7 +4,7 @@
   --color-block-cell-borderColor: var(--uitk-container-borderColor-medium);
   --color-block-cell-borderStyle: var(--uitk-container-borderStyle);
   --color-block-cell-borderWidth: var(--uitk-container-borderWidth);
-  --color-block-cell-borderRadius: var(--uitk-container-borderRadius);
+  --color-block-cell-borderRadius: 0;
 }
 
 .ColorBlock-cell {
