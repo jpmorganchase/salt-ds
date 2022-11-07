@@ -17,7 +17,12 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { name } = group.data;
 
   return (
-    <th className={withBaseName()} colSpan={colSpan}>
+    <th
+      className={withBaseName()}
+      colSpan={colSpan}
+      data-testid="column-group-header"
+      data-group-index={group.index}
+    >
       {props.children}
       <div
         className={cn({
