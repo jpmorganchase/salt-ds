@@ -181,8 +181,10 @@ describe("Navigation, Given a Tabstrip", () => {
         describe("WHEN focus returns to the tabstrip", () => {
           it("THEN the selected tab receives focus", () => {
             cy.mount(<SimpleTabstrip width={400} />);
+            cy.get(".uitkTabstrip-inner > *:first-child").should("be.visible");
             cy.get(".uitkTabstrip-inner > *:first-child").realClick();
             cy.realPress("ArrowRight");
+            cy.wait(50);
             cy.realPress("Tab");
             cy.realPress(["Shift", "Tab"]);
             cy.get(".uitkTabstrip-inner > *:first-child")
