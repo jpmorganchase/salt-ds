@@ -242,8 +242,8 @@
 }
 
 .layer-simple-usage p,
-.layer-simple-usage h1,
-.layer-simple-usage h2 {
+.layer-simple-usage h2,
+.layer-simple-usage h3 {
   margin: 0;
 }
 
@@ -290,7 +290,8 @@
 }
 
 @media (prefers-reduced-motion) {
-  .reduced-motion.uitkLayerLayout {
+  .reduced-motion .uitkLayerLayout,
+  .reduced-motion .uitkScrim {
     animation: none;
   }
 }
