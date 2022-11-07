@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("uitkIcon");
 
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
   /**
-   * Multiplier for the base icon size. Should be an integer to conform to the rest of the design system
+   * Multiplier for the base icon size. Should be a positive integer to conform to the rest of the design system.
    */
   size?: number;
 }

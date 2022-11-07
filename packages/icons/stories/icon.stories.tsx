@@ -1,13 +1,5 @@
-import {
-  ElementType,
-  useMemo,
-  useLayoutEffect,
-  useState,
-  ComponentPropsWithRef,
-  CSSProperties,
-} from "react";
+import { ElementType, useMemo } from "react";
 import { AddDocumentIcon, Icon, IconProps } from "@jpmorganchase/uitk-icons";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { allIcons } from "./icon.all";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -39,7 +31,10 @@ const IconGrid = ({
   );
 };
 
-export const ToolkitIcon: ComponentStory<typeof Icon> = () => (
+export const ToolkitIcon: ComponentStory<typeof Icon> = (props) => (
+  <AddDocumentIcon {...props} />
+);
+export const ToolkitIconMultipleSizes: ComponentStory<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
 );
 
