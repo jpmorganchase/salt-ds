@@ -3,7 +3,8 @@ const path = require("path");
 const { findLast, generate, parse, walk } = require("css-tree");
 
 // In the future this can be exposed to command arg
-const cssVarPrefix = "--uitk-";
+const cssUitkVarPrefix = "--uitk-";
+const cssVarPrefix = "--";
 const prettyPrintOutputJson = true;
 const splitFileByClass = true; // this would generate multiple JSON from a single CSS to avoid same token been overridden
 
@@ -23,14 +24,13 @@ log(outputDir);
 
 const removePrefix = (input) => input.replaceAll(cssVarPrefix, "");
 /**
- * `var(--uitk-abc-def)` => `{abc.def}`
+ * `var(--uitk-abc-def)` => `$uitk.abc.def`
  */
 const cssVarToReference = (input) =>
-  "{" +
+  "$" +
   removePrefix(input.replace(/(^.*\(|\).*$)/g, ""))
     .split("-")
-    .join(".") +
-  "}";
+    .join(".");
 
 const writeObjValue = (target, objKeys, value) => {
   if (!Array.isArray(objKeys)) return target;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node index.js ../../packages/theme/css/*/*.css",
-    "clean": "rm -rf build"
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "css-tree": "^2.0.4"
