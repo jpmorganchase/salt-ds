@@ -52,4 +52,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `Site Preview Link ${previewUrl}`
+              id: 'test123'
             })
+
+# get all issue comments
+# if existing comment with 'Site Preview Link' in body get comment id
+# and update existing comment
+# else create new comment
