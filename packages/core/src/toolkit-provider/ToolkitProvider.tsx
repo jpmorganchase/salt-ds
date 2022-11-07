@@ -171,13 +171,13 @@ export function ToolkitProvider({
         );
       } else {
         console.warn(
-          "\nToolkitProvider can only apply CSS classes to the body if it is the root level ToolkitProvider."
+          "\nToolkitProvider can only apply CSS classes to the root if it is the root level ToolkitProvider."
         );
       }
     }
     return () => {
       if (applyClassesTo === "root") {
-        // When unmounting/remounting, remove the applied styles from the body
+        // When unmounting/remounting, remove the applied styles from the root
         document.documentElement.classList.remove(
           ...themeClassnames,
           `uitk-density-${density}`
