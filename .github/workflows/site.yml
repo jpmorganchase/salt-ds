@@ -54,7 +54,7 @@ jobs:
               issue_number: context.payload.number,
             });
             const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText)); 
-            if(!oldPreviewUrlComment) {
+            if (!oldPreviewUrlComment) {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
@@ -63,7 +63,7 @@ jobs:
               });
             } else {
               github.rest.issues.createComment({
-                comment_id: oldPreviewUrlComment.id.
+                comment_id: oldPreviewUrlComment.id,
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
