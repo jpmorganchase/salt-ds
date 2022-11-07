@@ -1,8 +1,6 @@
 import cx from "classnames";
 import React, {
   createContext,
-  DetailedHTMLProps,
-  DOMAttributes,
   HTMLAttributes,
   ReactElement,
   ReactNode,
@@ -25,30 +23,12 @@ export interface ToolkitContextProps {
 
 const DEFAULT_THEME_NAME = "light";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      "uitk-theme": DetailedHTMLProps<
-        DOMAttributes<HTMLDivElement> & { class: string },
-        HTMLDivElement
-      >;
-    }
-  }
-}
-
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
 
 export const ThemeContext = createContext<Theme[]>([]);
 
 export const BreakpointContext =
   createContext<Breakpoints>(DEFAULT_BREAKPOINTS);
-
-export const ToolkitContext = createContext<ToolkitContextProps>({
-  density: undefined,
-  themes: [],
-  breakpoints: DEFAULT_BREAKPOINTS,
-});
 
 const createThemedChildren = (
   children: ReactNode,
@@ -69,20 +49,21 @@ const createThemedChildren = (
       console.warn(
         `\nToolkitProvider can only apply CSS classes for theming to a single nested child element of the ToolkitProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        uitk-theme element will wrap your child elements`
+        div element will wrap your child elements`
       );
       return children;
     }
   } else {
     return (
-      <uitk-theme
-        class={cx(
+      <div
+        className={cx(
+          `uitk-theme`,
           ...themeNames.map((themeName) => `uitk-${themeName}`),
           `uitk-density-${density}`
         )}
       >
         {children}
-      </uitk-theme>
+      </div>
     );
   }
 };
