@@ -50,6 +50,7 @@ describe("Given a ToolkitProvider", () => {
 
       cy.get("div.uitk-theme")
         .should("have.length", 2)
+        .and("have.class", "uitk-light")
         .and("have.class", "uitk-density-medium");
     });
     it("should apply correct default values for Density and Theme and add an AriaAnnouncer", () => {
