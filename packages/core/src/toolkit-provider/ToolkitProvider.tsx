@@ -60,11 +60,7 @@ const createThemedChildren = (
   } else {
     return (
       <div
-        className={cx(
-          `uitk-theme`,
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
-          `uitk-density-${density}`
-        )}
+        className={cx(`uitk-theme`, ...themeNames, `uitk-density-${density}`)}
       >
         {children}
       </div>
