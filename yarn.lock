@@ -3409,7 +3409,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-flow-app@workspace:playground/theme-flow-app"
   dependencies:
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/theme-editor": "*"
+    "@jpmorganchase/uitk-core": "*"
+    "@jpmorganchase/uitk-icons": "*"
+    "@jpmorganchase/uitk-theme": "*"
     "@types/css-tree": ^1.0.7
     css-tree: ^2.0.4
     react-flow-renderer: ^10.0.0
@@ -3450,7 +3453,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-icons@workspace:packages/icons":
+"@jpmorganchase/uitk-icons@*, @jpmorganchase/uitk-icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-icons@workspace:packages/icons"
   dependencies:
