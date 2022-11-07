@@ -2,8 +2,8 @@ name: Site Publish
 
 on:
   pull_request:
-    branches:
-      - main
+    paths:
+      - "site/**"
 
 jobs:
   deploy:
