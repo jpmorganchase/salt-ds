@@ -52,7 +52,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `Site Preview Link ${previewUrl}`
-              id: 'test123'
+              idTest: 'test123'
             })
 
 # get all issue comments
