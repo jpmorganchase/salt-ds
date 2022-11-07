@@ -49,7 +49,7 @@ the toolkit dark theme. Density is not specified on the inner ToolkitProvider, s
   </Story>
 </Canvas>
 
-By default, the `ToolkitProvider` wraps nested content with a custom `uitk-theme` element to which the theme and density CSS classes are added.
+By default, the `ToolkitProvider` wraps nested content with a `div` element to which the theme and density CSS classes are added.
 Given this JSX
 
 ```jsx
@@ -61,15 +61,15 @@ Given this JSX
 then we would see the following HTML.
 
 ```html
-<uitk-theme class="uitk-theme-light uitk-density-medium">
+<div class="utik-theme uitk-theme-light uitk-density-medium">
   <div class="uitkCard">...</div>
-</uitk-theme>
+</div>
 ```
 
-The `uitk-theme` element is styled with `display: contents` which generally ensures that it does not break any layout or formatting
-style rules that may be in effect. Child elements are styled and laid out as though the containing `uitk-theme` element were not present.
+The `div` element is styled with `display: contents` using the class `uitk-theme` which generally ensures that it does not break any layout or formatting
+style rules that may be in effect. Child elements are styled and laid out as though the containing `div` element were not present.
 Some browser implementations of `display: contents` are buggy (Safari, for example). Further, your code may rely on CSS query selectors
-in JavaScript that might be broken if they do not anticipate the additional `uitk-theme` element inserted by the ToolkitProvider.
+in JavaScript that might be broken if they do not anticipate the additional `div` element inserted by the ToolkitProvider.
 If you are concerned about either of these scenarios, the `ToolkitProvider` can be configured to not inject this additional element.
 Instead it can add the required CSS classes to the child element nested within the Provider. You may also simply prefer this approach.
 There is (currently) one limitation to this pattern, you must use a single child element only. This is enforced within the code and,
@@ -222,7 +222,7 @@ Note: `Portal` is not yet ready for release, the notes below are placeholder onl
 needs to be rendered outside of the current HTML DOM tree. This is done to avoid Z-indexing and clipping issues that local element
 structures might impose. Portal renders contents directly into the document body, employing CSS to manage positioning. This has
 implications for styling. Because CSS Variables operate an inheritance model, a portal-rendered element which sits
-outside the root <`uitk-theme>` node wil be outside the scope of the theme variables. Therefore Portal always wraps rendered content
+outside the root <`div>` node wil be outside the scope of the theme variables. Therefore Portal always wraps rendered content
 with a local ToolkitProvider which echoes the current theme values in effect at the point whetre the Portal is launched. This is easier
 shown than explained.
 

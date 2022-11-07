@@ -42,16 +42,17 @@ const TestComponent = ({
 
 describe("Given a ToolkitProvider", () => {
   describe("with no props set", () => {
-    it("should create uitk-theme element with correct classes applied", () => {
+    it("should create div element with correct classes applied", () => {
       cy.mount(
         <ToolkitProvider>
           <TestComponent />
         </ToolkitProvider>
       );
 
-      cy.get("uitk-theme")
+      cy.get("div.uitk-theme")
         .should("have.length", 2)
-        .and("have.attr", "class", "uitk-light uitk-density-medium");
+        .and("have.class", "uitk-light")
+        .and("have.class", "uitk-density-medium");
     });
     it("should apply correct default values for Density and Theme and add an AriaAnnouncer", () => {
       cy.mount(
@@ -147,7 +148,7 @@ describe("Given a ToolkitProvider", () => {
   });
 
   describe("when child is passed to applyClassesTo", () => {
-    it("should not create a uitk-theme element", () => {
+    it("should not create a div element", () => {
       cy.mount(
         <ToolkitProvider density="high" theme="dark" applyClassesTo={"child"}>
           <TestComponent />
@@ -155,7 +156,7 @@ describe("Given a ToolkitProvider", () => {
       );
 
       // cy.mount adds a ToolkitProvider
-      cy.get("uitk-theme").should("have.length", 1);
+      cy.get("div.uitk-theme").should("have.length", 1);
 
       cy.get("#test-1")
         .should("exist")
