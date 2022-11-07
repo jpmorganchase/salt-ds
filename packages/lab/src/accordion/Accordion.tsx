@@ -62,14 +62,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
 
     const registerSection = useCallback(
       (sectionId: string, isExpanded: boolean) => {
-        if (!sectionId) {
-          debugger;
-        }
-        console.log(
-          `Section "${sectionId}" registered as ${
-            isExpanded ? "expanded" : "collapsed"
-          }`
-        );
         setSectionIds((sectionIds) => {
           const newSectionIds = new Set(sectionIds);
           newSectionIds.add(sectionId);
@@ -87,7 +79,6 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     );
 
     const unregisterSection = useCallback((sectionId: string) => {
-      console.log(`Section "${sectionId}" unregistered`);
       if (expandedSectionIds.includes(sectionId)) {
         setExpandedSectionIds((oldValue) =>
           oldValue.filter((id) => id !== sectionId)
