@@ -132,6 +132,8 @@ export function ToolkitProvider({
   const themNameAsString = themeName.toString();
   const themes: Theme[] = useMemo(
     () => getTheme(themeName),
+    // if an array is passed to theme inline, themes would be recalculated each time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [themNameAsString]
   );
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
