@@ -16,6 +16,8 @@
   position: relative;
   width: var(--icon-size);
   height: var(--icon-size);
+  min-width: var(--icon-size);
+  min-height: var(--icon-size);
 }
 
 .uitkIcon:hover {
