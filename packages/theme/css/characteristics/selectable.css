@@ -6,15 +6,14 @@
   --uitk-selectable-cursor-disabled: not-allowed;
 
   --uitk-selectable-borderRadius: 0;
-  --uitk-selectable-borderWidth: 1px;
-  --uitk-selectable-borderWidth-hover: 1px;
-  --uitk-selectable-borderWidth-selected: 1px;
-  --uitk-selectable-borderWidth-blurSelected: 1px;
-
   --uitk-selectable-borderStyle: solid;
   --uitk-selectable-borderStyle-hover: solid;
   --uitk-selectable-borderStyle-selected: solid;
   --uitk-selectable-borderStyle-blurSelected: solid;
+  --uitk-selectable-borderWidth: 1px;
+  --uitk-selectable-borderWidth-hover: 1px;
+  --uitk-selectable-borderWidth-selected: 1px;
+  --uitk-selectable-borderWidth-blurSelected: 1px;
 
   --uitk-selectable-foreground: var(--uitk-palette-interact-foreground);
   --uitk-selectable-foreground-hover: var(--uitk-palette-interact-foreground-hover);
