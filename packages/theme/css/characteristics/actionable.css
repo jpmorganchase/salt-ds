@@ -1,12 +1,12 @@
 .uitk-light,
 .uitk-dark {
+  --uitk-actionable-cursor-hover: pointer;
   --uitk-actionable-cursor-active: pointer;
   --uitk-actionable-cursor-disabled: not-allowed;
-  --uitk-actionable-cursor-hover: pointer;
 
   --uitk-actionable-letterSpacing: 0.6px;
-  --uitk-actionable-textTransform: uppercase;
   --uitk-actionable-textAlign: center;
+  --uitk-actionable-textTransform: uppercase;
 
   /* Primary variant */
   --uitk-actionable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
@@ -18,8 +18,6 @@
   --uitk-actionable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
   --uitk-actionable-primary-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
   --uitk-actionable-primary-fontWeight: var(--uitk-typography-fontWeight-bold);
-  --uitk-actionable-primary-fontWeight-hover: var(--uitk-typography-fontWeight-bold);
-  --uitk-actionable-primary-fontWeight-active: var(--uitk-typography-fontWeight-bold);
 
   /* CTA variant */
   --uitk-actionable-cta-foreground: var(--uitk-palette-interact-cta-foreground);
@@ -31,8 +29,6 @@
   --uitk-actionable-cta-background-active: var(--uitk-palette-interact-cta-background-active);
   --uitk-actionable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
   --uitk-actionable-cta-fontWeight: var(--uitk-typography-fontWeight-bold);
-  --uitk-actionable-cta-fontWeight-hover: var(--uitk-typography-fontWeight-bold);
-  --uitk-actionable-cta-fontWeight-active: var(--uitk-typography-fontWeight-bold);
 
   /* Secondary variant */
   --uitk-actionable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
@@ -44,6 +40,4 @@
   --uitk-actionable-secondary-background-active: var(--uitk-palette-interact-secondary-background-active);
   --uitk-actionable-secondary-background-disabled: var(--uitk-palette-interact-secondary-background-disabled);
   --uitk-actionable-secondary-fontWeight: var(--uitk-typography-fontWeight-semiBold);
-  --uitk-actionable-secondary-fontWeight-hover: var(--uitk-typography-fontWeight-semiBold);
-  --uitk-actionable-secondary-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);
 }
