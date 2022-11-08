@@ -44,9 +44,9 @@ import { BorderLayout } from "@jpmorganchase/uitk-core";
   <p>Border layout content</p>
 </BorderLayout>;
 
-// Property 'checked' does not exist on element type 'img'
+// Property 'checked' does not exist on element type 'div'
 // @ts-expect-error
-<BorderLayout as="img" checked>
+<BorderLayout as="div" checked>
   <p>Border layout content</p>
   <p>Border layout content</p>
 </BorderLayout>;

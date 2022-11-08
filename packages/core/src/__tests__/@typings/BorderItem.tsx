@@ -39,9 +39,9 @@ import { BorderItem } from "@jpmorganchase/uitk-core";
   Border item content
 </BorderItem>;
 
-// Property 'checked' does not exist on element type 'img'
+// Property 'checked' does not exist on element type 'div'
 // @ts-expect-error
-<BorderItem position="main" as="img" checked>
+<BorderItem position="main" as="div" checked>
   Border item content
 </BorderItem>;
 
