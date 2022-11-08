@@ -8,7 +8,7 @@ import {
 } from "react";
 import { makePrefixer, useIsomorphicLayoutEffect } from "../../utils";
 import { LayoutAnimation, LayoutAnimationDirection } from "../types";
-import { DeckItem } from "../DeckItem";
+import { DeckItem, DeckItemProps } from "../DeckItem";
 import { useWidth } from "../../responsive";
 import "./DeckLayout.css";
 
@@ -27,6 +27,10 @@ export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * The direction in which items will transition.
    **/
   direction?: LayoutAnimationDirection;
+  /**
+   * Props to be passed to the DeckItem component.
+   */
+  deckItemProps?: Partial<DeckItemProps>;
 }
 
 const withBaseName = makePrefixer("uitkDeckLayout");
@@ -40,6 +44,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
       children,
       direction = "horizontal",
       style,
+      deckItemProps,
       ...rest
     },
     ref
@@ -109,6 +114,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
                 index={index}
                 activeIndex={activeIndex}
                 animation={animation}
+                {...deckItemProps}
               >
                 {child}
               </DeckItem>

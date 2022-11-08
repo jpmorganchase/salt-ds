@@ -1,10 +1,13 @@
 import { composeStories } from "@storybook/testing-react";
 import * as deckStories from "@stories/layout/deck-layout.stories";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(deckStories);
 const { DefaultDeckLayout } = composedStories;
 
 describe("Given a deck layout", () => {
+  checkAccessibility(composedStories);
+
   describe("WHEN no custom values are provided", () => {
     it("THEN it should render with default values", () => {
       cy.mount(<DefaultDeckLayout />);

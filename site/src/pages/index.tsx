@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
+import { Button } from "@jpmorganchase/uitk-core";
 
 import styles from "./index.module.css";
 
@@ -14,17 +15,14 @@ function HomepageHeader() {
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/getting-started"
-          >
-            Getting Started
+          <Link to="/docs/getting-started">
+            <Button variant="cta">Getting Started</Button>
           </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/components"
-          >
-            Components
+          <Link to="/docs/components">
+            <Button variant="cta">Components</Button>
+          </Link>
+          <Link to="/docs/contributing">
+            <Button variant="cta">Contributing</Button>
           </Link>
         </div>
       </div>
