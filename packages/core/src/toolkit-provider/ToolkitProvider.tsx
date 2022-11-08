@@ -131,7 +131,6 @@ export function ToolkitProvider({
     (Array.isArray(inheritedThemes) && inheritedThemes.length === 0);
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
-  // We expect theme to be stable
   const themNameAsString = themeName.toString();
   const themes: Theme[] = useMemo(
     () => getTheme(themeName),
