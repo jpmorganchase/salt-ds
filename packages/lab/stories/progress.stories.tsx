@@ -185,12 +185,6 @@ export const CircularUnit: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" unit="px" value={38} />
 );
 
-export const CircularBackwardsCompat: ComponentStory<
-  typeof CircularProgress
-> = () => (
-  <CircularProgress className="backwardsCompat" showInfo={false} value={38} />
-);
-
 const LinearExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>

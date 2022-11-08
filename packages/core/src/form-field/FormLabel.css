@@ -70,8 +70,3 @@
   margin-left: 6px;
   vertical-align: top;
 }
-
-.backwardsCompat.uitkFormField .uitkFormLabel,
-.backwardsCompat.uitkRadioButtonGroup .uitkFormLabel {
-  --formField-label-fontSize: var(--backwardsCompat-text-caption-fontSize);
-}

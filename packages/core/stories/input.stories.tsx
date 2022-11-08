@@ -16,7 +16,6 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import "./input.qa.stories.css";
 
 export default {
   title: "Core/Input",

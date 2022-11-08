@@ -12,8 +12,6 @@ import {
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 
-import { CustomSummary } from "./accordion/CustomSummary";
-
 export default {
   title: "Lab/Accordion",
   component: Accordion,
@@ -152,33 +150,6 @@ const AccordionInAccordionTemplate: Story<AccordionProps> = () => {
   );
 };
 
-const CustomSummaryTemplate: Story<AccordionProps> = (props) => {
-  return (
-    <div className="story-root">
-      <Accordion {...props}>
-        <AccordionSection className={"accordion"}>
-          <CustomSummary>Mountains and hills</CustomSummary>
-          <AccordionDetails>
-            <MountainsAndHills />
-          </AccordionDetails>
-        </AccordionSection>
-        <AccordionSection className={"accordion"}>
-          <CustomSummary>Rivers and lakes</CustomSummary>
-          <AccordionDetails>
-            <RiversAndLakes />
-          </AccordionDetails>
-        </AccordionSection>
-        <AccordionSection className={"accordion"}>
-          <CustomSummary>Islands</CustomSummary>
-          <AccordionDetails>
-            <Islands />
-          </AccordionDetails>
-        </AccordionSection>
-      </Accordion>
-    </div>
-  );
-};
-
 export const DefaultAccordion = AccordionTemplate.bind({});
 
 export const ControlledAccordion = ControlledAccordionTemplate.bind({});
@@ -186,8 +157,6 @@ export const ControlledAccordion = ControlledAccordionTemplate.bind({});
 export const DefaultMultiAccordion = MultiAccordionTemplate.bind({});
 
 export const AccordionInAccordion = AccordionInAccordionTemplate.bind({});
-
-export const AccordionWithCustomSummary = CustomSummaryTemplate.bind({});
 
 DefaultAccordion.args = {
   disabled: false,

@@ -207,9 +207,3 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkSlider {
-  --slider-label-fontSize: var(--backwardsCompat-text-caption-fontSize);
-}

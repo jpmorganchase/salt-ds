@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 
 import {
   ContactAction,
@@ -143,19 +143,4 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
-CompareWithOriginalToolkit.args = {
-  className: "backwardsCompat",
-  imgSrc: "/visual-regression-screenshots/ContactDetails-vr-snapshot.png",
 };

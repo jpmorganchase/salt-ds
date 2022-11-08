@@ -65,9 +65,3 @@
   flex-direction: row;
   justify-content: center;
 }
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkBadge {
-  --badge-fontSize: var(--backwardsCompat-text-caption-fontSize);
-}

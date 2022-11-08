@@ -82,39 +82,3 @@
 .uitkRadioButtonIcon-inner-checked {
   fill: var(--uitkRadioButton-icon-inner-fill, var(--uitk-selectable-primary-foreground-selected));
 }
-
-/* TK1 Backwards compatibility */
-
-.uitk-light {
-  --backwardsCompat-radioButton-icon-border-fill: transparent;
-  --backwardsCompat-radioButton-icon-border-fill-checked: var(--uitk-selectable-borderColor-selected);
-  --backwardsCompat-radioButton-icon-border-fill-checked-hover: var(--uitk-selectable-borderColor-selected);
-  --backwardsCompat-radioButton-icon-inner-checked-fill: var(--uitk-selectable-primary-foreground-selected);
-}
-
-.uitk-dark {
-  --backwardsCompat-radioButton-icon-border-fill: transparent;
-  --backwardsCompat-radioButton-icon-border-fill-checked: transparent;
-  --backwardsCompat-radioButton-icon-border-fill-checked-hover: transparent;
-  --backwardsCompat-radioButton-icon-inner-checked-fill: var(--uitk-selectable-borderColor-selected);
-}
-
-.backwardsCompat.uitkRadioButton .uitkRadioButtonIcon-border,
-.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonIcon-border {
-  fill: var(--backwardsCompat-radioButton-icon-border-fill);
-}
-
-.backwardsCompat.uitkRadioButton .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
-.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border {
-  fill: var(--backwardsCompat-radioButton-icon-border-fill-checked);
-}
-
-.backwardsCompat.uitkRadioButton .uitkRadioButtonIcon-inner-checked,
-.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonIcon-inner-checked {
-  fill: var(--backwardsCompat-radioButton-icon-inner-checked-fill);
-}
-
-.backwardsCompat.uitkRadioButton .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border,
-.backwardsCompat.uitkRadioButtonGroup .uitkRadioButtonBase:not(.uitkRadioButtonBase-disabled):hover .uitkRadioButtonIcon-checked .uitkRadioButtonIcon-border {
-  fill: var(--backwardsCompat-radioButton-icon-border-fill-checked-hover);
-}

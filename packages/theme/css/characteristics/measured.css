@@ -18,14 +18,3 @@
   --uitk-measured-foreground: var(--uitk-palette-measured-foreground);
   --uitk-measured-foreground-disabled: var(--uitk-palette-measured-foreground-disabled);
 }
-
-/* TK1 Backwards compatibility */
-.uitk-light {
-  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-500);
-  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-500);
-}
-
-.uitk-dark {
-  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-300);
-  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-300);
-}

@@ -1,7 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { Checkbox } from "@jpmorganchase/uitk-core";
 import { QAContainer, QAContainerProps } from "docs/components";
-import "./checkbox.qa.stories.css";
 
 export default {
   title: "Core/Checkbox/QA",
@@ -39,19 +38,4 @@ export const AllExamplesGrid: Story<
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Checkbox-vr-snapshot.png" />
-  );
 };
