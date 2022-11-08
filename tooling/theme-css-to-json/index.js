@@ -43,6 +43,20 @@ const cssVarToReference = (input) =>
 const guessTokenType = (tokenNameArray, filePath) => {
   if (tokenNameArray.includes("opacity")) {
     return "opacity";
+  } else if (
+    tokenNameArray.some((token) =>
+      /(foreground|background|borderColor|outlineColor|startColor|stopColor|indicator)/i.test(
+        token
+      )
+    )
+  ) {
+    return "color";
+  } else if (tokenNameArray.some((token) => /(fontWeight)/i.test(token))) {
+    return "font-weight";
+  } else if (tokenNameArray.some((token) => /(borderRadius)/i.test(token))) {
+    return "border-radius";
+  } else if (tokenNameArray.some((token) => /(borderStyle)/i.test(token))) {
+    return "border-style";
   }
 
   if (filePath.name.includes("palette")) {
