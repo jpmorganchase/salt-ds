@@ -128,7 +128,12 @@ export function ToolkitProvider({
     (Array.isArray(inheritedThemes) && inheritedThemes.length === 0);
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
-  const themes: Theme[] = useMemo(() => getTheme(themeName), [themeName]);
+  // We expect theme to be stable
+  const themNameAsString = themeName.toString();
+  const themes: Theme[] = useMemo(
+    () => getTheme(themeName),
+    [themNameAsString]
+  );
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
   const themeClassnames = useMemo(
