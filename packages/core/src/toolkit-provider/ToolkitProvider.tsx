@@ -113,6 +113,9 @@ const getThemeName = (
   }
 };
 
+const getThemeClassName = (themes: Theme[]): string[] =>
+  themes.map((theme) => `uitk-${theme.name}`);
+
 export function ToolkitProvider({
   applyClassesTo,
   children,
@@ -138,10 +141,7 @@ export function ToolkitProvider({
   );
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
-  const themeClassnames = useMemo(
-    () => themes.map((theme) => `uitk-${theme.name}`),
-    [themes]
-  );
+  const themeClassnames = getThemeClassName(themes);
 
   const themedChildren = createThemedChildren(
     children,
