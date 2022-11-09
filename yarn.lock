@@ -3758,7 +3758,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app"
   dependencies:
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/theme-editor": "*"
+    "@jpmorganchase/uitk-core": "*"
+    "@jpmorganchase/uitk-lab": "*"
+    "@jpmorganchase/uitk-theme": "*"
   languageName: unknown
   linkType: soft
 
@@ -3773,7 +3776,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+"@jpmorganchase/theme-editor@*, @jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
   dependencies:
@@ -3790,7 +3793,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-core@workspace:packages/core":
+"@jpmorganchase/uitk-core@*, @jpmorganchase/uitk-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-core@workspace:packages/core"
   peerDependencies:
@@ -3832,7 +3835,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-lab@workspace:packages/lab":
+"@jpmorganchase/uitk-lab@*, @jpmorganchase/uitk-lab@workspace:packages/lab":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-lab@workspace:packages/lab"
   peerDependencies:
@@ -3845,7 +3848,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-theme@workspace:packages/theme":
+"@jpmorganchase/uitk-theme@*, @jpmorganchase/uitk-theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-theme@workspace:packages/theme"
   languageName: unknown

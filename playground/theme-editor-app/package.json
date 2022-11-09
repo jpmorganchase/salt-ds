@@ -6,9 +6,9 @@
     "type": "app"
   },
   "dependencies": {
+    "@jpmorganchase/theme-editor": "*",
     "@jpmorganchase/uitk-core": "*",
     "@jpmorganchase/uitk-lab": "*",
-    "@jpmorganchase/uitk-theme": "*",
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/uitk-theme": "*"
   }
 }
