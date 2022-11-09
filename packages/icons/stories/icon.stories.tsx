@@ -119,7 +119,7 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
               <StackLayout style={{ width: "150px" }} align="center">
                 {createElement(icon, {
                   key: i,
-                  size: 24,
+                  size: 2,
                 })}
                 <p>{name.slice(0, -1)}</p>
               </StackLayout>
