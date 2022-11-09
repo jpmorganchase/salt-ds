@@ -94,7 +94,7 @@ export function renderStatusIndicator({
       className={className}
       data-jpmui-test={`icon-${iconName}-${id!}`}
       role="img"
-      size="medium"
+      size={2}
     />
   );
 }

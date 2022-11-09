@@ -49,7 +49,3 @@
   padding-right: var(--uitkFormField-helperText-paddingRight, var(--uitk-size-unit));
   transform: var(--uitkFormField-helperText-transform, var(--formField-helperText-transform, none));
 }
-
-.backwardsCompat.uitkFormField {
-  --formField-helperText-fontSize: var(--backwardsCompat-text-help-fontSize);
-}

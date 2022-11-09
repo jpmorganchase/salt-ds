@@ -1,7 +1,6 @@
 import { Pill } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import "./pill.qa.stories.css";
 
 export default {
   title: "Core/Pill/QA",
@@ -12,7 +11,7 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
   const { className, ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <Pill className="backwardsCompat" label="Default Pill" />
+      <Pill className={className} label="Default Pill" />
       <Pill className={className} label="Closable Pill" variant="closable" />
       <Pill
         className={className}
@@ -36,21 +35,4 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid: Story = () => {
-  return <ExamplesGrid className="backwardsCompat" />;
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <ExamplesGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/Pill-vr-snapshot.png"
-    />
-  );
 };

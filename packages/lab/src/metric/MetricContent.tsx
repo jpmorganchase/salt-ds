@@ -34,6 +34,11 @@ export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
   value: string | number;
 }
 
+const iconComponentMap = {
+  down: ArrowDownIcon,
+  up: ArrowUpIcon,
+};
+
 const withBaseName = makePrefixer("uitkMetricContent");
 
 export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
@@ -58,7 +63,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       subtitleId,
     } = useMetricContext();
 
-    const iconSize = size === "large" ? "medium" : size;
+    const iconSize = size === "large" ? 2 : 1;
 
     const valueComponentMap = {
       small: Figure3,
@@ -70,15 +75,9 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const iconProps = {
       "aria-label": direction,
       className: withBaseName("indicator"),
-      "data-testid": "metric-indicator",
       name: direction ? `movement-${direction}` : "",
       size: iconSize,
       ...IndicatorIconProps,
-    };
-
-    const iconComponentMap = {
-      down: ArrowDownIcon,
-      up: ArrowUpIcon,
     };
 
     const IconComponent =

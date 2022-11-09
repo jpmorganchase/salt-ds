@@ -48,7 +48,13 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
     <>
       <button onClick={handleDecrease}>Previous</button>
       <button onClick={handleIncrease}>Next</button>
-      <DeckLayout {...args} activeIndex={currentIndex}>
+      <DeckLayout
+        {...args}
+        activeIndex={currentIndex}
+        deckItemProps={{
+          "aria-roledescription": "slide",
+        }}
+      >
         {deckCards(slides)}
       </DeckLayout>
     </>
@@ -75,7 +81,11 @@ const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
           <Tab label={label} key={i} />
         ))}
       </Tabstrip>
-      <DeckLayout activeIndex={activeTabIndex} {...args}>
+      <DeckLayout
+        activeIndex={activeTabIndex}
+        deckItemProps={{ role: "tabpanel" }}
+        {...args}
+      >
         {tabs.map((tab, index) => {
           return (
             <Card key={index}>

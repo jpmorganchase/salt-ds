@@ -250,7 +250,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
 
   const BackButton = () => (
     <Button variant="secondary">
-      <ChevronLeftIcon size="small" style={{ marginRight: 4 }} />
+      <ChevronLeftIcon style={{ marginRight: 4 }} />
       Back to manage view
     </Button>
   );

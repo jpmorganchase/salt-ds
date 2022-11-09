@@ -124,7 +124,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           className={withBaseName("prev-button")}
           onClick={() => moveSlide("left")}
         >
-          <ChevronLeftIcon size="medium" />
+          <ChevronLeftIcon size={2} />
         </Button>
         <DeckLayout
           activeIndex={selectedSlide}
@@ -138,7 +138,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           className={withBaseName("next-button")}
           onClick={() => moveSlide("right")}
         >
-          <ChevronRightIcon size="medium" />
+          <ChevronRightIcon size={2} />
         </Button>
         <div className={withBaseName("dots")}>
           <RadioButtonGroup

@@ -187,7 +187,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
       className="parent-child-composite-title"
     >
       <Button onClick={handleParent} variant="secondary" aria-label="Back">
-        <ChevronLeftIcon size={12} />
+        <ChevronLeftIcon />
       </Button>
       <h2>{text}</h2>
       <div className="parent-child-composite-empty-container"></div>

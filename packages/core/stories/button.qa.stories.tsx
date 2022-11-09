@@ -16,34 +16,28 @@ export const AllVariantsGrid: Story<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
     <Button variant="primary">Button</Button>
     <Button variant="primary">
-      <SearchIcon size={12} />
+      <SearchIcon />
     </Button>
     <Button variant="primary">
-      <SearchIcon size={12} /> Button
+      <SearchIcon /> Button
     </Button>
     <Button variant="secondary">Button</Button>
     <Button variant="secondary">
-      <SearchIcon size={12} />
+      <SearchIcon />
     </Button>
     <Button variant="secondary">
-      <SearchIcon size={12} /> Button
+      <SearchIcon /> Button
     </Button>
     <Button variant="cta">Button</Button>
     <Button variant="cta">
-      <SearchIcon size={12} />
+      <SearchIcon />
     </Button>
     <Button variant="cta">
-      <SearchIcon size={12} /> Button
+      <SearchIcon /> Button
     </Button>
   </QAContainer>
 );
 
 AllVariantsGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllVariantsGrid imgSrc="/visual-regression-screenshots/Button-vr-snapshot.png" />
-  );
 };

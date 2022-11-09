@@ -8,7 +8,7 @@ describe("GIVEN a DropdownButton component", () => {
         "have.class",
         "uitkDropdownButton-buttonLabel"
       );
-      cy.get(".uitkDropdownButton-icon").within(() => {
+      cy.get(".uitkDropdownButton-content").within(() => {
         cy.findByTestId("ChevronDownIcon").should("exist");
       });
     });

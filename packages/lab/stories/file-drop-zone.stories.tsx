@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useDensity } from "@jpmorganchase/uitk-core";
 import {
   createFileTypeValidator,
@@ -237,7 +237,6 @@ export const WithMultipleValidations: ComponentStory<typeof FileDropZone> = ({
   return (
     <>
       <FileDropZone
-        className="backwardsCompat"
         accept={ACCEPTED_TYPES}
         data-testid="file-drop-zone-example"
         description={`${MAX_KB}KB total file size limit. Accept only images with file name no more than ${MAX_CHARS} chars.`}

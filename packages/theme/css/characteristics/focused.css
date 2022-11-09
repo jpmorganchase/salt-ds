@@ -4,11 +4,9 @@
   --uitk-focused-outlineStyle: dotted;
   --uitk-focused-outlineWidth: 2px;
 
-  --uitk-focused-outlineOffset: 0; /* Not in Figma */
   --uitk-focused-outlineInset: 0px 0px 0px 0px; /* Not in Figma */
-
-  /* CSS shortcut token: not in Figma */
-  --uitk-focused-outline: var(--uitk-focused-outlineWidth) var(--uitk-focused-outlineStyle) var(--uitk-focused-outlineColor);
+  --uitk-focused-outlineOffset: 0; /* Not in Figma */
+  --uitk-focused-outline: var(--uitk-focused-outlineWidth) var(--uitk-focused-outlineStyle) var(--uitk-focused-outlineColor); /* CSS shortcut token: not in Figma */
 }
 
 .uitkFocusVisible:after,

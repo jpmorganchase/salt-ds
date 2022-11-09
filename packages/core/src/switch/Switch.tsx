@@ -58,7 +58,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.checked;
     setChecked(value);
-    console.log(value);
     onChange?.(event, value);
   };
 
