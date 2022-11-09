@@ -37,37 +37,3 @@
 
   margin-bottom: var(--breadcrumbs-ol-wrap-li-marginBottom);
 }
-
-/* TK1 Backwards compatibility */
-
-.uitk-density-medium {
-  --backwardsCompat-breadcrumbs-li-marginRight: 6px;
-}
-.uitk-density-high {
-  --backwardsCompat-breadcrumbs-li-marginRight: 2px;
-}
-.uitk-density-low {
-  --backwardsCompat-breadcrumbs-li-marginRight: 10px;
-}
-.uitk-density-touch {
-  --backwardsCompat-breadcrumbs-li-marginRight: 14px;
-}
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol {
-  --breadcrumbs-ol-gap: 0px;
-}
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-ol-wrap li:not(:last-child) {
-  --breadcrumbs-ol-wrap-li-marginBottom: calc(var(--uitk-size-unit) / 2 - 2px);
-}
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-li {
-  --breadcrumbs-li-padding: 2px;
-  --breadcrumbs-li-marginRight: var(--backwardsCompat-breadcrumbs-li-marginRight);
-  box-sizing: content-box;
-}
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumbs-separator {
-  --breadcrumbs-separator-marginRight: var(--backwardsCompat-breadcrumbs-li-marginRight);
-  box-sizing: content-box;
-}

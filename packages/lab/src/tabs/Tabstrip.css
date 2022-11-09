@@ -59,7 +59,7 @@
 }
 
 .uitkTabstrip-overflowMenu.uitkDropdown {
-  --uitkIcon-padding: 0;
+  --uitkIcon-margin: 2px 0 0 0px;
 }
 
 .uitkTabstrip-overflowMenu-open {
@@ -143,9 +143,4 @@
   left: 0;
   right: 0;
   bottom: 0;
-}
-
-.uitkTabstrip.backwardsCompat {
-  --tabs-tab-letterSpacing: -0.1px;
-  --tabs-tab-top: -1px;
 }

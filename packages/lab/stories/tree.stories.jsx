@@ -1,10 +1,8 @@
 import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 
 import { Tree as Tree } from "@jpmorganchase/uitk-lab";
-import { usa_states_cities, groupByInitialLetter } from "./list.data";
+import { groupByInitialLetter, usa_states_cities } from "./list.data";
 import { folderData } from "./tree.data";
-
-import "./list.stories.css";
 
 export default {
   title: "Lab/Tree",

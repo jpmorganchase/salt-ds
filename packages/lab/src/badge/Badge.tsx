@@ -46,7 +46,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     badgeContent = 0,
     max = 1000,
     className,
-    children = <MessageIcon size={12} />,
+    children = <MessageIcon />,
     ...rest
   },
   ref

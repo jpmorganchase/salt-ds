@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 
 import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -89,22 +89,4 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: ComponentStory<typeof Metric> = () => {
-  return (
-    <AllExamplesGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/Metric-vr-snapshot.png"
-    />
-  );
 };

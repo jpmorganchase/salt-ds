@@ -138,13 +138,3 @@
     right: -8%;
   }
 }
-
-.backwardsCompat.uitkLinearProgress-large {
-  --linearProgress-fontSize: 16px;
-}
-.backwardsCompat.uitkLinearProgress-medium {
-  --linearProgress-fontSize: 14px;
-}
-.backwardsCompat.uitkLinearProgress-small {
-  --linearProgress-fontSize: 11px;
-}

@@ -1,9 +1,21 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const ArrowRightIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="ArrowRightIcon">
-    <path d="M8 5H0v2h8v3l4-4-4-4v3z" />
-  </svg>,
-  "ArrowRight",
-  "arrow right"
+import { Icon, IconProps } from "../icon";
+
+export type ArrowRightIconProps = IconProps;
+
+export const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
+  function ArrowRightIcon(props: ArrowRightIconProps, ref) {
+    return (
+      <Icon
+        data-testid="ArrowRightIcon"
+        aria-label="arrow right"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path d="M8 5H0v2h8v3l4-4-4-4v3z" />
+      </Icon>
+    );
+  }
 );

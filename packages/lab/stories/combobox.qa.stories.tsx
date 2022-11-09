@@ -60,9 +60,3 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
 AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-export const CompareWithBaseline: Story = () => {
-  return (
-    <AllExamples imgSrc="/visual-regression-screenshots/Combobox-vr-snapshot.png" />
-  );
-};

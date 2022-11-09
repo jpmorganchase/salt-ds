@@ -1,56 +1,29 @@
 .uitkIcon {
   --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
-  --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
+  --icon-size-multiplier: var(--uitkIcon-size-multiplier, 1);
+  --icon-base-size: var(--uitk-size-icon-base, 12px);
+  /**
+   * Icon size will be the multiplier (an integer from the size prop) * the base size (set by the theme per density)
+   * Icons should never be smaller than 12px for readability so we've added a max() to enforce this 
+  */
+  --icon-size: max(calc(var(--icon-base-size) * var(--icon-size-multiplier)), 12px);
 }
 
 .uitkIcon {
   fill: var(--uitkIcon-color, var(--icon-color));
-  letter-spacing: var(--uitkIcon-letterSpacing, normal);
-  speak: none;
   display: inline-block;
   margin: var(--uitkIcon-margin, 0);
-  padding: var(--uitkIcon-padding, 0);
   position: relative;
-  /* Reset 1.3 line height Toolkit sets */
-  line-height: 1;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  min-width: var(--icon-size);
+  min-height: var(--icon-size);
 }
 
 .uitkIcon:hover {
   --icon-color: var(--uitkIcon-color-hover, var(--uitk-text-secondary-foreground));
 }
 
-.uitkIcon:active,
-.uitkIcon.uitkIcon-active {
+.uitkIcon:active {
   --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
-}
-
-.uitkIcon-content {
-  display: block;
-}
-
-.uitkIcon-small {
-  --icon-size: var(--uitkIcon-size-small, var(--uitk-size-graphic-small));
-}
-
-.uitkIcon-medium {
-  --icon-size: var(--uitkIcon-size-medium, var(--uitk-size-graphic-medium));
-}
-
-.uitkIcon-large {
-  --icon-size: var(--uitkIcon-size-large, var(--uitk-size-graphic-large));
-}
-
-.uitkIcon .uitkIcon-content {
-  /* We don't want any font size impacting the size of Icon span */
-  font-size: 0;
-}
-
-.uitkIcon .uitkIcon-Svg-content {
-  width: var(--icon-size, 24px);
-  height: var(--icon-size, 24px);
-}
-
-.uitkIcon .uitkIcon-Svg-content > img {
-  width: var(--icon-size, 24px);
-  height: var(--icon-size, 24px);
 }

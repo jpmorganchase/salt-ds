@@ -133,7 +133,6 @@
   --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--grid-groupHeader-color-default));
   --grid-shadow-color: var(--uitkGrid-shadow-color, var(--grid-shadow-color-default));
   --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--grid-columnDropTarget-color-default));
-  --grid-columnDropTarget-width: var(--uitkGrid-columnDropTarget-width, 2px);
   --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, dotted);
   --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, 2px);
   --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor-default));
@@ -147,12 +146,6 @@
   --grid-columnGhost-borderColor: var(--uitkGrid-columnGhost-borderColor, var(--uitk-palette-interact-border-hover));
   --grid-columnGhost-borderWidth: var(--uitkGrid-columnGhost-borderWidth, 1px);
   --grid-columnGhost-boxShadow: var(--uitkGrid-columnGhost-boxShadow, var(--uitk-overlayable-shadow-drag));
-}
-
-.uitkGrid {
-  position: relative;
-  outline: none;
-  user-select: none;
 }
 
 .uitkGrid-columnSeparators {
@@ -169,12 +162,19 @@
 
 /* Styles applied to the root element if variant="primary" */
 .uitkGrid-primaryBackground {
-  background: var(--grid-background-primary);
+  --grid-background: var(--grid-background-primary);
 }
 
 /* Styles applied to the root element if variant="secondary" */
 .uitkGrid-secondaryBackground {
-  background: var(--grid-background-secondary);
+  --grid-background: var(--grid-background-secondary);
+}
+
+.uitkGrid {
+  position: relative;
+  outline: none;
+  user-select: none;
+  background: var(--grid-background);
 }
 
 /* Styles applied to the root element if zebra is enabled */

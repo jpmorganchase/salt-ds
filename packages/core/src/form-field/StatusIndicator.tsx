@@ -47,7 +47,6 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
       <StatusIcon
         {...getTriggerProps<typeof StatusIcon>({
           status,
-          size: 12,
           ...restProps,
           ...IconProps,
           className: cx(
