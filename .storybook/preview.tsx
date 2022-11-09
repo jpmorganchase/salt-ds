@@ -13,16 +13,16 @@ import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
-const DEFAULT_THEME = "light";
+const DEFAULT_MODE = "light";
 
 export const globalTypes: GlobalTypes = {
-  theme: {
-    name: "Theme",
+  mode: {
+    name: "Mode",
     description: "Set the color theme",
-    defaultValue: DEFAULT_THEME,
+    defaultValue: DEFAULT_MODE,
     toolbar: {
-      title: "Theme",
-      // show the theme name once selected in the toolbar
+      title: "Mode",
+      // show the mode name once selected in the toolbar
       dynamicTitle: true,
       items: [
         { value: "light", right: "⚪", title: "Light" },
@@ -114,7 +114,7 @@ export const parameters: Parameters = {
     }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
       // @ts-ignore DocsContainer does not support React18 types
       <DocsContainer context={context}>
-        <ToolkitProvider theme={context.globals?.theme}>
+        <ToolkitProvider mode={context.globals?.mode}>
           {children}
         </ToolkitProvider>
       </DocsContainer>

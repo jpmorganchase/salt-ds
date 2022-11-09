@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-dropTarget-borderStyle: dashed;
   --uitk-dropTarget-borderStyle-hover: dashed;
   --uitk-dropTarget-borderStyle-disabled: dashed;

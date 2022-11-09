@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-ratable-cursor-hover: pointer;
   --uitk-ratable-cursor-active: pointer;
   --uitk-ratable-cursor-undo: pointer;

@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   /* Body text (default), tokens that don't vary by density */
   --uitk-text-base-lineHeight: var(--uitk-typography-lineHeight);
   --uitk-text-fontFamily: var(--uitk-typography-fontFamily);

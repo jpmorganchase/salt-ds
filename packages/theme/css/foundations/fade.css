@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-color-blue-30-fade-99: rgba(164, 213, 244, 0.99); /* see Editable characteristic for explanation of this value */
   --uitk-color-blue-700-fade-99: rgba(0, 71, 123, 0.99); /* see Editable characteristic for explanation of this value */
 

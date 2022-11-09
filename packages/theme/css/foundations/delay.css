@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-delay-instant: 100;
   --uitk-delay-perceptible: 300;
   --uitk-delay-notable: 1000;

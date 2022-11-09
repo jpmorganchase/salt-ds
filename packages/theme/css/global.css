@@ -17,15 +17,15 @@ body {
   font-family: "uitk-sans";
 }
 
-.uitk-theme {
+.uitk-provider {
   display: contents;
 }
 
-.uitk-light {
+.uitk-theme[data-mode^="light"] {
   color-scheme: light;
 }
 
-.uitk-dark {
+.uitk-theme[mode="dark"] {
   color-scheme: dark;
 }
 

@@ -1,5 +1,4 @@
-.uitk-dark,
-.uitk-light {
+.uitk-theme {
   --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;

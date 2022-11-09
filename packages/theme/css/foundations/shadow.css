@@ -1,4 +1,4 @@
-.uitk-light {
+.uitk-theme[data-mode^="light"] {
   --uitk-shadow-0: none;
   --uitk-shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   --uitk-shadow-2: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
@@ -7,7 +7,7 @@
   --uitk-shadow-5: 0 12px 40px 5px rgba(0, 0, 0, 0.3);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode^="dark"] {
   --uitk-shadow-0: none;
   --uitk-shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
   --uitk-shadow-2: 0 2px 4px 0 rgba(0, 0, 0, 0.5);

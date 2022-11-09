@@ -25,7 +25,7 @@ const DARK = 1;
 const HIGH = 0;
 const NO_DENSITY = 4;
 
-const THEMES = ["light", "dark"];
+const MODES = ["light", "dark"];
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 
 export const ToggleTheme = () => {
@@ -39,7 +39,7 @@ export const ToggleTheme = () => {
   };
 
   return (
-    <ToolkitProvider theme={THEMES[theme]}>
+    <ToolkitProvider mode={MODES[theme]}>
       <Card>
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
@@ -47,7 +47,7 @@ export const ToggleTheme = () => {
             <ToggleButton aria-label="light theme">Light</ToggleButton>
             <ToggleButton aria-label="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
-          <p>{`This Card is wrapped with a ToolkitProvider, theme is ${THEMES[theme]}`}</p>
+          <p>{`This Card is wrapped with a ToolkitProvider, mode is ${MODES[theme]}`}</p>
 
           <Checkbox label="Example Choice 1" />
           <Checkbox defaultChecked label="Example Choice 2" />
@@ -106,10 +106,7 @@ export const NestedProviders = () => {
   };
 
   return (
-    <ToolkitProvider
-      density={DENSITIES[outerDensity]}
-      theme={THEMES[outerTheme]}
-    >
+    <ToolkitProvider density={DENSITIES[outerDensity]} mode={MODES[outerTheme]}>
       <Card>
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
@@ -138,7 +135,7 @@ export const NestedProviders = () => {
         </div>
         <br />
         <ToolkitProvider
-          theme={THEMES[innerTheme]}
+          mode={MODES[innerTheme]}
           density={DENSITIES[innerDensity]}
         >
           <Card>

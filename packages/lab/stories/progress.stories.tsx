@@ -79,10 +79,10 @@ export const CircularAll: ComponentStory<typeof CircularProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <CircularExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <CircularExamples />
     </ToolkitProvider>
   </div>
@@ -216,10 +216,10 @@ export const LinearAll: ComponentStory<typeof LinearProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <LinearExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <LinearExamples />
     </ToolkitProvider>
   </div>

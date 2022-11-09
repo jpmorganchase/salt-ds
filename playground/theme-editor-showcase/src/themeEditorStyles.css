@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-actionable-primary-fontWeight: var(--uitk-typography-fontWeight-bold);
   --uitk-actionable-letterSpacing: 0.6px;
   --uitk-actionable-textTransform: uppercase;
@@ -10,7 +9,7 @@ h1 {
   font-size: 1500px !important;
 }
 
-.uitk-light {
+.uitk-theme[data-mode^="light"] {
   --uitk-actionable-primary-foreground: var(--uitk-color-grey-900);
   --uitk-actionable-primary-foreground-active: var(--uitk-color-white);
   --uitk-actionable-primary-foreground-hover: var(--uitk-color-grey-900);
@@ -35,7 +34,7 @@ h1 {
   --uitk-actionable-secondary-background-hover: var(--uitk-color-grey-40);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode^="dark"] {
   --uitk-actionable-primary-foreground: var(--uitk-color-white);
   --uitk-actionable-primary-foreground-active: var(--uitk-color-grey-900);
   --uitk-actionable-primary-foreground-hover: var(--uitk-color-white);

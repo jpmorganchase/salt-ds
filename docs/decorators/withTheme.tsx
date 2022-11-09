@@ -1,8 +1,7 @@
 import { DecoratorFn } from "@storybook/react";
-import { Panel, ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
-import { useEffect } from "react";
+import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 
-const THEMES = ["light", "dark"];
+const MODES = ["light", "dark"];
 
 // Modified from storybook background addon
 // https://github.com/storybookjs/storybook/blob/next/addons/backgrounds/src/helpers/index.ts
@@ -21,42 +20,11 @@ export const addBackgroundStyle = (selector: string, css: string) => {
   }
 };
 
-function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
-  const [theme] = useTheme();
-  const selectorId =
-    viewMode === "docs"
-      ? `addon-backgrounds-docs-${id}`
-      : `addon-backgrounds-color`;
-
-  const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
-
-  useEffect(() => {
-    const color = theme.getCharacteristicValue("text", "primary-foreground");
-    const background = theme.getCharacteristicValue(
-      "container",
-      "background-medium"
-    );
-
-    addBackgroundStyle(
-      selectorId,
-      `
-        ${selector} {
-          background: ${background || "unset"};
-          color: ${color || "unset"};
-          transition: background-color 0.3s;
-        }
-      `
-    );
-  }, [selectorId, selector, theme]);
-
-  return null;
-}
-
 export const withTheme: DecoratorFn = (StoryFn, context) => {
-  const { density, theme } = context.globals;
+  const { density, mode } = context.globals;
 
-  if (theme === "side-by-side" || theme === "stacked") {
-    const isStacked = theme === "stacked";
+  if (mode === "side-by-side" || mode === "stacked") {
+    const isStacked = mode === "stacked";
 
     return (
       <div
@@ -72,12 +40,12 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
           left: 0,
         }}
       >
-        {THEMES.map((theme) => (
+        {MODES.map((mode) => (
           <ToolkitProvider
             applyClassesTo={"child"}
             density={density}
-            theme={theme}
-            key={theme}
+            mode={mode}
+            key={mode}
           >
             <Panel>
               <StoryFn />
@@ -89,9 +57,11 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
   }
 
   return (
-    <ToolkitProvider density={density} theme={theme}>
-      <SetBackground viewMode={context.viewMode} id={context.id} />
-      <StoryFn />
+    <ToolkitProvider density={density} mode={mode}>
+      <Panel>
+        {/*<SetBackground viewMode={context.viewMode} id={context.id} />*/}
+        <StoryFn />
+      </Panel>
     </ToolkitProvider>
   );
 };

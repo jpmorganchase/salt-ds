@@ -1,6 +1,6 @@
 import "@testing-library/cypress/add-commands";
 import { mount as cypressMount } from "cypress/react18";
-import type { MountReturn, MountOptions } from "cypress/react";
+import type { MountOptions, MountReturn } from "cypress/react";
 import "cypress-axe";
 import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
@@ -104,7 +104,7 @@ Cypress.Commands.add("mount", function (children, options) {
   };
 
   return cypressMount(
-    <ToolkitProvider density={this.density} theme={this.theme}>
+    <ToolkitProvider density={this.density} mode={this.theme}>
       {children}
       <AnnouncementListener onAnnouncement={handleAnnouncement} />
     </ToolkitProvider>,

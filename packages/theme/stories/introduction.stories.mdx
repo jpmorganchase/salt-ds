@@ -1,13 +1,6 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { DocGrid } from "docs/components/DocGrid";
-import { ColorBlock } from "docs/components/ColorBlock";
 import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-  LineBlockDotted,
-} from "docs/components/LineBlock";
-import { CornerBlock } from "docs/components/CornerBlock";
+  Meta
+} from "@storybook/addon-docs";
 
 <Meta title="Documentation/Styles and Theming/Introduction" />
 
@@ -145,12 +138,12 @@ Consider the example given above:
 In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
 
 ```css
-.uitk-light {
+.uitk-theme[data-mode^="light"] {
   --property-my-color: red;
 }
 ```
 
-In this case, the CSS selector `.uitk-light` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-light` or `.uitk-dark` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
+In this case, the CSS selector `.uitk-theme[data-mode^="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode^="light"]` or `.uitk-theme[data-mode^="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
 
 ```html
 <div class="MyApplication uitk-light">
@@ -163,7 +156,7 @@ In this case the UI Toolkit theme variables will be available throughout the app
 The UI Toolkit provides a component `ToolkitProvider` for React users that takes care of injecting the appropriate CSS class names into the HTML. Usage would be something like the following:
 
 ```jsx
-<ToolkitProvider density="high" theme="light">
+<ToolkitProvider density="high" mode="light">
   <RestOfMyApplication />
 </ToolkitProvider>
 ```
@@ -183,8 +176,7 @@ The combination of CSS variables with CSS selector scoping is very flexible. It 
 In the CSS where the theme variables are declared, there are sections declared as follows:
 
 ```css
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-actionable-primary-foreground: var(
     --uitk-palette-interact-primary-foreground
   );
@@ -194,10 +186,10 @@ In the CSS where the theme variables are declared, there are sections declared a
 The palette token then resolves down to:
 
 ```css
-.uitk-light {
+.uitk-theme[data-mode^="light"] {
   --uitk-palette-interact-primary-foreground: var(--uitk-grey-900);
 }
-.uitk-dark {
+.uitk-theme[data-mode^="dark"] {
   --uitk-palette-interact-primary-foreground: var(--uitk-white);
 }
 ```
