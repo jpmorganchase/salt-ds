@@ -3396,7 +3396,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor@*, @jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+"@jpmorganchase/theme-editor@*, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
   dependencies:
