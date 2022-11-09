@@ -76,7 +76,7 @@ There is (currently) one limitation to this pattern, you must use a single child
 for TypeScript users, via the typings.This would look as follows.
 
 ```jsx
-<ToolkitProvider theme="light" density="dark" applyClassesToChild>
+<ToolkitProvider theme="light" density="dark" applyClassesTo={"child"}>
   <Card>...</Card>
 </ToolkitProvider>
 ```
@@ -85,6 +85,33 @@ Then we would see the following HTML.
 
 ```html
 <div class="uitkCard uitk-light uitk-density-medium">...</div>
+```
+
+The `ToolkitProvider` can also be configured to add the required CSS classes to the root HTML element. This would allow you to apply styles
+to the whole of the document rather than just the root `div` that React renders to. Some use cases for this would be to prevent overscroll
+or to apply styling to the whole background of the page.
+
+This would look as follows.
+
+```jsx
+<ToolkitProvider theme="light" density="dark" applyClassesTo={"root"}>
+  <Card>...</Card>
+</ToolkitProvider>
+```
+
+Then we would see the following HTML.
+
+```html
+<html class="uitk-theme-light uitk-density-medium" lang="en">
+  <head>
+    <title>Example</title>
+  </head>
+  <body>
+    <div id="root">
+      <div class="uitkCard">...</div>
+    </div>
+  </body>
+</html>
 ```
 
 #### AriaAnnouncer
