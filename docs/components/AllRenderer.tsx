@@ -32,12 +32,12 @@ export const AllRenderer = ({
               density={d}
               theme="light"
               key={"theme-light-" + d}
-              applyClassesToChild
+              applyClassesTo={"child"}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
             </ToolkitProvider>
             <ToolkitProvider
-              applyClassesToChild
+              applyClassesTo={"child"}
               density={d}
               theme="dark"
               key={"theme-dark-" + d}
