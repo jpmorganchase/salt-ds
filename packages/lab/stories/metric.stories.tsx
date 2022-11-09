@@ -236,7 +236,6 @@ export const WithCustomIndicator: ComponentStory<typeof Metric> = () => (
         IndicatorIconProps={{
           // Updated from `accessibleText`
           "aria-label": "starred",
-          size: 24,
         }}
         // API changes
         // name: "favorite",

@@ -4,7 +4,11 @@ import {
   makePrefixer,
   useFormFieldProps,
 } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import {
+  ChevronDownIcon,
+  IconProps,
+  DEFAULT_ICON_SIZE,
+} from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
@@ -64,7 +68,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
     ariaHideOptionRole,
     className,
     disabled,
-    iconSize = "small",
+    iconSize = DEFAULT_ICON_SIZE,
     isOpen,
     label,
     labelId,
