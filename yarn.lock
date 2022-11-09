@@ -3758,7 +3758,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor-app@workspace:playground/theme-editor-app"
   dependencies:
-    "@jpmorganchase/theme-editor": ">=1.0.0"
+    "@jpmorganchase/theme-editor": "*"
+    "@jpmorganchase/uitk-core": "*"
+    "@jpmorganchase/uitk-lab": "*"
+    "@jpmorganchase/uitk-theme": "*"
   languageName: unknown
   linkType: soft
 
@@ -3773,7 +3776,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
+"@jpmorganchase/theme-editor@*, @jpmorganchase/theme-editor@>=1.0.0, @jpmorganchase/theme-editor@workspace:tooling/theme-editor":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/theme-editor@workspace:tooling/theme-editor"
   dependencies:
@@ -3790,7 +3793,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-core@workspace:packages/core":
+"@jpmorganchase/uitk-core@*, @jpmorganchase/uitk-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-core@workspace:packages/core"
   peerDependencies:
@@ -3832,7 +3835,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-lab@workspace:packages/lab":
+"@jpmorganchase/uitk-lab@*, @jpmorganchase/uitk-lab@workspace:packages/lab":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-lab@workspace:packages/lab"
   peerDependencies:
@@ -3845,7 +3848,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@jpmorganchase/uitk-theme@workspace:packages/theme":
+"@jpmorganchase/uitk-theme@*, @jpmorganchase/uitk-theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@jpmorganchase/uitk-theme@workspace:packages/theme"
   languageName: unknown
@@ -19068,7 +19071,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.4.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::locator=%40jpmorganchase%2Froot%40workspace%3A.":
   version: 3.4.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.4.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.4.0&hash=7de322&locator=%40jpmorganchase%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.4.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.4.0&hash=96a37d&locator=%40jpmorganchase%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.18.6
     "@modular-scripts/workspace-resolver": 1.2.0
@@ -19177,7 +19180,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: 1c093cdb27b2462d398d29de0a7cb1a21874d96ec9ab1d0bf67f97fdef615a5e39d3dc18ae6bd7741fcac5afc90321f3f33c152b7082d6c8c16edff2fc6768fc
+  checksum: ea014bef7fd83aeda4361ec33dfa7cfef00779b164608fc40487949a605b22762884fd6e47ab169080d7daf87030e53f0cfe32ce7f832447ad4ca3220a34d9e7
   languageName: node
   linkType: hard
 
