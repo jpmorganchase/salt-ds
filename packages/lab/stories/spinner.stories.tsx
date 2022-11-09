@@ -33,11 +33,6 @@ LargeSpinner.args = {
   size: "large",
 };
 
-export const BackwardsCompatSpinner = Template.bind({});
-BackwardsCompatSpinner.args = {
-  className: "backwardsCompat",
-};
-
 export const SpinnerWithButton: Story = () => {
   const [exampleOneIsLoading, setExampleOneIsLoading] = useState(false);
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);

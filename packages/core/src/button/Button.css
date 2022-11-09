@@ -1,8 +1,3 @@
-/* Icon API @ignore */
-.uitkButton {
-  --uitkIcon-letterSpacing: 0;
-}
-
 /* Styles applied to the root element if variant="cta" */
 .uitkButton-cta {
   --button-background: var(--uitk-actionable-cta-background);

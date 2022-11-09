@@ -44,10 +44,10 @@ const ButtonGrid = ({
           {buttonLabel}
         </Button>
         <Button variant={variant} onClick={handleClick}>
-          <SearchIcon size={12} />
+          <SearchIcon />
         </Button>
         <Button variant={variant} onClick={handleClick}>
-          <SearchIcon size={12} />
+          <SearchIcon />
           {` ${buttonLabel}`}
         </Button>
       </div>

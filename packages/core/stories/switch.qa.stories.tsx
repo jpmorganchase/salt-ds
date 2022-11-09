@@ -1,7 +1,6 @@
 import { Switch } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import "./switch.qa.stories.css";
 
 export default {
   title: "Core/Switch/QA",
@@ -28,22 +27,4 @@ export const AllExamplesGrid: Story<
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <BackwardsCompatGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/Switch-vr-snapshot.png"
-    />
-  );
 };

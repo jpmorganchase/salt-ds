@@ -23,7 +23,7 @@
 }
 
 .uitkOverflowPanel.uitkDropdown {
-  --uitkIcon-padding: 0;
+  --uitkIcon-margin: 2px 0 0 0px;
 }
 
 .uitkOverflowPanel.uitkDropdown-popup .uitkFormField:not(.uitkFormField-toolbarButton) {

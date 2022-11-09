@@ -1,19 +1,3 @@
-.uitk-density-touch {
-  --banner-icon-top: 23px;
-}
-
-.uitk-density-low {
-  --banner-icon-top: 17px;
-}
-
-.uitk-density-medium {
-  --banner-icon-top: 10px;
-}
-
-.uitk-density-high {
-  --banner-icon-top: 5px;
-}
-
 /* Styles applied to root component */
 .uitkBanner {
   --banner-background: var(--uitkBanner-background, var(--uitk-container-background-medium));
@@ -36,6 +20,7 @@
   position: relative;
   /*min-height: 36px;*/
   width: 100%;
+  align-items: center;
 }
 
 .uitkBanner-closeButton {
@@ -56,12 +41,6 @@
   color: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
   fill: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
   margin-right: var(--uitkTooltip-icon-marginRight, 6px);
-  padding-top: var(--banner-icon-top);
-  margin-top: 2px;
-  align-self: flex-start;
-  top: auto;
-  vertical-align: top;
-  display: inline-flex;
   flex: 0 0 auto;
 }
 

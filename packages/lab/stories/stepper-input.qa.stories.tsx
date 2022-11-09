@@ -1,7 +1,6 @@
 import { StepperInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
-import "./stepper-input.qa.stories.css";
+import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/Stepper Input/QA",
@@ -49,19 +48,4 @@ export const ExamplesGrid: ComponentStory<typeof StepperInput> = (props) => {
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: ComponentStory<typeof StepperInput> = (
-  props
-) => {
-  return (
-    <QAContainer
-      height={488}
-      width={678}
-      className="uitkStepperInputQA"
-      imgSrc="/visual-regression-screenshots/StepperInput-vr-snapshot.png"
-    >
-      <ExamplesGrid />
-    </QAContainer>
-  );
 };

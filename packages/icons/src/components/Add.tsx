@@ -1,9 +1,22 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const AddIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="AddIcon">
-    <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
-  </svg>,
-  "Add",
-  "add"
-);
+import { Icon, IconProps } from "../icon";
+
+export type AddIconProps = IconProps;
+
+export const AddIcon = forwardRef<SVGSVGElement, AddIconProps>(function AddIcon(
+  props: AddIconProps,
+  ref
+) {
+  return (
+    <Icon
+      data-testid="AddIcon"
+      aria-label="add"
+      viewBox="0 0 12 12"
+      ref={ref}
+      {...props}
+    >
+      <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
+    </Icon>
+  );
+});

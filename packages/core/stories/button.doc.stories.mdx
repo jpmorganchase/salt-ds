@@ -49,16 +49,16 @@ Icons can be put before or after text, or used alone.
 <Canvas>
   <Story name="Button with icon and label" decorators={[withFlexGap]}>
     <Button variant="cta">
-      Send <SendIcon size={12} />
+      Send <SendIcon />
     </Button>
     <Button variant="primary">
-      <SearchIcon size={12} /> Search
+      <SearchIcon /> Search
     </Button>
     <Button variant="secondary">
-      Setting <SettingsSolidIcon size={12} />
+      Setting <SettingsSolidIcon />
     </Button>
     <Button>
-      <DownloadIcon size={12} />
+      <DownloadIcon />
     </Button>
   </Story>
 </Canvas>
@@ -92,7 +92,7 @@ export const Link = ({ children, to, ...props }) => (
   <br />
   <ComponentAnatomy>
     <Button variant="cta" aria-label="CTA with Icon">
-      CTA with Icon <SendIcon size={12} />
+      CTA with Icon <SendIcon />
     </Button>
   </ComponentAnatomy>
 </Canvas>
