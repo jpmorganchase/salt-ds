@@ -12,7 +12,7 @@ import {
 } from "./utils/parseCssToFlowData";
 import { FlowView } from "./views/FlowView";
 import { PreviewView } from "./views/PreviewView";
-import { Node, Edge } from "react-flow-renderer";
+import { Node, Edge } from "reactflow";
 import { getIdFromPropertyName } from "./utils/getIdFromPropertyName";
 import {
   UITK_CHARACTERISTICS,

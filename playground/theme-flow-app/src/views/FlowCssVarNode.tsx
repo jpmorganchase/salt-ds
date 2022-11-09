@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-import { Handle, Position } from "react-flow-renderer";
+import { Handle, Position } from "reactflow";
 import { Declaration } from "../utils/parseCssToFlowData";
 import "./FlowCssVarNode.css";
 

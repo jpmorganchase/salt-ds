@@ -44,4 +44,4 @@ export const UITK_PALETTES = [
   "action",
 ];
 
-export const UITK_COMPONENTS = ["button"];
+export const UITK_COMPONENTS = ["button", "statusIcon"];

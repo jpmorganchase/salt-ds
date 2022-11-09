@@ -845,6 +845,32 @@
           "type": "color"
         }
       }
+    },
+    "status": {
+      "warning": {
+        "foreground": {
+          "value": "{uitk.warning.icon}",
+          "type": "color"
+        }
+      },
+      "info": {
+        "foreground": {
+          "value": "{uitk.info.icon}",
+          "type": "color"
+        }
+      },
+      "success": {
+        "foreground": {
+          "value": "{uitk.success.icon}",
+          "type": "color"
+        }
+      },
+      "error": {
+        "foreground": {
+          "value": "{uitk.error.icon}",
+          "type": "color"
+        }
+      }
     }
   }
 }

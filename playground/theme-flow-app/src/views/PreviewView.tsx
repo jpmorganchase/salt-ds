@@ -1,4 +1,9 @@
-import { Button } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  FlexLayout,
+  StatusIcon,
+  VALIDATION_NAMED_STATUS,
+} from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
 import { HTMLAttributes } from "react";
 
@@ -9,19 +14,26 @@ export const PreviewView = (
   }
 ) => {
   return (
-    <div {...props}>
-      <Button variant="cta">
-        <SearchIcon size={12} />
-        {` CTA Button`}
-      </Button>
-      <Button variant="primary">
-        <SearchIcon size={12} />
-        {` Primary Button`}
-      </Button>
-      <Button variant="secondary">
-        <SearchIcon size={12} />
-        {` Secondary Button`}
-      </Button>
-    </div>
+    <FlexLayout align="center" {...props}>
+      <FlexLayout>
+        <Button variant="cta">
+          <SearchIcon size={12} />
+          {` CTA Button`}
+        </Button>
+        <Button variant="primary">
+          <SearchIcon size={12} />
+          {` Primary Button`}
+        </Button>
+        <Button variant="secondary">
+          <SearchIcon size={12} />
+          {` Secondary Button`}
+        </Button>
+      </FlexLayout>
+      <FlexLayout>
+        {VALIDATION_NAMED_STATUS.map((status, index) => (
+          <StatusIcon status={status} key={index} />
+        ))}
+      </FlexLayout>
+    </FlexLayout>
   );
 };

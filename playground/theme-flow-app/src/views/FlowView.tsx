@@ -1,18 +1,20 @@
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ReactFlow, {
   addEdge,
-  FitViewOptions,
-  applyNodeChanges,
   applyEdgeChanges,
-  updateEdge,
-  Node,
-  Edge,
-  NodeChange,
-  EdgeChange,
+  applyNodeChanges,
   Connection,
-} from "react-flow-renderer";
+  Edge,
+  EdgeChange,
+  FitViewOptions,
+  Node,
+  NodeChange,
+  updateEdge,
+} from "reactflow";
 import { Declaration } from "../utils/parseCssToFlowData";
 import { FlowCssVarNode } from "./FlowCssVarNode";
+
+import "reactflow/dist/style.css";
 
 // const initialNodes: Node[] = [
 //   { id: "1", data: { label: "Node 1" }, position: { x: 5, y: 5 } },

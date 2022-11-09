@@ -17,6 +17,24 @@ const buttonCtaJson: JSONObj = JSON.parse(
         "value": "{uitk.actionable.cta.text-color}",
         "type": "color"
       }
+    },
+    "statusIcon": {
+      "warning-color": {
+        "value": "{uitk.status.warning.foreground}",
+        "type": "color"
+      },
+      "info-color": {
+        "value": "{uitk.status.info.foreground}",
+        "type": "color"
+      },
+      "success-color": {
+        "value": "{uitk.status.success.foreground}",
+        "type": "color"
+      },
+      "error-color": {
+        "value": "{uitk.status.error.foreground}",
+        "type": "color"
+      }
     }
   }
 }
