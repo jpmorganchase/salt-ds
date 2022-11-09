@@ -67,7 +67,7 @@ const ButtonsCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
       gap={1}
     >
       <Button>
-        <FavoriteIcon size={12} />
+        <FavoriteIcon />
       </Button>
       <Button>
         <LinkedIcon />

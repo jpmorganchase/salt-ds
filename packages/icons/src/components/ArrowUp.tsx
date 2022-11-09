@@ -1,9 +1,21 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const ArrowUpIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="ArrowUpIcon">
-    <path d="M5 4v8h2V4h3L6 0 2 4h3z" />
-  </svg>,
-  "ArrowUp",
-  "arrow up"
+import { Icon, IconProps } from "../icon";
+
+export type ArrowUpIconProps = IconProps;
+
+export const ArrowUpIcon = forwardRef<SVGSVGElement, ArrowUpIconProps>(
+  function ArrowUpIcon(props: ArrowUpIconProps, ref) {
+    return (
+      <Icon
+        data-testid="ArrowUpIcon"
+        aria-label="arrow up"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path d="M5 4v8h2V4h3L6 0 2 4h3z" />
+      </Icon>
+    );
+  }
 );

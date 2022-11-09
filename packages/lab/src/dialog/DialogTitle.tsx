@@ -35,7 +35,6 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
             <CloseIcon
               aria-label="close dialog"
               className={withBaseName("closeIcon")}
-              size={14}
             />
           </Button>
         )}

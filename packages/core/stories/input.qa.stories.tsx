@@ -76,7 +76,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Icon"
         endAdornment={
           <StaticInputAdornment>
-            <CalendarIcon size="small" />
+            <CalendarIcon />
           </StaticInputAdornment>
         }
       />
@@ -88,7 +88,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Button"
         endAdornment={
           <Button variant="secondary">
-            <CloseIcon aria-label="clear input" size="small" />
+            <CloseIcon aria-label="clear input" />
           </Button>
         }
       />
@@ -98,7 +98,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>
               {/* Phone --> Call */}
-              <CallIcon size="small" />
+              <CallIcon />
             </StaticInputAdornment>
             <StaticInputAdornment>+1</StaticInputAdornment>
           </>
@@ -116,7 +116,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>KG</StaticInputAdornment>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
           </>
         }
@@ -136,10 +136,10 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         endAdornment={
           <>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
             <Button variant="cta">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
@@ -150,13 +150,13 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>0/100</StaticInputAdornment>
             <Button variant="primary">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
         startAdornment={
           <StaticInputAdornment>
-            <UserIcon size="small" />
+            <UserIcon />
           </StaticInputAdornment>
         }
       />

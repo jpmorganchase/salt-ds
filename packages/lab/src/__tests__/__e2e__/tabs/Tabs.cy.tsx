@@ -186,7 +186,9 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.realPress("ArrowRight");
             cy.wait(50);
             cy.realPress("Tab");
+            cy.wait(50);
             cy.realPress(["Shift", "Tab"]);
+            cy.wait(50);
             cy.get(".uitkTabstrip-inner > *:first-child")
               .should("be.focused")
               .should("be.focusVisible")

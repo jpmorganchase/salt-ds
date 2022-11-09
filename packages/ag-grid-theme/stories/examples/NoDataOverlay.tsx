@@ -82,7 +82,7 @@ const NoDataOverlayExample = function NoDataOverlayExample(
             <div aria-atomic="true" style={{ textAlign: "left" }}>
               <WarningIcon
                 aria-label="alert"
-                size={20}
+                size={2}
                 style={{ color: "red", marginRight: 5 }}
               />
               <h2 style={{ display: "inline" }}>No data to display</h2>

@@ -4,19 +4,20 @@ import {
   FlowLayout,
   VALIDATION_NAMED_STATUS as status,
 } from "@jpmorganchase/uitk-core";
-import { ICON_NAMED_SIZES } from "@jpmorganchase/uitk-icons";
+
+const ICON_SIZES = [1, 2, 3];
 
 export default {
   title: "Core/StatusIcon",
   component: StatusIcon,
   argTypes: {
     size: {
-      options: ICON_NAMED_SIZES,
+      options: ICON_SIZES,
       control: { type: "select" },
     },
   },
   args: {
-    size: ICON_NAMED_SIZES[0],
+    size: ICON_SIZES[0],
   },
 } as ComponentMeta<typeof StatusIcon>;
 
