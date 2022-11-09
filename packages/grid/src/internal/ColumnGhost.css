@@ -1,4 +1,5 @@
 .uitkGridColumnGhost {
+  background: var(--grid-background);
   position: absolute;
   border: solid var(--grid-columnGhost-borderWidth) var(--grid-columnGhost-borderColor);
   box-shadow: var(--grid-columnGhost-boxShadow);
