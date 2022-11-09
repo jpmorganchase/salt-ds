@@ -5,6 +5,7 @@ import {
   useDensity,
   useTheme,
 } from "@jpmorganchase/uitk-core";
+import { mount } from "cypress/react";
 
 const TestComponent = ({
   id = "test-1",
@@ -146,10 +147,10 @@ describe("Given a ToolkitProvider", () => {
     });
   });
 
-  describe("when applyClassesToChild is true", () => {
+  describe("when child is passed to applyClassesTo", () => {
     it("should not create a div element", () => {
       cy.mount(
-        <ToolkitProvider density="high" theme="dark" applyClassesToChild>
+        <ToolkitProvider density="high" theme="dark" applyClassesTo={"child"}>
           <TestComponent />
         </ToolkitProvider>
       );
@@ -160,6 +161,23 @@ describe("Given a ToolkitProvider", () => {
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "class", "uitk-dark uitk-density-high");
+    });
+  });
+
+  describe("when root is passed to applyClassesTo", () => {
+    it("should apply the given theme and density class names to the html element", () => {
+      mount(
+        <ToolkitProvider density="high" theme="dark" applyClassesTo={"root"}>
+          <TestComponent />
+        </ToolkitProvider>
+      );
+
+      cy.get("uitk-theme").should("have.length", 0);
+
+      cy.get("html")
+        .should("exist")
+        .and("have.class", "uitk-dark")
+        .and("have.class", "uitk-density-high");
     });
   });
 

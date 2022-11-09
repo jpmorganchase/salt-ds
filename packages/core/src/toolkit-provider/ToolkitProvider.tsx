@@ -5,11 +5,13 @@ import React, {
   ReactElement,
   ReactNode,
   useContext,
+  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
 import { Density, getTheme, Theme } from "../theme";
 import { ViewportProvider } from "../viewport";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -34,14 +36,16 @@ const createThemedChildren = (
   children: ReactNode,
   themeNames: string[],
   density: Density,
-  applyClassesToChild: boolean
+  applyClassesTo?: TargetElement
 ) => {
-  if (applyClassesToChild) {
+  if (applyClassesTo === "root") {
+    return children;
+  } else if (applyClassesTo === "child") {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: cx(
           children.props?.className,
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
+          ...themeNames,
           `uitk-density-${density}`
         ),
       });
@@ -56,11 +60,7 @@ const createThemedChildren = (
   } else {
     return (
       <div
-        className={cx(
-          `uitk-theme`,
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
-          `uitk-density-${density}`
-        )}
+        className={cx(`uitk-theme`, ...themeNames, `uitk-density-${density}`)}
       >
         {children}
       </div>
@@ -68,27 +68,37 @@ const createThemedChildren = (
   }
 };
 
-interface ToolkitProviderThatAppliesClassesToChild {
-  children: ReactElement;
-  density?: Density;
-  theme?: ThemeNameType;
-  applyClassesToChild?: true;
-  breakpoints?: Breakpoints;
-}
-
 type ThemeNameType = string | Array<string>;
 
-interface ToolkitProviderThatInjectsThemeElement {
-  children: ReactNode;
+type TargetElement = "root" | "child";
+
+type ToolkitProviderBaseProps = {
+  applyClassesTo?: TargetElement;
   density?: Density;
   theme?: ThemeNameType;
-  applyClassesToChild?: false;
   breakpoints?: Breakpoints;
+};
+
+interface ToolkitProviderThatAppliesClassesToChild
+  extends ToolkitProviderBaseProps {
+  children: ReactElement;
+  applyClassesTo: "child";
+}
+
+interface ToolkitProviderThatInjectsThemeElement
+  extends ToolkitProviderBaseProps {
+  children: ReactNode;
+}
+
+interface ToolkitProviderThatClassesToRoot
+  extends ToolkitProviderThatInjectsThemeElement {
+  applyClassesTo: "root";
 }
 
 type ToolkitProviderProps =
   | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement;
+  | ToolkitProviderThatInjectsThemeElement
+  | ToolkitProviderThatClassesToRoot;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
@@ -103,8 +113,11 @@ const getThemeName = (
   }
 };
 
+const getThemeClassName = (themes: Theme[]): string[] =>
+  themes.map((theme) => `uitk-${theme.name}`);
+
 export function ToolkitProvider({
-  applyClassesToChild = false,
+  applyClassesTo,
   children,
   density: densityProp,
   theme: themesProp,
@@ -118,15 +131,48 @@ export function ToolkitProvider({
     (Array.isArray(inheritedThemes) && inheritedThemes.length === 0);
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
-  const themes: Theme[] = getTheme(themeName);
+  const themNameAsString = themeName.toString();
+  const themes: Theme[] = useMemo(
+    () => getTheme(themeName),
+    // if an array is passed to theme inline, themes would be recalculated each time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [themNameAsString]
+  );
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+
+  const themeClassnames = getThemeClassName(themes);
 
   const themedChildren = createThemedChildren(
     children,
-    themes.map((theme) => theme.name),
+    themeClassnames,
     density,
-    applyClassesToChild
+    applyClassesTo
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (applyClassesTo === "root") {
+      if (isRoot) {
+        // add the styles we want to apply
+        document.documentElement.classList.add(
+          ...themeClassnames,
+          `uitk-density-${density}`
+        );
+      } else {
+        console.warn(
+          "\nToolkitProvider can only apply CSS classes to the root if it is the root level ToolkitProvider."
+        );
+      }
+    }
+    return () => {
+      if (applyClassesTo === "root") {
+        // When unmounting/remounting, remove the applied styles from the root
+        document.documentElement.classList.remove(
+          ...themeClassnames,
+          `uitk-density-${density}`
+        );
+      }
+    };
+  }, [applyClassesTo, density, isRoot, themeClassnames]);
 
   const toolkitProvider = (
     <DensityContext.Provider value={density}>
