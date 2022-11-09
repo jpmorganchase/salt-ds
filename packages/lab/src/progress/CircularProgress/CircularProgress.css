@@ -108,13 +108,3 @@
     stroke-dashoffset: -125px;
   }
 }
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStart {
-  --circularProgress-gradient-color: var(--backwardsCompat-measured-fill-startColor);
-}
-
-.backwardsCompat.uitkCircularProgress .uitkCircularProgress-gradientStop {
-  --circularProgress-gradient-color: var(--backwardsCompat-measured-fill-stopColor);
-}

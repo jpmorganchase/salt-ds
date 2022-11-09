@@ -88,7 +88,7 @@
     "clipboard-copy": "^4.0.1",
     "compute-scroll-into-view": "^1.0.16",
     "csstree-validator": "^3.0.0",
-    "cypress": "^10.10.0",
+    "cypress": "^11.0.0",
     "cypress-axe": "^1.0.0",
     "cypress-real-events": "^1.7.2",
     "deepmerge": "^4.2.2",

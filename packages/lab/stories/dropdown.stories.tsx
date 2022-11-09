@@ -15,8 +15,8 @@ import {
 } from "@jpmorganchase/uitk-icons";
 
 import {
-  DropdownButton,
   Dropdown,
+  DropdownButton,
   DropdownProps,
   ListItem,
   ListItemType,

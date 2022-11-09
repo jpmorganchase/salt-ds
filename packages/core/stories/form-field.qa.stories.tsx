@@ -89,20 +89,3 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-export const BackwardsCompatGrid: Story = () => {
-  return <AllExamplesGrid className="backwardsCompat" />;
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/FormField-vr-snapshot.png"
-    />
-  );
-};

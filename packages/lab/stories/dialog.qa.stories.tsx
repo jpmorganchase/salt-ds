@@ -8,8 +8,7 @@ import {
   DialogTitle,
   OrderedButton,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
-import { QAContainer } from "docs/components";
+import { ComponentMeta, Story } from "@storybook/react";
 import "./dialog.qa.stories.css";
 
 export default {
@@ -87,15 +86,4 @@ export const ExamplesGrid: Story = () => (
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: ComponentStory<typeof Dialog> = () => {
-  return (
-    <QAContainer
-      className="uitkDialogQA"
-      imgSrc="/visual-regression-screenshots/Dialog-vr-snapshot.png"
-    >
-      <ExamplesGrid />
-    </QAContainer>
-  );
 };
