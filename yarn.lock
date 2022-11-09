@@ -3720,7 +3720,7 @@ __metadata:
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
     csstree-validator: ^3.0.0
-    cypress: ^10.10.0
+    cypress: ^11.0.0
     cypress-axe: ^1.0.0
     cypress-real-events: ^1.7.2
     deepmerge: ^4.2.2
@@ -11021,9 +11021,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^10.10.0":
-  version: 10.10.0
-  resolution: "cypress@npm:10.10.0"
+"cypress@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "cypress@npm:11.0.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -11069,7 +11069,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 668a32534a527dba79754abbf98af176b80c539a12ec00058932ba2a19c794c7888323e59e738c30f726ad740c5451c31d02548a0cb7c1b1c8ad01c55a984ca2
+  checksum: 279cb2b8e6bd85f1250552abaa45aed72a9e9208a8e51d467c0741fb7feb9db258a186c33f921f4ea19e90a7632ad19385f41eaf7650b5f113c31767ec1bd44a
   languageName: node
   linkType: hard
 
