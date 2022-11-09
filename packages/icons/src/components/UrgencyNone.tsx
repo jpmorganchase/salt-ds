@@ -14,10 +14,7 @@ export const UrgencyNoneIcon = forwardRef<SVGSVGElement, UrgencyNoneIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M11 4H1v1h10V4Z" />
-          <path d="M11 7H1v1h10V7Z" />
-        </>
+        <path d="M11 4H1v1h10V4Zm0 3H1v1h10V7Z" />
       </Icon>
     );
   }

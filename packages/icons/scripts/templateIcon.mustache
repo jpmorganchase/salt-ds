@@ -7,7 +7,7 @@ export type {{componentName}}IconProps = IconProps;
 export const {{componentName}}Icon = forwardRef<SVGSVGElement, {{componentName}}IconProps>(
   function {{componentName}}Icon(props: {{componentName}}IconProps, ref) {
     return (
-      <Icon data-testid="{{componentName}}Icon" aria-label="{{ariaLabel}}" viewBox="0 0 12 12" ref={ref} {...props}>
+      <Icon data-testid="{{componentName}}Icon" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...props}>
         {{{svgElements}}}
       </Icon>
     );

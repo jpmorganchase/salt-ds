@@ -14,28 +14,18 @@ export const BuildingIcon = forwardRef<SVGSVGElement, BuildingIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M0 11h12v1H0v-1Z" />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M9 1H2v10h7V1ZM1 0v12h9V0H1Z"
-          />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M6 9H5v2h1V9ZM4 8v4h3V8H4Z"
-          />
-          <path d="M3 4h1v1H3V4Z" />
-          <path d="M3 2h1v1H3V2Z" />
-          <path d="M3 6h1v1H3V6Z" />
-          <path d="M5 4h1v1H5V4Z" />
-          <path d="M5 2h1v1H5V2Z" />
-          <path d="M5 6h1v1H5V6Z" />
-          <path d="M7 4h1v1H7V4Z" />
-          <path d="M7 2h1v1H7V2Z" />
-          <path d="M7 6h1v1H7V6Z" />
-        </>
+        <path d="M0 11h12v1H0v-1Z" />
+        <path
+          fillRule="evenodd"
+          d="M9 1H2v10h7V1ZM1 0v12h9V0H1Z"
+          clipRule="evenodd"
+        />
+        <path
+          fillRule="evenodd"
+          d="M6 9H5v2h1V9ZM4 8v4h3V8H4Z"
+          clipRule="evenodd"
+        />
+        <path d="M3 4h1v1H3V4Zm0-2h1v1H3V2Zm0 4h1v1H3V6Zm2-2h1v1H5V4Zm0-2h1v1H5V2Zm0 4h1v1H5V6Zm2-2h1v1H7V4Zm0-2h1v1H7V2Zm0 4h1v1H7V6Z" />
       </Icon>
     );
   }

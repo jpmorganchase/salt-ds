@@ -18,8 +18,8 @@ export const FolderClosedIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        clipRule="evenodd"
         d="M12 12V2H6L4 1H0v11h12ZM3.764 2l2 1H11v1H1V2h2.764ZM1 5v6h10V5H1Z"
+        clipRule="evenodd"
       />
     </Icon>
   );

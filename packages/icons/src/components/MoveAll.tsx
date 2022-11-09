@@ -14,12 +14,7 @@ export const MoveAllIcon = forwardRef<SVGSVGElement, MoveAllIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M9 6.75H7v-1.5h2V3l3 3-3 3V6.75z" />
-          <path d="M9 3H6.75v2h-1.5V3H3l3-3 3 3z" />
-          <path d="m9 9-3 3-3-3h2.25V7h1.5v2H9z" />
-          <path d="M3 6.75h2v-1.5H3V3L0 6l3 3V6.75z" />
-        </>
+        <path d="M9 6.75H7v-1.5h2V3l3 3-3 3V6.75zM9 3H6.75v2h-1.5V3H3l3-3 3 3zm0 6-3 3-3-3h2.25V7h1.5v2H9zM3 6.75h2v-1.5H3V3L0 6l3 3V6.75z" />
       </Icon>
     );
   }

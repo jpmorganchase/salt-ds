@@ -14,12 +14,7 @@ export const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M0 0h5v5H0V0z" />
-          <path d="M7 5V0h5v5H7z" />
-          <path d="M7 7v5h5V7H7z" />
-          <path d="M0 7h5v5H0V7z" />
-        </>
+        <path d="M0 0h5v5H0V0zm7 5V0h5v5H7zm0 2v5h5V7H7zM0 7h5v5H0V7z" />
       </Icon>
     );
   }

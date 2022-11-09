@@ -18,8 +18,8 @@ export const ProgressOnholdIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        clipRule="evenodd"
         d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12Zm-.499-9H4v6h1.501V3ZM8 3H6.499v6H8V3Z"
+        clipRule="evenodd"
       />
     </Icon>
   );

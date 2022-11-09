@@ -16,10 +16,7 @@ export const BankCheckSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <>
-        <path d="M0 2h12v2H0V2z" />
-        <path d="M0 5v5h12V5H0zm2 3h7v1H2V8zm4-2v1H2V6h4zm4 0v1H8V6h2z" />
-      </>
+      <path d="M0 2h12v2H0V2zm0 3v5h12V5H0zm2 3h7v1H2V8zm4-2v1H2V6h4zm4 0v1H8V6h2z" />
     </Icon>
   );
 });

@@ -14,10 +14,7 @@ export const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M3 4H0v4h3l3 3V1L3 4z" />
-          <path d="M7 8.829a3.001 3.001 0 0 0 0-5.658V8.83z" />
-        </>
+        <path d="M3 4H0v4h3l3 3V1L3 4zm4 4.829a3.001 3.001 0 0 0 0-5.658V8.83z" />
       </Icon>
     );
   }

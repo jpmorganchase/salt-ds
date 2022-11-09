@@ -14,11 +14,7 @@ export const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M5 11V9h2v2H5z" />
-          <path d="M5 7V5h2v2H5z" />
-          <path d="M5 1v2h2V1H5z" />
-        </>
+        <path d="M5 11V9h2v2H5zm0-4V5h2v2H5zm0-6v2h2V1H5z" />
       </Icon>
     );
   }

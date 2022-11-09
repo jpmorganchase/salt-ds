@@ -14,10 +14,8 @@ export const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M9 0v1H8v1H4V1H3V0h6z" />
-          <path d="M3 1v2h6V1h2v11H1V1h2z" />
-        </>
+        <path d="M9 0v1H8v1H4V1H3V0h6z" />
+        <path d="M3 1v2h6V1h2v11H1V1h2z" />
       </Icon>
     );
   }

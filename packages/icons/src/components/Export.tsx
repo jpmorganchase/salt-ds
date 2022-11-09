@@ -14,10 +14,8 @@ export const ExportIcon = forwardRef<SVGSVGElement, ExportIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M5 1H1v10h4v-1H2V2h3V1z" />
-          <path d="M3 5h5V3l4 3-4 3V7H3V5z" />
-        </>
+        <path d="M5 1H1v10h4v-1H2V2h3V1z" />
+        <path d="M3 5h5V3l4 3-4 3V7H3V5z" />
       </Icon>
     );
   }

@@ -14,15 +14,12 @@ export const InfoIcon = forwardRef<SVGSVGElement, InfoIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M5 2h2v2H5V2Z" />
-          <path d="M5 5h2v5H5V5Z" />
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M0 12V0h12v12H0ZM1 1h10v10H1V1Z"
-          />
-        </>
+        <path d="M5 2h2v2H5V2Zm0 3h2v5H5V5Z" />
+        <path
+          fillRule="evenodd"
+          d="M0 12V0h12v12H0ZM1 1h10v10H1V1Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

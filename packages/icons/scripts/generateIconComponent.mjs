@@ -10,17 +10,15 @@
  */
 
 import fs from "fs";
-import path, { dirname } from "path";
+import path from "path";
 import glob from "glob";
 import prettier from "prettier";
 import Mustache from "mustache";
-import { convertSvgToJsx } from "@svgo/jsx";
 import { optimize } from "svgo";
-import { parseDocument, DomUtils } from "htmlparser2";
 import { fileURLToPath } from "url";
-import render from "dom-serializer";
+import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** Change kebab casing to Pascal casing */
 function pascalCase(str) {
@@ -50,6 +48,7 @@ glob(globPath, options, function (error, filenames) {
 
       const filenameWithoutExtension = path.parse(fileName).name;
       const componentName = pascalCase(filenameWithoutExtension);
+      let viewBox;
       const newFileName = path.join(
         basePath,
         "./components/",
@@ -63,25 +62,10 @@ glob(globPath, options, function (error, filenames) {
         .join(" ")
         .toLowerCase();
 
-      const document = parseDocument(svgString);
-
-      const svg = DomUtils.findOne(
-        (node) => node.name === "svg",
-        document.children,
-        true
-      );
-
-      const svgElementString = render(svg.children);
-
       // SVGO is a separate step to enable multi-pass optimizations.
-      const optimizedSvg = optimize(svgElementString, {
+      const optimizedSvg = optimize(svgString, {
+        multipass: true,
         plugins: [
-          {
-            name: "addAttributesToSVGElement",
-            params: {
-              attribute: { "data-testid": `${componentName}Icon` },
-            },
-          },
           {
             name: "preset-default",
             params: {
@@ -91,7 +75,6 @@ glob(globPath, options, function (error, filenames) {
               },
             },
           },
-          { name: "removeXMLNS" },
           {
             name: "removeAttrs",
             params: {
@@ -99,19 +82,66 @@ glob(globPath, options, function (error, filenames) {
             },
           },
         ],
-        multipass: true,
       });
 
-      const result = convertSvgToJsx({
-        svg: optimizedSvg.data,
+      const svgPaths = optimize(optimizedSvg.data, {
+        plugins: [
+          {
+            name: "mapHTMLAttributesToReactProps",
+            fn: () => {
+              return {
+                element: {
+                  enter: (node) => {
+                    const newAttributes = {};
+                    // preserve an order of attributes
+                    for (const [name, value] of Object.entries(
+                      node.attributes
+                    )) {
+                      newAttributes[svgAttributeMap[name] || name] = value;
+                    }
+                    node.attributes = newAttributes;
+                  },
+                },
+              };
+            },
+          },
+          {
+            name: "find-viewBox",
+            fn: () => {
+              return {
+                element: {
+                  enter: (node, parentNode) => {
+                    if (parentNode.type === "root") {
+                      viewBox = node.attributes.viewBox;
+                    }
+                  },
+                },
+              };
+            },
+          },
+          {
+            name: "removeSvg",
+            fn: () => {
+              return {
+                element: {
+                  exit: (node, parentNode) => {
+                    if (node.name === "svg") {
+                      const index = parentNode.children.indexOf(node);
+                      parentNode.children.splice(index, 1, ...node.children);
+                    }
+                  },
+                },
+              };
+            },
+          },
+        ],
       });
-
-      const optimizedSvgString = result.jsx;
 
       const fileContents = Mustache.render(template, {
-        svgElements: optimizedSvgString,
+        svgElements: svgPaths.data,
         componentName,
         ariaLabel: iconTitle,
+        viewBox: viewBox ?? "0 0 12 12",
       });
 
       const formattedResult = prettier.format(fileContents, {

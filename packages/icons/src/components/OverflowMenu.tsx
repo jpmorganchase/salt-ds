@@ -16,11 +16,7 @@ export const OverflowMenuIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <>
-        <path d="M1 5h2v2H1V5z" />
-        <path d="M5 5h2v2H5V5z" />
-        <path d="M11 5H9v2h2V5z" />
-      </>
+      <path d="M1 5h2v2H1V5zm4 0h2v2H5V5zm6 0H9v2h2V5z" />
     </Icon>
   );
 });

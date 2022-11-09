@@ -14,11 +14,7 @@ export const MenuIcon = forwardRef<SVGSVGElement, MenuIconProps>(
         ref={ref}
         {...props}
       >
-        <>
-          <path d="M0 1h12v2H0V1z" />
-          <path d="M0 5h12v2H0V5z" />
-          <path d="M12 9H0v2h12V9z" />
-        </>
+        <path d="M0 1h12v2H0V1zm0 4h12v2H0V5zm12 4H0v2h12V9z" />
       </Icon>
     );
   }

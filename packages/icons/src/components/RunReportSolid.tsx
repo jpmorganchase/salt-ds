@@ -18,8 +18,8 @@ export const RunReportSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        clipRule="evenodd"
         d="M1 0v12h10V2.293L8.707 0H1Zm6 1h1v2h2v1H7V1ZM4 5l4 2.5L4 10V5Z"
+        clipRule="evenodd"
       />
     </Icon>
   );
