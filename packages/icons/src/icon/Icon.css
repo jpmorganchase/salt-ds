@@ -27,4 +27,3 @@
 .uitkIcon:active {
   --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
 }
-

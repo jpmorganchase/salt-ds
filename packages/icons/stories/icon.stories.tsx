@@ -6,7 +6,6 @@ import {
   IconProps,
 } from "@jpmorganchase/uitk-icons";
 import { allIcons, allIconsNames } from "./icon.all";
-import CodeBrackets from "docs/assets/code-brackets.svg";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, FormField, Input, StackLayout } from "../../core";
 
@@ -47,8 +46,8 @@ export const ToolkitIconMultipleSizes: ComponentStory<typeof Icon> = () => (
 
 export const ToolkitTypes: ComponentStory<typeof Icon> = () => (
   <FlexLayout wrap gap={2}>
-    <AddDocumentIcon size="medium" />
-    <AddDocumentSolidIcon size="medium" />
+    <AddDocumentIcon size={4} />
+    <AddDocumentSolidIcon size={4} />
   </FlexLayout>
 );
 
