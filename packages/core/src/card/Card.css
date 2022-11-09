@@ -4,7 +4,7 @@
   border-width: var(--uitkCard-borderWidth, var(--uitk-container-borderWidth));
   border-style: var(--uitkCard-borderStyle, var(--uitk-container-borderStyle));
   border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-medium));
-  border-radius: var(--uitkCard-borderRadius, var(--uitk-container-borderRadius));
+  border-radius: var(--uitkCard-borderRadius, 0);
   box-shadow: var(--uitkCard-boxShadow, var(--uitk-overlayable-shadow));
   color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
   overflow: hidden;
