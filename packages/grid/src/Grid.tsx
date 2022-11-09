@@ -569,18 +569,22 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
   };
 
-  const { dragState, onColumnMoveHandleMouseDown, activeTarget } =
-    useColumnMove(
-      columnMove,
-      rootRef,
-      leftCols,
-      midCols,
-      rightCols,
-      cols,
-      scrollLeft,
-      clientMidWidth,
-      onColumnMove
-    );
+  const {
+    dragState,
+    onColumnMoveHandleMouseDown,
+    activeTarget,
+    onColumnMoveCancel,
+  } = useColumnMove(
+    columnMove,
+    rootRef,
+    leftCols,
+    midCols,
+    rightCols,
+    cols,
+    scrollLeft,
+    clientMidWidth,
+    onColumnMove
+  );
 
   const columnDragContext: ColumnDragContext = useMemo(
     () => ({
@@ -626,8 +630,12 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           startEditMode();
           break;
         case "Escape":
-          cancelEditMode();
-          break;
+          if (editMode) {
+            cancelEditMode();
+            break;
+          } else {
+            return false;
+          }
         default:
           if (
             !editMode &&
@@ -822,6 +830,20 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [moveCursor, cursorRowIdx, cursorRowIdx, cols.length, rowData.length]
   );
 
+  const columnMoveKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      if (key === "Escape") {
+        onColumnMoveCancel();
+        event.preventDefault();
+        event.stopPropagation();
+        return true;
+      }
+      return false;
+    },
+    []
+  );
+
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
     (event) => {
       if (cursorColIdx != undefined && cursorRowIdx != undefined) {
@@ -836,6 +858,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           clipboardKeyHandler,
           selectionKeyHandler,
           editModeKeyHandler,
+          columnMoveKeyHandler,
         ].find((handler) => {
           return handler(event);
         });
@@ -846,6 +869,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       clipboardKeyHandler,
       selectionKeyHandler,
       editModeKeyHandler,
+      columnMoveKeyHandler,
     ]
   );
 
@@ -976,12 +1000,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         isRaised={isRightRaised}
                       />
                     )}
+                    <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}
                       rows={rows}
                       dragState={dragState}
+                      zebra={zebra}
                     />
-                    <ColumnDropTarget x={activeTarget?.x} />
                   </div>
                 </EditorContext.Provider>
               </SizingContext.Provider>

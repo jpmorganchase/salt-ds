@@ -15,7 +15,7 @@ export function ColumnDropTarget(props: ColumnDropTargetProps) {
 
   const style = useMemo(() => {
     return {
-      left: `${x}px`,
+      left: `${x - 2}px`,
     };
   }, [x]);
 
