@@ -17,9 +17,9 @@
   --uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);
   --uitk-ratable-background-undo: var(--uitk-palette-rate-background-undo);
 
-  --uitk-ratable-border: var(--uitk-palette-rate-border);
-  --uitk-ratable-border-active: var(--uitk-palette-rate-border-active);
-  --uitk-ratable-border-disabled: var(--uitk-palette-rate-border-disabled);
-  --uitk-ratable-border-hover: var(--uitk-palette-rate-border-hover);
-  --uitk-ratable-border-undo: var(--uitk-palette-rate-border-undo);
+  --uitk-ratable-borderColor: var(--uitk-palette-rate-border);
+  --uitk-ratable-borderColor-active: var(--uitk-palette-rate-border-active);
+  --uitk-ratable-borderColor-disabled: var(--uitk-palette-rate-border-disabled);
+  --uitk-ratable-borderColor-hover: var(--uitk-palette-rate-border-hover);
+  --uitk-ratable-borderColor-undo: var(--uitk-palette-rate-border-undo);
 }

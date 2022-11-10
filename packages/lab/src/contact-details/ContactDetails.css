@@ -261,7 +261,7 @@
 }
 
 .uitkContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-borderColor);
 }
 
 .uitkContactFavoriteToggle-selecting {
@@ -273,7 +273,7 @@
 }
 
 .uitkContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
+  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-borderColor);
 }
 
 .uitkContactFavoriteToggle-svg {
