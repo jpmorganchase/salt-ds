@@ -5,15 +5,24 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 // ideally these css files would be loaded from a link tag
 // pointing to static asset directory for caching
 import { ColDef } from "ag-grid-community";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import "../../uitk-ag-theme.css";
+import "../../odyssey-ag-theme.css";
 
 const AddRemoveRowsExample = function AddRemoveRowsExample(
   props: AgGridReactProps
 ) {
-  const { containerProps, agGridProps, api, columnApi } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { containerProps, agGridProps, api, columnApi } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   const [columnDefs] = useState<ColDef[]>(dataGridExampleColumns);
 
@@ -70,6 +79,13 @@ const AddRemoveRowsExample = function AddRemoveRowsExample(
 
   return (
     <div style={{ marginTop: 25 }}>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
       <div
         style={{ height: 400, width: 820, marginBottom: 25 }}
         {...containerProps}

@@ -4,7 +4,7 @@ import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { DEFAULT_THEME, useDensity, useTheme } from "@jpmorganchase/uitk-core";
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
-export function useAgGridHelpers(): {
+export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
@@ -17,24 +17,32 @@ export function useAgGridHelpers(): {
   const themes = useTheme();
 
   const [rowHeight, listItemHeight] = useMemo(() => {
-    switch (density) {
-      case "high":
+    switch ([agThemeName, density].join("-")) {
+      case "ag-theme-uitk-high":
         return [20, 24];
-      case "medium":
+      case "ag-theme-uitk-medium":
         return [24, 36];
-      case "low":
+      case "ag-theme-uitk-low":
         return [32, 48];
-      case "touch":
+      case "ag-theme-uitk-touch":
         return [32, 60];
+      case "ag-theme-odyssey-high":
+        return [24, 24];
+      case "ag-theme-odyssey-medium":
+        return [36, 36];
+      case "ag-theme-odyssey-low":
+        return [48, 48];
+      case "ag-theme-odyssey-touch":
+        return [60, 60];
       default:
         return [20, 24];
     }
-  }, [density]);
+  }, [density, agThemeName]);
 
   const themeName =
     themes && themes.length > 0 ? themes[0].name : DEFAULT_THEME.name;
 
-  const className = `ag-theme-uitk-${density}-${themeName}`;
+  const className = `${agThemeName}-${density}-${themeName}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
@@ -52,7 +60,7 @@ export function useAgGridHelpers(): {
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height?
       }
     }, 0);
-  }, [density, isGridReady]);
+  }, [density, isGridReady, agThemeName]);
 
   return {
     containerProps: {
