@@ -1,0 +1,20 @@
+.card {
+  background-color: var(--uitk-color-grey-800);
+  padding: calc(var(--uitk-size-unit) * 6) calc(var(--uitk-size-unit) * 4);
+  color: var(--uitk-color-white);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--uitk-size-unit) * 2);
+  flex: 1;
+}
+
+.icon {
+  transform: translateZ(20);
+  animation: bounce 3s ease-in-out 2s infinite;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(5px);
+  }
+}
