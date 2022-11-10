@@ -5,15 +5,21 @@
   --uitk-selectable-cursor-blurSelected: pointer;
   --uitk-selectable-cursor-disabled: not-allowed;
 
-  --uitk-selectable-borderRadius: 0;
   --uitk-selectable-borderStyle: solid;
   --uitk-selectable-borderStyle-hover: solid;
   --uitk-selectable-borderStyle-selected: solid;
   --uitk-selectable-borderStyle-blurSelected: solid;
+
   --uitk-selectable-borderWidth: 1px;
   --uitk-selectable-borderWidth-hover: 1px;
   --uitk-selectable-borderWidth-selected: 1px;
   --uitk-selectable-borderWidth-blurSelected: 1px;
+
+  --uitk-selectable-borderColor: var(--uitk-palette-interact-border);
+  --uitk-selectable-borderColor-hover: var(--uitk-palette-interact-border-hover);
+  --uitk-selectable-borderColor-selected: var(--uitk-palette-interact-border-active);
+  --uitk-selectable-borderColor-selectedDisabled: var(--uitk-palette-interact-border-activeDisabled);
+  --uitk-selectable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
 
   --uitk-selectable-foreground: var(--uitk-palette-interact-foreground);
   --uitk-selectable-foreground-hover: var(--uitk-palette-interact-foreground-hover);
@@ -29,12 +35,6 @@
   --uitk-selectable-background-selected: var(--uitk-palette-interact-background-active);
   --uitk-selectable-background-blurSelected: var(--uitk-palette-interact-background-blurSelected);
   --uitk-selectable-background-disabled: transparent;
-
-  --uitk-selectable-borderColor: var(--uitk-palette-interact-border);
-  --uitk-selectable-borderColor-hover: var(--uitk-palette-interact-border-hover);
-  --uitk-selectable-borderColor-selected: var(--uitk-palette-interact-border-active);
-  --uitk-selectable-borderColor-selectedDisabled: var(--uitk-palette-interact-border-activeDisabled);
-  --uitk-selectable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
 
   --uitk-selectable-cta-foreground: var(--uitk-palette-interact-primary-foreground);
   --uitk-selectable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);

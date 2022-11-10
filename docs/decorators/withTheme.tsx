@@ -74,7 +74,7 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
       >
         {THEMES.map((theme) => (
           <ToolkitProvider
-            applyClassesToChild
+            applyClassesTo={"child"}
             density={density}
             theme={theme}
             key={theme}
