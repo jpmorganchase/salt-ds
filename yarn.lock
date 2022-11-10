@@ -8337,7 +8337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:^8.0.0, babel-loader@npm:^8.2.3, babel-loader@npm:^8.2.5":
+"babel-loader@npm:^8.0.0, babel-loader@npm:^8.2.5":
   version: 8.2.5
   resolution: "babel-loader@npm:8.2.5"
   dependencies:
@@ -8349,6 +8349,19 @@ __metadata:
     "@babel/core": ^7.0.0
     webpack: ">=2"
   checksum: a6605557885eabbc3250412405f2c63ca87287a95a439c643fdb47d5ea3d5326f72e43ab97be070316998cb685d5dfbc70927ce1abe8be7a6a4f5919287773fb
+  languageName: node
+  linkType: hard
+
+"babel-loader@npm:^9.0.0":
+  version: 9.1.0
+  resolution: "babel-loader@npm:9.1.0"
+  dependencies:
+    find-cache-dir: ^3.3.2
+    schema-utils: ^4.0.0
+  peerDependencies:
+    "@babel/core": ^7.12.0
+    webpack: ">=5"
+  checksum: 774758febd1e8ca804abcae3b8f65634330dc688837424d0946f06d1386914de43435cce691710fa144eccdf1292cf883439ac3598ce7320916acfaaa2372641
   languageName: node
   linkType: hard
 
@@ -11392,7 +11405,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.0.0
     "@vercel/webpack-asset-relocator-loader": 1.7.3
     asar: ^3.1.0
-    babel-loader: ^8.2.3
+    babel-loader: ^9.0.0
     css-loader: ^6.0.0
     electron: 17.4.11
     electron-squirrel-startup: ^1.0.0
@@ -11993,7 +12006,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^4.0.0
     "@typescript-eslint/parser": ^4.0.0
     "@vercel/webpack-asset-relocator-loader": 1.7.3
-    babel-loader: ^8.2.3
+    babel-loader: ^9.0.0
     css-loader: ^6.0.0
     electron: ^17.2.0
     electron-squirrel-startup: ^1.0.0
@@ -13746,7 +13759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-cache-dir@npm:^3.2.0, find-cache-dir@npm:^3.3.1":
+"find-cache-dir@npm:^3.2.0, find-cache-dir@npm:^3.3.1, find-cache-dir@npm:^3.3.2":
   version: 3.3.2
   resolution: "find-cache-dir@npm:3.3.2"
   dependencies:
