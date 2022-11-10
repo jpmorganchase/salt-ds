@@ -71,9 +71,14 @@ jobs:
               });
             };
 
-      - name: Lighthouse report
-        id: lighthouse_audit
-        uses: treosh/lighthouse-ci-action@v8
-        with:
-          urls: ${{ steps.publish.outputs.url }}
-          configPath: ./.github/workflows/lighthouserc.json
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.8.x
+          lhci autorun
+
+      # - name: Lighthouse report
+      #   id: lighthouse_audit
+      #   uses: treosh/lighthouse-ci-action@v8
+      #   with:
+      #     urls: ${{ steps.publish.outputs.url }}
+      #     configPath: ./.github/workflows/lighthouserc.json
