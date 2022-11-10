@@ -70,3 +70,10 @@ jobs:
                 body: `${commentText} ${previewUrl}`
               });
             };
+
+      - name: Lighthouse report
+        id: lighthouse_audit
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: ${{ steps.publish.outputs.url }}
+          configPath: ./.github/workflows/lighthouserc.json
