@@ -36,7 +36,7 @@ const statusToAriaLabelMap = {
 
 const withBaseName = makePrefixer("uitkStatusIcon");
 
-export const StatusIcon = forwardRef<HTMLSpanElement, StatusIconProps>(
+export const StatusIcon = forwardRef<SVGSVGElement, StatusIconProps>(
   function StatusIcon(
     { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
     ref

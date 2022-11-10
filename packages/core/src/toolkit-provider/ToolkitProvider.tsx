@@ -1,17 +1,17 @@
 import cx from "classnames";
 import React, {
   createContext,
-  DetailedHTMLProps,
-  DOMAttributes,
   HTMLAttributes,
   ReactElement,
   ReactNode,
   useContext,
+  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
-import { DEFAULT_THEME, Density, getTheme, Theme } from "../theme";
+import { Density, getTheme, Theme } from "../theme";
 import { ViewportProvider } from "../viewport";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -25,36 +25,27 @@ export interface ToolkitContextProps {
 
 const DEFAULT_THEME_NAME = "light";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      "uitk-theme": DetailedHTMLProps<
-        DOMAttributes<HTMLDivElement> & { class: string },
-        HTMLDivElement
-      >;
-    }
-  }
-}
+export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
 
-export const ToolkitContext = createContext<ToolkitContextProps>({
-  density: undefined,
-  themes: [],
-  breakpoints: DEFAULT_BREAKPOINTS,
-});
+export const ThemeContext = createContext<Theme[]>([]);
+
+export const BreakpointContext =
+  createContext<Breakpoints>(DEFAULT_BREAKPOINTS);
 
 const createThemedChildren = (
   children: ReactNode,
   themeNames: string[],
   density: Density,
-  applyClassesToChild: boolean
+  applyClassesTo?: TargetElement
 ) => {
-  if (applyClassesToChild) {
+  if (applyClassesTo === "root") {
+    return children;
+  } else if (applyClassesTo === "child") {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: cx(
           children.props?.className,
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
+          ...themeNames,
           `uitk-density-${density}`
         ),
       });
@@ -62,73 +53,55 @@ const createThemedChildren = (
       console.warn(
         `\nToolkitProvider can only apply CSS classes for theming to a single nested child element of the ToolkitProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        uitk-theme element will wrap your child elements`
+        div element will wrap your child elements`
       );
       return children;
     }
   } else {
     return (
-      <uitk-theme
-        class={cx(
-          ...themeNames.map((themeName) => `uitk-${themeName}`),
-          `uitk-density-${density}`
-        )}
+      <div
+        className={cx(`uitk-theme`, ...themeNames, `uitk-density-${density}`)}
       >
         {children}
-      </uitk-theme>
+      </div>
     );
   }
 };
 
-interface ToolkitProviderThatAppliesClassesToChild {
-  children: ReactElement;
-  /**
-   * Change density.
-   */
-  density?: Density;
-  /**
-   * Change theme.
-   */
-  theme?: ThemeNameType;
-  /**
-   * When `false` a `uitk-theme` element will be created to wrap the child elements.
-   *
-   * When `true` the CSS classes for theming will be applied to the child element of the ToolkitProvider.
-   */
-  applyClassesToChild?: true;
-  /**
-   * Customise breakpoints object.
-   */
-  breakpoints?: Breakpoints;
-}
-
 type ThemeNameType = string | Array<string>;
 
-interface ToolkitProviderThatInjectsThemeElement {
-  children: ReactNode;
-  /**
-   * Change density.
-   */
+type TargetElement = "root" | "child";
+
+type ToolkitProviderBaseProps = {
+  applyClassesTo?: TargetElement;
   density?: Density;
   /**
    * Change theme.
    */
   theme?: ThemeNameType;
-  /**
-   * When `false` a `uitk-theme` element will be created to wrap the child elements.
-   *
-   * When `true` the CSS classes for theming will be applied to the child element of the ToolkitProvider.
-   */
-  applyClassesToChild?: false;
-  /**
-   * Customise breakpoints object.
-   */
   breakpoints?: Breakpoints;
+};
+
+interface ToolkitProviderThatAppliesClassesToChild
+  extends ToolkitProviderBaseProps {
+  children: ReactElement;
+  applyClassesTo: "child";
+}
+
+interface ToolkitProviderThatInjectsThemeElement
+  extends ToolkitProviderBaseProps {
+  children: ReactNode;
+}
+
+interface ToolkitProviderThatClassesToRoot
+  extends ToolkitProviderThatInjectsThemeElement {
+  applyClassesTo: "root";
 }
 
 type ToolkitProviderProps =
   | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement;
+  | ToolkitProviderThatInjectsThemeElement
+  | ToolkitProviderThatClassesToRoot;
 
 const getThemeName = (
   theme: ThemeNameType | undefined,
@@ -143,35 +116,75 @@ const getThemeName = (
   }
 };
 
+const getThemeClassName = (themes: Theme[]): string[] =>
+  themes.map((theme) => `uitk-${theme.name}`);
+
 export function ToolkitProvider({
-  applyClassesToChild = false,
+  applyClassesTo,
   children,
   density: densityProp,
   theme: themesProp,
   breakpoints: breakpointsProp,
 }: ToolkitProviderProps) {
-  const { themes: inheritedThemes, density: inheritedDensity } =
-    useContext(ToolkitContext);
+  const inheritedDensity = useContext(DensityContext);
+  const inheritedThemes = useContext(ThemeContext);
 
   const isRoot =
     inheritedThemes === undefined ||
     (Array.isArray(inheritedThemes) && inheritedThemes.length === 0);
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName = getThemeName(themesProp, inheritedThemes);
-  const themes: Theme[] = getTheme(themeName);
+  const themNameAsString = themeName.toString();
+  const themes: Theme[] = useMemo(
+    () => getTheme(themeName),
+    // if an array is passed to theme inline, themes would be recalculated each time
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [themNameAsString]
+  );
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+
+  const themeClassnames = getThemeClassName(themes);
 
   const themedChildren = createThemedChildren(
     children,
-    themes.map((theme) => theme.name),
+    themeClassnames,
     density,
-    applyClassesToChild
+    applyClassesTo
   );
 
+  useIsomorphicLayoutEffect(() => {
+    if (applyClassesTo === "root") {
+      if (isRoot) {
+        // add the styles we want to apply
+        document.documentElement.classList.add(
+          ...themeClassnames,
+          `uitk-density-${density}`
+        );
+      } else {
+        console.warn(
+          "\nToolkitProvider can only apply CSS classes to the root if it is the root level ToolkitProvider."
+        );
+      }
+    }
+    return () => {
+      if (applyClassesTo === "root") {
+        // When unmounting/remounting, remove the applied styles from the root
+        document.documentElement.classList.remove(
+          ...themeClassnames,
+          `uitk-density-${density}`
+        );
+      }
+    };
+  }, [applyClassesTo, density, isRoot, themeClassnames]);
+
   const toolkitProvider = (
-    <ToolkitContext.Provider value={{ density, themes, breakpoints }}>
-      <ViewportProvider>{themedChildren}</ViewportProvider>
-    </ToolkitContext.Provider>
+    <DensityContext.Provider value={density}>
+      <ThemeContext.Provider value={themes}>
+        <BreakpointContext.Provider value={breakpoints}>
+          <ViewportProvider>{themedChildren}</ViewportProvider>
+        </BreakpointContext.Provider>
+      </ThemeContext.Provider>
+    </DensityContext.Provider>
   );
 
   if (isRoot) {
@@ -182,19 +195,17 @@ export function ToolkitProvider({
 }
 
 export const useTheme = (): Theme[] => {
-  const { themes = [DEFAULT_THEME] } = useContext(ToolkitContext);
-  return themes;
+  return useContext(ThemeContext);
 };
 
 /**
  * `useDensity` merges density value from 'DensityContext` with the one from component's props.
  */
 export function useDensity(density?: Density): Density {
-  const { density: densityFromContext } = useContext(ToolkitContext);
+  const densityFromContext = useContext(DensityContext);
   return density || densityFromContext || DEFAULT_DENSITY;
 }
 
 export const useBreakpoints = (): Breakpoints => {
-  const { breakpoints } = useContext(ToolkitContext);
-  return breakpoints;
+  return useContext(BreakpointContext);
 };

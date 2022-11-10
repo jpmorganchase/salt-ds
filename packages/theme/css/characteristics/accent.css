@@ -1,10 +1,12 @@
 .uitk-light,
 .uitk-dark {
-  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
   --uitk-accent-background: var(--uitk-palette-accent-background);
+  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
   --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
 
   --uitk-accent-fontSize-small: 8px;
   --uitk-accent-fontSize-medium: 11px;
   --uitk-accent-fontSize-large: 16px;
+
+  --uitk-accent-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 }

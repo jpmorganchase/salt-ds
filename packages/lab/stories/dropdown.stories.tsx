@@ -8,13 +8,15 @@ import {
   useTooltip,
 } from "@jpmorganchase/uitk-core";
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
 } from "@jpmorganchase/uitk-icons";
 
 import {
-  DropdownButton,
   Dropdown,
+  DropdownButton,
   DropdownProps,
   ListItem,
   ListItemType,
@@ -248,5 +250,64 @@ export const ControlledOpenDropdown: Story<DropdownProps> = () => {
         style={{ width: 180 }}
       />
     </>
+  );
+};
+
+export const FullyControlledDropdown: Story<DropdownProps> = () => {
+  const [open, setOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  const handleArrowDown = () => {
+    setHighlightedIndex((prevHighlightedIndex) =>
+      Math.min(usa_states.length - 1, prevHighlightedIndex + 1)
+    );
+  };
+
+  const handleArrowUp = () => {
+    setHighlightedIndex((prevHighlightedIndex) =>
+      Math.max(0, prevHighlightedIndex - 1)
+    );
+  };
+
+  const handleSelect = () => {
+    setSelectedItem(usa_states[highlightedIndex] || null);
+  };
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <div style={{ display: "inline-flex", gap: 16 }}>
+      <Dropdown
+        ListProps={{
+          highlightedIndex,
+        }}
+        defaultSelected={usa_states[0]}
+        isOpen={open}
+        selected={selectedItem}
+        source={usa_states}
+      />
+      <div style={{ display: "flex", justifyContent: "flex-end", zIndex: 1 }}>
+        <Button onClick={handleOpen} style={{ width: 80 }}>
+          {open ? "Close" : "Open"}
+        </Button>
+        <Button
+          disabled={!open || highlightedIndex === usa_states.length - 1}
+          onClick={handleArrowDown}
+        >
+          <ArrowDownIcon />
+        </Button>
+        <Button
+          disabled={!open || highlightedIndex <= 0}
+          onClick={handleArrowUp}
+        >
+          <ArrowUpIcon />
+        </Button>
+        <Button disabled={!open} onClick={handleSelect}>
+          Select
+        </Button>
+      </div>
+    </div>
   );
 };

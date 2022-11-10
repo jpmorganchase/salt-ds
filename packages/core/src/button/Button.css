@@ -1,8 +1,3 @@
-/* Icon API @ignore */
-.uitkButton {
-  --uitkIcon-letterSpacing: 0;
-}
-
 /* Styles applied to the root element if variant="cta" */
 .uitkButton-cta {
   --button-background: var(--uitk-actionable-cta-background);
@@ -95,7 +90,7 @@
   border-color: var(--uitkButton-borderColor, transparent);
   border-style: var(--uitkButton-borderStyle, solid);
   border-width: var(--uitkButton-borderWidth, 0);
-  border-radius: var(--uitkButton-borderRadius, var(--uitk-container-borderRadius));
+  border-radius: var(--uitkButton-borderRadius, 0);
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
   display: inline-block;

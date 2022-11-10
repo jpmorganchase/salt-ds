@@ -46,9 +46,3 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <ExamplesGrid imgSrc="/visual-regression-screenshots/Progress-vr-snapshot.png" />
-  );
-};

@@ -12,34 +12,29 @@ import {
 } from "react";
 import {
   Button,
-  Input,
-  FlexLayout,
   FlexItem,
+  FlexLayout,
   FormField,
-  useDensity,
+  Input,
   StackLayout,
+  useDensity,
 } from "@jpmorganchase/uitk-core";
 import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
 
 import {
   ContentStatus,
   List,
-  ListProps,
-  ListItemGroup,
   ListItem,
-  ListItemType,
+  ListItemGroup,
   ListItemProps,
+  ListItemType,
+  ListProps,
   ListScrollHandles,
   VirtualizedList,
 } from "@jpmorganchase/uitk-lab";
-import { SelectionChangeHandler, SelectHandler } from "../src/common-hooks";
+import { SelectHandler, SelectionChangeHandler } from "../src/common-hooks";
 
-import {
-  usa_states,
-  // random_1000,
-} from "./list.data";
-
-import "./list.stories.css";
+import { usa_states } from "./list.data";
 
 const containerStyle = {
   display: "flex",

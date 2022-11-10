@@ -1,0 +1,61 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #155c93;
+  --ifm-color-primary-dark: #135384;
+  --ifm-color-primary-darker: #124e7d;
+  --ifm-color-primary-darkest: #0f4067;
+  --ifm-color-primary-light: #1765a2;
+  --ifm-color-primary-lighter: #186aa9;
+  --ifm-color-primary-lightest: #1b78bf;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: var(--uitk-typography-fontFamily);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="dark"] {
+  --ifm-color-primary: #4b9fd8;
+  --ifm-color-primary-dark: #3392d3;
+  --ifm-color-primary-darker: #2c8bcb;
+  --ifm-color-primary-darkest: #2472a7;
+  --ifm-color-primary-light: #63acdd;
+  --ifm-color-primary-lighter: #6fb2e0;
+  --ifm-color-primary-lightest: #93c5e8;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.hero--primary {
+  --ifm-hero-background-color: var(--uitk-color-white);
+  --ifm-hero-text-color: var(--uitk-color-grey-900);
+}
+
+.navbar {
+  --ifm-navbar-height: 44px;
+  --ifm-navbar-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.navbar__logo {
+  height: 20px;
+}
+
+.navbar__logo__separator {
+  border-right: 1px solid var(--uitk-color-grey-60);
+  height: 14px;
+  margin: 0px calc(var(--uitk-size-unit) * 2);
+}
+
+.footer {
+  --ifm-footer-background-color: var(--uitk-color-grey-10);
+  --ifm-footer-color: var(--uitk-color-grey-900);
+  --ifm-footer-link-color: var(--uitk-color-grey-900);
+}
+
+.footer__title {
+  --ifm-footer-title-color: var(--uitk-color-grey-900);
+}

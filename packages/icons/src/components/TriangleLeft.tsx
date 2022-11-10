@@ -1,9 +1,22 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const TriangleLeftIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="TriangleLeftIcon">
-    <path d="m3.5 6 5 5V1l-5 5z" />
-  </svg>,
-  "TriangleLeft",
-  "triangle left"
-);
+import { Icon, IconProps } from "../icon";
+
+export type TriangleLeftIconProps = IconProps;
+
+export const TriangleLeftIcon = forwardRef<
+  SVGSVGElement,
+  TriangleLeftIconProps
+>(function TriangleLeftIcon(props: TriangleLeftIconProps, ref) {
+  return (
+    <Icon
+      data-testid="TriangleLeftIcon"
+      aria-label="triangle left"
+      viewBox="0 0 12 12"
+      ref={ref}
+      {...props}
+    >
+      <path d="m3.5 6 5 5V1l-5 5z" />
+    </Icon>
+  );
+});

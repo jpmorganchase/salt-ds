@@ -23,7 +23,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
   const tableRef = useActiveOnWheel(onWheel);
 
   return (
-    <div className={withBaseName()} ref={topRef}>
+    <div className={withBaseName()} ref={topRef} data-testid="grid-top-part">
       <div className={withBaseName("space")}>
         <table ref={tableRef}>
           <TableColGroup columns={columns} gap={midGap} />

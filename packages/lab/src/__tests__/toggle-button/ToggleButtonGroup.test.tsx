@@ -21,16 +21,16 @@ function renderToggleButtonGroup(
   ) => (
     <ToggleButtonGroup onChange={onChangeSpy} {...props}>
       <ToggleButton aria-label="home" tooltipText="Home">
-        <HomeIcon size={12} /> Home
+        <HomeIcon /> Home
       </ToggleButton>
       <ToggleButton aria-label="search" tooltipText="Search">
-        <SearchIcon size={12} /> Search
+        <SearchIcon /> Search
       </ToggleButton>
       <ToggleButton aria-label="print" tooltipText="Print">
-        <PrintIcon size={12} /> Print
+        <PrintIcon /> Print
       </ToggleButton>
       <ToggleButton aria-label="alert" tooltipText="Alert">
-        <NotificationIcon size={12} /> Alert
+        <NotificationIcon /> Alert
       </ToggleButton>
     </ToggleButtonGroup>
   );

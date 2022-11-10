@@ -1,24 +1,9 @@
-.uitk-density-touch {
-  --tooltip-icon-top: 6px;
-}
-
-.uitk-density-low {
-  --tooltip-icon-top: 4px;
-}
-
-.uitk-density-medium {
-  --tooltip-icon-top: 1px;
-}
-
-.uitk-density-high {
-  --tooltip-icon-top: 1px;
-}
-
 /* Styles applied to root component */
 .uitkTooltip {
   --tooltip-background: var(--uitkTooltip-background, var(--uitk-container-background-medium));
   --tooltip-fontSize: var(--uitkTooltip-fontSize, var(--uitk-text-fontSize));
   --tooltip-lineHeight: var(--uitkTooltip-lineHeight, var(--uitk-text-lineHeight));
+  --tooltip-zIndex: var(--uitkTooltip-zIndex, var(--uitk-zIndex-tooltip));
 }
 
 .uitkTooltip {
@@ -34,6 +19,7 @@
   padding: var(--uitkTooltip-padding, var(--uitk-size-unit));
   position: relative;
   text-align: var(--uitkTooltip-textAlign, left);
+  z-index: var(--tooltip-zIndex);
 }
 
 .uitkTooltip[data-placement^="top"] {
@@ -55,6 +41,7 @@
 /* Styles applied to inner content */
 .uitkTooltip-content {
   display: flex;
+  align-items: center;
   position: relative;
 }
 
@@ -65,10 +52,7 @@
 
 /* Styles applied to status icon */
 .uitkTooltip-icon {
-  color: var(--uitkTooltip-icon-color, var(--tooltip-status-icon-color));
-  fill: var(--uitkTooltip-icon-color, var(--tooltip-status-icon-color));
   margin-right: var(--uitkTooltip-icon-marginRight, 6px);
-  top: var(--tooltip-icon-top);
   vertical-align: top;
 }
 
@@ -130,23 +114,19 @@
 /* Styles applied when status = "info" */
 .uitkTooltip-info {
   --tooltip-status-borderColor: var(--uitk-status-info-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-info-foreground);
 }
 
 /* Styles applied when status = "error" */
 .uitkTooltip-error {
   --tooltip-status-borderColor: var(--uitk-status-error-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-error-foreground);
 }
 
 /* Styles applied when status = "warning" */
 .uitkTooltip-warning {
   --tooltip-status-borderColor: var(--uitk-status-warning-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-warning-foreground);
 }
 
 /* Styles applied when status = "success" */
 .uitkTooltip-success {
   --tooltip-status-borderColor: var(--uitk-status-success-borderColor);
-  --tooltip-status-icon-color: var(--uitk-status-success-foreground);
 }

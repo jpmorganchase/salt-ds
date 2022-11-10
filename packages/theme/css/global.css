@@ -1,0 +1,38 @@
+/**
+ * Have some global styles to simulate more realistic app. Currently only for Storybook.
+ * We don't have a universal set of styling on each component, e.g. some component set font-family some don't.
+ *
+ * It would be nice to do these as a global reset, so each component doesn't need to set these.
+ * - font-family
+ * - line-height
+ * - background
+ * - color
+ */
+
+p {
+  font-size: var(--uitk-text-fontSize);
+}
+
+body {
+  font-family: "uitk-sans";
+}
+
+.uitk-theme {
+  display: contents;
+}
+
+.uitk-light {
+  color-scheme: light;
+}
+
+.uitk-dark {
+  color-scheme: dark;
+}
+
+/* Setting every element's box-sizing to border-box ensures the declared width
+of the element is never exceeded due to padding or border. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

@@ -31,10 +31,13 @@ export const useDropdown = <
   Selection extends SelectionStrategy = "default"
 >({
   collectionHook,
+  defaultHighlightedIndex: defaultHighlightedIndexProp,
   defaultIsOpen,
   defaultSelected,
+  highlightedIndex: highlightedIndexProp,
   isOpen: isOpenProp,
   itemToString = defaultItemToString,
+  onHighlight,
   onOpenChange,
   onSelectionChange,
   selected,
@@ -67,11 +70,16 @@ export const useDropdown = <
 
   const listHook = useList<Item, Selection>({
     collectionHook,
-    defaultHighlightedIndex: 0,
+    defaultHighlightedIndex:
+      defaultHighlightedIndexProp ?? highlightedIndexProp === undefined
+        ? 0
+        : undefined,
     defaultSelected,
     label: "useDropDownList",
     onSelectionChange: handleSelectionChange,
     containerRef: NULL_REF,
+    highlightedIndex: highlightedIndexProp,
+    onHighlight,
     selected,
     selectionStrategy,
     tabToSelect: !isMultiSelect,

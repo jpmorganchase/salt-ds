@@ -22,16 +22,3 @@
 .uitkMetric-orientation-vertical.uitkMetric-align-right {
   align-items: flex-end;
 }
-
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal {
-  --metric-horizontal-gap: calc(var(--uitk-size-unit) * 2);
-}
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-small {
-  --metric-horizontal-marginTop: -4px;
-}
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-medium {
-  --metric-horizontal-marginTop: -8px;
-}
-.backwardsCompat.uitkMetric.uitkMetric-orientation-horizontal.uitkMetric-size-large {
-  --metric-horizontal-marginTop: -14px;
-}

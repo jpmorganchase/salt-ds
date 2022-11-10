@@ -94,10 +94,14 @@
   --uitk-palette-warning-icon: var(--uitk-color-orange-500);
 
   /* Measure */
-  --uitk-palette-measure-fill: var(--uitk-color-blue-500);
-  --uitk-palette-measure-fill-disabled: var(--uitk-color-blue-500-fade-fill);
-  --uitk-palette-measure-background: var(--uitk-color-grey-60);
-  --uitk-palette-measure-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-fill: var(--uitk-color-blue-500);
+  --uitk-palette-measured-fill-disabled: var(--uitk-color-blue-500-fade-fill);
+  --uitk-palette-measured-foreground: var(--uitk-color-grey-90);
+  --uitk-palette-measured-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
+  --uitk-palette-measured-background: var(--uitk-color-grey-60);
+  --uitk-palette-measured-background-disabled: var(--uitk-color-grey-60-fade-background);
+  --uitk-palette-measured-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-border-disabled: var(--uitk-color-grey-90-fade-border);
 
   /* Navigate */
   --uitk-palette-navigate-background-low: transparent;
@@ -113,6 +117,7 @@
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-grey-90-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-700);
@@ -231,10 +236,14 @@
   --uitk-palette-warning-icon: var(--uitk-color-orange-500);
 
   /* Measure */
-  --uitk-palette-measure-fill: var(--uitk-color-blue-300);
-  --uitk-palette-measure-fill-disabled: var(--uitk-color-blue-300-fade-fill);
-  --uitk-palette-measure-background: var(--uitk-color-grey-300);
-  --uitk-palette-measure-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-fill: var(--uitk-color-blue-300);
+  --uitk-palette-measured-fill-disabled: var(--uitk-color-blue-300-fade-fill);
+  --uitk-palette-measured-foreground: var(--uitk-color-grey-90);
+  --uitk-palette-measured-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
+  --uitk-palette-measured-background: var(--uitk-color-grey-300);
+  --uitk-palette-measured-background-disabled: var(--uitk-color-grey-300-fade-background);
+  --uitk-palette-measured-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-border-disabled: var(--uitk-color-grey-90-fade-border);
 
   /* Navigate */
   --uitk-palette-navigate-background-low: transparent;
@@ -250,6 +259,7 @@
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-200);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-grey-90-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-300);

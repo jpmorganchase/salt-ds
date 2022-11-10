@@ -12,19 +12,3 @@
   --uitkCheckbox-icon-borderWidth-checked: var(--uitk-selectable-borderWidth);
   --uitkCheckbox-icon-tick-color: var(--uitk-taggable-foreground);
 }
-
-/* TK1 Backwards compat styling */
-
-.uitk-light {
-  --backwardsCompat-pill-checkbox-icon-stroke: var(--uitk-color-grey-100);
-  --backwardsCompat-pill-checkbox-icon-tick-color: var(--uitk-color-grey-300);
-}
-.uitk-dark {
-  --backwardsCompat-pill-checkbox-icon-stroke: var(--uitk-color-grey-80);
-  --backwardsCompat-pill-checkbox-icon-tick-color: var(--uitk-color-grey-60);
-}
-
-.backwardsCompat.uitkPill .uitkPill-checkbox {
-  --uitkCheckbox-icon-stroke: var(--backwardsCompat-pill-checkbox-icon-stroke);
-  --uitkCheckbox-icon-tick-color: var(--backwardsCompat-pill-checkbox-icon-tick-color);
-}
