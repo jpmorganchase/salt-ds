@@ -148,14 +148,14 @@ light theme and high density.
       <Card>
         <div>
           <h1>This is Card</h1>
-          <span>Using Nested DOM Elements</span>
+          <span>Wrapped with a ToolkitProvider</span>
         </div>
       </Card>
     </ToolkitProvider>
   </Story>
 </Canvas>
 
-The same `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use
+Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use
 the toolkit dark theme. Density is not specified on the inner ToolkitProvider, so is inherited from the outer instance.
 
 <Canvas>
@@ -165,7 +165,8 @@ the toolkit dark theme. Density is not specified on the inner ToolkitProvider, s
 </Canvas>
 
 By default, the `ToolkitProvider` wraps nested content with a custom `uitk-theme` element to which the theme and density CSS classes are added.
-Given this JSX
+
+Given this JSX:
 
 ```jsx
 <ToolkitProvider theme="light" density="medium">
@@ -173,7 +174,7 @@ Given this JSX
 </ToolkitProvider>
 ```
 
-then we would see the following HTML.
+Then we would see the following HTML:
 
 ```html
 <uitk-theme class="uitk-theme-light uitk-density-medium">
@@ -185,10 +186,11 @@ The `uitk-theme` element is styled with `display: contents` which generally ensu
 style rules that may be in effect. Child elements are styled and laid out as though the containing `uitk-theme` element were not present.
 Some browser implementations of `display: contents` are buggy (Safari, for example). Further, your code may rely on CSS query selectors
 in JavaScript that might be broken if they do not anticipate the additional `uitk-theme` element inserted by the ToolkitProvider.
+
 If you are concerned about either of these scenarios, the `ToolkitProvider` can be configured to not inject this additional element.
 Instead it can add the required CSS classes to the child element nested within the Provider. You may also simply prefer this approach.
 There is (currently) one limitation to this pattern, you must use a single child element only. This is enforced within the code and,
-for TypeScript users, via the typings.This would look as follows.
+for TypeScript users, via the typings. This would look as follows:
 
 ```jsx
 <ToolkitProvider theme="light" density="dark" applyClassesToChild>
