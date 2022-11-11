@@ -25,7 +25,7 @@ these providers is to inject the appropriate CSS classes into the page so that t
 - Breakpoints
 - AriaAnnouncer
 
-### API
+## API
 
 ```js static
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
@@ -132,12 +132,12 @@ function MyComponent() {
 
 ## AriaAnnouncer
 
-None of the examples above mention `AriaAnnouncer`. The output it creates in markup is ignored for the sake of simplicity.
-It requires no configuration, but is included in your app when you use a ToolkitProvider. Because only one instance of
-AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
+`AriaAnnouncer` will be injected automatically inside the root element when ToolkitProvider is wrapping the app. If you use
 nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
 
-## ------ before
+Read [AriaAnnouncer documentation](/docs/documentation-core-aria-announcer--page) for more details.
+
+## Examples
 
 Here is a `Card` including some very simple content and wrapped with a ToolkitProvider. We set the ToolkitProvider to use the toolkit
 light theme and high density.
