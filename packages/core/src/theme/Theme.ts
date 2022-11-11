@@ -11,7 +11,6 @@ export type characteristic =
   | "measured"
   | "navigable"
   | "overlayable"
-  | "ratable"
   | "selectable"
   | "separable"
   | "taggable"

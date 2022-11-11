@@ -78,7 +78,6 @@ const allAllowedKeys = [
   "measured",
   "navigable",
   "overlayable",
-  "ratable",
   "selectable",
   "separable",
   "status",

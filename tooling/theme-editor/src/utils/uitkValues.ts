@@ -11,7 +11,6 @@ export const UITK_CHARACTERISTICS = [
   "measured",
   "navigable",
   "overlayable",
-  "ratable",
   "selectable",
   "separable",
   "status",
