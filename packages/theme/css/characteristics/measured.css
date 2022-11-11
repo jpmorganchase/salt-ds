@@ -16,5 +16,9 @@
   --uitk-measured-fill: var(--uitk-palette-measured-fill);
   --uitk-measured-fill-disabled: var(--uitk-palette-measured-fill-disabled);
   --uitk-measured-foreground: var(--uitk-palette-measured-foreground);
+  --uitk-measured-foreground-hover: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-active: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-undo: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-activeDisabled: var(--uitk-palette-measured-foreground-activeDisabled);
   --uitk-measured-foreground-disabled: var(--uitk-palette-measured-foreground-disabled);
 }

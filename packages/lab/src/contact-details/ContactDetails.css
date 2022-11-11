@@ -261,19 +261,19 @@
 }
 
 .uitkContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
 }
 
 .uitkContactFavoriteToggle-selecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-hover);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
 }
 
 .uitkContactFavoriteToggle-selected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-active);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
 }
 
 .uitkContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
 }
 
 .uitkContactFavoriteToggle-svg {
