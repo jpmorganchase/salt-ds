@@ -3,8 +3,9 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Remove ratable characteristic; tokens removed:
+Remove ratable characteristic
 
+```diff
 - --uitk-ratable-cursor-hover
 - --uitk-ratable-cursor-active
 - --uitk-ratable-cursor-undo
@@ -23,9 +24,11 @@ Remove ratable characteristic; tokens removed:
 - --uitk-ratable-borderColor-disabled
 - --uitk-ratable-borderColor-hover
 - --uitk-ratable-borderColor-undo
+```
 
 Remove rate tokens from palette:
 
+```diff
 - --uitk-palette-rate-background
 - --uitk-palette-rate-background-active
 - --uitk-palette-rate-background-activeDisabled
@@ -36,12 +39,15 @@ Remove rate tokens from palette:
 - --uitk-palette-rate-border-disabled
 - --uitk-palette-rate-border-hover
 - --uitk-palette-rate-border-undo
+```
 
 Add new tokens to measured characteristic:
 
-- --uitk-measured-foreground-hover
-- --uitk-measured-foreground-active
-- --uitk-measured-foreground-undo
-- --uitk-measured-foreground-activeDisabled
-- --uitk-palette-measured-foreground-active
-- --uitk-palette-measured-foreground-activeDisabled
+```diff
++ --uitk-measured-foreground-hover
++ --uitk-measured-foreground-active
++ --uitk-measured-foreground-undo
++ --uitk-measured-foreground-activeDisabled
++ --uitk-palette-measured-foreground-active
++ --uitk-palette-measured-foreground-activeDisabled
+```
