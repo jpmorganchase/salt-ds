@@ -36,7 +36,7 @@
   color: var(--banner-label-color);
 }
 
-/* Styles applied to status icon */
+/* Styles applied to status indicator */
 .uitkBanner-icon {
   color: var(--uitkBanner-icon-color, var(--banner-status-icon-color));
   fill: var(--uitkBanner-icon-color, var(--banner-status-icon-color));

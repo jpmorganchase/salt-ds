@@ -1,2 +1,2 @@
-export * from "./StatusIcon";
+export * from "./StatusIndicator";
 export * from "./ValidationStatus";
