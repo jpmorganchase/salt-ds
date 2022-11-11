@@ -72,7 +72,7 @@ const allAllowedKeys = [
   "container",
   "differential",
   "draggable",
-  "droptarget",
+  "target",
   "editable",
   "focused",
   "measured",

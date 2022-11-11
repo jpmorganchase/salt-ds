@@ -5,7 +5,7 @@ export const UITK_CHARACTERISTICS = [
   "delay",
   "disabled",
   "draggable",
-  "dropTarget",
+  "target",
   "editable",
   "focused",
   "measured",
