@@ -23,5 +23,4 @@ Rename Drop Target characteristic to Target
 + --uitk-target-borderWidth-disabled
 + --uitk-target-cursor-disabled
 + --uitk-target-borderColor-hover: var(--uitk-palette-interact-border-hover)
-+ --uitk-target-borderStyle-hover: solid
 ```
