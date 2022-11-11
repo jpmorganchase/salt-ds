@@ -4,7 +4,7 @@
   --switch-thumb-margin: 3px 0 0 3px;
   --switch-thumb-size: 18px;
   --switch-thumb-translate: 20px;
-  --switch-height: calc(var(--uitk-size-base) - var(--uitk-size-selection) + 1.5 * var(--uitk-size-unit));
+  --switch-height: 24px;
 }
 
 .uitk-density-low {
@@ -12,7 +12,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 16px;
   --switch-thumb-translate: 18px;
-  --switch-height: var(--uitk-size-base) - var(--uitk-size-selection) + var(--uitk-size-unit);
+  --switch-height: 20px;
 }
 
 .uitk-density-medium {
@@ -20,7 +20,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 14px;
   --switch-thumb-translate: 16px;
-  --switch-height: var(--uitk-size-base) - var(--uitk-size-selection) + var(--uitk-size-unit);
+  --switch-height: 18px;
 }
 
 .uitk-density-high {
@@ -28,7 +28,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 12px;
   --switch-thumb-translate: 14px;
-  --switch-height: var(--uitk-size-base) - var(--uitk-size-selection) + var(--uitk-size-unit);
+  --switch-height: 16px;
 }
 
 .uitkSwitch {
