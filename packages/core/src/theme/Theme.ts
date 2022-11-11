@@ -29,25 +29,26 @@ export class Theme {
     this.id = id;
     this.name = name;
   }
-
-  getCharacteristicValue(
-    characteristicName: characteristic,
-    variant: string,
-    scopeElement?: HTMLElement
-  ): string | null {
-    const cssVariableName = `--uitk-${characteristicName}-${variant}`;
-    const scopeTarget =
-      scopeElement || document.body.querySelector(`.uitk-${this.name}`);
-    if (scopeTarget) {
-      const style = getComputedStyle(scopeTarget);
-      const variableValue = style.getPropertyValue(cssVariableName);
-      if (variableValue) {
-        return variableValue;
-      }
-    }
-    return null;
-  }
 }
+
+export const getCharacteristicValue = (
+  themeName: string,
+  characteristicName: characteristic,
+  variant: string,
+  scopeElement?: HTMLElement
+): string | null => {
+  const cssVariableName = `--uitk-${characteristicName}-${variant}`;
+  const scopeTarget =
+    scopeElement || document.body.querySelector(`.${themeName}`);
+  if (scopeTarget) {
+    const style = getComputedStyle(scopeTarget);
+    const variableValue = style.getPropertyValue(cssVariableName);
+    if (variableValue) {
+      return variableValue;
+    }
+  }
+  return null;
+};
 
 const lightTheme = new Theme("uitk-light", "light");
 const darkTheme = new Theme("uitk-dark", "dark");

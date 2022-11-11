@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
-import { Density } from "../theme";
+import { Density, Mode } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
@@ -21,7 +21,7 @@ const DEFAULT_MODE = "light";
 
 export interface ThemeContextProps {
   theme: ThemeNameType;
-  mode: ThemeMode;
+  mode: Mode;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -84,15 +84,13 @@ const createThemedChildren = (
 
 type ThemeNameType = string;
 
-type ThemeMode = "light" | "dark";
-
 type TargetElement = "root" | "child";
 
 type ToolkitProviderBaseProps = {
   applyClassesTo?: TargetElement;
   density?: Density;
   theme?: ThemeNameType;
-  mode?: ThemeMode;
+  mode?: Mode;
   breakpoints?: Breakpoints;
 };
 
@@ -202,7 +200,7 @@ export const useTheme = (): ThemeNameType => {
   return useContext(ThemeContext).theme;
 };
 
-export const useMode = (): ThemeMode => {
+export const useMode = (): Mode => {
   return useContext(ThemeContext).mode;
 };
 

@@ -1,7 +1,13 @@
 import { DecoratorFn } from "@storybook/react";
-import { Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-
-const MODES = ["light", "dark"];
+import {
+  getCharacteristicValue,
+  ModeValues,
+  Panel,
+  ToolkitProvider,
+  useMode,
+  useTheme,
+} from "@jpmorganchase/uitk-core";
+import { useEffect } from "react";
 
 // Modified from storybook background addon
 // https://github.com/storybookjs/storybook/blob/next/addons/backgrounds/src/helpers/index.ts
@@ -19,6 +25,39 @@ export const addBackgroundStyle = (selector: string, css: string) => {
     document.head.appendChild(style);
   }
 };
+
+function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
+  const theme = useTheme();
+  const mode = useMode();
+  const selectorId =
+    viewMode === "docs"
+      ? `addon-backgrounds-docs-${id}`
+      : `addon-backgrounds-color`;
+
+  const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
+
+  useEffect(() => {
+    const color = getCharacteristicValue(theme, "text", "primary-foreground");
+    const background = getCharacteristicValue(
+      theme,
+      "container",
+      "background-medium"
+    );
+
+    addBackgroundStyle(
+      selectorId,
+      `
+        ${selector} {
+          background: ${background || "unset"};
+          color: ${color || "unset"};
+          transition: background-color 0.3s;
+        }
+      `
+    );
+  }, [selectorId, selector, mode, theme]);
+
+  return null;
+}
 
 export const withTheme: DecoratorFn = (StoryFn, context) => {
   const { density, mode } = context.globals;
@@ -40,7 +79,7 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
           left: 0,
         }}
       >
-        {MODES.map((mode) => (
+        {ModeValues.map((mode) => (
           <ToolkitProvider
             applyClassesTo={"child"}
             density={density}
@@ -58,10 +97,8 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
 
   return (
     <ToolkitProvider density={density} mode={mode}>
-      <Panel>
-        {/*<SetBackground viewMode={context.viewMode} id={context.id} />*/}
-        <StoryFn />
-      </Panel>
+      <SetBackground viewMode={context.viewMode} id={context.id} />
+      <StoryFn />
     </ToolkitProvider>
   );
 };

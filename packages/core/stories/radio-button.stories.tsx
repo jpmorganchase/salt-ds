@@ -2,6 +2,7 @@ import {
   Density,
   FormField,
   makeRadioIcon,
+  Mode,
   Panel,
   RadioButton,
   RadioButtonGroup,
@@ -218,7 +219,7 @@ const FormFieldRadios = ({
   </div>
 );
 
-const VariantExample = ({ name, mode }: { name: string; mode: string }) => (
+const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
   <ToolkitProvider mode={mode}>
     <Panel style={{ height: "unset" }}>
       <ColumnLayoutContainer>
@@ -280,7 +281,7 @@ const ExampleRow = ({ children, name }: ExampleRowProps) => {
   );
 };
 
-const GroupFormFieldExamples = ({ mode }: { mode: string }) => (
+const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
   <ToolkitProvider mode={mode}>
     <>
       <ExampleRow name="Basic">

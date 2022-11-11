@@ -1,4 +1,4 @@
-import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Mode, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   Children,
@@ -50,7 +50,7 @@ const DensityBlock = ({
   mode,
   children,
 }: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  mode: string;
+  mode: Mode;
 }) => (
   <BackgroundBlock background={mode === "light" ? "white" : undefined}>
     {DensityValues.map((d, i) => (
