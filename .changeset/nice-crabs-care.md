@@ -3,4 +3,4 @@
 ---
 
 Improve types for forwardCallbackProps
-Remove usage of forwardCallbackProps from List, add to Dropdown
+Ensure Dropdown callback props are merged
