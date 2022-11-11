@@ -17,6 +17,16 @@ const { CustomTooltipTextPill } = composedStories;
  */
 
 describe("GIVEN a Pill", () => {
+  it("THEN should render a `standard` Pill", () => {
+    cy.mount(<Pill label="Pill text" />);
+    cy.findByRole("button").should("have.text", "Pill text");
+  });
+
+  it("THEN should render a `disabled` Pill for disabled", () => {
+    cy.mount(<Pill disabled label="Pill disabled" />);
+    cy.findByRole("button").should("have.attr", "aria-disabled", "true");
+  });
+
   it("THEN should call onClick when Pill is clicked", () => {
     const clickSpy = cy.stub().as("clickSpy");
     cy.mount(<Pill label="label" onClick={clickSpy} />);
