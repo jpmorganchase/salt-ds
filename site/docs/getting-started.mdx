@@ -4,8 +4,102 @@ sidebar_position: 1
 
 # Getting Started
 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## Developing
 
-## Lorem ipsum
+Learn how to use Odyssey's [UI components](/components/) in your React web applications.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### Pre-requisites
+
+In order to use our components you will need:
+
+- Familiarity with web development fundamentals (HTML, CSS & JavaScript) and [React](https://reactjs.org/)
+- [Node.js](https://nodejs.org/) v16 or later installed on your system.
+- A React (v16 or later) web application project.
+  - For new projects, you can use [`create-react-app`](https://github.com/facebook/create-react-app#creating-an-app) or similar tools.
+
+### Install packages
+
+You will need to add the following three dependencies to your project:
+
+```sh
+npm install --save @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
+```
+
+:::note
+
+If you prefer, you can use [`yarn`](https://yarnpkg.com/) or other package managers to install our NPM packages.
+
+:::
+
+- `@jpmorganchase/uitk-core` contains our production-ready UI components
+- `@jpmorganchase/uitk-theme` contains the CSS files that apply Odyssey's default theme
+- `@jpmorganchase/uitk-icons` contains our SVG-based icons
+
+:::tip
+
+We strongly recommend that you regularly update to newer, compatible versions of Odyssey as they are released. For example, if using `npm`, this can be achieved by running:
+
+```sh
+npm update @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
+```
+
+This will provide you with the latest bug fixes and enhancements and does not require you to update any of your own code.
+
+Additionally, we recommend that you periodically check for new major versions (for example, via `npm outdated @jpmorganchase`) and aim to upgrade to those as soon as possible. Please note that new major versions will contain breaking changes, so always review the associated release notes and update your code as needed.
+
+:::
+
+### Initial setup
+
+When integrating Odyssey into your project, you need to perform the following one-off steps:
+
+- Include the theme CSS file (`@jpmorganchase/uitk-theme/index.css`) in your app
+- Wrap your application in a `<ToolktiProvider>` component.
+
+For example, in a typical React project, you can do this in your `src/index.js` as follows:
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+// Import <ToolkitProvider>
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+
+// Import theme CSS
+import "@jpmorganchase/uitk-theme/index.css";
+
+// Wrap your application in a <ToolkitProvider>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <ToolkitProvider>
+    <App />
+  </ToolkitProvider>
+);
+```
+
+### Next steps
+
+Congratulations, you're now ready to use our UI components. Import them from the `@jpmorganchase/uitk-core` package and use them in your JSX code. For example:
+
+```jsx
+import { Button } from "@jpmorganchase/uitk-core";
+
+function App() {
+  return <Button>Click me</Button>;
+}
+
+export default App;
+```
+
+Head over to our [component documentation](/components/) to learn about the available components and their respective APIs.
+
+### Labs components
+
+Our `@jpmorganchase/uitk-labs` package is where we introduce new components which are under initial development until they are stable and moved over to the core package. This is typically an unstable environment and may have major breaking changes.
+
+While we do not recommend using labs components in production applications, early adopters are welcome to use and experiment with them. We're keen to hear your feedback, bug reports and feature requests, so please don't hesitate to [raise new issues or comment on existing ones](https://github.com/jpmorganchase/uitk/issues).
+
+## Designing
+
+TBC
