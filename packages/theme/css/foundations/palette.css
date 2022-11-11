@@ -148,18 +148,6 @@
 
   /* Positive */
   --uitk-palette-positive-foreground: var(--uitk-color-green-700);
-
-  /* Rate */
-  --uitk-palette-rate-background: transparent;
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-activeDisabled: var(--uitk-color-orange-600-fade-background);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-undo: transparent;
-  --uitk-palette-rate-border: var(--uitk-color-grey-90);
-  --uitk-palette-rate-border-active: transparent;
-  --uitk-palette-rate-border-disabled: var(--uitk-color-grey-90-fade-border);
-  --uitk-palette-rate-border-hover: transparent;
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-600);
 }
 
 .uitk-dark {
@@ -292,16 +280,4 @@
 
   /* Positive */
   --uitk-palette-positive-foreground: var(--uitk-color-green-300);
-
-  /* Rate */
-  --uitk-palette-rate-background: transparent;
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-activeDisabled: var(--uitk-color-orange-400-fade-background);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-undo: transparent;
-  --uitk-palette-rate-border: var(--uitk-color-grey-90);
-  --uitk-palette-rate-border-active: transparent;
-  --uitk-palette-rate-border-disabled: var(--uitk-color-grey-90-fade-border);
-  --uitk-palette-rate-border-hover: transparent;
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-400);
 }
