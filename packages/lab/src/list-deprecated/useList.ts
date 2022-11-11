@@ -26,8 +26,6 @@ import {
   ListSelectionVariant,
 } from "./ListProps";
 
-import warning from "warning";
-
 type keyHandler = (event: KeyboardEvent<HTMLInputElement>) => void;
 
 interface listBoxAriaProps
@@ -610,25 +608,26 @@ const validateProps = <Item, Variant extends ListSelectionVariant>(
     const hasNoIndexer =
       getItemIndex === undefined && getItemAtIndex === undefined;
 
-    /* eslint-disable react-hooks/rules-of-hooks */
-    useEffect(() => {
-      warning(
-        source == null || Array.isArray(source),
-        "`source` for useList must be an array."
-      );
-    }, [source]);
+    const sourceNotArray = !Array.isArray(source);
 
     useEffect(() => {
-      warning(
-        hasNoIndexer || hasIndexer,
-        "useList needs to have both `getItemIndex` and `getItemAtIndex`."
-      );
+      if (sourceNotArray) {
+        console.error("`source` for useList must be an array.");
+      }
+    }, [sourceNotArray]);
 
-      warning(
-        hasNoIndexer || itemCount !== undefined,
-        "useList needs to have `itemCount` if an indexer is used."
-      );
+    useEffect(() => {
+      if (!hasNoIndexer && !hasIndexer) {
+        console.error(
+          "useList needs to have both `getItemIndex` and `getItemAtIndex`."
+        );
+      }
+
+      if (!hasNoIndexer && itemCount === undefined) {
+        console.error(
+          "useList needs to have `itemCount` if an indexer is used."
+        );
+      }
     }, [hasIndexer, hasNoIndexer, itemCount]);
-    /* eslint-enable react-hooks/rules-of-hooks */
   }
 };
