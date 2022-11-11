@@ -1,0 +1,14 @@
+.uitk-light,
+.uitk-dark {
+  --uitk-target-background-hover: var(--uitk-palette-interact-background-hover);
+
+  --uitk-target-borderColor-hover: var(--uitk-palette-interact-border-hover);
+  --uitk-target-borderStyle: dashed;
+  --uitk-target-borderStyle-hover: solid;
+  --uitk-target-borderStyle-disabled: dashed;
+  --uitk-target-borderWidth: 1px;
+  --uitk-target-borderWidth-hover: 1px;
+  --uitk-target-borderWidth-disabled: 1px;
+
+  --uitk-target-cursor-disabled: not-allowed;
+}
