@@ -1,10 +1,10 @@
 import {
   Button,
-  makePrefixer,
-  useId,
-  RadioButtonGroup,
-  GridLayout,
   DeckLayout,
+  GridLayout,
+  makePrefixer,
+  RadioButtonGroup,
+  useId,
 } from "@jpmorganchase/uitk-core";
 import {
   ChangeEventHandler,
@@ -15,7 +15,6 @@ import {
   useEffect,
 } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
-import warning from "warning";
 import cx from "classnames";
 import "./Carousel.css";
 import { useSlideSelection } from "../utils";
@@ -95,13 +94,13 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
-        const validNumberOfChildren = slidesCount > 1;
-        warning(
-          validNumberOfChildren,
-          "Carousel component requires more than one children to render. At least two elements should be provided."
-        );
+        if (slidesCount < 1) {
+          console.warn(
+            "Carousel component requires more than one children to render. At least two elements should be provided."
+          );
+        }
       }
-    }, [children]);
+    }, [slidesCount]);
 
     return (
       <GridLayout
