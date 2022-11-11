@@ -161,14 +161,6 @@
   background: var(--slider-selection-color);
 }
 
-.uitkSliderHandle-box {
-  position: absolute;
-  top: calc((var(--slider-arrow-height) - var(--slider-handle-size)) * 0.5);
-  left: calc(var(--slider-handle-size) * -0.5);
-  height: var(--slider-handle-size);
-  width: var(--slider-handle-size);
-}
-
 .uitkSliderHandle-box:focus-visible {
   outline-style: var(--slider-handle-outlineStyle);
   outline-width: var(--slider-handle-outlineWidth);
