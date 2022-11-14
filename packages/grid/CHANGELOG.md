@@ -1,5 +1,12 @@
 # @jpmorganchase/uitk-grid
 
+## 0.3.2
+
+### Patch Changes
+
+- 9a520319: Updated styles for column drag-and-drop
+  Escape key pressed while dragging a column cancels column move
+
 ## 0.3.1
 
 ### Patch Changes
