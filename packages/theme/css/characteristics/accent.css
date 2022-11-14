@@ -1,12 +1,20 @@
+.uitk-density-high {
+  --uitk-accent-fontSize: 8px;
+}
+.uitk-density-medium {
+  --uitk-accent-fontSize: 10px;
+}
+.uitk-density-low {
+  --uitk-accent-fontSize: 12px;
+}
+.uitk-density-touch {
+  --uitk-accent-fontSize: 14px;
+}
+
 .uitk-light,
 .uitk-dark {
   --uitk-accent-background: var(--uitk-palette-accent-background);
   --uitk-accent-borderColor: var(--uitk-palette-accent-border);
   --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
-
-  --uitk-accent-fontSize-small: 8px;
-  --uitk-accent-fontSize-medium: 11px;
-  --uitk-accent-fontSize-large: 16px;
-
   --uitk-accent-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 }

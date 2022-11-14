@@ -19,7 +19,6 @@ import {
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
-import { forwardCallbackProps } from "../utils";
 
 import { ListItem as DefaultListItem, ListItemProxy } from "./ListItem";
 import { ListItemProps, ListProps } from "./listTypes";
@@ -223,7 +222,7 @@ export const List = forwardRef(function List<
     };
     list.push(
       isChildItem ? (
-        cloneElement(value, forwardCallbackProps(value.props, listItemProps))
+        cloneElement(value, listItemProps)
       ) : (
         <ListItem {...listItemProps} />
       )

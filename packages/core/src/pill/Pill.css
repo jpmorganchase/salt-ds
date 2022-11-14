@@ -20,8 +20,9 @@
   --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
   --pill-background-disabled: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background-hover));
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-pill) - 2px));
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--pill-height) - 2px));
   --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-caption-fontSize));
+  --pill-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 1.5));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
   --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
@@ -45,7 +46,7 @@
   color: var(--pill-text-color);
   display: inline-flex;
   font-size: var(--pill-fontSize);
-  height: var(--uitkPill-height, var(--pill-checkbox-size));
+  height: var(--uitkPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
   letter-spacing: var(--uitkPill-letterSpacing, 0);
   line-height: var(--uitkPill-lineHeight, var(--uitk-text-base-lineHeight));
   max-width: var(--uitkPill-maxWidth, 160px);
@@ -151,7 +152,7 @@
 /* Style applied to Pill label inner text */
 .uitkPill-innerLabel {
   vertical-align: top;
-  line-height: calc(var(--pill-checkbox-size) + 2px);
+  line-height: var(--pill-height);
 }
 
 /* Style applied to Pill label and icon when `disabled={true}` */

@@ -7,7 +7,6 @@ import React, {
   ReactNode,
   useMemo,
 } from "react";
-import warning from "warning";
 import { BreadcrumbProps } from "./Breadcrumb";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
@@ -112,8 +111,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
       // This defends against someone passing weird input, to ensure that if all
       // items would be shown anyway, we just show all items without the EllipsisItem
       if (itemsBeforeCollapse + itemsAfterCollapse >= allItems.length) {
-        warning(
-          false,
+        console.warn(
           [
             "You have provided an invalid combination of properties to the Breadcrumbs.",
             `itemsAfterCollapse={${itemsAfterCollapse}} +itemsBeforeCollapse={${itemsBeforeCollapse}} >= maxItems={${maxItems}}`,

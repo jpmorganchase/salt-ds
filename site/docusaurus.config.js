@@ -31,6 +31,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/jpmorganchase/uitk",
+          routeBasePath: "/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -51,19 +52,18 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "getting-started",
+            docId: "getting-started/index",
             position: "left",
             label: "Getting Started",
           },
           {
             type: "doc",
-            docId: "components",
+            docId: "components/index",
             position: "left",
             label: "Components",
           },
           {
-            type: "doc",
-            docId: "contributing",
+            to: "contributing/",
             position: "left",
             label: "Contributing",
           },
@@ -82,15 +82,15 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                to: "/docs/getting-started",
+                to: "getting-started/",
               },
               {
                 label: "Components",
-                to: "/docs/components",
+                to: "components/",
               },
               {
                 label: "Contributing",
-                to: "/docs/contributing",
+                to: "contributing/",
               },
             ],
           },
