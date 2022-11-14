@@ -5,9 +5,9 @@ import {
   Icon,
   IconProps,
 } from "@jpmorganchase/uitk-icons";
-import { allIcons, allIconsNames } from "./icon.all";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, FormField, Input, StackLayout } from "../../core";
+import { AllIcons as AllIconsBox, allIconNames } from "docs/icons/AllIcons";
 
 export default {
   title: "Icons/Icon",
@@ -85,24 +85,13 @@ export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
   return <IconGrid Icon={CustomIcon} />;
 };
 
-export const AllIcons: ComponentStory<typeof Icon> = () => {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(15, auto)",
-        gap: 8,
-      }}
-    >
-      {allIcons.map((IconComponent, i) => (
-        <IconComponent key={i} size={2} />
-      ))}
-    </div>
-  );
-};
+export const AllIcons: ComponentStory<typeof Icon> = () => (
+  <AllIconsBox size={2} />
+);
 
 export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
   const [inputText, setInputText] = useState("");
+
   return (
     <StackLayout separators>
       <FormField
@@ -111,8 +100,12 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
       >
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
       </FormField>
-      <FlexLayout wrap gap={1}>
-        {allIconsNames
+      <FlexLayout
+        wrap
+        gap={4}
+        style={{ paddingBlock: "1rem", maxWidth: "650px" }}
+      >
+        {allIconNames
           .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
           .map(({ name, icon }, i) => {
             return (
@@ -121,7 +114,7 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
                   key: i,
                   size: 2,
                 })}
-                <p>{name.slice(0, -1)}</p>
+                <p>{name}</p>
               </StackLayout>
             );
           })}
