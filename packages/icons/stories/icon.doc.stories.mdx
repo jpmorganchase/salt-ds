@@ -41,13 +41,13 @@ You have more size choices by adding multiplies to 2x, 3x, 4x etc.
   <Story id="icons-icon--toolkit-icon-multiple-sizes" />
 </Canvas>
 
-We provide two types of icons: default and solid. Some special icons may be excluded from it like `plus` and `loader`.
+We provide two types of icons: default and solid. Most of our icons will have the two versions, except cases in which the icon shape is too narrow to have a solid version like `plus` and `loader`.
 
 <Canvas>
   <Story id="icons-icon--toolkit-types" />
 </Canvas>
 
-To override the default color of the icon, you can use the `color` css variable.
+To override the default color of the icon, you can use the `--uitkIcon-color` CSS variable.
 
 <Canvas>
   <AddDocumentIcon
@@ -55,7 +55,7 @@ To override the default color of the icon, you can use the `color` css variable.
   />
 </Canvas>
 
-You can supply custom icons as `children` of the `Icon` component by using an `<svg>`. Whenever you add a custom icon you need to pass an `aria-label` to the Icon.
+You can supply custom icons as `children` of the `Icon` component. `Icon` has the same API as the native `<svg>` element. Whenever you add a custom icon you need to pass an `aria-label` to the Icon.
 
 <Canvas>
   <Story id="icons-icon--custom-svg-icon" />
@@ -94,10 +94,5 @@ import { Icon } from "@jpmorganchase/uitk-icons";
 ## Characteristics Used
 
 <CharacteristicUsage of={Icon} />
-
-## Accessibility
-
-To ensure that icon-only buttons are ADA compliant, when icon is inside a button you must display the button’s label in a supporting Tooltip that is revealed on mouse hover or keyboard focus.
-The icon name/description should be read out automatically by a screen-reader with the Aria label.
 
 <HelpAndSupport />
