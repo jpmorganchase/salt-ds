@@ -1,6 +1,15 @@
+.uitk-density-medium,
+.uitk-density-low,
+.uitk-density-touch {
+  --appHeader-height: var(--uitkAppHeader-height, calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2));
+}
+
+.uitk-density-high {
+  --appHeader-height: var(--uitkAppHeader-height, calc(var(--uitk-size-base) + var(--uitk-size-unit) * 3));
+}
+
 .uitkAppHeader {
   --appHeader-background: var(--uitk-container-background-medium);
-  --appHeader-height: var(--uitkAppHeader-height, var(--uitk-size-toolbar));
   --appHeader-separable-bar: var(--uitk-separable-secondary-borderColor);
   --appHeader-shadow: var(--uitkAppHeader-shadow, var(--uitk-overlayable-shadow-borderRegion));
   --appHeader-padding: calc(var(--uitk-size-unit) * 3);

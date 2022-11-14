@@ -1,3 +1,16 @@
+.uitk-density-high {
+  --toggleButton-group-height: calc(var(--uitk-size-base) - var(--uitk-size-unit) + 2px);
+}
+.uitk-density-medium {
+  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
+}
+.uitk-density-low {
+  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 2 / 3) + 2px);
+}
+.uitk-density-touch {
+  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
+}
+
 .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
   --toggleButton-group-borderColor: var(--uitkToggleButton-group-cta-borderColor, var(--uitk-container-cta-borderColor));
 }
@@ -20,7 +33,7 @@
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton {
-  height: var(--uitk-size-toggleGroupButton);
+  height: var(--toggleButton-group-height);
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {
