@@ -1,5 +1,136 @@
 # @jpmorganchase/uitk-core
 
+## 0.8.0
+
+### Minor Changes
+
+- d636f6a7: Add `tabIndex` and `id` to `DeckItem`
+  Add `deckItemProps` prop to `DeckLayout`
+- 475f531c: change applyClassesToChild prop to applyClassesTo prop in ToolkitProvider, if this prop is set to "root" on a root level Toolkitprovider, then the provider will apply the theme classes to the html element instead of creating a uitk-theme element. Setting the prop to "child" will make the ToolkitProvider apply the classes to the child element as before
+- 2a3403c6: Rename Drop Target characteristic to Target
+
+  ```diff
+  - --uitk-dropTarget-background-hover
+  - --uitk-dropTarget-borderStyle
+  - --uitk-dropTarget-borderStyle-hover: dashed
+  - --uitk-dropTarget-borderStyle-disabled
+  - --uitk-dropTarget-borderWidth
+  - --uitk-dropTarget-borderWidth-hover
+  - --uitk-dropTarget-borderWidth-disabled
+  - --uitk-dropTarget-cursor-disabled
+  + --uitk-target-background-hover
+  + --uitk-target-borderStyle
+  + --uitk-target-borderStyle-hover: solid
+  + --uitk-target-borderStyle-disabled
+  + --uitk-target-borderWidth
+  + --uitk-target-borderWidth-hover
+  + --uitk-target-borderWidth-disabled
+  + --uitk-target-cursor-disabled
+  + --uitk-target-borderColor-hover: var(--uitk-palette-interact-border-hover)
+  ```
+
+- 5478cd2a: Remove separators from FlowLayout and restrain separators in FlexLayout to layouts with wrap = false
+- 38c46088: Remove backwards compatibility functionality
+- 2cb9429f: Add `role="dialog"` and `aria-modal="true"` to `LayerLayout` when `Scrim` is not being used
+- 0088d56a: Add "as" prop to `GridLayout`, `GridItem`, `BorderLayout` and `BorderItem`
+- 42f79714: Remove container, selectable and editable -borderRadius tokens; replace with 0 where container-borderRadius was already being used
+- b66d2b0c: Refactor Switch CSS to remove `:not` usage.
+- 3708f946: Rename component `StatusIcon` to `StatusIndicator`.
+- 993029f3: - --uitk-palette-opacity-background changed to opacity-2
+
+  - Size tokens updated to use unit calculations where density aware
+
+  - The following size tokens moved to become density invariant:
+
+  --uitk-size-divider-strokeWidth: 1px;
+  --uitk-size-bottomBorder: 2px;
+  --uitk-size-brandBar: 4px;
+
+  - Pill, Switch, AppHeader, Logo and ToggleGroupButton size tokens moved to respective components
+
+  ```diff
+  - --uitk-size-adornment
+  - --uitk-size-appHeader
+  - --uitk-size-pill
+  - --uitk-size-switch
+  - --uitk-size-logo
+  - --uitk-size-toggleGroupButton
+  - --uitk-size-formField-top
+  ```
+
+- d5f5d83e: ToolkitProvider
+
+  The `theme` prop has be renamed to `mode` so terminology is consistent between designers and developers.
+
+  ```diff
+  - <ToolkitProvider theme="light" density="medium" />
+  + <ToolkitProvider mode="light" density="medium" />
+  ```
+
+  The implementation of this has changed from using a class for the mode to a data attribute
+
+  ```diff
+  - <div class="uitk-theme uitk-light uitk-density-medium">
+  + <div class="uitk-theme uitk-density-medium" data-mode="light">
+  ```
+
+  CSS rules which used `uitk-theme-light` and `uitk-theme-dark`, will need to be updated e.g.
+
+  ```diff
+  - .uitk-light {}
+  + [data-mode="light"] {}
+
+  - .uitk-dark {}
+  + [data-mode="dark"] {}
+  ```
+
+  The `theme` prop can still be used to provide a custom theme name to help add specificity when creating custom themes.
+
+- 172fd5a8: Updated the `<Icon />` component.
+
+  - It now only accepts SVG elements as children and should be used as follows:
+
+  ```jsx
+  <Icon aria-label="add" viewBox="0 0 12 12" size={1}>
+    <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
+  </Icon>
+  ```
+
+  - Wrapping span elements have been removed so the root element is the `<svg>` itself. The Icon ref is now type `SVGSVGElement` instead of a `<span>`.
+
+  - The size prop has been updated to be a number which is a multiplier of the base value instead of a named size. At high density the following would apply:
+
+  ```jsx
+  <AddIcon size="small" />
+  <AddIcon size="medium" />
+  <AddIcon size="large" />
+  ```
+
+  becomes
+
+  ```jsx
+  <AddIcon size={1} />
+  <AddIcon size={2} />
+  <AddIcon size={4} />
+  ```
+
+  - The size of the Icon will now scale with density.
+  - **Note:** Previously Icon could be set to a specific size by passing a number to the `size` prop. This has been removed so Icons will scale with the rest of the design system. You can still set a specific size using the css variable `--icon-size` but it is not recommended as your component won't scale with density.
+  - Built in Icon components e.g. `<AddIcon />` have been regenerated to use the new Icon component so their html and API have changed accordingly.
+  - UITK components which had Icon or a built-in Icon as a dependancy have also been updated.
+  - A new size css variable `--uitk-size-icon-base` has been added to the theme for each density.
+
+- ce4756a1: Remove uitk-theme custom element and replace it with div element. The custom element may cause confusion.
+
+### Patch Changes
+
+- f48f7cc2: Fix tooltip doesn't have z-index applied
+- 212a2823: Separate ToolkitContext into Density, Theme and Breakpoint contexts. This will prevent any component where useTheme is used from re-rendering if density updates in the context and vice versa.
+- e52e83dd: Refactor Tooltip to use StatusIcon
+- e52e83dd: Fix StatusIcon fill specificity
+- 9a7b6020: Switch: remove console.log from change handler
+- 06d86e60: Remove warning and rely on native console
+
 ## 0.7.0
 
 ### Minor Changes
