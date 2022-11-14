@@ -2,7 +2,6 @@ import {
   ToolkitProvider,
   useAriaAnnouncer,
   useDensity,
-  useMode,
   useTheme,
 } from "@jpmorganchase/uitk-core";
 import { mount } from "cypress/react";
@@ -15,8 +14,7 @@ const TestComponent = ({
   className?: string;
 }) => {
   const density = useDensity();
-  const theme = useTheme();
-  const mode = useMode();
+  const { theme, mode } = useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
 

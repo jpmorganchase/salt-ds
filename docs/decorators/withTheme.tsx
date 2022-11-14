@@ -4,7 +4,6 @@ import {
   ModeValues,
   Panel,
   ToolkitProvider,
-  useMode,
   useTheme,
 } from "@jpmorganchase/uitk-core";
 import { useEffect } from "react";
@@ -27,8 +26,7 @@ export const addBackgroundStyle = (selector: string, css: string) => {
 };
 
 function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
-  const theme = useTheme();
-  const mode = useMode();
+  const { theme, mode } = useTheme();
   const selectorId =
     viewMode === "docs"
       ? `addon-backgrounds-docs-${id}`

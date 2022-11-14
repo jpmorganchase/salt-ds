@@ -17,10 +17,6 @@ body {
   font-family: "uitk-sans";
 }
 
-.uitk-provider {
-  display: contents;
-}
-
 .uitk-theme[data-mode^="light"] {
   color-scheme: light;
 }

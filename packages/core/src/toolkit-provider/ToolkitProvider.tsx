@@ -13,6 +13,8 @@ import { Density, Mode } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
+import "./ToolkitProvider.css";
+
 export const DEFAULT_DENSITY = "medium";
 
 const DEFAULT_THEME_NAME = "uitk-theme";
@@ -119,18 +121,17 @@ export function ToolkitProvider({
   applyClassesTo,
   children,
   density: densityProp,
-  theme: themesProp,
+  theme: themeProp,
   mode: modeProp,
   breakpoints: breakpointsProp,
 }: ToolkitProviderProps) {
   const inheritedDensity = useContext(DensityContext);
-  const inheritedThemes = useTheme();
-  const inheritedMode = useMode();
+  const { theme: inheritedThemes, mode: inheritedMode } = useTheme();
 
   const isRoot = inheritedThemes === undefined || inheritedThemes === "";
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
-    themesProp ??
+    themeProp ??
     (inheritedThemes === "" ? DEFAULT_THEME_NAME : inheritedThemes);
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
@@ -196,12 +197,8 @@ export function ToolkitProvider({
   }
 }
 
-export const useTheme = (): ThemeNameType => {
-  return useContext(ThemeContext).theme;
-};
-
-export const useMode = (): Mode => {
-  return useContext(ThemeContext).mode;
+export const useTheme = (): ThemeContextProps => {
+  return useContext(ThemeContext);
 };
 
 /**

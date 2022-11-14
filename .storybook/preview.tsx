@@ -18,7 +18,7 @@ const DEFAULT_MODE = "light";
 export const globalTypes: GlobalTypes = {
   mode: {
     name: "Mode",
-    description: "Set the color theme",
+    description: "Set the theme mode",
     defaultValue: DEFAULT_MODE,
     toolbar: {
       title: "Mode",

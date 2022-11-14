@@ -1,7 +1,16 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Card, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Canvas,
+  Meta,
+  Story
+} from "@storybook/addon-docs";
+import {
+  Card,
+  ToolkitProvider
+} from "@jpmorganchase/uitk-core";
 
-import { NestedProviders } from "./toolkit-provider.stories";
+import {
+  NestedProviders
+} from "./toolkit-provider.stories";
 
 <Meta title="Documentation/Core/Toolkit Provider" />
 
@@ -174,28 +183,13 @@ function MyComponent() {
 
 ## useTheme
 
-You can use the `useTheme` hook to access the value which indicates which theme is currently active. The `useTheme` hook returns the string value of the currently set theme in scope. You can optionally override these values by providing an array of theme names to `ToolkitProvider` via the `themes` prop.
+You can use the `useTheme` hook to access the value which indicates which theme and mode is currently active. The `useTheme` hook returns an object which contains string values of the currently set theme and mode in scope. You can optionally override these values by providing a theme name and mode string to `ToolkitProvider` via the `theme` and `mode` prop respectively.
 
 ```tsx
 import { useTheme } from "@jpmorganchase/uitk-core";
 
 function MyComponent() {
-  const [currentTheme] = useTheme();
-  return (
-    <div>{currentTheme === "uitk-light" ? "Light Theme" : "Dark Theme"}</div>
-  );
-}
-```
-
-## useMode
-
-You can use the `useMode` hook to access the value which indicates which theme mode is currently active. The `useMode` hook returns the string value of the currently set mode. The available themes by default are "light" and "dark". You can optionally override these values by providing a mode names to `ToolkitProvider` via the `mode` prop.
-
-```tsx
-import { useMode } from "@jpmorganchase/uitk-core";
-
-function MyComponent() {
-  const [currentMode] = useMode();
+  const {mode:currentMode} = useTheme();
   return <div>{currentMode === "light" ? "Light Mode" : "Dark Mode"}</div>;
 }
 ```
