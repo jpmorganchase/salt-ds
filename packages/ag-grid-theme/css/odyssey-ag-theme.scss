@@ -39,7 +39,6 @@
       --uitkAgGrid-tab-borderColor-active,
       #e06519
   );
-  --agGrid-checkbox-color: var(--uitkAgGrid-checkbox-color, black);
 
   --agGrid-button-color: var(--uitkAgGrid-button-color, #161616);
   --agGrid-button-background-hover: var(
@@ -139,7 +138,6 @@
       --uitkAgGrid-tab-borderColor-active,
       #e06519
   );
-  --agGrid-checkbox-color: var(--uitkAgGrid-checkbox-color, white);
 
   --agGrid-button-color: var(--uitkAgGrid-button-color, white);
   --agGrid-button-background-hover: var(
@@ -305,7 +303,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
 .ag-theme-odyssey-high-dark,
 .ag-theme-odyssey-high-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 14px);
+  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 12px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 4px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 20px);
   --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 10px);
@@ -314,7 +312,6 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-button-height: var(--uitkAgGrid-button-height, 20px);
   --agGrid-button-padding: var(--uitkAgGrid-button-padding, 4px);
 
-  --agGrid-list-item-height: var(--uitkAgGrid-list-item-height, var(--uitk-size-stackable));
   --agGrid-list-item-fontSize: var(--uitkAgGrid-list-item-fontSize, 13px);
 
   --agGrid-switch-height: var(--uitkAgGrid-switch-height, 16px);
@@ -323,6 +320,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 10px);
 
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 20px);
+  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 11px);
 }
 
 .ag-theme-odyssey-high-dark {
@@ -344,7 +342,6 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-button-height: var(--uitkAgGrid-button-height, 28px);
   --agGrid-button-padding: var(--uitkAgGrid-button-padding, 8px);
 
-  --agGrid-list-item-height: var(--uitkAgGrid-list-item-height, var(--uitk-size-stackable));
   --agGrid-list-item-fontSize: var(--uitkAgGrid-list-item-fontSize, 13px);
 
   --agGrid-switch-height: var(--uitkAgGrid-switch-height, 18px);
@@ -352,6 +349,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 11px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 28px);
+  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 12px);
 }
 
 .ag-theme-odyssey-medium-dark {
@@ -364,7 +362,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
 .ag-theme-odyssey-low-dark,
 .ag-theme-odyssey-low-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 14px);
+  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 16px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 12px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 36px);
   --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 14px);
@@ -373,7 +371,6 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-button-height: var(--uitkAgGrid-button-height, 36px);
   --agGrid-button-padding: var(--uitkAgGrid-button-padding, 12px);
 
-  --agGrid-list-item-height: var(--uitkAgGrid-list-item-height, var(--uitk-size-stackable));
   --agGrid-list-item-fontSize: var(--uitkAgGrid-list-item-fontSize, 13px);
 
   --agGrid-switch-height: var(--uitkAgGrid-switch-height, 20px);
@@ -381,6 +378,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 12px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 36px);
+  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 14px);
 }
 
 .ag-theme-odyssey-low-dark {
@@ -393,7 +391,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
 .ag-theme-odyssey-touch-dark,
 .ag-theme-odyssey-touch-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 14px);
+  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 20px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 8px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 28px);
   --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 14px);
@@ -402,7 +400,6 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-button-height: var(--uitkAgGrid-button-height, 44px);
   --agGrid-button-padding: var(--uitkAgGrid-button-padding, 14px);
 
-  --agGrid-list-item-height: var(--uitkAgGrid-list-item-height, var(--uitk-size-stackable));
   --agGrid-list-item-fontSize: var(--uitkAgGrid-list-item-fontSize, 13px);
 
   --agGrid-switch-height: var(--uitkAgGrid-switch-height, 24px);
@@ -410,6 +407,7 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 14px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 44px);
+  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 16px);
 }
 
 .ag-theme-odyssey-touch-light {
@@ -418,4 +416,17 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
 .ag-theme-odyssey-touch-dark {
   @include ag-theme-odyssey($ag-theme-odyssey-params-touch-dark);
+}
+
+.ag-theme-odyssey-touch-dark,
+.ag-theme-odyssey-touch-light,
+.ag-theme-odyssey-low-dark,
+.ag-theme-odyssey-low-light,
+.ag-theme-odyssey-medium-dark,
+.ag-theme-odyssey-medium-light,
+.ag-theme-odyssey-high-dark,
+.ag-theme-odyssey-high-light {
+  --agGrid-checkbox-color: var(--uitkAgGrid-checkbox-color, var(--uitk-selectable-background-selected));
+  --agGrid-list-item-height: var(--uitkAgGrid-list-item-height, var(--uitk-size-stackable));
+  --agGrid-paging-button-background-hover: var(--uitk-actionable-secondary-background-hover);
 }

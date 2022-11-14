@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const generateData = (states: typeof dataGridExampleData) =>
   states.reduce((result, row) => {
@@ -16,7 +17,15 @@ const generateData = (states: typeof dataGridExampleData) =>
   }, [] as typeof dataGridExampleData);
 
 const PagedGrid = (props: AgGridReactProps) => {
-  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -25,15 +34,24 @@ const PagedGrid = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div style={{ width: 900, height: 526 }} {...containerProps}>
-      <AgGridReact
-        columnDefs={dataGridExampleColumns}
-        pagination
-        paginationPageSize={100}
-        rowData={generateData(dataGridExampleData)}
-        {...agGridProps}
-        {...props}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div style={{ width: 900, height: 526 }} {...containerProps}>
+        <AgGridReact
+          columnDefs={dataGridExampleColumns}
+          pagination
+          paginationPageSize={100}
+          rowData={generateData(dataGridExampleData)}
+          {...agGridProps}
+          {...props}
+        />
+      </div>
     </div>
   );
 };

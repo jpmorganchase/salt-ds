@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
+import React, { useEffect, useState } from "react";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import "../../uitk-ag-theme.css";
 import changeDetectionExampleColumns from "../dependencies/changeDetectionExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -9,7 +9,15 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 const ChangeDetectionExample = function ChangeDetectionExample(
   props: AgGridReactProps
 ) {
-  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -68,6 +76,13 @@ const ChangeDetectionExample = function ChangeDetectionExample(
 
   return (
     <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
       <Button onClick={updateOneRecord}>Update One Value</Button>
       &nbsp;
       <Button onClick={updateUsingTransaction}>Update Using Transaction</Button>
