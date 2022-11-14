@@ -24,11 +24,11 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import cx from "classnames";
 import { ChangeEvent, useState } from "react";
+import { FlexLayoutComposite } from "./flex-layout.stories";
 import {
-  FlexLayoutComposite,
-  FlexLayoutFormComposite,
-} from "./flex-layout.stories";
-import { FlowLayoutSimpleUsage } from "./flow-layout.stories";
+  FlowLayoutSimpleUsage,
+  FlowLayoutComposite,
+} from "./flow-layout.stories";
 import { SplitLayoutSimpleUsage } from "./split-layout.stories";
 
 export default {
@@ -52,7 +52,7 @@ type ItemProps = { width?: number | string; height?: number | string };
 
 const HeaderItem = ({ width, height }: ItemProps) => (
   <div className="border-item border-header" style={{ width, height }}>
-    <p>Header</p>
+    <p>Top</p>
   </div>
 );
 
@@ -71,7 +71,7 @@ const MainItem = ({ width, height }: ItemProps) => (
       height,
     }}
   >
-    <p>Main</p>
+    <p>Main section</p>
   </div>
 );
 
@@ -204,37 +204,37 @@ export const BorderLayoutFixedPanels = FixedPanels.bind({});
 BorderLayoutFixedPanels.args = {};
 
 const Header = () => {
-  const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];
+  const tabs = ["Home", "Contacts", "FX", "Checks", "Loans"];
   return (
-    <>
-      <AppHeader>
-        <strong>LOGO</strong>
-        <Tabstrip data-index={1} data-priority={2}>
-          {tabs.map((label, i) => (
-            <Tab label={label} key={i} />
-          ))}
-        </Tabstrip>
-        <Tooltray
-          data-collapsible="dynamic"
-          data-index={2}
-          data-priority={1}
-          data-align-end
-          data-reclaim-space
-        >
-          <Button variant="secondary">
+    <AppHeader>
+      <strong>LOGO</strong>
+      <Tabstrip data-index={1} data-priority={2}>
+        {tabs.map((label, i) => (
+          <Tab label={label} key={i} />
+        ))}
+      </Tabstrip>
+      <Tooltray
+        data-collapsible="dynamic"
+        data-index={2}
+        data-priority={1}
+        data-align-end
+        data-reclaim-space
+      >
+        <ButtonBar>
+          <OrderedButton variant="secondary">
             <Badge badgeContent={50}>
               <MessageIcon />
             </Badge>
-          </Button>
-          <Button variant="secondary">
+          </OrderedButton>
+          <OrderedButton variant="secondary">
             <NotificationIcon />
-          </Button>
-          <Button variant="secondary">
+          </OrderedButton>
+          <OrderedButton variant="secondary">
             <SettingsIcon />
-          </Button>
-        </Tooltray>
-      </AppHeader>
-    </>
+          </OrderedButton>
+        </ButtonBar>
+      </Tooltray>
+    </AppHeader>
   );
 };
 
@@ -267,6 +267,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
     <BorderLayout {...args}>
       <BorderItem
         position="header"
+        as="header"
         sticky
         className="border-layout-form-header"
       >
@@ -287,18 +288,19 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
         </div>
       </BorderItem>
 
-      <BorderItem position="main">
+      <BorderItem position="main" as="main">
         <div
           className={cx({
             "border-layout-custom-form": checked,
           })}
         >
-          <FlexLayoutFormComposite />
+          <FlowLayoutComposite />
         </div>
       </BorderItem>
 
       <BorderItem
         position="bottom"
+        as="footer"
         sticky
         className="border-layout-form-footer"
       >
@@ -314,22 +316,27 @@ BorderLayoutFormComposite.args = {};
 const Contacts: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header" className="border-layout-form-header">
+      <BorderItem
+        position="header"
+        as="header"
+        className="border-layout-form-header"
+      >
         <Header />
       </BorderItem>
 
-      <BorderItem position="main">
+      <BorderItem position="main" as="main">
         <div className="border-layout-contacts">
           <h2>My contacts</h2>
           <FlexLayoutComposite wrap />
         </div>
       </BorderItem>
 
-      <BorderItem position="bottom" className="border-layout-contacts-footer">
-        <ButtonBar>
-          <OrderedButton variant="cta">Edit</OrderedButton>
-          <OrderedButton>Cancel</OrderedButton>
-        </ButtonBar>
+      <BorderItem
+        position="bottom"
+        as="footer"
+        className="border-layout-contacts-footer"
+      >
+        <p>Contact lists get updated monthly.</p>
       </BorderItem>
     </BorderLayout>
   );

@@ -1,37 +1,47 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, ReactElement, ElementType } from "react";
 import cx from "classnames";
 
 import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../types";
 import "./GridLayout.css";
 
-export interface GridLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Number of columns to be displayed. Defaults to 12
-   */
-  columns?: ResponsiveProp<number>;
-  /**
-   * Number of rows to be displayed. Defaults to 1
-   */
-  rows?: ResponsiveProp<number>;
-  /**
-   * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
-   */
-  gap?: ResponsiveProp<number>;
-  /**
-   * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
-   */
-  columnGap?: ResponsiveProp<number>;
-  /**
-   * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
-   */
-  rowGap?: ResponsiveProp<number>;
-}
+export type GridLayoutProps<T extends ElementType> =
+  PolymorphicComponentPropWithRef<
+    T,
+    {
+      /**
+       * Number of columns to be displayed. Defaults to 12
+       */
+      columns?: ResponsiveProp<number>;
+      /**
+       * Number of rows to be displayed. Defaults to 1
+       */
+      rows?: ResponsiveProp<number>;
+      /**
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
+       */
+      gap?: ResponsiveProp<number>;
+      /**
+       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
+       */
+      columnGap?: ResponsiveProp<number>;
+      /**
+       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
+       */
+      rowGap?: ResponsiveProp<number>;
+    }
+  >;
+
+type GridLayoutComponent = <T extends ElementType = "div">(
+  props: GridLayoutProps<T>
+) => ReactElement | null;
 
 const withBaseName = makePrefixer("uitkGridLayout");
 
-export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
-  function GridLayout(
+export const GridLayout: GridLayoutComponent = forwardRef(
+  <T extends ElementType = "div">(
     {
+      as,
       children,
       className,
       columns = 12,
@@ -41,9 +51,11 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
       rowGap,
       style,
       ...rest
-    },
-    ref
-  ) {
+    }: GridLayoutProps<T>,
+    ref?: PolymorphicRef<T>
+  ) => {
+    const Component = as || "div";
+
     const gridColumns = useResponsiveProp(columns, 12);
 
     const gridRows = useResponsiveProp(rows, 1);
@@ -63,14 +75,14 @@ export const GridLayout = forwardRef<HTMLDivElement, GridLayoutProps>(
     };
 
     return (
-      <div
+      <Component
         className={cx(withBaseName(), className)}
         style={gridLayoutStyles}
         ref={ref}
         {...rest}
       >
         {children}
-      </div>
+      </Component>
     );
   }
 );
