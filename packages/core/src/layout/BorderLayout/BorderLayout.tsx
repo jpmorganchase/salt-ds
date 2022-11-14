@@ -1,44 +1,56 @@
 import {
   Children,
   forwardRef,
-  HTMLAttributes,
   ReactElement,
   useEffect,
+  ElementType,
 } from "react";
 import cx from "classnames";
 
 import { GridLayout, GridLayoutProps } from "../GridLayout";
 import { makePrefixer } from "../../utils";
 import { BorderItemProps } from "../BorderItem";
+import { PolymorphicRef, PolymorphicComponentPropWithRef } from "../types";
 
-export interface BorderLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 0
-   */
-  gap?: GridLayoutProps["gap"];
-  /**
-   * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 0
-   */
-  columnGap?: GridLayoutProps["columnGap"];
-  /**
-   * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 0
-   */
-  rowGap?: GridLayoutProps["rowGap"];
-  /**
-   * Border item components to be rendered.
-   */
-  children: ReactElement<BorderItemProps>[];
-}
+export type BorderLayoutProps<T extends ElementType> =
+  PolymorphicComponentPropWithRef<
+    T,
+    {
+      /**
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 0
+       */
+      gap?: GridLayoutProps<T>["gap"];
+      /**
+       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 0
+       */
+      columnGap?: GridLayoutProps<T>["columnGap"];
+      /**
+       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 0
+       */
+      rowGap?: GridLayoutProps<T>["rowGap"];
+      /**
+       * Border item components to be rendered.
+       */
+      children: ReactElement<BorderItemProps<T>>[];
+    }
+  >;
 
 const withBaseName = makePrefixer("uitkBorderLayout");
 
 const numberOfColumns = 3;
 
-export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
-  function BorderLayout({ children, className, gap = 0, style, ...rest }, ref) {
+type BorderLayoutComponent = <T extends ElementType = "div">(
+  props: BorderLayoutProps<T>
+) => ReactElement | null;
+
+export const BorderLayout: BorderLayoutComponent = forwardRef(
+  <T extends ElementType>(
+    { children, className, gap, style, ...rest }: BorderLayoutProps<T>,
+    ref?: PolymorphicRef<T>
+  ) => {
     const borderAreas = Children.map(
       children,
-      (child: ReactElement<BorderItemProps>) => child.props.position
+      (child: ReactElement<BorderItemProps<T>>) => child.props.position
     );
 
     const topSection = borderAreas.includes("header")
@@ -78,7 +90,7 @@ export const BorderLayout = forwardRef<HTMLDivElement, BorderLayoutProps>(
       <GridLayout
         className={cx(withBaseName(), className, "uitkGridLayout-area")}
         columns={numberOfColumns}
-        gap={gap}
+        gap={gap || 0}
         style={borderLayoutStyles}
         ref={ref}
         {...rest}

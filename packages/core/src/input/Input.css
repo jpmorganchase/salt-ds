@@ -1,14 +1,18 @@
 /* Styles applied to the root element dependent on density */
 .uitk-density-touch {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
   --input-button-inset: 4px;
 }
 .uitk-density-low {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2 / 3);
   --input-button-inset: 4px;
 }
 .uitk-density-medium {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
   --input-button-inset: 2px;
 }
 .uitk-density-high {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit));
   --input-button-inset: 2px;
 }
 
@@ -80,7 +84,7 @@
   display: flex;
   align-items: center;
 
-  height: var(--uitk-size-adornment);
+  height: var(--input-adornment-height);
 }
 
 /* Style applied to root element with start adornment */

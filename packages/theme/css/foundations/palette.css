@@ -1,6 +1,6 @@
 /* Opacities */
 .uitk-theme {
-  --uitk-palette-opacity-background: var(--uitk-opacity-3);
+  --uitk-palette-opacity-background: var(--uitk-opacity-2);
   --uitk-palette-opacity-border: var(--uitk-opacity-2);
   --uitk-palette-opacity-border-readonly: var(--uitk-opacity-1);
   --uitk-palette-opacity-fill: var(--uitk-opacity-2);
