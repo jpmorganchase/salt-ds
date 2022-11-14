@@ -1,16 +1,7 @@
-import {
-  Canvas,
-  Meta,
-  Story
-} from "@storybook/addon-docs";
-import {
-  Card,
-  ToolkitProvider
-} from "@jpmorganchase/uitk-core";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Card, ToolkitProvider } from "@jpmorganchase/uitk-core";
 
-import {
-  NestedProviders
-} from "./toolkit-provider.stories";
+import { NestedProviders } from "./toolkit-provider.stories";
 
 <Meta title="Documentation/Core/Toolkit Provider" />
 
@@ -189,7 +180,7 @@ You can use the `useTheme` hook to access the value which indicates which theme 
 import { useTheme } from "@jpmorganchase/uitk-core";
 
 function MyComponent() {
-  const {mode:currentMode} = useTheme();
+  const { mode: currentMode } = useTheme();
   return <div>{currentMode === "light" ? "Light Mode" : "Dark Mode"}</div>;
 }
 ```
