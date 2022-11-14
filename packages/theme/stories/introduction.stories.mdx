@@ -1,4 +1,6 @@
-import { Meta } from "@storybook/addon-docs";
+import {
+  Meta
+} from "@storybook/addon-docs";
 
 <Meta title="Documentation/Styles and Theming/Introduction" />
 
@@ -134,12 +136,12 @@ Consider the example given above:
 In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
 
 ```css
-.uitk-theme[data-mode^="light"] {
+.uitk-theme[data-mode="light"] {
   --property-my-color: red;
 }
 ```
 
-In this case, the CSS selector `.uitk-theme[data-mode^="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode^="light"]` or `.uitk-theme[data-mode^="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
+In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode="light"]` or `.uitk-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
 
 ```html
 <div class="MyApplication uitk-light">
@@ -182,10 +184,10 @@ In the CSS where the theme variables are declared, there are sections declared a
 The palette token then resolves down to:
 
 ```css
-.uitk-theme[data-mode^="light"] {
+.uitk-theme[data-mode="light"] {
   --uitk-palette-interact-primary-foreground: var(--uitk-grey-900);
 }
-.uitk-theme[data-mode^="dark"] {
+.uitk-theme[data-mode="dark"] {
   --uitk-palette-interact-primary-foreground: var(--uitk-white);
 }
 ```

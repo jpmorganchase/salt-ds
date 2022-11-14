@@ -21,17 +21,11 @@ export type characteristic =
   | "shadow"
   | "size"
   | "spacing";
-export class Theme {
-  id: string;
-  name: string;
-  constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
-  }
-}
+
+export type ThemeName = string;
 
 export const getCharacteristicValue = (
-  themeName: string,
+  themeName: ThemeName,
   characteristicName: characteristic,
   variant: string,
   scopeElement?: HTMLElement
@@ -47,27 +41,4 @@ export const getCharacteristicValue = (
     }
   }
   return null;
-};
-
-const lightTheme = new Theme("uitk-light", "light");
-const darkTheme = new Theme("uitk-dark", "dark");
-
-const toolkitThemes: Map<string, Theme> = new Map([
-  ["light", lightTheme],
-  ["dark", darkTheme],
-]);
-
-export const DEFAULT_THEME = lightTheme;
-
-export const getTheme = (themeName: string | string[]): Theme[] => {
-  if (typeof themeName === "string") {
-    if (!toolkitThemes.has(themeName)) {
-      toolkitThemes.set(themeName, new Theme(themeName, themeName));
-    }
-    return [toolkitThemes.get(themeName) as Theme];
-  } else if (Array.isArray(themeName) && themeName.length > 0) {
-    return themeName.flatMap(getTheme);
-  } else {
-    return [DEFAULT_THEME];
-  }
 };

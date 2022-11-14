@@ -17,11 +17,11 @@ body {
   font-family: "uitk-sans";
 }
 
-.uitk-theme[data-mode^="light"] {
+.uitk-theme[data-mode="light"] {
   color-scheme: light;
 }
 
-.uitk-theme[mode="dark"] {
+.uitk-theme[data-mode="dark"] {
   color-scheme: dark;
 }
 

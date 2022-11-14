@@ -1,5 +1,4 @@
-.uitk-theme[data-mode^="dark"],
-.uitk-theme[data-mode^="light"] {
+.uitk-theme {
   --uitk-status-info-foreground: var(--uitk-palette-info-icon);
   --uitk-status-success-foreground: var(--uitk-palette-success-icon);
   --uitk-status-warning-foreground: var(--uitk-palette-warning-icon);

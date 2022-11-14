@@ -1,8 +1,8 @@
-.uitk-theme[data-mode^="light"] .withoutAvatar {
+.uitk-theme[data-mode="light"] .withoutAvatar {
   --heading-color: var(--uitk-color-grey-700);
 }
 
-.uitk-theme[data-mode^="dark"] .withoutAvatar {
+.uitk-theme[data-mode="dark"] .withoutAvatar {
   --heading-color: var(--uitk-color-grey-10);
 }
 
@@ -104,10 +104,10 @@
   margin-bottom: 16px;
 }
 
-.uitk-theme[data-mode^="dark"] .allVariants-withBackground {
+.uitk-theme[data-mode="dark"] .allVariants-withBackground {
   background: var(--uitk-color-blue-900);
 }
 
-.uitk-theme[data-mode^="light"] .allVariants-withBackground {
+.uitk-theme[data-mode="light"] .allVariants-withBackground {
   background: var(--uitk-color-blue-10);
 }

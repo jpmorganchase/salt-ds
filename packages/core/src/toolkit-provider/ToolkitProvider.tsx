@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
-import { Density, Mode } from "../theme";
+import { Density, Mode, ThemeName } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
@@ -22,7 +22,7 @@ const DEFAULT_THEME_NAME = "uitk-theme";
 const DEFAULT_MODE = "light";
 
 export interface ThemeContextProps {
-  theme: ThemeNameType;
+  theme: ThemeName;
   mode: Mode;
 }
 
@@ -38,9 +38,9 @@ export const BreakpointContext =
 
 const createThemedChildren = (
   children: ReactNode,
-  themeName: string,
+  themeName: ThemeName,
   density: Density,
-  mode: string,
+  mode: Mode,
   applyClassesTo?: TargetElement
 ) => {
   const themeNames =
@@ -84,14 +84,12 @@ const createThemedChildren = (
   }
 };
 
-type ThemeNameType = string;
-
 type TargetElement = "root" | "child";
 
 type ToolkitProviderBaseProps = {
   applyClassesTo?: TargetElement;
   density?: Density;
-  theme?: ThemeNameType;
+  theme?: ThemeName;
   mode?: Mode;
   breakpoints?: Breakpoints;
 };

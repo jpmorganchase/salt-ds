@@ -9,15 +9,15 @@
   --uitk-palette-opacity-stroke: var(--uitk-opacity-2);
 }
 
-.uitk-theme[data-mode^="light"] {
+.uitk-theme[data-mode="light"] {
   --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-4);
 }
 
-.uitk-theme[data-mode^="dark"] {
+.uitk-theme[data-mode="dark"] {
   --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-3);
 }
 
-.uitk-theme[data-mode^="light"] {
+.uitk-theme[data-mode="light"] {
   /* Accent */
   --uitk-palette-accent-background: var(--uitk-color-blue-500);
   --uitk-palette-accent-border: var(--uitk-color-blue-500);
@@ -149,7 +149,7 @@
   --uitk-palette-positive-foreground: var(--uitk-color-green-700);
 }
 
-.uitk-theme[data-mode^="dark"] {
+.uitk-theme[data-mode="dark"] {
   /* Accent */
   --uitk-palette-accent-background: var(--uitk-color-blue-500);
   --uitk-palette-accent-border: var(--uitk-color-blue-500);
