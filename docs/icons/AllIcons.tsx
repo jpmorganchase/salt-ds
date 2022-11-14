@@ -1,6 +1,7 @@
 import { allIcons } from "@jpmorganchase/uitk-icons/stories/icon.all";
-import { createElement } from "react";
+import { createElement, ReactElement } from "react";
 import { FlexLayout, StackLayout } from "@jpmorganchase/uitk-core";
+import { IconProps } from "@jpmorganchase/uitk-icons";
 
 const formatIconName = (icon: string) => {
   const fullName = icon.replace(/([A-Z])/g, " $1");
@@ -29,6 +30,6 @@ export const AllIcons = ({ size = 1, withName = false }) => {
   );
 };
 export const allIconNames = allIcons.map((iconComponent) => ({
-  name: iconComponent.displayName && formatIconName(iconComponent.displayName),
+  name: formatIconName(iconComponent.displayName || " "),
   icon: iconComponent,
 }));
