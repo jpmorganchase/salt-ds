@@ -154,4 +154,67 @@
   .ag-pivot-mode-panel {
     height: var(--uitk-size-stackable);
   }
+
+  .ag-checkbox-input-wrapper {
+    height: var(--agGrid-checkbox-size);
+    width: var(--agGrid-checkbox-size);
+    border: 1px solid var(--agGrid-checkbox-color);
+    border-radius: 0;
+    margin-left: 3px;
+  }
+
+  .ag-checkbox-input-wrapper.ag-checked {
+    border: none;
+    input:checked {
+      border: none;
+      background-color: var(--agGrid-checkbox-color);
+    }
+    &::after {
+      font-size: var(--agGrid-checkbox-size);
+      line-height: var(--agGrid-checkbox-size);
+      //color: var(--agGrid-checkbox-color);
+    }
+  }
+
+  .ag-paging-row-summary-panel {
+    display: none;
+  }
+
+  .ag-paging-page-summary-panel {
+    font-size: var(--agGrid-paging-fontSize);
+    margin-top: 5px;
+    color: var(--agGrid-button-color);
+  }
+
+  .ag-paging-number {
+    font-weight: normal;
+  }
+
+  .ag-paging-button {
+    height: var(--agGrid-paging-button-width);
+    width: var(--agGrid-paging-button-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-size: var(--agGrid-paging-fontSize);
+    & .ag-icon {
+      color: var(--agGrid-pagination-button-color);
+    }
+    &:hover {
+      background-color: var(--agGrid-paging-button-background-hover);
+    }
+    &.ag-disabled {
+      background-color: unset;
+      cursor: not-allowed;
+      & .ag-icon {
+        color: var(--agGrid-pagination-button-color-disabled);
+      }
+    }
+  }
+
+  .ag-keyboard-focus .ag-paging-button:focus::after {
+    border: dotted 2px var(--agGrid-color-focus);
+    outline: none;
+  }
 }
