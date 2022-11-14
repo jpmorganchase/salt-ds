@@ -6,7 +6,6 @@ import {
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import { ComponentType, forwardRef, Ref, useRef } from "react";
-import warning from "warning";
 
 import {
   DefaultComboBox,
@@ -45,10 +44,9 @@ const validateProps = ({
   delimiter?: string | string[];
 }) => {
   if (process.env.NODE_ENV !== "production") {
-    warning(
-      isMultiSelect || (!isMultiSelect && !delimiter),
-      "Delimiter can only be used for a multi-select combo-box."
-    );
+    if (!isMultiSelect && delimiter) {
+      console.warn("Delimiter can only be used for a multi-select combo-box.");
+    }
   }
 };
 

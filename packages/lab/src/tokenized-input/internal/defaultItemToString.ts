@@ -1,5 +1,3 @@
-import warning from "warning";
-
 import { isPlainObject } from "./isPlainObject";
 
 export const defaultItemToString = (item: any) => {
@@ -12,8 +10,7 @@ export const defaultItemToString = (item: any) => {
   }
 
   if (process.env.NODE_ENV !== "production") {
-    warning(
-      false,
+    console.warn(
       [
         "itemToString: you've likely forgotten to set the label prop on the item object.",
         "You can also provide your own `itemToString` implementation.",

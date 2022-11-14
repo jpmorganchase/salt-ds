@@ -8,9 +8,9 @@ import {
 } from "docs/components/LineBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Drop Target" />
+<Meta title="Documentation/Styles and Theming/Characteristics/Target" />
 
-# Drop Target
+# Target
 
 Components which indicate a target area where a draggable item can be dropped (related to Draggable).
 
@@ -21,23 +21,24 @@ Components which indicate a target area where a draggable item can be dropped (r
 <Canvas>
   <Story name="All">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-dropTarget-background-hover" />
+      <ColorBlock colorVar="--uitk-target-background-hover" />
+      <ColorBlock colorVar="--uitk-target-borderColor-hover" />
       <LineBlockDashed
-        lineStyle="--uitk-dropTarget-borderStyle"
-        lineWidth="--uitk-dropTarget-borderWidth"
+        lineStyle="--uitk-target-borderStyle"
+        lineWidth="--uitk-target-borderWidth"
       />
       <LineBlockDashed
-        lineStyle="--uitk-dropTarget-borderStyle-hover"
-        lineWidth="--uitk-dropTarget-borderWidth-hover"
+        lineStyle="--uitk-target-borderStyle-hover"
+        lineWidth="--uitk-target-borderWidth-hover"
       />
       <LineBlockDashed
-        lineStyle="--uitk-dropTarget-borderStyle-disabled"
-        lineWidth="--uitk-dropTarget-borderWidth-disabled"
+        lineStyle="--uitk-target-borderStyle-disabled"
+        lineWidth="--uitk-target-borderWidth-disabled"
       />
-      <LineBlock lineWidth="--uitk-dropTarget-borderWidth" />
-      <LineBlock lineWidth="--uitk-dropTarget-borderWidth-hover" />
-      <LineBlock lineWidth="--uitk-dropTarget-borderWidth-disabled" />
-      <CursorBlock cursor="--uitk-dropTarget-cursor-disabled" />
+      <LineBlock lineWidth="--uitk-target-borderWidth" />
+      <LineBlock lineWidth="--uitk-target-borderWidth-hover" />
+      <LineBlock lineWidth="--uitk-target-borderWidth-disabled" />
+      <CursorBlock cursor="--uitk-target-cursor-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
