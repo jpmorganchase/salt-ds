@@ -1,0 +1,22 @@
+.uitkStatusIndicator {
+  --statusIndicator-warning-color: var(--uitk-status-warning-foreground);
+  --statusIndicator-info-color: var(--uitk-status-info-foreground);
+  --statusIndicator-success-color: var(--uitk-status-success-foreground);
+  --statusIndicator-error-color: var(--uitk-status-error-foreground);
+}
+
+.uitkStatusIndicator-error {
+  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-error-color));
+}
+
+.uitkStatusIndicator-warning {
+  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-warning-color));
+}
+
+.uitkStatusIndicator-success {
+  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-success-color));
+}
+
+.uitkStatusIndicator-info {
+  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-info-color));
+}

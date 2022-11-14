@@ -1,4 +1,8 @@
-import { Button, makePrefixer, StatusIcon } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  makePrefixer,
+  StatusIndicator,
+} from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
@@ -39,7 +43,10 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
           </Button>
         )}
         {status && (
-          <StatusIcon className={withBaseName("statusIcon")} status={status} />
+          <StatusIndicator
+            className={withBaseName("statusIndicator")}
+            status={status}
+          />
         )}
         <span aria-level={1} id={`${dialogId}-heading`} role="heading">
           {children}

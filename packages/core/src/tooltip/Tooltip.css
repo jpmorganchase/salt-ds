@@ -50,7 +50,7 @@
   overflow: hidden;
 }
 
-/* Styles applied to status icon */
+/* Styles applied to status indicator */
 .uitkTooltip-icon {
   margin-right: var(--uitkTooltip-icon-marginRight, 6px);
   vertical-align: top;

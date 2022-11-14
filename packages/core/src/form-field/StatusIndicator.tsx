@@ -1,13 +1,14 @@
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ElementType } from "react";
-import { StatusIcon } from "../status-icon";
+import { StatusIndicator as BaseStatusIndicator } from "../status-indicator";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
+import { makePrefixer } from "../utils";
+
+const withBaseName = makePrefixer("uitkFormField");
 
 export type StatusIndicatorStatus = "error" | "info" | "warning" | "success";
 
-// `statusIndicatorContent` is removed. It's not a very restrictive API only allowing string array.
-// User always have ability to override `tooltipText` for string, or `TooltipProps.render` for complex structure.
 export interface StatusIndicatorProps extends IconProps {
   hasTooltip?: boolean;
   IconProps?: Partial<IconProps>;
@@ -44,13 +45,13 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
           ...TooltipProps,
         })}
       />
-      <StatusIcon
-        {...getTriggerProps<typeof StatusIcon>({
+      <BaseStatusIndicator
+        {...getTriggerProps<typeof BaseStatusIndicator>({
           status,
           ...restProps,
           ...IconProps,
           className: cx(
-            "uitkStatusIndicator-statusIcon",
+            withBaseName("statusIndicator"),
             className,
             IconProps?.className
           ),
