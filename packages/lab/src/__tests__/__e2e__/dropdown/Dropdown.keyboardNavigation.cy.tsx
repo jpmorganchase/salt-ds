@@ -1,4 +1,8 @@
-import { Dropdown, SelectionStrategy } from "@jpmorganchase/uitk-lab";
+import {
+  Dropdown,
+  DropdownButton,
+  SelectionStrategy,
+} from "@jpmorganchase/uitk-lab";
 
 /**
  * Changes applied
@@ -495,6 +499,31 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
         cy.get("#test-control").focus();
         cy.realPress("Enter");
         cy.get("#test-popup").should("not.exist");
+      });
+    });
+
+    describe("Given a Dropdown with custom trigger component", () => {
+      it("Should respect callback props on cloned custom trigger", () => {
+        const keyDownSpy = cy.stub().as("keyDownSpy");
+        cy.mount(
+          <Dropdown
+            id="test"
+            placement="bottom-end"
+            source={testSource}
+            triggerComponent={
+              <DropdownButton
+                id="custom-button"
+                tabIndex={0}
+                label="blah"
+                onKeyDown={keyDownSpy}
+              />
+            }
+          ></Dropdown>
+        );
+        cy.get("#custom-button").focus();
+        cy.realPress("ArrowDown");
+        cy.get("@keyDownSpy").should("have.callCount", 1);
+        cy.get("#test-popup").should("exist");
       });
     });
   });
