@@ -4,6 +4,7 @@
   --switch-thumb-margin: 3px 0 0 3px;
   --switch-thumb-size: 18px;
   --switch-thumb-translate: 20px;
+  --switch-height: 24px;
 }
 
 .uitk-density-low {
@@ -11,6 +12,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 16px;
   --switch-thumb-translate: 18px;
+  --switch-height: 20px;
 }
 
 .uitk-density-medium {
@@ -18,6 +20,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 14px;
   --switch-thumb-translate: 16px;
+  --switch-height: 18px;
 }
 
 .uitk-density-high {
@@ -25,6 +28,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 12px;
   --switch-thumb-translate: 14px;
+  --switch-height: 16px;
 }
 
 .uitkSwitch {
@@ -43,7 +47,7 @@
   box-sizing: content-box;
   display: inline-flex;
   flex-shrink: 0;
-  height: var(--uitkSwitch-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-height, var(--switch-height));
   margin-left: 0;
   overflow: visible;
   padding: 0;
@@ -104,7 +108,7 @@
 .uitkSwitch-track {
   background: var(--uitkSwitch-track-color, var(--switch-track-color));
   border-radius: var(--uitkSwitch-track-borderRadius, 0);
-  height: var(--uitkSwitch-track-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-track-height, var(--switch-height));
   min-height: var(--uitkSwitch-track-minHeight, 16px);
   margin-top: 0;
   margin-left: 0;
@@ -184,7 +188,7 @@
   background: transparent;
   content: "";
   display: block;
-  height: var(--uitkSwitch-focused-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-focused-height, var(--switch-height));
   left: var(--uitkSwitch-focused-left, -2px);
   outline-style: var(--uitk-focused-outlineStyle);
   outline-width: var(--uitk-focused-outlineWidth);
