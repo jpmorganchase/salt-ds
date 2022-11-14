@@ -1,11 +1,11 @@
 //TODO remove when popout code has been migrated
 /* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
 import {
+  ownerWindow,
   useControlled,
   useDensity,
   useFormFieldProps,
   useId,
-  ownerWindow,
 } from "@jpmorganchase/uitk-core";
 import copy from "clipboard-copy";
 import {
@@ -22,7 +22,6 @@ import {
   useRef,
   useState,
 } from "react";
-import warning from "warning";
 import { escapeRegExp, useEventCallback } from "../utils";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
@@ -575,7 +574,7 @@ export function useTokenizedInput<Item>(
               return result;
             })
             .catch((error) => {
-              warning(false, error);
+              console.error(error);
             });
           break;
         case "V":
@@ -707,18 +706,17 @@ const validateProps = function validateProps<Item>(
   if (process.env.NODE_ENV !== "production") {
     const { delimiter } = props;
 
-    /* eslint-disable react-hooks/rules-of-hooks */
+    const invalidDelimiter = Array.isArray(delimiter)
+      ? delimiter.every(isChar)
+      : isChar(delimiter);
+
     useEffect(() => {
-      warning(
-        delimiter == null ||
-          isValidDelimiter(delimiter) ||
-          (Array.isArray(delimiter) && delimiter.every(isValidDelimiter)),
+      console.warn(
         "TokenizedInput delimiter should be a single character or an array of single characters"
       );
-    }, [delimiter]);
-    /* eslint-enable react-hooks/rules-of-hooks */
+    }, [invalidDelimiter]);
   }
 };
 
-const isValidDelimiter = (value: unknown) =>
+const isChar = (value: unknown) =>
   typeof value === "string" && value.length === 1;

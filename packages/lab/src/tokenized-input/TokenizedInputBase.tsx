@@ -17,13 +17,12 @@ import {
   useRef,
   useState,
 } from "react";
-import warning from "warning";
 import {
   Button,
   ButtonProps,
-  makePrefixer,
   Input,
   InputProps,
+  makePrefixer,
   useDensity,
   useForkRef,
   useId,
@@ -85,10 +84,11 @@ const getItemsAriaLabel = (itemCount: number) =>
 
 const hasHelpers = (helpers: any) => {
   if (process.env.NODE_ENV !== "production") {
-    warning(
-      helpers != null,
-      'TokenizedInputBase is used without helpers. You should pass in "helpers" from "useTokenizedInput".'
-    );
+    if (helpers == null) {
+      console.warn(
+        'TokenizedInputBase is used without helpers. You should pass in "helpers" from "useTokenizedInput".'
+      );
+    }
   }
   return helpers != null;
 };
