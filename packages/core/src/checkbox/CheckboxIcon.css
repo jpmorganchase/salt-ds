@@ -100,36 +100,3 @@
   height: var(--uitkCheckbox-icon-indeterminate-bar-height, var(--checkbox-density-bar-height));
   y: var(--uitkCheckbox-icon-indeterminate-bar-y, var(--checkbox-density-bar-y));
 }
-
-/* TK1 backwards compat styling */
-
-.uitk-light {
-  --backwardsCompat-checkbox-icon-stroke-hover: var(--uitk-color-blue-400);
-  --backwardsCompat-checkbox-icon-stroke-disabled: var(--uitk-color-grey-90-fade-border);
-  --backwardsCompat-checkbox-icon-checked-fill: var(--uitk-color-blue-500);
-  --backwardsCompat-checkbox-icon-checked-fill-disabled: var(--uitk-color-blue-500);
-}
-.uitk-dark {
-  --backwardsCompat-checkbox-icon-stroke-hover: var(--uitk-color-blue-300);
-  --backwardsCompat-checkbox-icon-stroke-disabled: var(--uitk-color-grey-90-fade-border);
-  --backwardsCompat-checkbox-icon-checked-fill: var(--uitk-color-blue-400);
-  --backwardsCompat-checkbox-icon-checked-fill-disabled: var(--uitk-color-blue-400);
-}
-
-.uitkCheckbox.backwardsCompat:hover .uitkCheckboxIcon,
-.uitkCheckbox.backwardsCompat .uitkCheckboxIcon:hover {
-  stroke: var(--backwardsCompat-checkbox-icon-stroke-hover);
-}
-
-.uitkCheckbox.uitkCheckbox-disabled.backwardsCompat:hover .uitkCheckboxIcon,
-.uitkCheckbox.backwardsCompat .uitkCheckboxIcon.uitkCheckboxIcon-disabled:hover {
-  stroke: var(--backwardsCompat-checkbox-icon-stroke-disabled);
-}
-
-.uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked {
-  fill: var(--backwardsCompat-checkbox-icon-checked-fill);
-}
-
-.uitkCheckbox.backwardsCompat .uitkCheckboxIcon-checked.uitkCheckboxIcon-disabled {
-  fill: var(--backwardsCompat-checkbox-icon-checked-fill-disabled);
-}

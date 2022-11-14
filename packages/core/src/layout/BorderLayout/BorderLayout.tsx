@@ -6,7 +6,6 @@ import {
   ElementType,
 } from "react";
 import cx from "classnames";
-import warning from "warning";
 
 import { GridLayout, GridLayoutProps } from "../GridLayout";
 import { makePrefixer } from "../../utils";
@@ -70,16 +69,17 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
 
     const gridTemplateAreas = `"${topSection}" "${midSection}" "${bottomSection}"`;
 
+    const hasMainSection = borderAreas.includes("main");
+
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
-        const hasMainSection = borderAreas.includes("main");
-
-        warning(
-          hasMainSection,
-          "No main section has been found. A main section should be provided."
-        );
+        if (!hasMainSection) {
+          console.warn(
+            "No main section has been found. A main section should be provided."
+          );
+        }
       }
-    }, [borderAreas, children]);
+    }, [hasMainSection]);
 
     const borderLayoutStyles = {
       ...style,

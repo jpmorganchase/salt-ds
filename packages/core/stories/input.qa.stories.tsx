@@ -10,8 +10,6 @@ import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
-import "./input.qa.stories.css";
-
 export default {
   title: "Core/Input/QA",
   component: Input,
@@ -78,7 +76,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Icon"
         endAdornment={
           <StaticInputAdornment>
-            <CalendarIcon size="small" />
+            <CalendarIcon />
           </StaticInputAdornment>
         }
       />
@@ -90,7 +88,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         defaultValue="Suffix: Button"
         endAdornment={
           <Button variant="secondary">
-            <CloseIcon aria-label="clear input" size="small" />
+            <CloseIcon aria-label="clear input" />
           </Button>
         }
       />
@@ -100,7 +98,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>
               {/* Phone --> Call */}
-              <CallIcon size="small" />
+              <CallIcon />
             </StaticInputAdornment>
             <StaticInputAdornment>+1</StaticInputAdornment>
           </>
@@ -118,7 +116,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>KG</StaticInputAdornment>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
           </>
         }
@@ -138,10 +136,10 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         endAdornment={
           <>
             <Button variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
             <Button variant="cta">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
@@ -152,13 +150,13 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           <>
             <StaticInputAdornment>0/100</StaticInputAdornment>
             <Button variant="primary">
-              <SendIcon size="small" />
+              <SendIcon />
             </Button>
           </>
         }
         startAdornment={
           <StaticInputAdornment>
-            <UserIcon size="small" />
+            <UserIcon />
           </StaticInputAdornment>
         }
       />
@@ -168,10 +166,4 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid imgSrc="/visual-regression-screenshots/Input-vr-snapshot.png" />
-  );
 };

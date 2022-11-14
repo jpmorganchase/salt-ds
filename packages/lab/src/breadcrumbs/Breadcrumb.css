@@ -57,13 +57,3 @@
 .uitkBreadcrumb-text {
   text-decoration: underline;
 }
-
-/* TK1 backwards compatibility */
-
-.backwardsCompat.uitkBreadcrumbs {
-  --breadcrumbs-crumb-marginLeft: 1px;
-}
-
-.backwardsCompat.uitkBreadcrumbs .uitkBreadcrumb-icon:only-child {
-  --breadcrumbs-crumb-marginLeft: 0px;
-}

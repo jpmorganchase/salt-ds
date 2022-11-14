@@ -1,7 +1,6 @@
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
-import warning from "warning";
 import { Link, LinkProps } from "../link";
 import { Div } from "../text";
 import { useMetricContext } from "./internal";
@@ -13,7 +12,7 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
    *
    * @see `Link` for a list of valid props.
    */
-  SubtitleLinkProps?: Partial<LinkProps>;
+  SubtitleLinkProps?: Omit<Partial<LinkProps>, "children">;
   /**
    * Subtitle of the Metric Header
    */
@@ -47,14 +46,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
       );
 
       if (SubtitleLinkProps) {
-        const { children, href = "", ...restLinkProps } = SubtitleLinkProps;
-
-        if (process.env.NODE_ENV !== "production") {
-          warning(
-            children === undefined,
-            `'children' in 'SubtitleLinkProps' is ignored. ${subtitle} is used instead.`
-          );
-        }
+        const { href = "", ...restLinkProps } = SubtitleLinkProps;
 
         return (
           <Link href={href} {...restLinkProps}>

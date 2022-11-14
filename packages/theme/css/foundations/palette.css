@@ -94,14 +94,16 @@
   --uitk-palette-warning-icon: var(--uitk-color-orange-500);
 
   /* Measure */
-  --uitk-palette-measure-fill: var(--uitk-color-blue-500);
-  --uitk-palette-measure-fill-disabled: var(--uitk-color-blue-500-fade-fill);
-  --uitk-palette-measure-foreground: var(--uitk-color-grey-90);
-  --uitk-palette-measure-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
-  --uitk-palette-measure-background: var(--uitk-color-grey-60);
-  --uitk-palette-measure-background-disabled: var(--uitk-color-grey-60-fade-background);
-  --uitk-palette-measure-border: var(--uitk-color-grey-90);
-  --uitk-palette-measure-border-disabled: var(--uitk-color-grey-90-fade-border);
+  --uitk-palette-measured-fill: var(--uitk-color-blue-500);
+  --uitk-palette-measured-fill-disabled: var(--uitk-color-blue-500-fade-fill);
+  --uitk-palette-measured-foreground: var(--uitk-color-grey-90);
+  --uitk-palette-measured-foreground-active: var(--uitk-color-blue-500);
+  --uitk-palette-measured-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
+  --uitk-palette-measured-foreground-activeDisabled: var(--uitk-color-blue-500-fade-fill);
+  --uitk-palette-measured-background: var(--uitk-color-grey-60);
+  --uitk-palette-measured-background-disabled: var(--uitk-color-grey-60-fade-background);
+  --uitk-palette-measured-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-border-disabled: var(--uitk-color-grey-90-fade-border);
 
   /* Navigate */
   --uitk-palette-navigate-background-low: transparent;
@@ -117,7 +119,7 @@
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
-  --uitk-palette-navigate-indicator-disabled: var(--uitk-color-grey-90-fade-border);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-grey-90-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-700);
@@ -146,18 +148,6 @@
 
   /* Positive */
   --uitk-palette-positive-foreground: var(--uitk-color-green-700);
-
-  /* Rate */
-  --uitk-palette-rate-background: transparent;
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-activeDisabled: var(--uitk-color-orange-600-fade-background);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-600);
-  --uitk-palette-rate-background-undo: transparent;
-  --uitk-palette-rate-border: var(--uitk-color-grey-90);
-  --uitk-palette-rate-border-active: transparent;
-  --uitk-palette-rate-border-disabled: var(--uitk-color-grey-90-fade-border);
-  --uitk-palette-rate-border-hover: transparent;
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-600);
 }
 
 .uitk-dark {
@@ -236,14 +226,16 @@
   --uitk-palette-warning-icon: var(--uitk-color-orange-500);
 
   /* Measure */
-  --uitk-palette-measure-fill: var(--uitk-color-blue-300);
-  --uitk-palette-measure-fill-disabled: var(--uitk-color-blue-300-fade-fill);
-  --uitk-palette-measure-foreground: var(--uitk-color-grey-90);
-  --uitk-palette-measure-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
-  --uitk-palette-measure-background: var(--uitk-color-grey-300);
-  --uitk-palette-measure-background-disabled: var(--uitk-color-grey-300-fade-background);
-  --uitk-palette-measure-border: var(--uitk-color-grey-90);
-  --uitk-palette-measure-border-disabled: var(--uitk-color-grey-90-fade-border);
+  --uitk-palette-measured-fill: var(--uitk-color-blue-300);
+  --uitk-palette-measured-fill-disabled: var(--uitk-color-blue-300-fade-fill);
+  --uitk-palette-measured-foreground: var(--uitk-color-grey-90);
+  --uitk-palette-measured-foreground-active: var(--uitk-color-blue-300);
+  --uitk-palette-measured-foreground-disabled: var(--uitk-color-grey-90-fade-foreground);
+  --uitk-palette-measured-foreground-activeDisabled: var(--uitk-color-blue-300-fade-fill);
+  --uitk-palette-measured-background: var(--uitk-color-grey-300);
+  --uitk-palette-measured-background-disabled: var(--uitk-color-grey-300-fade-background);
+  --uitk-palette-measured-border: var(--uitk-color-grey-90);
+  --uitk-palette-measured-border-disabled: var(--uitk-color-grey-90-fade-border);
 
   /* Navigate */
   --uitk-palette-navigate-background-low: transparent;
@@ -259,7 +251,7 @@
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-200);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-grey-90);
-  --uitk-palette-navigate-indicator-disabled: var(--uitk-color-grey-90-fade-border);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-grey-90-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-300);
@@ -288,16 +280,4 @@
 
   /* Positive */
   --uitk-palette-positive-foreground: var(--uitk-color-green-300);
-
-  /* Rate */
-  --uitk-palette-rate-background: transparent;
-  --uitk-palette-rate-background-active: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-activeDisabled: var(--uitk-color-orange-400-fade-background);
-  --uitk-palette-rate-background-hover: var(--uitk-color-orange-400);
-  --uitk-palette-rate-background-undo: transparent;
-  --uitk-palette-rate-border: var(--uitk-color-grey-90);
-  --uitk-palette-rate-border-active: transparent;
-  --uitk-palette-rate-border-disabled: var(--uitk-color-grey-90-fade-border);
-  --uitk-palette-rate-border-hover: transparent;
-  --uitk-palette-rate-border-undo: var(--uitk-color-orange-400);
 }

@@ -1,10 +1,8 @@
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ComponentMeta, Story } from "@storybook/react";
 
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
+import { Breadcrumb, Breadcrumbs } from "@jpmorganchase/uitk-lab";
 import { HomeIcon, TreeIcon } from "@jpmorganchase/uitk-icons";
 import { QAContainer } from "docs/components";
-import { BackgroundBlock } from "docs/components/BackgroundBlock";
 
 export default {
   title: "Lab/Breadcrumbs/QA",
@@ -153,19 +151,4 @@ export const AllExamplesGrid: Story = (props: {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid = AllExamplesGrid.bind({});
-BackwardsCompatGrid.args = {
-  className: "backwardsCompat",
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit = AllExamplesGrid.bind({});
-CompareWithOriginalToolkit.args = {
-  className: "backwardsCompat",
-  imgSrc: "/visual-regression-screenshots/Breadcrumbs-vr-snapshot.png",
 };

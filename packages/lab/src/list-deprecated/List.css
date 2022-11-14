@@ -6,7 +6,7 @@
   --list-borderColor: var(--uitk-container-borderColor-medium);
   --list-borderStyle: var(--uitk-container-borderStyle);
   --list-borderWidth: var(--uitk-container-borderWidth);
-  --list-borderRadius: var(--uitk-container-borderRadius);
+  --list-borderRadius: 0;
 
   /* Text, Font */
   /* TODO: Do we necessary want to set this? Should rely on inheritance? */

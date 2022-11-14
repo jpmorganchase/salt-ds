@@ -288,8 +288,3 @@
 .uitkFormField-labelLeft > .uitkFormLabel ~ :not(.uitkFormFieldHelperText) {
   background: var(--uitkFormField-background, var(--formField-background));
 }
-
-/* TK1 backwards compat styling */
-.backwardsCompat.uitkFormField-withHelperText {
-  --formField-helperText-fontSize: var(--backwardsCompat-text-help-fontSize);
-}

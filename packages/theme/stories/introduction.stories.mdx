@@ -88,13 +88,12 @@ The full set of characteristics is currently defined is as follows:
 | Container           | Components that may encapsulate others                                            | `--uitk-container-borderWidth: 1px;`                                                                  |
 | Differential        | Components indicating a positive or negative change                               | `--uitk-differential-positive-foreground: var(--uitk-palette-positive-foreground);`                   |
 | Draggable           | Components that can be dragged                                                    | `--uitk-draggable-grab-cursor-hover: grab;`                                                           |
-| Drop Target         | Components that form a target for draggable components                            | `--uitk-dropTarget-borderStyle: dashed;`                                                              |
+| Target              | Components that form a target for draggable components                            | `--uitk-target-borderStyle: dashed;`                                                                  |
 | Editable            | Components that have mutable input                                                | `--uitk-editable-borderStyle: solid;`                                                                 |
 | Focused             | Components that have a focused state                                              | `--uitk-focused-outlineStyle: dotted;`                                                                |
-| Measured            | Components which have some form of scale or progress                              | `--uitk-measured-borderColor: var(--uitk-palette-measure-border);`                                    |
+| Measured            | Components which have some form of scale or progress                              | `--uitk-measured-borderColor: var(--uitk-palette-measured-border);`                                   |
 | Navigable           | Components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover: pointer;`                                                             |
 | Overlayable         | Components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                                             |
-| Ratable             | Components which can be rated                                                     | `--uitk-ratable-background-hover: var(--uitk-palette-rate-background-hover);`                         |
 | Selectable          | Components that have a selected state                                             | `--uitk-selectable-cursor-hover: pointer;`                                                            |
 | Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-low);`                       |
 | Status              | Components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor: var(--uitk-palette-info-border);`                                    |
@@ -103,20 +102,19 @@ The full set of characteristics is currently defined is as follows:
 
 And finally, the palette:
 
-| Palette sentiment | Appropriate usage                                               | Example token                                            |
-| ----------------- | --------------------------------------------------------------- | -------------------------------------------------------- |
-| Accent            | Characteristics which use a consistent tone throughout the UI   | `--uitk-palette-accent-background`                       |
-| Interact          | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`                         |
-| Error             | Characteristics symbolising an error state                      | `--uitk-palette-error-border`                            |
-| Info              | Characteristics symbolising an info state                       | `--uitk-palette-info-icon`                               |
-| Success           | Characteristics symbolising a success state                     | `--uitk-palette-success-border`                          |
-| Warning           | Characteristics symbolising a warning state                     | `--uitk-palette-warning-icon`                            |
-| Measure           | Characteristics showing some form of progress                   | `--uitk-palette-measure-background-gradient-start-color` |
-| Navigate          | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`                     |
-| Negative          | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`                     |
-| Neutral           | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground`              |
-| Positive          | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`                     |
-| Rate              | Characteristics allowing for something to be rated              | `--uitk-palette-rate-border-undo`                        |
+| Palette sentiment | Appropriate usage                                               | Example token                                             |
+| ----------------- | --------------------------------------------------------------- | --------------------------------------------------------- |
+| Accent            | Characteristics which use a consistent tone throughout the UI   | `--uitk-palette-accent-background`                        |
+| Interact          | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`                          |
+| Error             | Characteristics symbolising an error state                      | `--uitk-palette-error-border`                             |
+| Info              | Characteristics symbolising an info state                       | `--uitk-palette-info-icon`                                |
+| Success           | Characteristics symbolising a success state                     | `--uitk-palette-success-border`                           |
+| Warning           | Characteristics symbolising a warning state                     | `--uitk-palette-warning-icon`                             |
+| Measure           | Characteristics showing some form of progress                   | `--uitk-palette-measured-background-gradient-start-color` |
+| Navigate          | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`                      |
+| Negative          | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`                      |
+| Neutral           | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground`               |
+| Positive          | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`                      |
 
 #### Token naming conventions
 

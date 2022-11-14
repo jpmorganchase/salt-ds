@@ -12,7 +12,7 @@
 
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
-  --uitk-navigable-indicator-disabled: var(--uitk-palette-navigate-indicator-disabled);
+  --uitk-navigable-indicator-activeDisabled: var(--uitk-palette-navigate-indicator-activeDisabled);
 
   --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
   --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);

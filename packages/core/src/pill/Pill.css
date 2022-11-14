@@ -244,20 +244,3 @@
   background: initial;
   color: var(--pill-text-color-disabled);
 }
-
-/* TK1 backwards compat styling */
-
-.uitk-light {
-  --backwardsCompat-pill-background: var(--uitk-color-grey-40);
-  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-40);
-}
-.uitk-dark {
-  --backwardsCompat-pill-background: var(--uitk-color-grey-500);
-  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-500);
-}
-
-.backwardsCompat.uitkPill {
-  --pill-fontSize: var(--backwardsCompat-text-caption-fontSize);
-  --pill-background: var(--backwardsCompat-pill-background);
-  --pill-background-hover: var(--backwardsCompat-pill-background-hover);
-}

@@ -64,7 +64,6 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.20",
     "@types/no-scroll": "^2.1.0",
     "@types/node": "^14.14.20",
@@ -88,7 +87,7 @@
     "clipboard-copy": "^4.0.1",
     "compute-scroll-into-view": "^1.0.16",
     "csstree-validator": "^3.0.0",
-    "cypress": "^10.10.0",
+    "cypress": "^11.0.0",
     "cypress-axe": "^1.0.0",
     "cypress-real-events": "^1.7.2",
     "deepmerge": "^4.2.2",
@@ -110,13 +109,13 @@
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
     "sass": "^1.52.3",
+    "stylelint": "^14.9.1",
     "tinycolor2": "^1.4.2",
     "ts-node": "^10.4.0",
     "typescript": "4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-istanbul": "^3.0.1",
     "vite-tsconfig-paths": "^3.5.0",
-    "warning": "^4.0.3",
     "webpack": "5.74.0"
   },
   "resolutions": {
@@ -142,8 +141,5 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.2.4",
-  "devDependencies": {
-    "stylelint": "^14.9.1"
-  }
+  "packageManager": "yarn@3.2.4"
 }

@@ -77,7 +77,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                 <CloseIcon
                   accessible-text="close overlay"
                   className={withBaseName("closeIcon")}
-                  size={12}
                 />
               </Button>
             )}

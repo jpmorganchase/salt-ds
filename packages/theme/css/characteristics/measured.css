@@ -9,23 +9,16 @@
   --uitk-measured-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-measured-textAlign: center;
 
-  --uitk-measured-background: var(--uitk-palette-measure-background);
-  --uitk-measured-background-disabled: var(--uitk-palette-measure-background-disabled);
-  --uitk-measured-borderColor: var(--uitk-palette-measure-border);
-  --uitk-measured-borderColor-disabled: var(--uitk-palette-measure-border-disabled);
-  --uitk-measured-fill: var(--uitk-palette-measure-fill);
-  --uitk-measured-fill-disabled: var(--uitk-palette-measure-fill-disabled);
-  --uitk-measured-foreground: var(--uitk-palette-measure-foreground);
-  --uitk-measured-foreground-disabled: var(--uitk-palette-measure-foreground-disabled);
-}
-
-/* TK1 Backwards compatibility */
-.uitk-light {
-  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-500);
-  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-500);
-}
-
-.uitk-dark {
-  --backwardsCompat-measured-fill-startColor: var(--uitk-color-teal-300);
-  --backwardsCompat-measured-fill-stopColor: var(--uitk-color-blue-300);
+  --uitk-measured-background: var(--uitk-palette-measured-background);
+  --uitk-measured-background-disabled: var(--uitk-palette-measured-background-disabled);
+  --uitk-measured-borderColor: var(--uitk-palette-measured-border);
+  --uitk-measured-borderColor-disabled: var(--uitk-palette-measured-border-disabled);
+  --uitk-measured-fill: var(--uitk-palette-measured-fill);
+  --uitk-measured-fill-disabled: var(--uitk-palette-measured-fill-disabled);
+  --uitk-measured-foreground: var(--uitk-palette-measured-foreground);
+  --uitk-measured-foreground-hover: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-active: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-undo: var(--uitk-palette-measured-foreground-active);
+  --uitk-measured-foreground-activeDisabled: var(--uitk-palette-measured-foreground-activeDisabled);
+  --uitk-measured-foreground-disabled: var(--uitk-palette-measured-foreground-disabled);
 }

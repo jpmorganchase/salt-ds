@@ -19,9 +19,3 @@
   line-height: var(--calendar-week-header-size);
   font-size: var(--calendar-week-header-fontSize);
 }
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkCalendar {
-  --calendar-week-header-fontSize: var(--backwardsCompat-text-caption-fontSize);
-}

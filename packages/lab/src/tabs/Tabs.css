@@ -2,8 +2,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.uitkTabs.backwardsCompat {
-  --tabs-tab-letterSpacing: -0.1px;
-  --tabs-tab-top: -1px;
-}
