@@ -6,16 +6,16 @@ const useOnScreen = <T extends Element>(
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      setIntersecting(entry.isIntersecting);
-    },
-    {
-      rootMargin,
-    }
-  );
-
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIntersecting(entry.isIntersecting);
+      },
+      {
+        rootMargin,
+      }
+    );
+
     observer.observe(ref.current);
 
     return () => {
