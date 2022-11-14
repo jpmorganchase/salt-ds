@@ -3,7 +3,7 @@
 "@jpmorganchase/uitk-lab": minor
 ---
 
-## ToolkitProvider
+ToolkitProvider
 
 The `theme` prop has be renamed to `mode` so terminology is consistent between designers and developers.
 
