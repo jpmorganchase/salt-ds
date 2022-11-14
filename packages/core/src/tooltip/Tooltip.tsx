@@ -10,7 +10,7 @@ import {
 import { Portal, PortalProps } from "../portal";
 import { makePrefixer } from "../utils";
 import { useWindow } from "../window";
-import { StatusIcon } from "../status-icon";
+import { StatusIndicator } from "../status-indicator";
 
 import "./Tooltip.css";
 
@@ -83,7 +83,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           return null;
         }
         return status !== "info" ? (
-          <StatusIcon
+          <StatusIndicator
             status={status}
             {...iconProps}
             className={withBaseName("icon")}

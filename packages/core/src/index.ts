@@ -16,7 +16,7 @@ export * from "./portal";
 export * from "./radio-button";
 export * from "./responsive";
 export * from "./scrim";
-export * from "./status-icon";
+export * from "./status-indicator";
 export * from "./switch";
 export * from "./theme";
 export * from "./toolkit-provider";

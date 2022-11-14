@@ -1,7 +1,7 @@
 import {
   makePrefixer,
-  StatusIcon,
-  StatusIconProps,
+  StatusIndicator as BaseStatusIndicator,
+  StatusIndicatorProps as BaseStatusIndicatorProps,
 } from "@jpmorganchase/uitk-core";
 import { ReactElement } from "react";
 import cx from "classnames";
@@ -17,7 +17,7 @@ export interface StatusIndicatorProps
   CircularProgressProps?: Partial<CircularProgressProps>;
   SpinnerProps?: Partial<SpinnerProps>;
   id?: string;
-  status?: StatusIconProps["status"] | "loading";
+  status?: BaseStatusIndicatorProps["status"] | "loading";
 }
 
 const withBaseName = makePrefixer("uitkContentStatus");
@@ -65,7 +65,7 @@ export function StatusIndicator({
   }
 
   return (
-    <StatusIcon
+    <BaseStatusIndicator
       status={status}
       data-jpmui-test={`icon-${status}-${id!}`}
       size={2}
