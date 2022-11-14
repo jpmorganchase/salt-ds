@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-draggable-horizontal-cursor-hover: row-resize;
   --uitk-draggable-horizontal-cursor-active: row-resize;
 

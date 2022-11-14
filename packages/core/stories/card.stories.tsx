@@ -104,10 +104,10 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
 
 export const All: ComponentStory<typeof Card> = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <Examples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <Examples />
     </ToolkitProvider>
   </div>

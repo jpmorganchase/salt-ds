@@ -2,6 +2,7 @@ import {
   Density,
   FormField,
   makeRadioIcon,
+  Mode,
   Panel,
   RadioButton,
   RadioButtonGroup,
@@ -99,10 +100,10 @@ const StoryScroller = (props: { children?: ReactNode }) => (
 
 export const All: Story = () => (
   <StoryScroller>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <DensityExample name="light" />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <DensityExample name="dark" />
     </ToolkitProvider>
   </StoryScroller>
@@ -218,8 +219,8 @@ const FormFieldRadios = ({
   </div>
 );
 
-const VariantExample = ({ name, theme }: { name: string; theme: string }) => (
-  <ToolkitProvider theme={theme}>
+const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
+  <ToolkitProvider mode={mode}>
     <Panel style={{ height: "unset" }}>
       <ColumnLayoutContainer>
         <ColumnLayoutItem>
@@ -250,8 +251,8 @@ const VariantExample = ({ name, theme }: { name: string; theme: string }) => (
 
 export const FormFieldVariants: Story = () => (
   <StoryScroller>
-    <VariantExample name="fx1" theme="light" />
-    <VariantExample name="fx2" theme="dark" />
+    <VariantExample name="fx1" mode="light" />
+    <VariantExample name="fx2" mode="dark" />
   </StoryScroller>
 );
 
@@ -280,8 +281,8 @@ const ExampleRow = ({ children, name }: ExampleRowProps) => {
   );
 };
 
-const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
-  <ToolkitProvider theme={theme}>
+const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
+  <ToolkitProvider mode={mode}>
     <>
       <ExampleRow name="Basic">
         <FormField
@@ -383,8 +384,8 @@ const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
 
 export const GroupFormFieldRow: Story = () => (
   <StoryScroller>
-    <GroupFormFieldExamples theme="light" />
-    <GroupFormFieldExamples theme="dark" />
+    <GroupFormFieldExamples mode="light" />
+    <GroupFormFieldExamples mode="dark" />
   </StoryScroller>
 );
 
@@ -511,10 +512,10 @@ const GroupFormFieldVerticalExamples = () => (
 
 export const GroupFormFieldVertical: Story = () => (
   <StoryScroller>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <GroupFormFieldVerticalExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <GroupFormFieldVerticalExamples />
     </ToolkitProvider>
   </StoryScroller>

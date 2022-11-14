@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-measured-borderStyle: solid;
   --uitk-measured-borderStyle-active: solid;
   --uitk-measured-borderStyle-complete: solid;

@@ -59,7 +59,7 @@ function transformToCSS(patternJsonByScope) {
   patternJsonByScope.forEach((element) => {
     let selector;
     if (element.scope === "mode-all") {
-      selector = `.uitk-light, .uitk-dark`;
+      selector = `.uitk-theme`;
     } else if (element.scope === "density-all") {
       selector = `.uitk-density-low, .uitk-density-medium, .uitk-density-high, .uitk-density-touch`;
     } else if (element.scope.includes("emphasis")) {

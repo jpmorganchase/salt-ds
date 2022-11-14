@@ -242,8 +242,8 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
 export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
-      <ToolkitProvider theme="light">{renderAllDensities()}</ToolkitProvider>
-      <ToolkitProvider theme="dark">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider mode="light">{renderAllDensities()}</ToolkitProvider>
+      <ToolkitProvider mode="dark">{renderAllDensities()}</ToolkitProvider>
     </div>
   );
 };

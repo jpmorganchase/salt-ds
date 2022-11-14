@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-focused-outlineColor: var(--uitk-palette-info-border);
   --uitk-focused-outlineStyle: dotted;
   --uitk-focused-outlineWidth: 2px;

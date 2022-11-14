@@ -1,4 +1,4 @@
-import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Mode, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   Children,
@@ -47,14 +47,14 @@ const BackgroundBlock = ({
 const DensityValues = ["high", "medium", "low", "touch"] as const;
 
 const DensityBlock = ({
-  theme,
+  mode,
   children,
 }: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  theme: string;
+  mode: Mode;
 }) => (
-  <BackgroundBlock background={theme === "light" ? "white" : undefined}>
+  <BackgroundBlock background={mode === "light" ? "white" : undefined}>
     {DensityValues.map((d, i) => (
-      <ToolkitProvider theme={theme} density={d} key={i}>
+      <ToolkitProvider mode={mode} density={d} key={i}>
         <div className="background-item-wrapper">{children}</div>
       </ToolkitProvider>
     ))}
@@ -94,12 +94,12 @@ export const QAContainer = ({
       {transposeDensity ? (
         <>
           {Children.map(children, (child, i) => (
-            <DensityBlock key={i} theme="light">
+            <DensityBlock key={i} mode="light">
               {child}
             </DensityBlock>
           ))}
           {Children.map(children, (child, i) => (
-            <DensityBlock key={i} theme="dark">
+            <DensityBlock key={i} mode="dark">
               {child}
             </DensityBlock>
           ))}
@@ -107,10 +107,10 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <ToolkitProvider theme="light" density={d}>
+            <ToolkitProvider mode="light" density={d}>
               <BackgroundBlock background="white">{children}</BackgroundBlock>
             </ToolkitProvider>
-            <ToolkitProvider theme="dark" density={d}>
+            <ToolkitProvider mode="dark" density={d}>
               <BackgroundBlock>{children}</BackgroundBlock>
             </ToolkitProvider>
           </Fragment>

@@ -31,7 +31,7 @@
 }
 
 /* These ideally should be taken from characteristics */
-.uitk-light {
+.uitk-theme[data-mode="light"] {
   --grid-background-primary-default: var(--uitk-color-white);
   --grid-background-secondary-default: var(--uitk-color-grey-20);
   --grid-zebraColor-default: var(--uitk-color-grey-20);
@@ -63,7 +63,7 @@
   --grid-rowSeparator-color-divided-default: rgba(0, 0, 0, 0.2);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode="dark"] {
   --grid-background-primary-default: var(--uitk-color-grey-800);
   --grid-background-secondary-default: #2f3136;
   --grid-zebraColor-default: rgba(255, 255, 255, 0.05);
