@@ -125,7 +125,7 @@ export default function Home(): JSX.Element {
           duis.
         </p>
 
-        <Link to="/docs/components">
+        <Link to="/components">
           <Button variant="cta">See components</Button>
         </Link>
       </div>
