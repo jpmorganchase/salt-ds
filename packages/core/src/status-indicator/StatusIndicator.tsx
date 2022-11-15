@@ -11,7 +11,7 @@ import { forwardRef } from "react";
 import { makePrefixer } from "../utils";
 import { ValidationStatus } from "./ValidationStatus";
 
-import "./StatusIcon.css";
+import "./StatusIndicator.css";
 
 const icons = {
   error: ErrorSolidIcon,
@@ -20,24 +20,24 @@ const icons = {
   info: InfoSolidIcon,
 };
 
-export interface StatusIconProps extends IconProps {
+export interface StatusIndicatorProps extends IconProps {
   /**
-   * Status icon to be displayed.
+   * Status indicator to be displayed.
    */
   status: ValidationStatus;
 }
 
-const statusToAriaLabelMap = {
+const statusToAriaLabelMap: Record<ValidationStatus, string> = {
   error: "error",
   success: "success",
   warning: "warning",
   info: "info",
 };
 
-const withBaseName = makePrefixer("uitkStatusIcon");
+const withBaseName = makePrefixer("uitkStatusIndicator");
 
-export const StatusIcon = forwardRef<SVGSVGElement, StatusIconProps>(
-  function StatusIcon(
+export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
+  function StatusIndicator(
     { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
     ref
   ) {

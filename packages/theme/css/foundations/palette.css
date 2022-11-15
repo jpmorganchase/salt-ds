@@ -1,6 +1,5 @@
 /* Opacities */
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-palette-opacity-background: var(--uitk-opacity-2);
   --uitk-palette-opacity-border: var(--uitk-opacity-2);
   --uitk-palette-opacity-border-readonly: var(--uitk-opacity-1);
@@ -10,15 +9,15 @@
   --uitk-palette-opacity-stroke: var(--uitk-opacity-2);
 }
 
-.uitk-light {
+.uitk-theme[data-mode="light"] {
   --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-4);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode="dark"] {
   --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-3);
 }
 
-.uitk-light {
+.uitk-theme[data-mode="light"] {
   /* Accent */
   --uitk-palette-accent-background: var(--uitk-color-blue-500);
   --uitk-palette-accent-border: var(--uitk-color-blue-500);
@@ -150,7 +149,7 @@
   --uitk-palette-positive-foreground: var(--uitk-color-green-700);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode="dark"] {
   /* Accent */
   --uitk-palette-accent-background: var(--uitk-color-blue-500);
   --uitk-palette-accent-border: var(--uitk-color-blue-500);

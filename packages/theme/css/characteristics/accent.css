@@ -11,8 +11,7 @@
   --uitk-accent-fontSize: 14px;
 }
 
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-accent-background: var(--uitk-palette-accent-background);
   --uitk-accent-borderColor: var(--uitk-palette-accent-border);
   --uitk-accent-foreground: var(--uitk-palette-accent-foreground);

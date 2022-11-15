@@ -89,10 +89,10 @@ export const Alignment: Story = () => (
 
 export const All: Story = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <Examples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <Examples />
     </ToolkitProvider>
   </div>

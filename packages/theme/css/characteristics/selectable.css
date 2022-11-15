@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-selectable-cursor-hover: pointer;
   --uitk-selectable-cursor-selected: pointer;
   --uitk-selectable-cursor-blurSelected: pointer;

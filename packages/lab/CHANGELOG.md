@@ -1,5 +1,232 @@
 # @jpmorganchase/uitk-lab
 
+## 0.8.0
+
+### Minor Changes
+
+- 29b3478e: Alignment with Figma characteristics
+
+  Added:
+  --uitk-accent-fontWeight
+  --uitk-draggable-horizontal-cursor-active
+  --uitk-navigable-indicator-activeDisabled
+  --uitk-color-grey-90-fade-foreground
+  --uitk-palette-navigate-indicator-disabled
+
+  Removed:
+  --uitk-actionable-primary-fontWeight-hover
+  --uitk-actionable-cta-fontWeight-hover
+  --uitk-actionable-secondary-fontWeight-hover
+  --uitk-actionable-primary-fontWeight-active
+  --uitk-actionable-cta-fontWeight-active
+  --uitk-actionable-secondary-fontWeight-active
+  --uitk-container-textAlign
+
+- f259b693: Remove ratable characteristic
+
+  ```diff
+  - --uitk-ratable-cursor-hover
+  - --uitk-ratable-cursor-active
+  - --uitk-ratable-cursor-undo
+  - --uitk-ratable-cursor-disabled
+  - --uitk-ratable-borderWidth
+  - --uitk-ratable-borderWidth-undo
+  - --uitk-ratable-borderStyle
+  - --uitk-ratable-borderStyle-undo
+  - --uitk-ratable-background
+  - --uitk-ratable-background-active
+  - --uitk-ratable-background-activeDisabled
+  - --uitk-ratable-background-hover
+  - --uitk-ratable-background-undo
+  - --uitk-ratable-borderColor
+  - --uitk-ratable-borderColor-active
+  - --uitk-ratable-borderColor-disabled
+  - --uitk-ratable-borderColor-hover
+  - --uitk-ratable-borderColor-undo
+  ```
+
+  Remove rate tokens from palette:
+
+  ```diff
+  - --uitk-palette-rate-background
+  - --uitk-palette-rate-background-active
+  - --uitk-palette-rate-background-activeDisabled
+  - --uitk-palette-rate-background-hover
+  - --uitk-palette-rate-background-undo
+  - --uitk-palette-rate-border
+  - --uitk-palette-rate-border-active
+  - --uitk-palette-rate-border-disabled
+  - --uitk-palette-rate-border-hover
+  - --uitk-palette-rate-border-undo
+  ```
+
+  Add new tokens to measured characteristic:
+
+  ```diff
+  + --uitk-measured-foreground-hover
+  + --uitk-measured-foreground-active
+  + --uitk-measured-foreground-undo
+  + --uitk-measured-foreground-activeDisabled
+  + --uitk-palette-measured-foreground-active
+  + --uitk-palette-measured-foreground-activeDisabled
+  ```
+
+- b66d2b0c: Refactor Accordion CSS to remove `:not` usage.
+  Refactor TokenizedInput CSS to remove `:not` usage.
+- 38c46088: Remove backwards compatibility functionality
+- f7e835b3: Remove old typography sizes from theme:
+
+  - uitk-typography-size-10
+  - uitk-typography-size-30
+  - uitk-typography-size-40
+  - uitk-typography-size-50
+  - uitk-typography-size-60
+  - uitk-typography-size-70
+  - uitk-typography-size-80
+  - uitk-typography-size-90
+  - uitk-typography-size-100
+  - uitk-typography-size-110
+  - uitk-typography-size-120
+  - uitk-typography-size-125
+  - uitk-typography-size-130
+  - uitk-typography-size-140
+  - uitk-typography-size-150
+  - uitk-typography-size-170
+  - uitk-typography-size-180
+  - uitk-typography-size-210
+  - uitk-typography-size-240
+
+  Move base line height to foundation
+
+- 42f79714: Remove container, selectable and editable -borderRadius tokens; replace with 0 where container-borderRadius was already being used
+- 03281cb6: Improve types for forwardCallbackProps
+  Ensure Dropdown callback props are merged
+- 3708f946: Rename component `StatusIcon` to `StatusIndicator`.
+- 949feb1e: Allow Dropdown highlighting and selection to be controlled
+- 993029f3: - --uitk-palette-opacity-background changed to opacity-2
+
+  - Size tokens updated to use unit calculations where density aware
+
+  - The following size tokens moved to become density invariant:
+
+  --uitk-size-divider-strokeWidth: 1px;
+  --uitk-size-bottomBorder: 2px;
+  --uitk-size-brandBar: 4px;
+
+  - Pill, Switch, AppHeader, Logo and ToggleGroupButton size tokens moved to respective components
+
+  ```diff
+  - --uitk-size-adornment
+  - --uitk-size-appHeader
+  - --uitk-size-pill
+  - --uitk-size-switch
+  - --uitk-size-logo
+  - --uitk-size-toggleGroupButton
+  - --uitk-size-formField-top
+  ```
+
+- 6952b3e3: Remove following measured characteristics from theme:
+
+  - uitk-measured-fontSize-high
+  - uitk-measured-fontSize-medium
+  - uitk-measured-fontSize-low
+
+  Update following measured characteristics in theme:
+
+  - uitk-measured-borderColor
+  - uitk-measured-borderWidth 1px -> 2px
+
+  Add following measured characteristics in theme:
+
+  - uitk-measured-borderStyle-active
+  - uitk-measured-borderStyle-complete
+  - uitk-measured-borderStyle-incomplete
+  - uitk-measured-textAlign
+  - uitk-measured-background-disabled
+  - uitk-measured-borderColor
+  - uitk-measured-borderColor-disabled
+  - uitk-measured-foreground
+  - uitk-measured-foreground-disabled
+
+- 2b3fef8b: ToggleButton and ToggleButtonGroup rename prop `ariaLabel` to standard `aria-label`
+- d5f5d83e: ToolkitProvider
+
+  The `theme` prop has be renamed to `mode` so terminology is consistent between designers and developers.
+
+  ```diff
+  - <ToolkitProvider theme="light" density="medium" />
+  + <ToolkitProvider mode="light" density="medium" />
+  ```
+
+  The implementation of this has changed from using a class for the mode to a data attribute
+
+  ```diff
+  - <div class="uitk-theme uitk-light uitk-density-medium">
+  + <div class="uitk-theme uitk-density-medium" data-mode="light">
+  ```
+
+  CSS rules which used `uitk-theme-light` and `uitk-theme-dark`, will need to be updated e.g.
+
+  ```diff
+  - .uitk-light {}
+  + [data-mode="light"] {}
+
+  - .uitk-dark {}
+  + [data-mode="dark"] {}
+  ```
+
+  The `theme` prop can still be used to provide a custom theme name to help add specificity when creating custom themes.
+
+- 172fd5a8: Updated the `<Icon />` component.
+
+  - It now only accepts SVG elements as children and should be used as follows:
+
+  ```jsx
+  <Icon aria-label="add" viewBox="0 0 12 12" size={1}>
+    <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
+  </Icon>
+  ```
+
+  - Wrapping span elements have been removed so the root element is the `<svg>` itself. The Icon ref is now type `SVGSVGElement` instead of a `<span>`.
+
+  - The size prop has been updated to be a number which is a multiplier of the base value instead of a named size. At high density the following would apply:
+
+  ```jsx
+  <AddIcon size="small" />
+  <AddIcon size="medium" />
+  <AddIcon size="large" />
+  ```
+
+  becomes
+
+  ```jsx
+  <AddIcon size={1} />
+  <AddIcon size={2} />
+  <AddIcon size={4} />
+  ```
+
+  - The size of the Icon will now scale with density.
+  - **Note:** Previously Icon could be set to a specific size by passing a number to the `size` prop. This has been removed so Icons will scale with the rest of the design system. You can still set a specific size using the css variable `--icon-size` but it is not recommended as your component won't scale with density.
+  - Built in Icon components e.g. `<AddIcon />` have been regenerated to use the new Icon component so their html and API have changed accordingly.
+  - UITK components which had Icon or a built-in Icon as a dependancy have also been updated.
+  - A new size css variable `--uitk-size-icon-base` has been added to the theme for each density.
+
+- c8afdd35: Change -typography-weight tokens to -typography-fontWeight
+
+### Patch Changes
+
+- 9a7b6020: Accordion: remove console.log from register handler
+- bacf3a95: Hide
+  Accordion's
+  ChevronRightIcon
+  from
+  screen
+  readers.
+- 6ea95948: Simplify Slider handle and fix keyboard interaction when a screen reader is active
+- 55329c89: Refactor ContentStatus to use StatusIcon
+- 93298a2d: Color chooser: fix active state swatch size
+- 06d86e60: Remove warning and rely on native console
+
 ## 0.7.1
 
 ### Patch Changes

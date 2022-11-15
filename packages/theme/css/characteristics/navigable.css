@@ -1,5 +1,4 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-navigable-cursor-active: pointer;
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-disabled: not-allowed;

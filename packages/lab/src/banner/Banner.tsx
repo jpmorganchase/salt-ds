@@ -12,9 +12,10 @@ import {
   Button,
   ButtonProps,
   makePrefixer,
-  StatusIcon,
+  StatusIndicator,
   useAriaAnnouncer,
   useForkRef,
+  ValidationStatus,
 } from "@jpmorganchase/uitk-core";
 
 import { Link, LinkProps } from "../link";
@@ -24,7 +25,7 @@ import cx from "classnames";
 
 import "./Banner.css";
 
-export type BannerStatus = "error" | "info" | "success" | "warning";
+export type BannerStatus = ValidationStatus;
 
 export type LabelProps = { className?: string };
 
@@ -133,7 +134,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   });
 
   const getStateAndPropsGetters = (): GetStateAndPropGetters => ({
-    Icon: (props) => <StatusIcon {...props} status={status} />,
+    Icon: (props) => <StatusIndicator {...props} status={status} />,
     getIconProps,
     getLabelProps,
     getLinkProps,
@@ -143,7 +144,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   if (!render) {
     contentElement = (
       <>
-        <StatusIcon {...getIconProps()} status={status}></StatusIcon>
+        <StatusIndicator {...getIconProps()} status={status}></StatusIndicator>
         <span {...getLabelProps()}>
           {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
         </span>
