@@ -1,7 +1,8 @@
 import { forwardRef, useCallback, MouseEvent } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
-import { makePrefixer, Text, TextProps } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../utils";
+import { Text, TextProps } from "../text";
 
 import "./Link.css";
 
@@ -14,15 +15,10 @@ const withBaseName = makePrefixer("uitkLink");
  * <LinkExample to="#link">Action</LinkExample>
  */
 
-export interface LinkProps extends TextProps<"a"> {
-  /**
-   * If `true`, the link will be disabled.
-   */
-  disabled?: boolean;
-}
+export type LinkProps = TextProps<"a">;
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { href, className, disabled, children, target = "_self", ...rest },
+  { href, className, children, target = "_self", ...rest },
   ref
 ) {
   const stopPropagation = useCallback(
@@ -32,18 +28,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <Text
       as="a"
-      className={cx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      )}
-      href={disabled ? undefined : href}
+      className={cx(withBaseName(), className)}
+      href={href}
       onClick={stopPropagation}
       ref={ref}
       target={target}
-      tabIndex={disabled ? -1 : 0}
       {...rest}
     >
       {children}

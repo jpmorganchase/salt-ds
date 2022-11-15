@@ -9,6 +9,7 @@ export * from "./form-field-context";
 export * from "./form-group";
 export * from "./input";
 export * from "./layout";
+export * from "./link";
 export * from "./panel";
 export * from "./pill";
 export * from "./popper";

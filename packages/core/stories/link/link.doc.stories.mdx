@@ -1,0 +1,35 @@
+import { Meta, ArgsTable } from "@storybook/addon-docs";
+import { Link } from "@jpmorganchase/uitk-core";
+import { CSSClassTable } from "css-variable-docgen-components";
+
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Link"
+  component={Link}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Link
+
+We've created the Link as an extension of [Text component](/docs/documentation-core-text--primary) so it inherits all it's properties. Link also extends HTMLAnchorElement type so all anchor props are available to use.
+
+# API
+
+```
+import { Link } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Link} />
+
+## Features
+
+## CSS Class
+
+<CSSClassTable of={Link} />
+
+<HelpAndSupport />
