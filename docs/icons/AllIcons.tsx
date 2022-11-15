@@ -1,7 +1,6 @@
 import { allIcons } from "@jpmorganchase/uitk-icons/stories/icon.all";
-import { createElement, ReactElement } from "react";
+import { createElement } from "react";
 import { FlexLayout, StackLayout } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
 
 const formatIconName = (icon: string) => {
   const fullName = icon.replace(/([A-Z])/g, " $1");
