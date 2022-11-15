@@ -2,30 +2,35 @@ import {
   debounce,
   useForkRef,
   useIsomorphicLayoutEffect,
+  polymorphicRef,
 } from "@jpmorganchase/uitk-core";
 import {
-  ElementType,
-  ForwardedRef,
   useCallback,
   useRef,
   useState,
+  ElementType,
+  Ref,
+  JSXElementConstructor,
 } from "react";
-import { TextProps } from "./Text";
+import { TextProps } from "../typography";
 import { getComputedStyles } from "./getComputedStyles";
 
 // this guards against text underline which adds 1px on scrollHeight
 const VELOCITY = 1;
 
 export const useTruncation = (
-  props: TextProps<ElementType>,
-  ref: ForwardedRef<HTMLElement>
+  {
+    children,
+    maxRows,
+    showTooltip = true,
+    onOverflowChange,
+  }: Partial<TextProps>,
+  ref: polymorphicRef<ElementType>
 ) => {
-  const { children, maxRows, showTooltip = true, onOverflowChange } = props;
-
   const [element, setElement] = useState<HTMLElement>();
   const setContainerRef = useForkRef(ref, setElement);
   const [rows, setRows] = useState<number | undefined>();
-  const isOverflowed = useRef(false);
+  const isOverflowed = useRef<boolean | undefined>();
 
   // Calculating Rows
   const getRows = useCallback(() => {
@@ -71,6 +76,11 @@ export const useTruncation = (
         if (!hasOverflowed) {
           return 0;
         }
+      } else {
+        if (isOverflowed.current || isOverflowed.current === undefined) {
+          onOverflowChange && onOverflowChange(false);
+          isOverflowed.current = false;
+        }
       }
     }
 
@@ -104,7 +114,7 @@ export const useTruncation = (
   }, [element, getRows]);
 
   // Has Tooltip
-  const hasTooltip = rows && showTooltip && isOverflowed.current;
+  const hasTooltip = !!rows && showTooltip && isOverflowed.current;
 
   const tooltipTextDefault =
     (hasTooltip &&

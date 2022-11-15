@@ -4,13 +4,15 @@ import {
   TooltipProps,
   useForkRef,
   useTooltip,
+  polymorphicRef,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
+  ComponentPropsWithoutRef,
   CSSProperties,
   ElementType,
   forwardRef,
-  ComponentPropsWithoutRef,
+  ReactElement,
 } from "react";
 import { useTruncation } from "./useTruncation";
 
@@ -64,10 +66,13 @@ interface TextPropsBase<E extends ElementType> {
 export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
   Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
-const TruncatingText = forwardRef<
-  HTMLElement,
-  Omit<TextProps<ElementType>, "truncate">
->(function TruncatingText(props, ref) {
+type PolymorphicText = <T extends ElementType>(
+  p: TextProps<T> & { ref?: polymorphicRef<T> }
+) => ReactElement<TextProps<T>>;
+
+const TruncatingText = forwardRef(function TruncatingText<
+  T extends ElementType
+>(props: TextProps<T>, ref?: polymorphicRef<T>): ReactElement<TextProps<T>> {
   const {
     children,
     className,
@@ -82,7 +87,7 @@ const TruncatingText = forwardRef<
     showTooltip: _showTooltip,
     tabIndex,
     ...restProps
-  } = props;
+  }: TextProps = props;
   const { setContainerRef, hasTooltip, tooltipTextDefault, rows } =
     useTruncation(props, ref);
 
@@ -124,42 +129,43 @@ const TruncatingText = forwardRef<
   );
 });
 
-export const Text = forwardRef<HTMLElement, TextProps<ElementType>>(
-  function Text(props, ref) {
-    const {
-      children,
-      className,
-      elementType = "div",
-      maxRows,
-      onOverflowChange,
-      showTooltip = true,
-      style,
-      styleAs,
-      tooltipProps,
-      tooltipText,
-      truncate = false,
-      tabIndex,
-      ...restProps
-    } = props;
+export const Text = forwardRef(function Text<T extends ElementType>(
+  props: TextProps<T>,
+  ref?: polymorphicRef<T>
+): ReactElement<TextProps<T>> {
+  const {
+    children,
+    className,
+    elementType = "div",
+    maxRows,
+    onOverflowChange,
+    showTooltip,
+    style,
+    styleAs,
+    tooltipProps,
+    tooltipText,
+    truncate = false,
+    tabIndex,
+    ...restProps
+  } = props;
 
-    // Rendering
-    const Component: ElementType = elementType;
+  // Rendering
+  const Component: ElementType = elementType;
 
-    if (truncate) {
-      return <TruncatingText {...props} />;
-    }
-
-    return (
-      <Component
-        className={cx(withBaseName(), className, {
-          [withBaseName(styleAs || "")]: styleAs,
-        })}
-        {...restProps}
-        ref={ref}
-        style={style}
-      >
-        {children}
-      </Component>
-    );
+  if (truncate) {
+    return <TruncatingText {...props} />;
   }
-);
+
+  return (
+    <Component
+      className={cx(withBaseName(), className, {
+        [withBaseName(styleAs || "")]: styleAs,
+      })}
+      {...restProps}
+      ref={ref}
+      style={style}
+    >
+      {children}
+    </Component>
+  );
+}) as PolymorphicText;
