@@ -4,15 +4,8 @@ import {
   useIsomorphicLayoutEffect,
   polymorphicRef,
 } from "@jpmorganchase/uitk-core";
-import {
-  useCallback,
-  useRef,
-  useState,
-  ElementType,
-  Ref,
-  JSXElementConstructor,
-} from "react";
-import { TextProps } from "../typography";
+import { useCallback, useRef, useState, ElementType } from "react";
+import { TextProps } from "./Text";
 import { getComputedStyles } from "./getComputedStyles";
 
 // this guards against text underline which adds 1px on scrollHeight
