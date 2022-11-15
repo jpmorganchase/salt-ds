@@ -8,7 +8,7 @@ import { NestedProviders } from "./toolkit-provider.stories";
 # Toolkit Provider
 
 The UI Toolkit `ToolkitProvider` is a multi-purpose React Context provider. It allows values for cross-cutting concerns like `Theme` and `Density`
-to be injected into an application. This will commonly be done at the root level of an application, making these values are available throughout the
+to be injected into an application. This will commonly be done at the root level of an application, making these values available throughout the
 application. ToolkitProviders can also be nested to effect local overrides. Note that because almost all styling effects related to theme and density
 are managed using CSS variables, it will very rarely be necessary for React components to access the theme or density directly. The main purpose of
 these providers is to inject the appropriate CSS classes into the page so that the CSS variables which apply theme and density values are scoped correctly.
@@ -58,7 +58,7 @@ You can use the `density` prop to change the density on the wrapped component or
 
 ### useDensity
 
-You can use `useDensity` hook to access the currently active density of your app in the provided scope. The useDensity hook returns the string value of the currently set density. The possible values are `touch`, `low`, `medium`, and `high`. You can optionally override this value by passing your new value as the first parameter to the function.
+You can use the `useDensity` hook to access the currently active density of your app in the provided scope. The useDensity hook returns the string value of the currently set density. The possible values are `touch`, `low`, `medium` and `high`. You can optionally override this value by passing your new value as the first parameter to the function.
 
 ```tsx
 import { useDensity } from "@jpmorganchase/uitk-core";
@@ -88,9 +88,9 @@ function MyComponent() {
 }
 ```
 
-## Breakpoints
+## <a name="breakpoints"></a>Breakpoints
 
-The `breakpoints` prop on ToolkitProvider can be used to customize the css media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Look for an example in the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation.
+The `breakpoints` prop on ToolkitProvider can be used to customize the css media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Refer to the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation for a good example of this.
 
 The default value is the following breakpoint size mapping object.
 
@@ -106,7 +106,7 @@ The default value is the following breakpoint size mapping object.
 
 ### useBreakpoints
 
-You can use the `useBreakpoints` hook to access the current value of `breakpoints` in the ToolkitProvider context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the breakpoints section.
+You can use the `useBreakpoints` hook to access the current value of `breakpoints` in the ToolkitProvider context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the [breakpoints section](#breakpoints).
 
 ```tsx
 import { useBreakpoints } from "@jpmorganchase/uitk-core";
@@ -150,8 +150,7 @@ Here is a `Card` including some very simple content and wrapped with a ToolkitPr
   </Story>
 </Canvas>
 
-Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use
-the dark mode. Density is not specified on the inner ToolkitProvider, so is inherited from the outer instance.
+Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use dark mode. Density is not specified on the inner ToolkitProvider, so is inherited from the outer instance.
 
 <Canvas>
   <Story name="Nested ToolkitProvider">
@@ -160,7 +159,7 @@ the dark mode. Density is not specified on the inner ToolkitProvider, so is inhe
 </Canvas>
 
 By default, the `ToolkitProvider` wraps nested content with a `div` element to which the theme and density CSS classes are added.
-Given this JSX
+Given the following JSX:
 
 ```jsx
 <ToolkitProvider mode="light" density="medium">
@@ -168,7 +167,7 @@ Given this JSX
 </ToolkitProvider>
 ```
 
-then we would see the following HTML.
+then we would see the following HTML:
 
 ```html
 <div class="utik-theme uitk-density-medium" data-mode="light">
@@ -183,7 +182,7 @@ Some browser implementations of `display: contents` are buggy (Safari, for examp
 If you are concerned about either of these scenarios, the `ToolkitProvider` can be configured to not inject this additional element.
 Instead it can add the required CSS classes to the child element nested within the Provider. You may also simply prefer this approach.
 
-There is (currently) one limitation to this pattern, you must use a single child element only. This is enforced within the code and, for TypeScript users, via the typings.This would look as follows:
+There is (currently) one limitation to this pattern, you must only use a single child element. This is enforced within the code and, for TypeScript users, via the typings. This would look as follows:
 
 ```jsx
 <ToolkitProvider mode="light" density="medium" applyClassesTo="child">
