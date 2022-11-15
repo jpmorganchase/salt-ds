@@ -7,7 +7,17 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, FormField, Input, StackLayout } from "../../core";
-import { AllIcons as AllIconsBox, allIconNames } from "docs/icons/AllIcons";
+import { allIcons } from "./icon.all";
+
+const formatIconName = (icon: string) => {
+  const fullName = icon.replace(/([A-Z])/g, " $1");
+  return fullName.substring(0, fullName.lastIndexOf(" "));
+};
+
+const allIconNames = allIcons.map((iconComponent) => ({
+  name: formatIconName(iconComponent.displayName || " "),
+  icon: iconComponent,
+}));
 
 export default {
   title: "Icons/Icon",
@@ -85,9 +95,28 @@ export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
   return <IconGrid Icon={CustomIcon} />;
 };
 
-export const AllIcons: ComponentStory<typeof Icon> = () => (
-  <AllIconsBox size={2} />
-);
+export const AllIcons = ({ size = 1, withName = false }) => {
+  return (
+    <FlexLayout
+      wrap
+      gap={4}
+      style={{ paddingBlock: "1rem", maxWidth: "650px" }}
+    >
+      {allIcons.map((iconComponent, i) => {
+        return withName ? (
+          <StackLayout align="center" style={{ width: "150px" }}>
+            {createElement(iconComponent, { key: i, size: size })}
+            {iconComponent.displayName && (
+              <p>{formatIconName(iconComponent.displayName)}</p>
+            )}
+          </StackLayout>
+        ) : (
+          createElement(iconComponent, { key: i, size: size })
+        );
+      })}
+    </FlexLayout>
+  );
+};
 
 export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
   const [inputText, setInputText] = useState("");
