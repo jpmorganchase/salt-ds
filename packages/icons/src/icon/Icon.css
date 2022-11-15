@@ -1,10 +1,11 @@
+/* Style applied to the root element */
 .uitkIcon {
   --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
   --icon-size-multiplier: var(--uitkIcon-size-multiplier, 1);
   --icon-base-size: var(--uitk-size-icon-base, 12px);
   /**
    * Icon size will be the multiplier (an integer from the size prop) * the base size (set by the theme per density)
-   * Icons should never be smaller than 12px for readability so we've added a max() to enforce this 
+   * Icons should never be smaller than 12px for readability so we've added a max() to enforce this
   */
   --icon-size: max(calc(var(--icon-base-size) * var(--icon-size-multiplier)), 12px);
 }
