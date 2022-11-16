@@ -19,7 +19,13 @@ In order to use our components you will need:
 
 ### Install packages
 
-You will need to add the following three dependencies to your project:
+You will need to add the following 3 packages as dependencies to your project:
+
+- `@jpmorganchase/uitk-core` which contains our production-ready UI components
+- `@jpmorganchase/uitk-theme` which contains the CSS files that apply Odyssey's default theme
+- `@jpmorganchase/uitk-icons` which contains our SVG-based icons
+
+You can do this via `npm` like so:
 
 ```sh
 npm install --save @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
@@ -31,16 +37,12 @@ If you prefer, you can use [`yarn`](https://yarnpkg.com/) or other package manag
 
 :::
 
-- `@jpmorganchase/uitk-core` contains our production-ready UI components
-- `@jpmorganchase/uitk-theme` contains the CSS files that apply Odyssey's default theme
-- `@jpmorganchase/uitk-icons` contains our SVG-based icons
-
 ### Initial setup
 
 When integrating Odyssey into your project, you need to perform the following one-off steps:
 
 - Include the theme CSS file (`@jpmorganchase/uitk-theme/index.css`) in your app
-- Wrap your application in a `<ToolktiProvider>` component.
+- Import the `<ToolktiProvider>` component and wrap your application in it
 
 For example, in a typical React project, you can do this in your `src/index.js` as follows:
 
