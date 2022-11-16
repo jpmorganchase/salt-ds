@@ -33,7 +33,7 @@
   --uitk-palette-interact-background-blurSelected: var(--uitk-color-gray-30);
   --uitk-palette-interact-background-hover: var(--uitk-color-blue-20);
   --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
-  --uitk-palette-interact-border: var(--uitk-color-gray-90);
+  --uitk-palette-interact-border: var(--uitk-color-gray-100);
   --uitk-palette-interact-border-active: var(--uitk-color-blue-600);
   --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-600-fade-fill);
   --uitk-palette-interact-border-disabled: var(--uitk-color-gray-90-fade-border);
@@ -167,7 +167,7 @@
   --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
   --uitk-palette-interact-background-blurSelected: var(--uitk-color-gray-600);
   --uitk-palette-interact-background-hover: var(--uitk-color-blue-800);
-  --uitk-palette-interact-border: var(--uitk-color-gray-90);
+  --uitk-palette-interact-border: var(--uitk-color-gray-200);
   --uitk-palette-interact-border-active: var(--uitk-color-blue-400);
   --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-400-fade-fill);
   --uitk-palette-interact-border-disabled: var(--uitk-color-gray-90-fade-border);
