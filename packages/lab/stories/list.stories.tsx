@@ -31,8 +31,9 @@ import {
   ListProps,
   ListScrollHandles,
   VirtualizedList,
+  SelectionChangeHandler,
 } from "@jpmorganchase/uitk-lab";
-import { SelectHandler, SelectionChangeHandler } from "../src/common-hooks";
+import { SelectHandler } from "../src/common-hooks";
 
 import { usa_states } from "./list.data";
 
@@ -62,9 +63,14 @@ export default {
   decorators: [withFullViewWidth],
 } as ComponentMeta<typeof List>;
 
-export const Default: Story<ListProps> = () => {
+export const Default: Story<ListProps> = (props) => {
   return (
-    <List aria-label="Listbox example" maxWidth={292} source={usa_states} />
+    <List
+      {...props}
+      aria-label="Listbox example"
+      maxWidth={292}
+      source={usa_states}
+    />
   );
 };
 
@@ -78,9 +84,10 @@ export const BorderlessList: Story<ListProps> = (props) => (
   />
 );
 
-export const DeclarativeList: Story<ListProps> = () => {
+export const DeclarativeList: Story<ListProps> = (props) => {
   return (
     <List
+      {...props}
       aria-label="Declarative List example"
       displayedItemCount={5}
       width={292}
