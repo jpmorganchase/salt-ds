@@ -158,21 +158,25 @@
   .ag-checkbox-input-wrapper {
     height: var(--agGrid-checkbox-size);
     width: var(--agGrid-checkbox-size);
-    border: 1px solid var(--agGrid-checkbox-color);
+    border: var(--agGrid-checkbox-border);
+    background: var(--agGrid-checkbox-background);
     border-radius: 0;
     margin-left: 3px;
+
+    &::after {
+      line-height: 1;
+      font-weight: 700;
+      font-size: calc(var(--agGrid-checkbox-size) - 2px);
+      color: var(--agGrid-checkbox-foreground);
+    }
   }
 
   .ag-checkbox-input-wrapper.ag-checked {
-    border: none;
-    input:checked {
-      border: none;
-      background-color: var(--agGrid-checkbox-color);
-    }
+    border-color: var(--agGrid-checkbox-borderColor-selected);
+    background: var(--agGrid-checkbox-background-selected);
+
     &::after {
-      font-size: var(--agGrid-checkbox-size);
-      line-height: var(--agGrid-checkbox-size);
-      //color: var(--agGrid-checkbox-color);
+      color: var(--agGrid-checkbox-foreground-selected);
     }
   }
 
