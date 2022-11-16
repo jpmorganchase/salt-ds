@@ -6,8 +6,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "UITK Site",
-  tagline: "JP Morgan CIB - UI Toolkit",
+  title: "Welcome to Salt",
+  tagline: `An open-source design language for financial services and other industries. Whether you’re an internal J.P. Morgan team, a fintech start-up or building a UI for millions of customers, Salt provides well-documented components—with comprehensive design templates and assets. 
+Salt is the next-generation version of the established JPM UI Toolkit, which has been used to build over 1,200 websites and applications to date. It has a track record of increasing efficiency, ensuring design consistency and making significant cost savings for product teams. Rest assured, you’re in good hands.`,
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -44,17 +45,23 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "UITK Site",
+        title: "Salt Design System",
         logo: {
           alt: "UITK Site Logo",
           src: "img/logo.svg",
         },
         items: [
           {
+            to: "/",
+            position: "left",
+            label: "Home",
+            activeBaseRegex: "^/$",
+          },
+          {
             type: "doc",
             docId: "getting-started/index",
             position: "left",
-            label: "Getting Started",
+            label: "Get Started",
           },
           {
             type: "doc",
@@ -65,12 +72,13 @@ const config = {
           {
             to: "contributing/",
             position: "left",
-            label: "Contributing",
+            label: "Contributions and support",
           },
           {
             href: "https://github.com/jpmorganchase/uitk",
-            label: "GitHub",
+            "aria-label": "GitHub",
             position: "right",
+            className: "header-github-link",
           },
         ],
       },
@@ -109,6 +117,11 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      colorMode: {
+        defaultMode: "dark",
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
     }),
 };
