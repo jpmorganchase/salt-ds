@@ -37,6 +37,44 @@
   - Built in Icon components e.g. `<AddIcon />` have been regenerated to use the new Icon component so their html and API have changed accordingly.
   - UITK components which had Icon or a built-in Icon as a dependancy have also been updated.
   - A new size css variable `--uitk-size-icon-base` has been added to the theme for each density.
+  - The `createIcon` utitlity function has been removed. Instead you should just use the `<Icon />` component to create a custom Icon as follows:
+
+```jsx
+import { createIcon } from "@jpmorganchase/uitk-icons";
+
+export const AddIcon = createIcon(
+  <svg viewBox="0 0 12 12" data-testid="AddIcon">
+    <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
+  </svg>,
+  "Add",
+  "add"
+);
+```
+
+becomes
+
+```jsx
+import { forwardRef } from "react";
+import { Icon, IconProps } from "@jpmorganchase/uitk-icons";
+
+export const AddIcon = forwardRef<SVGSVGElement, IconProps>(function AddIcon(
+  props: AddIconProps,
+  ref
+) {
+  return (
+    <Icon
+      data-testid="AddIcon"
+      aria-label="add"
+      viewBox="0 0 12 12"
+      ref={ref}
+      {...props}
+    >
+      <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0z" />
+    </Icon>
+  );
+});
+
+```
 
 ### Patch Changes
 
