@@ -90,7 +90,7 @@ function MyComponent() {
 
 ## <a name="breakpoints"></a>Breakpoints
 
-The `breakpoints` prop on ToolkitProvider can be used to customize the css media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Refer to the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation for a good example of this.
+The `breakpoints` prop on `ToolkitProvider` can be used to customize the CSS media queries that custom hooks like `useBreakpoints` and `useCurrentBreakpoint` are using internally. These hooks are usually used to enable the responsive props, where you can pass multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes. These props can mostly be found in the layout components for now. Refer to the [FlexLayout](/docs/documentation-core-layout-flexlayout--page) component documentation for a good example of this.
 
 The default value is the following breakpoint size mapping object.
 
@@ -196,7 +196,7 @@ Then we would see the following HTML.
 <div class="uitkCard uitk-theme uitk-density-medium" data-mode="light">...</div>
 ```
 
-The `ToolkitProvider` can also be configured to add the required CSS classes to the root HTML element. This would allow you to apply styles to the whole of the document rather than just the root `div` that React renders to. Some use cases for this would be to prevent overscroll or to apply styling to the whole background of the page.
+The `ToolkitProvider` can also be configured to add the required CSS classes to the root HTML element. This would allow you to apply styles to the whole of the document. Some use cases for this would be to prevent overscroll or to apply styling to the whole background of the page.
 
 This would look as follows:
 
