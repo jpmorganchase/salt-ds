@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 /**
  * Example data can be found here
@@ -13,9 +13,18 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const SingleClickEdit = (props: AgGridReactProps) => {
-  const { containerProps, agGridProps, api, isGridReady } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { containerProps, agGridProps, api, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -24,14 +33,23 @@ const SingleClickEdit = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25, height: 800, width: 800 }}>
-      <AgGridReact
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div style={{ marginTop: 25, height: 800, width: 800 }}>
+        <AgGridReact
         {...props}
         singleClickEdit
         {...agGridProps}
         columnDefs={dataGridExampleColumns}
         rowData={dataGridExampleData}
       />
+      </div>
     </div>
   );
 };
