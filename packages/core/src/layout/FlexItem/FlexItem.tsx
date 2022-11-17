@@ -1,7 +1,8 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, ElementType, ReactElement } from "react";
 import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
 import "./FlexItem.css";
 import cx from "classnames";
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../types";
 
 const withBaseName = makePrefixer("uitkFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -13,27 +14,45 @@ export const FLEX_ITEM_ALIGNMENTS = [
 
 export type flexItemAlignment = typeof FLEX_ITEM_ALIGNMENTS[number];
 
-export interface FlexItemProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Allows the alignment specified by parent to be overridden for individual items, default is "start".
-   */
-  align?: flexItemAlignment;
-  /**
+export type FlexItemProps<T extends ElementType> =
+  PolymorphicComponentPropWithRef<
+    T,
+    {
+      /**
+       * Allows the alignment specified by parent to be overridden for individual items, default is "start".
+       */
+      align?: flexItemAlignment;
+      /**
    * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
-   
-   */
-  shrink?: ResponsiveProp<number>;
-  /**
-   * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
-   */
-  grow?: ResponsiveProp<number>;
-}
 
-export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
-  function FlexItem(
-    { align, children, className, shrink, grow, style, ...rest },
-    ref
-  ) {
+   */
+      shrink?: ResponsiveProp<number>;
+      /**
+       * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
+       */
+      grow?: ResponsiveProp<number>;
+    }
+  >;
+
+type FlexItemComponent = <T extends ElementType = "div">(
+  props: FlexItemProps<T>
+) => ReactElement | null;
+
+export const FlexItem: FlexItemComponent = forwardRef(
+  <T extends ElementType = "div">(
+    {
+      as,
+      align,
+      children,
+      className,
+      shrink,
+      grow,
+      style,
+      ...rest
+    }: FlexItemProps<T>,
+    ref?: PolymorphicRef<T>
+  ) => {
+    const Component = as || "div";
     const flexItemShrink = useResponsiveProp(shrink, 1);
     const flexItemGrow = useResponsiveProp(grow, 0);
 
@@ -44,14 +63,14 @@ export const FlexItem = forwardRef<HTMLDivElement, FlexItemProps>(
       ...style,
     };
     return (
-      <div
+      <Component
         className={cx(className, withBaseName())}
         ref={ref}
         style={itemStyle}
         {...rest}
       >
         {children}
-      </div>
+      </Component>
     );
   }
 );
