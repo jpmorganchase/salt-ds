@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { ElementType, forwardRef } from "react";
 import cx from "classnames";
 import { FlexItem, FlexItemProps } from "../FlexItem";
 
@@ -7,7 +7,7 @@ import "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";
 
-export interface ParentChildItemProps extends FlexItemProps {
+export interface ParentChildItemProps extends FlexItemProps<ElementType> {
   /**
    * Disable all animations.
    */
