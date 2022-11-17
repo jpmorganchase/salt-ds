@@ -23,17 +23,21 @@
 
 .uitk-density-high {
   --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 1);
+  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 1.5);
   --uitk-size-base: calc(var(--uitk-size-basis-unit) * 5);
 }
 .uitk-density-medium {
   --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 2);
+  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 2);
   --uitk-size-base: calc(var(--uitk-size-basis-unit) * 7);
 }
 .uitk-density-low {
   --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 3);
+  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 2.5);
   --uitk-size-base: calc(var(--uitk-size-basis-unit) * 9);
 }
 .uitk-density-touch {
   --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 4);
+  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 3);
   --uitk-size-base: calc(var(--uitk-size-basis-unit) * 11);
 }

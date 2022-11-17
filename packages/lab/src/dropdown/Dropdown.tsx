@@ -26,7 +26,7 @@ import { useDropdown } from "./useDropdown";
 import { forwardCallbackProps } from "../utils";
 
 export interface DropdownProps<
-  Item = "string",
+  Item = string,
   Selection extends SelectionStrategy = "default"
 > extends DropdownBaseProps,
     Pick<
@@ -41,7 +41,7 @@ export interface DropdownProps<
 }
 
 export const Dropdown = forwardRef(function Dropdown<
-  Item = "string",
+  Item = string,
   Selection extends SelectionStrategy = "default"
 >(
   {
