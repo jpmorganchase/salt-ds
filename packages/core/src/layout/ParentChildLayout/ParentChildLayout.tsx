@@ -1,7 +1,7 @@
 import { makePrefixer } from "../../utils";
 
 import cx from "classnames";
-import { ElementType, forwardRef, ReactNode } from "react";
+import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../../utils";
 
@@ -13,7 +13,7 @@ export type StackedViewElement = "parent" | "child";
 
 type Orientation = "horizontal" | "vertical";
 
-export interface ParentChildLayoutProps extends FlexLayoutProps<ElementType> {
+export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Breakpoint at which the parent and child will stack.
    */

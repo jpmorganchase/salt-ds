@@ -1,15 +1,16 @@
 import { forwardRef, ReactNode, HTMLAttributes, ElementType } from "react";
 import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 import "./SplitLayout.css";
+import { FlexItem, FlexItemProps } from "../FlexItem";
 
-export interface SplitItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface SplitItemProps extends FlexItemProps<ElementType> {
   /**
    * A list of items. Required to have some children.
    */
   children: ReactNode;
 }
 
-export interface SplitLayoutProps extends FlexLayoutProps<ElementType> {
+export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
@@ -41,9 +42,9 @@ const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
   ref
 ) {
   return (
-    <div {...rest} ref={ref}>
+    <FlexItem {...rest} ref={ref}>
       {children}
-    </div>
+    </FlexItem>
   );
 });
 
@@ -55,7 +56,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
       rightSplitItem,
       separators,
       wrap = true,
-      className,
       gap,
       ...rest
     },
@@ -70,7 +70,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         gap={gap}
         justify="space-between"
         separators={separators}
-        className={className}
         {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>
