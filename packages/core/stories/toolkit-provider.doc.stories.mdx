@@ -58,7 +58,7 @@ You can use the `density` prop to change the density on the wrapped component or
 
 ### useDensity
 
-You can use the `useDensity` hook to access the currently active density of your app in the provided scope. The useDensity hook returns the string value of the currently set density. The possible values are `touch`, `low`, `medium` and `high`. You can optionally override this value by passing your new value as the first parameter to the function.
+You can use the `useDensity` hook to access the currently active density of your app in the provided scope. The `useDensity` hook returns the string value of the currently set density. The possible values are `touch`, `low`, `medium` and `high`. You can optionally override this value by passing your new value as the first parameter to the function.
 
 ```tsx
 import { useDensity } from "@jpmorganchase/uitk-core";
@@ -106,7 +106,7 @@ The default value is the following breakpoint size mapping object.
 
 ### useBreakpoints
 
-You can use the `useBreakpoints` hook to access the current value of `breakpoints` in the ToolkitProvider context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the [breakpoints section](#breakpoints).
+You can use the `useBreakpoints` hook to access the current value of `breakpoints` in the `ToolkitProvider` context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the [breakpoints section](#breakpoints).
 
 ```tsx
 import { useBreakpoints } from "@jpmorganchase/uitk-core";
@@ -128,14 +128,14 @@ function MyComponent() {
 
 ## AriaAnnouncer
 
-`AriaAnnouncer` will be injected automatically inside the root element when ToolkitProvider is wrapping the app. If you use
-nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
+`AriaAnnouncer` will be injected automatically inside the root element when `ToolkitProvider` is wrapping the app. If you use
+nested ToolkitProviders, these will not inject further instances of `AriaAnnouncer`.
 
 Read [AriaAnnouncer documentation](/docs/documentation-core-aria-announcer--page) for more details.
 
 ## Examples of ToolkitProvider use
 
-Here is a `Card` including some very simple content and wrapped with a ToolkitProvider. We set the ToolkitProvider to use the light mode and high density.
+Here is a `Card` including some very simple content and wrapped with a `ToolkitProvider`. We set the `ToolkitProvider` to use the light mode and high density.
 
 <Canvas>
   <Story name="Simple ToolkitProvider - Touch Density">
@@ -150,7 +150,7 @@ Here is a `Card` including some very simple content and wrapped with a ToolkitPr
   </Story>
 </Canvas>
 
-Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a ToolkitProvider, this time configured to use dark mode. Density is not specified on the inner ToolkitProvider, so is inherited from the outer instance.
+Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a `ToolkitProvider`, this time configured to use dark mode. Density is not specified on the inner `ToolkitProvider`, so is inherited from the outer instance.
 
 <Canvas>
   <Story name="Nested ToolkitProvider">
