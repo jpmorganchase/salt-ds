@@ -139,10 +139,15 @@ describe("GIVEN Text component with parent height 100px and truncate=true", () =
       );
       cy.get(".uitkText").should("have.class", "uitkText-lineClamp");
 
+      cy.wait(50);
+
       cy.realPress("Tab");
+
       cy.findByRole("tooltip").should("be.visible");
 
       cy.realPress("Escape");
+
+      cy.findByRole("tooltip").should("not.exist");
 
       cy.get(".uitkText").realHover();
       cy.findByRole("tooltip").should("be.visible");
