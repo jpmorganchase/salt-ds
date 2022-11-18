@@ -64,7 +64,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
       onKeyDown?.(event);
     };
 
-    const { active, buttonProps } = useButton({
+    const { buttonProps } = useButton({
       disabled,
       focusableWhenDisabled,
       onKeyUp,
@@ -87,7 +87,6 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
         aria-disabled={ariaDisabled}
         className={cx(withBaseName(), className, withBaseName(variant), {
           [withBaseName("disabled")]: disabled,
-          [withBaseName("active")]: active,
         })}
         tabIndex={tabIndex}
         onBlur={handleBlur}

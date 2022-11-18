@@ -44,7 +44,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref?
   ): ReactElement<ButtonProps> {
-    const { active, buttonProps } = useButton({
+    const { buttonProps } = useButton({
       disabled,
       focusableWhenDisabled,
       onKeyUp,
@@ -60,7 +60,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...restButtonProps}
         className={cx(withBaseName(), className, withBaseName(variant), {
           [withBaseName("disabled")]: disabled,
-          [withBaseName("active")]: active,
         })}
         role={roleProp}
         {...restProps}
