@@ -97,11 +97,7 @@ export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
 
 export const AllIcons: ComponentStory<typeof Icon> = () => {
   return (
-    <FlexLayout
-      wrap
-      gap={4}
-      style={{ paddingBlock: "1rem", maxWidth: "650px" }}
-    >
+    <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
       {allIcons.map((iconComponent, i) => {
         return createElement(iconComponent, { key: i, size: 1 });
       })}
@@ -120,11 +116,7 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
       >
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
       </FormField>
-      <FlexLayout
-        wrap
-        gap={4}
-        style={{ paddingBlock: "1rem", maxWidth: "650px" }}
-      >
+      <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
         {allIconNames
           .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
           .map(({ name, icon }, i) => {

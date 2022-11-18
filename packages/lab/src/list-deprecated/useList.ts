@@ -36,7 +36,7 @@ interface listBoxAriaProps
   role: string; // We will default it to be 'listbox', but users can override
 }
 export interface ListState<
-  Item = "string",
+  Item = string,
   Variant extends ListSelectionVariant = "default"
 > {
   id: string;
@@ -49,7 +49,7 @@ export interface ListState<
 }
 
 export interface ListHelpers<
-  Item = "string",
+  Item = string,
   Variant extends ListSelectionVariant = "default"
 > {
   setFocusVisible: (visible: boolean) => void;
