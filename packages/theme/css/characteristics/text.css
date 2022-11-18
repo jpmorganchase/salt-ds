@@ -41,17 +41,17 @@
   --uitk-text-help-fontWeight: var(--uitk-typography-fontWeight-regular);
 
   /* Display text */
-  --uitk-text-figure1-fontSize: 56px;
-  --uitk-text-figure1-lineHeight: 74px;
-  --uitk-text-figure1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display1-fontSize: 56px;
+  --uitk-text-display1-lineHeight: 74px;
+  --uitk-text-display1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
-  --uitk-text-figure2-fontSize: 36px;
-  --uitk-text-figure2-lineHeight: 48px;
-  --uitk-text-figure2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display2-fontSize: 36px;
+  --uitk-text-display2-lineHeight: 48px;
+  --uitk-text-display2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
-  --uitk-text-figure3-lineHeight: 32px;
-  --uitk-text-figure3-fontSize: 24px;
-  --uitk-text-figure3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display3-lineHeight: 32px;
+  --uitk-text-display3-fontSize: 24px;
+  --uitk-text-display3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 
   /* Colors */
   --uitk-text-background: transparent;

@@ -22,25 +22,25 @@
   line-height: var(--uitk-text-help-lineHeight);
 }
 
-/*  1 */
-.uitkText-figure1.uitkText {
-  font-size: var(--uitk-text-figure1-fontSize);
-  font-weight: var(--uitk-text-figure1-fontWeight);
-  line-height: var(--uitk-text-figure1-lineHeight);
+/* Display 1 */
+.uitkText-display1.uitkText {
+  font-size: var(--uitk-text-display1-fontSize);
+  font-weight: var(--uitk-text-display1-fontWeight);
+  line-height: var(--uitk-text-display1-lineHeight);
 }
 
-/*  2 */
-.uitkText-figure2.uitkText {
-  line-height: var(--uitk-text-figure2-lineHeight);
-  font-size: var(--uitk-text-figure2-fontSize);
-  font-weight: var(--uitk-text-figure2-fontWeight);
+/* Display 2 */
+.uitkText-display2.uitkText {
+  line-height: var(--uitk-text-display2-lineHeight);
+  font-size: var(--uitk-text-display2-fontSize);
+  font-weight: var(--uitk-text-display2-fontWeight);
 }
 
-/*  3 */
-.uitkText-figure3.uitkText {
-  line-height: var(--uitk-text-figure3-lineHeight);
-  font-size: var(--uitk-text-figure3-fontSize);
-  font-weight: var(--uitk-text-figure3-fontWeight);
+/* Display 3 */
+.uitkText-display3.uitkText {
+  line-height: var(--uitk-text-display3-lineHeight);
+  font-size: var(--uitk-text-display3-fontSize);
+  font-weight: var(--uitk-text-display3-fontWeight);
 }
 
 /* Label-Caption */

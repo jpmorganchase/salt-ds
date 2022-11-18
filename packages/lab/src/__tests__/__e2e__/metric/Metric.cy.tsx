@@ -31,7 +31,7 @@ describe("Metric - by default", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure2").should("exist");
+    cy.get(".uitkText-display2").should("exist");
   });
 });
 
@@ -123,7 +123,7 @@ describe("Metric - Emphasis", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure1").should("exist");
+    cy.get(".uitkText-display1").should("exist");
   });
   it(`should render with correct text component for size MEDIUM`, () => {
     cy.mount(
@@ -132,7 +132,7 @@ describe("Metric - Emphasis", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure2").should("exist");
+    cy.get(".uitkText-display2").should("exist");
   });
   it(`should render with correct text component for size SMALL`, () => {
     cy.mount(
