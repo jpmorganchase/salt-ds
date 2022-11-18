@@ -39,8 +39,13 @@ export const useTruncation = (
         const parent = element.parentElement;
 
         if (parent && !element.nextSibling && !element.previousSibling) {
-          const { width: widthParent, height: heightParent } =
-            getComputedStyles(parent);
+          const {
+            width: widthParent,
+            height,
+            paddingTop,
+            paddingBottom,
+          } = getComputedStyles(parent);
+          const heightParent = height - paddingTop - paddingBottom;
 
           if (
             Math.ceil(heightParent) < scrollHeight - VELOCITY ||
