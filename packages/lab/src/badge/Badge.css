@@ -7,7 +7,7 @@
   --badge-content-borderRadius: 16px;
   --badge-content-lineHeight: 15px;
   --badge-content-padding: 0px 4px;
-  --badge-fontSize: var(--uitkBadge-fontSize, var(--uitk-text-caption-fontSize));
+  --badge-fontSize: var(--uitkBadge-fontSize, var(--uitk-text-label-fontSize));
 
   /* Derived */
   /* Same as content padding in x */

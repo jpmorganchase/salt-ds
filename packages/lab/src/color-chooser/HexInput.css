@@ -6,7 +6,7 @@
 
 .uitkColorChooserHexInput-hashSign {
   margin-top: 5px;
-  font-size: var(--uitk-text-caption-fontSize);
+  font-size: var(--uitk-text-label-fontSize);
   padding-right: 6px;
   color: var(--uitk-text-secondary-foreground);
   padding-left: 6px;
