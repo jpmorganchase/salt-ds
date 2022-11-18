@@ -7,10 +7,10 @@ import { Text, TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 
-export const HelpText = forwardRef<
+export const Help = forwardRef<
   HTMLDivElement,
   Omit<TextProps<"div">, "elementType">
->(function HelpText({ children, className, ...rest }, ref) {
+>(function Help({ children, className, ...rest }, ref) {
   return (
     <Text
       className={cx(className, withBaseName(`helpText`))}

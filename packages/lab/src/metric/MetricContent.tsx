@@ -6,7 +6,7 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Div, Figure1, Figure2, Figure3 } from "../text";
+import { Div, Display1, Display2, Display3 } from "../text";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
@@ -66,9 +66,9 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     const iconSize = size === "large" ? 2 : 1;
 
     const valueComponentMap = {
-      small: Figure3,
-      medium: Figure2,
-      large: Figure1,
+      small: Display3,
+      medium: Display2,
+      large: Display1,
     };
     const ValueComponent = valueComponentMap[size];
 

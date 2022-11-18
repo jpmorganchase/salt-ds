@@ -40,7 +40,7 @@
   --uitk-text-help-fontStyle: italic;
   --uitk-text-help-fontWeight: var(--uitk-typography-fontWeight-regular);
 
-  /* Figure text */
+  /* Display text */
   --uitk-text-figure1-fontSize: 56px;
   --uitk-text-figure1-lineHeight: 74px;
   --uitk-text-figure1-fontWeight: var(--uitk-typography-fontWeight-semiBold);

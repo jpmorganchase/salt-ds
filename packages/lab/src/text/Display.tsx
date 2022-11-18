@@ -6,10 +6,10 @@ import { TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 
-export const Figure1 = forwardRef<
+export const Display1 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Figure1({ children, className, ...rest }, ref) {
+>(function Display1({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`figure1`))}
@@ -21,10 +21,10 @@ export const Figure1 = forwardRef<
   );
 });
 
-export const Figure2 = forwardRef<
+export const Display2 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Figure2({ children, className, ...rest }, ref) {
+>(function Display2({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`figure2`))}
@@ -36,10 +36,10 @@ export const Figure2 = forwardRef<
   );
 });
 
-export const Figure3 = forwardRef<
+export const Display3 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Figure3({ children, className, ...rest }, ref) {
+>(function Display3({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`figure3`))}
