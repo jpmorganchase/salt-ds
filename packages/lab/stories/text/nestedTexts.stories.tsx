@@ -7,16 +7,7 @@ export default {
   component: Text,
 } as ComponentMeta<typeof Text>;
 
-const excludeProps = [
-  "children",
-  "elementType",
-  "maxRows",
-  "showTooltip",
-  "tooltipProps",
-  "truncate",
-  "style",
-  "onOverflowChange",
-];
+const excludeProps = ["children", "elementType", "style", "onOverflowChange"];
 
 const NestedTextsComponent: ComponentStory<typeof Text> = () => {
   const box = {

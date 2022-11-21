@@ -23,7 +23,10 @@ export const ContactMetadataItem = forwardRef<
   return (
     <div {...restProps} ref={ref} className={withBaseName()}>
       {!Icon ? (
-        <Div truncate maxRows={1} className={withBaseName("label")}>
+        <Div
+          // truncate maxRows={1}
+          className={withBaseName("label")}
+        >
           {label}
         </Div>
       ) : null}

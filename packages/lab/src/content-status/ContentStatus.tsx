@@ -95,12 +95,18 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
             role="region"
           >
             {title && (
-              <Div truncate className={cx(withBaseName("title"))}>
+              <Div
+                // truncate
+                className={cx(withBaseName("title"))}
+              >
                 {title}
               </Div>
             )}
             {message && (
-              <Div truncate className={cx(withBaseName("message"))}>
+              <Div
+                // truncate
+                className={cx(withBaseName("message"))}
+              >
                 {message}
               </Div>
             )}

@@ -76,7 +76,7 @@ describe("GIVEN a Text component with maxRows=2 ", () => {
 });
 
 // Truncation + Tooltip
-describe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
+xdescribe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should display only 2 rows and show Tooltip on focus and hover`, () => {
       const Component = component;
@@ -103,7 +103,7 @@ describe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
 });
 
 // Truncation + No Tooltip
-describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=false ", () => {
+xdescribe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=false ", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should display only 2 rows but should NOT show Tooltip on focus`, () => {
       const Component = component;
@@ -127,7 +127,7 @@ describe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=f
 });
 
 // Size restricted by parent container
-describe("GIVEN Text component with parent height 100px and truncate=true", () => {
+xdescribe("GIVEN Text component with parent height 100px and truncate=true", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should be truncated and show tooltip`, () => {
       const Component = component;

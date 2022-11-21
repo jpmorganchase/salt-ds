@@ -10,14 +10,16 @@ export const MailLinkComponent = (props: ValueComponentProps) => {
     <Link
       href={`mailto:${value}`}
       tabIndex={0}
-      truncate
-      maxRows={1}
+      // truncate
+      // maxRows={1}
       {...restProps}
     >
       {value}
     </Link>
   ) : (
-    <Div truncate maxRows={1}>
+    <Div
+    // truncate maxRows={1}
+    >
       {value}
     </Div>
   );

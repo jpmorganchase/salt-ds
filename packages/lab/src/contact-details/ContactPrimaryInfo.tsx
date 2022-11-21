@@ -38,8 +38,8 @@ export const ContactPrimaryInfo = forwardRef<
   return (
     <Div
       {...restProps}
-      truncate
-      maxRows={1}
+      // truncate
+      // maxRows={1}
       id={id}
       ref={ref}
       styleAs={variant === "default" ? "h2" : "h4"}

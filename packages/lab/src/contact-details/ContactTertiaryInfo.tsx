@@ -37,8 +37,8 @@ export const ContactTertiaryInfo = forwardRef<
   return (
     <Div
       {...restProps}
-      truncate={variant === "compact" ? false : true}
-      maxRows={1}
+      // truncate={variant === "compact" ? false : true}
+      // maxRows={1}
       styleAs={variant === "default" ? "h4" : undefined}
       id={id}
       ref={ref}
