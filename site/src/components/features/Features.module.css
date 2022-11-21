@@ -1,7 +1,6 @@
 .featuresContainer {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: calc(var(--uitk-size-unit) * 5);
   background-color: var(--uitk-color-teal-900);
   padding-top: calc(var(--uitk-size-unit) * 6);
