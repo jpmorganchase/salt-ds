@@ -1,15 +1,25 @@
-import React from "react";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { useMemo } from "react";
+import {
+  ToolkitProvider,
+  useCurrentBreakpoint,
+} from "@jpmorganchase/uitk-core";
 import "@jpmorganchase/uitk-theme/index.css";
 
-// TODO: change density per viewport
-// desktop: low density, tablet and mobile: touch density
-const density = "low";
+const DensityProvider = ({ children }) => {
+  const viewport = useCurrentBreakpoint();
+
+  const density = useMemo(
+    () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
+    [viewport]
+  );
+
+  return <ToolkitProvider density={density}>{children}</ToolkitProvider>;
+};
 
 export default function Root({ children }) {
   return (
-    <ToolkitProvider mode="dark" density={density}>
-      {children}
+    <ToolkitProvider mode="dark">
+      <DensityProvider>{children}</DensityProvider>
     </ToolkitProvider>
   );
 }
