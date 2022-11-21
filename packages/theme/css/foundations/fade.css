@@ -4,40 +4,40 @@
 
   --uitk-color-blue-400-fade-foreground: rgba(46, 132, 198, var(--uitk-palette-opacity-foreground));
   --uitk-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-60-fade-foreground: rgba(197, 201, 208, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-70-fade-foreground: rgba(180, 183, 190, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-200-fade-foreground: rgba(97, 101, 110, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-800-fade-foreground: rgba(36, 37, 38, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-90-fade-foreground: rgba(132, 135, 142, var(--uitk-palette-opacity-foreground));
-  --uitk-color-grey-900-fade-foreground: rgba(22, 22, 22, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-60-fade-foreground: rgba(197, 201, 208, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-70-fade-foreground: rgba(180, 183, 190, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-200-fade-foreground: rgba(97, 101, 110, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-800-fade-foreground: rgba(36, 37, 38, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-90-fade-foreground: rgba(132, 135, 142, var(--uitk-palette-opacity-foreground));
+  --uitk-color-gray-900-fade-foreground: rgba(22, 22, 22, var(--uitk-palette-opacity-foreground));
   --uitk-color-white-fade-foreground: rgba(255, 255, 255, var(--uitk-palette-opacity-foreground));
 
-  --uitk-color-grey-30-fade-border: rgba(224, 228, 233, var(--uitk-palette-opacity-border));
-  --uitk-color-grey-60-fade-border: rgba(197, 201, 208, var(--uitk-palette-opacity-border));
-  --uitk-color-grey-90-fade-border: rgba(132, 135, 142, var(--uitk-palette-opacity-border));
-  --uitk-color-grey-300-fade-border: rgba(76, 80, 91, var(--uitk-palette-opacity-border));
-  --uitk-color-grey-600-fade-border: rgba(47, 49, 54, var(--uitk-palette-opacity-border));
+  --uitk-color-gray-30-fade-border: rgba(224, 228, 233, var(--uitk-palette-opacity-border));
+  --uitk-color-gray-60-fade-border: rgba(197, 201, 208, var(--uitk-palette-opacity-border));
+  --uitk-color-gray-90-fade-border: rgba(132, 135, 142, var(--uitk-palette-opacity-border));
+  --uitk-color-gray-300-fade-border: rgba(76, 80, 91, var(--uitk-palette-opacity-border));
+  --uitk-color-gray-600-fade-border: rgba(47, 49, 54, var(--uitk-palette-opacity-border));
 
-  --uitk-color-grey-90-fade-border-readonly: rgba(132, 135, 142, var(--uitk-palette-opacity-border-readonly));
+  --uitk-color-gray-90-fade-border-readonly: rgba(132, 135, 142, var(--uitk-palette-opacity-border-readonly));
 
   --uitk-color-blue-600-fade-background: rgba(21, 92, 147, var(--uitk-palette-opacity-background));
   --uitk-color-blue-700-fade-background: rgba(0, 71, 123, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-20-fade-background: rgba(234, 237, 239, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-60-fade-background: rgba(197, 201, 208, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-70-fade-background: rgba(180, 183, 190, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-200-fade-background: rgba(97, 101, 110, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-300-fade-background: rgba(76, 80, 91, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-700-fade-background: rgba(42, 44, 47, var(--uitk-palette-opacity-background));
-  --uitk-color-grey-800-fade-background: rgba(36, 37, 38, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-20-fade-background: rgba(234, 237, 239, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-60-fade-background: rgba(197, 201, 208, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-70-fade-background: rgba(180, 183, 190, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-200-fade-background: rgba(97, 101, 110, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-300-fade-background: rgba(76, 80, 91, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-700-fade-background: rgba(42, 44, 47, var(--uitk-palette-opacity-background));
+  --uitk-color-gray-800-fade-background: rgba(36, 37, 38, var(--uitk-palette-opacity-background));
   --uitk-color-orange-400-fade-background: rgba(238, 133, 43, var(--uitk-palette-opacity-background));
   --uitk-color-orange-600-fade-background: rgba(224, 101, 25, var(--uitk-palette-opacity-background));
   --uitk-color-white-fade-background: rgba(255, 255, 255, var(--uitk-palette-opacity-background));
 
   --uitk-color-black-fade-scrim-medium: rgba(0, 0, 0, var(--uitk-palette-opacity-scrim-low));
-  --uitk-color-grey-800-fade-scrim-medium: rgba(36, 37, 38, var(--uitk-palette-opacity-scrim-medium));
+  --uitk-color-gray-800-fade-scrim-medium: rgba(36, 37, 38, var(--uitk-palette-opacity-scrim-medium));
   --uitk-color-white-fade-scrim-low: rgba(255, 255, 255, var(--uitk-palette-opacity-scrim-medium));
 
-  --uitk-color-grey-90-fade-stroke: rgba(132, 135, 142, var(--uitk-palette-opacity-stroke));
+  --uitk-color-gray-90-fade-stroke: rgba(132, 135, 142, var(--uitk-palette-opacity-stroke));
 
   --uitk-color-blue-300-fade-fill: rgba(51, 141, 205, var(--uitk-palette-opacity-fill));
   --uitk-color-blue-400-fade-fill: rgba(46, 132, 198, var(--uitk-palette-opacity-fill));

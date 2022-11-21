@@ -9,7 +9,7 @@
   position: relative;
   overflow: hidden;
   --ifm-hero-background-color: var(--uitk-color-white);
-  --ifm-hero-text-color: var(--uitk-color-grey-900);
+  --ifm-hero-text-color: var(--uitk-color-gray-900);
 }
 
 @media screen and (max-width: 996px) {

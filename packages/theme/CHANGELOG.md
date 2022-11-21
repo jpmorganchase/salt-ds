@@ -10,7 +10,7 @@
   --uitk-accent-fontWeight
   --uitk-draggable-horizontal-cursor-active
   --uitk-navigable-indicator-activeDisabled
-  --uitk-color-grey-90-fade-foreground
+  --uitk-color-gray-90-fade-foreground
   --uitk-palette-navigate-indicator-disabled
 
   Removed:

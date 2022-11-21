@@ -2,7 +2,7 @@ const common = {
   uitkwhite: "rgb(255, 255, 255)",
   uitkblack: "rgb(0, 0, 0)",
 };
-
+/* TODO: a few of these are probably out of date and need checking */
 export const uitklight = {
   ...common,
   /* Color palette will stay the same no matter of theming */
@@ -20,7 +20,6 @@ export const uitklight = {
   uitkred700: "rgb(166, 21, 11)",
   uitkred800: "rgb(136, 10, 5)",
   uitkred900: "rgb(106, 0, 0)",
-  /* TODO": uitkred-1000 */
   uitkorange10: "rgb(255, 232, 191)",
   uitkorange20: "rgb(254, 223, 166)",
   uitkorange30: "rgb(254, 214, 142)",
@@ -35,7 +34,6 @@ export const uitklight = {
   uitkorange700: "rgb(214, 85, 19)",
   uitkorange800: "rgb(204, 68, 13)",
   uitkorange900: "rgb(194, 52, 7)" /* #c23407 */,
-  /* TODO": uitkorange-1000 */
   uitkgreen10: "rgb(209, 244, 201)",
   uitkgreen20: "rgb(184, 232, 182)",
   uitkgreen30: "rgb(160, 221, 164)",
@@ -50,7 +48,6 @@ export const uitklight = {
   uitkgreen700: "rgb(12, 93, 46)",
   uitkgreen800: "rgb(1, 73, 32)",
   uitkgreen900: "rgb(0, 57, 18)",
-  /* TODO": uitkgreen-1000 */
   uitkteal10: "rgb(218, 240, 240)",
   uitkteal20: "rgb(199, 232, 232)",
   uitkteal30: "rgb(180, 224, 225)",
@@ -65,7 +62,6 @@ export const uitklight = {
   uitkteal700: "rgb(0, 85, 113)",
   uitkteal800: "rgb(1, 65, 86)",
   uitkteal900: "rgb(0, 49, 76)",
-  /* TODO": uitkteal-1000 */
   uitkblue10: "rgb(203, 231, 249)",
   uitkblue20: "rgb(183, 222, 246)",
   uitkblue30: "rgb(164, 213, 244)",
@@ -95,26 +91,24 @@ export const uitklight = {
   uitkpurple700: "rgb(103, 46, 122)",
   uitkpurple800: "rgb(83, 37, 109)",
   uitkpurple900: "rgb(59, 16, 84)",
-  /* TODO": uitkpurple-1000 */
-  uitkgrey10: "rgb(242, 244, 246)",
-  uitkgrey20: "rgb(234, 237, 239)" /* #EAEDEF */,
-  uitkgrey30: "rgb(224, 228, 233)",
-  uitkgrey40: "rgb(217, 221, 227)" /* #D9DDE3 */,
-  uitkgrey50: "rgb(206, 210, 217)",
-  uitkgrey60: "rgb(197, 201, 208)" /* #C5C9D0 */,
-  uitkgrey70: "rgb(180, 183, 190)" /* B4B7BE*/,
-  uitkgrey80: "rgb(159, 163, 170)",
-  uitkgrey90: "rgb(132, 135, 142)" /* #84878e */,
-  uitkgrey100: "rgb(116, 119, 127)",
-  uitkgrey200: "rgb(97, 101, 110)",
-  uitkgrey300: "rgb(76, 80, 91)" /* 4c505b*/,
-  uitkgrey400: "rgb(68, 72, 79)",
-  uitkgrey500: "rgb(59, 63, 70)",
-  uitkgrey600: "rgb(47, 49, 54)",
-  uitkgrey700: "rgb(42, 44, 47)",
-  uitkgrey800: "rgb(36, 37, 38)",
-  uitkgrey900: "rgb(22, 22, 22)" /* #161616 */,
-  /* TODO": uitkgrey-1000 */
+  uitkgray10: "rgb(242, 244, 246)",
+  uitkgray20: "rgb(234, 237, 239)" /* #EAEDEF */,
+  uitkgray30: "rgb(224, 228, 233)",
+  uitkgray40: "rgb(217, 221, 227)" /* #D9DDE3 */,
+  uitkgray50: "rgb(206, 210, 217)",
+  uitkgray60: "rgb(197, 201, 208)" /* #C5C9D0 */,
+  uitkgray70: "rgb(180, 183, 190)" /* B4B7BE*/,
+  uitkgray80: "rgb(159, 163, 170)",
+  uitkgray90: "rgb(132, 135, 142)" /* #84878e */,
+  uitkgray100: "rgb(116, 119, 127)",
+  uitkgray200: "rgb(97, 101, 110)",
+  uitkgray300: "rgb(76, 80, 91)" /* 4c505b*/,
+  uitkgray400: "rgb(68, 72, 79)",
+  uitkgray500: "rgb(59, 63, 70)",
+  uitkgray600: "rgb(47, 49, 54)",
+  uitkgray700: "rgb(42, 44, 47)",
+  uitkgray800: "rgb(36, 37, 38)",
+  uitkgray900: "rgb(22, 22, 22)" /* #161616 */,
 };
 
 export const uitkColorMap: Record<string, string> = uitklight;
