@@ -13,24 +13,45 @@ Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
 -  --uitk-text-caption-fontWeight
 -  --uitk-text-caption-fontWeight-strong
 -  --uitk-text-caption-fontSize
--  --uitk-text-caption-lineHeight
 -  --uitk-text-caption-minHeight
 -  --uitk-text-help-fontWeight
 -  --uitk-text-help-fontSize
--  --uitk-text-help-lineHeight
 -  --uitk-text-help-minHeight
 +  --uitk-text-label-fontWeight
 +  --uitk-text-label-fontWeight-strong
 +  --uitk-text-label-fontSize
-+  --uitk-text-label-lineHeight
-+  --uitk-text-label-minHeight
 ```
 
-Remove `-hover` and `-selected` foreground styles
+Correct line height values
+
+TD
 
 ```diff
-- --uitk-text-primary-foreground-hover
-- --uitk-text-primary-foreground-selected
-- --uitk-text-secondary-foreground-hover
-- --uitk-text-secondary-foreground-selected
+-  --uitk-text-caption-lineHeight: 16px;
+-  --uitk-text-help-lineHeight: 16px;
++  --uitk-text-label-lineHeight: 18px;
+```
+
+LD
+
+```diff
+-  --uitk-text-caption-lineHeight: 14px;
+-  --uitk-text-help-lineHeight: 14px;
++  --uitk-text-label-lineHeight: 16px;
+```
+
+MD
+
+```diff
+-  --uitk-text-caption-lineHeight: 14px;
+-  --uitk-text-help-lineHeight: 14px;
++  --uitk-text-label-lineHeight: 14px;
+```
+
+HD
+
+```diff
+-  --uitk-text-caption-lineHeight: 14px;
+-  --uitk-text-help-lineHeight: 14px;
++  --uitk-text-label-lineHeight: 13px;
 ```
