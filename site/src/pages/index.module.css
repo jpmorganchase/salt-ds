@@ -55,3 +55,10 @@
     flex: 1;
   }
 }
+
+@media screen and (max-width: 960px) {
+  /* TODO: use odyssey breakpoints? */
+  .cardContainer {
+    flex-direction: column;
+  }
+}

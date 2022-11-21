@@ -9,7 +9,7 @@
   color: var(--uitk-color-white);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--uitk-size-unit) * 2);
+  gap: calc(var(--uitk-size-unit) * 3);
   flex: 1;
 }
 
