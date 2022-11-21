@@ -78,11 +78,7 @@ $odyssey-ag-theme-default-params: (
   //minichart-selected-chart-color: ag-derived(checkbox-checked-color),
   //minichart-selected-page-color: ag-derived(checkbox-checked-color),
   // Fonts
-  font-family:
-    (
-      "uitk-sans",
-      sans-serif,
-    ),
+  font-family: ("uitk-sans", sans-serif),
   icon-font-family: $odyssey-ag-theme-icon-font-family,
   icons-data: $odyssey-ag-theme-icons-data,
   icons-font-codes: $odyssey-ag-theme-icons-font-codes,
@@ -92,6 +88,6 @@ $odyssey-ag-theme-default-params: (
 );
 
 $odyssey-ag-theme-default-params: map-merge(
-    $ag-theme-base-default-params,
-    $odyssey-ag-theme-default-params
+  $ag-theme-base-default-params,
+  $odyssey-ag-theme-default-params
 );
