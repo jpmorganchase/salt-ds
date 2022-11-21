@@ -25,11 +25,7 @@ export default {
   },
 } as ComponentMeta<typeof Text>;
 
-interface BaseComponentStoryProps extends TextProps<"div"> {
-  children: string;
-}
-
-const BaseComponent: Story<BaseComponentStoryProps> = (args) => {
+const BaseComponent: Story<TextProps> = (args) => {
   const { children, elementType, styleAs } = args;
 
   const mappedProps = {

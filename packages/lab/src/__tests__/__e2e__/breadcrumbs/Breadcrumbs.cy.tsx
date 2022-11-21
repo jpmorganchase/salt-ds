@@ -256,7 +256,7 @@ describe("GIVEN a Breadcrumbs component", () => {
 
       cy.findByText("Test1").should("exist").and("have.attr", "tabIndex", "0");
       cy.findByText("Test2").should("exist").and("have.attr", "tabIndex", "0");
-      cy.findByText("Test3").should("exist").and("have.attr", "tabIndex", "-1");
+      cy.findByText("Test3").should("exist").and("not.have.attr", "tabIndex");
     });
   });
 });
