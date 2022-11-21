@@ -191,7 +191,7 @@ describe("GIVEN a Breadcrumbs component", () => {
     });
   });
 
-  describe("WHEN providing the itemsMaxWidth prop", () => {
+  xdescribe("WHEN providing the itemsMaxWidth prop", () => {
     it("THEN correctly display Tooltip on hover and focus when truncating", () => {
       cy.mount(
         <Breadcrumbs itemsMaxWidth={30}>
