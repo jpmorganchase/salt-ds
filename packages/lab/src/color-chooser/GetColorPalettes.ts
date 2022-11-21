@@ -34,8 +34,8 @@ const tealPalette = (UITKColorOverrides?: Record<string, string>) =>
   makePalette("teal", UITKColorOverrides);
 const purplePalette = (UITKColorOverrides?: Record<string, string>) =>
   makePalette("purple", UITKColorOverrides);
-const greyPalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("grey", UITKColorOverrides);
+const grayPalette = (UITKColorOverrides?: Record<string, string>) =>
+  makePalette("gray", UITKColorOverrides);
 
 export function getColorPalettes(
   UITKColorOverrides?: Record<string, string>
@@ -53,15 +53,15 @@ export function getColorPalettes(
     redPalette(UITKColorOverrides).slice(7, 14),
     purplePalette(UITKColorOverrides).slice(0, 7),
     purplePalette(UITKColorOverrides).slice(7, 14),
-    greyPalette(UITKColorOverrides).slice(0, 7),
-    greyPalette(UITKColorOverrides).slice(7, 14),
+    grayPalette(UITKColorOverrides).slice(0, 7),
+    grayPalette(UITKColorOverrides).slice(7, 14),
     [
       UITKColorOverrides
         ? UITKColorOverrides["uitkwhite"]
           ? UITKColorOverrides["uitkwhite"]
           : "rgb(255, 255, 255)"
         : uitkColorMap["uitkwhite"],
-      ...greyPalette(UITKColorOverrides).slice(14, 18),
+      ...grayPalette(UITKColorOverrides).slice(14, 18),
       UITKColorOverrides
         ? UITKColorOverrides["uitkblack"]
           ? UITKColorOverrides["uitkblack"]

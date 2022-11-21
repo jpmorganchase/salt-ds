@@ -5,7 +5,7 @@ const dataGridExampleColumnsColoration = [
     headerName: "Name",
     field: "name",
     cellStyle: {
-      color: "var(--uitk-color-grey-900)",
+      color: "var(--uitk-color-gray-900)",
       backgroundColor: "var(--uitk-color-teal-100)",
     },
   },
@@ -21,7 +21,7 @@ const dataGridExampleColumnsColoration = [
     cellStyle: (params: CellClassParams) => {
       if (params.value === "Atlanta") {
         return {
-          color: "var(--uitk-color-grey-900)",
+          color: "var(--uitk-color-gray-900)",
           backgroundColor: "var(--uitk-color-orange-100)",
         };
       } else {

@@ -1,9 +1,9 @@
 .uitk-theme[data-mode="light"] .withoutAvatar {
-  --heading-color: var(--uitk-color-grey-700);
+  --heading-color: var(--uitk-color-gray-700);
 }
 
 .uitk-theme[data-mode="dark"] .withoutAvatar {
-  --heading-color: var(--uitk-color-grey-10);
+  --heading-color: var(--uitk-color-gray-10);
 }
 
 .withoutAvatar {
