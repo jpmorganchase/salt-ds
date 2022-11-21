@@ -32,7 +32,7 @@
 
 .hero--primary {
   --ifm-hero-background-color: var(--uitk-color-white);
-  --ifm-hero-text-color: var(--uitk-color-grey-900);
+  --ifm-hero-text-color: var(--uitk-color-gray-900);
 }
 
 .navbar {
@@ -45,17 +45,17 @@
 }
 
 .navbar__logo__separator {
-  border-right: 1px solid var(--uitk-color-grey-60);
+  border-right: 1px solid var(--uitk-color-gray-60);
   height: 14px;
   margin: 0px calc(var(--uitk-size-unit) * 2);
 }
 
 .footer {
-  --ifm-footer-background-color: var(--uitk-color-grey-10);
-  --ifm-footer-color: var(--uitk-color-grey-900);
-  --ifm-footer-link-color: var(--uitk-color-grey-900);
+  --ifm-footer-background-color: var(--uitk-color-gray-10);
+  --ifm-footer-color: var(--uitk-color-gray-900);
+  --ifm-footer-link-color: var(--uitk-color-gray-900);
 }
 
 .footer__title {
-  --ifm-footer-title-color: var(--uitk-color-grey-900);
+  --ifm-footer-title-color: var(--uitk-color-gray-900);
 }

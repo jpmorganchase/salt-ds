@@ -60,7 +60,7 @@ Foundational tokens can broken into the following groups:
 
 | Foundation name | Description                                            | Example token                                             |
 | --------------- | ------------------------------------------------------ | --------------------------------------------------------- |
-| Color           | The core set of colors available                       | `--uitk-color-grey-800: rgb(36, 37, 38);`                 |
+| Color           | The core set of colors available                       | `--uitk-color-gray-800: rgb(36, 37, 38);`                 |
 | Delay           | Durations between user actions and system feedback     | `--uitk-delay-cutoff: 10000;`                             |
 | Opacity         | Opacity percentages for different attributes           | `--uitk-opacity-background: 0.7;`                         |
 | Shadow          | Shadows conveying elevation or hierarchy of components | `--uitk-shadow-black-4: 0 6px 10px 0 rgba(0, 0, 0, 0.2);` |
@@ -183,7 +183,7 @@ The palette token then resolves down to:
 
 ```css
 .uitk-theme[data-mode="light"] {
-  --uitk-palette-interact-primary-foreground: var(--uitk-grey-900);
+  --uitk-palette-interact-primary-foreground: var(--uitk-gray-900);
 }
 .uitk-theme[data-mode="dark"] {
   --uitk-palette-interact-primary-foreground: var(--uitk-white);
