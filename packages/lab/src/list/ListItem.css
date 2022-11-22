@@ -3,7 +3,7 @@
   --list-item-text-color: var(--uitk-selectable-foreground);
   --list-item-background: var(--uitkList-item-background, var(--uitk-selectable-background));
   --list-item-selected-focus-outlineColor: var(--uitk-color-white); /* TODO: Check token with design */
-  --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
+  --list-item-text-color-active: var(--uitk-selectable-foreground);
   --list-item-background-active: var(--uitk-selectable-background-selected);
   --list-item-alignItems: center;
 }
