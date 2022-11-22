@@ -13,6 +13,7 @@
 
 .heroBanner {
   --ifm-hero-text-color: var(--uitk-color-white);
+  --ifm-hero-background-color: transparent;
 }
 
 .heroBanner {
