@@ -279,7 +279,7 @@ export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
 export const Grouped: Story<ListProps> = (props) => (
   <>
     <style>{`#grouped-list .uitkListItemHeader {
-      background: var(--uitk-color-grey-20);
+      background: var(--uitk-color-gray-20);
       }`}</style>
     <List
       aria-label="Grouped List example"

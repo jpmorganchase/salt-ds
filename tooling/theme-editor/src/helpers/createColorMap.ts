@@ -8,7 +8,7 @@ const UITK_COLORS = [
   "blue",
   "teal",
   "orange",
-  "grey",
+  "gray",
   "purple",
 ];
 

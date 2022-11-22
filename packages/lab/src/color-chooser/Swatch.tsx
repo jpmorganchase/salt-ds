@@ -41,8 +41,8 @@ export const Swatch = ({
     onDialogClosed();
   };
 
-  // If it's black/grey/white
-  const isBlackOrGrey = (color: string): boolean => {
+  // If it's black/gray/white
+  const isBlackOrgray = (color: string): boolean => {
     return (
       color.toLowerCase() === "black" ||
       color.toUpperCase().startsWith("#2F3136") ||
@@ -67,9 +67,9 @@ export const Swatch = ({
       className={cn({
         [withBaseName("active")]: active,
         [withBaseName("transparent")]: transparent,
-        [withBaseName("greySwatch")]: isBlackOrGrey(color),
+        [withBaseName("graySwatch")]: isBlackOrgray(color),
         [withBaseName("whiteSwatch")]: isWhite(color),
-        [withBaseName("swatch")]: !isWhite(color) && !isBlackOrGrey(color),
+        [withBaseName("swatch")]: !isWhite(color) && !isBlackOrgray(color),
       })}
       onClick={handleClick}
       tabIndex={0}
