@@ -19,10 +19,8 @@ Dark mode:
 
 ```diff
 - --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
-- --uitk-palette-interact-background-hover: var(--uitk-color-blue-800);
 - --uitk-palette-interact-border: var(--uitk-color-gray-90);
-+ --uitk-palette-interact-background-active: var(--uitk-color-blue-800);
-+ --uitk-palette-interact-background-hover: var(--uitk-color-blue-900);
++ --uitk-palette-interact-background-active: var(--uitk-color-blue-700);
 + --uitk-palette-interact-border: var(--uitk-color-gray-200);
 ```
 
