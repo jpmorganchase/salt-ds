@@ -45,7 +45,7 @@ const guessTokenType = (tokenNameArray, filePath) => {
     return "opacity";
   } else if (
     tokenNameArray.some((token) =>
-      /^(color|foreground|background|borderColor|outlineColor|startColor|stopColor|indicator|fade)$/i.test(
+      /^(color|foreground|background|borderColor|outlineColor|startColor|stopColor|indicator|fade|fill)$/i.test(
         token
       )
     )
