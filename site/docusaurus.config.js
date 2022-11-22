@@ -61,7 +61,7 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
             type: "doc",
             docId: "getting-started/index",
             position: "left",
-            label: "Get Started",
+            label: "Getting started",
           },
           {
             type: "doc",
@@ -72,7 +72,7 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
           {
             to: "contributing/",
             position: "left",
-            label: "Contributions and support",
+            label: "Support and contributions",
           },
           {
             href: "https://github.com/jpmorganchase/uitk",

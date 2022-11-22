@@ -6,7 +6,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: var(--uitk-color-grey-900);
+  --ifm-color-primary: var(--uitk-color-gray-900);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
 }
 
@@ -19,7 +19,7 @@
 
 .navbar {
   --ifm-navbar-height: 60px;
-  --ifm-navbar-background-color: var(--uitk-color-grey-900);
+  --ifm-navbar-background-color: var(--uitk-color-gray-900);
   --ifm-navbar-padding-vertical: var(--uitk-size-unit);
   --ifm-navbar-padding-horizontal: calc(var(--uitk-size-unit) * 3);
 }
@@ -33,7 +33,7 @@
 }
 
 .navbar__logo__separator {
-  border-right: 1px solid var(--uitk-color-grey-400);
+  border-right: 1px solid var(--uitk-color-gray-400);
   height: 14px;
   margin: 0px calc(var(--uitk-size-unit) * 2);
 }
@@ -58,12 +58,12 @@
 }
 
 .navbar__link:hover:not(.navbar__link--active):not(.header-github-link) {
-  background-color: var(--uitk-color-grey-600);
+  background-color: var(--uitk-color-gray-600);
   border-bottom: 2px solid var(--uitk-navigable-indicator-hover);
 }
 
 .footer {
-  --ifm-footer-background-color: var(--uitk-color-grey-900);
+  --ifm-footer-background-color: var(--uitk-color-gray-900);
 }
 
 .header-github-link:before {

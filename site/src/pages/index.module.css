@@ -4,7 +4,7 @@
  */
 
 .homepageContainer {
-  background-color: var(--uitk-color-grey-900);
+  background-color: var(--uitk-color-gray-900);
   background-image: url(@site/static/img/background_gradient.svg);
   background-repeat: no-repeat;
   background-size: cover;
