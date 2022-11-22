@@ -73,7 +73,7 @@ const Card = ({
             backgroundColor: `var(--uitk-color-${getKeylineColor(icon)})`,
           }}
           ref={ref}
-        ></div>
+        />
       </div>
     </>
   );
