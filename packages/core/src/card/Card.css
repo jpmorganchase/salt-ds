@@ -30,7 +30,7 @@
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
   border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-hover));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-hover));
+  color: var(--uitkCard-color-hover, var(--uitk-text-primary-foreground));
   cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
   position: relative;
   box-shadow: var(--uitkCard-boxShadow-hover, var(--uitk-overlayable-shadow-hover));
