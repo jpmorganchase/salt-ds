@@ -26,6 +26,8 @@ interface TextPropsBase<E extends ElementType> {
    * Match styling to a specified heading
    */
   styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
+  variant?: "primary" | "secondary";
+  help?: boolean;
 }
 
 export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
@@ -45,16 +47,19 @@ export const Text = forwardRef(function Text<T extends ElementType>(
     elementType = "div",
     style,
     styleAs,
+    variant = "primary",
+    help = false,
     ...restProps
   } = props;
 
-  // Rendering
   const Component: ElementType = elementType;
 
   return (
     <Component
       className={cx(withBaseName(), className, {
         [withBaseName(styleAs || "")]: styleAs,
+        [withBaseName(variant)]: variant,
+        [withBaseName(help ? "help" : "")]: help,
       })}
       {...restProps}
       ref={ref}

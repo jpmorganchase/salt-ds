@@ -14,6 +14,7 @@ export const Help = forwardRef<
   return (
     <Text
       className={cx(className, withBaseName(`helpText`))}
+      variant="secondary"
       ref={ref}
       {...rest}
     >

@@ -19,19 +19,19 @@ export default {
       },
     },
     styleAs: {
-      options: ["h1", "h2", "h3", "h4"],
+      options: ["h1", "h2", "h3", "h4", "label"],
       control: { type: "select" },
     },
+    variant: {
+      options: ["primary", "secondary"],
+      control: { type: "select" },
+    },
+    help: { control: { type: "boolean" } },
   },
 } as ComponentMeta<typeof Text>;
 
 const BaseComponent: Story<TextProps> = (args) => {
-  const { children, elementType, styleAs } = args;
-
-  const mappedProps = {
-    elementType,
-    styleAs,
-  };
+  const { children, elementType, styleAs, variant, help } = args;
 
   return (
     <div>
@@ -39,6 +39,8 @@ const BaseComponent: Story<TextProps> = (args) => {
       <Text
         elementType={elementType}
         styleAs={styleAs}
+        variant={variant}
+        help={help}
         dangerouslySetInnerHTML={{ __html: children }}
       />
     </div>
