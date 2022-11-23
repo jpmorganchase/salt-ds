@@ -41,6 +41,7 @@ jobs:
           projectName: "uitk-site"
           directory: ./site/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.event.pull_request.head.ref }}
 
       - name: Preview URL
         uses: actions/github-script@v6
@@ -53,7 +54,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.payload.number,
             });
-            const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText)); 
+            const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText));
             if (!oldPreviewUrlComment) {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
