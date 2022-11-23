@@ -29,10 +29,10 @@ function NavbarContentLayout({ left, right, center }) {
   return (
     <div className="navbar__inner">
       <div className="navbar__items">{left}</div>
-      <div className={clsx("navbar__items", styles.centerNav)}>{center}</div>
       <div
         className={clsx("navbar__items navbar__items--right", styles.rightNav)}
       >
+        {center}
         {right}
       </div>
     </div>
@@ -59,7 +59,7 @@ export default function NavbarContent() {
         <>
           <NavbarItems items={rightItems} />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
-          {!searchBarItem && (
+          {searchBarItem && (
             <NavbarSearch>
               <SearchBar />
             </NavbarSearch>
