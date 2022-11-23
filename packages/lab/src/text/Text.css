@@ -2,13 +2,17 @@
 .uitkText {
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight);
-  /* Truncation */
+}
+
+/* Allows truncation */
+.uitkText-lineClamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows, 0);
   overflow: hidden;
   word-break: break-word;
 }
+
 .uitkText-primary {
   color: var(--uitk-text-primary-foreground);
 }

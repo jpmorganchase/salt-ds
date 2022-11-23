@@ -1,7 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
 import { Text, TextProps } from "@jpmorganchase/uitk-lab";
-import { useEffect, useState } from "react";
 
 export default {
   title: "Lab/Text",
@@ -13,7 +12,19 @@ export default {
       control: { type: "text" },
     },
     elementType: {
-      options: ["h1", "h2", "h3", "h4", "p", "div", "span", "label"],
+      options: [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "p",
+        "div",
+        "span",
+        "label",
+        "code",
+        "blockquote",
+        "i",
+      ],
       control: {
         type: "select",
       },
@@ -26,23 +37,17 @@ export default {
       options: ["primary", "secondary"],
       control: { type: "select" },
     },
-    help: { control: { type: "boolean" } },
+    maxRows: { control: { type: "number" } },
   },
 } as ComponentMeta<typeof Text>;
 
 const BaseComponent: Story<TextProps> = (args) => {
-  const { children, elementType, styleAs, variant, help } = args;
+  const { children, ...rest } = args;
 
   return (
     <div>
       {/* We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! :) */}
-      <Text
-        elementType={elementType}
-        styleAs={styleAs}
-        variant={variant}
-        help={help}
-        dangerouslySetInnerHTML={{ __html: children }}
-      />
+      <Text dangerouslySetInnerHTML={{ __html: children }} {...rest} />
     </div>
   );
 };

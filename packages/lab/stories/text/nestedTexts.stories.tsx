@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Text, Link, H2, P } from "@jpmorganchase/uitk-lab";
+import { Text, Link, H2 } from "@jpmorganchase/uitk-lab";
 
 export default {
   title: "Lab/Text",
@@ -20,9 +20,9 @@ const NestedTextsComponent: ComponentStory<typeof Text> = () => {
       <Link href="">
         <H2>Heading inside a Link</H2>
       </Link>
-      <P>
+      <Text elementType="p">
         This is a <Link href="">link</Link> inside a paragraph.
-      </P>
+      </Text>
     </div>
   );
 };

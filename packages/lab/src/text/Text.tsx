@@ -58,12 +58,13 @@ export const Text = forwardRef(function Text<T extends ElementType>(
   return (
     <Component
       className={cx(withBaseName(), className, {
+        [withBaseName("lineClamp")]: maxRows,
         [withBaseName(styleAs || "")]: styleAs,
         [withBaseName(variant)]: variant,
       })}
       {...restProps}
       ref={ref}
-      style={style}
+      style={{ ...style, "--text-max-rows": maxRows }}
     >
       {children}
     </Component>
