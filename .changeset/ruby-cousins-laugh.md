@@ -1,8 +1,8 @@
 ---
-"@jpmorganchase/uitk-theme": patch
+"@jpmorganchase/uitk-theme": minor
 ---
 
-Rename `-icon` token parts within palette to `-foreground`
+Rename palette -icon tokens to -foreground
 
 ```diff
 - --uitk-palette-info-icon
