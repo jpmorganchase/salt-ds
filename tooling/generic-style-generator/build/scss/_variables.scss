@@ -1,4 +1,3 @@
-
 // Do not edit directly
 // Generated on Wed, 25 May 2022 13:51:01 GMT
 
@@ -20,7 +19,11 @@ $uitk-palette-navigate-background-active-medium: transparent;
 $uitk-palette-navigate-background-active-high: transparent;
 $uitk-palette-navigate-background-active-low: transparent;
 $uitk-palette-navigate-background-low: transparent;
-$uitk-palette-measure-background: linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%);
+$uitk-palette-measure-background: linear-gradient(
+  0deg,
+  var(--uitk-palette-measure-background-gradient-start-color) 0%,
+  var(--uitk-palette-measure-background-gradient-stop-color) 100%
+);
 $uitk-palette-interact-fill: transparent;
 $uitk-palette-interact-secondary-background: transparent;
 $uitk-palette-interact-background: transparent;
@@ -138,10 +141,30 @@ $uitk-color-white: #ffffff;
 $uitk-color-transparent: rgba(0, 0, 0, 0);
 $uitk-palette-rate-border: $uitk-color-grey-90;
 $uitk-palette-positive-foreground: $uitk-color-green-700;
-$uitk-palette-neutral-scrim-medium: rgba(0, 0, 0, var(--uitk-opacity-scrim-low));
-$uitk-palette-neutral-scrim-low: rgba(255, 255, 255, var(--uitk-opacity-scrim-medium));
-$uitk-palette-neutral-border-disabled-high: rgba(132, 135, 142, var(--uitk-opacity-border));
-$uitk-palette-neutral-border-disabled-medium: rgba(197, 201, 208, var(--uitk-opacity-border));
+$uitk-palette-neutral-scrim-medium: rgba(
+  0,
+  0,
+  0,
+  var(--uitk-opacity-scrim-low)
+);
+$uitk-palette-neutral-scrim-low: rgba(
+  255,
+  255,
+  255,
+  var(--uitk-opacity-scrim-medium)
+);
+$uitk-palette-neutral-border-disabled-high: rgba(
+  132,
+  135,
+  142,
+  var(--uitk-opacity-border)
+);
+$uitk-palette-neutral-border-disabled-medium: rgba(
+  197,
+  201,
+  208,
+  var(--uitk-opacity-border)
+);
 $uitk-palette-neutral-border-high: $uitk-color-grey-90;
 $uitk-palette-neutral-border-medium: $uitk-color-grey-60;
 $uitk-palette-neutral-border-low: $uitk-color-grey-30;

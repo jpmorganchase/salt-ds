@@ -147,7 +147,8 @@ export const uitkPaletteSuccessBackgroundHigh = "rgb(209, 244, 201)";
 export const uitkPaletteWarningBorder = "rgb(234, 115, 25)";
 export const uitkPaletteWarningIcon = "rgb(234, 115, 25)";
 export const uitkPaletteWarningBackgroundHigh = "rgb(255, 232, 191)";
-export const uitkPaletteMeasureBackground = "linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%)";
+export const uitkPaletteMeasureBackground =
+  "linear-gradient(0deg, var(--uitk-palette-measure-background-gradient-start-color) 0%, var(--uitk-palette-measure-background-gradient-stop-color) 100%)";
 export const uitkPaletteNavigateForeground = "rgb(68, 72, 79)";
 export const uitkPaletteNavigateIndicatorActive = "rgb(238, 133, 43)";
 export const uitkPaletteNavigateIndicatorHover = "rgb(132, 135, 142)";
@@ -172,10 +173,14 @@ export const uitkPaletteNeutralBackgroundHigh = "rgb(234, 237, 239)";
 export const uitkPaletteNeutralBorderLow = "rgb(224, 228, 233)";
 export const uitkPaletteNeutralBorderMedium = "rgb(197, 201, 208)";
 export const uitkPaletteNeutralBorderHigh = "rgb(132, 135, 142)";
-export const uitkPaletteNeutralBorderDisabledMedium = "rgba(197, 201, 208, var(--uitk-opacity-border))";
-export const uitkPaletteNeutralBorderDisabledHigh = "rgba(132, 135, 142, var(--uitk-opacity-border))";
-export const uitkPaletteNeutralScrimLow = "rgba(255, 255, 255, var(--uitk-opacity-scrim-medium))";
-export const uitkPaletteNeutralScrimMedium = "rgba(0, 0, 0, var(--uitk-opacity-scrim-low))";
+export const uitkPaletteNeutralBorderDisabledMedium =
+  "rgba(197, 201, 208, var(--uitk-opacity-border))";
+export const uitkPaletteNeutralBorderDisabledHigh =
+  "rgba(132, 135, 142, var(--uitk-opacity-border))";
+export const uitkPaletteNeutralScrimLow =
+  "rgba(255, 255, 255, var(--uitk-opacity-scrim-medium))";
+export const uitkPaletteNeutralScrimMedium =
+  "rgba(0, 0, 0, var(--uitk-opacity-scrim-low))";
 export const uitkPalettePositiveForeground = "rgb(12, 93, 46)";
 export const uitkPaletteRateBackground = "transparent";
 export const uitkPaletteRateBorder = "rgb(132, 135, 142)";

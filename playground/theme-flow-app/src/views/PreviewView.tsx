@@ -1,7 +1,7 @@
 import {
   Button,
   FlexLayout,
-  StatusIcon,
+  StatusIndicator,
   VALIDATION_NAMED_STATUS,
 } from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
@@ -31,7 +31,7 @@ export const PreviewView = (
       </FlexLayout>
       <FlexLayout>
         {VALIDATION_NAMED_STATUS.map((status, index) => (
-          <StatusIcon status={status} key={index} />
+          <StatusIndicator status={status} key={index} />
         ))}
       </FlexLayout>
     </FlexLayout>

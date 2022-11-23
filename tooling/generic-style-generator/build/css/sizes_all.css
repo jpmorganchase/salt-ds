@@ -3,7 +3,10 @@
  * Generated on Wed, 25 May 2022 13:51:01 GMT
  */
 
-.uitk-density-touch, .uitk-density-low, .uitk-density-medium, .uitk-density-high {
+.uitk-density-touch,
+.uitk-density-low,
+.uitk-density-medium,
+.uitk-density-high {
   --uitk-size-sharktooth-width: 10px;
   --uitk-size-sharktooth-height: 5px;
   --uitk-size-graphic-large: 48px;

@@ -855,15 +855,16 @@
 <button id="create">Create</button>
 <button id="cancel">Cancel</button>
 <script>
+  document.getElementById("create").onclick = () => {
+    const textbox = document.getElementById("json-input");
+    const jsonInput = textbox.value;
+    parent.postMessage(
+      { pluginMessage: { type: "create-style", jsonInput } },
+      "*"
+    );
+  };
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('json-input');
-  const jsonInput = textbox.value;
-  parent.postMessage({ pluginMessage: { type: 'create-style', jsonInput } }, '*')
-}
-
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
-
+  document.getElementById("cancel").onclick = () => {
+    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
+  };
 </script>

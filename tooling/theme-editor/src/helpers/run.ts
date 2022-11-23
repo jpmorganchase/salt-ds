@@ -2,21 +2,26 @@
 //@ts-nocheck
 import { parseCSStoJSON } from "./parseToJson";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const walkObject = (obj: object, predicate: (obj: object) => boolean, transform: (obj: object) => object) => {
+const walkObject = (
+  obj: object,
+  predicate: (obj: object) => boolean,
+  transform: (obj: object) => object
+) => {
   Object.keys(obj).forEach(function (key) {
     if (predicate(obj[key])) {
       obj[key] = transform(obj[key]);
-    }
-    else if (typeof obj[key] === 'object' &&
+    } else if (
+      typeof obj[key] === "object" &&
       !Array.isArray(obj[key]) &&
-      obj[key] !== null) {
-      walkObject(obj[key], predicate, transform)
+      obj[key] !== null
+    ) {
+      walkObject(obj[key], predicate, transform);
     }
   });
-}
+};
 
 /**
  * figma tokens expected:
@@ -26,40 +31,42 @@ const walkObject = (obj: object, predicate: (obj: object) => boolean, transform:
       },
  */
 const addColorType = (input) => {
-  input.type = 'color';
+  input.type = "color";
   return input;
-}
+};
 
-const inputFile = path.join(__dirname, '../../../../packages/theme/css/foundations/color.css');
+const inputFile = path.join(
+  __dirname,
+  "../../../../packages/theme/css/foundations/color.css"
+);
 const parsedInputFile = path.parse(inputFile);
-const outputFile = path.join(parsedInputFile.dir, parsedInputFile.name + "_ouput.json");
+const outputFile = path.join(
+  parsedInputFile.dir,
+  parsedInputFile.name + "_ouput.json"
+);
 
 try {
-  const data = fs.readFileSync(inputFile, 'utf8')
+  const data = fs.readFileSync(inputFile, "utf8");
   // console.log(data)
   const jsonOutput = parseCSStoJSON(data);
 
   // jsonOutput.forEach(j => console.log(j.scope, JSON.stringify(j.jsonObj)))
 
   if (jsonOutput.length === 0) {
-    console.error('No valid jsonOutput parsed')
+    console.error("No valid jsonOutput parsed");
   } else {
-
     const j = jsonOutput[0].jsonObj;
-    walkObject(j, (test) => test.value && typeof test.value === 'string', addColorType);
+    walkObject(
+      j,
+      (test) => test.value && typeof test.value === "string",
+      addColorType
+    );
 
     // 2nd, 3rd arg to pretty print
-    const content = JSON.stringify(j, null, 2)
+    const content = JSON.stringify(j, null, 2);
     fs.writeFileSync(outputFile, content);
-    console.log("Wrote to", outputFile)
+    console.log("Wrote to", outputFile);
   }
-
-
-
 } catch (err) {
-  console.error(err)
+  console.error(err);
 }
-
-
-
-

@@ -9,12 +9,11 @@
   flex-grow: 1;
 }
 
-.App-preview { 
+.App-preview {
   padding: 16px;
   display: flex;
   gap: 16px;
 }
-
 
 .App-debug {
   max-height: 100px;

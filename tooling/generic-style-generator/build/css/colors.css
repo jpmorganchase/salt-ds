@@ -3,7 +3,8 @@
  * Generated on Wed, 25 May 2022 13:51:01 GMT
  */
 
-.uitk-light, .uitk-dark {
+.uitk-light,
+.uitk-dark {
   --uitk-color-transparent: rgba(0, 0, 0, 0);
   --uitk-color-white: #ffffff;
   --uitk-color-black: #000000;
