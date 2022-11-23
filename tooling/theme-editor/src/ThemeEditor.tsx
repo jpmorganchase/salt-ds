@@ -1,4 +1,4 @@
-import { useState, ReactElement, useCallback } from "react";
+import { ReactElement } from "react";
 import { JSONByScope } from "./helpers/parseToJson";
 import { ThemeMode } from "./header/ScopeSelector";
 import { ScopeSelector } from "./header/ScopeSelector";
@@ -7,12 +7,19 @@ import { ThemeHeader } from "./header/ThemeHeader";
 import { foundationPathnames } from "./tokens/foundations/FoundationsView";
 import { useTabsWithRouting } from "./utils/useTabsWithRouting";
 import "@jpmorganchase/uitk-theme/index.css";
+import "@fontsource/open-sans/300.css";
+import "@fontsource/open-sans/300-italic.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/400-italic.css";
+import "@fontsource/open-sans/500.css";
+import "@fontsource/open-sans/500-italic.css";
+import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/600-italic.css";
+import "@fontsource/open-sans/700.css";
+import "@fontsource/open-sans/700-italic.css";
+import "@fontsource/open-sans/800.css";
+import "@fontsource/open-sans/800-italic.css";
 import "./ThemeEditor.css";
-
-export type ScopeAndJSON = {
-  scope: string;
-  jsonObj: JSON;
-};
 
 type ThemeEditorProps = {
   currentTheme: string;
