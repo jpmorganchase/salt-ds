@@ -1,0 +1,48 @@
+.wrapper {
+  --accordian-background: #10212b;
+  --ifm-link-decoration: underline;
+}
+
+/* accordian / card background should be shared va? */
+
+/* .h2 {
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
+} */
+
+.wrapper {
+  background-color: var(--accordian-background);
+  max-width: 820px;
+  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 2);
+}
+
+.accordion .summary {
+  background-color: transparent;
+}
+
+/* .accordion .summary h2 {
+  line-height: 32px;
+} */
+
+.keyline {
+  height: 3px;
+  width: calc(100% + calc(var(--uitk-size-unit) * 4));
+  position: relative;
+  left: calc(-1 * var(--uitk-size-unit) * 2);
+}
+
+.animate {
+  animation: swing-in-left-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes swing-in-left-bck {
+  0% {
+    transform: rotateY(-70deg);
+    transform-origin: left;
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0);
+    transform-origin: left;
+    opacity: 1;
+  }
+}

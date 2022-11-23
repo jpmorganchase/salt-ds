@@ -122,48 +122,31 @@ const accordianInfo = [
 ];
 
 const SiteAccordian = (): JSX.Element => {
+  const ref = useRef<HTMLDivElement>();
+
+  const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
   return (
-    <>
-      <div className={styles.accordion}>
-        <Accordion>
-          {accordianInfo.map(({ id, summary, details }) => {
-            return (
-              <AccordionSection className={"accordion"} key={id}>
-                <AccordionSummary>{summary}</AccordionSummary>
-                <AccordionDetails>{details}</AccordionDetails>
-              </AccordionSection>
-            );
-          })}
-        </Accordion>
-      </div>
-
-      {/* <h2>Why trust us?</h2>
-        <p>In a nutshell, we’re not newbies.</p>
-
-        <p>
-          The team behind Salt created the J.P Morgan UI Toolkit, a design
-          system that’s used and trusted by over 2,000 internal product owners,
-          visual and UX designers, developers, content specialists and more. It
-          has a track record of increasing efficiency, ensuring design
-          consistency and driving significant cost savings for product teams.
-        </p>
-
-        <p>
-          The UI Toolkit has over 80 components, 12 patterns, sample apps, as
-          well as usage, design, content and accessibility guidance that we plan
-          to improve and migrate to Salt. Eventually, Salt will provide
-          everything you need to create consistent, fully accessible,
-          beautifully designed user interfaces.
-        </p> */}
-
-      {/* <div
+    <div className={styles.wrapper}>
+      <Accordion className={styles.wrapper}>
+        {accordianInfo.map(({ id, summary, details }) => {
+          return (
+            <AccordionSection className={styles.accordion} key={id}>
+              <AccordionSummary className={styles.summary}>
+                <h2>{summary}</h2>
+              </AccordionSummary>
+              <AccordionDetails>{details}</AccordionDetails>
+            </AccordionSection>
+          );
+        })}
+      </Accordion>
+      <div
         className={clsx(styles.keyline, { [styles.animate]: onScreen })}
         style={{
-          backgroundColor: `var(--uitk-color-${getKeylineColor(icon)})`,
+          backgroundColor: `var(--uitk-color-teal-50)`,
         }}
         ref={ref}
-      > */}
-    </>
+      />
+    </div>
   );
 };
 
