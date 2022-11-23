@@ -1,7 +1,7 @@
 import { makePrefixer } from "../../utils";
 
 import cx from "classnames";
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem, SlideDirection } from "../ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../../utils";
 
@@ -33,7 +33,7 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Controls the space between columns.
    */
-  gap?: FlexLayoutProps["gap"];
+  gap?: FlexLayoutProps<ElementType>["gap"];
   /**
    * Parent component to be rendered
    */
