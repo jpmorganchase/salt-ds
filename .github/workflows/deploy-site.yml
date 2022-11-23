@@ -50,30 +50,29 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-          if (context.eventName == 'pull_request') {
-            const previewUrl = "${{ steps.publish.outputs.url }}";
-            const commentText = `Site Preview Link `;
-            const {data: comments} = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.number,
-            });
-            const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText));
-            if (!oldPreviewUrlComment) {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
+            if (context.eventName == 'pull_request') {
+              const previewUrl = "${{ steps.publish.outputs.url }}";
+              const commentText = `Site Preview Link `;
+              const {data: comments} = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: `${commentText} ${previewUrl}`
+                issue_number: context.payload.number,
               });
-            } else {
-              github.rest.issues.updateComment({
-                comment_id: oldPreviewUrlComment.id,
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: `${commentText} ${previewUrl}`
-              });
-            };
-          }
-            
+              const oldPreviewUrlComment = comments.find(comment => comment.body.includes(commentText));
+              if (!oldPreviewUrlComment) {
+                github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: `${commentText} ${previewUrl}`
+                });
+              } else {
+                github.rest.issues.updateComment({
+                  comment_id: oldPreviewUrlComment.id,
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: `${commentText} ${previewUrl}`
+                });
+              };
+            }
