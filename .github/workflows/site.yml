@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - "site/**"
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -41,7 +44,7 @@ jobs:
           projectName: "uitk-site"
           directory: ./site/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.event.pull_request.head.ref }}
+          branch: ${{ github.head_ref || github.ref_name }}
 
       - name: Preview URL
         uses: actions/github-script@v6
