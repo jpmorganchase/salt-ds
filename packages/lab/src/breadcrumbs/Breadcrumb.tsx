@@ -46,7 +46,6 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
   ) {
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
-    const tooltipTitle = tooltipText || overflowLabel || String(children);
     const hasChildren = React.Children.count(children) !== 0;
     const hasOnlyIcon = Icon && !hasChildren;
 
@@ -76,13 +75,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         >
           {Icon && <Icon className={withBaseName("icon")} />}
           {hasChildren && (
-            <Link
-              // truncate
-              // maxRows={1}
-              // tooltipText={tooltipTitle}
-              styleAs="label"
-              {...props}
-            >
+            <Link maxRows={1} styleAs="label" {...props}>
               {children}
             </Link>
           )}

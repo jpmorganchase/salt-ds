@@ -10,11 +10,6 @@ export default {
 const excludeProps = ["children", "elementType", "style", "onOverflowChange"];
 
 const NestedTextsComponent: ComponentStory<typeof Text> = () => {
-  const box = {
-    border: "1px solid #ccc",
-    padding: 10,
-  };
-
   return (
     <div>
       <Link href="">

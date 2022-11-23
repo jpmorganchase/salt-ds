@@ -2,7 +2,6 @@ import { makePrefixer, polymorphicRef } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
   ComponentPropsWithoutRef,
-  CSSProperties,
   ElementType,
   forwardRef,
   ReactElement,
