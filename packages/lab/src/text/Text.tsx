@@ -18,6 +18,7 @@ interface TextPropsBase<E extends ElementType> {
    * Defaults to 'div'
    */
   elementType?: ElementType;
+  maxRows?: number;
   /**
    * Customise styling.
    */
@@ -45,10 +46,10 @@ export const Text = forwardRef(function Text<T extends ElementType>(
     children,
     className,
     elementType = "div",
+    maxRows,
     style,
     styleAs,
     variant = "primary",
-    help = false,
     ...restProps
   } = props;
 
@@ -59,7 +60,6 @@ export const Text = forwardRef(function Text<T extends ElementType>(
       className={cx(withBaseName(), className, {
         [withBaseName(styleAs || "")]: styleAs,
         [withBaseName(variant)]: variant,
-        [withBaseName(help ? "help" : "")]: help,
       })}
       {...restProps}
       ref={ref}

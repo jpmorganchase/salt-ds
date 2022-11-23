@@ -1,16 +1,11 @@
 import { Meta, Story, Canvas, ArgsTable, Props } from "@storybook/addon-docs";
 import {
   Text,
-  Div,
-  Code,
   H1,
   H2,
   H3,
   H4,
-  Help,
   Label,
-  P,
-  Span,
   Display1,
   Display2,
   Display3,
@@ -32,12 +27,12 @@ import {
 
 # Text
 
-We've created a base Text component (that contains our key typography styles and functionality) and more typography components which derive from it: H1, H2, H3, H4, Div, Span, P, Label, Code etc. Using the Text components will guarantee that the typography styles are consistent throughout the app.
+We've created a base Text component (that contains our key typography styles and functionality) and more typography components which derive from it: H1, H2, H3, H4, Label, etc. Using the Text components will guarantee that the typography styles are consistent throughout the app.
 
 # API
 
 ```
-import { Text, H1, H2, H3, H4, Div, Span, P, Label, Help, Code, Display1, Display2, Display3 } from "@jpmorganchase/uitk-lab";
+import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-lab";
 ```
 
 ## Props
@@ -63,22 +58,7 @@ import { Text, H1, H2, H3, H4, Div, Span, P, Label, Help, Code, Display1, Displa
     <H4>H4</H4>
   </ComponentAnatomy>
   <ComponentAnatomy>
-    <Div>Div</Div>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Span>Span</Span>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <P>P</P>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
     <Label>Label</Label>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Help>Help</Help>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Code>Code</Code>
   </ComponentAnatomy>
   <ComponentAnatomy>
     <Display1>Display1</Display1>
@@ -228,81 +208,6 @@ We've created a set of components that are most commonly used, but it's easy to 
   </Story>
 </Canvas>
 
-### Div
-
-<Canvas>
-  <Story name="Div" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <Div>This is a text example</Div>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <Div>
-          <strong>This is a text example</strong>
-        </Div>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <Div>
-          <small>This is a text example</small>
-        </Div>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### Span
-
-<Canvas>
-  <Story name="Span" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <Span>This is a text example</Span>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <Span>
-          <strong>This is a text example</strong>
-        </Span>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <Span>
-          <small>This is a text example</small>
-        </Span>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### P
-
-<Canvas>
-  <Story name="P" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <P>This is a text example</P>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <P>
-          <strong>This is a text example</strong>
-        </P>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <P>
-          <small>This is a text example</small>
-        </P>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
 ### Label
 
 <Canvas>
@@ -323,56 +228,6 @@ We've created a set of components that are most commonly used, but it's easy to 
         <Label>
           <small>This is a text example</small>
         </Label>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### Help
-
-<Canvas>
-  <Story name="Help" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <Help>This is a text example</Help>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <Help>
-          <strong>This is a text example</strong>
-        </Help>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <Help>
-          <small>This is a text example</small>
-        </Help>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### Code
-
-<Canvas>
-  <Story name="Code" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <Code>This is a text example</Code>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <Code>
-          <strong>This is a text example</strong>
-        </Code>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <Code>
-          <small>This is a text example</small>
-        </Code>
       </div>
     </div>
   </Story>

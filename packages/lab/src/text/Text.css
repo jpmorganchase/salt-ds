@@ -5,7 +5,7 @@
   /* Truncation */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* var(--text-max-rows);*/
+  -webkit-line-clamp: var(--text-max-rows, 0);
   overflow: hidden;
   word-break: break-word;
 }

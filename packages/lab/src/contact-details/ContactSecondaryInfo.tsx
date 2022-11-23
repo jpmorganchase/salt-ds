@@ -2,7 +2,7 @@ import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
-import { Div } from "../text";
+import { Text } from "../text";
 import { useContactDetailsContext } from "./internal";
 import { ValueComponentProps } from "./types";
 
@@ -40,10 +40,9 @@ export const ContactSecondaryInfo = forwardRef<
   }, [id, text, setSecondary, setSecondaryId]);
 
   return (
-    <Div
+    <Text
       styleAs={variant === "default" ? "h4" : undefined}
-      // truncate
-      // maxRows={1}
+      maxRows={1}
       {...restProps}
       id={id}
       ref={ref}
@@ -52,6 +51,6 @@ export const ContactSecondaryInfo = forwardRef<
     >
       {Icon ? <Icon className={withBaseName("icon")} /> : null}
       {text}
-    </Div>
+    </Text>
   );
 });

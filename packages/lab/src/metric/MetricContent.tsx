@@ -6,7 +6,7 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Div, Display1, Display2, Display3 } from "../text";
+import { Text, Display1, Display2, Display3 } from "../text";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
@@ -106,12 +106,12 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
-          <Div
+          <Text
             className={withBaseName("subvalue")}
             data-testid="metric-subvalue"
           >
             {subvalue}
-          </Div>
+          </Text>
         )}
       </div>
     );

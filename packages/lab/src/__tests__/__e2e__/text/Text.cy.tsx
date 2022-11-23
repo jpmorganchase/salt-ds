@@ -1,8 +1,5 @@
 import {
   Text,
-  Div,
-  P,
-  Code,
   Display1,
   Display2,
   Display3,
@@ -10,9 +7,7 @@ import {
   H2,
   H3,
   H4,
-  Help,
   Label,
-  Span,
 } from "@jpmorganchase/uitk-lab";
 
 const textExample = `Far far away, behind the word mountains, far from the countries Vokalia
@@ -34,9 +29,6 @@ subline of her own road, the Line Lane.`;
 
 const componentsArray = [
   { component: Text, name: "Text", tag: "div" },
-  { component: Div, name: "Div", tag: "div" },
-  { component: P, name: "P", tag: "p" },
-  { component: Code, name: "Code", tag: "code" },
   { component: Display1, name: "Display1", tag: "span" },
   { component: Display2, name: "Display", tag: "span" },
   { component: Display3, name: "Display", tag: "span" },
@@ -44,9 +36,7 @@ const componentsArray = [
   { component: H2, name: "H2", tag: "h2" },
   { component: H3, name: "H3", tag: "h3" },
   { component: H4, name: "H4", tag: "h4" },
-  { component: Help, name: "Help", tag: "div" },
   { component: Label, name: "Label", tag: "label" },
-  { component: Span, name: "Span", tag: "span" },
 ];
 
 // Render correctly

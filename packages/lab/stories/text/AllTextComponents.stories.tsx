@@ -2,10 +2,6 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import {
   Text,
-  Code as CodeText,
-  Div as DivText,
-  Span as SpanText,
-  P as PText,
   Display1,
   Display2,
   Display3,
@@ -13,7 +9,6 @@ import {
   H2,
   H3,
   H4,
-  Help as HelpText,
   Label as LabelText,
 } from "@jpmorganchase/uitk-lab";
 
@@ -49,99 +44,6 @@ const DefaultTextComponent: ComponentStory<typeof Text> = () => {
 };
 
 export const DefaultText = DefaultTextComponent.bind({});
-
-//********** Div ***********/
-
-const DivTextComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <DivText>
-        Div text component - His seasons Shall without form fourth seed so.
-      </DivText>
-      <DivText>
-        Div text component
-        <strong> emphasis high</strong>
-      </DivText>
-      <DivText>
-        Div text component
-        <small> emphasis low</small>
-      </DivText>
-    </>
-  );
-};
-
-export const Div = DivTextComponent.bind({});
-
-//********** Span ***********/
-
-const SpanTextComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <SpanText>
-        Span text component - His seasons Shall without form fourth seed so.
-      </SpanText>
-      <br />
-      <SpanText>
-        Span text component
-        <strong> emphasis high</strong>
-      </SpanText>
-      <br />
-      <SpanText>
-        Span text component
-        <small> emphasis low</small>
-      </SpanText>
-    </>
-  );
-};
-
-export const Span = SpanTextComponent.bind({});
-
-//********** Paragraph - P ***********/
-
-const PTextComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <PText>
-        Paragraph text component - His seasons Shall without form fourth seed
-        so.
-      </PText>
-      <PText>
-        Paragraph text component
-        <strong> emphasis high</strong>
-      </PText>
-      <PText>
-        Paragraph text component
-        <small> emphasis low</small>
-      </PText>
-    </>
-  );
-};
-
-export const P = PTextComponent.bind({});
-
-//********** Code ***********/
-
-const CodeTextComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <CodeText>
-        Code text component - His seasons Shall without form fourth seed so.
-      </CodeText>
-      <br />
-      <CodeText>
-        Code text component
-        <strong> emphasis high</strong>
-      </CodeText>
-      <br />
-      <CodeText>
-        Code text component
-        <small> emphasis low</small>
-      </CodeText>
-    </>
-  );
-};
-
-export const Code = CodeTextComponent.bind({});
 
 //********** Display 1,2 and 3 ***********/
 
@@ -213,28 +115,6 @@ const HeadingsComponent: ComponentStory<typeof Text> = () => (
   </>
 );
 export const Headings = HeadingsComponent.bind({});
-
-//********** Help ***********/
-
-const HelpComponent: ComponentStory<typeof Text> = () => {
-  return (
-    <>
-      <HelpText>
-        Help Text - div - His seasons Shall without form fourth seed so.
-      </HelpText>
-      <HelpText>
-        Help Text
-        <strong> emphasis high</strong>
-      </HelpText>
-      <HelpText>
-        Help Text
-        <small> emphasis low</small>
-      </HelpText>
-    </>
-  );
-};
-
-export const Help = HelpComponent.bind({});
 
 //********** Label ***********/
 
