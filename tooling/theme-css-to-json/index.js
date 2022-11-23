@@ -26,14 +26,14 @@ log(outputDir);
 
 const removePrefix = (input) => input.replaceAll(cssVarPrefix, "");
 /**
- * `var(--uitk-abc-def)` => `$uitk.abc.def`
+ * `var(--uitk-abc-def)` => `{uitk.abc.def}`
  */
 const cssVarToReference = (input) =>
-  "$" +
+  "{" +
   removePrefix(input.replace(/(^.*\(|\).*$)/g, ""))
     .split("-")
-    .join(".");
-
+    .join(".") +
+  "}";
 /**
  * Guess token type from path.
  *
