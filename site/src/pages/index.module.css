@@ -3,24 +3,60 @@
  * and scoped locally.
  */
 
+.homepageContainer {
+  background-color: var(--uitk-color-gray-900);
+  background-image: url(@site/static/img/background_gradient.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  --ifm-hero-background-color: var(--uitk-color-white);
-  --ifm-hero-text-color: var(--uitk-color-gray-900);
+  --ifm-hero-text-color: var(--uitk-color-white);
+  --ifm-hero-background-color: none;
+}
+
+.heroBanner {
+  flex: 2;
+  padding: calc(var(--uitk-size-unit) * 5);
+}
+
+.heroContainer {
+  display: flex;
+  padding: 0 calc(var(--uitk-size-unit) * 5);
+}
+
+.heroImage {
+  max-width: 100%;
+  flex: 2;
+}
+
+.heroTitle {
+  font-size: 60px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--uitk-size-unit) * 4);
+  padding: calc(var(--uitk-size-unit) * 6) calc(var(--uitk-size-unit) * 4);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: var(--uitk-size-unit);
+    flex: 1;
   }
-}
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--uitk-size-unit);
+  .heroContainer {
+    flex-flow: column-reverse;
+  }
+
+  .heroImage {
+    flex: 1;
+  }
+
+  .cardContainer {
+    flex-direction: column;
+  }
 }
