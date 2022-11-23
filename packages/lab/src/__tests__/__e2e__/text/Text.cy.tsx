@@ -51,7 +51,7 @@ describe("GIVEN a Text Component with elementType", () => {
   });
 });
 
-// No Truncation
+// Truncation
 describe("GIVEN a Text component with maxRows=2 ", () => {
   componentsArray.forEach(({ component, name }) => {
     it(`${name} should not be truncated`, () => {
@@ -59,88 +59,30 @@ describe("GIVEN a Text component with maxRows=2 ", () => {
 
       cy.mount(<Component maxRows={2}>{textExample}</Component>);
       cy.get(".uitkText")
-        .should("not.have.class", "uitkText-lineClamp")
-        .and("not.have.css", "-webkit-line-clamp", "2");
-    });
-  });
-});
-
-// Truncation + Tooltip
-xdescribe("GIVEN a Text component with maxRows=2 and truncate=true", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should display only 2 rows and show Tooltip on focus and hover`, () => {
-      const Component = component;
-
-      cy.mount(
-        <Component truncate maxRows={2}>
-          {textExample}
-        </Component>
-      );
-      const textComponent = cy.get(".uitkText");
-      textComponent
         .should("have.class", "uitkText-lineClamp")
         .and("have.css", "-webkit-line-clamp", "2");
-
-      cy.realPress("Tab");
-      cy.findByRole("tooltip").should("be.visible");
-
-      cy.realPress("Escape");
-
-      cy.get(".uitkText").realHover();
-      cy.findByRole("tooltip").should("be.visible");
     });
   });
 });
 
-// Truncation + No Tooltip
-xdescribe("GIVEN a Text component with maxRows=2, truncate=true and showTooltip=false ", () => {
+// Variant
+describe("GIVEN a Text component with variant=primary ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should display only 2 rows but should NOT show Tooltip on focus`, () => {
+    it(`${name} should have class uitkText-primary`, () => {
       const Component = component;
 
-      cy.mount(
-        <Component truncate maxRows={2} showTooltip={false}>
-          {textExample}
-        </Component>
-      );
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-lineClamp")
-        .and("have.css", "-webkit-line-clamp", "2");
-
-      cy.realPress("Tab");
-      cy.findByRole("tooltip").should("not.exist");
-
-      cy.get(".uitkText").realHover();
-      cy.findByRole("tooltip").should("not.exist");
+      cy.mount(<Component variant="primary">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-primary");
     });
   });
 });
-
-// Size restricted by parent container
-xdescribe("GIVEN Text component with parent height 100px and truncate=true", () => {
+describe("GIVEN a Text component with variant=secondary ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should be truncated and show tooltip`, () => {
+    it(`${name} should have class uitkText-primary`, () => {
       const Component = component;
 
-      cy.mount(
-        <div style={{ width: 200, height: 100 }}>
-          <Component truncate>{textExample}</Component>
-        </div>
-      );
-      cy.get(".uitkText").should("have.class", "uitkText-lineClamp");
-
-      cy.wait(50);
-
-      cy.realPress("Tab");
-
-      cy.findByRole("tooltip").should("be.visible");
-
-      cy.realPress("Escape");
-
-      cy.findByRole("tooltip").should("not.exist");
-
-      cy.get(".uitkText").realHover();
-      cy.findByRole("tooltip").should("be.visible");
+      cy.mount(<Component variant="secondary">{textExample}</Component>);
+      cy.get(".uitkText").should("have.class", "uitkText-secondary");
     });
   });
 });

@@ -20,15 +20,10 @@ interface TextPropsBase<E extends ElementType> {
   elementType?: ElementType;
   maxRows?: number;
   /**
-   * Customise styling.
-   */
-  style?: CSSProperties;
-  /**
    * Match styling to a specified heading
    */
   styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
   variant?: "primary" | "secondary";
-  help?: boolean;
 }
 
 export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
@@ -47,7 +42,6 @@ export const Text = forwardRef(function Text<T extends ElementType>(
     className,
     elementType = "div",
     maxRows,
-    style,
     styleAs,
     variant = "primary",
     ...restProps
@@ -64,7 +58,7 @@ export const Text = forwardRef(function Text<T extends ElementType>(
       })}
       {...restProps}
       ref={ref}
-      style={{ ...style, "--text-max-rows": maxRows }}
+      style={{ "--text-max-rows": maxRows }}
     >
       {children}
     </Component>
