@@ -4,7 +4,6 @@
 
 Rename `-icon` token parts within palette to `-foreground`
 
-
 ```diff
 - --uitk-palette-info-icon
 - --uitk-palette-error-icon
