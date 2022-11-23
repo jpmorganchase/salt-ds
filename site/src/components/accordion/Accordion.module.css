@@ -5,29 +5,36 @@
 
 /* accordian / card background should be shared va? */
 
-/* .h2 {
-  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
-} */
-
 .wrapper {
   background-color: var(--accordian-background);
-  max-width: 820px;
-  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 2);
+  width: 60%;
+  padding: calc(var(--uitk-size-unit) * 10);
 }
 
 .accordion .summary {
   background-color: transparent;
 }
 
-/* .accordion .summary h2 {
-  line-height: 32px;
-} */
+.accordion .metrics {
+  display: flex;
+  flex-direction: row;
+}
+
+.accordion .summary h2 {
+  line-height: var(--accordion-summary-height);
+}
+
+.wavesContainer {
+  align-self: center;
+  padding: calc(var(--uitk-size-unit) * 5) 0;
+}
 
 .keyline {
   height: 3px;
-  width: calc(100% + calc(var(--uitk-size-unit) * 4));
+  width: calc(100% + calc(var(--uitk-size-unit) * 20));
   position: relative;
-  left: calc(-1 * var(--uitk-size-unit) * 2);
+  left: calc(-1 * var(--uitk-size-unit) * 10);
+  top: calc(var(--uitk-size-unit) * 10);
 }
 
 .animate {

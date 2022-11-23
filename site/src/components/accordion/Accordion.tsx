@@ -11,46 +11,14 @@ import {
   AccordionSummaryProps,
 } from "@jpmorganchase/uitk-lab";
 
-import PencilIcon from "@site/static/img/pencil.svg";
-import CodeIcon from "@site/static/img/code.svg";
-import ArrowsIcon from "@site/static/img/arrows.svg";
+import { Metric, MetricContent } from "@jpmorganchase/uitk-lab";
+
+import Arch from "./Arch";
+import Waves from "./Waves";
+
 import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Accordion.module.css";
-
-type CardIconName = "pencil" | "code" | "arrows";
-
-type CardIconsType = {
-  name: CardIconName;
-  icon: JSX.Element;
-}[];
-
-const cardIcons: CardIconsType = [
-  { name: "pencil", icon: <PencilIcon className={styles.icon} /> },
-  { name: "code", icon: <CodeIcon className={styles.icon} /> },
-  { name: "arrows", icon: <ArrowsIcon className={styles.icon} /> },
-];
-
-const getKeylineColor = (icon: CardIconName) => {
-  switch (icon) {
-    case "pencil":
-      return "purple-50";
-    case "code":
-      return "teal-50";
-    case "arrows":
-      return "orange-30";
-    default:
-      return "orange-30";
-  }
-};
-
-export interface CardProps extends ComponentPropsWithoutRef<"div"> {
-  icon: CardIconName;
-  title: string;
-  description: string;
-  url: string;
-  linkText: string;
-}
 
 const accordianInfo = [
   {
@@ -73,6 +41,17 @@ const accordianInfo = [
           everything you need to create consistent, fully accessible,
           beautifully designed user interfaces.
         </p>
+        <div className={styles.metrics}>
+          <Metric>
+            <MetricContent subvalue="components" value="80+" />
+          </Metric>
+          <Metric>
+            <MetricContent subvalue="patterns" value="10+" />
+          </Metric>
+          <Metric>
+            <MetricContent subvalue="websites and apps created" value="1200+" />
+          </Metric>
+        </div>
       </>
     ),
   },
@@ -92,6 +71,9 @@ const accordianInfo = [
           Underpinned by beautiful and functional design, they support the
           creation of great user experiences across all devices.
         </p>
+        <div className={styles.wavesContainer}>
+          <Waves />
+        </div>
       </>
     ),
   },
@@ -116,6 +98,9 @@ const accordianInfo = [
           contributions informing and shaping our next steps. Get in touch to
           share your feedback.
         </p>
+        <div className={styles.wavesContainer}>
+          <Arch />
+        </div>
       </>
     ),
   },
@@ -127,10 +112,14 @@ const SiteAccordian = (): JSX.Element => {
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
   return (
     <div className={styles.wrapper}>
-      <Accordion className={styles.wrapper}>
+      <Accordion
+        className={styles.accordion}
+        defaultExpandedSectionIds={[accordianInfo[0].id]}
+        maxExpandedItems={1}
+      >
         {accordianInfo.map(({ id, summary, details }) => {
           return (
-            <AccordionSection className={styles.accordion} key={id}>
+            <AccordionSection className={styles.accordion} key={id} id={id}>
               <AccordionSummary className={styles.summary}>
                 <h2>{summary}</h2>
               </AccordionSummary>
