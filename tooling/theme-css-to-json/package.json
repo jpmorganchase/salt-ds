@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "node index.js ../../packages/theme/css/*/*.css",
+    "build:verbose": "node index.js --verbose ../../packages/theme/css/*/*.css ",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "css-tree": "^2.0.4"
+    "css-tree": "^2.0.4",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/css-tree": "^1.0.7",

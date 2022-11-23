@@ -4,21 +4,29 @@ const fs = require("fs");
 const path = require("path");
 const { findLast, generate, parse, walk } = require("css-tree");
 
+var argv = require("yargs/yargs")(process.argv.slice(2)).argv;
+
 // In the future this can be exposed to command arg
 const cssUitkVarPrefix = "--uitk-";
 const cssVarPrefix = "--";
 const prettyPrintOutputJson = true;
 const splitFileByClass = true; // this would generate multiple JSON from a single CSS to avoid same token been overridden
 
-const filesArg = process.argv.slice(2);
+const filesArg = argv._;
 
 const log = (...params) => {
   console.log(...params);
 };
 
+const logInfo = (...params) => {
+  if (argv.verbose) {
+    console.info(...params);
+  }
+};
+
 log("filesArg: ", filesArg);
 const outputDir = path.join(__dirname, "dist");
-log(outputDir);
+log("Output dir: ", outputDir);
 // if (fs.existsSync(outputDir)) {
 //   fs.rmdirSync(outputDir);
 // }
@@ -136,9 +144,9 @@ const getDescriptionFromClasses = (classes) => {
  * @param {object} obj
  */
 const remapWithDefault = (obj) => {
-  // console.log("remapWithDefault", obj);
+  // log("remapWithDefault", obj);
   const keys = Object.keys(obj);
-  // console.log("remapWithDefault keys", keys);
+  // log("remapWithDefault keys", keys);
   if (
     typeof obj === "object" &&
     keys.includes("type") &&
@@ -146,7 +154,7 @@ const remapWithDefault = (obj) => {
     keys.filter((x) => !x.startsWith("$") && !["type", "value"].includes(x))
       .length > 0
   ) {
-    console.log("remapping default", obj);
+    logInfo("remapping default", obj);
     const newObj = { default: { value: obj.value, type: obj.type }, ...obj };
     delete newObj.value;
     delete newObj.type;
@@ -157,7 +165,7 @@ const remapWithDefault = (obj) => {
 };
 
 const walkDownObjToRemap = (obj) => {
-  // console.log("walkDownObjToRemap", obj);
+  // log("walkDownObjToRemap", obj);
   if (typeof obj === "object") {
     const remapped = remapWithDefault(obj);
     let newObj = {};
@@ -200,7 +208,7 @@ const writeObjToFile = (obj, filePath) => {
     JSON.stringify(obj, null, prettyPrintOutputJson ? 2 : undefined),
     { flags: "a" }
   );
-  log("Wrote to", filePath);
+  logInfo("Wrote to", filePath);
 };
 
 filesArg.forEach((inputFile) => {
@@ -228,7 +236,6 @@ filesArg.forEach((inputFile) => {
           walk(node, {
             visit: "ClassSelector",
             enter(node) {
-              // console.log(node);
               classes.push(node.name);
             },
           });
