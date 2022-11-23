@@ -131,7 +131,6 @@
   --uitk-palette-neutral-border-disabled-high: var(--uitk-color-gray-90-fade-border);
   --uitk-palette-neutral-border-disabled-low: var(--uitk-color-gray-30-fade-border);
   --uitk-palette-neutral-border-disabled-medium: var(--uitk-color-gray-60-fade-border);
-  --uitk-palette-neutral-highlight: var(--uitk-color-blue-30);
   --uitk-palette-neutral-scrim-low: var(--uitk-color-white-fade-scrim-low);
   --uitk-palette-neutral-scrim-medium: var(--uitk-color-black-fade-scrim-medium);
 
@@ -261,7 +260,6 @@
   --uitk-palette-neutral-border-disabled-low: var(--uitk-color-gray-600-fade-border);
   --uitk-palette-neutral-border-disabled-medium: var(--uitk-color-gray-300-fade-border);
   --uitk-palette-neutral-border-disabled-high: var(--uitk-color-gray-90-fade-border);
-  --uitk-palette-neutral-highlight: var(--uitk-color-blue-700);
   --uitk-palette-neutral-scrim-low: var(--uitk-color-black-fade-scrim-medium);
   --uitk-palette-neutral-scrim-medium: var(--uitk-color-gray-800-fade-scrim-medium);
 

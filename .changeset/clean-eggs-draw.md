@@ -39,6 +39,7 @@ Dark mode:
 ```
 
 Remove selectable foreground state tokens and respective palette tokens
+Remove `uitk-palette-neutral-highlight` as it now can be replaced by `uitk-palette-interact-background-active`
 
 ```diff
 - --uitk-selectable-foreground-hover
@@ -47,6 +48,7 @@ Remove selectable foreground state tokens and respective palette tokens
 - --uitk-palette-interact-foreground-hover
 - --uitk-palette-interact-foreground-active
 - --uitk-palette-interact-foreground-blurSelected
+- --uitk-palette-neutral-highlight
 ```
 
 Remove redundant fade tokens, add new requirements
