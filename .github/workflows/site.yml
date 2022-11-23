@@ -50,6 +50,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+          if (context.eventName == 'pull_request') {
             const previewUrl = "${{ steps.publish.outputs.url }}";
             const commentText = `Site Preview Link `;
             const {data: comments} = await github.rest.issues.listComments({
@@ -74,3 +75,5 @@ jobs:
                 body: `${commentText} ${previewUrl}`
               });
             };
+          }
+            
