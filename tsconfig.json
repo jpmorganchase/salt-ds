@@ -12,5 +12,10 @@
     "tooling",
     "playground"
   ],
-  "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]
+  "exclude": [
+    "**/*.cy.*",
+    "**/*.spec.*",
+    "**/*.test.*",
+    "tooling/figma-style-generator"
+  ]
 }
