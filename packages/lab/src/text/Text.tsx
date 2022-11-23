@@ -21,7 +21,15 @@ interface TextPropsBase<E extends ElementType> {
   /**
    * Match styling to a specified heading
    */
-  styleAs?: "h1" | "h2" | "h3" | "h4" | "label";
+  styleAs?:
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "label"
+    | "display1"
+    | "display2"
+    | "display3";
   variant?: "primary" | "secondary";
 }
 

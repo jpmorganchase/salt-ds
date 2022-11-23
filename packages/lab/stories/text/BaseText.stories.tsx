@@ -30,7 +30,16 @@ export default {
       },
     },
     styleAs: {
-      options: ["h1", "h2", "h3", "h4", "label"],
+      options: [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "label",
+        "display1",
+        "display2",
+        "display3",
+      ],
       control: { type: "select" },
     },
     variant: {
