@@ -1,8 +1,7 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { Link, LinkProps } from "../link";
-import { Text } from "../text";
 import { useMetricContext } from "./internal";
 import "./MetricHeader.css";
 

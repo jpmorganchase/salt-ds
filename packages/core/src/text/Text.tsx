@@ -19,7 +19,7 @@ interface TextPropsBase<E extends ElementType> {
   elementType?: ElementType;
   maxRows?: number;
   /**
-   * Match styling to a specified heading
+   * Match styling to another text component
    */
   styleAs?:
     | "h1"
@@ -37,7 +37,8 @@ export type TextProps<E extends ElementType = "div"> = TextPropsBase<E> &
   Omit<ComponentPropsWithoutRef<E>, keyof TextPropsBase<E>>;
 
 type PolymorphicText = <T extends ElementType>(
-  p: TextProps<T> & { ref?: polymorphicRef<T> }
+  p: TextProps<T>,
+  ref?: polymorphicRef<T>
 ) => ReactElement<TextProps<T>>;
 
 export const Text = forwardRef(function Text<T extends ElementType>(

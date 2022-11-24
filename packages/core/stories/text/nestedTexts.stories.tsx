@@ -1,9 +1,10 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Text, Link, H2 } from "@jpmorganchase/uitk-lab";
+import { Text, H2 } from "@jpmorganchase/uitk-core";
+import { Link } from "@jpmorganchase/uitk-lab";
 
 export default {
-  title: "Lab/Text",
+  title: "Core/Text",
   component: Text,
 } as ComponentMeta<typeof Text>;
 

@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Text, TextProps } from "@jpmorganchase/uitk-lab";
+import { Text, TextProps } from "@jpmorganchase/uitk-core";
 
 export default {
-  title: "Lab/Text",
+  title: "Core/Text",
   component: Text,
   argTypes: {
     children: {

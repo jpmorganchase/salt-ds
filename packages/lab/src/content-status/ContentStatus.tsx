@@ -3,11 +3,11 @@ import {
   makePrefixer,
   useAriaAnnouncer,
   useId,
+  Text,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
 
-import { Text } from "../text";
 import {
   StatusIndicator,
   StatusIndicatorProps,

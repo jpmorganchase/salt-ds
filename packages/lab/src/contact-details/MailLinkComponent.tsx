@@ -1,5 +1,6 @@
+import { Text } from "@jpmorganchase/uitk-core";
+
 import { Link } from "../link";
-import { Text } from "../text";
 import { isEmail } from "../utils";
 import { ValueComponentProps } from "./types";
 

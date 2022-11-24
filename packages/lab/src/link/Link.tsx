@@ -1,9 +1,8 @@
 import { forwardRef, useCallback, MouseEvent } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
-import { Text, TextProps } from "../text";
+import { makePrefixer, Text, TextProps } from "@jpmorganchase/uitk-core";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Link.css";
 
 const withBaseName = makePrefixer("uitkLink");

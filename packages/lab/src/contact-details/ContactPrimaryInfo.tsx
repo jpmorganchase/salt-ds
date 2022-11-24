@@ -1,8 +1,7 @@
-import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, Text } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
-import { Text } from "../text";
 
 const withBaseName = makePrefixer("uitkContactPrimaryInfo");
 

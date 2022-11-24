@@ -1,4 +1,10 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  Text,
+  Display1,
+  Display2,
+  Display3,
+} from "@jpmorganchase/uitk-core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -6,7 +12,6 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Text, Display1, Display2, Display3 } from "../text";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";

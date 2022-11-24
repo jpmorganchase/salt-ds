@@ -1,7 +1,6 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Text } from "../text";
 import { MailLinkComponent } from "./MailLinkComponent";
 import { ValueComponentProps } from "./types";
 

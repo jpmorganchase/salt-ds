@@ -1,8 +1,7 @@
-import { makePrefixer, TooltipProps } from "@jpmorganchase/uitk-core";
+import { makePrefixer, TooltipProps, Text } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
-import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { Text } from "../text";
+import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";
@@ -46,7 +45,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
   ) {
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
-    const hasChildren = React.Children.count(children) !== 0;
+    const hasChildren = Children.count(children) !== 0;
     const hasOnlyIcon = Icon && !hasChildren;
 
     const getDefaultBreadcrumb = () =>

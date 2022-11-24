@@ -10,10 +10,10 @@ import {
   H3,
   H4,
   Label as LabelText,
-} from "@jpmorganchase/uitk-lab";
+} from "@jpmorganchase/uitk-core";
 
 export default {
-  title: "Lab/Text",
+  title: "Core/Text",
   component: Text,
   parameters: {
     controls: {
@@ -51,7 +51,9 @@ const FigureTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
       <Display1>Display 1</Display1>
+      <br />
       <Display2>Display 2</Display2>
+      <br />
       <Display3>Display 3</Display3>
     </>
   );
