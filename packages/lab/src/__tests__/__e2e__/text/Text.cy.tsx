@@ -30,8 +30,8 @@ subline of her own road, the Line Lane.`;
 const componentsArray = [
   { component: Text, name: "Text", tag: "div" },
   { component: Display1, name: "Display1", tag: "span" },
-  { component: Display2, name: "Display", tag: "span" },
-  { component: Display3, name: "Display", tag: "span" },
+  { component: Display2, name: "Display2", tag: "span" },
+  { component: Display3, name: "Display3", tag: "span" },
   { component: H1, name: "H1", tag: "h1" },
   { component: H2, name: "H2", tag: "h2" },
   { component: H3, name: "H3", tag: "h3" },
@@ -54,7 +54,7 @@ describe("GIVEN a Text Component with elementType", () => {
 // Truncation
 describe("GIVEN a Text component with maxRows=2 ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should not be truncated`, () => {
+    it(`${name} should be truncated and only display 2 rows`, () => {
       const Component = component;
 
       cy.mount(<Component maxRows={2}>{textExample}</Component>);
@@ -78,7 +78,7 @@ describe("GIVEN a Text component with variant=primary ", () => {
 });
 describe("GIVEN a Text component with variant=secondary ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should have class uitkText-primary`, () => {
+    it(`${name} should have class uitkText-secondary`, () => {
       const Component = component;
 
       cy.mount(<Component variant="secondary">{textExample}</Component>);
@@ -89,7 +89,13 @@ describe("GIVEN a Text component with variant=secondary ", () => {
 
 // styleAs
 describe("GIVEN Text component with styleAs=h1", () => {
-  componentsArray.forEach(({ component, name }) => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
     it(`${name} should be styled as h1`, () => {
       const Component = component;
 
@@ -101,7 +107,13 @@ describe("GIVEN Text component with styleAs=h1", () => {
   });
 });
 describe("GIVEN Text component with styleAs=h2", () => {
-  componentsArray.forEach(({ component, name }) => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
     it(`${name} should be styled as h2`, () => {
       const Component = component;
 
@@ -113,7 +125,13 @@ describe("GIVEN Text component with styleAs=h2", () => {
   });
 });
 describe("GIVEN Text component with styleAs=h3", () => {
-  componentsArray.forEach(({ component, name }) => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
     it(`${name} should be styled as h3`, () => {
       const Component = component;
 
@@ -125,7 +143,13 @@ describe("GIVEN Text component with styleAs=h3", () => {
   });
 });
 describe("GIVEN Text component with styleAs=h4", () => {
-  componentsArray.forEach(({ component, name }) => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
     it(`${name} should be styled as h4`, () => {
       const Component = component;
 
@@ -137,7 +161,13 @@ describe("GIVEN Text component with styleAs=h4", () => {
   });
 });
 describe("GIVEN Text component with styleAs=label", () => {
-  componentsArray.forEach(({ component, name }) => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+  ].forEach(({ component, name }) => {
     it(`${name} should be styled as label`, () => {
       const Component = component;
 
@@ -145,6 +175,66 @@ describe("GIVEN Text component with styleAs=label", () => {
       cy.get(".uitkText")
         .should("have.class", "uitkText-label")
         .and("have.css", "font-size", "11px");
+    });
+  });
+});
+
+describe("GIVEN Text component with styleAs=display1", () => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
+    it(`${name} should be styled as display1`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="display1">{textExample}</Component>);
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-display1")
+        .and("have.css", "font-size", "54px");
+    });
+  });
+});
+
+describe("GIVEN Text component with styleAs=display2", () => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
+    it(`${name} should be styled as display2`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="display2">{textExample}</Component>);
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-display2")
+        .and("have.css", "font-size", "36px");
+    });
+  });
+});
+
+describe("GIVEN Text component with styleAs=display3", () => {
+  [
+    { component: Text, name: "Text", tag: "div" },
+    { component: H1, name: "H1", tag: "h1" },
+    { component: H2, name: "H2", tag: "h2" },
+    { component: H3, name: "H3", tag: "h3" },
+    { component: H4, name: "H4", tag: "h4" },
+    { component: Label, name: "Label", tag: "label" },
+  ].forEach(({ component, name }) => {
+    it(`${name} should be styled as display3`, () => {
+      const Component = component;
+
+      cy.mount(<Component styleAs="display3">{textExample}</Component>);
+      cy.get(".uitkText")
+        .should("have.class", "uitkText-display3")
+        .and("have.css", "font-size", "24px");
     });
   });
 });
