@@ -11,7 +11,7 @@ export default {
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   const { imgSrc, className } = props;
   return (
-    <QAContainer imgSrc={imgSrc}>
+    <QAContainer imgSrc={imgSrc} itemPadding={6}>
       <FormField
         className={cx(className)}
         label="Default Form Field description label"

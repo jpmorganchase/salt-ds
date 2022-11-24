@@ -1,25 +1,19 @@
 /* Styles applied to root element */
 .uitk-density-touch {
-  --formField-label-default-top: 11px;
   --formField-label-left-top: 16px;
-  --formField-label-minHeight: 16px;
 }
 .uitk-density-low {
-  --formField-label-default-top: 7px;
   --formField-label-left-top: 12px;
 }
 .uitk-density-medium {
-  --formField-label-default-top: 5px;
   --formField-label-left-top: 8px;
 }
 .uitk-density-high {
-  --formField-label-default-top: 3px;
   --formField-label-left-top: 4px;
 }
 
 .uitkFormLabel {
   --formField-label-fontSize: var(--uitkFormField-label-fontSize, var(--uitk-text-caption-fontSize));
-  --formField-label-top: var(--formField-label-default-top);
   --formField-label-width: 100%;
 }
 
@@ -28,20 +22,17 @@
   --formField-label-width: auto;
 }
 
-.uitkFormLabel {
+.uitkText.uitkFormLabel {
   align-items: center;
   color: var(--uitkFormField-label-text-color, var(--uitk-text-secondary-foreground));
   display: block;
-  font-size: var(--formField-label-fontSize);
-  margin-bottom: var(--uitkFormField-label-marginBottom, var(--formField-label-marginBottom));
-  min-height: var(--uitkFormField-label-minHeight, var(--formField-label-minHeight, var(--uitk-text-caption-minHeight)));
+  min-height: var(--uitkFormField-label-minHeight, var(--uitk-text-caption-lineHeight));
   margin-top: var(--uitkFormField-label-marginTop, 0px);
-  line-height: var(--uitkFormField-label-lineHeight, var(--uitk-text-base-lineHeight));
   overflow: hidden;
-  padding-left: var(--uitkFormField-label-paddingLeft, var(--formField-label-paddingLeft));
-  padding-right: var(--uitkFormField-label-paddingRight, var(--formField-label-paddingRight));
+  padding-left: var(--uitkFormField-label-paddingLeft, var(--formField-label-paddingLeft, 0));
+  padding-right: var(--uitkFormField-label-paddingRight, var(--formField-label-paddingRight, 0));
   padding-top: var(--uitkFormField-label-paddingTop, 0);
-  padding-bottom: var(--uitkFormField-label-paddingBottom, 0);
+  padding-bottom: var(--uitkFormField-label-paddingBottom, var(--formField-label-paddingBottom, 0));
   text-overflow: ellipsis;
   top: var(--uitkFormField-label-top, var(--formField-label-top));
   transform: translate(var(--uitkFormField-label-transform-x, 0), var(--uitkFormField-label-transform-y, var(--formField-label-top)));

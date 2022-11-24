@@ -23,7 +23,7 @@
   border: var(--uitkInput-border, none);
   border-radius: var(--uitkInput-borderRadius, 0);
   color: var(--uitkInput-text-color, var(--uitk-text-primary-foreground));
-  cursor: var(--uitkInput-cursor, default);
+  cursor: var(--uitkInput-cursor, var(--uitk-editable-cursor-hover));
   display: inline-flex;
   font-family: var(--uitkInput-fontFamily, var(--uitk-text-fontFamily));
   font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
@@ -132,6 +132,7 @@
 
 /* Style applied if `inFormField={true}` */
 .uitkInput-formField {
+  background: var(--uitkFormField-input-background, var(--formField-background));
   min-width: var(--uitkFormField-input-minWidth, 0px);
   width: 100%;
 }

@@ -9,6 +9,7 @@ import {
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
 import "./FormLabel.css";
+import { LabelCaption } from "@jpmorganchase/uitk-lab";
 
 const withBaseName = makePrefixer("uitkFormLabel");
 export interface FormLabelProps
@@ -63,7 +64,7 @@ export const FormLabel = ({
   tooltipText,
   ...restProps
 }: FormLabelProps) => (
-  <label
+  <LabelCaption
     className={cx(withBaseName(), className, {
       [withBaseName("disabled")]: disabled,
     })}
@@ -86,5 +87,5 @@ export const FormLabel = ({
         {...StatusIndicatorProps}
       />
     )}
-  </label>
+  </LabelCaption>
 );

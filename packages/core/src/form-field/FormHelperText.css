@@ -34,8 +34,6 @@
 
 /* Class applied to the helper text container */
 .uitkFormFieldHelperText {
-  --formField-helperText-opacity: 1;
-
   color: var(--uitkFormField-helperText-color, var(--uitk-text-secondary-foreground));
   font-size: var(--formField-helperText-fontSize);
   font-style: var(--uitkFormField-helperText-fontStyle, var(--uitk-text-help-fontStyle));
@@ -44,7 +42,6 @@
   min-height: var(--uitkFormField-helperText-minHeight, var(--uitk-text-help-minHeight));
   margin-bottom: var(--uitkFormField-helperText-marginBottom, 0);
   margin-top: var(--uitkFormField-helperText-marginTop, var(--formField-helperText-marginTop));
-  opacity: var(--uitkFormField-helperText-opacity, var(--formField-helperText-opacity));
   padding-left: var(--uitkFormField-helperText-paddingLeft, var(--uitk-size-unit));
   padding-right: var(--uitkFormField-helperText-paddingRight, var(--uitk-size-unit));
   transform: var(--uitkFormField-helperText-transform, var(--formField-helperText-transform, none));
