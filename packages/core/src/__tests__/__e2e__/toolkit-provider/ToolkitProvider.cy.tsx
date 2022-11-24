@@ -187,28 +187,4 @@ describe("Given a ToolkitProvider", () => {
         .and("have.class", "uitk-density-high");
     });
   });
-
-  // describe("when a theme is available", () => {
-  //   it("provides programatic access to CSS variables", () => {
-  //     cy.mount(
-  //       <ToolkitProvider density="high" theme="dark">
-  //         <TestComponent displayVariableValue={["spacing", "unit"]} />
-  //         <ToolkitProvider density="medium">
-  //           <TestComponent
-  //             displayVariableValue={["spacing", "unit"]}
-  //             id="test-2"
-  //           />
-  //         </ToolkitProvider>
-  //       </ToolkitProvider>
-  //     );
-
-  //     cy.get("#test-1")
-  //       .should("exist")
-  //       .and("have.attr", "data-variable-value", "4px");
-
-  //     cy.get("#test-2")
-  //       .should("exist")
-  //       .and("have.attr", "data-variable-value", "8px");
-  //   });
-  // });
 });

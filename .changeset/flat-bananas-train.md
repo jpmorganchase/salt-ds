@@ -1,5 +1,8 @@
 ---
-"@jpmorganchase/uitk-core": patch
+"@jpmorganchase/uitk-core": minor
 ---
 
-Added "scope" as an option for "applyClassesTo" prop, if this is passed into the `ToolkitProvider`, the provider will create a div element and apply the classes to that. The root level toolkit provider now applies the classes to the html element while nested toolkit providers will behave as if "scope" was passed as a prop to "applyClassesTo"
+Added `"scope"` as an option for `applyClassesTo` prop which causes classes to be applied to a div element created by the `ToolkitProvider`.  
+
+**BREAKING CHANGE:**  
+The default value of `applyClassesTo` is now `"root"` for root level `ToolkitProviders` and `"scope"` for nested `ToolkitProviders`.
