@@ -220,3 +220,32 @@ Then we would see the following HTML.
   </body>
 </html>
 ```
+
+By default, the root level `ToolkitProvider` will apply the theme and density classes and the theme mode data attribute to the `<html>` element and any nested `ToolkitProvider` will create a div with the `uitk-provider` class
+which the classes and data attributes are added,
+if you want the root level `ToolkitProvider` to create a div instead, then pass the value "scope" in the `applyClassesTo`
+
+This would look as follows:
+
+```jsx
+<ToolkitProvider mode="light" density="high" applyClassesTo={"scope"}>
+  <Card>...</Card>
+</ToolkitProvider>
+```
+
+Then we would see the following HTML.
+
+```html
+<html lang="en">
+  <head>
+    <title>Example</title>
+  </head>
+  <body>
+    <div id="root">
+      <div class="uitk-provider uitk-theme uitk-density-high" data-mode="light">
+        <div class="uitkCard">...</div>
+      </div>
+    </div>
+  </body>
+</html>
+```

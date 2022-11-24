@@ -40,7 +40,7 @@ describe("Given a ToolkitProvider", () => {
       );
 
       cy.get("div.uitk-provider")
-        .should("have.length", 2)
+        .should("have.length", 1)
         .and("have.attr", "data-mode", "light")
         .and("have.class", "uitk-density-medium");
     });
@@ -146,7 +146,7 @@ describe("Given a ToolkitProvider", () => {
       );
 
       // cy.mount adds a ToolkitProvider
-      cy.get("div.uitk-provider").should("have.length", 1);
+      cy.get("div.uitk-provider").should("have.length", 0);
 
       cy.get("#test-1")
         .should("exist")
@@ -164,12 +164,28 @@ describe("Given a ToolkitProvider", () => {
         </ToolkitProvider>
       );
 
-      cy.get("uitk-provider").should("have.length", 0);
+      cy.get("div.uitk-provider").should("have.length", 0);
 
       cy.get("html")
         .should("exist")
         .and("have.attr", "data-mode", "dark")
         .and("have.class", "uitk-density-high");
+    });
+  });
+
+  describe("when scope is passed to applyClassesTo", () => {
+    it("should create div element with correct classes applied even if it is the root level provider", () => {
+      mount(
+        <ToolkitProvider density="high" mode="dark" applyClassesTo={"scope"}>
+          <TestComponent />
+        </ToolkitProvider>
+      );
+
+      cy.get("div.uitk-provider")
+        .should("have.length", 1)
+        .and("have.attr", "data-mode", "dark")
+        .and("have.class", "uitk-density-high");
+
     });
   });
 
