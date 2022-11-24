@@ -134,7 +134,7 @@ export function ToolkitProvider({
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
 
-  const applyClassesTo = applyClassesToProp ?? (isRoot ? "root" : "scope")
+  const applyClassesTo = applyClassesToProp ?? (isRoot ? "root" : "scope");
 
   const themeContextValue = useMemo(
     () => ({ theme: themeName, mode }),

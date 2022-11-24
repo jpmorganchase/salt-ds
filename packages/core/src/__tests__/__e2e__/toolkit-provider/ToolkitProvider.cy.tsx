@@ -185,7 +185,6 @@ describe("Given a ToolkitProvider", () => {
         .should("have.length", 1)
         .and("have.attr", "data-mode", "dark")
         .and("have.class", "uitk-density-high");
-
     });
   });
 
