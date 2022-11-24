@@ -1,8 +1,9 @@
-import { forwardRef, ReactNode, HTMLAttributes } from "react";
+import { forwardRef, ReactNode, HTMLAttributes, ElementType } from "react";
 import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 import "./SplitLayout.css";
+import { FlexItem, FlexItemProps } from "../FlexItem";
 
-export interface SplitItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface SplitItemProps extends FlexItemProps<ElementType> {
   /**
    * A list of items. Required to have some children.
    */
@@ -13,19 +14,19 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
    */
-  align?: FlexLayoutProps["align"];
+  align?: FlexLayoutProps<ElementType>["align"];
   /**
    * Adds a separator between elements if wrap is not active, default is false.
    */
-  separators?: FlexLayoutProps["separators"];
+  separators?: FlexLayoutProps<ElementType>["separators"];
   /**
    * Allow the items to wrap as needed, default is true.
    */
-  wrap?: FlexLayoutProps["wrap"];
+  wrap?: FlexLayoutProps<ElementType>["wrap"];
   /**
    * Controls the space between items.
    */
-  gap?: FlexLayoutProps["gap"];
+  gap?: FlexLayoutProps<ElementType>["gap"];
   /**
    * Parent component to be rendered
    */
@@ -41,9 +42,9 @@ const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
   ref
 ) {
   return (
-    <div {...rest} ref={ref}>
+    <FlexItem {...rest} ref={ref}>
       {children}
-    </div>
+    </FlexItem>
   );
 });
 
@@ -55,7 +56,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
       rightSplitItem,
       separators,
       wrap = true,
-      className,
       gap,
       ...rest
     },
@@ -70,7 +70,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         gap={gap}
         justify="space-between"
         separators={separators}
-        className={className}
         {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>
