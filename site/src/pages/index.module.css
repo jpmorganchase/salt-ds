@@ -13,6 +13,10 @@
 
 .heroBanner {
   --ifm-hero-text-color: var(--uitk-color-white);
+<<<<<<< HEAD
+=======
+  --ifm-hero-background-color: none;
+>>>>>>> main
 }
 
 .heroBanner {
@@ -45,6 +49,7 @@
   .heroBanner {
     padding: var(--uitk-size-unit);
     flex: 1;
+<<<<<<< HEAD
   }
 
   .heroContainer {
@@ -53,11 +58,23 @@
 
   .heroImage {
     flex: 1;
+=======
+>>>>>>> main
   }
-}
 
+<<<<<<< HEAD
 @media screen and (max-width: 960px) {
   /* TODO: use odyssey breakpoints? */
+=======
+  .heroContainer {
+    flex-flow: column-reverse;
+  }
+
+  .heroImage {
+    flex: 1;
+  }
+
+>>>>>>> main
   .cardContainer {
     flex-direction: column;
   }
