@@ -29,6 +29,7 @@ const withBaseName = makePrefixer("uitkTab");
 
 //TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
 const CloseTabButton = (props: ButtonProps) => (
+  // FIXME: use polymorphic button
   <Button
     {...props}
     aria-label="Close Tab (Delete or Backspace)"

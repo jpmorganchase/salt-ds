@@ -19,6 +19,7 @@ import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 
 import "./Pill.css";
+import { Button } from "../button";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -152,8 +153,7 @@ export const PillBase = forwardRef(function PillBase(
   };
 
   // FIXME: use polymorphic button as div for deletable and clickable cases.
-  //  const Component = deletable || clickable ? Button : "div";
-  const Component = "div";
+  const Component = deletable || clickable ? Button : "div";
 
   const renderDeleteIcon = () => {
     // FIXME: deleteIconProp type
