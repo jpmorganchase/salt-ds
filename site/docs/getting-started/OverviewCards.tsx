@@ -1,6 +1,7 @@
 import Card, { CardProps } from "@site/src/components/card/Card";
 import DesignIcon from "@site/static/img/design.svg";
 import DevelopIcon from "@site/static/img/develop.svg";
+import { ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
 import styles from "./OverviewCards.module.css";
 
 const cards: CardProps[] = [
@@ -18,7 +19,7 @@ const cards: CardProps[] = [
     title: "Develop",
     description:
       "We walk you through the process of installing the Salt dependencies into your React project and importing components.",
-    url: "/getting-started/dev",
+    url: "/getting-started/develop",
     linkText: "Start developing",
     keylineColor: "var(--uitk-color-orange-600)",
   },
@@ -29,16 +30,16 @@ const OverviewCards = () => (
     {cards.map((card, index) => {
       const { icon, title, description, url, linkText, keylineColor } = card;
       return (
-        <Card
-          key={index}
-          theme="light"
-          icon={icon}
-          title={title}
-          description={description}
-          url={url}
-          linkText={linkText}
-          keylineColor={keylineColor}
-        />
+        <ToolkitProvider mode="light" key={index}>
+          <Card
+            icon={icon}
+            title={title}
+            description={description}
+            url={url}
+            linkText={linkText}
+            keylineColor={keylineColor}
+          />
+        </ToolkitProvider>
       );
     })}
   </div>

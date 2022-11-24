@@ -6,6 +6,7 @@ import {
 } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
+import { useTheme } from "@jpmorganchase/uitk-core";
 
 import useOnScreen from "../../utils/useOnScreen";
 
@@ -18,7 +19,6 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   url: string;
   linkText: string;
   keylineColor: CSSProperties["color"];
-  theme?: "light" | "dark";
 }
 
 const Card = ({
@@ -28,19 +28,18 @@ const Card = ({
   url,
   linkText,
   keylineColor,
-  theme = "dark",
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
 
-  const useLightTheme = theme !== "dark";
+  const { mode } = useTheme();
+
+  const useLightTheme = mode !== "dark";
 
   return (
     <div className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}>
-      <div className={styles.iconContainer}>
-        {cloneElement(icon, { ...icon.props, className: styles.icon })}
-      </div>
+      <div className={styles.iconContainer}>{icon}</div>
       <div className={styles.cardContent}>
         <h2>{title}</h2>
         <p>{description}</p>
