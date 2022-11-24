@@ -33,6 +33,7 @@
 
   /* Label */
   --uitk-text-label-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-label-fontWeight-small: var(--uitk-typography-fontWeight-light);
   --uitk-text-label-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
 
   /* Display text */
