@@ -168,7 +168,7 @@
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .uitkButton:active,
-.uitkButton-active {
+.uitkButton-active.uitkButton-active {
   background: var(--uitkButton-background-active, var(--button-background-active));
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
