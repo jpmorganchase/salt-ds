@@ -43,7 +43,7 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
 
 <Canvas>
   <ComponentAnatomy>
-    <Text>Default</Text>
+    <Text>Text</Text>
   </ComponentAnatomy>
   <ComponentAnatomy>
     <H1>H1</H1>
@@ -83,26 +83,63 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
 
 We've created a set of components that are most commonly used, but it's easy to generate your own by passing the tag you want to be returned into the `elementType` prop. The base Text component is generating a `div` by default
 
-### Default Text
+### Text
 
 <Canvas>
-  <Story name="Text" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
-      <div>
-        <h4>Default</h4>
-        <Text>This is a text example</Text>
-      </div>
-      <div>
-        <h4>Strong</h4>
-        <Text>
-          <strong>This is a text example</strong>
-        </Text>
-      </div>
-      <div>
-        <h4>Small</h4>
-        <Text>
-          <small>This is a text example</small>
-        </Text>
+  <Story name="Text">
+    <div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr",
+          width: "100%",
+          gap: 20,
+        }}
+      >
+        <div>
+          <strong>Variant</strong>
+        </div>
+        <div>
+          <strong>Text</strong>
+        </div>
+        <div>
+          <strong>Strong</strong>
+        </div>
+        <div>
+          <strong>Small</strong>
+        </div>
+        <div>
+          <strong>Primary</strong>
+        </div>
+        <div>
+          <Text>This is a text example</Text>
+        </div>
+        <div>
+          <Text>
+            <strong>This is a text example</strong>
+          </Text>
+        </div>
+        <div>
+          <Text>
+            <small>This is a text example</small>
+          </Text>
+        </div>
+        <div>
+          <strong>Secondary</strong>
+        </div>
+        <div>
+          <Text variant="secondary">This is a text example</Text>
+        </div>
+        <div>
+          <Text variant="secondary">
+            <strong>This is a text example</strong>
+          </Text>
+        </div>
+        <div>
+          <Text variant="secondary">
+            <small>This is a text example</small>
+          </Text>
+        </div>
       </div>
     </div>
   </Story>
@@ -111,21 +148,57 @@ We've created a set of components that are most commonly used, but it's easy to 
 ### H1
 
 <Canvas>
-  <Story name="H1" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+  <Story name="H1">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 1fr 1fr",
+        width: "100%",
+        gap: 20,
+        alignItems: "center",
+      }}
+    >
       <div>
-        <h4>Default</h4>
+        <strong>Variant</strong>
+      </div>
+      <div>
+        <strong>Default</strong>
+      </div>
+      <div>
+        <strong>Strong</strong>
+      </div>
+      <div>
+        <strong>Small</strong>
+      </div>
+      <div>
+        <strong>Primary</strong>
+      </div>
+      <div>
         <H1>This is a text example</H1>
       </div>
       <div>
-        <h4>Strong</h4>
         <H1>
           <strong>This is a text example</strong>
         </H1>
       </div>
       <div>
-        <h4>Small</h4>
         <H1>
+          <small>This is a text example</small>
+        </H1>
+      </div>
+      <div>
+        <strong>Secondary</strong>
+      </div>
+      <div>
+        <H1 variant="secondary">This is a text example</H1>
+      </div>
+      <div>
+        <H1 variant="secondary">
+          <strong>This is a text example</strong>
+        </H1>
+      </div>
+      <div>
+        <H1 variant="secondary">
           <small>This is a text example</small>
         </H1>
       </div>
@@ -136,21 +209,57 @@ We've created a set of components that are most commonly used, but it's easy to 
 ### H2
 
 <Canvas>
-  <Story name="H2" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+  <Story name="H2">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 1fr 1fr",
+        width: "100%",
+        gap: 20,
+        alignItems: "center",
+      }}
+    >
       <div>
-        <h4>Default</h4>
+        <strong>Variant</strong>
+      </div>
+      <div>
+        <strong>Default</strong>
+      </div>
+      <div>
+        <strong>Strong</strong>
+      </div>
+      <div>
+        <strong>Small</strong>
+      </div>
+      <div>
+        <strong>Primary</strong>
+      </div>
+      <div>
         <H2>This is a text example</H2>
       </div>
       <div>
-        <h4>Strong</h4>
         <H2>
           <strong>This is a text example</strong>
         </H2>
       </div>
       <div>
-        <h4>Small</h4>
         <H2>
+          <small>This is a text example</small>
+        </H2>
+      </div>
+      <div>
+        <strong>Secondary</strong>
+      </div>
+      <div>
+        <H2 variant="secondary">This is a text example</H2>
+      </div>
+      <div>
+        <H2 variant="secondary">
+          <strong>This is a text example</strong>
+        </H2>
+      </div>
+      <div>
+        <H2 variant="secondary">
           <small>This is a text example</small>
         </H2>
       </div>
@@ -161,21 +270,57 @@ We've created a set of components that are most commonly used, but it's easy to 
 ### H3
 
 <Canvas>
-  <Story name="H3" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+  <Story name="H3">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 1fr 1fr",
+        width: "100%",
+        gap: 20,
+        alignItems: "center",
+      }}
+    >
       <div>
-        <h4>Default</h4>
+        <strong>Variant</strong>
+      </div>
+      <div>
+        <strong>Default</strong>
+      </div>
+      <div>
+        <strong>Strong</strong>
+      </div>
+      <div>
+        <strong>Small</strong>
+      </div>
+      <div>
+        <strong>Primary</strong>
+      </div>
+      <div>
         <H3>This is a text example</H3>
       </div>
       <div>
-        <h4>Strong</h4>
         <H3>
           <strong>This is a text example</strong>
         </H3>
       </div>
       <div>
-        <h4>Small</h4>
         <H3>
+          <small>This is a text example</small>
+        </H3>
+      </div>
+      <div>
+        <strong>Secondary</strong>
+      </div>
+      <div>
+        <H3 variant="secondary">This is a text example</H3>
+      </div>
+      <div>
+        <H3 variant="secondary">
+          <strong>This is a text example</strong>
+        </H3>
+      </div>
+      <div>
+        <H3 variant="secondary">
           <small>This is a text example</small>
         </H3>
       </div>
@@ -186,21 +331,57 @@ We've created a set of components that are most commonly used, but it's easy to 
 ### H4
 
 <Canvas>
-  <Story name="H4" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+  <Story name="H4">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 1fr 1fr",
+        width: "100%",
+        gap: 20,
+        alignItems: "center",
+      }}
+    >
       <div>
-        <h4>Default</h4>
+        <strong>Variant</strong>
+      </div>
+      <div>
+        <strong>Default</strong>
+      </div>
+      <div>
+        <strong>Strong</strong>
+      </div>
+      <div>
+        <strong>Small</strong>
+      </div>
+      <div>
+        <strong>Primary</strong>
+      </div>
+      <div>
         <H4>This is a text example</H4>
       </div>
       <div>
-        <h4>Strong</h4>
         <H4>
           <strong>This is a text example</strong>
         </H4>
       </div>
       <div>
-        <h4>Small</h4>
         <H4>
+          <small>This is a text example</small>
+        </H4>
+      </div>
+      <div>
+        <strong>Secondary</strong>
+      </div>
+      <div>
+        <H4 variant="secondary">This is a text example</H4>
+      </div>
+      <div>
+        <H4 variant="secondary">
+          <strong>This is a text example</strong>
+        </H4>
+      </div>
+      <div>
+        <H4 variant="secondary">
           <small>This is a text example</small>
         </H4>
       </div>
@@ -211,21 +392,57 @@ We've created a set of components that are most commonly used, but it's easy to 
 ### Label
 
 <Canvas>
-  <Story name="Label" decorators={[withFlexGap]}>
-    <div style={{ display: "flex", width: "100%", gap: 50 }}>
+  <Story name="Label">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto 1fr 1fr 1fr",
+        width: "100%",
+        gap: 20,
+        alignItems: "center",
+      }}
+    >
       <div>
-        <h4>Default</h4>
+        <strong>Variant</strong>
+      </div>
+      <div>
+        <strong>Default</strong>
+      </div>
+      <div>
+        <strong>Strong</strong>
+      </div>
+      <div>
+        <strong>Small</strong>
+      </div>
+      <div>
+        <strong>Primary</strong>
+      </div>
+      <div>
         <Label>This is a text example</Label>
       </div>
       <div>
-        <h4>Strong</h4>
         <Label>
           <strong>This is a text example</strong>
         </Label>
       </div>
       <div>
-        <h4>Small</h4>
         <Label>
+          <small>This is a text example</small>
+        </Label>
+      </div>
+      <div>
+        <strong>Secondary</strong>
+      </div>
+      <div>
+        <Label variant="secondary">This is a text example</Label>
+      </div>
+      <div>
+        <Label variant="secondary">
+          <strong>This is a text example</strong>
+        </Label>
+      </div>
+      <div>
+        <Label variant="secondary">
           <small>This is a text example</small>
         </Label>
       </div>

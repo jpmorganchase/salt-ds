@@ -1,6 +1,5 @@
-import { Card } from "@jpmorganchase/uitk-core";
+import { Card, H1, Text } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, Story } from "@storybook/react";
-import { H1, Text } from "@jpmorganchase/uitk-lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
