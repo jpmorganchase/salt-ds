@@ -1,14 +1,10 @@
-import { ComponentPropsWithoutRef, useMemo, useRef } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import {
   Accordion,
   AccordionDetails,
-  AccordionDetailsProps,
-  AccordionProps,
   AccordionSection,
-  AccordionSectionProps,
   AccordionSummary,
-  AccordionSummaryProps,
 } from "@jpmorganchase/uitk-lab";
 
 import { Metric, MetricContent } from "@jpmorganchase/uitk-lab";
@@ -20,7 +16,7 @@ import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Accordion.module.css";
 
-const accordianInfo = [
+const accordionInfo = [
   {
     id: "why-trust-us",
     summary: "Why trust us?",
@@ -29,17 +25,20 @@ const accordianInfo = [
         <p>In a nutshell, we’re not newbies.</p>
         <p>
           The team behind Salt created the J.P Morgan UI Toolkit, a design
-          system that’s used and trusted by over 2,000 internal product owners,
-          visual and UX designers, developers, content specialists and more. It
-          has a track record of increasing efficiency, ensuring design
-          consistency and driving significant cost savings for product teams.
+          system that’s used and trusted by internal product owners, visual and
+          UX designers, developers, content specialists and more.
         </p>
         <p>
-          The UI Toolkit has over 80 components, 12 patterns, sample apps, as
-          well as usage, design, content and accessibility guidance that we plan
-          to improve and migrate to Salt. Eventually, Salt will provide
-          everything you need to create consistent, fully accessible,
-          beautifully designed user interfaces.
+          The UI Toolkit has a proven track record of increasing efficiency,
+          ensuring design consistency and driving significant cost savings for
+          product teams. It provides a robust component set, business patterns
+          and sample apps as well as usage, design, content and accessibility
+          guidance. All of this work is the foundation on which we plan to
+          improve and migrate to Salt.
+        </p>
+        <p>
+          Eventually, Salt will provide everything you need to create
+          consistent, fully accessible, beautifully designed user interfaces.
         </p>
         <div className={styles.metrics}>
           <Metric>
@@ -106,7 +105,7 @@ const accordianInfo = [
   },
 ];
 
-const SiteAccordian = (): JSX.Element => {
+const SiteAccordion = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
@@ -114,10 +113,10 @@ const SiteAccordian = (): JSX.Element => {
     <div className={styles.wrapper}>
       <Accordion
         className={styles.accordion}
-        defaultExpandedSectionIds={[accordianInfo[0].id]}
+        defaultExpandedSectionIds={[accordionInfo[0].id]}
         maxExpandedItems={1}
       >
-        {accordianInfo.map(({ id, summary, details }) => {
+        {accordionInfo.map(({ id, summary, details }) => {
           return (
             <AccordionSection className={styles.accordion} key={id} id={id}>
               <AccordionSummary className={styles.summary}>
@@ -130,13 +129,10 @@ const SiteAccordian = (): JSX.Element => {
       </Accordion>
       <div
         className={clsx(styles.keyline, { [styles.animate]: onScreen })}
-        style={{
-          backgroundColor: `var(--uitk-color-teal-50)`,
-        }}
         ref={ref}
       />
     </div>
   );
 };
 
-export default SiteAccordian;
+export default SiteAccordion;

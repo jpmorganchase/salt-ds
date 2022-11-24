@@ -1,14 +1,8 @@
 .wrapper {
-  --accordian-background: #10212b;
-  --ifm-link-decoration: underline;
-}
-
-/* accordian / card background should be shared va? */
-
-.wrapper {
-  background-color: var(--accordian-background);
-  width: 60%;
+  background-color: var(--card-background);
+  width: 55vw;
   padding: calc(var(--uitk-size-unit) * 10);
+  grid-area: 2 / 1 / 4 / 3;
 }
 
 .accordion .summary {
@@ -35,6 +29,7 @@
   position: relative;
   left: calc(-1 * var(--uitk-size-unit) * 10);
   top: calc(var(--uitk-size-unit) * 10);
+  background-color: var(--uitk-color-teal-50);
 }
 
 .animate {
@@ -51,5 +46,13 @@
     transform: rotateY(0);
     transform-origin: left;
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .wrapper {
+    width: 100%;
+    padding: calc(var(--uitk-size-unit) * 2);
+    grid-area: 2 / 1 / 4 / 1;
   }
 }
