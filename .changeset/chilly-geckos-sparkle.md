@@ -7,6 +7,7 @@
 
 Merge `-caption` and `-help` tokens to single `-label` token
 Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
+Move `--uitk-text-help-fontStyle` to become `--uitk-editable-help-fontStyle`
 
 ```diff
 -  --uitk-text-caption-fontStyle
@@ -17,9 +18,11 @@ Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
 -  --uitk-text-help-fontWeight
 -  --uitk-text-help-fontSize
 -  --uitk-text-help-minHeight
+-  --uitk-text-help-fontStyle
 +  --uitk-text-label-fontWeight
 +  --uitk-text-label-fontWeight-strong
 +  --uitk-text-label-fontSize
++  --uitk-editable-help-fontStyle
 ```
 
 Correct line height values

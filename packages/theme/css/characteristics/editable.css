@@ -3,7 +3,7 @@
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;
   --uitk-editable-cursor-readonly: text;
-
+  
   --uitk-editable-borderStyle: solid;
   --uitk-editable-borderStyle-hover: solid;
   --uitk-editable-borderStyle-active: solid;
@@ -14,28 +14,30 @@
   --uitk-editable-borderWidth-active: 2px;
   --uitk-editable-borderWidth-disabled: 1px;
   --uitk-editable-borderWidth-readonly: 1px;
-
+  
   --uitk-editable-borderColor: var(--uitk-palette-interact-border);
   --uitk-editable-borderColor-active: var(--uitk-palette-interact-border-active);
   --uitk-editable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
   --uitk-editable-borderColor-hover: var(--uitk-palette-interact-border-hover);
   --uitk-editable-borderColor-readonly: var(--uitk-palette-interact-border-readonly);
-
+  
   --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-disabled-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-hover-low: var(--uitk-palette-interact-background-low);
   --uitk-editable-background-readonly-low: var(--uitk-palette-interact-background-low);
-
+  
   --uitk-editable-background-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-active-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-disabled-medium: var(--uitk-palette-interact-background-disabled-medium);
   --uitk-editable-background-hover-medium: var(--uitk-palette-interact-background-medium);
   --uitk-editable-background-readonly-medium: var(--uitk-palette-interact-background-medium);
-
+  
   --uitk-editable-background-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-active-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-disabled-high: var(--uitk-palette-interact-background-disabled-high);
   --uitk-editable-background-hover-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-readonly-high: var(--uitk-palette-interact-background-high);
+
+  --uitk-editable-help-fontStyle: italic;
 }

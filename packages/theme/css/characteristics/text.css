@@ -35,9 +35,6 @@
   --uitk-text-label-fontWeight: var(--uitk-typography-fontWeight-regular);
   --uitk-text-label-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
 
-  /* Help text */
-  --uitk-text-help-fontStyle: italic;
-
   /* Display text */
   --uitk-text-display1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-display1-fontWeight-strong: var(--uitk-typography-fontWeight-bold);

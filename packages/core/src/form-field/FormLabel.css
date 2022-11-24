@@ -61,7 +61,7 @@
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
-  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
+  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-editable-help-fontStyle));
   margin-left: 1ch;
 }
 
