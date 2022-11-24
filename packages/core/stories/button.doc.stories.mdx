@@ -13,6 +13,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Button"
@@ -30,7 +31,9 @@ A Button executes an action when clicked. Button labels should use only one or t
 - **Primary** is the most commonly-used button.
 - **Secondary** performs an action less likely to be triggered.
 
-## Button variants
+## Features
+
+### Button variants
 
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
@@ -42,7 +45,7 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
   </Story>
 </Canvas>
 
-## Button with icon and label
+### Button with icon and label
 
 Icons can be put before or after text, or used alone.
 
@@ -67,8 +70,6 @@ Icons can be put before or after text, or used alone.
 
 ### API
 
-Use the following call to import Button.
-
 ```
 import { Button } from "@jpmorganchase/uitk-core";
 ```
@@ -77,7 +78,7 @@ import { Button } from "@jpmorganchase/uitk-core";
 
 <ArgsTable of={Button} />
 
-### HTML Anatomy of a Button
+### Anatomy
 
 export const Link = ({ children, to, ...props }) => (
   <a {...props} href={to}>
@@ -97,7 +98,7 @@ export const Link = ({ children, to, ...props }) => (
   </ComponentAnatomy>
 </Canvas>
 
-### CSS Class
+### Classes
 
 <CSSClassTable of={Button} />
 
@@ -116,10 +117,4 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 
 <CSSVariableTable of={Button} />
 
-# Help and support
-
-Please check the [issues section of our github repository](https://github.com/jpmorganchase/uitk/issues) for any design or development issues you have.
-
-If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior.
-
-If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.
+<HelpAndSupport />
