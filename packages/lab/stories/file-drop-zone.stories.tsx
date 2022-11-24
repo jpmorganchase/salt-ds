@@ -385,7 +385,7 @@ export const ResultCard = ({ result }: ResultCardProps) => {
   return (
     <div
       style={{
-        fontFamily: "uitk-sans",
+        fontFamily: "Open Sans",
         lineHeight: "1.85em",
         marginTop: "2em",
         padding: "1em 1em 0 1em",
