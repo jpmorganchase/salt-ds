@@ -1,4 +1,4 @@
-import { makePrefixer, polymorphicRef } from "@jpmorganchase/uitk-core";
+import { makePrefixer, polymorphicRef } from "../utils";
 import cx from "classnames";
 import {
   ComponentPropsWithoutRef,
