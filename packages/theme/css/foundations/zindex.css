@@ -5,11 +5,11 @@
   --uitk-zIndex-default: 1;
   --uitk-zIndex-popout: 1000;
   --uitk-zIndex-docked: 1050;
-  --uitk-zIndex-appheader: 1100;
+  --uitk-zIndex-appHeader: 1100;
   --uitk-zIndex-drawer: 1200;
   --uitk-zIndex-modal: 1300;
   --uitk-zIndex-notification: 1400;
-  --uitk-zIndex-dragobject: 1420;
-  --uitk-zIndex-contextmenu: 1450;
-  --uitk-zIndex-tooltip: 1500;
+  --uitk-zIndex-dragObject: 1420;
+  --uitk-zIndex-contextMenu: 1450;
+  --uitk-zIndex-flyover: 1500;
 }

@@ -40,18 +40,18 @@
   --uitk-text-help-fontStyle: italic;
   --uitk-text-help-fontWeight: var(--uitk-typography-fontWeight-regular);
 
-  /* Figure text */
-  --uitk-text-figure1-fontSize: 56px;
-  --uitk-text-figure1-lineHeight: 74px;
-  --uitk-text-figure1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  /* Display text */
+  --uitk-text-display1-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display1-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  --uitk-text-display1-fontWeight-small: var(--uitk-typography-fontWeight-regular);
 
-  --uitk-text-figure2-fontSize: 36px;
-  --uitk-text-figure2-lineHeight: 48px;
-  --uitk-text-figure2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display2-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  --uitk-text-display2-fontWeight-small: var(--uitk-typography-fontWeight-regular);
 
-  --uitk-text-figure3-lineHeight: 32px;
-  --uitk-text-figure3-fontSize: 24px;
-  --uitk-text-figure3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-text-display3-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  --uitk-text-display3-fontWeight-small: var(--uitk-typography-fontWeight-regular);
 
   /* Colors */
   --uitk-text-background: transparent;
@@ -59,13 +59,8 @@
   --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
 
   --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
-  --uitk-text-primary-foreground-hover: var(--uitk-palette-neutral-primary-foreground);
-  --uitk-text-primary-foreground-selected: var(--uitk-palette-neutral-primary-foreground);
   --uitk-text-primary-foreground-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
-
   --uitk-text-secondary-foreground: var(--uitk-palette-neutral-secondary-foreground);
-  --uitk-text-secondary-foreground-hover: var(--uitk-palette-neutral-secondary-foreground);
-  --uitk-text-secondary-foreground-selected: var(--uitk-palette-neutral-secondary-foreground);
   --uitk-text-secondary-foreground-disabled: var(--uitk-palette-neutral-secondary-foreground-disabled);
 
   /* Link */
@@ -81,16 +76,16 @@
 /* Sizes by density */
 .uitk-density-touch {
   --uitk-text-h1-fontSize: 42px;
-  --uitk-text-h1-lineHeight: auto;
+  --uitk-text-h1-lineHeight: 54px;
 
   --uitk-text-h2-fontSize: 32px;
-  --uitk-text-h2-lineHeight: 36px;
+  --uitk-text-h2-lineHeight: 42px;
 
   --uitk-text-h3-fontSize: 24px;
-  --uitk-text-h3-lineHeight: 26px;
+  --uitk-text-h3-lineHeight: 32px;
 
   --uitk-text-h4-fontSize: 16px;
-  --uitk-text-h4-lineHeight: 22px;
+  --uitk-text-h4-lineHeight: 20px;
 
   --uitk-text-caption-fontSize: 14px;
   --uitk-text-caption-lineHeight: 16px;
@@ -101,8 +96,17 @@
   --uitk-text-help-minHeight: 16px;
 
   --uitk-text-fontSize: 16px;
-  --uitk-text-lineHeight: 22px;
+  --uitk-text-lineHeight: 20px;
   --uitk-text-minHeight: 20px;
+
+  --uitk-text-display1-fontSize: 84px;
+  --uitk-text-display1-lineHeight: 109px;
+
+  --uitk-text-display2-fontSize: 58px;
+  --uitk-text-display2-lineHeight: 76px;
+
+  --uitk-text-display3-fontSize: 42px;
+  --uitk-text-display3-lineHeight: 54px;
 }
 
 .uitk-density-low {
@@ -113,7 +117,7 @@
   --uitk-text-h2-lineHeight: 32px;
 
   --uitk-text-h3-fontSize: 18px;
-  --uitk-text-h3-lineHeight: 26px;
+  --uitk-text-h3-lineHeight: 24px;
 
   --uitk-text-h4-fontSize: 14px;
   --uitk-text-h4-lineHeight: 18px;
@@ -129,17 +133,26 @@
   --uitk-text-fontSize: 14px;
   --uitk-text-lineHeight: 18px;
   --uitk-text-minHeight: 18px;
+
+  --uitk-text-display1-fontSize: 68px;
+  --uitk-text-display1-lineHeight: 88px;
+
+  --uitk-text-display2-fontSize: 46px;
+  --uitk-text-display2-lineHeight: 60px;
+
+  --uitk-text-display3-fontSize: 32px;
+  --uitk-text-display3-lineHeight: 42px;
 }
 
 .uitk-density-medium {
   --uitk-text-h1-fontSize: 24px;
-  --uitk-text-h1-lineHeight: 31px;
+  --uitk-text-h1-lineHeight: 32px;
 
   --uitk-text-h2-fontSize: 18px;
   --uitk-text-h2-lineHeight: 24px;
 
   --uitk-text-h3-fontSize: 14px;
-  --uitk-text-h3-lineHeight: 22px;
+  --uitk-text-h3-lineHeight: 18px;
 
   --uitk-text-h4-fontSize: 12px;
   --uitk-text-h4-lineHeight: 16px;
@@ -155,6 +168,15 @@
   --uitk-text-fontSize: 12px;
   --uitk-text-lineHeight: 16px;
   --uitk-text-minHeight: 16px;
+
+  --uitk-text-display1-fontSize: 54px;
+  --uitk-text-display1-lineHeight: 70px;
+
+  --uitk-text-display2-fontSize: 36px;
+  --uitk-text-display2-lineHeight: 47px;
+
+  --uitk-text-display3-fontSize: 24px;
+  --uitk-text-display3-lineHeight: 32px;
 }
 
 .uitk-density-high {
@@ -181,4 +203,13 @@
   --uitk-text-fontSize: 11px;
   --uitk-text-lineHeight: 14px;
   --uitk-text-minHeight: 14px;
+
+  --uitk-text-display1-fontSize: 42px;
+  --uitk-text-display1-lineHeight: 54px;
+
+  --uitk-text-display2-fontSize: 28px;
+  --uitk-text-display2-lineHeight: 36px;
+
+  --uitk-text-display3-fontSize: 18px;
+  --uitk-text-display3-lineHeight: 24px;
 }

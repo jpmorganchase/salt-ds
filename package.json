@@ -45,9 +45,10 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@changesets/cli": "^2.24.2",
+    "@changesets/cli": "^2.25.2",
     "@cypress/code-coverage": "^3.10.0",
     "@floating-ui/react-dom-interactions": "^0.5.0",
+    "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
     "@storybook/addon-a11y": "^6.5.12",
     "@storybook/addon-actions": "^6.5.12",

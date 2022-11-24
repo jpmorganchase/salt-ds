@@ -12,7 +12,7 @@ export const Figure1 = forwardRef<
 >(function Figure1({ children, className, ...rest }, ref) {
   return (
     <Span
-      className={cx(className, withBaseName(`figure1`))}
+      className={cx(className, withBaseName(`display1`))}
       ref={ref}
       {...rest}
     >
@@ -27,7 +27,7 @@ export const Figure2 = forwardRef<
 >(function Figure2({ children, className, ...rest }, ref) {
   return (
     <Span
-      className={cx(className, withBaseName(`figure2`))}
+      className={cx(className, withBaseName(`display2`))}
       ref={ref}
       {...rest}
     >
@@ -42,7 +42,7 @@ export const Figure3 = forwardRef<
 >(function Figure3({ children, className, ...rest }, ref) {
   return (
     <Span
-      className={cx(className, withBaseName(`figure3`))}
+      className={cx(className, withBaseName(`display3`))}
       ref={ref}
       {...rest}
     >

@@ -28,6 +28,7 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 import { LeftForm, RightForm } from "./flow-layout.stories";
+import { useRef } from "react";
 
 export default {
   title: "Core/Layout/FlexLayout",
@@ -363,3 +364,24 @@ const Form: ComponentStory<typeof FlexLayout> = (args) => {
   );
 };
 export const FlexLayoutFormComposite = Form.bind({});
+
+const flagsList: string[] = [
+  "Afghanistan",
+  "Albania",
+  "Algeria",
+  "Andorra",
+  "Angola",
+  "Antigua and Barbuda",
+  "Argentina",
+];
+export const FlexLayoutPolymorphicList: ComponentStory<typeof FlexLayout> = (
+  args
+) => {
+  return (
+    <FlexLayout {...args} as="ol" direction="column">
+      {Array.from({ length: flagsList.length }, (_, index) => (
+        <FlexItem as="li">{flagsList[index]}</FlexItem>
+      ))}
+    </FlexLayout>
+  );
+};
