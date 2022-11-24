@@ -155,10 +155,10 @@ In this case, the scope is `:root`. This is equivalent to `html` so variables de
 }
 ```
 
-In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `uitk-light` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode="light"]` or `.uitk-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
+In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.uitk-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode="light"]` or `.uitk-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
 
 ```html
-<div class="MyApplication uitk-light">
+<div class="MyApplication uitk-theme" data-mode="light">
   <rest-of-my-application />
 </div>
 ```
@@ -180,9 +180,9 @@ Refer to the ToolkitProvider docs for more detail.
 The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. By default, the UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `ToolkitProvider` the application is using the light and high density variants. The HTML for this app will look like this:
 
 ```html
-<uitk-theme class="uitk-light uitk-density-high">
+<div class="uitk-provider uitk-theme uitk-density-high" data-mode="light">
   <rest-of-my-application />
-</uitk-theme>
+</div>
 ```
 
 In the CSS where the theme variables are declared, there are sections declared as follows:
