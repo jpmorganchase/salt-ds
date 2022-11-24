@@ -76,16 +76,16 @@
 /* Sizes by density */
 .uitk-density-touch {
   --uitk-text-h1-fontSize: 42px;
-  --uitk-text-h1-lineHeight: auto;
+  --uitk-text-h1-lineHeight: 54px;
 
   --uitk-text-h2-fontSize: 32px;
-  --uitk-text-h2-lineHeight: 36px;
+  --uitk-text-h2-lineHeight: 42px;
 
   --uitk-text-h3-fontSize: 24px;
-  --uitk-text-h3-lineHeight: 26px;
+  --uitk-text-h3-lineHeight: 32px;
 
   --uitk-text-h4-fontSize: 16px;
-  --uitk-text-h4-lineHeight: 22px;
+  --uitk-text-h4-lineHeight: 20px;
 
   --uitk-text-caption-fontSize: 14px;
   --uitk-text-caption-lineHeight: 16px;
@@ -96,7 +96,7 @@
   --uitk-text-help-minHeight: 16px;
 
   --uitk-text-fontSize: 16px;
-  --uitk-text-lineHeight: 22px;
+  --uitk-text-lineHeight: 20px;
   --uitk-text-minHeight: 20px;
 }
 
@@ -108,7 +108,7 @@
   --uitk-text-h2-lineHeight: 32px;
 
   --uitk-text-h3-fontSize: 18px;
-  --uitk-text-h3-lineHeight: 26px;
+  --uitk-text-h3-lineHeight: 24px;
 
   --uitk-text-h4-fontSize: 14px;
   --uitk-text-h4-lineHeight: 18px;
@@ -128,13 +128,13 @@
 
 .uitk-density-medium {
   --uitk-text-h1-fontSize: 24px;
-  --uitk-text-h1-lineHeight: 31px;
+  --uitk-text-h1-lineHeight: 32px;
 
   --uitk-text-h2-fontSize: 18px;
   --uitk-text-h2-lineHeight: 24px;
 
   --uitk-text-h3-fontSize: 14px;
-  --uitk-text-h3-lineHeight: 22px;
+  --uitk-text-h3-lineHeight: 18px;
 
   --uitk-text-h4-fontSize: 12px;
   --uitk-text-h4-lineHeight: 16px;

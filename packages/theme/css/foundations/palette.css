@@ -81,16 +81,16 @@
   /* States - error, info, success, warning */
   --uitk-palette-error-background-high: var(--uitk-color-red-10);
   --uitk-palette-error-border: var(--uitk-color-red-500);
-  --uitk-palette-error-icon: var(--uitk-color-red-500);
+  --uitk-palette-error-foreground: var(--uitk-color-red-500);
   --uitk-palette-info-background-high: var(--uitk-color-blue-10);
   --uitk-palette-info-border: var(--uitk-color-blue-500);
-  --uitk-palette-info-icon: var(--uitk-color-blue-500);
+  --uitk-palette-info-foreground: var(--uitk-color-blue-500);
   --uitk-palette-success-background-high: var(--uitk-color-green-10);
   --uitk-palette-success-border: var(--uitk-color-green-500);
-  --uitk-palette-success-icon: var(--uitk-color-green-500);
+  --uitk-palette-success-foreground: var(--uitk-color-green-500);
   --uitk-palette-warning-background-high: var(--uitk-color-orange-10);
   --uitk-palette-warning-border: var(--uitk-color-orange-500);
-  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
+  --uitk-palette-warning-foreground: var(--uitk-color-orange-500);
 
   /* Measure */
   --uitk-palette-measured-fill: var(--uitk-color-blue-500);
@@ -213,16 +213,16 @@
   /* States - error, info, success, warning */
   --uitk-palette-error-background-high: var(--uitk-color-red-900);
   --uitk-palette-error-border: var(--uitk-color-red-500);
-  --uitk-palette-error-icon: var(--uitk-color-red-500);
+  --uitk-palette-error-foreground: var(--uitk-color-red-500);
   --uitk-palette-info-background-high: var(--uitk-color-blue-900);
   --uitk-palette-info-border: var(--uitk-color-blue-500);
-  --uitk-palette-info-icon: var(--uitk-color-blue-500);
+  --uitk-palette-info-foreground: var(--uitk-color-blue-500);
   --uitk-palette-success-background-high: var(--uitk-color-green-900);
   --uitk-palette-success-border: var(--uitk-color-green-500);
-  --uitk-palette-success-icon: var(--uitk-color-green-500);
+  --uitk-palette-success-foreground: var(--uitk-color-green-500);
   --uitk-palette-warning-background-high: var(--uitk-color-orange-900);
   --uitk-palette-warning-border: var(--uitk-color-orange-500);
-  --uitk-palette-warning-icon: var(--uitk-color-orange-500);
+  --uitk-palette-warning-foreground: var(--uitk-color-orange-500);
 
   /* Measure */
   --uitk-palette-measured-fill: var(--uitk-color-blue-300);

@@ -6,7 +6,7 @@
   --overlay-background: var(--uitk-container-background-medium);
   --overlay-borderColor: var(--uitk-container-borderColor-medium);
   /* TODO: z-index audit, provide z index here or rely on popper */
-  --overlay-zindex: var(--uitk-zIndex-tooltip);
+  --overlay-zindex: var(--uitk-zIndex-flyover);
 }
 
 .uitkEmphasisHigh.uitkOverlay {
