@@ -13,7 +13,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { DivButton } from "../button";
 import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
 import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
 import { pillBaseName } from "./constants";
@@ -152,7 +151,9 @@ export const PillBase = forwardRef(function PillBase(
     onClick(event);
   };
 
-  const Component = deletable || clickable ? DivButton : "div";
+  // FIXME: use polymorphic button as div for deletable and clickable cases.
+  //  const Component = deletable || clickable ? Button : "div";
+  const Component = "div";
 
   const renderDeleteIcon = () => {
     // FIXME: deleteIconProp type
