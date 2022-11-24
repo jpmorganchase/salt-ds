@@ -3,8 +3,6 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Change 'Figure' Text component to 'Display'
-
 Change `-figure` text tokens to `display`, updated values and font weights
 
 ```diff

@@ -6,9 +6,9 @@ import {
   Div as DivText,
   Span as SpanText,
   P as PText,
-  Display1,
-  Display2,
-  Display3,
+  Figure1,
+  Figure2,
+  Figure3,
   H1,
   H2,
   H3,
@@ -151,19 +151,19 @@ const CodeTextComponent: ComponentStory<typeof Text> = () => {
 
 export const Code = CodeTextComponent.bind({});
 
-//********** Display 1,2 and 3 ***********/
+//********** Figure 1,2 and 3 ***********/
 
-const DisplayTextComponent: ComponentStory<typeof Text> = () => {
+const FigureTextComponent: ComponentStory<typeof Text> = () => {
   return (
     <>
-      <Display1>Display 1</Display1>
-      <Display2>Display 2</Display2>
-      <Display3>Display 3</Display3>
+      <Figure1>Figure 1</Figure1>
+      <Figure2>Figure 2</Figure2>
+      <Figure3>Figure 3</Figure3>
     </>
   );
 };
 
-export const Display = DisplayTextComponent.bind({});
+export const Figure = FigureTextComponent.bind({});
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 

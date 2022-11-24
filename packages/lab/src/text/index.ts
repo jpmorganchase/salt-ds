@@ -1,6 +1,6 @@
 export * from "./Code";
-export * from "./Display";
 export * from "./Div";
+export * from "./Figure";
 export * from "./Headings";
 export * from "./HelpText";
 export * from "./LabelCaption";

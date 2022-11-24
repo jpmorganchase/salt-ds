@@ -1,15 +1,15 @@
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Span } from "./Span";
 import { TextProps } from "./Text";
 
 const withBaseName = makePrefixer("uitkText");
 
-export const Display1 = forwardRef<
+export const Figure1 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Display1({ children, className, ...rest }, ref) {
+>(function Figure1({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`display1`))}
@@ -21,10 +21,10 @@ export const Display1 = forwardRef<
   );
 });
 
-export const Display2 = forwardRef<
+export const Figure2 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Display2({ children, className, ...rest }, ref) {
+>(function Figure2({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`display2`))}
@@ -36,10 +36,10 @@ export const Display2 = forwardRef<
   );
 });
 
-export const Display3 = forwardRef<
+export const Figure3 = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "elementType">
->(function Display3({ children, className, ...rest }, ref) {
+>(function Figure3({ children, className, ...rest }, ref) {
   return (
     <Span
       className={cx(className, withBaseName(`display3`))}
