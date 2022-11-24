@@ -45,7 +45,7 @@ A simple example will help to illustrate some of the key concepts:
 
 The styling of our UI Toolkit componentry is defined in the following two places, which operate together at runtime:
 
-- Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes
+- Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes.
 - Component styles - each component contributes its own stylesheet. Many of the CSS declarations in here will reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
 
 #### Theme styles
@@ -53,59 +53,75 @@ The styling of our UI Toolkit componentry is defined in the following two places
 A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories:
 
 - Foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
+- An in-between palette - The palette is a carefully selected group of color tokens from the foundations which are aliased to give semantic meaning, as well as aliases for the foundations opacity tokens; allowing for a more consistent look and feel when used by characteristics, rather than the foundation tokens directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
 - Characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
-- An in-between palette - The palette is a carefully selected group of color tokens which are aliased to give semantic meaning; allowing for a more consistent look and feel when used by characteristics, rather than foundation colors directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
 
 Foundational tokens can broken into the following groups:
 
-| Foundation name | Description                                            | Example token                                             |
-| --------------- | ------------------------------------------------------ | --------------------------------------------------------- |
-| Color           | The core set of colors available                       | `--uitk-color-gray-800: rgb(36, 37, 38);`                 |
-| Delay           | Durations between user actions and system feedback     | `--uitk-delay-cutoff: 10000;`                             |
-| Opacity         | Opacity percentages for different attributes           | `--uitk-opacity-background: 0.7;`                         |
-| Shadow          | Shadows conveying elevation or hierarchy of components | `--uitk-shadow-black-4: 0 6px 10px 0 rgba(0, 0, 0, 0.2);` |
-| Size            | Sizes in px to be used for general styling             | `--uitk-size-basis-unit: 4px;`                            |
-| Typography      | General tokens relating to typography styles           | `--uitk-typography-fontWeight-regular: 400;`              |
-| Z-index\*       | Number indicating appropriate z-index of components    | `--uitk-zIndex-flyover: 1500;`                            |
+| Foundation name | Description                                            | Example token                          | Defined value                     |
+| --------------- | ------------------------------------------------------ | -------------------------------------- | --------------------------------- |
+| Color           | The core set of colors                                 | `--uitk-color-gray-800`                | `rgb(36, 37, 38)`                 |
+| Delay           | Durations between user actions and system feedback     | `--uitk-delay-cutoff`                  | `10000`                           |
+| Icon\*          | Iconography                                            | `--uitk-icon-size-base`                | `12px`                            |
+| Opacity         | Opacity percentages for different attributes           | `--uitk-opacity-background`            | `0.7`                             |
+| Shadow          | Shadows conveying elevation or hierarchy of components | `--uitk-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
+| Size            | Sizes in px to be used for general styling             | `--uitk-size-basis-unit`               | `4px`                             |
+| Typography      | General tokens relating to typography styles           | `--uitk-typography-fontWeight-regular` | `400`                             |
+| Z-index\*\*     | Number indicating appropriate z-index of components    | `--uitk-zIndex-flyover`                | `1500`                            |
 
-\* z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
+\* In design, the Icon foundation is regarded to as the collection of Icon components alongside their styling. The defined value of the example token here varies by density.
 
-The full set of characteristics is currently defined is as follows:
+\*\* Z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
 
-| Characteristic name | Appropriate usage                                                                 | Example token                                                                                         |
-| ------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Accent              | Components that needs to be emphasized                                            | `--uitk-accent-background: var(--uitk-palette-accent-background);`                                    |
-| Actionable          | Components on which the user can perform an action                                | ` --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);` |
-| Container           | Components that may encapsulate others                                            | `--uitk-container-borderWidth: 1px;`                                                                  |
-| Differential        | Components indicating a positive or negative change                               | `--uitk-differential-positive-foreground: var(--uitk-palette-positive-foreground);`                   |
-| Draggable           | Components that can be dragged                                                    | `--uitk-draggable-grab-cursor-hover: grab;`                                                           |
-| Target              | Components that form a target for draggable components                            | `--uitk-target-borderStyle: dashed;`                                                                  |
-| Editable            | Components that have mutable input                                                | `--uitk-editable-borderStyle: solid;`                                                                 |
-| Focused             | Components that have a focused state                                              | `--uitk-focused-outlineStyle: dotted;`                                                                |
-| Measured            | Components which have some form of scale or progress                              | `--uitk-measured-borderColor: var(--uitk-palette-measured-border);`                                   |
-| Navigable           | Components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover: pointer;`                                                             |
-| Overlayable         | Components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);`                                             |
-| Selectable          | Components that have a selected state                                             | `--uitk-selectable-cursor-hover: pointer;`                                                            |
-| Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-low);`                       |
-| Status              | Components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor: var(--uitk-palette-info-border);`                                    |
-| Taggable            | Components which allow data to be organized                                       | `--uitk-taggable-background: var(--uitk-palette-interact-primary-background);`                        |
-| Text                | All text components or HTML elements                                              | `--uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);`                     |
+Similarly, for the palette:
 
-And finally, the palette:
+| Palette sentiment | Appropriate usage                                               | Example token                               | Defined value (light mode) |
+| ----------------- | --------------------------------------------------------------- | ------------------------------------------- | -------------------------- |
+| Accent            | Characteristics which use a consistent tone throughout the UI   | `--uitk-palette-accent-background`          | --uitk-color-blue-500      |
+| Error             | Characteristics symbolising an error state                      | `--uitk-palette-error-border`               | --uitk-color-red-500       |
+| Info              | Characteristics symbolising an info state                       | `--uitk-palette-info-foreground`            | --uitk-color-blue-500      |
+| Interact          | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`            | --uitk-color-gray-90       |
+| Measure           | Characteristics showing some form of progress                   | `--uitk-palette-measured-fill`              | --uitk-color-blue-500      |
+| Navigate          | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`        | --uitk-color-gray-400      |
+| Negative          | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`        | --uitk-color-red-700       |
+| Neutral           | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground` | --uitk-color-gray-900      |
+| Positive          | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`        | --uitk-color-green-700     |
+| Success           | Characteristics symbolising a success state                     | `--uitk-palette-success-border`             | --uitk-color-green-500     |
+| Warning           | Characteristics symbolising a warning state                     | `--uitk-palette-warning-foreground`         | --uitk-color-orange-500    |
 
-| Palette sentiment | Appropriate usage                                               | Example token                                             |
-| ----------------- | --------------------------------------------------------------- | --------------------------------------------------------- |
-| Accent            | Characteristics which use a consistent tone throughout the UI   | `--uitk-palette-accent-background`                        |
-| Interact          | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`                          |
-| Error             | Characteristics symbolising an error state                      | `--uitk-palette-error-border`                             |
-| Info              | Characteristics symbolising an info state                       | `--uitk-palette-info-foreground`                          |
-| Success           | Characteristics symbolising a success state                     | `--uitk-palette-success-border`                           |
-| Warning           | Characteristics symbolising a warning state                     | `--uitk-palette-warning-foreground`                       |
-| Measure           | Characteristics showing some form of progress                   | `--uitk-palette-measured-background-gradient-start-color` |
-| Navigate          | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`                      |
-| Negative          | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`                      |
-| Neutral           | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground`               |
-| Positive          | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`                      |
+And it's opacities:
+
+| Opacity sentiment                       | Defined value      |
+| --------------------------------------- | ------------------ |
+| --uitk-palette-opacity-background       | `--uitk-opacity-2` |
+| --uitk-palette-opacity-border`          | `--uitk-opacity-2` |
+| --uitk-palette-opacity-border-readonly` | `--uitk-opacity-1` |
+| --uitk-palette-opacity-fill`            | `--uitk-opacity-2` |
+| --uitk-palette-opacity-foreground`      | `--uitk-opacity-3` |
+| --uitk-palette-opacity-scrim-low`       | `--uitk-opacity-4` |
+| --uitk-palette-opacity-stroke`          | `--uitk-opacity-2` |
+| --uitk-palette-opacity-scrim-medium`    | `--uitk-opacity-4` |
+
+The full set of characteristics is currently defined is as follows. Note how the values of characteristics can be foundation tokens, palette tokens, or hardcoded values, depending on what's most suitable:
+
+| Characteristic name | Appropriate usage                                                                 | Example token                                | Defined value                                      |
+| ------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
+| Accent              | Components that needs to be emphasized                                            | `--uitk-accent-background`                   | `--uitk-palette-accent-background`                 |
+| Actionable          | Components on which the user can perform an action                                | `--uitk-actionable-primary-background-hover` | `--uitk-palette-interact-primary-background-hover` |
+| Container           | Components that may encapsulate others                                            | `--uitk-container-borderWidth`               | `1px`                                              |
+| Differential        | Components indicating a positive or negative change                               | `--uitk-differential-positive-foreground`    | `--uitk-palette-positive-foreground`               |
+| Draggable           | Components that can be dragged                                                    | `--uitk-draggable-grab-cursor-hover`         | `grab`                                             |
+| Target              | Components that form a target for draggable components                            | `--uitk-target-borderStyle`                  | `dashed`                                           |
+| Editable            | Components that have mutable input                                                | `--uitk-editable-borderStyle`                | `solid`                                            |
+| Focused             | Components that have a focused state                                              | `--uitk-focused-outlineStyle`                | `dotted`                                           |
+| Measured            | Components which have some form of scale or progress                              | `--uitk-measured-borderColor`                | `--uitk-palette-measured-border`                   |
+| Navigable           | Components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover`              | `pointer`                                          |
+| Overlayable         | Components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll`           | `--uitk-shadow-1`                                  |
+| Selectable          | Components that have a selected state                                             | `--uitk-selectable-cursor-hover`             | `pointer`                                          |
+| Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor`       | `--uitk-palette-neutral-border-low`                |
+| Status              | Components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor`             | `--uitk-palette-info-border`                       |
+| Taggable            | Components which allow data to be organized                                       | `--uitk-taggable-background`                 | `--uitk-palette-interact-primary-background`       |
+| Text                | All text components or HTML elements                                              | `--uitk-text-primary-foreground`             | `--uitk-palette-neutral-primary-foreground`        |
 
 #### Token naming conventions
 
@@ -183,10 +199,10 @@ The palette token then resolves down to:
 
 ```css
 .uitk-theme[data-mode="light"] {
-  --uitk-palette-interact-primary-foreground: var(--uitk-gray-900);
+  --uitk-palette-interact-primary-foreground: var(--uitk-color-gray-900);
 }
 .uitk-theme[data-mode="dark"] {
-  --uitk-palette-interact-primary-foreground: var(--uitk-white);
+  --uitk-palette-interact-primary-foreground: var(--uitk-color-white);
 }
 ```
 
@@ -213,5 +229,3 @@ We have already mentioned that components will reference Theme variables, the ex
 In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--uitk-text-fontSize`. Providing that a UI Toolkit theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
 Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a _CSS API variable_. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customization mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
-
-`TODO` include link to button example, once we have landmark ids in the Button docs.
