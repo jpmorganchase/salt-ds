@@ -4,16 +4,38 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+/**
+ * Determines if this is a local dev, PR or production build
+ */
+function getBuildType() {
+  if (
+    process.env.GITHUB_EVENT_NAME === "push" &&
+    process.env.GITHUB_REF_NAME === "main"
+  ) {
+    return "prod";
+  }
+  if (process.env.GITHUB_EVENT_NAME === "pull_request") {
+    return "pr";
+  }
+  return "dev";
+}
+
+const favicons = {
+  prod: "img/favicon.ico",
+  pr: "img/favicon-pr.ico",
+  dev: "img/favicon-dev.ico",
+};
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Welcome to Salt",
-  tagline: `An open-source design language for financial services and other industries. Whether you’re an internal J.P. Morgan team, a fintech start-up or building a UI for millions of customers, Salt provides well-documented components—with comprehensive design templates and assets. 
+  tagline: `An open-source design language for financial services and other industries. Whether you’re an internal J.P. Morgan team, a fintech start-up or building a UI for millions of customers, Salt provides well-documented components—with comprehensive design templates and assets.
 Salt is the next-generation version of the established JPM UI Toolkit, which has been used to build over 1,200 websites and applications to date. It has a track record of increasing efficiency, ensuring design consistency and making significant cost savings for product teams. Rest assured, you’re in good hands.`,
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: favicons[getBuildType()],
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
