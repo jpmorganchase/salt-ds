@@ -64,7 +64,9 @@ const SuccessDialog = () => <BasicDialogExample status={"success"} />;
 export const ExamplesGrid: Story = () => (
   <div className={"examples-container"}>
     <ToolkitProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
-      <BasicDialog />
+      <div>
+        <BasicDialog />
+      </div>
     </ToolkitProvider>
     <ToolkitProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
       <div>
