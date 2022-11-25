@@ -53,10 +53,10 @@ The styling of our UI Toolkit componentry is defined in the following two places
 A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories:
 
 - Foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
-- An in-between palette - The palette is a carefully selected group of color tokens from the foundations which are aliased to give semantic meaning, as well as aliases for the foundations opacity tokens; allowing for a more consistent look and feel when used by characteristics, rather than the foundation tokens directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
+- An in-between palette - The palette is a carefully selected group of color tokens from the foundations which are aliased to give semantic meaning, as well as aliases for the foundations opacity tokens; allowing for a more consistent look-and-feel when used by characteristics, rather than the foundation tokens directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
 - Characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
 
-Foundational tokens can broken into the following groups:
+Foundational tokens can be broken into the following groups:
 
 | Foundation name | Description                                            | Example token                          | Defined value                     |
 | --------------- | ------------------------------------------------------ | -------------------------------------- | --------------------------------- |
@@ -69,7 +69,7 @@ Foundational tokens can broken into the following groups:
 | Typography      | General tokens relating to typography styles           | `--uitk-typography-fontWeight-regular` | `400`                             |
 | Z-index\*\*     | Number indicating appropriate z-index of components    | `--uitk-zIndex-flyover`                | `1500`                            |
 
-\* In design, the Icon foundation is regarded to as the collection of Icon components alongside their styling. The defined value of the example token here varies by density.
+\* In design, the Icon foundation is regarded as the collection of Icon components alongside their styling. The defined value of the example token here varies by density.
 
 \*\* Z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
 
@@ -102,11 +102,11 @@ And it's opacities:
 | --uitk-palette-opacity-stroke`          | `--uitk-opacity-2` |
 | --uitk-palette-opacity-scrim-medium`    | `--uitk-opacity-4` |
 
-The full set of characteristics is currently defined is as follows. Note how the values of characteristics can be foundation tokens, palette tokens, or hardcoded values, depending on what's most suitable:
+The full set of characteristics currently defined is as follows. Note how the values of characteristics can be foundation tokens, palette tokens or hardcoded values, depending on what's most suitable:
 
 | Characteristic name | Appropriate usage                                                                 | Example token                                | Defined value                                      |
 | ------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
-| Accent              | Components that needs to be emphasized                                            | `--uitk-accent-background`                   | `--uitk-palette-accent-background`                 |
+| Accent              | Components that need to be emphasized                                            | `--uitk-accent-background`                   | `--uitk-palette-accent-background`                 |
 | Actionable          | Components on which the user can perform an action                                | `--uitk-actionable-primary-background-hover` | `--uitk-palette-interact-primary-background-hover` |
 | Container           | Components that may encapsulate others                                            | `--uitk-container-borderWidth`               | `1px`                                              |
 | Differential        | Components indicating a positive or negative change                               | `--uitk-differential-positive-foreground`    | `--uitk-palette-positive-foreground`               |
@@ -134,7 +134,7 @@ Comparing the tokens above, you may have noticed the following conventions we ha
 
 #### Theme scoping - how CSS variables work
 
-CSS variables have a concept of scoping - they may be global to an entire HTML page, or constrained to a subset of that page.
+CSS variables have a concept of scoping - they may be global to an entire HTML page or constrained to a subset of that page.
 Consider the example given above:
 
 ```css
