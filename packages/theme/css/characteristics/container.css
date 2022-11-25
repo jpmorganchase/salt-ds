@@ -2,10 +2,6 @@
   --uitk-container-borderStyle: solid;
   --uitk-container-borderWidth: 1px;
 
-  --uitk-container-cta-borderColor: var(--uitk-palette-neutral-cta-border);
-  --uitk-container-primary-borderColor: var(--uitk-palette-neutral-primary-border);
-  --uitk-container-secondary-borderColor: var(--uitk-palette-neutral-secondary-border);
-
   --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
   --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);
   --uitk-container-background-high: var(--uitk-palette-neutral-background-high);
