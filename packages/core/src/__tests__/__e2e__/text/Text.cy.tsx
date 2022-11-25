@@ -8,7 +8,7 @@ import {
   H3,
   H4,
   Label,
-} from "@jpmorganchase/uitk-core";
+} from "../../../text";
 
 const textExample = `Far far away, behind the word mountains, far from the countries Vokalia
 and Consonantia, there live the blind texts. Separated they live in
