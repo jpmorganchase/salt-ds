@@ -14,6 +14,12 @@
   width: 55vw;
   padding: calc(var(--uitk-size-unit) * 10);
   grid-area: 2 / 1 / 4 / 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion {
+  flex: 1;
 }
 
 .accordion .summary {
