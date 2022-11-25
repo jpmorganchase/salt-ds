@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "../utils";
 import cx from "classnames";
 import { forwardRef } from "react";
 import { Text, TextProps } from "./Text";

@@ -30,6 +30,9 @@ interface TextPropsBase<E extends ElementType> {
     | "display1"
     | "display2"
     | "display3";
+  /**
+   * Change text color palette
+   */
   variant?: "primary" | "secondary";
 }
 
