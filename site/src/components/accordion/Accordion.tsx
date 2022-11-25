@@ -41,7 +41,7 @@ const accordionInfo = [
           Eventually, Salt will provide everything you need to create
           consistent, fully accessible, beautifully designed user interfaces.
         </p>
-        <div className={styles.metrics}>
+        {/* <div className={styles.metrics}>
           <Metric>
             <MetricContent subvalue="components" value="80+" />
           </Metric>
@@ -51,7 +51,7 @@ const accordionInfo = [
           <Metric>
             <MetricContent subvalue="websites and apps created" value="1200+" />
           </Metric>
-        </div>
+        </div> */}
       </>
     ),
   },
@@ -71,9 +71,9 @@ const accordionInfo = [
           Underpinned by beautiful and functional design, they support the
           creation of great user experiences across all devices.
         </p>
-        <div className={styles.wavesContainer}>
+        {/* <div className={styles.wavesContainer}>
           <Waves />
-        </div>
+        </div> */}
       </>
     ),
   },
@@ -90,7 +90,7 @@ const accordionInfo = [
           Salt’s predecessor was built with multiple third-party dependencies,
           which added significant weight and complexity to our library. We’re
           rebuilding and enhancing each and every component—striving for
-          accessibility, lightweight code, with flexibility in theming and
+          accessibility, lightweight code and flexibility in theming and
           presentation.
         </p>
         <p>
@@ -98,9 +98,9 @@ const accordionInfo = [
           contributions informing and shaping our next steps. Get in touch to
           share your feedback.
         </p>
-        <div className={styles.wavesContainer}>
+        {/* <div className={styles.wavesContainer}>
           <Arch />
-        </div>
+        </div> */}
       </>
     ),
   },
