@@ -41,7 +41,7 @@
   font-style: var(--uitkFormField-helperText-fontStyle, var(--uitk-editable-help-fontStyle));
   letter-spacing: var(--uitkFormField-helperText-letterSpacing, 0);
   line-height: var(--uitkFormField-helperText-lineHeight, var(--uitk-text-base-lineHeight));
-  min-height: var(--uitkFormField-helperText-minHeight, var(--uitk-text-help-minHeight));
+  min-height: var(--uitkFormField-helperText-minHeight, var(--uitk-text-label-minHeight));
   margin-bottom: var(--uitkFormField-helperText-marginBottom, 0);
   margin-top: var(--uitkFormField-helperText-marginTop, var(--formField-helperText-marginTop));
   opacity: var(--uitkFormField-helperText-opacity, var(--formField-helperText-opacity));
