@@ -93,7 +93,7 @@
   border-radius: var(--uitkButton-borderRadius, 0);
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
-  display: inline-block;
+  display: inline-flex;
   justify-content: var(--uitkButton-justifyContent, center);
   font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
@@ -114,18 +114,9 @@
   width: var(--uitkButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* Styles applied to the inner element wrapping children of the component */
-.uitkButton-label {
+  /* Styles applied to align children*/
   font-weight: var(--uitkButton-fontWeight, var(--button-fontWeight));
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: inherit;
-  position: relative;
   white-space: pre;
-  width: 100%;
 }
 
 /* Pseudo-class applied to the root element on focus */

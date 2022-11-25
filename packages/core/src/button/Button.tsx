@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
       >
-        <span className={withBaseName("label")}>{children}</span>
+        {children}
       </button>
     );
   }
