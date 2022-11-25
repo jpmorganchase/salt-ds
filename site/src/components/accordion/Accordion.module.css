@@ -24,6 +24,8 @@
 
 .accordion .summary {
   background-color: transparent;
+  padding-left: 0;
+  /* padding-right: var(--accordion-summary-paddingLeft); */
 }
 
 .accordion .metrics {

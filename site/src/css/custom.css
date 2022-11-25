@@ -63,6 +63,15 @@
   border-bottom: 2px solid var(--uitk-navigable-indicator-hover);
 }
 
+.uitkAccordionSummary .uitkAccordionSummary-icon {
+  left: unset;
+  right: 0;
+}
+
+.uitkAccordionDetails .uitkAccordionDetails-content {
+  padding-left: 0;
+}
+
 .footer {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
 }
