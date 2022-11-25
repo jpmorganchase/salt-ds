@@ -20,7 +20,6 @@ import {
   getCellPosition,
   LeftPart,
   MiddlePart,
-  PAGE_SIZE,
   RightPart,
   Scrollable,
   TopLeftPart,
@@ -199,12 +198,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
-  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(
-    undefined
-  );
-  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(
-    undefined
-  );
+  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(0);
+  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(0);
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -550,13 +545,30 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
   );
 
+  const [isFocused, setFocused] = useState<boolean>(false);
+
+  const onFocus = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(true);
+    },
+    [setFocused]
+  );
+
+  const onBlur = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(false);
+    },
+    [setFocused]
+  );
+
   const cursorContext: CursorContext = useMemo(
     () => ({
+      isFocused,
       cursorRowIdx,
       cursorColIdx,
       moveCursor,
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor]
+    [cursorRowIdx, cursorColIdx, moveCursor, isFocused]
   );
 
   const onColumnMove: GridColumnMoveHandler = (
@@ -678,8 +690,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             if (cursorRowIdx != undefined) {
               selectRows({
                 rowIndex: cursorRowIdx,
-                shift: event.shiftKey,
-                meta: event.metaKey,
+                shift: false,
+                meta: event.shiftKey,
               });
             }
           }
@@ -745,6 +757,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [rangeSelection.selectedCellRange]
   );
 
+  const pageSize = visRowRng.length - 1;
+
   const navigationKeyHandler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       const { key } = event;
@@ -762,10 +776,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
           break;
         case "PageUp":
-          moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
+          moveCursor((cursorRowIdx || 0) - pageSize, cursorColIdx);
           break;
         case "PageDown":
-          moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
+          moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
           break;
         case "Home":
           if (!event.ctrlKey) {
@@ -779,31 +793,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             moveCursor(cursorRowIdx, cols.length - 1);
           } else {
             moveCursor(rowData.length - 1, cols.length - 1);
-          }
-          break;
-        case "Tab":
-          if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-            if (cursorColIdx == undefined || cursorRowIdx == undefined) {
-              moveCursor(0, 0);
-            } else {
-              if (!event.shiftKey) {
-                if (cursorColIdx < cols.length - 1) {
-                  moveCursor(cursorRowIdx, cursorColIdx + 1);
-                } else {
-                  if (cursorRowIdx < rowData.length - 1) {
-                    moveCursor(cursorRowIdx + 1, 0);
-                  }
-                }
-              } else {
-                if (cursorColIdx > 0) {
-                  moveCursor(cursorRowIdx, cursorColIdx - 1);
-                } else {
-                  if (cursorRowIdx > 0) {
-                    moveCursor(cursorRowIdx - 1, cols.length - 1);
-                  }
-                }
-              }
-            }
           }
           break;
         case "Enter":
@@ -928,6 +917,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     data-name="grid-root"
                     role="grid"
                   >

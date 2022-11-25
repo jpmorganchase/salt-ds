@@ -273,7 +273,6 @@ export const useColumnGroups = (
       }),
     [grpPs, startIdx]
   );
-export const PAGE_SIZE = 10;
 
 // Visible range of column groups.
 export function useVisibleColumnGroupRange<T>(
@@ -1183,6 +1182,9 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   }, []);
 
   const selectRange = useCallback((range: CellRange) => {
+    if (cellSelectionMode !== "range") {
+      return;
+    }
     setSelectedCellRange(range);
   }, []);
 
