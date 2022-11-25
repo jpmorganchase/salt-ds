@@ -63,14 +63,22 @@
   border-bottom: 2px solid var(--uitk-navigable-indicator-hover);
 }
 
+/* Override Salt accordion styles */
+
 .uitkAccordionSummary .uitkAccordionSummary-icon {
   left: unset;
   right: 0;
 }
 
+.uitkAccordionSummary .uitkAccordionSummary-icon:hover {
+  background: var(--accordion-summary-background-hover);
+}
+
 .uitkAccordionDetails .uitkAccordionDetails-content {
   padding-left: 0;
 }
+
+/* ----------------------------- */
 
 .footer {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
