@@ -52,16 +52,33 @@ Icons can be put before or after text, or used alone.
 <Canvas>
   <Story name="Button with icon and label" decorators={[withFlexGap]}>
     <Button variant="cta">
-      Send <SendIcon />
+      Send <SendIcon aria-hidden />
     </Button>
     <Button variant="primary">
-      <SearchIcon /> Search
+      <SearchIcon aria-hidden /> Search
     </Button>
     <Button variant="secondary">
-      Setting <SettingsSolidIcon />
+      Setting <SettingsSolidIcon aria-hidden />
     </Button>
-    <Button>
-      <DownloadIcon />
+    <Button  aria-label="download">
+      <DownloadIcon aria-hidden/>
+    </Button>
+  </Story>
+</Canvas>
+
+
+### Disabled Button
+
+We have 2 variants of a disabled button. 
+A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"` 
+
+<Canvas>
+  <Story name="Disabled buttons" decorators={[withFlexGap]}>
+    <Button disabled>
+      Disabled <SendIcon aria-hidden />
+    </Button>
+    <Button disabled focusableWhenDisabled >
+      Focusable When Disabled
     </Button>
   </Story>
 </Canvas>
@@ -78,6 +95,12 @@ import { Button } from "@jpmorganchase/uitk-core";
 
 <ArgsTable of={Button} />
 
+## Related components
+
+The button component can nest the following component: 
+
+- [Icon](?path=/docs/documentation-icons-icon--page)
+
 ### Anatomy
 
 export const Link = ({ children, to, ...props }) => (
@@ -88,14 +111,20 @@ export const Link = ({ children, to, ...props }) => (
 
 <Canvas>
   <ComponentAnatomy>
-    <Button aria-label="Simple Button">Default</Button>
+    <Button>Default</Button>
   </ComponentAnatomy>
   <br />
   <ComponentAnatomy>
-    <Button variant="cta" aria-label="CTA with Icon">
-      CTA with Icon <SendIcon />
+    <Button variant="cta">
+      CTA with Icon <SendIcon aria-hidden/>
     </Button>
   </ComponentAnatomy>
+  <br />
+    <ComponentAnatomy>
+      <Button aria-label="Send">
+        <SendIcon aria-hidden/>
+      </Button>
+    </ComponentAnatomy>
 </Canvas>
 
 ### Classes
@@ -116,5 +145,14 @@ a custom class name to override button styling. They will always take precedence
 or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
 
 <CSSVariableTable of={Button} />
+
+## Accessibility
+
+If you are using an icon-only Button:
+- Button needs an `aria-label` that describes the purpose of the button.
+- Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
+
+If you are using an icon as a decorator:
+- Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
 
 <HelpAndSupport />

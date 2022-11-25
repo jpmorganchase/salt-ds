@@ -43,11 +43,11 @@ const ButtonGrid = ({
         <Button variant={variant} onClick={handleClick}>
           {buttonLabel}
         </Button>
-        <Button variant={variant} onClick={handleClick}>
-          <SearchIcon />
+        <Button variant={variant} onClick={handleClick} aria-label="search">
+          <SearchIcon aria-hidden />
         </Button>
         <Button variant={variant} onClick={handleClick}>
-          <SearchIcon />
+          <SearchIcon aria-hidden />
           {` ${buttonLabel}`}
         </Button>
       </div>
