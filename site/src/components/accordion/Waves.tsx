@@ -60,9 +60,9 @@ export default () => (
         y2="10.5371"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#8DCDD1" />
-        <stop offset="0.9999" stop-color="#055353" />
-        <stop offset="1" stop-color="#00314C" />
+        <stop stopColor="#8DCDD1" />
+        <stop offset="0.9999" stopColor="#055353" />
+        <stop offset="1" stopColor="#00314C" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_641_94603"
@@ -72,9 +72,9 @@ export default () => (
         y2="99.4248"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#8DCDD1" />
-        <stop offset="0.9999" stop-color="#055353" />
-        <stop offset="1" stop-color="#00314C" />
+        <stop stopColor="#8DCDD1" />
+        <stop offset="0.9999" stopColor="#055353" />
+        <stop offset="1" stopColor="#00314C" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_641_94603"
@@ -84,9 +84,9 @@ export default () => (
         y2="66.6777"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#8DCDD1" />
-        <stop offset="0.9999" stop-color="#055353" />
-        <stop offset="1" stop-color="#00314C" />
+        <stop stopColor="#8DCDD1" />
+        <stop offset="0.9999" stopColor="#055353" />
+        <stop offset="1" stopColor="#00314C" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_641_94603"
@@ -96,8 +96,8 @@ export default () => (
         y2="113.461"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="white" />
-        <stop offset="1" stop-color="#A2D9DA" />
+        <stop stopColor="white" />
+        <stop offset="1" stopColor="#A2D9DA" />
       </linearGradient>
       <linearGradient
         id="paint4_linear_641_94603"
@@ -107,8 +107,8 @@ export default () => (
         y2="172.719"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="white" />
-        <stop offset="1" stop-color="#A2D9DA" />
+        <stop stopColor="white" />
+        <stop offset="1" stopColor="#A2D9DA" />
       </linearGradient>
     </defs>
   </svg>
