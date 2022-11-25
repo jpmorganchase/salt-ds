@@ -20,6 +20,7 @@
 
 .accordion {
   flex: 1;
+  padding: calc(var(--uitk-size-unit) * 2) 0;
 }
 
 .accordion .summary {
