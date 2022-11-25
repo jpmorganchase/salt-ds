@@ -11,6 +11,7 @@ import { Metric, MetricContent } from "@jpmorganchase/uitk-lab";
 
 import Arch from "./Arch";
 import Waves from "./Waves";
+import PageIllustration from "./PageIllustration";
 
 import useOnScreen from "../../utils/useOnScreen";
 
@@ -110,27 +111,30 @@ const SiteAccordion = (): JSX.Element => {
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
   return (
-    <div className={styles.wrapper}>
-      <Accordion
-        className={styles.accordion}
-        defaultExpandedSectionIds={[accordionInfo[0].id]}
-        maxExpandedItems={1}
-      >
-        {accordionInfo.map(({ id, summary, details }) => {
-          return (
-            <AccordionSection className={styles.accordion} key={id} id={id}>
-              <AccordionSummary className={styles.summary}>
-                <h2>{summary}</h2>
-              </AccordionSummary>
-              <AccordionDetails>{details}</AccordionDetails>
-            </AccordionSection>
-          );
-        })}
-      </Accordion>
-      <div
-        className={clsx(styles.keyline, { [styles.animate]: onScreen })}
-        ref={ref}
-      />
+    <div className={styles.accordionContainer}>
+      <PageIllustration />
+      <div className={styles.wrapper}>
+        <Accordion
+          className={styles.accordion}
+          defaultExpandedSectionIds={[accordionInfo[0].id]}
+          maxExpandedItems={1}
+        >
+          {accordionInfo.map(({ id, summary, details }) => {
+            return (
+              <AccordionSection className={styles.accordion} key={id} id={id}>
+                <AccordionSummary className={styles.summary}>
+                  <h2>{summary}</h2>
+                </AccordionSummary>
+                <AccordionDetails>{details}</AccordionDetails>
+              </AccordionSection>
+            );
+          })}
+        </Accordion>
+        <div
+          className={clsx(styles.keyline, { [styles.animate]: onScreen })}
+          ref={ref}
+        />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import styles from "./index.module.css";
+import styles from "./Accordion.module.css";
 
 export default () => (
   <svg

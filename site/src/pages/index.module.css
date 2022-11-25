@@ -42,17 +42,6 @@
   padding: calc(var(--uitk-size-unit) * 6) calc(var(--uitk-size-unit) * 4);
 }
 
-.accordionContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr) min-content;
-  grid-template-rows: repeat(3, min-content);
-  overflow: hidden;
-}
-
-.accordionIllustration {
-  grid-area: 1 / 2 / 3 / 4;
-}
-
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: var(--uitk-size-unit);
@@ -69,15 +58,5 @@
 
   .cardContainer {
     flex-direction: column;
-  }
-}
-
-@media screen and (max-width: 1280px) {
-  .accordionContainer {
-    grid-template-columns: 1fr;
-  }
-
-  .accordionIllustration {
-    grid-area: 1 / 1 / 3 / 1;
   }
 }

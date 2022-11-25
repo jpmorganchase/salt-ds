@@ -7,7 +7,6 @@ import HeroImage from "@site/static/img/hero_image.svg";
 import PencilIcon from "@site/static/img/pencil.svg";
 import CodeIcon from "@site/static/img/code.svg";
 import ArrowsIcon from "@site/static/img/arrows.svg";
-import AccordionIllustration from "./AccordionIllustration";
 import { Button } from "@jpmorganchase/uitk-core";
 
 import styles from "./index.module.css";
@@ -107,10 +106,7 @@ export default function Home(): JSX.Element {
             );
           })}
         </div>
-        <div className={styles.accordionContainer}>
-          <AccordionIllustration />
-          <Accordion />
-        </div>
+        <Accordion />
       </div>
     </Layout>
   );

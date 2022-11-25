@@ -1,3 +1,14 @@
+.accordionContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) min-content;
+  grid-template-rows: repeat(3, min-content);
+  overflow: hidden;
+}
+
+.accordionIllustration {
+  grid-area: 1 / 2 / 3 / 4;
+}
+
 .wrapper {
   background-color: var(--card-background);
   width: 55vw;
@@ -54,5 +65,13 @@
     width: 100%;
     padding: calc(var(--uitk-size-unit) * 2);
     grid-area: 2 / 1 / 4 / 1;
+  }
+
+  .accordionContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .accordionIllustration {
+    grid-area: 1 / 1 / 3 / 1;
   }
 }
