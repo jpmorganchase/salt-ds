@@ -120,7 +120,7 @@
     "webpack": "5.74.0"
   },
   "resolutions": {
-    "esbuild": "0.14.51",
+    "esbuild": "0.15.16",
     "webpack-dev-server": "4.9.3"
   },
   "browserslist": {
