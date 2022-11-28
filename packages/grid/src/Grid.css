@@ -103,7 +103,7 @@
   --grid-separatorGap: var(--uitkGrid-separatorGap, var(--grid-separatorGap-default));
   --grid-header-fontSize: var(--uitkGrid-header-fontSize, var(--grid-header-fontSize-default));
   --grid-groupHeader-fontSize: var(--uitkGrid-groupHeader-fontSize, var(--grid-header-fontSize));
-  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-caption-fontWeight-strong));
+  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-label-fontWeight-strong));
 
   --grid-cell-padding: 0 var(--grid-padding);
 

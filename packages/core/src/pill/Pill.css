@@ -21,7 +21,7 @@
   --pill-background-disabled: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background-hover));
   --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--pill-height) - 2px));
-  --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-caption-fontSize));
+  --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-label-fontSize));
   --pill-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 1.5));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));

@@ -38,4 +38,6 @@
   --uitk-editable-background-disabled-high: var(--uitk-palette-interact-background-disabled-high);
   --uitk-editable-background-hover-high: var(--uitk-palette-interact-background-high);
   --uitk-editable-background-readonly-high: var(--uitk-palette-interact-background-high);
+
+  --uitk-editable-help-fontStyle: italic;
 }
