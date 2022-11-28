@@ -261,6 +261,27 @@
   width: 14px;
 }
 
+table thead tr {
+  border: none;
+  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+}
+
+table th, table td {
+  border: none;
+}
+
+table tr {
+  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
+table th {
+  color: var(--uitk-text-secondary-foreground);
+}
+
+table tr th:not(:last-child), table tr td:not(:last-child) {
+  border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
 @media screen and (max-width: 1280px) {
   .navbar {
     --ifm-navbar-height: 76px;
