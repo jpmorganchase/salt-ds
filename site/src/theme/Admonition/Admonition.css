@@ -1,0 +1,29 @@
+.saltAdmonition {
+  background: var(--uitk-container-background-low);
+}
+
+.saltAdmonition-info {
+  background-color: var(--uitk-color-teal-500);
+  height: 3px;
+}
+
+.saltAdmonition .theme-admonition {
+  --ifm-alert-foreground-color: var(--uitk-color-gray-900);
+  --ifm-alert-background-color: var(--uitk-color-white);
+  --ifm-alert-shadow: none;
+  --ifm-alert-padding-horizontal: 0;
+  --ifm-alert-padding-vertical: 0;
+  border: none;
+}
+
+.saltAdmonition .theme-admonition a {
+  text-decoration-color: var(--uitk-color-gray-900);
+}
+
+.saltAdmonition .theme-admonition a:hover {
+  text-decoration-thickness: 1px;
+}
+
+.theme-admonition div:nth-child(1) {
+  display: none;
+}
