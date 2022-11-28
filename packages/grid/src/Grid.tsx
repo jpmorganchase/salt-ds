@@ -945,6 +945,15 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       leftRef={leftRef}
                       middleRef={middleRef}
                     />
+                    {!hideHeader && (
+                      <TopPart
+                        columns={headVisibleColumns}
+                        columnGroups={visColGrps}
+                        topRef={topRef}
+                        onWheel={onWheel}
+                        midGap={midGap}
+                      />
+                    )}
                     <MiddlePart
                       middleRef={middleRef}
                       onWheel={onWheel}
@@ -955,15 +964,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       midGap={midGap}
                       zebra={zebra}
                     />
-                    {!hideHeader && (
-                      <TopPart
-                        columns={headVisibleColumns}
-                        columnGroups={visColGrps}
-                        topRef={topRef}
-                        onWheel={onWheel}
-                        midGap={midGap}
-                      />
-                    )}
                     <LeftPart
                       leftRef={leftRef}
                       onWheel={onWheel}
