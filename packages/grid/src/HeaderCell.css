@@ -1,7 +1,7 @@
 .uitkGridHeaderCell {
   text-align: left;
   font-size: var(--grid-header-fontSize);
-  font-weight: var(--uitk-text-caption-fontWeight-strong);
+  font-weight: var(--uitk-text-label-fontWeight-strong);
   line-height: var(--grid-row-height);
   position: relative;
   box-sizing: border-box;
