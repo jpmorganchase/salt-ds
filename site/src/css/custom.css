@@ -141,6 +141,8 @@
 
 .docs-wrapper main .container {
   max-width: none;
+  /* using !important here is not ideal but this is required to override docusauros own !important style */
+  padding-bottom: 0 !important;
 }
 
 .docs-page-content {
