@@ -4,20 +4,34 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: var(--uitk-color-gray-900);
+  --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme="dark"] .uitk-theme {
-  --ifm-heading-color: var(--uitk-color-white);
+.uitk-theme[data-mode="light"]  {
+  --site-tertiary-accent-green: var(--uitk-color-green-500);
+  --site-tertiary-accent-teal: var(--uitk-color-teal-500);
+  --site-tertiary-accent-blue: var(--uitk-color-blue-900);
+  --site-tertiary-accent-purple: var(--uitk-color-purple-500);
+  --site-tertiary-accent-red: var(--uitk-color-red-700);
+  --site-tertiary-accent-orange: var(--uitk-color-orange-600);
+}
+
+.uitk-theme[data-mode="dark"]  {
+  --site-tertiary-accent-green: var(--uitk-color-green-20);
+  --site-tertiary-accent-teal: var(--uitk-color-teal-50);
+  --site-tertiary-accent-blue: var(--uitk-color-blue-50);
+  --site-tertiary-accent-purple: var(--uitk-color-purple-50);
+  --site-tertiary-accent-red: var(--uitk-color-red-50);
+  --site-tertiary-accent-orange: var(--uitk-color-orange-30);
+}
+
+.uitk-theme {
+  --ifm-heading-color: var(--uitk-text-primary-foreground);
   --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
-  --ifm-menu-color: var(--uitk-color-gray-900);
-  --ifm-menu-color-active: var(--uitk-color-gray-900);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
   --ifm-toc-border-color: var(--uitk-separable-tertiary-borderColor);
@@ -72,6 +86,8 @@
 }
 
 .theme-doc-sidebar-container {
+  --ifm-menu-color: var(--uitk-color-gray-900);/* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color-active: var(--uitk-color-gray-900);
   background-color: var(--uitk-color-white);
 }
 
@@ -148,7 +164,7 @@
 
 .docs-page-content {
   background-color: var(--uitk-color-white);
-  color: var(--uitk-color-gray-900);
+  color: var(--uitk-text-primary-foreground);
   padding: calc(var(--uitk-size-unit) * 3);
 }
 
@@ -156,21 +172,21 @@
   --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
   --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
-  --ifm-heading-color: var(--uitk-color-gray-900);
+  --ifm-heading-color: var(--uitk-text-primary-foreground);
 }
 
 .docs-page-content h3 {
   --ifm-h3-font-size: var(--uitk-text-h3-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight);
   --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
-  --ifm-heading-color: var(--uitk-color-gray-900);
+  --ifm-heading-color: var(--uitk-text-primary-foreground);
 }
 
 .docs-page-content h4 {
   --ifm-h4-font-size: var(--uitk-text-h4-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-h4-fontWeight);
   --ifm-heading-line-height: var(--uitk-text-h4-lineHeight);
-  --ifm-heading-color: var(--uitk-color-teal-500);
+  --ifm-heading-color: var(--site-tertiary-accent-teal);
 }
 
 .docs-page-content code {

@@ -3,7 +3,7 @@
 }
 
 .saltAdmonition-info {
-  background-color: var(--uitk-color-teal-500);
+  background-color: var(--site-tertiary-accent-teal);
   height: 3px;
 }
 
