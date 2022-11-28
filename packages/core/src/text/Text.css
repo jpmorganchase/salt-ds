@@ -136,4 +136,17 @@ label.uitkText,
 .uitkText-label.uitkText {
   font-size: var(--uitk-text-caption-fontSize);
   line-height: var(--uitk-text-caption-lineHeight);
+  font-weight: var(--uitk-text-fontWeight);
+}
+
+/* Label emphasis strong */
+label.uitkText strong,
+.uitkText-label.uitkText strong {
+  font-weight: var(--uitk-text-fontWeight-strong);
+}
+/* Label emphasis small */
+label.uitkText small,
+.uitkText-label.uitkText small {
+  font-size: inherit;
+  font-weight: var(--uitk-text-fontWeight-small);
 }

@@ -17,9 +17,12 @@ interface TextPropsBase<E extends ElementType> {
    * Defaults to 'div'
    */
   elementType?: ElementType;
+  /**
+   * Apply text truncation by mentioning number of rows to be displayed
+   */
   maxRows?: number;
   /**
-   * Match styling to another text component
+   * Match styling to another text component's style
    */
   styleAs?:
     | "h1"
