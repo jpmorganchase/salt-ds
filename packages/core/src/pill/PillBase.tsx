@@ -19,7 +19,6 @@ import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 
 import "./Pill.css";
-import { Button } from "../button";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -148,12 +147,12 @@ export const PillBase = forwardRef(function PillBase(
     setActive(false);
   };
 
-  const handleClick = (event: SyntheticEvent<HTMLDivElement, Event>) => {
+  const handleClick = (event: SyntheticEvent<HTMLDivElement>) => {
     onClick(event);
   };
 
   // FIXME: use polymorphic button as div for deletable and clickable cases.
-  const Component = deletable || clickable ? Button : "div";
+  const Component = "div";
 
   const renderDeleteIcon = () => {
     // FIXME: deleteIconProp type

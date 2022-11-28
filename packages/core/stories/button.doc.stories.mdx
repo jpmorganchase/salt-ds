@@ -60,24 +60,23 @@ Icons can be put before or after text, or used alone.
     <Button variant="secondary">
       Setting <SettingsSolidIcon aria-hidden />
     </Button>
-    <Button  aria-label="download">
-      <DownloadIcon aria-hidden/>
+    <Button aria-label="download">
+      <DownloadIcon aria-hidden />
     </Button>
   </Story>
 </Canvas>
 
-
 ### Disabled Button
 
-We have 2 variants of a disabled button. 
-A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"` 
+We have 2 variants of a disabled button.
+A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"`
 
 <Canvas>
   <Story name="Disabled buttons" decorators={[withFlexGap]}>
     <Button disabled>
       Disabled <SendIcon aria-hidden />
     </Button>
-    <Button disabled focusableWhenDisabled >
+    <Button disabled focusableWhenDisabled>
       Focusable When Disabled
     </Button>
   </Story>
@@ -97,7 +96,7 @@ import { Button } from "@jpmorganchase/uitk-core";
 
 ## Related components
 
-The button component can nest the following component: 
+The button component can nest the following component:
 
 - [Icon](?path=/docs/documentation-icons-icon--page)
 
@@ -116,15 +115,15 @@ export const Link = ({ children, to, ...props }) => (
   <br />
   <ComponentAnatomy>
     <Button variant="cta">
-      CTA with Icon <SendIcon aria-hidden/>
+      CTA with Icon <SendIcon aria-hidden />
     </Button>
   </ComponentAnatomy>
   <br />
-    <ComponentAnatomy>
-      <Button aria-label="Send">
-        <SendIcon aria-hidden/>
-      </Button>
-    </ComponentAnatomy>
+  <ComponentAnatomy>
+    <Button aria-label="Send">
+      <SendIcon aria-hidden />
+    </Button>
+  </ComponentAnatomy>
 </Canvas>
 
 ### Classes
@@ -149,10 +148,12 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 ## Accessibility
 
 If you are using an icon-only Button:
+
 - Button needs an `aria-label` that describes the purpose of the button.
 - Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
 
 If you are using an icon as a decorator:
+
 - Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
 
 <HelpAndSupport />
