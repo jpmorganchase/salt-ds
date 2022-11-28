@@ -175,6 +175,9 @@
   outline: none;
   user-select: none;
   background: var(--grid-background);
+  
+  width: var(--uitkGrid-width, var(--grid-total-width));
+  height: var(--uitkGrid-height, var(--grid-total-height));
 }
 
 /* Styles applied to the root element if zebra is enabled */
