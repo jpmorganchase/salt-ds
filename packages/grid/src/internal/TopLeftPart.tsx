@@ -28,7 +28,7 @@ export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
       })}
       data-testid="grid-top-left-part"
     >
-      <table ref={tableRef}>
+      <table ref={tableRef} role="presentation">
         <TableColGroup columns={columns} />
         <thead>
           <GroupHeaderRow groups={columnGroups} />

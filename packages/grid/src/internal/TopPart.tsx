@@ -25,7 +25,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
   return (
     <div className={withBaseName()} ref={topRef} data-testid="grid-top-part">
       <div className={withBaseName("space")}>
-        <table ref={tableRef}>
+        <table ref={tableRef} role="presentation">
           <TableColGroup columns={columns} gap={midGap} />
           <thead>
             <GroupHeaderRow groups={columnGroups} gap={midGap} />

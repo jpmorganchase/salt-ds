@@ -39,8 +39,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
       className={withBaseName()}
       data-testid="grid-middle-part"
     >
-      <div className={withBaseName("space")}>
-        <table ref={tableRef}>
+        <table ref={tableRef} role="presentation">
           <TableColGroup columns={columns} gap={midGap} />
           <TableBody
             columns={columns}
