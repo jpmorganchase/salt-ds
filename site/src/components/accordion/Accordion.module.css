@@ -44,11 +44,6 @@
   font-size: var(--uitk-text-h2-fontSize);
 }
 
-.wavesContainer {
-  align-self: center;
-  padding: calc(var(--uitk-size-unit) * 5) 0;
-}
-
 .keyline {
   height: 3px;
   width: calc(100% + calc(var(--uitk-size-unit) * 20));

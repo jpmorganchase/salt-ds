@@ -7,10 +7,6 @@ import {
   AccordionSummary,
 } from "@jpmorganchase/uitk-lab";
 
-import { Metric, MetricContent } from "@jpmorganchase/uitk-lab";
-
-import Arch from "./Arch";
-import Waves from "./Waves";
 import PageIllustration from "./PageIllustration";
 
 import useOnScreen from "../../utils/useOnScreen";
@@ -41,17 +37,6 @@ const accordionInfo = [
           Eventually, Salt will provide everything you need to create
           consistent, fully accessible, beautifully designed user interfaces.
         </p>
-        {/* <div className={styles.metrics}>
-          <Metric>
-            <MetricContent subvalue="components" value="80+" />
-          </Metric>
-          <Metric>
-            <MetricContent subvalue="patterns" value="10+" />
-          </Metric>
-          <Metric>
-            <MetricContent subvalue="websites and apps created" value="1200+" />
-          </Metric>
-        </div> */}
       </>
     ),
   },
@@ -71,9 +56,6 @@ const accordionInfo = [
           Underpinned by beautiful and functional design, they support the
           creation of great user experiences across all devices.
         </p>
-        {/* <div className={styles.wavesContainer}>
-          <Waves />
-        </div> */}
       </>
     ),
   },
@@ -98,9 +80,6 @@ const accordionInfo = [
           contributions informing and shaping our next steps. Get in touch to
           share your feedback.
         </p>
-        {/* <div className={styles.wavesContainer}>
-          <Arch />
-        </div> */}
       </>
     ),
   },
