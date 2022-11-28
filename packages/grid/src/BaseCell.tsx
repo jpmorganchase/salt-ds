@@ -30,7 +30,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       data-row-index={row.index}
       data-column-index={column.index}
       data-testid={isFocused ? "grid-cell-focused" : undefined}
-      aria-colindex={column.index}
+      // aria-colindex={column.index}
       role="gridcell"
       className={cn(withBaseName(), className)}
       style={style}
