@@ -18,7 +18,7 @@ const cards: CardProps[] = [
     title: "Develop",
     description:
       "We walk you through the process of installing the Salt dependencies into your React project and importing components.",
-    url: "/getting-started/develop",
+    url: "/getting-started/dev",
     linkText: "Start developing",
     keylineColor: "var(--uitk-color-orange-600)",
   },
