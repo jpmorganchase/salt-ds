@@ -11,6 +11,10 @@
 }
 
 .wrapper {
+  --keyline-height: 3px;
+}
+
+.wrapper {
   background-color: var(--card-background);
   width: 55vw;
   padding: calc(var(--uitk-size-unit) * 10);
@@ -19,6 +23,10 @@
 }
 
 .accordion {
+  height: calc(100% - var(--keyline-height));
+}
+
+.accordion .section {
   padding: calc(var(--uitk-size-unit) * 2) 0;
 }
 
@@ -38,7 +46,7 @@
 }
 
 .keyline {
-  height: 3px;
+  height: var(--keyline-height);
   width: calc(100% + calc(var(--uitk-size-unit) * 20));
   position: relative;
   left: calc(-1 * var(--uitk-size-unit) * 10);

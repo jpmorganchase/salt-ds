@@ -100,7 +100,7 @@ const SiteAccordion = (): JSX.Element => {
         >
           {accordionInfo.map(({ id, summary, details }) => {
             return (
-              <AccordionSection className={styles.accordion} key={id} id={id}>
+              <AccordionSection className={styles.section} key={id} id={id}>
                 <AccordionSummary className={styles.summary}>
                   <h2>{summary}</h2>
                 </AccordionSummary>
