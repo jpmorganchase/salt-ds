@@ -37,7 +37,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onKeyDown,
       onBlur,
       onClick,
-      role: roleProp,
       type = "button",
       variant = "primary",
       ...restProps
@@ -62,7 +61,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
         })}
-        role={roleProp}
         {...restProps}
         ref={ref}
         type={type}

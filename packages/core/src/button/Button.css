@@ -110,7 +110,6 @@
   text-decoration: none;
   transition: none;
   user-select: none;
-  vertical-align: middle;
   width: var(--uitkButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
