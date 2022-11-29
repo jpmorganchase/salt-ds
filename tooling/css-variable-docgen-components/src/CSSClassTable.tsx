@@ -15,7 +15,6 @@ export function CSSClassTable(props: Record<string, string>): JSX.Element {
   const context = useContext(DocsContext);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const main = getComponent(props, context);
-
   const classNames = getDocgenSection<Record<string, ClassName>>(
     main,
     "classNames"
