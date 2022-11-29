@@ -1,6 +1,6 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Text, TextProps } from "@jpmorganchase/uitk-core";
+import { Text } from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Core/Text",
@@ -50,12 +50,13 @@ export default {
   },
 } as ComponentMeta<typeof Text>;
 
-const BaseComponent: Story<TextProps> = (args) => {
+const BaseComponent: ComponentStory<typeof Text> = (args) => {
   const { children, ...rest } = args;
 
   return (
     <div>
       {/* We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! :) */}
+      {/* @ts-ignore */}
       <Text dangerouslySetInnerHTML={{ __html: children }} {...rest} />
     </div>
   );

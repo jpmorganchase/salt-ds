@@ -15,10 +15,14 @@ export function CSSClassTable(props: Record<string, string>): JSX.Element {
   const context = useContext(DocsContext);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const main = getComponent(props, context);
+  console.log("main", main, context);
+
   const classNames = getDocgenSection<Record<string, ClassName>>(
     main,
     "classNames"
   );
+
+  console.log("classNames", classNames);
 
   if (!classNames || Object.values(classNames).length < 1) {
     return (

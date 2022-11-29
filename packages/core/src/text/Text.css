@@ -134,8 +134,8 @@ h4.uitkText small,
 /* Label */
 label.uitkText,
 .uitkText-label.uitkText {
-  font-size: var(--uitk-text-caption-fontSize);
-  line-height: var(--uitk-text-caption-lineHeight);
+  font-size: var(--uitk-text-label-fontSize);
+  line-height: var(--uitk-text-label-lineHeight);
   font-weight: var(--uitk-text-fontWeight);
 }
 

@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas, ArgsTable, Props } from "@storybook/addon-docs";
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import {
   Text,
   H1,
@@ -14,23 +14,30 @@ import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import {
   CharacteristicUsage,
   CSSClassTable,
+  CSSVariableTable,
 } from "css-variable-docgen-components";
 
-<Meta title="Documentation/Core/Text" />
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Text"
+  component={Text}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
 
 # Text
 
-We've created a base Text component (that contains our key typography styles and functionality) and more typography components which derive from it: H1, H2, H3, H4, Label, etc. Using the Text components will guarantee that the typography styles are consistent throughout the app.
+We've created a base Text component (that contains our key typography styles and functionality) and more text components which derive from it: H1, H2, H3, H4, Label, Display1, Display2 and Display3. All our text components are aware of theme, mode and density.
+
+You can also create your own text components using the props and CSS variables to configure them.
 
 # API
 
 ```
 import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-core";
 ```
-
-## Props
-
-<ArgsTable of={Text} />
 
 ## HTML Anatomy of a Text component
 
@@ -64,403 +71,50 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
   </ComponentAnatomy>
 </Canvas>
 
+## Props
+
+<ArgsTable of={Text} />
+
+## Features
+
+### Variant
+
+Use `variant` prop when you want to change the text color. Available options are `primary` and `secondary`. Default is `primary`.
+
+<Canvas>
+  <Story name="Primary">
+    <Text>This is a primary text example</Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Secondary">
+    <Text variant="secondary">This is a secondary text example</Text>
+  </Story>
+</Canvas>
+
+### Emphasis
+
+Use `<strong>` or `<small>` tags inside your text components to wrap the chunks of text you wish to emphasise
+
+<Canvas>
+  <Story name="Strong">
+    <Text>
+      This is a <strong>strong</strong> text example
+    </Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Small">
+    <Text>
+      This is a <small>small</small> text example
+    </Text>
+  </Story>
+</Canvas>
+
 ## CSS Class
 
 <CSSClassTable of={Text} />
 
-## Characteristics Used
-
-## Text components
-
-We've created a set of components that are most commonly used, but it's easy to generate your own by passing the tag you want to be returned into the `elementType` prop. The base Text component is generating a `div` by default
-
-### Text
-
-<Canvas>
-  <Story name="Text">
-    <div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          width: "100%",
-          gap: 20,
-        }}
-      >
-        <div>
-          <strong>Variant</strong>
-        </div>
-        <div>
-          <strong>Text</strong>
-        </div>
-        <div>
-          <strong>Strong</strong>
-        </div>
-        <div>
-          <strong>Small</strong>
-        </div>
-        <div>
-          <strong>Primary</strong>
-        </div>
-        <div>
-          <Text>This is a text example</Text>
-        </div>
-        <div>
-          <Text>
-            <strong>This is a text example</strong>
-          </Text>
-        </div>
-        <div>
-          <Text>
-            <small>This is a text example</small>
-          </Text>
-        </div>
-        <div>
-          <strong>Secondary</strong>
-        </div>
-        <div>
-          <Text variant="secondary">This is a text example</Text>
-        </div>
-        <div>
-          <Text variant="secondary">
-            <strong>This is a text example</strong>
-          </Text>
-        </div>
-        <div>
-          <Text variant="secondary">
-            <small>This is a text example</small>
-          </Text>
-        </div>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### H1
-
-<Canvas>
-  <Story name="H1">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        width: "100%",
-        gap: 20,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <strong>Variant</strong>
-      </div>
-      <div>
-        <strong>Default</strong>
-      </div>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <strong>Small</strong>
-      </div>
-      <div>
-        <strong>Primary</strong>
-      </div>
-      <div>
-        <H1>This is a text example</H1>
-      </div>
-      <div>
-        <H1>
-          <strong>This is a text example</strong>
-        </H1>
-      </div>
-      <div>
-        <H1>
-          <small>This is a text example</small>
-        </H1>
-      </div>
-      <div>
-        <strong>Secondary</strong>
-      </div>
-      <div>
-        <H1 variant="secondary">This is a text example</H1>
-      </div>
-      <div>
-        <H1 variant="secondary">
-          <strong>This is a text example</strong>
-        </H1>
-      </div>
-      <div>
-        <H1 variant="secondary">
-          <small>This is a text example</small>
-        </H1>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### H2
-
-<Canvas>
-  <Story name="H2">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        width: "100%",
-        gap: 20,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <strong>Variant</strong>
-      </div>
-      <div>
-        <strong>Default</strong>
-      </div>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <strong>Small</strong>
-      </div>
-      <div>
-        <strong>Primary</strong>
-      </div>
-      <div>
-        <H2>This is a text example</H2>
-      </div>
-      <div>
-        <H2>
-          <strong>This is a text example</strong>
-        </H2>
-      </div>
-      <div>
-        <H2>
-          <small>This is a text example</small>
-        </H2>
-      </div>
-      <div>
-        <strong>Secondary</strong>
-      </div>
-      <div>
-        <H2 variant="secondary">This is a text example</H2>
-      </div>
-      <div>
-        <H2 variant="secondary">
-          <strong>This is a text example</strong>
-        </H2>
-      </div>
-      <div>
-        <H2 variant="secondary">
-          <small>This is a text example</small>
-        </H2>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### H3
-
-<Canvas>
-  <Story name="H3">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        width: "100%",
-        gap: 20,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <strong>Variant</strong>
-      </div>
-      <div>
-        <strong>Default</strong>
-      </div>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <strong>Small</strong>
-      </div>
-      <div>
-        <strong>Primary</strong>
-      </div>
-      <div>
-        <H3>This is a text example</H3>
-      </div>
-      <div>
-        <H3>
-          <strong>This is a text example</strong>
-        </H3>
-      </div>
-      <div>
-        <H3>
-          <small>This is a text example</small>
-        </H3>
-      </div>
-      <div>
-        <strong>Secondary</strong>
-      </div>
-      <div>
-        <H3 variant="secondary">This is a text example</H3>
-      </div>
-      <div>
-        <H3 variant="secondary">
-          <strong>This is a text example</strong>
-        </H3>
-      </div>
-      <div>
-        <H3 variant="secondary">
-          <small>This is a text example</small>
-        </H3>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### H4
-
-<Canvas>
-  <Story name="H4">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        width: "100%",
-        gap: 20,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <strong>Variant</strong>
-      </div>
-      <div>
-        <strong>Default</strong>
-      </div>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <strong>Small</strong>
-      </div>
-      <div>
-        <strong>Primary</strong>
-      </div>
-      <div>
-        <H4>This is a text example</H4>
-      </div>
-      <div>
-        <H4>
-          <strong>This is a text example</strong>
-        </H4>
-      </div>
-      <div>
-        <H4>
-          <small>This is a text example</small>
-        </H4>
-      </div>
-      <div>
-        <strong>Secondary</strong>
-      </div>
-      <div>
-        <H4 variant="secondary">This is a text example</H4>
-      </div>
-      <div>
-        <H4 variant="secondary">
-          <strong>This is a text example</strong>
-        </H4>
-      </div>
-      <div>
-        <H4 variant="secondary">
-          <small>This is a text example</small>
-        </H4>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### Label
-
-<Canvas>
-  <Story name="Label">
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 1fr 1fr 1fr",
-        width: "100%",
-        gap: 20,
-        alignItems: "center",
-      }}
-    >
-      <div>
-        <strong>Variant</strong>
-      </div>
-      <div>
-        <strong>Default</strong>
-      </div>
-      <div>
-        <strong>Strong</strong>
-      </div>
-      <div>
-        <strong>Small</strong>
-      </div>
-      <div>
-        <strong>Primary</strong>
-      </div>
-      <div>
-        <Label>This is a text example</Label>
-      </div>
-      <div>
-        <Label>
-          <strong>This is a text example</strong>
-        </Label>
-      </div>
-      <div>
-        <Label>
-          <small>This is a text example</small>
-        </Label>
-      </div>
-      <div>
-        <strong>Secondary</strong>
-      </div>
-      <div>
-        <Label variant="secondary">This is a text example</Label>
-      </div>
-      <div>
-        <Label variant="secondary">
-          <strong>This is a text example</strong>
-        </Label>
-      </div>
-      <div>
-        <Label variant="secondary">
-          <small>This is a text example</small>
-        </Label>
-      </div>
-    </div>
-  </Story>
-</Canvas>
-
-### Display1
-
-<Canvas>
-  <Story name="Display1">
-    <Display1>$801.9B</Display1>
-  </Story>
-</Canvas>
-
-### Display2
-
-<Canvas>
-  <Story name="Display2">
-    <Display2>$801.9B</Display2>
-  </Story>
-</Canvas>
-
-### Display3
-
-<Canvas>
-  <Story name="Display3">
-    <Display3>$801.9B</Display3>
-  </Story>
-</Canvas>
+<HelpAndSupport />
