@@ -90,7 +90,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
         {...restProps}
         ref={ref}
       >
-        <span className={withBaseName("label")}>{children}</span>
+        {children}
       </div>
     );
   }
