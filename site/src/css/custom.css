@@ -19,6 +19,7 @@
   --ifm-menu-color-active: var(--uitk-color-gray-900);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
+  --ifm-toc-border-color: var(--uitk-separable-tertiary-borderColor);
 }
 
 .main-wrapper {
