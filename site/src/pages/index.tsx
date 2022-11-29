@@ -10,8 +10,9 @@ import ArrowsIcon from "@site/static/img/arrows.svg";
 import { Button } from "@jpmorganchase/uitk-core";
 
 import styles from "./index.module.css";
-import Features from "../components/features/Features";
+import Features from "./_index/features/Features";
 import Card, { CardProps } from "../components/card/Card";
+import Accordion from "./_index/accordion/Accordion";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -105,6 +106,7 @@ export default function Home(): JSX.Element {
             );
           })}
         </div>
+        <Accordion />
       </div>
     </Layout>
   );
