@@ -54,7 +54,7 @@
   --slider-clickable-paddingLeft: var(--uitkSlider-clickable-paddingLeft, calc(var(--uitk-size-base) * 0.5));
   --slider-clickable-paddingRight: var(--uitkSlider-clickable-paddingRight, calc(var(--uitk-size-base) * 0.5));
 
-  --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
+  --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-label-fontSize));
   --slider-label-paddingLeft: var(--uitkSlider-label-paddingLeft, 0);
   --slider-label-paddingRight: var(--uitkSlider-label-paddingRight, 0);
 }

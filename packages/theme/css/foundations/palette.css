@@ -27,6 +27,7 @@
   --uitk-palette-interact-background-high: var(--uitk-color-gray-20);
   --uitk-palette-interact-background-disabled-high: var(--uitk-color-gray-20-fade-background);
   --uitk-palette-interact-background-low: transparent;
+  --uitk-palette-interact-background-disabled-low: transparent;
   --uitk-palette-interact-background-medium: var(--uitk-color-white);
   --uitk-palette-interact-background-disabled-medium: var(--uitk-color-white-fade-background);
   --uitk-palette-interact-background-blurSelected: var(--uitk-color-gray-30);
@@ -160,6 +161,7 @@
   --uitk-palette-interact-background-high: var(--uitk-color-gray-700);
   --uitk-palette-interact-background-disabled-high: var(--uitk-color-gray-700-fade-background);
   --uitk-palette-interact-background-low: transparent;
+  --uitk-palette-interact-background-disabled-low: transparent;
   --uitk-palette-interact-background-medium: var(--uitk-color-gray-800);
   --uitk-palette-interact-background-disabled-medium: var(--uitk-color-gray-800-fade-background);
   --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
