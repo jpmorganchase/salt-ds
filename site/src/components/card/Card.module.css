@@ -1,5 +1,4 @@
 .card {
-  --card-background: #10212b;
   --ifm-link-decoration: underline;
   --card-color: var(--uitk-color-white);
   --card-icon-background: unset;
