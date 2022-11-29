@@ -10,16 +10,16 @@ export default function TOCInline(props) {
   const { toc, minHeadingLevel, maxHeadingLevel, ...restProps } = props;
   return (
     <ToolkitProvider density="medium">
-        <div className="docs-toc-container">
-            <TOCItems
-                toc={toc}
-                minHeadingLevel={minHeadingLevel}
-                maxHeadingLevel={maxHeadingLevel}
-                className="table-of-contents"
-                linkClassName={withBaseName("link")}
-                linkActiveClassName={withBaseName("activeLink")}
-            />
-        </div>
+      <div className="docs-toc-container">
+        <TOCItems
+          toc={toc}
+          minHeadingLevel={minHeadingLevel}
+          maxHeadingLevel={maxHeadingLevel}
+          className="table-of-contents"
+          linkClassName={withBaseName("link")}
+          linkActiveClassName={withBaseName("activeLink")}
+        />
+      </div>
     </ToolkitProvider>
   );
 }

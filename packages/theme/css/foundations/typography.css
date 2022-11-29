@@ -14,4 +14,5 @@
 /* TODO maybe move to global.css */
 .uitk-theme {
   font-family: var(--uitk-typography-fontFamily);
+  font-size: 14px;
 }

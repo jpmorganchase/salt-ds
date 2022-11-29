@@ -10,7 +10,7 @@
   --card-background: #10212b;
 }
 
-.uitk-theme[data-mode="light"]  {
+.uitk-theme[data-mode="light"] {
   --site-tertiary-accent-green: var(--uitk-color-green-500);
   --site-tertiary-accent-teal: var(--uitk-color-teal-500);
   --site-tertiary-accent-blue: var(--uitk-color-blue-900);
@@ -19,7 +19,7 @@
   --site-tertiary-accent-orange: var(--uitk-color-orange-600);
 }
 
-.uitk-theme[data-mode="dark"]  {
+.uitk-theme[data-mode="dark"] {
   --site-tertiary-accent-green: var(--uitk-color-green-20);
   --site-tertiary-accent-teal: var(--uitk-color-teal-50);
   --site-tertiary-accent-blue: var(--uitk-color-blue-50);
@@ -86,7 +86,7 @@
 }
 
 .theme-doc-sidebar-container {
-  --ifm-menu-color: var(--uitk-color-gray-900);/* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
   --ifm-menu-color-active: var(--uitk-color-gray-900);
   background-color: var(--uitk-color-white);
 }
@@ -165,6 +165,7 @@
 .docs-page-container {
   background-color: var(--uitk-color-white);
   color: var(--uitk-text-primary-foreground);
+  font-size: var(--uitk-text-fontSize);
   display: flex;
   flex-direction: row;
 }
@@ -178,12 +179,13 @@
   width: 282px;
 }
 
-.docs-toc-container > div{
-top: var(--ifm-navbar-height);
-    position: relative;
+.docs-toc-container > div {
+  top: var(--ifm-navbar-height);
+  position: relative;
 }
 
-.table-of-contents ul, .table-of-contents li {
+.table-of-contents ul,
+.table-of-contents li {
   list-style: none;
 }
 
@@ -293,7 +295,8 @@ table thead tr {
   box-shadow: var(--uitk-overlayable-shadow-borderRegion);
 }
 
-table th, table td {
+table th,
+table td {
   border: none;
 }
 
@@ -305,7 +308,8 @@ table th {
   color: var(--uitk-text-secondary-foreground);
 }
 
-table tr th:not(:last-child), table tr td:not(:last-child) {
+table tr th:not(:last-child),
+table tr td:not(:last-child) {
   border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
 }
 
