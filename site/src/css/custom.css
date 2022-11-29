@@ -85,7 +85,7 @@
 
 .theme-doc-sidebar-container .menu__link--active {
   font-weight: var(--uitk-navigable-fontWeight-active);
-  border-left: 2px solid var(--uitk-navigable-indicator-active);
+  border-left: 4px solid var(--uitk-navigable-indicator-active);
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
