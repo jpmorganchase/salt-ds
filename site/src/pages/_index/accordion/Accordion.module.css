@@ -50,6 +50,23 @@
   animation: swing-in-left-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
+/* Override Salt accordion styles */
+
+.summary :global(.uitkAccordionSummary-icon) {
+  left: unset;
+  right: 0;
+}
+
+.summary :global(.uitkAccordionSummary-icon:hover) {
+  background: var(--accordion-summary-background-hover);
+}
+
+.accordion :global(.uitkAccordionDetails .uitkAccordionDetails-content) {
+  padding-left: 0;
+}
+
+/* ----------------------------- */
+
 @keyframes swing-in-left-bck {
   0% {
     transform: rotateY(-70deg);
