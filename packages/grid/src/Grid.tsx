@@ -404,6 +404,17 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     scroll
   );
 
+  const focusCellElement = (rowIdx: number, colIdx: number) => {
+    setTimeout(() => {
+      const nodeToFocus = rootRef.current?.querySelector(
+        `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
+      );
+      if (nodeToFocus) {
+        (nodeToFocus as HTMLElement).focus();
+      }
+    }, 0);
+  };
+
   const startEditMode = (text?: string) => {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
@@ -439,9 +450,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       handler(rowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
-    }
+    focusCellElement(cursorRowIdx, cursorColIdx);
   };
 
   const cancelEditMode = () => {
@@ -449,8 +458,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       return;
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
+    if (cursorRowIdx != null && cursorColIdx != null) {
+      focusCellElement(cursorRowIdx, cursorColIdx);
     }
   };
 
@@ -484,13 +493,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       setCursorRowIdx(rowIdx);
       setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
-      const nodeToFocus = rootRef.current?.querySelector(
-        `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
-      );
-
-      if (nodeToFocus) {
-        (nodeToFocus as HTMLElement).focus();
-      }
+      focusCellElement(rowIdx, colIdx);
       rangeSelection.onCursorMove({ rowIdx, colIdx });
     },
     [
@@ -644,8 +647,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       const { key } = event;
       switch (key) {
         case "F2":
-        case "Backspace":
+        case "Enter":
           startEditMode();
+          break;
+        case "Backspace":
+          startEditMode("");
           break;
         case "Escape":
           if (editMode) {
@@ -801,8 +807,39 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             moveCursor(rowData.length - 1, cols.length - 1);
           }
           break;
+        case "Tab":
+          if (
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            editMode &&
+            cursorColIdx != null &&
+            cursorRowIdx != null
+          ) {
+            if (!event.shiftKey) {
+              if (cursorColIdx < cols.length - 1) {
+                moveCursor(cursorRowIdx, cursorColIdx + 1);
+              } else {
+                if (cursorRowIdx < rowData.length - 1) {
+                  moveCursor(cursorRowIdx + 1, 0);
+                }
+              }
+            } else {
+              if (cursorColIdx > 0) {
+                moveCursor(cursorRowIdx, cursorColIdx - 1);
+              } else {
+                if (cursorRowIdx > 0) {
+                  moveCursor(cursorRowIdx - 1, cols.length - 1);
+                }
+              }
+            }
+          } else {
+            return false;
+          }
+          break;
         case "Enter":
           if (
+            editMode &&
             !event.ctrlKey &&
             !event.metaKey &&
             !event.altKey &&
@@ -813,6 +850,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             } else {
               moveCursor(cursorRowIdx + 1, cursorColIdx);
             }
+          } else {
+            return false;
           }
           break;
         default:
