@@ -15,6 +15,15 @@
   --ifm-heading-color: var(--uitk-color-white);
   --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
+  --ifm-menu-color: var(--uitk-color-gray-900);
+  --ifm-menu-color-active: var(--uitk-color-gray-900);
+  --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
+  --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
+  --ifm-toc-border-color: var(--uitk-separable-tertiary-borderColor);
+}
+
+.main-wrapper {
+  background-color: var(--uitk-color-gray-900);
 }
 
 .navbar {
@@ -58,8 +67,106 @@
 }
 
 .navbar__link:hover:not(.navbar__link--active):not(.header-github-link) {
-  background-color: var(--uitk-color-gray-600);
+  background-color: var(--uitk-palette-navigate-background-hover-high);
   border-bottom: 2px solid var(--uitk-navigable-indicator-hover);
+}
+
+.theme-doc-sidebar-container {
+  background-color: var(--uitk-color-white);
+}
+
+.theme-doc-sidebar-container .menu {
+  padding: 0;
+}
+
+.theme-doc-sidebar-container .menu__link {
+  border-radius: 0;
+}
+
+.theme-doc-sidebar-container .menu__link--active {
+  font-weight: var(--uitk-navigable-fontWeight-active);
+  border-left: 4px solid var(--uitk-navigable-indicator-active);
+}
+
+.theme-doc-sidebar-container .menu__link:hover {
+  background-color: var(--uitk-color-gray-20);
+}
+
+.docs-wrapper .main-wrapper {
+  background-image: url(@site/static/img/background_gradient.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.docs-wrapper .container .col {
+  padding: 0;
+}
+
+.docs-wrapper .pagination-nav {
+  background-color: #10212b;
+  padding: 0 calc(var(--uitk-size-unit) * 3);
+  margin-top: 0;
+}
+
+.docs-wrapper .pagination-nav__link {
+  padding: calc(var(--uitk-size-unit) * 3);
+  text-align: left;
+  border: none;
+  border-radius: unset;
+}
+
+.docs-wrapper .pagination-nav__link:hover {
+  --ifm-link-hover-color: none;
+}
+
+.docs-wrapper .pagination-nav__link:hover {
+  background-color: var(--uitk-color-teal-900);
+}
+
+.docs-wrapper .pagination-nav .pagination-nav__sublabel {
+  font-size: var(--uitk-text-h2-fontSize);
+  font-weight: var(--uitk-text-h2-fontWeight);
+  margin-bottom: var(--uitk-size-unit);
+}
+
+.docs-wrapper .pagination-nav .pagination-label {
+  font-size: var(--uitk-text-h3-fontSize);
+  font-weight: var(--uitk-text-h3-fontWeight);
+}
+
+.docs-wrapper .pagination-nav__link--next .pagination-nav__label::after,
+.docs-wrapper .pagination-nav__link--prev .pagination-nav__label::before {
+  content: "";
+}
+
+.docs-wrapper main .container {
+  max-width: none;
+  /* using !important here is not ideal but this is required to override docusauros own !important style */
+  padding-bottom: 0 !important;
+}
+
+.docs-page-content {
+  background-color: var(--uitk-color-white);
+  color: var(--uitk-color-gray-900);
+  padding: calc(var(--uitk-size-unit) * 3);
+}
+
+.docs-page-content h2 {
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
+  --ifm-heading-color: var(--uitk-color-gray-900);
+}
+
+.theme-doc-markdown.markdown > h1:first-child {
+  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
+}
+
+.theme-doc-markdown.markdown > h1:first-child {
+  margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3);
 }
 
 .footer {
