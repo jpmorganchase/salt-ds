@@ -30,9 +30,8 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/jpmorganchase/uitk",
           routeBasePath: "/",
+          breadcrumbs: false,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
