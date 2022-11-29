@@ -9,7 +9,7 @@ import {
 
 import PageIllustration from "./PageIllustration";
 
-import useOnScreen from "../../utils/useOnScreen";
+import useOnScreen from "../../../utils/useOnScreen";
 
 import styles from "./Accordion.module.css";
 
