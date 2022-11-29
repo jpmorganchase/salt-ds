@@ -34,7 +34,7 @@
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
-  --ifm-toc-border-color: var(--uitk-separable-tertiary-borderColor);
+  --ifm-toc-border-color: var(--uitk-color-gray-30);  /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */ 
 }
 
 .main-wrapper {
