@@ -18,7 +18,7 @@ export const DefaultDropdown: Story<DropdownBaseProps> = () => {
     console.log("isOpen changed", isOpen);
   };
 
-  const callbackRef = (el: HTMLDivElement) => {
+  const callbackRef = (el: HTMLButtonElement) => {
     console.log(`ref on Button set to ${el.className}`);
   };
   return (
