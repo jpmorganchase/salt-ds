@@ -1,7 +1,8 @@
 .accordionContainer {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: 468px auto; // 468px is height of hatching in illustration
+  /* 468px is height of hatching in illustration */
+  grid-template-rows: 468px auto;
   overflow: hidden;
 }
 
@@ -29,7 +30,6 @@
 .accordion .summary:hover {
   background: none;
 }
-
 
 .accordion .summary h2 {
   line-height: var(--accordion-summary-height);
@@ -71,11 +71,13 @@
   .accordionIllustration {
     width: 100%;
     height: auto;
-    margin-bottom: -50%; // pull up subsequent elements by half the image's height
+    /* pull up subsequent elements by half the image's height */
+    margin-bottom: -50%;
   }
-  
+
   .wrapper {
-    position: relative; // creates a new stacking context and ensures this sits above the illustration
+    /* creates a new stacking context and ensures this sits above the illustration */
+    position: relative;
     width: 100%;
     padding: calc(var(--uitk-size-unit) * 2);
   }
