@@ -200,19 +200,19 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     expect(buttons.length).toBe(4);
     expect(buttons[0]).toHaveTextContent("Home");
     expect(buttons[0]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[0]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[0]).toBeDisabled();
     expect(buttons[0]).toHaveAttribute("tabindex", "-1");
     expect(buttons[1]).toHaveTextContent("Search");
     expect(buttons[1]).toHaveAttribute("aria-checked", "true");
-    expect(buttons[1]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[1]).toBeDisabled();
     expect(buttons[1]).toHaveAttribute("tabindex", "-1");
     expect(buttons[2]).toHaveTextContent("Print");
     expect(buttons[2]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[2]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[2]).toBeDisabled();
     expect(buttons[2]).toHaveAttribute("tabindex", "-1");
     expect(buttons[3]).toHaveTextContent("Alert");
     expect(buttons[3]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[3]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[3]).toBeDisabled();
     expect(buttons[3]).toHaveAttribute("tabindex", "-1");
 
     fireEvent.click(buttons[0]);

@@ -93,7 +93,7 @@
   border-radius: var(--uitkButton-borderRadius, 0);
   color: var(--uitkButton-text-color, var(--button-text-color));
   cursor: var(--uitkButton-cursor, pointer);
-  display: inline-block;
+  display: inline-flex;
   justify-content: var(--uitkButton-justifyContent, center);
   font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
@@ -110,45 +110,20 @@
   text-decoration: none;
   transition: none;
   user-select: none;
-  vertical-align: middle;
   width: var(--uitkButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* Styles applied to the inner element wrapping children of the component */
-.uitkButton-label {
+  /* Styles applied to align children*/
   font-weight: var(--uitkButton-fontWeight, var(--button-fontWeight));
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: inherit;
-  position: relative;
   white-space: pre;
-  width: 100%;
-}
-
-/* Added .uitkButton:focus for browsers don't support :focus-visible, like Firefox */
-.uitkButton:focus {
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
-}
-
-.uitkButton:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.uitkButton:focus-visible {
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
 }
 
 /* Pseudo-class applied to the root element on focus */
 .uitkButton:focus-visible {
+  outline-style: var(--uitk-focused-outlineStyle);
+  outline-width: var(--uitk-focused-outlineWidth);
+  outline-color: var(--uitk-focused-outlineColor);
+  outline-offset: var(--uitk-focused-outlineOffset);
   background: var(--uitkButton-background-hover, var(--button-background-hover));
   color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
 }
@@ -168,7 +143,7 @@
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .uitkButton:active,
-.uitkButton-active {
+.uitkButton.uitkButton-active {
   background: var(--uitkButton-background-active, var(--button-background-active));
   color: var(--uitkButton-text-color-active, var(--button-text-color-active));
 }
@@ -187,9 +162,4 @@
 
 .uitkButton[href] {
   display: inline-flex;
-}
-
-.uitkButton::-moz-focus-inner {
-  padding: 0;
-  border: 0;
 }
