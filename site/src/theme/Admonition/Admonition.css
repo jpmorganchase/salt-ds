@@ -1,13 +1,13 @@
-.saltAdmonition {
+.uitkAdmonition {
   background: var(--uitk-container-background-low);
 }
 
-.saltAdmonition-info {
+.uitkAdmonition-info {
   background-color: var(--site-tertiary-accent-teal);
   height: 3px;
 }
 
-.saltAdmonition .theme-admonition {
+.uitkAdmonition .theme-admonition {
   --ifm-alert-foreground-color: var(--uitk-color-gray-900);
   --ifm-alert-background-color: var(--uitk-color-white);
   --ifm-alert-shadow: none;
@@ -16,11 +16,11 @@
   border: none;
 }
 
-.saltAdmonition .theme-admonition a {
+.uitkAdmonition .theme-admonition a {
   text-decoration-color: var(--uitk-color-gray-900);
 }
 
-.saltAdmonition .theme-admonition a:hover {
+.uitkAdmonition .theme-admonition a:hover {
   text-decoration-thickness: 1px;
 }
 

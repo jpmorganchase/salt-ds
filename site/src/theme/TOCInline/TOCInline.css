@@ -1,0 +1,14 @@
+.uitkTocInline {
+
+}
+
+.uitkTocInline-link {
+    padding-left: var(--uitk-size-unit);
+    font-size: var(--uitk-text-fontSize);
+}
+
+.uitkTocInline-activeLink {
+    border-left: 2px solid var(--uitk-navigable-indicator-active);
+    color: var(--uitk-text-primary-foreground);
+    font-weight: var(--uitk-navigable-fontWeight-active);
+}

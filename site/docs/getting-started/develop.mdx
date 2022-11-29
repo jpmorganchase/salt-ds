@@ -1,8 +1,10 @@
 ---
 sidebar_label: Develop
+hide_table_of_contents: true
 ---
 
 import Link from "@docusaurus/Link";
+import TOCInline from "@theme/TOCInline";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   Accordion,
@@ -10,11 +12,11 @@ import {
   AccordionSection,
   AccordionSummary,
 } from "@jpmorganchase/uitk-lab";
+import Content from "../../src/components/content/Content.tsx";
 
 # Develop with Salt
 
-<ToolkitProvider mode="light">
-<div className='docs-page-content'>
+<Content toc={toc}>
 
 Learn how to use Salt's UI components in your React web applications.
 
@@ -233,5 +235,4 @@ We're keen to hear your feedback, bug reports and feature requests, so please do
 
 :::
 
-</div>
-</ToolkitProvider>
+</Content>
