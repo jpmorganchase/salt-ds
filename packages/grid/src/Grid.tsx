@@ -946,6 +946,15 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       middleRef={middleRef}
                     />
                     {!hideHeader && (
+                      <TopLeftPart
+                        onWheel={onWheel}
+                        columns={leftCols}
+                        columnGroups={leftGroups}
+                        isRaised={isLeftRaised}
+                      />
+                    )}
+
+                    {!hideHeader && (
                       <TopPart
                         columns={headVisibleColumns}
                         columnGroups={visColGrps}
@@ -954,26 +963,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         midGap={midGap}
                       />
                     )}
-                    <MiddlePart
-                      middleRef={middleRef}
-                      onWheel={onWheel}
-                      columns={bodyVisibleColumns}
-                      rows={rows}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      midGap={midGap}
-                      zebra={zebra}
-                    />
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      isRaised={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
                     <RightPart
                       rightRef={rightRef}
                       onWheel={onWheel}
@@ -984,14 +973,28 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       setHoverOverRowKey={setHoverRowKey}
                       zebra={zebra}
                     />
-                    {!hideHeader && (
-                      <TopLeftPart
-                        onWheel={onWheel}
-                        columns={leftCols}
-                        columnGroups={leftGroups}
-                        isRaised={isLeftRaised}
-                      />
-                    )}
+
+                    <LeftPart
+                      leftRef={leftRef}
+                      onWheel={onWheel}
+                      columns={leftCols}
+                      rows={rows}
+                      isRaised={isLeftRaised}
+                      hoverOverRowKey={hoverRowKey}
+                      setHoverOverRowKey={setHoverRowKey}
+                      zebra={zebra}
+                    />
+                    <MiddlePart
+                      middleRef={middleRef}
+                      onWheel={onWheel}
+                      columns={bodyVisibleColumns}
+                      rows={rows}
+                      hoverOverRowKey={hoverRowKey}
+                      setHoverOverRowKey={setHoverRowKey}
+                      midGap={midGap}
+                      zebra={zebra}
+                    />
+
                     {!hideHeader && (
                       <TopRightPart
                         onWheel={onWheel}
