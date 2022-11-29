@@ -1,6 +1,6 @@
 .accordionContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr) min-content;
+  grid-template-columns: 1fr auto;
   grid-template-rows: repeat(3, min-content);
   overflow: hidden;
 }
