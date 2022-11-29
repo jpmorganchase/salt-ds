@@ -1,7 +1,7 @@
 .accordionContainer {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: repeat(3, min-content);
+  grid-template-rows: 468px auto; // 468px is height of hatching in illustration
   overflow: hidden;
 }
 
