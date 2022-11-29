@@ -39,7 +39,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
   ): ReactElement<DivButtonProps> {
     const enter = "Enter";
     const space = " ";
-    //
+
     const handleKeyDownDiv = (event: KeyboardEvent<HTMLDivElement>) => {
       // for Pill component, which depends on Button
       if (

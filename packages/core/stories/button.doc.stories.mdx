@@ -147,13 +147,9 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 
 ## Accessibility
 
-If you are using an icon-only Button:
+If you are using icons contained inside Button:
 
-- Button needs an `aria-label` that describes the purpose of the button.
-- Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
-
-If you are using an icon as a decorator:
-
-- Icon should not be announced, pass `aria-hidden=”true”` to hide its label from the screen reader.
+- Pass `aria-hidden=”true”` to the icon so its label is not announced by the screen reader.
+- If the only content is an icon, pass an `aria-label` to `Button` that describes it's purpose.
 
 <HelpAndSupport />
