@@ -17,7 +17,6 @@ export function CharacteristicUsage(
   props: Record<string, string>
 ): JSX.Element {
   const context = useContext(DocsContext);
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const main = getComponent(props, context);
   const cssVariablesApi = getDocgenSection<Record<string, CSSVariable>>(
