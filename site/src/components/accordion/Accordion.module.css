@@ -31,10 +31,6 @@
   background: none;
 }
 
-.accordion .metrics {
-  display: flex;
-  flex-direction: row;
-}
 
 .accordion .summary h2 {
   line-height: var(--accordion-summary-height);
