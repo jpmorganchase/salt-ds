@@ -10,6 +10,10 @@
   --card-background: #10212b;
 }
 
+::selection {
+  background: var(--uitk-text-background-selected);
+}
+
 .uitk-theme[data-mode="light"] {
   --site-tertiary-accent-green: var(--uitk-color-green-500);
   --site-tertiary-accent-teal: var(--uitk-color-teal-500);
