@@ -14,6 +14,8 @@
     "directory": "../../dist/jpmorganchase-uitk-ag-grid-theme"
   },
   "devDependencies": {
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.14",
     "sass": "^1.51.0"
   }
 }
