@@ -34,6 +34,10 @@ export function RightPart<T>(props: RightPartProps<T>) {
 
   const tableRef = useActiveOnWheel(onWheel);
 
+  if (columns.length === 0) {
+    return null;
+  }
+
   return (
     <div
       ref={rightRef}

@@ -88,6 +88,10 @@ export interface GridProps<T = any> {
    * */
   columnSeparators?: boolean;
   /**
+   * If `true`, separators are rendered between pinned and unpinned columns.
+   * */
+  pinnedSeparators?: boolean;
+  /**
    * Row data objects. Sparse arrays are supported.
    * */
   rowData: T[];
@@ -161,6 +165,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     zebra,
     hideHeader,
     columnSeparators,
+    pinnedSeparators = true,
     className,
     style,
     rowKeyGetter = defaultRowKeyGetter,
@@ -949,6 +954,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       {
                         [withBaseName("zebra")]: zebra,
                         [withBaseName("columnSeparators")]: columnSeparators,
+                        [withBaseName("pinnedSeparators")]: pinnedSeparators,
                         [withBaseName("primaryBackground")]:
                           variant === "primary",
                         [withBaseName("secondaryBackground")]:

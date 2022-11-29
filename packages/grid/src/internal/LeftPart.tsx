@@ -34,6 +34,10 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
 
   const tableRef = useActiveOnWheel(onWheel);
 
+  if (columns.length === 0) {
+    return null;
+  }
+
   return (
     <div
       ref={leftRef}

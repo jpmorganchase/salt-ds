@@ -2,10 +2,15 @@
   position: absolute;
   top: 0;
   left: 0;
+  clip-path: inset(1px -10px 0 0);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridTopLeftPart {
+  border-right: solid 1px var(--grid-pinnedSeparator-color);
 }
 
 .uitkGridTopLeftPart-raised {
-  box-shadow: 6px 0 4px -4px var(--grid-shadow-color);
+  box-shadow: 2px 0 4px 0 var(--grid-shadow-color);
 }
 
 .uitkGridTopLeftPart table {

@@ -221,13 +221,13 @@ const PinnedColumnsTemplate: Story<{}> = (props) => {
         <GridColumn
           name="Location"
           id="location"
-          defaultWidth={150}
+          defaultWidth={250}
           getValue={(x) => x.location}
         />
         <GridColumn
           name="Cohort"
           id="cohort"
-          defaultWidth={200}
+          defaultWidth={300}
           getValue={(x) => x.cohort}
         />
       </ColumnGroup>
@@ -235,7 +235,7 @@ const PinnedColumnsTemplate: Story<{}> = (props) => {
         <GridColumn
           name="Amount"
           id="amount"
-          defaultWidth={200}
+          defaultWidth={250}
           getValue={(x) => x.amount.toFixed(4)}
           align="right"
           onChange={onAmountChange}

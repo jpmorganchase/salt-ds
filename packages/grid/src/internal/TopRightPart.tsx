@@ -21,6 +21,10 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
 
   const tableRef = useActiveOnWheel(onWheel);
 
+  if (columns.length === 0) {
+    return null;
+  }
+
   return (
     <div
       className={cx(withBaseName(), {
