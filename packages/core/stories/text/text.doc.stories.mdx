@@ -113,6 +113,30 @@ Use `<strong>` or `<small>` tags inside your text components to wrap the chunks 
   </Story>
 </Canvas>
 
+### StyleAs
+
+Although we do not encourage it, it is necessary sometimes to need to match one of our text components styling to another element type. In this case you'd use the `styleAs` prop.
+
+<Canvas>
+  <Story name="StyleAs">
+    <Text elementType="p" styleAs="display3">
+      This is a styleAs="display3" example
+    </Text>
+  </Story>
+</Canvas>
+
+### Truncation
+
+By using the `maxRows` prop your text component truncating to display the chosen number of rows and ellipsis will be shown to reflect that.
+
+<Canvas>
+  <Story name="Truncation">
+    <div style={{ width: 150 }}>
+      <Text maxRows={1}>This is a maxRows=1 example</Text>
+    </div>
+  </Story>
+</Canvas>
+
 ## CSS Class
 
 <CSSClassTable of={Text} />

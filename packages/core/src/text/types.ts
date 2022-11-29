@@ -1,13 +1,11 @@
 import {
   ElementType,
-  forwardRef,
-  ReactElement,
   PropsWithChildren,
   ComponentPropsWithRef,
   ComponentPropsWithoutRef,
 } from "react";
 
-type ElementTypeProp<T extends ElementType> = {
+type ElementTypeProp = {
   /**
    * Represents the semantic element tag name as a string.
    * Defaults to 'div'
@@ -15,10 +13,10 @@ type ElementTypeProp<T extends ElementType> = {
   elementType?: ElementType;
 };
 
-type PropsToOmit<T extends ElementType, P> = keyof (ElementTypeProp<T> & P);
+type PropsToOmit<T extends ElementType, P> = keyof (ElementTypeProp & P);
 
 type PolymorphicComponentProp<T extends ElementType, Props> = PropsWithChildren<
-  Props & ElementTypeProp<T>
+  Props & ElementTypeProp
 > &
   Omit<ComponentPropsWithoutRef<T>, PropsToOmit<T, Props>>;
 
