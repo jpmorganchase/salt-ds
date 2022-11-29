@@ -34,10 +34,10 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       role="gridcell"
       className={cn(withBaseName(), className)}
       style={style}
+      tabIndex={isFocused ? 0 : -1}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
-          [withBaseName("focused")]: isFocused,
           [withBaseName("editable")]: isEditable,
           [withBaseName("selected")]: isSelected,
         })}

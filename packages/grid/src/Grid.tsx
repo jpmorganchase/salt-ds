@@ -484,7 +484,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       setCursorRowIdx(rowIdx);
       setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
-      rootRef.current?.focus();
+      const nodeToFocus = rootRef.current?.querySelector(
+        `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
+      );
+
+      if (nodeToFocus) {
+        (nodeToFocus as HTMLElement).focus();
+      }
       rangeSelection.onCursorMove({ rowIdx, colIdx });
     },
     [
@@ -913,7 +919,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     )}
                     style={rootStyle}
                     ref={rootRef}
-                    tabIndex={0}
+                    // tabIndex={0}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}

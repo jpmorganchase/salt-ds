@@ -14,6 +14,8 @@
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
+
+  outline: 0;
 }
 
 .uitkGrid-columnSeparators .uitkGridBaseCell {
@@ -54,7 +56,7 @@
   border-color: var(--grid-editableCell-borderColor);
 }
 
-.uitkGridBaseCell-focused {
+.uitkGridBaseCell:focus .uitkGridBaseCell-valueContainer {
   border-style: var(--grid-cursor-border-style);
   border-width: var(--grid-cursor-border-width);
   border-color: var(--grid-cursor-borderColor);

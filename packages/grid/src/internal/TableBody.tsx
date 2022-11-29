@@ -61,8 +61,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     <tbody onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
       {rows.map((row) => {
         const isSelected = selRowIdxs.has(row.index);
-        const cursorIdx =
-          isFocused && cursorRowIdx === row.index ? cursorColIdx : undefined;
+        const cursorIdx = cursorRowIdx === row.index ? cursorColIdx : undefined;
         const editorColIdx = editMode ? cursorIdx : undefined;
         return (
           <TableRow
