@@ -13,6 +13,7 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Button"
@@ -30,7 +31,9 @@ A Button executes an action when clicked. Button labels should use only one or t
 - **Primary** is the most commonly-used button.
 - **Secondary** performs an action less likely to be triggered.
 
-## Button variants
+## Features
+
+### Button variants
 
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
@@ -42,23 +45,38 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
   </Story>
 </Canvas>
 
-## Button with icon and label
+### Button with icon and label
 
 Icons can be put before or after text, or used alone.
 
 <Canvas>
   <Story name="Button with icon and label" decorators={[withFlexGap]}>
     <Button variant="cta">
-      Send <SendIcon />
+      Send <SendIcon aria-hidden />
     </Button>
     <Button variant="primary">
-      <SearchIcon /> Search
+      <SearchIcon aria-hidden /> Search
     </Button>
     <Button variant="secondary">
-      Setting <SettingsSolidIcon />
+      Setting <SettingsSolidIcon aria-hidden />
     </Button>
-    <Button>
-      <DownloadIcon />
+    <Button aria-label="download">
+      <DownloadIcon aria-hidden />
+    </Button>
+  </Story>
+</Canvas>
+
+### Disabled Button
+
+A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
+
+<Canvas>
+  <Story name="Disabled buttons" decorators={[withFlexGap]}>
+    <Button disabled>
+      Disabled <SendIcon aria-hidden />
+    </Button>
+    <Button disabled focusableWhenDisabled>
+      Focusable When Disabled
     </Button>
   </Story>
 </Canvas>
@@ -66,8 +84,6 @@ Icons can be put before or after text, or used alone.
 ## Configuring Button
 
 ### API
-
-Use the following call to import Button.
 
 ```
 import { Button } from "@jpmorganchase/uitk-core";
@@ -77,7 +93,14 @@ import { Button } from "@jpmorganchase/uitk-core";
 
 <ArgsTable of={Button} />
 
-### HTML Anatomy of a Button
+## Related components
+
+The button component can contain the following components:
+
+- [Icon](?path=/docs/documentation-icons-icon--page)
+- [Status Indicator](?path=/docs/documentation-core-statusindicator--page)
+
+### Anatomy
 
 export const Link = ({ children, to, ...props }) => (
   <a {...props} href={to}>
@@ -87,17 +110,23 @@ export const Link = ({ children, to, ...props }) => (
 
 <Canvas>
   <ComponentAnatomy>
-    <Button aria-label="Simple Button">Default</Button>
+    <Button>Default</Button>
   </ComponentAnatomy>
   <br />
   <ComponentAnatomy>
-    <Button variant="cta" aria-label="CTA with Icon">
-      CTA with Icon <SendIcon />
+    <Button variant="cta">
+      CTA with Icon <SendIcon aria-hidden />
+    </Button>
+  </ComponentAnatomy>
+  <br />
+  <ComponentAnatomy>
+    <Button aria-label="Send">
+      <SendIcon aria-hidden />
     </Button>
   </ComponentAnatomy>
 </Canvas>
 
-### CSS Class
+### Classes
 
 <CSSClassTable of={Button} />
 
@@ -116,10 +145,11 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 
 <CSSVariableTable of={Button} />
 
-# Help and support
+## Accessibility
 
-Please check the [issues section of our github repository](https://github.com/jpmorganchase/uitk/issues) for any design or development issues you have.
+If you are using icons contained inside Button:
 
-If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, any relevant code samples, and details of the expected behavior.
+- Pass `aria-hidden=”true”` to the icon so its label is not announced by the screen reader.
+- If the only content is an icon, you should pass an `aria-label` to `Button` that describes its purpose.
 
-If your issue has already been raised and the issue is still open, add a comment to the existing issue instead of opening a new one.
+<HelpAndSupport />

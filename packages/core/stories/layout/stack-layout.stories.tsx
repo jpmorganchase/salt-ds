@@ -6,7 +6,6 @@ import {
   StackLayout,
 } from "@jpmorganchase/uitk-core";
 import { SearchIcon } from "@jpmorganchase/uitk-icons";
-import { Dropdown } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexContent } from "./flex-item.stories";
 
@@ -91,7 +90,6 @@ const Form: ComponentStory<typeof StackLayout> = (args) => {
 };
 export const StackLayoutComposite = Form.bind({});
 StackLayoutComposite.args = {};
-const dropdownExampleData = ["No", "Yes"];
 
 export const ComplexFormOne: ComponentStory<typeof StackLayout> = () => {
   return (
@@ -105,19 +103,6 @@ export const ComplexFormOne: ComponentStory<typeof StackLayout> = () => {
       </FormField>
       <FormField labelPlacement="left" label="Ullamco sunt sit occaecat">
         <Input defaultValue="Pariatur occaecat ipsum" />
-      </FormField>
-      <FormField
-        label="Aperiam"
-        className="uitkEmphasisHigh"
-        labelPlacement="left"
-        LabelProps={{
-          displayedNecessity: "optional",
-        }}
-      >
-        <Dropdown
-          defaultSelected={dropdownExampleData[0]}
-          source={dropdownExampleData}
-        />
       </FormField>
     </StackLayout>
   );
