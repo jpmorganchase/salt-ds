@@ -391,3 +391,12 @@ table tr th + th::before {
   left: calc(-1 * var(--uitk-size-unit));
   top: 25%;
 }
+
+@media screen and (max-width: 768px) {
+  .docs-toc-container {
+    display: none;
+  }
+  .docs-page-content,  .docs-page-content.withToc {
+    width: 100%;
+  }
+}
