@@ -981,16 +981,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       leftRef={leftRef}
                       middleRef={middleRef}
                     />
-                    <MiddlePart
-                      middleRef={middleRef}
-                      onWheel={onWheel}
-                      columns={bodyVisibleColumns}
-                      rows={rows}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      midGap={midGap}
-                      zebra={zebra}
-                    />
+                    {!hideHeader && (
+                      <TopLeftPart
+                        onWheel={onWheel}
+                        columns={leftCols}
+                        columnGroups={leftGroups}
+                        isRaised={isLeftRaised}
+                      />
+                    )}
                     {!hideHeader && (
                       <TopPart
                         columns={headVisibleColumns}
@@ -998,6 +996,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         topRef={topRef}
                         onWheel={onWheel}
                         midGap={midGap}
+                      />
+                    )}
+                    {!hideHeader && (
+                      <TopRightPart
+                        onWheel={onWheel}
+                        columns={rightCols}
+                        columnGroups={rightGroups}
+                        isRaised={isRightRaised}
                       />
                     )}
                     <LeftPart
@@ -1010,6 +1016,16 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       setHoverOverRowKey={setHoverRowKey}
                       zebra={zebra}
                     />
+                    <MiddlePart
+                      middleRef={middleRef}
+                      onWheel={onWheel}
+                      columns={bodyVisibleColumns}
+                      rows={rows}
+                      hoverOverRowKey={hoverRowKey}
+                      setHoverOverRowKey={setHoverRowKey}
+                      midGap={midGap}
+                      zebra={zebra}
+                    />
                     <RightPart
                       rightRef={rightRef}
                       onWheel={onWheel}
@@ -1020,22 +1036,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       setHoverOverRowKey={setHoverRowKey}
                       zebra={zebra}
                     />
-                    {!hideHeader && (
-                      <TopLeftPart
-                        onWheel={onWheel}
-                        columns={leftCols}
-                        columnGroups={leftGroups}
-                        isRaised={isLeftRaised}
-                      />
-                    )}
-                    {!hideHeader && (
-                      <TopRightPart
-                        onWheel={onWheel}
-                        columns={rightCols}
-                        columnGroups={rightGroups}
-                        isRaised={isRightRaised}
-                      />
-                    )}
                     <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}
