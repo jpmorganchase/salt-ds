@@ -38,6 +38,7 @@
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
+  --ifm-paragraph-margin-bottom:  calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
 }
 
@@ -154,6 +155,12 @@
   margin-bottom: var(--uitk-size-unit);
 }
 
+.docs-wrapper .pagination-nav .pagination-nav__label {
+  font-size: var(--uitk-text-h3-fontSize);
+  font-weight: var(--uitk-text-h3-fontWeight-small);
+}
+
+
 .docs-wrapper .pagination-nav .pagination-label {
   font-size: var(--uitk-text-h3-fontSize);
   font-weight: var(--uitk-text-h3-fontWeight);
@@ -190,7 +197,7 @@
 
 .docs-toc-intro {
   font-size: var(--uitk-text-h4-fontSize);
-  font-weight: var(--uitk-text-h4-fontWeight-strong);
+  font-weight: var(--uitk-text-h4-fontWeight);
 }
 
 .table-of-contents ul,
@@ -208,6 +215,11 @@ ul.table-of-contents li > ul li {
 
 .docs-page-content {
   padding: calc(var(--uitk-size-unit) * 3);
+
+}
+
+.docs-page-content > p:first-child {
+  --ifm-paragraph-margin-bottom:  calc(var(--uitk-size-unit) * 3);
 }
 
 .docs-page-content.withToc {
@@ -219,20 +231,27 @@ ul.table-of-contents li > ul li {
   --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
   --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
   --ifm-heading-color: var(--uitk-text-primary-foreground);
+  margin-bottom: calc(var(--uitk-size-unit) * 2);
+}
+
+
+.docs-page-content *:has(+ h2), 
+.docs-page-content *:not(h2):has(+ h3)  {
+  margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 .docs-page-content h3 {
   --ifm-h3-font-size: var(--uitk-text-h3-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight);
+  --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight-strong);
   --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
   --ifm-heading-color: var(--uitk-text-primary-foreground);
 }
 
 .docs-page-content h4 {
   --ifm-h4-font-size: var(--uitk-text-h4-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-h4-fontWeight);
+  --ifm-heading-font-weight: var(--uitk-text-h4-fontWeight-strong);
   --ifm-heading-line-height: var(--uitk-text-h4-lineHeight);
-  --ifm-heading-color: var(--site-tertiary-accent-teal);
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .docs-page-content code {
@@ -241,13 +260,13 @@ ul.table-of-contents li > ul li {
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
-  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
+  --ifm-h1-font-size: var(--uitk-text-display2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-display2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-display2-lineHeight);
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
-  margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3);
+  margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
 }
 
 .footer {
@@ -315,6 +334,11 @@ table {
 table thead tr {
   border: none;
   box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
+table thead tr th {
+  text-align: left;
 }
 
 table th,
@@ -328,9 +352,9 @@ table tr {
 
 table th {
   color: var(--uitk-text-secondary-foreground);
+  font-weight: var(--uitk-text-h4-fontWeight);
 }
 
-table tr th:not(:last-child),
 table tr td:not(:last-child) {
   border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
 }
@@ -344,4 +368,13 @@ table tr td:not(:last-child) {
     /* custom padding so the orange border perfectly aligns with the navbar */
     --ifm-navbar-item-padding-vertical: calc(var(--uitk-size-unit) + 3px);
   }
+}
+
+table tr th + th::before {
+  content: '';
+  border-left: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+  position: relative;
+  height: 50%;
+  left: calc(-1 * var(--uitk-size-unit));
+  top: 25%;
 }
