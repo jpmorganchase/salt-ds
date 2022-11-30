@@ -509,7 +509,6 @@ export const TabstripAddNew = () => {
   }, []);
 
   return (
-    // <ComponentAnatomy>
     <div style={{ height: 300, width: 250 }}>
       <Tabstrip enableAddTab onActiveChange={setSelectedTabIndex}>
         {tabs.map((label, i) => (
@@ -518,7 +517,6 @@ export const TabstripAddNew = () => {
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
     </div>
-    // </ComponentAnatomy>
   );
 };
 
