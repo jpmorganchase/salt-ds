@@ -1,8 +1,7 @@
 name: Bug report
 description: Report bugs in our code
-title: ""
+title: "[BUG]: "
 labels: "type: bug 🪲"
-assignees: ""
 body:
   - type: markdown
     attributes:
@@ -40,7 +39,7 @@ body:
       label: JPMC employee
       description: Please let us know whether or not you are employee of JPMorgan Chase
       options:
-        - I am an employee of JPMorgan Chase
+        - label: I am an employee of JPMorgan Chase
   - type: markdown
     attributes:
       value: |
