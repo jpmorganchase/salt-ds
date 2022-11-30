@@ -1,0 +1,65 @@
+name: Bug report
+description: Report bugs in our code
+title: "[BUG]: "
+labels: "type: bug 🪲"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Warning**
+        > This is a public repository, so **please do not include any company-internal code or details in your bug report**
+  - type: dropdown
+    attributes:
+      label: Affects
+      description: Which packages did you observe this bug in?
+      multiple: true
+      options:
+        - "Core v0.8.0 (@jpmorganchase/uitk-core)"
+        - "Core v0.7.0 (@jpmorganchase/uitk-core)"
+        - "Core v0.6.0 (@jpmorganchase/uitk-core)"
+        - "Icons v0.7.0 (@jpmorganchase/uitk"
+        - "Icons v0.6.0 (@jpmorganchase/uitk-icons)"
+        - "Icons v0.5.0 (@jpmorganchase/uitk-icons)"
+        - "Theme v0.6.0 (@jpmorganchase/uitk-theme)"
+        - "Theme v0.5.0 (@jpmorganchase/uitk-theme)"
+        - "Theme v0.4.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.8.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.7.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.6.0 (@jpmorganchase/uitk-theme)"
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them.
+
+        If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
+  - type: checkboxes
+    attributes:
+      label: JPMC employee
+      description: Please let us know whether or not you are employee of JPMorgan Chase
+      options:
+        - label: I am an employee of JPMorgan Chase
+  - type: markdown
+    attributes:
+      value: |
+        > **Info**
+        > Where relevant, please consider attaching screenshots in the following sections
+  - type: textarea
+    attributes:
+      label: Description
+      description: A concise description of what's going wrong
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps or code someone needs in order to reproduce this bug. Where relevant, please include screenshots as well.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen?
+    validations:
+      required: true
