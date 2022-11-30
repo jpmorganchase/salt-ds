@@ -13,23 +13,23 @@
 
   /* H1 */
   --uitk-text-h1-fontWeight: var(--uitk-typography-fontWeight-bold);
-  --uitk-text-h1-fontWeight-small: var(--uitk-typography-fontWeight-light);
+  --uitk-text-h1-fontWeight-small: var(--uitk-typography-fontWeight-medium);
   --uitk-text-h1-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
 
   /* H2 */
   --uitk-text-h2-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-h2-fontWeight-small: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-h2-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  --uitk-text-h2-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
 
   /* H3 */
   --uitk-text-h3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-h3-fontWeight-small: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
 
   /* H4 */
   --uitk-text-h4-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-h4-fontWeight-small: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
 
   /* Label */
   --uitk-text-label-fontWeight: var(--uitk-typography-fontWeight-regular);
