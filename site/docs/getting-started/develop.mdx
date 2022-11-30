@@ -14,7 +14,7 @@ import {
 } from "@jpmorganchase/uitk-lab";
 import Content from "../../src/components/content/Content.tsx";
 
-# Develop with Salt
+# Developing with Salt
 
 <Content toc={toc}>
 
@@ -40,7 +40,9 @@ There are three dependencies that you need to add to your project:
 
 Use this npm command to install all three dependencies in one go:
 
-`npm install --save @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons`
+```
+npm install --save @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
+```
 
 If you prefer not to use npm, you can install the packages using yarn or other package managers.
 
@@ -69,7 +71,9 @@ You install FontSource’s npm packages and then import their CSS into your appl
 
 First, install the required NPM packages:
 
-`npm install –save @fontsource/open-sans @fontsource/pt-mono`
+```
+npm install –save @fontsource/open-sans @fontsource/pt-mono
+```
 
 Next, import the CSS for the weights and styles that Salt requires. In a typical React project setup, the best place to put these imports is in your src/index.js file:
 
@@ -97,7 +101,7 @@ If you prefer not to use Google Fonts or FontSource, you can use any other appro
   <AccordionSection id="web-font-files">
     <AccordionSummary>Web Font Files</AccordionSummary>
     <AccordionDetails>
-      <table class="css-0">
+      <table>
         <thead>
           <tr>
             <th>Font family</th>

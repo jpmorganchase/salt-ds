@@ -294,6 +294,11 @@
   width: 14px;
 }
 
+table {
+  display: inline-table;
+  width: 100%;
+}
+
 table thead tr {
   border: none;
   box-shadow: var(--uitk-overlayable-shadow-borderRegion);
