@@ -7,7 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        :warn: **This is a public repository, so please do not include any company-internal code or details in your bug report**
+        > **Warning**
+        > This is a public repository, so **please do not include any company-internal code or details in your bug report**
   - type: dropdown
     attributes:
       label: Affects
@@ -43,7 +44,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Where relevant, please consider attaching screenshots in the following sections
+        > **Info**
+        > Where relevant, please consider attaching screenshots in the following sections
   - type: textarea
     attributes:
       label: Description
