@@ -1,6 +1,7 @@
 .uitkTocInline-link {
   padding-left: var(--uitk-size-unit);
   font-size: var(--uitk-text-fontSize);
+  margin-left: -1.8em
 }
 
 .uitkTocInline-activeLink {

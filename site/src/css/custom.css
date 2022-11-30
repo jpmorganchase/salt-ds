@@ -90,9 +90,13 @@
 }
 
 .theme-doc-sidebar-container {
-  --ifm-menu-color: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
-  --ifm-menu-color-active: var(--uitk-color-gray-900);
-  background-color: var(--uitk-color-white);
+  --ifm-menu-color: var(--uitk-color-gray-200); /* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color-active: var(--uitk-color-gray-900);  /* TODO: see if we can wrap sidebar with TKProvider */
+  background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with TKProvider */
+}
+
+.theme-doc-sidebar-container *::selection { 
+  background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
 }
 
 .theme-doc-sidebar-container .menu {
@@ -146,7 +150,7 @@
 
 .docs-wrapper .pagination-nav .pagination-nav__sublabel {
   font-size: var(--uitk-text-h2-fontSize);
-  font-weight: var(--uitk-text-h2-fontWeight);
+  font-weight: var(--uitk-text-h2-fontWeight-small);
   margin-bottom: var(--uitk-size-unit);
 }
 
@@ -178,20 +182,30 @@
   --ifm-link-color: var(--uitk-text-secondary-foreground);
   height: 100%;
   position: sticky;
-  padding-top: var(--ifm-navbar-height);
+  padding-left: calc(4 * var(--uitk-size-unit));
+  padding-top: calc(3 * var(--uitk-size-unit));
   top: var(--ifm-navbar-height);
   width: 282px;
 }
 
-.docs-toc-container > div {
-  top: var(--ifm-navbar-height);
-  position: relative;
+.docs-toc-intro {
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-h4-fontWeight-strong);
 }
 
 .table-of-contents ul,
 .table-of-contents li {
   list-style: none;
 }
+
+.table-of-contents li a {
+  height: var(--uitk-size-stackable);
+}
+
+ul.table-of-contents li > ul li {
+  width: 70%;
+}
+
 
 .docs-page-content {
   padding: calc(var(--uitk-size-unit) * 3);
