@@ -28,7 +28,7 @@ export function CellMeasure<T>(props: CellMeasureProps<T>) {
 
   return (
     <div className={withBaseName()}>
-      <table>
+      <table role="presentation">
         <thead>
           <tr ref={rowRef}>
             <th>Invisible Cell</th>

@@ -43,7 +43,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
       data-testid="grid-right-part"
     >
       <div className={withBaseName("space")}>
-        <table ref={tableRef}>
+        <table ref={tableRef} role="presentation">
           <TableColGroup columns={columns} />
           <TableBody
             columns={columns}

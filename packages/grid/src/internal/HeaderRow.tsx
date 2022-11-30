@@ -15,7 +15,7 @@ export interface HeaderRowProps<T> {
 export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const { columns, gap } = props;
   return (
-    <tr className={withBaseName()}>
+    <tr className={withBaseName()} role="row">
       {columns.map((column) => {
         const Cell = column.info.props.headerComponent || HeaderCell;
         const CellValue =
