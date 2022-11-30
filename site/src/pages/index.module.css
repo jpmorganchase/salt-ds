@@ -33,6 +33,7 @@
 
 .heroTitle {
   font-size: var(--uitk-text-display1-fontSize);
+  overflow-wrap: initial;
 }
 
 .cardContainer {

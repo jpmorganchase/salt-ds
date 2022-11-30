@@ -1,5 +1,6 @@
 .card {
-  --ifm-link-decoration: underline;
+  --ifm-link-hover-color: none;
+  --ifm-link-hover-decoration: none;
   --card-color: var(--uitk-color-white);
   --card-icon-background: #0e1b23;
 }
@@ -8,6 +9,13 @@
   --card-background: var(--uitk-color-white);
   --card-color: var(--uitk-color-gray-900);
   --card-icon-background: var(--uitk-color-gray-10);
+}
+
+.cardTitle {
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
+  --ifm-heading-margin-bottom: var(--uitk-size-unit);
 }
 
 .card {
@@ -19,11 +27,25 @@
   flex: 1;
 }
 
+.card:hover {
+  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+}
+
+.card:hover .icon {
+  transform: scale(1.1);
+}
+
 .iconContainer {
   width: 100%;
   text-align: center;
   padding: calc(var(--uitk-size-unit) * 5) 0;
   background-color: var(--card-icon-background);
+}
+
+.icon {
+  transition: 0.5s all ease-in-out;
+  max-width: 160px;
+  max-height: 160px;
 }
 
 .cardContent {
@@ -34,8 +56,14 @@
   flex: 1;
 }
 
-.cardContent p {
+.cardDescription {
   color: var(--uitk-text-secondary-foreground);
+  margin-bottom: calc(var(--uitk-size-unit) * 2);
+}
+
+.cardFooter {
+  margin-bottom: 0;
+  text-decoration: underline;
 }
 
 .keyline {
