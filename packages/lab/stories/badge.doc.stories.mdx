@@ -1,5 +1,4 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Badge } from "@jpmorganchase/uitk-lab";
 import {
   ClockIcon,
@@ -77,24 +76,6 @@ import { Badge } from "@jpmorganchase/uitk-lab";
 ## Props
 
 <ArgsTable of={Badge} />
-
-## HTML Anatomy of Badge component
-
-<Canvas>
-  <ComponentAnatomy>
-    <Badge badgeContent={1} max={100}>
-      <ClockIcon />
-    </Badge>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Badge badgeContent="Text">Text Badge</Badge>
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Badge badgeContent={150} max={99}>
-      <UserBadgeIcon />
-    </Badge>
-  </ComponentAnatomy>
-</Canvas>
 
 ## CSS Class
 

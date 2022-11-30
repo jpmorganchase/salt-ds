@@ -1,5 +1,4 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { StackLayout, FlexItem } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
@@ -64,16 +63,5 @@ import { StackLayout } from "@jpmorganchase/uitk-core";
 ### Props
 
 <ArgsTable of={StackLayout} />
-
-## Anatomy
-
-<Canvas>
-  <ComponentAnatomy showControls={false}>
-    <StackLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
-      <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
-    </StackLayout>
-  </ComponentAnatomy>
-</Canvas>
 
 <HelpAndSupport />
