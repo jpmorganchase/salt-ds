@@ -118,9 +118,9 @@
   --uitk-palette-navigate-background-hover-medium: var(--uitk-color-gray-20);
   --uitk-palette-navigate-foreground: var(--uitk-color-gray-400);
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
-  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-gray-90);
-  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-gray-90-fade-border);
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-600-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-700);
@@ -252,9 +252,9 @@
   --uitk-palette-navigate-background-hover-medium: var(--uitk-color-gray-700);
   --uitk-palette-navigate-foreground: var(--uitk-color-gray-90);
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-200);
-  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-gray-90);
-  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-gray-90-fade-border);
+  --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
+  --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-400-fade-border);
 
   /* Negative */
   --uitk-palette-negative-foreground: var(--uitk-color-red-300);
