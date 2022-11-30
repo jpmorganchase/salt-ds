@@ -1,4 +1,4 @@
-.uitkEmphasisHigh.uitkCard {
+.MyApp.uitkCard { /* todo: example */
   --uitkCard-background: var(--uitk-container-background-high);
   --uitkCard-borderColor: var(--uitk-container-borderColor-high);
   --uitkCard-borderRadius: 10px;

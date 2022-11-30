@@ -63,11 +63,11 @@ theme, --uitk-actionable-primary-background resolves to `var(--uitk-action-prima
 
 Some characteristic tokens have a concept of emphasis. Components can apply characteristics with emphasis to make them stand out on the page amongst the rest of the UI, or have less prominence so that other components appear exaggerated.
 
-An example of a characteristic token which has emphasis levels is `--uitk-editable-background-` which has the three levels defined, `low`, `medium`, and `high`. By default, the FormField component has been styled to use the `--uitk-editable-background-medium` token in a local variable:
+An example of a characteristic token which has emphasis levels is `--uitk-editable-background-` which has the three levels defined, `low`, `medium`, and `high`. By default, the FormField component has been styled to use the `--uitk-editable-primary-background` token in a local variable:
 
 ```css
 .uitkFormField {
-  --formField-background: var(--uitk-editable-background-medium);
+  --formField-background: var(--uitk-editable-primary-background);
 }
 ```
 
@@ -87,7 +87,7 @@ Perhaps though, you would like a FormField to have more emphasis on the page. In
 
 ```css
 .uitkEmphasisHigh.uitkFormField {
-  --formField-background: var(--uitk-editable-background-high);
+  --formField-background: var(--uitk-editable-secondary-background);
 }
 ```
 
@@ -120,7 +120,7 @@ Alternatively, if you want it to have a lower emphasis, pass in the `uitkEmphasi
 ### Extending emphasis to more components
 
 Not all UITK components support emphasis by default. This capability can easily be added though.
-In the following example, we will show how to add emphasis to the Card component. Currently, Card makes use of the `---uitk-container-background-medium` token for all of it's styling purposes. Here's how it looks by default:
+In the following example, we will show how to add emphasis to the Card component. Currently, Card makes use of the `---uitk-container-primary-background` token for all of it's styling purposes. Here's how it looks by default:
 
 <Panel style={{ background: "var(--uitk-color-purple-10)" }}>
   <Card>

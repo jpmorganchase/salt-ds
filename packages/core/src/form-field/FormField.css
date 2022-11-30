@@ -16,18 +16,18 @@
   --formField-activationIndicator-color: var(--uitk-editable-borderColor);
   --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle);
-  --formField-background: var(--uitk-editable-background-medium);
+  --formField-background: var(--uitk-editable-primary-background);
   --formField-focused-outlineColor: var(--uitk-focused-outlineColor);
   /* Set to 0 until helper text class provided */
   --formField-helperText-height: 0px;
 }
 
-.uitkEmphasisLow.uitkFormField {
-  --formField-background: var(--uitk-editable-background-low);
+.uitkFormField-tertiary.uitkFormField {
+  --formField-background: var(--uitk-editable-tertiary-background);
 }
 
-.uitkEmphasisHigh.uitkFormField {
-  --formField-background: var(--uitk-editable-background-high);
+.uitkFormField-secondary.uitkFormField {
+  --formField-background: var(--uitk-editable-secondary-background);
 }
 
 .uitkFormField {
@@ -132,13 +132,14 @@
   --formField-activationIndicator-color: var(--uitk-status-error-borderColor);
 }
 
-/* As above when `uitkEmphasisHigh` className passed */
-.uitkEmphasisHigh.uitkFormField-error {
-  --formField-background: var(--uitk-status-error-background-high);
+/* Error state styling when `emphasize={true}` */
+.uitkFormField-emphasize.uitkFormField-error {
+  --formField-background: var(--uitk-status-error-background-emphasize);
 }
 
-.uitkEmphasisHigh.uitkFormField-warning {
-  --formField-background: var(--uitk-status-warning-background-high);
+/* Warning state styling when `emphasize={true}` */
+.uitkFormField-emphasize.uitkFormField-warning {
+  --formField-background: var(--uitk-status-warning-background-emphasize);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */
@@ -277,11 +278,11 @@
   outline: none;
 }
 
-.uitkEmphasisLow.uitkFormField.uitkFormField-labelLeft > .uitkFormLabel ~ * {
+.uitkFormField-tertiary.uitkFormField.uitkFormField-labelLeft > .uitkFormLabel ~ * {
   background: var(--uitkFormField-background, var(--formField-background));
 }
 
-.uitkEmphasisMedium.uitkFormField > :not(.uitkFormLabel):first-child {
+.uitkFormField-primary.uitkFormField > :not(.uitkFormLabel):first-child {
   background: var(--uitkFormField-background, var(--formField-background));
 }
 

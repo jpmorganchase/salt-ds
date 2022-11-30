@@ -118,11 +118,11 @@ export const Centered: TabsStory = () => {
   );
 };
 
-export const SecondaryOrEmphasisLow: TabsStory = () => {
+export const Tertiary: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);
   return (
     <ToolkitProvider>
-      <Tabs emphasis="low" style={{ width: 600, height: 300 }}>
+      <Tabs variant="tertiary" style={{ width: 600, height: 300 }}>
         <TabPanel label="Home" {...style}>
           <Text>Content for Home tab</Text>
         </TabPanel>

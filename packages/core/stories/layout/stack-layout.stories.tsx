@@ -54,7 +54,7 @@ const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
   return (
     <StackLayout {...args}>
       {Array.from({ length: 4 }, (_, index) => (
-        <Panel className="uitkEmphasisHigh">{`Panel ${index + 1} stack`}</Panel>
+        <Panel variant="secondary">{`Panel ${index + 1} stack`}</Panel>
       ))}
     </StackLayout>
   );
@@ -62,11 +62,11 @@ const StackLayoutStorySimpleUsage: ComponentStory<typeof StackLayout> = (
 export const StackLayoutSimpleUsage = StackLayoutStorySimpleUsage.bind({});
 StackLayoutSimpleUsage.args = {};
 
-const EmphasisFormField = () => (
+const SecondaryFormField = () => (
   <FormField
     labelPlacement="left"
     label="Quis qui nisi"
-    className="uitkEmphasisHigh"
+    variant="secondary"
   >
     <Input defaultValue="Lorem ipsum" />
   </FormField>
@@ -76,12 +76,12 @@ const Form: ComponentStory<typeof StackLayout> = (args) => {
   return (
     <StackLayout {...args}>
       {Array.from({ length: 2 }, (_, index) => (
-        <EmphasisFormField key={index} />
+        <SecondaryFormField key={index} />
       ))}
       <FormField labelPlacement="left" label="Consectetur sint">
         <Input defaultValue="Nulla id Lorem Lorem" />
       </FormField>
-      <EmphasisFormField />
+      <SecondaryFormField />
       <FormField labelPlacement="left" label="Quis qui nisi">
         <Input defaultValue="Lorem ipsum" />
       </FormField>
@@ -114,7 +114,7 @@ export const ComplexFormTwo: ComponentStory<typeof StackLayout> = () => {
       <FormField
         labelPlacement="left"
         label="Neque porro quisquam"
-        className="uitkEmphasisHigh"
+        variant="secondary"
       >
         <Input defaultValue="Duis aute irure" endAdornment={<SearchIcon />} />
       </FormField>
@@ -150,7 +150,7 @@ export const ComplexFormFour: ComponentStory<typeof StackLayout> = () => {
       <FormField
         labelPlacement="left"
         label="Exercitation veniam temp"
-        className="uitkEmphasisHigh"
+        variant="secondary"
       >
         <Input defaultValue="e.g. Esse velit sunt do" />
       </FormField>

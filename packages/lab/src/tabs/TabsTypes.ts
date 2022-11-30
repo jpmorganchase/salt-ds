@@ -27,7 +27,7 @@ export type composableTabProps = navigationProps &
     "onClick" | "onEnterEditMode" | "onExitEditMode" | "onMouseDown"
   >;
 
-export type TabstripEmphasis = "low";
+export type TabstripVariant = "primary" | "tertiary";
 
 export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -45,11 +45,6 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   defaultActiveTabIndex?: number;
 
   editing?: boolean;
-
-  /**
-   * Set visual emphasis - supported value 'low'
-   */
-  emphasis?: TabstripEmphasis;
   /**
    * Boolean that enables add new tab
    */
@@ -83,6 +78,10 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
    *  index value of Active Tab, used in controlled mode
    */
   activeTabIndex?: number;
+  /**
+   * Set variant - defaults 'primary'
+   */
+   variant?: TabstripVariant;
 }
 
 export type exitEditHandler = (

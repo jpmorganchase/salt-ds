@@ -264,14 +264,14 @@ export const TabstripCentered = () => {
   );
 };
 
-export const LowEmphasisTabstrip = () => {
+export const TertiaryTabstrip = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
   return (
     <div style={{ height: 300, width: 600 }}>
       <Tabstrip
-        emphasis="low"
+        variant="tertiary"
         onActiveChange={handleTabSelection}
         overflowMenu={false}
         activeTabIndex={selectedTab}

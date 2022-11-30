@@ -62,9 +62,9 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   disableAnnouncer?: boolean;
   /**
-   * Emphasis styling variant; defaults to "medium".
+   * Emphasize the styling by applying a background color: defaults to false
    */
-  emphasis?: "medium" | "high";
+  emphasize?: boolean
   /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
@@ -91,7 +91,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     className,
     closeRef,
     disableAnnouncer = false,
-    emphasis = "medium",
+    emphasize = false,
     onClose,
     render,
     status = "info",
@@ -157,7 +157,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   return (
     <div
       className={cx(withBaseName(), withBaseName(status), className, {
-        uitkEmphasisHigh: emphasis === "high",
+        [withBaseName("emphasize")]: emphasize 
       })}
       ref={handleRef}
       {...rest}

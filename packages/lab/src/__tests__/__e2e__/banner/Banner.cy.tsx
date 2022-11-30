@@ -63,15 +63,15 @@ describe("GIVEN a Banner", () => {
     });
   });
 
-  describe("WHEN using high emphasis", () => {
-    it("THEN uitkEmphasisHigh should be applied to the banner", () => {
+  describe("WHEN emphasize={true}", () => {
+    it("THEN class should be applied to the banner", () => {
       cy.mount(
-        <Banner data-testid="bannerRoot" emphasis="high">
+        <Banner data-testid="bannerRoot" emphasize={true}>
           Default Banner State
         </Banner>
       );
 
-      cy.findByTestId("bannerRoot").should("have.class", "uitkEmphasisHigh");
+      cy.findByTestId("bannerRoot").should("have.class", "uitkBanner-emphasize");
     });
   });
 });

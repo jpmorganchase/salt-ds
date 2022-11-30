@@ -25,6 +25,7 @@ export interface OverlayProps
    */
   adaExceptions?: ADAExceptions;
   arrowProps?: ComponentProps<"div">;
+  variant?: "primary" | "secondary";
 }
 
 const withBaseName = makePrefixer("uitkOverlay");
@@ -40,6 +41,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       className,
       open,
       onOpenChange,
+      variant = "primary",
       ...rest
     },
     ref
@@ -59,7 +61,9 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     return (
       <Portal>
         <Window
-          className={cx(withBaseName(), className)}
+          className={cx(withBaseName(), className, {
+            [withBaseName(variant)]: variant === "secondary"}
+          )}
           id={id}
           ref={ref}
           {...rest}

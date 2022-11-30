@@ -62,6 +62,10 @@ export interface FormFieldProps
    * Outer focus ring focus will not be applied. Defaults to false.
    */
   disableFocusRing?: boolean;
+  /**
+   * Emphasized styling by applying background on validation states; defaults to false
+   */
+  emphasize?: boolean;
   // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behaviour)
   // we should also support 'auto' or explicit numeric values
   /**
@@ -114,6 +118,10 @@ export interface FormFieldProps
    * The state for the FormField: Must be one of: 'error'|'warning'|undefined
    */
   validationStatus?: FormFieldValidationStatus;
+  /**
+   * FormField variants; defaults to primary.
+   */
+   variant?: "primary" | "secondary" | "tertiary";
 }
 
 export interface useA11yValueValue {
@@ -192,6 +200,7 @@ export const FormField = forwardRef(
       className,
       disabled,
       disableFocusRing = false,
+      emphasize = false,
       fullWidth = true,
       hasStatusIndicator,
       HelperTextComponent = FormHelperText,
@@ -208,6 +217,7 @@ export const FormField = forwardRef(
       required,
       StatusIndicatorProps,
       validationStatus,
+      variant = "primary",
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -239,7 +249,7 @@ export const FormField = forwardRef(
     const isError = validationStatus === "error";
     const focusClass = disableFocusRing
       ? "lowFocused"
-      : "focused"; /* Low emphasis will override this */
+      : "focused"; /* NOTE: need to look at */
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =
@@ -264,6 +274,8 @@ export const FormField = forwardRef(
           [withBaseName("labelTop")]: labelTop,
           [withBaseName("labelLeft")]: labelLeft,
           [withBaseName(`withHelperText`)]: inlineHelperText,
+          [withBaseName(`emphasize`)]: emphasize,
+          [withBaseName(variant)]: variant
         },
         className
       ),

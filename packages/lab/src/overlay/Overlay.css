@@ -3,15 +3,15 @@
   --overlay-text-color: var(--uitk-text-primary-foreground);
   --overlay-spacing: var(--uitk-size-unit);
   --overlay-fontSize: var(--uitk-text-fontSize);
-  --overlay-background: var(--uitk-container-background-medium);
-  --overlay-borderColor: var(--uitk-container-borderColor-medium);
+  --overlay-background: var(--uitk-container-primary-background);
+  --overlay-borderColor: var(--uitk-container-primary-borderColor);
   /* TODO: z-index audit, provide z index here or rely on popper */
   --overlay-zindex: var(--uitk-zIndex-flyover);
 }
 
-.uitkEmphasisHigh.uitkOverlay {
-  --overlay-background: var(--uitk-container-background-high);
-  --overlay-borderColor: var(--uitk-container-borderColor-high);
+.uitkOverlay-secondary.uitkOverlay { 
+  --overlay-background: var(--uitk-container-secondary-background);
+  --overlay-borderColor: var(--uitk-container-secondary-borderColor);
 }
 
 .uitkOverlay-content {

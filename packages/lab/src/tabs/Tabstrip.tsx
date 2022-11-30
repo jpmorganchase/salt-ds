@@ -67,7 +67,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     defaultSource,
     defaultActiveTabIndex,
     editing,
-    emphasis,
+    variant,
     enableAddTab = false,
     enableCloseTab,
     enableRenameTab,
@@ -467,7 +467,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     {
       [withBaseName("centered")]: centered,
       [withBaseName("draggingTab")]: tabstripHook.isDragging,
-      uitkEmphasisLow: emphasis === "low",
+      [withBaseName("tertiary")]: variant === "tertiary",
     }
   );
 

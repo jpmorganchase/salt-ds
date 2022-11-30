@@ -190,16 +190,16 @@ export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
 type ExampleWithTitleAndVariantProps = {
   name: string;
   title: string;
-  className?: string;
+  variant?: "primary" | "secondary" | "tertiary";
 };
 
 const FormFieldRadios = ({
   name,
   title,
-  className,
+  variant,
 }: ExampleWithTitleAndVariantProps) => (
   <div data-testid="radio-button-form-field-variants-example">
-    <FormField className={className}>
+    <FormField variant={variant}>
       <RadioButtonGroup
         aria-label="Variants Example"
         defaultValue="forward"
@@ -225,23 +225,22 @@ const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
       <ColumnLayoutContainer>
         <ColumnLayoutItem>
           <FormFieldRadios
-            name={`${name}-1`}
-            title="High emphasis"
-            className="uitkEmphasisHigh"
+            name="fx2"
+            title="Primary"
           />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios
-            name="fx2"
-            title="Medium Emphasis"
-            className="uitkEmphasisMedium"
+            name={`${name}-1`}
+            title="Secondary"
+            variant="secondary"
           />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios
             name={`${name}-2`}
-            title="Low Emphasis"
-            className="uitkEmphasisLow"
+            title="Tertiary"
+            variant="tertiary"
           />
         </ColumnLayoutItem>
       </ColumnLayoutContainer>
