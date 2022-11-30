@@ -396,7 +396,8 @@ table tr th + th::before {
   .docs-toc-container {
     display: none;
   }
-  .docs-page-content,  .docs-page-content.withToc {
+  .docs-page-content,
+  .docs-page-content.withToc {
     width: 100%;
   }
 }
