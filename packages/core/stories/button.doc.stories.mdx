@@ -1,5 +1,4 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Button } from "@jpmorganchase/uitk-core";
 import {
   DownloadIcon,
@@ -99,32 +98,6 @@ The button component can contain the following components:
 
 - [Icon](?path=/docs/documentation-icons-icon--page)
 - [Status Indicator](?path=/docs/documentation-core-statusindicator--page)
-
-### Anatomy
-
-export const Link = ({ children, to, ...props }) => (
-  <a {...props} href={to}>
-    {children}
-  </a>
-);
-
-<Canvas>
-  <ComponentAnatomy>
-    <Button>Default</Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button variant="cta">
-      CTA with Icon <SendIcon aria-hidden />
-    </Button>
-  </ComponentAnatomy>
-  <br />
-  <ComponentAnatomy>
-    <Button aria-label="Send">
-      <SendIcon aria-hidden />
-    </Button>
-  </ComponentAnatomy>
-</Canvas>
 
 ### Classes
 
