@@ -19,6 +19,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   url: string;
   linkText: string;
   keylineColor: CSSProperties["color"];
+  disableKeylineAnimation?: boolean;
 }
 
 const Card = ({
@@ -28,6 +29,7 @@ const Card = ({
   url,
   linkText,
   keylineColor,
+  disableKeylineAnimation = false,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
@@ -46,7 +48,9 @@ const Card = ({
         <Link to={url}>{linkText}</Link>
       </div>
       <div
-        className={clsx(styles.keyline, { [styles.animate]: onScreen })}
+        className={clsx(styles.keyline, {
+          [styles.animate]: onScreen && !disableKeylineAnimation,
+        })}
         style={{
           backgroundColor: keylineColor,
         }}

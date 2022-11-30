@@ -38,6 +38,7 @@ const OverviewCards = () => (
             url={url}
             linkText={linkText}
             keylineColor={keylineColor}
+            disableKeylineAnimation
           />
         </ToolkitProvider>
       );
