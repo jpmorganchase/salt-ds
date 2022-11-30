@@ -91,11 +91,11 @@
 
 .theme-doc-sidebar-container {
   --ifm-menu-color: var(--uitk-color-gray-200); /* TODO: see if we can wrap sidebar with TKProvider */
-  --ifm-menu-color-active: var(--uitk-color-gray-900);  /* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color-active: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
   background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with TKProvider */
 }
 
-.theme-doc-sidebar-container *::selection { 
+.theme-doc-sidebar-container *::selection {
   background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
 }
 
@@ -205,7 +205,6 @@
 ul.table-of-contents li > ul li {
   width: 70%;
 }
-
 
 .docs-page-content {
   padding: calc(var(--uitk-size-unit) * 3);
