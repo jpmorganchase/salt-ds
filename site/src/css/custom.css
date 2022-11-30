@@ -38,7 +38,7 @@
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
-  --ifm-paragraph-margin-bottom:  calc(var(--uitk-size-unit) * 2);
+  --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
 }
 
@@ -110,7 +110,22 @@
 
 .theme-doc-sidebar-container .menu__link--active {
   font-weight: var(--uitk-navigable-fontWeight-active);
+}
+
+.theme-doc-sidebar-container li {
+  display: flex;
+  height: calc(var(--uitk-text-h4-fontSize) + 3 * var(--uitk-size-unit));
+}
+
+.menu__list-item:not(:first-child) {
+  margin: 0;
+}
+
+.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
+  content: "";
+  position: relative;
+  left: -289px;
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
@@ -160,7 +175,6 @@
   font-weight: var(--uitk-text-h3-fontWeight-small);
 }
 
-
 .docs-wrapper .pagination-nav .pagination-label {
   font-size: var(--uitk-text-h3-fontSize);
   font-weight: var(--uitk-text-h3-fontWeight);
@@ -198,6 +212,7 @@
 .docs-toc-intro {
   font-size: var(--uitk-text-h4-fontSize);
   font-weight: var(--uitk-text-h4-fontWeight);
+  margin-left: 2px;
 }
 
 .table-of-contents ul,
@@ -205,8 +220,8 @@
   list-style: none;
 }
 
-.table-of-contents li a {
-  height: var(--uitk-size-stackable);
+.table-of-contents li {
+  padding-bottom: var(--uitk-size-unit);
 }
 
 ul.table-of-contents li > ul li {
@@ -215,11 +230,10 @@ ul.table-of-contents li > ul li {
 
 .docs-page-content {
   padding: calc(var(--uitk-size-unit) * 3);
-
 }
 
 .docs-page-content > p:first-child {
-  --ifm-paragraph-margin-bottom:  calc(var(--uitk-size-unit) * 3);
+  --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 .docs-page-content.withToc {
@@ -234,9 +248,8 @@ ul.table-of-contents li > ul li {
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
-
-.docs-page-content *:has(+ h2), 
-.docs-page-content *:not(h2):has(+ h3)  {
+.docs-page-content *:has(+ h2),
+.docs-page-content *:not(h2):has(+ h3) {
   margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
@@ -371,7 +384,7 @@ table tr td:not(:last-child) {
 }
 
 table tr th + th::before {
-  content: '';
+  content: "";
   border-left: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
   position: relative;
   height: 50%;

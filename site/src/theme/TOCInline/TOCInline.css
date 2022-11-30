@@ -1,11 +1,18 @@
 .uitkTocInline-link {
   padding-left: var(--uitk-size-unit);
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-fontWeight);
   margin-left: -1.8em;
 }
 
 .uitkTocInline-activeLink {
-  border-left: 2px solid var(--uitk-navigable-indicator-active);
   color: var(--uitk-text-primary-foreground);
   font-weight: var(--uitk-navigable-fontWeight-active);
+}
+
+.table-of-contents li:has(> .uitkTocInline-activeLink)::before {
+  border-left: 2px solid var(--uitk-navigable-indicator-active);
+  content: "";
+  position: relative;
+  left: calc(var(--uitk-size-unit) * -3);
 }
