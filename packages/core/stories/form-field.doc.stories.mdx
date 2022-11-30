@@ -1,12 +1,10 @@
 import { FormField, Input } from "@jpmorganchase/uitk-core";
 import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
-import "docs/components/ComponentAnatomy.css";
 import {
   CSSClassTable,
   CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 
 <Meta
   title="Documentation/Core/Form Field"
@@ -27,16 +25,6 @@ import { FormField } from "@jpmorganchase/uitk-core";
 ## Props
 
 <ArgsTable of={FormField} />
-
-## HTML Anatomy of a Form Field
-
-<Canvas>
-  <ComponentAnatomy showControls={false}>
-    <FormField helperText="Sample helper text" label="Default Form Field label">
-      <Input defaultValue="Value" />
-    </FormField>
-  </ComponentAnatomy>
-</Canvas>
 
 ## CSS Class
 

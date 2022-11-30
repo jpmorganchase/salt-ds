@@ -1,5 +1,3 @@
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-
 import { Tree as Tree } from "@jpmorganchase/uitk-lab";
 import { groupByInitialLetter, usa_states_cities } from "./list.data";
 import { folderData } from "./tree.data";
@@ -202,7 +200,7 @@ export const SimpleTreeIcons = () => {
 //   );
 // };
 
-export const SimpleTreeWithAnatomy = () => {
+export const SimpleTree = () => {
   const source = [
     {
       label: "Fruits",
@@ -225,11 +223,5 @@ export const SimpleTreeWithAnatomy = () => {
     { label: "Grain" },
   ];
 
-  return (
-    <>
-      <ComponentAnatomy style={{ width: 1100 }}>
-        <Tree groupSelection="single" source={source} />
-      </ComponentAnatomy>
-    </>
-  );
+  return <Tree groupSelection="single" source={source} />;
 };
