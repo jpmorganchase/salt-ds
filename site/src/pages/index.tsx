@@ -12,7 +12,7 @@ import { Button } from "@jpmorganchase/uitk-core";
 import styles from "./index.module.css";
 import Features from "./_index/features/Features";
 import Card, { CardProps } from "../components/card/Card";
-import Accordion from "./_index/accordion/Accordion";
+import HomepageAccordion from "./_index/accordion/Accordion";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -106,7 +106,7 @@ export default function Home(): JSX.Element {
             );
           })}
         </div>
-        <Accordion />
+        <HomepageAccordion />
       </div>
     </Layout>
   );

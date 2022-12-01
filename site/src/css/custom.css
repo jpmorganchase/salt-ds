@@ -248,8 +248,8 @@ ul.table-of-contents li > ul li {
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
-.docs-page-content *:has(+ h2),
-.docs-page-content *:not(h2):has(+ h3) {
+.docs-page-content > *:has(+ h2),
+.docs-page-content > *:not(h2):has(+ h3) {
   margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
