@@ -9,6 +9,11 @@
  * - color
  */
 
+body {
+  font-family: "uitk-sans";
+  font-size: var(--uitk-text-fontSize);
+}
+
 .uitk-theme[data-mode="light"] {
   color-scheme: light;
 }
