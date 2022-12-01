@@ -14,6 +14,7 @@
 .heroBanner {
   --ifm-hero-text-color: var(--uitk-color-white);
   --ifm-hero-background-color: none;
+  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
 }
 
 .heroBanner {
