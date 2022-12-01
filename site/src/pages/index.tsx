@@ -28,7 +28,7 @@ function HomepageHeader() {
             <p key={index}>{tagline}</p>
           ))}
           <Link to="/getting-started">
-            <Button variant="cta">Get started</Button>
+            <Button variant="cta">Start using Salt</Button>
           </Link>
         </div>
       </header>
@@ -39,42 +39,42 @@ function HomepageHeader() {
 }
 
 const features = [
-  "Easy installation with step-by-step guidance",
-  "Streamlined migration, if you’re upgrading from UI Toolkit",
-  "A lightweight, efficient codebase",
+  "Step-by-step installation guides",
+  "Comprehensive migration resources for J.P. Morgan teams",
+  "Components and patterns that are tested against WCAG 2.1 AA",
   "Theming and rebranding support",
-  "Modular building blocks",
+  "Responsiveness as standard",
   "Hooks, utilities and design tokens",
-  "Responsive layouts, enabled for mobile interfaces",
-  "Fully accessible and WCAG 2.1 AA compliant components",
+  "Modular building blocks",
+  "A lightweight, efficient codebase",
 ];
 
 const cards: CardProps[] = [
   {
     icon: <PencilIcon />,
-    title: "Get started",
+    title: "Design and develop",
     description:
-      "Follow our simple step-by-step process for installing the Salt packages and Figma library, whether you’re a designer or developer. It also covers theming, styling and how to add other aspects of customization to suit your needs. ",
+      "Follow our step-by-step process to access our Figma libraries. If you’re a developer, we show you how to install and start using the Salt packages.",
     url: "/getting-started",
-    linkText: "Browse our getting started guides",
+    linkText: "Read the guides",
     keylineColor: "var(--uitk-color-purple-50)",
   },
   {
     icon: <CodeIcon />,
     title: "Browse our components",
     description:
-      "Our suite of React-based components is built accessibly from the ground up, fully customizable, usability tested and most importantly, lightweight. Find what you need to create simple forms and a license-free, fast DataGrid.",
+      "Our suite of UI components is built with accessibility in mind. Each component is thoroughly tested before release and customizable for multiple use cases.",
     url: "/components",
-    linkText: "Explore the component library",
+    linkText: "Explore components",
     keylineColor: "var(--uitk-color-teal-50)",
   },
   {
     icon: <ArrowsIcon />,
-    title: "Make a contribution",
+    title: "Get involved",
     description:
-      "We welcome bug reports, fixes and other contributions, and would love to receive your feedback and suggestions. Use our GitHub templates to reach out to us.",
-    url: "/contributing",
-    linkText: "Learn more on how to contribute",
+      "We welcome bug reports, fixes and other contributions—and would love to receive your feedback and suggestions. Reach out to us on GitHub or via email.",
+    url: "/support-and-contributions",
+    linkText: "Contact us",
     keylineColor: "var(--uitk-color-orange-30)",
   },
 ];

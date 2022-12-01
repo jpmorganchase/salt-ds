@@ -88,7 +88,7 @@ const accordionInfo = [
 const SiteAccordion = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
-  const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
+  const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-50px");
   return (
     <div className={styles.accordionContainer}>
       <PageIllustration />

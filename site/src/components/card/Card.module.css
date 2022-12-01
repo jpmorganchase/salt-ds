@@ -1,7 +1,7 @@
 .card {
   --ifm-link-decoration: underline;
   --card-color: var(--uitk-color-white);
-  --card-icon-background: unset;
+  --card-icon-background: #0e1b23;
 }
 
 .card.lightTheme {
@@ -26,16 +26,16 @@
   background-color: var(--card-icon-background);
 }
 
-.icon {
-  animation: bounce 3s ease-in-out 2s infinite;
-}
-
 .cardContent {
-  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 2);
+  padding: 0 calc(var(--uitk-size-unit) * 2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+}
+
+.cardContent p {
+  color: var(--uitk-text-secondary-foreground);
 }
 
 .keyline {
@@ -43,13 +43,7 @@
 }
 
 .animate {
-  animation: swing-in-left-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes bounce {
-  50% {
-    transform: translateY(5px);
-  }
+  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 @keyframes swing-in-left-bck {
