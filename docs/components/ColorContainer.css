@@ -1,0 +1,5 @@
+.docblock-colorpalette > div > div:nth-child(1) {
+  flex: none;
+  width: 160px;
+  -webkit-flex: none;
+}

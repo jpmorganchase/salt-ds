@@ -1,0 +1,75 @@
+name: Bug report 🪲
+description: Report bugs in our code
+labels:
+  - "type: bug 🪲"
+  - "status: awaiting triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Warning
+        This is a public repository, so **please do not include any company-internal code or details in your bug report**.
+  - type: dropdown
+    attributes:
+      label: Affects
+      description: |
+        Which package(s) did you observe this bug in? Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them. If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
+      multiple: true
+      options:
+        - "Core v0.8.0 (@jpmorganchase/uitk-core)"
+        - "Core v0.7.0 (@jpmorganchase/uitk-core)"
+        - "Core v0.6.0 (@jpmorganchase/uitk-core)"
+        - "Icons v0.7.0 (@jpmorganchase/uitk"
+        - "Icons v0.6.0 (@jpmorganchase/uitk-icons)"
+        - "Icons v0.5.0 (@jpmorganchase/uitk-icons)"
+        - "Theme v0.6.0 (@jpmorganchase/uitk-theme)"
+        - "Theme v0.5.0 (@jpmorganchase/uitk-theme)"
+        - "Theme v0.4.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.8.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.7.0 (@jpmorganchase/uitk-theme)"
+        - "Lab v0.6.0 (@jpmorganchase/uitk-theme)"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: A concise description of what's going wrong. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps or code someone needs to reproduce this bug. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Operating system
+      description: On which operating system(s) have you observed the bug?
+      options:
+        - label: macOS
+        - label: Windows
+        - label: Linux
+        - label: iOS
+        - label: Android
+  - type: checkboxes
+    attributes:
+      label: Browser
+      description: Where relevant, in which browser(s) have you observed the bug?
+      options:
+        - label: Chrome
+        - label: Safari
+        - label: Firefox
+        - label: Edge
+  - type: checkboxes
+    attributes:
+      label: Are you a JPMorgan Chase employee?
+      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are not a JPMC employee.
+      options:
+        - label: I am an employee of JPMorgan Chase

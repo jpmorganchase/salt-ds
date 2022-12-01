@@ -1,15 +1,12 @@
 import {
   ComponentPropsWithoutRef,
   forwardRef,
-  KeyboardEvent,
   ReactElement,
+  KeyboardEvent,
 } from "react";
+import { useButton } from "../../button/useButton";
 import cx from "classnames";
-import { makePrefixer } from "../utils";
-
-import "./Button.css";
-import { ButtonVariant } from "./Button";
-import { useButton } from "./useButton";
+import { makePrefixer } from "../../utils";
 
 const withBaseName = makePrefixer("uitkButton");
 
@@ -22,11 +19,6 @@ export interface DivButtonProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, the button will be focusable when disabled.
    */
   focusableWhenDisabled?: boolean;
-  /**
-   * The variant to use. Options are 'primary', 'secondary' and 'cta'.
-   * 'primary' is the default value.
-   */
-  variant?: ButtonVariant;
 }
 
 export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
@@ -41,7 +33,6 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
       onBlur,
       onClick,
       role: roleProp,
-      variant = "primary",
       ...restProps
     },
     ref?
@@ -85,7 +76,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
     return (
       <div
         aria-disabled={ariaDisabled}
-        className={cx(withBaseName(), className, withBaseName(variant), {
+        className={cx(withBaseName(), className, withBaseName("primary"), {
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
         })}
@@ -99,7 +90,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
         {...restProps}
         ref={ref}
       >
-        <span className={withBaseName("label")}>{children}</span>
+        {children}
       </div>
     );
   }

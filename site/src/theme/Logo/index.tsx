@@ -56,10 +56,7 @@ export default function Logo(props) {
         />
       )}
       {navbarTitle != null && (
-        <>
-          <span className="navbar__logo__separator"></span>
-          <span className={titleClassName}>{navbarTitle}</span>
-        </>
+        <span className={titleClassName}>{navbarTitle}</span>
       )}
     </Link>
   );

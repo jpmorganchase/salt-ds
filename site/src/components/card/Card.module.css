@@ -1,12 +1,18 @@
 .card {
-  --card-background: #10212b;
   --ifm-link-decoration: underline;
+  --card-color: var(--uitk-color-white);
+  --card-icon-background: #0e1b23;
+}
+
+.card.lightTheme {
+  --card-background: var(--uitk-color-white);
+  --card-color: var(--uitk-color-gray-900);
+  --card-icon-background: var(--uitk-color-gray-10);
 }
 
 .card {
   background-color: var(--card-background);
-  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 2) 0 calc(var(--uitk-size-unit) * 2);
-  color: var(--uitk-color-white);
+  color: var(--card-color);
   display: flex;
   flex-direction: column;
   gap: calc(var(--uitk-size-unit) * 3);
@@ -14,36 +20,30 @@
 }
 
 .iconContainer {
-  align-self: center;
+  width: 100%;
+  text-align: center;
   padding: calc(var(--uitk-size-unit) * 5) 0;
-}
-
-.icon {
-  animation: bounce 3s ease-in-out 2s infinite;
+  background-color: var(--card-icon-background);
 }
 
 .cardContent {
+  padding: 0 calc(var(--uitk-size-unit) * 2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
 }
 
+.cardContent p {
+  color: var(--uitk-text-secondary-foreground);
+}
+
 .keyline {
   height: 3px;
-  width: calc(100% + calc(var(--uitk-size-unit) * 4));
-  position: relative;
-  left: calc(-1 * var(--uitk-size-unit) * 2);
 }
 
 .animate {
-  animation: swing-in-left-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes bounce {
-  50% {
-    transform: translateY(5px);
-  }
+  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 @keyframes swing-in-left-bck {
