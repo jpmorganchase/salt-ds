@@ -6,9 +6,9 @@
   padding: 0;
 
   border-style: solid;
-  border-top-color: var(--grid-row-borderColor);
+  border-bottom-color: var(--grid-row-borderColor);
   border-right-color: transparent;
-  border-width: 1px 1px 0 0;
+  border-width: 0 1px 1px 0;
 
   white-space: nowrap;
   position: relative;
