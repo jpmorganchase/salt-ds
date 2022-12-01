@@ -14,6 +14,7 @@
 .heroBanner {
   --ifm-hero-text-color: var(--uitk-color-white);
   --ifm-hero-background-color: none;
+  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
   --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
 }
 
@@ -30,11 +31,6 @@
 .heroImage {
   max-width: 100%;
   flex: 2;
-}
-
-.heroTitle {
-  font-size: var(--uitk-text-display1-fontSize);
-  overflow-wrap: initial;
 }
 
 .cardContainer {
@@ -60,5 +56,12 @@
 
   .cardContainer {
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .heroTitle {
+    --ifm-heading-line-height: var(--uitk-text-h1-lineHeight);
+    --ifm-h1-font-size: var(--uitk-text-h1-fontSize);
   }
 }
