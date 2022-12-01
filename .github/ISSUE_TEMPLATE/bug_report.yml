@@ -39,12 +39,12 @@ body:
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Describe the steps or code someone needs in order to reproduce this bug. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+      description: Describe the steps or code someone needs to reproduce this bug. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Expected behaviour
+      label: Expected behavior
       description: What did you expect to happen?
     validations:
       required: true
@@ -70,6 +70,6 @@ body:
   - type: checkboxes
     attributes:
       label: Are you a JPMorgan Chase employee?
-      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
+      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are not a JPMC employee.
       options:
         - label: I am an employee of JPMorgan Chase
