@@ -47,6 +47,10 @@
   font-size: var(--uitk-text-fontSize);
 }
 
+.main-wrapper h2 {
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+}
+
 .navbar {
   --ifm-navbar-height: calc(var(--uitk-size-unit) * 5);
   --ifm-navbar-background-color: var(--uitk-color-gray-900);
