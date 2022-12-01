@@ -50,12 +50,6 @@ body:
       required: true
   - type: checkboxes
     attributes:
-      label: Are you a JPMorgan Chase employee?
-      description: We ask this incase we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
-      options:
-        - label: I am an employee of JPMorgan Chase
-  - type: checkboxes
-    attributes:
       label: Operating system
       description: On which operating system(s) have you observed the bug?
       options:
@@ -73,3 +67,9 @@ body:
         - label: Safari
         - label: Firefox
         - label: Edge
+  - type: checkboxes
+    attributes:
+      label: Are you a JPMorgan Chase employee?
+      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
+      options:
+        - label: I am an employee of JPMorgan Chase

@@ -45,6 +45,6 @@ body:
   - type: checkboxes
     attributes:
       label: Are you a JPMorgan Chase employee?
-      description: We ask this incase we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
+      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
       options:
         - label: I am an employee of JPMorgan Chase
