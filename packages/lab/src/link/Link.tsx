@@ -31,7 +31,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   );
   return (
     <Text
-      elementType="a"
+      as="a"
       className={cx(
         withBaseName(),
         {
