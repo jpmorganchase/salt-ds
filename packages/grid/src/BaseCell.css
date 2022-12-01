@@ -8,7 +8,7 @@
   border-style: solid;
   border-bottom-color: var(--grid-row-borderColor);
   border-right-color: transparent;
-  border-width: 0 1px 1px 0;
+  border-width: 0 0 1px 0;
 
   white-space: nowrap;
   position: relative;
@@ -19,14 +19,17 @@
 }
 
 .uitkGrid-columnSeparators .uitkGridBaseCell-regularSeparator {
+  border-right-width: 1px;
   border-right-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGrid-columnSeparators .uitkGridBaseCell-pinnedSeparator {
+  border-right-width: 1px;
   border-right-color: var(--grid-columnSeparator-color);
 }
 
 .uitkGrid-pinnedSeparators .uitkGridBaseCell-pinnedSeparator {
+  border-right-width: 1px;
   border-right-color: var(--grid-pinnedSeparator-color);
 }
 
