@@ -24,6 +24,8 @@
   --uitk-palette-accent-foreground: var(--uitk-color-white);
 
   /* Interact */
+  --uitk-palette-interact-background: transparent;
+  --uitk-palette-interact-background-disabled: transparent;
   --uitk-palette-interact-background-high: var(--uitk-color-gray-20);
   --uitk-palette-interact-background-disabled-high: var(--uitk-color-gray-20-fade-background);
   --uitk-palette-interact-background-low: transparent;
@@ -40,13 +42,9 @@
   --uitk-palette-interact-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-border-readonly: var(--uitk-color-gray-90-fade-border-readonly);
   --uitk-palette-interact-foreground: var(--uitk-color-gray-900);
-  --uitk-palette-interact-foreground-active: var(--uitk-color-white);
-  --uitk-palette-interact-foreground-blurSelected: var(--uitk-color-gray-900);
   --uitk-palette-interact-foreground-disabled: var(--uitk-color-gray-900-fade-foreground);
-  --uitk-palette-interact-foreground-hover: var(--uitk-color-gray-900);
   --uitk-palette-interact-foreground-partial: var(--uitk-color-blue-600);
   --uitk-palette-interact-foreground-partialDisabled: var(--uitk-color-blue-600-fade-foreground);
-  --uitk-palette-interact-foreground-activeDisabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-interact-outline: var(--uitk-color-blue-600);
 
   --uitk-palette-interact-cta-background: var(--uitk-color-blue-600);
@@ -158,6 +156,8 @@
   --uitk-palette-accent-foreground: var(--uitk-color-white);
 
   /* Interact */
+  --uitk-palette-interact-background: transparent;
+  --uitk-palette-interact-background-disabled: transparent;
   --uitk-palette-interact-background-high: var(--uitk-color-gray-700);
   --uitk-palette-interact-background-disabled-high: var(--uitk-color-gray-700-fade-background);
   --uitk-palette-interact-background-low: transparent;
@@ -174,13 +174,9 @@
   --uitk-palette-interact-border-hover: var(--uitk-color-blue-500);
   --uitk-palette-interact-border-readonly: var(--uitk-color-gray-90-fade-border-readonly);
   --uitk-palette-interact-foreground: var(--uitk-color-white);
-  --uitk-palette-interact-foreground-active: var(--uitk-color-white);
-  --uitk-palette-interact-foreground-blurSelected: var(--uitk-color-white);
   --uitk-palette-interact-foreground-disabled: var(--uitk-color-white-fade-foreground);
-  --uitk-palette-interact-foreground-hover: var(--uitk-color-white);
   --uitk-palette-interact-foreground-partial: var(--uitk-color-blue-400);
   --uitk-palette-interact-foreground-partialDisabled: var(--uitk-color-blue-400-fade-foreground);
-  --uitk-palette-interact-foreground-activeDisabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-interact-outline: var(--uitk-color-blue-100);
 
   --uitk-palette-interact-cta-background: var(--uitk-color-blue-600);

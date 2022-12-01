@@ -5,7 +5,7 @@
   --list-item-background-hover: var(--uitk-selectable-background-hover);
   --list-item-selected-focus-outlineColor: var(--uitk-accent-foreground); /* TODO: Check token with design */
 
-  --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
+  --list-item-text-color-active: var(--uitk-selectable-foreground);
   --list-item-background-active: var(--uitk-selectable-background-selected);
 
   /* Text, Font */
