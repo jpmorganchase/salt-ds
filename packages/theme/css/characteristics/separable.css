@@ -1,5 +1,6 @@
 .uitk-theme {
   --uitk-separable-borderStyle: solid;
+  --uitk-separable-borderWidth: 1px;
 
   --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-primary-separator);
   --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-secondary-separator);
