@@ -90,7 +90,7 @@ describe("Grid", () => {
       });
   });
 
-  it("Row virtualization", () => {
+  it.only("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
 
     cy.findByTestId("grid-scrollable")
@@ -98,7 +98,7 @@ describe("Grid", () => {
       .then(() => {
         const getRow = (n: number) =>
           cy
-            .findByTestId("grid-middle-part")
+            .get("[data-testid='grid-middle-part']")
             .find(`[aria-rowindex="${n + 1}"]`);
 
         // Rows 1 to 15 should be rendered, everything above and below - not
