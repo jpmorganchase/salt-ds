@@ -21,4 +21,7 @@ Replace 1px borders with size token
 - --uitk-target-borderWidth-hover
 - --uitk-target-borderWidth-disabled
 + --uitk-size-border: 1px
++ --uitk-measured-borderWidth-active: 2px
++ --uitk-measured-borderWidth-complete: 2px
++ --uitk-measured-borderWidth-incomplete: 2px
 ```
