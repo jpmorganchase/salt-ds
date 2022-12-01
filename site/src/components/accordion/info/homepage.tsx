@@ -1,4 +1,6 @@
-export const homePageInfo = [
+import { AccordionBaseProps } from "../Accordion";
+
+export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
   {
     id: "why-trust-us",
     summary: "Why trust us?",
