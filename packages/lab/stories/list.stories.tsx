@@ -933,13 +933,11 @@ export const EmptyList: Story<ListProps> = (props) => {
 //           border: "solid 1px #ccc",
 //         }}
 //       >
-//         <ComponentAnatomy>
 //           <List
 //             collapsibleHeaders
 //             source={groupByInitialLetter(usa_states, "groups-only")}
 //             style={{ maxHeight: 500 }}
 //           />
-//         </ComponentAnatomy>
 //       </div>
 //     </div>
 //   );
@@ -966,13 +964,11 @@ export const EmptyList: Story<ListProps> = (props) => {
 //           border: "solid 1px #ccc",
 //         }}
 //       >
-//         <ComponentAnatomy>
 //           <List
 //             collapsibleHeaders
 //             source={groupByInitialLetter(usa_states_cities, "groups-only")}
 //             style={{ maxHeight: 500 }}
 //           />
-//         </ComponentAnatomy>
 //       </div>
 //       <input type="text" />
 //     </div>

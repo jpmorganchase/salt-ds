@@ -84,7 +84,7 @@ const createThemedChildren = (
   }
 };
 
-type TargetElement = "root" | "child";
+type TargetElement = "root" | "scope" | "child";
 
 type ToolkitProviderBaseProps = {
   applyClassesTo?: TargetElement;
@@ -116,7 +116,7 @@ type ToolkitProviderProps =
   | ToolkitProviderThatClassesToRoot;
 
 export function ToolkitProvider({
-  applyClassesTo,
+  applyClassesTo: applyClassesToProp,
   children,
   density: densityProp,
   theme: themeProp,
@@ -133,6 +133,8 @@ export function ToolkitProvider({
     (inheritedThemes === "" ? DEFAULT_THEME_NAME : inheritedThemes);
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+
+  const applyClassesTo = applyClassesToProp ?? (isRoot ? "root" : "scope");
 
   const themeContextValue = useMemo(
     () => ({ theme: themeName, mode }),

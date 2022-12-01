@@ -12,10 +12,10 @@
 }
 
 .uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-cta-borderColor, var(--uitk-container-cta-borderColor));
+  --toggleButton-group-borderColor: var(--uitkToggleButton-group-cta-borderColor, var(--uitk-container-borderColor-high));
 }
 .uitkToggleButtonGroup.uitkToggleButtonGroup-primary {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-primary-borderColor, var(--uitk-container-primary-borderColor));
+  --toggleButton-group-borderColor: var(--uitkToggleButton-group-primary-borderColor, var(--uitk-container-borderColor-medium));
 }
 
 .uitkToggleButtonGroup {
@@ -29,7 +29,7 @@
 }
 
 .uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-secondary-borderColor, var(--uitk-container-secondary-borderColor));
+  --toggleButton-group-borderColor: var(--uitkToggleButton-group-secondary-borderColor, var(--uitk-container-borderColor-low));
 }
 
 .uitkToggleButtonGroup-horizontal .uitkToggleButton {

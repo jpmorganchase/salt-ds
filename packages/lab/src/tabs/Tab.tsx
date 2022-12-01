@@ -1,7 +1,7 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
 import {
-  DivButton,
-  DivButtonProps,
+  Button,
+  ButtonProps,
   makePrefixer,
   useForkRef,
 } from "@jpmorganchase/uitk-core";
@@ -28,8 +28,9 @@ const noop = () => undefined;
 const withBaseName = makePrefixer("uitkTab");
 
 //TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
-const CloseTabButton = (props: DivButtonProps) => (
-  <DivButton
+const CloseTabButton = (props: ButtonProps) => (
+  // FIXME: use polymorphic button
+  <Button
     {...props}
     aria-label="Close Tab (Delete or Backspace)"
     className={withBaseName("closeButton")}
@@ -45,7 +46,7 @@ const CloseTabButton = (props: DivButtonProps) => (
       aria-label="Close Tab (Delete or Backspace)"
       className={withBaseName("close-icon-small")}
     />
-  </DivButton>
+  </Button>
 );
 
 export const Tab = forwardRef(function Tab(
@@ -118,7 +119,7 @@ export const Tab = forwardRef(function Tab(
     }
   };
 
-  const handleCloseButtonClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleCloseButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onClose && onClose(index);
   };

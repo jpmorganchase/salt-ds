@@ -1,5 +1,4 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { DeckLayout, DeckItem } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
@@ -55,21 +54,5 @@ import { DeckLayout } from "@jpmorganchase/uitk-core";
 ### Props
 
 <ArgsTable of={DeckLayout} />
-
-## Anatomy
-
-<Canvas>
-  <ComponentAnatomy>
-    <DeckLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <DeckItem
-        style={{
-          border: "dashed 1px black",
-          padding: "1rem",
-          display: "block",
-        }}
-      />
-    </DeckLayout>
-  </ComponentAnatomy>
-</Canvas>
 
 <HelpAndSupport />

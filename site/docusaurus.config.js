@@ -7,8 +7,9 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Welcome to Salt",
-  tagline: `An open-source design language for financial services and other industries. Whether you’re an internal J.P. Morgan team, a fintech start-up or building a UI for millions of customers, Salt provides well-documented components—with comprehensive design templates and assets. 
-Salt is the next-generation version of the established JPM UI Toolkit, which has been used to build over 1,200 websites and applications to date. It has a track record of increasing efficiency, ensuring design consistency and making significant cost savings for product teams. Rest assured, you’re in good hands.`,
+  tagline: `Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessibility-focused components as well as comprehensive design templates, style libraries and assets.
+  Salt is the next-generation version of the established internal J.P. Morgan UI Toolkit design system, which has been used to build over 1,200 websites and applications to date.
+  In time, as a full-service solution, Salt will be the vehicle for digital delivery of a universal design language—with best-in-class business patterns, content and accessibility guides, tooling and adoption resources.`,
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -30,9 +31,8 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/jpmorganchase/uitk",
           routeBasePath: "/",
+          breadcrumbs: false,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -45,7 +45,6 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Salt Design System",
         logo: {
           alt: "UITK Site Logo",
           src: "img/logo.svg",
@@ -70,7 +69,7 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
             label: "Components",
           },
           {
-            to: "contributing/",
+            to: "support-and-contributions/",
             position: "left",
             label: "Support and contributions",
           },
@@ -86,28 +85,18 @@ Salt is the next-generation version of the established JPM UI Toolkit, which has
         style: "dark",
         links: [
           {
-            title: "Docs",
             items: [
               {
-                label: "Getting Started",
-                to: "getting-started/",
+                label: "Terms of use",
+                to: "https://www.jpmorgan.com/terms",
               },
               {
-                label: "Components",
-                to: "components/",
+                label: "Privacy policy",
+                to: "https://www.jpmorgan.com/privacy",
               },
               {
-                label: "Contributing",
-                to: "contributing/",
-              },
-            ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "GitHub",
-                href: "https://github.com/jpmorganchase/uitk",
+                label: "Contact us",
+                to: "support-and-contributions/",
               },
             ],
           },

@@ -18,7 +18,7 @@
 }
 
 .uitkFormLabel {
-  --formField-label-fontSize: var(--uitkFormField-label-fontSize, var(--uitk-text-caption-fontSize));
+  --formField-label-fontSize: var(--uitkFormField-label-fontSize, var(--uitk-text-label-fontSize));
   --formField-label-top: var(--formField-label-default-top);
   --formField-label-width: 100%;
 }
@@ -34,7 +34,7 @@
   display: block;
   font-size: var(--formField-label-fontSize);
   margin-bottom: var(--uitkFormField-label-marginBottom, var(--formField-label-marginBottom));
-  min-height: var(--uitkFormField-label-minHeight, var(--formField-label-minHeight, var(--uitk-text-caption-minHeight)));
+  min-height: var(--uitkFormField-label-minHeight, var(--formField-label-minHeight, var(--uitk-text-label-minHeight)));
   margin-top: var(--uitkFormField-label-marginTop, 0px);
   line-height: var(--uitkFormField-label-lineHeight, var(--uitk-text-base-lineHeight));
   overflow: hidden;
@@ -61,7 +61,7 @@
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
-  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-text-help-fontStyle));
+  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-editable-help-fontStyle));
   margin-left: 1ch;
 }
 
