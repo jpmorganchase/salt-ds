@@ -2,15 +2,21 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.uitkGridTopLeftPart-rightShadow {
+  box-shadow: 2px 0 4px 0 var(--grid-shadow-color);
   clip-path: inset(1px -10px 0 0);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridTopLeftPart {
-  border-right: solid 1px var(--grid-pinnedSeparator-color);
+.uitkGridTopLeftPart-bottomShadow {
+  box-shadow: 0 2px 4px 0 var(--grid-shadow-color);
+  clip-path: inset(1px 0 -10px 0);
 }
 
-.uitkGridTopLeftPart-raised {
-  box-shadow: 2px 0 4px 0 var(--grid-shadow-color);
+.uitkGridTopLeftPart-rightShadow.uitkGridTopLeftPart-bottomShadow {
+  box-shadow: 2px 2px 4px 0 var(--grid-shadow-color);
+  clip-path: inset(1px -10px -10px 0);
 }
 
 .uitkGridTopLeftPart table {

@@ -12,7 +12,7 @@ const withBaseName = makePrefixer("uitkGridRightPart");
 export interface RightPartProps<T> {
   rightRef: RefObject<HTMLDivElement>;
   onWheel: EventListener;
-  isRaised?: boolean;
+  leftShadow?: boolean;
   columns: GridColumnModel<T>[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
@@ -25,7 +25,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
     rightRef,
     onWheel,
     columns,
-    isRaised,
+    leftShadow,
     rows,
     hoverOverRowKey,
     setHoverOverRowKey,
@@ -42,7 +42,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
     <div
       ref={rightRef}
       className={cn(withBaseName(), {
-        [withBaseName("raised")]: isRaised,
+        [withBaseName("leftShadow")]: leftShadow,
       })}
       data-testid="grid-right-part"
     >

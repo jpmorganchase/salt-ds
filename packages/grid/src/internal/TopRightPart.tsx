@@ -13,11 +13,12 @@ export interface TopRightPartProps<T> {
   onWheel: EventListener;
   columns: GridColumnModel<T>[];
   columnGroups: GridColumnGroupModel[];
-  isRaised?: boolean;
+  leftShadow?: boolean;
+  bottomShadow?: boolean;
 }
 
 export function TopRightPart<T>(props: TopRightPartProps<T>) {
-  const { onWheel, columns, columnGroups, isRaised } = props;
+  const { onWheel, columns, columnGroups, leftShadow, bottomShadow } = props;
 
   const tableRef = useActiveOnWheel(onWheel);
 
@@ -28,7 +29,8 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
   return (
     <div
       className={cx(withBaseName(), {
-        [withBaseName("raised")]: isRaised,
+        [withBaseName("leftShadow")]: leftShadow,
+        [withBaseName("bottomShadow")]: bottomShadow,
       })}
       data-testid="grid-top-right-part"
     >
