@@ -40,13 +40,25 @@ const componentsArray = [
 ];
 
 // Render correctly
-describe("GIVEN a Text Component with elementType", () => {
+describe("GIVEN a Text Component", () => {
   componentsArray.forEach(({ component, name, tag }) => {
     it(`${name} component should return correct ${tag} element`, () => {
       const Component = component;
 
       cy.mount(<Component>{textExample}</Component>);
       cy.get(tag).should("have.class", "uitkText");
+    });
+  });
+});
+
+// Render correctly
+describe('GIVEN a Text Component with as="p"', () => {
+  componentsArray.forEach(({ component, name }) => {
+    it(`${name} component should return correct paragraph element`, () => {
+      const Component = component;
+
+      cy.mount(<Component as="p">{textExample}</Component>);
+      cy.get("p").should("have.class", "uitkText");
     });
   });
 });

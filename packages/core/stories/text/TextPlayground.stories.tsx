@@ -11,7 +11,7 @@ export default {
         "Amend text. We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home!",
       control: { type: "text" },
     },
-    elementType: {
+    as: {
       options: [
         "h1",
         "h2",

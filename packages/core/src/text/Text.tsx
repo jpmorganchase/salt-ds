@@ -42,7 +42,7 @@ export const Text: TextComponent = forwardRef(
     {
       children,
       className,
-      elementType,
+      as,
       maxRows,
       styleAs,
       variant = "primary",
@@ -50,7 +50,7 @@ export const Text: TextComponent = forwardRef(
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
   ): ReactElement<TextProps<T>> => {
-    const Component = elementType || "div";
+    const Component = as || "div";
 
     return (
       <Component

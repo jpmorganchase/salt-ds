@@ -3,10 +3,10 @@ import { Text, TextProps } from "./Text";
 
 export const Label = forwardRef<
   HTMLLabelElement,
-  Omit<TextProps<"label">, "elementType">
+  Omit<TextProps<"label">, "as">
 >(function Label({ children, ...rest }, ref) {
   return (
-    <Text elementType="label" ref={ref} {...rest}>
+    <Text as="label" ref={ref} {...rest}>
       {children}
     </Text>
   );
