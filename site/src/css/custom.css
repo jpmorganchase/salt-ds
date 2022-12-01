@@ -34,6 +34,9 @@
 
 .uitk-theme {
   --ifm-heading-color: var(--uitk-text-primary-foreground);
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
   --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
@@ -45,10 +48,6 @@
 .main-wrapper {
   background-color: var(--uitk-color-gray-900);
   font-size: var(--uitk-text-fontSize);
-}
-
-.main-wrapper h2 {
-  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
 }
 
 .navbar {
@@ -245,10 +244,6 @@ ul.table-of-contents li > ul li {
 }
 
 .docs-page-content h2 {
-  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
-  --ifm-heading-color: var(--uitk-text-primary-foreground);
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
