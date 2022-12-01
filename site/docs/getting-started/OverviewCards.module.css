@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: calc(var(--uitk-size-unit) * 3);
+  padding-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 @media screen and (max-width: 996px) {
