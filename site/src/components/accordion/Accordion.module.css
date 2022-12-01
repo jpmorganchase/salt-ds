@@ -4,6 +4,7 @@
   --uitkAccordion-summary-background: none;
   --uitkAccordion-summary-background-active: none;
   --uitkAccordion-summary-paddingLeft: 0;
+  --ifm-link-decoration: var(--uitk-text-link-textDecoration);
 
   height: calc(100% - var(--keyline-height));
 }

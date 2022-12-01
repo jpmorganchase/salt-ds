@@ -1,3 +1,4 @@
+import Link from "@docusaurus/Link";
 import { AccordionBaseProps } from "../Accordion";
 
 export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
@@ -64,8 +65,9 @@ export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
         </p>
         <p>
           We’d love to share this journey with you, with your input and
-          contributions informing and shaping our next steps. Get in touch to
-          share your feedback.
+          contributions informing and shaping our next steps.{" "}
+          <Link href="./support-and-contributions">Get in touch</Link> to share
+          your feedback.
         </p>
       </>
     ),
