@@ -4,7 +4,7 @@
 "@jpmorganchase/uitk-theme": minor
 ---
 
-Replace 1px borders with size token and remove `--uitk-size-bottomBorder` as component specific
+Replace 1px borders with size token and remove `--uitk-size-bottomBorder` as it's component specific.
 
 ```diff
 - --uitk-size-bottomBorder
