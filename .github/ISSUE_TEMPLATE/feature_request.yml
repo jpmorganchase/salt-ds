@@ -1,6 +1,5 @@
----
 name: Feature request 💡
-about: Suggest new functionality, components or ideas for this project
+description: Suggest new functionality, components or ideas for this project
 labels:
   - "type: enhancement 💡"
   - "status: awaiting triage"
