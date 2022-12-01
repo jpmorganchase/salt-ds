@@ -13,7 +13,7 @@ body:
     attributes:
       label: Area
       description: |
-        Which aspect(s) of the Salt design system does your proposed feature relate to?
+        Which aspect(s) of the Salt design system does your proposed feature relate to? Select all that apply.
       multiple: true
       options:
         - UI Components
