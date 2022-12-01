@@ -19,6 +19,7 @@
 .listItem {
   margin-bottom: var(--uitk-size-unit);
   display: flex;
+  align-items: baseline;
 }
 
 .listItem > svg {
