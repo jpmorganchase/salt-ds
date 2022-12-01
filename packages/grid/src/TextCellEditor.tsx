@@ -61,6 +61,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
     <td className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
         <input
+          data-testid="grid-cell-editor-input"
           ref={inputRef}
           autoFocus={true}
           value={editorText}
