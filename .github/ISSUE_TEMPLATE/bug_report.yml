@@ -1,13 +1,12 @@
 name: Bug report
 description: Report bugs in our code
-title: "[BUG]: "
 labels: "type: bug 🪲"
 body:
   - type: markdown
     attributes:
       value: |
-        > **Warning**
-        > This is a public repository, so **please do not include any company-internal code or details in your bug report**
+        ⚠️ **Warning**
+        This is a public repository, so **please do not include any company-internal code or details in your bug report**
   - type: dropdown
     attributes:
       label: Affects
@@ -34,27 +33,16 @@ body:
         Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them.
 
         If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
-  - type: checkboxes
-    attributes:
-      label: JPMC employee
-      description: Please let us know whether or not you are employee of JPMorgan Chase
-      options:
-        - label: I am an employee of JPMorgan Chase
-  - type: markdown
-    attributes:
-      value: |
-        > **Info**
-        > Where relevant, please consider attaching screenshots in the following sections
   - type: textarea
     attributes:
       label: Description
-      description: A concise description of what's going wrong
+      description: A concise description of what's going wrong. Where relevant, please include screenshots as well. When including error or log messages, please copy-paste them as text, not screenshots.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Describe the steps or code someone needs in order to reproduce this bug. Where relevant, please include screenshots as well.
+      description: Describe the steps or code someone needs in order to reproduce this bug. Where relevant, please include screenshots as well. When including error or log messages, please copy-paste them as text, not screenshots.
     validations:
       required: true
   - type: textarea
@@ -63,3 +51,26 @@ body:
       description: What did you expect to happen?
     validations:
       required: true
+  - type: checkboxes
+    attributes:
+      label: Are you a JPMorgan Chase employee?
+      options:
+        - label: I am an employee of JPMorgan Chase
+  - type: checkboxes
+    attributes:
+      label: On which operating system(s) have you observed the bug?
+      options:
+        - label: macOS
+        - label: Windows
+        - label: Linux
+        - label: iOS
+        - label: Android
+  - type: checkboxes
+    attributes:
+      label: Browser
+      description: In which browser(s) have you observed the bug?
+      options:
+        - label: Chrome
+        - label: Safari
+        - label: Firefox
+        - label: Edge
