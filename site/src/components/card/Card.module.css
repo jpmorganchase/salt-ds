@@ -66,6 +66,10 @@
   text-decoration: underline;
 }
 
+.cardFooter:hover {
+  color: var(--uitk-text-link-foreground-hover);
+}
+
 .keyline {
   height: 3px;
 }
