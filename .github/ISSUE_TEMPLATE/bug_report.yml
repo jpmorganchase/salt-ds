@@ -13,9 +13,7 @@ body:
     attributes:
       label: Affects
       description: |
-        Which package(s) did you observe this bug in? Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them.
-
-        If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
+        Which package(s) did you observe this bug in? Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them. If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
       multiple: true
       options:
         - "Core v0.8.0 (@jpmorganchase/uitk-core)"
