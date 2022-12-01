@@ -23,6 +23,10 @@
 }
 
 .accordion {
+  --uitkAccordion-section-borderColor: rgba(255, 255, 255, 0.1);
+}
+
+.accordion {
   height: calc(100% - var(--keyline-height));
 }
 
@@ -31,12 +35,10 @@
 }
 
 .accordion .summary {
-  background-color: transparent;
-  padding-left: 0;
-}
-
-.accordion .summary:hover {
-  background: none;
+  --accordion-summary-background: none;
+  --accordion-summary-background-active: none;
+  --accordion-summary-background-hover: none;
+  --accordion-summary-paddingLeft: 0;
 }
 
 .accordion .summary h2 {
@@ -55,7 +57,7 @@
 }
 
 .animate {
-  animation: swing-in-left-bck 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 /* Override Salt accordion styles */
@@ -67,6 +69,10 @@
 
 .summary :global(.uitkAccordionSummary-icon:hover) {
   background: var(--accordion-summary-background-hover);
+}
+
+.summary :global(.uitkIcon) {
+  --uitk-size-icon-base: calc(var(--uitk-size-unit) * 2);
 }
 
 .accordion :global(.uitkAccordionDetails .uitkAccordionDetails-content) {

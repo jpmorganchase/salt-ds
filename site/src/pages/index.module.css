@@ -32,14 +32,14 @@
 }
 
 .heroTitle {
-  font-size: 60px;
+  font-size: var(--uitk-text-display1-fontSize);
 }
 
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
   gap: calc(var(--uitk-size-unit) * 4);
-  padding: calc(var(--uitk-size-unit) * 6) calc(var(--uitk-size-unit) * 4);
+  padding: calc(var(--uitk-size-unit) * 5) calc(var(--uitk-size-unit) * 4);
 }
 
 @media screen and (max-width: 996px) {
