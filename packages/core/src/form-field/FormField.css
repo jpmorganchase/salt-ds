@@ -14,7 +14,7 @@
 /* Style applied to the root element */
 .uitkFormField {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor);
-  --formField-activationIndicator-size: var(--uitk-editable-borderWidth);
+  --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle);
   --formField-background: var(--uitk-editable-background-medium);
   --formField-focused-outlineColor: var(--uitk-focused-outlineColor);
@@ -45,7 +45,7 @@
 /* Class applied to the root element on hover */
 .uitkFormField:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-hover);
-  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-hover);
+  --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-hover);
 
   --uitkInput-cursor: var(--uitk-editable-cursor-hover);
@@ -92,7 +92,7 @@
 .uitkFormField-disabled {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-disabled);
   --formField-activationIndicator-opacity: var(--uitk-palette-opacity-foreground);
-  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-disabled);
+  --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-disabled);
   --formField-helperText-opacity: var(--uitk-palette-opacity-foreground);
 
@@ -104,7 +104,7 @@
 /* Class applied to the root element on hover if `disabled={true}` */
 .uitkFormField.uitkFormField-disabled:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-disabled);
-  --formField-activationIndicator-size: var(--uitk-editable-borderWidth-disabled);
+  --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-disabled);
 
   --uitkInput-cursor: var(--uitk-editable-cursor-disabled);

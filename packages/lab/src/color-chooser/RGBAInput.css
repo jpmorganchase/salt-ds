@@ -1,6 +1,6 @@
 .uitkColorChooser-rgbaInput {
   width: var(--uitk-size-unit);
-  border-bottom: var(--uitk-editable-borderWidth) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
   padding-top: var(--uitk-size-unit);
 }
 
@@ -8,7 +8,7 @@
   min-width: 40px !important;
   width: 40px !important;
   min-height: unset !important;
-  border-bottom: var(--uitk-editable-borderWidth) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
 }
 
 .uitkColorChooser-rgbaText {

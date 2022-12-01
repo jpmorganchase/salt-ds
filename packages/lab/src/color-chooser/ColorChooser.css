@@ -53,7 +53,7 @@
 }
 
 .uitkColorChooser-defaultButton {
-  border-bottom: var(--uitk-editable-borderWidth) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
 }
 
 .uitkColorChooser-overlayContent {

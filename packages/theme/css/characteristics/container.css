@@ -1,6 +1,5 @@
 .uitk-theme {
   --uitk-container-borderStyle: solid;
-  --uitk-container-borderWidth: 1px;
 
   --uitk-container-background-low: var(--uitk-palette-neutral-background-low);
   --uitk-container-background-medium: var(--uitk-palette-neutral-background-medium);

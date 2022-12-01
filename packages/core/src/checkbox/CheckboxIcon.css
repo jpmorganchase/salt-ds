@@ -42,7 +42,7 @@
 .uitkCheckbox:hover .uitkCheckboxIcon,
 .uitkCheckboxIcon:hover {
   stroke: var(--uitkCheckbox-icon-stroke, var(--uitk-selectable-borderColor));
-  stroke-width: var(--uitkCheckbox-icon-strokeWidth-hover, var(--uitk-selectable-borderWidth-hover));
+  stroke-width: var(--uitkCheckbox-icon-strokeWidth-hover, var(--uitk-size-border));
 }
 
 /* Styles applied if `disabled={true}` */

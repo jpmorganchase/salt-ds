@@ -1,7 +1,6 @@
 .uitk-theme {
   --uitk-separable-borderStyle: solid;
-  --uitk-separable-borderWidth: 1px;
-
+  
   --uitk-separable-primary-background: var(--uitk-palette-interact-primary-background);
   --uitk-separable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
   --uitk-separable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
