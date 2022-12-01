@@ -7,8 +7,8 @@
 }
 
 .uitk-density-low {
-  --grid-row-height-default-default: 49px;
-  --grid-padding-default-default: 12px;
+  --grid-row-height-default: 49px;
+  --grid-padding-default: 12px;
   --grid-fontSize-default: 14px;
   --grid-header-fontSize-default: 12px;
   --grid-separatorGap-default: 16px;
