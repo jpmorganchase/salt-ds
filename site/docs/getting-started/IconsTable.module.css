@@ -1,5 +1,5 @@
 .colored {
-  color: var(--uitk-color-purple-500);
+  color: var(--site-tertiary-accent-purple);
 }
 
 .iconsTable > tbody tr td:not(:first-child) {

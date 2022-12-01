@@ -21,25 +21,25 @@ const IconsTable = () => (
         </td>
         <td>
           <ToolkitProvider density="high">
-            <PrintIcon size={1} />
+            <PrintIcon />
           </ToolkitProvider>
           <p className={styles.colored}>12px</p>
         </td>
         <td>
           <ToolkitProvider density="medium">
-            <PrintIcon size={1} />
+            <PrintIcon />
           </ToolkitProvider>
           <p className={styles.colored}>12px</p>
         </td>
         <td>
           <ToolkitProvider density="low">
-            <PrintIcon size={1} />
+            <PrintIcon />
           </ToolkitProvider>
           <p className={styles.colored}>14px</p>
         </td>
         <td>
           <ToolkitProvider density="touch">
-            <PrintIcon size={1} />
+            <PrintIcon />
           </ToolkitProvider>
           <p className={styles.colored}>16px</p>
         </td>
