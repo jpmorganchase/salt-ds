@@ -14,9 +14,7 @@ const headerOn = {
 
 const [headerName, , headerCapital] = dataGridExampleColumns;
 
-const CheckboxSelectionExample = function CheckboxSelectionExample(
-  props: AgGridReactProps
-) {
+const CheckboxSelection = (props: AgGridReactProps) => {
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -27,16 +25,14 @@ const CheckboxSelectionExample = function CheckboxSelectionExample(
 
   return (
     <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact {...agGridProps} {...props} />
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        rowData={dataGridExampleData}
+        columnDefs={[headerOn, headerName, headerCapital]}
+      />
     </div>
   );
 };
 
-CheckboxSelectionExample.defaultProps = {
-  columnDefs: [headerOn, headerName, headerCapital],
-  rowData: dataGridExampleData,
-};
-
-export default function CheckboxSelection(props: AgGridReactProps) {
-  return <CheckboxSelectionExample {...props} />;
-}
+export default CheckboxSelection;

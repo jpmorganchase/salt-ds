@@ -7,9 +7,7 @@ import { Card } from "@jpmorganchase/uitk-core";
 import { Spinner } from "@jpmorganchase/uitk-lab";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const LoadingOverlayExample = function LoadingOverlayExample(
-  props: AgGridReactProps
-) {
+const LoadingOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
@@ -73,17 +71,15 @@ const LoadingOverlayExample = function LoadingOverlayExample(
         ref={gridRef}
         tabIndex={-1}
       >
-        <AgGridReact {...agGridProps} {...props} />
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridExampleColumns}
+          rowData={dataGridExampleData}
+        />
       </div>
     </div>
   );
 };
 
-LoadingOverlayExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function LoadingOverlay(props: AgGridReactProps) {
-  return <LoadingOverlayExample {...props} />;
-}
+export default LoadingOverlay;

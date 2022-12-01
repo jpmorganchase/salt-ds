@@ -10,9 +10,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import "../../uitk-ag-theme.css";
 
-const AddRemoveRowsExample = function AddRemoveRowsExample(
-  props: AgGridReactProps
-) {
+export const AddRemoveRows = (props: AgGridReactProps) => {
   const { containerProps, agGridProps, api, columnApi } = useAgGridHelpers();
 
   const [columnDefs] = useState<ColDef[]>(dataGridExampleColumns);
@@ -78,6 +76,7 @@ const AddRemoveRowsExample = function AddRemoveRowsExample(
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           onSelectionChanged={onSelectionChanged}
+          rowData={dataGridExampleData}
           {...agGridProps}
           {...props}
         />
@@ -102,11 +101,3 @@ const AddRemoveRowsExample = function AddRemoveRowsExample(
     </div>
   );
 };
-
-AddRemoveRowsExample.defaultProps = {
-  rowData: dataGridExampleData,
-};
-
-export function AddRemoveRows(props: AgGridReactProps) {
-  return <AddRemoveRowsExample {...props} />;
-}

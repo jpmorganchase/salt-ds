@@ -8,9 +8,7 @@ import { GetContextMenuItemsParams } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const ContextMenuExample = function ContextMenuExample(
-  props: AgGridReactProps
-) {
+const ContextMenu = (props: AgGridReactProps) => {
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
@@ -152,6 +150,8 @@ const ContextMenuExample = function ContextMenuExample(
       <AgGridReact
         allowContextMenuWithControlKey
         getContextMenuItems={getContextMenuItems}
+        columnDefs={dataGridExampleColumns}
+        rowData={dataGridExampleData}
         {...agGridProps}
         {...props}
       />
@@ -159,11 +159,4 @@ const ContextMenuExample = function ContextMenuExample(
   );
 };
 
-ContextMenuExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function ContextMenu(props: AgGridReactProps) {
-  return <ContextMenuExample {...props} />;
-}
+export default ContextMenu;

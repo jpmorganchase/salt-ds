@@ -17,9 +17,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 LicenseManager.setLicenseKey("your license key");
 
-const RowGroupingExample = function RowGroupingExample(
-  props: AgGridReactProps
-) {
+const RowGrouping = (props: AgGridReactProps) => {
   const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers();
 
   useEffect(() => {
@@ -40,6 +38,4 @@ const RowGroupingExample = function RowGroupingExample(
   );
 };
 
-export default function RowGrouping(props: AgGridReactProps) {
-  return <RowGroupingExample {...props} />;
-}
+export default RowGrouping;

@@ -5,9 +5,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const AggregateValuesExample = function AggregateValuesExample(
-  props: AgGridReactProps
-) {
+export const AggregateValues = (props: AgGridReactProps) => {
   const [columnDefs] = useState<ColDef[]>([
     {
       headerName: "Name",
@@ -87,11 +85,3 @@ const AggregateValuesExample = function AggregateValuesExample(
     </div>
   );
 };
-
-AggregateValuesExample.defaultProps = {
-  rowData: dataGridExampleData,
-};
-
-export function AggregateValues(props: AgGridReactProps) {
-  return <AggregateValuesExample {...props} />;
-}
