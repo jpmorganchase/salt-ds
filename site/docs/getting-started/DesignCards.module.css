@@ -29,6 +29,10 @@
   padding-top: var(--uitk-size-unit);
 }
 
+.soloImg {
+  max-width: 560px;
+}
+
 @media screen and (max-width: 996px) {
   .row {
     flex-direction: column;

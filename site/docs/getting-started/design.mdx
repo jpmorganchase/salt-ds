@@ -3,8 +3,9 @@ sidebar_label: Design
 hide_table_of_contents: true
 ---
 
-import DesignCards from "./DesignCards";
 import Content from "../../src/components/content/Content.tsx";
+import DesignCards, { SoloImgCard } from "./DesignCards";
+import IconsTable from "./IconsTable";
 
 # Designing with Salt
 
@@ -43,7 +44,7 @@ To start using a library:
 
 #### Available Salt libraries
 
-<table>
+<table style={{ tableLayout: "fixed" }}>
   <thead>
     <tr>
       <th>Assets</th>
@@ -69,7 +70,7 @@ To start using a library:
     </tr>
   </tbody>
 </table>
-<table>
+<table style={{ tableLayout: "fixed" }}>
   <thead>
     <tr>
       <th>Styles</th>
@@ -131,6 +132,23 @@ Our components come complete with icons embedded within them. However, you can a
 
 All components come complete with our icon component embedded within them. However, you can also choose an appropriate icon for your specific use case directly from the icon library—by swapping the instance using the variants panel on the right-hand side.
 
-TODO : IMAGE HERE
+<SoloImgCard />
+
+#### Understanding our icon sizes
+
+We provide two types of icon: default and solid.
+
+Our base size for HD/default is 10px. However, for accessibility and visual design reasons, we don’t recommend icon sizes that are smaller then 12px. Therefore, although the default HD icons start at 12px, the 2X size is 20px, 4X is 40px, etc.
+
+The default icon set starts from 12px for both high and medium density, 14px for low density and 16px for touch density. If necessary, you can adjust your icon size according to your UI designs in multiples of 2X, 3X, 4X, etc.
+
+<IconsTable />
+
+:::info Need support?
+
+For installation help when manually installing Figma, visit the support page tear-out on the Figma website.
+If you have any questions about Salt’s Figma libraries, please get in touch with our design team.
+
+:::
 
 </Content>

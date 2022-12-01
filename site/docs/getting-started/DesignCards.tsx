@@ -2,6 +2,7 @@ import Assets1 from "@site/static/img/design-getting-started/assets1.png";
 import Assets2 from "@site/static/img/design-getting-started/assets2.png";
 import Assets3 from "@site/static/img/design-getting-started/assets3.png";
 import Assets4 from "@site/static/img/design-getting-started/assets4.png";
+import SelectIconImg from "@site/static/img/design-getting-started/SelectIconImg.png";
 
 import styles from "./DesignCards.module.css";
 
@@ -50,19 +51,25 @@ const DesignCards = () => {
     <>
       <div className={styles.row}>
         {cardInfo.slice(0, 2).map((cardInfo) => (
-          <Row {...cardInfo} />
+          <Card {...cardInfo} key={cardInfo.img} />
         ))}
       </div>
       <div className={styles.row}>
         {cardInfo.slice(2, 4).map((cardInfo) => (
-          <Row {...cardInfo} />
+          <Card {...cardInfo} key={cardInfo.img} />
         ))}
       </div>
     </>
   );
 };
 
-const Row = ({ img, content }) => (
+export const SoloImgCard = () => (
+  <div className={styles.soloImg}>
+    <Card img={SelectIconImg} />
+  </div>
+);
+
+const Card = ({ img, content }: { img: string; content?: JSX.Element }) => (
   <div className={styles.card}>
     <div className={styles.imgContainer}>
       <img src={img} />
