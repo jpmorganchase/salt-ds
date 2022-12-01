@@ -48,15 +48,15 @@ export const TargetBlankNoIcon: ComponentStory<typeof Link> = () => {
   );
 };
 
-export const WithTooltip: ComponentStory<typeof Link> = () => {
-  return (
-    <div style={{ width: 50 }}>
-      <Link
-        // truncate={true} maxRows={1}
-        href="https://www.google.com"
-      >
-        Link to URL with tooltip
-      </Link>
-    </div>
-  );
-};
+// export const WithTooltip: ComponentStory<typeof Link> = () => {
+//   return (
+//     <div style={{ width: 50 }}>
+//       <Link
+//         // truncate={true} maxRows={1}
+//         href="https://www.google.com"
+//       >
+//         Link to URL with tooltip
+//       </Link>
+//     </div>
+//   );
+// };

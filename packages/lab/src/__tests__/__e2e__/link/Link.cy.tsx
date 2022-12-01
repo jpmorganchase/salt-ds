@@ -36,7 +36,10 @@ describe("GIVEN a link", () => {
     it("THEN it should NOT truncate text and NOT show tooltip on focus/hover", () => {
       cy.mount(
         <div style={{ width: 150 }}>
-          <Link truncate href="#root">
+          <Link
+            // truncate
+            href="#root"
+          >
             Far far away, behind the word mountains, far from the countries
             Vokalia and Consonantia, there live the blind texts.
           </Link>
@@ -59,7 +62,11 @@ describe("GIVEN a link", () => {
     it("and maxRows=1, THEN it should truncate text and show tooltip on focus/hover", () => {
       cy.mount(
         <div style={{ width: 150 }}>
-          <Link truncate maxRows={1} href="#root">
+          <Link
+            // truncate
+            maxRows={1}
+            href="#root"
+          >
             Far far away, behind the word mountains, far from the countries
             Vokalia and Consonantia, there live the blind texts.
           </Link>
@@ -82,7 +89,10 @@ describe("GIVEN a link", () => {
     it("and parent height = 20px, THEN it should truncate text and show tooltip on focus/hover", () => {
       cy.mount(
         <div style={{ width: 150, height: 20 }}>
-          <Link truncate href="#root">
+          <Link
+            // truncate
+            href="#root"
+          >
             Far far away, behind the word mountains, far from the countries
             Vokalia and Consonantia, there live the blind texts.
           </Link>
@@ -106,7 +116,10 @@ describe("GIVEN a link", () => {
   xdescribe("WHEN passed 'truncate' prop", () => {
     it("THEN it should NOT truncate text and NOT show tooltip on focus/hover", () => {
       cy.mount(
-        <Link truncate href="#root">
+        <Link
+          // truncate
+          href="#root"
+        >
           Far far away, behind the word mountains, far from the countries
           Vokalia and Consonantia, there live the blind texts.
         </Link>
@@ -127,7 +140,11 @@ describe("GIVEN a link", () => {
 
     it("and maxRows=1, THEN it should NOT truncate text and NOT show tooltip on focus/hover", () => {
       cy.mount(
-        <Link truncate maxRows={1} href="#root">
+        <Link
+          // truncate
+          maxRows={1}
+          href="#root"
+        >
           Far far away, behind the word mountains, far from the countries
           Vokalia and Consonantia, there live the blind texts.
         </Link>
