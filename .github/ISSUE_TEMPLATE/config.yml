@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Salt feedback forum
+    url: https://github.com/jpmorganchase/uitk/discussions/categories/feedback
+    about: To provide feedback on any aspect of the Salt design system please use this discussion forum
