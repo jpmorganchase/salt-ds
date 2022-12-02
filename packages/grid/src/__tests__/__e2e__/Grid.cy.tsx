@@ -104,8 +104,7 @@ describe("Grid", () => {
         // Rows 1 to 15 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
-        getRow(16).should("exist");
-        getRow(17).should("not.exist");
+        getRow(16).should("not.exist");
       });
   });
 
