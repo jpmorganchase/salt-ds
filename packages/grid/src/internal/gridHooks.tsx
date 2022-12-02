@@ -187,7 +187,7 @@ export function useVisibleRowRange(
     const start = Math.floor(scrollTop / rowHeight);
     let end = Math.max(
       start,
-      Math.floor((scrollTop + clientMidHeight) / rowHeight)
+      Math.ceil((scrollTop + clientMidHeight) / rowHeight)
     );
     if (end > rowCount) {
       end = rowCount;

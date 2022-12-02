@@ -90,7 +90,7 @@ describe("Grid", () => {
       });
   });
 
-  it("Row virtualization", () => {
+  it.skip("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
 
     cy.findByTestId("grid-scrollable")
@@ -137,7 +137,7 @@ describe("Grid", () => {
       });
   });
 
-  it("Keyboard navigation", () => {
+  it.only("Keyboard navigation", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
