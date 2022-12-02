@@ -311,7 +311,7 @@ ul.table-of-contents li > ul li {
 }
 
 .footer__items > *:not(:last-child):after {
-  width: var(--uitk-separable-borderWidth);
+  width: var(--uitk-size-border);
   content: "";
   background-color: var(--uitk-text-secondary-foreground);
   height: var(--footer-items-separator-height);
