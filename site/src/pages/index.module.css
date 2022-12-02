@@ -15,6 +15,7 @@
   --ifm-hero-text-color: var(--uitk-color-white);
   --ifm-hero-background-color: none;
   --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
   --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
 }
 
