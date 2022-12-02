@@ -1,15 +1,8 @@
 .uitk-theme {
   --uitk-separable-borderStyle: solid;
+  --uitk-separable-borderWidth: 1px;
 
-  --uitk-separable-primary-background: var(--uitk-palette-interact-primary-background);
-  --uitk-separable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
-  --uitk-separable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
-  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-high);
-  --uitk-separable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
-  --uitk-separable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
-  --uitk-separable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
-
-  --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-border-medium);
-
-  --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-border-low);
+  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-primary-separator);
+  --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-secondary-separator);
+  --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-tertiary-separator);
 }

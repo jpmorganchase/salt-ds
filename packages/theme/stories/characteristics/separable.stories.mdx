@@ -1,6 +1,7 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
+import { NumberBlock } from "docs/components/NumberBlock";
 import {
   LineBlock,
   LineBlockCell,
@@ -37,12 +38,10 @@ Connected to Container
 <Canvas>
   <Story name="Primary">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-separable-primary-background" />
-      <ColorBlock colorVar="--uitk-separable-primary-background-hover" />
-      <ColorBlock colorVar="--uitk-separable-primary-background-active" />
-      <ColorBlock colorVar="--uitk-separable-primary-foreground" />
-      <ColorBlock colorVar="--uitk-separable-primary-foreground-hover" />
-      <ColorBlock colorVar="--uitk-separable-primary-foreground-active" />
+      <NumberBlock
+        number="0.35"
+        cssVariable="--uitk-separable-primary-borderOpacity"
+      />
       <ColorBlock colorVar="--uitk-separable-primary-borderColor" />
     </DocGrid>
   </Story>
@@ -53,6 +52,10 @@ Connected to Container
 <Canvas>
   <Story name="Secondary">
     <DocGrid>
+      <NumberBlock
+        number="0.25"
+        cssVariable="--uitk-separable-secondary-borderOpacity"
+      />
       <ColorBlock colorVar="--uitk-separable-secondary-borderColor" />
     </DocGrid>
   </Story>
@@ -63,6 +66,10 @@ Connected to Container
 <Canvas>
   <Story name="Tertiary">
     <DocGrid>
+      <NumberBlock
+        number="0.15"
+        cssVariable="--uitk-separable-tertiary-borderOpacity"
+      />
       <ColorBlock colorVar="--uitk-separable-tertiary-borderColor" />
     </DocGrid>
   </Story>
