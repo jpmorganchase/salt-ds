@@ -1,15 +1,154 @@
 ---
 sidebar_label: Develop
+hide_table_of_contents: true
 ---
 
-# Getting Started for developers
+import Link from "@docusaurus/Link";
+import TOCInline from "@theme/TOCInline";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import Accordion from "../../src/components/accordion/Accordion";
+import { fontFileTable } from "../../src/components/accordion/info/develop";
+import Content from "../../src/components/content/Content.tsx";
 
-<div className='docs-page-content'>
+# Developing with Salt
 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<Content toc={toc}>
 
-## Lorem ipsum
+Learn how to use Salt's UI components in your React web applications.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## What you’ll need
 
-</div>
+To start developing with Salt, you should:
+
+- Be familiar with React and web development fundamentals (such as HTML, CSS and JavaScript).
+- Have Node.js (version 16 or later) installed on your system.
+- Create a React (version 16 or later) web application project. For new projects, use create-react-app or a similar tool.
+
+## The step-by-step process
+
+### 1. Install the Salt packages
+
+There are three dependencies that you need to add to your project:
+
+- `@jpmorganchase/uitk-core` contains production-ready UI components.
+- `@jpmorganchase/uitk-theme` contains CSS files that apply Salt's default theme.
+- `@jpmorganchase/uitk-icons` contains SVG-based icons.
+
+Use this npm command to install all three dependencies in one go:
+
+```
+npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
+```
+
+If you prefer not to use npm, you can install the packages using yarn or other package managers.
+
+### 2. Add required web fonts
+
+Salt’s default theme requires the Open Sans and PT Mono web fonts. Use one of the following methods to integrate them into your application.
+
+#### Use Google Fonts
+
+To load the fonts directly from Google Fonts, add the following into your application’s index.html file:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2 family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap"
+  rel="stylesheet"
+/>
+```
+
+For further details and alternative methods, refer to the instructions on Google Fonts tear-out.
+
+#### Use FontSource
+
+You install FontSource’s npm packages and then import their CSS into your application. This will include the necessary web font files into your build so that you can self-host them.
+
+First, install the required NPM packages:
+
+```
+npm install @fontsource/open-sans @fontsource/pt-mono
+```
+
+Next, import the CSS for the weights and styles that Salt requires. In a typical React project setup, the best place to put these imports is in your src/index.js file:
+
+```tsx
+import "@fontsource/open-sans/300.css";
+import "@fontsource/open-sans/300-italic.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/400-italic.css";
+import "@fontsource/open-sans/500.css";
+import "@fontsource/open-sans/500-italic.css";
+import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/600-italic.css";
+import "@fontsource/open-sans/700.css";
+import "@fontsource/open-sans/700-italic.css";
+import "@fontsource/open-sans/800.css";
+import "@fontsource/open-sans/800-italic.css";
+import "@fontsource/pt-mono";
+```
+
+#### Other
+
+If you prefer not to use Google Fonts or FontSource, you can use any other approach to incorporate the required web font files. Make sure the CSS @font-face declarations associate the following combinations of font-family, font-weight and font-style with the corresponding web font files:
+
+<Accordion accordionInfo={fontFileTable} />
+
+### 3. Do the initial setup
+
+To integrate Salt into your project, import the CSS theme and ToolkitProvider component—and then wrap your application in it.
+
+For example, in a typical React project, you can do this in your src/index.js as follows:
+
+```tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+// Import <ToolkitProvider>
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+
+// Import theme CSS
+import "@jpmorganchase/uitk-theme/index.css";
+
+// Wrap your application in a <ToolkitProvider>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <ToolkitProvider>
+    <App />
+  </ToolkitProvider>
+);
+```
+
+### 4. Import components
+
+Congratulations, you're now ready to use our UI components. You can now import them from the `@jpmorganchase/uitk-core` package and use them in your JSX code.
+
+For example:
+
+```tsx
+import { Button } from "@jpmorganchase/uitk-core";
+
+function App() {
+  return <Button>Click me</Button>;
+}
+
+export default App;
+```
+
+Head over to our available components to view their respective APIs.
+
+### 5. (Optional) Play with labs components
+
+Our `@jpmorganchase/uitk-labs` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
+
+Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using labs components in production applications. However, early adopters are welcome to use and experiment with them.
+
+:::info Need support?
+
+We're keen to hear your feedback, bug reports and feature requests, so please don't hesitate to <Link to="/support-and-contributions">raise new issues or comment on existing ones</Link>.
+
+:::
+
+</Content>

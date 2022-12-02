@@ -12,7 +12,7 @@ const cards: CardProps[] = [
       "Find out how to access Salt’s comprehensive libraries in Figma, add components and apply styling to your designs.",
     url: "/getting-started/design",
     linkText: "Start designing",
-    keylineColor: "var(--uitk-color-purple-500)",
+    keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
     icon: <DevelopIcon />,
@@ -21,7 +21,7 @@ const cards: CardProps[] = [
       "We walk you through the process of installing the Salt dependencies into your React project and importing components.",
     url: "/getting-started/develop",
     linkText: "Start developing",
-    keylineColor: "var(--uitk-color-orange-600)",
+    keylineColor: "var(--site-tertiary-accent-orange)",
   },
 ];
 

@@ -9,7 +9,7 @@
 .uitkTooltip {
   background: var(--tooltip-background);
   border-color: var(--uitkTooltip-borderColor, var(--tooltip-status-borderColor));
-  border-width: var(--uitkTooltip-borderWidth, var(--uitk-container-borderWidth));
+  border-width: var(--uitkTooltip-borderWidth, var(--uitk-size-border));
   border-style: var(--uitkTooltip-borderStyle, var(--uitk-container-borderStyle));
   box-shadow: var(--uitkTooltip-shadow, var(--uitk-overlayable-shadow-popout));
   color: var(--uitkTooltip-text-color, var(--uitk-text-primary-foreground));

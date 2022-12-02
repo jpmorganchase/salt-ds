@@ -9,11 +9,6 @@
   --uitk-selectable-borderStyle-selected: solid;
   --uitk-selectable-borderStyle-blurSelected: solid;
 
-  --uitk-selectable-borderWidth: 1px;
-  --uitk-selectable-borderWidth-hover: 1px;
-  --uitk-selectable-borderWidth-selected: 1px;
-  --uitk-selectable-borderWidth-blurSelected: 1px;
-
   --uitk-selectable-borderColor: var(--uitk-palette-interact-border);
   --uitk-selectable-borderColor-hover: var(--uitk-palette-interact-border-hover);
   --uitk-selectable-borderColor-selected: var(--uitk-palette-interact-border-active);

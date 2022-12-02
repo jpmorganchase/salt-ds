@@ -81,7 +81,7 @@
   color: var(--accordion-summary-text-color);
   font-size: var(--uitkAccordion-summary-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkAccordion-summary-fontFamily, var(--uitk-text-fontFamily));
-  padding-left: var(--accordion-summary-paddingLeft);
+  padding-left: var(--uitkAccordion-summary-paddingLeft, var(--accordion-summary-paddingLeft));
   position: relative;
 }
 
