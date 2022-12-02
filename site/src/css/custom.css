@@ -8,6 +8,7 @@
   --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
+  --image-border: #c5c9d0;
 }
 
 ::selection {
