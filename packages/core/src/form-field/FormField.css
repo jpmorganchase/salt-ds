@@ -211,7 +211,7 @@
 /* Class applied to the root element if `readOnly={true}"` on hover */
 .uitkFormField.uitkFormField-readOnly:hover {
   --formField-activationIndicator-color: var(--uitk-editable-borderColor-readonly);
-  --formField-activationIndicator-size: var(---uitk-size-border);
+  --formField-activationIndicator-size: var(--uitk-size-border);
   --formField-activationIndicator-style: var(--uitk-editable-borderStyle-readonly);
 
   --uitkInput-cursor: var(--uitk-editable-cursor-readonly);
