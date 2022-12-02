@@ -56,3 +56,9 @@
     padding: calc(var(--uitk-size-unit) * 2);
   }
 }
+
+@media screen and (max-width: 996px) {
+  .accordionWrapper {
+    padding: var(--uitk-size-unit);
+  }
+}
