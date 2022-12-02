@@ -23,8 +23,8 @@
 
 .uitkTreeNode-item[aria-selected="true"] {
   background: var(--uitk-selectable-background-selected);
-  color: var(--uitk-selectable-foreground-selected);
-  --uitkIcon-color: var(--uitk-selectable-foreground-selected);
+  color: var(--uitk-selectable-foreground);
+  --uitkIcon-color: var(--uitk-selectable-foreground);
 }
 
 .uitkTreeNode[aria-expanded="true"] {
