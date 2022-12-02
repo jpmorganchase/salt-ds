@@ -8,6 +8,7 @@
   --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
+  --image-border: #c5c9d0;
 }
 
 ::selection {
@@ -310,7 +311,7 @@ ul.table-of-contents li > ul li {
 }
 
 .footer__items > *:not(:last-child):after {
-  width: var(--uitk-separable-borderWidth);
+  width: var(--uitk-size-border);
   content: "";
   background-color: var(--uitk-text-secondary-foreground);
   height: var(--footer-items-separator-height);

@@ -24,7 +24,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
   const [editorText, setEditorText] = useState<string>(
-    initialText || column!.info.props.getValue!(row!.data)
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
   );
 
   const initialSelectionRef = useRef(!!initialText);
@@ -36,16 +36,18 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
       endEditMode(editorText);
-      event.preventDefault();
-      event.stopPropagation();
+      return;
     }
     if (event.key === "Escape") {
       cancelEditMode();
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      event.stopPropagation();
+      return;
     }
+    if (event.key === "Tab") {
+      endEditMode(editorText);
+      event.preventDefault();
+      return;
+    }
+    event.stopPropagation();
   };
 
   useEffect(() => {
@@ -59,6 +61,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
     <td className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
         <input
+          data-testid="grid-cell-editor-input"
           ref={inputRef}
           autoFocus={true}
           value={editorText}

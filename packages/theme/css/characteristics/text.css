@@ -24,12 +24,12 @@
   /* H3 */
   --uitk-text-h3-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-h3-fontWeight-small: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
 
   /* H4 */
   --uitk-text-h4-fontWeight: var(--uitk-typography-fontWeight-semiBold);
   --uitk-text-h4-fontWeight-small: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
 
   /* Label */
   --uitk-text-label-fontWeight: var(--uitk-typography-fontWeight-regular);
@@ -52,7 +52,7 @@
   /* Colors */
   --uitk-text-background: transparent;
   --uitk-text-background-hover: transparent;
-  --uitk-text-background-selected: var(--uitk-palette-neutral-highlight);
+  --uitk-text-background-selected: var(--uitk-palette-interact-background-active);
 
   --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
   --uitk-text-primary-foreground-disabled: var(--uitk-palette-neutral-primary-foreground-disabled);
