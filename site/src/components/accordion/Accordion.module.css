@@ -51,3 +51,9 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .summary :global(.uitkIcon) {
+    --uitk-size-icon-base: var(--uitk-size-unit);
+  }
+}
