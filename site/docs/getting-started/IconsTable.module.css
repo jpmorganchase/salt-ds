@@ -1,0 +1,12 @@
+.colored {
+  color: var(--site-tertiary-accent-purple);
+}
+
+.iconsTable > tbody tr td:not(:first-child) {
+  text-align: center;
+}
+
+.iconsTable > tbody tr td p {
+  margin-top: var(--uitk-size-unit);
+  margin-bottom: 0;
+}
