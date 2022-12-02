@@ -137,7 +137,7 @@ describe("Grid", () => {
       });
   });
 
-  it.only("Keyboard navigation", () => {
+  it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
