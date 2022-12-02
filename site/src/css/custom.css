@@ -399,4 +399,9 @@ table tr th + th::before {
   .docs-page-content.withToc {
     width: 100%;
   }
+  .uitk-theme {
+    --ifm-h2-font-size: var(--uitk-text-h3-fontSize);
+    --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight);
+    --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
+  }
 }

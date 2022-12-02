@@ -87,3 +87,13 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 996px) {
+  .iconContainer {
+    padding: calc(var(--uitk-size-unit) * 2) 0;
+  }
+
+  .card {
+    gap: calc(var(--uitk-size-unit) * 2);
+  }
+}
