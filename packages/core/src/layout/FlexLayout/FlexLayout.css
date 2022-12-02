@@ -10,7 +10,7 @@
   --flexLayout-wrap: nowrap;
   --flexLayout-justify: flex-start;
   --flexLayout-align: stretch;
-  --flexLayout-separator: var(--uitk-separable-borderWidth);
+  --flexLayout-separator: var(--uitk-size-border);
   --flexLayout-gap: calc(var(--uitk-size-unit) * var(--flexLayout-gap-multiplier));
 }
 
