@@ -1,9 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
-import {
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components";
+import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
@@ -17,8 +14,8 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Grid layout
 
-Defines an equally distributed layout system using columns and rows.
-The grid layout defaults to a twelve column grid with 1 row but you can customize it using the `columns` and `rows` props.
+Defines an equally distributed layout system using columns and rows which provides consistent and responsive layouts for building both components and application pages.
+The grid layout defaults to a twelve column grid with 1 row, but you can customize it using the `columns` and `rows` props.
 For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
@@ -32,7 +29,7 @@ Your content is best displayed using a configurable number of columns and rows.
 Grid layout can take any number of children, and will by default display them in a 12 columns grid (items after the 12th one will wrap).
 In order to change the number of columns displayed in the grid, you can reduce or increase the `columns` prop.
 
-Grid layout is useful when you want to control the layout in both row and columns dimensions and it can achieve more complex forms when used in combination with `GridItems`.
+Grid layout is useful when you want to control the layout in both row and columns dimensions, and it can achieve more complex forms when used in combination with `GridItems`.
 
 ### Don't use Grid layout when...
 
@@ -42,7 +39,7 @@ You want your layout to flow in a single dimension. In this case we recommend yo
 
 #### Grid Item inside default grid layout
 
-A grid item allows more complex controls to the default behavior of a grid child, like defining how many rows or columns will it span trough and it's alignment
+A grid item allows more complex controls to the default behavior of a grid child, like defining how many rows or columns will it span trough, and it's alignment.
 
 ##### Use when
 
@@ -60,10 +57,10 @@ You can use the default breakpoints or pass in you own.
 
 ##### Use when
 
-The flow of the grid is dependant on the viewport size.
+The flow of the grid is dependent on the viewport size.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-responsive-view" />
+  <Story id="core-layout-gridlayout--grid-layout-responsive-view-with-custom-breakpoints" />
 </Canvas>
 
 #### Simple usage
@@ -92,7 +89,7 @@ import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 
 ### Props
 
-**ResponsiveProp** refers to a prop that takes either multiple values (one per breakpoint) or a single value that would take effect across all different screen sizes.
+**ResponsiveProp** refers to a prop that takes either multiple values (one per breakpoint), or a single value that would take effect across all different screen sizes.
 For the following example, we can think about a layout that will responsively change from 12 columns to 2 and then to 1 as the space decreases.
 
 ```

@@ -1,19 +1,12 @@
-import { CSSProperties, useRef } from "react";
 import {
-  Card,
-  GridLayout,
-  GridItem,
-  FlowLayout,
   Button,
-} from "@jpmorganchase/uitk-core";
-import {
-  ToolkitProvider,
-  FlexLayout,
-  FlexItem,
-  Pill,
+  FlowLayout,
+  GridItem,
+  GridLayout,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
+import { ThumbsUpIcon } from "../../../icons";
 
 export default {
   title: "Core/Layout/GridLayout",
@@ -28,232 +21,72 @@ export default {
     rowGap: { type: "number" },
     rows: { type: "number" },
   },
-  args: {
-    columns: 12,
-    gap: 3,
-    rows: 1,
-  },
+  args: {},
 } as ComponentMeta<typeof GridLayout>;
+
+const customBreakpoints = { xs: 0, md: 860, lg: 1180 };
 
 const Template: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout {...args}>
+    <GridLayout {...args} className="layout-container">
       {Array.from({ length: 12 }, (_, index) => (
-        <GridItem key={index}>
-          <div className="layout-content">
-            <p>{`GridItem ${index + 1}`}</p>
-          </div>
-        </GridItem>
+        <div key={index}>
+          <p>{`GridItem ${index + 1}`}</p>
+        </div>
       ))}
     </GridLayout>
   );
 };
 export const DefaultGridLayout = Template.bind({});
-DefaultGridLayout.args = {};
-
-const MultipleRowsStory: ComponentStory<typeof GridLayout> = (args) => {
-  return (
-    <GridLayout {...args}>
-      {Array.from({ length: 12 }, (_, index) => (
-        <GridItem key={index}>
-          <div className="layout-content">
-            <p>{`GridItem ${index + 1}`}</p>
-          </div>
-        </GridItem>
-      ))}
-    </GridLayout>
-  );
+DefaultGridLayout.args = {
+  columns: { xs: 1, sm: 3, md: 6, lg: 9, xl: 12 },
 };
-export const GridLayoutMultipleRows = MultipleRowsStory.bind({});
-GridLayoutMultipleRows.args = {
-  columns: 4,
-  rows: 3,
-};
-
-const ResponsiveItem = ({ text }: { text: string }) => (
-  <FlexLayout
-    className="layout-content responsive-grid-item"
-    align="center"
-    justify="center"
-  >
-    <FlexItem>
-      <p>{text}</p>
-    </FlexItem>
-  </FlexLayout>
-);
 
 const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout {...args}>
-      <GridItem
-        colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-        rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-      >
-        <ResponsiveItem text="GridItem 1" />
+    <GridLayout {...args} className="layout-container custom-breaks">
+      <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
+        <p>GridItem 1</p>
       </GridItem>
-      <GridItem
-        colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-        rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-      >
-        <ResponsiveItem text="GridItem 2" />
-      </GridItem>
-      <GridItem
-        colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-        rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-      >
-        <ResponsiveItem text="GridItem 3" />
-      </GridItem>
-      <GridItem
-        colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-        rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-      >
-        <ResponsiveItem text="GridItem 4" />
+
+      {Array.from({ length: 6 }, (_, index) => (
+        <GridItem
+          key={index}
+          colSpan={{ xs: 1, md: 3 }}
+          rowSpan={{ md: 2, lg: 1 }}
+        >
+          <p>{`GridItem ${index + 2}`}</p>
+        </GridItem>
+      ))}
+      <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
+        <p>GridItem 8</p>
       </GridItem>
     </GridLayout>
   );
 };
-export const GridLayoutResponsiveView = ResponsiveView.bind({});
-GridLayoutResponsiveView.args = {
-  columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
-  rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
+
+export const GridLayoutResponsiveViewWithCustomBreakpoints =
+  ResponsiveView.bind({});
+GridLayoutResponsiveViewWithCustomBreakpoints.args = {
+  columns: { xs: 1, md: 6, lg: 12 },
+  rows: { md: 8, lg: 3 },
+  breakpoints: customBreakpoints,
 };
 
-const breakpoints = {
-  xs: 0,
-  sm: 500,
-  md: 860,
-  lg: 1180,
-  xl: 1820,
+const footerLinks: Record<string, string[]> = {
+  Solutions: ["Marketing", "Analytics", "Commerce", "Insights"],
+  Support: ["Pricing", "Documentation", "Guides", "API Status"],
+  Company: ["About", "Blog", "Jobs", "Press", "Partners"],
+  Legal: ["Claim", "Privacy", "Terms"],
 };
 
-const CustomBreakpoints: ComponentStory<typeof GridLayout> = (args) => {
-  return (
-    <ToolkitProvider breakpoints={breakpoints}>
-      <GridLayout {...args}>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-        >
-          <ResponsiveItem text="GridItem 1" />
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-        >
-          <ResponsiveItem text="GridItem 2" />
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 3, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 4, lg: 1, xl: 1 }}
-        >
-          <ResponsiveItem text="GridItem 3" />
-        </GridItem>
-        <GridItem
-          colSpan={{ xs: 1, sm: 1, md: 6, lg: 3, xl: 3 }}
-          rowSpan={{ xs: 1, sm: 1, md: 2, lg: 1, xl: 1 }}
-        >
-          <ResponsiveItem text="GridItem 4" />
-        </GridItem>
-      </GridLayout>
-    </ToolkitProvider>
-  );
-};
-export const GridLayoutCustomBreakpoints = CustomBreakpoints.bind({});
-
-GridLayoutCustomBreakpoints.args = {
-  columns: { xs: 1, sm: 2, md: 12, lg: 12, xl: 12 },
-  rows: { xs: 4, sm: 2, md: 4, lg: 1, xl: 1 },
-};
-
-const Border: ComponentStory<typeof GridLayout> = (args) => {
-  return (
-    <GridLayout {...args}>
-      <GridItem colSpan={4}>
-        <FlexLayout
-          className="layout-content border-header"
-          align="center"
-          justify="center"
-        >
-          <p>Header</p>
-        </FlexLayout>
-      </GridItem>
-      <GridItem colSpan={1}>
-        <FlexLayout
-          className="layout-content border-left"
-          align="center"
-          justify="center"
-        >
-          <p>Left</p>
-        </FlexLayout>
-      </GridItem>
-      <GridItem colSpan={2}>
-        <FlexLayout
-          className="layout-content border-main"
-          align="center"
-          justify="center"
-        >
-          <p>Main</p>
-        </FlexLayout>
-      </GridItem>
-      <GridItem colSpan={1}>
-        <FlexLayout
-          className="layout-content border-right"
-          align="center"
-          justify="center"
-        >
-          <p>Right</p>
-        </FlexLayout>
-      </GridItem>
-      <GridItem colSpan={4}>
-        <FlexLayout
-          className="layout-content border-bottom"
-          align="center"
-          justify="center"
-        >
-          <p>Bottom</p>
-        </FlexLayout>
-      </GridItem>
-    </GridLayout>
-  );
-};
-export const GridLayoutBorder = Border.bind({});
-GridLayoutBorder.args = {
-  columns: 4,
-  rows: 3,
-  gap: 0,
-};
-
-const headerStyles: CSSProperties = {
-  color: "#70737A",
-  fontWeight: 600,
-  letterSpacing: "0.2em",
-  textTransform: "uppercase",
-};
-const textStyles = { color: "#707279" };
-const copyrightStyles: CSSProperties = {
-  color: "#70737A",
-  borderTop: "1px solid #D9DDE3",
-  textAlign: "center",
-};
-
-const footerHeaders = ["Solutions", "Support", "Company", "Legal"];
-
-const footerLinks = [
-  ["Marketing", "Analytics", "Commerce", "Insights"],
-  ["Pricing", "Documentation", "Guides", "API Status"],
-  ["About", "Blog", "Jobs", "Press", "Partners"],
-  ["Claim", "Privacy", "Terms"],
-];
-
-const footerColumns = footerHeaders.map((header, index) => (
-  <GridItem key={index}>
-    <p style={headerStyles}>{header}</p>
-    {footerLinks[index].map((link, i) => (
-      <p style={textStyles} key={i}>
-        {link}
-      </p>
+const footerColumns = Object.keys(footerLinks).map((header, index) => (
+  <div key={index} className="footer-column">
+    <p>{header}</p>
+    {footerLinks[header].map((link: string, i: number) => (
+      <p key={i}>{link}</p>
     ))}
-  </GridItem>
+  </div>
 ));
 
 const Footer: ComponentStory<typeof GridLayout> = (args) => {
@@ -263,42 +96,47 @@ const Footer: ComponentStory<typeof GridLayout> = (args) => {
         colSpan={2}
         horizontalAlignment="center"
         verticalAlignment="center"
+        className="footer-column"
       >
-        <p>
-          <strong>LOGO</strong> | Toolkit
-        </p>
-        <p style={textStyles}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
+        <p>Logo | Toolkit</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </GridItem>
       {footerColumns}
-      <GridItem colSpan={6}>
-        <div style={copyrightStyles}>
-          <p>© 2022 BrandName All rights reserved.</p>
-        </div>
+      <GridItem colSpan={{ xs: 2, md: 6 }} className="copy-right">
+        <p>© 2022 BrandName All rights reserved.</p>
       </GridItem>
     </GridLayout>
   );
 };
 export const GridLayoutFooter = Footer.bind({});
 GridLayoutFooter.args = {
-  columns: 6,
-  columnGap: 8,
+  columnGap: { xs: 2, md: 8 },
+  columns: { xs: 1, sm: 2, md: 6 },
 };
 
+const renderArticleButtons = (
+  <FlowLayout gap={1}>
+    <Button>Save to reading list</Button>
+    <Button>Share</Button>
+    <Button aria-label="like">
+      <ThumbsUpIcon />
+    </Button>
+  </FlowLayout>
+);
 const Blog: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
-        <GridItem colSpan={{ xs: 1, sm: 2, md: 2, lg: 4, xl: 4 }}>
+        <GridItem as="section" colSpan={{ xs: 1, sm: 2, md: 2, lg: 4, xl: 4 }}>
           <h1>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Featured blog post of the week: Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore.
           </h1>
-          <div className="grid-blog-hero" />
+          <div className="grid-blog-featured" />
         </GridItem>
 
-        <GridItem colSpan={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 2 }}>
+        <GridItem as="article" colSpan={{ xs: 1, lg: 2 }}>
           <h2>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           </h2>
@@ -307,14 +145,10 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
             suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 5 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
+          {renderArticleButtons}
         </GridItem>
 
-        <GridItem colSpan={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 2 }}>
+        <GridItem as="article" colSpan={{ xs: 1, lg: 2 }}>
           <h2>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h2>
           <div className="grid-blog-medium-image grid-blog-image-two" />
           <p>
@@ -324,13 +158,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             provident, similique sunt in culpa qui officia deserunt mollitia
             animi.
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 3 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
+          {renderArticleButtons}
         </GridItem>
-        <GridItem colSpan={1}>
+        <article>
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-three" />
           <p>
@@ -339,14 +169,10 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             cupidatat non proident, sunt in culpa qui officia deserunt mollit
             anim id est laborum.
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 4 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
-        </GridItem>
+          {renderArticleButtons}
+        </article>
 
-        <GridItem colSpan={1}>
+        <article>
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-four" />
           <p>
@@ -355,13 +181,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             nostrud cupidatat eu sint officia nulla esse. Veniam enim est irure
             est est aliquip nisi enim veniam occaecat.
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 4 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
-        </GridItem>
-        <GridItem colSpan={1}>
+          {renderArticleButtons}
+        </article>
+        <article>
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-five" />
           <p>
@@ -370,13 +192,9 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             fugiat pariatur enim. Cillum est labore in labore labore culpa id.
             Consectetur ut enim eiusmod aliqua eu eiusmod sit.
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 4 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
-        </GridItem>
-        <GridItem colSpan={1}>
+          {renderArticleButtons}
+        </article>
+        <article>
           <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
           <div className="grid-blog-small-image grid-blog-image-six" />
           <p>
@@ -384,50 +202,14 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
             Aliquip exercitation sunt esse voluptate laborum. Occaecat dolor
             minim dolore in excepteur sint.
           </p>
-          <FlowLayout gap={1}>
-            {Array.from({ length: 4 }, (_, index) => (
-              <Pill label="Lorem" key={index} />
-            ))}
-          </FlowLayout>
-        </GridItem>
+          {renderArticleButtons}
+        </article>
       </GridLayout>
     </div>
   );
 };
 export const GridLayoutComposite = Blog.bind({});
 GridLayoutComposite.args = {
-  columns: { xs: 1, sm: 2, md: 2, lg: 4, xl: 4 },
-};
-
-const renderCards = (cardsNumber: number) => {
-  return Array.from({ length: cardsNumber }, (_, index) => (
-    <Card key={index} style={{ maxHeight: "150px", minWidth: "100px" }}>
-      <p>{`Item ${index + 1}`}</p>
-    </Card>
-  ));
-};
-
-const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = (args) => {
-  return (
-    <GridLayout columnGap={6} rows={2} columns={2}>
-      {renderCards(2)}
-      <GridLayout>{renderCards(2)}</GridLayout>
-    </GridLayout>
-  );
-};
-export const GridLayoutNested = GridLayoutNestedExample.bind({});
-GridLayoutNested.args = {};
-
-export const GridLayoutPolymorphicContainer: ComponentStory<
-  typeof GridLayout
-> = (args) => {
-  return (
-    <GridLayout {...args} as="main" columns={3}>
-      {Array.from({ length: 3 }, (_, index) => (
-        <GridItem as="section" key={index} className="layout-content">
-          <p>{`Section ${index + 1}`}</p>
-        </GridItem>
-      ))}
-    </GridLayout>
-  );
+  as: "main",
+  columns: { xs: 1, sm: 2, lg: 4 },
 };

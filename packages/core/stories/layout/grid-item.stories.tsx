@@ -12,30 +12,28 @@ export default {
   },
 } as ComponentMeta<typeof GridItem>;
 
-const GridItemContent = ({ active }: { active?: boolean }) => {
-  return (
-    <div
-      className={`grid-item ${
-        active ? "layout-active-content" : "layout-content"
-      }`}
-    >
-      <p>Item</p>
-    </div>
-  );
-};
+const renderGridContent = (
+  <div>
+    <p>Item</p>
+  </div>
+);
 const GridItemStory: ComponentStory<typeof GridItem> = (args) => {
   return (
     <div>
-      <GridLayout rows={2} columns={5}>
-        <GridItem {...args}>
-          <GridItemContent active />
+      <GridLayout
+        rows={2}
+        columns={{ xs: 2, md: 5 }}
+        className="layout-container"
+      >
+        <GridItem className="layout-active-content" {...args}>
+          <p>Item</p>
         </GridItem>
-        <GridItemContent />
-        <GridItemContent />
-        <GridItemContent />
-        <GridItemContent />
-        <GridItem colSpan={4}>
-          <GridItemContent />
+        {renderGridContent}
+        {renderGridContent}
+        {renderGridContent}
+        {renderGridContent}
+        <GridItem colSpan={{ xs: 2, md: 4 }}>
+          <p>Item spanning 4 columns</p>
         </GridItem>
       </GridLayout>
     </div>
