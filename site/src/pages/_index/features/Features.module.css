@@ -31,8 +31,7 @@
   .featuresContainer {
     max-width: none;
     margin-top: calc(var(--uitk-size-unit) * 3);
-    padding-left: calc(var(--uitk-size-unit) * 2);
-    padding-right: calc(var(--uitk-size-unit) * 2);
+    padding: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2);
   }
 }
 
