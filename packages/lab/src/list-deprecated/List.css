@@ -5,7 +5,7 @@
   /* Border */
   --list-borderColor: var(--uitk-container-borderColor-medium);
   --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-container-borderWidth);
+  --list-borderWidth: var(--uitk-size-border);
   --list-borderRadius: 0;
 
   /* Text, Font */
