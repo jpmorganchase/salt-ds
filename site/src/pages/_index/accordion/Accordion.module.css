@@ -61,4 +61,8 @@
   .accordionWrapper {
     padding: var(--uitk-size-unit);
   }
+
+  .accordionIllustration {
+    margin-bottom: -35%;
+  }
 }
