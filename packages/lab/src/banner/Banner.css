@@ -10,7 +10,7 @@
 .uitkBanner {
   background: var(--banner-background);
   border-color: var(--uitkBanner-borderColor, var(--banner-status-borderColor));
-  border-width: var(--uitkBanner-borderWidth, var(--uitk-container-borderWidth));
+  border-width: var(--uitkBanner-borderWidth, var(--uitk-size-border));
   border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
   border-bottom: 2px solid var(--uitkBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;

@@ -26,9 +26,9 @@
   --radioButton-icon-strokeColor-checked: var(--uitk-selectable-borderColor-selected);
   --radioButton-icon-strokeColor-checked-disabled: var(--uitk-selectable-borderColor-selectedDisabled);
 
-  --radioButton-icon-strokeWidth: var(--uitk-selectable-borderWidth);
-  --radioButton-icon-strokeWidth-hover: var(--uitk-selectable-borderWidth-hover);
-  --radioButton-icon-strokeWidth-checked: var(--uitk-selectable-borderWidth-selected);
+  --radioButton-icon-strokeWidth: var(--uitk-size-border);
+  --radioButton-icon-strokeWidth-hover: var(--uitk-size-border);
+  --radioButton-icon-strokeWidth-checked: var(--uitk-size-border);
 
   width: var(--uitkRadioButton-icon-svg-size, var(--radioButton-icon-size));
   height: var(--uitkRadioButton-icon-svg-size, var(--radioButton-icon-size));

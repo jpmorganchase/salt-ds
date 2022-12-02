@@ -9,6 +9,6 @@
   --uitkCheckbox-icon-stroke-hover: var(--uitk-selectable-borderColor);
   --uitkCheckbox-icon-fill: none;
   --uitkCheckbox-icon-fill-checked: none;
-  --uitkCheckbox-icon-borderWidth-checked: var(--uitk-selectable-borderWidth);
+  --uitkCheckbox-icon-borderWidth-checked: var(--uitk-size-border);
   --uitkCheckbox-icon-tick-color: var(--uitk-taggable-foreground);
 }
