@@ -23,6 +23,7 @@
 }
 
 .listItem > svg {
+  top: 2px;
   margin-right: var(--uitk-size-unit);
 }
 
