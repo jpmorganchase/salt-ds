@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 
 export interface CursorContext {
+  isFocused: boolean;
   cursorRowIdx: number | undefined;
   cursorColIdx: number | undefined;
   moveCursor: (rowIdx: number, colIdx: number) => void;

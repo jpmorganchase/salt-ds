@@ -42,7 +42,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
       })}
     >
       <div className={withBaseName("space")} data-testid="grid-left-part">
-        <table ref={tableRef}>
+        <table ref={tableRef} role="presentation">
           <TableColGroup columns={columns} />
           <TableBody
             columns={columns}
