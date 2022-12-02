@@ -32,40 +32,13 @@ Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_**
 
 # Token structure
 
-Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>-<emphasis>`
+Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>`
 
 - Always begin with `--uitk-palette-`
 - Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
 - Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
 - Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
 - Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
-- Finally, add **_emphasis_** if applicable, e.g.: `--uitk-palette-neutral-border-medium`
-
-# Emphasis
-
-Some tokens below have `-low`, `-medium`, or `-high` suffixes. These are values which should change with emphasis. For example,
-
-The characteristic `--uitk-overlayable-background-medium` resolves to `--uitk-palette-neutral-scrim-medium` whilst the characteristic `--uitk-overlayable-background-low` resolves to `--uitk-palette-neutral-scrim-low`.
-
-The characteristic with the respective emphasis should be used within a `uitkEmphasisLow`, `uitkEmphasisMedium`, or `uitkEmphasisHigh` class. For example, if the default input in your app should have a medium emphasis background, but can be styled with low emphasis, your CSS will probably look something like this:
-
-```css
-.MyInputComponent {
-  background: var(--uitk-editable-primary-background);
-}
-
-.MyInputComponent:hover {
-  background: var(--uitk-editable-primary-background-hover);
-}
-
-.uitkEmphasisLow.MyInputComponent {
-  background: var(--uitk-editable-tertiary-background);
-}
-
-.uitkEmphasisLow.MyInputComponent:hover {
-  background: var(--uitk-editable-tertiary-background-hover);
-}
-```
 
 ## Opacities
 
