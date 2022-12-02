@@ -68,11 +68,22 @@
     width: 100%;
     padding: calc(var(--uitk-size-unit) * 2);
   }
+
+  .keyline {
+    width: calc(100% + calc(var(--uitk-size-unit) * 4));
+    left: calc(-1 * var(--uitk-size-unit) * 2);
+    top: calc(var(--uitk-size-unit) * 2);
+  }
 }
 
 @media screen and (max-width: 996px) {
   .accordionWrapper {
     padding: var(--uitk-size-unit) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 3) var(--uitk-size-unit);
+  }
+
+  .keyline {
+    left: calc(-1 * var(--uitk-size-unit));
+    top: calc(var(--uitk-size-unit) * 3);
   }
 
   .accordionIllustration {
