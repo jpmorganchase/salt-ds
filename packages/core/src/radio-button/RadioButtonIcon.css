@@ -26,7 +26,7 @@
   --radioButton-icon-strokeColor-checked: var(--uitk-selectable-borderColor-selected);
   --radioButton-icon-strokeColor-checked-disabled: var(--uitk-selectable-borderColor-selectedDisabled);
 
-  --radioButton-icon-strokeWidth: var(--uitk-selectable-borderWidth);
+  --radioButton-icon-strokeWidth: var(--uitk-size-border);
   --radioButton-icon-strokeWidth-hover: var(--uitk-size-border);
   --radioButton-icon-strokeWidth-checked: var(--uitk-size-border);
 
