@@ -9,5 +9,5 @@
 }
 
 .uitkPanel-secondary.uitkPanel {
-  background: var(--uitkPanel-background, var(--uitk-container-background-high));
+  background: var(--uitkPanel-background, var(--uitk-container-secondary-background));
 }
