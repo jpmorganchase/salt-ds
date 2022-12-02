@@ -444,7 +444,6 @@ table tr th + th::before {
   }
 
   .footer .container {
-    justify-content: center;
     gap: calc(var(--uitk-size-unit) / 2);
   }
 }
