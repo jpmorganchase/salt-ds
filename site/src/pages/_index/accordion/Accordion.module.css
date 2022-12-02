@@ -59,7 +59,7 @@
 
 @media screen and (max-width: 996px) {
   .accordionWrapper {
-    padding: var(--uitk-size-unit);
+    padding: var(--uitk-size-unit) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 10) var(--uitk-size-unit);
   }
 
   .accordionIllustration {
