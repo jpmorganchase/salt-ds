@@ -13,6 +13,7 @@
 
 /* Styles applied to Card content */
 .uitkCard-content {
+  color: inherit;
   font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
   letter-spacing: var(--uitkCard-content-letterSpacing, normal);
   line-height: var(--uitk-text-base-lineHeight);
