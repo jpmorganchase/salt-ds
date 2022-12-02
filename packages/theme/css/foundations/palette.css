@@ -261,7 +261,7 @@
   --uitk-palette-neutral-border-disabled-high: var(--uitk-color-gray-90-fade-border);
   --uitk-palette-neutral-scrim-low: var(--uitk-color-black-fade-scrim-medium);
   --uitk-palette-neutral-scrim-medium: var(--uitk-color-gray-800-fade-scrim-medium);
-  
+
   --uitk-palette-neutral-primary-foreground: var(--uitk-color-white);
   --uitk-palette-neutral-primary-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-neutral-primary-separator: var(--uitk-color-black-fade-separatorOpacity-primary);
