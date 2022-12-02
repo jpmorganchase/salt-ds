@@ -285,6 +285,7 @@ ul.table-of-contents li > ul li {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
   --ifm-footer-link-color: var(--uitk-text-secondary-foreground);
   --footer-items-separator-height: 16px;
+  --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) * 2);
 }
 
 .footer__title {
@@ -435,5 +436,14 @@ table tr th + th::before {
   .docs-wrapper .pagination-nav .pagination-nav__label {
     font-size: var(--uitk-text-h4-fontSize);
     font-weight: var(--uitk-text-h4-fontWeight-small);
+  }
+
+  .footer {
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
+  }
+
+  .footer .container {
+    justify-content: center;
+    gap: calc(var(--uitk-size-unit) / 2);
   }
 }
