@@ -1,4 +1,5 @@
-.uitkGridCheckboxCell > .uitkGridBaseCell-valueContainer, .uitkGridCheckboxHeaderCell {
+.uitkGridCheckboxCell,
+.uitkGridCheckboxHeaderCell {
   height: 100%;
   display: flex;
   flex-direction: column;

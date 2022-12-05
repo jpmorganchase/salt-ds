@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback, useMemo } from "react";
 import { TableRow } from "./TableRow";
-import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from "../Grid";
 import { getRowKeyAttribute } from "./utils";
 import { useSelectionContext } from "../SelectionContext";
 import { useEditorContext } from "../EditorContext";
@@ -17,7 +17,8 @@ export interface TableBodyProps<T> {
 }
 
 export function TableBody<T>(props: TableBodyProps<T>) {
-  const { columns, rows, groups, hoverRowKey, setHoverRowKey, gap, zebra } = props;
+  const { columns, rows, groups, hoverRowKey, setHoverRowKey, gap, zebra } =
+    props;
   const { selRowIdxs, selectedCellRange } = useSelectionContext();
 
   const isCellInSelectedRange = useCallback(

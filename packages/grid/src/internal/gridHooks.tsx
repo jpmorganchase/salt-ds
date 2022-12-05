@@ -266,7 +266,7 @@ export const useColumnGroups = (
 
         let colIndex = 0;
 
-        if(previousGroups && previousGroups.length > 0) {
+        if (previousGroups && previousGroups.length > 0) {
           let lastPreviousGroup = groups[i - 1] ?? previousGroups.slice(-1)[0];
           colIndex = lastPreviousGroup.colIndex + lastPreviousGroup.colSpan;
         }
@@ -527,10 +527,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const leftGroups = useColumnGroups(leftGrpPs);
   const midGroups = useColumnGroups(midGrpPs, leftGroups);
-  const rightGroups = useColumnGroups(
-    rightGrpPs,
-    midGroups
-  );
+  const rightGroups = useColumnGroups(rightGrpPs, midGroups);
 
   const leftCols: GridColumnModel<T>[] = useCols(leftColInfos, 0, leftGroups);
   const midCols: GridColumnModel<T>[] = useCols(

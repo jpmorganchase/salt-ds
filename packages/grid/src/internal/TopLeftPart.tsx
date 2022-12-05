@@ -6,7 +6,7 @@ import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";
 import { useActiveOnWheel } from "./gridHooks";
-import { useCursorContext } from '../CursorContext';
+import { useCursorContext } from "../CursorContext";
 
 const withBaseName = makePrefixer("uitkGridTopLeftPart");
 

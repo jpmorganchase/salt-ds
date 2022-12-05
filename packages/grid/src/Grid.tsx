@@ -517,7 +517,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       setCursorColIdx(colIdx);
       focusHeaderCellElement(colIdx);
     },
-    [setCursorRowIdx, setCursorHeaderRowIdx, setCursorColIdx, focusHeaderCellElement, cols]
+    [
+      setCursorRowIdx,
+      setCursorHeaderRowIdx,
+      setCursorColIdx,
+      focusHeaderCellElement,
+      cols,
+    ]
   );
 
   const moveCursor = useCallback(
@@ -620,7 +626,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       moveCursor,
       moveHeaderCursor,
     }),
-    [cursorRowIdx, cursorColIdx, cursorHeaderRowIdx, moveCursor, moveHeaderCursor, isFocused]
+    [
+      cursorRowIdx,
+      cursorColIdx,
+      cursorHeaderRowIdx,
+      moveCursor,
+      moveHeaderCursor,
+      isFocused,
+    ]
   );
 
   const onColumnMove: GridColumnMoveHandler = (

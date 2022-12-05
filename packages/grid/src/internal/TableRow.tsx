@@ -8,7 +8,7 @@ import "./TableRow.css";
 import { BaseCell } from "../BaseCell";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from "../Grid";
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";

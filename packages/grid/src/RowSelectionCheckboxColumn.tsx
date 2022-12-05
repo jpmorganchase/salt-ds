@@ -1,9 +1,8 @@
-import { KeyboardEvent, useEffect } from 'react';
+import { KeyboardEvent } from "react";
 import { RowSelectionCheckboxHeaderCell } from "./RowSelectionCheckboxHeaderCell";
 import { RowSelectionCheckboxCell } from "./RowSelectionCheckboxCell";
 import { GridColumn, GridColumnProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-import { useCursorContext } from './CursorContext';
 
 export type RowSelectionCheckboxColumnProps<T> = Omit<
   GridColumnProps<T>,
@@ -19,7 +18,7 @@ export function RowSelectionCheckboxColumn<T>(
     event: KeyboardEvent<HTMLDivElement>,
     rowIndex: number
   ) => {
-    if (event.key === " ") {
+    if (!event.repeat && event.key === " ") {
       selectRows({ rowIndex, meta: true });
       event.preventDefault();
       event.stopPropagation();

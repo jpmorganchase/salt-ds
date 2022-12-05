@@ -4,7 +4,7 @@ import { TableBody } from "./TableBody";
 import { RefObject } from "react";
 import "./LeftPart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridLeftPart");
