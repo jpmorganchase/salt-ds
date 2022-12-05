@@ -2,9 +2,9 @@
   --uitk-focused-outlineColor: var(--uitk-palette-interact-outline);
   --uitk-focused-outlineStyle: dotted;
   --uitk-focused-outlineWidth: 2px;
+  --uitk-focused-outlineInset: 0; 
+  --uitk-focused-outlineOffset: 0;
 
-  --uitk-focused-outlineInset: 0px 0px 0px 0px; /* Not in Figma */
-  --uitk-focused-outlineOffset: 0; /* Not in Figma */
   --uitk-focused-outline: var(--uitk-focused-outlineWidth) var(--uitk-focused-outlineStyle) var(--uitk-focused-outlineColor); /* CSS shortcut token: not in Figma */
 }
 
