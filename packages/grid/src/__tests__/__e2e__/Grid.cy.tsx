@@ -11,8 +11,13 @@ import { ColumnGroups } from "@stories/grid-columnGroups.stories";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
-const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
-  composedStories;
+const {
+  GridExample,
+  LotsOfColumns,
+  SingleRowSelect,
+  SmallGrid,
+  PinnedColumns,
+} = composedStories;
 const { EditableCells } = composedEditableStories;
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -52,7 +57,7 @@ const expectFakeColumnWidth = (w: number) => {
 describe("Grid", () => {
   // TODO checkAccessibility(composedStories);
   it("Rendering", () => {
-    cy.mount(<GridExample />);
+    cy.mount(<PinnedColumns />);
     cy.findByTestId("grid-left-part").should("exist");
     cy.findByTestId("grid-middle-part").should("exist");
     cy.findByTestId("grid-right-part").should("exist");

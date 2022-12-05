@@ -17,9 +17,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 LicenseManager.setLicenseKey("your license key");
 
-const RowGroupPanelExample = function RowGroupPanelExample(
-  props: AgGridReactProps
-) {
+const RowGroupPanel = (props: AgGridReactProps) => {
   const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -44,6 +42,4 @@ const RowGroupPanelExample = function RowGroupPanelExample(
   );
 };
 
-export default function RowGroupPanel(props: AgGridReactProps) {
-  return <RowGroupPanelExample {...props} />;
-}
+export default RowGroupPanel;

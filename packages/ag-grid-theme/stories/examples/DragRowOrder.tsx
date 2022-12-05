@@ -5,9 +5,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const DragRowOrderExample = function DragRowOrderExample(
-  props: AgGridReactProps
-) {
+const DragRowOrder = (props: AgGridReactProps) => {
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -18,16 +16,16 @@ const DragRowOrderExample = function DragRowOrderExample(
 
   return (
     <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact animateRows rowDragManaged {...agGridProps} {...props} />
+      <AgGridReact
+        animateRows
+        rowDragManaged
+        {...agGridProps}
+        {...props}
+        columnDefs={rowDragColumns}
+        rowData={dataGridExampleData}
+      />
     </div>
   );
 };
 
-DragRowOrderExample.defaultProps = {
-  columnDefs: rowDragColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function DragRowOrder(props: AgGridReactProps) {
-  return <DragRowOrderExample {...props} />;
-}
+export default DragRowOrder;

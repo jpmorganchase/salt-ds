@@ -18,9 +18,7 @@ export interface HeaderCellSeparatorProps {
 }
 
 export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
-  const className = withBaseName(
-    props.separatorType === "regular" ? "regularSeparator" : "edgeSeparator"
-  );
+  const className = withBaseName([props.separatorType, "Separator"].join(""));
   return <div className={className} />;
 }
 

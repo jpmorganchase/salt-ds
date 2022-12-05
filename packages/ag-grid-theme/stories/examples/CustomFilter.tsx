@@ -6,9 +6,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const CustomFilterExample = function CustomFilterExample(
-  props: AgGridReactProps
-) {
+const CustomFilter = (props: AgGridReactProps) => {
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
 
@@ -98,6 +96,8 @@ const CustomFilterExample = function CustomFilterExample(
       >
         <AgGridReact
           defaultColDef={{ floatingFilter: true, filter: true }}
+          columnDefs={customFilterExampleColumns}
+          rowData={dataGridExampleData}
           {...agGridProps}
           {...props}
         />
@@ -106,11 +106,4 @@ const CustomFilterExample = function CustomFilterExample(
   );
 };
 
-CustomFilterExample.defaultProps = {
-  columnDefs: customFilterExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function CustomFilter(props: AgGridReactProps) {
-  return <CustomFilterExample {...props} />;
-}
+export default CustomFilter;

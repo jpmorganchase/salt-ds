@@ -5,7 +5,7 @@ import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleCol
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const ColorationExample = function ColorationExample(props: AgGridReactProps) {
+const Coloration = (props: AgGridReactProps) => {
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -16,16 +16,14 @@ const ColorationExample = function ColorationExample(props: AgGridReactProps) {
 
   return (
     <div style={{ height: 800, width: 800, marginTop: 25 }} {...containerProps}>
-      <AgGridReact {...agGridProps} {...props} />
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={dataGridExampleColumnsColoration}
+        rowData={dataGridExampleData}
+      />
     </div>
   );
 };
 
-ColorationExample.defaultProps = {
-  columnDefs: dataGridExampleColumnsColoration,
-  rowData: dataGridExampleData,
-};
-
-export default function Coloration(props: AgGridReactProps) {
-  return <ColorationExample {...props} />;
-}
+export default Coloration;

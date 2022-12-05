@@ -6,9 +6,7 @@ import { WarningIcon } from "@jpmorganchase/uitk-icons";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const NoDataOverlayExample = function NoDataOverlayExample(
-  props: AgGridReactProps
-) {
+const NoDataOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const [position, setPosition] = useState<
     Pick<CSSProperties, "top" | "left" | "width" | "height">
@@ -123,16 +121,14 @@ const NoDataOverlayExample = function NoDataOverlayExample(
     >
       {modal}
       <div style={{ height: 800, width: 800 }} {...containerProps}>
-        <AgGridReact {...agGridProps} {...props} />
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridExampleColumns}
+        />
       </div>
     </div>
   );
 };
 
-NoDataOverlayExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-};
-
-export default function NoDataOverlay(props: AgGridReactProps) {
-  return <NoDataOverlayExample {...props} />;
-}
+export default NoDataOverlay;
