@@ -69,11 +69,11 @@
 }
 
 .cardFooter {
-  margin-bottom: 0;
   display: flex;
 }
 
 .cardFooter > p {
+  margin-bottom: 0;
   text-decoration: underline;
   padding-right: calc(var(--uitk-size-unit) / 3);
 }
