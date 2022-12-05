@@ -6,9 +6,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { GridApi, RowNode } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const ChangeDetectionExample = function ChangeDetectionExample(
-  props: AgGridReactProps
-) {
+const ChangeDetection = (props: AgGridReactProps) => {
   const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -87,6 +85,10 @@ const ChangeDetectionExample = function ChangeDetectionExample(
           animateRows
           enableCellChangeFlash
           suppressAggFuncInHeader
+          rowData={getRowData()}
+          columnDefs={changeDetectionExampleColumns}
+          groupDefaultExpanded={1}
+          columnTypes={getColumnTypes()}
           {...agGridProps}
           {...props}
         />
@@ -109,6 +111,16 @@ const getRowData = () => {
     });
   }
   return rowData;
+};
+
+const getColumnTypes = () => {
+  const valueColumn = {
+    editable: true,
+    aggFunc: "sum",
+    valueParser: "Number(newValue)",
+    filter: "agNumberColumnFilter",
+  };
+  return { valueColumn };
 };
 
 interface RowDataItem {
@@ -167,20 +179,4 @@ const pickExistingRowNodeAtRandom = (gridApi: GridApi): RowNode | undefined => {
   return allItems[Math.floor(Math.random() * allItems.length)];
 };
 
-ChangeDetectionExample.defaultProps = {
-  columnDefs: changeDetectionExampleColumns,
-  columnTypes: {
-    valueColumn: {
-      editable: true,
-      aggFunc: "sum",
-      valueParser: "Number(newValue)",
-      filter: "agNumberColumnFilter",
-    },
-  },
-  groupDefaultExpanded: 1,
-  rowData: getRowData(),
-};
-
-export default function ChangeDetection(props: AgGridReactProps) {
-  return <ChangeDetectionExample {...props} />;
-}
+export default ChangeDetection;
