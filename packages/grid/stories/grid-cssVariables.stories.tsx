@@ -39,6 +39,7 @@ const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 const CssVariablesTemplate: Story<{}> = () => {
   const variants = [`primary`, `secondary`, `zebra`];
   const [separators, setSeparators] = useState(false);
+  const [pinnedSeparators, setPinnedSeparators] = useState(true);
   const [index, setIndex] = useState(0);
   const [changes, setChanges] = useState<Array<() => void>>([]);
 
@@ -189,6 +190,10 @@ const CssVariablesTemplate: Story<{}> = () => {
       description: "Color of column separators (when enabled)",
     },
     {
+      name: "--uitkGrid-pinnedSeparator-color",
+      description: "Color of the separator between pinned and unpinned columns",
+    },
+    {
       name: "--uitkGrid-rowSeparator-color-divided",
       description: "Color of row separators between groups or rows",
     },
@@ -253,6 +258,11 @@ const CssVariablesTemplate: Story<{}> = () => {
     setSeparators(checked);
   };
 
+  const onPinnedSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setPinnedSeparators(checked);
+  };
+
   return (
     <FlexLayout direction="column">
       <FlexItem>
@@ -275,6 +285,13 @@ const CssVariablesTemplate: Story<{}> = () => {
               checked={separators}
               label="Column separators"
               onChange={onSeparatorsChange}
+            />
+          </FlexItem>
+          <FlexItem>
+            <Checkbox
+              checked={pinnedSeparators}
+              label="Pinned column separators"
+              onChange={onPinnedSeparatorsChange}
             />
           </FlexItem>
           <FlexItem>
@@ -302,9 +319,10 @@ const CssVariablesTemplate: Story<{}> = () => {
         variant={index === 1 ? "secondary" : "primary"}
         zebra={index === 2 ? true : false}
         columnSeparators={separators}
+        pinnedSeparators={pinnedSeparators}
         style={style}
       >
-        <ColumnGroup id="group_one" name="Group One">
+        <ColumnGroup id="group_one" name="Group One" pinned="left">
           <GridColumn
             name="Name"
             id="name"

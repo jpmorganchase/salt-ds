@@ -35,7 +35,15 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       // aria-rowindex uses one-based array indexing
       aria-rowindex={row.index + 1}
       role="gridcell"
-      className={cn(withBaseName(), className)}
+      className={cn(
+        withBaseName(),
+        {
+          [withBaseName("regularSeparator")]:
+            column.separator === "regular" || column.separator === "groupEdge",
+          [withBaseName("pinnedSeparator")]: column.separator === "pinned",
+        },
+        className
+      )}
       style={style}
       tabIndex={isFocused ? 0 : -1}
     >

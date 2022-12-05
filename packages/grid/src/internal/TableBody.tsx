@@ -61,6 +61,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     <tbody onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
       {rows.map((row) => {
         const isSelected = selRowIdxs.has(row.index);
+        const isFollowedBySelected = selRowIdxs.has(row.index + 1);
         const cursorIdx = cursorRowIdx === row.index ? cursorColIdx : undefined;
         const editorColIdx = editMode ? cursorIdx : undefined;
         return (
@@ -71,6 +72,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             columns={columns}
             isHoverOver={row.key === hoverRowKey}
             isSelected={isSelected}
+            isFollowedBySelected={isFollowedBySelected}
             cursorColIdx={cursorIdx}
             gap={gap}
             zebra={zebra && row.index % 2 == 0}

@@ -6,9 +6,9 @@
   padding: 0;
 
   border-style: solid;
-  border-top-color: var(--grid-row-borderColor);
+  border-bottom-color: var(--grid-row-borderColor);
   border-right-color: transparent;
-  border-width: 1px 1px 0 0;
+  border-width: 0 0 1px 0;
 
   white-space: nowrap;
   position: relative;
@@ -18,8 +18,19 @@
   outline: 0;
 }
 
-.uitkGrid-columnSeparators .uitkGridBaseCell {
+.uitkGrid-columnSeparators .uitkGridBaseCell-regularSeparator {
+  border-right-width: 1px;
   border-right-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-columnSeparators .uitkGridBaseCell-pinnedSeparator {
+  border-right-width: 1px;
+  border-right-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridBaseCell-pinnedSeparator {
+  border-right-width: 1px;
+  border-right-color: var(--grid-pinnedSeparator-color);
 }
 
 .uitkGridBaseCell-selectedCell {
