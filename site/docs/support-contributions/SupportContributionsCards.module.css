@@ -5,12 +5,16 @@
   padding-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
-.supportContributionsCards > a {
-  min-width: 432px;
+.supportContributionsCards a {
+  height: 100%;
 }
 
 @media screen and (max-width: 996px) {
   .supportContributionsCards {
     flex-direction: column;
+  }
+
+  .supportContributionsCards > a {
+    min-width: 200px;
   }
 }

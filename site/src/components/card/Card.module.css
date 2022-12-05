@@ -3,6 +3,7 @@
   --ifm-link-hover-decoration: none;
   --card-color: var(--uitk-color-white);
   --card-icon-background: #0e1b23;
+  --uitkIcon-color: var(--uitk-color-gray-900);
 }
 
 .card.lightTheme {
@@ -13,7 +14,6 @@
 
 .cardTitle {
   --ifm-heading-margin-bottom: var(--uitk-size-unit);
-  --uitkIcon-color: var(--uitk-color-gray-900);
 }
 
 .card {
