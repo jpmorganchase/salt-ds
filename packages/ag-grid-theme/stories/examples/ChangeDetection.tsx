@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
+import React, { useEffect, useState } from "react";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import "../../uitk-ag-theme.css";
 import changeDetectionExampleColumns from "../dependencies/changeDetectionExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { GridApi, RowNode } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const ChangeDetectionExample = function ChangeDetectionExample(
-  props: AgGridReactProps
-) {
-  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers();
+const ChangeDetection = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -68,6 +74,13 @@ const ChangeDetectionExample = function ChangeDetectionExample(
 
   return (
     <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
       <Button onClick={updateOneRecord}>Update One Value</Button>
       &nbsp;
       <Button onClick={updateUsingTransaction}>Update Using Transaction</Button>
@@ -87,6 +100,10 @@ const ChangeDetectionExample = function ChangeDetectionExample(
           animateRows
           enableCellChangeFlash
           suppressAggFuncInHeader
+          rowData={getRowData()}
+          columnDefs={changeDetectionExampleColumns}
+          groupDefaultExpanded={1}
+          columnTypes={getColumnTypes()}
           {...agGridProps}
           {...props}
         />
@@ -109,6 +126,16 @@ const getRowData = () => {
     });
   }
   return rowData;
+};
+
+const getColumnTypes = () => {
+  const valueColumn = {
+    editable: true,
+    aggFunc: "sum",
+    valueParser: "Number(newValue)",
+    filter: "agNumberColumnFilter",
+  };
+  return { valueColumn };
 };
 
 interface RowDataItem {
@@ -167,20 +194,4 @@ const pickExistingRowNodeAtRandom = (gridApi: GridApi): RowNode | undefined => {
   return allItems[Math.floor(Math.random() * allItems.length)];
 };
 
-ChangeDetectionExample.defaultProps = {
-  columnDefs: changeDetectionExampleColumns,
-  columnTypes: {
-    valueColumn: {
-      editable: true,
-      aggFunc: "sum",
-      valueParser: "Number(newValue)",
-      filter: "agNumberColumnFilter",
-    },
-  },
-  groupDefaultExpanded: 1,
-  rowData: getRowData(),
-};
-
-export default function ChangeDetection(props: AgGridReactProps) {
-  return <ChangeDetectionExample {...props} />;
-}
+export default ChangeDetection;

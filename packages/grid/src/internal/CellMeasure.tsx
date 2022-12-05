@@ -20,6 +20,7 @@ export function CellMeasure<T>(props: CellMeasureProps<T>) {
     if (rowRef.current) {
       const height = rowRef.current.getBoundingClientRect().height;
       if (heightRef.current !== height) {
+        // console.log(`Row height changing to ${height}px`);
         heightRef.current = height;
         setRowHeight(height);
       }

@@ -4,7 +4,8 @@
   "license": "Apache-2.0",
   "style": "uitk-ag-theme.css",
   "files": [
-    "/uitk-ag-theme.css"
+    "/uitk-ag-theme.css",
+    "/odyssey-ag-theme.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js",

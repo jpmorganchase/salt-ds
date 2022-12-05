@@ -10,10 +10,6 @@
   border-width: var(--grid-rowSeparator-width) 0 0 0;
 }
 
-.uitkGridTableRow-selected + .uitkGridTableRow {
-  --grid-row-borderColor: var(--grid-row-borderColor-selected);
-}
-
 .uitkGridTableRow-divided {
   --grid-row-borderColor: var(--grid-rowSeparator-color-divided);
 }
@@ -28,6 +24,10 @@
 
 .uitkGridTableRow-selected {
   background: var(--grid-row-background-selected);
+  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+}
+
+.uitkGridTableRow-followedBySelected {
   --grid-row-borderColor: var(--grid-row-borderColor-selected);
 }
 

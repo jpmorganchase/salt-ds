@@ -7,6 +7,8 @@ const sass = require("sass");
 const postcss = require("postcss");
 
 function buildStyles(entry) {
+  console.log(`Building "${entry}"`);
+
   const sourceFileName = path.basename(entry);
   const outputFileName = sourceFileName.replace(/\.scss$/, ".css");
   const outputFolder = path.join(
@@ -58,18 +60,23 @@ function buildStyles(entry) {
     });
 }
 
-const entry = path.resolve(__dirname, "../css/uitk-ag-theme.scss");
+const inputFolder = path.resolve(__dirname, "../css");
+const entries = fs
+  .readdirSync(inputFolder)
+  .filter((e) => !path.basename(e).match(/^_/))
+  .map((x) => path.resolve(inputFolder, x));
 
 function tryBuildStyles() {
   try {
-    buildStyles(entry);
-    console.log("Done");
+    for (let entry of entries) {
+      buildStyles(entry);
+    }
+    console.log(`Done`);
   } catch (exc) {
     console.error(exc);
   }
 }
 
-console.log(`Building "${entry}"`);
 tryBuildStyles();
 
 let isWatch = false;
@@ -81,7 +88,9 @@ process.argv.forEach((p) => {
 
 if (isWatch) {
   chokidar.watch(path.resolve(__dirname, "../css/")).on("change", (path) => {
-    console.log(`"${path}" changed. Rebuilding "${entry}"`);
+    for (let entry of entries) {
+      console.log(`"${path}" changed. Rebuilding "${entry}"`);
+    }
     tryBuildStyles();
   });
 }
