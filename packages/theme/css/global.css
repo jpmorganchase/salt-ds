@@ -8,7 +8,7 @@
  * - color
  */
 
- .uitk-theme {
+.uitk-theme {
   color: var(--uitk-text-primary-foreground);
   font-family: var(--uitk-typography-fontFamily);
   font-size: var(--uitk-text-fontSize);

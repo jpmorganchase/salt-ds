@@ -68,7 +68,6 @@
   --uitk-text-code-fontFamily: var(--uitk-typography-fontFamily-code);
 }
 
-
 /* Sizes by density */
 .uitk-density-touch {
   --uitk-text-h1-fontSize: 42px;
