@@ -5,18 +5,20 @@
   --uitkAccordion-summary-background-active: none;
   --uitkAccordion-summary-paddingLeft: 0;
   --uitkAccordion-summary-background-hover: transparent;
+  --accordion-padding-left: var(--uitk-size-unit);
+  --accordion-section-padding: calc(var(--uitk-size-unit) * 2) 0;
   --ifm-link-decoration: var(--uitk-text-link-textDecoration);
 
   height: calc(100% - var(--keyline-height));
 }
 
 .accordion .section {
-  padding: calc(var(--uitk-size-unit) * 2) 0;
+  padding: var(--accordion-section-padding);
 }
 
 .accordion .summary h2 {
   line-height: var(--accordion-summary-height);
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--accordion-padding-left);
 }
 
 /* Override Salt accordion styles */
