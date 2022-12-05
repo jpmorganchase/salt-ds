@@ -142,6 +142,8 @@ Palette: token renaming emphasis to variants; color is the same where not stated
 - --uitk-palette-interact-background-disabled-medium
 - --uitk-palette-interact-background-low
 - --uitk-palette-interact-background-disabled-low
++ --uitk-palette-interact-background: transparent
++ --uitk-palette-interact-background-disabled: transparent
 
 - --uitk-palette-error-background-high
 + --uitk-palette-error-background-emphasize
