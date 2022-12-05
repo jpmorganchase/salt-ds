@@ -1,0 +1,16 @@
+.supportContributionsCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--uitk-size-unit) * 3);
+  padding-bottom: calc(var(--uitk-size-unit) * 3);
+}
+
+.supportContributionsCards > a {
+  min-width: 432px;
+}
+
+@media screen and (max-width: 996px) {
+  .supportContributionsCards {
+    flex-direction: column;
+  }
+}

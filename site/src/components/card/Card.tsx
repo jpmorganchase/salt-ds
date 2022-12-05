@@ -13,17 +13,19 @@ import useOnScreen from "../../utils/useOnScreen";
 import styles from "./Card.module.css";
 
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  inlineIcon?: JSX.Element;
   title: string;
   description: string;
   url: string;
-  footer: string;
+  footer: string | JSX.Element;
   keylineColor: CSSProperties["color"];
   keyLineAnimation?: boolean;
 }
 
 const Card = ({
   icon,
+  inlineIcon,
   title,
   description,
   url,
@@ -44,11 +46,16 @@ const Card = ({
       className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}
       to={url}
     >
-      <div className={styles.iconContainer}>
-        {cloneElement(icon, { ...icon.props, className: styles.icon })}
-      </div>
+      {icon && (
+        <div className={styles.iconContainer}>
+          {cloneElement(icon, { ...icon.props, className: styles.icon })}
+        </div>
+      )}
       <div className={styles.cardContent}>
-        <h2 className={styles.cardTitle}>{title}</h2>
+        <span className={styles.cardTitle}>
+          <h2>{title}</h2>
+          {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
+        </span>
         <p className={styles.cardDescription}>{description}</p>
         <p className={styles.cardFooter}>{footer}</p>
       </div>

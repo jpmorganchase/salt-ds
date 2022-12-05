@@ -13,6 +13,7 @@
 
 .cardTitle {
   --ifm-heading-margin-bottom: var(--uitk-size-unit);
+  --uitkIcon-color: var(--uitk-color-gray-900);
 }
 
 .card {
@@ -30,6 +31,15 @@
 
 .card:hover .icon {
   transform: scale(1.1);
+}
+
+.cardTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inlineIcon {
+  display: flex;
 }
 
 .iconContainer {
