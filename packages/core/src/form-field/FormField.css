@@ -282,9 +282,10 @@
   background: var(--uitkFormField-background, var(--formField-background));
 }
 
+/* TODO: I don't think this is needed, but commenting until work on FF done
 .uitkFormField-primary.uitkFormField > :not(.uitkFormLabel):first-child {
   background: var(--uitkFormField-background, var(--formField-background));
-}
+} */
 
 .uitkFormField-labelLeft > .uitkFormLabel ~ :not(.uitkFormFieldHelperText) {
   background: var(--uitkFormField-background, var(--formField-background));
