@@ -132,13 +132,13 @@
   --formField-activationIndicator-color: var(--uitk-status-error-borderColor);
 }
 
-/* Error state styling when `emphasize={true}` */
-.uitkFormField-emphasize.uitkFormField-error {
+/* Error state styling when `variant="secondary"` */
+.uitkFormField-secondary.uitkFormField-error {
   --formField-background: var(--uitk-status-error-background-emphasize);
 }
 
-/* Warning state styling when `emphasize={true}` */
-.uitkFormField-emphasize.uitkFormField-warning {
+/* Warning state styling when `variant="secondary"` */
+.uitkFormField-secondary.uitkFormField-warning {
   --formField-background: var(--uitk-status-warning-background-emphasize);
 }
 

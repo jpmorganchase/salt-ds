@@ -7,8 +7,7 @@
 Remove .uitkEmphasisHigh, .uitkEmphasisLow, .uitkEmphasisMedium classes from components
 
 - Banner; replaces classes with `emphasize` prop
-- FormField; replaces classes with `emphasize` and `variant` prop
-- Card, Scrim, Overlay; replaces these classes with `variant` prop
+- Card, FormField, Scrim, Overlay; replaces these classes with `variant` prop
 - CalendarDay; replaces these classes with `-unselectableLow`, `-unselectableMedium`
 
 Remove emphasis concept from characteristics; replace with variants (Low -> Tertiary, Medium -> Primary, High -> Secondary)

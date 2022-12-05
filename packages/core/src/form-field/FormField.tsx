@@ -62,10 +62,6 @@ export interface FormFieldProps
    * Outer focus ring focus will not be applied. Defaults to false.
    */
   disableFocusRing?: boolean;
-  /**
-   * Emphasized styling by applying background on validation states; defaults to false
-   */
-  emphasize?: boolean;
   // I hate this fullWidth business. We should support a width prop. The default should be 100% (standard block behaviour)
   // we should also support 'auto' or explicit numeric values
   /**
@@ -200,7 +196,6 @@ export const FormField = forwardRef(
       className,
       disabled,
       disableFocusRing = false,
-      emphasize = false,
       fullWidth = true,
       hasStatusIndicator,
       HelperTextComponent = FormHelperText,
@@ -274,7 +269,6 @@ export const FormField = forwardRef(
           [withBaseName("labelTop")]: labelTop,
           [withBaseName("labelLeft")]: labelLeft,
           [withBaseName(`withHelperText`)]: inlineHelperText,
-          [withBaseName(`emphasize`)]: emphasize,
           [withBaseName(variant)]: variant,
         },
         className
