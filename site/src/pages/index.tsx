@@ -27,7 +27,7 @@ function HomepageHeader() {
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
-          <Link to="/getting-started">
+          <Link to="/getting-started" className={styles.heroButton}>
             <Button variant="cta">Start using Salt</Button>
           </Link>
         </div>

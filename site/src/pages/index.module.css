@@ -29,6 +29,10 @@
   padding: 0 calc(var(--uitk-size-unit) * 5);
 }
 
+.heroBanner .heroButton {
+  text-decoration: none;
+}
+
 .heroImage {
   max-width: 100%;
   flex: 2;
