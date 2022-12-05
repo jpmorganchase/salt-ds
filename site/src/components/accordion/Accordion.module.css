@@ -4,6 +4,7 @@
   --uitkAccordion-summary-background: none;
   --uitkAccordion-summary-background-active: none;
   --uitkAccordion-summary-paddingLeft: 0;
+  --ifm-link-decoration: var(--uitk-text-link-textDecoration);
 
   height: calc(100% - var(--keyline-height));
 }
@@ -13,9 +14,6 @@
 }
 
 .accordion .summary h2 {
-  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
-
-  font-weight: var(--uitk-text-h2-fontWeight);
   line-height: var(--accordion-summary-height);
   padding-left: var(--uitk-size-unit);
 }
@@ -41,15 +39,8 @@
 
 /* ----------------------------- */
 
-@keyframes swing-in-left-bck {
-  0% {
-    transform: rotateY(-70deg);
-    transform-origin: left;
-    opacity: 0;
-  }
-  100% {
-    transform: rotateY(0);
-    transform-origin: left;
-    opacity: 1;
+@media screen and (max-width: 768px) {
+  .summary :global(.uitkIcon) {
+    --uitk-size-icon-base: var(--uitk-size-unit);
   }
 }
