@@ -1,15 +1,16 @@
 .uitk-theme {
-  /* Body text (default), tokens that don't vary by density */
-  --uitk-text-base-lineHeight: var(--uitk-typography-lineHeight);
-  --uitk-text-fontFamily: var(--uitk-typography-fontFamily);
-  --uitk-text-fontWeight: var(--uitk-typography-fontWeight-regular);
-  --uitk-text-fontWeight-small: var(--uitk-typography-fontWeight-light);
-  --uitk-text-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
+  /* Misc */
   --uitk-text-letterSpacing: 0;
   --uitk-text-textAlign: left;
   --uitk-text-textAlign-embedded: center;
   --uitk-text-textDecoration: none;
   --uitk-text-textTransform: none;
+
+  /* Body text (should be used as default) */
+  --uitk-text-fontFamily: var(--uitk-typography-fontFamily);
+  --uitk-text-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-text-fontWeight-small: var(--uitk-typography-fontWeight-light);
+  --uitk-text-fontWeight-strong: var(--uitk-typography-fontWeight-semiBold);
 
   /* H1 */
   --uitk-text-h1-fontWeight: var(--uitk-typography-fontWeight-bold);
@@ -50,8 +51,6 @@
   --uitk-text-display3-fontWeight-small: var(--uitk-typography-fontWeight-regular);
 
   /* Colors */
-  --uitk-text-background: transparent;
-  --uitk-text-background-hover: transparent;
   --uitk-text-background-selected: var(--uitk-palette-interact-background-active);
 
   --uitk-text-primary-foreground: var(--uitk-palette-neutral-primary-foreground);
@@ -68,6 +67,7 @@
   /* Code */
   --uitk-text-code-fontFamily: var(--uitk-typography-fontFamily-code);
 }
+
 
 /* Sizes by density */
 .uitk-density-touch {

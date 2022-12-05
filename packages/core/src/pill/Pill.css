@@ -48,7 +48,7 @@
   font-size: var(--pill-fontSize);
   height: var(--uitkPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
   letter-spacing: var(--uitkPill-letterSpacing, 0);
-  line-height: var(--uitkPill-lineHeight, var(--uitk-text-base-lineHeight));
+  line-height: var(--uitkPill-lineHeight, var(--uitk-text-label-lineHeight));
   max-width: var(--uitkPill-maxWidth, 160px);
   min-width: var(--uitkPill-minWidth, 40px);
   min-height: var(--uitkPill-minHeight, var(--uitk-text-minHeight));
