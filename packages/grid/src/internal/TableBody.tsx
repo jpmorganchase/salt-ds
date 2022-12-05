@@ -39,7 +39,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     [selectedCellRange]
   );
 
-  const { cursorRowIdx, cursorColIdx } = useCursorContext();
+  const { isFocused, cursorRowIdx, cursorColIdx } = useCursorContext();
 
   const { editMode, startEditMode } = useEditorContext();
 

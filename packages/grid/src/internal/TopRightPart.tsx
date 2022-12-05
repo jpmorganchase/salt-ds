@@ -28,7 +28,11 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
       })}
       data-testid="grid-top-right-part"
     >
-      <table className={withBaseName("table")} ref={tableRef}>
+      <table
+        className={withBaseName("table")}
+        ref={tableRef}
+        role="presentation"
+      >
         <TableColGroup columns={columns} />
         <thead>
           <GroupHeaderRow groups={columnGroups} />

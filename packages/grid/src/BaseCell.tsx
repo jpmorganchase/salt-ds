@@ -30,14 +30,17 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       data-row-index={row.index}
       data-column-index={column.index}
       data-testid={isFocused ? "grid-cell-focused" : undefined}
-      aria-colindex={column.index}
+      // aria-colindex uses one-based array indexing
+      aria-colindex={column.index + 1}
+      // aria-rowindex uses one-based array indexing
+      aria-rowindex={row.index + 1}
       role="gridcell"
       className={cn(withBaseName(), className)}
       style={style}
+      tabIndex={isFocused ? 0 : -1}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
-          [withBaseName("focused")]: isFocused,
           [withBaseName("editable")]: isEditable,
           [withBaseName("selected")]: isSelected,
         })}
