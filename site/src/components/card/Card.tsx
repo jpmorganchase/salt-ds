@@ -7,10 +7,17 @@ import {
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { useTheme } from "@jpmorganchase/uitk-core";
+import { TearOutIcon } from "@jpmorganchase/uitk-icons";
 
 import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Card.module.css";
+import { isExternal } from "util/types";
+
+export interface FooterProps {
+  isExternalLink?: boolean;
+  footerText: string;
+}
 
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   icon?: JSX.Element;
@@ -18,7 +25,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   title: string;
   description: string;
   url: string;
-  footer: string | JSX.Element;
+  footer: FooterProps;
   keylineColor: CSSProperties["color"];
   keyLineAnimation?: boolean;
 }
@@ -29,7 +36,7 @@ const Card = ({
   title,
   description,
   url,
-  footer,
+  footer: { footerText, isExternalLink },
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
@@ -57,7 +64,9 @@ const Card = ({
           {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
         </span>
         <p className={styles.cardDescription}>{description}</p>
-        <p className={styles.cardFooter}>{footer}</p>
+        <div className={styles.cardFooter}>
+          <p>{footerText}</p> {isExternalLink && <TearOutIcon />}
+        </div>
       </div>
       <div
         className={clsx(styles.keyline, {

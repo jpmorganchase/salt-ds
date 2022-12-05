@@ -70,7 +70,16 @@
 
 .cardFooter {
   margin-bottom: 0;
+  display: flex;
+}
+
+.cardFooter > p {
   text-decoration: underline;
+  padding-right: calc(var(--uitk-size-unit) / 3);
+}
+
+.cardFooter > svg {
+  margin-top: calc(var(--uitk-size-unit) / 4);
 }
 
 .cardFooter:hover {
