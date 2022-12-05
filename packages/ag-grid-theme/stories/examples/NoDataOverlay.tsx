@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Card } from "@jpmorganchase/uitk-core";
+import { Button, Card, Switch } from "@jpmorganchase/uitk-core";
 import { WarningIcon } from "@jpmorganchase/uitk-icons";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -17,7 +17,16 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     height: "100%",
   });
   const containerRef = useRef<HTMLDivElement>(null);
-  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
+
   useEffect(() => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
@@ -114,18 +123,27 @@ const NoDataOverlay = (props: AgGridReactProps) => {
   );
 
   return (
-    <div
-      style={{ marginTop: 25, position: "relative" }}
-      ref={containerRef}
-      tabIndex={0}
-    >
-      {modal}
-      <div style={{ height: 800, width: 800 }} {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumns}
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
         />
+      </div>
+      <div
+        style={{ marginTop: 25, position: "relative" }}
+        ref={containerRef}
+        tabIndex={0}
+      >
+        {modal}
+        <div style={{ height: 800, width: 800 }} {...containerProps}>
+          <AgGridReact
+            {...agGridProps}
+            {...props}
+            columnDefs={dataGridExampleColumns}
+          />
+        </div>
       </div>
     </div>
   );

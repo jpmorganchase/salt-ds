@@ -1,13 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../uitk-ag-theme.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const RefreshGridContentExample = function RefreshGridContentExample(
   props: AgGridReactProps
 ) {
-  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -49,23 +57,32 @@ const RefreshGridContentExample = function RefreshGridContentExample(
 
   return (
     <div>
-      <Button onClick={onUpdateSomeValues}>Update Some Data</Button>
-      &nbsp;&nbsp;&nbsp;
-      <Button onClick={onFlashOneCell}>Flash One Cell</Button>
-      &nbsp;&nbsp;&nbsp;
-      <Button onClick={onFlashTwoRows}>Flash Two Rows</Button>
-      &nbsp;&nbsp;&nbsp;
-      <Button onClick={onFlashTwoColumns}>Flash Two Columns</Button>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
-        <AgGridReact
-          columnDefs={props.columnDefs}
-          masterDetail
-          {...agGridProps}
-          {...props}
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
         />
+      </div>
+      <div>
+        <Button onClick={onUpdateSomeValues}>Update Some Data</Button>
+        &nbsp;&nbsp;&nbsp;
+        <Button onClick={onFlashOneCell}>Flash One Cell</Button>
+        &nbsp;&nbsp;&nbsp;
+        <Button onClick={onFlashTwoRows}>Flash Two Rows</Button>
+        &nbsp;&nbsp;&nbsp;
+        <Button onClick={onFlashTwoColumns}>Flash Two Columns</Button>
+        <div
+          style={{ marginTop: 25, height: 800, width: 800 }}
+          {...containerProps}
+        >
+          <AgGridReact
+            columnDefs={props.columnDefs}
+            masterDetail
+            {...agGridProps}
+            {...props}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const FloatingFilter = (props: AgGridReactProps) => {
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -15,14 +24,26 @@ const FloatingFilter = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact
-        defaultColDef={{ floatingFilter: true }}
-        columnDefs={customFilterExampleColumns}
-        rowData={dataGridExampleData}
-        {...agGridProps}
-        {...props}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ marginTop: 25, height: 800, width: 800 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          defaultColDef={{ floatingFilter: true }}
+          columnDefs={customFilterExampleColumns}
+          rowData={dataGridExampleData}
+          {...agGridProps}
+          {...props}
+        />
+      </div>
     </div>
   );
 };
