@@ -66,10 +66,10 @@ const ButtonsCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
       direction="row"
       gap={1}
     >
-      <Button>
+      <Button tabIndex={-1}>
         <FavoriteIcon />
       </Button>
-      <Button>
+      <Button tabIndex={-1}>
         <LinkedIcon />
       </Button>
     </FlexLayout>

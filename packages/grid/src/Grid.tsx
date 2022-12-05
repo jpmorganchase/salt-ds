@@ -417,8 +417,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       );
 
       const nestedInteractive = cellToFocus?.querySelector('[tabindex="0"]');
+      const nestedInteractives =
+        cellToFocus?.querySelectorAll("[tabindex]") ?? [];
 
-      const nodeToFocus = nestedInteractive ?? cellToFocus;
+      let nodeToFocus = cellToFocus;
+
+      if (nestedInteractives.length === 1) {
+        nodeToFocus = nestedInteractive;
+      }
 
       if (nodeToFocus) {
         (nodeToFocus as HTMLElement).focus();
