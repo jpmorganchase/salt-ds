@@ -52,9 +52,9 @@ For example, a Button is a component on which a user can perform an action, so y
 Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest ToolkitProvider. Considering the above, we would get that in light
 theme, --uitk-actionable-primary-background resolves to `var(--uitk-action-primary-background)`, which in light theme is `var(--uitk-color-gray-60)` and in dark theme is `var(--uitk-color-gray-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
 
-### Simple customisation using characteristics
+### Simple customization using characteristics
 
-In the following example, we will show how to customise the Card component through characteristics. Currently, Card only has one variant, using tokens such as `---uitk-container-primary-background` all of it's styling purposes. Here's how it looks by default, shown on a purple Panel for demo purposes:
+In the following example, we will show how to customize the Card component through characteristics. Currently, Card only has one variant, using tokens such as `---uitk-container-primary-background` all of its styling purposes. Here's how it looks by default, shown on a purple Panel for demo purposes:
 
 <Panel style={{ background: "var(--uitk-color-purple-10)" }}>
   <Card>
@@ -99,7 +99,7 @@ Alternatively, we could actually redefine our design to mean that all Card compo
 }
 ```
 
-Note how no classname is needed to be passed in, we have just redefined the Card's styling at a higher specificity, to produce the following styling:
+Note how no class name is needed to be passed in. We have just redefined the Card's styling at a higher specificity, to produce the following styling:
 
 <Panel className="my-app" style={{ background: "var(--uitk-color-purple-10)" }}>
   <Card className="uitkCard">
