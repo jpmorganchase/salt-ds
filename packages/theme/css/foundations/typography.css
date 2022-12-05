@@ -9,9 +9,3 @@
   --uitk-typography-fontWeight-bold: 700;
   --uitk-typography-fontWeight-extraBold: 800;
 }
-
-/* TODO maybe move to global.css */
-.uitk-theme {
-  font-family: var(--uitk-typography-fontFamily);
-  font-size: 14px;
-}
