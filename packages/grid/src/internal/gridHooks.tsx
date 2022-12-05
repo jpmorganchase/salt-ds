@@ -247,11 +247,11 @@ export function useRowModels<T>(
 // Creates column group models.
 export const useColumnGroups = (
   grpPs: ColumnGroupProps[],
-  startIdx: number
+  previousGroups?: GridColumnGroupModel[]
 ): GridColumnGroupModel[] =>
   useMemo(
     () =>
-      grpPs.map((data, i) => {
+      grpPs.reduce((groups, data, i) => {
         const childrenIds = Children.toArray(data.children)
           .map((child) => {
             if (!isValidElement(child)) {
@@ -261,17 +261,29 @@ export const useColumnGroups = (
           })
           .filter((x) => x !== undefined) as string[];
         const colSpan = childrenIds.length;
+        const startIdx = previousGroups?.length ?? 0;
+        const index = i + startIdx;
 
-        return {
+        let colIndex = 0;
+
+        if(previousGroups && previousGroups.length > 0) {
+          let lastPreviousGroup = groups[i - 1] ?? previousGroups.slice(-1)[0];
+          colIndex = lastPreviousGroup.colIndex + lastPreviousGroup.colSpan;
+        }
+
+        groups.push({
           data,
-          index: i + startIdx,
+          index,
           childrenIds,
           colSpan,
+          colIndex,
           columnSeparator: "regular",
           rowSeparator: "regular",
-        };
-      }),
-    [grpPs, startIdx]
+        });
+
+        return groups;
+      }, [] as GridColumnGroupModel[]),
+    [grpPs, previousGroups]
   );
 
 // Visible range of column groups.
@@ -513,11 +525,11 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const rightGrpPs = useFlatten(rightGrpMap);
   const midGrpPs = useFlatten(midGrpMap);
 
-  const leftGroups = useColumnGroups(leftGrpPs, 0);
-  const midGroups = useColumnGroups(midGrpPs, leftGroups.length);
+  const leftGroups = useColumnGroups(leftGrpPs);
+  const midGroups = useColumnGroups(midGrpPs, leftGroups);
   const rightGroups = useColumnGroups(
     rightGrpPs,
-    leftGroups.length + midGroups.length
+    midGroups
   );
 
   const leftCols: GridColumnModel<T>[] = useCols(leftColInfos, 0, leftGroups);
@@ -581,6 +593,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
     // );
     const { id, pinned } = columnInfo.props;
     const index = getChildIndex(id);
+
     getColMapSet(pinned)(makeMapAdder(index, columnInfo));
   }, []);
 

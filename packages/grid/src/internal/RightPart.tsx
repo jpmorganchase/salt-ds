@@ -4,7 +4,7 @@ import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./RightPart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
 import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridRightPart");
@@ -14,6 +14,7 @@ export interface RightPartProps<T> {
   onWheel: EventListener;
   isRaised?: boolean;
   columns: GridColumnModel<T>[];
+  groups: GridColumnGroupModel[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
   setHoverOverRowKey: (key: string | undefined) => void;
@@ -25,6 +26,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
     rightRef,
     onWheel,
     columns,
+    groups,
     isRaised,
     rows,
     hoverOverRowKey,
@@ -48,6 +50,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
           <TableBody
             columns={columns}
             rows={rows}
+            groups={groups}
             hoverRowKey={hoverOverRowKey}
             setHoverRowKey={setHoverOverRowKey}
             zebra={zebra}

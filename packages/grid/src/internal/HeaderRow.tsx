@@ -10,18 +10,25 @@ const withBaseName = makePrefixer("uitkGridHeaderRow");
 export interface HeaderRowProps<T> {
   columns: GridColumnModel<T>[];
   gap?: number;
+  rowIndex: number;
+  cursorColHeaderIdx?: number;
 }
 
 export function HeaderRow<T>(props: HeaderRowProps<T>) {
-  const { columns, gap } = props;
+  const { columns, gap, rowIndex, cursorColHeaderIdx } = props;
   return (
-    <tr className={withBaseName()} role="row">
+    <tr className={withBaseName()} role="row" aria-rowindex={rowIndex}>
       {columns.map((column) => {
         const Cell = column.info.props.headerComponent || HeaderCell;
         const CellValue =
           column.info.props.headerValueComponent || HeaderCellValue;
+        const isFocused = cursorColHeaderIdx === column.index;
         return (
-          <Cell key={column.info.props.id} column={column}>
+          <Cell
+            key={column.info.props.id}
+            column={column}
+            isFocused={isFocused}
+          >
             <CellValue column={column} />
           </Cell>
         );

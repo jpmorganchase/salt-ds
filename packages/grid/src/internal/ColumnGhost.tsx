@@ -37,7 +37,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
       <table>
         <TableColGroup columns={[movingColumn]} />
         <thead>
-          <HeaderRow columns={[movingColumn]} />
+          <HeaderRow columns={[movingColumn]} rowIndex={-1} />
         </thead>
         <TableBody
           columns={[movingColumn]}

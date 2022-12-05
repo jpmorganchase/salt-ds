@@ -146,6 +146,7 @@ export interface GridColumnGroupModel {
   index: number;
   data: ColumnGroupProps;
   childrenIds: string[];
+  colIndex: number;
   rowSeparator: ColumnGroupRowSeparatorType;
   columnSeparator: ColumnGroupColumnSeparatorType;
   colSpan: number;
@@ -183,6 +184,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const headersRef = useRef<HTMLDivElement>(null);
 
   // What caused the latest scroll change. User means the UI (mouse events), table means the component initiated scrolling (scrollToCell was called for example)
   const [scrollSource, setScrollSource] = useState<"user" | "table">("user");
@@ -200,6 +202,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(0);
   const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(0);
+
+  const [cursorHeaderRowIdx, setCursorHeaderRowIdx] = useState<
+    number | undefined
+  >(undefined);
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -406,9 +412,30 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const focusCellElement = (rowIdx: number, colIdx: number) => {
     setTimeout(() => {
-      const nodeToFocus = rootRef.current?.querySelector(
+      const cellToFocus = rootRef.current?.querySelector(
         `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
       );
+
+      const nestedInteractive = cellToFocus?.querySelector('[tabindex="0"]');
+
+      const nodeToFocus = nestedInteractive ?? cellToFocus;
+
+      if (nodeToFocus) {
+        (nodeToFocus as HTMLElement).focus();
+      }
+    }, 0);
+  };
+
+  const focusHeaderCellElement = (colIdx: number) => {
+    setTimeout(() => {
+      const cellToFocus = rootRef.current?.querySelector(
+        `.uitkGridHeaderCell[data-column-index="${colIdx}"]`
+      );
+
+      const nestedInteractive = cellToFocus?.querySelector('[tabindex="0"]');
+
+      const nodeToFocus = nestedInteractive ?? cellToFocus;
+
       if (nodeToFocus) {
         (nodeToFocus as HTMLElement).focus();
       }
@@ -482,14 +509,27 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const rangeSelection = useRangeSelection(cellSelectionMode);
 
+  const moveHeaderCursor = useCallback(
+    (newColIdx?: number) => {
+      const colIdx = clamp(newColIdx, 0, cols.length - 1);
+      setCursorRowIdx(undefined);
+      setCursorHeaderRowIdx(0);
+      setCursorColIdx(colIdx);
+      focusHeaderCellElement(colIdx);
+    },
+    [setCursorRowIdx, setCursorHeaderRowIdx, setCursorColIdx, focusHeaderCellElement, cols]
+  );
+
   const moveCursor = useCallback(
-    (rowIdx?: number, colIdx?: number) => {
+    (newRowIdx?: number, newColIdx?: number) => {
       cancelEditMode();
-      if (rowData.length < 1 || cols.length < 1) {
+      const colIdx = clamp(newColIdx, 0, cols.length - 1);
+      if (newRowIdx === undefined || newRowIdx === -1) {
+        moveHeaderCursor(colIdx);
         return;
       }
-      rowIdx = clamp(rowIdx, 0, rowData.length - 1);
-      colIdx = clamp(colIdx, 0, cols.length - 1);
+
+      const rowIdx = clamp(newRowIdx, 0, rowData.length - 1);
       setCursorRowIdx(rowIdx);
       setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
@@ -504,8 +544,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cols,
       rootRef.current,
       scrollToCell,
-      endEditMode,
+      cancelEditMode,
       rangeSelection.onCursorMove,
+      moveHeaderCursor,
     ]
   );
 
@@ -575,9 +616,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       isFocused,
       cursorRowIdx,
       cursorColIdx,
+      cursorHeaderRowIdx,
       moveCursor,
+      moveHeaderCursor,
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor, isFocused]
+    [cursorRowIdx, cursorColIdx, cursorHeaderRowIdx, moveCursor, moveHeaderCursor, isFocused]
   );
 
   const onColumnMove: GridColumnMoveHandler = (
@@ -774,88 +817,117 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const navigationKeyHandler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       const { key } = event;
-      switch (key) {
-        case "ArrowLeft":
-          moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
-          break;
-        case "ArrowRight":
-          moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
-          break;
-        case "ArrowUp":
-          moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
-          break;
-        case "ArrowDown":
-          moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
-          break;
-        case "PageUp":
-          moveCursor((cursorRowIdx || 0) - pageSize, cursorColIdx);
-          break;
-        case "PageDown":
-          moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
-          break;
-        case "Home":
-          if (!event.ctrlKey) {
-            moveCursor(cursorRowIdx, 0);
-          } else {
-            moveCursor(0, 0);
-          }
-          break;
-        case "End":
-          if (!event.ctrlKey) {
-            moveCursor(cursorRowIdx, cols.length - 1);
-          } else {
-            moveCursor(rowData.length - 1, cols.length - 1);
-          }
-          break;
-        case "Tab":
-          if (
-            !event.ctrlKey &&
-            !event.metaKey &&
-            !event.altKey &&
-            editMode &&
-            cursorColIdx != null &&
-            cursorRowIdx != null
-          ) {
-            if (!event.shiftKey) {
-              if (cursorColIdx < cols.length - 1) {
-                moveCursor(cursorRowIdx, cursorColIdx + 1);
-              } else {
-                if (cursorRowIdx < rowData.length - 1) {
-                  moveCursor(cursorRowIdx + 1, 0);
-                }
-              }
-            } else {
-              if (cursorColIdx > 0) {
-                moveCursor(cursorRowIdx, cursorColIdx - 1);
-              } else {
-                if (cursorRowIdx > 0) {
-                  moveCursor(cursorRowIdx - 1, cols.length - 1);
-                }
-              }
-            }
-          } else {
+      const headerEvent = headersRef.current?.contains(
+        event.target as HTMLElement
+      );
+
+      if (headerEvent) {
+        switch (key) {
+          case "ArrowLeft":
+            moveHeaderCursor((cursorColIdx || 0) - 1);
+            break;
+          case "ArrowRight":
+            moveHeaderCursor((cursorColIdx || 0) + 1);
+            break;
+          case "ArrowDown":
+            moveCursor(0, cursorColIdx);
+            break;
+          case "PageDown":
+            moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
+            break;
+          case "Home":
+            moveHeaderCursor(0);
+            break;
+          case "End":
+            moveHeaderCursor(cols.length - 1);
+            break;
+          default:
             return false;
-          }
-          break;
-        case "Enter":
-          if (
-            editMode &&
-            !event.ctrlKey &&
-            !event.metaKey &&
-            !event.altKey &&
-            !event.shiftKey
-          ) {
-            if (cursorRowIdx == undefined) {
+        }
+      } else {
+        switch (key) {
+          case "ArrowLeft":
+            moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
+            break;
+          case "ArrowRight":
+            moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
+            break;
+          case "ArrowUp":
+            moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
+            break;
+          case "ArrowDown":
+            moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
+            break;
+          case "PageUp":
+            moveCursor((cursorRowIdx || 0) - pageSize, cursorColIdx);
+            break;
+          case "PageDown":
+            moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
+            break;
+          case "Home":
+            if (!event.ctrlKey) {
+              moveCursor(cursorRowIdx, 0);
+            } else {
               moveCursor(0, 0);
-            } else {
-              moveCursor(cursorRowIdx + 1, cursorColIdx);
             }
-          } else {
+            break;
+          case "End":
+            if (!event.ctrlKey) {
+              moveCursor(cursorRowIdx, cols.length - 1);
+            } else {
+              moveCursor(rowData.length - 1, cols.length - 1);
+            }
+            break;
+          case "Tab":
+            if (
+              !event.ctrlKey &&
+              !event.metaKey &&
+              !event.altKey &&
+              editMode &&
+              cursorColIdx != null &&
+              cursorRowIdx != null
+            ) {
+              if (!event.shiftKey) {
+                if (cursorColIdx < cols.length - 1) {
+                  moveCursor(cursorRowIdx, cursorColIdx + 1);
+                } else {
+                  if (cursorRowIdx < rowData.length - 1) {
+                    moveCursor(cursorRowIdx + 1, 0);
+                  }
+                }
+              } else {
+                if (cursorColIdx > 0) {
+                  moveCursor(cursorRowIdx, cursorColIdx - 1);
+                } else {
+                  if (cursorRowIdx > 0) {
+                    moveCursor(cursorRowIdx - 1, cols.length - 1);
+                  }
+                }
+              }
+            } else {
+              return false;
+            }
+            break;
+          case "Enter":
+            if (
+              editMode &&
+              !event.ctrlKey &&
+              !event.metaKey &&
+              !event.altKey &&
+              !event.shiftKey
+            ) {
+              if (cursorRowIdx == undefined) {
+                moveCursor(0, 0);
+              } else {
+                moveCursor(cursorRowIdx + 1, cursorColIdx);
+              }
+            } else {
+              return false;
+            }
+            break;
+          default:
             return false;
-          }
-          break;
-        default:
-          return false;
+        }
       }
       event.preventDefault();
       event.stopPropagation();
@@ -958,7 +1030,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     )}
                     style={rootStyle}
                     ref={rootRef}
-                    // tabIndex={0}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
@@ -966,6 +1037,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     onBlur={onBlur}
                     data-name="grid-root"
                     role="grid"
+                    aria-colcount={cols.length}
+                    aria-rowcount={rowCount + headRowCount}
+                    aria-multiselectable={rowSelectionMode === "multi"}
                   >
                     <CellMeasure setRowHeight={setRowHeight} />
                     <Scrollable
@@ -981,68 +1055,75 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       leftRef={leftRef}
                       middleRef={middleRef}
                     />
-                    {!hideHeader && (
-                      <TopLeftPart
+                    <div ref={headersRef}>
+                      {!hideHeader && (
+                        <TopLeftPart
+                          onWheel={onWheel}
+                          columns={leftCols}
+                          columnGroups={leftGroups}
+                          isRaised={isLeftRaised}
+                        />
+                      )}
+                      {!hideHeader && (
+                        <TopPart
+                          columns={headVisibleColumns}
+                          columnGroups={visColGrps}
+                          topRef={topRef}
+                          onWheel={onWheel}
+                          midGap={midGap}
+                        />
+                      )}
+                      {!hideHeader && (
+                        <TopRightPart
+                          onWheel={onWheel}
+                          columns={rightCols}
+                          columnGroups={rightGroups}
+                          isRaised={isRightRaised}
+                        />
+                      )}
+                    </div>
+                    <div role="rowgroup">
+                      <LeftPart
+                        leftRef={leftRef}
                         onWheel={onWheel}
                         columns={leftCols}
-                        columnGroups={leftGroups}
+                        rows={rows}
+                        groups={leftGroups}
                         isRaised={isLeftRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
                       />
-                    )}
-                    {!hideHeader && (
-                      <TopPart
-                        columns={headVisibleColumns}
-                        columnGroups={visColGrps}
-                        topRef={topRef}
+                      <MiddlePart
+                        middleRef={middleRef}
                         onWheel={onWheel}
+                        columns={bodyVisibleColumns}
+                        rows={rows}
+                        groups={midGroups}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
                         midGap={midGap}
+                        zebra={zebra}
                       />
-                    )}
-                    {!hideHeader && (
-                      <TopRightPart
+                      <RightPart
+                        rightRef={rightRef}
                         onWheel={onWheel}
                         columns={rightCols}
-                        columnGroups={rightGroups}
+                        rows={rows}
+                        groups={rightGroups}
                         isRaised={isRightRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
                       />
-                    )}
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      isRaised={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
-                    <MiddlePart
-                      middleRef={middleRef}
-                      onWheel={onWheel}
-                      columns={bodyVisibleColumns}
-                      rows={rows}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      midGap={midGap}
-                      zebra={zebra}
-                    />
-                    <RightPart
-                      rightRef={rightRef}
-                      onWheel={onWheel}
-                      columns={rightCols}
-                      rows={rows}
-                      isRaised={isRightRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
-                    <ColumnDropTarget x={activeTarget?.x} />
-                    <ColumnGhost
-                      columns={cols}
-                      rows={rows}
-                      dragState={dragState}
-                      zebra={zebra}
-                    />
+                      <ColumnDropTarget x={activeTarget?.x} />
+                      <ColumnGhost
+                        columns={cols}
+                        rows={rows}
+                        dragState={dragState}
+                        zebra={zebra}
+                      />
+                    </div>
                   </div>
                 </EditorContext.Provider>
               </SizingContext.Provider>

@@ -3,7 +3,7 @@ import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./MiddlePart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
 import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridMiddlePart");
@@ -12,6 +12,7 @@ export interface MiddlePartProps<T> {
   middleRef: RefObject<HTMLDivElement>;
   onWheel: EventListener;
   columns: GridColumnModel<T>[];
+  groups: GridColumnGroupModel[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
   setHoverOverRowKey: (key: string | undefined) => void;
@@ -25,6 +26,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
     onWheel,
     columns,
     rows,
+    groups,
     hoverOverRowKey,
     setHoverOverRowKey,
     midGap,
@@ -44,6 +46,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
           <TableColGroup columns={columns} gap={midGap} />
           <TableBody
             columns={columns}
+            groups={groups}
             rows={rows}
             hoverRowKey={hoverOverRowKey}
             setHoverRowKey={setHoverOverRowKey}

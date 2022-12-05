@@ -8,7 +8,7 @@ import "./TableRow.css";
 import { BaseCell } from "../BaseCell";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";
@@ -21,6 +21,7 @@ export interface TableRowProps<T> {
   isHoverOver?: boolean;
   zebra?: boolean;
   columns: GridColumnModel<T>[];
+  groups?: GridColumnGroupModel[];
   cursorColIdx?: number;
   onMouseEnter?: MouseEventHandler<HTMLTableRowElement>;
   onMouseLeave?: MouseEventHandler<HTMLTableRowElement>;
@@ -36,6 +37,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     zebra,
     isHoverOver,
     columns,
+    groups,
     onMouseEnter,
     onMouseLeave,
     cursorColIdx,
@@ -50,8 +52,14 @@ export function TableRow<T>(props: TableRowProps<T>) {
     throw new Error(`Invalid row`);
   }
 
+  let startIndex = columns.length > 0 ? 1 : 0;
+  startIndex += groups && groups.length > 0 ? 1 : 0;
+
   return (
     <tr
+      // aria-rowindex uses one-based array indexing
+      aria-rowindex={startIndex + row.index + 1}
+      aria-selected={isSelected}
       className={cn(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,

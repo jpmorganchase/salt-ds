@@ -1,14 +1,18 @@
 import { AutoSizeHeaderCell, HeaderCellProps } from "./HeaderCell";
 import { useSelectionContext } from "./SelectionContext";
-import { MouseEventHandler } from "react";
-import { CheckboxIcon, makePrefixer } from "@jpmorganchase/uitk-core";
+import { ChangeEventHandler, useEffect } from "react";
+import { CheckboxBase } from "@jpmorganchase/uitk-core";
 import "./CheckboxCell.css";
 
 export function RowSelectionCheckboxHeaderCell<T>(props: HeaderCellProps<T>) {
+  const {
+    column: { index },
+    isFocused
+  } = props;
   const { selectAll, unselectAll, isAllSelected, isAnySelected } =
     useSelectionContext();
 
-  const onMousedown: MouseEventHandler<HTMLDivElement> = (event) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = () => {
     if (isAllSelected) {
       unselectAll();
     } else {
@@ -16,10 +20,20 @@ export function RowSelectionCheckboxHeaderCell<T>(props: HeaderCellProps<T>) {
     }
   };
 
+  useEffect(() => {
+    if (index === 0) {
+    }
+  }, [index]);
+
   return (
     <AutoSizeHeaderCell {...props}>
-      <div onMouseDown={onMousedown} className="uitkGridCheckboxCell">
-        <CheckboxIcon
+      <div className="uitkGridCheckboxHeaderCell">
+        <CheckboxBase
+          inputProps={{
+            "aria-label": "Select all rows",
+            tabIndex: isFocused ? 0 : -1
+          }}
+          onChange={handleChange}
           checked={isAllSelected}
           indeterminate={!isAllSelected && isAnySelected}
         />

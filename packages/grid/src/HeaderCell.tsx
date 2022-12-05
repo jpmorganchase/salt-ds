@@ -11,6 +11,7 @@ const withBaseName = makePrefixer("uitkGridHeaderCell");
 export interface HeaderCellProps<T> {
   column: GridColumnModel<T>;
   children: ReactNode;
+  isFocused?: boolean;
 }
 
 export interface HeaderCellSeparatorProps {
@@ -25,7 +26,7 @@ export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
 }
 
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
-  const { column, children } = props;
+  const { column, children, isFocused } = props;
   const { separator } = column;
   const { onResizeHandleMouseDown } = useSizingContext();
 
@@ -34,10 +35,12 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
 
   return (
     <th
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
       data-testid="column-header"
+      tabIndex={isFocused ? 0 : -1}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
@@ -61,7 +64,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
   const { column, children } = props;
   const { separator } = column;
   const valueContainerRef = useRef<HTMLDivElement>(null);
-  const { resizeColumn, rowHeight } = useSizingContext();
+  const { resizeColumn } = useSizingContext();
 
   useLayoutEffect(() => {
     const width = valueContainerRef.current
@@ -74,6 +77,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
 
   return (
     <th
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={withBaseName()}
       role="columnheader"

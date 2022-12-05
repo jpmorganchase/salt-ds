@@ -6,6 +6,7 @@ import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";
 import { useActiveOnWheel } from "./gridHooks";
+import { useCursorContext } from "../CursorContext";
 
 const withBaseName = makePrefixer("uitkGridTopRightPart");
 
@@ -20,6 +21,7 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
   const { onWheel, columns, columnGroups, isRaised } = props;
 
   const tableRef = useActiveOnWheel(onWheel);
+  const { cursorHeaderRowIdx } = useCursorContext();
 
   return (
     <div
@@ -36,7 +38,11 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
         <TableColGroup columns={columns} />
         <thead>
           <GroupHeaderRow groups={columnGroups} />
-          <HeaderRow columns={columns} />
+          <HeaderRow
+            columns={columns}
+            rowIndex={columnGroups.length > 0 ? 2 : 1}
+            cursorColHeaderIdx={cursorHeaderRowIdx}
+          />
           {/*TODO Do we need a toolbar?*/}
           {/*{showToolbar ? <HeaderToolbarRow columns={rightColumns} /> : null}*/}
         </thead>

@@ -1,6 +1,6 @@
 import { MouseEventHandler, useCallback, useMemo } from "react";
 import { TableRow } from "./TableRow";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
 import { getRowKeyAttribute } from "./utils";
 import { useSelectionContext } from "../SelectionContext";
 import { useEditorContext } from "../EditorContext";
@@ -8,6 +8,7 @@ import { useCursorContext } from "../CursorContext";
 
 export interface TableBodyProps<T> {
   columns: GridColumnModel<T>[];
+  groups?: GridColumnGroupModel[];
   rows: GridRowModel<T>[];
   hoverRowKey?: string;
   setHoverRowKey: (key: string | undefined) => void;
@@ -16,7 +17,7 @@ export interface TableBodyProps<T> {
 }
 
 export function TableBody<T>(props: TableBodyProps<T>) {
-  const { columns, rows, hoverRowKey, setHoverRowKey, gap, zebra } = props;
+  const { columns, rows, groups, hoverRowKey, setHoverRowKey, gap, zebra } = props;
   const { selRowIdxs, selectedCellRange } = useSelectionContext();
 
   const isCellInSelectedRange = useCallback(
@@ -39,7 +40,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     [selectedCellRange]
   );
 
-  const { isFocused, cursorRowIdx, cursorColIdx } = useCursorContext();
+  const { cursorRowIdx, cursorColIdx } = useCursorContext();
 
   const { editMode, startEditMode } = useEditorContext();
 
@@ -69,6 +70,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             row={row}
             onMouseEnter={onRowMouseEnter}
             columns={columns}
+            groups={groups}
             isHoverOver={row.key === hoverRowKey}
             isSelected={isSelected}
             cursorColIdx={cursorIdx}

@@ -14,14 +14,17 @@ export interface GroupHeaderCellProps {
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { group } = props;
   const { colSpan, columnSeparator, rowSeparator } = group;
-  const { name } = group.data;
+  const { colIndex } = group;
 
   return (
     <th
       className={withBaseName()}
       colSpan={colSpan}
+      aria-colspan={colSpan}
+      aria-colindex={colIndex + 1}
       data-testid="column-group-header"
       data-group-index={group.index}
+      role="columnheader"
     >
       {props.children}
       <div

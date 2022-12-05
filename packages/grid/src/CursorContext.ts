@@ -4,7 +4,9 @@ export interface CursorContext {
   isFocused: boolean;
   cursorRowIdx: number | undefined;
   cursorColIdx: number | undefined;
+  cursorHeaderRowIdx: number | undefined;
   moveCursor: (rowIdx: number, colIdx: number) => void;
+  moveHeaderCursor: (colIdx: number) => void;
 }
 
 export const CursorContext = createContext<CursorContext | undefined>(

@@ -1,4 +1,4 @@
-import { RowSelectionRadioCellValue } from "./RowSelectionRadioCellValue";
+import { RowSelectionRadioCell } from "./RowSelectionRadioCell";
 import { GridColumn, GridColumnProps } from "./GridColumn";
 import { RowSelectionRadioHeaderCell } from "./RowSelectionRadioHeaderCell";
 import { useSelectionContext } from "./SelectionContext";
@@ -30,7 +30,7 @@ export function RowSelectionRadioColumn<T>(
       {...props}
       defaultWidth={100}
       headerComponent={RowSelectionRadioHeaderCell}
-      cellValueComponent={RowSelectionRadioCellValue}
+      cellComponent={RowSelectionRadioCell}
       pinned="left"
       onKeyDown={onKeyDown}
     />

@@ -4,7 +4,7 @@ import { TableBody } from "./TableBody";
 import { RefObject } from "react";
 import "./LeftPart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import { GridColumnGroupModel, GridColumnModel, GridRowModel } from '../Grid';
 import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridLeftPart");
@@ -14,6 +14,7 @@ export interface LeftPartProps<T> {
   onWheel: EventListener;
   isRaised?: boolean;
   columns: GridColumnModel<T>[];
+  groups: GridColumnGroupModel[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
   setHoverOverRowKey: (key: string | undefined) => void;
@@ -27,6 +28,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
     isRaised,
     columns,
     rows,
+    groups,
     hoverOverRowKey,
     setHoverOverRowKey,
     zebra,
@@ -46,6 +48,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
           <TableColGroup columns={columns} />
           <TableBody
             columns={columns}
+            groups={groups}
             rows={rows}
             hoverRowKey={hoverOverRowKey}
             setHoverRowKey={setHoverOverRowKey}
