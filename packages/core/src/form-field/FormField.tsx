@@ -121,7 +121,7 @@ export interface FormFieldProps
   /**
    * FormField variants; defaults to primary.
    */
-   variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export interface useA11yValueValue {
@@ -275,7 +275,7 @@ export const FormField = forwardRef(
           [withBaseName("labelLeft")]: labelLeft,
           [withBaseName(`withHelperText`)]: inlineHelperText,
           [withBaseName(`emphasize`)]: emphasize,
-          [withBaseName(variant)]: variant
+          [withBaseName(variant)]: variant,
         },
         className
       ),

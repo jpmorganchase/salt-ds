@@ -9,7 +9,7 @@
   --overlay-zindex: var(--uitk-zIndex-flyover);
 }
 
-.uitkOverlay-secondary.uitkOverlay { 
+.uitkOverlay-secondary.uitkOverlay {
   --overlay-background: var(--uitk-container-secondary-background);
   --overlay-borderColor: var(--uitk-container-secondary-borderColor);
 }

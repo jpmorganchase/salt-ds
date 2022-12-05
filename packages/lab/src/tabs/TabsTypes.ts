@@ -81,7 +81,7 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Set variant - defaults 'primary'
    */
-   variant?: TabstripVariant;
+  variant?: TabstripVariant;
 }
 
 export type exitEditHandler = (

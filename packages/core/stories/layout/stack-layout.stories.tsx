@@ -63,11 +63,7 @@ export const StackLayoutSimpleUsage = StackLayoutStorySimpleUsage.bind({});
 StackLayoutSimpleUsage.args = {};
 
 const SecondaryFormField = () => (
-  <FormField
-    labelPlacement="left"
-    label="Quis qui nisi"
-    variant="secondary"
-  >
+  <FormField labelPlacement="left" label="Quis qui nisi" variant="secondary">
     <Input defaultValue="Lorem ipsum" />
   </FormField>
 );

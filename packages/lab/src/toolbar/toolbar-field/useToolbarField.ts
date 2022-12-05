@@ -61,7 +61,7 @@ export const getToolbarFormFieldProps = (
     className: cx({
       "uitkFormField-toolbarButton":
         isOverflowPanel && isToolbarButton(element),
-        [`uitkFormField-${variant}`]: variant
+      [`uitkFormField-${variant}`]: variant,
     }),
     fullWidth: false,
   };

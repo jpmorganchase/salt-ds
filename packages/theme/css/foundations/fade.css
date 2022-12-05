@@ -35,7 +35,7 @@
   --uitk-color-white-fade-background: rgba(255, 255, 255, var(--uitk-palette-opacity-background));
 
   --uitk-color-white-fade-background-readonly: rgba(255, 255, 255, var(--uitk-palette-opacity-readonly));
-  --uitk-color-gray-20-fade-background-readonly:  rgba(234, 237, 239, var(--uitk-palette-opacity-readonly));
+  --uitk-color-gray-20-fade-background-readonly: rgba(234, 237, 239, var(--uitk-palette-opacity-readonly));
   --uitk-color-gray-700-fade-background-readonly: rgba(42, 44, 47, var(--uitk-palette-opacity-readonly));
   --uitk-color-gray-800-fade-background-readonly: rgba(36, 37, 38, var(--uitk-palette-opacity-readonly));
 

@@ -11,7 +11,7 @@ const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: "Lorem Ipsum"
+  children: "Lorem Ipsum",
 };
 
 export const Secondary = Template.bind({});

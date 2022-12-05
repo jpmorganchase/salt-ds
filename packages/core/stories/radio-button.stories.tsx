@@ -224,10 +224,7 @@ const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
     <Panel style={{ height: "unset" }}>
       <ColumnLayoutContainer>
         <ColumnLayoutItem>
-          <FormFieldRadios
-            name="fx2"
-            title="Primary"
-          />
+          <FormFieldRadios name="fx2" title="Primary" />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios

@@ -71,7 +71,10 @@ describe("GIVEN a Banner", () => {
         </Banner>
       );
 
-      cy.findByTestId("bannerRoot").should("have.class", "uitkBanner-emphasize");
+      cy.findByTestId("bannerRoot").should(
+        "have.class",
+        "uitkBanner-emphasize"
+      );
     });
   });
 });

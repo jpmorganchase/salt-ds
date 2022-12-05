@@ -62,8 +62,8 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       <Portal>
         <Window
           className={cx(withBaseName(), className, {
-            [withBaseName(variant)]: variant === "secondary"}
-          )}
+            [withBaseName(variant)]: variant === "secondary",
+          })}
           id={id}
           ref={ref}
           {...rest}

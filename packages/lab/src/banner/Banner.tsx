@@ -64,7 +64,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Emphasize the styling by applying a background color: defaults to false
    */
-  emphasize?: boolean
+  emphasize?: boolean;
   /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
@@ -157,7 +157,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   return (
     <div
       className={cx(withBaseName(), withBaseName(status), className, {
-        [withBaseName("emphasize")]: emphasize 
+        [withBaseName("emphasize")]: emphasize,
       })}
       ref={handleRef}
       {...rest}

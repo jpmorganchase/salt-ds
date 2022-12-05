@@ -443,8 +443,7 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
       <WarningState hasStatusIndicator />
       <WarningState hasStatusIndicator variant="secondary" />
       <DefaultState />
-      <DefaultState 
-        variant="secondary" />
+      <DefaultState variant="secondary" />
       <DefaultState hasStatusIndicator />
       <DefaultState hasStatusIndicator variant="secondary" />
       <HelperTextAsTooltip hasStatusIndicator />
@@ -489,10 +488,7 @@ export const Variants: ComponentStory<typeof FormField> = () => (
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Secondary</h3>
-        <FormField
-          label="Default Form Field label"
-          variant="secondary"
-        >
+        <FormField label="Default Form Field label" variant="secondary">
           <Input defaultValue="Value" />
         </FormField>
       </div>

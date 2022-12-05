@@ -1,10 +1,9 @@
-.uitkCard-secondary { 
+.uitkCard-secondary {
   --uitkCard-background: var(--uitk-container-secondary-background);
   --uitkCard-borderColor: var(--uitk-container-secondary-borderColor);
   --uitkCard-borderRadius: 10px;
   --uitkCard-borderWidth: 3px;
 }
-
 
 .my-app .uitkCard {
   --uitkCard-background: var(--uitk-accent-background);
