@@ -1018,16 +1018,18 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         bottomShadow={isHeaderRaised}
                       />
                     )}
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      rightShadow={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
+                    {leftCols.length > 0 && (
+                      <LeftPart
+                        leftRef={leftRef}
+                        onWheel={onWheel}
+                        columns={leftCols}
+                        rows={rows}
+                        rightShadow={isLeftRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
+                      />
+                    )}
                     <MiddlePart
                       middleRef={middleRef}
                       onWheel={onWheel}
@@ -1038,16 +1040,18 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       midGap={midGap}
                       zebra={zebra}
                     />
-                    <RightPart
-                      rightRef={rightRef}
-                      onWheel={onWheel}
-                      columns={rightCols}
-                      rows={rows}
-                      leftShadow={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
+                    {rightCols.length > 0 && (
+                      <RightPart
+                        rightRef={rightRef}
+                        onWheel={onWheel}
+                        columns={rightCols}
+                        rows={rows}
+                        leftShadow={isLeftRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
+                      />
+                    )}
                     <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}
