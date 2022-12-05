@@ -965,7 +965,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     )}
                     style={rootStyle}
                     ref={rootRef}
-                    // tabIndex={0}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
@@ -973,6 +972,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     onBlur={onBlur}
                     data-name="grid-root"
                     role="grid"
+                    aria-colcount={cols.length}
+                    aria-rowcount={rowCount + headRowCount}
+                    aria-multiselectable={rowSelectionMode === "multi"}
                   >
                     <CellMeasure setRowHeight={setRowHeight} />
                     <Scrollable
