@@ -37,17 +37,17 @@ const ParentChildRows = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        animateRows
-        treeData
-        {...agGridProps}
-        {...props}
-        columnDefs={parentChildExampleColumns}
-        getDataPath={(data: any) => {
-          return data.orgHierarchy;
-        }}
-        groupDefaultExpanded={-1}
-        rowData={parentChildExampleData}
-      />
+          animateRows
+          treeData
+          {...agGridProps}
+          {...props}
+          columnDefs={parentChildExampleColumns}
+          getDataPath={(data: any) => {
+            return data.orgHierarchy;
+          }}
+          groupDefaultExpanded={-1}
+          rowData={parentChildExampleData}
+        />
       </div>
     </div>
   );

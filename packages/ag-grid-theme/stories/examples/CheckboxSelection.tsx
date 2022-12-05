@@ -46,11 +46,11 @@ const CheckboxSelection = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        {...agGridProps}
-        {...props}
-        rowData={dataGridExampleData}
-        columnDefs={[headerOn, headerName, headerCapital]}
-      />
+          {...agGridProps}
+          {...props}
+          rowData={dataGridExampleData}
+          columnDefs={[headerOn, headerName, headerCapital]}
+        />
       </div>
     </div>
   );

@@ -37,11 +37,11 @@ const ColumnSpanning = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        {...agGridProps}
-        {...props}
-        columnDefs={columnSpanningExampleColumns}
-        rowData={dataGridExampleData}
-      />
+          {...agGridProps}
+          {...props}
+          columnDefs={columnSpanningExampleColumns}
+          rowData={dataGridExampleData}
+        />
       </div>
     </div>
   );

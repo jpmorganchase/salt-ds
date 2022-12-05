@@ -88,11 +88,11 @@ const LoadingOverlay = (props: AgGridReactProps) => {
           tabIndex={-1}
         >
           <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumns}
-          rowData={dataGridExampleData}
-        />
+            {...agGridProps}
+            {...props}
+            columnDefs={dataGridExampleColumns}
+            rowData={dataGridExampleData}
+          />
         </div>
       </div>
     </div>

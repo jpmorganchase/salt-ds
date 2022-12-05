@@ -37,11 +37,11 @@ const Coloration = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        {...agGridProps}
-        {...props}
-        columnDefs={dataGridExampleColumnsColoration}
-        rowData={dataGridExampleData}
-      />
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridExampleColumnsColoration}
+          rowData={dataGridExampleData}
+        />
       </div>
     </div>
   );

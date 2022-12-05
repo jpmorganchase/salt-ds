@@ -37,11 +37,11 @@ const ColumnGroup = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        {...agGridProps}
-        {...props}
-        rowData={dataGridExampleData}
-        columnDefs={columnsWithGrouping("US States")}
-      />
+          {...agGridProps}
+          {...props}
+          rowData={dataGridExampleData}
+          columnDefs={columnsWithGrouping("US States")}
+        />
       </div>
     </div>
   );

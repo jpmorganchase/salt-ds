@@ -139,10 +139,10 @@ const NoDataOverlay = (props: AgGridReactProps) => {
         {modal}
         <div style={{ height: 800, width: 800 }} {...containerProps}>
           <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumns}
-        />
+            {...agGridProps}
+            {...props}
+            columnDefs={dataGridExampleColumns}
+          />
         </div>
       </div>
     </div>

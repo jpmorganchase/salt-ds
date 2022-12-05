@@ -43,12 +43,12 @@ const SingleClickEdit = (props: AgGridReactProps) => {
       </div>
       <div style={{ marginTop: 25, height: 800, width: 800 }}>
         <AgGridReact
-        {...props}
-        singleClickEdit
-        {...agGridProps}
-        columnDefs={dataGridExampleColumns}
-        rowData={dataGridExampleData}
-      />
+          {...props}
+          singleClickEdit
+          {...agGridProps}
+          columnDefs={dataGridExampleColumns}
+          rowData={dataGridExampleData}
+        />
       </div>
     </div>
   );

@@ -37,13 +37,13 @@ const DragRowOrder = (props: AgGridReactProps) => {
         {...containerProps}
       >
         <AgGridReact
-        animateRows
-        rowDragManaged
-        {...agGridProps}
-        {...props}
-        columnDefs={rowDragColumns}
-        rowData={dataGridExampleData}
-      />
+          animateRows
+          rowDragManaged
+          {...agGridProps}
+          {...props}
+          columnDefs={rowDragColumns}
+          rowData={dataGridExampleData}
+        />
       </div>
     </div>
   );

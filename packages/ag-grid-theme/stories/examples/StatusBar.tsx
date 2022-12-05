@@ -60,8 +60,8 @@ const StatusBar = (props: AgGridReactProps) => {
             enableRangeSelection
             // TODO enableStatusBar
             statusBar={statusBar}
-          columnDefs={dataGridExampleColumns}
-          rowData={dataGridExampleData}
+            columnDefs={dataGridExampleColumns}
+            rowData={dataGridExampleData}
             {...agGridProps}
             {...props}
           />
