@@ -1,4 +1,6 @@
-export const fontFileTable = [
+import { AccordionBaseProps } from "../Accordion";
+
+export const fontFileTable: AccordionBaseProps["accordionInfo"] = [
   {
     id: "font-file-table",
     summary: "Web Font Files",

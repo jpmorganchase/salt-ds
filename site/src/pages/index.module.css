@@ -14,6 +14,9 @@
 .heroBanner {
   --ifm-hero-text-color: var(--uitk-color-white);
   --ifm-hero-background-color: none;
+  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
 }
 
 .heroBanner {
@@ -26,13 +29,13 @@
   padding: 0 calc(var(--uitk-size-unit) * 5);
 }
 
+.heroBanner .heroButton {
+  text-decoration: none;
+}
+
 .heroImage {
   max-width: 100%;
   flex: 2;
-}
-
-.heroTitle {
-  font-size: var(--uitk-text-display1-fontSize);
 }
 
 .cardContainer {
@@ -42,13 +45,21 @@
   padding: calc(var(--uitk-size-unit) * 5) calc(var(--uitk-size-unit) * 4);
 }
 
+@media screen and (max-width: 1280px) {
+  .heroTitle {
+    --ifm-heading-line-height: var(--uitk-text-h1-lineHeight);
+    --ifm-h1-font-size: var(--uitk-text-h1-fontSize);
+  }
+}
+
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: var(--uitk-size-unit);
+    padding: var(--uitk-size-unit) 0;
     flex: 1;
   }
 
   .heroContainer {
+    padding: var(--uitk-size-unit);
     flex-flow: column-reverse;
   }
 
@@ -58,5 +69,7 @@
 
   .cardContainer {
     flex-direction: column;
+    padding: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2);
+    gap: calc(var(--uitk-size-unit) * 2);
   }
 }

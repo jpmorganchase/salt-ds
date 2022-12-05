@@ -17,9 +17,9 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   title: string;
   description: string;
   url: string;
-  linkText: string;
+  footer: string;
   keylineColor: CSSProperties["color"];
-  disableKeylineAnimation?: boolean;
+  keyLineAnimation?: boolean;
 }
 
 const Card = ({
@@ -27,9 +27,9 @@ const Card = ({
   title,
   description,
   url,
-  linkText,
+  footer,
   keylineColor,
-  disableKeylineAnimation = false,
+  keyLineAnimation = true,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
@@ -40,23 +40,28 @@ const Card = ({
   const useLightTheme = mode !== "dark";
 
   return (
-    <div className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}>
-      <div className={styles.iconContainer}>{icon}</div>
+    <Link
+      className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}
+      to={url}
+    >
+      <div className={styles.iconContainer}>
+        {cloneElement(icon, { ...icon.props, className: styles.icon })}
+      </div>
       <div className={styles.cardContent}>
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <Link to={url}>{linkText}</Link>
+        <h2 className={styles.cardTitle}>{title}</h2>
+        <p className={styles.cardDescription}>{description}</p>
+        <p className={styles.cardFooter}>{footer}</p>
       </div>
       <div
         className={clsx(styles.keyline, {
-          [styles.animate]: onScreen && !disableKeylineAnimation,
+          [styles.animate]: onScreen && keyLineAnimation,
         })}
         style={{
           backgroundColor: keylineColor,
         }}
         ref={ref}
       />
-    </div>
+    </Link>
   );
 };
 

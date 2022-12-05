@@ -13,7 +13,7 @@ export type AccordionInfoType = {
   details: JSX.Element;
 };
 
-interface AccordionBaseProps {
+export interface AccordionBaseProps {
   accordionInfo: AccordionInfoType[];
   defaultExpandedSectionIds?: string[];
 }
