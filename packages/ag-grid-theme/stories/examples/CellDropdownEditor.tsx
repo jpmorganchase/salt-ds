@@ -12,9 +12,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
  * This examples uses a JPM UI Toolkit Dropdown as a cell editor
  * complete with focus and keyboard navigation support
  */
-const CellDropdownEditorExample = function CellDropdownEditorExample(
-  props: AgGridReactProps
-) {
+const CellDropdownEditor = (props: AgGridReactProps) => {
   const [columnDefs] = useState<ColDef[]>([
     { headerName: "Name", field: "name" },
     { headerName: "Code", field: "code", minWidth: 120 },
@@ -57,6 +55,4 @@ const CellDropdownEditorExample = function CellDropdownEditorExample(
   );
 };
 
-export default function CellDropdownEditor(props: AgGridReactProps) {
-  return <CellDropdownEditorExample {...props} />;
-}
+export default CellDropdownEditor;

@@ -34,6 +34,9 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
       {columnSeparator === "regular" ? (
         <div className={withBaseName("columnSeparator")} />
       ) : null}
+      {columnSeparator === "pinned" ? (
+        <div className={withBaseName("pinnedSeparator")} />
+      ) : null}
     </th>
   );
 }

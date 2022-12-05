@@ -14,9 +14,7 @@ import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const SingleClickEditExample = function SingleClickEditExample(
-  props: AgGridReactProps
-) {
+const SingleClickEdit = (props: AgGridReactProps) => {
   const { containerProps, agGridProps, api, isGridReady } = useAgGridHelpers();
 
   useEffect(() => {
@@ -27,16 +25,15 @@ const SingleClickEditExample = function SingleClickEditExample(
 
   return (
     <div style={{ marginTop: 25, height: 800, width: 800 }}>
-      <AgGridReact {...props} singleClickEdit {...agGridProps} />
+      <AgGridReact
+        {...props}
+        singleClickEdit
+        {...agGridProps}
+        columnDefs={dataGridExampleColumns}
+        rowData={dataGridExampleData}
+      />
     </div>
   );
 };
 
-SingleClickEditExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function SingleClickEdit(props: AgGridReactProps) {
-  return <SingleClickEditExample {...props} />;
-}
+export default SingleClickEdit;

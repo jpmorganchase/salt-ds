@@ -26,7 +26,7 @@ const statusBar = {
   ],
 };
 
-const StatusBarExample = function StatusBarExample(props: AgGridReactProps) {
+const StatusBar = (props: AgGridReactProps) => {
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
@@ -43,6 +43,8 @@ const StatusBarExample = function StatusBarExample(props: AgGridReactProps) {
           enableRangeSelection
           // TODO enableStatusBar
           statusBar={statusBar}
+          columnDefs={dataGridExampleColumns}
+          rowData={dataGridExampleData}
           {...agGridProps}
           {...props}
         />
@@ -51,11 +53,4 @@ const StatusBarExample = function StatusBarExample(props: AgGridReactProps) {
   );
 };
 
-StatusBarExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function StatusBar(props: AgGridReactProps) {
-  return <StatusBarExample {...props} />;
-}
+export default StatusBar;

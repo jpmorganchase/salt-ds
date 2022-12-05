@@ -20,7 +20,6 @@ import {
   getCellPosition,
   LeftPart,
   MiddlePart,
-  PAGE_SIZE,
   RightPart,
   Scrollable,
   TopLeftPart,
@@ -60,9 +59,9 @@ import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 
 const withBaseName = makePrefixer("uitkGrid");
 
-export type ColumnSeparatorType = "regular" | "none" | "groupEdge";
+export type ColumnSeparatorType = "regular" | "none" | "groupEdge" | "pinned";
 export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
-export type ColumnGroupColumnSeparatorType = "regular" | "none";
+export type ColumnGroupColumnSeparatorType = "regular" | "none" | "pinned";
 export type GridRowSelectionMode = "single" | "multi" | "none";
 export type GridCellSelectionMode = "range" | "none";
 
@@ -88,6 +87,10 @@ export interface GridProps<T = any> {
    * If `true`, column separators are rendered.
    * */
   columnSeparators?: boolean;
+  /**
+   * If `true`, separators are rendered between pinned and unpinned columns.
+   * */
+  pinnedSeparators?: boolean;
   /**
    * Row data objects. Sparse arrays are supported.
    * */
@@ -162,6 +165,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     zebra,
     hideHeader,
     columnSeparators,
+    pinnedSeparators = true,
     className,
     style,
     rowKeyGetter = defaultRowKeyGetter,
@@ -199,12 +203,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
-  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(
-    undefined
-  );
-  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(
-    undefined
-  );
+  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(0);
+  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(0);
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -409,6 +409,17 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     scroll
   );
 
+  const focusCellElement = (rowIdx: number, colIdx: number) => {
+    setTimeout(() => {
+      const nodeToFocus = rootRef.current?.querySelector(
+        `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
+      );
+      if (nodeToFocus) {
+        (nodeToFocus as HTMLElement).focus();
+      }
+    }, 0);
+  };
+
   const startEditMode = (text?: string) => {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
@@ -444,9 +455,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       handler(rowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
-    }
+    focusCellElement(cursorRowIdx, cursorColIdx);
   };
 
   const cancelEditMode = () => {
@@ -454,8 +463,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       return;
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
+    if (cursorRowIdx != null && cursorColIdx != null) {
+      focusCellElement(cursorRowIdx, cursorColIdx);
     }
   };
 
@@ -489,7 +498,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       setCursorRowIdx(rowIdx);
       setCursorColIdx(colIdx);
       scrollToCell(rowIdx, colIdx);
-      rootRef.current?.focus();
+      focusCellElement(rowIdx, colIdx);
       rangeSelection.onCursorMove({ rowIdx, colIdx });
     },
     [
@@ -509,6 +518,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const isLeftRaised = scrollLeft > 0;
   const isRightRaised = scrollLeft + clientMidWidth < midWidth;
+  const isHeaderRaised = scrollTop > 0;
 
   const resizeColumn = useCallback(
     (colIdx: number, width: number) => {
@@ -550,13 +560,30 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
   );
 
+  const [isFocused, setFocused] = useState<boolean>(false);
+
+  const onFocus = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(true);
+    },
+    [setFocused]
+  );
+
+  const onBlur = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(false);
+    },
+    [setFocused]
+  );
+
   const cursorContext: CursorContext = useMemo(
     () => ({
+      isFocused,
       cursorRowIdx,
       cursorColIdx,
       moveCursor,
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor]
+    [cursorRowIdx, cursorColIdx, moveCursor, isFocused]
   );
 
   const onColumnMove: GridColumnMoveHandler = (
@@ -626,8 +653,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       const { key } = event;
       switch (key) {
         case "F2":
-        case "Backspace":
+        case "Enter":
           startEditMode();
+          break;
+        case "Backspace":
+          startEditMode("");
           break;
         case "Escape":
           if (editMode) {
@@ -678,8 +708,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             if (cursorRowIdx != undefined) {
               selectRows({
                 rowIndex: cursorRowIdx,
-                shift: event.shiftKey,
-                meta: event.metaKey,
+                shift: false,
+                meta: event.shiftKey,
               });
             }
           }
@@ -745,6 +775,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [rangeSelection.selectedCellRange]
   );
 
+  const pageSize = visRowRng.length - 1;
+
   const navigationKeyHandler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       const { key } = event;
@@ -762,10 +794,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
           break;
         case "PageUp":
-          moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
+          moveCursor((cursorRowIdx || 0) - pageSize, cursorColIdx);
           break;
         case "PageDown":
-          moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
+          moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
           break;
         case "Home":
           if (!event.ctrlKey) {
@@ -782,32 +814,38 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           }
           break;
         case "Tab":
-          if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-            if (cursorColIdx == undefined || cursorRowIdx == undefined) {
-              moveCursor(0, 0);
-            } else {
-              if (!event.shiftKey) {
-                if (cursorColIdx < cols.length - 1) {
-                  moveCursor(cursorRowIdx, cursorColIdx + 1);
-                } else {
-                  if (cursorRowIdx < rowData.length - 1) {
-                    moveCursor(cursorRowIdx + 1, 0);
-                  }
-                }
+          if (
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            editMode &&
+            cursorColIdx != null &&
+            cursorRowIdx != null
+          ) {
+            if (!event.shiftKey) {
+              if (cursorColIdx < cols.length - 1) {
+                moveCursor(cursorRowIdx, cursorColIdx + 1);
               } else {
-                if (cursorColIdx > 0) {
-                  moveCursor(cursorRowIdx, cursorColIdx - 1);
-                } else {
-                  if (cursorRowIdx > 0) {
-                    moveCursor(cursorRowIdx - 1, cols.length - 1);
-                  }
+                if (cursorRowIdx < rowData.length - 1) {
+                  moveCursor(cursorRowIdx + 1, 0);
+                }
+              }
+            } else {
+              if (cursorColIdx > 0) {
+                moveCursor(cursorRowIdx, cursorColIdx - 1);
+              } else {
+                if (cursorRowIdx > 0) {
+                  moveCursor(cursorRowIdx - 1, cols.length - 1);
                 }
               }
             }
+          } else {
+            return false;
           }
           break;
         case "Enter":
           if (
+            editMode &&
             !event.ctrlKey &&
             !event.metaKey &&
             !event.altKey &&
@@ -818,6 +856,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             } else {
               moveCursor(cursorRowIdx + 1, cursorColIdx);
             }
+          } else {
+            return false;
           }
           break;
         default:
@@ -915,6 +955,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       {
                         [withBaseName("zebra")]: zebra,
                         [withBaseName("columnSeparators")]: columnSeparators,
+                        [withBaseName("pinnedSeparators")]: pinnedSeparators,
                         [withBaseName("primaryBackground")]:
                           variant === "primary",
                         [withBaseName("secondaryBackground")]:
@@ -924,10 +965,12 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     )}
                     style={rootStyle}
                     ref={rootRef}
-                    tabIndex={0}
+                    // tabIndex={0}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     data-name="grid-root"
                     role="grid"
                   >
@@ -945,6 +988,44 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       leftRef={leftRef}
                       middleRef={middleRef}
                     />
+                    {!hideHeader && (
+                      <TopLeftPart
+                        onWheel={onWheel}
+                        columns={leftCols}
+                        columnGroups={leftGroups}
+                        rightShadow={isLeftRaised}
+                        bottomShadow={isHeaderRaised}
+                      />
+                    )}
+                    {!hideHeader && (
+                      <TopPart
+                        columns={headVisibleColumns}
+                        columnGroups={visColGrps}
+                        topRef={topRef}
+                        onWheel={onWheel}
+                        midGap={midGap}
+                        bottomShadow={isHeaderRaised}
+                      />
+                    )}
+                    {!hideHeader && (
+                      <TopRightPart
+                        onWheel={onWheel}
+                        columns={rightCols}
+                        columnGroups={rightGroups}
+                        leftShadow={isRightRaised}
+                        bottomShadow={isHeaderRaised}
+                      />
+                    )}
+                    <LeftPart
+                      leftRef={leftRef}
+                      onWheel={onWheel}
+                      columns={leftCols}
+                      rows={rows}
+                      rightShadow={isLeftRaised}
+                      hoverOverRowKey={hoverRowKey}
+                      setHoverOverRowKey={setHoverRowKey}
+                      zebra={zebra}
+                    />
                     <MiddlePart
                       middleRef={middleRef}
                       onWheel={onWheel}
@@ -955,51 +1036,16 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       midGap={midGap}
                       zebra={zebra}
                     />
-                    {!hideHeader && (
-                      <TopPart
-                        columns={headVisibleColumns}
-                        columnGroups={visColGrps}
-                        topRef={topRef}
-                        onWheel={onWheel}
-                        midGap={midGap}
-                      />
-                    )}
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      isRaised={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
                     <RightPart
                       rightRef={rightRef}
                       onWheel={onWheel}
                       columns={rightCols}
                       rows={rows}
-                      isRaised={isRightRaised}
+                      leftShadow={isRightRaised}
                       hoverOverRowKey={hoverRowKey}
                       setHoverOverRowKey={setHoverRowKey}
                       zebra={zebra}
                     />
-                    {!hideHeader && (
-                      <TopLeftPart
-                        onWheel={onWheel}
-                        columns={leftCols}
-                        columnGroups={leftGroups}
-                        isRaised={isLeftRaised}
-                      />
-                    )}
-                    {!hideHeader && (
-                      <TopRightPart
-                        onWheel={onWheel}
-                        columns={rightCols}
-                        columnGroups={rightGroups}
-                        isRaised={isRightRaised}
-                      />
-                    )}
                     <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}

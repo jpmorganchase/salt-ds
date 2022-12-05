@@ -5,9 +5,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const ParentChildRowsExample = function ParentChildRowsExample(
-  props: AgGridReactProps
-) {
+const ParentChildRows = (props: AgGridReactProps) => {
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
@@ -18,20 +16,20 @@ const ParentChildRowsExample = function ParentChildRowsExample(
 
   return (
     <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact animateRows treeData {...agGridProps} {...props} />
+      <AgGridReact
+        animateRows
+        treeData
+        {...agGridProps}
+        {...props}
+        columnDefs={parentChildExampleColumns}
+        getDataPath={(data: any) => {
+          return data.orgHierarchy;
+        }}
+        groupDefaultExpanded={-1}
+        rowData={parentChildExampleData}
+      />
     </div>
   );
 };
 
-ParentChildRowsExample.defaultProps = {
-  columnDefs: parentChildExampleColumns,
-  getDataPath(data: any) {
-    return data.orgHierarchy;
-  },
-  groupDefaultExpanded: -1,
-  rowData: parentChildExampleData,
-};
-
-export default function ParentChildRows(props: AgGridReactProps) {
-  return <ParentChildRowsExample {...props} />;
-}
+export default ParentChildRows;

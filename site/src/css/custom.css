@@ -8,6 +8,7 @@
   --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
+  --image-border: #c5c9d0;
 }
 
 ::selection {
@@ -34,6 +35,9 @@
 
 .uitk-theme {
   --ifm-heading-color: var(--uitk-text-primary-foreground);
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
   --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
@@ -241,10 +245,6 @@ ul.table-of-contents li > ul li {
 }
 
 .docs-page-content h2 {
-  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
-  --ifm-heading-color: var(--uitk-text-primary-foreground);
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
@@ -286,6 +286,7 @@ ul.table-of-contents li > ul li {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
   --ifm-footer-link-color: var(--uitk-text-secondary-foreground);
   --footer-items-separator-height: 16px;
+  --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) * 1);
 }
 
 .footer__title {
@@ -310,7 +311,7 @@ ul.table-of-contents li > ul li {
 }
 
 .footer__items > *:not(:last-child):after {
-  width: var(--uitk-separable-borderWidth);
+  width: var(--uitk-size-border);
   content: "";
   background-color: var(--uitk-text-secondary-foreground);
   height: var(--footer-items-separator-height);
@@ -399,5 +400,50 @@ table tr th + th::before {
   .docs-page-content,
   .docs-page-content.withToc {
     width: 100%;
+  }
+
+  .docs-page-content {
+    padding: calc(var(--uitk-size-unit) * 2);
+  }
+  .uitk-theme {
+    --ifm-h2-font-size: var(--uitk-text-h3-fontSize);
+    --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight);
+    --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
+  }
+
+  .theme-doc-markdown.markdown > h1:first-child {
+    --ifm-h1-font-size: var(--uitk-text-h1-fontSize);
+    --ifm-heading-font-weight: var(--uitk-text-h1-fontWeight);
+    --ifm-heading-line-height: var(--uitk-text-h1-lineHeight);
+
+    margin-right: calc(var(--uitk-size-unit) * 2);
+    margin-left: calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav {
+    padding: 0 calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav__link {
+    padding: calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav .pagination-nav__sublabel {
+    font-size: var(--uitk-text-h3-fontSize);
+    font-weight: var(--uitk-text-h3-fontWeight-small);
+    margin-bottom: 0;
+  }
+
+  .docs-wrapper .pagination-nav .pagination-nav__label {
+    font-size: var(--uitk-text-h4-fontSize);
+    font-weight: var(--uitk-text-h4-fontWeight-small);
+  }
+
+  .footer {
+    --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) / 2);
+  }
+
+  .footer .container {
+    gap: calc(var(--uitk-size-unit) / 2);
   }
 }

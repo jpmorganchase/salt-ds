@@ -8,8 +8,8 @@
   clip-path: inset(var(--grid-topPart-height) -10px 0 0);
 }
 
-.uitkGridLeftPart-raised {
-  box-shadow: 6px 0 4px -4px var(--grid-shadow-color);
+.uitkGridLeftPart-rightShadow {
+  box-shadow: 2px 0 4px 0 var(--grid-shadow-color);
 }
 
 .uitkGridLeftPart-space {

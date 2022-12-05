@@ -8,9 +8,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 LicenseManager.setLicenseKey("your license key");
 
-const MasterDetailExample = function MasterDetailExample(
-  props: AgGridReactProps
-) {
+const MasterDetail = (props: AgGridReactProps) => {
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
   useEffect(() => {
     if (isGridReady) {
@@ -36,6 +34,4 @@ const MasterDetailExample = function MasterDetailExample(
   );
 };
 
-export default function MasterDetail(props: AgGridReactProps) {
-  return <MasterDetailExample {...props} />;
-}
+export default MasterDetail;

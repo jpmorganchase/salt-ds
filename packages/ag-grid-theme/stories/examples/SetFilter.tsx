@@ -35,7 +35,7 @@ const applyExampleConfig = (columnDefs: ColDef[]) => {
   return [nameColumnDef, codeColumnDef, capitalColumnDef, populationColumnDef];
 };
 
-const SetFilterExample = function SetFilterExample(props: AgGridReactProps) {
+const SetFilter = (props: AgGridReactProps) => {
   const { containerProps, agGridProps, isGridReady, api } = useAgGridHelpers();
   useEffect(() => {
     if (isGridReady) {
@@ -57,6 +57,4 @@ const SetFilterExample = function SetFilterExample(props: AgGridReactProps) {
   );
 };
 
-export default function SetFilter(props: AgGridReactProps) {
-  return <SetFilterExample {...props} />;
-}
+export default SetFilter;

@@ -3,7 +3,7 @@
 
   --color-block-cell-borderColor: var(--uitk-container-borderColor-medium);
   --color-block-cell-borderStyle: var(--uitk-container-borderStyle);
-  --color-block-cell-borderWidth: var(--uitk-container-borderWidth);
+  --color-block-cell-borderWidth: var(--uitk-size-border);
   --color-block-cell-borderRadius: 0;
 }
 
