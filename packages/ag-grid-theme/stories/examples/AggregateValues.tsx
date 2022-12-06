@@ -4,8 +4,15 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 export const AggregateValues = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
   const [columnDefs] = useState<ColDef[]>([
     {
       headerName: "Name",
@@ -64,7 +71,9 @@ export const AggregateValues = (props: AgGridReactProps) => {
     filter: true,
   });
 
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -73,15 +82,27 @@ export const AggregateValues = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div style={{ height: 500, width: 900, marginTop: 25 }} {...containerProps}>
-      <AgGridReact
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        rowData={dataGridExampleData}
-        sideBar
-        {...agGridProps}
-        {...props}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ height: 500, width: 900, marginTop: 25 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          rowData={dataGridExampleData}
+          sideBar
+          {...agGridProps}
+          {...props}
+        />
+      </div>
     </div>
   );
 };

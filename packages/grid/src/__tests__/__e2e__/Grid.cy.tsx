@@ -55,7 +55,6 @@ const expectFakeColumnWidth = (w: number) => {
 };
 
 describe("Grid", () => {
-  // TODO checkAccessibility(composedStories);
   it("Rendering", () => {
     cy.mount(<PinnedColumns />);
     cy.findByTestId("grid-left-part").should("exist");
@@ -457,10 +456,9 @@ describe("Grid", () => {
     it("Renders customised cell values", () => {
       cy.mount(<HeaderCustomization />);
 
-      // check for items sold column, that it has a has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
-
+      // TODO:
+      // Check for items sold column, that it has a has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
       // "Item" column group has a button to toggle between pinned and unpinned modes.
-
       // "Name" and "Price" columns have custom headers that indicate sort direction.
     });
   });
