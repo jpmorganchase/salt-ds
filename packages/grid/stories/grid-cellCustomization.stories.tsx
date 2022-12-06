@@ -129,11 +129,6 @@ const CellCustomizationTemplate: Story<{}> = () => {
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
       />
-      {/* <GridColumn
-        name="Buttons"
-        id="buttons"
-        cellValueComponent={ButtonsCellValue}
-      /> */}
     </Grid>
   );
 };
