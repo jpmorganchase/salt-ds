@@ -34,7 +34,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
 
   return (
     <div className={withBaseName()} style={style}>
-      <table>
+      <table aria-hidden>
         <TableColGroup columns={[movingColumn]} />
         <thead>
           <HeaderRow columns={[movingColumn]} />
