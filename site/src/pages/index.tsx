@@ -56,7 +56,7 @@ const cards: CardProps[] = [
     description:
       "Follow our step-by-step process to access our Figma libraries. If you’re a developer, we show you how to install and start using the Salt packages.",
     url: "/getting-started",
-    footer: "Read the guides",
+    footer: { footerText: "Read the guides" },
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
@@ -65,7 +65,7 @@ const cards: CardProps[] = [
     description:
       "Our suite of UI components is built with accessibility in mind. Each component is thoroughly tested before release and optimized for multiple use cases.",
     url: "/components",
-    footer: "Explore components",
+    footer: { footerText: "Explore components" },
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
@@ -74,7 +74,7 @@ const cards: CardProps[] = [
     description:
       "We welcome bug reports, fixes and other contributions—and would love to receive your feedback and suggestions. Reach out to us on GitHub or via email.",
     url: "/support-and-contributions",
-    footer: "Contact us",
+    footer: { footerText: "Contact us" },
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
 ];

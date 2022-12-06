@@ -47,6 +47,7 @@
 }
 
 .main-wrapper {
+  --doc-sidebar-hidden-width: 0;
   background-color: var(--uitk-color-gray-900);
   font-size: var(--uitk-text-fontSize);
 }

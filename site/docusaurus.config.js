@@ -66,7 +66,8 @@ const config = {
             label: "Components",
           },
           {
-            to: "support-and-contributions/",
+            type: "doc",
+            docId: "support-and-contributions/index",
             position: "left",
             label: "Support and contributions",
           },
