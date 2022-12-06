@@ -20,10 +20,6 @@
   min-height: 70vh;
 }
 
-.accordionContainer * {
-  --uitkAccordion-summary-background-hover: transparent;
-}
-
 .animate {
   animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }

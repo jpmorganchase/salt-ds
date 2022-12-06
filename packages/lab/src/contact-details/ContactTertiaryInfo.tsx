@@ -1,8 +1,7 @@
-import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, Text } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
-import { Div } from "../text";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("uitkContactTertiaryInfo");
@@ -35,9 +34,8 @@ export const ContactTertiaryInfo = forwardRef<
   }
 
   return (
-    <Div
+    <Text
       {...restProps}
-      truncate={variant === "compact" ? false : true}
       maxRows={1}
       styleAs={variant === "default" ? "h4" : undefined}
       id={id}
@@ -47,6 +45,6 @@ export const ContactTertiaryInfo = forwardRef<
     >
       {Icon ? <Icon className={withBaseName("icon")} /> : null}
       {text}
-    </Div>
+    </Text>
   );
 });

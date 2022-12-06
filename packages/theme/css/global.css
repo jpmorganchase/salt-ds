@@ -9,12 +9,9 @@
  * - color
  */
 
-p {
-  font-size: var(--uitk-text-fontSize);
-}
-
 body {
   font-family: "Open Sans";
+  font-size: var(--uitk-text-fontSize);
 }
 
 .uitk-theme[data-mode="light"] {
