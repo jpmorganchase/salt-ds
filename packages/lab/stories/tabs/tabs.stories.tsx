@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ComponentStory } from "@storybook/react";
 
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { TabPanel, Tabs, Text } from "@jpmorganchase/uitk-lab";
+import { Button, ToolkitProvider, Text } from "@jpmorganchase/uitk-core";
+import { TabPanel, Tabs } from "@jpmorganchase/uitk-lab";
 import { CloseTabWarningDialog } from "./CloseTabWarningDialog";
 export default {
   title: "Lab/Tabs",

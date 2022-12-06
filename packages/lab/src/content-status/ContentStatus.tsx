@@ -3,11 +3,11 @@ import {
   makePrefixer,
   useAriaAnnouncer,
   useId,
+  Text,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
 
-import { Div } from "../text";
 import {
   StatusIndicator,
   StatusIndicatorProps,
@@ -95,14 +95,10 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
             role="region"
           >
             {title && (
-              <Div truncate className={cx(withBaseName("title"))}>
-                {title}
-              </Div>
+              <Text className={cx(withBaseName("title"))}>{title}</Text>
             )}
             {message && (
-              <Div truncate className={cx(withBaseName("message"))}>
-                {message}
-              </Div>
+              <Text className={cx(withBaseName("message"))}>{message}</Text>
             )}
             {hasActions && (
               <div className={cx(withBaseName("actions"))}>
