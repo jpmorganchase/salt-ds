@@ -221,14 +221,28 @@
 .table-of-contents ul,
 .table-of-contents li {
   list-style: none;
+  padding-left: 0;
 }
 
 .table-of-contents li {
-  padding-bottom: var(--uitk-size-unit);
+  padding: var(--uitk-size-unit) 0;
+  height: 36px;
 }
 
 ul.table-of-contents li > ul li {
   width: 70%;
+}
+
+.table-of-contents li {
+  margin: var(--ifm-toc-padding-vertical) 0;
+}
+
+.table-of-contents li li {
+  margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
+}
+
+ul {
+  padding-inline-start: 0;
 }
 
 .docs-page-content {
