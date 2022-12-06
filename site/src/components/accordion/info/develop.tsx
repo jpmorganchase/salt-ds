@@ -3,7 +3,7 @@ import { AccordionBaseProps } from "../Accordion";
 export const fontFileTable: AccordionBaseProps["accordionInfo"] = [
   {
     id: "font-file-table",
-    summary: "Web Font Files",
+    summary: "View the web fonts, widths and styles",
     details: (
       <>
         <table>
