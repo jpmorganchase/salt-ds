@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]
@@ -22,7 +23,15 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -42,15 +51,27 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact
-        {...agGridProps}
-        {...props}
-        columnDefs={dataGridInfiniteScrollExampleColumns}
-        rowModelType="infinite"
-        infiniteInitialRowCount={100}
-        components={infiniteScrollComponents}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ marginTop: 25, height: 800, width: 800 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridInfiniteScrollExampleColumns}
+          rowModelType="infinite"
+          infiniteInitialRowCount={100}
+          components={infiniteScrollComponents}
+        />
+      </div>
     </div>
   );
 };

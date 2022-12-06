@@ -8,7 +8,6 @@
   --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
-  --image-border: #c5c9d0;
 }
 
 ::selection {
@@ -44,6 +43,7 @@
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
+  --image-border: var(--uitk-palette-neutral-border-medium);
 }
 
 .main-wrapper {
@@ -269,6 +269,8 @@ ul.table-of-contents li > ul li {
 .docs-page-content code {
   --ifm-code-font-size: var(--uitk-text-fontSize);
   border: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
@@ -346,7 +348,7 @@ table {
 
 table thead tr {
   border: none;
-  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
 }
 
