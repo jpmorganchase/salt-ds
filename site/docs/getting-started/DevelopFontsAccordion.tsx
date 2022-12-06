@@ -17,9 +17,9 @@ export const fontFileTable: AccordionBaseProps["accordionInfo"] = [
         <table>
           <thead>
             <tr>
-              <th>Font-family</th>
-              <th>Font-weight</th>
-              <th>Font-style</th>
+              <th>Font family</th>
+              <th>Weight</th>
+              <th>Style</th>
             </tr>
           </thead>
           <tbody>

@@ -276,6 +276,10 @@ ul.table-of-contents li > ul li {
   overflow-wrap: anywhere;
 }
 
+.docs-page-content table + table {
+  margin-top: calc(var(--uitk-size-unit) * 2);
+}
+
 .theme-doc-markdown.markdown > h1:first-child {
   --ifm-h1-font-size: var(--uitk-text-display2-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-display2-fontWeight);
@@ -284,6 +288,10 @@ ul.table-of-contents li > ul li {
 
 .theme-doc-markdown.markdown > h1:first-child {
   margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
+}
+
+.theme-code-block {
+  --ifm-leading: var(--ifm-paragraph-margin-bottom);
 }
 
 .footer {

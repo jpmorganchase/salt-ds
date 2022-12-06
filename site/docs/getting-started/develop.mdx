@@ -28,13 +28,13 @@ To start developing with Salt, you should:
 
 ### 1. Install the Salt packages
 
-There are three dependencies that you need to add to your project:
+There are three packages that you need to add to your project:
 
 - `@jpmorganchase/uitk-core` contains production-ready UI components.
 - `@jpmorganchase/uitk-theme` contains CSS files that apply Salt's default theme.
 - `@jpmorganchase/uitk-icons` contains SVG-based icons.
 
-Use this npm command to install all three dependencies in one go:
+Use this npm command to install all three packages in one go:
 
 ```
 npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
@@ -44,7 +44,7 @@ If you prefer not to use npm, you can install the packages using [yarn](https://
 
 ### 2. Add required web fonts
 
-Salt’s default theme requires the Open Sans and PT Mono web fonts. Use one of the following methods to integrate them into your application.
+Salt’s default theme requires the Open Sans and PT Mono web fonts. You can integrate them into your application using one of the following methods.
 
 #### Use Google Fonts
 
@@ -61,11 +61,11 @@ To load the fonts directly from Google Fonts, add the following into your applic
 
 Refer to the [Google Fonts page](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono) for more information.
 
-#### Use FontSource
+#### Use Fontsource
 
 With Fontsource, you can include the web font files into your build and self-host them.
 
-First, install the required NPM packages:
+First, install the required npm packages:
 
 ```
 npm install @fontsource/open-sans @fontsource/pt-mono
@@ -97,9 +97,9 @@ If you prefer not to use Google Fonts or Fontsource, you can use any other metho
 
 <DevelopFontsAccordion />
 
-### 3. Do the initial setup
+### 3. Integrate Salt into your app
 
-To integrate Salt into your project, import the CSS theme and ToolkitProvider component—and then wrap your application in it.
+To integrate Salt into your project, import the CSS theme and Salt Provider component—and then wrap your application in it.
 
 For example, in a typical React project, you can do this in your src/index.js as follows:
 
@@ -125,7 +125,7 @@ root.render(
 
 ### 4. Import components
 
-Congratulations, you're now ready to use our UI components. You can now import them from the `@jpmorganchase/uitk-core` package and use them in your JSX code.
+Now that you’re ready to use our UI components, you can import them from the `@jpmorganchase/uitk-core` package and use them in your JSX code.
 
 For example:
 
@@ -139,13 +139,13 @@ function App() {
 export default App;
 ```
 
-Head over to our available components to view their respective APIs.
+Head over to our available [components](/components/) to view their respective APIs.
 
-### 5. (Optional) Play with labs components
+### 5. (Optional) Play with lab components
 
 Our `@jpmorganchase/uitk-labs` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
 
-Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using labs components in production applications. However, early adopters are welcome to use and experiment with them.
+Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using lab components in production applications. However, early adopters are welcome to use and experiment with them.
 
 :::info Need support?
 
