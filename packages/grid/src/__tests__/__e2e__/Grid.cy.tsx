@@ -10,12 +10,8 @@ import { ColumnGroups } from "@stories/grid-columnGroups.stories";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
-const {
-  GridExample,
-  LotsOfColumns,
-  SingleRowSelect,
-  SmallGrid
-} = composedStories;
+const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
+  composedStories;
 const { EditableCells } = composedEditableStories;
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -443,7 +439,6 @@ describe("Grid", () => {
       cy.mount(<CellCustomization />);
       cy.get(".bidAskCellValue").should("have.length", 16);
       cy.get(".uitkLinearProgress").should("have.length", 16);
-      cy.get(".uitkButton").should("have.length", 32);
     });
   });
 
