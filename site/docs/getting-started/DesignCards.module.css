@@ -1,24 +1,25 @@
+.designCardsContainer {
+  margin: calc(var(--uitk-size-unit) * 2) 0;
+}
+
 .row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
   gap: calc(var(--uitk-size-unit) * 4);
 }
 
 .card {
+  --img-width: 327px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  max-width: var(--img-width);
 }
 
-.imgContainer {
+.card > img {
   padding: var(--uitk-size-unit);
   border: 1px solid var(--image-border);
-}
-
-.imgContainer > img {
-  width: 100%;
 }
 
 .textContainer {
@@ -27,10 +28,6 @@
   flex-direction: column;
   justify-content: space-between;
   padding-top: var(--uitk-size-unit);
-}
-
-.soloImg {
-  max-width: 560px;
 }
 
 @media screen and (max-width: 996px) {

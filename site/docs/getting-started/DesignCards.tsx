@@ -6,9 +6,12 @@ import SelectIconImg from "@site/static/img/design-getting-started/SelectIconImg
 
 import styles from "./DesignCards.module.css";
 
-const cardInfo = [
+type CardInfoType = { img: string; altText: string; content?: JSX.Element };
+
+const cardInfo: CardInfoType[] = [
   {
     img: Assets1,
+    altText: "figma components panel",
     content: (
       <p>
         You can access the components in the left-hand panel using the Assets
@@ -18,6 +21,7 @@ const cardInfo = [
   },
   {
     img: Assets2,
+    altText: "figma mode selection",
     content: (
       <p>
         The components are organized in alphabetical order. Select a mode, i.e.
@@ -28,6 +32,7 @@ const cardInfo = [
   },
   {
     img: Assets3,
+    altText: "figma components search",
     content: (
       <p>
         Or, if you prefer you can use the search function to find the component
@@ -37,6 +42,7 @@ const cardInfo = [
   },
   {
     img: Assets4,
+    altText: "figma contextual panel",
     content: (
       <p>
         You can change density and further manipulate the setup in the
@@ -48,7 +54,7 @@ const cardInfo = [
 
 const DesignCards = () => {
   return (
-    <>
+    <div className={styles.designCardsContainer}>
       <div className={styles.row}>
         {cardInfo.slice(0, 2).map((cardInfo) => (
           <Card {...cardInfo} key={cardInfo.img} />
@@ -59,21 +65,19 @@ const DesignCards = () => {
           <Card {...cardInfo} key={cardInfo.img} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
 export const SoloImgCard = () => (
-  <div className={styles.soloImg}>
-    <Card img={SelectIconImg} />
+  <div className={styles.designCardsContainer}>
+    <Card img={SelectIconImg} altText="figma icon library" />
   </div>
 );
 
-const Card = ({ img, content }: { img: string; content?: JSX.Element }) => (
+const Card = ({ img, altText, content }: CardInfoType) => (
   <div className={styles.card}>
-    <div className={styles.imgContainer}>
-      <img src={img} />
-    </div>
+    <img src={img} alt={altText} />
     <div className={styles.textContainer}>{content}</div>
   </div>
 );
