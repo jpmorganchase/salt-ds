@@ -43,7 +43,7 @@ const config = {
     ({
       navbar: {
         logo: {
-          alt: "UITK Site Logo",
+          alt: "Salt Site Logo",
           src: "img/logo.svg",
         },
         items: [
@@ -76,6 +76,7 @@ const config = {
             "aria-label": "GitHub",
             position: "right",
             className: "header-github-link",
+            label: "Github",
           },
         ],
       },
