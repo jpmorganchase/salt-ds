@@ -1,5 +1,5 @@
 .BackgroundBlock {
-  background: var(--uitk-container-background-medium);
+  background: var(--uitk-container-primary-background);
   color: var(--uitk-text-primary-foreground);
   padding: 8px;
 
