@@ -18,7 +18,7 @@ const cards: CardProps[] = [
     icon: <DevelopIcon />,
     title: "Develop",
     description:
-      "We walk you through the process of installing the Salt dependencies into your React project and importing components.",
+      "Learn how to install the Salt packages, integrate them into your React project, add the web fonts you need and import components.",
     url: "/getting-started/develop",
     footer: "Start developing",
     keylineColor: "var(--site-tertiary-accent-orange)",

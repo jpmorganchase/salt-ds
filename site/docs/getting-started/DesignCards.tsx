@@ -11,42 +11,45 @@ type CardInfoType = { img: string; altText: string; content?: JSX.Element };
 const cardInfo: CardInfoType[] = [
   {
     img: Assets1,
-    altText: "figma components panel",
+    altText:
+      'Screenshot of Figma\'s assets panel displaying the "Salt: Components Light" library',
     content: (
       <p>
-        You can access the components in the left-hand panel using the Assets
-        tab.
+        Use the “Assets” tab In the left-hand panel to access the components,
+        which are organized in alphabetical order.
       </p>
     ),
   },
   {
     img: Assets2,
-    altText: "figma mode selection",
+    altText:
+      "Screenshot of a light mode Button compponent being dragged out of Figma's assets panel",
     content: (
       <p>
-        The components are organized in alphabetical order. Select a mode, i.e.
-        Light mode, then the component and simply drag it to the Canvas or a
-        Frame in your project.
+        Select a mode, for example Light Mode, choose the component you need and
+        simply drag it to the Canvas or a Frame in your project.
       </p>
     ),
   },
   {
     img: Assets3,
-    altText: "figma components search",
+    altText:
+      "Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed",
     content: (
       <p>
-        Or, if you prefer you can use the search function to find the component
+        Or, if you prefer, you can use the search function to find the component
         you need.
       </p>
     ),
   },
   {
     img: Assets4,
-    altText: "figma contextual panel",
+    altText:
+      "Screenshot of the Figma's contextual panel for Salt's Button component",
     content: (
       <p>
-        You can change density and further manipulate the setup in the
-        contextual panel on the right-hand side.
+        To change density and further manipulate the setup, use the contextual
+        panel on the right-hand side.
       </p>
     ),
   },
@@ -70,8 +73,12 @@ const DesignCards = () => {
 };
 
 export const SoloImgCard = () => (
-  <div className={styles.designCardsContainer}>
-    <Card img={SelectIconImg} altText="figma icon library" />
+  <div className={styles.soloImg}>
+    <Card
+      img={SelectIconImg}
+      content={<p>Swapping an icon in Figma</p>}
+      altText="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
+    />
   </div>
 );
 
