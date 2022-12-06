@@ -47,6 +47,7 @@
 }
 
 .main-wrapper {
+  --doc-sidebar-hidden-width: 0;
   background-color: var(--uitk-color-gray-900);
   font-size: var(--uitk-text-fontSize);
 }
@@ -65,6 +66,10 @@
 
 .navbar__logo {
   height: 23px;
+}
+
+.navbar__logo img {
+  height: auto;
 }
 
 .navbar__items {
@@ -215,20 +220,36 @@
 .docs-toc-intro {
   font-size: var(--uitk-text-h4-fontSize);
   font-weight: var(--uitk-text-h4-fontWeight);
-  margin-left: 2px;
+  position: relative;
+  right: calc(0.5 * var(--uitk-size-unit));
 }
 
 .table-of-contents ul,
 .table-of-contents li {
   list-style: none;
+  padding-left: 0;
 }
 
 .table-of-contents li {
-  padding-bottom: var(--uitk-size-unit);
+  padding: var(--uitk-size-unit) 0;
+  height: 36px;
 }
 
 ul.table-of-contents li > ul li {
   width: 70%;
+}
+
+.table-of-contents li {
+  margin: var(--ifm-toc-padding-vertical) 0;
+}
+
+.table-of-contents li li {
+  margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
+}
+
+.docs-toc-container .table-of-contents ul {
+  padding-inline-start: 0;
+  padding-left: 0;
 }
 
 .docs-page-content {
@@ -373,6 +394,50 @@ table th {
 table tr td:not(:last-child) {
   border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
 }
+
+/* Mobile navigation */
+
+.navbar-sidebar .navbar-sidebar__item {
+  --sidebar-border-left-width: 4px;
+  --sidebar-border-left: var(--sidebar-border-left-width) solid var(--uitk-navigable-indicator-active);
+
+  padding: 0;
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__list {
+  background-color: var(--uitk-color-gray-800);
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__list .menu__link {
+  --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
+  --ifm-menu-link-padding-horizontal: calc((var(--uitk-size-unit) * 3) - var(--sidebar-border-left-width));
+
+  border-radius: 0;
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__link--active:not(.menu__link--sublist) {
+  border-left: var(--sidebar-border-left);
+}
+
+.navbar-sidebar .header-github-link svg {
+  display: none;
+}
+
+.navbar-sidebar .header-github-link {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--uitk-size-unit);
+}
+
+.navbar-sidebar .navbar-sidebar__back {
+  padding: var(--uitk-size-unit);
+  margin: 0 0 var(--uitk-size-unit) 0;
+  position: unset;
+  width: 100%;
+}
+
+/* ----------------- */
 
 @media screen and (max-width: 1280px) {
   .navbar {

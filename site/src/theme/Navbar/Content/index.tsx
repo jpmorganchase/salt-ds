@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import clsx from "clsx";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
 } from "@docusaurus/theme-common/internal";
+import { useViewport } from "@jpmorganchase/uitk-core";
 import NavbarItem from "@theme/NavbarItem";
 import NavbarColorModeToggle from "@theme/Navbar/ColorModeToggle";
 import SearchBar from "@theme/SearchBar";
@@ -38,11 +39,24 @@ function NavbarContentLayout({ left, right, center }) {
     </div>
   );
 }
+
 export default function NavbarContent() {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
+
   const searchBarItem = items.find((item) => item.type === "search");
+
+  const viewport = useViewport();
+
+  const isMobileView = viewport <= 996;
+
+  const rightItemsNoLabel = useMemo(
+    () => rightItems.map(({ label, ...keepAttrs }) => keepAttrs),
+    [rightItems]
+  );
+
+  const responsiveRightItems = isMobileView ? rightItems : rightItemsNoLabel;
   return (
     <NavbarContentLayout
       left={
@@ -57,7 +71,7 @@ export default function NavbarContent() {
         // TODO stop hardcoding items?
         // Ask the user to add the respective navbar items => more flexible
         <>
-          <NavbarItems items={rightItems} />
+          <NavbarItems items={responsiveRightItems} />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
           {searchBarItem && (
             <NavbarSearch>
