@@ -27,10 +27,10 @@ export interface GridCellProps<T> {
   children?: ReactNode;
 }
 
-export interface GridCellValueProps<T> {
+export interface GridCellValueProps<T, U = any> {
   row: GridRowModel<T>;
   column: GridColumnModel<T>;
-  value?: T;
+  value?: U;
 }
 
 export interface GridHeaderValueProps<T> {
@@ -42,7 +42,7 @@ export interface GridEditorProps<T> {
   column: GridColumnModel<T>;
 }
 
-export interface GridColumnProps<T = any> {
+export interface GridColumnProps<T = any, U = any> {
   /**
    * Unique identifier of the column.
    * */
@@ -79,12 +79,12 @@ export interface GridColumnProps<T = any> {
    * Component to render inside every cell. This is the preferred way of
    * customizing grid cells.
    * */
-  cellValueComponent?: ComponentType<GridCellValueProps<T>>;
+  cellValueComponent?: ComponentType<GridCellValueProps<T, U>>;
   /**
    * Cell value getter. Should return the value to be displayed in the cell
    * for the given row data item.
    * */
-  getValue?: (rowData: T) => any;
+  getValue?: (rowData: T) => U;
   /**
    * CSS class to be applied to the column header.
    * Useful for minor customizations

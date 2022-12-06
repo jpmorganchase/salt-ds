@@ -2,8 +2,8 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 3px;
+  width: var(--grid-columnDropTarget-width);
   border: var(--grid-columnDropTarget-color);
-  border-width: 0 1px 0 1px;
-  border-style: solid;
+  border-width: var(--grid-columnDropTarget-borderWidth);
+  border-style: var(--grid-columnDropTarget-style);
 }

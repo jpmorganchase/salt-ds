@@ -2,6 +2,8 @@
   --uitk-target-background-hover: var(--uitk-palette-interact-background-hover);
 
   --uitk-target-borderColor-hover: var(--uitk-palette-interact-border-hover);
+  --uitk-target-width-hover: 3px;
+  --uitk-target-borderWidth-hover: 0 1px 0 1px;
   --uitk-target-borderStyle: dashed;
   --uitk-target-borderStyle-hover: solid;
   --uitk-target-borderStyle-disabled: dashed;
