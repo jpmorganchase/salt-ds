@@ -116,7 +116,7 @@ describe("Metric - Indicator Position", () => {
   });
 });
 
-describe("Metric - Emphasis", () => {
+describe("Metric - Size", () => {
   it(`should render with correct text component for size LARGE`, () => {
     cy.mount(
       <Metric size="large">

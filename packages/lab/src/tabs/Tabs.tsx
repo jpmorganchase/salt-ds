@@ -26,7 +26,6 @@ export const Tabs = forwardRef(function Tabs(
     className,
     defaultActiveTabIndex,
     editing,
-    emphasis,
     enableAddTab,
     enableCloseTab,
     enableRenameTab,
@@ -37,6 +36,7 @@ export const Tabs = forwardRef(function Tabs(
     onExitEditMode,
     onMoveTab,
     overflowMenu,
+    variant,
     ...htmlAttributes
   }: TabsProps,
   forwardedRef: ForwardedRef<FocusAPI>
@@ -63,7 +63,7 @@ export const Tabs = forwardRef(function Tabs(
     allowDragDrop,
     centered,
     editing,
-    emphasis,
+    variant,
     enableAddTab,
     enableCloseTab,
     enableRenameTab,

@@ -45,21 +45,21 @@ Banner contains four states `info`, `warning`, `error` and `success`. If not spe
   </StackLayout>
 </Canvas>
 
-## Emphasis variants
+## Emphasized
 
-Banner has two emphasis levels; medium (default) and high.
+Banner can be emphasized by passing in `emphasize={true}`.
 
 <Canvas>
   <StackLayout gap={2}>
-    <Banner emphasis="high">High emphasis</Banner>
-    <Banner emphasis="high" state="warning">
-      High emphasis
+    <Banner emphasize={true}>Emphasized</Banner>
+    <Banner emphasize={true} state="warning">
+      Emphasized
     </Banner>
-    <Banner emphasis="high" state="error">
-      High emphasis
+    <Banner emphasize={true} state="error">
+      Emphasized
     </Banner>
-    <Banner emphasis="high" state="success">
-      High emphasis
+    <Banner emphasize={true} state="success">
+      Emphasized
     </Banner>
   </StackLayout>
 </Canvas>

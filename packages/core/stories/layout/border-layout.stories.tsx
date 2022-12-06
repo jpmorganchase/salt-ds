@@ -278,7 +278,7 @@ const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
           className="border-layout-button-container"
         />
 
-        <div className="uitkEmphasisHigh border-layout-form-steps">
+        <div className="border-layout-form-steps">
           <SplitLayout
             leftSplitItem={<FlowLayoutSimpleUsage />}
             rightSplitItem={

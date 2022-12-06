@@ -11,10 +11,10 @@ import { ToolbarFieldProps } from "./toolbarFieldTypes";
 
 type TypeWithDisplayName = { displayName: string };
 type ActivationIndicator = ToolbarFieldProps["ActivationIndicatorComponent"];
-type ToolbarFormFieldEmphasis = "uitkEmphasisLow" | "uitkEmphasisMedium";
+type ToolbarFormFieldVariant = "primary" | "tertiary";
 
 const NullActivationIndicator = () => null;
-const mediumEmphasisControls = ["Dropdown", "Input"];
+const primaryControls = ["Dropdown", "Input"];
 
 const getChildElementName = (element: ReactNode): string => {
   if (isValidElement(element)) {
@@ -47,20 +47,21 @@ export const getToolbarFormFieldProps = (
   isOverflowPanel = false
 ): ToolbarFieldProps => {
   let activationIndicator: ActivationIndicator = NullActivationIndicator;
-  let emphasis: ToolbarFormFieldEmphasis = "uitkEmphasisLow";
+  let variant: ToolbarFormFieldVariant = "tertiary";
   const element = child as ReactElement;
   if (isValidElement(element)) {
     const name = getChildElementName(element);
-    if (mediumEmphasisControls.includes(name)) {
+    if (primaryControls.includes(name)) {
       activationIndicator = undefined;
-      emphasis = "uitkEmphasisMedium";
+      variant = "primary";
     }
   }
   return {
     ActivationIndicatorComponent: activationIndicator,
-    className: cx(emphasis, {
+    className: cx({
       "uitkFormField-toolbarButton":
         isOverflowPanel && isToolbarButton(element),
+      [`uitkFormField-${variant}`]: variant,
     }),
     fullWidth: false,
   };

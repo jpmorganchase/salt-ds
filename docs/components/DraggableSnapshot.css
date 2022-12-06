@@ -20,7 +20,7 @@
 }
 
 .uitkDraggableSnapshot-header {
-  background-color: var(--uitk-container-background-high);
+  background-color: var(--uitk-container-secondary-background);
   height: var(--header-height);
   padding: 8px;
 }

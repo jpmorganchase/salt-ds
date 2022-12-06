@@ -66,7 +66,7 @@ export const LighterScrim: ComponentStory<typeof Scrim> = () => {
       <Scrim
         aria-label="Example Scrim"
         closeWithEscape
-        className="uitkEmphasisLow"
+        variant="secondary"
         onBackDropClick={handleClose}
         onClose={handleClose}
         open={open}
@@ -150,7 +150,7 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         open={open}
         enableContainerMode
         containerRef={parentRef}
-        className="uitkEmphasisLow"
+        variant="secondary"
         zIndex={2}
       >
         <Button onClick={handleClose}>CLOSE SCRIM</Button>

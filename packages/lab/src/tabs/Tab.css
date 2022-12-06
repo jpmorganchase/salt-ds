@@ -4,7 +4,7 @@
   --uitkEditableLabel-height: var(--tabs-tabstrip-height);
   --uitkInput-minWidth: 4em;
 
-  --tabs-tab-background: var(--uitk-navigable-background-medium);
+  --tabs-tab-background: var(--uitk-navigable-primary-background);
   --tabs-tab-cursor: pointer;
   --tabs-tab-spacing: var(--uitk-size-unit);
   --tabs-tab-position: relative;
@@ -136,7 +136,7 @@
 }
 
 .uitkTab.uitkFocusVisible {
-  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-primary-background-hover));
 }
 
 .uitkTab:before {
@@ -168,5 +168,5 @@
 }
 
 .uitkTab:hover:not(.uitkTab-closeHover) {
-  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-background-hover-medium));
+  background: var(--uitkTabs-tab-hover-background, var(--uitk-navigable-primary-background-hover));
 }

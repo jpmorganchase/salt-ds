@@ -1,6 +1,6 @@
 .uitkLayerLayout {
   --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
-  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
+  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-primary-background));
   --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
   --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
 }

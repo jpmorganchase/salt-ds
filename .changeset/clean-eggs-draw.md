@@ -86,7 +86,7 @@ Update opacities
 + --uitk-palette-opacity-border-readonly: var(--uitk-opacity-2)
 + --uitk-palette-opacity-fill: var(--uitk-opacity-3)
 + --uitk-palette-opacity-foreground: var(--uitk-opacity-4)
-+ --uitk-palette-opacity-scrim-low: var(--uitk-opacity-5)
++ --uitk-palette-opacity-tertiary-scrim: var(--uitk-opacity-5)
 + --uitk-palette-opacity-stroke: var(--uitk-opacity-3)
 + --uitk-palette-opacity-primary-border: var(--uitk-opacity-3)
 + --uitk-palette-opacity-secondary-border: var(--uitk-opacity-2)
@@ -108,8 +108,8 @@ Redo separable characteristic
 - --uitk-palette-neutral-cta-border
 - --uitk-palette-neutral-primary-border
 - --uitk-palette-neutral-secondary-border
-- --uitk-palette-neutral-border-low
-- --uitk-palette-neutral-border-disabled-low
+- --uitk-palette-neutral-tertiary-border-low
+- --uitk-palette-neutral-tertiary-border-disabled-low
 + --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-primary-separator)
 + --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-secondary-separator)
 + --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-tertiary-separator)
