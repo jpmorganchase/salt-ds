@@ -11,7 +11,7 @@
 }
 
 .table-of-contents li:has(> .uitkTocInline-activeLink)::before {
-  border-left: 4px solid var(--uitk-navigable-indicator-active);
+  border-left: 3px solid var(--uitk-navigable-indicator-active);
   content: "";
   position: relative;
   left: calc(var(--uitk-size-unit) * -3);

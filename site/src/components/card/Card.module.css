@@ -11,8 +11,9 @@
   --card-icon-background: var(--uitk-color-gray-10);
 }
 
-.cardTitle {
-  --ifm-heading-margin-bottom: var(--uitk-size-unit);
+.card h2.cardTitle {
+  margin-bottom: var(--uitk-size-unit);
+  font-weight: var(--uitk-text-h2-fontWeight);
 }
 
 .card {
