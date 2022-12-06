@@ -1,9 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Welcome to Salt",
@@ -103,10 +100,7 @@ const config = {
         ],
         copyright: `© ${new Date().getFullYear()} JPMorgan Chase & Co. All rights reserved.`,
       },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
+      prism: {},
       colorMode: {
         defaultMode: "dark",
         disableSwitch: true,
@@ -115,4 +109,13 @@ const config = {
     }),
 };
 
-module.exports = config;
+async function createConfig() {
+  const lightTheme = (await import("./prismLight.mjs")).default;
+
+  // @ts-expect-error: we know it exists, right
+  config.themeConfig.prism.theme = lightTheme;
+
+  return config;
+}
+
+module.exports = createConfig;

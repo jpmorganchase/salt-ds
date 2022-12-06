@@ -2,6 +2,10 @@
   color: var(--site-tertiary-accent-purple);
 }
 
+.iconsTable {
+  margin: calc(var(--uitk-size-unit) * 2) 0;
+}
+
 .iconsTable > tbody tr td:not(:first-child) {
   text-align: center;
 }

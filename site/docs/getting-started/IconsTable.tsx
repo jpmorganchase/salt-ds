@@ -9,9 +9,9 @@ const IconsTable = () => (
       <tr>
         <th>Size</th>
         <th>High Density (HD)</th>
-        <th>Medium Density (HD)</th>
-        <th>Low Density (HD)</th>
-        <th>Touch Density (HD)</th>
+        <th>Medium Density (MD)</th>
+        <th>Low Density (LD)</th>
+        <th>Touch Density (TD)</th>
       </tr>
     </thead>
     <tbody>
