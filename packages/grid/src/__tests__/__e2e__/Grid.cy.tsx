@@ -443,7 +443,6 @@ describe("Grid", () => {
       cy.mount(<CellCustomization />);
       cy.get(".bidAskCellValue").should("have.length", 16);
       cy.get(".uitkLinearProgress").should("have.length", 16);
-      cy.get(".uitkButton").should("have.length", 32);
     });
   });
 
