@@ -6,7 +6,7 @@ export const enum ComponentStatus {
    * The component has been released in the core package and
    * consumers can use it in production applications.
    */
-  READY,
+  READY = "Ready",
 
   /**
    * Work on the component has begun (and therefore it MAY be
@@ -14,17 +14,17 @@ export const enum ComponentStatus {
    * and therefore consumers are discouraged from using it in
    * production applications.
    */
-  IN_PROGRESS,
+  IN_PROGRESS = "In progress",
 
   /**
    * There is an intent to build this component, but work on it
    * has not yet started.
    */
-  IN_BACKLOG,
+  IN_BACKLOG = "In the backlog",
 }
 
 /**
- * Descirptive metadata about a Salt UI component.
+ * Descriptive metadata about a Salt UI component.
  */
 export interface ComponentDetails {
   /**
@@ -78,7 +78,7 @@ export interface ComponentDetails {
    *
    * Only needed for components in the READY status.
    */
-  availablInCoreSince?: string;
+  availableInCoreSince?: string;
 
   /**
    * The version of Salt's Figma library in which this component was
@@ -180,7 +180,7 @@ export const componentDetails: ComponentDetails[] = [
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availablInCoreSince: "0.9.0",
+    availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
   },
@@ -443,7 +443,7 @@ export const componentDetails: ComponentDetails[] = [
     ),
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availablInCoreSince: "0.9.0",
+    availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
@@ -502,7 +502,7 @@ export const componentDetails: ComponentDetails[] = [
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availablInCoreSince: "0.9.0",
+    availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
   },
@@ -553,7 +553,7 @@ export const componentDetails: ComponentDetails[] = [
     // TODO: add description
     devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availablInCoreSince: "0.9.0",
+    availableInCoreSince: "0.9.0",
   },
   {
     name: "Toast",

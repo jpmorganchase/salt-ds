@@ -1,0 +1,30 @@
+.componentList {
+  margin: calc(var(--uitk-size-unit) * 3) 0;
+}
+
+.componentList table {
+  table-layout: fixed;
+}
+
+.componentList a span {
+  text-decoration: underline;
+}
+
+.componentList .status,
+.componentList a {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--uitk-size-unit) / 2);
+}
+
+.componentList .status.ready {
+  --uitkIcon-color: var(--uitk-status-success-foreground);
+}
+
+.componentList .status.progress {
+  --uitkIcon-color: var(--uitk-status-warning-foreground);
+}
+
+.componentList .status.backlog {
+  --uitkIcon-color: var(--uitk-status-error-foreground);
+}
