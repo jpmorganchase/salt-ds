@@ -236,35 +236,46 @@ ul.table-of-contents li > ul li {
   padding: calc(var(--uitk-size-unit) * 3);
 }
 
-.docs-page-content > p:first-child {
+/* .docs-page-content > p:first-child {
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 3);
-}
+} */
 
 .docs-page-content.withToc {
   width: calc(100% - 282px);
 }
 
 .docs-page-content h2 {
+  margin-top: calc(var(--uitk-size-unit) * 3);
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
-.docs-page-content > *:has(+ h2),
-.docs-page-content > *:not(h2):has(+ h3) {
+/* .docs-page-content > *:has(+ h2), */
+/* .docs-page-content > *:not(h2):has(+ h3) {
   margin-bottom: calc(var(--uitk-size-unit) * 3);
-}
+} */
 
 .docs-page-content h3 {
   --ifm-h3-font-size: var(--uitk-text-h3-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight-strong);
   --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
   --ifm-heading-color: var(--uitk-text-primary-foreground);
+  margin-top: calc(var(--uitk-size-unit) * 3);
+}
+
+.docs-page-content h2 + h3 {
+  margin-top: 0;
 }
 
 .docs-page-content h4 {
   --ifm-h4-font-size: var(--uitk-text-h4-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-h4-fontWeight-strong);
   --ifm-heading-line-height: var(--uitk-text-h4-lineHeight);
+  margin-top: calc(var(--uitk-size-unit) * 2);
   margin-bottom: var(--uitk-size-unit);
+}
+
+.docs-page-content h3 + h4 {
+  margin-top: 0;
 }
 
 .docs-page-content code {
