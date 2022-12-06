@@ -30,7 +30,7 @@
   left: calc(var(--uitk-size-unit) * -2);
 }
 
-.table-of-contents ul ul {
+ul.table-of-contents ul {
   position: relative;
   top: calc(-2 * var(--uitk-size-unit))
 }
