@@ -4,11 +4,20 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import ThemedImage from "@theme/ThemedImage";
+import { useViewport } from "@jpmorganchase/uitk-core";
+
 function LogoThemedImage({ logo, alt, imageClassName }) {
+  const viewport = useViewport();
+
+  const isMobileView = viewport <= 996;
+
   const sources = {
     light: useBaseUrl(logo.src),
-    dark: useBaseUrl(logo.srcDark || logo.src),
+    dark: isMobileView
+      ? useBaseUrl("/img/logo_mobile.svg")
+      : useBaseUrl(logo.srcDark || logo.src),
   };
+
   const themedImage = (
     <ThemedImage
       className={logo.className}
@@ -34,6 +43,7 @@ export default function Logo(props) {
   const {
     navbar: { title: navbarTitle, logo },
   } = useThemeConfig();
+
   const { imageClassName, titleClassName, ...propsRest } = props;
   const logoLink = useBaseUrl(logo?.href || "/");
   // If visible title is shown, fallback alt text should be
