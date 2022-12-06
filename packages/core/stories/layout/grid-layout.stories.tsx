@@ -3,6 +3,7 @@ import {
   FlowLayout,
   GridItem,
   GridLayout,
+  ToolkitProvider,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
@@ -24,7 +25,7 @@ export default {
   args: {},
 } as ComponentMeta<typeof GridLayout>;
 
-const customBreakpoints = { xs: 0, md: 860, lg: 1180 };
+const customBreakpoints = { xs: 0, sm: 0, md: 860, lg: 1180, xl: 1180 };
 
 const Template: ComponentStory<typeof GridLayout> = (args) => {
   return (
@@ -44,24 +45,26 @@ DefaultGridLayout.args = {
 
 const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <GridLayout {...args} className="layout-container custom-breaks">
-      <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-        <p>GridItem 1</p>
-      </GridItem>
-
-      {Array.from({ length: 6 }, (_, index) => (
-        <GridItem
-          key={index}
-          colSpan={{ xs: 1, md: 3 }}
-          rowSpan={{ md: 2, lg: 1 }}
-        >
-          <p>{`GridItem ${index + 2}`}</p>
+    <ToolkitProvider breakpoints={customBreakpoints}>
+      <GridLayout {...args} className="layout-container custom-breaks">
+        <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
+          <p>GridItem 1</p>
         </GridItem>
-      ))}
-      <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
-        <p>GridItem 8</p>
-      </GridItem>
-    </GridLayout>
+
+        {Array.from({ length: 6 }, (_, index) => (
+          <GridItem
+            key={index}
+            colSpan={{ xs: 1, md: 3 }}
+            rowSpan={{ md: 2, lg: 1 }}
+          >
+            <p>{`GridItem ${index + 2}`}</p>
+          </GridItem>
+        ))}
+        <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
+          <p>GridItem 8</p>
+        </GridItem>
+      </GridLayout>
+    </ToolkitProvider>
   );
 };
 
@@ -70,7 +73,6 @@ export const GridLayoutResponsiveViewWithCustomBreakpoints =
 GridLayoutResponsiveViewWithCustomBreakpoints.args = {
   columns: { xs: 1, md: 6, lg: 12 },
   rows: { md: 8, lg: 3 },
-  breakpoints: customBreakpoints,
 };
 
 const footerLinks: Record<string, string[]> = {
