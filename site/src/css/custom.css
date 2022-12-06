@@ -242,8 +242,9 @@ ul.table-of-contents li > ul li {
   margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
 }
 
-ul {
+.docs-toc-container .table-of-contents ul {
   padding-inline-start: 0;
+  padding-left: 0;
 }
 
 .docs-page-content {
