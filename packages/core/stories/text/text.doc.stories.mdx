@@ -1,0 +1,111 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import {
+  Text,
+  H1,
+  H2,
+  H3,
+  H4,
+  Label,
+  Display1,
+  Display2,
+  Display3,
+} from "@jpmorganchase/uitk-core";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Text"
+  component={Text}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Text
+
+We've created a base Text component (that contains our key typography styles and functionality) and more text components which derive from it: H1, H2, H3, H4, Label, Display1, Display2 and Display3. All our text components are aware of theme, mode and density.
+
+You can also create your own text components using the props and CSS variables to configure them.
+
+# API
+
+```
+import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-core";
+```
+
+## Props
+
+<ArgsTable of={Text} />
+
+## Features
+
+### Variant
+
+Use `variant` prop when you want to change the text color. Available options are `primary` and `secondary`. Default is `primary`.
+
+<Canvas>
+  <Story name="Primary">
+    <Text>This is a primary text example</Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Secondary">
+    <Text variant="secondary">This is a secondary text example</Text>
+  </Story>
+</Canvas>
+
+### Emphasis
+
+Use `<strong>` or `<small>` tags inside your text components to wrap the chunks of text you wish to emphasise
+
+<Canvas>
+  <Story name="Strong">
+    <Text>
+      This is a <strong>strong</strong> text example
+    </Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Small">
+    <Text>
+      This is a <small>small</small> text example
+    </Text>
+  </Story>
+</Canvas>
+
+### StyleAs
+
+Although we do not encourage it, it is necessary sometimes to need to match one of our text components styling to another element type. In this case you'd use the `styleAs` prop.
+
+<Canvas>
+  <Story name="StyleAs">
+    <Text elementType="p" styleAs="display3">
+      This is a styleAs Display3 example
+    </Text>
+  </Story>
+</Canvas>
+
+### Truncation
+
+By using the `maxRows` prop your text component will be truncated and will display the chosen number of rows. Ellipsis will be shown at the end to reflect that.
+
+<Canvas>
+  <Story name="Truncation">
+    <div style={{ width: 150 }}>
+      <Text maxRows={1}>This is a maxRows=1 example</Text>
+    </div>
+  </Story>
+</Canvas>
+
+## CSS Class
+
+<CSSClassTable of={Text} />
+
+<HelpAndSupport />
