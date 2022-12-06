@@ -3,7 +3,7 @@ import "./GroupHeaderCell.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnGroupModel } from "./Grid";
 import { ReactNode } from "react";
-import { useGridContext } from "./GridContext";
+import { useColumnDataContext } from "./ColumnDataContext";
 
 const withBaseName = makePrefixer("uitkGridGroupHeaderCell");
 
@@ -15,7 +15,7 @@ export interface GroupHeaderCellProps {
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { group } = props;
   const { colSpan, columnSeparator, rowSeparator } = group;
-  const { getColById } = useGridContext();
+  const { getColById } = useColumnDataContext();
   const firstChild = getColById(group.childrenIds[0]);
 
   return (
