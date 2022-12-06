@@ -32,5 +32,5 @@
 
 ul.table-of-contents ul {
   position: relative;
-  top: calc(-2 * var(--uitk-size-unit))
+  top: calc(-2 * var(--uitk-size-unit));
 }
