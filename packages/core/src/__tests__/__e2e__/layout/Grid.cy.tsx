@@ -4,7 +4,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 const composedStories = composeStories(gridStories);
-const { DefaultGridLayout } = composedStories;
+const { DefaultGridLayout, GridLayoutNested } = composedStories;
 
 const testElementsNumber = (elements: number) =>
   new RegExp(`^(\\d*\\.?\\d*px *){${elements}}$`);
@@ -33,29 +33,29 @@ describe("GIVEN a Grid", () => {
 
       cy.get(".uitkGridLayout").should("have.css", "row-gap", "24px");
     });
-    // it("THEN nested items should not inherit css variables from parent", () => {
-    //   cy.mount(<GridLayoutNested />);
-    //
-    //   cy.get(".uitkGridLayout").eq(0).should("have.css", "column-gap", "48px");
-    //   cy.get(".uitkGridLayout")
-    //     .eq(0)
-    //     .invoke("css", "grid-template-columns")
-    //     .should("match", testElementsNumber(2));
-    //   cy.get(".uitkGridLayout")
-    //     .eq(0)
-    //     .invoke("css", "grid-template-rows")
-    //     .should("match", testElementsNumber(2));
-    //
-    //   cy.get(".uitkGridLayout").eq(1).should("have.css", "column-gap", "24px");
-    //   cy.get(".uitkGridLayout")
-    //     .eq(1)
-    //     .invoke("css", "grid-template-columns")
-    //     .should("match", testElementsNumber(12));
-    //   cy.get(".uitkGridLayout")
-    //     .eq(1)
-    //     .invoke("css", "grid-template-rows")
-    //     .should("match", testElementsNumber(1));
-    // });
+    it("THEN nested items should not inherit css variables from parent", () => {
+      cy.mount(<GridLayoutNested />);
+
+      cy.get(".uitkGridLayout").eq(0).should("have.css", "column-gap", "48px");
+      cy.get(".uitkGridLayout")
+        .eq(0)
+        .invoke("css", "grid-template-columns")
+        .should("match", testElementsNumber(2));
+      cy.get(".uitkGridLayout")
+        .eq(0)
+        .invoke("css", "grid-template-rows")
+        .should("match", testElementsNumber(2));
+
+      cy.get(".uitkGridLayout").eq(1).should("have.css", "column-gap", "24px");
+      cy.get(".uitkGridLayout")
+        .eq(1)
+        .invoke("css", "grid-template-columns")
+        .should("match", testElementsNumber(12));
+      cy.get(".uitkGridLayout")
+        .eq(1)
+        .invoke("css", "grid-template-rows")
+        .should("match", testElementsNumber(1));
+    });
   });
 
   describe("WHEN column and row values are provided", () => {

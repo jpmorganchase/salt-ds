@@ -23,16 +23,17 @@ export default {
     rows: { type: "number" },
   },
   args: {},
+  excludeStories: ["GridLayoutNested"],
 } as ComponentMeta<typeof GridLayout>;
 
-const customBreakpoints = { xs: 0, sm: 0, md: 860, lg: 1180, xl: 1180 };
+const customBreakpoints = { xs: 0, sm: 450, md: 450, lg: 700, xl: 700 };
 
 const Template: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args} className="layout-container">
       {Array.from({ length: 12 }, (_, index) => (
         <div key={index}>
-          <p>{`GridItem ${index + 1}`}</p>
+          <p>{`Item ${index + 1}`}</p>
         </div>
       ))}
     </GridLayout>
@@ -57,7 +58,7 @@ const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
             colSpan={{ xs: 1, md: 3 }}
             rowSpan={{ md: 2, lg: 1 }}
           >
-            <p>{`GridItem ${index + 2}`}</p>
+            <p>{`Item ${index + 2}`}</p>
           </GridItem>
         ))}
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
@@ -215,3 +216,22 @@ GridLayoutComposite.args = {
   as: "main",
   columns: { xs: 1, sm: 2, lg: 4 },
 };
+
+const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = () => {
+  return (
+    <GridLayout columnGap={6} rows={2} columns={2} className="layout-container">
+      <div>
+        <p>Item 1</p>
+        <p>Item 2</p>
+      </div>
+      <GridLayout>
+        <div>
+          <p>Item 1</p>
+          <p>Item 2</p>
+        </div>
+      </GridLayout>
+    </GridLayout>
+  );
+};
+export const GridLayoutNested = GridLayoutNestedExample.bind({});
+GridLayoutNested.args = {};
