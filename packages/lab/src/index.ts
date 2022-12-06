@@ -54,6 +54,5 @@ export * from "./toggle-button";
 export * from "./toolbar";
 export * from "./tokenized-input";
 export * from "./tree";
-export * from "./text";
 export * from "./window";
 export * from "./utils";

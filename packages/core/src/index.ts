@@ -18,6 +18,7 @@ export * from "./responsive";
 export * from "./scrim";
 export * from "./status-indicator";
 export * from "./switch";
+export * from "./text";
 export * from "./theme";
 export * from "./toolkit-provider";
 export * from "./tooltip";

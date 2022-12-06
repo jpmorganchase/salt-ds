@@ -1,4 +1,5 @@
 import { Metric, MetricHeader, MetricContent } from "@jpmorganchase/uitk-lab";
+import { DoubleChevronDownIcon } from "@jpmorganchase/uitk-icons";
 
 describe("Metric - by default", () => {
   it("should NOT render the indicator", () => {
@@ -42,7 +43,7 @@ describe("Metric - Indicator", () => {
         <MetricHeader title="Revenue YTD" />
         <MetricContent
           value="$801.9B"
-          IndicatorIconComponent={(props) => <div {...props}>icon</div>}
+          IndicatorIconComponent={DoubleChevronDownIcon}
         />
       </Metric>
     );
@@ -115,7 +116,7 @@ describe("Metric - Indicator Position", () => {
   });
 });
 
-describe("Metric - Emphasis", () => {
+describe("Metric - Size", () => {
   it(`should render with correct text component for size LARGE`, () => {
     cy.mount(
       <Metric size="large">

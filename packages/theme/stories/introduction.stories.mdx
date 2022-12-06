@@ -91,19 +91,23 @@ Similarly, for the palette:
 
 And it's opacities:
 
-| Opacity sentiment                        | Defined value      |
-| ---------------------------------------- | ------------------ |
-| --uitk-palette-opacity-background        | `--uitk-opacity-3` |
-| --uitk-palette-opacity-border`           | `--uitk-opacity-3` |
-| --uitk-palette-opacity-border-readonly`  | `--uitk-opacity-2` |
-| --uitk-palette-opacity-fill`             | `--uitk-opacity-3` |
-| --uitk-palette-opacity-foreground`       | `--uitk-opacity-4` |
-| --uitk-palette-opacity-scrim-low`        | `--uitk-opacity-5` |
-| --uitk-palette-opacity-stroke`           | `--uitk-opacity-3` |
-| --uitk-palette-opacity-scrim-medium`     | `--uitk-opacity-5` |
-| --uitk-palette-opacity-primary-border`   | `--uitk-opacity-3` |
-| --uitk-palette-opacity-secondary-border` | `--uitk-opacity-2` |
-| --uitk-palette-opacity-tertiary-border`  | `--uitk-opacity-1` |
+| Opacity sentiment                        | Defined value        |
+| ---------------------------------------- | -------------------- |
+| --uitk-palette-opacity-background        | `--uitk-opacity-3`   |
+| --uitk-palette-opacity-border`           | `--uitk-opacity-3`   |
+| --uitk-palette-opacity-border-readonly`  | `--uitk-opacity-2`   |
+| --uitk-palette-opacity-fill`             | `--uitk-opacity-3`   |
+| --uitk-palette-opacity-foreground`       | `--uitk-opacity-4`   |
+| --uitk-palette-opacity-scrim-low`        | `--uitk-opacity-5`   |
+| --uitk-palette-opacity-stroke`           | `--uitk-opacity-3`   |
+| --uitk-palette-opacity-scrim-medium`     | `--uitk-opacity-5`   |
+| --uitk-palette-opacity-primary-border`   | `--uitk-opacity-3`   |
+| --uitk-palette-opacity-secondary-border` | `--uitk-opacity-2`   |
+| --uitk-palette-opacity-tertiary-border`  | `--uitk-opacity-1`   |
+| --uitk-palette-opacity-primary-scrim`    | `--uitk-opacity-5`\* |
+| --uitk-palette-opacity-secondary-scrim`  | `--uitk-opacity-5`   |
+
+- 4 in dark mode
 
 The full set of characteristics currently defined is as follows. Note how the values of characteristics can be foundation tokens, palette tokens or hardcoded values, depending on what's most suitable:
 
@@ -121,7 +125,7 @@ The full set of characteristics currently defined is as follows. Note how the va
 | Navigable           | Components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover`              | `pointer`                                          |
 | Overlayable         | Components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll`           | `--uitk-shadow-1`                                  |
 | Selectable          | Components that have a selected state                                             | `--uitk-selectable-cursor-hover`             | `pointer`                                          |
-| Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor`       | `--uitk-palette-neutral-border-low`                |
+| Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor`       | `--uitk-palette-neutral-primary-border`            |
 | Status              | Components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor`             | `--uitk-palette-info-border`                       |
 | Taggable            | Components which allow data to be organized                                       | `--uitk-taggable-background`                 | `--uitk-palette-interact-primary-background`       |
 | Text                | All text components or HTML elements                                              | `--uitk-text-primary-foreground`             | `--uitk-palette-neutral-primary-foreground`        |
