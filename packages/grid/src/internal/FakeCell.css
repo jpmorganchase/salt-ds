@@ -3,7 +3,7 @@
 
   border-style: solid;
   border-color: var(--grid-row-borderColor);
-  border-width: 1px 0 0 0;
+  border-width: 0 0 1px 0;
 
   overflow: hidden;
   margin: 0;

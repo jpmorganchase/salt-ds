@@ -55,7 +55,8 @@
   bottom: var(--grid-separatorGap);
 }
 
-.uitkGridHeaderCell-edgeSeparator {
+.uitkGridHeaderCell-groupEdgeSeparator,
+.uitkGridHeaderCell-pinnedSeparator {
   background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
@@ -63,6 +64,15 @@
   right: 0;
   top: 0;
   bottom: var(--grid-separatorGap);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridHeaderCell-pinnedSeparator {
+  background: var(--grid-pinnedSeparator-color);
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .uitkGridHeaderCell-resizeHandle {

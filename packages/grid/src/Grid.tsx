@@ -59,9 +59,9 @@ import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 
 const withBaseName = makePrefixer("uitkGrid");
 
-export type ColumnSeparatorType = "regular" | "none" | "groupEdge";
+export type ColumnSeparatorType = "regular" | "none" | "groupEdge" | "pinned";
 export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
-export type ColumnGroupColumnSeparatorType = "regular" | "none";
+export type ColumnGroupColumnSeparatorType = "regular" | "none" | "pinned";
 export type GridRowSelectionMode = "single" | "multi" | "none";
 export type GridCellSelectionMode = "range" | "none";
 
@@ -87,6 +87,10 @@ export interface GridProps<T = any> {
    * If `true`, column separators are rendered.
    * */
   columnSeparators?: boolean;
+  /**
+   * If `true`, separators are rendered between pinned and unpinned columns.
+   * */
+  pinnedSeparators?: boolean;
   /**
    * Row data objects. Sparse arrays are supported.
    * */
@@ -161,6 +165,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     zebra,
     hideHeader,
     columnSeparators,
+    pinnedSeparators = true,
     className,
     style,
     rowKeyGetter = defaultRowKeyGetter,
@@ -513,6 +518,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const isLeftRaised = scrollLeft > 0;
   const isRightRaised = scrollLeft + clientMidWidth < midWidth;
+  const isHeaderRaised = scrollTop > 0;
 
   const resizeColumn = useCallback(
     (colIdx: number, width: number) => {
@@ -949,6 +955,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       {
                         [withBaseName("zebra")]: zebra,
                         [withBaseName("columnSeparators")]: columnSeparators,
+                        [withBaseName("pinnedSeparators")]: pinnedSeparators,
                         [withBaseName("primaryBackground")]:
                           variant === "primary",
                         [withBaseName("secondaryBackground")]:
@@ -958,7 +965,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     )}
                     style={rootStyle}
                     ref={rootRef}
-                    // tabIndex={0}
                     onKeyDown={onKeyDown}
                     onKeyUp={onKeyUp}
                     onMouseDown={onMouseDown}
@@ -966,6 +972,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                     onBlur={onBlur}
                     data-name="grid-root"
                     role="grid"
+                    aria-colcount={cols.length}
+                    aria-rowcount={rowCount + headRowCount}
+                    aria-multiselectable={rowSelectionMode === "multi"}
                   >
                     <CellMeasure setRowHeight={setRowHeight} />
                     <Scrollable
@@ -981,12 +990,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       leftRef={leftRef}
                       middleRef={middleRef}
                     />
-                    {!hideHeader && (
+                    {!hideHeader && leftCols.length > 0 && (
                       <TopLeftPart
                         onWheel={onWheel}
                         columns={leftCols}
                         columnGroups={leftGroups}
-                        isRaised={isLeftRaised}
+                        rightShadow={isLeftRaised}
+                        bottomShadow={isHeaderRaised}
                       />
                     )}
                     {!hideHeader && (
@@ -996,26 +1006,30 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         topRef={topRef}
                         onWheel={onWheel}
                         midGap={midGap}
+                        bottomShadow={isHeaderRaised}
                       />
                     )}
-                    {!hideHeader && (
+                    {!hideHeader && rightCols.length > 0 && (
                       <TopRightPart
                         onWheel={onWheel}
                         columns={rightCols}
                         columnGroups={rightGroups}
-                        isRaised={isRightRaised}
+                        leftShadow={isRightRaised}
+                        bottomShadow={isHeaderRaised}
                       />
                     )}
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      isRaised={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
+                    {leftCols.length > 0 && (
+                      <LeftPart
+                        leftRef={leftRef}
+                        onWheel={onWheel}
+                        columns={leftCols}
+                        rows={rows}
+                        rightShadow={isLeftRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
+                      />
+                    )}
                     <MiddlePart
                       middleRef={middleRef}
                       onWheel={onWheel}
@@ -1026,16 +1040,18 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                       midGap={midGap}
                       zebra={zebra}
                     />
-                    <RightPart
-                      rightRef={rightRef}
-                      onWheel={onWheel}
-                      columns={rightCols}
-                      rows={rows}
-                      isRaised={isRightRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
+                    {rightCols.length > 0 && (
+                      <RightPart
+                        rightRef={rightRef}
+                        onWheel={onWheel}
+                        columns={rightCols}
+                        rows={rows}
+                        leftShadow={isLeftRaised}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
+                        zebra={zebra}
+                      />
+                    )}
                     <ColumnDropTarget x={activeTarget?.x} />
                     <ColumnGhost
                       columns={cols}
