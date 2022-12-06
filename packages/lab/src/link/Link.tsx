@@ -1,9 +1,8 @@
 import { forwardRef, useCallback, MouseEvent } from "react";
 import cx from "classnames";
 import { TearOutIcon } from "@jpmorganchase/uitk-icons";
-import { Text, TextProps } from "../text";
+import { makePrefixer, Text, TextProps } from "@jpmorganchase/uitk-core";
 
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import "./Link.css";
 
 const withBaseName = makePrefixer("uitkLink");
@@ -32,7 +31,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   );
   return (
     <Text
-      elementType="a"
+      as="a"
       className={cx(
         withBaseName(),
         {
@@ -44,6 +43,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       onClick={stopPropagation}
       ref={ref}
       target={target}
+      tabIndex={disabled ? -1 : 0}
       {...rest}
     >
       {children}

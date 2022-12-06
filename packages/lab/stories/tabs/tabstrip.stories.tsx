@@ -3,6 +3,7 @@ import {
   Button,
   ParentChildLayout,
   ToolkitProvider,
+  Text,
 } from "@jpmorganchase/uitk-core";
 import {
   EditableLabel,
@@ -14,7 +15,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Text,
 } from "@jpmorganchase/uitk-lab";
 
 import { AdjustableFlexbox } from "../story-components";

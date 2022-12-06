@@ -1,8 +1,7 @@
-import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, Text } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
-import { Div } from "../text";
 
 const withBaseName = makePrefixer("uitkContactPrimaryInfo");
 
@@ -36,9 +35,8 @@ export const ContactPrimaryInfo = forwardRef<
   }, [setPrimary, id, text, setPrimaryId]);
 
   return (
-    <Div
+    <Text
       {...restProps}
-      truncate
       maxRows={1}
       id={id}
       ref={ref}
@@ -52,6 +50,6 @@ export const ContactPrimaryInfo = forwardRef<
       data-testid="primary"
     >
       {text}
-    </Div>
+    </Text>
   );
 });

@@ -1,8 +1,7 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { Link, LinkProps } from "../link";
-import { Div } from "../text";
 import { useMetricContext } from "./internal";
 import "./MetricHeader.css";
 
@@ -36,13 +35,13 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
       if (!subtitle) return null;
 
       const subtitleComponent = (
-        <Div
+        <Text
           id={subtitleId}
           className={withBaseName("subtitle")}
           data-testid="metric-subtitle"
         >
           {subtitle}
-        </Div>
+        </Text>
       );
 
       if (SubtitleLinkProps) {
@@ -60,7 +59,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
 
     return (
       <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
-        <Div
+        <Text
           styleAs="h4"
           className={withBaseName("title")}
           data-testid="metric-title"
@@ -69,7 +68,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
           aria-level={headingAriaLevel}
         >
           {title}
-        </Div>
+        </Text>
         {renderSubtitle()}
       </div>
     );

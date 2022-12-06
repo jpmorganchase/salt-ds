@@ -1,7 +1,6 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Div } from "../text";
 import { MailLinkComponent } from "./MailLinkComponent";
 import { ValueComponentProps } from "./types";
 
@@ -23,9 +22,9 @@ export const ContactMetadataItem = forwardRef<
   return (
     <div {...restProps} ref={ref} className={withBaseName()}>
       {!Icon ? (
-        <Div truncate maxRows={1} className={withBaseName("label")}>
+        <Text maxRows={1} className={withBaseName("label")}>
           {label}
-        </Div>
+        </Text>
       ) : null}
       {Icon ? <Icon className={withBaseName("icon")} /> : null}
 
