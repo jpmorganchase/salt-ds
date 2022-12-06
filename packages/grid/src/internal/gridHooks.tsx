@@ -644,9 +644,30 @@ export function useColumnRegistry<T>(children: ReactNode) {
     [editorMap]
   );
 
+  const cols = useMemo(
+    () => [...leftCols, ...midCols, ...rightCols],
+    [leftCols, midCols, rightCols]
+  );
+
+  const colsById = useMemo(
+    () =>
+      new Map<string, GridColumnModel<T>>(
+        cols.map((c) => [c.info.props.id, c] as [string, GridColumnModel<T>])
+      ),
+    [cols]
+  );
+
+  const getColById = useCallback(
+    (id: string) => {
+      return colsById.get(id);
+    },
+    [colsById]
+  );
+
   const contextValue: GridContext<T> = useMemo(
     () => ({
       getChildIndex,
+      getColById,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,
@@ -657,6 +678,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
     }),
     [
       getChildIndex,
+      getColById,
       onColumnAdded,
       onColumnRemoved,
       onColumnGroupAdded,

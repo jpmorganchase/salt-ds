@@ -1,10 +1,12 @@
-import { GridColumnInfo } from "./GridColumn";
+import type { GridColumnInfo } from "./GridColumn";
 import { createContext, useContext } from "react";
-import { ColumnGroupProps } from "./ColumnGroup";
-import { CellEditorInfo } from "./CellEditor";
+import type { ColumnGroupProps } from "./ColumnGroup";
+import type { CellEditorInfo } from "./CellEditor";
+import type { GridColumnModel } from "./Grid";
 
 export interface GridContext<T> {
   getChildIndex: (columnId: string) => number;
+  getColById: (id: string) => GridColumnModel<T> | undefined;
 
   onColumnAdded: (columnInfo: GridColumnInfo<T>) => void;
   onColumnRemoved: (index: number, columnInfo: GridColumnInfo<T>) => void;
