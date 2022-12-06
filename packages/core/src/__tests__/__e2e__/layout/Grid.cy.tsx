@@ -44,17 +44,17 @@ describe("GIVEN a Grid", () => {
       cy.get(".uitkGridLayout")
         .eq(0)
         .invoke("css", "grid-template-rows")
-        .should("match", testElementsNumber(2));
+        .should("match", testElementsNumber(1));
 
       cy.get(".uitkGridLayout").eq(1).should("have.css", "column-gap", "24px");
       cy.get(".uitkGridLayout")
         .eq(1)
         .invoke("css", "grid-template-columns")
-        .should("match", testElementsNumber(12));
+        .should("match", testElementsNumber(1));
       cy.get(".uitkGridLayout")
         .eq(1)
         .invoke("css", "grid-template-rows")
-        .should("match", testElementsNumber(1));
+        .should("match", testElementsNumber(2));
     });
   });
 

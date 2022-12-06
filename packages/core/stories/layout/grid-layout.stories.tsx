@@ -23,7 +23,6 @@ export default {
     rows: { type: "number" },
   },
   args: {},
-  excludeStories: ["GridLayoutNested"],
 } as ComponentMeta<typeof GridLayout>;
 
 const customBreakpoints = { xs: 0, sm: 450, md: 450, lg: 700, xl: 700 };
@@ -219,16 +218,11 @@ GridLayoutComposite.args = {
 
 const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = () => {
   return (
-    <GridLayout columnGap={6} rows={2} columns={2} className="layout-container">
-      <div>
-        <p>Item 1</p>
-        <p>Item 2</p>
-      </div>
-      <GridLayout>
-        <div>
-          <p>Item 1</p>
-          <p>Item 2</p>
-        </div>
+    <GridLayout columnGap={6} columns={2}>
+      <div className="layout-content">Item 1</div>
+      <GridLayout rows={2} columns={1} className="layout-container">
+        <div>Item 1</div>
+        <div>Item 2</div>
       </GridLayout>
     </GridLayout>
   );
