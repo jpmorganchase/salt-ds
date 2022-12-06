@@ -215,7 +215,8 @@
 .docs-toc-intro {
   font-size: var(--uitk-text-h4-fontSize);
   font-weight: var(--uitk-text-h4-fontWeight);
-  margin-left: 2px;
+  position: relative;
+  right: calc(0.5 * var(--uitk-size-unit));
 }
 
 .table-of-contents ul,
