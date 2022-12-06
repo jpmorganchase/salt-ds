@@ -14,3 +14,7 @@
 .accordionWrapper :global(.uitkAccordionSection) {
   --accordion-section-padding: 0;
 }
+
+.summary {
+  font-weight: 600;
+}

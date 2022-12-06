@@ -73,13 +73,11 @@ const DesignCards = () => {
 };
 
 export const SoloImgCard = () => (
-  <div className={styles.soloImg}>
-    <Card
-      img={SelectIconImg}
-      content={<p>Swapping an icon in Figma</p>}
-      altText="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
-    />
-  </div>
+  <Card
+    img={SelectIconImg}
+    content={<p>Swapping an icon in Figma</p>}
+    altText="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
+  />
 );
 
 const Card = ({ img, altText, content }: CardInfoType) => (

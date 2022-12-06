@@ -236,10 +236,6 @@ ul.table-of-contents li > ul li {
   padding: calc(var(--uitk-size-unit) * 3);
 }
 
-/* .docs-page-content > p:first-child {
-  --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 3);
-} */
-
 .docs-page-content.withToc {
   width: calc(100% - 282px);
 }
@@ -248,11 +244,6 @@ ul.table-of-contents li > ul li {
   margin-top: calc(var(--uitk-size-unit) * 3);
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
-
-/* .docs-page-content > *:has(+ h2), */
-/* .docs-page-content > *:not(h2):has(+ h3) {
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
-} */
 
 .docs-page-content h3 {
   --ifm-h3-font-size: var(--uitk-text-h3-fontSize);
