@@ -3,13 +3,11 @@ import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Card } from "@jpmorganchase/uitk-core";
+import { Card, Switch } from "@jpmorganchase/uitk-core";
 import { Spinner } from "@jpmorganchase/uitk-lab";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const LoadingOverlayExample = function LoadingOverlayExample(
-  props: AgGridReactProps
-) {
+const LoadingOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
@@ -18,7 +16,15 @@ const LoadingOverlayExample = function LoadingOverlayExample(
 
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -65,25 +71,32 @@ const LoadingOverlayExample = function LoadingOverlayExample(
   );
 
   return (
-    <div style={{ marginTop: 25, position: "relative" }}>
-      {modal}
-      <div
-        style={{ height: 800, width: 800 }}
-        {...containerProps}
-        ref={gridRef}
-        tabIndex={-1}
-      >
-        <AgGridReact {...agGridProps} {...props} />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div style={{ marginTop: 25, position: "relative" }}>
+        {modal}
+        <div
+          style={{ height: 800, width: 800 }}
+          {...containerProps}
+          ref={gridRef}
+          tabIndex={-1}
+        >
+          <AgGridReact
+            {...agGridProps}
+            {...props}
+            columnDefs={dataGridExampleColumns}
+            rowData={dataGridExampleData}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-LoadingOverlayExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function LoadingOverlay(props: AgGridReactProps) {
-  return <LoadingOverlayExample {...props} />;
-}
+export default LoadingOverlay;

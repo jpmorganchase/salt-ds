@@ -4,27 +4,51 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: var(--uitk-color-gray-900);
+  --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --card-background: #10212b;
+  --image-border: #c5c9d0;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme="dark"] .uitk-theme {
-  --ifm-heading-color: var(--uitk-color-white);
+::selection {
+  background: var(--uitk-text-background-selected);
+}
+
+.uitk-theme[data-mode="light"] {
+  --site-tertiary-accent-green: var(--uitk-color-green-500);
+  --site-tertiary-accent-teal: var(--uitk-color-teal-500);
+  --site-tertiary-accent-blue: var(--uitk-color-blue-900);
+  --site-tertiary-accent-purple: var(--uitk-color-purple-500);
+  --site-tertiary-accent-red: var(--uitk-color-red-700);
+  --site-tertiary-accent-orange: var(--uitk-color-orange-600);
+}
+
+.uitk-theme[data-mode="dark"] {
+  --site-tertiary-accent-green: var(--uitk-color-green-20);
+  --site-tertiary-accent-teal: var(--uitk-color-teal-50);
+  --site-tertiary-accent-blue: var(--uitk-color-blue-50);
+  --site-tertiary-accent-purple: var(--uitk-color-purple-50);
+  --site-tertiary-accent-red: var(--uitk-color-red-50);
+  --site-tertiary-accent-orange: var(--uitk-color-orange-30);
+}
+
+.uitk-theme {
+  --ifm-heading-color: var(--uitk-text-primary-foreground);
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
   --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
   --ifm-footer-link-hover-color: var(--uitk-text-link-foreground-hover);
-  --ifm-menu-color: var(--uitk-color-gray-900);
-  --ifm-menu-color-active: var(--uitk-color-gray-900);
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
-  --ifm-toc-border-color: var(--uitk-separable-tertiary-borderColor);
+  --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
+  --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
 }
 
 .main-wrapper {
   background-color: var(--uitk-color-gray-900);
+  font-size: var(--uitk-text-fontSize);
 }
 
 .navbar {
@@ -71,7 +95,13 @@
 }
 
 .theme-doc-sidebar-container {
-  background-color: var(--uitk-color-white);
+  --ifm-menu-color: var(--uitk-color-gray-200); /* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color-active: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
+  background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with TKProvider */
+}
+
+.theme-doc-sidebar-container *::selection {
+  background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
 }
 
 .theme-doc-sidebar-container .menu {
@@ -84,7 +114,22 @@
 
 .theme-doc-sidebar-container .menu__link--active {
   font-weight: var(--uitk-navigable-fontWeight-active);
+}
+
+.theme-doc-sidebar-container li {
+  display: flex;
+  height: calc(var(--uitk-text-h4-fontSize) + 3 * var(--uitk-size-unit));
+}
+
+.menu__list-item:not(:first-child) {
+  margin: 0;
+}
+
+.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
+  content: "";
+  position: relative;
+  left: -289px;
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
@@ -125,8 +170,13 @@
 
 .docs-wrapper .pagination-nav .pagination-nav__sublabel {
   font-size: var(--uitk-text-h2-fontSize);
-  font-weight: var(--uitk-text-h2-fontWeight);
+  font-weight: var(--uitk-text-h2-fontWeight-small);
   margin-bottom: var(--uitk-size-unit);
+}
+
+.docs-wrapper .pagination-nav .pagination-nav__label {
+  font-size: var(--uitk-text-h3-fontSize);
+  font-weight: var(--uitk-text-h3-fontWeight-small);
 }
 
 .docs-wrapper .pagination-nav .pagination-label {
@@ -145,33 +195,98 @@
   padding-bottom: 0 !important;
 }
 
-.docs-page-content {
+.docs-page-container {
   background-color: var(--uitk-color-white);
-  color: var(--uitk-color-gray-900);
+  color: var(--uitk-text-primary-foreground);
+  font-size: var(--uitk-text-fontSize);
+  display: flex;
+  flex-direction: row;
+}
+
+.docs-toc-container {
+  --ifm-link-color: var(--uitk-text-secondary-foreground);
+  height: 100%;
+  position: sticky;
+  padding-left: calc(4 * var(--uitk-size-unit));
+  padding-top: calc(3 * var(--uitk-size-unit));
+  top: var(--ifm-navbar-height);
+  width: 282px;
+}
+
+.docs-toc-intro {
+  font-size: var(--uitk-text-h4-fontSize);
+  font-weight: var(--uitk-text-h4-fontWeight);
+  margin-left: 2px;
+}
+
+.table-of-contents ul,
+.table-of-contents li {
+  list-style: none;
+}
+
+.table-of-contents li {
+  padding-bottom: var(--uitk-size-unit);
+}
+
+ul.table-of-contents li > ul li {
+  width: 70%;
+}
+
+.docs-page-content {
   padding: calc(var(--uitk-size-unit) * 3);
 }
 
+.docs-page-content > p:first-child {
+  --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 3);
+}
+
+.docs-page-content.withToc {
+  width: calc(100% - 282px);
+}
+
 .docs-page-content h2 {
-  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-h2-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
-  --ifm-heading-color: var(--uitk-color-gray-900);
+  margin-bottom: calc(var(--uitk-size-unit) * 2);
+}
+
+.docs-page-content > *:has(+ h2),
+.docs-page-content > *:not(h2):has(+ h3) {
+  margin-bottom: calc(var(--uitk-size-unit) * 3);
+}
+
+.docs-page-content h3 {
+  --ifm-h3-font-size: var(--uitk-text-h3-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight-strong);
+  --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
+  --ifm-heading-color: var(--uitk-text-primary-foreground);
+}
+
+.docs-page-content h4 {
+  --ifm-h4-font-size: var(--uitk-text-h4-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-h4-fontWeight-strong);
+  --ifm-heading-line-height: var(--uitk-text-h4-lineHeight);
+  margin-bottom: var(--uitk-size-unit);
+}
+
+.docs-page-content code {
+  --ifm-code-font-size: var(--uitk-text-fontSize);
+  border: none;
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
-  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
+  --ifm-h1-font-size: var(--uitk-text-display2-fontSize);
+  --ifm-heading-font-weight: var(--uitk-text-display2-fontWeight);
+  --ifm-heading-line-height: var(--uitk-text-display2-lineHeight);
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
-  margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 3);
+  margin: calc(var(--uitk-size-unit) * 7) calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
 }
 
 .footer {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
   --ifm-footer-link-color: var(--uitk-text-secondary-foreground);
   --footer-items-separator-height: 16px;
+  --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) * 1);
 }
 
 .footer__title {
@@ -196,7 +311,7 @@
 }
 
 .footer__items > *:not(:last-child):after {
-  width: var(--uitk-separable-borderWidth);
+  width: var(--uitk-size-border);
   content: "";
   background-color: var(--uitk-text-secondary-foreground);
   height: var(--footer-items-separator-height);
@@ -225,6 +340,39 @@
   width: 14px;
 }
 
+table {
+  display: inline-table;
+  width: 100%;
+}
+
+table thead tr {
+  border: none;
+  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
+table thead tr th {
+  text-align: left;
+}
+
+table th,
+table td {
+  border: none;
+}
+
+table tr {
+  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
+table th {
+  color: var(--uitk-text-secondary-foreground);
+  font-weight: var(--uitk-text-h4-fontWeight);
+}
+
+table tr td:not(:last-child) {
+  border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+}
+
 @media screen and (max-width: 1280px) {
   .navbar {
     --ifm-navbar-height: 76px;
@@ -233,5 +381,69 @@
   .navbar__item {
     /* custom padding so the orange border perfectly aligns with the navbar */
     --ifm-navbar-item-padding-vertical: calc(var(--uitk-size-unit) + 3px);
+  }
+}
+
+table tr th + th::before {
+  content: "";
+  border-left: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+  position: relative;
+  height: 50%;
+  left: calc(-1 * var(--uitk-size-unit));
+  top: 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .docs-toc-container {
+    display: none;
+  }
+  .docs-page-content,
+  .docs-page-content.withToc {
+    width: 100%;
+  }
+
+  .docs-page-content {
+    padding: calc(var(--uitk-size-unit) * 2);
+  }
+  .uitk-theme {
+    --ifm-h2-font-size: var(--uitk-text-h3-fontSize);
+    --ifm-heading-font-weight: var(--uitk-text-h3-fontWeight);
+    --ifm-heading-line-height: var(--uitk-text-h3-lineHeight);
+  }
+
+  .theme-doc-markdown.markdown > h1:first-child {
+    --ifm-h1-font-size: var(--uitk-text-h1-fontSize);
+    --ifm-heading-font-weight: var(--uitk-text-h1-fontWeight);
+    --ifm-heading-line-height: var(--uitk-text-h1-lineHeight);
+
+    margin-right: calc(var(--uitk-size-unit) * 2);
+    margin-left: calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav {
+    padding: 0 calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav__link {
+    padding: calc(var(--uitk-size-unit) * 2);
+  }
+
+  .docs-wrapper .pagination-nav .pagination-nav__sublabel {
+    font-size: var(--uitk-text-h3-fontSize);
+    font-weight: var(--uitk-text-h3-fontWeight-small);
+    margin-bottom: 0;
+  }
+
+  .docs-wrapper .pagination-nav .pagination-nav__label {
+    font-size: var(--uitk-text-h4-fontSize);
+    font-weight: var(--uitk-text-h4-fontWeight-small);
+  }
+
+  .footer {
+    --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) / 2);
+  }
+
+  .footer .container {
+    gap: calc(var(--uitk-size-unit) / 2);
   }
 }

@@ -19,7 +19,7 @@
 }
 
 .uitkToggleButtonGroup {
-  --toggleButton-group-borderWidth: var(--uitkToggleButton-group-borderWidth, var(--uitk-container-borderWidth));
+  --toggleButton-group-borderWidth: var(--uitkToggleButton-group-borderWidth, var(--uitk-size-border));
   --toggleButton-group-borderStyle: var(--uitkToggleButton-group-borderWidth, var(--uitk-container-borderStyle));
 
   display: inline-flex;

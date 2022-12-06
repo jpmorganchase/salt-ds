@@ -5,7 +5,7 @@
 .uitk-density-high {
   --uitk-size-basis-unit: 4px;
 
-  --uitk-size-bottomBorder: 2px;
+  --uitk-size-border: 1px;
   --uitk-size-brandBar: 4px;
   --uitk-size-divider-strokeWidth: 1px;
   --uitk-size-sharktooth-height: 5px;

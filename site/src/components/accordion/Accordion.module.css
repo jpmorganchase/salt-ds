@@ -1,0 +1,46 @@
+.accordion {
+  --uitkAccordion-section-borderColor: rgba(255, 255, 255, 0.1);
+  --uitkAccordion-summary-background-hover: var(--uitk-color-gray-20);
+  --uitkAccordion-summary-background: none;
+  --uitkAccordion-summary-background-active: none;
+  --uitkAccordion-summary-paddingLeft: 0;
+  --ifm-link-decoration: var(--uitk-text-link-textDecoration);
+
+  height: calc(100% - var(--keyline-height));
+}
+
+.accordion .section {
+  padding: calc(var(--uitk-size-unit) * 2) 0;
+}
+
+.accordion .summary h2 {
+  line-height: var(--accordion-summary-height);
+  padding-left: var(--uitk-size-unit);
+}
+
+/* Override Salt accordion styles */
+
+.summary :global(.uitkAccordionSummary-icon) {
+  left: unset;
+  right: calc(2 * var(--uitk-size-unit));
+}
+
+.summary :global(.uitkAccordionSummary-icon:hover) {
+  background: var(--accordion-summary-background-hover);
+}
+
+.summary :global(.uitkIcon) {
+  --uitk-size-icon-base: calc(var(--uitk-size-unit) * 2);
+}
+
+.accordion :global(.uitkAccordionDetails .uitkAccordionDetails-content) {
+  padding-left: var(--uitk-size-unit);
+}
+
+/* ----------------------------- */
+
+@media screen and (max-width: 768px) {
+  .summary :global(.uitkIcon) {
+    --uitk-size-icon-base: var(--uitk-size-unit);
+  }
+}

@@ -5,9 +5,6 @@
   --uitk-target-borderStyle: dashed;
   --uitk-target-borderStyle-hover: solid;
   --uitk-target-borderStyle-disabled: dashed;
-  --uitk-target-borderWidth: 1px;
-  --uitk-target-borderWidth-hover: 1px;
-  --uitk-target-borderWidth-disabled: 1px;
 
   --uitk-target-cursor-disabled: not-allowed;
 }

@@ -37,11 +37,21 @@
   background: var(--grid-groupHeaderRowSeparator-color);
 }
 
-.uitkGridGroupHeaderCell-columnSeparator {
+.uitkGridGroupHeaderCell-columnSeparator,
+.uitkGridGroupHeaderCell-pinnedSeparator {
   position: absolute;
   right: 0;
   top: 4px;
   bottom: 0;
   width: 1px;
   background: var(--grid-headerColumnSeparator-color);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridGroupHeaderCell-pinnedSeparator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--grid-pinnedSeparator-color);
 }

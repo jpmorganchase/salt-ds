@@ -1,15 +1,154 @@
 ---
 sidebar_label: Design
+hide_table_of_contents: true
 ---
 
-# Getting Started for designers
+import Content from "../../src/components/content/Content.tsx";
+import DesignCards, { SoloImgCard } from "./DesignCards";
+import IconsTable from "./IconsTable";
 
-<div className='docs-page-content'>
+# Designing with Salt
 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<Content toc={toc}>
 
-## Lorem ipsum
+Salt provides a comprehensive set of styles and components, which include themes, typography, color palettes, iconography and more. Use the components as they are, out of the box, or adapt them to accommodate the nuances of your business or application.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## Accessibility first
 
-</div>
+One of our main objectives is to offer a complete solution for building great, accessible experiences.
+To ensure the Salt design system is fully accessible and inclusive, we thoroughly check all our components to ensure they:
+
+- Pass tests for WCAG 2.1 AA standards.
+- Meet color contrast ratios across small and large text, for best legibility.
+- Reduce users’ cognitive load—with imagery, text size and behavior collectively indicating a clear hierarchy of information.
+- Are optimized for keyboard input and screen readers, using ARIA roles, states and properties that comply with accessibility standards.
+
+## What you’ll need
+
+To start designing with Salt, you’ll need to:
+
+- Have an active Figma account.
+- Install the Salt font library, Open Sans. If you don’t already have it, download Open Sans here.
+
+## The step-by-step process
+
+### 1. Enable the Figma libraries
+
+We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently-designed UIs and applications.
+
+To start using a library:
+
+- Select the “Assets” tab on the left-hand panel to access the libraries.
+- Click on the book icon and search for “Salt” in Libraries.
+- Pick the library you need, for example, the icon library, modes (light or dark), color palette, etc.
+
+#### Available Salt libraries
+
+<table style={{ tableLayout: "fixed" }}>
+  <thead>
+    <tr>
+      <th>Assets</th>
+      <th>Contents</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Components: Light</td>
+      <td>Light-themed components in high, medium, low and touch densities</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Components: Dark</td>
+      <td>Dark-themed components in high, medium, low and touch densities</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Icons</td>
+      <td>Salt’s icon set</td>
+      <td>View in Figma</td>
+    </tr>
+  </tbody>
+</table>
+<table style={{ tableLayout: "fixed" }}>
+  <thead>
+    <tr>
+      <th>Styles</th>
+      <th>Contents</th>
+      <th>Figma link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mode: Light</td>
+      <td>Semantic palette for light UIs, components and shadows</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Mode: Dark</td>
+      <td>Semantic palette for dark UIs, components and shadows</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Color Palette</td>
+      <td>The Salt theme’s full foundational color palette</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Typography</td>
+      <td>Typography ramp that’s suitable for all densities</td>
+      <td>View in Figma</td>
+    </tr>
+    <tr>
+      <td>Layout Grids</td>
+      <td>Layout grid styles for all densities</td>
+      <td>View in Figma</td>
+    </tr>
+  </tbody>
+</table>
+
+### 2. Locate and add components to your designs
+
+<DesignCards />
+
+#### Swapping from light to dark theme and vice versa
+
+If you’ve created your design in one mode and need to change it, use Figma's Swap Library function to update it instantly—without having to start again.
+
+### 3. Apply semantic colors
+
+Semantic colors are the light and dark theme libraries that define colors for specific uses, for example, for containers, separators, actionable components, etc. The colors are preassigned to components, but can you can also apply them in your designs.
+
+To access the full range of semantic colors in Figma, you need to enable the theme palette library as follows :
+
+- Open the “Assets” panel on the left-hand menu.
+- Select the book icon to open the libraries, and then search for “Salt Typography.”
+- Enable the library to access the full range of Salt colors.
+- Apply the colors using the Fill area (as fill or stroke) that’s within the design panel on the right-hand side of the Figma UI.
+
+### 4. Select icons, if needed
+
+Our components come complete with icons embedded within them. However, you can also choose an appropriate icon for your specific use case directly from the icon library. All icons are available in SVG format, in three sizes (large, medium and small) and in all four densities.
+
+All components come complete with our icon component embedded within them. However, you can also choose an appropriate icon for your specific use case directly from the icon library—by swapping the instance using the variants panel on the right-hand side.
+
+<SoloImgCard />
+
+#### Understanding our icon sizes
+
+We provide two types of icon: default and solid.
+
+Our base size for HD/default is 10px. However, for accessibility and visual design reasons, we don’t recommend icon sizes that are smaller then 12px. Therefore, although the default HD icons start at 12px, the 2X size is 20px, 4X is 40px, etc.
+
+The default icon set starts from 12px for both high and medium density, 14px for low density and 16px for touch density. If necessary, you can adjust your icon size according to your UI designs in multiples of 2X, 3X, 4X, etc.
+
+<IconsTable />
+
+:::info Need support?
+
+For installation help when manually installing Figma, visit the support page tear-out on the Figma website.
+If you have any questions about Salt’s Figma libraries, please get in touch with our design team.
+
+:::
+
+</Content>

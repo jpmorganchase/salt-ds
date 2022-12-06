@@ -36,6 +36,7 @@ import {
   Investor,
   investorKeyGetter,
 } from "./dummyData";
+import { Card, Checkbox, FlexLayout } from "../../core";
 
 export default {
   title: "Grid/New Grid",
@@ -203,52 +204,83 @@ const SmallTemplate: Story<{}> = (props) => {
 };
 
 const PinnedColumnsTemplate: Story<{}> = (props) => {
+  const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
+  const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
+
+  const onChangeColumnSeparators = (_: any, checked: boolean) => {
+    console.log(`Column separators ${checked ? "enabled" : "disabled"}`);
+    setColumnSeparators(checked);
+  };
+
+  const onChangePinnedSeparators = (_: any, checked: boolean) => {
+    console.log(`Pinned separators ${checked ? "enabled" : "disabled"}`);
+    setPinnedSeparators(checked);
+  };
+
   return (
-    <Grid
-      rowData={dummyInvestors}
-      rowKeyGetter={investorKeyGetter}
-      className="grid"
-    >
-      <ColumnGroup id="groupOne" name="Group One" pinned="left">
-        <GridColumn
-          name="Name"
-          id="name"
-          defaultWidth={200}
-          getValue={(x) => x.name}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupTwo" name="Group Two">
-        <GridColumn
-          name="Location"
-          id="location"
-          defaultWidth={150}
-          getValue={(x) => x.location}
-        />
-        <GridColumn
-          name="Cohort"
-          id="cohort"
-          defaultWidth={200}
-          getValue={(x) => x.cohort}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupThree" name="Group Three">
-        <GridColumn
-          name="Amount"
-          id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          align="right"
-          onChange={onAmountChange}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupFour" name="Group Four" pinned="right">
-        <GridColumn
-          name="Strategy"
-          id="strategy"
-          getValue={(x) => x.strategy.join(", ")}
-        />
-      </ColumnGroup>
-    </Grid>
+    <FlexLayout direction="column" separators={true}>
+      <Card>
+        <FlexLayout direction="row">
+          <Checkbox
+            label="Column separators"
+            checked={columnSeparators}
+            onChange={onChangeColumnSeparators}
+          />
+          <Checkbox
+            label="Pinned separators"
+            checked={pinnedSeparators}
+            onChange={onChangePinnedSeparators}
+          />
+        </FlexLayout>
+      </Card>
+      <Grid
+        rowData={dummyInvestors}
+        rowKeyGetter={investorKeyGetter}
+        className="grid"
+        columnSeparators={columnSeparators}
+        pinnedSeparators={pinnedSeparators}
+      >
+        <ColumnGroup id="groupOne" name="Group One" pinned="left">
+          <GridColumn
+            name="Name"
+            id="name"
+            defaultWidth={200}
+            getValue={(x) => x.name}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupTwo" name="Group Two">
+          <GridColumn
+            name="Location"
+            id="location"
+            defaultWidth={250}
+            getValue={(x) => x.location}
+          />
+          <GridColumn
+            name="Cohort"
+            id="cohort"
+            defaultWidth={300}
+            getValue={(x) => x.cohort}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupThree" name="Group Three">
+          <GridColumn
+            name="Amount"
+            id="amount"
+            defaultWidth={250}
+            getValue={(x) => x.amount.toFixed(4)}
+            align="right"
+            onChange={onAmountChange}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupFour" name="Group Four" pinned="right">
+          <GridColumn
+            name="Strategy"
+            id="strategy"
+            getValue={(x) => x.strategy.join(", ")}
+          />
+        </ColumnGroup>
+      </Grid>
+    </FlexLayout>
   );
 };
 
