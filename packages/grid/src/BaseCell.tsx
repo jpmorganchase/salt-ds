@@ -3,6 +3,7 @@ import "./BaseCell.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
+import { useEffect, useRef } from "react";
 
 const withBaseName = makePrefixer("uitkGridBaseCell");
 
@@ -24,8 +25,22 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     children,
   } = props;
 
+  const tdRef = useRef<HTMLTableCellElement>(null);
+
+  useEffect(() => {
+    if (isFocused && tdRef.current) {
+      const nestedInteractive = tdRef.current.querySelector(`[tabindex="0"]`);
+      if (nestedInteractive) {
+        (nestedInteractive as HTMLElement).focus();
+      } else {
+        tdRef.current.focus();
+      }
+    }
+  }, [isFocused, tdRef.current]);
+
   return (
     <td
+      ref={tdRef}
       id={getCellId(row.key, column)}
       data-row-index={row.index}
       data-column-index={column.index}
