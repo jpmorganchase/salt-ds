@@ -6,13 +6,15 @@ import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
 import { LotsOfColumnGroups } from "@stories/grid.stories";
-import { ColumnGroups } from "@stories/grid-columnGroups.stories";
+import * as groupedStories from "@stories/grid-columnGroups.stories";
+import { Grid, GridColumn, ColumnGroup } from "src";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
   composedStories;
 const { EditableCells } = composedEditableStories;
+const { ColumnGroups } = composeStories(groupedStories);
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
 };
@@ -53,6 +55,51 @@ describe("Grid", () => {
     cy.mount(<GridExample />);
     cy.findByTestId("grid-middle-part").should("exist");
     cy.findByTestId("grid-top-part").should("exist");
+  });
+
+  it("Assigns correct aria-colindex to grouped column headers", () => {
+    type GridData = { a: string; b: string; c: string; id: string };
+    cy.mount(
+      <Grid
+        rowData={[{ id: "0", a: "a0", b: "b0", c: "c0" }]}
+        rowKeyGetter={(r) => r.id}
+        className="grid-column-groups"
+      >
+        <ColumnGroup name="Group One" id="group_one">
+          <GridColumn id="a" name="A" getValue={(r: GridData) => r.a} />
+          <GridColumn id="b" name="B" getValue={(r: GridData) => r.b} />
+        </ColumnGroup>
+        <ColumnGroup name="Group Two" id="group_two">
+          <GridColumn id="c" name="C" getValue={(r: GridData) => r.c} />
+        </ColumnGroup>
+      </Grid>
+    );
+
+    assertGridReady();
+
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(0)
+      .find("th")
+      .eq(0)
+      .should("have.attr", "aria-colindex", "1")
+      .should("have.attr", "aria-colspan", "2");
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(1)
+      .find("th")
+      .eq(0)
+      .should("have.attr", "aria-colindex", "1");
+
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(0)
+      .find("th")
+      .eq(1)
+      .should("have.attr", "aria-colindex", "3")
+      .should("have.attr", "aria-colspan", "1");
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(1)
+      .find("th")
+      .eq(2)
+      .should("have.attr", "aria-colindex", "3");
   });
 
   it("Column virtualization", () => {
