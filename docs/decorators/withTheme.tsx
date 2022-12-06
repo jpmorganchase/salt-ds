@@ -39,7 +39,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
     const background = getCharacteristicValue(
       theme,
       "container",
-      "background-medium"
+      "primary-background"
     );
 
     addBackgroundStyle(

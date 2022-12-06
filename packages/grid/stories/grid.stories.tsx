@@ -736,11 +736,11 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
 export const SmallGrid = SmallTemplate.bind({});
-export const PinnedColumns = PinnedColumnsTemplate.bind({});
+// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 export const LotsOfColumns = LotsOfColumnsTemplate.bind({});
 export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
-export const CustomHeaders = CustomHeadersTemplate.bind({});
-export const CustomCells = CustomCellsTemplate.bind({});
-export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
+// export const CustomHeaders = CustomHeadersTemplate.bind({});
+// export const CustomCells = CustomCellsTemplate.bind({});
+// export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
 
 GridExample.args = {};

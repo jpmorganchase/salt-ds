@@ -34,9 +34,15 @@
   --uitk-color-orange-600-fade-background: rgba(224, 101, 25, var(--uitk-palette-opacity-background));
   --uitk-color-white-fade-background: rgba(255, 255, 255, var(--uitk-palette-opacity-background));
 
-  --uitk-color-black-fade-scrim-medium: rgba(0, 0, 0, var(--uitk-palette-opacity-scrim-low));
-  --uitk-color-gray-800-fade-scrim-medium: rgba(36, 37, 38, var(--uitk-palette-opacity-scrim-medium));
-  --uitk-color-white-fade-scrim-low: rgba(255, 255, 255, var(--uitk-palette-opacity-scrim-medium));
+  --uitk-color-white-fade-background-readonly: rgba(255, 255, 255, var(--uitk-palette-opacity-readonly));
+  --uitk-color-gray-20-fade-background-readonly: rgba(234, 237, 239, var(--uitk-palette-opacity-readonly));
+  --uitk-color-gray-700-fade-background-readonly: rgba(42, 44, 47, var(--uitk-palette-opacity-readonly));
+  --uitk-color-gray-800-fade-background-readonly: rgba(36, 37, 38, var(--uitk-palette-opacity-readonly));
+
+  --uitk-color-gray-800-fade-scrim-primary: rgba(36, 37, 38, var(--uitk-palette-opacity-primary-scrim));
+  --uitk-color-black-fade-scrim-primary: rgba(36, 37, 38, var(--uitk-palette-opacity-primary-scrim));
+  --uitk-color-black-fade-scrim-secondary: rgba(0, 0, 0, var(--uitk-palette-opacity-secondary-scrim));
+  --uitk-color-white-fade-scrim-secondary: rgba(255, 255, 255, var(--uitk-palette-opacity-primary-scrim));
 
   --uitk-color-gray-90-fade-stroke: rgba(132, 135, 142, var(--uitk-palette-opacity-stroke));
 

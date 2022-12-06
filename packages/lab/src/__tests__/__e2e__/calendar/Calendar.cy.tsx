@@ -477,7 +477,7 @@ describe("GIVEN a Calendar component", () => {
   });
 
   describe("Unselectable Days", () => {
-    describe("Low Emphasis", () => {
+    describe("Tertiary", () => {
       it("SHOULD apply `aria-disabled=true` to unselectable days", () => {
         cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
         cy.findByRole("button", {
@@ -493,7 +493,7 @@ describe("GIVEN a Calendar component", () => {
       });
     });
 
-    describe("Medium Emphasis", () => {
+    describe("Secondary", () => {
       it("SHOULD apply `aria-disabled=true` to unselectable days", () => {
         cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
         cy.findByRole("button", {

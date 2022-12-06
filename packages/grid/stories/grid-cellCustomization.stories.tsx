@@ -6,8 +6,6 @@ import {
   RowSelectionCheckboxColumn,
 } from "../src";
 import { LinearProgress } from "@jpmorganchase/uitk-lab";
-import { Button, FlexLayout } from "@jpmorganchase/uitk-core";
-import { FavoriteIcon, LinkedIcon } from "@jpmorganchase/uitk-icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
@@ -54,25 +52,6 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
     <div className="percentage">
       <LinearProgress value={percentage} />
     </div>
-  );
-};
-
-const ButtonsCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
-  return (
-    <FlexLayout
-      className="buttons"
-      align="center"
-      justify="center"
-      direction="row"
-      gap={1}
-    >
-      <Button>
-        <FavoriteIcon />
-      </Button>
-      <Button>
-        <LinkedIcon />
-      </Button>
-    </FlexLayout>
   );
 };
 
@@ -128,11 +107,6 @@ const CellCustomizationTemplate: Story<{}> = () => {
         id="percentage"
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
-      />
-      <GridColumn
-        name="Buttons"
-        id="buttons"
-        cellValueComponent={ButtonsCellValue}
       />
     </Grid>
   );

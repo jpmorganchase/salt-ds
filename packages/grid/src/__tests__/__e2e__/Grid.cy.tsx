@@ -5,19 +5,13 @@ import { GridVariants } from "@stories/grid-variants.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
-import { HeaderCustomization } from "@stories/grid-headerCustomization.stories";
 import { LotsOfColumnGroups } from "@stories/grid.stories";
 import { ColumnGroups } from "@stories/grid-columnGroups.stories";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
-const {
-  GridExample,
-  LotsOfColumns,
-  SingleRowSelect,
-  SmallGrid,
-  PinnedColumns,
-} = composedStories;
+const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
+  composedStories;
 const { EditableCells } = composedEditableStories;
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -56,12 +50,9 @@ const expectFakeColumnWidth = (w: number) => {
 
 describe("Grid", () => {
   it("Rendering", () => {
-    cy.mount(<PinnedColumns />);
-    cy.findByTestId("grid-left-part").should("exist");
+    cy.mount(<GridExample />);
     cy.findByTestId("grid-middle-part").should("exist");
-    cy.findByTestId("grid-right-part").should("exist");
-    cy.findByTestId("grid-top-left-part").should("exist");
-    cy.findByTestId("grid-top-right-part").should("exist");
+    cy.findByTestId("grid-top-part").should("exist");
   });
 
   it("Column virtualization", () => {
@@ -448,18 +439,6 @@ describe("Grid", () => {
       cy.mount(<CellCustomization />);
       cy.get(".bidAskCellValue").should("have.length", 16);
       cy.get(".uitkLinearProgress").should("have.length", 16);
-      cy.get(".uitkButton").should("have.length", 32);
-    });
-  });
-
-  describe("Header Customisation Selection", () => {
-    it("Renders customised cell values", () => {
-      cy.mount(<HeaderCustomization />);
-
-      // TODO:
-      // Check for items sold column, that it has a has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
-      // "Item" column group has a button to toggle between pinned and unpinned modes.
-      // "Name" and "Price" columns have custom headers that indicate sort direction.
     });
   });
 

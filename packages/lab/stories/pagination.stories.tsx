@@ -38,7 +38,6 @@ const Template: Story<PaginationProps & PaginatorProps & StoryProps> = (
       page={page}
       onPageChange={onPageChange}
       count={count}
-      className={"uitkEmphasisHigh"}
       compact={compact}
     >
       {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}

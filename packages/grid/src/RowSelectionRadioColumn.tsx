@@ -31,7 +31,6 @@ export function RowSelectionRadioColumn<T>(
       defaultWidth={100}
       headerComponent={RowSelectionRadioHeaderCell}
       cellValueComponent={RowSelectionRadioCellValue}
-      pinned="left"
       onKeyDown={onKeyDown}
     />
   );

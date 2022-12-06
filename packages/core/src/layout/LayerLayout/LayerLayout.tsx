@@ -125,7 +125,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     ) : (
       <Scrim
         open={showComponent}
-        className={cx("uitkEmphasisMedium", {
+        className={cx({
           [withBaseName("enter-animation")]: enterAnimation,
           [withBaseName("exit-animation")]: exitAnimation,
         })}

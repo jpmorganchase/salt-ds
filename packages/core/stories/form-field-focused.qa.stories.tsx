@@ -18,7 +18,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
       </FormField>
 
       <FormField
-        className="uitkEmphasisHigh uitkFormField-focused"
+        className="uitkFormField-secondary uitkFormField-focused"
         label="Default Form Field description label"
       >
         <Input value="Value" />
@@ -39,7 +39,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisHigh uitkFormField-focused"
+        className="uitkFormField-secondary uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -47,7 +47,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisLow uitkFormField-focused"
+        className="uitkFormField-tertiary uitkFormField-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -56,7 +56,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisLow uitkFormField-focused"
+        className="uitkFormField-tertiary uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -64,7 +64,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisHigh uitkFormField-focused"
+        className="uitkFormField-secondary uitkFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -72,7 +72,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkEmphasisLow uitkFormField-focused"
+        className="uitkFormField-tertiary uitkFormField-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
