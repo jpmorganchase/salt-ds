@@ -90,7 +90,6 @@
 }
 
 .navbar__link:hover:not(.navbar__link--active):not(.header-github-link) {
-  background-color: var(--uitk-palette-navigate-background-hover-high);
   border-bottom: 2px solid var(--uitk-navigable-indicator-hover);
 }
 

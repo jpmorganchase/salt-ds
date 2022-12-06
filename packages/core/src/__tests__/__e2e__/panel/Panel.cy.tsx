@@ -27,11 +27,11 @@ describe("GIVEN a Panel", () => {
     });
   });
 
-  describe("emphasis prop", () => {
-    describe('WHEN the "high" emphasis is input', () => {
-      it('THEN should display "high" emphasis', () => {
-        cy.mount(<Panel emphasis="high">Content</Panel>);
-        cy.get("div").should("have.class", "uitkEmphasisHigh");
+  describe("variant prop", () => {
+    describe('WHEN the "secondary" variant is input', () => {
+      it('THEN should display "secondary" variant', () => {
+        cy.mount(<Panel variant="secondary">Content</Panel>);
+        cy.get("div").should("have.class", "uitkPanel-secondary");
       });
     });
   });

@@ -1,5 +1,5 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-container-background-high);
+  --toolbar-background: var(--uitk-container-secondary-background);
   --toolbar-fontSize: var(--uitk-text-fontSize);
   /* --uitkFormField-activationIndicator-size: 0; */
 }
@@ -114,14 +114,14 @@
   padding-left: var(--uitk-size-unit);
 }
 
-.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton {
+.uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton {
   background: var(--toolbar-background);
 }
-.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton:hover {
+.uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton:hover {
   background: var(--uitk-actionable-secondary-background-hover);
 }
-.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkButton-active,
-.uitkToolbar .uitkEmphasisMedium.uitkFormField > .uitkToolbarButton:active {
+.uitkToolbar .uitkFormField-primary.uitkFormField > .uitkButton-active,
+.uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton:active {
   background: var(--uitk-actionable-secondary-background-active) !important;
 }
 
