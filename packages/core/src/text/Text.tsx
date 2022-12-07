@@ -1,11 +1,12 @@
-import { makePrefixer } from "../utils";
+import {
+  makePrefixer,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+} from "../utils";
 import cx from "classnames";
 import { ElementType, forwardRef, ReactElement } from "react";
 
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "./types";
 import "./Text.css";
-
-const withBaseName = makePrefixer("uitkText");
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
@@ -33,12 +34,14 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   }
 >;
 
-type TextComponent = <T extends ElementType>(
+type TextComponent = <T extends ElementType = "div">(
   props: TextProps<T>
 ) => ReactElement | null;
 
+const withBaseName = makePrefixer("uitkText");
+
 export const Text: TextComponent = forwardRef(
-  <T extends ElementType>(
+  <T extends ElementType = "div">(
     {
       children,
       className,
@@ -46,11 +49,14 @@ export const Text: TextComponent = forwardRef(
       maxRows,
       styleAs,
       variant = "primary",
+      style,
       ...restProps
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
-  ): ReactElement<TextProps<T>> => {
+  ) => {
     const Component = as || "div";
+
+    const textStyles = { "--text-max-rows": maxRows, ...style };
 
     return (
       <Component
@@ -61,7 +67,7 @@ export const Text: TextComponent = forwardRef(
         })}
         {...restProps}
         ref={ref}
-        style={{ "--text-max-rows": maxRows }}
+        style={textStyles}
       >
         {children}
       </Component>
