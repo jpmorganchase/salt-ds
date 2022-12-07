@@ -183,18 +183,10 @@ describe("Grid", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
-      // Column 0 has interactive elements in cells. We expect the interactive element to have focus.
-      // Other columns have no interactive elements. Focus is expected to be on the cell element.
-      if (col === 0) {
         cy.focused()
-          .parents("td")
+          .closest("td")
           .should("have.attr", "aria-rowindex", String(row + 1))
           .should("have.attr", "aria-colindex", String(col + 1));
-      } else {
-        cy.focused()
-          .should("have.attr", "aria-rowindex", String(row + 1))
-          .should("have.attr", "aria-colindex", String(col + 1));
-      }
     };
 
     // we cannot test tabbing in cypress for now
