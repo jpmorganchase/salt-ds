@@ -261,6 +261,7 @@ ul.table-of-contents li > ul li {
 }
 
 .docs-page-content {
+  --ifm-list-margin: calc(var(--uitk-size-unit) * 2);
   padding: calc(var(--uitk-size-unit) * 3);
 }
 
