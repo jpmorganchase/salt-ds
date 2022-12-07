@@ -105,7 +105,12 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isSelected={isSelected}
             isEditable={isEditable}
           >
-            <CellValue column={column} row={row} value={value} />
+            <CellValue
+              column={column}
+              row={row}
+              value={value}
+              isFocused={isFocused}
+            />
           </Cell>
         );
       })}
