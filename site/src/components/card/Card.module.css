@@ -1,5 +1,6 @@
 .card {
   --ifm-link-hover-color: none;
+  --ifm-link-decoration: none;
   --ifm-link-hover-decoration: none;
   --card-color: var(--uitk-color-white);
   --card-icon-background: #0e1b23;
