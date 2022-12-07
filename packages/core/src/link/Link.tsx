@@ -1,6 +1,11 @@
-import { forwardRef, useCallback, MouseEvent } from "react";
+import {
+  forwardRef,
+  useCallback,
+  MouseEvent,
+  ReactElement, ComponentType
+} from "react";
 import cx from "classnames";
-import { TearOutIcon } from "@jpmorganchase/uitk-icons";
+import {IconProps, TearOutIcon} from "@jpmorganchase/uitk-icons";
 import { makePrefixer } from "../utils";
 import { Text, TextProps } from "../text";
 
@@ -14,17 +19,28 @@ const withBaseName = makePrefixer("uitkLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
+export interface InternalLinkProps extends TextProps<"a"> {
+  IconComponent?: never;
+}
+export interface ExternalLinkProps extends TextProps<"a"> {
+  target:"_blank";
+  /**
+   * Override "tearout" icon.
+   */
+  IconComponent?: ComponentType<IconProps>;
+}
 
-export type LinkProps = TextProps<"a">;
+export type LinkProps = ExternalLinkProps | InternalLinkProps;
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { href, className, children, target = "_self", ...rest },
+  { IconComponent= TearOutIcon, href, className, children, target = "_self", ...rest },
   ref
-) {
+): ReactElement<LinkProps> {
   const stopPropagation = useCallback(
     (evt: MouseEvent<HTMLAnchorElement>) => evt.stopPropagation(),
     []
   );
+
   return (
     <Text
       as="a"
@@ -37,7 +53,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     >
       {children}
       {target && target === "_blank" && (
-        <TearOutIcon
+        <IconComponent
           aria-label="External Link"
           className={withBaseName("icon")}
         />

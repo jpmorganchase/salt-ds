@@ -1,4 +1,10 @@
+import { composeStories } from "@storybook/testing-react";
 import { Link } from "@jpmorganchase/uitk-core";
+
+import * as linkStories from "@stories/link/link.stories";
+
+const composedStories = composeStories(linkStories);
+const { TargetBlankCustomIcon } = composedStories;
 
 describe("GIVEN a link", () => {
   it("WHEN passed children node, THEN children should be rendered", () => {
@@ -19,6 +25,14 @@ describe("GIVEN a link", () => {
     );
 
     cy.findByTestId(/TearOutIcon/i).should("exist");
+  });
+
+  it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the tear out icon', () => {
+    cy.mount(
+      <TargetBlankCustomIcon />
+    );
+
+    cy.findByTestId(/StackOverflowIcon/i).should("exist");
   });
 
   it('WHEN passed target != "_blank", THEN should NOT render the tear out icon', () => {

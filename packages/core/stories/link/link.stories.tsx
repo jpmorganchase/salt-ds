@@ -2,6 +2,7 @@ import { Link } from "@jpmorganchase/uitk-core";
 
 import "./link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {StackoverflowIcon} from "@jpmorganchase/uitk-icons";
 
 export default {
   title: "Core/Link",
@@ -15,6 +16,18 @@ export const Default: ComponentStory<typeof Link> = () => {
 export const TargetBlank: ComponentStory<typeof Link> = () => {
   return (
     <Link href="https://www.google.com" target="_blank">
+      Link to URL
+    </Link>
+  );
+};
+
+export const TargetBlankCustomIcon: ComponentStory<typeof Link> = () => {
+  return (
+    <Link
+      IconComponent={StackoverflowIcon}
+      href="https://www.google.com"
+      target="_blank"
+    >
       Link to URL
     </Link>
   );

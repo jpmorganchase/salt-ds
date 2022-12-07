@@ -1,8 +1,17 @@
-import { Meta, ArgsTable } from "@storybook/addon-docs";
+import {
+  Meta,
+  ArgsTable,
+  Canvas,
+  Story
+} from "@storybook/addon-docs";
 import { Link } from "@jpmorganchase/uitk-core";
 import { CSSClassTable } from "css-variable-docgen-components";
 
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx"; import {
+  StackoverflowIcon
+} from "@jpmorganchase/uitk-icons";
 
 <Meta
   title="Documentation/Core/Link"
@@ -14,7 +23,49 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Link
 
-We've created the Link as an extension of [Text component](/docs/documentation-core-text--primary) so it inherits all it's properties. Link also extends HTMLAnchorElement type so all anchor props are available to use.
+A link is a navigational element that whn clicked, takes the user to either a different site or element within the current site.
+
+Link is an extension of [Text component,](/docs/documentation-core-text--primary) so it inherits all it's properties. Link also extends HTMLAnchorElement type so all anchor props are available to use.
+
+## Features
+
+### Internal Link
+
+A default link provides navigation to either a new webpage or an internal page of the current website
+
+<Canvas>
+  <Story name="Internal Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com">Link to URL</Link>
+  </Story>
+</Canvas>
+
+### External Link
+
+A link with target _blank navigates the user to an external link. Each time the link is accessed, a new tab will open
+
+<Canvas>
+  <Story name="External Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com" target="_blank">
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
+
+### External Link with custom icon
+
+The icon for external links can be customised to display alternative icons
+
+<Canvas>
+  <Story name="External Link with custom icon" decorators={[withFlexGap]}>
+    <Link
+      IconComponent={StackoverflowIcon}
+      href="https://www.google.com"
+      target="_blank"
+    >
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
 
 # API
 
@@ -31,5 +82,7 @@ import { Link } from "@jpmorganchase/uitk-core";
 ## CSS Class
 
 <CSSClassTable of={Link} />
+
+## Accessibility
 
 <HelpAndSupport />
