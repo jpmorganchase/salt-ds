@@ -17,6 +17,10 @@
   gap: calc(var(--uitk-size-unit) / 2);
 }
 
+.componentList .status svg {
+  --icon-size: 12px;
+}
+
 .componentList .status.ready {
   --uitkIcon-color: var(--uitk-status-success-foreground);
 }
