@@ -51,7 +51,7 @@ import { SelectionContext } from "./SelectionContext";
 import { SizingContext } from "./SizingContext";
 import { LayoutContext } from "./LayoutContext";
 import { EditorContext } from "./EditorContext"; // TODO remove
-import { CursorContext } from "./CursorContext";
+import { CursorContext, FocusedPart } from "./CursorContext";
 import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
@@ -204,8 +204,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
-  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(0);
-  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(0);
+  const [cursorRowIdx, setCursorRowIdx] = useState<number>(0);
+  const [cursorColIdx, setCursorColIdx] = useState<number>(0);
+  const [focusedPart, setFocusedPart] = useState<FocusedPart>("body");
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -422,6 +423,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [setScrollLeft, setScrollTop, setScrollSource]
   );
 
+  const scrollToHeaderCell = (colIdx: number) => {
+    // TODO
+  };
+
   const scrollToCell = useScrollToCell(
     visRowRng,
     rowHeight,
@@ -439,6 +444,22 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       );
       if (nodeToFocus) {
         (nodeToFocus as HTMLElement).focus();
+      }
+    }, 0);
+  };
+
+  // TODO
+  const focusHeaderElement = (rowIdx: number, colIdx: number) => {
+    setTimeout(() => {
+      console.log(`Focusing on the header cell ${rowIdx} ${colIdx}`);
+      const nodeToFocus = rootRef.current?.querySelector(
+        `th[data-column-index="${colIdx}"]`
+      );
+      if (nodeToFocus) {
+        console.log(nodeToFocus);
+        (nodeToFocus as HTMLElement).focus();
+      } else {
+        console.log(`header cell not found`);
       }
     }, 0);
   };
@@ -511,18 +532,49 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const rangeSelection = useRangeSelection(cellSelectionMode);
 
   const moveCursor = useCallback(
-    (rowIdx?: number, colIdx?: number) => {
+    (rowIdx: number, colIdx: number) => {
       cancelEditMode();
-      if (rowData.length < 1 || cols.length < 1) {
-        return;
+      console.log(`moveCursor(${rowIdx}, ${colIdx})`);
+      if (focusedPart === "body") {
+        if (rowIdx < 0) {
+          // TODO if header is focusable
+          setFocusedPart("header");
+          setCursorRowIdx(0);
+          colIdx = clamp(colIdx, 0, cols.length - 1);
+          setCursorColIdx(colIdx);
+          scrollToHeaderCell(colIdx);
+          focusHeaderElement(0, colIdx);
+        } else {
+          if (rowData.length < 1 || cols.length < 1) {
+            return;
+          }
+          rowIdx = clamp(rowIdx, 0, rowData.length - 1);
+          colIdx = clamp(colIdx, 0, cols.length - 1);
+          setCursorRowIdx(rowIdx);
+          setCursorColIdx(colIdx);
+          scrollToCell(rowIdx, colIdx);
+          focusCellElement(rowIdx, colIdx);
+          rangeSelection.onCursorMove({ rowIdx, colIdx });
+        }
+      } else if (focusedPart === "header") {
+        if (rowIdx > 0) {
+          // TODO can we jump from the header to any other row than 0?
+          setFocusedPart("body");
+          setCursorRowIdx(0);
+          colIdx = clamp(colIdx, 0, cols.length - 1);
+          setCursorColIdx(colIdx);
+          scrollToCell(0, colIdx);
+          focusCellElement(rowIdx, colIdx);
+        } else {
+          setCursorRowIdx(0);
+          colIdx = clamp(colIdx, 0, cols.length - 1);
+          setCursorColIdx(colIdx);
+          scrollToHeaderCell(colIdx);
+          focusHeaderElement(0, colIdx);
+        }
+      } else {
+        // TODO any other parts?
       }
-      rowIdx = clamp(rowIdx, 0, rowData.length - 1);
-      colIdx = clamp(colIdx, 0, cols.length - 1);
-      setCursorRowIdx(rowIdx);
-      setCursorColIdx(colIdx);
-      scrollToCell(rowIdx, colIdx);
-      focusCellElement(rowIdx, colIdx);
-      rangeSelection.onCursorMove({ rowIdx, colIdx });
     },
     [
       setCursorRowIdx,
@@ -534,6 +586,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       scrollToCell,
       endEditMode,
       rangeSelection.onCursorMove,
+      focusedPart,
+      // TODO
     ]
   );
 
@@ -605,8 +659,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cursorRowIdx,
       cursorColIdx,
       moveCursor,
+      focusedPart,
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor, isFocused]
+    [cursorRowIdx, cursorColIdx, moveCursor, isFocused, focusedPart]
   );
 
   const onColumnMove: GridColumnMoveHandler = (

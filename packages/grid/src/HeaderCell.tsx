@@ -37,6 +37,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
       data-testid="column-header"
+      tabIndex={0}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
