@@ -33,13 +33,14 @@ const statusSortList = [
 ];
 
 const componentsListSortedByStatus = [...componentDetails].sort(
-  (a, b) => statusSortList.indexOf(a.status) - statusSortList.indexOf(b.status)
+  (a, b) =>
+    statusSortList.indexOf(a.devStatus) - statusSortList.indexOf(b.devStatus)
 );
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
-  const { status, name, storybookUrl } = component;
+  const { devStatus, name, storybookUrl } = component;
 
-  return status === ComponentStatus.READY ? (
+  return devStatus === ComponentStatus.READY ? (
     <Link to={storybookUrl}>
       <span>{name}</span> <TearOutIcon />
     </Link>
@@ -53,12 +54,14 @@ const ComponentStatusData = ({
 }: {
   component: ComponentDetails;
 }) => {
-  const { availableInCoreSince, status } = component;
+  const { availableInCoreSince, devStatus } = component;
 
   return (
     <>
       <StepActiveIcon />
-      {availableInCoreSince ? `Released in v${availableInCoreSince}` : status}
+      {availableInCoreSince
+        ? `Released in v${availableInCoreSince}`
+        : devStatus}
     </>
   );
 };
@@ -103,7 +106,7 @@ const ComponentsList = () => {
                 <td
                   className={clsx(
                     styles.status,
-                    styles[statusClass(component.status)]
+                    styles[statusClass(component.devStatus)]
                   )}
                 >
                   <ComponentStatusData component={component} />
