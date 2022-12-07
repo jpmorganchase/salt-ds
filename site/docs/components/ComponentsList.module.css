@@ -12,7 +12,7 @@
 
 .componentList td :first-child {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--uitk-size-unit);
 }
 
