@@ -1,8 +1,13 @@
 import { forwardRef, ElementType, ReactElement } from "react";
-import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
+import {
+  makePrefixer,
+  ResponsiveProp,
+  useResponsiveProp,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+} from "../../utils";
 import "./FlexItem.css";
 import cx from "classnames";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../types";
 
 const withBaseName = makePrefixer("uitkFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [

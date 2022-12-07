@@ -1,6 +1,6 @@
 .uitkThemeEditor {
-  border-right: 1px solid var(--uitk-container-borderColor-medium);
-  background-color: var(--uitk-container-background-medium);
+  border-right: 1px solid var(--uitk-container-primary-borderColor);
+  background-color: var(--uitk-container-primary-background);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,7 +8,7 @@
 
 .uitkThemeEditorAppOutputHeader {
   color: var(--uitk-text-primary-foreground);
-  background-color: var(--uitk-container-background-medium);
+  background-color: var(--uitk-container-primary-background);
   flex: 240 0;
 }
 

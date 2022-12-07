@@ -62,7 +62,7 @@ export const All: ComponentStory<typeof Banner> = () => (
   </div>
 );
 
-const ExampleBanner = ({ status, emphasis }: BannerProps) => {
+const ExampleBanner = ({ status, emphasize }: BannerProps) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const handleClose = () => {
@@ -77,7 +77,7 @@ const ExampleBanner = ({ status, emphasis }: BannerProps) => {
           LinkProps={{ href: "javascript:void(0)" }}
           onClose={handleClose}
           status={status}
-          emphasis={emphasis}
+          emphasize={emphasize}
         >
           Banners appear inline on the page
         </Banner>
@@ -102,8 +102,8 @@ export const Success: ComponentStory<typeof Banner> = () => {
   return <ExampleBanner status={"success"} />;
 };
 
-export const HighEmphasis: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner emphasis="high" status={"success"} />;
+export const Emphasize: ComponentStory<typeof Banner> = () => {
+  return <ExampleBanner emphasize={true} status={"success"} />;
 };
 
 export const Render = (

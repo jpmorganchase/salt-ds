@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]
@@ -21,10 +22,16 @@ const generateData = function generateData<T extends { name: string }>(
 
 const dataSourceRows = generateData(dataGridExampleData);
 
-const InfiniteScrollExample = function InfiniteScrollExample(
-  props: AgGridReactProps
-) {
-  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
+const InfiniteScroll = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -44,27 +51,39 @@ const InfiniteScrollExample = function InfiniteScrollExample(
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact {...agGridProps} {...props} />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ marginTop: 25, height: 800, width: 800 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridInfiniteScrollExampleColumns}
+          rowModelType="infinite"
+          infiniteInitialRowCount={100}
+          components={infiniteScrollComponents}
+        />
+      </div>
     </div>
   );
 };
 
-InfiniteScrollExample.defaultProps = {
-  columnDefs: dataGridInfiniteScrollExampleColumns,
-  components: {
-    loadingRenderer(params: any) {
-      if (params.value !== undefined) {
-        return params.value;
-      } else {
-        return '<div aria-label="loading" class="jpm-ui-toolkit-cssSpinner small" role="status"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div>';
-      }
-    },
+const infiniteScrollComponents = {
+  loadingRenderer(params: any) {
+    if (params.value !== undefined) {
+      return params.value;
+    } else {
+      return '<div aria-label="loading" class="jpm-ui-toolkit-cssSpinner small" role="status"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div>';
+    }
   },
-  rowModelType: "infinite",
-  infiniteInitialRowCount: 100,
-} as AgGridReactProps;
+};
 
-export default function InfiniteScroll(props: AgGridReactProps) {
-  return <InfiniteScrollExample {...props} />;
-}
+export default InfiniteScroll;

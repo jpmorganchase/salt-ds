@@ -17,7 +17,8 @@ const withBaseName = makePrefixer("uitkGridTableRow");
 
 export interface TableRowProps<T> {
   row: GridRowModel<T>;
-  isSelected?: boolean;
+  isSelected?: boolean; // Render selected background and the bottom border. Top border is rendered by the previous row (it gets isFollowedBySelected = true)
+  isFollowedBySelected?: boolean; // Next row is selected. Render the bottom border.
   isHoverOver?: boolean;
   zebra?: boolean;
   columns: GridColumnModel<T>[];
@@ -33,6 +34,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   const {
     row,
     isSelected,
+    isFollowedBySelected,
     zebra,
     isHoverOver,
     columns,
@@ -56,6 +58,8 @@ export function TableRow<T>(props: TableRowProps<T>) {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
         [withBaseName("selected")]: isSelected,
+        [withBaseName("followedBySelected")]:
+          isFollowedBySelected && !isSelected,
       })}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -101,7 +105,12 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isSelected={isSelected}
             isEditable={isEditable}
           >
-            <CellValue column={column} row={row} value={value} />
+            <CellValue
+              column={column}
+              row={row}
+              value={value}
+              isFocused={isFocused}
+            />
           </Cell>
         );
       })}

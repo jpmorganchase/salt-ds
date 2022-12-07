@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 /**
  * Example data can be found here
@@ -13,6 +13,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const statusBar = {
   statusPanels: [
@@ -26,8 +27,16 @@ const statusBar = {
   ],
 };
 
-const StatusBarExample = function StatusBarExample(props: AgGridReactProps) {
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
+const StatusBar = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -36,26 +45,30 @@ const StatusBarExample = function StatusBarExample(props: AgGridReactProps) {
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25 }}>
-      <p>Select rows to enable status bar display</p>
-      <div style={{ height: 800, width: 800 }} {...containerProps}>
-        <AgGridReact
-          enableRangeSelection
-          // TODO enableStatusBar
-          statusBar={statusBar}
-          {...agGridProps}
-          {...props}
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
         />
+      </div>
+      <div style={{ marginTop: 25 }}>
+        <p>Select rows to enable status bar display</p>
+        <div style={{ height: 800, width: 800 }} {...containerProps}>
+          <AgGridReact
+            enableRangeSelection
+            // TODO enableStatusBar
+            statusBar={statusBar}
+            columnDefs={dataGridExampleColumns}
+            rowData={dataGridExampleData}
+            {...agGridProps}
+            {...props}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-StatusBarExample.defaultProps = {
-  columnDefs: dataGridExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function StatusBar(props: AgGridReactProps) {
-  return <StatusBarExample {...props} />;
-}
+export default StatusBar;

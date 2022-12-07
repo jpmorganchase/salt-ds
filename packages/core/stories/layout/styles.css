@@ -55,7 +55,7 @@
 
 .flow-layout-container {
   padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
-  background-color: var(--uitk-container-background-high);
+  background-color: var(--uitk-container-secondary-background);
 }
 
 .flow-layout-container p,
@@ -108,7 +108,7 @@
 }
 
 .border-layout-form-steps {
-  background-color: var(--uitk-container-background-high);
+  background-color: var(--uitk-container-secondary-background);
 }
 
 .border-layout-contacts {

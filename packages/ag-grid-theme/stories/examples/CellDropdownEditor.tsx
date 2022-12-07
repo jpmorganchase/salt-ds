@@ -5,6 +5,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 /**
  * Based on the examples provided by
@@ -12,9 +13,13 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
  * This examples uses a JPM UI Toolkit Dropdown as a cell editor
  * complete with focus and keyboard navigation support
  */
-const CellDropdownEditorExample = function CellDropdownEditorExample(
-  props: AgGridReactProps
-) {
+const CellDropdownEditor = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
   const [columnDefs] = useState<ColDef[]>([
     { headerName: "Name", field: "name" },
     { headerName: "Code", field: "code", minWidth: 120 },
@@ -31,7 +36,10 @@ const CellDropdownEditorExample = function CellDropdownEditorExample(
     },
   ]);
 
-  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
+  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
+
   const [rowData] = useState(dataGridExampleData);
 
   useEffect(() => {
@@ -45,18 +53,19 @@ const CellDropdownEditorExample = function CellDropdownEditorExample(
   };
 
   return (
-    <div style={{ height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact
-        columnDefs={columnDefs}
-        onBodyScroll={onBodyScroll}
-        {...agGridProps}
-        {...props}
-        rowData={rowData}
-      />
+    <div>
+      <Switch checked={isNewTheme} onChange={onThemeChange} label="New theme" />
+      <div style={{ height: 800, width: 800 }} {...containerProps}>
+        <AgGridReact
+          columnDefs={columnDefs}
+          onBodyScroll={onBodyScroll}
+          {...agGridProps}
+          {...props}
+          rowData={rowData}
+        />
+      </div>
     </div>
   );
 };
 
-export default function CellDropdownEditor(props: AgGridReactProps) {
-  return <CellDropdownEditorExample {...props} />;
-}
+export default CellDropdownEditor;

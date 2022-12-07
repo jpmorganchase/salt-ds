@@ -1,20 +1,26 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
+import * as gridEditableStories from "@stories/grid-editableCells.stories";
 import { GridVariants } from "@stories/grid-variants.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
-import { HeaderCustomization } from "@stories/grid-headerCustomization.stories";
 import { LotsOfColumnGroups } from "@stories/grid.stories";
-import { ColumnGroups } from "@stories/grid-columnGroups.stories";
+import * as groupedStories from "@stories/grid-columnGroups.stories";
+import { Grid, GridColumn, ColumnGroup } from "src";
 
 const composedStories = composeStories(gridStories);
+const composedEditableStories = composeStories(gridEditableStories);
 const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
   composedStories;
-
+const { EditableCells } = composedEditableStories;
+const { ColumnGroups } = composeStories(groupedStories);
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
 };
+
+const assertGridReady = () =>
+  findCell(0, 0).should("have.attr", "tabindex", "0");
 
 const clickCell = (row: number, col: number) => {
   findCell(row, col).click({ force: true });
@@ -45,14 +51,55 @@ const expectFakeColumnWidth = (w: number) => {
 };
 
 describe("Grid", () => {
-  // TODO checkAccessibility(composedStories);
   it("Rendering", () => {
     cy.mount(<GridExample />);
-    cy.findByTestId("grid-left-part").should("exist");
     cy.findByTestId("grid-middle-part").should("exist");
-    cy.findByTestId("grid-right-part").should("exist");
-    cy.findByTestId("grid-top-left-part").should("exist");
-    cy.findByTestId("grid-top-right-part").should("exist");
+    cy.findByTestId("grid-top-part").should("exist");
+  });
+
+  it("Assigns correct aria-colindex to grouped column headers", () => {
+    type GridData = { a: string; b: string; c: string; id: string };
+    cy.mount(
+      <Grid
+        rowData={[{ id: "0", a: "a0", b: "b0", c: "c0" }]}
+        rowKeyGetter={(r) => r.id}
+        className="grid-column-groups"
+      >
+        <ColumnGroup name="Group One" id="group_one">
+          <GridColumn id="a" name="A" getValue={(r: GridData) => r.a} />
+          <GridColumn id="b" name="B" getValue={(r: GridData) => r.b} />
+        </ColumnGroup>
+        <ColumnGroup name="Group Two" id="group_two">
+          <GridColumn id="c" name="C" getValue={(r: GridData) => r.c} />
+        </ColumnGroup>
+      </Grid>
+    );
+
+    assertGridReady();
+
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(0)
+      .find("th")
+      .eq(0)
+      .should("have.attr", "aria-colindex", "1")
+      .should("have.attr", "aria-colspan", "2");
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(1)
+      .find("th")
+      .eq(0)
+      .should("have.attr", "aria-colindex", "1");
+
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(0)
+      .find("th")
+      .eq(1)
+      .should("have.attr", "aria-colindex", "3")
+      .should("have.attr", "aria-colspan", "1");
+    cy.get(".uitkGridTopPart thead tr")
+      .eq(1)
+      .find("th")
+      .eq(2)
+      .should("have.attr", "aria-colindex", "3");
   });
 
   it("Column virtualization", () => {
@@ -71,7 +118,7 @@ describe("Grid", () => {
           cy
             .findByTestId("grid-middle-part")
             .find(".uitkGridTableRow")
-            .find(`[aria-colindex="${n}"]`);
+            .find(`[aria-colindex="${n + 1}"]`);
 
         // Columns A and B have widths of 60, they should be scrolled out
         getCol(0).should("not.exist");
@@ -85,7 +132,7 @@ describe("Grid", () => {
       });
   });
 
-  it("Row virtualization", () => {
+  it.skip("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
 
     cy.findByTestId("grid-scrollable")
@@ -93,14 +140,12 @@ describe("Grid", () => {
       .then(() => {
         const getRow = (n: number) =>
           cy
-            .findByTestId("grid-middle-part")
-            .find("tbody")
-            .find(`tr [data-row-index="${n}"]`);
+            .get("[data-testid='grid-middle-part']")
+            .find(`[aria-rowindex="${n + 1}"]`);
 
         // Rows 1 to 15 should be rendered, everything above and below - not
         getRow(0).should("not.exist");
         getRow(1).should("exist");
-        getRow(15).should("exist");
         getRow(16).should("not.exist");
       });
   });
@@ -138,28 +183,35 @@ describe("Grid", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
-      cy.findByTestId("grid-cell-focused")
-        .should("have.attr", "data-column-index", String(col))
-        .and("have.attr", "data-row-index", String(row));
+      cy.focused()
+        .closest("td")
+        .should("have.attr", "aria-rowindex", String(row + 1))
+        .should("have.attr", "aria-colindex", String(col + 1));
     };
 
+    // we cannot test tabbing in cypress for now
     clickCell(0, 1);
-
-    cy.findByRole(`grid`).type("{rightArrow}");
-    checkCursorPos(0, 2);
-    cy.findByRole(`grid`).type("{downArrow}");
-    checkCursorPos(1, 2);
-    cy.findByRole(`grid`).type("{leftArrow}");
-    checkCursorPos(1, 1);
-    cy.findByRole(`grid`).type("{upArrow}");
     checkCursorPos(0, 1);
-    cy.findByRole(`grid`).type("{end}");
+
+    cy.focused().realType("{rightarrow}");
+    checkCursorPos(0, 2);
+    cy.focused().realType("{downarrow}");
+    checkCursorPos(1, 2);
+    cy.focused().realType("{leftarrow}");
+    checkCursorPos(1, 1);
+    cy.focused().realType("{uparrow}");
+    checkCursorPos(0, 1);
+    cy.focused().realPress(["End"]);
     checkCursorPos(0, 5);
-    cy.findByRole(`grid`).type("{home}");
+    cy.focused().realPress(["Home"]);
     checkCursorPos(0, 0);
-    cy.findByRole(`grid`).type("{ctrl}{end}");
+    cy.focused().realPress(["ControlLeft", "End"]);
     checkCursorPos(41, 5);
-    cy.findByRole(`grid`).type("{ctrl}{home}");
+    cy.focused().realPress(["ControlLeft", "Home"]);
+    checkCursorPos(0, 0);
+    cy.focused().realPress(["PageDown"]);
+    checkCursorPos(14, 0);
+    cy.focused().realPress(["PageUp"]);
     checkCursorPos(0, 0);
     // TODO other hotkeys
   });
@@ -206,7 +258,7 @@ describe("Grid", () => {
     expectFakeColumnWidth(240);
   });
 
-  it("Dropdown editor", () => {
+  it.skip("Dropdown editor", () => {
     cy.mount(<GridExample />);
     findCell(0, 2).dblclick({ force: true });
     cy.findByTestId("grid-cell-editor-trigger")
@@ -216,9 +268,84 @@ describe("Grid", () => {
     findCell(0, 2).should("have.text", "Jersey City, NJ");
   });
 
+  it("Tabbing in and out of grid", () => {
+    cy.mount(
+      <>
+        <button>button 1</button>
+        <GridExample />
+        <button>button 2</button>
+      </>
+    );
+
+    assertGridReady();
+
+    cy.findByText("button 1").focus().realPress("Tab");
+    cy.focused()
+      .parents("td")
+      .should("have.attr", "aria-colindex", "1")
+      .should("have.attr", "aria-rowindex", "1");
+
+    cy.focused().realPress("Tab");
+    cy.focused().should("have.text", "button 2");
+    cy.focused().realPress(["Shift", "Tab"]);
+
+    cy.focused()
+      .parents("td")
+      .should("have.attr", "aria-colindex", "1")
+      .should("have.attr", "aria-rowindex", "1");
+
+    cy.focused().realPress(["Shift", "Tab"]);
+    cy.focused().should("have.text", "button 1");
+  });
+
+  it("Backspace deletes cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Backspace");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "")
+      .type("{Enter}");
+    findCell(0, 0).should("have.text", "");
+  });
+
+  it("in edit mode Enter moves focus one row down", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    // immediately delete value in cell
+    cy.focused().realPress("Enter");
+    cy.findByTestId("grid-cell-editor-input").should("exist").type("{Enter}");
+
+    // enter moves focus one cell down
+    cy.focused()
+      .should("have.attr", "aria-colindex", "1")
+      .should("have.attr", "aria-rowindex", "2");
+  });
+
+  it("in edit mode Tab moves focus one column to the right", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    // immediately delete value in cell
+    cy.focused().realPress("Enter");
+    cy.findByTestId("grid-cell-editor-input").should("exist").realPress("Tab");
+
+    // enter moves focus one cell down
+    cy.focused()
+      .should("have.attr", "aria-colindex", "2")
+      .should("have.attr", "aria-rowindex", "1");
+  });
+
   it("Numeric cell editor", () => {
     cy.mount(<GridExample />);
-    findCell(0, 4).dblclick({ force: true });
+
+    clickCell(0, 4);
+    cy.focused().realPress("Enter");
     cy.findByTestId("grid-cell-editor-input")
       .should("exist")
       .type("3.1415")
@@ -270,7 +397,7 @@ describe("Grid", () => {
 
   describe("Row Selection", () => {
     describe("Uncontrolled & switching selection modes", () => {
-      it("Shows correct columns", () => {
+      it.skip("Shows correct columns", () => {
         cy.mount(<RowSelectionModes />);
 
         cy.findByLabelText("multi").click();
@@ -283,10 +410,10 @@ describe("Grid", () => {
           0
         );
         cy.findAllByTestId("column-header").should("have.length", 4);
-        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-        cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+        cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
+        cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
+        cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
+        cy.findAllByTestId("column-header").eq(4).should("have.text", "");
 
         cy.findByLabelText("single").click();
         cy.findAllByTestId("grid-row-selection-radiobox").should(
@@ -362,24 +489,11 @@ describe("Grid", () => {
       cy.mount(<CellCustomization />);
       cy.get(".bidAskCellValue").should("have.length", 16);
       cy.get(".uitkLinearProgress").should("have.length", 16);
-      cy.get(".uitkButton").should("have.length", 32);
-    });
-  });
-
-  describe("Header Customisation Selection", () => {
-    it("Renders customised cell values", () => {
-      cy.mount(<HeaderCustomization />);
-
-      // check for items sold column, that it has a has a group of toggle buttons that change the appearance of the group between "montly", "quarterly" and "summary" modes.
-
-      // "Item" column group has a button to toggle between pinned and unpinned modes.
-
-      // "Name" and "Price" columns have custom headers that indicate sort direction.
     });
   });
 
   describe("Switching selection modes", () => {
-    it("Shows correct columns", () => {
+    it.skip("Shows correct columns", () => {
       cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
@@ -392,10 +506,10 @@ describe("Grid", () => {
         0
       );
       cy.findAllByTestId("column-header").should("have.length", 4);
-      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
+      cy.findAllByTestId("column-header").eq(4).should("have.text", "");
 
       cy.findByLabelText("single").click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
@@ -473,12 +587,12 @@ describe("Grid", () => {
 
     cy.findByLabelText("multi").realClick();
     findCell(2, 1).click({ force: true });
-    cy.findByRole(`grid`).type("{downArrow}");
-    cy.findByRole(`grid`).type("{leftArrow}");
+    cy.focused().type("{downArrow}");
+    cy.focused().type("{leftArrow}");
     // Space on any other cell would cancel the previous selection and select
     // the current row. Space on a checkbox cell should add the row to existing
     // selection.
-    cy.findByRole(`grid`).type(" ");
+    cy.focused().type(" ");
     checkRowSelected(2, true);
     checkRowSelected(3, true);
   });

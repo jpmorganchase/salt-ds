@@ -7,29 +7,38 @@ import {
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { useTheme } from "@jpmorganchase/uitk-core";
+import { TearOutIcon } from "@jpmorganchase/uitk-icons";
 
 import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Card.module.css";
+import { isExternal } from "util/types";
+
+export interface FooterProps {
+  isExternalLink?: boolean;
+  footerText: string;
+}
 
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  inlineIcon?: JSX.Element;
   title: string;
   description: string;
   url: string;
-  linkText: string;
+  footer: FooterProps;
   keylineColor: CSSProperties["color"];
-  disableKeylineAnimation?: boolean;
+  keyLineAnimation?: boolean;
 }
 
 const Card = ({
   icon,
+  inlineIcon,
   title,
   description,
   url,
-  linkText,
+  footer: { footerText, isExternalLink },
   keylineColor,
-  disableKeylineAnimation = false,
+  keyLineAnimation = true,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
@@ -40,23 +49,35 @@ const Card = ({
   const useLightTheme = mode !== "dark";
 
   return (
-    <div className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}>
-      <div className={styles.iconContainer}>{icon}</div>
+    <Link
+      className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}
+      to={url}
+    >
+      {icon && (
+        <div className={styles.iconContainer}>
+          {cloneElement(icon, { ...icon.props, className: styles.icon })}
+        </div>
+      )}
       <div className={styles.cardContent}>
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <Link to={url}>{linkText}</Link>
+        <span className={styles.cardTitle}>
+          <h2>{title}</h2>
+          {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
+        </span>
+        <p className={styles.cardDescription}>{description}</p>
+        <div className={styles.cardFooter}>
+          <p>{footerText}</p> {isExternalLink && <TearOutIcon />}
+        </div>
       </div>
       <div
         className={clsx(styles.keyline, {
-          [styles.animate]: onScreen && !disableKeylineAnimation,
+          [styles.animate]: onScreen && keyLineAnimation,
         })}
         style={{
           backgroundColor: keylineColor,
         }}
         ref={ref}
       />
-    </div>
+    </Link>
   );
 };
 

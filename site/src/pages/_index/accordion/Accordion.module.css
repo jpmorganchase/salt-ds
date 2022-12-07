@@ -4,17 +4,15 @@
   /* 468px is height of hatching in illustration */
   grid-template-rows: 468px auto;
   overflow: hidden;
+
+  --keyline-height: 3px;
 }
 
 .accordionIllustration {
   grid-area: 1 / 2 / 3 / 3;
 }
 
-.wrapper {
-  --keyline-height: 3px;
-}
-
-.wrapper {
+.accordionWrapper {
   background-color: var(--card-background);
   width: 55vw;
   padding: calc(var(--uitk-size-unit) * 10);
@@ -22,29 +20,8 @@
   min-height: 70vh;
 }
 
-.accordion {
-  --uitkAccordion-section-borderColor: rgba(255, 255, 255, 0.1);
-}
-
-.accordion {
-  height: calc(100% - var(--keyline-height));
-}
-
-.accordion .section {
-  padding: calc(var(--uitk-size-unit) * 2) 0;
-}
-
-.accordion .summary {
-  --accordion-summary-background: none;
-  --accordion-summary-background-active: none;
-  --accordion-summary-background-hover: none;
-  --accordion-summary-paddingLeft: 0;
-}
-
-.accordion .summary h2 {
-  line-height: var(--accordion-summary-height);
-  font-weight: var(--uitk-text-h2-fontWeight);
-  font-size: var(--uitk-text-h2-fontSize);
+.animate {
+  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 .keyline {
@@ -55,31 +32,6 @@
   top: calc(var(--uitk-size-unit) * 10);
   background-color: var(--uitk-color-teal-50);
 }
-
-.animate {
-  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-/* Override Salt accordion styles */
-
-.summary :global(.uitkAccordionSummary-icon) {
-  left: unset;
-  right: 0;
-}
-
-.summary :global(.uitkAccordionSummary-icon:hover) {
-  background: var(--accordion-summary-background-hover);
-}
-
-.summary :global(.uitkIcon) {
-  --uitk-size-icon-base: calc(var(--uitk-size-unit) * 2);
-}
-
-.accordion :global(.uitkAccordionDetails .uitkAccordionDetails-content) {
-  padding-left: 0;
-}
-
-/* ----------------------------- */
 
 @keyframes swing-in-left-bck {
   0% {
@@ -106,10 +58,31 @@
     margin-bottom: -50%;
   }
 
-  .wrapper {
+  .accordionWrapper {
     /* creates a new stacking context and ensures this sits above the illustration */
     position: relative;
     width: 100%;
     padding: calc(var(--uitk-size-unit) * 2);
+  }
+
+  .keyline {
+    width: calc(100% + calc(var(--uitk-size-unit) * 4));
+    left: calc(-1 * var(--uitk-size-unit) * 2);
+    top: calc(var(--uitk-size-unit) * 2);
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .accordionWrapper {
+    padding: var(--uitk-size-unit) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 3) var(--uitk-size-unit);
+  }
+
+  .keyline {
+    left: calc(-1 * var(--uitk-size-unit));
+    top: calc(var(--uitk-size-unit) * 3);
+  }
+
+  .accordionIllustration {
+    margin-bottom: -35%;
   }
 }

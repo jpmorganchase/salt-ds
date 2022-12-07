@@ -1,0 +1,23 @@
+@import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base-default-params";
+@import "./odyssey-ag-theme-font-vars";
+
+$odyssey-ag-theme-default-params: (
+  row-hover-color: var(--agGrid-row-color-hover),
+  header-column-separator: true,
+  header-column-separator-width: 1px,
+  header-column-separator-color: var(--agGrid-header-column-separator-color),
+  // Fonts
+  font-family:
+    (
+      "uitk-sans",
+      sans-serif,
+    ),
+  icon-font-family: $odyssey-ag-theme-icon-font-family,
+  icons-data: $odyssey-ag-theme-icons-data,
+  icons-font-codes: $odyssey-ag-theme-icons-font-codes,
+);
+
+$odyssey-ag-theme-default-params: map-merge(
+  $ag-theme-base-default-params,
+  $odyssey-ag-theme-default-params
+);

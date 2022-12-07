@@ -1,20 +1,13 @@
 /**
  * Have some global styles to simulate more realistic app. Currently only for Storybook.
- * We don't have a universal set of styling on each component, e.g. some component set font-family some don't.
- *
- * It would be nice to do these as a global reset, so each component doesn't need to set these.
- * - font-family
- * - line-height
- * - background
- * - color
  */
 
-p {
+.uitk-theme {
+  color: var(--uitk-text-primary-foreground);
+  font-family: var(--uitk-typography-fontFamily);
   font-size: var(--uitk-text-fontSize);
-}
-
-body {
-  font-family: "Open Sans";
+  letter-spacing: var(--uitk-text-letterSpacing);
+  line-height: var(--uitk-text-lineHeight);
 }
 
 .uitk-theme[data-mode="light"] {

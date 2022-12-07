@@ -18,9 +18,7 @@ export interface HeaderCellSeparatorProps {
 }
 
 export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
-  const className = withBaseName(
-    props.separatorType === "regular" ? "regularSeparator" : "edgeSeparator"
-  );
+  const className = withBaseName([props.separatorType, "Separator"].join(""));
   return <div className={className} />;
 }
 
@@ -34,6 +32,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
 
   return (
     <th
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
@@ -74,6 +73,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
 
   return (
     <th
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={withBaseName()}
       role="columnheader"

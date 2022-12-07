@@ -1,12 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
-const ColorationExample = function ColorationExample(props: AgGridReactProps) {
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+const Coloration = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -15,17 +24,27 @@ const ColorationExample = function ColorationExample(props: AgGridReactProps) {
   }, [isGridReady]);
 
   return (
-    <div style={{ height: 800, width: 800, marginTop: 25 }} {...containerProps}>
-      <AgGridReact {...agGridProps} {...props} />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ height: 800, width: 800, marginTop: 25 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          columnDefs={dataGridExampleColumnsColoration}
+          rowData={dataGridExampleData}
+        />
+      </div>
     </div>
   );
 };
 
-ColorationExample.defaultProps = {
-  columnDefs: dataGridExampleColumnsColoration,
-  rowData: dataGridExampleData,
-};
-
-export default function Coloration(props: AgGridReactProps) {
-  return <ColorationExample {...props} />;
-}
+export default Coloration;

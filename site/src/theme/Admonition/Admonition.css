@@ -1,0 +1,38 @@
+.uitkAdmonition {
+  background: var(--uitk-container-tertiary-background);
+}
+.uitkAdmonition hr {
+  margin-bottom: var(--uitk-size-unit);
+  margin-top: calc(3 * var(--uitk-size-unit));
+}
+
+.uitkAdmonition-info {
+  background-color: var(--site-tertiary-accent-teal);
+  height: 3px;
+}
+
+.uitkAdmonition .theme-admonition {
+  --ifm-alert-foreground-color: var(--uitk-color-gray-900);
+  --ifm-alert-background-color: var(--uitk-color-white);
+  --ifm-alert-shadow: none;
+  --ifm-alert-padding-horizontal: 0;
+  --ifm-alert-padding-vertical: 0;
+  border: none;
+}
+
+.uitkAdmonition .theme-admonition a {
+  text-decoration-color: var(--uitk-color-gray-900);
+  --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
+}
+
+.uitkAdmonition .theme-admonition a:hover {
+  text-decoration-thickness: 1px;
+}
+
+.theme-admonition div:nth-child(1) {
+  display: none;
+}
+
+.uitkAdmonition h4 {
+  --ifm-heading-color: var(--site-tertiary-accent-teal);
+}

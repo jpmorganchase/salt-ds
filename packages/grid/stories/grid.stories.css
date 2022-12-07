@@ -1,5 +1,5 @@
 .grid {
-  height: 600px;
+  height: 593px;
   width: 958px;
 }
 
@@ -72,7 +72,6 @@
 .smallGrid {
   height: 600px;
   width: 800px;
-  /*border: solid 1px var(--uitk-container-borderColor-high);*/
 }
 
 .customHeader {

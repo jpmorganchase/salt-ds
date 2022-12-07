@@ -40,7 +40,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
   const [editorText, setEditorText] = useState<string>(
-    initialText || column!.info.props.getValue!(row!.data)
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
   );
 
   const initialSelectionRef = useRef(!!initialText);
@@ -52,16 +52,18 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
       endEditMode(editorText);
-      event.preventDefault();
-      event.stopPropagation();
+      return;
     }
     if (event.key === "Escape") {
       cancelEditMode();
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      event.stopPropagation();
+      return;
     }
+    if (event.key === "Tab") {
+      endEditMode(editorText);
+      event.preventDefault();
+      return;
+    }
+    event.stopPropagation();
   };
 
   useEffect(() => {

@@ -273,7 +273,6 @@ export const useColumnGroups = (
       }),
     [grpPs, startIdx]
   );
-export const PAGE_SIZE = 10;
 
 // Visible range of column groups.
 export function useVisibleColumnGroupRange<T>(
@@ -520,6 +519,12 @@ export function useColumnRegistry<T>(children: ReactNode) {
     rightGrpPs,
     leftGroups.length + midGroups.length
   );
+  if (leftGroups.length > 0) {
+    last(leftGroups).columnSeparator = "pinned";
+  }
+  if (rightGroups.length > 0 && midGroups.length > 0) {
+    last(midGroups).columnSeparator = "pinned";
+  }
 
   const leftCols: GridColumnModel<T>[] = useCols(leftColInfos, 0, leftGroups);
   const midCols: GridColumnModel<T>[] = useCols(
@@ -532,6 +537,12 @@ export function useColumnRegistry<T>(children: ReactNode) {
     leftCols.length + midCols.length,
     rightGroups
   );
+  if (leftCols.length > 0) {
+    last(leftCols).separator = "pinned";
+  }
+  if (rightCols.length > 0 && midCols.length > 0) {
+    last(midCols).separator = "pinned";
+  }
 
   const chPosById = useRef<Map<string, number>>(new Map());
 
@@ -1183,6 +1194,9 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   }, []);
 
   const selectRange = useCallback((range: CellRange) => {
+    if (cellSelectionMode !== "range") {
+      return;
+    }
     setSelectedCellRange(range);
   }, []);
 

@@ -3,7 +3,7 @@
 }
 
 .uitkTabActivationIndicator {
-  --tabs-activationIndicator-background: var(--uitk-container-borderColor-medium);
+  --tabs-activationIndicator-background: var(--uitk-container-primary-borderColor);
 
   background: var(--uitkTabs-activationIndicator-background, var(--tabs-activationIndicator-background));
   bottom: 0;

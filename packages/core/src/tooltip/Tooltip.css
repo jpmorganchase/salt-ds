@@ -1,6 +1,6 @@
 /* Styles applied to root component */
 .uitkTooltip {
-  --tooltip-background: var(--uitkTooltip-background, var(--uitk-container-background-medium));
+  --tooltip-background: var(--uitkTooltip-background, var(--uitk-container-primary-background));
   --tooltip-fontSize: var(--uitkTooltip-fontSize, var(--uitk-text-fontSize));
   --tooltip-lineHeight: var(--uitkTooltip-lineHeight, var(--uitk-text-lineHeight));
   --tooltip-zIndex: var(--uitkTooltip-zIndex, var(--uitk-zIndex-flyover));
@@ -9,7 +9,7 @@
 .uitkTooltip {
   background: var(--tooltip-background);
   border-color: var(--uitkTooltip-borderColor, var(--tooltip-status-borderColor));
-  border-width: var(--uitkTooltip-borderWidth, var(--uitk-container-borderWidth));
+  border-width: var(--uitkTooltip-borderWidth, var(--uitk-size-border));
   border-style: var(--uitkTooltip-borderStyle, var(--uitk-container-borderStyle));
   box-shadow: var(--uitkTooltip-shadow, var(--uitk-overlayable-shadow-popout));
   color: var(--uitkTooltip-text-color, var(--uitk-text-primary-foreground));

@@ -40,9 +40,9 @@
   --accordion-summary-height: var(--uitkAccordion-summary-height, var(--uitk-size-stackable));
   --accordion-summary-fontWeight: var(--uitkAccordion-summary-fontWeight, initial);
 
-  --accordion-summary-background: var(--uitkAccordion-summary-background, var(--uitk-container-background-medium));
-  --accordion-summary-background-active: var(--uitkAccordion-summary-background-active, var(--uitk-container-background-medium));
-  --accordion-summary-background-disabled: var(--uitkAccordion-summary-background-disabled, var(--uitk-container-background-medium));
+  --accordion-summary-background: var(--uitkAccordion-summary-background, var(--uitk-container-primary-background));
+  --accordion-summary-background-active: var(--uitkAccordion-summary-background-active, var(--uitk-container-primary-background));
+  --accordion-summary-background-disabled: var(--uitkAccordion-summary-background-disabled, var(--uitk-container-primary-background));
   --accordion-summary-background-hover: var(--uitkAccordion-summary-background-hover, var(--uitk-actionable-primary-background-hover));
 
   --accordion-summary-text-color: var(--uitkAccordion-summary-text-color, var(--uitk-text-primary-foreground));
@@ -81,7 +81,7 @@
   color: var(--accordion-summary-text-color);
   font-size: var(--uitkAccordion-summary-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkAccordion-summary-fontFamily, var(--uitk-text-fontFamily));
-  padding-left: var(--accordion-summary-paddingLeft);
+  padding-left: var(--uitkAccordion-summary-paddingLeft, var(--accordion-summary-paddingLeft));
   position: relative;
 }
 

@@ -1,6 +1,6 @@
 /* Styles applied to root component */
 .uitkBanner {
-  --banner-background: var(--uitkBanner-background, var(--uitk-container-background-medium));
+  --banner-background: var(--uitkBanner-background, var(--uitk-container-primary-background));
   --banner-fontSize: var(--uitkBanner-fontSize, var(--uitk-text-fontSize));
   --banner-lineHeight: var(--uitkBanner-lineHeight, var(--uitk-text-lineHeight));
   --banner-padding: var(--uitkBanner-padding, var(--uitk-size-unit));
@@ -10,7 +10,7 @@
 .uitkBanner {
   background: var(--banner-background);
   border-color: var(--uitkBanner-borderColor, var(--banner-status-borderColor));
-  border-width: var(--uitkBanner-borderWidth, var(--uitk-container-borderWidth));
+  border-width: var(--uitkBanner-borderWidth, var(--uitk-size-border));
   border-style: var(--uitkBanner-borderStyle, var(--uitk-container-borderStyle));
   border-bottom: 2px solid var(--uitkBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;
@@ -73,17 +73,18 @@
   --banner-status-icon-color: var(--uitk-status-success-foreground);
 }
 
-.uitkEmphasisHigh.uitkBanner-info {
-  --banner-background: var(--uitk-palette-info-background-high);
+.uitkBanner-emphasize.uitkBanner-info {
+  --banner-background: var(--uitk-status-info-background-emphasize);
 }
 
-.uitkEmphasisHigh.uitkBanner-error {
-  --banner-background: var(--uitk-palette-error-background-high);
+.uitkBanner-emphasize.uitkBanner-error {
+  --banner-background: var(--uitk-status-error-background-emphasize);
 }
 
-.uitkEmphasisHigh.uitkBanner-warning {
-  --banner-background: var(--uitk-palette-warning-background-high);
+.uitkBanner-emphasize.uitkBanner-warning {
+  --banner-background: var(--uitk-status-warning-background-emphasize);
 }
-.uitkEmphasisHigh.uitkBanner-success {
-  --banner-background: var(--uitk-palette-success-background-high);
+
+.uitkBanner-emphasize.uitkBanner-success {
+  --banner-background: var(--uitk-status-success-background-emphasize);
 }

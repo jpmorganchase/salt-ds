@@ -3,6 +3,7 @@ import "./GroupHeaderCell.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnGroupModel } from "./Grid";
 import { ReactNode } from "react";
+import { useColumnDataContext } from "./ColumnDataContext";
 
 const withBaseName = makePrefixer("uitkGridGroupHeaderCell");
 
@@ -14,14 +15,18 @@ export interface GroupHeaderCellProps {
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { group } = props;
   const { colSpan, columnSeparator, rowSeparator } = group;
-  const { name } = group.data;
+  const { getColById } = useColumnDataContext();
+  const firstChild = getColById(group.childrenIds[0]);
 
   return (
     <th
       className={withBaseName()}
       colSpan={colSpan}
+      aria-colspan={colSpan}
+      aria-colindex={(firstChild?.index ?? 0) + 1}
       data-testid="column-group-header"
       data-group-index={group.index}
+      role="columnheader"
     >
       {props.children}
       <div
@@ -33,6 +38,9 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
       />
       {columnSeparator === "regular" ? (
         <div className={withBaseName("columnSeparator")} />
+      ) : null}
+      {columnSeparator === "pinned" ? (
+        <div className={withBaseName("pinnedSeparator")} />
       ) : null}
     </th>
   );

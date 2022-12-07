@@ -114,6 +114,10 @@ export interface FormFieldProps
    * The state for the FormField: Must be one of: 'error'|'warning'|undefined
    */
   validationStatus?: FormFieldValidationStatus;
+  /**
+   * FormField variants; defaults to primary.
+   */
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export interface useA11yValueValue {
@@ -208,6 +212,7 @@ export const FormField = forwardRef(
       required,
       StatusIndicatorProps,
       validationStatus,
+      variant = "primary",
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -239,7 +244,7 @@ export const FormField = forwardRef(
     const isError = validationStatus === "error";
     const focusClass = disableFocusRing
       ? "lowFocused"
-      : "focused"; /* Low emphasis will override this */
+      : "focused"; /* NOTE: need to look at */
     const inlineHelperText =
       renderHelperText && helperTextPlacement === "bottom";
     const tooltipHelperText =
@@ -264,6 +269,7 @@ export const FormField = forwardRef(
           [withBaseName("labelTop")]: labelTop,
           [withBaseName("labelLeft")]: labelLeft,
           [withBaseName(`withHelperText`)]: inlineHelperText,
+          [withBaseName(variant)]: variant,
         },
         className
       ),
