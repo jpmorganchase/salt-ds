@@ -17,8 +17,13 @@ import {
 # Grid
 
 A Grid presents tabular information that has columns and rows.
-Grid is particularly useful if the tabular information is editable or interactive.
-Grid provides users with intuitive and efficient keyboard navigation, content editing, selection, and copy and paste.
+Grid is particularly useful if the tabular information is editable or interactive, various use cases include:
+
+- Data input, such as editing notional values
+- Real-time data display, such as executed trades
+- Inline cell or row-based actions, such as cancelling trades
+
+Grid provides users with intuitive and efficient keyboard navigation, filtering, content editing, selection, and copy and paste.
 
 Grid is virtualized. Only the visible part is rendered to the DOM.
 
@@ -190,18 +195,20 @@ To trigger edit mode on cells on your...
 ```
 import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
 
-// Pagination props
-count: number
-page?: number
-onPageChange?: ((page: number) => void)
-initialPage?: number
-compact?: Boolean
+interface PaginationProps {
+  count: number
+  page?: number
+  onPageChange?: ((page: number) => void)
+  initialPage?: number
+  compact?: Boolean
+}
 
-// Paginator props
-boundaryCount?: number;
-siblingCount?: number;
-showPreviousNext?: boolean;
-FormFieldProps?: Partial<FormFieldProps>;
+interface PaginatorProps {
+  boundaryCount?: number;
+  siblingCount?: number;
+  showPreviousNext?: boolean;
+  FormFieldProps?: Partial<FormFieldProps>;
+}
 ```
 
 <Canvas>
@@ -238,6 +245,57 @@ The grid below is editable. Change the values of CSS variables to view their eff
 <Canvas>
   <Story id="grid-new-grid--css-variables" decorators={[withFlexGap]} />
 </Canvas>
+
+# Accessibility
+
+Grid is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+
+## Keyboard interactions
+
+The following keyboard interactions apply to the Grid component:
+
+_Note: the keys below represent the expected interaction on Windows OS. For Mac replace <kbd>Ctrl</kbd> with <kbd>Cmd</kbd>._
+
+### Grid navigation
+
+| Key                                 | Function                                                                                                                                                                                                                                            |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Tab</kbd>                      | - If focus is before the grid, put focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, move focus to next component in the tab order outside of the grid.    |
+| <kbd>Shift</kbd> and <kbd>Tab</kbd> | - If focus is after the grid, put focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, move focus to previous component in the tab order outside of the grid. |
+| <kbd>►</kbd>                        | - Move focus one cell to the right. <br /> - If the last cell in the row, focus does not wrap.                                                                                                                                                      |
+| <kbd>◄</kbd>                        | - Move focus one cell to the left. <br /> - If the first cell in the row, focus does not wrap.                                                                                                                                                      |
+| <kbd>▲</kbd>                        | - Move focus one cell up. <br /> - If the first cell in the column, focus does not wrap.                                                                                                                                                            |
+| <kbd>▼</kbd>                        | - Move focus one cell down. <br /> - If the last cell in the column, focus does not wrap.                                                                                                                                                           |
+| <kbd>Home</kbd>                     | If focus is on a grid cell, moves focus to first cell in the current row.                                                                                                                                                                           |
+| <kbd>End</kbd>                      | If focus is on a grid cell, moves focus to last cell in the current row.                                                                                                                                                                            |
+| <kbd>Ctrl</kbd> and <kbd>Home</kbd> | If focus is on a grid cell, moves focus to first cell in the grid.                                                                                                                                                                                  |
+| <kbd>Ctrl</kbd> and <kbd>End</kbd>  | If focus is on a grid cell, moves focus to last cell in the grid.                                                                                                                                                                                   |
+| <kbd>Page up</kbd>                  | If focus is on a grid cell, scrolls to the next page of rows and moves focus to the first visible cell in the current column.                                                                                                                       |
+| <kbd>Page down</kbd>                | If focus is on a grid cell, scrolls to the previous page of rows and moves focus to the first visible cell in the current column.                                                                                                                   |
+
+### Grid selection
+
+| Key                                      | Function                                                                                                                                                                                                                                                                                                                     |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Spacebar</kbd>                      | - If focus is on a cell, toggles the selection state of the row and always deselects a previous selected row (single and multi-select). <br /> - If focus is on a row checkbox, adds (or removes) the row to row multiple selection.                                                                                         |
+| <kbd>Shift</kbd> and <kbd>Spacebar</kbd> | - If focus is on any cell, toggles the selection state of its row and deselects any previous row selection. <br /> - If the grid supports multiple selection (i.e., rows contain checkboxes), when any cell in the row has focus, toggles the row's checkbox state and adds to (or removes from) the multiple row selection. |
+| <kbd>Ctrl</kbd> and <kbd>C</kbd>         | Coplies selection to clipboard.                                                                                                                                                                                                                                                                                              |
+| <kbd>Ctrl</kbd> and <kbd>X</kbd>         | Cuts selection to clipboard.                                                                                                                                                                                                                                                                                                 |
+
+### Interacting with editable cells
+
+| Key                                   | Function                                                                                                                                                                                                                               |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <kbd>Return</kbd> or <kbd>Enter</kbd> | - If focus is on an editable input cell, moves cell to edit mode and hightlights existing characters. <br /> - If the cell is in edit mode, stores the value, returns cell to default state and moves focus one cell down.             |
+| <kbd>F2</kbd>                         | If focus is on an editable input cell, toggles between default and edit modes. Any value changes are stored.                                                                                                                           |
+| <kbd>Backspace</kbd>                  | If focus is on an editable input cell, moves cell to edit mode and deletes existing characters.                                                                                                                                        |
+| <kbd>Tab</kbd>                        | - If an editable cell is in edit mode **only**, returns to default state and moves focus to next cell on the right. Cell values are stored. <br /> - If the editable cell is the last cell in the grid, focus stays over current cell. |
+| <kbd>Shift</kbd> and <kbd>Tab</kbd>   | - If an editable cell is in edit mode **only**, returns to default state and moves focus to next cell on the left. Cell values are stored. <br /> - If the editable cell is the last cell in the grid, focus stays over current cell.  |
+| <kbd>Esc</kbd>                        | If an editable cell is active, reverts any changes to the input and returns the cell to default state.                                                                                                                                 |
+| Alphanumeric keys                     | If focus is on an editable input cell, enters the typed characters and replaces current characters.                                                                                                                                    |
+| <kbd>Ctrl</kbd> and <kbd>V</kbd>      | Pastes values to cell/s.                                                                                                                                                                                                               |
+| <kbd>Ctrl</kbd> and <kbd>Z</kbd>      | Undo last action.                                                                                                                                                                                                                      |
+| <kbd>Ctrl</kbd> and <kbd>Y</kbd>      | Redo last action.                                                                                                                                                                                                                      |
 
 # Help and support
 
