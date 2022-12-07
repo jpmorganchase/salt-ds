@@ -370,7 +370,7 @@ table {
 table thead tr {
   border: none;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+  border-bottom: 1px solid var(--uitk-separable-primary-borderColor);
 }
 
 table thead tr th {
@@ -383,7 +383,7 @@ table td {
 }
 
 table tr {
-  border-bottom: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+  border-bottom: 1px solid var(--uitk-separable-tertiary-borderColor);
 }
 
 table th {
@@ -392,7 +392,7 @@ table th {
 }
 
 table tr td:not(:last-child) {
-  border-right: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
+  border-right: 1px solid var(--uitk-separable-tertiary-borderColor);
 }
 
 /* Mobile navigation */
