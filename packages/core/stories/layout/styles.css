@@ -1,5 +1,5 @@
-.layout-active-content {
-  background: var(--uitk-color-gray-40);
+.layout-container > .layout-active-content,
+.layout-active-content {  background: var(--uitk-color-gray-40);
   padding: 1rem;
 }
 .layout-content {
@@ -15,12 +15,6 @@
   height: 100%;
   display: flex;
   align-content: center;
-}
-
-.responsive-grid-item {
-  min-height: 200px;
-  min-width: 200px;
-  height: 100%;
 }
 
 .border-item {

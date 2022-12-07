@@ -1,9 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { BorderLayout, BorderItem } from "@jpmorganchase/uitk-core";
-import {
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components";
+import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
@@ -49,14 +46,6 @@ You can have a responsive `main` region while the `left` and `right` panels rema
 
 <Canvas>
   <Story id="core-layout-borderlayout--border-layout-fixed-panels" />
-</Canvas>
-
-#### Composite usage
-
-The composite usage combines examples from other layout components nested to give a better example of a complex implementation of the border component.
-
-<Canvas>
-  <Story id="core-layout-borderlayout--border-layout-form-composite" />
 </Canvas>
 
 ## Configuring Border layout
