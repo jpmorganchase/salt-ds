@@ -20,6 +20,20 @@ const statusClass = (status: ComponentStatus) => {
   return "backlog";
 };
 
+const statusSortList = [
+  ComponentStatus.READY,
+  ComponentStatus.IN_PROGRESS,
+  ComponentStatus.IN_BACKLOG,
+];
+
+// const sortedComponentsList = componentDetails.sort((a, b) =>
+//   a.name.localeCompare(b.name)
+// );
+
+const sortedComponentsList = componentDetails.sort(
+  (a, b) => statusSortList.indexOf(a.status) - statusSortList.indexOf(b.status)
+);
+
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   const { status, name, storybookUrl } = component;
 
@@ -58,7 +72,7 @@ const ComponentsList = () => {
           </tr>
         </thead>
         <tbody>
-          {componentDetails.map((component, index) => {
+          {sortedComponentsList.map((component, index) => {
             return (
               <tr key={index}>
                 <td>
