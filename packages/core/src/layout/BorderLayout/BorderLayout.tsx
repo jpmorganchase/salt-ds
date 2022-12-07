@@ -8,9 +8,12 @@ import {
 import cx from "classnames";
 
 import { GridLayout, GridLayoutProps } from "../GridLayout";
-import { makePrefixer } from "../../utils";
+import {
+  makePrefixer,
+  PolymorphicRef,
+  PolymorphicComponentPropWithRef,
+} from "../../utils";
 import { BorderItemProps } from "../BorderItem";
-import { PolymorphicRef, PolymorphicComponentPropWithRef } from "../types";
 
 export type BorderLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<

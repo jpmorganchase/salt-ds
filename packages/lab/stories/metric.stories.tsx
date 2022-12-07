@@ -129,7 +129,7 @@ export const WithAlignmentVertical: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithEmphasisHorizontal: ComponentStory<typeof Metric> = () => (
+export const Horizontal: ComponentStory<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -153,7 +153,7 @@ export const WithEmphasisHorizontal: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithEmphasisVertical: ComponentStory<typeof Metric> = () => (
+export const Vertical: ComponentStory<typeof Metric> = () => (
   <div
     style={{
       display: "flex",

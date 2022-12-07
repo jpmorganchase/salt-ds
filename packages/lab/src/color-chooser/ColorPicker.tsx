@@ -73,10 +73,7 @@ export const ColorPicker = ({
   };
 
   return (
-    <div
-      data-testid="color-picker"
-      className={cn("uitkEmphasisHigh", withBaseName())}
-    >
+    <div data-testid="color-picker" className={cn(withBaseName())}>
       {/** @ts-ignore react-color has incorrect types **/}
       <SketchPicker
         className={cn(withBaseName("swatchPickerStyles"), {

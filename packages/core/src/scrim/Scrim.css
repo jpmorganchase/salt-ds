@@ -1,11 +1,11 @@
 /* Style applied to the root element */
 .uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-medium);
+  --scrim-background: var(--uitk-overlayable-primary-background);
 }
 
-/* Apply this className to the element to achieve the lighter color variant. The default is `medium` emphasis. */
-.uitkEmphasisLow.uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-low);
+/* Secondary variant */
+.uitkScrim-secondary.uitkScrim {
+  --scrim-background: var(--uitk-overlayable-secondary-background);
 }
 
 .uitkScrim {

@@ -1,6 +1,6 @@
 /* Styles applied to the root element */
 .uitkPanel {
-  background: var(--uitkPanel-background, var(--uitk-container-background-medium));
+  background: var(--uitkPanel-background, var(--uitk-container-primary-background));
   color: var(--uitkPanel-color, var(--uitk-text-primary-foreground));
   height: var(--uitkPanel-height, auto);
   overflow: auto;
@@ -8,6 +8,6 @@
   width: var(--uitkPanel-width, 100%);
 }
 
-.uitkEmphasisHigh.uitkPanel {
-  background: var(--uitkPanel-background, var(--uitk-container-background-high));
+.uitkPanel-secondary.uitkPanel {
+  background: var(--uitkPanel-background, var(--uitk-container-secondary-background));
 }

@@ -3,6 +3,7 @@
   --ifm-link-hover-decoration: none;
   --card-color: var(--uitk-color-white);
   --card-icon-background: #0e1b23;
+  --uitkIcon-color: var(--uitk-color-gray-900);
 }
 
 .card.lightTheme {
@@ -32,6 +33,15 @@
   transform: scale(1.1);
 }
 
+.cardTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inlineIcon {
+  display: flex;
+}
+
 .iconContainer {
   width: 100%;
   text-align: center;
@@ -59,8 +69,17 @@
 }
 
 .cardFooter {
+  display: flex;
+}
+
+.cardFooter > p {
   margin-bottom: 0;
   text-decoration: underline;
+  padding-right: calc(var(--uitk-size-unit) / 3);
+}
+
+.cardFooter > svg {
+  margin-top: calc(var(--uitk-size-unit) / 4);
 }
 
 .cardFooter:hover {

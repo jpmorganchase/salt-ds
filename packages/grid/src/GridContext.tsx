@@ -1,7 +1,7 @@
-import { GridColumnInfo } from "./GridColumn";
+import type { GridColumnInfo } from "./GridColumn";
 import { createContext, useContext } from "react";
-import { ColumnGroupProps } from "./ColumnGroup";
-import { CellEditorInfo } from "./CellEditor";
+import type { ColumnGroupProps } from "./ColumnGroup";
+import type { CellEditorInfo } from "./CellEditor";
 
 export interface GridContext<T> {
   getChildIndex: (columnId: string) => number;

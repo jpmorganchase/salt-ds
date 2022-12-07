@@ -28,7 +28,6 @@ export interface RadioButtonBaseProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  emphasis?: "low" | "medium" | "high";
   /**
    * custom icon component
    */
@@ -40,8 +39,8 @@ export interface RadioButtonBaseProps {
   onBlur?: FocusEventHandler<HTMLSpanElement>;
   required?: boolean;
   id?: string;
-  value?: string;
   tabIndex?: number;
+  value?: string;
 }
 
 export const RadioButtonBase = forwardRef<
