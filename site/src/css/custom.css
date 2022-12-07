@@ -154,6 +154,7 @@
 }
 
 .docs-wrapper .pagination-nav {
+  --ifm-link-decoration: none;
   background-color: #10212b;
   padding: 0 calc(var(--uitk-size-unit) * 3);
   margin-top: 0;
