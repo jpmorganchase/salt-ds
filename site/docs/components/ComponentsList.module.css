@@ -10,11 +10,18 @@
   text-decoration: underline;
 }
 
-.componentList,
 .componentList td :first-child {
   display: flex;
   align-items: center;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: var(--uitk-size-unit);
+}
+
+.componentList th svg {
+  margin-right: calc(var(--uitk-size-unit) / 2);
+}
+
+.componentList th span {
+  vertical-align: top;
 }
 
 .componentList .status svg {

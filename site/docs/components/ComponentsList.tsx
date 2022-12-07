@@ -6,6 +6,9 @@ import {
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { TearOutIcon, StepActiveIcon } from "@jpmorganchase/uitk-icons";
+import StorybookLogo from "@site/static/img/storybook_logo.svg";
+import ReactLogo from "@site/static/img/react_logo.svg";
+import FigmaLogo from "@site/static/img/figma_logo.svg";
 
 import styles from "./ComponentsList.module.css";
 
@@ -66,9 +69,18 @@ const ComponentsList = () => {
       <table>
         <thead>
           <tr>
-            <th>Component</th>
-            <th>React</th>
-            <th>Figma</th>
+            <th>
+              <StorybookLogo />
+              <span>Component</span>
+            </th>
+            <th>
+              <ReactLogo />
+              <span>React</span>
+            </th>
+            <th>
+              <FigmaLogo />
+              <span>Figma</span>
+            </th>
           </tr>
         </thead>
         <tbody>
