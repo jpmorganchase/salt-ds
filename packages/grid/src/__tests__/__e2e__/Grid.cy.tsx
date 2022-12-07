@@ -183,9 +183,18 @@ describe("Grid", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
-      cy.focused()
-        .should("have.attr", "aria-rowindex", String(row + 1))
-        .should("have.attr", "aria-colindex", String(col + 1));
+      // Column 0 has interactive elements in cells. We expect the interactive element to have focus.
+      // Other columns have no interactive elements. Focus is expected to be on the cell element.
+      if (col === 0) {
+        cy.focused()
+          .parents("td")
+          .should("have.attr", "aria-rowindex", String(row + 1))
+          .should("have.attr", "aria-colindex", String(col + 1));
+      } else {
+        cy.focused()
+          .should("have.attr", "aria-rowindex", String(row + 1))
+          .should("have.attr", "aria-colindex", String(col + 1));
+      }
     };
 
     // we cannot test tabbing in cypress for now
@@ -280,6 +289,7 @@ describe("Grid", () => {
 
     cy.findByText("button 1").focus().realPress("Tab");
     cy.focused()
+      .parents("td")
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-rowindex", "1");
 
@@ -288,6 +298,7 @@ describe("Grid", () => {
     cy.focused().realPress(["Shift", "Tab"]);
 
     cy.focused()
+      .parents("td")
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-rowindex", "1");
 

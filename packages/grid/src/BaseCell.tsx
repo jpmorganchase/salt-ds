@@ -3,7 +3,7 @@ import "./BaseCell.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
-import { useEffect, useRef } from "react";
+import { FocusEventHandler, useRef, useState } from "react";
 
 const withBaseName = makePrefixer("uitkGridBaseCell");
 
@@ -26,17 +26,17 @@ export function BaseCell<T>(props: GridCellProps<T>) {
   } = props;
 
   const tdRef = useRef<HTMLTableCellElement>(null);
+  const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (isFocused && tdRef.current) {
+  const onFocus: FocusEventHandler<HTMLTableCellElement> = (event) => {
+    if (event.target === tdRef.current) {
       const nestedInteractive = tdRef.current.querySelector(`[tabindex="0"]`);
       if (nestedInteractive) {
         (nestedInteractive as HTMLElement).focus();
-      } else {
-        tdRef.current.focus();
+        setFocusableContent(true);
       }
     }
-  }, [isFocused, tdRef.current]);
+  };
 
   return (
     <td
@@ -60,7 +60,8 @@ export function BaseCell<T>(props: GridCellProps<T>) {
         className
       )}
       style={style}
-      tabIndex={isFocused ? 0 : -1}
+      tabIndex={isFocused && !isFocusableContent ? 0 : -1}
+      onFocus={onFocus}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
