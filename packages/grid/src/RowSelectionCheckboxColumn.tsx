@@ -31,7 +31,6 @@ export function RowSelectionCheckboxColumn<T>(
       defaultWidth={100}
       headerComponent={RowSelectionCheckboxHeaderCell}
       cellValueComponent={RowSelectionCheckboxCellValue}
-      pinned="left"
       onKeyDown={onKeyDown}
     />
   );

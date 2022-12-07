@@ -1,6 +1,6 @@
 /* Styles applied to root component */
 .uitkTooltip {
-  --tooltip-background: var(--uitkTooltip-background, var(--uitk-container-background-medium));
+  --tooltip-background: var(--uitkTooltip-background, var(--uitk-container-primary-background));
   --tooltip-fontSize: var(--uitkTooltip-fontSize, var(--uitk-text-fontSize));
   --tooltip-lineHeight: var(--uitkTooltip-lineHeight, var(--uitk-text-lineHeight));
   --tooltip-zIndex: var(--uitkTooltip-zIndex, var(--uitk-zIndex-flyover));

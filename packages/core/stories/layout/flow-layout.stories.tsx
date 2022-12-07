@@ -73,7 +73,7 @@ const FlowLayoutStorySimpleUsage: ComponentStory<typeof FlowLayout> = (
   args
 ) => {
   return (
-    <div className="uitkEmphasisHigh flow-layout-container">
+    <div className="flow-layout-container">
       <FlowLayout gap={2} {...args}>
         {Array.from({ length: 6 }, (_, index) => (
           <MetricExample key={index} />

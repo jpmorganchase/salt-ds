@@ -1,7 +1,7 @@
 .uitkDialog {
-  --dialog-background: var(--uitkDialog-background, var(--uitk-container-background-medium));
+  --dialog-background: var(--uitkDialog-background, var(--uitk-container-primary-background));
   --dialog-borderBottomWidth: var(--uitkDialog-borderBottomWidth, 2px);
-  --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-borderColor-medium));
+  --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-primary-borderColor));
   --dialog-borderStyle: var(--uitkDialog-borderStyle, var(--uitk-container-borderStyle));
   --dialog-borderWidth: var(--uitkDialog-borderColor, var(--uitk-size-border));
   --dialog-boxShadow: var(--uitkDialog-boxShadow, var(--uitk-overlayable-shadow-modal));

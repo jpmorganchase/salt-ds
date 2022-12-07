@@ -1,9 +1,9 @@
 import { forwardRef, ComponentPropsWithRef } from "react";
 import cx from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { daysForLocale } from "./utils";
 
 import "./CalendarWeekHeader.css";
-import { daysForLocale } from "./utils";
 
 export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div">;
 
@@ -19,7 +19,7 @@ export const CalendarWeekHeader = forwardRef<
   return (
     <div
       data-testid="CalendarWeekHeader"
-      className={cx("uitkEmphasisHigh", withBaseName(), className)}
+      className={cx(withBaseName(), className)}
       ref={ref}
       {...rest}
     >

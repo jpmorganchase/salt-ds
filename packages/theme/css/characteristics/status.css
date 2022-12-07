@@ -9,8 +9,8 @@
   --uitk-status-warning-borderColor: var(--uitk-palette-warning-border);
   --uitk-status-error-borderColor: var(--uitk-palette-error-border);
 
-  --uitk-status-info-background-high: var(--uitk-palette-info-background-high);
-  --uitk-status-success-background-high: var(--uitk-palette-success-background-high);
-  --uitk-status-warning-background-high: var(--uitk-palette-warning-background-high);
-  --uitk-status-error-background-high: var(--uitk-palette-error-background-high);
+  --uitk-status-info-background-emphasize: var(--uitk-palette-info-background-emphasize);
+  --uitk-status-success-background-emphasize: var(--uitk-palette-success-background-emphasize);
+  --uitk-status-warning-background-emphasize: var(--uitk-palette-warning-background-emphasize);
+  --uitk-status-error-background-emphasize: var(--uitk-palette-error-background-emphasize);
 }

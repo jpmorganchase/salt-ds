@@ -32,7 +32,7 @@
   font-family: var(--uitk-text-fontFamily);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-text-fontWeight);
-  line-height: var(--uitk-text-base-lineHeight);
+  line-height: var(--uitk-text-lineHeight);
   margin-left: var(--uitkControlLabel-marginLeft, var(--controlLabel-marginLeft));
   margin-right: var(--uitkControlLabel-marginRight, var(--controlLabel-marginRight));
   display: block;

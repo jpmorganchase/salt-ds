@@ -1,5 +1,5 @@
 .uitkAdmonition {
-  background: var(--uitk-container-background-low);
+  background: var(--uitk-container-tertiary-background);
 }
 .uitkAdmonition hr {
   margin-bottom: var(--uitk-size-unit);

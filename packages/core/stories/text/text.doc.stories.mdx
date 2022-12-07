@@ -1,0 +1,130 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import {
+  Text,
+  H1,
+  H2,
+  H3,
+  H4,
+  Label,
+  Display1,
+  Display2,
+  Display3,
+} from "@jpmorganchase/uitk-core";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+  CSSVariableTable,
+} from "css-variable-docgen-components";
+
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Text"
+  component={Text}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Text
+
+We've created a base Text component (that contains our key typography styles and functionality) and more text components which derive from it: H1, H2, H3, H4, Label, Display1, Display2 and Display3. All our text components are aware of theme, mode and density.
+
+You can also create your own text components using the props and CSS variables to configure them.
+
+## Features
+
+### Text variants
+
+Text variants are the background/foreground colors assigned to text styles for varying interaction states (e.g. disabled, hover, selected etc), that can be applied across the different text styles available. These are split into two groupings, `primary` and `secondary` with `primary` being the default.
+
+Use the `variant` prop when you want to change the text color.
+
+<Canvas>
+  <Story name="Primary">
+    <Text>This is a primary text example</Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Secondary">
+    <Text variant="secondary">This is a secondary text example</Text>
+  </Story>
+</Canvas>
+
+### Emphasis
+
+There are three emphasis levels across our text styles that can be used to highlight or lowlight body text and headings - the default level with no emphasis, `strong` to emphasize text/content and `small` to de-emphasize text/content.
+
+The text component allows flexibility for you to apply different emphasis levels to individual parts of text, and is not restricted to entire headings or sections of text. This enables you to provide the best visual priority, by tweaking the affordance of the text, whilst maintaining the correct HTML hierarchy.
+
+Use `<strong>` or `<small>` tags inside your text components to wrap the chunks of text you wish to modify.
+
+<Canvas>
+  <Story name="Strong">
+    <Text>
+      This is a <strong>strong</strong> text example
+    </Text>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Small">
+    <Text>
+      This is a <small>small</small> text example
+    </Text>
+  </Story>
+</Canvas>
+
+### StyleAs
+
+Although we do not encourage it, you may find it necessary to need to match one of our text components' styling to another element type. In this case you'd use the `styleAs` prop.
+
+The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for placement of text that supports assistive technologies such as screen readers) whilst maintaining the appropriate visual priority.
+
+<Canvas>
+  <Story name="StyleAs">
+    <Text elementType="p" styleAs="display3">
+      This is a styleAs Display3 example
+    </Text>
+  </Story>
+</Canvas>
+
+### Truncation
+
+By using the `maxRows` prop your text component will be truncated and will display the chosen number of rows. An ellipsis will be shown at the end to indicate the text has been truncated. If a value is not set for `maxRows`, the text will wrap.
+
+If you use truncated text, please ensure you are remaining ADA compliant by following our [Accessibility](#Accessibility) guidance.
+
+<Canvas>
+  <Story name="Truncation">
+    <div style={{ width: 150 }}>
+      <Text maxRows={1}>This is a maxRows=1 example</Text>
+    </div>
+  </Story>
+</Canvas>
+
+## Configuring Text
+
+### API
+
+```
+import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-core";
+```
+
+### Props
+
+<ArgsTable of={Text} />
+
+### CSS Classes
+
+<CSSClassTable of={Text} />
+
+## Accessibility
+
+We are letting you decide on the user experience you would like to implement for text, however you need to remain ADA compliant and provide the correct visual and auditory experience for text truncation. Truncated text must meet the WCAG SC 1.4.4 requirement.
+
+- The requirement states any visually rendered text must be accessed and displayed in full. Therefore, a truncated string must be able to be displayed in full - it is the application team’s responsibility to provide a mechanism to achieve that. Possible solutions include tooltips, a mechanism for expanding the text, or a link to open the full content on a new page.
+- If you use truncated text, you must ensure that the full value can be read out via a screen reader. This can be achieved by allowing your user to move focus to the parent of the text, or the text itself, within your application.
+
+<HelpAndSupport />

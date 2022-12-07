@@ -18,21 +18,21 @@ import "./Panel.css";
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Emphasis styling variant; defaults to "medium".
+   * Styling variant; defaults to "primary".
    */
-  emphasis?: "medium" | "high";
+  variant?: "primary" | "secondary";
 }
 
 const withBaseName = makePrefixer("uitkPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  { className, children, emphasis = "medium", ...restProps },
+  { className, children, variant = "primary", ...restProps },
   ref
 ) {
   return (
     <div
       className={cx(withBaseName(), className, {
-        uitkEmphasisHigh: emphasis === "high",
+        [withBaseName(variant)]: variant === "secondary",
       })}
       ref={ref}
       {...restProps}

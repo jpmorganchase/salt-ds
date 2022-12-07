@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ComponentStory } from "@storybook/react";
 
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { TabPanel, Tabs, Text } from "@jpmorganchase/uitk-lab";
+import { Button, ToolkitProvider, Text } from "@jpmorganchase/uitk-core";
+import { TabPanel, Tabs } from "@jpmorganchase/uitk-lab";
 import { CloseTabWarningDialog } from "./CloseTabWarningDialog";
 export default {
   title: "Lab/Tabs",
@@ -118,11 +118,11 @@ export const Centered: TabsStory = () => {
   );
 };
 
-export const SecondaryOrEmphasisLow: TabsStory = () => {
+export const Tertiary: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);
   return (
     <ToolkitProvider>
-      <Tabs emphasis="low" style={{ width: 600, height: 300 }}>
+      <Tabs variant="tertiary" style={{ width: 600, height: 300 }}>
         <TabPanel label="Home" {...style}>
           <Text>Content for Home tab</Text>
         </TabPanel>
