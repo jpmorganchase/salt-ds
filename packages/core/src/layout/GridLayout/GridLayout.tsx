@@ -1,8 +1,14 @@
 import { forwardRef, ReactElement, ElementType } from "react";
 import cx from "classnames";
 
-import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../types";
+import {
+  makePrefixer,
+  ResponsiveProp,
+  useResponsiveProp,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+} from "../../utils";
+
 import "./GridLayout.css";
 
 export type GridLayoutProps<T extends ElementType> =

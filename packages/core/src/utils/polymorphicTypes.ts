@@ -1,22 +1,21 @@
 import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
   ElementType,
   PropsWithChildren,
-  ComponentPropsWithRef,
-  ComponentPropsWithoutRef,
 } from "react";
 
-type AsProp = {
+type AsProp<T extends ElementType> = {
   /**
-   * Represents the semantic element tag name as a string.
-   * Defaults to 'div'
+   * The HTML element used for the root node.
    */
-  as?: ElementType;
+  as?: T;
 };
 
-type PropsToOmit<T extends ElementType, P> = keyof (AsProp & P);
+type PropsToOmit<T extends ElementType, P> = keyof (AsProp<T> & P);
 
 type PolymorphicComponentProp<T extends ElementType, Props> = PropsWithChildren<
-  Props & AsProp
+  Props & AsProp<T>
 > &
   Omit<ComponentPropsWithoutRef<T>, PropsToOmit<T, Props>>;
 

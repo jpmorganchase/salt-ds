@@ -1,8 +1,13 @@
 import { forwardRef, ElementType, ReactElement } from "react";
 import cx from "classnames";
 
-import { makePrefixer, ResponsiveProp, useResponsiveProp } from "../../utils";
-import { PolymorphicRef, PolymorphicComponentPropWithRef } from "../types";
+import {
+  makePrefixer,
+  ResponsiveProp,
+  useResponsiveProp,
+  PolymorphicRef,
+  PolymorphicComponentPropWithRef,
+} from "../../utils";
 import "./GridItem.css";
 
 export const GRID_ALIGNMENT_BASE = [

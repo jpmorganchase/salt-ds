@@ -2,8 +2,11 @@ import { forwardRef, ElementType, ReactElement } from "react";
 import cx from "classnames";
 import { GridItem, GridItemProps } from "../GridItem";
 import "./BorderItem.css";
-import { makePrefixer } from "../../utils";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../types";
+import {
+  makePrefixer,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+} from "../../utils";
 
 export const BORDER_POSITION = [
   "header",
