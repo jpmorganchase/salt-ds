@@ -183,10 +183,10 @@ describe("Grid", () => {
     cy.mount(<GridExample />);
 
     const checkCursorPos = (row: number, col: number) => {
-        cy.focused()
-          .closest("td")
-          .should("have.attr", "aria-rowindex", String(row + 1))
-          .should("have.attr", "aria-colindex", String(col + 1));
+      cy.focused()
+        .closest("td")
+        .should("have.attr", "aria-rowindex", String(row + 1))
+        .should("have.attr", "aria-colindex", String(col + 1));
     };
 
     // we cannot test tabbing in cypress for now
