@@ -85,10 +85,14 @@ export interface ComponentDetails {
 }
 
 /**
- * Details for all the Salt components.
+ * Details for all the Salt components, sorted alphabetically by name.
  *
- * Manually maintained for now, but this should be automated as soon
+ * TODO: Manually maintained for now, but this should be automated as soon
  * as possible.
+ *
+ * When editing, please keep ensure you retain the alphatical ordering.
+ * This makes things easier to find here in the code (and thus avoids
+ * accidental duplicates).
  */
 export const componentDetails: ComponentDetails[] = [
   {
@@ -144,7 +148,8 @@ export const componentDetails: ComponentDetails[] = [
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     status: ComponentStatus.READY,
     availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
   },
   {
     name: "Button Bar",
@@ -249,9 +254,7 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "Form Field",
     description: "",
-    status: ComponentStatus.READY,
-    availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    status: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Formatted Input",
@@ -284,9 +287,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Link",
     description:
       "Navigates the user to a new page, and displays link text with a meaningful description.",
-    status: ComponentStatus.READY,
-    availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    status: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "List",
@@ -362,7 +363,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Radio Button",
     description:
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
-    status: ComponentStatus.IN_PROGRESS,
+    status: ComponentStatus.IN_BACKLOG,
   },
   {
     name: "Salt Provider",
@@ -375,13 +376,50 @@ export const componentDetails: ComponentDetails[] = [
     ),
     status: ComponentStatus.READY,
     availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
   {
     name: "Scrim",
     description:
+      "Allows the user to enter a specific search term into an input field.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Search Input",
+    description:
       "Makes underlying content less prominent by providing  a temporary, semi-transparent layer over application content.",
-    status: ComponentStatus.IN_PROGRESS,
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Selectable Card",
+    description:
+      "Presents options that have a supporting image, title and description—for the user to make a selection from.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Skip Link",
+    description:
+      "Helps keyboard users to navigate a page more quickly by skipping past repeated or generic content to move focus to a target element.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Slider",
+    description:
+      "Enables the selection of a single value within a range of values that’s displayed horizontally or vertically, with the selected value shown in a tooltip.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Spinner",
+    description:
+      "Visually represents a process that is taking an indeterminate time to complete.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Split Button",
+    description:
+      "Gives the user the ability to perform a main action while having access to relevant, supplementary actions if needed.",
+    status: ComponentStatus.IN_BACKLOG,
   },
   {
     name: "Status Indicator",
@@ -389,26 +427,103 @@ export const componentDetails: ComponentDetails[] = [
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     status: ComponentStatus.READY,
     availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
+  },
+  {
+    name: "Stepped Tracker",
+    description:
+      "Visually communicates a user’s progress through a linear process, giving the user context about where they are in the process and indicating the remaining steps.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Stepper Input",
+    description:
+      "Displays a default numeric value that users can change by manually entering a value, or by increasing or decreasing the default value using the controls.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Switch",
+    description:
+      "Allows the user to turn a specific value on or off from two choices—with the action having an immediate impact.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Tabs",
+    description:
+      "Allows the user to switch between different panes of content.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Tile",
+    description:
+      "Creates a repeated pattern of bite-size content that’s arranged horizontally or vertically.",
+    status: ComponentStatus.IN_BACKLOG,
   },
   {
     name: "Text",
     description:
       "Includes attributes such as font weight, letter spacing, size, line height, paragraph spacing, case, text decoration and emphasis levels.",
-    status: ComponentStatus.READY,
-    availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+    status: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Theme",
     // TODO: add description
-    status: ComponentStatus.READY,
+    status: ComponentStatus.IN_PROGRESS,
     availablInCoreSince: "0.9.0",
-    storybookUrl: "",
+  },
+  {
+    name: "Toast",
+    description:
+      "Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event that’s unrelated to the user’s current focus.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Toggle Button",
+    description:
+      "Allows the user to switch between two possible states, or a related, grouped set of options.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Tokenized Input",
+    description:
+      "Provides an input field for text that’s converted into a pill within the field when the user enters a delimiting character.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Toolbar",
+    description:
+      "Gives users access to multiple action buttons that are relevant to what they’re focused on, to increase task efficiency.",
+    status: ComponentStatus.IN_BACKLOG,
   },
   {
     name: "Tooltip",
-    description: "",
-    status: ComponentStatus.IN_PROGRESS,
+    description:
+      "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Tree",
+    description:
+      "Provides a visual representation of items, referred to as nodes, in a hierarchical parent-child relationship.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Vertical Navigation",
+    description:
+      "Provides access to other destinations or functionality within an application, as a secondary navigation pattern, in the form of a left-aligned hierarchical list.",
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Window",
+    description:
+      'Allow developers using desktop platforms to inject their own "window" or abstraction layer for use in components that are rendered to their own layer.',
+    status: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Wizard",
+    description:
+      "Allows a workflow-based task to be displayed in a sequence of manageable steps, for easier completion.",
+    status: ComponentStatus.IN_BACKLOG,
   },
 ];
