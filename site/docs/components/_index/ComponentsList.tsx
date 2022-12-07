@@ -2,7 +2,7 @@ import {
   componentDetails,
   ComponentStatus,
   ComponentDetails,
-} from "../components/_index/components-list";
+} from "./components-list";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { TearOutIcon, StepActiveIcon } from "@jpmorganchase/uitk-icons";
