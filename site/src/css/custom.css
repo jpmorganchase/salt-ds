@@ -7,6 +7,7 @@
 :root {
   --ifm-color-primary: var(--uitk-text-primary-foreground);
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
+  --ifm-link-decoration: underline;
   --card-background: #10212b;
 }
 
@@ -56,6 +57,7 @@
   --ifm-navbar-background-color: var(--uitk-color-gray-900);
   --ifm-navbar-padding-vertical: var(--uitk-size-unit);
   --ifm-navbar-padding-horizontal: calc(var(--uitk-size-unit) * 3);
+  --ifm-link-decoration: none;
 }
 
 .navbar__item {
@@ -102,6 +104,10 @@
 
 .theme-doc-sidebar-container *::selection {
   background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
+}
+
+.menu {
+  --ifm-link-decoration: none;
 }
 
 .theme-doc-sidebar-container .menu {
@@ -205,6 +211,7 @@
 
 .docs-toc-container {
   --ifm-link-color: var(--uitk-text-secondary-foreground);
+  --ifm-link-decoration: none;
   height: 100%;
   position: sticky;
   padding-left: calc(4 * var(--uitk-size-unit));
