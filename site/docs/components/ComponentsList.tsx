@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   componentDetails,
   ComponentStatus,
@@ -6,12 +5,7 @@ import {
 } from "../components/_index/components-list";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import {
-  TearOutIcon,
-  StepActiveIcon,
-  SortAlphaAscendIcon,
-} from "@jpmorganchase/uitk-icons";
-import { Button } from "@jpmorganchase/uitk-core";
+import { TearOutIcon, StepActiveIcon } from "@jpmorganchase/uitk-icons";
 
 import styles from "./ComponentsList.module.css";
 
@@ -67,38 +61,18 @@ const ComponentStatusData = ({
 };
 
 const ComponentsList = () => {
-  const [componentsList, setComponentsList] = useState(
-    componentsListSortedByStatus
-  );
-
-  const handleNameSort = () => {
-    const componentsListSortedByName = [...componentDetails].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-
-    setComponentsList(componentsListSortedByName);
-  };
   return (
     <div className={styles.componentList}>
       <table>
         <thead>
           <tr>
-            <th className={styles.nameSort}>
-              Component
-              <Button
-                aria-label="sort alphabetically"
-                variant="secondary"
-                onClick={handleNameSort}
-              >
-                <SortAlphaAscendIcon />
-              </Button>
-            </th>
+            <th>Component</th>
             <th>React</th>
             <th>Figma</th>
           </tr>
         </thead>
         <tbody>
-          {componentsList.map((component, index) => {
+          {componentsListSortedByStatus.map((component, index) => {
             return (
               <tr key={index}>
                 <td>

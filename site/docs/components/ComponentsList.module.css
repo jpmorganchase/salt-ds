@@ -10,7 +10,7 @@
   text-decoration: underline;
 }
 
-.componentList .nameSort,
+.componentList,
 .componentList td :first-child {
   display: flex;
   align-items: center;
