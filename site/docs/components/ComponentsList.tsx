@@ -80,7 +80,7 @@ const ComponentsList = () => {
       <table>
         <thead>
           <tr>
-            <th>
+            <th className={styles.nameSort}>
               Component
               <Button
                 aria-label="sort alphabetically"
@@ -90,7 +90,7 @@ const ComponentsList = () => {
                 <SortAlphaAscendIcon />
               </Button>
             </th>
-            <th>Status</th>
+            <th>React</th>
           </tr>
         </thead>
         <tbody>
