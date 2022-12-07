@@ -56,10 +56,12 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince: string;
 }) => {
+  const showReleaseDate = availableSince && status === ComponentStatus.READY;
+
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       <StepActiveIcon />
-      <span>{availableSince ? `Released in v${availableSince}` : status}</span>
+      <span>{showReleaseDate ? `Released in v${availableSince}` : status}</span>
     </div>
   );
 };

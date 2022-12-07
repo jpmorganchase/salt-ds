@@ -320,7 +320,7 @@ export const componentDetails: ComponentDetails[] = [
       "Graphically represents an idea, concept or action. Icons visually reinforce or provide information for a specific task or context.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availablInCoreSince: "0.9.0",
+    availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-icons-icon--page",
   },
