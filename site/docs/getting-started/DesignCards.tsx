@@ -26,8 +26,8 @@ const cardInfo: CardInfoType[] = [
       "Screenshot of a light mode Button compponent being dragged out of Figma's assets panel",
     content: (
       <p>
-        Select a mode, for example Light Mode, choose the component you need and
-        simply drag it to the Canvas or a Frame in your project.
+        Select a mode, choose the component you need and simply drag it to the
+        Canvas or a Frame in your project.
       </p>
     ),
   },
