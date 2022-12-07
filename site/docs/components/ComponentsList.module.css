@@ -10,9 +10,7 @@
   text-decoration: underline;
 }
 
-.componentList .nameSort,
-.componentList .status,
-.componentList a {
+.componentList td :first-child {
   display: flex;
   align-items: center;
   gap: calc(var(--uitk-size-unit) / 2);

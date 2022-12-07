@@ -89,7 +89,7 @@ export interface ComponentDetails {
    *
    * Only needed for components in the READY status.
    */
-  availablInFigmaSince?: string;
+  availableInFigmaSince?: string;
 
   /**
    * A representative illustration or screenshot of the component

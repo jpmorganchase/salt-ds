@@ -50,19 +50,17 @@ const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
 };
 
 const ComponentStatusData = ({
-  component,
+  status,
+  availableSince,
 }: {
-  component: ComponentDetails;
+  status: ComponentStatus;
+  availableSince: string;
 }) => {
-  const { availableInCoreSince, devStatus } = component;
-
   return (
-    <>
+    <div className={clsx(styles.status, styles[statusClass(status)])}>
       <StepActiveIcon />
-      {availableInCoreSince
-        ? `Released in v${availableInCoreSince}`
-        : devStatus}
-    </>
+      <span>{availableSince ? `Released in v${availableSince}` : status}</span>
+    </div>
   );
 };
 
@@ -94,6 +92,7 @@ const ComponentsList = () => {
               </Button>
             </th>
             <th>React</th>
+            <th>Figma</th>
           </tr>
         </thead>
         <tbody>
@@ -103,13 +102,18 @@ const ComponentsList = () => {
                 <td>
                   <ComponentNameData component={component} />
                 </td>
-                <td
-                  className={clsx(
-                    styles.status,
-                    styles[statusClass(component.devStatus)]
-                  )}
-                >
-                  <ComponentStatusData component={component} />
+                <td>
+                  <ComponentStatusData
+                    status={component.devStatus}
+                    availableSince={component.availableInCoreSince}
+                  />
+                </td>
+
+                <td>
+                  <ComponentStatusData
+                    status={component.designStatus}
+                    availableSince={component.availableInFigmaSince}
+                  />
                 </td>
               </tr>
             );
