@@ -129,6 +129,9 @@ export interface GridProps<T = any> {
    * If `true`, user will be able to move columns using drag and drop.
    * */
   columnMove?: boolean;
+  /**
+   * Accepts `(columnId: string, fromIndex: number, toIndex: number) => void`
+   * */
   onColumnMoved?: GridColumnMoveHandler;
   /**
    * Options are `range` and `none`.
