@@ -21,6 +21,12 @@ export const enum ComponentStatus {
    * has not yet started.
    */
   IN_BACKLOG = "In the backlog",
+
+  /**
+   * Can be used for situations where there is no Figma or React
+   * version of a components.
+   */
+  NOT_APPLICABLE = "N/A",
 }
 
 /**
@@ -151,7 +157,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "AG Grid Theme",
     // TODO: add description
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Badge",
@@ -179,7 +185,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
@@ -264,7 +270,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Data Grid",
     // TODO: add description
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Dialog",
@@ -319,7 +325,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Graphically represents an idea, concept or action. Icons visually reinforce or provide information for a specific task or context.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-icons-icon--page",
@@ -336,14 +342,14 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Provides a series of versatile, flexible layouts that support the design of components and application UIs and can be used in multiple contexts.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
   },
   {
     name: "Link",
     description:
       "Navigates the user to a new page, and displays link text with a meaningful description.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
   },
   {
     name: "List",
@@ -442,7 +448,7 @@ export const componentDetails: ComponentDetails[] = [
       </p>
     ),
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
@@ -501,7 +507,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "0.9.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
@@ -546,7 +552,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Includes attributes such as font weight, letter spacing, size, line height, paragraph spacing, case, text decoration and emphasis levels.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
   },
   {
     name: "Theme",

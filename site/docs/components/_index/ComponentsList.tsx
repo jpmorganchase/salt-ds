@@ -27,8 +27,10 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
-
-  return "backlog";
+  if (status === ComponentStatus.IN_BACKLOG) {
+    return "backlog";
+  }
+  return "none";
 };
 
 const statusSortList = [

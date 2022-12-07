@@ -61,3 +61,8 @@
 .componentList .status.backlog {
   --uitkIcon-color: var(--uitk-status-error-foreground);
 }
+
+.componentList .status.none {
+  --uitkIcon-color: transparent;
+  color: var(--uitk-text-secondary-foreground-disabled);
+}
