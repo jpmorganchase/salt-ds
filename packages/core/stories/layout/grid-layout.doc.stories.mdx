@@ -15,7 +15,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Grid layout
 
 Defines an equally distributed layout system using columns and rows which provides consistent and responsive layouts for building both components and application pages.
-The grid layout defaults to a twelve column grid with 1 row, but you can customize it using the `columns` and `rows` props.
+The grid layout defaults to a 12 column grid with one row, but you can customize it using the `columns` and `rows` props.
 For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
@@ -26,8 +26,8 @@ For more complex layouts, it supports spanning across columns and rows.
 
 Your content is best displayed using a configurable number of columns and rows.
 
-Grid layout can take any number of children, and will by default display them in a 12 columns grid (items after the 12th one will wrap).
-In order to change the number of columns displayed in the grid, you can reduce or increase the `columns` prop.
+Grid layout can take any number of children, and will by default display them in a 12 column grid (items after the 12th one will wrap).
+In order to change the number of columns displayed in the grid, you can reduce or increase the value of the `columns` prop.
 
 Grid layout is useful when you want to control the layout in both row and column dimensions, and it can achieve more complex forms when used in combination with `GridItems`.
 
@@ -90,7 +90,7 @@ import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
 ### Props
 
 **ResponsiveProp** refers to a prop that takes either multiple values (one per breakpoint), or a single value that would take effect across all different screen sizes.
-For the following example, we can think about a layout that will responsively change from 12 columns to 2 and then to 1 as the space decreases.
+For the following example, we can think about a layout that will responsively change from 12 columns to two and then to one as the space decreases.
 
 ```
 columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
