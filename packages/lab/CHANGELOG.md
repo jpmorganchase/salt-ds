@@ -1,5 +1,411 @@
 # @jpmorganchase/uitk-lab
 
+## 0.9.0
+
+### Minor Changes
+
+- da7065c1: Merge `-caption` and `-help` tokens to single `-label` token
+  Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
+  Move `--uitk-text-help-fontStyle` to become `--uitk-editable-help-fontStyle`
+
+  ```diff
+  -  --uitk-text-caption-fontStyle
+  -  --uitk-text-caption-fontWeight
+  -  --uitk-text-caption-fontWeight-strong
+  -  --uitk-text-caption-fontSize
+  -  --uitk-text-caption-minHeight
+  -  --uitk-text-help-fontWeight
+  -  --uitk-text-help-fontSize
+  -  --uitk-text-help-minHeight
+  -  --uitk-text-help-fontStyle
+  +  --uitk-text-label-fontWeight
+  +  --uitk-text-label-fontWeight-strong
+  +  --uitk-text-label-fontSize
+  +  --uitk-editable-help-fontStyle
+  ```
+
+  Correct line height values
+
+  TD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 16px;
+  -  --uitk-text-help-lineHeight: 16px;
+  +  --uitk-text-label-lineHeight: 18px;
+  ```
+
+  LD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 16px;
+  ```
+
+  MD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 14px;
+  ```
+
+  HD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 13px;
+  ```
+
+- feefd8b0: Change `-figure` text tokens to `display`, updated values and font weights
+
+  ```diff
+  - --uitk-text-figure1-fontSize
+  - --uitk-text-figure1-fontWeight
+  - --uitk-text-figure2-fontSize
+  - --uitk-text-figure2-fontWeight
+  - --uitk-text-figure3-fontSize
+  - --uitk-text-figure3-fontWeight
+  - --uitk-text-figure1-lineHeight: 72px;
+  - --uitk-text-figure2-lineHeight: 48px;
+  - --uitk-text-figure3-lineHeight: 24px;
+  + --uitk-text-display1-fontWeight
+  + --uitk-text-display1-fontWeight-strong
+  + --uitk-text-display1-fontWeight-small
+  + --uitk-text-display2-fontWeight
+  + --uitk-text-display2-fontWeight-strong
+  + --uitk-text-display2-fontWeight-small
+  + --uitk-text-display3-fontWeight
+  + --uitk-text-display3-fontWeight-strong
+  + --uitk-text-display3-fontWeight-small
+  ```
+
+  Add line heights
+
+  HD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 54px;
+  + --uitk-text-display2-lineHeight: 36px;
+  + --uitk-text-display3-lineHeight: 24px;
+  ```
+
+  MD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 70px;
+  + --uitk-text-display2-lineHeight: 47px;
+  + --uitk-text-display3-lineHeight: 32px;
+  ```
+
+  LD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 88px;
+  + --uitk-text-display2-lineHeight: 60px;
+  + --uitk-text-display3-lineHeight: 42px;
+  ```
+
+  TD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 109px;
+  + --uitk-text-display2-lineHeight: 76px;
+  + --uitk-text-display3-lineHeight: 54px;
+  ```
+
+- 9e999d50: Rename zIndex tokens, respectively:
+
+  ```diff
+  - --uitk-zIndex-appheader
+  - --uitk-zIndex-dragobject
+  - --uitk-zIndex-contextmenu
+  - --uitk-zIndex-tooltip
+  + --uitk-zIndex-appHeader
+  + --uitk-zIndex-dragObject
+  + --uitk-zIndex-contextMenu
+  + --uitk-zIndex-flyover
+  ```
+
+- 991a408c: Make theme global font size `--uitk-text-fontSize` instead of 14px, and move to global.css from typography.css
+  Give global values for font-size, font-family, color, line-height, letter-spacing
+
+  Remove base 1.3 line height, and replace with appropriate line height variant throughout the code
+  Remove text background on default and hover state tokens
+
+  ```diff
+  - --uitk-text-base-lineHeight
+  - --uitk-typography-lineHeight
+  - --uitk-text-background
+  - --uitk-text-background-hover
+  ```
+
+- 7aef81aa: Replace 1px borders with size token and remove `--uitk-size-bottomBorder` as it's component specific.
+
+  ```diff
+  - --uitk-size-bottomBorder
+  - --uitk-container-borderWidth
+  - --uitk-editable-borderWidth
+  - --uitk-editable-borderWidth-hover
+  - --uitk-editable-borderWidth-disabled
+  - --uitk-editable-borderWidth-readonly
+  - --uitk-selectable-borderWidth
+  - --uitk-selectable-borderWidth-hover
+  - --uitk-selectable-borderWidth-selected
+  - --uitk-selectable-borderWidth-blurSelected
+  - --uitk-separable-borderWidth
+  - --uitk-target-borderWidth
+  - --uitk-target-borderWidth-hover
+  - --uitk-target-borderWidth-disabled
+  + --uitk-size-border: 1px
+  + --uitk-measured-borderWidth-active: 2px
+  + --uitk-measured-borderWidth-complete: 2px
+  + --uitk-measured-borderWidth-incomplete: 2px
+  ```
+
+- 3d94d560: Remove .uitkEmphasisHigh, .uitkEmphasisLow, .uitkEmphasisMedium classes from components
+
+  - Banner; replaces classes with `emphasize` prop
+  - Card, FormField, Scrim, Overlay; replaces these classes with `variant` prop
+  - CalendarDay; replaces these classes with `-unselectableLow`, `-unselectableMedium`
+
+  Remove emphasis concept from characteristics; replace with variants (Low -> Tertiary, Medium -> Primary, High -> Secondary)
+
+  Container: replace emphasis tokens with new respective variants, add `--uitk-container-tertiary-background`, `--uitk-container-tertiary-background-disabled`
+
+  ```diff
+  - --uitk-container-background-medium
+  + --uitk-container-primary-background
+  - --uitk-container-background-high
+  + --uitk-container-secondary-background
+  - --uitk-container-background-low
+  + --uitk-container-tertiary-background
+
+  - --uitk-container-borderColor-medium
+  + --uitk-container-primary-borderColor
+  - --uitk-container-borderColor-disabled-medium
+  + --uitk-container-primary-borderColor-disabled
+
+  - --uitk-container-borderColor-low
+  + --uitk-container-tertiary-borderColor
+  - --uitk-container-borderColor-disabled-low
+  + --uitk-container-tertiary-borderColor-disabled
+
+  - --uitk-container-borderColor-high
+  + --uitk-container-secondary-borderColor
+  - --uitk-container-borderColor-disabled-high
+  + --uitk-container-secondary-borderColor-disabled
+
+  + --uitk-container-tertiary-background
+  + --uitk-container-tertiary-background-disabled
+  ```
+
+  Editable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-editable-background-medium
+  + --uitk-editable-primary-background
+  - --uitk-editable-background-active-medium
+  + --uitk-editable-primary-background-active
+  - --uitk-editable-background-disabled-medium
+  + --uitk-editable-primary-background-disabled
+  - --uitk-editable-background-hover-medium
+  + --uitk-editable-primary-background-hover
+  - --uitk-editable-background-readonly-medium
+  + --uitk-editable-primary-background-readonly
+
+  - --uitk-editable-background-high
+  + --uitk-editable-secondary-background
+  - --uitk-editable-background-active-high
+  + --uitk-editable-secondary-background-active
+  - --uitk-editable-background-disabled-high
+  + --uitk-editable-secondary-background-disabled
+  - --uitk-editable-background-hover-high
+  + --uitk-editable-secondary-background-hover
+  - --uitk-editable-background-readonly-high
+  + --uitk-editable-secondary-background-readonly
+
+  - --uitk-editable-background-low
+  + --uitk-editable-tertiary-background
+  - --uitk-editable-background-active-low
+  + --uitk-editable-tertiary-background-active
+  - --uitk-editable-background-disabled-low
+  + --uitk-editable-tertiary-background-disabled
+  - --uitk-editable-background-hover-low
+  + --uitk-editable-tertiary-background-hover
+  - --uitk-editable-background-readonly-low
+  + --uitk-editable-tertiary-background-readonly
+  ```
+
+  Navigable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-navigable-background-medium
+  + --uitk-navigable-primary-background
+  - --uitk-navigable-background-hover-medium
+  + --uitk-navigable-primary-background-active
+  - --uitk-navigable-background-active-medium
+  + --uitk-navigable-primary-background-disabled
+
+  - --uitk-navigable-background-high
+  + --uitk-navigable-secondary-background
+  - --uitk-navigable-background-hover-high
+  + --uitk-navigable-secondary-background-active
+  - --uitk-navigable-background-active-high
+  + --uitk-navigable-secondary-background-disabled
+
+  - --uitk-navigable-background-low
+  + --uitk-navigable-tertiary-background
+  - --uitk-navigable-background-hover-low
+  + --uitk-navigable-tertiary-background-active
+  - --uitk-navigable-background-active-low
+  + --uitk-navigable-tertiary-background-disabled
+  ```
+
+  Overlayable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-overlayable-background-medium
+  + --uitk-overlayable-primary-background
+
+  - --uitk-overlayable-background-low
+  + --uitk-overlayable-secondary-background
+  ```
+
+  Status: replace emphasis tokens with 'emphasize' type
+
+  ```diff
+  - --uitk-status-info-background-high
+  + --uitk-status-info-background-emphasize
+  - --uitk-status-succes-background-high
+  + --uitk-status-succes-background-emphasize
+  - --uitk-status-error-background-high
+  + --uitk-status-error-background-emphasize
+  - --uitk-status-warning-background-high
+  + --uitk-status-warning-background-emphasize
+  ```
+
+  Palette: token renaming emphasis to variants; color is the same where not stated
+
+  ````diff
+  - --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-4) // Light mode
+  + --uitk-palette-opacity-primary-scrim: var(--uitk-opacity-5) // Light mode
+  - --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-3) // Dark mode
+  + --uitk-palette-opacity-primary-scrim: var(--uitk-opacity-4) // Dark mode
+  - --uitk-palette-opacity-scrim-low
+  + --uitk-palette-opacity-secondary-scrim
+
+  - --uitk-palette-interact-background-high
+  - --uitk-palette-interact-background-disabled-high
+  - --uitk-palette-interact-background-medium
+  - --uitk-palette-interact-background-disabled-medium
+  - --uitk-palette-interact-background-low
+  - --uitk-palette-interact-background-disabled-low
+  + --uitk-palette-interact-background: transparent
+  + --uitk-palette-interact-background-disabled: transparent
+
+  - --uitk-palette-error-background-high
+  + --uitk-palette-error-background-emphasize
+  - --uitk-palette-info-background-high
+  + --uitk-palette-info-background-emphasize
+  - --uitk-palette-success-background-high
+  + --uitk-palette-success-background-emphasize
+  - --uitk-palette-warning-background-high
+  + --uitk-palette-warning-background-emphasize
+
+  - --uitk-palette-navigate-background-medium
+  - --uitk-palette-navigate-background-active-medium
+  - --uitk-palette-navigate-background-hover-medium
+  + --uitk-palette-navigate-primary-background
+  + --uitk-palette-navigate-primary-background-active
+  + --uitk-palette-navigate-primary-background-hover
+  - --uitk-palette-navigate-background-high
+  - --uitk-palette-navigate-background-active-high
+  - --uitk-palette-navigate-background-hover-high
+  + --uitk-palette-navigate-secondary-background
+  + --uitk-palette-navigate-secondary-background-active
+  + --uitk-palette-navigate-secondary-background-hover
+  - --uitk-palette-navigate-background-low
+  - --uitk-palette-navigate-background-active-low
+  - --uitk-palette-navigate-background-hover-low
+  + --uitk-palette-navigate-tertiary-background
+  + --uitk-palette-navigate-tertiary-background-active
+  + --uitk-palette-navigate-tertiary-background-hover
+
+  - --uitk-palette-neutral-scrim-medium: var(--uitk-color-black-fade-scrim-medium) // Light mode
+  - --uitk-palette-neutral-scrim-medium: var(--uitk-color-gray-800-fade-scrim-medium) // Dark mode
+  + --uitk-palette-neutral-primary-scrim: var(--uitk-color-black-fade-scrim-primary) // Light mode
+  + --uitk-palette-neutral-primary-scrim: var(--uitk-color-gray-800-fade-scrim-primary) // Dark mode
+  - --uitk-palette-neutral-scrim-low: var(--uitk-color-white-fade-scrim-low) // Light mode
+  - --uitk-palette-neutral-scrim-low: var(--uitk-color-black-fade-scrim-medium) // Dark mode
+  + --uitk-palette-neutral-secondary-scrim: var(--uitk-color-white-fade-scrim-secondary) // Light mode
+  + --uitk-palette-neutral-secondary-scrim: var(--uitk-color-black-fade-scrim-secondary) // Dark mode
+  - --uitk-palette-neutral-background-medium
+  + --uitk-palette-neutral-primary-background
+  - --uitk-palette-neutral-background-high
+  + --uitk-palette-neutral-secondary-background
+  - --uitk-palette-neutral-background-low
+  + --uitk-palette-neutral-tertiary-background
+  - --uitk-palette-neutral-border-medium
+  - --uitk-palette-neutral-border-disabled-medium
+  + --uitk-palette-neutral-primary-border
+  + --uitk-palette-neutral-primary-border-disabled
+  - --uitk-palette-neutral-border-high
+  - --uitk-palette-neutral-border-disabled-high
+  + --uitk-palette-neutral-secondary-border
+  + --uitk-palette-neutral-secondary-border-disabled
+
+  + --uitk-palette-neutral-primary-background-disabled: var(--uitk-color-white-fade-background) // Light mode
+  + --uitk-palette-neutral-primary-background-disabled: var(--uitk-color-gray-800-fade-background) // Dark mode
+  + --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-20-fade-background) // Light mode
+  + --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-800-fade-background-readonly) // Dark mode
+  + --uitk-palette-neutral-tertiary-background-disabled: transparent
+  + --uitk-palette-neutral-tertiary-background-readonly: transparent
+  + --uitk-palette-neutral-tertiary-border: transparent
+  + --uitk-palette-neutral-tertiary-border-disabled: transparent
+  ```
+
+  Add new fade tokens needed for palette; replace emphasis tokens with variants - here, low scrim is changed to secondary variant
+
+  ```diff
+  - --uitk-color-black-fade-scrim-medium
+  + --uitk-color-black-fade-scrim-primary
+  - --uitk-color-gray-800-fade-scrim-medium
+  + --uitk-color-gray-800-fade-scrim-primary
+  - --uitk-color-white-fade-scrim-low
+  + --uitk-color-black-fade-scrim-secondary
+  + --uitk-color-white-fade-scrim-secondary
+
+  + --uitk-color-white-fade-background-readonly
+  + --uitk-color-gray-20-fade-background-readonly
+  + --uitk-color-gray-600-fade-background-readonly
+  + --uitk-color-gray-800-fade-background-readonly
+  ````
+
+- ccff8af8: Remove container border color variants; replace usage with respective emphasis token
+
+  ```diff
+  - --uitk-container-cta-borderColor
+  - --uitk-container-primary-borderColor
+  - --uitk-container-secondary-borderColor
+  ```
+
+- 0f2a3988: ### Button refactor
+
+  - Removed internal `<span/>` from `Button`, children are now direct children of the component.
+  - CSS Refactor to remove old browser support.
+  - Fix `aria-disabled` to only show when not redundant.
+  - Added active visual style to `Button` when either `spacebar` or `enter`.
+  - Removed `DivButton`. For lab components that used `DivButton`, it's been replaced by a `Button` (`Tab` and `Dropdown`) or a custom internal `div` (`Pill`).
+
+- 8c075106: Use American English 'gray' throughout code
+
+### Patch Changes
+
+- d86de02f: Move Text component from 'lab' to 'core'
+- 6158a031: Fix default generic Item type to be `string` for ListProps, DropdownProps and ComboBox
+
 ## 0.8.0
 
 ### Minor Changes
