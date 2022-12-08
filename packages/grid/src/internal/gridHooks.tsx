@@ -1,5 +1,6 @@
 import React, {
   Children,
+  FocusEventHandler,
   isValidElement,
   MouseEventHandler,
   ReactNode,
@@ -31,6 +32,7 @@ import {
 import { GridContext } from "../GridContext";
 import { CellEditorInfo } from "../CellEditor";
 import { useControlled } from "@jpmorganchase/uitk-core";
+import { FocusedPart } from "../CursorContext";
 
 // Attaches active onWheel event to a table element
 // Grid needs to prevent default onWheel event handling for situations when a
@@ -361,7 +363,10 @@ export function useScrollToCell<T>(
   scroll: (left?: number, top?: number, source?: "user" | "table") => void
 ) {
   return useCallback(
-    (rowIdx: number, colIdx: number) => {
+    (part: FocusedPart, rowIdx: number, colIdx: number) => {
+      if (part !== "body") {
+        return; // TODO
+      }
       let x: number | undefined = undefined;
       let y: number | undefined = undefined;
       if (rowIdx <= visRowRng.start) {
@@ -1208,4 +1213,21 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     onCursorMove,
     selectRange,
   };
+}
+
+export function useFocusableContent<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
+
+  const onFocus: FocusEventHandler<T> = (event) => {
+    if (event.target === ref.current) {
+      const nestedInteractive = ref.current.querySelector(`[tabindex="0"]`);
+      if (nestedInteractive) {
+        (nestedInteractive as HTMLElement).focus();
+        setFocusableContent(true);
+      }
+    }
+  };
+
+  return { ref, isFocusableContent, onFocus };
 }

@@ -132,6 +132,10 @@ export interface GridProps<T = any> {
    * */
   cellSelectionMode?: GridCellSelectionMode;
   onVisibleRowRangeChange?: (start: number, end: number) => void;
+  /**
+   * If `true`, keyboard navigation is enabled for the header.
+   * */
+  headerIsFocusable?: boolean;
 }
 
 export interface GridRowModel<T> {
@@ -180,6 +184,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     onColumnMoved,
     cellSelectionMode = "none",
     onVisibleRowRangeChange,
+    headerIsFocusable,
   } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -423,10 +428,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [setScrollLeft, setScrollTop, setScrollSource]
   );
 
-  const scrollToHeaderCell = (colIdx: number) => {
-    // TODO
-  };
-
   const scrollToCell = useScrollToCell(
     visRowRng,
     rowHeight,
@@ -437,29 +438,19 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     scroll
   );
 
-  const focusCellElement = (rowIdx: number, colIdx: number) => {
+  const focusCellElement = (
+    part: FocusedPart,
+    rowIdx: number,
+    colIdx: number
+  ) => {
     setTimeout(() => {
-      const nodeToFocus = rootRef.current?.querySelector(
-        `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
-      );
+      const selector =
+        part === "body"
+          ? `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
+          : `th[data-column-index="${colIdx}"]`;
+      const nodeToFocus = rootRef.current?.querySelector(selector);
       if (nodeToFocus) {
         (nodeToFocus as HTMLElement).focus();
-      }
-    }, 0);
-  };
-
-  // TODO
-  const focusHeaderElement = (rowIdx: number, colIdx: number) => {
-    setTimeout(() => {
-      console.log(`Focusing on the header cell ${rowIdx} ${colIdx}`);
-      const nodeToFocus = rootRef.current?.querySelector(
-        `th[data-column-index="${colIdx}"]`
-      );
-      if (nodeToFocus) {
-        console.log(nodeToFocus);
-        (nodeToFocus as HTMLElement).focus();
-      } else {
-        console.log(`header cell not found`);
       }
     }, 0);
   };
@@ -499,7 +490,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       handler(rowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
-    focusCellElement(cursorRowIdx, cursorColIdx);
+    focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
   };
 
   const cancelEditMode = () => {
@@ -508,7 +499,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
     setEditMode(false);
     if (cursorRowIdx != null && cursorColIdx != null) {
-      focusCellElement(cursorRowIdx, cursorColIdx);
+      focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
     }
   };
 
@@ -532,48 +523,30 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const rangeSelection = useRangeSelection(cellSelectionMode);
 
   const moveCursor = useCallback(
-    (rowIdx: number, colIdx: number) => {
+    (part: FocusedPart, rowIdx: number, colIdx: number) => {
       cancelEditMode();
-      console.log(`moveCursor(${rowIdx}, ${colIdx})`);
-      if (focusedPart === "body") {
-        if (rowIdx < 0) {
-          // TODO if header is focusable
-          setFocusedPart("header");
-          setCursorRowIdx(0);
-          colIdx = clamp(colIdx, 0, cols.length - 1);
-          setCursorColIdx(colIdx);
-          scrollToHeaderCell(colIdx);
-          focusHeaderElement(0, colIdx);
-        } else {
-          if (rowData.length < 1 || cols.length < 1) {
-            return;
-          }
-          rowIdx = clamp(rowIdx, 0, rowData.length - 1);
-          colIdx = clamp(colIdx, 0, cols.length - 1);
-          setCursorRowIdx(rowIdx);
-          setCursorColIdx(colIdx);
-          scrollToCell(rowIdx, colIdx);
-          focusCellElement(rowIdx, colIdx);
-          rangeSelection.onCursorMove({ rowIdx, colIdx });
+      if (!headerIsFocusable && part === "header") {
+        console.warn(
+          `Cannot move focus to the header. "headerIsFocusable" prop is false.`
+        );
+        return;
+      }
+      setFocusedPart(part);
+      colIdx = clamp(colIdx, 0, cols.length - 1);
+      if (part === "body") {
+        if (rowData.length < 1 || cols.length < 1) {
+          return;
         }
-      } else if (focusedPart === "header") {
-        if (rowIdx > 0) {
-          // TODO can we jump from the header to any other row than 0?
-          setFocusedPart("body");
-          setCursorRowIdx(0);
-          colIdx = clamp(colIdx, 0, cols.length - 1);
-          setCursorColIdx(colIdx);
-          scrollToCell(0, colIdx);
-          focusCellElement(rowIdx, colIdx);
-        } else {
-          setCursorRowIdx(0);
-          colIdx = clamp(colIdx, 0, cols.length - 1);
-          setCursorColIdx(colIdx);
-          scrollToHeaderCell(colIdx);
-          focusHeaderElement(0, colIdx);
-        }
-      } else {
-        // TODO any other parts?
+        rowIdx = clamp(rowIdx, 0, rowData.length - 1);
+      } else if (part === "header") {
+        rowIdx = 0; // There is only one row in the header currently
+      }
+      setCursorRowIdx(rowIdx);
+      setCursorColIdx(colIdx);
+      scrollToCell(part, rowIdx, colIdx);
+      focusCellElement(part, rowIdx, colIdx);
+      if (part === "body") {
+        rangeSelection.onCursorMove({ rowIdx, colIdx });
       }
     },
     [
@@ -587,7 +560,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       endEditMode,
       rangeSelection.onCursorMove,
       focusedPart,
-      // TODO
+      headerIsFocusable,
     ]
   );
 
@@ -699,6 +672,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [columnMove, onColumnMoveHandleMouseDown]
   );
 
+  // TODO can we navigate to the header using mouse?
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     onRowSelectionMouseDown(event);
     rangeSelection.onCellMouseDown(event);
@@ -707,7 +681,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     try {
       const [rowIdx, colIdx] = getCellPosition(target);
       if (colIdx >= 0) {
-        moveCursor(rowIdx, colIdx);
+        moveCursor("body", rowIdx, colIdx);
       }
       // event.preventDefault();
       // event.stopPropagation();
@@ -775,23 +749,27 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           });
           break;
         case " ":
-          if (event.ctrlKey) {
-            if (cursorColIdx != undefined) {
-              rangeSelection.selectRange({
-                start: { rowIdx: 0, colIdx: cursorColIdx },
-                end: { rowIdx: rowData.length, colIdx: cursorColIdx },
-              });
+          if (focusedPart === "body") {
+            if (event.ctrlKey) {
+              if (cursorColIdx != undefined) {
+                rangeSelection.selectRange({
+                  start: { rowIdx: 0, colIdx: cursorColIdx },
+                  end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+                });
+              }
+            } else {
+              if (cursorRowIdx != undefined) {
+                selectRows({
+                  rowIndex: cursorRowIdx,
+                  shift: false,
+                  meta: event.shiftKey,
+                });
+              }
             }
+            break;
           } else {
-            if (cursorRowIdx != undefined) {
-              selectRows({
-                rowIndex: cursorRowIdx,
-                shift: false,
-                meta: event.shiftKey,
-              });
-            }
+            return false;
           }
-          break;
         case "a":
           if (event.ctrlKey || event.metaKey) {
             rangeSelection.selectRange({
@@ -817,6 +795,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cursorRowIdx,
       rowData.length,
       cols.length,
+      focusedPart,
     ]
   );
 
@@ -860,35 +839,59 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       const { key } = event;
       switch (key) {
         case "ArrowLeft":
-          moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
+          moveCursor(focusedPart, cursorRowIdx, (cursorColIdx || 0) - 1);
           break;
         case "ArrowRight":
-          moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
+          moveCursor(focusedPart, cursorRowIdx, (cursorColIdx || 0) + 1);
           break;
         case "ArrowUp":
-          moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
+          if (cursorRowIdx === 0 && headerIsFocusable) {
+            moveCursor("header", 0, cursorColIdx);
+          } else {
+            moveCursor(focusedPart, (cursorRowIdx || 0) - 1, cursorColIdx);
+          }
           break;
         case "ArrowDown":
-          moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
+          if (focusedPart === "header") {
+            moveCursor("body", 0, cursorColIdx);
+          } else {
+            moveCursor(focusedPart, (cursorRowIdx || 0) + 1, cursorColIdx);
+          }
           break;
         case "PageUp":
-          moveCursor((cursorRowIdx || 0) - pageSize, cursorColIdx);
+          if (cursorRowIdx === 0 && headerIsFocusable) {
+            moveCursor("header", 0, cursorColIdx);
+          } else {
+            moveCursor(
+              focusedPart,
+              (cursorRowIdx || 0) - pageSize,
+              cursorColIdx
+            );
+          }
           break;
         case "PageDown":
-          moveCursor((cursorRowIdx || 0) + pageSize, cursorColIdx);
+          if (focusedPart === "header") {
+            moveCursor("body", 0, cursorColIdx);
+          } else {
+            moveCursor(
+              focusedPart,
+              (cursorRowIdx || 0) + pageSize,
+              cursorColIdx
+            );
+          }
           break;
         case "Home":
           if (!event.ctrlKey) {
-            moveCursor(cursorRowIdx, 0);
+            moveCursor(focusedPart, cursorRowIdx, 0);
           } else {
-            moveCursor(0, 0);
+            moveCursor(focusedPart, 0, 0);
           }
           break;
         case "End":
           if (!event.ctrlKey) {
-            moveCursor(cursorRowIdx, cols.length - 1);
+            moveCursor(focusedPart, cursorRowIdx, cols.length - 1);
           } else {
-            moveCursor(rowData.length - 1, cols.length - 1);
+            moveCursor(focusedPart, rowData.length - 1, cols.length - 1);
           }
           break;
         case "Tab":
@@ -902,18 +905,18 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           ) {
             if (!event.shiftKey) {
               if (cursorColIdx < cols.length - 1) {
-                moveCursor(cursorRowIdx, cursorColIdx + 1);
+                moveCursor(focusedPart, cursorRowIdx, cursorColIdx + 1);
               } else {
                 if (cursorRowIdx < rowData.length - 1) {
-                  moveCursor(cursorRowIdx + 1, 0);
+                  moveCursor(focusedPart, cursorRowIdx + 1, 0);
                 }
               }
             } else {
               if (cursorColIdx > 0) {
-                moveCursor(cursorRowIdx, cursorColIdx - 1);
+                moveCursor(focusedPart, cursorRowIdx, cursorColIdx - 1);
               } else {
                 if (cursorRowIdx > 0) {
-                  moveCursor(cursorRowIdx - 1, cols.length - 1);
+                  moveCursor(focusedPart, cursorRowIdx - 1, cols.length - 1);
                 }
               }
             }
@@ -930,9 +933,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             !event.shiftKey
           ) {
             if (cursorRowIdx == undefined) {
-              moveCursor(0, 0);
+              moveCursor(focusedPart, 0, 0);
             } else {
-              moveCursor(cursorRowIdx + 1, cursorColIdx);
+              moveCursor(focusedPart, cursorRowIdx + 1, cursorColIdx);
             }
           } else {
             return false;
@@ -945,7 +948,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       event.stopPropagation();
       return true;
     },
-    [moveCursor, cursorRowIdx, cursorRowIdx, cols.length, rowData.length]
+    [
+      moveCursor,
+      cursorRowIdx,
+      cursorRowIdx,
+      cols.length,
+      rowData.length,
+      headerIsFocusable,
+    ]
   );
 
   const columnMoveKeyHandler = useCallback(

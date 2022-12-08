@@ -123,6 +123,7 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
       className="grid"
       zebra={true}
       rowSelectionMode="single"
+      headerIsFocusable={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionRadioColumn id="rowSelection" />

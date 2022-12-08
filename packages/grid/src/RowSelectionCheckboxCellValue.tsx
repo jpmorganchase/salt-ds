@@ -14,7 +14,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
 
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     selectRows({ rowIndex: row.index, meta: true });
-    moveCursor(row.index, column.index);
+    moveCursor("body", row.index, column.index);
     event.preventDefault();
     event.stopPropagation();
   };

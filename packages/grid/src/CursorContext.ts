@@ -6,7 +6,7 @@ export interface CursorContext {
   isFocused: boolean;
   cursorRowIdx: number | undefined;
   cursorColIdx: number | undefined;
-  moveCursor: (rowIdx: number, colIdx: number) => void;
+  moveCursor: (part: FocusedPart, rowIdx: number, colIdx: number) => void;
   focusedPart: FocusedPart;
 }
 

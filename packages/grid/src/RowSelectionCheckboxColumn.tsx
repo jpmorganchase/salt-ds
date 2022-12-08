@@ -1,8 +1,9 @@
 import { KeyboardEvent } from "react";
-import { RowSelectionCheckboxHeaderCell } from "./RowSelectionCheckboxHeaderCell";
+import { RowSelectionCheckboxHeaderCellValue } from "./RowSelectionCheckboxHeaderCellValue";
 import { RowSelectionCheckboxCellValue } from "./RowSelectionCheckboxCellValue";
 import { GridColumn, GridColumnProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
+import { AutoSizeHeaderCell } from "./HeaderCell";
 
 export type RowSelectionCheckboxColumnProps<T> = Omit<
   GridColumnProps<T>,
@@ -29,7 +30,8 @@ export function RowSelectionCheckboxColumn<T>(
     <GridColumn
       {...props}
       defaultWidth={100}
-      headerComponent={RowSelectionCheckboxHeaderCell}
+      headerComponent={AutoSizeHeaderCell}
+      headerValueComponent={RowSelectionCheckboxHeaderCellValue}
       cellValueComponent={RowSelectionCheckboxCellValue}
       onKeyDown={onKeyDown}
     />

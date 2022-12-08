@@ -7,6 +7,8 @@
   box-sizing: border-box;
   color: var(--grid-header-color);
   white-space: nowrap;
+
+  outline: 0;
 }
 
 .uitkGridHeaderCell-valueContainer {

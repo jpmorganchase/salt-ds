@@ -67,14 +67,6 @@
   border-color: var(--grid-editableCell-borderColor);
 }
 
-.uitkGridBaseCell:focus-visible .uitkGridBaseCell-valueContainer {
-  border-style: var(--grid-cursor-border-style);
-  border-width: var(--grid-cursor-border-width);
-  border-color: var(--grid-cursor-borderColor);
-  line-height: calc(var(--grid-row-height) - 2 * var(--grid-cursor-border-width));
-  --grid-cell-padding: 0 calc(var(--grid-padding) - var(--grid-cursor-border-width));
-}
-
 .uitkGridBaseCell-editable:hover {
   border-color: var(--grid-editableCell-borderColor-hover);
 }

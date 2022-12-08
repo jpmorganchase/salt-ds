@@ -61,6 +61,7 @@ const RowSelectionModesTemplate: Story<{}> = () => {
         columnSeparators={true}
         zebra={true}
         rowSelectionMode={rowSelectionMode}
+        headerIsFocusable={true}
       >
         {rowSelectionMode === "multi" && (
           <RowSelectionCheckboxColumn id="checkbox" />
