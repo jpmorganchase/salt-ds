@@ -3,7 +3,7 @@
   --link-color-hover: var(--uitkLink-color-hover, var(--uitk-text-link-foreground-hover));
   --link-color-active: var(--uitkLink-color-active, var(--uitk-text-link-foreground-active));
   /* Awaiting the characteristic for visited links */
-  --link-color-visited: var(--uitkLink-color-visited, var(--uitk-color-purple-800));
+  --link-color-visited: var(--uitkLink-color-visited, var(--uitk-text-link-foreground-visited));
   /* When focused, we also want hover style */
   --link-color-focus: var(--uitkLink-color-focus, var(--link-color-hover));
   --link-color-disabled: var(--uitkLink-color-disabled, var(--uitk-text-link-foreground-disabled));
