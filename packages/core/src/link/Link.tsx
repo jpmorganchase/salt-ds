@@ -1,9 +1,9 @@
 import {
+  ComponentType,
   forwardRef,
-  useCallback,
   MouseEvent,
   ReactElement,
-  ComponentType,
+  useCallback,
 } from "react";
 import cx from "classnames";
 import { IconProps, TearOutIcon } from "@jpmorganchase/uitk-icons";
@@ -56,6 +56,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       href={href}
       onClick={stopPropagation}
       ref={ref}
+      tabIndex={0}
       target={target}
       {...rest}
     >
