@@ -2,7 +2,7 @@ import { Link } from "@jpmorganchase/uitk-core";
 
 import "./link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import {StackoverflowIcon} from "@jpmorganchase/uitk-icons";
+import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
   title: "Core/Link",

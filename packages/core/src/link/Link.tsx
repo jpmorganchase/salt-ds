@@ -2,10 +2,11 @@ import {
   forwardRef,
   useCallback,
   MouseEvent,
-  ReactElement, ComponentType
+  ReactElement,
+  ComponentType,
 } from "react";
 import cx from "classnames";
-import {IconProps, TearOutIcon} from "@jpmorganchase/uitk-icons";
+import { IconProps, TearOutIcon } from "@jpmorganchase/uitk-icons";
 import { makePrefixer } from "../utils";
 import { Text, TextProps } from "../text";
 
@@ -23,7 +24,7 @@ export interface InternalLinkProps extends TextProps<"a"> {
   IconComponent?: never;
 }
 export interface ExternalLinkProps extends TextProps<"a"> {
-  target:"_blank";
+  target: "_blank";
   /**
    * Override "tearout" icon.
    */
@@ -33,7 +34,14 @@ export interface ExternalLinkProps extends TextProps<"a"> {
 export type LinkProps = ExternalLinkProps | InternalLinkProps;
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { IconComponent= TearOutIcon, href, className, children, target = "_self", ...rest },
+  {
+    IconComponent = TearOutIcon,
+    href,
+    className,
+    children,
+    target = "_self",
+    ...rest
+  },
   ref
 ): ReactElement<LinkProps> {
   const stopPropagation = useCallback(

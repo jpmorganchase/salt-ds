@@ -28,9 +28,7 @@ describe("GIVEN a link", () => {
   });
 
   it('WHEN passed target="_blank" AND passed IconComponent, THEN should render the Link with the tear out icon', () => {
-    cy.mount(
-      <TargetBlankCustomIcon />
-    );
+    cy.mount(<TargetBlankCustomIcon />);
 
     cy.findByTestId(/StackOverflowIcon/i).should("exist");
   });

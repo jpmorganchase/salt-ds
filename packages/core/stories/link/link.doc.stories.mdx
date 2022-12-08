@@ -1,17 +1,11 @@
-import {
-  Meta,
-  ArgsTable,
-  Canvas,
-  Story
-} from "@storybook/addon-docs";
+import { Meta, ArgsTable, Canvas, Story } from "@storybook/addon-docs";
 import { Link } from "@jpmorganchase/uitk-core";
 import { CSSClassTable } from "css-variable-docgen-components";
 
 import { withFlexGap } from "docs/decorators/withFlexGap";
 
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx"; import {
-  StackoverflowIcon
-} from "@jpmorganchase/uitk-icons";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
 
 <Meta
   title="Documentation/Core/Link"
@@ -41,7 +35,7 @@ A default link provides navigation to either a new webpage or an internal page o
 
 ### External Link
 
-A link with target _blank navigates the user to an external link. Each time the link is accessed, a new tab will open
+A link with target \_blank navigates the user to an external link. Each time the link is accessed, a new tab will open
 
 <Canvas>
   <Story name="External Link" decorators={[withFlexGap]}>
