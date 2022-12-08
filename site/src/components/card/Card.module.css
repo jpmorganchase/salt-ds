@@ -37,6 +37,7 @@
 .cardTitle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .inlineIcon {
