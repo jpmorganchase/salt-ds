@@ -54,6 +54,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
 
   return (
     <tr
+      aria-rowindex={row.index + 1}
       className={cn(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
