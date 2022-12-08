@@ -16,12 +16,19 @@
   gap: var(--uitk-size-unit);
 }
 
-.componentList th svg {
-  margin-right: calc(var(--uitk-size-unit) / 2);
+.componentList th:hover {
+  cursor: pointer;
 }
 
-.componentList th span {
-  vertical-align: top;
+.componentList th .headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.componentList th .headerContainer div {
+  display: flex;
+  gap: calc(var(--uitk-size-unit) / 2);
 }
 
 .componentList .status svg {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   componentDetails,
   ComponentStatus,
@@ -5,7 +6,12 @@ import {
 } from "./components-list";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import { TearOutIcon, StepActiveIcon } from "@jpmorganchase/uitk-icons";
+import {
+  TearOutIcon,
+  StepActiveIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
+} from "@jpmorganchase/uitk-icons";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";
@@ -29,10 +35,18 @@ const statusSortList = [
   ComponentStatus.IN_BACKLOG,
 ];
 
-const componentsListSortedByStatus = [...componentDetails].sort(
-  (a, b) =>
-    statusSortList.indexOf(a.devStatus) - statusSortList.indexOf(b.devStatus)
+const componentsListSortedByName = [...componentDetails].sort((a, b) =>
+  a.name.localeCompare(b.name)
 );
+
+type SortedByStatus = "devStatus" | "designStatus";
+
+const componentsListSortedByStatus = (componentStatus: SortedByStatus) =>
+  [...componentsListSortedByName].sort(
+    (a, b) =>
+      statusSortList.indexOf(a[componentStatus]) -
+      statusSortList.indexOf(b[componentStatus])
+  );
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   const { devStatus, name, storybookUrl } = component;
@@ -63,28 +77,73 @@ const ComponentStatusData = ({
   );
 };
 
+const ComponentHeader = ({
+  logo,
+  label,
+  isSorted,
+}: {
+  logo: JSX.Element;
+  label: string;
+  isSorted: boolean;
+}) => (
+  <div className={styles.headerContainer}>
+    <div>
+      {logo}
+      <span>{label}</span>
+    </div>
+    {isSorted && <ArrowUpIcon />}
+  </div>
+);
+
+type SortedBy = SortedByStatus | "name";
+
 const ComponentsList = () => {
+  const [componentsList, setComponentsList] = useState(
+    componentsListSortedByStatus("devStatus")
+  );
+
+  const [isSortedBy, setIsSortedBy] = useState<SortedBy>("devStatus");
+
+  const handleNameSorting = () => {
+    setIsSortedBy("name");
+    setComponentsList(componentsListSortedByName);
+  };
+
+  const handleStatusSorting = (componentStatus: SortedByStatus) => {
+    setIsSortedBy(componentStatus);
+    setComponentsList(componentsListSortedByStatus(componentStatus));
+  };
+
   return (
     <div className={styles.componentList}>
       <table>
         <thead>
           <tr>
-            <th>
-              <StorybookLogo />
-              <span>Component</span>
+            <th onClick={handleNameSorting}>
+              <ComponentHeader
+                logo={<StorybookLogo />}
+                label="Component"
+                isSorted={isSortedBy === "name"}
+              />
             </th>
-            <th>
-              <ReactLogo />
-              <span>React</span>
+            <th onClick={() => handleStatusSorting("devStatus")}>
+              <ComponentHeader
+                logo={<ReactLogo />}
+                label="React"
+                isSorted={isSortedBy === "devStatus"}
+              />
             </th>
-            <th>
-              <FigmaLogo />
-              <span>Figma</span>
+            <th onClick={() => handleStatusSorting("designStatus")}>
+              <ComponentHeader
+                logo={<FigmaLogo />}
+                label="Figma"
+                isSorted={isSortedBy === "designStatus"}
+              />
             </th>
           </tr>
         </thead>
         <tbody>
-          {componentsListSortedByStatus.map((component, index) => {
+          {componentsList.map((component, index) => {
             return (
               <tr key={index}>
                 <td>
