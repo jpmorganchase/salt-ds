@@ -22,7 +22,7 @@
 }
 
 .uitkLink-icon {
-  padding: 0px 0px 0px 6px;
+  margin-left: calc(var(--uitk-size-unit) * 0.75);
 }
 
 .uitkLink:visited,
