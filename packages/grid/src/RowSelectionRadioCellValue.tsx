@@ -1,27 +1,21 @@
-import { RadioButtonIcon } from "@jpmorganchase/uitk-core";
+import { RadioButtonBase } from "@jpmorganchase/uitk-core";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-import { MouseEventHandler } from "react";
 import "./CheckboxCell.css";
 
 export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
-  const { row } = props;
-  const { selRowIdxs, selectRows } = useSelectionContext();
+  const { row, isFocused } = props;
+  const { selRowIdxs } = useSelectionContext();
 
   const isSelected = selRowIdxs.has(row.index);
-  const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    selectRows({ rowIndex: row.index });
-    event.preventDefault();
-    event.stopPropagation();
-  };
 
   return (
-    <div
-      className="uitkGridCheckboxContainer"
-      onMouseDown={onMouseDown}
-      data-testid="grid-row-selection-radiobox"
-    >
-      <RadioButtonIcon checked={isSelected} />
+    <div className="uitkGridCheckboxContainer">
+      <RadioButtonBase
+        checked={isSelected}
+        tabIndex={isFocused ? 0 : -1}
+        data-testid="grid-row-selection-radiobox"
+      />
     </div>
   );
 }

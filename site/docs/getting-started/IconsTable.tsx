@@ -5,6 +5,9 @@ import styles from "./IconsTable.module.css";
 
 const IconsTable = () => (
   <table className={styles.iconsTable}>
+    <caption>
+      Example of an icon (print) in different densities and sizes
+    </caption>
     <thead>
       <tr>
         <th>Size</th>

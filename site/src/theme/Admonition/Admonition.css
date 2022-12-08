@@ -35,4 +35,5 @@
 
 .uitkAdmonition h4 {
   --ifm-heading-color: var(--site-tertiary-accent-teal);
+  margin-top: 0;
 }
