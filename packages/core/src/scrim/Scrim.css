@@ -1,14 +1,5 @@
 /* Style applied to the root element */
 .uitkScrim {
-  --scrim-background: var(--uitk-overlayable-primary-background);
-}
-
-/* Secondary variant */
-.uitkScrim-secondary.uitkScrim {
-  --scrim-background: var(--uitk-overlayable-secondary-background);
-}
-
-.uitkScrim {
   top: 0;
   left: 0;
   right: 0;
@@ -20,7 +11,7 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background: var(--uitkScrim-background, var(--scrim-background));
+  background: var(--uitkScrim-background, var(--uitk-overlayable-primary-background));
   -webkit-tap-highlight-color: transparent;
 }
 
