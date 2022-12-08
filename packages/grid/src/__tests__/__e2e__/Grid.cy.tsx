@@ -184,6 +184,7 @@ describe("Grid", () => {
 
     const checkCursorPos = (row: number, col: number) => {
       cy.focused()
+        .closest("td")
         .should("have.attr", "aria-rowindex", String(row + 1))
         .should("have.attr", "aria-colindex", String(col + 1));
     };
@@ -280,6 +281,7 @@ describe("Grid", () => {
 
     cy.findByText("button 1").focus().realPress("Tab");
     cy.focused()
+      .parents("td")
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-rowindex", "1");
 
@@ -288,6 +290,7 @@ describe("Grid", () => {
     cy.focused().realPress(["Shift", "Tab"]);
 
     cy.focused()
+      .parents("td")
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-rowindex", "1");
 

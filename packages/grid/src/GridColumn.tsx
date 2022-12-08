@@ -27,10 +27,11 @@ export interface GridCellProps<T> {
   children?: ReactNode;
 }
 
-export interface GridCellValueProps<T> {
+export interface GridCellValueProps<T, U = any> {
   row: GridRowModel<T>;
   column: GridColumnModel<T>;
-  value?: T;
+  isFocused?: boolean;
+  value?: U;
 }
 
 export interface GridHeaderValueProps<T> {
