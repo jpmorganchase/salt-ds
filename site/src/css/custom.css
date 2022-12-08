@@ -394,6 +394,10 @@ table thead tr {
 
 table thead tr th {
   text-align: left;
+  position: sticky;
+  top: calc(var(--ifm-navbar-height));
+  background: var(--uitk-color-white);
+  z-index: 2;
 }
 
 table th,
@@ -459,7 +463,7 @@ table tr td:not(:last-child) {
 /* ----------------- */
 
 @media screen and (max-width: 1280px) {
-  .navbar {
+  :root {
     --ifm-navbar-height: 76px;
   }
 
