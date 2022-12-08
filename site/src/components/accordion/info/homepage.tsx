@@ -4,7 +4,7 @@ import { AccordionBaseProps } from "../Accordion";
 export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
   {
     id: "why-trust-us",
-    summary: "Why trust us?",
+    summary: <h2>Why trust us?</h2>,
     details: (
       <>
         <p>In a nutshell, we’re not newbies.</p>
@@ -30,7 +30,7 @@ export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
   },
   {
     id: "future-of-finance",
-    summary: "The future of finance",
+    summary: <h2>The future of finance</h2>,
     details: (
       <>
         <p>
@@ -49,7 +49,7 @@ export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
   },
   {
     id: "join-us",
-    summary: "Join us on this odyssey",
+    summary: <h2>Join us on this odyssey</h2>,
     details: (
       <>
         <p>

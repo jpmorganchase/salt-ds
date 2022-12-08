@@ -9,7 +9,7 @@ import styles from "./Accordion.module.css";
 
 export type AccordionInfoType = {
   id: string;
-  summary: string;
+  summary: JSX.Element | string;
   details: JSX.Element;
 };
 
@@ -32,7 +32,7 @@ const AccordionBase = ({
         return (
           <AccordionSection className={styles.section} key={id} id={id}>
             <AccordionSummary className={styles.summary}>
-              <h2>{summary}</h2>
+              {summary}
             </AccordionSummary>
             <AccordionDetails>{details}</AccordionDetails>
           </AccordionSection>
