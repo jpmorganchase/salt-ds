@@ -1,7 +1,7 @@
 /* Main css class. Style for body text */
 .uitkText {
-  font-size: var(--uitk-text-fontSize);
-  line-height: var(--uitk-text-lineHeight);
+  font-size: var(--uitkText-fontSize, var(--uitk-text-fontSize));
+  line-height: var(--uitkText-lineHeight, var(--uitk-text-lineHeight));
 }
 
 /* Allows truncation */
@@ -14,139 +14,139 @@
 }
 
 .uitkText-primary {
-  color: var(--uitk-text-primary-foreground);
+  color: var(--uitkText-primary-foreground, var(--uitk-text-primary-foreground));
 }
 .uitkText-secondary {
-  color: var(--uitk-text-secondary-foreground);
+  color: var(--uitkText-secondary-foreground, var(--uitk-text-secondary-foreground));
 }
 
 /* Body emphasis strong */
 .uitkText strong {
-  font-weight: var(--uitk-text-fontWeight-strong);
+  font-weight: var(--uitkText-fontWeight-strong, var(--uitk-text-fontWeight-strong));
 }
 /* Body emphasis small */
 .uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-fontWeight-small);
+  font-weight: var(--uitkText-fontWeight-small, var(--uitk-text-fontWeight-small));
 }
 
 /* Display 1 */
 .uitkText-display1.uitkText {
-  font-size: var(--uitk-text-display1-fontSize);
-  font-weight: var(--uitk-text-display1-fontWeight);
-  line-height: var(--uitk-text-display1-lineHeight);
+  font-size: var(--uitkText-display1-fontSize, var(--uitk-text-display1-fontSize));
+  font-weight: var(--uitkText-display1-fontWeight, var(--uitk-text-display1-fontWeight));
+  line-height: var(--uitkText-display1-lineHeight, var(--uitk-text-display1-lineHeight));
 }
 
 /* Display 2 */
 .uitkText-display2.uitkText {
-  font-size: var(--uitk-text-display2-fontSize);
-  font-weight: var(--uitk-text-display2-fontWeight);
-  line-height: var(--uitk-text-display2-lineHeight);
+  font-size: var(--uitkText-display2-fontSize, var(--uitk-text-display2-fontSize));
+  font-weight: var(--uitkText-display2-fontWeight, var(--uitk-text-display2-fontWeight));
+  line-height: var(--uitkText-display2-lineHeight, var(--uitk-text-display2-lineHeight));
 }
 
 /* Display 3 */
 .uitkText-display3.uitkText {
-  font-size: var(--uitk-text-display3-fontSize);
-  font-weight: var(--uitk-text-display3-fontWeight);
-  line-height: var(--uitk-text-display3-lineHeight);
+  font-size: var(--uitkText-display3-fontSize, var(--uitk-text-display3-fontSize));
+  font-weight: var(--uitkText-display3-fontWeight, var(--uitk-text-display3-fontWeight));
+  line-height: var(--uitkText-display3-lineHeight, var(--uitk-text-display3-lineHeight));
 }
 
 /* Heading 1 */
 h1.uitkText,
 .uitkText-h1.uitkText {
-  font-size: var(--uitk-text-h1-fontSize);
-  font-weight: var(--uitk-text-h1-fontWeight);
-  line-height: var(--uitk-text-h1-lineHeight);
+  font-size: var(--uitkText-h1-fontSize, var(--uitk-text-h1-fontSize));
+  font-weight: var(--uitkText-h1-fontWeight, var(--uitk-text-h1-fontWeight));
+  line-height: var(--uitkText-h1-lineHeight, var(--uitk-text-h1-lineHeight));
 }
 
 /* H1 emphasis strong */
 h1.uitkText strong,
 .uitkText-h1.uitkText strong {
-  font-weight: var(--uitk-text-h1-fontWeight-strong);
+  font-weight: var(--uitkText-h1-fontWeight-strong, var(--uitk-text-h1-fontWeight-strong));
 }
 /* H1 emphasis small */
 h1.uitkText small,
 .uitkText-h1.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h1-fontWeight-small);
+  font-weight: var(--uitkText-h1-fontWeight-small, var(--uitk-text-h1-fontWeight-small));
 }
 
 /* Heading 2 */
 h2.uitkText,
 .uitkText-h2.uitkText {
-  font-size: var(--uitk-text-h2-fontSize);
-  font-weight: var(--uitk-text-h2-fontWeight);
-  line-height: var(--uitk-text-h2-lineHeight);
+  font-size: var(--uitkText-h2-fontSize, var(--uitk-text-h2-fontSize));
+  font-weight: var(--uitkText-h2-fontWeight, var(--uitk-text-h2-fontWeight));
+  line-height: var(--uitkText-h2-lineHeight, var(--uitk-text-h2-lineHeight));
 }
 
 /* H2 emphasis strong */
 h2.uitkText strong,
 .uitkText-h2.uitkText strong {
-  font-weight: var(--uitk-text-h2-fontWeight-strong);
+  font-weight: var(--uitkText-h2-fontWeight-strong, var(--uitk-text-h2-fontWeight-strong));
 }
 /* H2 emphasis small */
 h2.uitkText small,
 .uitkText-h2.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h2-fontWeight-small);
+  font-weight: var(--uitkText-h2-fontWeight-small, var(--uitk-text-h2-fontWeight-small));
 }
 
 /* Heading 3 */
 h3.uitkText,
 .uitkText-h3.uitkText {
-  font-size: var(--uitk-text-h3-fontSize);
-  font-weight: var(--uitk-text-h3-fontWeight);
-  line-height: var(--uitk-text-h3-lineHeight);
+  font-size: var(--uitkText-h3-fontSize, var(--uitk-text-h3-fontSize));
+  font-weight: var(--uitkText-h3-fontWeight, var(--uitk-text-h3-fontWeight));
+  line-height: var(--uitkText-h3-lineHeight, var(--uitk-text-h3-lineHeight));
 }
 
 /* H3 emphasis strong */
 h3.uitkText strong,
 .uitkText-h3.uitkText strong {
-  font-weight: var(--uitk-text-h3-fontWeight-strong);
+  font-weight: var(--uitkText-h3-fontWeight-strong, var(--uitk-text-h3-fontWeight-strong));
 }
 /* H3 emphasis small */
 h3.uitkText small,
 .uitkText-h3.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h3-fontWeight-small);
+  font-weight: var(--uitkText-h3-fontWeight-small, var(--uitk-text-h3-fontWeight-small));
 }
 
 /* Heading 4 */
 h4.uitkText,
 .uitkText-h4.uitkText {
-  font-size: var(--uitk-text-h4-fontSize);
-  font-weight: var(--uitk-text-h4-fontWeight);
-  line-height: var(--uitk-text-h4-lineHeight);
+  font-size: var(--uitkText-h4-fontSize, var(--uitk-text-h4-fontSize));
+  font-weight: var(--uitkText-h4-fontWeight, var(--uitk-text-h4-fontWeight));
+  line-height: var(--uitkText-h4-lineHeight, var(--uitk-text-h4-lineHeight));
 }
 
 /* H4 emphasis strong */
 h4.uitkText strong,
 .uitkText-h4.uitkText strong {
-  font-weight: var(--uitk-text-h4-fontWeight-strong);
+  font-weight: var(--uitkText-h4-fontWeight-strong, var(--uitk-text-h4-fontWeight-strong));
 }
 /* H4 emphasis small */
 h4.uitkText small,
 .uitkText-h4.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h4-fontWeight-small);
+  font-weight: var(--uitkText-h4-fontWeight-small, var(--uitk-text-h4-fontWeight-small));
 }
 
 /* Label */
 label.uitkText,
 .uitkText-label.uitkText {
-  font-size: var(--uitk-text-label-fontSize);
-  line-height: var(--uitk-text-label-lineHeight);
-  font-weight: var(--uitk-text-fontWeight);
+  font-size: var(--uitkText-label-fontSize, var(--uitk-text-label-fontSize));
+  line-height: var(--uitkText-label-lineHeight, var(--uitk-text-label-lineHeight));
+  font-weight: var(--uitkText-fontWeight, var(--uitk-text-fontWeight));
 }
 
 /* Label emphasis strong */
 label.uitkText strong,
 .uitkText-label.uitkText strong {
-  font-weight: var(--uitk-text-fontWeight-strong);
+  font-weight: var(--uitkText-fontWeight-strong, var(--uitk-text-fontWeight-strong));
 }
 /* Label emphasis small */
 label.uitkText small,
 .uitkText-label.uitkText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-fontWeight-small);
+  font-weight: var(--uitkText-fontWeight-small, var(--uitk-text-fontWeight-small));
 }
