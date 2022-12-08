@@ -1,6 +1,5 @@
 import { defineConfig } from "cypress";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
 import IstanbulPlugin from "vite-plugin-istanbul";
 import { isCI } from "ci-info";
 import path from "path";
@@ -10,7 +9,7 @@ import { version as reactVersion } from "react";
 import installCoverageTask from "@cypress/code-coverage/task";
 
 let viteConfig: UserConfig = {
-  plugins: [react(), tsconfigPaths(), IstanbulPlugin()],
+  plugins: [react(), IstanbulPlugin()],
   server: {
     watch: {
       ignored: ["**/coverage"],
