@@ -46,4 +46,9 @@
   .summary :global(.uitkIcon) {
     --uitk-size-icon-base: var(--uitk-size-unit);
   }
+
+  .summary :global(.uitkAccordionSummary-icon) {
+    left: unset;
+    right: 0;
+  }
 }
