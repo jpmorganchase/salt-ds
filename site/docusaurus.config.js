@@ -1,6 +1,28 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+/**
+ * Determines if this is a local dev, PR or production build
+ */
+function getBuildType() {
+  if (
+    process.env.GITHUB_EVENT_NAME === "push" &&
+    process.env.GITHUB_REF_NAME === "main"
+  ) {
+    return "prod";
+  }
+  if (process.env.GITHUB_EVENT_NAME === "pull_request") {
+    return "pr";
+  }
+  return "dev";
+}
+
+const favicons = {
+  prod: "img/favicon.ico",
+  pr: "img/favicon-pr.ico",
+  dev: "img/favicon-dev.ico",
+};
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Welcome to Salt",
@@ -11,7 +33,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: favicons[getBuildType()],
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
