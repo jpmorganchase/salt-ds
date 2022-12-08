@@ -60,6 +60,8 @@
 
   /* Link */
   --uitk-text-link-foreground-hover: var(--uitk-palette-navigate-foreground-hover);
+  --uitk-text-link-foreground-active: var(--uitk-palette-navigate-foreground-active);
+  --uitk-text-link-foreground-visited: var(--uitk-palette-navigate-foreground-visited);
   --uitk-text-link-textDecoration: underline;
   --uitk-text-link-textDecoration-hover: none;
   --uitk-text-link-textDecoration-selected: underline;
