@@ -222,7 +222,7 @@ interface PaginatorProps {
 ### Writing tests for Grid component
 
 The grid utilizes virtualization to load content and renders only what’s in the viewport.
-As previously fetched data leave the viewport (data scrolled out of view in grid), so do the DOM nodes.
+As previously fetched data leave the viewport (rows/columns scrolled out of view in grid), so do the DOM nodes.
 
 Note: if your test expects an element to be rendered, and it is out of the viewport, the test will not find the element - that is expected behaviour.
 Virtual DOM environments like JSDOM in Jest do not have any dimensions, therefore will not render any rows. We recommend using Cypress for testing the grid.
