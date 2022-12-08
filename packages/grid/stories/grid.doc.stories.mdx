@@ -29,7 +29,7 @@ The grid is virtualized. Only the visible part is rendered to the DOM.
 
 ## Configuring Grid
 
-Run command below to install `@jpmorganchase/uitk-grid` package.
+To install the `@jpmorganchase/uitk-grid` package, run the command relevant to your environment:
 
 ```sh
 yarn add @jpmorganchase/uitk-grid;
@@ -38,14 +38,13 @@ yarn add @jpmorganchase/uitk-grid;
 ```sh
 npm install @jpmorganchase/uitk-grid;
 ```
-
-Use the following call to import the grid.
+To import the grid into your application, run the following call:
 
 ```
 import { Grid } from "@jpmorganchase/uitk-grid";
 ```
 
-Note: ensure CSS `height` property for `.grid` has been set appropriately to see grid on screen
+Note: ensure the CSS `height` property for `.grid` has been set appropriately to see grid on screen.
 
 ### Props
 
@@ -55,10 +54,10 @@ Note: ensure CSS `height` property for `.grid` has been set appropriately to see
 
 The grid contains two variants:
 
-1. `primary`: the default mode. Zebra is available on `primary` variant, i.e. `zebra={true}`
+1. `primary`: the default mode. Zebra is available on `primary` variant, by using `zebra={true}`
 2. `secondary`
 
-Column separators can be enabled using `columnSeparators` property.
+Column separators can be enabled using the `columnSeparators` property.
 
 <Canvas>
   <Story id="grid-new-grid--grid-variants" decorators={[withFlexGap]} />
@@ -70,9 +69,9 @@ The grid columns can be configured using the `GridColumn` component.
 
 The grid package contains three types of predefined columns:
 
-1. `RowSelectionCheckboxColumn`: cell values of type `RowSelectionCheckboxCellValue` contain checkboxes, allows multiple selection and values are left aligned by default.
-2. `RowSelectionRadioColumn`: cell values of type `RowSelectionRadioCellValue` contain radio buttons, allows single selection only and values are left aligned by default.
-3. `NumericColumn`: cell values of type `NumericCellValue`, values are right aligned only.
+- `RowSelectionCheckboxColumn`: cell values of type `RowSelectionCheckboxCellValue` contain checkboxes, allow multiple selection and values are left aligned by default.
+- `RowSelectionRadioColumn`: cell values of type `RowSelectionRadioCellValue` contain radio buttons, allow single selection only and values are left aligned by default.
+- `NumericColumn`: cell values of type `NumericCellValue`, values are right aligned only.
 
 Each one of them renders a `GridColumn` with a specific set of props.
 You can easily create any project-specific column types tailored to your needs using the same approach.
@@ -85,7 +84,7 @@ You can easily create any project-specific column types tailored to your needs u
 
 Columns can be grouped using the `ColumnGroup` component.
 
-Note: whenever a `ColumnGroup` component is present, all other grid's children will also need to be wrapped within a `ColumnGroup` component.
+Note: whenever a `ColumnGroup` component is present, all other grids' children will also need to be wrapped within a `ColumnGroup` component.
 
 <Canvas>
   <Story id="grid-new-grid--column-groups" decorators={[withFlexGap]} />
@@ -107,9 +106,9 @@ When used in combination with the `onVisibleRowRangeChange` callback this allows
 
 The grid supports three variants of row selection:
 
-1. Single row selection
-2. Multi-row selection
-3. None (rows cannot be selected)
+- Single row selection
+- Multi-row selection
+- None (rows cannot be selected)
 
 `RowSelectionCheckboxColumn` is useful in `multi` row selection mode, and `RowSelectionRadioColumn` works best in `single` row selection mode.
 Both are optional.
@@ -124,7 +123,7 @@ In [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html) yo
 
 #### Controlled mode
 
-In [controlled mode](https://reactjs.org/docs/forms.html#controlled-components) you can provide `selectedRowIdxs` and update it when `onRowsSelected` callback is invoked.
+In [controlled mode](https://reactjs.org/docs/forms.html#controlled-components) you can provide `selectedRowIdxs` and update it when the `onRowsSelected` callback is invoked.
 Below is an example of how to use controlled selection mode to synchronize selection in two grids.
 
 <Canvas>
@@ -136,19 +135,19 @@ Below is an example of how to use controlled selection mode to synchronize selec
 
 ### Cell customization
 
-The grid allows the use of any renderable react components for cell customization. There is two ways to customize cell appearance:
+The grid allows the use of any renderable react components for cell customization. There are two ways to customize cell appearance:
 
-1. `cellValueComponent` (recommended)
-2. `cellComponent`
+- `cellValueComponent` (recommended)
+- `cellComponent`
 
-The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. It handles cell values and functionalities like on hover highlighting, selection, cursor and focus.
+The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. It handles cell values and functionalities like on-hover highlighting, selection, cursor and focus.
 Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns, [more details here](https://uitk.pages.dev/?path=/story/grid-new-grid--cell-customization).
 
 <Canvas>
   <Story id="grid-new-grid--cell-customization" decorators={[withFlexGap]} />
 </Canvas>
 
-Second way to customize cell appearance is the `cellComponent` property.
+The second way to customize cell appearance is the `cellComponent` property.
 Unlike `cellValueComponent` it replaces the entire cell element rather than its content and allows you to implement more radical customization scenarios.
 Please note that if you override `cellComponent` you will need to handle all basic functionality typically provided by the default cell implementation,
 therefore it is recommended that you only use `cellComponent` if `cellValueComponent` does not provide enough flexibility.
@@ -183,9 +182,9 @@ You can easily create any components tailored to your needs using the same appro
   <Story id="grid-new-grid--editable-cells" decorators={[withFlexGap]} />
 </Canvas>
 
-To trigger edit mode on cells on your...
+To trigger edit mode on cells on your:
 
-- keyboard: `backspace` key _or_ `F2` key _or_ simply start typing
+- keyboard: press either the `backspace` _or_ `F2` key, _alternatively_ simply start typing
 - mouse: double click
 
 ### Pagination
@@ -260,16 +259,16 @@ _Note: the keys below represent the expected interaction on Windows OS. For Mac 
 
 | Key                                 | Function                                                                                                                                                                                                                                            |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>Tab</kbd>                      | - If focus is before the grid, put focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, move focus to next component in the tab order outside of the grid.    |
-| <kbd>Shift</kbd> and <kbd>Tab</kbd> | - If focus is after the grid, put focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, move focus to previous component in the tab order outside of the grid. |
-| <kbd>►</kbd>                        | - Move focus one cell to the right. <br /> - If the last cell in the row, focus does not wrap.                                                                                                                                                      |
-| <kbd>◄</kbd>                        | - Move focus one cell to the left. <br /> - If the first cell in the row, focus does not wrap.                                                                                                                                                      |
-| <kbd>▲</kbd>                        | - Move focus one cell up. <br /> - If the first cell in the column, focus does not wrap.                                                                                                                                                            |
-| <kbd>▼</kbd>                        | - Move focus one cell down. <br /> - If the last cell in the column, focus does not wrap.                                                                                                                                                           |
-| <kbd>Home</kbd>                     | If focus is on a grid cell, moves focus to first cell in the current row.                                                                                                                                                                           |
-| <kbd>End</kbd>                      | If focus is on a grid cell, moves focus to last cell in the current row.                                                                                                                                                                            |
-| <kbd>Ctrl</kbd> and <kbd>Home</kbd> | If focus is on a grid cell, moves focus to first cell in the grid.                                                                                                                                                                                  |
-| <kbd>Ctrl</kbd> and <kbd>End</kbd>  | If focus is on a grid cell, moves focus to last cell in the grid.                                                                                                                                                                                   |
+| <kbd>Tab</kbd>                      | - If focus is before the grid, puts focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, moves focus to next component in the tab order outside of the grid.    |
+| <kbd>Shift</kbd> and <kbd>Tab</kbd> | - If focus is after the grid, puts focus on the last focused grid cell or the first cell if the grid is receiving focus for the first time. <br /> - If focus is in the grid, moves focus to previous component in the tab order outside of the grid. |
+| <kbd>►</kbd>                        | - Moves focus one cell to the right. <br /> - If the last cell in the row, focus does not wrap.                                                                                                                                                      |
+| <kbd>◄</kbd>                        | - Moves focus one cell to the left. <br /> - If the first cell in the row, focus does not wrap.                                                                                                                                                      |
+| <kbd>▲</kbd>                        | - Moves focus one cell up. <br /> - If the first cell in the column, focus does not wrap.                                                                                                                                                            |
+| <kbd>▼</kbd>                        | - Moves focus one cell down. <br /> - If the last cell in the column, focus does not wrap.                                                                                                                                                           |
+| <kbd>Home</kbd>                     | If focus is on a grid cell, moves focus to the first cell in the current row.                                                                                                                                                                           |
+| <kbd>End</kbd>                      | If focus is on a grid cell, moves focus to the last cell in the current row.                                                                                                                                                                            |
+| <kbd>Ctrl</kbd> and <kbd>Home</kbd> | If focus is on a grid cell, moves focus to the first cell in the grid.                                                                                                                                                                                  |
+| <kbd>Ctrl</kbd> and <kbd>End</kbd>  | If focus is on a grid cell, moves focus to the last cell in the grid.                                                                                                                                                                                   |
 | <kbd>Page up</kbd>                  | If focus is on a grid cell, scrolls to the next page of rows and moves focus to the first visible cell in the current column.                                                                                                                       |
 | <kbd>Page down</kbd>                | If focus is on a grid cell, scrolls to the previous page of rows and moves focus to the first visible cell in the current column.                                                                                                                   |
 
@@ -277,10 +276,10 @@ _Note: the keys below represent the expected interaction on Windows OS. For Mac 
 
 | Key                                      | Function                                                                                                                                                                                                                                                                                                                     |
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>Spacebar</kbd>                      | - If focus is on a cell, toggles the selection state of the row and always deselects a previous selected row (single and multi-select). <br /> - If focus is on a row checkbox, adds (or removes) the row to row multiple selection.                                                                                         |
-| <kbd>Shift</kbd> and <kbd>Spacebar</kbd> | - If focus is on any cell, toggles the selection state of its row and deselects any previous row selection. <br /> - If the grid supports multiple selection (i.e., rows contain checkboxes), when any cell in the row has focus, toggles the row's checkbox state and adds to (or removes from) the multiple row selection. |
-| <kbd>Ctrl</kbd> and <kbd>C</kbd>         | Coplies selection to clipboard.                                                                                                                                                                                                                                                                                              |
-| <kbd>Ctrl</kbd> and <kbd>X</kbd>         | Cuts selection to clipboard.                                                                                                                                                                                                                                                                                                 |
+| <kbd>Spacebar</kbd>                      | - If focus is on a cell, toggles the selection state of the row and always deselects a previous selected row (single and multi-select). <br /> - If focus is on a row checkbox, it adds (or removes) the row to row multiple selection.                                                                                         |
+| <kbd>Shift</kbd> and <kbd>Spacebar</kbd> | - If focus is on any cell, toggles the selection state of its row and deselects any previous row selection. <br /> - If the grid supports multiple selection (i.e., rows contain checkboxes), when any cell in the row has focus, it toggles the row's checkbox state and adds to (or removes from) the multiple row selection. |
+| <kbd>Ctrl</kbd> and <kbd>C</kbd>         | Copies the selection to clipboard.                                                                                                                                                                                                                                                                                              |
+| <kbd>Ctrl</kbd> and <kbd>X</kbd>         | Cuts the selection to clipboard.                                                                                                                                                                                                                                                                                                 |
 
 ### Interacting with editable cells
 
@@ -294,8 +293,8 @@ _Note: the keys below represent the expected interaction on Windows OS. For Mac 
 | <kbd>Esc</kbd>                        | If an editable cell is active, reverts any changes to the input and returns the cell to default state.                                                                                                                                 |
 | Alphanumeric keys                     | If focus is on an editable input cell, enters the typed characters and replaces current characters.                                                                                                                                    |
 | <kbd>Ctrl</kbd> and <kbd>V</kbd>      | Pastes values to cell/s.                                                                                                                                                                                                               |
-| <kbd>Ctrl</kbd> and <kbd>Z</kbd>      | Undo last action.                                                                                                                                                                                                                      |
-| <kbd>Ctrl</kbd> and <kbd>Y</kbd>      | Redo last action.                                                                                                                                                                                                                      |
+| <kbd>Ctrl</kbd> and <kbd>Z</kbd>      | Undoes the last action.                                                                                                                                                                                                                      |
+| <kbd>Ctrl</kbd> and <kbd>Y</kbd>      | Redoes the last action.                                                                                                                                                                                                                      |
 
 # Help and support
 
