@@ -6,9 +6,8 @@
 Change to Scrim styling; remove variant prop from Scrim component
 
 ```diff
-- --uitk-opacity-5
-- --uitk-palette-opacity-scrim-primary
-- --uitk-palette-opacity-scrim-secondary
+- --uitk-palette-opacity-primary-scrim
+- --uitk-palette-opacity-secondary-scrim
 - --uitk-palette-neutral-primary-background-scrim
 - --uitk-palette-neutral-secondary-background-scrim
 - --uitk-overlayable-primary-background
