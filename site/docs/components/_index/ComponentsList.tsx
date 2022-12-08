@@ -9,6 +9,7 @@ import { TearOutIcon, StepActiveIcon } from "@jpmorganchase/uitk-icons";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";
+import useIsMobileView from "../../../src/utils/useIsMobileView";
 
 import styles from "./ComponentsList.module.css";
 
@@ -54,16 +55,27 @@ const ComponentStatusData = ({
   availableSince: string;
 }) => {
   const showReleaseDate = availableSince && status === ComponentStatus.READY;
+  const isMobileView = useIsMobileView();
+  const mobileView = (
+    <span>{showReleaseDate ? `v${availableSince}` : null}</span>
+  );
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       <StepActiveIcon />
-      <span>{showReleaseDate ? `Released in v${availableSince}` : status}</span>
+      {isMobileView ? (
+        mobileView
+      ) : (
+        <span>
+          {showReleaseDate ? `Released in v${availableSince}` : status}
+        </span>
+      )}
     </div>
   );
 };
 
 const ComponentsList = () => {
+  const isMobileView = useIsMobileView();
   return (
     <div className={styles.componentList}>
       <table>
@@ -71,15 +83,15 @@ const ComponentsList = () => {
           <tr>
             <th>
               <StorybookLogo />
-              <span>Component</span>
+              {!isMobileView && <span>Component</span>}
             </th>
             <th>
               <ReactLogo />
-              <span>React</span>
+              {!isMobileView && <span>React</span>}
             </th>
             <th>
               <FigmaLogo />
-              <span>Figma</span>
+              {!isMobileView && <span>Figma</span>}
             </th>
           </tr>
         </thead>
