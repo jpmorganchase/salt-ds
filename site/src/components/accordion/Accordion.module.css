@@ -52,3 +52,9 @@
     right: 0;
   }
 }
+
+@media screen and (max-width: 309px) {
+  .accordion .summary h2 {
+    line-height: initial;
+  }
+}
