@@ -6,7 +6,7 @@ export * from "./makePrefixer";
 export * from "./marginMiddleware";
 export * from "./ownerDocument";
 export * from "./ownerWindow";
-export * from "./polymorphicRef";
+export * from "./polymorphicTypes";
 export * from "./setRef";
 export * from "./useControlled";
 export * from "./useForkRef";
