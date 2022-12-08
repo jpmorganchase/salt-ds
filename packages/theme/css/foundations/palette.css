@@ -261,9 +261,9 @@
   --uitk-palette-neutral-primary-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-neutral-primary-scrim: var(--uitk-color-gray-800-fade-scrim-primary);
   --uitk-palette-neutral-primary-separator: var(--uitk-color-white-fade-separatorOpacity-primary);
-  --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-700);
-  --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-700-fade-background);
-  --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-700-fade-readonly);
+  --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-600);
+  --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-600-fade-background);
+  --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-600-fade-background-readonly);
   --uitk-palette-neutral-secondary-border: var(--uitk-color-gray-90);
   --uitk-palette-neutral-secondary-border-disabled: var(--uitk-color-gray-90-fade-border);
   --uitk-palette-neutral-secondary-foreground: var(--uitk-color-gray-70);
