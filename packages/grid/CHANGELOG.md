@@ -1,5 +1,81 @@
 # @jpmorganchase/uitk-grid
 
+## 0.4.0
+
+### Minor Changes
+
+- da7065c1: Merge `-caption` and `-help` tokens to single `-label` token
+  Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
+  Move `--uitk-text-help-fontStyle` to become `--uitk-editable-help-fontStyle`
+
+  ```diff
+  -  --uitk-text-caption-fontStyle
+  -  --uitk-text-caption-fontWeight
+  -  --uitk-text-caption-fontWeight-strong
+  -  --uitk-text-caption-fontSize
+  -  --uitk-text-caption-minHeight
+  -  --uitk-text-help-fontWeight
+  -  --uitk-text-help-fontSize
+  -  --uitk-text-help-minHeight
+  -  --uitk-text-help-fontStyle
+  +  --uitk-text-label-fontWeight
+  +  --uitk-text-label-fontWeight-strong
+  +  --uitk-text-label-fontSize
+  +  --uitk-editable-help-fontStyle
+  ```
+
+  Correct line height values
+
+  TD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 16px;
+  -  --uitk-text-help-lineHeight: 16px;
+  +  --uitk-text-label-lineHeight: 18px;
+  ```
+
+  LD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 16px;
+  ```
+
+  MD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 14px;
+  ```
+
+  HD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 13px;
+  ```
+
+- 8c075106: Use American English 'gray' throughout code
+
+### Patch Changes
+
+- 8ded93ce: Fix Grid headers and column groups accessibility
+- 51c31aeb: Focus handling changed to improve accessibility. Cells receive real focus.
+  Keyboard handling updated.
+  Aria attributes added.
+  Keyboard navigation and edit mode tests added.
+- 1228d3db: Remove selection column pinning by default
+- d8d00054: Add aria-colcount, aria-rowcount and aria-multiselectable to grid
+- 185375b5: Remove pinned Grid columns from the DOM when not in use.
+- 656d4b07: Additional separators (pinned column separators) added (optional, enabled by default)
+  Pinned/unpinned column separator replaces the regular column separator and column header separator (rendered on the same place)
+  Shadows have no gaps between the header and table body
+  Header has a shadow when scrollTop is not zero
+- 4ed5e1f1: Row selection checkbox/radio button gets focus
+
 ## 0.3.2
 
 ### Patch Changes

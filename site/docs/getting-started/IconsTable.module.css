@@ -4,6 +4,7 @@
 
 .iconsTable {
   margin: calc(var(--uitk-size-unit) * 2) 0;
+  caption-side: bottom;
 }
 
 .iconsTable > tbody tr td:not(:first-child) {
@@ -13,4 +14,9 @@
 .iconsTable > tbody tr td p {
   margin-top: var(--uitk-size-unit);
   margin-bottom: 0;
+}
+
+.iconsTable > caption {
+  text-align: left;
+  margin-top: var(--uitk-size-unit);
 }

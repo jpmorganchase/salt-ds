@@ -27,7 +27,7 @@ const cards: CardProps[] = [
     inlineIcon: <FlagIcon size={1.7} />,
     title: "Raise a bug",
     description:
-      "Let us know if you spot any issues and we’ll add them to our backlog.",
+      "Let us know if you spot any issues with our components and we'll add them to our backlog.",
     url: "https://github.com/jpmorganchase/uitk/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
     footer: { footerText: "Report a bug on GitHub", isExternalLink: true },
     keylineColor: "var(--site-tertiary-accent-purple)",

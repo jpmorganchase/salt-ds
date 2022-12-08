@@ -15,6 +15,7 @@
   flex-direction: column;
   flex: 1;
   max-width: var(--img-width);
+  margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 .card > img {
@@ -28,6 +29,10 @@
   flex-direction: column;
   justify-content: space-between;
   padding-top: var(--uitk-size-unit);
+}
+
+.textContainer > :last-child {
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 996px) {
