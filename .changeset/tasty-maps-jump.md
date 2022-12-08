@@ -219,6 +219,6 @@ Add new fade tokens needed for palette; replace emphasis tokens with variants - 
 
 + --uitk-color-white-fade-background-readonly
 + --uitk-color-gray-20-fade-background-readonly
-+ --uitk-color-gray-700-fade-background-readonly
++ --uitk-color-gray-600-fade-background-readonly
 + --uitk-color-gray-800-fade-background-readonly
 ````
