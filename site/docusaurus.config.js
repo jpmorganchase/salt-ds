@@ -25,7 +25,7 @@ const favicons = {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Welcome to Salt",
+  title: "Salt Design System",
   tagline: `Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessibility-focused components as well as comprehensive design templates, style libraries and assets.
   Salt is the next-generation version of the established internal J.P. Morgan UI Toolkit design system, which has been used to build over 1,200 websites and applications to date.
   In time, as a full-service solution, Salt will be the vehicle for digital delivery of a universal design language—with best-in-class business patterns, content and accessibility guides, tooling and adoption resources.`,

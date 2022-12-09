@@ -457,11 +457,11 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   );
   --agGrid-checkbox-foreground: var(
     --uitkAgGrid-checkbox-foreground,
-    var(--uitk-selectable-foreground)
+    var(--uitk-text-primary-foreground)
   );
   --agGrid-checkbox-foreground-selected: var(
     --uitkAgGrid-checkbox-foreground-selected,
-    var(--uitk-selectable-foreground-selected)
+    var(--uitk-text-primary-foreground)
   );
   --_agGrid-checkbox-border: var(--uitk-selectable-borderWidth)
     var(--uitk-selectable-borderStyle) var(--uitk-selectable-borderColor);
