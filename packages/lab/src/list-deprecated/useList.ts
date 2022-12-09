@@ -39,7 +39,7 @@ export interface ListState<
   Item = string,
   Variant extends ListSelectionVariant = "default"
 > {
-  id: string;
+  id?: string;
   focusVisible: boolean;
   selectedItem?: Variant extends ListMultiSelectionVariant ? Array<Item> : Item;
   highlightedIndex?: number;
@@ -518,7 +518,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   };
 
   const handleMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
-    if (focusVisible) {
+    if (focusVisible && id) {
       // Get the root node of the component if we have access to it otherwise default to current document
       const rootNode = (
         rootRef.current || ownerDocument(event.currentTarget)
