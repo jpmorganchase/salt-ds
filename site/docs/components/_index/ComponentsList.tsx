@@ -135,12 +135,17 @@ const ComponentsList = () => {
     }
   };
 
+  const ariaSort = hasAscendingOrder ? "ascending" : "descending";
+
   return (
     <div className={styles.componentList}>
       <table>
         <thead>
           <tr>
-            <th onClick={() => handleSorting("name")}>
+            <th
+              onClick={() => handleSorting("name")}
+              aria-sort={isSortedBy === "name" ? ariaSort : null}
+            >
               <ComponentHeader
                 logo={<StorybookLogo />}
                 label="Component"
@@ -148,7 +153,10 @@ const ComponentsList = () => {
                 ascendingOrder={hasAscendingOrder}
               />
             </th>
-            <th onClick={() => handleSorting("devStatus")}>
+            <th
+              onClick={() => handleSorting("devStatus")}
+              aria-sort={isSortedBy === "devStatus" ? ariaSort : null}
+            >
               <ComponentHeader
                 logo={<ReactLogo />}
                 label="React"
@@ -156,7 +164,10 @@ const ComponentsList = () => {
                 ascendingOrder={hasAscendingOrder}
               />
             </th>
-            <th onClick={() => handleSorting("designStatus")}>
+            <th
+              onClick={() => handleSorting("designStatus")}
+              aria-sort={isSortedBy === "designStatus" ? ariaSort : null}
+            >
               <ComponentHeader
                 logo={<FigmaLogo />}
                 label="Figma"
