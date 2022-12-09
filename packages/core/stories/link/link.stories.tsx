@@ -1,6 +1,5 @@
 import { Link } from "@jpmorganchase/uitk-core";
 
-import "./link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
 
@@ -25,18 +24,6 @@ export const TargetBlankCustomIcon: ComponentStory<typeof Link> = () => {
   return (
     <Link
       IconComponent={StackoverflowIcon}
-      href="https://www.google.com"
-      target="_blank"
-    >
-      Link to URL
-    </Link>
-  );
-};
-
-export const TargetBlankNoIcon: ComponentStory<typeof Link> = () => {
-  return (
-    <Link
-      className="uitkTargetBlankNoIcon-Link"
       href="https://www.google.com"
       target="_blank"
     >
