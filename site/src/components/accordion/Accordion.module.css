@@ -8,6 +8,7 @@
   --accordion-padding-left: var(--uitk-size-unit);
   --accordion-section-padding: calc(var(--uitk-size-unit) * 2) 0;
   --ifm-link-decoration: var(--uitk-text-link-textDecoration);
+  --ifm-heading-margin-bottom: 0;
 
   height: calc(100% - var(--keyline-height));
 }
@@ -17,16 +18,16 @@
 }
 
 .accordion .summary h2 {
-  line-height: var(--accordion-summary-height);
   padding-left: var(--accordion-padding-left);
 }
 
-/* Override Salt accordion styles */
-
-.summary :global(.uitkAccordionSummary-icon) {
-  left: unset;
-  right: calc(2 * var(--uitk-size-unit));
+.accordion .summary {
+  line-height: initial;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
+
+/* Override Salt accordion styles */
 
 .summary :global(.uitkAccordionSummary-icon:hover) {
   background: var(--accordion-summary-background-hover);

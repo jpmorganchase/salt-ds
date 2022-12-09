@@ -63,6 +63,7 @@
     position: relative;
     width: 100%;
     padding: calc(var(--uitk-size-unit) * 2);
+    min-height: unset;
   }
 
   .keyline {
