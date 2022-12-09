@@ -1,9 +1,4 @@
-import {
-  InternalLinkProps,
-  Link,
-  makePrefixer,
-  Text,
-} from "@jpmorganchase/uitk-core";
+import { LinkProps, Link, makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { useMetricContext } from "./internal";
@@ -15,7 +10,7 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
    *
    * @see `Link` for a list of valid props.
    */
-  SubtitleLinkProps?: Omit<Partial<InternalLinkProps>, "children">;
+  SubtitleLinkProps?: Omit<Partial<LinkProps>, "children">;
   /**
    * Subtitle of the Metric Header
    */

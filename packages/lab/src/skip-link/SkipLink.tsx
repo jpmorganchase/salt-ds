@@ -1,14 +1,10 @@
 import { forwardRef, RefObject } from "react";
-import {
-  InternalLinkProps,
-  Link,
-  makePrefixer,
-} from "@jpmorganchase/uitk-core";
+import { LinkProps, Link, makePrefixer } from "@jpmorganchase/uitk-core";
 import "./SkipLink.css";
 import cx from "classnames";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 
-interface SkipLinkProps extends InternalLinkProps {
+interface SkipLinkProps extends LinkProps {
   /**
    * This is a ref that has access to the target element.
    *
