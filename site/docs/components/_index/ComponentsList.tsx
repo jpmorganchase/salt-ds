@@ -12,6 +12,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@jpmorganchase/uitk-icons";
+import { Button } from "@jpmorganchase/uitk-core";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";
@@ -100,13 +101,15 @@ const ComponentHeader = ({
 }) => {
   const arrowIcon = ascendingOrder ? <ArrowUpIcon /> : <ArrowDownIcon />;
   return (
-    <div className={styles.headerContainer}>
-      <div>
-        {logo}
-        <span>{label}</span>
+    <Button>
+      <div className={styles.headerContainer}>
+        <div>
+          {logo}
+          <span>{label}</span>
+        </div>
+        {isSorted && arrowIcon}
       </div>
-      {isSorted && arrowIcon}
-    </div>
+    </Button>
   );
 };
 

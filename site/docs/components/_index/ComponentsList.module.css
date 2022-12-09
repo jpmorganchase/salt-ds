@@ -16,8 +16,22 @@
   gap: var(--uitk-size-unit);
 }
 
-.componentList th:hover {
-  cursor: pointer;
+.componentList th button {
+  --uitkButton-background-hover: transparent;
+  --uitkButton-background: transparent;
+  --uitkButton-background-active: transparent;
+  --button-text-color-active: var(--button-text-color-hover);
+  --uitkButton-width: 100%;
+  --uitkButton-padding: 0;
+  --uitkButton-text-color: none;
+  --uitkButton-textTransform: none;
+  --uitkButton-fontWeight: none;
+  --uitkButton-letterSpacing: normal;
+  --uitkButton-height: auto;
+  --uitkIcon-color: inherit;
+  --uitk-actionable-primary-foreground-active: var(--button-text-color-hover);
+
+  display: inline;
 }
 
 .componentList th .headerContainer {
