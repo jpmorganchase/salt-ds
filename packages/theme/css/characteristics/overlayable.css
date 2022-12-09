@@ -7,5 +7,5 @@
   --uitk-overlayable-shadow-drag: var(--uitk-shadow-4);
   --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
 
-  --uitk-overlayable-background: var(--uitk-palette-neutral-scrim);
+  --uitk-overlayable-background: var(--uitk-palette-neutral-backdrop);
 }

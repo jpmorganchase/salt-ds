@@ -12,6 +12,6 @@ Change to Scrim styling; remove variant prop from Scrim component
 - --uitk-palette-neutral-secondary-background-scrim
 - --uitk-overlayable-primary-background
 - --uitk-overlayable-secondary-background
-+ --uitk-palette-neutral-background-scrim
-+ --uitk-overlayable-background: var(--uitk-palette-neutral-background-scrim)
++ --uitk-palette-neutral-background-backdrop
++ --uitk-overlayable-background: var(--uitk-palette-neutral-background-backdrop)
 ```
