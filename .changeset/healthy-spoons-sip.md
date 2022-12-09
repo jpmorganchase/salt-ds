@@ -3,4 +3,4 @@
 "@jpmorganchase/uitk-lab": patch
 ---
 
-Move Text component from 'lab' to 'core'
+Move to global incrementing counter for useId

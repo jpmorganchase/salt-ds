@@ -223,9 +223,9 @@
   --ifm-link-decoration: none;
   height: 100%;
   position: sticky;
-  padding-left: calc(4 * var(--uitk-size-unit));
+  padding-left: calc(5 * var(--uitk-size-unit));
   padding-top: calc(3 * var(--uitk-size-unit));
-  top: var(--ifm-navbar-height);
+  top: calc(var(--ifm-navbar-height) + var(--uitk-size-unit));
   width: 282px;
 }
 
@@ -233,7 +233,7 @@
   font-size: var(--uitk-text-h4-fontSize);
   font-weight: var(--uitk-text-h4-fontWeight);
   position: relative;
-  right: calc(0.5 * var(--uitk-size-unit));
+  right: 1.85em;
 }
 
 .table-of-contents ul,
@@ -252,7 +252,8 @@ ul.table-of-contents li > ul li {
 }
 
 .table-of-contents li {
-  margin: var(--ifm-toc-padding-vertical) 0;
+  margin: 0;
+  text-indent: -1em;
 }
 
 .table-of-contents li li {

@@ -4,12 +4,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 const composedStories = composeStories(gridStories);
-const {
-  DefaultGridLayout,
-  GridLayoutMultipleRows,
-  GridLayoutResponsiveView,
-  GridLayoutNested,
-} = composedStories;
+const { DefaultGridLayout, GridLayoutNested } = composedStories;
 
 const testElementsNumber = (elements: number) =>
   new RegExp(`^(\\d*\\.?\\d*px *){${elements}}$`);
@@ -19,7 +14,8 @@ describe("GIVEN a Grid", () => {
 
   describe("WHEN no props are provided", () => {
     it("THEN it should render 12 columns and 1 row", () => {
-      cy.mount(<DefaultGridLayout />);
+      // Passing empty columns to test default, as example needs columns for accessibility purposes.
+      cy.mount(<DefaultGridLayout columns={{}} />);
 
       cy.get(".uitkGridLayout")
         .invoke("css", "grid-template-columns")
@@ -48,17 +44,17 @@ describe("GIVEN a Grid", () => {
       cy.get(".uitkGridLayout")
         .eq(0)
         .invoke("css", "grid-template-rows")
-        .should("match", testElementsNumber(2));
+        .should("match", testElementsNumber(1));
 
       cy.get(".uitkGridLayout").eq(1).should("have.css", "column-gap", "24px");
       cy.get(".uitkGridLayout")
         .eq(1)
         .invoke("css", "grid-template-columns")
-        .should("match", testElementsNumber(12));
+        .should("match", testElementsNumber(1));
       cy.get(".uitkGridLayout")
         .eq(1)
         .invoke("css", "grid-template-rows")
-        .should("match", testElementsNumber(1));
+        .should("match", testElementsNumber(2));
     });
   });
 
@@ -67,7 +63,7 @@ describe("GIVEN a Grid", () => {
     const rows = 3;
 
     it("THEN it should render multiple columns and rows", () => {
-      cy.mount(<GridLayoutMultipleRows columns={columns} rows={rows} />);
+      cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
       cy.get(".uitkGridLayout")
         .invoke("css", "grid-template-columns")
@@ -90,7 +86,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
+        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -109,7 +105,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
+        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -122,13 +118,13 @@ describe("GIVEN a Grid", () => {
     );
 
     it(
-      "THEN it should render 2 columns and 2 rows on sm viewport",
+      "THEN it should render 2 columns and 6 rows on sm viewport",
       {
         viewportHeight: 900,
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
+        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -136,18 +132,18 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testElementsNumber(2));
+          .should("match", testElementsNumber(6));
       }
     );
 
     it(
-      "THEN it should render 1 column and 4 rows on xs viewport",
+      "THEN it should render 1 column and 12 rows on xs viewport",
       {
         viewportHeight: 900,
         viewportWidth: 600,
       },
       () => {
-        cy.mount(<GridLayoutResponsiveView columns={columns} rows={rows} />);
+        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-columns")
@@ -155,7 +151,7 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testElementsNumber(4));
+          .should("match", testElementsNumber(12));
       }
     );
   });
@@ -181,7 +177,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <GridLayoutResponsiveView columns={columns} rows={rows} />
+            <DefaultGridLayout columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -204,7 +200,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <GridLayoutResponsiveView columns={columns} rows={rows} />
+            <DefaultGridLayout columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -219,7 +215,7 @@ describe("GIVEN a Grid", () => {
     );
 
     it(
-      "THEN it should render 2 columns and 2 rows on sm viewport",
+      "THEN it should render 2 columns and 6 rows on sm viewport",
       {
         viewportHeight: 900,
         viewportWidth: 741,
@@ -227,7 +223,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <GridLayoutResponsiveView columns={columns} rows={rows} />
+            <DefaultGridLayout columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -237,12 +233,12 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testElementsNumber(2));
+          .should("match", testElementsNumber(6));
       }
     );
 
     it(
-      "THEN it should render 1 column and 4 rows on xs viewport",
+      "THEN it should render 1 column and 12 rows on xs viewport",
       {
         viewportHeight: 900,
         viewportWidth: 499,
@@ -250,7 +246,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <ToolkitProvider breakpoints={breakpoints}>
-            <GridLayoutResponsiveView columns={columns} rows={rows} />
+            <DefaultGridLayout columns={columns} rows={rows} />
           </ToolkitProvider>
         );
 
@@ -260,7 +256,7 @@ describe("GIVEN a Grid", () => {
 
         cy.get(".uitkGridLayout")
           .invoke("css", "grid-template-rows")
-          .should("match", testElementsNumber(4));
+          .should("match", testElementsNumber(12));
       }
     );
   });
