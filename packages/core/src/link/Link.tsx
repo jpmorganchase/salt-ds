@@ -56,7 +56,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {...rest}
     >
       {children}
-      {target && target === "_blank" && (
+      {target === "_blank" && (
         <IconComponent
           aria-label="External Link"
           className={withBaseName("icon")}
