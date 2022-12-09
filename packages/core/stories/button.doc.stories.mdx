@@ -57,6 +57,12 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
 
 Icons can be put before or after text, or used alone.
 
+#### Design considerations
+
+- An icon should be put before the text if it is further describing the button's action, such as upload, submit, play, done. This can be useful in busy environments where an additional description can improve speed to locate actions.
+- When you put an icon after the button label, it typically suggests direction or movement, such as opening a menu overlay, expanding a panel or opening a document. In this case, when the button is pressed there is typically an immediate visual change.
+- A button with only an icon and no text should be self-explanatory, ideally using well known metaphors which are easily related too. If the purpose of the button isn’t clear, a label should be added. If space is a consideration, add a tooltip to the button set to display on hover after a short delay (typically 300ms, `--foundation-delay-perceptible`). The tooltip should add context to the action such as 'Edit this form', 'Print this document', 'Lock document state'. 
+
 <Canvas>
   <Story name="Button with icon and label" decorators={[withFlexGap]}>
     <Button variant="cta">
