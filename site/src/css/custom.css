@@ -455,8 +455,8 @@ table tr td:not(:last-child) {
 .navbar-sidebar__back {
   font-size: var(--uitk-text-fontSize);
   margin-bottom: -8px;
-
-},
+}
+,
 .navbar-sidebar .navbar-sidebar__back {
   padding: var(--uitk-size-unit);
   margin: 0 0 var(--uitk-size-unit) 0;
