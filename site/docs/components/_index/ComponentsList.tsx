@@ -131,6 +131,7 @@ const ComponentsList = () => {
         componentsListSorting(componentDetail, !hasAscendingOrder)
       );
     } else {
+      // we want to reset the sorting order when switching to a different column
       setHasAscendingOrder(true);
       setComponentsList(componentsListSorting(componentDetail, true));
     }

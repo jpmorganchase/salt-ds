@@ -17,6 +17,7 @@
 }
 
 .componentList th button {
+  /* Remove button default styles so it's not visible but we retain its functionality for ADA purposes */
   --uitkButton-background-hover: transparent;
   --uitkButton-background: transparent;
   --uitkButton-background-active: transparent;
