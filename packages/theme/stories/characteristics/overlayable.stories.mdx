@@ -22,11 +22,12 @@ Components that may form a hierarchy and stack upon or beneath other elements of
 | Hover              | Dropshadow found around a component using the default (e.g. Card) on hover state |
 | Popout             | Dropshadow found around temporarily overlaying elements (e.g. Tooltip)           |
 | Drag               | Dropshadow found around draggable objects on drag (e.g. Tabs)                    |
-| Z-Modal            | Dropshadow found around modal windows (e.g. Dialog)                              |
+| Modal              | Dropshadow found around modal windows (e.g. Dialog)                              |
 
 <Canvas>
-  <Story name="Shadow">
+  <Story name="Overlayable">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-overlayable-background" />
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-scroll" />
       <BlankBlockCode>--uitk-overlayable-shadow-scroll</BlankBlockCode>
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-borderRegion" />
@@ -41,26 +42,6 @@ Components that may form a hierarchy and stack upon or beneath other elements of
       <BlankBlockCode>--uitk-overlayable-shadow-drag</BlankBlockCode>
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-modal" />
       <BlankBlockCode>--uitk-overlayable-shadow-modal</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Primary
-
-<Canvas>
-  <Story name="Primary">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-overlayable-primary-background" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Secondary
-
-<Canvas>
-  <Story name="Secondary">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-overlayable-secondary-background" />
     </DocGrid>
   </Story>
 </Canvas>
