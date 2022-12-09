@@ -246,7 +246,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       value: generate(
                         findLast(node.value, (node) =>
                           valueTypes.includes(node.type)
-                        )
+                        ) ?? node.value
                       ),
                     };
                   } catch (e) {
