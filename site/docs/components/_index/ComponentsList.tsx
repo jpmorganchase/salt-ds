@@ -132,9 +132,7 @@ const ComponentsList = () => {
       );
     } else {
       setHasAscendingOrder(true);
-      setComponentsList(
-        componentsListSorting(componentDetail, hasAscendingOrder)
-      );
+      setComponentsList(componentsListSorting(componentDetail, true));
     }
   };
 
