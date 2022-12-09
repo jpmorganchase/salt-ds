@@ -2,7 +2,7 @@
 .uitkText {
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight);
-  color: var(--text-color);
+  color: var(--uitkText-color, var(--text-color));
 }
 
 /* Allows truncation */
