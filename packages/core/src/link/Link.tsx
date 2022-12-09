@@ -20,18 +20,13 @@ const withBaseName = makePrefixer("uitkLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
-export interface InternalLinkProps extends TextProps<"a"> {
-  IconComponent?: never;
-}
-export interface ExternalLinkProps extends TextProps<"a"> {
-  target: "_blank";
+export interface LinkProps extends TextProps<"a"> {
+  target?: "_blank";
   /**
    * Override "tearout" icon.
    */
   IconComponent?: ComponentType<IconProps>;
 }
-
-export type LinkProps = ExternalLinkProps | InternalLinkProps;
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
