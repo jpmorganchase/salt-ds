@@ -220,7 +220,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     <div
       aria-modal={!enableContainerMode}
       className={classnames(className, withBaseName(), {
-        [withBaseName("containerFix")]: enableContainerMode
+        [withBaseName("containerFix")]: enableContainerMode,
       })}
       data-testid="scrim"
       onClick={onBackDropClick}
