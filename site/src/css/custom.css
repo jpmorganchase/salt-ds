@@ -45,6 +45,7 @@
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
   --image-border: var(--uitk-palette-neutral-border-medium);
+  --ifm-menu-color-background-hover: none;
 }
 
 .main-wrapper {
@@ -140,10 +141,12 @@
   content: "";
   position: relative;
   left: 0;
+  font-weight: bold;
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
   background-color: var(--uitk-color-gray-20);
+  background-color: red;
 }
 
 .docs-wrapper .main-wrapper {
@@ -448,7 +451,11 @@ table tr td:not(:last-child) {
   justify-content: flex-end;
   gap: var(--uitk-size-unit);
 }
+.navbar-sidebar__back {
+  font-size: var(--uitk-text-fontSize);
+  margin-bottom: -8px;
 
+},
 .navbar-sidebar .navbar-sidebar__back {
   padding: var(--uitk-size-unit);
   margin: 0 0 var(--uitk-size-unit) 0;
