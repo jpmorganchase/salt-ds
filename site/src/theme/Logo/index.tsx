@@ -9,11 +9,10 @@ import { useViewport } from "@jpmorganchase/uitk-core";
 function LogoThemedImage({ logo, alt, imageClassName }) {
   const viewport = useViewport();
 
-  const isMobileView = viewport <= 996;
-
+  const isSmallView = viewport <= 1070;
   const sources = {
     light: useBaseUrl(logo.src),
-    dark: isMobileView
+    dark: isSmallView
       ? useBaseUrl("/img/logo_mobile.svg")
       : useBaseUrl(logo.srcDark || logo.src),
   };
