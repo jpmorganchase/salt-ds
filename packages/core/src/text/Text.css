@@ -15,10 +15,10 @@
 }
 
 .uitkText-primary {
-  --text-color: var(--uitk-text-primary-foreground);
+  --text-color: var(--uitkText-primary-foreground, var(--uitk-text-primary-foreground));
 }
 .uitkText-secondary {
-  --text-color: var(--uitk-text-secondary-foreground);
+  --text-color: var(--uitkText-secondary-foreground, var(--uitk-text-secondary-foreground));
 }
 
 /* Body emphasis strong */

@@ -124,6 +124,17 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
 
 <CharacteristicUsage of={Text} />
 
+### --uitkText CSS custom property API
+
+The default styling values for most Text attributes are provided by the theme variables. A smaller number of attributes
+use hard-coded values local to Text. Both of these can be overridden, see Theme documentation for detailed usage guidance.
+
+The CSS custom properties below are consumed by Text, but not defined by Text. They can be defined via a container or
+a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
+or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
+
+<CSSVariableTable of={Text} />
+
 ## Accessibility
 
 We are letting you decide on the user experience you would like to implement for text, however you need to remain ADA compliant and provide the correct visual and auditory experience for text truncation. Truncated text must meet the WCAG SC 1.4.4 requirement.
