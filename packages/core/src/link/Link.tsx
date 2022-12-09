@@ -20,7 +20,7 @@ const withBaseName = makePrefixer("uitkLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
-export interface LinkProps extends Omit<TextProps<"a">, "styleAs" | "as"> {
+export interface LinkProps extends Omit<TextProps<"a">, "as"> {
   IconComponent?: ComponentType<IconProps>;
 }
 
