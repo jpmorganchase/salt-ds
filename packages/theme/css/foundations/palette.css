@@ -111,8 +111,9 @@
   --uitk-palette-navigate-tertiary-background: transparent;
   --uitk-palette-navigate-tertiary-background-active: transparent;
   --uitk-palette-navigate-tertiary-background-hover: var(--uitk-color-gray-20);
-  --uitk-palette-navigate-foreground: var(--uitk-color-gray-400);
-  --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-600);
+  --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-700);
+  --uitk-palette-navigate-foreground-active: var(--uitk-color-blue-600);
+  --uitk-palette-navigate-foreground-visited: var(--uitk-color-purple-800);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-gray-90);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-600);
   --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-600-fade-border);
@@ -242,8 +243,9 @@
   --uitk-palette-navigate-tertiary-background: transparent;
   --uitk-palette-navigate-tertiary-background-active: transparent;
   --uitk-palette-navigate-tertiary-background-hover: var(--uitk-color-gray-700);
-  --uitk-palette-navigate-foreground: var(--uitk-color-gray-90);
   --uitk-palette-navigate-foreground-hover: var(--uitk-color-blue-200);
+  --uitk-palette-navigate-foreground-active: var(--uitk-color-blue-300);
+  --uitk-palette-navigate-foreground-visited: var(--uitk-color-purple-100);
   --uitk-palette-navigate-indicator-hover: var(--uitk-color-gray-90);
   --uitk-palette-navigate-indicator-active: var(--uitk-color-orange-400);
   --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-400-fade-border);
@@ -261,9 +263,9 @@
   --uitk-palette-neutral-primary-foreground-disabled: var(--uitk-color-white-fade-foreground);
   --uitk-palette-neutral-primary-scrim: var(--uitk-color-gray-800-fade-scrim-primary);
   --uitk-palette-neutral-primary-separator: var(--uitk-color-white-fade-separatorOpacity-primary);
-  --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-700);
-  --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-700-fade-background);
-  --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-700-fade-readonly);
+  --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-600);
+  --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-600-fade-background);
+  --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-600-fade-background-readonly);
   --uitk-palette-neutral-secondary-border: var(--uitk-color-gray-90);
   --uitk-palette-neutral-secondary-border-disabled: var(--uitk-color-gray-90-fade-border);
   --uitk-palette-neutral-secondary-foreground: var(--uitk-color-gray-70);

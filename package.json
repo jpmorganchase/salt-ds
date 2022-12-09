@@ -4,6 +4,7 @@
   "private": true,
   "main": "index.js",
   "license": "MIT",
+  "repository": "https://github.com/jpmorganchase/uitk",
   "workspaces": [
     "packages/**",
     "tooling/**",
@@ -116,7 +117,7 @@
     "typescript": "4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-istanbul": "^3.0.1",
-    "vite-tsconfig-paths": "^3.5.0",
+    "vite-tsconfig-paths": "^4.0.0",
     "webpack": "5.74.0"
   },
   "resolutions": {

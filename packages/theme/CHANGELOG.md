@@ -1,5 +1,685 @@
 # @jpmorganchase/uitk-theme
 
+## 0.7.0
+
+### Minor Changes
+
+- b5881e50: Correction of line height values
+
+  TD
+
+  ```diff
+  - --uitk-text-lineHeight: 22px;
+  - --uitk-text-h1-lineHeight: auto;
+  - --uitk-text-h2-lineHeight: 36px;
+  - --uitk-text-h3-lineHeight: 26px;
+  - --uitk-text-h4-lineHeight: 22px;
+  + --uitk-text-lineHeight: 20px;
+  + --uitk-text-h1-lineHeight: 54px;
+  + --uitk-text-h2-lineHeight: 42px;
+  + --uitk-text-h3-lineHeight: 32px;
+  + --uitk-text-h4-lineHeight: 20px;
+  ```
+
+  LD
+
+  ```diff
+  - --uitk-text-h3-lineHeight: 26px;
+  + --uitk-text-h3-lineHeight: 24px;
+  ```
+
+  MD
+
+  ```diff
+  - --uitk-text-h1-lineHeight: 31px;
+  - --uitk-text-h3-lineHeight: 22px;
+  + --uitk-text-h1-lineHeight: 32px;
+  + --uitk-text-h3-lineHeight: 18px;
+  ```
+
+- fc1a5b8e: Tweak palette disabled token used in editable
+
+  ```diff
+  - --uitk-editable-background-disabled-low: var(--uitk-palette-interact-background-low)
+  + --uitk-palette-interact-tertiary-background-disabled
+  + --uitk-editable-tertiary-background-disabled: var(--uitk-palette-neutral-tertiary-background-disabled)
+  ```
+
+- da7065c1: Merge `-caption` and `-help` tokens to single `-label` token
+  Remove `--uitk-text-help-fontWeight`, `--uitk-text-caption-fontStyle`
+  Move `--uitk-text-help-fontStyle` to become `--uitk-editable-help-fontStyle`
+
+  ```diff
+  -  --uitk-text-caption-fontStyle
+  -  --uitk-text-caption-fontWeight
+  -  --uitk-text-caption-fontWeight-strong
+  -  --uitk-text-caption-fontSize
+  -  --uitk-text-caption-minHeight
+  -  --uitk-text-help-fontWeight
+  -  --uitk-text-help-fontSize
+  -  --uitk-text-help-minHeight
+  -  --uitk-text-help-fontStyle
+  +  --uitk-text-label-fontWeight
+  +  --uitk-text-label-fontWeight-strong
+  +  --uitk-text-label-fontSize
+  +  --uitk-editable-help-fontStyle
+  ```
+
+  Correct line height values
+
+  TD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 16px;
+  -  --uitk-text-help-lineHeight: 16px;
+  +  --uitk-text-label-lineHeight: 18px;
+  ```
+
+  LD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 16px;
+  ```
+
+  MD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 14px;
+  ```
+
+  HD
+
+  ```diff
+  -  --uitk-text-caption-lineHeight: 14px;
+  -  --uitk-text-help-lineHeight: 14px;
+  +  --uitk-text-label-lineHeight: 13px;
+  ```
+
+- da141cda: Change palette-interact values
+
+  Light mode:
+
+  ```diff
+  - --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
+  - --uitk-palette-interact-background-hover: var(--uitk-color-blue-20);
+  - --uitk-palette-interact-border: var(--uitk-color-gray-90);
+  - --uitk-palette-interact-border-active: var(--uitk-color-blue-400);
+  - --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-400-fade-fill);
+  - --uitk-palette-interact-border-disabled: var(--uitk-color-grey-90);
+  - --uitk-palette-interact-border-readonly: var(--uitk-color-gray-90-fade-border-readonly);
+  + --uitk-palette-interact-background-active: var(--uitk-color-blue-30);
+  + --uitk-palette-interact-background-hover: var(--uitk-color-blue-10);
+  + --uitk-palette-interact-border: var(--uitk-color-gray-200);
+  + --uitk-palette-interact-border-active: var(--uitk-color-blue-600);
+  + --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-600-fade-fill);
+  + --uitk-palette-interact-border-disabled: var(--uitk-color-grey-200);
+  + --uitk-palette-interact-border-readonly: var(--uitk-color-gray-200-fade-border-readonly);
+  ```
+
+  Dark mode:
+
+  ```diff
+  - --uitk-palette-interact-background-active: var(--uitk-color-blue-500);
+  - --uitk-palette-interact-border-active: var(--uitk-color-blue-600);
+  - --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-600-fade-fill);
+  - --uitk-palette-interact-foreground-partial: var(--uitk-color-blue-400);
+  - --uitk-palette-interact-foreground-partialDisabled: var(--uitk-color-blue-400-fade-foreground);
+  + --uitk-palette-interact-background-active: var(--uitk-color-blue-700);
+  + --uitk-palette-interact-border-active: var(--uitk-color-blue-100);
+  + --uitk-palette-interact-border-activeDisabled: var(--uitk-color-blue-100-fade-fill);
+  + --uitk-palette-interact-foreground-partial: var(--uitk-color-blue-100);
+  + --uitk-palette-interact-foreground-partialDisabled: var(--uitk-color-blue-100-fade-foreground);
+  ```
+
+  Remove selectable foreground state tokens and respective palette tokens
+  Remove `uitk-palette-neutral-highlight` as it now can be replaced by `uitk-palette-interact-background-active`
+
+  ```diff
+  - --uitk-selectable-foreground-hover
+  - --uitk-selectable-foreground-selected
+  - --uitk-selectable-foreground-blurSelected
+  - --uitk-palette-interact-foreground-hover
+  - --uitk-palette-interact-foreground-active
+  - --uitk-palette-interact-foreground-blurSelected
+  - --uitk-palette-neutral-highlight
+  ```
+
+  Remove redundant tokens, add new requirements
+
+  ```diff
+  - --uitk-color-blue-400-fade-fill
+  - --uitk-color-blue-400-fade-foreground
+  + --uitk-color-blue-100-fade-fill
+  + --uitk-color-blue-100-fade-foreground
+  + --uitk-color-gray-200-fade-border
+  + --uitk-color-gray-200-fade-border-readonly
+  ```
+
+  Update opacities
+
+  ```diff
+  - --uitk-opacity-1: 0.2
+  - --uitk-opacity-2: 0.4
+  - --uitk-opacity-3: 0.7
+  - --uitk-opacity-4: 0.8
+  - --uitk-palette-opacity-background: var(--uitk-opacity-2)
+  - --uitk-palette-opacity-border: var(--uitk-opacity-2)
+  - --uitk-palette-opacity-border-readonly: var(--uitk-opacity-1)
+  - --uitk-palette-opacity-fill: var(--uitk-opacity-2)
+  - --uitk-palette-opacity-foreground: var(--uitk-opacity-3)
+  - --uitk-palette-opacity-scrim-low: var(--uitk-opacity-4)
+  - --uitk-palette-opacity-stroke: var(--uitk-opacity-2)
+  + --uitk-opacity-1: 0.15
+  + --uitk-opacity-2: 0.25
+  + --uitk-opacity-3: 0.4
+  + --uitk-opacity-4: 0.7
+  + --uitk-opacity-5: 0.8
+  + --uitk-palette-opacity-background: var(--uitk-opacity-3)
+  + --uitk-palette-opacity-border: var(--uitk-opacity-3)
+  + --uitk-palette-opacity-border-readonly: var(--uitk-opacity-2)
+  + --uitk-palette-opacity-fill: var(--uitk-opacity-3)
+  + --uitk-palette-opacity-foreground: var(--uitk-opacity-4)
+  + --uitk-palette-opacity-tertiary-scrim: var(--uitk-opacity-5)
+  + --uitk-palette-opacity-stroke: var(--uitk-opacity-3)
+  + --uitk-palette-opacity-primary-border: var(--uitk-opacity-3)
+  + --uitk-palette-opacity-secondary-border: var(--uitk-opacity-2)
+  + --uitk-palette-opacity-tertiary-border: var(--uitk-opacity-1)
+  ```
+
+  Redo separable characteristic
+
+  ```diff
+  - --uitk-separable-primary-background
+  - --uitk-separable-primary-background-hover
+  - --uitk-separable-primary-background-active
+  - --uitk-separable-primary-foreground
+  - --uitk-separable-primary-foreground-active
+  - --uitk-separable-primary-foreground-hover
+  - --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-border-high)
+  - --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-border-medium)
+  - --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-border-low)
+  - --uitk-palette-neutral-cta-border
+  - --uitk-palette-neutral-primary-border
+  - --uitk-palette-neutral-secondary-border
+  - --uitk-palette-neutral-tertiary-border-low
+  - --uitk-palette-neutral-tertiary-border-disabled-low
+  + --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-primary-separator)
+  + --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-secondary-separator)
+  + --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-tertiary-separator)
+  + --uitk-color-white-fade-separatorOpacity-primary
+  + --uitk-color-white-fade-separatorOpacity-secondary
+  + --uitk-color-white-fade-separatorOpacity-tertiary
+  + --uitk-color-black-fade-separatorOpacity-primary
+  + --uitk-color-black-fade-separatorOpacity-secondary
+  + --uitk-color-black-fade-separatorOpacity-tertiary
+  + --uitk-palette-neutral-primary-separator
+  + --uitk-palette-neutral-secondary-separator
+  + --uitk-palette-neutral-tertiary-separator
+  ```
+
+- 3e2263ba: Change `--uitk-palette-navigate-indicator-activeDisabled` to orange
+
+  Light mode:
+
+  ```diff
+  - --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-gray-90-fade-border)
+  + --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-600-fade-border)
+  ```
+
+  Dark mode:
+
+  ```diff
+  - --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-gray-90-fade-border)
+  + --uitk-palette-navigate-indicator-activeDisabled: var(--uitk-color-orange-400-fade-border)
+  ```
+
+  Add fade tokens
+
+  ```diff
+  + --uitk-color-orange-400-fade-border: rgba(238, 133, 43, var(--uitk-palette-opacity-border));
+  + --uitk-color-orange-600-fade-border: rgba(224, 101, 25, var(--uitk-palette-opacity-border));
+  ```
+
+- 81d6999b: Updates to text fontWeight
+
+  ```diff
+  - --uitk-text-h1-fontWeight-small: var(--uitk-typography-fontWeight-light);
+  - --uitk-text-h2-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  - --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  - --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-extraBold);
+  + --uitk-text-h1-fontWeight-small: var(--uitk-typography-fontWeight-medium);
+  + --uitk-text-h2-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  + --uitk-text-h3-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  + --uitk-text-h4-fontWeight-strong: var(--uitk-typography-fontWeight-bold);
+  ```
+
+- feefd8b0: Change `-figure` text tokens to `display`, updated values and font weights
+
+  ```diff
+  - --uitk-text-figure1-fontSize
+  - --uitk-text-figure1-fontWeight
+  - --uitk-text-figure2-fontSize
+  - --uitk-text-figure2-fontWeight
+  - --uitk-text-figure3-fontSize
+  - --uitk-text-figure3-fontWeight
+  - --uitk-text-figure1-lineHeight: 72px;
+  - --uitk-text-figure2-lineHeight: 48px;
+  - --uitk-text-figure3-lineHeight: 24px;
+  + --uitk-text-display1-fontWeight
+  + --uitk-text-display1-fontWeight-strong
+  + --uitk-text-display1-fontWeight-small
+  + --uitk-text-display2-fontWeight
+  + --uitk-text-display2-fontWeight-strong
+  + --uitk-text-display2-fontWeight-small
+  + --uitk-text-display3-fontWeight
+  + --uitk-text-display3-fontWeight-strong
+  + --uitk-text-display3-fontWeight-small
+  ```
+
+  Add line heights
+
+  HD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 54px;
+  + --uitk-text-display2-lineHeight: 36px;
+  + --uitk-text-display3-lineHeight: 24px;
+  ```
+
+  MD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 70px;
+  + --uitk-text-display2-lineHeight: 47px;
+  + --uitk-text-display3-lineHeight: 32px;
+  ```
+
+  LD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 88px;
+  + --uitk-text-display2-lineHeight: 60px;
+  + --uitk-text-display3-lineHeight: 42px;
+  ```
+
+  TD
+
+  ```diff
+  + --uitk-text-display1-lineHeight: 109px;
+  + --uitk-text-display2-lineHeight: 76px;
+  + --uitk-text-display3-lineHeight: 54px;
+  ```
+
+- 2f508979: Add palette token for focused outline
+
+  Light mode
+
+  ```diff
+  + --uitk-palette-interact-outline: var(--uitk-color-blue-600)
+  ```
+
+  Dark mode
+
+  ```diff
+  + --uitk-palette-interact-outline: var(--uitk-color-blue-100)
+  ```
+
+- 9e999d50: Rename zIndex tokens, respectively:
+
+  ```diff
+  - --uitk-zIndex-appheader
+  - --uitk-zIndex-dragobject
+  - --uitk-zIndex-contextmenu
+  - --uitk-zIndex-tooltip
+  + --uitk-zIndex-appHeader
+  + --uitk-zIndex-dragObject
+  + --uitk-zIndex-contextMenu
+  + --uitk-zIndex-flyover
+  ```
+
+- 991a408c: Make theme global font size `--uitk-text-fontSize` instead of 14px, and move to global.css from typography.css
+  Give global values for font-size, font-family, color, line-height, letter-spacing
+
+  Remove base 1.3 line height, and replace with appropriate line height variant throughout the code
+  Remove text background on default and hover state tokens
+
+  ```diff
+  - --uitk-text-base-lineHeight
+  - --uitk-typography-lineHeight
+  - --uitk-text-background
+  - --uitk-text-background-hover
+  ```
+
+- e64146d7: Navigate tokens for links
+
+  ```diff
+  - --uitk-palette-navigate-foreground
+  + --uitk-palette-navigate-foreground-hover
+  + --uitk-palette-navigate-foreground-active
+  + --uitk-palette-navigate-foreground-visited
+  + --uitk-text-link-foreground-active: var(--uitk-palette-navigate-foreground-active)
+  + --uitk-text-link-foreground-visited: var(--uitk-palette-navigate-foreground-visited)
+  ```
+
+- 6338ff71: Add new size token
+
+  ```diff
+  + --uitk-size-detail
+  ```
+
+- eeff5bb6: Change to `--uitk-palette-neutral-secondary-background` in dark mode:
+
+  ```diff
+  - --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-700)
+  - --uitk-palette-neutral-secondary-background-disabled: var(--uitk-fade-gray-700-opacity-background)
+  - --uitk-palette-neutral-secondary-background-readonly: var(--uitk-fade-gray-700-opacity-background-readonly)
+  + --uitk-palette-neutral-secondary-background: var(--uitk-color-gray-600)
+  + --uitk-palette-neutral-secondary-background-disabled: var(--uitk-fade-gray-600-opacity-background)
+  + --uitk-palette-neutral-secondary-background-readonly: var(--uitk-fade-gray-600-opacity-background-readonly)
+  ```
+
+- 42ed0026: Rename palette -icon tokens to -foreground
+
+  ```diff
+  - --uitk-palette-info-icon
+  - --uitk-palette-error-icon
+  - --uitk-palette-success-icon
+  - --uitk-palette-warning-icon
+  + --uitk-palette-info-foreground
+  + --uitk-palette-error-foreground
+  + --uitk-palette-success-foreground
+  + --uitk-palette-warning-foreground
+  ```
+
+- 7aef81aa: Replace 1px borders with size token and remove `--uitk-size-bottomBorder` as it's component specific.
+
+  ```diff
+  - --uitk-size-bottomBorder
+  - --uitk-container-borderWidth
+  - --uitk-editable-borderWidth
+  - --uitk-editable-borderWidth-hover
+  - --uitk-editable-borderWidth-disabled
+  - --uitk-editable-borderWidth-readonly
+  - --uitk-selectable-borderWidth
+  - --uitk-selectable-borderWidth-hover
+  - --uitk-selectable-borderWidth-selected
+  - --uitk-selectable-borderWidth-blurSelected
+  - --uitk-separable-borderWidth
+  - --uitk-target-borderWidth
+  - --uitk-target-borderWidth-hover
+  - --uitk-target-borderWidth-disabled
+  + --uitk-size-border: 1px
+  + --uitk-measured-borderWidth-active: 2px
+  + --uitk-measured-borderWidth-complete: 2px
+  + --uitk-measured-borderWidth-incomplete: 2px
+  ```
+
+- b7e456b3: Remove `-hover` and `-selected` text foreground styles
+
+  ```diff
+  - --uitk-text-primary-foreground-hover
+  - --uitk-text-primary-foreground-selected
+  - --uitk-text-secondary-foreground-hover
+  - --uitk-text-secondary-foreground-selected
+  ```
+
+- 3d94d560: Remove .uitkEmphasisHigh, .uitkEmphasisLow, .uitkEmphasisMedium classes from components
+
+  - Banner; replaces classes with `emphasize` prop
+  - Card, FormField, Scrim, Overlay; replaces these classes with `variant` prop
+  - CalendarDay; replaces these classes with `-unselectableLow`, `-unselectableMedium`
+
+  Remove emphasis concept from characteristics; replace with variants (Low -> Tertiary, Medium -> Primary, High -> Secondary)
+
+  Container: replace emphasis tokens with new respective variants, add `--uitk-container-tertiary-background`, `--uitk-container-tertiary-background-disabled`
+
+  ```diff
+  - --uitk-container-background-medium
+  + --uitk-container-primary-background
+  - --uitk-container-background-high
+  + --uitk-container-secondary-background
+  - --uitk-container-background-low
+  + --uitk-container-tertiary-background
+
+  - --uitk-container-borderColor-medium
+  + --uitk-container-primary-borderColor
+  - --uitk-container-borderColor-disabled-medium
+  + --uitk-container-primary-borderColor-disabled
+
+  - --uitk-container-borderColor-low
+  + --uitk-container-tertiary-borderColor
+  - --uitk-container-borderColor-disabled-low
+  + --uitk-container-tertiary-borderColor-disabled
+
+  - --uitk-container-borderColor-high
+  + --uitk-container-secondary-borderColor
+  - --uitk-container-borderColor-disabled-high
+  + --uitk-container-secondary-borderColor-disabled
+
+  + --uitk-container-tertiary-background
+  + --uitk-container-tertiary-background-disabled
+  ```
+
+  Editable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-editable-background-medium
+  + --uitk-editable-primary-background
+  - --uitk-editable-background-active-medium
+  + --uitk-editable-primary-background-active
+  - --uitk-editable-background-disabled-medium
+  + --uitk-editable-primary-background-disabled
+  - --uitk-editable-background-hover-medium
+  + --uitk-editable-primary-background-hover
+  - --uitk-editable-background-readonly-medium
+  + --uitk-editable-primary-background-readonly
+
+  - --uitk-editable-background-high
+  + --uitk-editable-secondary-background
+  - --uitk-editable-background-active-high
+  + --uitk-editable-secondary-background-active
+  - --uitk-editable-background-disabled-high
+  + --uitk-editable-secondary-background-disabled
+  - --uitk-editable-background-hover-high
+  + --uitk-editable-secondary-background-hover
+  - --uitk-editable-background-readonly-high
+  + --uitk-editable-secondary-background-readonly
+
+  - --uitk-editable-background-low
+  + --uitk-editable-tertiary-background
+  - --uitk-editable-background-active-low
+  + --uitk-editable-tertiary-background-active
+  - --uitk-editable-background-disabled-low
+  + --uitk-editable-tertiary-background-disabled
+  - --uitk-editable-background-hover-low
+  + --uitk-editable-tertiary-background-hover
+  - --uitk-editable-background-readonly-low
+  + --uitk-editable-tertiary-background-readonly
+  ```
+
+  Navigable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-navigable-background-medium
+  + --uitk-navigable-primary-background
+  - --uitk-navigable-background-hover-medium
+  + --uitk-navigable-primary-background-active
+  - --uitk-navigable-background-active-medium
+  + --uitk-navigable-primary-background-disabled
+
+  - --uitk-navigable-background-high
+  + --uitk-navigable-secondary-background
+  - --uitk-navigable-background-hover-high
+  + --uitk-navigable-secondary-background-active
+  - --uitk-navigable-background-active-high
+  + --uitk-navigable-secondary-background-disabled
+
+  - --uitk-navigable-background-low
+  + --uitk-navigable-tertiary-background
+  - --uitk-navigable-background-hover-low
+  + --uitk-navigable-tertiary-background-active
+  - --uitk-navigable-background-active-low
+  + --uitk-navigable-tertiary-background-disabled
+  ```
+
+  Overlayable: replace emphasis tokens with new respective variants
+
+  ```diff
+  - --uitk-overlayable-background-medium
+  + --uitk-overlayable-primary-background
+
+  - --uitk-overlayable-background-low
+  + --uitk-overlayable-secondary-background
+  ```
+
+  Status: replace emphasis tokens with 'emphasize' type
+
+  ```diff
+  - --uitk-status-info-background-high
+  + --uitk-status-info-background-emphasize
+  - --uitk-status-succes-background-high
+  + --uitk-status-succes-background-emphasize
+  - --uitk-status-error-background-high
+  + --uitk-status-error-background-emphasize
+  - --uitk-status-warning-background-high
+  + --uitk-status-warning-background-emphasize
+  ```
+
+  Palette: token renaming emphasis to variants; color is the same where not stated
+
+  ````diff
+  - --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-4) // Light mode
+  + --uitk-palette-opacity-primary-scrim: var(--uitk-opacity-5) // Light mode
+  - --uitk-palette-opacity-scrim-medium: var(--uitk-opacity-3) // Dark mode
+  + --uitk-palette-opacity-primary-scrim: var(--uitk-opacity-4) // Dark mode
+  - --uitk-palette-opacity-scrim-low
+  + --uitk-palette-opacity-secondary-scrim
+
+  - --uitk-palette-interact-background-high
+  - --uitk-palette-interact-background-disabled-high
+  - --uitk-palette-interact-background-medium
+  - --uitk-palette-interact-background-disabled-medium
+  - --uitk-palette-interact-background-low
+  - --uitk-palette-interact-background-disabled-low
+  + --uitk-palette-interact-background: transparent
+  + --uitk-palette-interact-background-disabled: transparent
+
+  - --uitk-palette-error-background-high
+  + --uitk-palette-error-background-emphasize
+  - --uitk-palette-info-background-high
+  + --uitk-palette-info-background-emphasize
+  - --uitk-palette-success-background-high
+  + --uitk-palette-success-background-emphasize
+  - --uitk-palette-warning-background-high
+  + --uitk-palette-warning-background-emphasize
+
+  - --uitk-palette-navigate-background-medium
+  - --uitk-palette-navigate-background-active-medium
+  - --uitk-palette-navigate-background-hover-medium
+  + --uitk-palette-navigate-primary-background
+  + --uitk-palette-navigate-primary-background-active
+  + --uitk-palette-navigate-primary-background-hover
+  - --uitk-palette-navigate-background-high
+  - --uitk-palette-navigate-background-active-high
+  - --uitk-palette-navigate-background-hover-high
+  + --uitk-palette-navigate-secondary-background
+  + --uitk-palette-navigate-secondary-background-active
+  + --uitk-palette-navigate-secondary-background-hover
+  - --uitk-palette-navigate-background-low
+  - --uitk-palette-navigate-background-active-low
+  - --uitk-palette-navigate-background-hover-low
+  + --uitk-palette-navigate-tertiary-background
+  + --uitk-palette-navigate-tertiary-background-active
+  + --uitk-palette-navigate-tertiary-background-hover
+
+  - --uitk-palette-neutral-scrim-medium: var(--uitk-color-black-fade-scrim-medium) // Light mode
+  - --uitk-palette-neutral-scrim-medium: var(--uitk-color-gray-800-fade-scrim-medium) // Dark mode
+  + --uitk-palette-neutral-primary-scrim: var(--uitk-color-black-fade-scrim-primary) // Light mode
+  + --uitk-palette-neutral-primary-scrim: var(--uitk-color-gray-800-fade-scrim-primary) // Dark mode
+  - --uitk-palette-neutral-scrim-low: var(--uitk-color-white-fade-scrim-low) // Light mode
+  - --uitk-palette-neutral-scrim-low: var(--uitk-color-black-fade-scrim-medium) // Dark mode
+  + --uitk-palette-neutral-secondary-scrim: var(--uitk-color-white-fade-scrim-secondary) // Light mode
+  + --uitk-palette-neutral-secondary-scrim: var(--uitk-color-black-fade-scrim-secondary) // Dark mode
+  - --uitk-palette-neutral-background-medium
+  + --uitk-palette-neutral-primary-background
+  - --uitk-palette-neutral-background-high
+  + --uitk-palette-neutral-secondary-background
+  - --uitk-palette-neutral-background-low
+  + --uitk-palette-neutral-tertiary-background
+  - --uitk-palette-neutral-border-medium
+  - --uitk-palette-neutral-border-disabled-medium
+  + --uitk-palette-neutral-primary-border
+  + --uitk-palette-neutral-primary-border-disabled
+  - --uitk-palette-neutral-border-high
+  - --uitk-palette-neutral-border-disabled-high
+  + --uitk-palette-neutral-secondary-border
+  + --uitk-palette-neutral-secondary-border-disabled
+
+  + --uitk-palette-neutral-primary-background-disabled: var(--uitk-color-white-fade-background) // Light mode
+  + --uitk-palette-neutral-primary-background-disabled: var(--uitk-color-gray-800-fade-background) // Dark mode
+  + --uitk-palette-neutral-secondary-background-disabled: var(--uitk-color-gray-20-fade-background) // Light mode
+  + --uitk-palette-neutral-secondary-background-readonly: var(--uitk-color-gray-800-fade-background-readonly) // Dark mode
+  + --uitk-palette-neutral-tertiary-background-disabled: transparent
+  + --uitk-palette-neutral-tertiary-background-readonly: transparent
+  + --uitk-palette-neutral-tertiary-border: transparent
+  + --uitk-palette-neutral-tertiary-border-disabled: transparent
+  ```
+
+  Add new fade tokens needed for palette; replace emphasis tokens with variants - here, low scrim is changed to secondary variant
+
+  ```diff
+  - --uitk-color-black-fade-scrim-medium
+  + --uitk-color-black-fade-scrim-primary
+  - --uitk-color-gray-800-fade-scrim-medium
+  + --uitk-color-gray-800-fade-scrim-primary
+  - --uitk-color-white-fade-scrim-low
+  + --uitk-color-black-fade-scrim-secondary
+  + --uitk-color-white-fade-scrim-secondary
+
+  + --uitk-color-white-fade-background-readonly
+  + --uitk-color-gray-20-fade-background-readonly
+  + --uitk-color-gray-600-fade-background-readonly
+  + --uitk-color-gray-800-fade-background-readonly
+  ````
+
+- ccff8af8: Remove container border color variants; replace usage with respective emphasis token
+
+  ```diff
+  - --uitk-container-cta-borderColor
+  - --uitk-container-primary-borderColor
+  - --uitk-container-secondary-borderColor
+  ```
+
+- e7530f8b: **BREAKING CHANGE:**
+
+  uitk-sans has been removed. The default font family is now Open Sans.
+  Fonts are no longer bundled with the components.
+
+  You may add it to your project with a npm package e.g. [Fontsource](https://fontsource.org/), or with the [Google Fonts CDN](https://fonts.google.com/).
+
+  For example, using fontsource:
+
+  ```js
+  import "@fontsource/open-sans/300.css";
+  import "@fontsource/open-sans/300-italic.css";
+  import "@fontsource/open-sans/400.css";
+  import "@fontsource/open-sans/400-italic.css";
+  import "@fontsource/open-sans/500.css";
+  import "@fontsource/open-sans/500-italic.css";
+  import "@fontsource/open-sans/600.css";
+  import "@fontsource/open-sans/600-italic.css";
+  import "@fontsource/open-sans/700.css";
+  import "@fontsource/open-sans/700-italic.css";
+  import "@fontsource/open-sans/800.css";
+  import "@fontsource/open-sans/800-italic.css";
+  ```
+
+- 8c075106: Use American English 'gray' throughout code
+
 ## 0.6.0
 
 ### Minor Changes

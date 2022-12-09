@@ -12,7 +12,6 @@ import { TearOutIcon } from "@jpmorganchase/uitk-icons";
 import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Card.module.css";
-import { isExternal } from "util/types";
 
 export interface FooterProps {
   isExternalLink?: boolean;
