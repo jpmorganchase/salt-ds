@@ -20,23 +20,23 @@ export default {
 const Template: ComponentStory<typeof BorderItem> = (args) => {
   return (
     <BorderLayout columnGap={1} rowGap={1} className="layout-container">
-      <BorderItem position="header" className="border-item">
+      <BorderItem position="north" className="border-item">
         <p>Header</p>
       </BorderItem>
       <BorderItem {...args} className="border-item layout-active-content">
         <p>{args.position}</p>
       </BorderItem>
       <BorderItem
-        position="main"
+        position="center"
         className="border-item layout-content"
         style={{ minWidth: 100 }}
       >
         <p>Main</p>
       </BorderItem>
-      <BorderItem position="right" className="border-item">
+      <BorderItem position="east" className="border-item">
         <p>Right</p>
       </BorderItem>
-      <BorderItem position="bottom" className="border-item">
+      <BorderItem position="south" className="border-item">
         <p>Bottom</p>
       </BorderItem>
     </BorderLayout>
@@ -44,4 +44,4 @@ const Template: ComponentStory<typeof BorderItem> = (args) => {
 };
 
 export const BorderItemWrapper = Template.bind({});
-BorderItemWrapper.args = { position: "left", sticky: true };
+BorderItemWrapper.args = { position: "west", sticky: true };

@@ -21,17 +21,17 @@ export default {
 const Template: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
+      <BorderItem position="north">
         <div className="border-item border-header">
           <p>Top</p>
         </div>
       </BorderItem>
-      <BorderItem position="left">
+      <BorderItem position="west">
         <div className="border-item border-left">
           <p>Left</p>
         </div>
       </BorderItem>
-      <BorderItem position="main">
+      <BorderItem position="center">
         <div
           className="border-item border-main"
           style={{
@@ -41,12 +41,12 @@ const Template: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Main section</p>
         </div>
       </BorderItem>
-      <BorderItem position="right">
+      <BorderItem position="east">
         <div className="border-item border-right">
           <p>Right</p>
         </div>
       </BorderItem>
-      <BorderItem position="bottom">
+      <BorderItem position="south">
         <div className="border-item border-bottom">
           <p>Bottom</p>
         </div>
@@ -61,17 +61,17 @@ BorderLayoutAllPanels.args = {};
 const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
+      <BorderItem position="north">
         <div className="border-item border-header">
           <p>Top</p>
         </div>
       </BorderItem>
-      <BorderItem position="left">
+      <BorderItem position="west">
         <div className="border-item border-left">
           <p>Left</p>
         </div>
       </BorderItem>
-      <BorderItem position="main">
+      <BorderItem position="center">
         <div
           className="border-item border-main"
           style={{
@@ -81,7 +81,7 @@ const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Main section</p>
         </div>
       </BorderItem>
-      <BorderItem position="bottom">
+      <BorderItem position="south">
         <div className="border-item border-bottom">
           <p>Bottom</p>
         </div>
@@ -96,12 +96,12 @@ BorderLayoutNoRightPanel.args = {};
 const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
+      <BorderItem position="north">
         <div className="border-item border-header">
           <p>Top</p>
         </div>
       </BorderItem>
-      <BorderItem position="main">
+      <BorderItem position="center">
         <div
           className="border-item border-main"
           style={{
@@ -111,12 +111,12 @@ const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Main section</p>
         </div>
       </BorderItem>
-      <BorderItem position="right">
+      <BorderItem position="east">
         <div className="border-item border-right">
           <p>Right</p>
         </div>
       </BorderItem>
-      <BorderItem position="bottom">
+      <BorderItem position="south">
         <div className="border-item border-bottom">
           <p>Bottom</p>
         </div>
@@ -131,12 +131,12 @@ BorderLayoutNoLeftPanel.args = {};
 const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="left">
+      <BorderItem position="west">
         <div className="border-item border-left">
           <p>Left</p>
         </div>
       </BorderItem>
-      <BorderItem position="main">
+      <BorderItem position="center">
         <div
           className="border-item border-main"
           style={{
@@ -146,12 +146,12 @@ const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Main section</p>
         </div>
       </BorderItem>
-      <BorderItem position="right">
+      <BorderItem position="east">
         <div className="border-item border-right">
           <p>Right</p>
         </div>
       </BorderItem>
-      <BorderItem position="bottom">
+      <BorderItem position="south">
         <div className="border-item border-bottom">
           <p>Bottom</p>
         </div>
@@ -166,12 +166,12 @@ BorderLayoutNoHeader.args = {};
 const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args} style={{ width: "60vw" }}>
-      <BorderItem position="header">
+      <BorderItem position="north">
         <div className="border-item border-header" style={{ height: 50 }}>
           <p>Top</p>
         </div>
       </BorderItem>
-      <BorderItem position="left">
+      <BorderItem position="west">
         <div
           className="border-item border-left"
           style={{ width: 100, height: 200 }}
@@ -179,7 +179,7 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Left</p>
         </div>
       </BorderItem>
-      <BorderItem position="main">
+      <BorderItem position="center">
         <div
           className="border-item border-main"
           style={{
@@ -190,7 +190,7 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Main section</p>
         </div>
       </BorderItem>
-      <BorderItem position="right">
+      <BorderItem position="east">
         <div
           className="border-item border-right"
           style={{ width: 100, height: 200 }}
@@ -198,7 +198,7 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
           <p>Right</p>
         </div>
       </BorderItem>
-      <BorderItem position="bottom">
+      <BorderItem position="south">
         <div className="border-item border-bottom" style={{ height: 50 }}>
           <p>Bottom</p>
         </div>

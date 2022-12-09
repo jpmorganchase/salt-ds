@@ -3,7 +3,8 @@
   background: var(--uitk-color-orange-20);
   padding: 1rem;
 }
-.layout-container > .layout-active-content {
+.layout-container > .layout-active-content,
+.layout-active-content {
   background: var(--uitk-color-gray-40);
   padding: 1rem;
 }
