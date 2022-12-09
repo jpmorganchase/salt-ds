@@ -23,7 +23,7 @@ function HomepageHeader() {
     <div className={styles.heroContainer}>
       <header className={clsx("hero hero--primary", styles.heroBanner)}>
         <div className="container">
-          <h1 className={styles.heroTitle}>{siteConfig.title}</h1>
+          <h1 className={styles.heroTitle}>Welcome to Salt</h1>
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
@@ -82,10 +82,7 @@ const cards: CardProps[] = [
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={siteConfig.title}
-      description="Description will go into a meta tag in <head />"
-    >
+    <Layout description="Description will go into a meta tag in <head />">
       <div className={styles.homepageContainer}>
         <HomepageHeader />
         <Features heading="What to expect" listItems={features} />

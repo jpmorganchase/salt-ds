@@ -47,8 +47,6 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       data-testid={isFocused ? "grid-cell-focused" : undefined}
       // aria-colindex uses one-based array indexing
       aria-colindex={column.index + 1}
-      // aria-rowindex uses one-based array indexing
-      aria-rowindex={row.index + 1}
       role="gridcell"
       className={cn(
         withBaseName(),

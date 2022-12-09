@@ -81,8 +81,8 @@
   color: var(--accordion-summary-text-color);
   font-size: var(--uitkAccordion-summary-fontSize, var(--uitk-text-fontSize));
   font-family: var(--uitkAccordion-summary-fontFamily, var(--uitk-text-fontFamily));
-  padding-left: var(--uitkAccordion-summary-paddingLeft, var(--accordion-summary-paddingLeft));
-  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .uitkAccordionSummary:focus-visible {
@@ -111,10 +111,6 @@
 }
 
 .uitkAccordionSummary-icon {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
   width: var(--accordion-summary-paddingLeft);
   display: flex;
   flex-direction: row;
