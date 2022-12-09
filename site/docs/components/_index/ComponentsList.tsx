@@ -35,17 +35,22 @@ const statusSortList = [
   ComponentStatus.IN_BACKLOG,
 ];
 
-const componentsListSortedByName = [...componentDetails].sort((a, b) =>
-  a.name.localeCompare(b.name)
-);
+const componentsListSortedByName = (ascendingOrder: boolean = true) =>
+  [...componentDetails].sort(
+    (a, b) => a.name.localeCompare(b.name) * (ascendingOrder ? 1 : -1)
+  );
 
 type SortedByStatus = "devStatus" | "designStatus";
 
-const componentsListSortedByStatus = (componentStatus: SortedByStatus) =>
-  [...componentsListSortedByName].sort(
+const componentsListSortedByStatus = (
+  componentStatus: SortedByStatus,
+  ascendingOrder: boolean = true
+) =>
+  componentsListSortedByName().sort(
     (a, b) =>
-      statusSortList.indexOf(a[componentStatus]) -
-      statusSortList.indexOf(b[componentStatus])
+      (statusSortList.indexOf(a[componentStatus]) -
+        statusSortList.indexOf(b[componentStatus])) *
+      (ascendingOrder ? 1 : -1)
   );
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
@@ -81,37 +86,48 @@ const ComponentHeader = ({
   logo,
   label,
   isSorted,
+  ascendingOrder,
 }: {
   logo: JSX.Element;
   label: string;
   isSorted: boolean;
-}) => (
-  <div className={styles.headerContainer}>
-    <div>
-      {logo}
-      <span>{label}</span>
+  ascendingOrder: boolean;
+}) => {
+  const arrowIcon = ascendingOrder ? <ArrowUpIcon /> : <ArrowDownIcon />;
+  return (
+    <div className={styles.headerContainer}>
+      <div>
+        {logo}
+        <span>{label}</span>
+      </div>
+      {isSorted && arrowIcon}
     </div>
-    {isSorted && <ArrowUpIcon />}
-  </div>
-);
+  );
+};
 
 type SortedBy = SortedByStatus | "name";
 
 const ComponentsList = () => {
   const [componentsList, setComponentsList] = useState(
-    componentsListSortedByStatus("devStatus")
+    componentsListSortedByStatus("devStatus", true)
   );
 
   const [isSortedBy, setIsSortedBy] = useState<SortedBy>("devStatus");
 
+  const [hasAscendingOrder, setHasAscendingOrder] = useState(true);
+
   const handleNameSorting = () => {
     setIsSortedBy("name");
-    setComponentsList(componentsListSortedByName);
+    setHasAscendingOrder((hasAscendingOrder) => !hasAscendingOrder);
+    setComponentsList(componentsListSortedByName(!hasAscendingOrder));
   };
 
   const handleStatusSorting = (componentStatus: SortedByStatus) => {
     setIsSortedBy(componentStatus);
-    setComponentsList(componentsListSortedByStatus(componentStatus));
+    setHasAscendingOrder((hasAscendingOrder) => !hasAscendingOrder);
+    setComponentsList(
+      componentsListSortedByStatus(componentStatus, !hasAscendingOrder)
+    );
   };
 
   return (
@@ -124,6 +140,7 @@ const ComponentsList = () => {
                 logo={<StorybookLogo />}
                 label="Component"
                 isSorted={isSortedBy === "name"}
+                ascendingOrder={hasAscendingOrder}
               />
             </th>
             <th onClick={() => handleStatusSorting("devStatus")}>
@@ -131,6 +148,7 @@ const ComponentsList = () => {
                 logo={<ReactLogo />}
                 label="React"
                 isSorted={isSortedBy === "devStatus"}
+                ascendingOrder={hasAscendingOrder}
               />
             </th>
             <th onClick={() => handleStatusSorting("designStatus")}>
@@ -138,6 +156,7 @@ const ComponentsList = () => {
                 logo={<FigmaLogo />}
                 label="Figma"
                 isSorted={isSortedBy === "designStatus"}
+                ascendingOrder={hasAscendingOrder}
               />
             </th>
           </tr>
