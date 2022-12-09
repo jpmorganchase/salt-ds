@@ -20,10 +20,12 @@ const withBaseName = makePrefixer("uitkLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
-export interface InternalLinkProps extends TextProps<"a"> {
+export interface InternalLinkProps
+  extends Omit<TextProps<"a">, "styleAs" | "as"> {
   IconComponent?: never;
 }
-export interface ExternalLinkProps extends TextProps<"a"> {
+export interface ExternalLinkProps
+  extends Omit<TextProps<"a">, "styleAs" | "as"> {
   target: "_blank";
   /**
    * Override "tearout" icon.
@@ -61,11 +63,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {...rest}
     >
       {children}
-      {target && target === "_blank" && (
-        <IconComponent
-          aria-label="External Link"
-          className={withBaseName("icon")}
-        />
+      {target === "_blank" && (
+        <>
+          <IconComponent className={withBaseName("icon")} aria-hidden />
+          <span className={withBaseName("externalLinkADA")}>External Link</span>
+        </>
       )}
     </Text>
   );
