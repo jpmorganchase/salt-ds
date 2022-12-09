@@ -11,7 +11,7 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background: var(--uitkScrim-background, var(--uitk-overlayable-primary-background));
+  background: var(--uitkScrim-background, var(--uitk-overlayable-background));
   -webkit-tap-highlight-color: transparent;
 }
 
