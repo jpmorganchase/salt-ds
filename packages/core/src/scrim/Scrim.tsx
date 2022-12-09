@@ -111,10 +111,6 @@ export interface ScrimProps extends HTMLAttributes<HTMLDivElement> {
    */
   tabEnabledSelectors?: string;
   /**
-   * Variant; defaults to "primary"
-   */
-  variant?: "primary" | "secondary";
-  /**
    * Prop to pass z-index for Scrim.
    */
   zIndex?: number;
@@ -137,7 +133,6 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     enableContainerMode = false,
     returnFocusOptions,
     tabEnabledSelectors = defaultSelector,
-    variant = "primary",
     zIndex,
     ...rest
   },
@@ -225,8 +220,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     <div
       aria-modal={!enableContainerMode}
       className={classnames(className, withBaseName(), {
-        [withBaseName(`containerFix`)]: enableContainerMode,
-        [withBaseName(variant)]: variant === "secondary",
+        [withBaseName("containerFix")]: enableContainerMode,
       })}
       data-testid="scrim"
       onClick={onBackDropClick}
