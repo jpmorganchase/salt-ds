@@ -21,10 +21,6 @@ const withBaseName = makePrefixer("uitkLink");
  * <LinkExample to="#link">Action</LinkExample>
  */
 export interface LinkProps extends TextProps<"a"> {
-  target?: "_blank";
-  /**
-   * Override "tearout" icon.
-   */
   IconComponent?: ComponentType<IconProps>;
 }
 
