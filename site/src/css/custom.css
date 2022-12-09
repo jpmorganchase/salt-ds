@@ -135,11 +135,11 @@
   margin: 0;
 }
 
-.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
+.theme-doc-sidebar-container li:has(> .menu__link--active)::before {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
   content: "";
   position: relative;
-  left: -289px;
+  left: 0;
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
@@ -479,6 +479,9 @@ table tr th + th::before {
 }
 
 @media screen and (max-width: 768px) {
+  .navbar {
+    --ifm-navbar-padding-horizontal: calc(var(--uitk-size-unit) * 2);
+  }
   .docs-toc-container {
     display: none;
   }
