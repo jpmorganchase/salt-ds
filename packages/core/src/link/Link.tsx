@@ -1,7 +1,6 @@
 import {
   ComponentType,
   forwardRef,
-  MouseEvent,
   ReactElement,
 } from "react";
 import cx from "classnames";
