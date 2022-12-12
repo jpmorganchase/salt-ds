@@ -34,7 +34,7 @@
 
 @media screen and (max-width: 960px) {
   /* TODO: use odyssey breakpoints? */
-  .featuresContainer {
+  .featuresContainerWrapper {
     max-width: none;
     margin-top: calc(var(--uitk-size-unit) * 3);
     padding: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2);
