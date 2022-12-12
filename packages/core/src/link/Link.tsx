@@ -30,6 +30,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     href,
     className,
     children,
+    variant = "primary",
     target = "_self",
     ...rest
   },
@@ -48,6 +49,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       onClick={stopPropagation}
       ref={ref}
       target={target}
+      variant={variant}
       {...rest}
     >
       {children}

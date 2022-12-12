@@ -19,10 +19,10 @@
   font-family: var(--link-fontFamily);
 }
 
-.uitkLink-primary {
+.uitkText-primary {
   --link-color: var(--uitk-text-primary-foreground);
 }
-.uitkLink-secondary {
+.uitkText-secondary {
   --link-color: var(--uitk-text-secondary-foreground);
 }
 
