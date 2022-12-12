@@ -70,7 +70,7 @@
   --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--uitk-separable-tertiary-borderColor));
 
   --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--uitk-text-secondary-foreground));
-  --grid-shadow-color: var(--uitkGrid-shadow-color, var(--uitk-overlayable-shadow-scroll));
+  --grid-shadow-color: var(--uitkGrid-shadow-color, var(--uitk-overlayable-shadow-scroll-color));
   --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--uitk-target-borderColor-hover));
   --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, var(--uitk-focused-outlineStyle));
   --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, var(--uitk-focused-outlineWidth));
@@ -87,6 +87,13 @@
   --grid-columnGhost-borderColor: var(--uitkGrid-columnGhost-borderColor, var(--uitk-palette-interact-border-hover));
   --grid-columnGhost-borderWidth: var(--uitkGrid-columnGhost-borderWidth, 1px);
   --grid-columnGhost-boxShadow: var(--uitkGrid-columnGhost-boxShadow, var(--uitk-overlayable-shadow-drag));
+
+  --grid-mid-body-zIndex: 0;
+  --grid-left-body-zIndex: 1;
+  --grid-right-body-zIndex: 1;
+  --grid-middle-header-zIndex: 2;
+  --grid-left-header-zIndex: 3;
+  --grid-right-header-zIndex: 3;
 }
 
 .uitkGrid-columnSeparators {
