@@ -56,8 +56,6 @@ type SortableColId = "name" | "price";
 interface SalesGridContext {
   viewMode: SalesViewMode;
   setViewMode: (m: SalesViewMode) => void;
-  isItemPinned: boolean;
-  setItemPinned: (p: boolean) => void;
   sortBy: SortableColId;
   setSortBy: (c: SortableColId) => void;
   sortOrder: "asc" | "desc";
@@ -109,26 +107,11 @@ const SalesGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
  * */
 const ItemGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
   const { group } = props;
-  const { isItemPinned, setItemPinned } = useContext(SalesGridContext)!;
-
-  const onToggle = () => {
-    setItemPinned(!isItemPinned);
-  };
 
   return (
     <FlexLayout direction="row" wrap={false} align={"center"}>
       <FlexItem grow={1}>
         <span>{group.data.name}</span>
-      </FlexItem>
-      <FlexItem>
-        <ToggleButton
-          toggled={isItemPinned}
-          // onToggle={onToggle}
-          tooltipText="Pin left"
-        >
-          {/*<PinIcon />*/}
-          <HomeIcon />
-        </ToggleButton>
       </FlexItem>
       <FlexItem>
         <MenuButton
@@ -281,7 +264,6 @@ const HeaderCustomizationTemplate: Story<{}> = () => {
         <ColumnGroup
           name="Item"
           id="main_group"
-          // pinned={isItemPinned ? "left" : undefined}
           headerValueComponent={ItemGroupHeaderValue}
         >
           <GridColumn
