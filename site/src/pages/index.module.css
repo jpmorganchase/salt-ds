@@ -27,6 +27,8 @@
 .heroContainer {
   display: flex;
   padding: 0 calc(var(--uitk-size-unit) * 5);
+  max-width: var(--max-content-width);
+  margin: auto;
 }
 
 .heroBanner .heroButton {
@@ -40,6 +42,8 @@
 
 .cardContainer {
   display: flex;
+  max-width: var(--max-content-width);
+  margin: auto;
   flex-wrap: wrap;
   gap: calc(var(--uitk-size-unit) * 4);
   padding: calc(var(--uitk-size-unit) * 5) calc(var(--uitk-size-unit) * 4);

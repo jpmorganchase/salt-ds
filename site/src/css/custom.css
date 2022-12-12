@@ -9,6 +9,7 @@
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --ifm-link-decoration: underline;
   --card-background: #10212b;
+  --max-content-width: 1920px;
 }
 
 ::selection {
@@ -216,6 +217,7 @@
   font-size: var(--uitk-text-fontSize);
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .docs-toc-container {
@@ -268,6 +270,8 @@ ul.table-of-contents li > ul li {
 .docs-page-content {
   --ifm-list-margin: calc(var(--uitk-size-unit) * 2);
   padding: calc(var(--uitk-size-unit) * 3);
+  max-width: var(--max-content-width);
+  margin: auto;
 }
 
 .docs-page-content.withToc {
@@ -457,7 +461,7 @@ table tr td:not(:last-child) {
   font-size: var(--uitk-text-fontSize);
   margin-bottom: -8px;
 }
-,
+
 .navbar-sidebar .navbar-sidebar__back {
   padding: var(--uitk-size-unit);
   margin: 0 0 var(--uitk-size-unit) 0;
