@@ -415,10 +415,6 @@ table th {
   font-weight: var(--uitk-text-h4-fontWeight);
 }
 
-table th svg {
-  margin-right: calc(var(--uitk-size-unit) / 2);
-}
-
 table tr td:not(:last-child) {
   border-right: 1px solid var(--uitk-separable-tertiary-borderColor);
 }

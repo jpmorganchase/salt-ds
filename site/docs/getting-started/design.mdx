@@ -10,6 +10,8 @@ import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
 import FigmaLink from "./FigmaLink";
 
+import styles from "./design.module.css";
+
 # Designing with Salt
 
 <Content toc={toc}>
@@ -45,7 +47,7 @@ To start using a library:
 - Click on the book icon and search for “Salt” in Libraries.
 - Pick the library you need from the set of available libraries (shown in the table below).
 
-<table style={{ tableLayout: "fixed" }}>
+<table className={styles.assetsTable}>
   <thead>
     <tr>
       <th>Assets and styles</th>
