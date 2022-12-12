@@ -415,6 +415,7 @@ const MIN_COLUMN_WIDTH = 10;
 // Returns onMouseDown handler to be attached to column resize handlers.
 // TODO There might be some problems if column is removed while it is being resized
 export function useColumnResize<T>(
+  cols: GridColumnModel<T>[],
   resizeColumn: (columnIndex: number, width: number) => void
 ) {
   const columnResizeDataRef = useRef<{
@@ -423,6 +424,7 @@ export function useColumnResize<T>(
     eventsUnsubscription: () => void;
     columnIndex: number;
     initialColumnWidth: number;
+    minWidth: number;
     resizeColumn: (columnIndex: number, width: number) => void;
   }>();
 
@@ -433,13 +435,10 @@ export function useColumnResize<T>(
 
   const onMouseMove = useCallback((event: MouseEvent) => {
     const x = event.screenX;
-    const { startX, columnIndex, initialColumnWidth } =
+    const { startX, columnIndex, initialColumnWidth, minWidth } =
       columnResizeDataRef.current!;
     const shift = x - startX;
-    let width = initialColumnWidth + shift;
-    if (width < MIN_COLUMN_WIDTH) {
-      width = MIN_COLUMN_WIDTH;
-    }
+    let width = Math.max(minWidth, initialColumnWidth + shift);
     columnResizeDataRef.current!.resizeColumn(columnIndex, Math.round(width));
   }, []);
 
@@ -468,6 +467,7 @@ export function useColumnResize<T>(
         columnIndex,
         initialColumnWidth,
         resizeColumn,
+        minWidth: cols[columnIndex].info.props.minWidth || MIN_COLUMN_WIDTH,
       };
 
       event.preventDefault();

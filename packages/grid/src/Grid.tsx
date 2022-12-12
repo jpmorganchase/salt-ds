@@ -578,7 +578,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [cols]
   );
 
-  const onResizeHandleMouseDown = useColumnResize(resizeColumn);
+  const onResizeHandleMouseDown = useColumnResize(cols, resizeColumn);
 
   const sizingContext: SizingContext = useMemo(
     () => ({

@@ -107,6 +107,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
         id="percentage"
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
+        minWidth={120}
       />
     </Grid>
   );

@@ -63,6 +63,10 @@ export interface GridColumnProps<T = any> {
    * */
   defaultWidth?: number;
   /**
+   * Min width of the column.
+   * */
+  minWidth?: number;
+  /**
    * Callback invoked when the user resizes the column.
    * */
   onWidthChanged?: (width: number) => void;

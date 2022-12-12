@@ -13,3 +13,12 @@
   font-size: var(--grid-fontSize);
   font-weight: normal;
 }
+
+.uitkGridFakeCell div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--grid-row-background);
+}
