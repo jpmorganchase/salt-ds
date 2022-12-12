@@ -88,20 +88,24 @@ const ComponentStatusData = ({
   );
 };
 
+type ComponentHeaderProps = {
+  logo: JSX.Element;
+  label: string;
+  isSorted: boolean;
+  ascendingOrder: boolean;
+  handleClick: () => void;
+};
+
 const ComponentHeader = ({
   logo,
   label,
   isSorted,
   ascendingOrder,
-}: {
-  logo: JSX.Element;
-  label: string;
-  isSorted: boolean;
-  ascendingOrder: boolean;
-}) => {
+  handleClick,
+}: ComponentHeaderProps) => {
   const arrowIcon = ascendingOrder ? <ArrowUpIcon /> : <ArrowDownIcon />;
   return (
-    <Button>
+    <Button onClick={handleClick}>
       <div className={styles.headerContainer}>
         <div>
           {logo}
@@ -144,37 +148,31 @@ const ComponentsList = () => {
       <table>
         <thead>
           <tr>
-            <th
-              onClick={() => handleSorting("name")}
-              aria-sort={isSortedBy === "name" ? ariaSort : null}
-            >
+            <th aria-sort={isSortedBy === "name" ? ariaSort : null}>
               <ComponentHeader
                 logo={<StorybookLogo />}
                 label="Component"
                 isSorted={isSortedBy === "name"}
                 ascendingOrder={hasAscendingOrder}
+                handleClick={() => handleSorting("name")}
               />
             </th>
-            <th
-              onClick={() => handleSorting("devStatus")}
-              aria-sort={isSortedBy === "devStatus" ? ariaSort : null}
-            >
+            <th aria-sort={isSortedBy === "devStatus" ? ariaSort : null}>
               <ComponentHeader
                 logo={<ReactLogo />}
                 label="React"
                 isSorted={isSortedBy === "devStatus"}
                 ascendingOrder={hasAscendingOrder}
+                handleClick={() => handleSorting("devStatus")}
               />
             </th>
-            <th
-              onClick={() => handleSorting("designStatus")}
-              aria-sort={isSortedBy === "designStatus" ? ariaSort : null}
-            >
+            <th aria-sort={isSortedBy === "designStatus" ? ariaSort : null}>
               <ComponentHeader
                 logo={<FigmaLogo />}
                 label="Figma"
                 isSorted={isSortedBy === "designStatus"}
                 ascendingOrder={hasAscendingOrder}
+                handleClick={() => handleSorting("designStatus")}
               />
             </th>
           </tr>
