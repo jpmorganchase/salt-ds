@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
-import { makePrefixer, useForkRef, useIdMemo } from "../../utils";
+import { makePrefixer, useForkRef, useId } from "../../utils";
 import { LayoutAnimation } from "../types";
 import "./DeckItem.css";
 
@@ -22,7 +22,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       className,
       index,
       role = "group",
-      id,
+      id: idProp,
       ...rest
     },
     ref
@@ -42,7 +42,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       `${animation || "fade"}-out`, // out-left
     ];
 
-    const deckItemId = useIdMemo(id);
+    const id = useId(idProp);
 
     return (
       <div
@@ -58,7 +58,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         ref={useForkRef(ref, sliderRef)}
         role={role}
         tabIndex={isCurrent ? 0 : -1}
-        id={deckItemId}
+        id={id}
         {...rest}
       >
         {children}

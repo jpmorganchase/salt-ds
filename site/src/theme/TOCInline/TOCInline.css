@@ -17,7 +17,7 @@
   border-left: 3px solid transparent;
   content: "";
   position: relative;
-  left: calc(var(--uitk-size-unit) * -1);
+  left: calc(var(--uitk-size-unit) * -3);
   height: var(--uitk-size-stackable);
   display: inline-block;
 }
@@ -27,7 +27,7 @@
 }
 
 .table-of-contents li li .uitkTocInline-activeLink::before {
-  left: calc(var(--uitk-size-unit) * -2);
+  left: calc(var(--uitk-size-unit) * -4);
 }
 
 ul.table-of-contents ul {
