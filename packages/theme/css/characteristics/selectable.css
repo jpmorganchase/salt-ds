@@ -15,11 +15,8 @@
   --uitk-selectable-borderColor-selectedDisabled: var(--uitk-palette-interact-border-activeDisabled);
   --uitk-selectable-borderColor-disabled: var(--uitk-palette-interact-border-disabled);
 
-  --uitk-selectable-foreground: var(--uitk-palette-interact-foreground);
   --uitk-selectable-foreground-partial: var(--uitk-palette-interact-foreground-partial);
-  --uitk-selectable-foreground-disabled: var(--uitk-palette-interact-foreground-disabled);
   --uitk-selectable-foreground-partialDisabled: var(--uitk-palette-interact-foreground-partialDisabled);
-  --uitk-selectable-foreground-selectedDisabled: var(--uitk-palette-interact-foreground-activeDisabled);
 
   --uitk-selectable-background: var(--uitk-palette-interact-background);
   --uitk-selectable-background-hover: var(--uitk-palette-interact-background-hover);
