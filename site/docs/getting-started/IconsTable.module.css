@@ -2,6 +2,14 @@
   color: var(--site-tertiary-accent-purple);
 }
 
+.iconsTableContainer {
+  overflow-x: auto;
+}
+
+.iconsTableContainer table thead tr th {
+  top: 0;
+}
+
 .iconsTable {
   margin: calc(var(--uitk-size-unit) * 2) 0;
   caption-side: bottom;
