@@ -1,20 +1,16 @@
 .uitk-theme {
   --uitk-color-blue-100-fade-foreground: rgba(100, 177, 228, var(--uitk-palette-opacity-foreground));
   --uitk-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-60-fade-foreground: rgba(197, 201, 208, var(--uitk-palette-opacity-foreground));
   --uitk-color-gray-70-fade-foreground: rgba(180, 183, 190, var(--uitk-palette-opacity-foreground));
   --uitk-color-gray-200-fade-foreground: rgba(97, 101, 110, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-800-fade-foreground: rgba(36, 37, 38, var(--uitk-palette-opacity-foreground));
   --uitk-color-gray-90-fade-foreground: rgba(132, 135, 142, var(--uitk-palette-opacity-foreground));
   --uitk-color-gray-900-fade-foreground: rgba(22, 22, 22, var(--uitk-palette-opacity-foreground));
   --uitk-color-white-fade-foreground: rgba(255, 255, 255, var(--uitk-palette-opacity-foreground));
 
-  --uitk-color-gray-30-fade-border: rgba(224, 228, 233, var(--uitk-palette-opacity-border));
   --uitk-color-gray-60-fade-border: rgba(197, 201, 208, var(--uitk-palette-opacity-border));
   --uitk-color-gray-90-fade-border: rgba(132, 135, 142, var(--uitk-palette-opacity-border));
   --uitk-color-gray-200-fade-border: rgba(97, 101, 110, var(--uitk-palette-opacity-border));
   --uitk-color-gray-300-fade-border: rgba(76, 80, 91, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-600-fade-border: rgba(47, 49, 54, var(--uitk-palette-opacity-border));
   --uitk-color-orange-400-fade-border: rgba(238, 133, 43, var(--uitk-palette-opacity-border));
   --uitk-color-orange-600-fade-border: rgba(224, 101, 25, var(--uitk-palette-opacity-border));
 
@@ -40,8 +36,6 @@
   --uitk-color-gray-800-fade-background-readonly: rgba(36, 37, 38, var(--uitk-palette-opacity-readonly));
 
   --uitk-color-black-fade-backdrop: rgba(36, 37, 38, var(--uitk-palette-opacity-backdrop));
-
-  --uitk-color-gray-90-fade-stroke: rgba(132, 135, 142, var(--uitk-palette-opacity-stroke));
 
   --uitk-color-blue-100-fade-fill: rgba(100, 177, 228, var(--uitk-palette-opacity-fill));
   --uitk-color-blue-300-fade-fill: rgba(51, 141, 205, var(--uitk-palette-opacity-fill));
