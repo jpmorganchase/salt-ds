@@ -44,6 +44,8 @@ export function BaseCell<T>(props: GridCellProps<T>) {
           [withBaseName("regularSeparator")]:
             column.separator === "regular" || column.separator === "groupEdge",
           [withBaseName("pinnedSeparator")]: column.separator === "pinned",
+          [withBaseName("editable")]: !isFocused && isEditable,
+          [withBaseName("selected")]: isSelected,
         },
         className
       )}
@@ -51,16 +53,13 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
     >
-      <div
-        className={cn(withBaseName("valueContainer"), {
-          [withBaseName("editable")]: isEditable,
-          [withBaseName("selected")]: isSelected,
-        })}
-      >
-        {children}
+      <div className={withBaseName("body")}>
+        <div className={cn(withBaseName("valueContainer"))}>{children}</div>
+        {isFocused && isEditable && (
+          <div className={withBaseName("cornerTag")} />
+        )}
+        {isFocused && !isFocusableContent && <Cursor />}
       </div>
-      {isFocused && !isFocusableContent && <Cursor />}
-      {isFocused && isEditable && <div className={withBaseName("cornerTag")} />}
     </td>
   );
 }
