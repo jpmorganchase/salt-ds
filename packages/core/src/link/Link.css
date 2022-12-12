@@ -1,4 +1,3 @@
-/* Defining global css variables for Link */
 .uitkLink {
   --link-color-hover: var(--uitkLink-color-hover, var(--uitk-text-link-foreground-hover));
   --link-color-active: var(--uitkLink-color-active, var(--uitk-text-link-foreground-active));
