@@ -5,11 +5,10 @@ const useOnScreen = <T extends Element>(
   rootMargin: string = "0px"
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIntersecting(entry.isIntersecting);
+        entry.isIntersecting === true && setIntersecting(entry.isIntersecting);
       },
       {
         rootMargin,
