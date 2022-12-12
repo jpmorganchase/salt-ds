@@ -26,6 +26,44 @@ Link is an extension of [Text component](/docs/documentation-core-text--primary)
 
 ## Features
 
+### Internal Link
+
+A default link provides navigation to either a new webpage or an internal page of the current website
+
+<Canvas>
+  <Story name="Internal Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com">Link to URL</Link>
+  </Story>
+</Canvas>
+
+### External Link
+
+A link with target \_blank navigates the user to an external link. Each time the link is accessed, a new tab will open
+
+<Canvas>
+  <Story name="External Link" decorators={[withFlexGap]}>
+    <Link href="https://www.google.com" target="_blank">
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
+
+### External Link with custom icon
+
+The icon for external links can be customized to display alternative icons
+
+<Canvas>
+  <Story name="External Link with custom icon" decorators={[withFlexGap]}>
+    <Link
+      IconComponent={StackoverflowIcon}
+      href="https://www.google.com"
+      target="_blank"
+    >
+      Link to URL
+    </Link>
+  </Story>
+</Canvas>
+
 ### Link variants
 
 Link variants are the background/foreground colors assigned to text styles for varying interaction states (e.g. disabled, hover, selected etc), that can be applied across the different text styles available. These are split into two groupings, `primary` and `secondary` with `primary` being the default.
@@ -68,41 +106,31 @@ Use `<strong>` or `<small>` tags inside your link components to wrap the chunks 
   </Story>
 </Canvas>
 
-### Internal Link
+### StyleAs
 
-A default link provides navigation to either a new webpage or an internal page of the current website
+Although we do not encourage it, you may find it necessary to need to match one of our link components' styling to another element type. In this case you'd use the `styleAs` prop.
 
-<Canvas>
-  <Story name="Internal Link" decorators={[withFlexGap]}>
-    <Link href="https://www.google.com">Link to URL</Link>
-  </Story>
-</Canvas>
-
-### External Link
-
-A link with target \_blank navigates the user to an external link. Each time the link is accessed, a new tab will open
+The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for placement of text that supports assistive technologies such as screen readers) whilst maintaining the appropriate visual priority.
 
 <Canvas>
-  <Story name="External Link" decorators={[withFlexGap]}>
-    <Link href="https://www.google.com" target="_blank">
-      Link to URL
+  <Story name="StyleAs">
+    <Link href="#root" styleAs="label">
+      This is a styleAs label example
     </Link>
   </Story>
 </Canvas>
 
-### External Link with custom icon
+### Truncation
 
-The icon for external links can be customized to display alternative icons
+By using the `maxRows` prop your link component will be truncated and will display the chosen number of rows. An ellipsis will be shown at the end to indicate the text has been truncated. If a value is not set for `maxRows`, the text will wrap.
+
+If you use truncated text, please ensure you are remaining ADA compliant by following our [Accessibility](#Accessibility) guidance.
 
 <Canvas>
-  <Story name="External Link with custom icon" decorators={[withFlexGap]}>
-    <Link
-      IconComponent={StackoverflowIcon}
-      href="https://www.google.com"
-      target="_blank"
-    >
-      Link to URL
-    </Link>
+  <Story name="Truncation">
+    <div style={{ width: 150 }}>
+      <Link maxRows={1}>This is a truncation example</Link>
+    </div>
   </Story>
 </Canvas>
 
