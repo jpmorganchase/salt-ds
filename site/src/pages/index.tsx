@@ -6,7 +6,6 @@ import HeroImage from "@site/static/img/hero_image.svg";
 import PencilIcon from "@site/static/img/pencil.svg";
 import CodeIcon from "@site/static/img/code.svg";
 import ArrowsIcon from "@site/static/img/arrows.svg";
-import { Button } from "@jpmorganchase/uitk-core";
 
 import styles from "./index.module.css";
 import Features from "./_index/features/Features";
@@ -26,8 +25,8 @@ function HomepageHeader() {
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
-          <Link to="/getting-started" className={styles.heroButton}>
-            <Button variant="cta">Start using Salt</Button>
+          <Link to="/getting-started" className={styles.heroLink}>
+            Start using Salt
           </Link>
         </div>
       </header>
