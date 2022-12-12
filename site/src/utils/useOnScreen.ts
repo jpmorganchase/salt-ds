@@ -8,7 +8,6 @@ const useOnScreen = <T extends Element>(
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log(entry);
         entry.isIntersecting === true && setIntersecting(entry.isIntersecting);
       },
       {
