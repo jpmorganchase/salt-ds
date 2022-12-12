@@ -31,20 +31,17 @@
   margin-bottom: -2px;
 }
 
-.uitkLink:visited,
-.uitkLink:visited .uitkLink-icon {
+.uitkLink:visited {
   --uitkIcon-color: var(--link-color-visited);
   color: var(--link-color-visited);
 }
 
-.uitkLink:hover,
-.uitkLink:hover .uitkLink-icon {
+.uitkLink:hover {
   --uitkIcon-color: var(--link-color-hover);
   color: var(--link-color-hover);
 }
 
-.uitkLink:active,
-.uitkLink:active .uitkLink-icon {
+.uitkLink:active {
   --uitkIcon-color: var(--link-color-active);
   color: var(--link-color-active);
 }
