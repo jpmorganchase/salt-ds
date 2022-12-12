@@ -1,3 +1,4 @@
+/* Defining global css variables for Link */
 .uitkLink {
   --link-color-hover: var(--uitkLink-color-hover, var(--uitk-text-link-foreground-hover));
   --link-color-active: var(--uitkLink-color-active, var(--uitk-text-link-foreground-active));
@@ -12,6 +13,7 @@
   --link-focus-outline: var(--uitk-focused-outline);
 }
 
+/* Main css class */
 .uitkLink {
   color: var(--link-color);
   letter-spacing: 0px;
@@ -19,46 +21,48 @@
   font-family: var(--link-fontFamily);
 }
 
+/* Primary variant */
 .uitkText-primary {
   --link-color: var(--uitk-text-primary-foreground);
 }
+
+/* Secondary variant */
 .uitkText-secondary {
   --link-color: var(--uitk-text-secondary-foreground);
 }
 
+/* External link's icon */
 .uitkLink-icon {
   margin-left: calc(var(--uitk-size-unit) * 0.75);
   margin-bottom: -2px;
 }
 
+/* Set color for visited link */
 .uitkLink:visited {
   --uitkIcon-color: var(--link-color-visited);
   color: var(--link-color-visited);
 }
 
+/* Set color for hovered link */
 .uitkLink:hover {
   --uitkIcon-color: var(--link-color-hover);
   color: var(--link-color-hover);
 }
 
+/* Set color for active link */
 .uitkLink:active {
   --uitkIcon-color: var(--link-color-active);
   color: var(--link-color-active);
 }
 
+/* Set color for focused link */
 .uitkLink:focus {
   --uitkIcon-color: var(--link-color-focus);
   outline: var(--link-focus-outline);
   color: var(--link-color-focus);
 }
 
-.uitkLink-disabled,
-.uitkLink-disabled:hover {
-  --uitkIcon-color: var(--link-color-disabled);
-  cursor: var(--uitk-actionable-cursor-disabled);
-  color: var(--link-color-disabled);
-}
-
+/* Class for ADA content */
 .uitkLink-externalLinkADA {
   display: block;
   position: absolute;
