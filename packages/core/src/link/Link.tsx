@@ -47,7 +47,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       href={href}
       onClick={stopPropagation}
       ref={ref}
-      tabIndex={0}
       target={target}
       {...rest}
     >
