@@ -478,13 +478,8 @@ table tr td:not(:last-child) {
   }
 }
 
-table tr th + th::before {
-  content: "";
+table tr th + th {
   border-left: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
-  position: relative;
-  height: 50%;
-  left: calc(-1 * var(--uitk-size-unit));
-  top: 25%;
 }
 
 @media screen and (max-width: 768px) {

@@ -16,8 +16,34 @@
   gap: var(--uitk-size-unit);
 }
 
-.componentList th span {
-  vertical-align: top;
+.componentList th button {
+  /* Remove button default styles so it's not visible but we retain its functionality for ADA purposes */
+  --uitkButton-background-hover: transparent;
+  --uitkButton-background: transparent;
+  --uitkButton-background-active: transparent;
+  --button-text-color-active: var(--button-text-color-hover);
+  --uitkButton-width: 100%;
+  --uitkButton-padding: 0;
+  --uitkButton-text-color: none;
+  --uitkButton-textTransform: none;
+  --uitkButton-fontWeight: none;
+  --uitkButton-letterSpacing: normal;
+  --uitkButton-height: auto;
+  --uitkIcon-color: inherit;
+  --uitk-actionable-primary-foreground-active: var(--button-text-color-hover);
+
+  display: inline;
+}
+
+.componentList th .headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.componentList th .headerContainer div {
+  display: flex;
+  gap: calc(var(--uitk-size-unit) / 2);
 }
 
 .componentList .status svg {
