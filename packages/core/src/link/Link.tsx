@@ -3,7 +3,6 @@ import {
   forwardRef,
   MouseEvent,
   ReactElement,
-  useCallback,
 } from "react";
 import cx from "classnames";
 import { IconProps, TearOutIcon } from "@jpmorganchase/uitk-icons";
