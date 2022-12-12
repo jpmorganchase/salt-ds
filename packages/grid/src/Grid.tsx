@@ -17,7 +17,7 @@ import cx from "classnames";
 import {
   CellMeasure,
   clamp,
-  getCellPosition,
+  getFocusablePosition,
   LeftPart,
   MiddlePart,
   RightPart,
@@ -672,19 +672,17 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [columnMove, onColumnMoveHandleMouseDown]
   );
 
-  // TODO can we navigate to the header using mouse?
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     onRowSelectionMouseDown(event);
     rangeSelection.onCellMouseDown(event);
 
     const target = event.target as HTMLElement;
     try {
-      const [rowIdx, colIdx] = getCellPosition(target);
-      if (colIdx >= 0) {
-        moveCursor("body", rowIdx, colIdx);
+      const { part, rowIndex, columnIndex } = getFocusablePosition(target);
+      if (part === "header" && !headerIsFocusable) {
+        return;
       }
-      // event.preventDefault();
-      // event.stopPropagation();
+      moveCursor(part, rowIndex, columnIndex);
     } catch (e) {
       // TODO
     }
