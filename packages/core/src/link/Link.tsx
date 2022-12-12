@@ -36,17 +36,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   },
   ref
 ): ReactElement<LinkProps> {
-  const stopPropagation = useCallback(
-    (evt: MouseEvent<HTMLAnchorElement>) => evt.stopPropagation(),
-    []
-  );
-
   return (
     <Text
       as="a"
       className={cx(withBaseName(), className)}
       href={href}
-      onClick={stopPropagation}
       ref={ref}
       target={target}
       variant={variant}
