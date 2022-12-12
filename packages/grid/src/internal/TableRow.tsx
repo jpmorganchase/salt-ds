@@ -61,6 +61,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
         [withBaseName("selected")]: isSelected,
         [withBaseName("followedBySelected")]:
           isFollowedBySelected && !isSelected,
+        [withBaseName("first")]: row.index === 0,
       })}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

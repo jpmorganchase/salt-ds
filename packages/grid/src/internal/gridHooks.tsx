@@ -86,11 +86,6 @@ export function useSumRangeWidth<T>(
   return useMemo(() => sumRangeWidth(columns, range), [columns, range]);
 }
 
-// Product of the given numbers.
-export function useProd(source: number[]) {
-  return useMemo(() => source.reduce((p, x) => p * x, 1), source);
-}
-
 // Range memoization using Rng.equals comparator.
 function useMemoRng(fn: () => NumberRange, deps: any[]) {
   const prevRef = useRef<NumberRange>(NumberRange.empty);
@@ -169,10 +164,13 @@ export function useBodyVisibleAreaTop<T>(
   visibleRowRange: NumberRange,
   topHeight: number
 ) {
-  return useMemo(
-    () => topHeight + visibleRowRange.start * rowHeight,
-    [rowHeight, visibleRowRange, topHeight]
-  );
+  return useMemo(() => {
+    let top = topHeight + visibleRowRange.start * rowHeight;
+    if (visibleRowRange.start > 0) {
+      top += 1; // First row (row #0) has an extra border
+    }
+    return top;
+  }, [rowHeight, visibleRowRange, topHeight]);
 }
 
 // Visible range of rows.
@@ -186,14 +184,19 @@ export function useVisibleRowRange(
     if (rowHeight < 1) {
       return NumberRange.empty;
     }
-    const start = Math.floor(scrollTop / rowHeight);
-    let end = Math.max(
-      start,
-      Math.ceil((scrollTop + clientMidHeight) / rowHeight)
-    );
-    if (end > rowCount) {
-      end = rowCount;
+    const firstRowHeight = rowHeight + 1; // First row has an extra 1px
+    const start =
+      scrollTop > firstRowHeight
+        ? 1 + Math.floor((scrollTop - firstRowHeight) / rowHeight)
+        : 0;
+    let endPos = scrollTop + clientMidHeight;
+    if (start === 0) {
+      endPos -= 1;
     }
+    const end = Math.min(
+      rowCount,
+      Math.max(start, Math.ceil(endPos / rowHeight))
+    );
     return new NumberRange(start, end);
   }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 }
@@ -356,7 +359,7 @@ export function useCols<T>(
 export function useScrollToCell<T>(
   visRowRng: NumberRange,
   rowHeight: number,
-  clientMidHt: number,
+  clientMidHeight: number,
   midCols: GridColumnModel<T>[],
   bodyVisColRng: NumberRange,
   clientMidWidth: number,
@@ -370,9 +373,14 @@ export function useScrollToCell<T>(
       let x: number | undefined = undefined;
       let y: number | undefined = undefined;
       if (rowIdx <= visRowRng.start) {
-        y = rowHeight * rowIdx;
+        // First row is 1px wider than other rows (additional top border)
+        y = rowIdx === 0 ? 0 : 1 + rowHeight * rowIdx;
       } else if (rowIdx >= visRowRng.end - 1) {
-        y = Math.max(0, rowHeight * rowIdx - clientMidHt + rowHeight);
+        const extraBorder = rowIdx > 0 ? 1 : 0;
+        y = Math.max(
+          0,
+          rowHeight * rowIdx + extraBorder - clientMidHeight + rowHeight
+        );
       }
       const isMidCol =
         midCols.length > 0 &&
@@ -391,7 +399,7 @@ export function useScrollToCell<T>(
           for (let i = 0; i <= midColIdx; ++i) {
             w += midCols[i].info.width;
           }
-          x = w - clientMidWidth;
+          x = Math.max(0, w - clientMidWidth);
         }
       }
       if (x !== undefined || y !== undefined) {
@@ -401,7 +409,7 @@ export function useScrollToCell<T>(
     [
       visRowRng,
       rowHeight,
-      clientMidHt,
+      clientMidHeight,
       midCols,
       bodyVisColRng,
       clientMidWidth,

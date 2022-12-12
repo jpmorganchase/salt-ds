@@ -35,7 +35,6 @@ import {
   useColumnResize,
   useHeadVisibleColumnRange,
   useLeftScrolledOutWidth,
-  useProd,
   useRangeSelection,
   useRowModels,
   useRowSelection,
@@ -262,11 +261,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   // Footer is not implemented yet.
   const botRowCount = 0; // TODO
   // Height of the header
-  const topHeight = useProd([rowHeight, headRowCount]);
+  const topHeight = rowHeight * headRowCount;
   // Height of the middle part (virtual height)
-  const midHeight = useProd([rowHeight, rowCount]);
+  const midHeight = rowCount === 0 ? 0 : rowHeight * rowCount + 1;
   // Height of the footer
-  const botHeight = useProd([botRowCount, rowHeight]);
+  const botHeight = botRowCount * rowHeight;
   // Total height of the grid (virtual)
   const totalHeight = useSum([topHeight, midHeight, botHeight]);
   // Client width of the middle part of the grid (viewport)
@@ -450,7 +449,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           : `th[data-column-index="${colIdx}"]`;
       const nodeToFocus = rootRef.current?.querySelector(selector);
       if (nodeToFocus) {
-        (nodeToFocus as HTMLElement).focus();
+        (nodeToFocus as HTMLElement).focus({ preventScroll: true });
+      } else {
+        console.warn(`focusCellElement can't find the element`);
       }
     }, 0);
   };

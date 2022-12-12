@@ -5,6 +5,10 @@
   --grid-row-background: var(--grid-background);
 }
 
+.uitkGridTableRow-first {
+  height: calc(var(--grid-row-height) + 1px);
+}
+
 .uitkGridTableRow th {
   border-style: solid;
   border-color: var(--grid-row-borderColor);

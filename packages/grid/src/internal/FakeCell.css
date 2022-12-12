@@ -2,7 +2,7 @@
   box-sizing: border-box;
 
   border-style: solid;
-  border-color: var(--grid-row-borderColor);
+  border-bottom-color: var(--grid-row-borderColor);
   border-width: 0 0 1px 0;
 
   overflow: hidden;
@@ -12,6 +12,15 @@
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
+}
+
+.uitkGridTableRow-first .uitkGridFakeCell {
+  border-width: 1px 0 1px 0;
+  border-top-color: transparent;
+}
+
+.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridFakeCell {
+  border-top-color: var(--grid-row-borderColor);
 }
 
 .uitkGridFakeCell div {
