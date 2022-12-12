@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
@@ -80,10 +79,9 @@ const cards: CardProps[] = [
 ];
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout description="Description will go into a meta tag in <head />">
-      <div className={styles.homepageContainer}>
+      <main className={styles.homepageContainer}>
         <HomepageHeader />
         <Features heading="What to expect" listItems={features} />
         <div className={styles.cardContainer}>
@@ -104,7 +102,7 @@ export default function Home(): JSX.Element {
           })}
         </div>
         <HomepageAccordion />
-      </div>
+      </main>
     </Layout>
   );
 }
