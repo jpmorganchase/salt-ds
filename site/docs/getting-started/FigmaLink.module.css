@@ -4,7 +4,3 @@ a.link {
   display: flex;
   align-items: center;
 }
-
-.logo {
-  margin-right: calc(var(--uitk-size-unit) / 2);
-}
