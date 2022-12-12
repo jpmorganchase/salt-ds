@@ -50,6 +50,16 @@ const expectFakeColumnWidth = (w: number) => {
   });
 };
 
+const checkCursorPos = (row: number, col: number) => {
+  cy.focused()
+    .closest("td")
+    .should("have.attr", "aria-colindex", String(col + 1));
+
+  cy.focused()
+    .closest("tr")
+    .should("have.attr", "aria-rowindex", String(row + 1));
+};
+
 describe("Grid", () => {
   it("Rendering", () => {
     cy.mount(<GridExample />);
@@ -182,13 +192,6 @@ describe("Grid", () => {
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
 
-    const checkCursorPos = (row: number, col: number) => {
-      cy.focused()
-        .closest("td")
-        .should("have.attr", "aria-rowindex", String(row + 1))
-        .should("have.attr", "aria-colindex", String(col + 1));
-    };
-
     // we cannot test tabbing in cypress for now
     clickCell(0, 1);
     checkCursorPos(0, 1);
@@ -280,19 +283,13 @@ describe("Grid", () => {
     assertGridReady();
 
     cy.findByText("button 1").focus().realPress("Tab");
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress("Tab");
     cy.focused().should("have.text", "button 2");
     cy.focused().realPress(["Shift", "Tab"]);
 
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress(["Shift", "Tab"]);
     cy.focused().should("have.text", "button 1");
@@ -321,9 +318,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").type("{Enter}");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "2");
+    checkCursorPos(1, 0);
   });
 
   it("in edit mode Tab moves focus one column to the right", () => {
@@ -336,9 +331,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").realPress("Tab");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "2")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 1);
   });
 
   it("Numeric cell editor", () => {
