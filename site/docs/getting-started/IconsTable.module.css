@@ -6,7 +6,7 @@
   overflow-x: auto;
 }
 
-.iconsTableContainer table thead tr th {
+.iconsTableContainer table thead {
   top: 0;
 }
 

@@ -387,18 +387,21 @@ table {
   width: 100%;
 }
 
+table thead {
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: 2;
+}
+
 table thead tr {
   border: none;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid var(--uitk-separable-primary-borderColor);
+  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
 table thead tr th {
   text-align: left;
-  position: sticky;
-  top: calc(var(--ifm-navbar-height));
   background: var(--uitk-color-white);
-  z-index: 2;
 }
 
 table th,
@@ -408,6 +411,7 @@ table td {
 
 table tr {
   border-bottom: 1px solid var(--uitk-separable-tertiary-borderColor);
+  border-top: 1px solid var(--uitk-separable-tertiary-borderColor);
 }
 
 table th {
