@@ -14,7 +14,7 @@
 }
 
 .cardTitle h2 {
-  margin-top: 0;
+  margin-top: var(--uitk-size-unit);
   margin-bottom: var(--uitk-size-unit);
 }
 
