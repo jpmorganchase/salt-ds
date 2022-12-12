@@ -3,6 +3,8 @@ sidebar_label: Design
 hide_table_of_contents: true
 ---
 
+import FigmaLogo from "@site/static/img/figma_logo.svg";
+
 import Content from "../../src/components/content/Content.tsx";
 import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
@@ -46,9 +48,11 @@ To start using a library:
 <table style={{ tableLayout: "fixed" }}>
   <thead>
     <tr>
-      <th>Salt asset libraries</th>
+      <th>Assets and styles</th>
       <th>What they contain</th>
-      <th>Design specifications</th>
+      <th>
+        <FigmaLogo /> Salt libraries
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -73,17 +77,6 @@ To start using a library:
         <FigmaLink />
       </td>
     </tr>
-  </tbody>
-</table>
-<table style={{ tableLayout: "fixed" }}>
-  <thead>
-    <tr>
-      <th>Salt style libraries</th>
-      <th>What they contain</th>
-      <th>Design specifications</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td>Layout Grid</td>
       <td>Layout grid styles for all densities</td>
