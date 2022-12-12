@@ -5,13 +5,13 @@ import {
   splitNavbarItems,
   useNavbarMobileSidebar,
 } from "@docusaurus/theme-common/internal";
-import { useViewport } from "@jpmorganchase/uitk-core";
 import NavbarItem from "@theme/NavbarItem";
 import NavbarColorModeToggle from "@theme/Navbar/ColorModeToggle";
 import SearchBar from "@theme/SearchBar";
 import NavbarMobileSidebarToggle from "@theme/Navbar/MobileSidebar/Toggle";
 import NavbarLogo from "@theme/Navbar/Logo";
 import NavbarSearch from "@theme/Navbar/Search";
+import useIsMobileView from "../../../utils/useIsMobileView";
 import styles from "./styles.module.css";
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -47,9 +47,7 @@ export default function NavbarContent() {
 
   const searchBarItem = items.find((item) => item.type === "search");
 
-  const viewport = useViewport();
-
-  const isMobileView = viewport <= 996;
+  const isMobileView = useIsMobileView();
 
   const rightItemsNoLabel = useMemo(
     () => rightItems.map(({ label, ...keepAttrs }) => keepAttrs),

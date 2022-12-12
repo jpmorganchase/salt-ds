@@ -13,8 +13,9 @@
   --card-icon-background: var(--uitk-color-gray-10);
 }
 
-.cardTitle {
-  --ifm-heading-margin-bottom: var(--uitk-size-unit);
+.cardTitle h2 {
+  margin-top: var(--uitk-size-unit);
+  margin-bottom: var(--uitk-size-unit);
 }
 
 .card {
@@ -37,6 +38,7 @@
 .cardTitle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .inlineIcon {
