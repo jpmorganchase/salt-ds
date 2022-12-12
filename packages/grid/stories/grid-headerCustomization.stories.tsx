@@ -6,33 +6,28 @@ import {
   useState,
 } from "react";
 import {
+  ColumnGroup,
+  ColumnGroupCellValueProps,
   Grid,
   GridCellValueProps,
   GridColumn,
-  ColumnGroup,
-  RowSelectionCheckboxColumn,
-  NumericColumn,
-  ColumnGroupCellValueProps,
   GridHeaderValueProps,
-  NumericCellValue,
+  NumericColumn,
 } from "../src";
 import {
-  LinearProgress,
+  MenuButton,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-  MenuButton,
 } from "@jpmorganchase/uitk-lab";
-import { Button, FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  FavoriteIcon,
-  LinkedIcon,
   MenuIcon,
-  PinIcon,
+  HomeIcon,
 } from "@jpmorganchase/uitk-icons";
-import { randomAmount, randomInt, randomNumber } from "./utils";
+import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
@@ -128,10 +123,11 @@ const ItemGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
       <FlexItem>
         <ToggleButton
           toggled={isItemPinned}
-          onToggle={onToggle}
+          // onToggle={onToggle}
           tooltipText="Pin left"
         >
-          <PinIcon />
+          {/*<PinIcon />*/}
+          <HomeIcon />
         </ToggleButton>
       </FlexItem>
       <FlexItem>
@@ -285,7 +281,7 @@ const HeaderCustomizationTemplate: Story<{}> = () => {
         <ColumnGroup
           name="Item"
           id="main_group"
-          pinned={isItemPinned ? "left" : undefined}
+          // pinned={isItemPinned ? "left" : undefined}
           headerValueComponent={ItemGroupHeaderValue}
         >
           <GridColumn
@@ -345,6 +341,7 @@ const HeaderCustomizationTemplate: Story<{}> = () => {
               key="summary"
               name="Summary"
               defaultWidth={250}
+              minWidth={160}
               cellValueComponent={SummaryCellValue}
             />
           )}

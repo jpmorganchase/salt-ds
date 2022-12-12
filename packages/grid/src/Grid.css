@@ -65,7 +65,7 @@
 
   --grid-headerColumnSeparator-color: var(--uitkGrid-headerColumnSeparator-color, var(--uitk-separable-tertiary-borderColor));
   --grid-headerRowSeparator-color: var(--uitkGrid-headerRowSeparator-color, var(--uitk-separable-primary-borderColor));
-  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, var(--uitk-size-basis-unit));
+  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, var(--uitk-size-unit));
   --grid-headerRowSeparator-height: var(--uitkGrid-headerRowSeparator-height, 1px);
   --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--uitk-separable-tertiary-borderColor));
 
