@@ -761,8 +761,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               if (cursorRowIdx != undefined) {
                 selectRows({
                   rowIndex: cursorRowIdx,
-                  shift: false,
-                  meta: event.shiftKey,
+                  isRange: false,
+                  incremental: true,
+                  unselectOtherRows: !event.shiftKey,
                 });
               }
             }

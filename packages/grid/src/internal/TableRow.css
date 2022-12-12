@@ -25,6 +25,7 @@
 
 .uitkGridTableRow-selected {
   --grid-row-borderColor: var(--grid-row-borderColor-selected);
+  --grid-row-background: var(--grid-row-background-selected);
 }
 
 .uitkGridTableRow-followedBySelected {

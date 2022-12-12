@@ -43,6 +43,10 @@
   border-color: var(--grid-pinnedSeparator-color);
 }
 
+.uitkGridBaseCell-selected .uitkGridBaseCell-body {
+  background: var(--grid-cell-background-selected);
+}
+
 .uitkGridBaseCell-valueContainer {
   position: absolute;
   top: 0;
@@ -57,10 +61,6 @@
   border-width: 1px;
   border-color: transparent;
   --grid-cell-padding: 0 calc(var(--grid-padding) - 1px);
-}
-
-.uitkGridBaseCell-selected .uitkGridBaseCell-valueContainer {
-  background: var(--grid-cell-background-selected);
 }
 
 .uitkGridBaseCell-editable .uitkGridBaseCell-valueContainer {

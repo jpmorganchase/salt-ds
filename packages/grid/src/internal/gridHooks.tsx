@@ -683,6 +683,19 @@ export function useColumnRegistry<T>(children: ReactNode) {
   };
 }
 
+export type SelectRowsOptions = {
+  rowIndex: number;
+  isRange?: boolean;
+  // Update selection incrementally based on previous state.
+  // If rowIndex is selected then unselect it, otherwise select it.
+  // This is what happens when the user clicks a row selection checkbox.
+  // Shift + Space is another case when this behaviour is used.
+  incremental?: boolean;
+  // Unusual behaviour, applied on space keypress on a non-checkbox cell
+  // The row is toggled, other rows unselected.
+  unselectOtherRows?: boolean;
+};
+
 // Returns functions related to row selection.
 // TODO test use case when selection mode changes
 export function useRowSelection<T>(
@@ -730,15 +743,12 @@ export function useRowSelection<T>(
   const selectRows = useCallback(
     ({
       rowIndex,
-      shift = false,
-      meta = false,
-    }: {
-      rowIndex: number;
-      shift?: boolean;
-      meta?: boolean;
-    }) => {
+      isRange = false,
+      incremental = false,
+      unselectOtherRows = false,
+    }: SelectRowsOptions) => {
       const idxFrom =
-        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && shift
+        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && isRange
           ? lastSelRowIdx
           : undefined;
 
@@ -746,22 +756,31 @@ export function useRowSelection<T>(
       let nextLastSelRowIdx: number | undefined = undefined;
 
       if (idxFrom === undefined) {
-        if (rowSelectionMode !== "multi" || !meta) {
-          nextSelRowIdxs = new Set([rowIndex]);
-          nextLastSelRowIdx = rowIndex;
-        } else {
-          const n = new Set<number>(selRowIdxs);
-          if (n.has(rowIndex)) {
-            n.delete(rowIndex);
+        if (unselectOtherRows) {
+          if (incremental && selRowIdxs.has(rowIndex)) {
+            nextSelRowIdxs = new Set<number>([]);
             nextLastSelRowIdx = undefined;
           } else {
-            n.add(rowIndex);
+            nextSelRowIdxs = new Set<number>([rowIndex]);
             nextLastSelRowIdx = rowIndex;
           }
-          nextSelRowIdxs = n;
+        } else {
+          if (incremental && rowSelectionMode === "multi") {
+            nextSelRowIdxs = new Set<number>(selRowIdxs);
+            if (nextSelRowIdxs.has(rowIndex)) {
+              nextSelRowIdxs.delete(rowIndex);
+              nextLastSelRowIdx = undefined;
+            } else {
+              nextSelRowIdxs.add(rowIndex);
+              nextLastSelRowIdx = rowIndex;
+            }
+          } else {
+            nextSelRowIdxs = new Set([rowIndex]);
+            nextLastSelRowIdx = rowIndex;
+          }
         }
       } else {
-        const s = meta ? new Set<number>(selRowIdxs) : new Set<number>();
+        const s = incremental ? new Set<number>(selRowIdxs) : new Set<number>();
         const idxs = [rowIndex, idxFrom];
         idxs.sort((a, b) => a - b);
         const rowIdxs: number[] = [];
@@ -822,8 +841,8 @@ export function useRowSelection<T>(
         const [rowIndex] = getCellPosition(target);
         selectRows({
           rowIndex,
-          shift: event.shiftKey,
-          meta: event.metaKey || event.ctrlKey,
+          isRange: event.shiftKey,
+          incremental: event.metaKey || event.ctrlKey,
         });
       } catch (e) {}
     },
