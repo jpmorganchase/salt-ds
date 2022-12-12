@@ -1,8 +1,4 @@
-import {
-  ComponentType,
-  forwardRef,
-  ReactElement,
-} from "react";
+import { ComponentType, forwardRef, ReactElement } from "react";
 import cx from "classnames";
 import { IconProps, TearOutIcon } from "@jpmorganchase/uitk-icons";
 import { makePrefixer } from "../utils";
