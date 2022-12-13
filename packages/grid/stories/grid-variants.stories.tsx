@@ -73,6 +73,7 @@ const GridVariantsTemplate: Story<{}> = () => {
         variant={index === 1 ? "secondary" : "primary"}
         zebra={index === 2 ? true : false}
         columnSeparators={separators}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="s" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />

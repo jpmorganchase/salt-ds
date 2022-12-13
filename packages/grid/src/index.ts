@@ -6,7 +6,7 @@ export * from "./GroupHeaderCellValue";
 export * from "./HeaderCell";
 export * from "./HeaderCellValue";
 export * from "./NumberRange";
-export * from "./RowSelectionCheckboxHeaderCell";
+export * from "./RowSelectionCheckboxHeaderCellValue";
 export * from "./RowSelectionCheckboxCellValue";
 export * from "./RowSelectionRadioColumn";
 export * from "./SelectionContext";
