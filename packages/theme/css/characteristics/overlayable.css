@@ -1,5 +1,6 @@
 .uitk-theme {
   --uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);
+  --uitk-overlayable-shadow-scroll-color: var(--uitk-shadow-1-color);
   --uitk-overlayable-shadow-borderRegion: var(--uitk-shadow-2);
   --uitk-overlayable-shadow: var(--uitk-shadow-2);
   --uitk-overlayable-shadow-hover: var(--uitk-shadow-3);
@@ -7,6 +8,5 @@
   --uitk-overlayable-shadow-drag: var(--uitk-shadow-4);
   --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
 
-  --uitk-overlayable-primary-background: var(--uitk-palette-neutral-primary-scrim);
-  --uitk-overlayable-secondary-background: var(--uitk-palette-neutral-secondary-scrim);
+  --uitk-overlayable-background: var(--uitk-palette-neutral-backdrop);
 }

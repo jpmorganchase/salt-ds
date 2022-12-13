@@ -5,14 +5,18 @@ import { GridVariants } from "@stories/grid-variants.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
-import { LotsOfColumnGroups } from "@stories/grid.stories";
 import * as groupedStories from "@stories/grid-columnGroups.stories";
-import { Grid, GridColumn, ColumnGroup } from "src";
+import { Grid, GridColumn, ColumnGroup } from "@jpmorganchase/uitk-grid";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
-const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
-  composedStories;
+const {
+  GridExample,
+  LotsOfColumns,
+  SingleRowSelect,
+  SmallGrid,
+  LotsOfColumnGroups,
+} = composedStories;
 const { EditableCells } = composedEditableStories;
 const { ColumnGroups } = composeStories(groupedStories);
 const findCell = (row: number, col: number) => {
@@ -20,7 +24,9 @@ const findCell = (row: number, col: number) => {
 };
 
 const assertGridReady = () =>
-  findCell(0, 0).should("have.attr", "tabindex", "0");
+  cy
+    .get(`[aria-rowindex="1"] [aria-colindex="1"]`)
+    .should("have.attr", "tabindex", "0");
 
 const clickCell = (row: number, col: number) => {
   findCell(row, col).click({ force: true });
@@ -48,6 +54,16 @@ const expectFakeColumnWidth = (w: number) => {
   cy.findByTestId(`grid-fake-column-header`).should(($el) => {
     expect($el[0].getBoundingClientRect().width).equal(w);
   });
+};
+
+const checkCursorPos = (row: number, col: number) => {
+  cy.focused()
+    .closest("[aria-colindex]")
+    .should("have.attr", "aria-colindex", String(col + 1));
+
+  cy.focused()
+    .closest("[aria-rowindex]")
+    .should("have.attr", "aria-rowindex", String(row + 1));
 };
 
 describe("Grid", () => {
@@ -182,37 +198,30 @@ describe("Grid", () => {
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
 
-    const checkCursorPos = (row: number, col: number) => {
-      cy.focused()
-        .closest("td")
-        .should("have.attr", "aria-rowindex", String(row + 1))
-        .should("have.attr", "aria-colindex", String(col + 1));
-    };
-
     // we cannot test tabbing in cypress for now
     clickCell(0, 1);
-    checkCursorPos(0, 1);
+    checkCursorPos(1, 1);
 
     cy.focused().realType("{rightarrow}");
-    checkCursorPos(0, 2);
-    cy.focused().realType("{downarrow}");
     checkCursorPos(1, 2);
+    cy.focused().realType("{downarrow}");
+    checkCursorPos(2, 2);
     cy.focused().realType("{leftarrow}");
-    checkCursorPos(1, 1);
+    checkCursorPos(2, 1);
     cy.focused().realType("{uparrow}");
-    checkCursorPos(0, 1);
+    checkCursorPos(1, 1);
     cy.focused().realPress(["End"]);
-    checkCursorPos(0, 5);
+    checkCursorPos(1, 5);
     cy.focused().realPress(["Home"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     cy.focused().realPress(["ControlLeft", "End"]);
-    checkCursorPos(41, 5);
+    checkCursorPos(42, 5);
     cy.focused().realPress(["ControlLeft", "Home"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     cy.focused().realPress(["PageDown"]);
     checkCursorPos(14, 0);
     cy.focused().realPress(["PageUp"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     // TODO other hotkeys
   });
 
@@ -279,20 +288,15 @@ describe("Grid", () => {
 
     assertGridReady();
 
-    cy.findByText("button 1").focus().realPress("Tab");
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    cy.findByText("button 1").focus();
+    cy.realPress("Tab");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress("Tab");
     cy.focused().should("have.text", "button 2");
     cy.focused().realPress(["Shift", "Tab"]);
 
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress(["Shift", "Tab"]);
     cy.focused().should("have.text", "button 1");
@@ -321,9 +325,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").type("{Enter}");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "2");
+    checkCursorPos(1, 0);
   });
 
   it("in edit mode Tab moves focus one column to the right", () => {
@@ -336,9 +338,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").realPress("Tab");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "2")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 1);
   });
 
   it("Numeric cell editor", () => {
@@ -487,8 +487,8 @@ describe("Grid", () => {
   describe("Cell Customisation", () => {
     it("Renders customised cell values", () => {
       cy.mount(<CellCustomization />);
-      cy.get(".bidAskCellValue").should("have.length", 16);
-      cy.get(".uitkLinearProgress").should("have.length", 16);
+      cy.get(".bidAskCellValue").should("have.length", 15);
+      cy.get(".uitkLinearProgress").should("have.length", 15);
     });
   });
 

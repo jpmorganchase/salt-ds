@@ -16,10 +16,6 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement> {
    */
   align?: FlexLayoutProps<ElementType>["align"];
   /**
-   * Adds a separator between elements if wrap is not active, default is false.
-   */
-  separators?: FlexLayoutProps<ElementType>["separators"];
-  /**
    * Allow the items to wrap as needed, default is true.
    */
   wrap?: FlexLayoutProps<ElementType>["wrap"];
@@ -50,15 +46,7 @@ const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
 
 export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
   function SplitLayout(
-    {
-      align,
-      leftSplitItem,
-      rightSplitItem,
-      separators,
-      wrap = true,
-      gap,
-      ...rest
-    },
+    { align, leftSplitItem, rightSplitItem, wrap = true, gap, ...rest },
     ref
   ) {
     return (
@@ -69,7 +57,6 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
         wrap={wrap}
         gap={gap}
         justify="space-between"
-        separators={separators}
         {...rest}
       >
         <SplitItem>{leftSplitItem}</SplitItem>

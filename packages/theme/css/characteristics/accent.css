@@ -1,14 +1,18 @@
 .uitk-density-high {
   --uitk-accent-fontSize: 8px;
+  --uitk-accent-lineHeight: 11px;
 }
 .uitk-density-medium {
   --uitk-accent-fontSize: 10px;
+  --uitk-accent-lineHeight: 13px;
 }
 .uitk-density-low {
   --uitk-accent-fontSize: 12px;
+  --uitk-accent-lineHeight: 16px;
 }
 .uitk-density-touch {
   --uitk-accent-fontSize: 14px;
+  --uitk-accent-lineHeight: 18px;
 }
 
 .uitk-theme {

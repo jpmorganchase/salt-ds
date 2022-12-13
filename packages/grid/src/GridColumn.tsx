@@ -12,7 +12,6 @@ import {
 } from "react";
 import { useGridContext } from "./GridContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
-import { HeaderCellProps } from "./HeaderCell";
 
 export type GridColumnPin = "left" | "right" | null;
 
@@ -34,8 +33,15 @@ export interface GridCellValueProps<T, U = any> {
   value?: U;
 }
 
+export interface HeaderCellProps<T> {
+  column: GridColumnModel<T>;
+  children: ReactNode;
+  isFocused?: boolean;
+}
+
 export interface GridHeaderValueProps<T> {
   column: GridColumnModel<T>;
+  isFocused?: boolean;
 }
 
 export interface GridEditorProps<T> {
@@ -56,6 +62,10 @@ export interface GridColumnProps<T = any> {
    * Default width of the column in `px`.
    * */
   defaultWidth?: number;
+  /**
+   * Min width of the column.
+   * */
+  minWidth?: number;
   /**
    * Callback invoked when the user resizes the column.
    * */

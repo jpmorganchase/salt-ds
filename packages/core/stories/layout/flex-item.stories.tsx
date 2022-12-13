@@ -5,7 +5,6 @@ import {
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./styles.css";
-import { ReactNode, HTMLAttributes } from "react";
 
 export default {
   title: "Core/Layout/FlexLayout/FlexItem",
@@ -18,46 +17,21 @@ export default {
     shrink: { control: { type: "number" } },
     grow: { control: { type: "number" } },
   },
-  excludeStories: ["FlexContent"],
 } as ComponentMeta<typeof FlexItem>;
-
-interface FlexContentProps extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode;
-  caption?: string;
-  className?: string;
-  number?: number;
-}
-
-export const FlexContent = ({
-  children,
-  className,
-  number,
-  ...rest
-}: FlexContentProps) => (
-  <div className={className || "layout-content"} {...rest}>
-    {children || <p>Item {number && number}</p>}
-  </div>
-);
 
 const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
   return (
-    <FlexLayout>
-      <FlexItem {...args}>
-        <FlexContent className={"layout-active-content"}>
-          <p>Item</p>
-        </FlexContent>
+    <FlexLayout className="layout-container">
+      <FlexItem className="layout-active-content" {...args}>
+        <p>Item</p>
       </FlexItem>
       <FlexItem>
-        <FlexContent>
-          <p>This is a larger item</p>
-          <p>This is a larger item</p>
-        </FlexContent>
+        <p>Larger Item</p>
+        <p>Containing 2 paragraphs</p>
       </FlexItem>
       <FlexItem>
-        <FlexContent>
-          <p>This is a larger item</p>
-          <p>This is a larger item</p>
-        </FlexContent>
+        <p>Larger Item</p>
+        <p>Containing 2 paragraphs</p>
       </FlexItem>
     </FlexLayout>
   );

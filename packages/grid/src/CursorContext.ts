@@ -1,10 +1,14 @@
 import { createContext, useContext } from "react";
 
+export type FocusedPart = "header" | "body";
+
 export interface CursorContext {
   isFocused: boolean;
   cursorRowIdx: number | undefined;
   cursorColIdx: number | undefined;
-  moveCursor: (rowIdx: number, colIdx: number) => void;
+  moveCursor: (part: FocusedPart, rowIdx: number, colIdx: number) => void;
+  focusedPart: FocusedPart;
+  headerIsFocusable: boolean;
 }
 
 export const CursorContext = createContext<CursorContext | undefined>(

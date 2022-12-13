@@ -9,6 +9,8 @@
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --ifm-link-decoration: underline;
   --card-background: #10212b;
+  --max-content-width: 1920px;
+  --site-navigable-fontWeight-active: var(--uitk-typography-fontWeight-bold);
 }
 
 ::selection {
@@ -45,6 +47,7 @@
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
   --image-border: var(--uitk-palette-neutral-border-medium);
+  --ifm-menu-color-background-hover: none;
 }
 
 .main-wrapper {
@@ -84,7 +87,7 @@
 }
 
 .navbar__link--active {
-  font-weight: var(--uitk-navigable-fontWeight-active);
+  font-weight: var(--site-navigable-fontWeight-active);
   border-bottom: 3px solid var(--uitk-navigable-indicator-active);
   color: var(--uitk-color-white);
 }
@@ -105,7 +108,9 @@
   --ifm-menu-color-active: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
   background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with TKProvider */
 }
-
+.theme-doc-sidebar-container > div:first-child {
+  height: unset;
+}
 .theme-doc-sidebar-container *::selection {
   background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
 }
@@ -116,14 +121,15 @@
 
 .theme-doc-sidebar-container .menu {
   padding: 0;
+  width: calc(100% + 5px);
 }
 
 .theme-doc-sidebar-container .menu__link {
   border-radius: 0;
 }
 
-.theme-doc-sidebar-container .menu__link--active {
-  font-weight: var(--uitk-navigable-fontWeight-active);
+.menu__link--active {
+  font-weight: var(--site-navigable-fontWeight-active);
 }
 
 .theme-doc-sidebar-container li {
@@ -135,11 +141,12 @@
   margin: 0;
 }
 
-.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
+.theme-doc-sidebar-container li:has(> .menu__link--active)::before {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
   content: "";
   position: relative;
-  left: -289px;
+  left: 0;
+  font-weight: bold;
 }
 
 .theme-doc-sidebar-container .menu__link:hover {
@@ -212,6 +219,7 @@
   font-size: var(--uitk-text-fontSize);
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .docs-toc-container {
@@ -219,9 +227,9 @@
   --ifm-link-decoration: none;
   height: 100%;
   position: sticky;
-  padding-left: calc(4 * var(--uitk-size-unit));
+  padding-left: calc(5 * var(--uitk-size-unit));
   padding-top: calc(3 * var(--uitk-size-unit));
-  top: var(--ifm-navbar-height);
+  top: calc(var(--ifm-navbar-height) + var(--uitk-size-unit));
   width: 282px;
 }
 
@@ -229,7 +237,7 @@
   font-size: var(--uitk-text-h4-fontSize);
   font-weight: var(--uitk-text-h4-fontWeight);
   position: relative;
-  right: calc(0.5 * var(--uitk-size-unit));
+  right: 1.85em;
 }
 
 .table-of-contents ul,
@@ -248,7 +256,8 @@ ul.table-of-contents li > ul li {
 }
 
 .table-of-contents li {
-  margin: var(--ifm-toc-padding-vertical) 0;
+  margin: 0;
+  text-indent: -1em;
 }
 
 .table-of-contents li li {
@@ -263,6 +272,8 @@ ul.table-of-contents li > ul li {
 .docs-page-content {
   --ifm-list-margin: calc(var(--uitk-size-unit) * 2);
   padding: calc(var(--uitk-size-unit) * 3);
+  max-width: var(--max-content-width);
+  margin: auto;
 }
 
 .docs-page-content.withToc {
@@ -386,14 +397,21 @@ table {
   width: 100%;
 }
 
+table thead {
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: 2;
+}
+
 table thead tr {
   border: none;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid var(--uitk-separable-primary-borderColor);
+  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
 table thead tr th {
   text-align: left;
+  background: var(--uitk-color-white);
 }
 
 table th,
@@ -403,6 +421,7 @@ table td {
 
 table tr {
   border-bottom: 1px solid var(--uitk-separable-tertiary-borderColor);
+  border-top: 1px solid var(--uitk-separable-tertiary-borderColor);
 }
 
 table th {
@@ -450,8 +469,9 @@ table tr td:not(:last-child) {
 }
 
 .navbar-sidebar .navbar-sidebar__back {
+  font-size: var(--uitk-text-fontSize);
   padding: var(--uitk-size-unit);
-  margin: 0 0 var(--uitk-size-unit) 0;
+  margin: 0;
   position: unset;
   width: 100%;
 }
@@ -459,7 +479,7 @@ table tr td:not(:last-child) {
 /* ----------------- */
 
 @media screen and (max-width: 1280px) {
-  .navbar {
+  :root {
     --ifm-navbar-height: 76px;
   }
 
@@ -469,16 +489,14 @@ table tr td:not(:last-child) {
   }
 }
 
-table tr th + th::before {
-  content: "";
+table tr th + th {
   border-left: 1px solid var(--uitk-color-gray-90-fade-border-readonly);
-  position: relative;
-  height: 50%;
-  left: calc(-1 * var(--uitk-size-unit));
-  top: 25%;
 }
 
 @media screen and (max-width: 768px) {
+  .navbar {
+    --ifm-navbar-padding-horizontal: calc(var(--uitk-size-unit) * 2);
+  }
   .docs-toc-container {
     display: none;
   }

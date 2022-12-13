@@ -1,7 +1,7 @@
 import { Button, SplitLayout } from "@jpmorganchase/uitk-core";
 import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexContent } from "./flex-item.stories";
+import "./styles.css";
 
 export default {
   title: "Core/Layout/SplitLayout",
@@ -13,10 +13,6 @@ export default {
     },
     gap: {
       type: "number",
-    },
-    separators: {
-      options: ["start", "center", "end", true],
-      control: { type: "select" },
     },
     wrap: {
       type: "boolean",
@@ -32,17 +28,23 @@ export default {
 } as ComponentMeta<typeof SplitLayout>;
 
 const leftItem = (
-  <FlowLayout>
+  <FlowLayout className="layout-container">
     {Array.from({ length: 3 }, (_, index) => (
-      <FlexContent key={index}>{`Item ${index + 1}`}</FlexContent>
+      <div key={index}>
+        <p>Item {index + 1}</p>
+      </div>
     ))}
   </FlowLayout>
 );
 
 const rightItem = (
   <FlowLayout>
-    <FlexContent className="layout-content-right">Item 4</FlexContent>
-    <FlexContent className="layout-content-right">Item 5</FlexContent>
+    <div className="layout-content-right">
+      <p>Item 4</p>
+    </div>
+    <div className="layout-content-right">
+      <p>Item 5</p>
+    </div>
   </FlowLayout>
 );
 

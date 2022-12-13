@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
@@ -7,7 +6,6 @@ import HeroImage from "@site/static/img/hero_image.svg";
 import PencilIcon from "@site/static/img/pencil.svg";
 import CodeIcon from "@site/static/img/code.svg";
 import ArrowsIcon from "@site/static/img/arrows.svg";
-import { Button } from "@jpmorganchase/uitk-core";
 
 import styles from "./index.module.css";
 import Features from "./_index/features/Features";
@@ -23,12 +21,12 @@ function HomepageHeader() {
     <div className={styles.heroContainer}>
       <header className={clsx("hero hero--primary", styles.heroBanner)}>
         <div className="container">
-          <h1 className={styles.heroTitle}>{siteConfig.title}</h1>
+          <h1 className={styles.heroTitle}>Welcome to Salt</h1>
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
-          <Link to="/getting-started" className={styles.heroButton}>
-            <Button variant="cta">Start using Salt</Button>
+          <Link to="/getting-started" className={styles.heroLink}>
+            Start using Salt
           </Link>
         </div>
       </header>
@@ -80,13 +78,9 @@ const cards: CardProps[] = [
 ];
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={siteConfig.title}
-      description="Description will go into a meta tag in <head />"
-    >
-      <div className={styles.homepageContainer}>
+    <Layout description="Description will go into a meta tag in <head />">
+      <main className={styles.homepageContainer}>
         <HomepageHeader />
         <Features heading="What to expect" listItems={features} />
         <div className={styles.cardContainer}>
@@ -107,7 +101,7 @@ export default function Home(): JSX.Element {
           })}
         </div>
         <HomepageAccordion />
-      </div>
+      </main>
     </Layout>
   );
 }

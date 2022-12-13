@@ -2,6 +2,7 @@
 .uitkText {
   font-size: var(--uitk-text-fontSize);
   line-height: var(--uitk-text-lineHeight);
+  color: var(--uitkText-color, var(--text-color));
 }
 
 /* Allows truncation */
@@ -14,10 +15,10 @@
 }
 
 .uitkText-primary {
-  color: var(--uitk-text-primary-foreground);
+  --text-color: var(--uitk-text-primary-foreground);
 }
 .uitkText-secondary {
-  color: var(--uitk-text-secondary-foreground);
+  --text-color: var(--uitk-text-secondary-foreground);
 }
 
 /* Body emphasis strong */

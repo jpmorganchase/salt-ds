@@ -62,6 +62,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
       className="grid"
       zebra={true}
       columnSeparators={true}
+      headerIsFocusable={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionCheckboxColumn id="rowSelection" />
