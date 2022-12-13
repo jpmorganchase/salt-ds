@@ -2,10 +2,13 @@ import { useCallback, useState } from "react";
 import {
   AriaAnnouncerProvider,
   Button,
-  Card,
   useAriaAnnouncer,
 } from "@jpmorganchase/uitk-core";
-import { ContentStatus, ContentStatusProps } from "@jpmorganchase/uitk-lab";
+import {
+  Card,
+  ContentStatus,
+  ContentStatusProps,
+} from "@jpmorganchase/uitk-lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {

@@ -1,4 +1,3 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { ColumnGroupCellValueProps } from "./ColumnGroup";
 
 export function GroupHeaderCellValue(props: ColumnGroupCellValueProps) {

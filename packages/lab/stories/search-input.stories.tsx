@@ -1,9 +1,8 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
 
-import { FormField } from "@jpmorganchase/uitk-core";
 import { NotificationIcon } from "@jpmorganchase/uitk-icons";
-import { SearchInput } from "@jpmorganchase/uitk-lab";
+import { FormField, SearchInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { SyntheticEvent, useState } from "react";
 

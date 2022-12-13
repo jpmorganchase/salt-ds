@@ -1,11 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  Button,
-  Link,
-  ParentChildLayout,
-  ToolkitProvider,
-  Text,
-} from "@jpmorganchase/uitk-core";
+import { Button, Link, ToolkitProvider, Text } from "@jpmorganchase/uitk-core";
 import {
   EditableLabel,
   Tab,
@@ -15,6 +9,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  ParentChildLayout,
 } from "@jpmorganchase/uitk-lab";
 
 import { AdjustableFlexbox } from "../story-components";

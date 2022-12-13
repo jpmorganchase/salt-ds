@@ -1,10 +1,8 @@
 import {
   Button,
   makePrefixer,
-  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
-  useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
@@ -40,6 +38,7 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";

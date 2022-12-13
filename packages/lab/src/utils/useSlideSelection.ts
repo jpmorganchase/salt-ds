@@ -1,4 +1,4 @@
-import { LayoutAnimationTransition } from "@jpmorganchase/uitk-core";
+import { LayoutAnimationTransition } from "../deck-layout";
 import { useState } from "react";
 
 export const useSlideSelection = (

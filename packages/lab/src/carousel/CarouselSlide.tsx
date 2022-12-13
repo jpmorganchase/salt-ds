@@ -8,7 +8,7 @@ import {
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 import cx from "classnames";
-import { ButtonBarProps } from "../buttonbar";
+import { ButtonBarProps } from "../button-bar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   ButtonBar?: ElementType<Partial<ButtonBarProps>>;

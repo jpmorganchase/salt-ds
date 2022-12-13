@@ -1,11 +1,7 @@
-import {
-  Tooltip,
-  TooltipProps,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { useForkRef } from "@jpmorganchase/uitk-core";
 import { forwardRef } from "react";
 import { FavoriteToggle, FavoriteToggleProps } from "./FavoriteToggle";
+import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
 
 export interface FavoriteToggleWithTooltipProps extends FavoriteToggleProps {
   tooltipProps?: TooltipProps;

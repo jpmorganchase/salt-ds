@@ -9,10 +9,10 @@ import React, {
   useRef,
 } from "react";
 import {
-  Input,
   useControlled,
   useIsomorphicLayoutEffect,
 } from "@jpmorganchase/uitk-core";
+import { Input } from "../input";
 
 import "./EditableLabel.css";
 

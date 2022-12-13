@@ -1,10 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import {
-  Button,
-  Input,
-  Pill,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   AddIcon,
   ChatIcon,
@@ -39,6 +34,9 @@ import {
   ToolbarField,
   ToolbarProps,
   Tooltray,
+  Input,
+  Pill,
+  StaticInputAdornment,
 } from "@jpmorganchase/uitk-lab";
 import { CSSProperties, MouseEvent, useState } from "react";
 

@@ -1,8 +1,9 @@
 import { ChangeEvent, ComponentProps, memo, useRef, useState } from "react";
-import { Button, FormField } from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 
 import {
   ComboBoxDeprecated,
+  FormField,
   escapeRegExp,
   GetFilterRegex,
   ListChangeHandlerDeprecated,

@@ -4,21 +4,17 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import {
-  isDesktop,
-  Portal,
-  TooltipContext,
-  useAriaAnnouncer,
-  useFloatingUI,
-  useForkRef,
-  useWindow,
-} from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useForkRef } from "@jpmorganchase/uitk-core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
 import { BaseComboBoxProps } from "./DefaultComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
+import { useWindow, isDesktop } from "../../window";
+import { Portal } from "../../portal";
+import { useFloatingUI } from "../../popper";
+import { TooltipContext } from "../../tooltip";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,

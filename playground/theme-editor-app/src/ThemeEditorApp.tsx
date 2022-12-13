@@ -7,12 +7,13 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { isDesktop, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   AppHeader,
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
+  isDesktop,
 } from "@jpmorganchase/uitk-lab";
 import {
   CSSByPattern,

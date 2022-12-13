@@ -1,10 +1,6 @@
 import { KeyboardEvent, MouseEvent, MutableRefObject } from "react";
-import {
-  ButtonProps,
-  InputProps,
-  useControlled,
-  useId,
-} from "@jpmorganchase/uitk-core";
+import { ButtonProps, useControlled, useId } from "@jpmorganchase/uitk-core";
+import { InputProps } from "../input";
 import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";

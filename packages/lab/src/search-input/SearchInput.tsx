@@ -7,14 +7,8 @@ import {
   useRef,
 } from "react";
 import cx from "classnames";
-import {
-  Button,
-  Input,
-  InputProps,
-  StaticInputAdornment,
-  useControlled,
-  useForkRef,
-} from "@jpmorganchase/uitk-core";
+import { Button, useControlled, useForkRef } from "@jpmorganchase/uitk-core";
+import { Input, InputProps, StaticInputAdornment } from "../input";
 import { CloseIcon, SearchIcon } from "@jpmorganchase/uitk-icons";
 
 import "./SearchInput.css";
