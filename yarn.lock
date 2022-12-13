@@ -3316,7 +3316,7 @@ __metadata:
     "@storybook/node-logger": ^6.5.14
     "@storybook/react": ^6.5.14
     "@storybook/testing-react": ^1.3.0
-    "@testing-library/cypress": ^8.0.3
+    "@testing-library/cypress": ^9.0.0
     "@testing-library/dom": ^8.5.0
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.1.0
@@ -3344,8 +3344,8 @@ __metadata:
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^1.0.16
     csstree-validator: ^3.0.0
-    cypress: ^11.0.0
-    cypress-axe: ^1.0.0
+    cypress: ^12.0.0
+    cypress-axe: ^1.1.0
     cypress-real-events: ^1.7.2
     deepmerge: ^4.2.2
     del: ^6.0.0
@@ -5326,15 +5326,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "@testing-library/cypress@npm:8.0.3"
+"@testing-library/cypress@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@testing-library/cypress@npm:9.0.0"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@testing-library/dom": ^8.1.0
   peerDependencies:
-    cypress: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 319f6c7297f85e5673882a71009b5d5b576006f986d87a6ca6f2f8c679d96d9779f3ddbc01654b5a943407fa91192814f250835ce01f153e33ef24818cf1bf20
+    cypress: ^12.0.0
+  checksum: fbd24e8f0b8a60279b336de5f6bc0e7ad6fb31316eacab5128dacc7fccde1eb40935b90f2c3bddc7d814115fe3965c6dbf011785448cd15b5a5b0bc40ef5bb4c
   languageName: node
   linkType: hard
 
@@ -10266,13 +10266,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-axe@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "cypress-axe@npm:1.0.0"
+"cypress-axe@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "cypress-axe@npm:1.1.0"
   peerDependencies:
     axe-core: ^3 || ^4
-    cypress: ^10
-  checksum: 02b5d8ac11b659772fc11e587c61c75b86fdbd1dda7930ec76e02ed4f7e774d01a087bd21681460d9664d469f1bc778a8402825e9c7fd95e0aa2688264a381c2
+    cypress: ^10 || ^11
+  checksum: a86b4ff0d35eab82ac5cfd40bbe4077aaf5e7f075b40a49efa949e2c40c60d0f78c1b43d65f98e255c1675d8492b674933da12e11ff71b1f670bd6cfa03b363c
   languageName: node
   linkType: hard
 
@@ -10285,9 +10285,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "cypress@npm:11.0.0"
+"cypress@npm:^12.0.0":
+  version: 12.1.0
+  resolution: "cypress@npm:12.1.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -10333,7 +10333,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 279cb2b8e6bd85f1250552abaa45aed72a9e9208a8e51d467c0741fb7feb9db258a186c33f921f4ea19e90a7632ad19385f41eaf7650b5f113c31767ec1bd44a
+  checksum: 238ea125f396594a84ba096e0eaebe6f0d6b60b3b232a3f6e36420f9fa7a9218211df8dc6ad2a4f6cc0cc2fd77d4e0eb0932b409a73ff8434e78e880a36f59a7
   languageName: node
   linkType: hard
 
