@@ -26,7 +26,7 @@
 .notFoundContent:before {
   content: "";
   border: 1px solid;
-  border-color: var(--uitkAccordion-section-borderColor, var(--uitk-separable-secondary-borderColor));
+  border-color: var(--uitk-separable-secondary-borderColor);
   align-self: stretch;
 }
 
