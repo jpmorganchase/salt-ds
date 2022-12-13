@@ -74,6 +74,9 @@ export type GridColumnMoveHandler = (
 ) => void;
 
 export interface GridProps<T = any> {
+  /**
+   * At least 1 children is expected, options are `ColumnGroup` or `GridColumn`.
+   * */
   children: ReactNode;
   /**
    * If `true`, zebra stripes are enabled (odd/even rows have alternate colours)
@@ -98,7 +101,7 @@ export interface GridProps<T = any> {
   /**
    * Should return unique string for a given row data object.
    * If rowData is sparse then this function should work with undefined row data
-   * objects and create keys based on row index.
+   * objects and create keys based on row index. `(row: T, index: number) => string`
    * */
   rowKeyGetter?: RowKeyGetter<T>;
   /**
@@ -125,6 +128,9 @@ export interface GridProps<T = any> {
    * If `true`, user will be able to move columns using drag and drop.
    * */
   columnMove?: boolean;
+  /**
+   * Accepts `(columnId: string, fromIndex: number, toIndex: number) => void`
+   * */
   onColumnMoved?: GridColumnMoveHandler;
   /**
    * Options are `range` and `none`.
