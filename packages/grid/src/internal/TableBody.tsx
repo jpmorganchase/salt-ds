@@ -39,7 +39,8 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     [selectedCellRange]
   );
 
-  const { isFocused, cursorRowIdx, cursorColIdx } = useCursorContext();
+  const { cursorRowIdx, cursorColIdx, focusedPart, headerIsFocusable } =
+    useCursorContext();
 
   const { editMode, startEditMode } = useEditorContext();
 
@@ -62,7 +63,10 @@ export function TableBody<T>(props: TableBodyProps<T>) {
       {rows.map((row) => {
         const isSelected = selRowIdxs.has(row.index);
         const isFollowedBySelected = selRowIdxs.has(row.index + 1);
-        const cursorIdx = cursorRowIdx === row.index ? cursorColIdx : undefined;
+        const cursorIdx =
+          focusedPart === "body" && cursorRowIdx === row.index
+            ? cursorColIdx
+            : undefined;
         const editorColIdx = editMode ? cursorIdx : undefined;
         return (
           <TableRow
@@ -78,6 +82,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             zebra={zebra && row.index % 2 == 0}
             editorColIdx={editorColIdx}
             isCellSelected={isCellInSelectedRange}
+            headerIsFocusable={headerIsFocusable}
           />
         );
       })}

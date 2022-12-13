@@ -6,33 +6,28 @@ import {
   useState,
 } from "react";
 import {
+  ColumnGroup,
+  ColumnGroupCellValueProps,
   Grid,
   GridCellValueProps,
   GridColumn,
-  ColumnGroup,
-  RowSelectionCheckboxColumn,
-  NumericColumn,
-  ColumnGroupCellValueProps,
   GridHeaderValueProps,
-  NumericCellValue,
+  NumericColumn,
 } from "../src";
 import {
-  LinearProgress,
+  MenuButton,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-  MenuButton,
 } from "@jpmorganchase/uitk-lab";
-import { Button, FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  FavoriteIcon,
-  LinkedIcon,
   MenuIcon,
-  PinIcon,
+  HomeIcon,
 } from "@jpmorganchase/uitk-icons";
-import { randomAmount, randomInt, randomNumber } from "./utils";
+import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
@@ -61,8 +56,6 @@ type SortableColId = "name" | "price";
 interface SalesGridContext {
   viewMode: SalesViewMode;
   setViewMode: (m: SalesViewMode) => void;
-  isItemPinned: boolean;
-  setItemPinned: (p: boolean) => void;
   sortBy: SortableColId;
   setSortBy: (c: SortableColId) => void;
   sortOrder: "asc" | "desc";
@@ -114,25 +107,11 @@ const SalesGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
  * */
 const ItemGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
   const { group } = props;
-  const { isItemPinned, setItemPinned } = useContext(SalesGridContext)!;
-
-  const onToggle = () => {
-    setItemPinned(!isItemPinned);
-  };
 
   return (
     <FlexLayout direction="row" wrap={false} align={"center"}>
       <FlexItem grow={1}>
         <span>{group.data.name}</span>
-      </FlexItem>
-      <FlexItem>
-        <ToggleButton
-          toggled={isItemPinned}
-          onToggle={onToggle}
-          tooltipText="Pin left"
-        >
-          <PinIcon />
-        </ToggleButton>
       </FlexItem>
       <FlexItem>
         <MenuButton
@@ -285,7 +264,6 @@ const HeaderCustomizationTemplate: Story<{}> = () => {
         <ColumnGroup
           name="Item"
           id="main_group"
-          pinned={isItemPinned ? "left" : undefined}
           headerValueComponent={ItemGroupHeaderValue}
         >
           <GridColumn
@@ -345,6 +323,7 @@ const HeaderCustomizationTemplate: Story<{}> = () => {
               key="summary"
               name="Summary"
               defaultWidth={250}
+              minWidth={160}
               cellValueComponent={SummaryCellValue}
             />
           )}
