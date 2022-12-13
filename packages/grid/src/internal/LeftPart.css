@@ -6,6 +6,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
   clip-path: inset(var(--grid-topPart-height) -10px 0 0);
+  z-index: var(--grid-left-body-zIndex);
 }
 
 .uitkGridLeftPart-rightShadow {

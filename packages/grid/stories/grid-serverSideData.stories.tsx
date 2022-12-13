@@ -57,6 +57,7 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
       zebra={true}
       columnSeparators={true}
       onVisibleRowRangeChange={onVisibleRowRangeChange}
+      headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="rowSelection" />
       <GridColumn

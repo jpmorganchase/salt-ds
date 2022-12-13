@@ -87,6 +87,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
       className="grid"
       zebra={true}
       columnSeparators={true}
+      headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="s" />
       <GridColumn
@@ -107,6 +108,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
         id="percentage"
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
+        minWidth={120}
       />
     </Grid>
   );

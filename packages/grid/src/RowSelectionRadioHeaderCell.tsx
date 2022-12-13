@@ -1,7 +1,8 @@
-import { AutoSizeHeaderCell, HeaderCellProps } from "./HeaderCell";
-import { makePrefixer, RadioButtonIcon } from "@jpmorganchase/uitk-core";
+import { AutoSizeHeaderCell } from "./HeaderCell";
+import { RadioButtonIcon } from "@jpmorganchase/uitk-core";
 import "./CheckboxCell.css";
 import cx from "classnames";
+import { HeaderCellProps } from "./GridColumn";
 
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
   return (

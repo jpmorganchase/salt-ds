@@ -1,3 +1,5 @@
+import { FocusedPart } from "../CursorContext";
+
 export function getAttribute(
   element: HTMLElement,
   attributeName: string
@@ -19,6 +21,25 @@ export function getRowIndexAttribute(element: HTMLElement): number {
 export function getRowKeyAttribute(element: HTMLElement): string {
   const [rowKey] = getAttribute(element, "data-row-key");
   return rowKey;
+}
+
+export function getFocusablePosition(element: HTMLElement): {
+  part: FocusedPart;
+  columnIndex: number;
+  rowIndex: number;
+} {
+  const [columnIndexAttr, cellElement] = getAttribute(
+    element,
+    "data-column-index"
+  );
+  const columnIndex = parseInt(columnIndexAttr, 10);
+  const role = cellElement.getAttribute("role");
+  if (role === "columnheader") {
+    return { part: "header", columnIndex, rowIndex: 0 };
+  }
+  const [rowIndexAttr] = getAttribute(element, "data-row-index");
+  const rowIndex = parseInt(rowIndexAttr, 10);
+  return { part: "body", rowIndex, columnIndex };
 }
 
 export function getCellPosition(element: HTMLElement): [number, number] {

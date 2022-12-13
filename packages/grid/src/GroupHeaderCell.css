@@ -13,7 +13,7 @@
 .uitkGridGroupHeaderCell-rowSeparator {
   position: absolute;
   left: var(--grid-headerRowSeparator-gap);
-  right: var(--grid-headerRowSeparator-gap);
+  right: calc(1px + var(--grid-headerRowSeparator-gap));
   bottom: 0;
   height: var(--grid-headerRowSeparator-height);
   background: var(--grid-groupHeaderRowSeparator-color);
