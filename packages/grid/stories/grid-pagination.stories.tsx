@@ -36,6 +36,7 @@ const GridPaginationTemplate: Story<{}> = (props) => {
         className="paginatedGrid"
         zebra={true}
         columnSeparators={true}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="rowSelection" />
         <GridColumn

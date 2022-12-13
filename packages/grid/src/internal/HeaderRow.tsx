@@ -15,10 +15,12 @@ export interface HeaderRowProps<T> {
 
 export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const { columns, gap } = props;
-  const { cursorColIdx, focusedPart } = useCursorContext();
+  const { cursorColIdx, focusedPart, headerIsFocusable } = useCursorContext();
+
+  const ariaRowIndex = headerIsFocusable ? 1 : undefined;
 
   return (
-    <tr className={withBaseName()} role="row">
+    <tr className={withBaseName()} role="row" aria-rowindex={ariaRowIndex}>
       {columns.map((column) => {
         const Cell = column.info.props.headerComponent || HeaderCell;
         const CellValue =

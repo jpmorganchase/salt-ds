@@ -87,6 +87,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
       className="grid"
       zebra={true}
       columnSeparators={true}
+      headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="s" />
       <GridColumn

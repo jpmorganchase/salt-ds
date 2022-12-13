@@ -210,7 +210,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [cursorRowIdx, setCursorRowIdx] = useState<number>(0);
   const [cursorColIdx, setCursorColIdx] = useState<number>(0);
-  const [focusedPart, setFocusedPart] = useState<FocusedPart>("body");
+  const [focusedPart, setFocusedPart] = useState<FocusedPart>(
+    headerIsFocusable ? "header" : "body"
+  );
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -634,8 +636,16 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cursorColIdx,
       moveCursor,
       focusedPart,
+      headerIsFocusable: Boolean(headerIsFocusable),
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor, isFocused, focusedPart]
+    [
+      cursorRowIdx,
+      cursorColIdx,
+      moveCursor,
+      isFocused,
+      focusedPart,
+      headerIsFocusable,
+    ]
   );
 
   const onColumnMove: GridColumnMoveHandler = (

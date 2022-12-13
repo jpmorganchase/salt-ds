@@ -28,6 +28,7 @@ export interface TableRowProps<T> {
   gap?: number;
   editorColIdx?: number;
   isCellSelected?: (rowIdx: number, colIdx: number) => boolean;
+  headerIsFocusable?: boolean;
 }
 
 export function TableRow<T>(props: TableRowProps<T>) {
@@ -44,6 +45,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     gap,
     editorColIdx,
     isCellSelected,
+    headerIsFocusable,
   } = props;
 
   const grid = useGridContext();
@@ -52,9 +54,11 @@ export function TableRow<T>(props: TableRowProps<T>) {
     throw new Error(`Invalid row`);
   }
 
+  const ariaRowIndex = headerIsFocusable ? row.index + 2 : row.index + 1;
+
   return (
     <tr
-      aria-rowindex={row.index + 1}
+      aria-rowindex={ariaRowIndex}
       className={cn(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,

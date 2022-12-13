@@ -8,6 +8,7 @@ export interface CursorContext {
   cursorColIdx: number | undefined;
   moveCursor: (part: FocusedPart, rowIdx: number, colIdx: number) => void;
   focusedPart: FocusedPart;
+  headerIsFocusable: boolean;
 }
 
 export const CursorContext = createContext<CursorContext | undefined>(
