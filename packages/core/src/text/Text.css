@@ -14,9 +14,12 @@
   word-break: break-word;
 }
 
+/* Primary variant */
 .uitkText-primary {
   --text-color: var(--uitk-text-primary-foreground);
 }
+
+/* Secondary variant */
 .uitkText-secondary {
   --text-color: var(--uitk-text-secondary-foreground);
 }

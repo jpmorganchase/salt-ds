@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Button,
+  Link,
   ParentChildLayout,
   ToolkitProvider,
   Text,
 } from "@jpmorganchase/uitk-core";
 import {
   EditableLabel,
-  Link,
   Tab,
   TabDescriptor,
   Tabstrip,

@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Link } from "@jpmorganchase/uitk-lab";
+import { Card, Link, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {
@@ -79,22 +78,6 @@ export const Interactable: ComponentStory<typeof Card> = () => (
     target="_parent"
   >
     <Card interactable>
-      <div>
-        <p>Visit Google</p>
-      </div>
-    </Card>
-  </Link>
-);
-
-export const InteractableDisabled: ComponentStory<typeof Card> = () => (
-  <Link
-    disabled
-    href="https://google.com"
-    style={{ display: "inline-block", textDecoration: "none" }}
-    tab-index="0"
-    target="_parent"
-  >
-    <Card interactable disabled>
       <div>
         <p>Visit Google</p>
       </div>
