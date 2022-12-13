@@ -16,6 +16,10 @@
   gap: calc(var(--uitk-size-unit) / 2);
 }
 
+.componentList th {
+  padding: 0;
+}
+
 .componentList th button {
   /* Remove button default styles so it's not visible but we retain its functionality for ADA purposes */
   --uitkButton-background-hover: transparent;
@@ -33,6 +37,7 @@
   --uitk-actionable-primary-foreground-active: var(--button-text-color-hover);
 
   display: inline;
+  padding: var(--ifm-table-cell-padding);
 }
 
 .componentList th .headerContainer {
