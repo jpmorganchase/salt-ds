@@ -1,35 +1,6 @@
-import {
-  BorderItem,
-  BorderLayout,
-  Button,
-  Pill,
-  SplitLayout,
-  Switch,
-} from "@jpmorganchase/uitk-core";
-import {
-  ChevronLeftIcon,
-  MessageIcon,
-  NotificationIcon,
-  SettingsIcon,
-} from "@jpmorganchase/uitk-icons";
-import {
-  AppHeader,
-  Badge,
-  ButtonBar,
-  OrderedButton,
-  Tab,
-  Tabstrip,
-  Tooltray,
-} from "@jpmorganchase/uitk-lab";
+import { BorderItem, BorderLayout } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import cx from "classnames";
-import { ChangeEvent, useState } from "react";
-import { FlexLayoutComposite } from "./flex-layout.stories";
-import {
-  FlowLayoutSimpleUsage,
-  FlowLayoutComposite,
-} from "./flow-layout.stories";
-import { SplitLayoutSimpleUsage } from "./split-layout.stories";
+import "./styles.css";
 
 export default {
   title: "Core/Layout/BorderLayout",
@@ -48,62 +19,38 @@ export default {
   },
 } as ComponentMeta<typeof BorderLayout>;
 
-type ItemProps = { width?: number | string; height?: number | string };
-
-const HeaderItem = ({ width, height }: ItemProps) => (
-  <div className="border-item border-header" style={{ width, height }}>
-    <p>Top</p>
-  </div>
-);
-
-const LeftItem = ({ width, height }: ItemProps) => (
-  <div className="border-item border-left" style={{ width, height }}>
-    <p>Left</p>
-  </div>
-);
-
-const MainItem = ({ width, height }: ItemProps) => (
-  <div
-    className="border-item border-main"
-    style={{
-      minWidth: 100,
-      width,
-      height,
-    }}
-  >
-    <p>Main section</p>
-  </div>
-);
-
-const RightItem = ({ width, height }: ItemProps) => (
-  <div className="border-item border-right" style={{ width, height }}>
-    <p>Right</p>
-  </div>
-);
-
-const BottomItem = ({ width, height }: ItemProps) => (
-  <div className="border-item border-bottom" style={{ width, height }}>
-    <p>Bottom</p>
-  </div>
-);
-
 const Template: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
-        <HeaderItem />
+      <BorderItem position="north">
+        <div className="border-item border-header">
+          <p>North</p>
+        </div>
       </BorderItem>
-      <BorderItem position="left">
-        <LeftItem />
+      <BorderItem position="west">
+        <div className="border-item border-left">
+          <p>West</p>
+        </div>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem />
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+          }}
+        >
+          <p>Center</p>
+        </div>
       </BorderItem>
-      <BorderItem position="right">
-        <RightItem />
+      <BorderItem position="east">
+        <div className="border-item border-right">
+          <p>East</p>
+        </div>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem />
+      <BorderItem position="south">
+        <div className="border-item border-bottom">
+          <p>South</p>
+        </div>
       </BorderItem>
     </BorderLayout>
   );
@@ -115,17 +62,30 @@ BorderLayoutAllPanels.args = {};
 const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
-        <HeaderItem />
+      <BorderItem position="north">
+        <div className="border-item border-header">
+          <p>North</p>
+        </div>
       </BorderItem>
-      <BorderItem position="left">
-        <LeftItem />
+      <BorderItem position="west">
+        <div className="border-item border-left">
+          <p>West</p>
+        </div>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem />
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+          }}
+        >
+          <p>Center</p>
+        </div>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem />
+      <BorderItem position="south">
+        <div className="border-item border-bottom">
+          <p>South</p>
+        </div>
       </BorderItem>
     </BorderLayout>
   );
@@ -137,17 +97,30 @@ BorderLayoutNoRightPanel.args = {};
 const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="header">
-        <HeaderItem />
+      <BorderItem position="north">
+        <div className="border-item border-header">
+          <p>North</p>
+        </div>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem />
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+          }}
+        >
+          <p>Center</p>
+        </div>
       </BorderItem>
-      <BorderItem position="right">
-        <RightItem />
+      <BorderItem position="east">
+        <div className="border-item border-right">
+          <p>East</p>
+        </div>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem />
+      <BorderItem position="south">
+        <div className="border-item border-bottom">
+          <p>South</p>
+        </div>
       </BorderItem>
     </BorderLayout>
   );
@@ -159,17 +132,30 @@ BorderLayoutNoLeftPanel.args = {};
 const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
-      <BorderItem position="left">
-        <LeftItem />
+      <BorderItem position="west">
+        <div className="border-item border-left">
+          <p>West</p>
+        </div>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem />
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+          }}
+        >
+          <p>Center</p>
+        </div>
       </BorderItem>
-      <BorderItem position="right">
-        <RightItem />
+      <BorderItem position="east">
+        <div className="border-item border-right">
+          <p>East</p>
+        </div>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem />
+      <BorderItem position="south">
+        <div className="border-item border-bottom">
+          <p>South</p>
+        </div>
       </BorderItem>
     </BorderLayout>
   );
@@ -181,20 +167,42 @@ BorderLayoutNoHeader.args = {};
 const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args} style={{ width: "60vw" }}>
-      <BorderItem position="header">
-        <HeaderItem height={50} />
+      <BorderItem position="north">
+        <div className="border-item border-header" style={{ height: 50 }}>
+          <p>North</p>
+        </div>
       </BorderItem>
-      <BorderItem position="left">
-        <LeftItem width={100} height={200} />
+      <BorderItem position="west">
+        <div
+          className="border-item border-left"
+          style={{ width: 100, height: 200 }}
+        >
+          <p>West</p>
+        </div>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem height="100%" />
+      <BorderItem position="center">
+        <div
+          className="border-item border-main"
+          style={{
+            minWidth: 100,
+            height: "100%",
+          }}
+        >
+          <p>Center</p>
+        </div>
       </BorderItem>
-      <BorderItem position="right">
-        <RightItem width={100} height={200} />
+      <BorderItem position="east">
+        <div
+          className="border-item border-right"
+          style={{ width: 100, height: 200 }}
+        >
+          <p>East</p>
+        </div>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem height={50} />
+      <BorderItem position="south">
+        <div className="border-item border-bottom" style={{ height: 50 }}>
+          <p>South</p>
+        </div>
       </BorderItem>
     </BorderLayout>
   );
@@ -202,145 +210,3 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
 
 export const BorderLayoutFixedPanels = FixedPanels.bind({});
 BorderLayoutFixedPanels.args = {};
-
-const Header = () => {
-  const tabs = ["Home", "Contacts", "FX", "Checks", "Loans"];
-  return (
-    <AppHeader>
-      <strong>LOGO</strong>
-      <Tabstrip data-index={1} data-priority={2}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
-        ))}
-      </Tabstrip>
-      <Tooltray
-        data-collapsible="dynamic"
-        data-index={2}
-        data-priority={1}
-        data-align-end
-        data-reclaim-space
-      >
-        <ButtonBar>
-          <OrderedButton variant="secondary">
-            <Badge badgeContent={50}>
-              <MessageIcon />
-            </Badge>
-          </OrderedButton>
-          <OrderedButton variant="secondary">
-            <NotificationIcon />
-          </OrderedButton>
-          <OrderedButton variant="secondary">
-            <SettingsIcon />
-          </OrderedButton>
-        </ButtonBar>
-      </Tooltray>
-    </AppHeader>
-  );
-};
-
-const TwoColumnFormPage: ComponentStory<typeof BorderLayout> = (args) => {
-  const [checked, setChecked] = useState(true);
-
-  const handleChange = (
-    _: ChangeEvent<HTMLInputElement>,
-    isChecked: boolean
-  ) => {
-    setChecked(isChecked);
-  };
-
-  const BackButton = () => (
-    <Button variant="secondary">
-      <ChevronLeftIcon style={{ marginRight: 4 }} />
-      Back to manage view
-    </Button>
-  );
-
-  const StylesToggle = () => (
-    <Switch
-      checked={checked}
-      onChange={handleChange}
-      label={`Custom styles ${checked ? "on" : "off"}`}
-    />
-  );
-
-  return (
-    <BorderLayout {...args}>
-      <BorderItem
-        position="header"
-        as="header"
-        sticky
-        className="border-layout-form-header"
-      >
-        <Header />
-        <SplitLayout
-          leftSplitItem={<BackButton />}
-          rightSplitItem={<StylesToggle />}
-          className="border-layout-button-container"
-        />
-
-        <div className="border-layout-form-steps">
-          <SplitLayout
-            leftSplitItem={<FlowLayoutSimpleUsage />}
-            rightSplitItem={
-              <Pill label="In progress" className="border-layout-pill" />
-            }
-          />
-        </div>
-      </BorderItem>
-
-      <BorderItem position="main" as="main">
-        <div
-          className={cx({
-            "border-layout-custom-form": checked,
-          })}
-        >
-          <FlowLayoutComposite />
-        </div>
-      </BorderItem>
-
-      <BorderItem
-        position="bottom"
-        as="footer"
-        sticky
-        className="border-layout-form-footer"
-      >
-        <SplitLayoutSimpleUsage leftSplitItem={""} rightSplitItem={""} />
-      </BorderItem>
-    </BorderLayout>
-  );
-};
-
-export const BorderLayoutFormComposite = TwoColumnFormPage.bind({});
-BorderLayoutFormComposite.args = {};
-
-const Contacts: ComponentStory<typeof BorderLayout> = (args) => {
-  return (
-    <BorderLayout {...args}>
-      <BorderItem
-        position="header"
-        as="header"
-        className="border-layout-form-header"
-      >
-        <Header />
-      </BorderItem>
-
-      <BorderItem position="main" as="main">
-        <div className="border-layout-contacts">
-          <h2>My contacts</h2>
-          <FlexLayoutComposite wrap />
-        </div>
-      </BorderItem>
-
-      <BorderItem
-        position="bottom"
-        as="footer"
-        className="border-layout-contacts-footer"
-      >
-        <p>Contact lists get updated monthly.</p>
-      </BorderItem>
-    </BorderLayout>
-  );
-};
-
-export const BorderLayoutContactsComposite = Contacts.bind({});
-BorderLayoutContactsComposite.args = {};

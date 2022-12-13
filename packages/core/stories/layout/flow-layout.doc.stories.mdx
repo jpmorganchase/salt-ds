@@ -1,10 +1,5 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { FlowLayout } from "@jpmorganchase/uitk-core";
-import {
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components";
-import { DefaultFlowLayout } from "./flow-layout.stories";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
@@ -33,24 +28,6 @@ You want to build responsive layouts that will wrap into two rows as soon as the
 ### Don't use Flow layout when...
 
 You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
-
-### Examples
-
-#### Simple usage
-
-The simple usage example shows a group of elements inside a flow wrapper that wraps by default.
-
-<Canvas>
-  <Story id="core-layout-flowlayout--flow-layout-simple-usage" />
-</Canvas>
-
-#### Composite usage
-
-The composite usage example shows 2 columns achieved with `FlowLayout`, with a nested `StackLayout`.
-
-<Canvas>
-  <Story id="core-layout-flowlayout--flow-layout-composite" />
-</Canvas>
 
 ## Configuring Flow layout
 

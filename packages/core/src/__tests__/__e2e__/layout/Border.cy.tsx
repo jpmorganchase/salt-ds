@@ -16,7 +16,7 @@ describe("GIVEN a Border", () => {
       cy.get(".uitkBorderLayout").should(
         "have.css",
         "grid-template-areas",
-        '"header header header" "left main right" "bottom bottom bottom"'
+        '"north north north" "west center east" "south south south"'
       );
 
       cy.get(".uitkBorderLayout > .uitkBorderItem").then((items) => {
