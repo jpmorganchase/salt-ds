@@ -56,23 +56,23 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
       (child: ReactElement<BorderItemProps<T>>) => child.props.position
     );
 
-    const topSection = borderAreas.includes("header")
-      ? "header ".repeat(numberOfColumns)
+    const topSection = borderAreas.includes("north")
+      ? "north ".repeat(numberOfColumns)
       : "none ".repeat(numberOfColumns);
 
-    const leftSection = borderAreas.includes("left") ? "left" : "main";
+    const leftSection = borderAreas.includes("west") ? "west" : "center";
 
-    const rightSection = borderAreas.includes("right") ? "right" : "main";
+    const rightSection = borderAreas.includes("east") ? "east" : "center";
 
-    const midSection = `${leftSection} main ${rightSection}`;
+    const midSection = `${leftSection} center ${rightSection}`;
 
-    const bottomSection = borderAreas.includes("bottom")
-      ? "bottom ".repeat(numberOfColumns)
+    const bottomSection = borderAreas.includes("south")
+      ? "south ".repeat(numberOfColumns)
       : "none ".repeat(numberOfColumns);
 
     const gridTemplateAreas = `"${topSection}" "${midSection}" "${bottomSection}"`;
 
-    const hasMainSection = borderAreas.includes("main");
+    const hasMainSection = borderAreas.includes("center");
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {

@@ -35,6 +35,7 @@ const RowSelectionControlledTemplate: Story<{}> = () => {
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />
@@ -49,6 +50,7 @@ const RowSelectionControlledTemplate: Story<{}> = () => {
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />

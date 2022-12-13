@@ -3,7 +3,8 @@
   background: var(--uitk-color-orange-20);
   padding: 1rem;
 }
-.layout-container > .layout-active-content {
+.layout-container > .layout-active-content,
+.layout-active-content {
   background: var(--uitk-color-gray-40);
   padding: 1rem;
 }
@@ -26,12 +27,6 @@
   color: var(--uitk-color-gray-200);
   border-top: 1px solid var(--uitk-color-gray-300);
   text-align: center;
-}
-
-.responsive-grid-item {
-  min-height: 200px;
-  min-width: 200px;
-  height: 100%;
 }
 
 .border-item {
