@@ -324,7 +324,7 @@ ul.table-of-contents li > ul li {
 }
 
 .theme-doc-markdown.markdown {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   flex: 1;
 }
@@ -358,7 +358,6 @@ ul.table-of-contents li > ul li {
 .container .row {
   height: 100%;
 }
-
 
 .footer {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
