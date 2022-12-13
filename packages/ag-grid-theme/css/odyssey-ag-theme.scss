@@ -28,16 +28,22 @@ div[class*="ag-theme-odyssey"] {
     --uitkAgGrid-color-focus,
     var(--uitk-focused-outlineColor)
   );
+
+  --agGrid-header-foreground: var(
+    --uitkAgGrid-header-foreground,
+    var(--uitk-text-secondary-foreground)
+  );
+
+  --agGrid-header-fontWeight: var(
+    --uitkAgGrid-header-fontWeight,
+    var(--uitk-text-label-fontWeight-strong)
+  );
 }
 
 .ag-theme-odyssey-high-light,
 .ag-theme-odyssey-medium-light,
 .ag-theme-odyssey-low-light,
 .ag-theme-odyssey-touch-light {
-  --agGrid-header-foreground: var(
-    --uitkAgGrid-header-foreground,
-    var(--uitk-container-background-medium)
-  );
   --agGrid-row-background-selected: var(
     --uitkAgGrid-row-background-selected,
     var(--uitk-selectable-background-selected)
@@ -131,7 +137,6 @@ div[class*="ag-theme-odyssey"] {
 .ag-theme-odyssey-medium-dark,
 .ag-theme-odyssey-low-dark,
 .ag-theme-odyssey-touch-dark {
-  --agGrid-header-foreground: var(--uitkAgGrid-header-foreground, white);
   --agGrid-row-background-selected: var(
     --uitkAgGrid-row-background-selected,
     var(--uitk-color-blue-800)

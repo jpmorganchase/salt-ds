@@ -123,6 +123,12 @@
     background-color: var(--agGrid-list-item-color-hover) !important;
   }
 
+  .ag-header-row {
+    color: var(--agGrid-header-foreground);
+    font-size: var(--agGrid-header-fontSize);
+    font-weight: var(--agGrid-header-fontWeight);
+  }
+
   .ag-row-selected {
     background-color: var(--agGrid-row-background-selected);
     border-color: var(--agGrid-row-borderColor-selected);
