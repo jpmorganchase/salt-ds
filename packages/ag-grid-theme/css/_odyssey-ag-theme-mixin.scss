@@ -21,7 +21,7 @@
     .ag-has-focus .ag-full-width-row.ag-row-focus .ag-cell-wrapper.ag-row-group,
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
-      border: 2px dotted var(--agGrid-color-focus);
+      border: 2px dotted var(--agGrid-color-focus) !important;
       padding-left: ag-param(cell-horizontal-padding) - 2px;
       padding-right: ag-param(cell-horizontal-padding) - 2px;
     }
@@ -124,11 +124,50 @@
   }
 
   .ag-row-selected {
-    //z-index: 2;
-    border: transparent;
     background-color: var(--agGrid-row-background-selected);
-    //border-bottom: 0 solid var(--agGrid-row-borderColor-selected);
-    //outline: 1px solid var(--agGrid-row-borderColor-selected);
+    border-color: var(--agGrid-row-borderColor-selected);
+    // position: relative;
+  }
+  .ag-row-selected::before {
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    background-color: var(--agGrid-row-borderColor-selected);
+    z-index: 1;
+  }
+
+  .ag-cell.editable-numeric-cell {
+    border: solid 1px var(--agGrid-cell-borderColor-editable);
+    text-align: right;
+  }
+
+  .ag-cell.editable-numeric-cell.ag-cell-focus:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 0 solid transparent;
+    border-left: var(--agGrid-editableCell-cornerTag-size) solid
+      var(--agGrid-cursor-borderColor);
+    border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
+    z-index: 2;
+  }
+
+  .ag-cell-inline-editing.ag-cell-focus:before {
+    opacity: 0;
+  }
+
+  .ag-cell.ag-cell-inline-editing {
+    padding: 0 !important;
+  }
+
+  .ag-input-field-input {
+    border: 0;
+    padding-left: ag-param(cell-horizontal-padding) - 2px;
+    padding-right: ag-param(cell-horizontal-padding) - 2px;
   }
 
   .ag-side-buttons {

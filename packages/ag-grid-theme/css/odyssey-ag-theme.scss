@@ -1,9 +1,10 @@
 @import "./odyssey-ag-theme-mixin";
 
-.ag-theme-odyssey-high-light,
-.ag-theme-odyssey-medium-light,
-.ag-theme-odyssey-low-light,
-.ag-theme-odyssey-touch-light {
+div[class*="ag-theme-odyssey"] {
+  --agGrid-background: var(
+    --uitkAgGrid-background,
+    var(--uitk-container-primary-background)
+  );
   --agGrid-foreground: var(
     --uitkAgGrid-foreground,
     var(--uitk-text-primary-foreground)
@@ -12,44 +13,57 @@
     --uitkAgGrid-foreground-disabled,
     var(--uitk-text-primary-foreground-disabled)
   );
-  --agGrid-header-foreground: var(
-    --uitkAgGrid-header-foreground,
-    var(--uitk-color-grey-200)
-  );
-  --agGrid-background: var(--uitkAgGrid-background, var(--uitk-color-white));
-  --agGrid-row-background-selected: var(
-    --uitkAgGrid-row-background-selected,
-    var(--uitk-color-blue-30)
-  );
-  --agGrid-row-color-hover: var(
-    --uitkAgGrid-row-color-hover,
-    var(--uitk-color-blue-10)
-  );
-  --agGrid-row-borderColor: var(
-    --uitkAgGrid-row-borderColor,
-    rgba(0, 0, 0, 0.1)
-  );
-  --agGrid-header-column-separator-color: var(
-    --uitkAgGrid-header-column-separator-color,
-    rgba(0, 0, 0, 0.1)
-  );
-  --agGrid-cell-borderColor-editable: var(
-    --uitkAgGrid-cell-borderColor-editable,
-    var(--uitk-color-grey-100)
+
+  --agGrid-menu-color: var(
+    --uitkAgGrid-menu-color,
+    var(--uitk-text-primary-foreground)
   );
 
-  --agGrid-row-shadow-hover: var(
-    --uitkAgGrid-row-shadow-hover,
-    0 2px 5px 0 #24252633,
-    0 -1px 0 0 #b4b7be
+  --agGrid-row-color-hover: var(
+    --uitkAgGrid-row-color-hover,
+    var(--uitk-selectable-background-hover)
+  );
+
+  --agGrid-color-focus: var(
+    --uitkAgGrid-color-focus,
+    var(--uitk-focused-outlineColor)
+  );
+}
+
+.ag-theme-odyssey-high-light,
+.ag-theme-odyssey-medium-light,
+.ag-theme-odyssey-low-light,
+.ag-theme-odyssey-touch-light {
+  --agGrid-header-foreground: var(
+    --uitkAgGrid-header-foreground,
+    var(--uitk-container-background-medium)
+  );
+  --agGrid-row-background-selected: var(
+    --uitkAgGrid-row-background-selected,
+    var(--uitk-selectable-background-selected)
   );
   --agGrid-row-borderColor-selected: var(
     --uitkAgGrid-row-borderColor-selected,
-    transparent
+    var(--uitk-selectable-borderColor-selected)
   );
-  --agGrid-color-focus: var(--uitkAgGrid-color-focus, #2d81bd);
+  --agGrid-row-borderColor: var(
+    --uitkAgGrid-row-borderColor,
+    var(--uitk-separable-tertiary-borderColor)
+  );
+  --agGrid-header-column-separator-color: var(
+    --uitkAgGrid-header-column-separator-color,
+    var(--uitk-separable-tertiary-borderColor)
+  );
+  --agGrid-cell-borderColor-editable: var(
+    --uitkAgGrid-cell-borderColor-editable,
+    var(--uitk-editable-borderColor)
+  );
 
-  --agGrid-borderColor: var(--uitkAgGrid-borderColor, #e2e2e2);
+  --agGrid-borderColor: var(
+    --uitkAgGrid-borderColor,
+    var(--separable-tertiary-borderColor)
+  );
+
   --agGrid-tab-borderColor-active: var(
     --uitkAgGrid-tab-borderColor-active,
     #e06519
@@ -83,7 +97,6 @@
     --uitkAgGrid-toggle-button-background,
     var(--uitk-selectable-borderColor)
   );
-  --agGrid-menu-color: var(--uitkAgGrid-menu-color, #61656e);
   --agGrid-filter-borderColor: var(--uitkAgGrid-filter-borderColor, #eaedef);
   --agGrid-filter-apply-button-color: var(
     --uitkAgGrid-filter-apply-button-color,
@@ -118,17 +131,10 @@
 .ag-theme-odyssey-medium-dark,
 .ag-theme-odyssey-low-dark,
 .ag-theme-odyssey-touch-dark {
-  --agGrid-foreground: var(--uitkAgGrid-foreground, white);
-  --agGrid-foreground-disabled: var(--uitkAgGrid-foreground-disabled, white);
   --agGrid-header-foreground: var(--uitkAgGrid-header-foreground, white);
-  --agGrid-background: var(--uitkAgGrid-background, var(--uitk-color-grey-800));
   --agGrid-row-background-selected: var(
     --uitkAgGrid-row-background-selected,
     var(--uitk-color-blue-800)
-  );
-  --agGrid-row-color-hover: var(
-    --uitkAgGrid-row-color-hover,
-    var(--uitk-color-blue-900)
   );
   --agGrid-row-borderColor: var(
     --uitkAgGrid-row-borderColor,
@@ -152,7 +158,6 @@
     --uitkAgGrid-row-borderColor-selected,
     #2d81bd
   );
-  --agGrid-color-focus: var(--uitkAgGrid-color-focus, #2d81bd);
 
   --agGrid-borderColor: var(--uitkAgGrid-borderColor, #e2e2e2);
   --agGrid-tab-borderColor-active: var(
@@ -189,7 +194,6 @@
     #84878e
   );
 
-  --agGrid-menu-color: var(--uitkAgGrid-menu-color, white);
   --agGrid-filter-borderColor: var(--uitkAgGrid-filter-borderColor, #44484f);
   --agGrid-filter-apply-button-color: var(
     --uitkAgGrid-filter-apply-button-color,
@@ -342,6 +346,8 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
 
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 20px);
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 11px);
+
+  --agGrid-editableCell-cornerTag-size-default: 10px;
 }
 
 .ag-theme-odyssey-high-dark {
@@ -371,6 +377,8 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 11px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 28px);
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 12px);
+
+  --agGrid-editableCell-cornerTag-size-default: 12px;
 }
 
 .ag-theme-odyssey-medium-dark {
@@ -400,6 +408,8 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 12px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 36px);
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 14px);
+
+  --agGrid-editableCell-cornerTag-size-default: 14px;
 }
 
 .ag-theme-odyssey-low-dark {
@@ -429,6 +439,8 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 14px);
   --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 44px);
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 16px);
+
+  --agGrid-editableCell-cornerTag-size-default: 16px;
 }
 
 .ag-theme-odyssey-touch-light {
@@ -453,18 +465,18 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   );
   --agGrid-checkbox-background-selected: var(
     --uitkAgGrid-checkbox-background-selected,
-    var(--uitk-selectable-background-selected)
+    var(--uitk-selectable-borderColor-selected)
   );
   --agGrid-checkbox-foreground: var(
     --uitkAgGrid-checkbox-foreground,
-    var(--uitk-text-primary-foreground)
+    var(--uitk-selectable-foreground)
   );
   --agGrid-checkbox-foreground-selected: var(
     --uitkAgGrid-checkbox-foreground-selected,
-    var(--uitk-text-primary-foreground)
+    var(--uitk-selectable-primary-foreground-selected)
   );
-  --_agGrid-checkbox-border: var(--uitk-selectable-borderWidth)
-    var(--uitk-selectable-borderStyle) var(--uitk-selectable-borderColor);
+  --_agGrid-checkbox-border: 1px var(--uitk-selectable-borderStyle)
+    var(--uitk-selectable-borderColor);
   --agGrid-checkbox-border: var(
     --uitkAgGrid-checkbox-border,
     var(--_agGrid-checkbox-border)
@@ -479,5 +491,13 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   );
   --agGrid-paging-button-background-hover: var(
     --uitk-actionable-secondary-background-hover
+  );
+  --agGrid-editableCell-cornerTag-size: var(
+    --uitkAgGrid-editableCell-cornerTag-size,
+    var(--agGrid-editableCell-cornerTag-size-default)
+  );
+  --agGrid-cursor-borderColor: var(
+    --uitkGrid-cursor-borderColor,
+    var(--uitk-focused-outlineColor)
   );
 }
