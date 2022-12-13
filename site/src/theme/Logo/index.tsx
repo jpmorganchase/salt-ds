@@ -4,12 +4,14 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import ThemedImage from "@theme/ThemedImage";
-import { useViewport } from "@jpmorganchase/uitk-core";
+import useIsMobileView from "../../utils/useIsMobileView";
 
 function LogoThemedImage({ logo, alt, imageClassName }) {
   const viewport = useViewport();
 
   const isSmallView = viewport <= 1070;
+  const isMobileView = useIsMobileView();
+
   const sources = {
     light: useBaseUrl(logo.src),
     dark: isSmallView

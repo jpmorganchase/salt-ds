@@ -16,6 +16,7 @@ import { Button } from "@jpmorganchase/uitk-core";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";
+import useIsMobileView from "../../../src/utils/useIsMobileView";
 
 import styles from "./ComponentsList.module.css";
 
@@ -79,11 +80,21 @@ const ComponentStatusData = ({
   availableSince: string;
 }) => {
   const showReleaseDate = availableSince && status === ComponentStatus.READY;
+  const isMobileView = useIsMobileView();
+  const mobileView = (
+    <span>{showReleaseDate ? `v${availableSince}` : null}</span>
+  );
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       <StepActiveIcon />
-      <span>{showReleaseDate ? `Released in v${availableSince}` : status}</span>
+      {isMobileView ? (
+        mobileView
+      ) : (
+        <span>
+          {showReleaseDate ? `Released in v${availableSince}` : status}
+        </span>
+      )}
     </div>
   );
 };
@@ -103,13 +114,14 @@ const ComponentHeader = ({
   ascendingOrder,
   handleClick,
 }: ComponentHeaderProps) => {
+  const isMobileView = useIsMobileView();
   const arrowIcon = ascendingOrder ? <ArrowUpIcon /> : <ArrowDownIcon />;
   return (
     <Button onClick={handleClick}>
       <div className={styles.headerContainer}>
         <div>
           {logo}
-          <span>{label}</span>
+          {!isMobileView && <span>{label}</span>}
         </div>
         {isSorted && arrowIcon}
       </div>

@@ -13,7 +13,7 @@
 .componentList td :first-child {
   display: flex;
   align-items: baseline;
-  gap: var(--uitk-size-unit);
+  gap: calc(var(--uitk-size-unit) / 2);
 }
 
 .componentList th button {
