@@ -1,0 +1,48 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+
+<Meta
+  title="Documentation/Lab/Layout/Introduction"
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Layout components
+
+Layout componentry was created to help you build consistent and responsive layouts while using Toolkit components.
+Built on top of CSS Grid and Flexbox, the layout components give spacial consistency out of the box,
+they allow for easy responsive behavior and customization.
+
+## [Parent Child](/docs/documentation-lab-layout-parentchildlayout--page)
+
+Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
+
+<Canvas>
+  <Story id="lab-layout-parentchildlayout--default-parent-child-layout" />
+</Canvas>
+
+## [Split layout](/docs/documentation-lab-layout-splitlayout--page)
+
+Defines left and right regions for UI elements within a span, such as a button bar
+
+<Canvas>
+  <Story id="lab-layout-splitlayout--default-split-layout" />
+</Canvas>
+
+## [Deck layout](/docs/documentation-lab-layout-decklayout--page)
+
+Defines pages of content that appear within the same specified region, one at a time
+
+<Canvas>
+  <Story id="lab-layout-decklayout--default-deck-layout" />
+</Canvas>
+
+## [Layer layout](/docs/documentation-lab-layout-layerlayout--page)
+
+Defines a layer above the existing layout structure for UI elements to be displayed in.
+
+It can be used to build dialog or drawer components and it can be positioned in different parts of the screen.
+
+<Canvas>
+  <Story id="lab-layout-layerlayout--default-layer-layout" />
+</Canvas>

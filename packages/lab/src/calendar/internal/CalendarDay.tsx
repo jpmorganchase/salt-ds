@@ -1,10 +1,4 @@
-import {
-  makePrefixer,
-  Tooltip,
-  TooltipProps,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
@@ -13,6 +7,7 @@ import { DateValue } from "@internationalized/date";
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
 import { formatDate } from "./utils";
+import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
 
 export type DateFormatter = (day: Date) => string | undefined;
 

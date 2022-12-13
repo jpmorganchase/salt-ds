@@ -1,5 +1,5 @@
-import { makePrefixer, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
-import { capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize, Tooltip, useTooltip } from "@jpmorganchase/uitk-lab";
 import { ReactElement } from "react";
 
 import "./ScopeLabel.css";

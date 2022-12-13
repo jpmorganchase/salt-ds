@@ -29,14 +29,15 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   FavoriteIcon,
-} from "../../icons";
+} from "@jpmorganchase/uitk-icons";
+import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { Card, Checkbox } from "@jpmorganchase/uitk-lab";
 import {
   allLocations,
   createDummyInvestors,
   Investor,
   investorKeyGetter,
 } from "./dummyData";
-import { Card, Checkbox, FlexLayout } from "../../core";
 
 export default {
   title: "Grid/New Grid",

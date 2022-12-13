@@ -5,19 +5,18 @@ import {
   size,
 } from "@floating-ui/react-dom-interactions";
 import {
-  isDesktop,
   makePrefixer,
-  Portal,
-  useFloatingUI,
   useForkRef,
   useIdMemo as useId,
-  useWindow,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
+import { useFloatingUI } from "../popper";
+import { Portal } from "../portal";
+import { isDesktop, useWindow } from "../window";
 
 import "./Dropdown.css";
 

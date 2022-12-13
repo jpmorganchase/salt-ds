@@ -2,9 +2,7 @@ import {
   Button,
   ButtonProps,
   makePrefixer,
-  Tooltip,
   useId,
-  useTooltip,
 } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
@@ -16,6 +14,7 @@ import {
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { ListItem, ListItemType } from "../../list";
+import { Tooltip, useTooltip } from "../../tooltip";
 
 import { useCalendarContext } from "./CalendarContext";
 

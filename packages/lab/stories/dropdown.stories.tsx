@@ -1,12 +1,7 @@
 import { useCallback, useState } from "react";
 import { Story } from "@storybook/react";
 
-import {
-  Button,
-  FormField,
-  Tooltip,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -15,6 +10,9 @@ import {
 } from "@jpmorganchase/uitk-icons";
 
 import {
+  FormField,
+  Tooltip,
+  useTooltip,
   Dropdown,
   DropdownButton,
   DropdownProps,

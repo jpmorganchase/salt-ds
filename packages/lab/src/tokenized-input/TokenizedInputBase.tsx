@@ -20,8 +20,6 @@ import {
 import {
   Button,
   ButtonProps,
-  Input,
-  InputProps,
   makePrefixer,
   useDensity,
   useForkRef,
@@ -39,6 +37,7 @@ import {
   TokenizedInputHelpers,
   TokenizedInputState,
 } from "./useTokenizedInput";
+import { Input, InputProps } from "../input";
 
 export type RemoveItemHandler = (itemIndex: number) => void;
 export type ItemToString<Item> = (item: Item) => string;

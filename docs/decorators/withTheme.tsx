@@ -2,10 +2,10 @@ import { DecoratorFn } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
-  Panel,
   ToolkitProvider,
   useTheme,
 } from "@jpmorganchase/uitk-core";
+import { Panel } from "@jpmorganchase/uitk-lab";
 import { useEffect } from "react";
 
 // Modified from storybook background addon

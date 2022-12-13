@@ -1,5 +1,5 @@
-import { FormField, Input, makePrefixer } from "@jpmorganchase/uitk-core";
-import { capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { capitalize, FormField, Input } from "@jpmorganchase/uitk-lab";
 import cn from "classnames";
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { validateTokenInput } from "../../helpers/validateTokenInput";

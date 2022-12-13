@@ -1,16 +1,14 @@
 import { ComponentProps, memo } from "react";
-
-import { FormField } from "@jpmorganchase/uitk-core";
 import {
   ComboBox,
   ComboBoxProps,
   escapeRegExp,
+  FormField,
   Highlighter,
   ListItem,
   ListItemProps,
   ListItemType,
 } from "@jpmorganchase/uitk-lab";
-
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {

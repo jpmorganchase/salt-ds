@@ -1,0 +1,51 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Card } from "@jpmorganchase/uitk-lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import { DefaultCard, Disabled, Interactable } from "./card.stories";
+
+<Meta
+  title="Documentation/Lab/Card"
+  component={Card}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Card
+
+A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+
+## Card Component
+
+<Canvas>
+  <Story name="Card" decorators={[withFlexGap]}>
+    <Card>
+      <div>
+        <h1>This is Card</h1>
+        <span>Using Nested DOM Elements</span>
+      </div>
+    </Card>
+  </Story>
+</Canvas>
+
+# API
+
+```
+import { Card } from "@jpmorganchase/uitk-lab";
+```
+
+## Props
+
+<ArgsTable of={Card} />
+
+## CSS Class
+
+<CSSClassTable of={Card} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Card} />

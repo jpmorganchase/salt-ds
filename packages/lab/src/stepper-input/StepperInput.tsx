@@ -1,17 +1,12 @@
 import classnames from "classnames";
 import React, { forwardRef, ReactNode, useRef } from "react";
-import {
-  makePrefixer,
-  Button,
-  ButtonProps,
-  Input,
-  InputProps,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
 import {
   RefreshIcon,
   TriangleDownIcon,
   TriangleUpIcon,
 } from "@jpmorganchase/uitk-icons";
+import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
 
 import "./StepperInput.css";

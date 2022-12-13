@@ -1,14 +1,10 @@
-import {
-  Button,
-  makePrefixer,
-  Portal,
-  UseFloatingUIProps,
-  useId,
-  useWindow,
-} from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
 import { CloseIcon } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
+import { useWindow } from "../window";
+import { UseFloatingUIProps } from "../popper";
+import { Portal } from "../portal";
 
 import "./Overlay.css";
 
