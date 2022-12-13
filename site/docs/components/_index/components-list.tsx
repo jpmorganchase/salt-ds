@@ -186,7 +186,7 @@ export const componentDetails: ComponentDetails[] = [
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "0.9.0",
+    availableInCoreSince: "1.0.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
   },
@@ -326,7 +326,7 @@ export const componentDetails: ComponentDetails[] = [
       "Graphically represents an idea, concept or action. Icons visually reinforce or provide information for a specific task or context.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "0.9.0",
+    availableInCoreSince: "1.0.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-icons-icon--page",
   },
@@ -449,7 +449,7 @@ export const componentDetails: ComponentDetails[] = [
     ),
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "0.9.0",
+    availableInCoreSince: "1.0.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
@@ -508,7 +508,7 @@ export const componentDetails: ComponentDetails[] = [
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "0.9.0",
+    availableInCoreSince: "1.0.0",
     storybookUrl:
       "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
   },
@@ -559,7 +559,7 @@ export const componentDetails: ComponentDetails[] = [
     // TODO: add description
     devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    availableInCoreSince: "1.0.0",
   },
   {
     name: "Toast",

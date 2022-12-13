@@ -11,6 +11,8 @@ import {
 import {
   Button,
   ButtonProps,
+  Link,
+  LinkProps,
   makePrefixer,
   StatusIndicator,
   useAriaAnnouncer,
@@ -18,7 +20,6 @@ import {
   ValidationStatus,
 } from "@jpmorganchase/uitk-core";
 
-import { Link, LinkProps } from "../link";
 import getInnerText from "./internal/getInnerText";
 import { CloseIcon, IconProps } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";

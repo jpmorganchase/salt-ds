@@ -29,6 +29,9 @@
   flex-direction: column;
   justify-content: space-between;
   padding-top: var(--uitk-size-unit);
+  font-style: var(--uitk-editable-help-fontStyle);
+  font-size: var(--uitk-text-label-fontSize);
+  line-height: var(--uitk-text-label-lineHeight);
 }
 
 .textContainer > :last-child {
@@ -38,5 +41,6 @@
 @media screen and (max-width: 996px) {
   .row {
     flex-direction: column;
+    gap: 0;
   }
 }
