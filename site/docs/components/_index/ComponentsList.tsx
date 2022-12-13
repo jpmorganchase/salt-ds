@@ -37,6 +37,7 @@ const statusSortList = [
   ComponentStatus.READY,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
+  ComponentStatus.NOT_APPLICABLE,
 ];
 
 const componentsListSortedByName = (ascendingOrder: boolean = true) =>
