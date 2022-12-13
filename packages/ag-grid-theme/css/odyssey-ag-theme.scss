@@ -1,5 +1,41 @@
 @import "./odyssey-ag-theme-mixin";
 
+div[class*="ag-theme-odyssey-touch"] {
+  --agGrid-row-height-default: 61px;
+  --agGrid-padding-default: 16px;
+  --agGrid-fontSize-default: 16px;
+  --agGrid-header-fontSize-default: 14px;
+  --agGrid-separatorGap-default: 20px;
+  --agGrid-cornerTag-size-default: 14px;
+}
+
+div[class*="ag-theme-odyssey-low"] {
+  --agGrid-row-height-default: 49px;
+  --agGrid-padding-default: 12px;
+  --agGrid-fontSize-default: 14px;
+  --agGrid-header-fontSize-default: 12px;
+  --agGrid-separatorGap-default: 16px;
+  --agGrid-cornerTag-size-default: 12px;
+}
+
+div[class*="ag-theme-odyssey-medium"] {
+  --agGrid-row-height-default: 37px;
+  --agGrid-padding-default: 8px;
+  --agGrid-fontSize-default: 12px;
+  --agGrid-header-fontSize-default: 11px;
+  --agGrid-separatorGap-default: 12px;
+  --agGrid-cornerTag-size-default: 10px;
+}
+
+div[class*="ag-theme-odyssey-high"] {
+  --agGrid-row-height-default: 25px;
+  --agGrid-padding-default: 8px;
+  --agGrid-fontSize-default: 11px;
+  --agGrid-header-fontSize-default: 10px;
+  --agGrid-separatorGap-default: 8px;
+  --agGrid-cornerTag-size-default: 8px;
+}
+
 div[class*="ag-theme-odyssey"] {
   --agGrid-background: var(
     --uitkAgGrid-background,
@@ -24,6 +60,11 @@ div[class*="ag-theme-odyssey"] {
     var(--uitk-selectable-background-hover)
   );
 
+  --agGrid-row-background-hover: var(
+    --uitkAgGrid-row-color-hover,
+    var(--uitk-selectable-background-hover)
+  );
+
   --agGrid-color-focus: var(
     --uitkAgGrid-color-focus,
     var(--uitk-focused-outlineColor)
@@ -38,16 +79,17 @@ div[class*="ag-theme-odyssey"] {
     --uitkAgGrid-header-fontWeight,
     var(--uitk-text-label-fontWeight-strong)
   );
-}
 
-.ag-theme-odyssey-high-light,
-.ag-theme-odyssey-medium-light,
-.ag-theme-odyssey-low-light,
-.ag-theme-odyssey-touch-light {
+  --agGrid-separatorGap: var(
+    --uitkAgGrid-separatorGap,
+    var(--agGrid-separatorGap-default)
+  );
+
   --agGrid-row-background-selected: var(
     --uitkAgGrid-row-background-selected,
     var(--uitk-selectable-background-selected)
   );
+
   --agGrid-row-borderColor-selected: var(
     --uitkAgGrid-row-borderColor-selected,
     var(--uitk-selectable-borderColor-selected)
@@ -69,7 +111,12 @@ div[class*="ag-theme-odyssey"] {
     --uitkAgGrid-borderColor,
     var(--separable-tertiary-borderColor)
   );
+}
 
+.ag-theme-odyssey-high-light,
+.ag-theme-odyssey-medium-light,
+.ag-theme-odyssey-low-light,
+.ag-theme-odyssey-touch-light {
   --agGrid-tab-borderColor-active: var(
     --uitkAgGrid-tab-borderColor-active,
     #e06519
@@ -137,34 +184,6 @@ div[class*="ag-theme-odyssey"] {
 .ag-theme-odyssey-medium-dark,
 .ag-theme-odyssey-low-dark,
 .ag-theme-odyssey-touch-dark {
-  --agGrid-row-background-selected: var(
-    --uitkAgGrid-row-background-selected,
-    var(--uitk-color-blue-800)
-  );
-  --agGrid-row-borderColor: var(
-    --uitkAgGrid-row-borderColor,
-    rgba(255, 255, 255, 0.1)
-  );
-  --agGrid-header-column-separator-color: var(
-    --uitkAgGrid-header-column-separator-color,
-    white
-  );
-  --agGrid-cell-borderColor-editable: var(
-    --uitkAgGrid-cell-borderColor-editable,
-    #74777f
-  );
-
-  --agGrid-row-shadow-hover: var(
-    --uitkAgGrid-row-shadow-hover,
-    0 2px 5px 0 #24252633,
-    0 -1px 0 0 #b4b7be
-  );
-  --agGrid-row-borderColor-selected: var(
-    --uitkAgGrid-row-borderColor-selected,
-    #2d81bd
-  );
-
-  --agGrid-borderColor: var(--uitkAgGrid-borderColor, #e2e2e2);
   --agGrid-tab-borderColor-active: var(
     --uitkAgGrid-tab-borderColor-active,
     #e06519
@@ -229,11 +248,12 @@ div[class*="ag-theme-odyssey"] {
   );
 }
 
+// Do not delete these two hardcoded values
 $ag-theme-odyssey-params-dark: (
   foreground-color: white,
   background-color: #242526,
 );
-
+// Do not delete these two hardcoded values
 $ag-theme-odyssey-params-light: (
   foreground-color: #2a2c2f,
   background-color: white,
@@ -266,7 +286,7 @@ $ag-theme-odyssey-params-medium: map-merge(
   $odyssey-ag-theme-default-params,
   (
     row-height: 36px,
-    header-height: 36,
+    header-height: 36px,
     font-size: 12px,
     header-column-separator-height: 10px,
     cell-horizontal-padding: 8px,

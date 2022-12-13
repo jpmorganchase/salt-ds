@@ -129,6 +129,20 @@
     font-weight: var(--agGrid-header-fontWeight);
   }
 
+  .ag-header-cell:after {
+    height: auto;
+    top: var(--agGrid-separatorGap);
+    bottom: var(--agGrid-separatorGap);
+  }
+
+  .ag-row {
+    color: var(--agGrid-foreground);
+  }
+
+  .ag-row-hover {
+    background-color: var(--agGrid-row-background-hover);
+  }
+
   .ag-row-selected {
     background-color: var(--agGrid-row-background-selected);
     border-color: var(--agGrid-row-borderColor-selected);
