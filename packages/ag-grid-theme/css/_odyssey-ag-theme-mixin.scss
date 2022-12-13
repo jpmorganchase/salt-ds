@@ -14,6 +14,12 @@
     border: none;
   }
 
+  .ag-root-wrapper *,
+  .ag-root-wrapper *::before,
+  .ag-root-wrapper *::after {
+    box-sizing: border-box;
+  }
+
   .ag-ltr,
   .ag-rtl {
     .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected),
@@ -24,6 +30,7 @@
       border: 2px dotted var(--agGrid-color-focus) !important;
       padding-left: ag-param(cell-horizontal-padding) - 2px;
       padding-right: ag-param(cell-horizontal-padding) - 2px;
+      line-height: calc(min(var(--ag-line-height, 34px), 34px) - 2px);
     }
   }
 
