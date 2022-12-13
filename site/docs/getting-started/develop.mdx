@@ -4,9 +4,6 @@ hide_table_of_contents: true
 ---
 
 import Link from "@docusaurus/Link";
-import TOCInline from "@theme/TOCInline";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import Accordion from "../../src/components/accordion/Accordion";
 import DevelopFontsAccordion from "./DevelopFontsAccordion.tsx";
 import Content from "../../src/components/content/Content.tsx";
 
@@ -30,14 +27,14 @@ To start developing with Salt, you should:
 
 There are three packages that you need to add to your project:
 
-- `@jpmorganchase/uitk-core` contains production-ready UI components.
-- `@jpmorganchase/uitk-theme` contains CSS files that apply Salt's default theme.
-- `@jpmorganchase/uitk-icons` contains SVG-based icons.
+- `@salt-ds/core` contains production-ready UI components.
+- `@salt-ds/theme` contains CSS files that apply Salt's default theme.
+- `@salt-ds/icons` contains SVG-based icons.
 
 Use this npm command to install all three packages in one go:
 
 ```
-npm install @jpmorganchase/uitk-core @jpmorganchase/uitk-theme @jpmorganchase/uitk-icons
+npm install @salt-ds/core @salt-ds/theme @salt-ds/icons
 ```
 
 If you prefer not to use npm, you can install the packages using [yarn](https://yarnpkg.com/) or other package managers.
@@ -108,29 +105,29 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-// Import <ToolkitProvider>
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+// Import <SaltProvider>
+import { SaltProvider } from "@salt-ds/core";
 
 // Import theme CSS
-import "@jpmorganchase/uitk-theme/index.css";
+import "@salt-ds/theme/index.css";
 
-// Wrap your application in a <ToolkitProvider>
+// Wrap your application in a <SaltProvider>
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ToolkitProvider>
+  <SaltProvider>
     <App />
-  </ToolkitProvider>
+  </SaltProvider>
 );
 ```
 
 ### 4. Import components
 
-Now that you’re ready to use our UI components, you can import them from the `@jpmorganchase/uitk-core` package and use them in your JSX code.
+Now that you’re ready to use our UI components, you can import them from the `@salt-ds/core` package and use them in your JSX code.
 
 For example:
 
 ```tsx
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 
 function App() {
   return <Button>Click me</Button>;
@@ -143,7 +140,7 @@ Head over to our available [components](/components/) to view their respective A
 
 ### 5. (Optional) Play with lab components
 
-Our `@jpmorganchase/uitk-lab` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
+Our `@salt-ds/lab` package is where we introduce new components that are in the initial stages of development. Once they’re stable, we move them over to the core package.
 
 Because it’s an unstable environment that may cause major breaking changes, we don’t recommend using lab components in production applications. However, early adopters are welcome to use and experiment with them.
 
