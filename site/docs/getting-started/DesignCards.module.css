@@ -41,5 +41,6 @@
 @media screen and (max-width: 996px) {
   .row {
     flex-direction: column;
+    gap: 0;
   }
 }
