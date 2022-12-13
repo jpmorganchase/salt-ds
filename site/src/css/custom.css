@@ -273,7 +273,6 @@ ul.table-of-contents li > ul li {
   --ifm-list-margin: calc(var(--uitk-size-unit) * 2);
   padding: calc(var(--uitk-size-unit) * 3);
   max-width: var(--max-content-width);
-  margin: auto;
 }
 
 .docs-page-content.withToc {
