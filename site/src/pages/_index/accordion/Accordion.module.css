@@ -14,7 +14,7 @@
 
 .accordionWrapper {
   background-color: var(--card-background);
-  width: 55vw;
+  width: min(55vw, var(--max-content-width));
   padding: calc(var(--uitk-size-unit) * 10);
   grid-area: 2 / 1 / 3 / 3;
   min-height: 70vh;
@@ -45,7 +45,11 @@
     opacity: 1;
   }
 }
-
+@media screen and (min-width: 1920px) {
+  .accordionWrapper {
+    margin: auto;
+  }
+}
 @media screen and (max-width: 1280px) {
   .accordionContainer {
     display: block;

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Card, DeckLayout } from "@jpmorganchase/uitk-core";
 import { Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
-
 import "./styles.css";
 
 export default {

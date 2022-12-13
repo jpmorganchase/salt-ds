@@ -1,7 +1,7 @@
-import { ElementType, forwardRef } from "react";
+import { ElementType, forwardRef, HTMLAttributes } from "react";
 import { FlexLayout, FlexLayoutProps } from "../FlexLayout";
 
-export interface FlowLayoutProps extends FlexLayoutProps<ElementType> {
+export interface FlowLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
    */

@@ -17,73 +17,31 @@ export default {
   },
 } as ComponentMeta<typeof BorderItem>;
 
-type ItemProps = {
-  width?: number | string;
-  height?: number | string;
-  position?: string;
-};
-
-const HeaderItem = ({ width, height }: ItemProps) => (
-  <div className="border-item layout-content" style={{ width, height }}>
-    <p>Header</p>
-  </div>
-);
-
-const MovingItem = ({ width, height, position }: ItemProps) => (
-  <div
-    className="border-item layout-active-content"
-    style={{ width, height, fontWeight: "bold" }}
-  >
-    <p>{position}</p>
-  </div>
-);
-
-const MainItem = ({ width, height }: ItemProps) => (
-  <div
-    className="border-item layout-content"
-    style={{
-      minWidth: 100,
-      width,
-      height,
-    }}
-  >
-    <p>Main</p>
-  </div>
-);
-
-const RightItem = ({ width, height }: ItemProps) => (
-  <div className="border-item layout-content" style={{ width, height }}>
-    <p>Right</p>
-  </div>
-);
-
-const BottomItem = ({ width, height }: ItemProps) => (
-  <div className="border-item layout-content" style={{ width, height }}>
-    <p>Bottom</p>
-  </div>
-);
-
 const Template: ComponentStory<typeof BorderItem> = (args) => {
   return (
-    <BorderLayout columnGap={1} rowGap={1}>
-      <BorderItem position="header">
-        <HeaderItem />
+    <BorderLayout columnGap={1} rowGap={1} className="layout-container">
+      <BorderItem position="north" className="border-item">
+        <p>North</p>
       </BorderItem>
-      <BorderItem {...args}>
-        <MovingItem position={args.position} />
+      <BorderItem {...args} className="border-item layout-active-content">
+        <p>{args.position}</p>
       </BorderItem>
-      <BorderItem position="main">
-        <MainItem />
+      <BorderItem
+        position="center"
+        className="border-item layout-content"
+        style={{ minWidth: 100 }}
+      >
+        <p>Center</p>
       </BorderItem>
-      <BorderItem position="right">
-        <RightItem />
+      <BorderItem position="east" className="border-item">
+        <p>East</p>
       </BorderItem>
-      <BorderItem position="bottom">
-        <BottomItem />
+      <BorderItem position="south" className="border-item">
+        <p>South</p>
       </BorderItem>
     </BorderLayout>
   );
 };
 
 export const BorderItemWrapper = Template.bind({});
-BorderItemWrapper.args = { position: "left", sticky: true };
+BorderItemWrapper.args = { position: "west", sticky: true };

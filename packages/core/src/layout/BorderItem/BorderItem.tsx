@@ -9,11 +9,11 @@ import {
 } from "../../utils";
 
 export const BORDER_POSITION = [
-  "header",
-  "left",
-  "main",
-  "right",
-  "bottom",
+  "north",
+  "west",
+  "center",
+  "east",
+  "south",
 ] as const;
 
 export type BorderPosition = typeof BORDER_POSITION[number];
