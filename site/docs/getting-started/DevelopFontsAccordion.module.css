@@ -3,12 +3,24 @@
   --ifm-hr-background-color: var(--uitk-separable-secondary-borderColor);
 }
 
+.accordionWrapper :global(.uitkAccordionDetails) {
+  overflow: visible;
+}
+
 .accordionWrapper :global(.uitkIcon) {
   --uitk-size-icon-base: var(--uitk-size-unit);
 }
 
 .accordionWrapper :global(.uitkAccordionSummary-icon) {
   right: 0;
+}
+
+.accordionWrapper :global(.uitkAccordionDetails-content) {
+  padding: 0;
+}
+
+.accordionWrapper :global(.uitkAccordionDetails .uitkAccordionDetails-content) {
+  padding-left: 0;
 }
 
 .accordionWrapper :global(.uitkAccordionSection) {
