@@ -89,7 +89,7 @@ const ComponentStatusData = ({
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
-      <StepActiveIcon />
+      {status !== ComponentStatus.NOT_APPLICABLE ? <StepActiveIcon /> : null}
       {isMobileView ? (
         mobileView
       ) : (
