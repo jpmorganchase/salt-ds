@@ -78,6 +78,10 @@
   border-color: var(--grid-editableCell-borderColor);
 }
 
+.uitkGridBaseCell-editable:focus-visible .uitkGridBaseCell-valueContainer {
+  border-color: transparent;
+}
+
 .uitkGridBaseCell-editable:hover .uitkGridBaseCell-valueContainer {
   border-color: var(--grid-editableCell-borderColor-hover);
 }

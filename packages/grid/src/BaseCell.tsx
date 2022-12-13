@@ -44,7 +44,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
           [withBaseName("regularSeparator")]:
             column.separator === "regular" || column.separator === "groupEdge",
           [withBaseName("pinnedSeparator")]: column.separator === "pinned",
-          [withBaseName("editable")]: !isFocused && isEditable,
+          [withBaseName("editable")]: isEditable,
           [withBaseName("selected")]: isSelected,
         },
         className
