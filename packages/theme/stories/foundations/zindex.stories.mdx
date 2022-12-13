@@ -6,6 +6,10 @@ import { DocGrid } from "docs/components/DocGrid";
 
 # Z-Index
 
+The z-index property specifies the stack order of a component. A component with a greater stack order is always in front of an element with a lower stack order.
+
+Often used with Shadow to create visual priority, so users know where to direct their focus. The greater the distance, measured along the z-axis, the larger the shadow.
+
 ## Z-Index
 
 <Canvas>
@@ -14,13 +18,13 @@ import { DocGrid } from "docs/components/DocGrid";
       <NumberBlock number="1" cssVariable="--uitk-zIndex-default" />
       <NumberBlock number="1000" cssVariable="--uitk-zIndex-popout" />
       <NumberBlock number="1050" cssVariable="--uitk-zIndex-docked" />
-      <NumberBlock number="1100" cssVariable="--uitk-zIndex-appheader" />
+      <NumberBlock number="1100" cssVariable="--uitk-zIndex-appHeader" />
       <NumberBlock number="1200" cssVariable="--uitk-zIndex-drawer" />
       <NumberBlock number="1300" cssVariable="--uitk-zIndex-modal" />
       <NumberBlock number="1400" cssVariable="--uitk-zIndex-notification" />
-      <NumberBlock number="1420" cssVariable="--uitk-zIndex-dragobject" />
-      <NumberBlock number="1450" cssVariable="--uitk-zIndex-contextmenu" />
-      <NumberBlock number="1500" cssVariable="--uitk-zIndex-tooltip" />
+      <NumberBlock number="1420" cssVariable="--uitk-zIndex-dragObject" />
+      <NumberBlock number="1450" cssVariable="--uitk-zIndex-contextMenu" />
+      <NumberBlock number="1500" cssVariable="--uitk-zIndex-flyover" />
     </DocGrid>
   </Story>
 </Canvas>

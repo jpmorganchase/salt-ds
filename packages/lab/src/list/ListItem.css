@@ -1,9 +1,9 @@
 .uitkListItem {
   /* Color */
-  --list-item-text-color: var(--uitk-selectable-foreground);
+  --list-item-text-color: var(--uitk-text-primary-foreground);
   --list-item-background: var(--uitkList-item-background, var(--uitk-selectable-background));
   --list-item-selected-focus-outlineColor: var(--uitk-color-white); /* TODO: Check token with design */
-  --list-item-text-color-active: var(--uitk-selectable-foreground-selected);
+  --list-item-text-color-active: var(--uitk-text-primary-foreground);
   --list-item-background-active: var(--uitk-selectable-background-selected);
   --list-item-alignItems: center;
 }
@@ -14,7 +14,7 @@
 }
 
 .uitkListItemHeader {
-  font-weight: var(--uitk-typography-weight-bold);
+  font-weight: var(--uitk-typography-fontWeight-bold);
 }
 
 .uitkListItemHeader[data-sticky] {
@@ -48,7 +48,7 @@
 
 .uitkListItem-checkbox {
   --list-item-background-active: var(--uitk-selectable-background);
-  --list-item-text-color-active: var(--uitk-selectable-foreground);
+  --list-item-text-color-active: var(--uitk-text-primary-foreground);
   --list-item-text-padding: 0 0 0 var(--uitk-size-unit);
 }
 
@@ -58,7 +58,7 @@
 }
 
 .uitkListItem.uitkDisabled {
-  --list-item-text-color: var(--uitk-selectable-foreground-disabled);
+  --list-item-text-color: var(--uitk-text-primary-foreground-disabled);
   cursor: var(--uitk-selectable-cursor-disabled);
 }
 

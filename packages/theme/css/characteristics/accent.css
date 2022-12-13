@@ -1,10 +1,23 @@
-.uitk-light,
-.uitk-dark {
-  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
-  --uitk-accent-background: var(--uitk-palette-accent-background);
-  --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
+.uitk-density-high {
+  --uitk-accent-fontSize: 8px;
+  --uitk-accent-lineHeight: 11px;
+}
+.uitk-density-medium {
+  --uitk-accent-fontSize: 10px;
+  --uitk-accent-lineHeight: 13px;
+}
+.uitk-density-low {
+  --uitk-accent-fontSize: 12px;
+  --uitk-accent-lineHeight: 16px;
+}
+.uitk-density-touch {
+  --uitk-accent-fontSize: 14px;
+  --uitk-accent-lineHeight: 18px;
+}
 
-  --uitk-accent-fontSize-small: 8px;
-  --uitk-accent-fontSize-medium: 11px;
-  --uitk-accent-fontSize-large: 16px;
+.uitk-theme {
+  --uitk-accent-background: var(--uitk-palette-accent-background);
+  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
+  --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
+  --uitk-accent-fontWeight: var(--uitk-typography-fontWeight-semiBold);
 }

@@ -1,9 +1,6 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { LinkProps, Link, makePrefixer, Text } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
-import warning from "warning";
-import { Link, LinkProps } from "../link";
-import { Div } from "../text";
 import { useMetricContext } from "./internal";
 import "./MetricHeader.css";
 
@@ -13,7 +10,7 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
    *
    * @see `Link` for a list of valid props.
    */
-  SubtitleLinkProps?: Partial<LinkProps>;
+  SubtitleLinkProps?: Omit<Partial<LinkProps>, "children">;
   /**
    * Subtitle of the Metric Header
    */
@@ -37,24 +34,17 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
       if (!subtitle) return null;
 
       const subtitleComponent = (
-        <Div
+        <Text
           id={subtitleId}
           className={withBaseName("subtitle")}
           data-testid="metric-subtitle"
         >
           {subtitle}
-        </Div>
+        </Text>
       );
 
       if (SubtitleLinkProps) {
-        const { children, href = "", ...restLinkProps } = SubtitleLinkProps;
-
-        if (process.env.NODE_ENV !== "production") {
-          warning(
-            children === undefined,
-            `'children' in 'SubtitleLinkProps' is ignored. ${subtitle} is used instead.`
-          );
-        }
+        const { href = "", ...restLinkProps } = SubtitleLinkProps;
 
         return (
           <Link href={href} {...restLinkProps}>
@@ -68,7 +58,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
 
     return (
       <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
-        <Div
+        <Text
           styleAs="h4"
           className={withBaseName("title")}
           data-testid="metric-title"
@@ -77,7 +67,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
           aria-level={headingAriaLevel}
         >
           {title}
-        </Div>
+        </Text>
         {renderSubtitle()}
       </div>
     );

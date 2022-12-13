@@ -1,5 +1,5 @@
 /* TODO: get rid of this once Tabs is compatible with dark theme */
-.uitk-light .uitkColorChooserDictTabs-text {
+.uitk-theme[data-mode="light"] .uitkColorChooserDictTabs-text {
   background-color: transparent;
   color: var(--uitk-text-primary-foreground) !important;
 }

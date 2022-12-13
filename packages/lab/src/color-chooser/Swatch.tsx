@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 import cn from "classnames";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { Color } from "./Color";
@@ -13,26 +13,11 @@ interface SwatchProps {
   onClick: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    e?: ChangeEvent
   ) => void;
   onDialogClosed: () => void;
   transparent?: boolean;
 }
-
-export const withHandleFocus =
-  <P extends Record<string, unknown>>(
-    Component: React.ComponentType<P>
-  ): React.FC<P> =>
-  (props): JSX.Element => {
-    const [focus, setFocus] = useState(false);
-    const handleFocus = (): void => setFocus(true);
-    const handleBlur = (): void => setFocus(false);
-    return (
-      <span onFocus={handleFocus} onBlur={handleBlur}>
-        <Component focus={focus} {...props} />
-      </span>
-    );
-  };
 
 export const Swatch = ({
   color,
@@ -42,9 +27,7 @@ export const Swatch = ({
   onDialogClosed,
   transparent = false,
 }: SwatchProps): JSX.Element => {
-  const handleClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
+  const handleClick = () => {
     const newColor = Color.makeColorFromHex(color);
     isTransparent(color) ? newColor?.setAlpha(0) : newColor?.setAlpha(alpha);
 
@@ -52,14 +35,14 @@ export const Swatch = ({
     onDialogClosed();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
     const newColor = Color.makeColorFromHex(color)?.setAlpha(alpha);
     e.key === "ENTER" && onClick(newColor, true);
     onDialogClosed();
   };
 
-  // If it's black/grey/white
-  const isBlackOrGrey = (color: string): boolean => {
+  // If it's black/gray/white
+  const isBlackOrgray = (color: string): boolean => {
     return (
       color.toLowerCase() === "black" ||
       color.toUpperCase().startsWith("#2F3136") ||
@@ -84,9 +67,9 @@ export const Swatch = ({
       className={cn({
         [withBaseName("active")]: active,
         [withBaseName("transparent")]: transparent,
-        [withBaseName("greySwatch")]: isBlackOrGrey(color),
+        [withBaseName("graySwatch")]: isBlackOrgray(color),
         [withBaseName("whiteSwatch")]: isWhite(color),
-        [withBaseName("swatch")]: !isWhite(color) && !isBlackOrGrey(color),
+        [withBaseName("swatch")]: !isWhite(color) && !isBlackOrgray(color),
       })}
       onClick={handleClick}
       tabIndex={0}

@@ -1,6 +1,6 @@
 .uitkTreeNode {
   /* Color */
-  --tree-item-text-color: var(--uitk-selectable-foreground);
+  --tree-item-text-color: var(--uitk-text-primary-foreground);
   --tree-item-background: var(--uitk-selectable-background);
   --tree-item-background-hover: var(--uitk-selectable-background-hover);
 
@@ -23,8 +23,8 @@
 
 .uitkTreeNode-item[aria-selected="true"] {
   background: var(--uitk-selectable-background-selected);
-  color: var(--uitk-selectable-foreground-selected);
-  --uitkIcon-color: var(--uitk-selectable-foreground-selected);
+  color: var(--uitk-text-primary-foreground);
+  --uitkIcon-color: var(--uitk-text-primary-foreground);
 }
 
 .uitkTreeNode[aria-expanded="true"] {

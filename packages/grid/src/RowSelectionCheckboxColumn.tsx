@@ -1,6 +1,9 @@
-import { RowSelectionCheckboxHeaderCell } from "./RowSelectionCheckboxHeaderCell";
+import { KeyboardEvent } from "react";
+import { RowSelectionCheckboxHeaderCellValue } from "./RowSelectionCheckboxHeaderCellValue";
 import { RowSelectionCheckboxCellValue } from "./RowSelectionCheckboxCellValue";
 import { GridColumn, GridColumnProps } from "./GridColumn";
+import { useSelectionContext } from "./SelectionContext";
+import { AutoSizeHeaderCell } from "./HeaderCell";
 
 export type RowSelectionCheckboxColumnProps<T> = Omit<
   GridColumnProps<T>,
@@ -10,13 +13,27 @@ export type RowSelectionCheckboxColumnProps<T> = Omit<
 export function RowSelectionCheckboxColumn<T>(
   props: RowSelectionCheckboxColumnProps<T>
 ) {
+  const { selectRows } = useSelectionContext();
+
+  const onKeyDown = (
+    event: KeyboardEvent<HTMLDivElement>,
+    rowIndex: number
+  ) => {
+    if (event.key === " ") {
+      selectRows({ rowIndex, incremental: true });
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   return (
     <GridColumn
       {...props}
       defaultWidth={100}
-      headerComponent={RowSelectionCheckboxHeaderCell}
+      headerComponent={AutoSizeHeaderCell}
+      headerValueComponent={RowSelectionCheckboxHeaderCellValue}
       cellValueComponent={RowSelectionCheckboxCellValue}
-      pinned="left"
+      onKeyDown={onKeyDown}
     />
   );
 }

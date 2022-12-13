@@ -1,7 +1,6 @@
 import cn from "classnames";
 import {
   ChangeEventHandler,
-  FC,
   KeyboardEventHandler,
   useEffect,
   useState,
@@ -16,12 +15,12 @@ export interface CompactInputProps {
   FormFieldProps?: Partial<FormFieldProps>;
 }
 
-export const CompactInput: FC<CompactInputProps> = ({
+export const CompactInput = ({
   page,
   count,
   onPageChange,
   FormFieldProps: { className, ...restFormFieldProps } = {},
-}) => {
+}: CompactInputProps) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
   useEffect(() => {

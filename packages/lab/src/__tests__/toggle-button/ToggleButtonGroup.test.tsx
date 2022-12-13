@@ -20,17 +20,17 @@ function renderToggleButtonGroup(
     props: Partial<ToggleButtonGroupProps>
   ) => (
     <ToggleButtonGroup onChange={onChangeSpy} {...props}>
-      <ToggleButton ariaLabel="home" tooltipText="Home">
-        <HomeIcon size={12} /> Home
+      <ToggleButton aria-label="home" tooltipText="Home">
+        <HomeIcon /> Home
       </ToggleButton>
-      <ToggleButton ariaLabel="search" tooltipText="Search">
-        <SearchIcon size={12} /> Search
+      <ToggleButton aria-label="search" tooltipText="Search">
+        <SearchIcon /> Search
       </ToggleButton>
-      <ToggleButton ariaLabel="print" tooltipText="Print">
-        <PrintIcon size={12} /> Print
+      <ToggleButton aria-label="print" tooltipText="Print">
+        <PrintIcon /> Print
       </ToggleButton>
-      <ToggleButton ariaLabel="alert" tooltipText="Alert">
-        <NotificationIcon size={12} /> Alert
+      <ToggleButton aria-label="alert" tooltipText="Alert">
+        <NotificationIcon /> Alert
       </ToggleButton>
     </ToggleButtonGroup>
   );
@@ -63,7 +63,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
   test("THEN it should respect to `aria-label` prop", () => {
     const { getAllByRole } = renderToggleButtonGroup({
-      ariaLabel: "My Toggle Button Group",
+      "aria-label": "My Toggle Button Group",
       children: [],
     });
     const toggleButtonGroup = getAllByRole("radiogroup");
@@ -200,19 +200,19 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     expect(buttons.length).toBe(4);
     expect(buttons[0]).toHaveTextContent("Home");
     expect(buttons[0]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[0]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[0]).toBeDisabled();
     expect(buttons[0]).toHaveAttribute("tabindex", "-1");
     expect(buttons[1]).toHaveTextContent("Search");
     expect(buttons[1]).toHaveAttribute("aria-checked", "true");
-    expect(buttons[1]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[1]).toBeDisabled();
     expect(buttons[1]).toHaveAttribute("tabindex", "-1");
     expect(buttons[2]).toHaveTextContent("Print");
     expect(buttons[2]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[2]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[2]).toBeDisabled();
     expect(buttons[2]).toHaveAttribute("tabindex", "-1");
     expect(buttons[3]).toHaveTextContent("Alert");
     expect(buttons[3]).toHaveAttribute("aria-checked", "false");
-    expect(buttons[3]).toHaveAttribute("aria-disabled", "true");
+    expect(buttons[3]).toBeDisabled();
     expect(buttons[3]).toHaveAttribute("tabindex", "-1");
 
     fireEvent.click(buttons[0]);

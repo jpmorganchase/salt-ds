@@ -1,14 +1,5 @@
 /* Style applied to the root element */
 .uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-medium);
-}
-
-/* Apply this className to the element to achieve the lighter color variant. The default is `medium` emphasis. */
-.uitkEmphasisLow.uitkScrim {
-  --scrim-background: var(--uitk-overlayable-background-low);
-}
-
-.uitkScrim {
   top: 0;
   left: 0;
   right: 0;
@@ -20,7 +11,7 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background: var(--uitkScrim-background, var(--scrim-background));
+  background: var(--uitkScrim-background, var(--uitk-overlayable-background));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -31,5 +22,5 @@
 /* Style applied to the root element when containerFix={true} */
 .uitkScrim-containerFix {
   position: absolute;
-  z-index: calc(var(--uitk-zIndex-appheader) - 1);
+  z-index: calc(var(--uitk-zIndex-appHeader) - 1);
 }

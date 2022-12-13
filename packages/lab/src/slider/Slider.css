@@ -54,7 +54,7 @@
   --slider-clickable-paddingLeft: var(--uitkSlider-clickable-paddingLeft, calc(var(--uitk-size-base) * 0.5));
   --slider-clickable-paddingRight: var(--uitkSlider-clickable-paddingRight, calc(var(--uitk-size-base) * 0.5));
 
-  --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-caption-fontSize));
+  --slider-label-fontSize: var(--uitkSlider-label-fontSize, var(--uitk-text-label-fontSize));
   --slider-label-paddingLeft: var(--uitkSlider-label-paddingLeft, 0);
   --slider-label-paddingRight: var(--uitkSlider-label-paddingRight, 0);
 }
@@ -161,14 +161,6 @@
   background: var(--slider-selection-color);
 }
 
-.uitkSliderHandle-box {
-  position: absolute;
-  top: calc((var(--slider-arrow-height) - var(--slider-handle-size)) * 0.5);
-  left: calc(var(--slider-handle-size) * -0.5);
-  height: var(--slider-handle-size);
-  width: var(--slider-handle-size);
-}
-
 .uitkSliderHandle-box:focus-visible {
   outline-style: var(--slider-handle-outlineStyle);
   outline-width: var(--slider-handle-outlineWidth);
@@ -206,10 +198,4 @@
   padding-right: var(--slider-label-paddingRight);
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkSlider {
-  --slider-label-fontSize: var(--backwardsCompat-text-caption-fontSize);
 }

@@ -1,12 +1,12 @@
 /* TODO: Should the outer most container being 'wrapper'? */
 .uitkListDeprecated-wrapper {
   /* Color */
-  --list-background: var(--uitk-container-background-medium);
+  --list-background: var(--uitk-container-primary-background);
   /* Border */
-  --list-borderColor: var(--uitk-container-borderColor-medium);
+  --list-borderColor: var(--uitk-container-primary-borderColor);
   --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-container-borderWidth);
-  --list-borderRadius: var(--uitk-container-borderRadius);
+  --list-borderWidth: var(--uitk-size-border);
+  --list-borderRadius: 0;
 
   /* Text, Font */
   /* TODO: Do we necessary want to set this? Should rely on inheritance? */

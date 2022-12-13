@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   ContactAction,
   ContactActions,
@@ -42,14 +41,12 @@ const testMetadata = [
   ["Email", personaA.email],
 ] as [string, string][];
 
-const focusedMetadata = testMetadata.slice(3);
-
 type PersonaAContactDetailsProps = Pick<ContactDetailsProps, "variant"> &
   Pick<ContactMetadataProps, "collapsible"> & {
     headingAriaLevel?: number;
   };
 
-const PersonaAContactDetails: FC<PersonaAContactDetailsProps> = (props) => {
+const PersonaAContactDetails = (props: PersonaAContactDetailsProps) => {
   return (
     <ContactDetails variant={props.variant}>
       <ContactAvatar />
@@ -149,7 +146,7 @@ variants.forEach((variant) => {
       if (variant !== "mini") {
         for (const [label, text] of testActions) {
           cy.realPress("Tab");
-          cy.findByText(label).parent().should("have.focus");
+          cy.findByText(label).should("have.focus");
           cy.findByText(text).should("exist");
         }
       }
@@ -196,7 +193,7 @@ describe("Given a default collapsible ContactDetails", () => {
 
     for (const [label, text] of testActions) {
       cy.realPress("Tab");
-      cy.findByText(label).parent().should("have.focus");
+      cy.findByText(label).should("have.focus");
       cy.findByText(text).should("exist");
     }
 

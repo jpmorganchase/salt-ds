@@ -1,8 +1,8 @@
 import { Story } from "@storybook/react";
 import {
   Button,
-  Input,
   FormField,
+  Input,
   Pill,
   StaticInputAdornment,
 } from "@jpmorganchase/uitk-core";
@@ -91,7 +91,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       </FormField>
       <Tooltray aria-label="filters tooltray">
         <ToggleButton
-          ariaLabel=" AND"
+          aria-label=" AND"
           style={{ width: "100%", minWidth: "60px" }}
           toggled
         >
@@ -142,8 +142,4 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
 
 QA.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return <QA imgSrc="/visual-regression-screenshots/Toolbar-vr-snapshot.png" />;
 };

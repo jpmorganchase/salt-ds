@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ToolkitProvider, useDensity } from "@jpmorganchase/uitk-core";
 import {
   ButtonBar,
@@ -9,8 +8,7 @@ import {
   DialogTitle,
   OrderedButton,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
-import { QAContainer } from "docs/components";
+import { ComponentMeta, Story } from "@storybook/react";
 import "./dialog.qa.stories.css";
 
 export default {
@@ -27,7 +25,7 @@ const densityDialogWidths = {
 
 type BasicDialogExampleProps = Pick<DialogProps, "status">;
 
-const BasicDialogExample: FC<BasicDialogExampleProps> = ({ status }) => {
+const BasicDialogExample = ({ status }: BasicDialogExampleProps) => {
   const density = useDensity();
   const densityBreakpoint = density === "touch" ? "xl" : "xs";
 
@@ -65,20 +63,22 @@ const SuccessDialog = () => <BasicDialogExample status={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <div className={"examples-container"}>
-    <ToolkitProvider applyClassesToChild density={"high"} theme={"light"}>
-      <BasicDialog />
+    <ToolkitProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
+      <div>
+        <BasicDialog />
+      </div>
     </ToolkitProvider>
-    <ToolkitProvider applyClassesToChild density={"medium"} theme={"dark"}>
+    <ToolkitProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
       <div>
         <ErrorDialog />
       </div>
     </ToolkitProvider>
-    <ToolkitProvider applyClassesToChild density={"low"} theme={"light"}>
+    <ToolkitProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
       <div>
         <WarningDialog />
       </div>
     </ToolkitProvider>
-    <ToolkitProvider applyClassesToChild density={"touch"} theme={"dark"}>
+    <ToolkitProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
       <div>
         <SuccessDialog />
       </div>
@@ -88,15 +88,4 @@ export const ExamplesGrid: Story = () => (
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: ComponentStory<typeof Dialog> = () => {
-  return (
-    <QAContainer
-      className="uitkDialogQA"
-      imgSrc="/visual-regression-screenshots/Dialog-vr-snapshot.png"
-    >
-      <ExamplesGrid />
-    </QAContainer>
-  );
 };

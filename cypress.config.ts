@@ -5,6 +5,7 @@ import IstanbulPlugin from "vite-plugin-istanbul";
 import { isCI } from "ci-info";
 import path from "path";
 import { mergeConfig, UserConfig } from "vite";
+import { version as reactVersion } from "react";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 
@@ -20,10 +21,9 @@ let viteConfig: UserConfig = {
   },
   resolve: {
     alias: {
-      "cypress/react":
-        process.env.REACT_VERSION === "18"
-          ? "cypress/react18"
-          : "cypress/react",
+      "cypress/react18": reactVersion.startsWith("18")
+        ? "cypress/react18"
+        : "cypress/react",
     },
   },
 };

@@ -5,8 +5,6 @@ import { List } from "@jpmorganchase/uitk-lab";
 
 import { usa_states } from "./list.data";
 
-import "./list.stories.css";
-
 export default {
   title: "Lab/List/QA",
   component: List,
@@ -49,10 +47,4 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
 
 AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithBaseline: Story = () => {
-  return (
-    <AllExamples imgSrc="/visual-regression-screenshots/List-vr-snapshot.png" />
-  );
 };

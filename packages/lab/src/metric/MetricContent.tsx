@@ -1,4 +1,10 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import {
+  makePrefixer,
+  Text,
+  Display1,
+  Display2,
+  Display3,
+} from "@jpmorganchase/uitk-core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -6,7 +12,6 @@ import {
 } from "@jpmorganchase/uitk-icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
-import { Div, Figure1, Figure2, Figure3 } from "../text";
 import { useMetricContext } from "./internal";
 
 import "./MetricContent.css";
@@ -34,6 +39,11 @@ export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
   value: string | number;
 }
 
+const iconComponentMap = {
+  down: ArrowDownIcon,
+  up: ArrowUpIcon,
+};
+
 const withBaseName = makePrefixer("uitkMetricContent");
 
 export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
@@ -58,27 +68,21 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
       subtitleId,
     } = useMetricContext();
 
-    const iconSize = size === "large" ? "medium" : size;
+    const iconSize = size === "large" ? 2 : 1;
 
     const valueComponentMap = {
-      small: Figure3,
-      medium: Figure2,
-      large: Figure1,
+      small: Display3,
+      medium: Display2,
+      large: Display1,
     };
     const ValueComponent = valueComponentMap[size];
 
     const iconProps = {
       "aria-label": direction,
       className: withBaseName("indicator"),
-      "data-testid": "metric-indicator",
       name: direction ? `movement-${direction}` : "",
       size: iconSize,
       ...IndicatorIconProps,
-    };
-
-    const iconComponentMap = {
-      down: ArrowDownIcon,
-      up: ArrowUpIcon,
     };
 
     const IconComponent =
@@ -107,12 +111,12 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
           {indicatorPosition === "end" && icon}
         </div>
         {subvalue && (
-          <Div
+          <Text
             className={withBaseName("subvalue")}
             data-testid="metric-subvalue"
           >
             {subvalue}
-          </Div>
+          </Text>
         )}
       </div>
     );

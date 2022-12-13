@@ -1,8 +1,20 @@
 import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@jpmorganchase/uitk-theme/index.css";
+import "@fontsource/open-sans/300.css";
+import "@fontsource/open-sans/300-italic.css";
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/400-italic.css";
+import "@fontsource/open-sans/500.css";
+import "@fontsource/open-sans/500-italic.css";
+import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/600-italic.css";
+import "@fontsource/open-sans/700.css";
+import "@fontsource/open-sans/700-italic.css";
+import "@fontsource/open-sans/800.css";
+import "@fontsource/open-sans/800-italic.css";
 
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
@@ -13,16 +25,16 @@ import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
-const DEFAULT_THEME = "light";
+const DEFAULT_MODE = "light";
 
 export const globalTypes: GlobalTypes = {
-  theme: {
-    name: "Theme",
-    description: "Set the color theme",
-    defaultValue: DEFAULT_THEME,
+  mode: {
+    name: "Mode",
+    description: "Set the theme mode",
+    defaultValue: DEFAULT_MODE,
     toolbar: {
-      title: "Theme",
-      // show the theme name once selected in the toolbar
+      title: "Mode",
+      // show the mode name once selected in the toolbar
       dynamicTitle: true,
       items: [
         { value: "light", right: "⚪", title: "Light" },
@@ -111,9 +123,10 @@ export const parameters: Parameters = {
     container: ({
       children,
       context,
-    }: ComponentProps<typeof DocsContainer>) => (
+    }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
+      // @ts-ignore DocsContainer does not support React18 types
       <DocsContainer context={context}>
-        <ToolkitProvider theme={context.globals?.theme}>
+        <ToolkitProvider mode={context.globals?.mode}>
           {children}
         </ToolkitProvider>
       </DocsContainer>

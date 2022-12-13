@@ -1,9 +1,12 @@
-import { makePrefixer, TooltipProps } from "@jpmorganchase/uitk-core";
+import {
+  Link,
+  makePrefixer,
+  TooltipProps,
+  Text,
+} from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
-import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { Div } from "../text";
-import { Link } from "../link";
+import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";
 
@@ -46,16 +49,13 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
   ) {
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
-    const tooltipTitle = tooltipText || overflowLabel || String(children);
-    const hasChildren = React.Children.count(children) !== 0;
+    const hasChildren = Children.count(children) !== 0;
     const hasOnlyIcon = Icon && !hasChildren;
 
     const getDefaultBreadcrumb = () =>
       isCurrentLevel ? (
-        <Div
-          truncate
+        <Text
           maxRows={1}
-          tooltipText={tooltipTitle}
           className={classnames(
             withBaseName(),
             className,
@@ -64,7 +64,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           styleAs="label"
         >
           {children}
-        </Div>
+        </Text>
       ) : (
         <div
           className={classnames(
@@ -78,13 +78,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         >
           {Icon && <Icon className={withBaseName("icon")} />}
           {hasChildren && (
-            <Link
-              truncate
-              maxRows={1}
-              tooltipText={tooltipTitle}
-              styleAs="label"
-              {...props}
-            >
+            <Link maxRows={1} styleAs="label" {...props}>
               {children}
             </Link>
           )}

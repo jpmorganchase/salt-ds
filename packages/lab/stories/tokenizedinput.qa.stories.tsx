@@ -1,7 +1,6 @@
 import { TokenizedInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { AllRenderer, QAContainer } from "docs/components";
-import "./tokenizedinput.qa.stories.css";
+import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/Tokenized Input/QA",
@@ -43,20 +42,4 @@ export const ExamplesGrid: ComponentStory<typeof TokenizedInput> = (props) => {
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: ComponentStory<
-  typeof TokenizedInput
-> = (props) => {
-  return (
-    <QAContainer
-      width={864}
-      height={235}
-      className="uitkTokenizedInputQA"
-      imgSrc="/visual-regression-screenshots/TokenizedInput-vr-snapshot.png"
-      style={{ display: "flex" }}
-    >
-      <ExamplesGrid />
-    </QAContainer>
-  );
 };

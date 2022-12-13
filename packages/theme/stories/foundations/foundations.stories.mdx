@@ -15,21 +15,20 @@ Foundation design tokens should generally be in the format `--uitk-<foundation n
 
 1. Always begin with `--uitk-`
 2. Follow this by the **_foundation name_**, e.g. `---uitk-color-`, `---uitk-shadow-`, `--uitk-size-`, `--uitk-typography-`
-3. Append the **_intent_**, if applicable: e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-size-toggleGroupButton`, `--uitk-typography-weight-`
-4. Append the **_scale_** or **_rank_**, if applicable: e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`, `--uitk-typography-weight-light`
+3. Append the **_intent_**, if applicable: e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-size-stackable`, `--uitk-typography-fontWeight-`
+4. Append the **_scale_** or **_rank_**, if applicable: e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`, `--uitk-typography-fontWeight-light`
 
 ## Using Foundations
 
 Wrap the foundation you wish to use inside a `var()` function. Most commonly, foundations are used when referenced by characteristics, for example:
 
 ```css
-.uitk-light,
-.uitk-dark {
-  --uitk-actionable-primary-fontWeight: var(--uitk-typography-weight-bold);
+.uitk-theme {
+  --uitk-actionable-primary-fontWeight: var(--uitk-typography-fontWeight-bold);
 }
 ```
 
-where the **actionable characteristic** `--uitk-actionable-primary-fontWeight` references the variable `--uitk-typography-weight-bold` from the **typography foundation**.
+where the **actionable characteristic** `--uitk-actionable-primary-fontWeight` references the variable `--uitk-typography-fontWeight-bold` from the **typography foundation**.
 
 However, foundations can also be used directly if there is no appropriate characteristic provided for your use case. For example, you could color your headings green:
 

@@ -1,31 +1,33 @@
-/* 
+/*
   When we clone a React element and inject props, if any of these are
-  callback props, make sure original callback props are also invoked. 
-  
+  callback props, make sure original callback props are also invoked.
+
  React.cloneElement(
     element,
     forwardCallbackProps(element.props, overrideProps)
   )
  */
-export const forwardCallbackProps = (elementProps: any, overrideProps: any) => {
-  const callbackProps = Object.entries<Function>(elementProps).filter(
-    ([, value]) => typeof value === "function"
+
+type Props = Record<string, any>;
+
+export const forwardCallbackProps = <P1 extends Props, P2 extends Props>(
+  ownProps: P1,
+  overrideProps: P2
+): P1 & P2 => {
+  const props = Object.keys(ownProps).reduce<Props>(
+    (map, name) => {
+      const ownProp = ownProps[name];
+      const overrideProp = overrideProps[name];
+      if (typeof ownProp === "function" && typeof overrideProp === "function") {
+        map[name] = (...args: unknown[]) => {
+          ownProp(...args);
+          overrideProp(...args);
+        };
+      }
+      return map;
+    },
+    { ...overrideProps }
   );
 
-  if (callbackProps.some(([name]) => overrideProps[name] !== undefined)) {
-    return {
-      ...overrideProps,
-      ...callbackProps.reduce((map, [name, fn]) => {
-        if (overrideProps[name] && typeof overrideProps[name] === "function") {
-          map[name] = (...args: any) => {
-            overrideProps[name]?.(...args);
-            fn(...args);
-          };
-        }
-        return map;
-      }, {} as any),
-    };
-  } else {
-    return overrideProps;
-  }
+  return props as P1 & P2;
 };

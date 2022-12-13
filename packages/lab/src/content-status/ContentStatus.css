@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: var(--uitk-text-textAlign-embedded);
   gap: var(--uitk-size-unit);
 }
 
@@ -18,30 +18,14 @@
 
 /* Styles applied to status title */
 .uitkContentStatus-title {
-  font-weight: var(--uitk-typography-weight-semiBold);
+  font-weight: var(--uitk-typography-fontWeight-semiBold);
+}
+
+/* Styles applied to status message */
+.uitkContentStatus-message {
 }
 
 /* Styles applied to status actions */
 .uitkContentStatus-actions {
   margin-top: var(--uitkContentStatus-actions-marginTop, var(--uitk-size-unit));
-}
-
-/* Styles applied if `status="error"` */
-.uitkContentStatus-error {
-  fill: var(--uitkContentStatus-error-fill, var(--uitk-status-error-foreground));
-}
-
-/* Styles applied if `status="success"` */
-.uitkContentStatus-success {
-  fill: var(--uitkContentStatus-success-fill, var(--uitk-status-success-foreground));
-}
-
-/* Styles applied if `status="warning"` */
-.uitkContentStatus-warning {
-  fill: var(--uitkContentStatus-warning-fill, var(--uitk-status-warning-foreground));
-}
-
-/* Styles applied if `status="info"` */
-.uitkContentStatus-info {
-  fill: var(--uitkContentStatus-info-fill, var(--uitk-status-info-foreground));
 }

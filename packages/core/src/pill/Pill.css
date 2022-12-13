@@ -20,8 +20,9 @@
   --pill-background-active: var(--uitkPill-background-active, var(--uitk-taggable-background-active));
   --pill-background-disabled: var(--uitkPill-background-disabled, var(--uitk-taggable-background-disabled));
   --pill-background-hover: var(--uitkPill-background-hover, var(--uitk-taggable-background-hover));
-  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--uitk-size-pill) - 2px));
-  --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-caption-fontSize));
+  --pill-checkbox-size: var(--uitkPill-checkbox-size, calc(var(--pill-height) - 2px));
+  --pill-fontSize: var(--uitkPill-fontSize, var(--uitk-text-label-fontSize));
+  --pill-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 1.5));
   --pill-icon-color: var(--uitkPill-icon-color, var(--uitk-taggable-foreground));
   --pill-icon-color-active: var(--uitkPill-icon-color-active, var(--uitk-taggable-foreground-active));
   --pill-icon-color-hover: var(--uitkPill-icon-color-hover, var(--uitk-taggable-foreground-hover));
@@ -45,9 +46,9 @@
   color: var(--pill-text-color);
   display: inline-flex;
   font-size: var(--pill-fontSize);
-  height: var(--uitkPill-height, var(--pill-checkbox-size));
+  height: var(--uitkPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
   letter-spacing: var(--uitkPill-letterSpacing, 0);
-  line-height: var(--uitkPill-lineHeight, var(--uitk-text-base-lineHeight));
+  line-height: var(--uitkPill-lineHeight, var(--uitk-text-label-lineHeight));
   max-width: var(--uitkPill-maxWidth, 160px);
   min-width: var(--uitkPill-minWidth, 40px);
   min-height: var(--uitkPill-minHeight, var(--uitk-text-minHeight));
@@ -151,7 +152,7 @@
 /* Style applied to Pill label inner text */
 .uitkPill-innerLabel {
   vertical-align: top;
-  line-height: calc(var(--pill-checkbox-size) + 2px);
+  line-height: var(--pill-height);
 }
 
 /* Style applied to Pill label and icon when `disabled={true}` */
@@ -243,21 +244,4 @@
 .uitkPill-disabled:active .uitkPill-label {
   background: initial;
   color: var(--pill-text-color-disabled);
-}
-
-/* TK1 backwards compat styling */
-
-.uitk-light {
-  --backwardsCompat-pill-background: var(--uitk-color-grey-40);
-  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-40);
-}
-.uitk-dark {
-  --backwardsCompat-pill-background: var(--uitk-color-grey-500);
-  --backwardsCompat-pill-background-hover: var(--uitk-color-grey-500);
-}
-
-.backwardsCompat.uitkPill {
-  --pill-fontSize: var(--backwardsCompat-text-caption-fontSize);
-  --pill-background: var(--backwardsCompat-pill-background);
-  --pill-background-hover: var(--backwardsCompat-pill-background-hover);
 }

@@ -19,13 +19,14 @@ import {
 } from "../common-hooks";
 import { List } from "../list/List";
 import { ListProps } from "../list/listTypes";
-import { DropdownBase } from "./DropdownBase";
+import { DropdownBase, MaybeChildProps } from "./DropdownBase";
 import { DropdownButton } from "./DropdownButton";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdown } from "./useDropdown";
+import { forwardCallbackProps } from "../utils";
 
 export interface DropdownProps<
-  Item = "string",
+  Item = string,
   Selection extends SelectionStrategy = "default"
 > extends DropdownBaseProps,
     Pick<
@@ -40,7 +41,7 @@ export interface DropdownProps<
 }
 
 export const Dropdown = forwardRef(function Dropdown<
-  Item = "string",
+  Item = string,
   Selection extends SelectionStrategy = "default"
 >(
   {
@@ -78,7 +79,7 @@ export const Dropdown = forwardRef(function Dropdown<
   });
 
   const {
-    highlightedIndex: highlightedIdx,
+    highlightedIndex,
     triggerLabel,
     listHandlers,
     listControlProps,
@@ -86,14 +87,17 @@ export const Dropdown = forwardRef(function Dropdown<
     ...dropdownListHook
   } = useDropdown<Item, Selection>({
     collectionHook,
+    defaultHighlightedIndex: ListProps?.defaultHighlightedIndex,
     defaultIsOpen,
     defaultSelected: collectionHook.itemToCollectionItem<
       Selection,
       typeof defaultSelected
     >(defaultSelected),
+    highlightedIndex: ListProps?.highlightedIndex,
     isOpen: isOpenProp,
     itemToString,
     label: "Dropdown",
+    onHighlight: ListProps?.onHighlight,
     onOpenChange,
     onSelectionChange,
     selected: collectionHook.itemToCollectionItem<
@@ -129,10 +133,14 @@ export const Dropdown = forwardRef(function Dropdown<
       "aria-label": ariaLabel,
     };
     if (triggerComponent) {
-      return cloneElement(triggerComponent, {
-        ...listControlProps,
-        ...ariaProps,
-      });
+      const ownProps = triggerComponent.props as MaybeChildProps;
+      return cloneElement(
+        triggerComponent,
+        forwardCallbackProps(ownProps, {
+          ...listControlProps,
+          ...ariaProps,
+        })
+      );
     } else {
       return (
         <DropdownButton
@@ -159,7 +167,7 @@ export const Dropdown = forwardRef(function Dropdown<
           ListItem={ListItem}
           itemToString={itemToString}
           {...ListProps}
-          highlightedIndex={highlightedIdx}
+          highlightedIndex={highlightedIndex}
           listHandlers={listHandlers}
           onSelectionChange={onSelectionChange}
           selected={collectionItemsToItem(selected)}

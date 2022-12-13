@@ -1,10 +1,10 @@
 .OpacityBlock-cell {
   --opacity-block-cell-size: var(--uitk-size-base);
 
-  --opacity-block-cell-borderColor: var(--uitk-container-borderColor-medium);
+  --opacity-block-cell-borderColor: var(--uitk-container-primary-borderColor);
   --opacity-block-cell-borderStyle: var(--uitk-container-borderStyle);
-  --opacity-block-cell-borderWidth: var(--uitk-container-borderWidth);
-  --opacity-block-cell-borderRadius: var(--uitk-container-borderRadius);
+  --opacity-block-cell-borderWidth: var(--uitk-size-border);
+  --opacity-block-cell-borderRadius: 0;
 }
 
 .OpacityBlock-cell {

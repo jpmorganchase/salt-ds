@@ -1,6 +1,6 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
 .uitkColorChooserSwatch-swatch,
-.uitkColorChooserSwatch-greySwatch {
+.uitkColorChooserSwatch-graySwatch {
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
@@ -30,7 +30,7 @@
 }
 
 .uitkColorChooserSwatch-swatch,
-.uitk-light .uitkColorChooserSwatch-greySwatch {
+.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-graySwatch {
   width: var(--colorChooser-swatch-size-unit);
   height: var(--colorChooser-swatch-size-unit);
 }
@@ -41,42 +41,40 @@
   cursor: pointer;
 }
 
-.uitk-light .uitkColorChooserSwatch-whiteSwatch {
-  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
+.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-whiteSwatch {
+  border: var(--uitk-size-border) var(--uitk-container-borderColor-style) var(--uitk-container-primary-borderColor);
 }
 
-.uitk-light .uitkColorChooserSwatch-whiteSwatch,
-.uitk-dark .uitkColorChooserSwatch-greySwatch {
+.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-whiteSwatch,
+.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-graySwatch {
   width: calc(var(--colorChooser-swatch-size-unit) - 2);
   height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
-.uitk-dark .uitkColorChooserSwatch-whiteSwatch,
-.uitkColorChooserSwatch-greySwatch {
+.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-whiteSwatch,
+.uitkColorChooserSwatch-graySwatch {
   border: 0px;
 }
 
-.uitk-dark .uitkColorChooserSwatch-whiteSwatch {
+.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-whiteSwatch {
   width: calc(var(--colorChooser-swatch-size-unit) - 2);
   height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
-.uitk-dark .uitkColorChooserSwatch-greySwatch {
-  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
+.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-graySwatch {
+  border: var(--uitk-size-border) var(--uitk-container-borderColor-style) var(--uitk-container-primary-borderColor);
 }
 
 .uitkColorChooserSwatch-active {
-  outline: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-container-borderColor-medium);
+  outline: var(--uitk-size-border) var(--uitk-container-borderColor-style) var(--uitk-container-primary-borderColor);
   border: var(--uitk-focused-outlineWidth) var(--uitk-container-borderStyle) var(--uitk-actionable-cta-foreground-active) !important;
-  width: calc(var(--colorChooser-swatch-size-unit) - 4px) !important;
-  height: calc(var(--colorChooser-swatch-size-unit) - 4px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
 }
 
 .uitkColorChooserSwatch-transparent {
-  border: var(--uitk-container-borderWidth) var(--uitk-container-borderColor-style) var(--uitk-negative-foreground) !important;
+  border: var(--uitk-size-border) var(--uitk-container-borderStyle) var(--uitk-negative-foreground) !important;
   width: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;

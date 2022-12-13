@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {
   ChangeEventHandler,
-  FC,
+  ComponentType,
   forwardRef,
   HTMLAttributes,
   useImperativeHandle,
@@ -23,7 +23,7 @@ const withBaseName = makePrefixer("uitkRadioButtonGroup");
 export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultValue?: string;
-  icon?: FC<RadioButtonIconProps>;
+  icon?: ComponentType<RadioButtonIconProps>;
   legend?: string;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;

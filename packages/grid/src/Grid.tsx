@@ -1,8 +1,6 @@
 import React, {
-  Children,
-  cloneElement,
   CSSProperties,
-  isValidElement,
+  KeyboardEvent,
   KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
@@ -11,7 +9,6 @@ import React, {
   useMemo,
   useRef,
   useState,
-  WheelEventHandler,
 } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnInfo } from "./GridColumn";
@@ -20,10 +17,9 @@ import cx from "classnames";
 import {
   CellMeasure,
   clamp,
-  getCellPosition,
+  getFocusablePosition,
   LeftPart,
   MiddlePart,
-  PAGE_SIZE,
   RightPart,
   Scrollable,
   TopLeftPart,
@@ -39,9 +35,7 @@ import {
   useColumnResize,
   useHeadVisibleColumnRange,
   useLeftScrolledOutWidth,
-  useProd,
   useRangeSelection,
-  useRowIdxByKey,
   useRowModels,
   useRowSelection,
   useScrollToCell,
@@ -56,18 +50,18 @@ import { SelectionContext } from "./SelectionContext";
 import { SizingContext } from "./SizingContext";
 import { LayoutContext } from "./LayoutContext";
 import { EditorContext } from "./EditorContext"; // TODO remove
-import { CursorContext } from "./CursorContext";
+import { CursorContext, FocusedPart } from "./CursorContext";
 import { ColumnGroupProps } from "./ColumnGroup";
 import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
-import { range } from "./NumberRange";
+import { ColumnDataContext } from "./ColumnDataContext";
 
 const withBaseName = makePrefixer("uitkGrid");
 
-export type ColumnSeparatorType = "regular" | "none" | "groupEdge";
+export type ColumnSeparatorType = "regular" | "none" | "groupEdge" | "pinned";
 export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
-export type ColumnGroupColumnSeparatorType = "regular" | "none";
+export type ColumnGroupColumnSeparatorType = "regular" | "none" | "pinned";
 export type GridRowSelectionMode = "single" | "multi" | "none";
 export type GridCellSelectionMode = "range" | "none";
 
@@ -80,6 +74,9 @@ export type GridColumnMoveHandler = (
 ) => void;
 
 export interface GridProps<T = any> {
+  /**
+   * At least 1 children is expected, options are `ColumnGroup` or `GridColumn`.
+   * */
   children: ReactNode;
   /**
    * If `true`, zebra stripes are enabled (odd/even rows have alternate colours)
@@ -94,13 +91,17 @@ export interface GridProps<T = any> {
    * */
   columnSeparators?: boolean;
   /**
+   * If `true`, separators are rendered between pinned and unpinned columns.
+   * */
+  pinnedSeparators?: boolean;
+  /**
    * Row data objects. Sparse arrays are supported.
    * */
   rowData: T[];
   /**
    * Should return unique string for a given row data object.
    * If rowData is sparse then this function should work with undefined row data
-   * objects and create keys based on row index.
+   * objects and create keys based on row index. `(row: T, index: number) => string`
    * */
   rowKeyGetter?: RowKeyGetter<T>;
   /**
@@ -127,12 +128,19 @@ export interface GridProps<T = any> {
    * If `true`, user will be able to move columns using drag and drop.
    * */
   columnMove?: boolean;
+  /**
+   * Accepts `(columnId: string, fromIndex: number, toIndex: number) => void`
+   * */
   onColumnMoved?: GridColumnMoveHandler;
   /**
    * Options are `range` and `none`.
    * */
   cellSelectionMode?: GridCellSelectionMode;
   onVisibleRowRangeChange?: (start: number, end: number) => void;
+  /**
+   * If `true`, keyboard navigation is enabled for the header.
+   * */
+  headerIsFocusable?: boolean;
 }
 
 export interface GridRowModel<T> {
@@ -167,6 +175,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     zebra,
     hideHeader,
     columnSeparators,
+    pinnedSeparators = true,
     className,
     style,
     rowKeyGetter = defaultRowKeyGetter,
@@ -178,8 +187,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     onRowSelected,
     columnMove,
     onColumnMoved,
-    cellSelectionMode = "range",
+    cellSelectionMode = "none",
     onVisibleRowRangeChange,
+    headerIsFocusable,
   } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -204,14 +214,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
-  const [cursorRowIdx, setCursorRowIdx] = useState<number | undefined>(
-    undefined
-  );
-  const [cursorColIdx, setCursorColIdx] = useState<number | undefined>(
-    undefined
+  const [cursorRowIdx, setCursorRowIdx] = useState<number>(0);
+  const [cursorColIdx, setCursorColIdx] = useState<number>(0);
+  const [focusedPart, setFocusedPart] = useState<FocusedPart>(
+    headerIsFocusable ? "header" : "body"
   );
 
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [initialText, setInitialText] = useState<string | undefined>(undefined);
 
   const resizeClient = useCallback(
     (clW: number, clH: number, sbW: number, sbH: number) => {
@@ -259,11 +269,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   // Footer is not implemented yet.
   const botRowCount = 0; // TODO
   // Height of the header
-  const topHeight = useProd([rowHeight, headRowCount]);
+  const topHeight = rowHeight * headRowCount;
   // Height of the middle part (virtual height)
-  const midHeight = useProd([rowHeight, rowCount]);
+  const midHeight = rowCount === 0 ? 0 : rowHeight * rowCount + 1;
   // Height of the footer
-  const botHeight = useProd([botRowCount, rowHeight]);
+  const botHeight = botRowCount * rowHeight;
   // Total height of the grid (virtual)
   const totalHeight = useSum([topHeight, midHeight, botHeight]);
   // Client width of the middle part of the grid (viewport)
@@ -367,9 +377,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     ]
   );
 
-  const onWheel: WheelEventHandler<HTMLTableElement> = useCallback(
+  const onWheel: EventListener = useCallback(
     (event) => {
-      let { deltaX, deltaY, shiftKey } = event;
+      let { deltaX, deltaY, shiftKey } = event as WheelEvent;
       if (deltaX === 0 && shiftKey) {
         deltaX = deltaY;
         deltaY = 0;
@@ -390,10 +400,26 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [leftCols, midCols, rightCols]
   );
 
-  const colIdxByKey = useMemo(
+  const colsById = useMemo(
     () =>
-      new Map<string, number>(cols.map((c, i) => [c.info.props.id, c.index])),
+      new Map<string, GridColumnModel<T>>(
+        cols.map((c) => [c.info.props.id, c] as [string, GridColumnModel<T>])
+      ),
     [cols]
+  );
+
+  const getColById = useCallback(
+    (id: string) => {
+      return colsById.get(id);
+    },
+    [colsById]
+  );
+
+  const columnDataContext: ColumnDataContext<T> = useMemo(
+    () => ({
+      getColById,
+    }),
+    [getColById]
   );
 
   const scroll = useCallback(
@@ -419,6 +445,25 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     scroll
   );
 
+  const focusCellElement = (
+    part: FocusedPart,
+    rowIdx: number,
+    colIdx: number
+  ) => {
+    setTimeout(() => {
+      const selector =
+        part === "body"
+          ? `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
+          : `th[data-column-index="${colIdx}"]`;
+      const nodeToFocus = rootRef.current?.querySelector(selector);
+      if (nodeToFocus) {
+        (nodeToFocus as HTMLElement).focus({ preventScroll: true });
+      } else {
+        console.warn(`focusCellElement can't find the element`);
+      }
+    }, 0);
+  };
+
   const startEditMode = (text?: string) => {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
@@ -427,6 +472,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     const c = cols[cursorColIdx];
     const isEditable = !!contextValue.getEditor(c.info.props.id);
     if (isEditable) {
+      setInitialText(text);
       setEditMode(true);
     }
   };
@@ -453,9 +499,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       handler(rowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
-    }
+    focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
   };
 
   const cancelEditMode = () => {
@@ -463,8 +507,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       return;
     }
     setEditMode(false);
-    if (rootRef.current) {
-      rootRef.current.focus();
+    if (cursorRowIdx != null && cursorColIdx != null) {
+      focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
     }
   };
 
@@ -488,18 +532,31 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const rangeSelection = useRangeSelection(cellSelectionMode);
 
   const moveCursor = useCallback(
-    (rowIdx?: number, colIdx?: number) => {
+    (part: FocusedPart, rowIdx: number, colIdx: number) => {
       cancelEditMode();
-      if (rowData.length < 1 || cols.length < 1) {
+      if (!headerIsFocusable && part === "header") {
+        console.warn(
+          `Cannot move focus to the header. "headerIsFocusable" prop is false.`
+        );
         return;
       }
-      rowIdx = clamp(rowIdx, 0, rowData.length - 1);
+      setFocusedPart(part);
       colIdx = clamp(colIdx, 0, cols.length - 1);
+      if (part === "body") {
+        if (rowData.length < 1 || cols.length < 1) {
+          return;
+        }
+        rowIdx = clamp(rowIdx, 0, rowData.length - 1);
+      } else if (part === "header") {
+        rowIdx = 0; // There is only one row in the header currently
+      }
       setCursorRowIdx(rowIdx);
       setCursorColIdx(colIdx);
-      scrollToCell(rowIdx, colIdx);
-      rootRef.current?.focus();
-      rangeSelection.onCursorMove({ rowIdx, colIdx });
+      scrollToCell(part, rowIdx, colIdx);
+      focusCellElement(part, rowIdx, colIdx);
+      if (part === "body") {
+        rangeSelection.onCursorMove({ rowIdx, colIdx });
+      }
     },
     [
       setCursorRowIdx,
@@ -511,6 +568,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       scrollToCell,
       endEditMode,
       rangeSelection.onCursorMove,
+      focusedPart,
+      headerIsFocusable,
     ]
   );
 
@@ -518,6 +577,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const isLeftRaised = scrollLeft > 0;
   const isRightRaised = scrollLeft + clientMidWidth < midWidth;
+  const isHeaderRaised = scrollTop > 0;
 
   const resizeColumn = useCallback(
     (colIdx: number, width: number) => {
@@ -527,7 +587,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [cols]
   );
 
-  const onResizeHandleMouseDown = useColumnResize(resizeColumn);
+  const onResizeHandleMouseDown = useColumnResize(cols, resizeColumn);
 
   const sizingContext: SizingContext = useMemo(
     () => ({
@@ -550,21 +610,48 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const editorContext: EditorContext = useMemo(
     () => ({
+      initialText,
       editMode,
       startEditMode,
       endEditMode,
       cancelEditMode,
     }),
-    [editMode, startEditMode, endEditMode, cancelEditMode]
+    [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
+  );
+
+  const [isFocused, setFocused] = useState<boolean>(false);
+
+  const onFocus = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(true);
+    },
+    [setFocused]
+  );
+
+  const onBlur = useCallback(
+    (event: React.FocusEvent<HTMLDivElement>) => {
+      setFocused(false);
+    },
+    [setFocused]
   );
 
   const cursorContext: CursorContext = useMemo(
     () => ({
+      isFocused,
       cursorRowIdx,
       cursorColIdx,
       moveCursor,
+      focusedPart,
+      headerIsFocusable: Boolean(headerIsFocusable),
     }),
-    [cursorRowIdx, cursorColIdx, moveCursor]
+    [
+      cursorRowIdx,
+      cursorColIdx,
+      moveCursor,
+      isFocused,
+      focusedPart,
+      headerIsFocusable,
+    ]
   );
 
   const onColumnMove: GridColumnMoveHandler = (
@@ -577,18 +664,22 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
   };
 
-  const { dragState, onColumnMoveHandleMouseDown, activeTarget } =
-    useColumnMove(
-      columnMove,
-      rootRef,
-      leftCols,
-      midCols,
-      rightCols,
-      cols,
-      scrollLeft,
-      clientMidWidth,
-      onColumnMove
-    );
+  const {
+    dragState,
+    onColumnMoveHandleMouseDown,
+    activeTarget,
+    onColumnMoveCancel,
+  } = useColumnMove(
+    columnMove,
+    rootRef,
+    leftCols,
+    midCols,
+    rightCols,
+    cols,
+    scrollLeft,
+    clientMidWidth,
+    onColumnMove
+  );
 
   const columnDragContext: ColumnDragContext = useMemo(
     () => ({
@@ -604,12 +695,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
     const target = event.target as HTMLElement;
     try {
-      const [rowIdx, colIdx] = getCellPosition(target);
-      if (colIdx >= 0) {
-        moveCursor(rowIdx, colIdx);
+      const { part, rowIndex, columnIndex } = getFocusablePosition(target);
+      if (part === "header" && !headerIsFocusable) {
+        return;
       }
-      // event.preventDefault();
-      // event.stopPropagation();
+      moveCursor(part, rowIndex, columnIndex);
     } catch (e) {
       // TODO
     }
@@ -625,130 +715,114 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [rangeSelection.onKeyboardRangeSelectionEnd]
   );
 
-  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
-    (event) => {
+  const editModeKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
       const { key } = event;
-      // console.log(`onKeyDown. key: ${event.key}`);
-
-      if (key === "Shift") {
-        rangeSelection.onKeyboardRangeSelectionStart({
-          rowIdx: cursorRowIdx || 0,
-          colIdx: cursorColIdx || 0,
-        });
-        return;
-      }
-      if (key === "ArrowLeft") {
-        moveCursor(cursorRowIdx, (cursorColIdx || 0) - 1);
-        return;
-      }
-      if (key === "ArrowRight") {
-        moveCursor(cursorRowIdx, (cursorColIdx || 0) + 1);
-        return;
-      }
-      if (key === "ArrowUp") {
-        moveCursor((cursorRowIdx || 0) - 1, cursorColIdx);
-        return;
-      }
-      if (key === "ArrowDown") {
-        moveCursor((cursorRowIdx || 0) + 1, cursorColIdx);
-        return;
-      }
-      if (key === "PageUp") {
-        moveCursor((cursorRowIdx || 0) - PAGE_SIZE, cursorColIdx);
-        return;
-      }
-      if (key === "PageDown") {
-        moveCursor((cursorRowIdx || 0) + PAGE_SIZE, cursorColIdx);
-        return;
-      }
-      if (key === "Home") {
-        if (!event.ctrlKey) {
-          moveCursor(cursorRowIdx, 0);
-        } else {
-          moveCursor(0, 0);
-        }
-        return;
-      }
-      if (key === "End") {
-        if (!event.ctrlKey) {
-          moveCursor(cursorRowIdx, cols.length - 1);
-        } else {
-          moveCursor(rowData.length - 1, cols.length - 1);
-        }
-        return;
-      }
-      if (key === "F2" || key === "Backspace") {
-        startEditMode();
-        return;
-      }
-      if (key === "Tab") {
-        if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-          if (cursorColIdx == undefined || cursorRowIdx == undefined) {
-            moveCursor(0, 0);
+      switch (key) {
+        case "F2":
+        case "Enter":
+          startEditMode();
+          break;
+        case "Backspace":
+          startEditMode("");
+          break;
+        case "Escape":
+          if (editMode) {
+            cancelEditMode();
+            break;
           } else {
-            if (!event.shiftKey) {
-              if (cursorColIdx < cols.length - 1) {
-                moveCursor(cursorRowIdx, cursorColIdx + 1);
-              } else {
-                if (cursorRowIdx < rowData.length - 1) {
-                  moveCursor(cursorRowIdx + 1, 0);
-                }
+            return false;
+          }
+        default:
+          if (
+            !editMode &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            /^[\w\d ]$/.test(key)
+          ) {
+            startEditMode(key);
+          } else {
+            return false;
+          }
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [startEditMode, editMode, cancelEditMode]
+  );
+
+  const selectionKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      switch (key) {
+        case "Shift":
+          rangeSelection.onKeyboardRangeSelectionStart({
+            rowIdx: cursorRowIdx || 0,
+            colIdx: cursorColIdx || 0,
+          });
+          break;
+        case " ":
+          if (focusedPart === "body") {
+            if (event.ctrlKey) {
+              if (cursorColIdx != undefined) {
+                rangeSelection.selectRange({
+                  start: { rowIdx: 0, colIdx: cursorColIdx },
+                  end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+                });
               }
             } else {
-              if (cursorColIdx > 0) {
-                moveCursor(cursorRowIdx, cursorColIdx - 1);
-              } else {
-                if (cursorRowIdx > 0) {
-                  moveCursor(cursorRowIdx - 1, cols.length - 1);
-                }
+              if (cursorRowIdx != undefined) {
+                selectRows({
+                  rowIndex: cursorRowIdx,
+                  isRange: false,
+                  incremental: true,
+                  unselectOtherRows: !event.shiftKey,
+                });
               }
             }
-          }
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-      }
-      if (key === "Enter") {
-        if (
-          !event.ctrlKey &&
-          !event.metaKey &&
-          !event.altKey &&
-          !event.shiftKey
-        ) {
-          if (cursorRowIdx == undefined) {
-            moveCursor(0, 0);
+            break;
           } else {
-            moveCursor(cursorRowIdx + 1, cursorColIdx);
+            return false;
           }
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
-      }
-      if (key === "Escape") {
-        cancelEditMode();
-        return;
-      }
-      if (key === " ") {
-        if (event.ctrlKey) {
-          if (cursorColIdx != undefined) {
+        case "a":
+          if (event.ctrlKey || event.metaKey) {
             rangeSelection.selectRange({
-              start: { rowIdx: 0, colIdx: cursorColIdx },
-              end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+              start: { rowIdx: 0, colIdx: 0 },
+              end: { rowIdx: rowData.length, colIdx: cols.length },
             });
+            selectAll();
           }
-        } else {
-          if (cursorRowIdx != undefined) {
-            selectRows(cursorRowIdx, event.shiftKey, event.metaKey);
-          }
-        }
-        return;
+          break;
+        default:
+          return false;
       }
-      if (key === "c" && (event.ctrlKey || event.metaKey)) {
-        if (!rangeSelection.selectedCellRange) {
-          return;
-        }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [
+      rangeSelection.selectRange,
+      rangeSelection.onKeyboardRangeSelectionStart,
+      selectRows,
+      selectAll,
+      cursorColIdx,
+      cursorRowIdx,
+      rowData.length,
+      cols.length,
+      focusedPart,
+    ]
+  );
+
+  const clipboardKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      if (
+        key === "c" &&
+        (event.ctrlKey || event.metaKey) &&
+        rangeSelection.selectedCellRange
+      ) {
         const { start, end } = rangeSelection.selectedCellRange;
         const c = (x: number, y: number) => x - y;
         const [minRow, maxRow] = [start.rowIdx, end.rowIdx].sort(c);
@@ -765,33 +839,183 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           text.push(rowText.join("\t"));
         }
         navigator.clipboard.writeText(text.join("\n"));
-        return;
-      }
-      if (key === "a" && (event.ctrlKey || event.metaKey)) {
-        rangeSelection.selectRange({
-          start: { rowIdx: 0, colIdx: 0 },
-          end: { rowIdx: rowData.length, colIdx: cols.length },
-        });
-        selectAll();
         event.preventDefault();
         event.stopPropagation();
-        return;
+        return true;
       }
-      if (
-        !editMode &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.altKey &&
-        /^[\w\d ]$/.test(key)
-      ) {
-        startEditMode("");
-        return;
-      }
-      // TODO Ctrl + D copies from the first cell to the selection down
-      // TODO Ctrl + R copies from the first cell to the selection right
-      console.log(`onKeyDown unhandled. key=${key}`);
+      return false;
     },
-    [cursorRowIdx, cursorColIdx, moveCursor, startEditMode, rowData, cols]
+    [rangeSelection.selectedCellRange]
+  );
+
+  const pageSize = Math.max(1, visRowRng.length - 1);
+
+  const navigationKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      switch (key) {
+        case "ArrowLeft":
+          moveCursor(focusedPart, cursorRowIdx, (cursorColIdx || 0) - 1);
+          break;
+        case "ArrowRight":
+          moveCursor(focusedPart, cursorRowIdx, (cursorColIdx || 0) + 1);
+          break;
+        case "ArrowUp":
+          if (cursorRowIdx === 0 && headerIsFocusable) {
+            moveCursor("header", 0, cursorColIdx);
+          } else {
+            moveCursor(focusedPart, (cursorRowIdx || 0) - 1, cursorColIdx);
+          }
+          break;
+        case "ArrowDown":
+          if (focusedPart === "header") {
+            moveCursor("body", 0, cursorColIdx);
+          } else {
+            moveCursor(focusedPart, (cursorRowIdx || 0) + 1, cursorColIdx);
+          }
+          break;
+        case "PageUp":
+          if (cursorRowIdx === 0 && headerIsFocusable) {
+            moveCursor("header", 0, cursorColIdx);
+          } else {
+            moveCursor(
+              focusedPart,
+              (cursorRowIdx || 0) - pageSize,
+              cursorColIdx
+            );
+          }
+          break;
+        case "PageDown":
+          if (focusedPart === "header") {
+            moveCursor("body", 0, cursorColIdx);
+          } else {
+            moveCursor(
+              focusedPart,
+              (cursorRowIdx || 0) + pageSize,
+              cursorColIdx
+            );
+          }
+          break;
+        case "Home":
+          if (!event.ctrlKey) {
+            moveCursor(focusedPart, cursorRowIdx, 0);
+          } else {
+            moveCursor(focusedPart, 0, 0);
+          }
+          break;
+        case "End":
+          if (!event.ctrlKey) {
+            moveCursor(focusedPart, cursorRowIdx, cols.length - 1);
+          } else {
+            moveCursor(focusedPart, rowData.length - 1, cols.length - 1);
+          }
+          break;
+        case "Tab":
+          if (
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            editMode &&
+            cursorColIdx != null &&
+            cursorRowIdx != null
+          ) {
+            if (!event.shiftKey) {
+              if (cursorColIdx < cols.length - 1) {
+                moveCursor(focusedPart, cursorRowIdx, cursorColIdx + 1);
+              } else {
+                if (cursorRowIdx < rowData.length - 1) {
+                  moveCursor(focusedPart, cursorRowIdx + 1, 0);
+                }
+              }
+            } else {
+              if (cursorColIdx > 0) {
+                moveCursor(focusedPart, cursorRowIdx, cursorColIdx - 1);
+              } else {
+                if (cursorRowIdx > 0) {
+                  moveCursor(focusedPart, cursorRowIdx - 1, cols.length - 1);
+                }
+              }
+            }
+          } else {
+            return false;
+          }
+          break;
+        case "Enter":
+          if (
+            editMode &&
+            !event.ctrlKey &&
+            !event.metaKey &&
+            !event.altKey &&
+            !event.shiftKey
+          ) {
+            if (cursorRowIdx == undefined) {
+              moveCursor(focusedPart, 0, 0);
+            } else {
+              moveCursor(focusedPart, cursorRowIdx + 1, cursorColIdx);
+            }
+          } else {
+            return false;
+          }
+          break;
+        default:
+          return false;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    },
+    [
+      moveCursor,
+      cursorRowIdx,
+      cursorRowIdx,
+      cols.length,
+      rowData.length,
+      headerIsFocusable,
+      pageSize,
+    ]
+  );
+
+  const columnMoveKeyHandler = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const { key } = event;
+      if (key === "Escape") {
+        onColumnMoveCancel();
+        event.preventDefault();
+        event.stopPropagation();
+        return true;
+      }
+      return false;
+    },
+    []
+  );
+
+  const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      if (cursorColIdx != undefined && cursorRowIdx != undefined) {
+        const column = cols[cursorColIdx];
+        if (column.info.props.onKeyDown) {
+          column.info.props.onKeyDown(event, cursorRowIdx);
+        }
+      }
+      if (!event.isPropagationStopped()) {
+        [
+          navigationKeyHandler,
+          clipboardKeyHandler,
+          selectionKeyHandler,
+          editModeKeyHandler,
+          columnMoveKeyHandler,
+        ].find((handler) => {
+          return handler(event);
+        });
+      }
+    },
+    [
+      navigationKeyHandler,
+      clipboardKeyHandler,
+      selectionKeyHandler,
+      editModeKeyHandler,
+      columnMoveKeyHandler,
+    ]
   );
 
   const selectionContext: SelectionContext = useMemo(
@@ -829,106 +1053,120 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             <CursorContext.Provider value={cursorContext}>
               <SizingContext.Provider value={sizingContext}>
                 <EditorContext.Provider value={editorContext}>
-                  {props.children}
-                  <div
-                    className={cx(
-                      withBaseName(),
-                      {
-                        [withBaseName("zebra")]: zebra,
-                        [withBaseName("columnSeparators")]: columnSeparators,
-                        [withBaseName("primaryBackground")]:
-                          variant === "primary",
-                        [withBaseName("secondaryBackground")]:
-                          variant === "secondary",
-                      },
-                      className
-                    )}
-                    style={rootStyle}
-                    ref={rootRef}
-                    tabIndex={0}
-                    onKeyDown={onKeyDown}
-                    onKeyUp={onKeyUp}
-                    onMouseDown={onMouseDown}
-                    // onCopy={onCopy}
-                    data-name="grid-root"
-                    role="grid"
-                  >
-                    <CellMeasure setRowHeight={setRowHeight} />
-                    <Scrollable
-                      resizeClient={resizeClient}
-                      scrollLeft={scrollLeft}
-                      scrollTop={scrollTop}
-                      scrollSource={scrollSource}
-                      scroll={scroll}
-                      scrollerRef={scrollableRef}
-                      topRef={topRef}
-                      rightRef={rightRef}
-                      bottomRef={bottomRef}
-                      leftRef={leftRef}
-                      middleRef={middleRef}
-                    />
-                    <MiddlePart
-                      middleRef={middleRef}
-                      onWheel={onWheel}
-                      columns={bodyVisibleColumns}
-                      rows={rows}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      midGap={midGap}
-                      zebra={zebra}
-                    />
-                    {!hideHeader && (
-                      <TopPart
-                        columns={headVisibleColumns}
-                        columnGroups={visColGrps}
+                  <ColumnDataContext.Provider value={columnDataContext}>
+                    {props.children}
+                    <div
+                      className={cx(
+                        withBaseName(),
+                        {
+                          [withBaseName("zebra")]: zebra,
+                          [withBaseName("columnSeparators")]: columnSeparators,
+                          [withBaseName("pinnedSeparators")]: pinnedSeparators,
+                          [withBaseName("primaryBackground")]:
+                            variant === "primary",
+                          [withBaseName("secondaryBackground")]:
+                            variant === "secondary",
+                        },
+                        className
+                      )}
+                      style={rootStyle}
+                      ref={rootRef}
+                      onKeyDown={onKeyDown}
+                      onKeyUp={onKeyUp}
+                      onMouseDown={onMouseDown}
+                      onFocus={onFocus}
+                      onBlur={onBlur}
+                      data-name="grid-root"
+                      role="grid"
+                      aria-colcount={cols.length}
+                      aria-rowcount={rowCount + headRowCount}
+                      aria-multiselectable={rowSelectionMode === "multi"}
+                    >
+                      <CellMeasure setRowHeight={setRowHeight} />
+                      <Scrollable
+                        resizeClient={resizeClient}
+                        scrollLeft={scrollLeft}
+                        scrollTop={scrollTop}
+                        scrollSource={scrollSource}
+                        scroll={scroll}
+                        scrollerRef={scrollableRef}
                         topRef={topRef}
+                        rightRef={rightRef}
+                        bottomRef={bottomRef}
+                        leftRef={leftRef}
+                        middleRef={middleRef}
+                      />
+                      {!hideHeader && leftCols.length > 0 && (
+                        <TopLeftPart
+                          onWheel={onWheel}
+                          columns={leftCols}
+                          columnGroups={leftGroups}
+                          rightShadow={isLeftRaised}
+                          bottomShadow={isHeaderRaised}
+                        />
+                      )}
+                      {!hideHeader && (
+                        <TopPart
+                          columns={headVisibleColumns}
+                          columnGroups={visColGrps}
+                          topRef={topRef}
+                          onWheel={onWheel}
+                          midGap={midGap}
+                          bottomShadow={isHeaderRaised}
+                        />
+                      )}
+                      {!hideHeader && rightCols.length > 0 && (
+                        <TopRightPart
+                          onWheel={onWheel}
+                          columns={rightCols}
+                          columnGroups={rightGroups}
+                          leftShadow={isRightRaised}
+                          bottomShadow={isHeaderRaised}
+                        />
+                      )}
+                      {leftCols.length > 0 && (
+                        <LeftPart
+                          leftRef={leftRef}
+                          onWheel={onWheel}
+                          columns={leftCols}
+                          rows={rows}
+                          rightShadow={isLeftRaised}
+                          hoverOverRowKey={hoverRowKey}
+                          setHoverOverRowKey={setHoverRowKey}
+                          zebra={zebra}
+                        />
+                      )}
+                      <MiddlePart
+                        middleRef={middleRef}
                         onWheel={onWheel}
+                        columns={bodyVisibleColumns}
+                        rows={rows}
+                        hoverOverRowKey={hoverRowKey}
+                        setHoverOverRowKey={setHoverRowKey}
                         midGap={midGap}
+                        zebra={zebra}
                       />
-                    )}
-                    <LeftPart
-                      leftRef={leftRef}
-                      onWheel={onWheel}
-                      columns={leftCols}
-                      rows={rows}
-                      isRaised={isLeftRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
-                    <RightPart
-                      rightRef={rightRef}
-                      onWheel={onWheel}
-                      columns={rightCols}
-                      rows={rows}
-                      isRaised={isRightRaised}
-                      hoverOverRowKey={hoverRowKey}
-                      setHoverOverRowKey={setHoverRowKey}
-                      zebra={zebra}
-                    />
-                    {!hideHeader && (
-                      <TopLeftPart
-                        onWheel={onWheel}
-                        columns={leftCols}
-                        columnGroups={leftGroups}
-                        isRaised={isLeftRaised}
+                      {rightCols.length > 0 && (
+                        <RightPart
+                          rightRef={rightRef}
+                          onWheel={onWheel}
+                          columns={rightCols}
+                          rows={rows}
+                          leftShadow={isLeftRaised}
+                          hoverOverRowKey={hoverRowKey}
+                          setHoverOverRowKey={setHoverRowKey}
+                          zebra={zebra}
+                        />
+                      )}
+                      <ColumnDropTarget x={activeTarget?.x} />
+                      <ColumnGhost
+                        columns={cols}
+                        rows={rows}
+                        dragState={dragState}
+                        zebra={zebra}
                       />
-                    )}
-                    {!hideHeader && (
-                      <TopRightPart
-                        onWheel={onWheel}
-                        columns={rightCols}
-                        columnGroups={rightGroups}
-                        isRaised={isRightRaised}
-                      />
-                    )}
-                    <ColumnGhost
-                      columns={cols}
-                      rows={rows}
-                      dragState={dragState}
-                    />
-                    <ColumnDropTarget x={activeTarget?.x} />
-                  </div>
+                    </div>
+                  </ColumnDataContext.Provider>
                 </EditorContext.Provider>
               </SizingContext.Provider>
             </CursorContext.Provider>

@@ -12,16 +12,17 @@ import {
 } from "react";
 import { Placement } from "@floating-ui/react-dom-interactions";
 import { Portal, PortalProps } from "../portal";
-import { StatusIcon, ValidationStatus } from "../status-icon";
+// import { StatusIcon, ValidationStatus } from "../status-icon";
 import { makePrefixer } from "../utils";
 import { useWindow } from "../window";
+import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { useTooltip } from "./useTooltip";
+
 import "./Tooltip.css";
 
 // Keep in order of preference. First items are used as default
 
 const withBaseName = makePrefixer("uitkTooltip");
-const defaultIconProps = { size: 12, className: withBaseName("icon") };
 
 // FIXME: Fix types
 interface TooltipRenderProp {
@@ -32,7 +33,7 @@ interface TooltipRenderProp {
 }
 
 export interface TooltipProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title">,
     Pick<PortalProps, "disablePortal" | "container"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   placement?: Placement;
@@ -82,6 +83,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...rest
     } = props;
 
+    const getIcon = useCallback(
+      (iconProps: IconProps) => {
+        if (hideIcon) {
+          return null;
+        }
+        return status !== "info" ? (
+          <StatusIndicator
+            status={status}
+            {...iconProps}
+            className={withBaseName("icon")}
+          />
+        ) : null;
+      },
+      [status, hideIcon]
+    );
+
     const Window = useWindow();
 
     const tooltipProps = getTooltipProps(props);
@@ -99,23 +116,20 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               )}
               {...tooltipProps}
             >
-              <div className={withBaseName("content")}>
-                {render ? (
-                  render({
-                    Icon: (passedProps: IconProps) => (
-                      <Icon {...passedProps} {...defaultIconProps} />
-                    ),
-                    getIconProps: () => defaultIconProps,
-                  })
-                ) : (
-                  <>
-                    {!hideIcon && (
-                      <StatusIcon status={status} {...defaultIconProps} />
-                    )}
-                    <span className={withBaseName("body")}>{text}</span>
-                  </>
-                )}
-              </div>
+              {render ? (
+                render({
+                  Icon: (passedProps: IconProps) => getIcon(passedProps),
+                  getIconProps: () => ({
+                    status,
+                    className: withBaseName("icon"),
+                  }),
+                })
+              ) : (
+                <>
+                  {getIcon({})}
+                  <span className={withBaseName("body")}>{text}</span>
+                </>
+              )}
               {!hideArrow && (
                 <div className={withBaseName("arrow")} {...arrowProps} />
               )}

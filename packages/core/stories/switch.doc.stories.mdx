@@ -1,5 +1,4 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Switch } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
@@ -69,22 +68,6 @@ import { Switch } from "@jpmorganchase/uitk-core";
 ## Props
 
 <ArgsTable of={Switch} />
-
-## HTML Anatomy of Switch component
-
-<Canvas>
-  <Story name="Switch Anatomy">
-    <ComponentAnatomy>
-      <Switch />
-    </ComponentAnatomy>
-    <ComponentAnatomy>
-      <Switch defaultChecked={true} label="Checked" />
-    </ComponentAnatomy>
-    <ComponentAnatomy>
-      <Switch disabled label="Disabled" />
-    </ComponentAnatomy>
-  </Story>
-</Canvas>
 
 ## CSS Class
 

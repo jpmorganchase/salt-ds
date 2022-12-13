@@ -4,6 +4,7 @@
   --switch-thumb-margin: 3px 0 0 3px;
   --switch-thumb-size: 18px;
   --switch-thumb-translate: 20px;
+  --switch-height: 24px;
 }
 
 .uitk-density-low {
@@ -11,6 +12,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 16px;
   --switch-thumb-translate: 18px;
+  --switch-height: 20px;
 }
 
 .uitk-density-medium {
@@ -18,6 +20,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 14px;
   --switch-thumb-translate: 16px;
+  --switch-height: 18px;
 }
 
 .uitk-density-high {
@@ -25,6 +28,7 @@
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 12px;
   --switch-thumb-translate: 14px;
+  --switch-height: 16px;
 }
 
 .uitkSwitch {
@@ -43,7 +47,7 @@
   box-sizing: content-box;
   display: inline-flex;
   flex-shrink: 0;
-  height: var(--uitkSwitch-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-height, var(--switch-height));
   margin-left: 0;
   overflow: visible;
   padding: 0;
@@ -68,13 +72,18 @@
   text-align: right;
 }
 
-/* Styles applied to track on hover if `disabled={false}` */
-.uitkSwitch-label:hover:not(.uitkSwitch-disabled) .uitkSwitch-track {
+/* Styles applied to track on hover  */
+.uitkSwitch-label:hover .uitkSwitch-track {
   background: var(--uitkSwitch-track-color-hover, var(--switch-track-color-hover));
 }
 
-/* Styles applied to track on hover when checked if `disabled={false}` */
-.uitkSwitch-label:hover:not(.uitkSwitch-disabled) .uitkSwitch-checked + .uitkSwitch-track {
+/* Styles applied to track on hover if `disabled={true}` */
+.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-track {
+  background: var(--uitkSwitch-track-color-disabled, var(--switch-track-color-disabled));
+}
+
+/* Styles applied to track on hover when checked  */
+.uitkSwitch-label:hover .uitkSwitch-checked + .uitkSwitch-track {
   background: var(--uitkSwitch-track-color-checked-hover, var(--switch-track-color-checked));
 }
 
@@ -99,7 +108,7 @@
 .uitkSwitch-track {
   background: var(--uitkSwitch-track-color, var(--switch-track-color));
   border-radius: var(--uitkSwitch-track-borderRadius, 0);
-  height: var(--uitkSwitch-track-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-track-height, var(--switch-height));
   min-height: var(--uitkSwitch-track-minHeight, 16px);
   margin-top: 0;
   margin-left: 0;
@@ -179,7 +188,7 @@
   background: transparent;
   content: "";
   display: block;
-  height: var(--uitkSwitch-focused-height, var(--uitk-size-switch));
+  height: var(--uitkSwitch-focused-height, var(--switch-height));
   left: var(--uitkSwitch-focused-left, -2px);
   outline-style: var(--uitk-focused-outlineStyle);
   outline-width: var(--uitk-focused-outlineWidth);
@@ -196,14 +205,15 @@
 }
 
 /* Styles applied to track if `disabled={true}` */
-.uitkSwitch-disabled .uitkSwitch-base:not(.uitkSwitch-checked) + .uitkSwitch-track {
+.uitkSwitch-disabled .uitkSwitch-base + .uitkSwitch-track {
   background: var(--switch-track-color-disabled);
   border: transparent;
 }
 
 /* Styles applied to track if `disabled={true}` and `checked={true}` */
-.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
-  background: var(--switch-track-color-checked-disabled);
+.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track,
+.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-checked + .uitkSwitch-track {
+  background: var(--uitkSwitch-track-color-checked-disabled, var(--switch-track-color-checked-disabled));
   border: transparent;
 }
 
@@ -215,21 +225,4 @@
 .uitkSwitch-disabled,
 .uitkSwitch-disabled:hover {
   --switch-thumb-background: var(--uitk-selectable-primary-foreground-selectedDisabled);
-}
-
-/* TK1 Backwards compatibility */
-
-.uitk-light {
-  --backwardsCompat-switch-tick-color: var(--uitk-selectable-borderColor-selected);
-  --backwardsCompat-switch-tick-color-disabled: var(--uitk-selectable-borderColor-selectedDisabled);
-}
-
-.uitk-dark {
-  --backwardsCompat-switch-tick-color: rgb(255, 255, 255);
-  --backwardsCompat-switch-tick-color-disabled: rgba(255, 255, 255, 0.4);
-}
-
-.backwardsCompat.uitkSwitch {
-  --switch-tick-color: var(--backwardsCompat-switch-tick-color);
-  --switch-tick-color-disabled: var(--backwardsCompat-switch-tick-color-disabled);
 }

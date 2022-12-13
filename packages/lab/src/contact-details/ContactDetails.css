@@ -261,70 +261,22 @@
 }
 
 .uitkContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
 }
 
 .uitkContactFavoriteToggle-selecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-hover);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
 }
 
 .uitkContactFavoriteToggle-selected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-background-active);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
 }
 
 .uitkContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-ratable-border);
+  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
 }
 
 .uitkContactFavoriteToggle-svg {
   height: var(--contactDetails-icon-size);
   width: var(--contactDetails-icon-size);
-}
-
-/* TK1 Backwards compatibility */
-
-.uitk-density-touch {
-  --backwardsCompat-contactDetails-h2-fontSize: 30px;
-  --backwardsCompat-contactDetails-h4-fontSize: 14px;
-  --backwardsCompat-contactDetails-default-toggle-marginRight: calc(var(--uitk-size-unit) * 0.65);
-  --backwardsCompat-contactDetails-default-toggle-marginTop: calc(var(--uitk-size-unit) * 0.4);
-}
-
-.uitk-density-high,
-.uitk-density-low,
-.uitk-density-medium {
-  --backwardsCompat-contactDetails-default-toggle-marginRight: var(--uitk-size-unit);
-  --backwardsCompat-contactDetails-default-toggle-marginTop: calc(var(--uitk-size-unit) * 0.5);
-  /* Value doesn't change for these densities, defined to avoid nesting issues */
-  --backwardsCompat-contactDetails-h4-fontSize: var(--uitk-text-h4-fontSize);
-  /* This value is ideally handled by the Text component anyway, but re-defined to avoid nesting issues */
-  --backwardsCompat-contactDetails-h2-fontSize: var(--backwardsCompat-text-h2-fontSize);
-}
-
-.backwardsCompat.uitkContactDetails-default .uitkContactPrimaryInfo {
-  font-size: var(--backwardsCompat-contactDetails-h2-fontSize);
-}
-
-.backwardsCompat.uitkContactDetails-compact .uitkContactSecondaryInfo,
-.backwardsCompat.uitkContactDetails-compact .uitkContactTertiaryInfo,
-.backwardsCompat.uitkContactDetails-mini .uitkContactSecondaryInfo {
-  font-size: var(--backwardsCompat-contactDetails-h4-fontSize);
-}
-
-.backwardsCompat.uitkContactDetails {
-  --contactDetails-compact-tertiaryInfo-marginLeft: 16px;
-  --contactDetails-mini-stacked-secondaryInfo-marginLeft: var(--uitk-size-unit);
-  --contactDetails-favoriteToggle-fill: var(--uitk-text-secondary-foreground);
-}
-
-.backwardsCompat.uitkContactDetails-default {
-  --contactDetails-favoriteToggle-marginRight: var(--backwardsCompat-contactDetails-default-toggle-marginRight);
-  --contactDetails-favoriteToggle-marginTop: var(--backwardsCompat-contactDetails-default-toggle-marginTop);
-}
-
-.backwardsCompat.uitkContactDetails .uitkContactMetadataItem-label {
-  display: block;
-  overflow: visible;
-  word-break: normal;
-  text-overflow: ellipsis;
 }

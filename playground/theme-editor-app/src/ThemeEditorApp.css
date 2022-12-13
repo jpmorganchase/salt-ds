@@ -6,7 +6,7 @@
 
 .uitkThemeEditorAppOutput {
   color: var(--uitk-text-secondary-foreground);
-  background-color: var(--uitk-container-background-medium);
+  background-color: var(--uitk-container-primary-background);
 }
 
 .uitkThemeEditorApp-leftPane {

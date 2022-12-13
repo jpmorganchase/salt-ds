@@ -1,8 +1,8 @@
 /* Styles applied to root component */
 .uitkFileDropZone {
-  --fileDropZone-background: var(--uitk-container-background-high);
-  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
-  --fileDropZone-borderWidth: var(--uitk-container-borderWidth);
+  --fileDropZone-background: var(--uitk-container-secondary-background);
+  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor);
+  --fileDropZone-borderWidth: var(--uitk-size-border);
   --fileDropZone-borderStyle: var(--uitk-dropTarget-borderStyle);
   --fileDropZone-text-color: var(--uitk-text-primary-foreground);
   --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
@@ -52,7 +52,7 @@
 
 /* Styles applied if `isRejected={true}`  */
 .uitkFileDropZone-error {
-  --fileDropZone-background: var(--uitk-status-error-background-high);
+  --fileDropZone-background: var(--uitk-status-error-background-emphasize);
   --fileDropZone-borderColor: var(--uitk-status-error-borderColor);
   --fileDropZone-icon-color: var(--uitk-status-error-foreground);
 }
@@ -60,7 +60,7 @@
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
 .uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active {
   --fileDropZone-background: var(--uitk-dropTarget-background-hover);
-  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
+  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor);
 }
 
 /* Styles applied to title and description */
@@ -93,7 +93,7 @@
 
 /* Styles applied if `disabled={true}` */
 .uitkFileDropZone-disabled {
-  --fileDropZone-borderColor: var(--uitk-container-borderColor-disabled-high);
+  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor-disabled);
 
   cursor: var(--uitk-dropTarget-cursor-disabled);
 }
@@ -103,21 +103,4 @@
 .uitkFileDropZone-disabled .uitkFileDropZone-title {
   --fileDropZone-text-color: var(--uitk-text-primary-foreground-disabled);
   --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
-}
-
-/* TK1 Backwards compatibility */
-
-.backwardsCompat.uitkFileDropZone {
-  --fileDropZone-title-lineHeight: var(--uitk-text-base-lineHeight);
-}
-
-.backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-icon,
-.backwardsCompat.uitkFileDropZone-disabled .uitkFileDropZone-title {
-  --fileDropZone-text-color: var(--uitk-text-primary-foreground-disabled);
-  --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
-}
-
-.backwardsCompat.uitkFileDropZone-error {
-  --fileDropZone-background: var(--uitk-container-background-high);
-  --fileDropZone-borderColor: var(--uitk-container-borderColor-high);
 }

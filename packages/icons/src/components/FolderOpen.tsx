@@ -1,9 +1,25 @@
-import { createIcon } from "../icon/createIcon";
+import { forwardRef } from "react";
 
-export const FolderOpenIcon = createIcon(
-  <svg viewBox="0 0 12 12" data-testid="FolderOpenIcon">
-    <path d="m4.118 1 2 1H12v10H0V1h4.118zM11 3H5.882l-2-1H1v8l3-6h7V3z" />
-  </svg>,
-  "FolderOpen",
-  "folder open"
+import { Icon, IconProps } from "../icon";
+
+export type FolderOpenIconProps = IconProps;
+
+export const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
+  function FolderOpenIcon(props: FolderOpenIconProps, ref) {
+    return (
+      <Icon
+        data-testid="FolderOpenIcon"
+        aria-label="folder open"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path
+          fillRule="evenodd"
+          d="M0 1h4.118l2 1H12v10H0V1Zm5.882 2H11v1H4L1 9.53V2h2.882l2 1Zm-4.544 8H11V5H4.58l-3.242 6Z"
+          clipRule="evenodd"
+        />
+      </Icon>
+    );
+  }
 );

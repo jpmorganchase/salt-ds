@@ -85,9 +85,9 @@ function addOrRemoveFromArray(
 const defaultOffset = (date: DateValue) => date;
 
 function isRangeOrOffsetSelectionValue(
-  selectionValue: AllSelectionValueType
+  selectionValue?: AllSelectionValueType
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
-  return selectionValue !== null && isPlainObject(selectionValue);
+  return selectionValue != null && isPlainObject(selectionValue);
 }
 
 const withBaseName = makePrefixer("uitkCalendarDay");

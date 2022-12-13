@@ -1,7 +1,7 @@
 .story-root {
   height: 600px;
   overflow-y: auto;
-  border: solid 1px var(--uitk-container-borderColor-medium);
+  border: solid 1px var(--uitk-container-primary-borderColor);
   padding: var(--uitk-size-base);
 }
 
@@ -12,20 +12,4 @@
 .accordion-story-details {
   padding: var(--uitk-size-base);
   border: solid 1px var(--uitk-text-primary-foreground);
-}
-
-.accordion-styled {
-  --uitkAccordion-summary-background: rgb(237, 237, 237);
-  --uitkAccordion-summary-background-active: rgb(237, 237, 237);
-  --uitkAccordion-details-padding: 1rem;
-  --uitkAccordion-section-borderColor: #6c6e6e;
-  --uitkAccordion-section-borderWidth: 1px;
-  --uitkAccordion-section-marginBottom: 1rem;
-  --uitkAccordion-summary-icon-expand-transform: scaleY(-1);
-  --uitkAccordion-summary-icon-transition: transform 300ms ease;
-  --uitkAccordion-borderStyle: solid;
-  --uitkAccordion-borderColor: #6c6e6e;
-  --uitkAccordion-borderWidth: 2px;
-  --uitkAccordion-padding: 1rem;
-  --uitkAccordion-borderRadius: 4px;
 }

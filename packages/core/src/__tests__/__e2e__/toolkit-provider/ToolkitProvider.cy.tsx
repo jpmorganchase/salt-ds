@@ -1,41 +1,30 @@
-import { useContext } from "react";
 import {
-  characteristic,
-  useAriaAnnouncer,
-  ToolkitContext,
   ToolkitProvider,
+  useAriaAnnouncer,
   useDensity,
   useTheme,
 } from "@jpmorganchase/uitk-core";
+import { mount } from "cypress/react";
 
 const TestComponent = ({
   id = "test-1",
   className = "",
-  displayVariableValue,
 }: {
   id?: string;
   className?: string;
-  displayVariableValue?: [characteristic, string];
 }) => {
   const density = useDensity();
-  const themes = useTheme();
+  const { theme, mode } = useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
-  const [theme] = themes;
-  let variableValue;
-
-  if (theme && displayVariableValue) {
-    const [characteristicName, variant] = displayVariableValue;
-    variableValue = theme.getCharacteristicValue(characteristicName, variant);
-  }
 
   return (
     <div
       id={id}
       className={className}
       data-density={density}
-      data-theme={theme?.id}
-      data-variable-value={variableValue}
+      data-theme={theme}
+      data-mode={mode}
       data-announcer={announcerPresent}
     />
   );
@@ -43,19 +32,22 @@ const TestComponent = ({
 
 describe("Given a ToolkitProvider", () => {
   describe("with no props set", () => {
-    it("should create uitk-theme element with correct classes applied", () => {
-      cy.mount(
+    it("should apply the given theme and density class names to the html element", () => {
+      mount(
         <ToolkitProvider>
           <TestComponent />
         </ToolkitProvider>
       );
 
-      cy.get("uitk-theme")
-        .should("have.length", 2)
-        .and("have.attr", "class", "uitk-light uitk-density-medium");
+      cy.get("div.uitk-provider").should("have.length", 0);
+
+      cy.get("html")
+        .should("exist")
+        .and("have.attr", "data-mode", "light")
+        .and("have.class", "uitk-density-medium");
     });
     it("should apply correct default values for Density and Theme and add an AriaAnnouncer", () => {
-      cy.mount(
+      mount(
         <ToolkitProvider>
           <TestComponent />
         </ToolkitProvider>
@@ -63,7 +55,7 @@ describe("Given a ToolkitProvider", () => {
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "medium")
-        .and("have.attr", "data-theme", "uitk-light")
+        .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true");
       cy.get("[aria-live]").should("exist");
     });
@@ -71,20 +63,20 @@ describe("Given a ToolkitProvider", () => {
 
   describe("with props set", () => {
     it("should apply correct default value for Density and add an AriaAnnouncer", () => {
-      cy.mount(
-        <ToolkitProvider theme="dark">
+      mount(
+        <ToolkitProvider mode="dark">
           <TestComponent />
         </ToolkitProvider>
       );
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "medium")
-        .and("have.attr", "data-theme", "uitk-dark")
+        .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
     });
 
     it("should apply correct default value for Theme and add an AriaAnnouncer", () => {
-      cy.mount(
+      mount(
         <ToolkitProvider density="high">
           <TestComponent />
         </ToolkitProvider>
@@ -92,27 +84,27 @@ describe("Given a ToolkitProvider", () => {
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "high")
-        .and("have.attr", "data-theme", "uitk-light")
+        .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true");
     });
 
     it("should apply values specified in props", () => {
-      cy.mount(
-        <ToolkitProvider density="high" theme="dark">
+      mount(
+        <ToolkitProvider density="high" mode="dark">
           <TestComponent />
         </ToolkitProvider>
       );
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "high")
-        .and("have.attr", "data-theme", "uitk-dark")
+        .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
     });
   });
 
   describe("when nested", () => {
     it("should only create a single AriaAnnouncer", () => {
-      cy.mount(
+      mount(
         <ToolkitProvider>
           <ToolkitProvider>
             <TestComponent />
@@ -124,8 +116,8 @@ describe("Given a ToolkitProvider", () => {
     });
 
     it("should inherit values not passed as props", () => {
-      cy.mount(
-        <ToolkitProvider density="high" theme="dark">
+      mount(
+        <ToolkitProvider density="high" mode="dark">
           <TestComponent />
           <ToolkitProvider density="medium">
             <TestComponent id="test-2" />
@@ -136,55 +128,64 @@ describe("Given a ToolkitProvider", () => {
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "high")
-        .and("have.attr", "data-theme", "uitk-dark")
+        .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
         .should("exist")
         .and("have.attr", "data-density", "medium")
-        .and("have.attr", "data-theme", "uitk-dark")
+        .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
     });
   });
 
-  describe("when applyClassesToChild is true", () => {
-    it("should not create a uitk-theme element", () => {
-      cy.mount(
-        <ToolkitProvider density="high" theme="dark" applyClassesToChild>
+  describe("when child is passed to applyClassesTo", () => {
+    it("should not create a div element", () => {
+      mount(
+        <ToolkitProvider density="high" mode="dark" applyClassesTo={"child"}>
           <TestComponent />
         </ToolkitProvider>
       );
 
-      // cy.mount adds a ToolkitProvider
-      cy.get("uitk-theme").should("have.length", 1);
+      cy.get("div.uitk-provider").should("have.length", 0);
 
       cy.get("#test-1")
         .should("exist")
-        .and("have.attr", "class", "uitk-dark uitk-density-high");
+        .and("have.attr", "data-mode", "dark")
+        .and("have.class", "uitk-theme")
+        .and("have.class", "uitk-density-high");
     });
   });
 
-  // describe("when a theme is available", () => {
-  //   it("provides programatic access to CSS variables", () => {
-  //     cy.mount(
-  //       <ToolkitProvider density="high" theme="dark">
-  //         <TestComponent displayVariableValue={["spacing", "unit"]} />
-  //         <ToolkitProvider density="medium">
-  //           <TestComponent
-  //             displayVariableValue={["spacing", "unit"]}
-  //             id="test-2"
-  //           />
-  //         </ToolkitProvider>
-  //       </ToolkitProvider>
-  //     );
+  describe("when root is passed to applyClassesTo", () => {
+    it("should apply the given theme and density class names to the html element", () => {
+      mount(
+        <ToolkitProvider density="high" mode="dark" applyClassesTo={"root"}>
+          <TestComponent />
+        </ToolkitProvider>
+      );
 
-  //     cy.get("#test-1")
-  //       .should("exist")
-  //       .and("have.attr", "data-variable-value", "4px");
+      cy.get("div.uitk-provider").should("have.length", 0);
 
-  //     cy.get("#test-2")
-  //       .should("exist")
-  //       .and("have.attr", "data-variable-value", "8px");
-  //   });
-  // });
+      cy.get("html")
+        .should("exist")
+        .and("have.attr", "data-mode", "dark")
+        .and("have.class", "uitk-density-high");
+    });
+  });
+
+  describe("when scope is passed to applyClassesTo", () => {
+    it("should create div element with correct classes applied even if it is the root level provider", () => {
+      mount(
+        <ToolkitProvider density="high" mode="dark" applyClassesTo={"scope"}>
+          <TestComponent />
+        </ToolkitProvider>
+      );
+
+      cy.get("div.uitk-provider")
+        .should("have.length", 1)
+        .and("have.attr", "data-mode", "dark")
+        .and("have.class", "uitk-density-high");
+    });
+  });
 });

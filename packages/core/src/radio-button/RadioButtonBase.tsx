@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {
   ChangeEventHandler,
-  FC,
+  ComponentType,
   FocusEventHandler,
   forwardRef,
   Ref,
@@ -28,11 +28,10 @@ export interface RadioButtonBaseProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  emphasis?: "low" | "medium" | "high";
   /**
    * custom icon component
    */
-  icon?: FC<RadioButtonIconProps>;
+  icon?: ComponentType<RadioButtonIconProps>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   name?: string;
   defaultChecked?: boolean;
@@ -40,8 +39,8 @@ export interface RadioButtonBaseProps {
   onBlur?: FocusEventHandler<HTMLSpanElement>;
   required?: boolean;
   id?: string;
-  value?: string;
   tabIndex?: number;
+  value?: string;
 }
 
 export const RadioButtonBase = forwardRef<

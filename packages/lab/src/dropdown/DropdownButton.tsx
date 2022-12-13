@@ -1,16 +1,20 @@
 import {
-  DivButton,
-  DivButtonProps,
+  Button,
+  ButtonProps,
   makePrefixer,
   useFormFieldProps,
 } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import {
+  ChevronDownIcon,
+  IconProps,
+  DEFAULT_ICON_SIZE,
+} from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
 import "./DropdownButton.css";
 
-export interface DropdownButtonProps extends DivButtonProps {
+export interface DropdownButtonProps extends ButtonProps {
   /**
    * Replace the default Icon component
    */
@@ -64,7 +68,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
     ariaHideOptionRole,
     className,
     disabled,
-    iconSize = "small",
+    iconSize = DEFAULT_ICON_SIZE,
     isOpen,
     label,
     labelId,
@@ -74,13 +78,14 @@ export const DropdownButton = forwardRef(function DropdownButton(
     labelAriaAttributes,
     ...rest
   }: DropdownButtonProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   const { inFormField } = useFormFieldProps();
+  // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
   // tool's false alarm on role of 'listbox'
   return (
-    <DivButton
+    <Button
       className={classnames(
         withBaseName(),
         {
@@ -114,6 +119,6 @@ export const DropdownButton = forwardRef(function DropdownButton(
           aria-hidden="true"
         />
       </div>
-    </DivButton>
+    </Button>
   );
 });

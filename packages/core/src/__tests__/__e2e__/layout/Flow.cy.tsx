@@ -14,7 +14,6 @@ describe("GIVEN a Flow", () => {
 
       cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
-    ``;
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultFlowLayout />);
@@ -22,17 +21,6 @@ describe("GIVEN a Flow", () => {
       cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
 
       cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
-    });
-  });
-
-  describe("WHEN a separator value is provided", () => {
-    it("THEN it should render a separator", () => {
-      cy.mount(<DefaultFlowLayout separators />);
-
-      cy.get(".uitkFlexLayout").should(
-        "have.class",
-        "uitkFlexLayout-separator"
-      );
     });
   });
 });

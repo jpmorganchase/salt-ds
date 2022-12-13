@@ -9,7 +9,7 @@ import { BackgroundBlock } from "./BackgroundBlock";
  * Sample usage:
  * ```
  * <AllRenderer Component={Panel} props={{ ...props }} >
- *    <Panel className="uitkEmphasisLow" {...props}>
+ *    <Panel {...props}>
  *       Lorem Ipsum
  *    </Panel>
  * </AllRenderer>
@@ -30,16 +30,16 @@ export const AllRenderer = ({
           <Fragment key={i}>
             <ToolkitProvider
               density={d}
-              theme="light"
+              mode="light"
               key={"theme-light-" + d}
-              applyClassesToChild
+              applyClassesTo={"child"}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
             </ToolkitProvider>
             <ToolkitProvider
-              applyClassesToChild
+              applyClassesTo={"child"}
               density={d}
-              theme="dark"
+              mode="dark"
               key={"theme-dark-" + d}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>

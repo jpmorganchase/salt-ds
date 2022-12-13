@@ -1,12 +1,7 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { FlexLayout, FlexItem } from "@jpmorganchase/uitk-core";
-import {
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components";
-import { DefaultFlexLayout } from "./flex-layout.stories";
-import HelpAndSupport from "../help-and-support.doc.mdx";
+import { CSSClassTable } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/FlexLayout"
@@ -61,27 +56,11 @@ The Flex layout gap will apply to both sides of the separator line.
 
 #### Responsive
 
-The flex layout supports the use of responsive props, so you can define different behaviors based on viewport size.
-You can use the default breakpoints or pass in your own.
+Flex layout supports the use of responsive props, so you can define different behaviors based on viewport size.
+You can use the default breakpoints or pass in your own to the `ToolkitProvider`.
 
 <Canvas>
   <Story id="core-layout-flexlayout--flex-layout-using-responsive-props" />
-</Canvas>
-
-#### Simple usage
-
-The simple usage example shows a group of elements inside a flex container with `wrap`.
-
-<Canvas>
-  <Story id="core-layout-flexlayout--flex-layout-simple-usage" />
-</Canvas>
-
-#### Composite usage
-
-The composite usage example shows a collection of contact details cards using `FlexLayout`.
-
-<Canvas>
-  <Story id="core-layout-flexlayout--flex-layout-composite" />
 </Canvas>
 
 ## Configuring Flex layout
@@ -111,16 +90,6 @@ The flex layout is used in the following components:
 - [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page)
 - [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page)
 - [Parent Child layout](?path=/docs/documentation-core-layout-parentchildlayout--page)
-
-## Anatomy
-
-<Canvas>
-  <ComponentAnatomy showControls={false}>
-    <FlexLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
-    </FlexLayout>
-  </ComponentAnatomy>
-</Canvas>
 
 ### Classes
 

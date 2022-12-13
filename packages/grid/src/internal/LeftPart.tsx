@@ -1,17 +1,18 @@
 import cn from "classnames";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
-import { RefObject, WheelEventHandler } from "react";
+import { RefObject } from "react";
 import "./LeftPart.css";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { GridColumnModel, GridRowModel } from "../Grid";
+import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("uitkGridLeftPart");
 
 export interface LeftPartProps<T> {
   leftRef: RefObject<HTMLDivElement>;
-  onWheel: WheelEventHandler<HTMLTableElement>;
-  isRaised?: boolean;
+  onWheel: EventListener;
+  rightShadow?: boolean;
   columns: GridColumnModel<T>[];
   rows: GridRowModel<T>[];
   hoverOverRowKey?: string;
@@ -23,7 +24,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
   const {
     leftRef,
     onWheel,
-    isRaised,
+    rightShadow,
     columns,
     rows,
     hoverOverRowKey,
@@ -31,15 +32,21 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
     zebra,
   } = props;
 
+  const tableRef = useActiveOnWheel(onWheel);
+
+  if (columns.length === 0) {
+    return null;
+  }
+
   return (
     <div
       ref={leftRef}
       className={cn(withBaseName(), {
-        [withBaseName("raised")]: isRaised,
+        [withBaseName("rightShadow")]: rightShadow,
       })}
     >
       <div className={withBaseName("space")} data-testid="grid-left-part">
-        <table onWheel={onWheel}>
+        <table ref={tableRef} role="presentation">
           <TableColGroup columns={columns} />
           <TableBody
             columns={columns}

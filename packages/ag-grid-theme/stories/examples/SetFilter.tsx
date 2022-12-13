@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
 
 /**
@@ -15,6 +15,7 @@ import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -35,8 +36,17 @@ const applyExampleConfig = (columnDefs: ColDef[]) => {
   return [nameColumnDef, codeColumnDef, capitalColumnDef, populationColumnDef];
 };
 
-const SetFilterExample = function SetFilterExample(props: AgGridReactProps) {
-  const { containerProps, agGridProps, isGridReady, api } = useAgGridHelpers();
+const SetFilter = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { containerProps, agGridProps, isGridReady, api } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
+
   useEffect(() => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
@@ -46,17 +56,24 @@ const SetFilterExample = function SetFilterExample(props: AgGridReactProps) {
   const columnDefs = applyExampleConfig(dataGridExampleColumns);
 
   return (
-    <div style={{ height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact
-        columnDefs={columnDefs}
-        rowData={dataGridExampleData}
-        {...agGridProps}
-        {...props}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div style={{ height: 800, width: 800 }} {...containerProps}>
+        <AgGridReact
+          columnDefs={columnDefs}
+          rowData={dataGridExampleData}
+          {...agGridProps}
+          {...props}
+        />
+      </div>
     </div>
   );
 };
 
-export default function SetFilter(props: AgGridReactProps) {
-  return <SetFilterExample {...props} />;
-}
+export default SetFilter;

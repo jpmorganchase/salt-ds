@@ -13,17 +13,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { DivButton } from "../button";
-import {
-  TooltipProps,
-  // useTooltip
-  useTooltipContext,
-} from "../tooltip";
-import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import { TooltipProps, useTooltipContext } from "../tooltip";
+import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 
 import "./Pill.css";
+import { DivButton } from "./internal/DivButton";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -156,6 +152,7 @@ export const PillBase = forwardRef(function PillBase(
     onClick(event);
   };
 
+  // FIXME: use polymorphic button as div for deletable and clickable cases.
   const Component = deletable || clickable ? DivButton : "div";
 
   const renderDeleteIcon = () => {

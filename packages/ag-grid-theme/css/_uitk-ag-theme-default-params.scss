@@ -54,7 +54,7 @@ $uitk-ag-theme-default-params: (
   header-column-resize-handle: false,
   header-column-resize-handle-height: 100%,
   header-column-resize-handle-width: 1px,
-  header-column-resize-handle-color: var(--uitk-color-grey-90),
+  header-column-resize-handle-color: var(--uitk-color-gray-90),
   // INPUTS
   suppress-native-widget-styling: false,
   input-border-color: null,
@@ -80,7 +80,7 @@ $uitk-ag-theme-default-params: (
   // Fonts
   font-family:
     (
-      "uitk-sans",
+      "Open Sans",
       sans-serif,
     ),
   icon-font-family: $uitk-ag-theme-icon-font-family,

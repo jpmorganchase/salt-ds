@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
-import { Tabstrip, Tab } from "@jpmorganchase/uitk-lab";
+import { ChevronLeftIcon, ThumbsUpIcon } from "@jpmorganchase/uitk-icons";
+import { Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
 import {
   Button,
+  FlexItem,
+  FlexLayout,
+  FlowLayout,
   ParentChildLayout,
   StackedViewElement,
+  StackLayout,
   useIsViewportLargerThanBreakpoint,
-  FlowLayout,
 } from "@jpmorganchase/uitk-core";
-import { DashboardExample } from "./flow-layout.stories";
-import { SectionForm, Blog } from "./flex-layout.stories";
 
 import "./styles.css";
 
@@ -187,10 +188,10 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
       className="parent-child-composite-title"
     >
       <Button onClick={handleParent} variant="secondary" aria-label="Back">
-        <ChevronLeftIcon size={12} />
+        <ChevronLeftIcon />
       </Button>
       <h2>{text}</h2>
-      <div className="parent-child-composite-empty-container"></div>
+      <div className="parent-child-composite-empty-container" />
     </FlowLayout>
   );
 
@@ -207,26 +208,76 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
       <Title text={tabs[selectedTab]} />
     );
 
+  const renderArticleButtons = (
+    <FlowLayout gap={1}>
+      <Button>Save to reading list</Button>
+      <Button>Share</Button>
+      <Button aria-label="like">
+        <ThumbsUpIcon />
+      </Button>
+    </FlowLayout>
+  );
+
   const child = (
     <>
-      {selectedTab === 0 && (
-        <>
-          <ChildTitle />
-          <DashboardExample />
-        </>
-      )}
-      {selectedTab === 1 && (
-        <>
-          <ChildTitle />
-          <SectionForm />
-        </>
-      )}
-      {selectedTab === 2 && (
-        <>
-          <ChildTitle />
-          <Blog />
-        </>
-      )}
+      <ChildTitle />
+      <StackLayout>
+        <FlexLayout wrap={{ xs: true, lg: false }}>
+          <FlexItem grow={1} className="flex-blog-image flex-blog-image-one" />
+          <StackLayout>
+            <h3>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            </h3>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+              quae ab illo inventore veritatis et quasi architecto beatae vitae
+              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
+              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+              velit, sed quia non numquam eius modi tempora incidunt ut labore
+              et dolore magnam aliquam quaerat voluptatem.
+            </p>
+            {renderArticleButtons}
+          </StackLayout>
+        </FlexLayout>
+
+        <FlexLayout wrap={{ xs: true, lg: false }}>
+          <FlexItem grow={1} className="flex-blog-image flex-blog-image-two" />
+          <StackLayout>
+            <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
+            <p>
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti atque corrupti quos
+              dolores et quas molestias excepturi sint occaecati cupiditate non
+              provident, similique sunt in culpa qui officia deserunt mollitia
+              animi.
+            </p>
+            {renderArticleButtons}
+          </StackLayout>
+        </FlexLayout>
+
+        <FlexLayout wrap={{ xs: true, lg: false }}>
+          <FlexItem
+            grow={1}
+            className="flex-blog-image flex-blog-image-three"
+          />
+          <StackLayout>
+            <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+              cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum. Duis aute irure dolor in reprehenderit in
+              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum.
+            </p>
+            {renderArticleButtons}
+          </StackLayout>
+        </FlexLayout>
+      </StackLayout>
     </>
   );
 

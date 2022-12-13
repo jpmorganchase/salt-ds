@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
 
 /**
@@ -14,13 +14,20 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 LicenseManager.setLicenseKey("your license key");
 
-const RowGroupPanelExample = function RowGroupPanelExample(
-  props: AgGridReactProps
-) {
-  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers();
+const RowGroupPanel = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -29,21 +36,28 @@ const RowGroupPanelExample = function RowGroupPanelExample(
   }, [isGridReady]);
 
   return (
-    <div style={{ height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact
-        columnDefs={dataGridExampleRowGroupPanel}
-        defaultColDef={{
-          enableRowGroup: true,
-        }}
-        rowData={dataGridExampleData}
-        rowGroupPanelShow="always"
-        {...agGridProps}
-        {...props}
-      />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div style={{ height: 800, width: 800 }} {...containerProps}>
+        <AgGridReact
+          columnDefs={dataGridExampleRowGroupPanel}
+          defaultColDef={{
+            enableRowGroup: true,
+          }}
+          rowData={dataGridExampleData}
+          rowGroupPanelShow="always"
+          {...agGridProps}
+          {...props}
+        />
+      </div>
     </div>
   );
 };
 
-export default function RowGroupPanel(props: AgGridReactProps) {
-  return <RowGroupPanelExample {...props} />;
-}
+export default RowGroupPanel;

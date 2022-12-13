@@ -1,27 +1,20 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import {
-  Button,
-  Card,
-  ToolkitProvider,
-  Portal,
-} from "@jpmorganchase/uitk-core";
-
-import { NestedProviders } from "./toolkit-provider.stories";
+import { Meta } from "@storybook/addon-docs";
+import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 
 <Meta title="Documentation/Core/Aria Announcer" />
 
-# Aria Announcer
+# AriaAnnouncer
 
-The Aria Announcer reliably generates speech, via a screen reader, that
+The `AriaAnnouncer` reliably generates speech, via a screen reader, that
 describes the current interaction or experience to assistive technology users.
 It provides accessibility support for Toolkit components, as well as your own
 application.
 
 ## Get Started
 
-AriaAnnouncer usually requires no configuration as it is included in your app when you use a ToolkitProvider. Because only one instance of
-AriaAnnouncer is ever required, only the outermost instance of ToolkitProvider will instantiate the AriaAnnouncer. If you use
-nested ToolkitProviders, these will not inject further instances of AriaAnnouncer.
+`AriaAnnouncer` usually requires no configuration as it is included in your app when you use a `ToolkitProvider`. Because only one instance of
+`AriaAnnouncer` is ever required, only the outermost instance of `ToolkitProvider` will instantiate the `AriaAnnouncer`. If you use
+nested ToolkitProviders, these will not inject further instances of `AriaAnnouncer`.
 
 ```jsx
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
@@ -34,7 +27,6 @@ import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 Note that some component examples have the provider in their code, but this is
 only for demonstration purposes.
 
-You’ll only need one `ToolkitProvider` throughout your entire application.
 Even if you don't use any of the functionality below directly, it's likely that
 you may still require it as some components have built-in functionality which
 relies on it. Otherwise, a console warning will be triggered each time an event
@@ -51,9 +43,7 @@ Use this component to trigger the announcement of significant, relevant events
 that screen readers might not ordinarily detect—and to customize specific
 announcements to their context on a per component basis.
 
-For more guidance, please refer to <Link url="https://confluence.uk.jpmorgan.com/confluence/x/pV7IWw">the Announcer Confluence Page</Link>.
-
-## Aria Announcer hook
+## useAriaAnnouncer
 
 You can use the `useAriaAnnouncer` hook to provide announcement message for
 screen readers. Destructure `announce` from the hook and call it with a string

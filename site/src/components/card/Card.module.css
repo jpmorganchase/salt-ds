@@ -1,0 +1,121 @@
+.card {
+  --ifm-link-hover-color: none;
+  --ifm-link-decoration: none;
+  --ifm-link-hover-decoration: none;
+  --card-color: var(--uitk-color-white);
+  --card-icon-background: #0e1b23;
+  --uitkIcon-color: var(--uitk-color-gray-900);
+}
+
+.card.lightTheme {
+  --card-background: var(--uitk-color-white);
+  --card-color: var(--uitk-color-gray-900);
+  --card-icon-background: var(--uitk-color-gray-10);
+}
+
+.cardTitle h2 {
+  margin-top: var(--uitk-size-unit);
+  margin-bottom: var(--uitk-size-unit);
+}
+
+.card {
+  background-color: var(--card-background);
+  color: var(--card-color);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--uitk-size-unit) * 3);
+  flex: 1;
+}
+
+.card:hover {
+  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+}
+
+.card:hover .icon {
+  transform: scale(1.1);
+}
+
+.cardTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inlineIcon {
+  display: flex;
+}
+
+.iconContainer {
+  width: 100%;
+  text-align: center;
+  padding: calc(var(--uitk-size-unit) * 5) 0;
+  background-color: var(--card-icon-background);
+}
+
+.icon {
+  transition: 0.5s all ease-in-out;
+  max-width: 160px;
+  max-height: 160px;
+}
+
+.cardContent {
+  padding: 0 calc(var(--uitk-size-unit) * 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.cardDescription {
+  color: var(--uitk-text-secondary-foreground);
+  margin-bottom: calc(var(--uitk-size-unit) * 2);
+}
+
+.cardFooter {
+  display: flex;
+}
+
+.cardFooter > p {
+  margin-bottom: 0;
+  text-decoration: underline;
+  padding-right: calc(var(--uitk-size-unit) / 3);
+}
+
+.cardFooter > svg {
+  margin-top: calc(var(--uitk-size-unit) / 4);
+}
+
+.cardFooter:hover {
+  color: var(--uitk-text-link-foreground-hover);
+}
+
+.keyline {
+  height: 3px;
+}
+
+.animate {
+  animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes swing-in-left-bck {
+  0% {
+    transform: rotateY(-70deg);
+    transform-origin: left;
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0);
+    transform-origin: left;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .iconContainer {
+    padding: calc(var(--uitk-size-unit) * 2) 0;
+  }
+
+  .card {
+    gap: calc(var(--uitk-size-unit) * 2);
+  }
+}

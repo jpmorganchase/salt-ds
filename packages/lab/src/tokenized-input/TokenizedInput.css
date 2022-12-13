@@ -34,9 +34,14 @@
   width: 100%;
 }
 
-/* Styles applied to root component on hover state when `disabled={false}` */
-.uitkTokenizedInput:hover:not(.uitkTokenizedInput-disabled) {
-  cursor: pointer;
+/* Styles applied to root component on hover state  */
+.uitkTokenizedInput:hover {
+  cursor: var(--uitk-selectable-cursor-hover);
+}
+
+/* Styles applied to root component on hover state if `disabled={true}` */
+.uitkTokenizedInput.uitkTokenizedInput-disabled:hover {
+  cursor: var(--uitk-selectable-cursor-disabled);
 }
 
 /* Styles applied to container of pills */

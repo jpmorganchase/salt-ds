@@ -7,112 +7,91 @@ import { OpacityBlock } from "docs/components/OpacityBlock";
 
 # Palette
 
-There is a special layer which sits in between the foundations and characteristics: the palette. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
+The palette sits in between the foundations and characteristics. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
 
-| Semantic | Appropriate usage                                               | Example token                                            | UITK Theme value<br /> (light mode) |
-| -------- | --------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------- |
-| Accent   | characteristics which use the main brand color                  | `--uitk-palette-accent-background`                       | `--uitk-color-blue-500`             |
-| Interact | characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`                         | `--uitk-color-grey-90`              |
-| Error    | characteristics symbolising an error state                      | `--uitk-palette-error-border`                            | `--uitk-color-red-500`              |
-| Info     | characteristics symbolising an info state                       | `--uitk-palette-info-icon`                               | `--uitk-color-blue-500`             |
-| Success  | characteristics symbolising a success state                     | `--uitk-palette-success-border`                          | `--uitk-color-green-500`            |
-| Warning  | characteristics symbolising a warning state                     | `--uitk-palette-warning-icon`                            | `--uitk-color-orange-500`           |
-| Measure  | characteristics showing some form of progress                   | `--uitk-palette-measure-background-gradient-start-color` | `--uitk-color-teal-500`             |
-| Navigate | characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`                     | `--uitk-color-grey-400`             |
-| Negative | characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`                     | `--uitk-color-red-700`              |
-| Neutral  | characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground`              | `--uitk-color-grey-900`             |
-| Positive | characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`                     | `--uitk-color-green-700`            |
-| Rate     | characteristics allowing for something to be rated              | `--uitk-palette-rate-border-undo`                        | `--uitk-color-orange-600`           |
+| Semantic | Appropriate usage                                               | Example token                               | UITK Theme value<br /> (light mode) |
+| -------- | --------------------------------------------------------------- | ------------------------------------------- | ----------------------------------- |
+| Accent   | Characteristics which use the main brand color                  | `--uitk-palette-accent-background`          | `--uitk-color-blue-500`             |
+| Interact | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`            | `--uitk-color-gray-90`              |
+| Error    | Characteristics symbolising an error state                      | `--uitk-palette-error-border`               | `--uitk-color-red-500`              |
+| Info     | Characteristics symbolising an info state                       | `--uitk-palette-info-foreground`            | `--uitk-color-blue-500`             |
+| Success  | Characteristics symbolising a success state                     | `--uitk-palette-success-border`             | `--uitk-color-green-500`            |
+| Warning  | Characteristics symbolising a warning state                     | `--uitk-palette-warning-foreground`         | `--uitk-color-orange-500`           |
+| Measure  | Characteristics showing some form of progress                   | `--uitk-palette-measured-fill`              | `--uitk-color-blue-500`             |
+| Navigate | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground-active` | `--uitk-color-blue-600`             |
+| Negative | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`        | `--uitk-color-red-700`              |
+| Neutral  | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground` | `--uitk-color-gray-900`             |
+| Positive | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`        | `--uitk-color-green-700`            |
+| Rate     | Characteristics allowing for something to be rated              | `--uitk-palette-rate-border-undo`           | `--uitk-color-orange-600`           |
 
 # Usage
 
-The palette is intended to provide meaning to the colors used throughout the characteristics. Whilst a component only has to care that their background color is `--uitk-actionable-cta-background`, rather than this token directly pointing to the foundation token `--uitk-color-blue-500`, this value instead resolves to the palette token `--uitk-interact-cta-background`. Similarly, selectable backgrounds result to the same palette token. This ensures anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
+The palette provides meaning to the colors used throughout the characteristics. For a component with a background color set to `--uitk-actionable-cta-background`, rather than this token directly pointing to the foundation token `--uitk-color-blue-500`, this value instead resolves to the palette token `--uitk-interact-cta-background`. Similarly, selectable backgrounds resolve to the same palette token. This ensures that anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
 
 Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_** &#8594; Foundation token &#8594; Raw RGBA Value
 
 # Token structure
 
-Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>-<emphasis>`
+Palette tokens are structured as follows: `--uitk-palette-<sentiment>-<variant>-<usage>-<interaction>`
 
-1. Always begin with `--uitk-palette-`
-2. Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
-3. Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
-4. Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
-5. Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
-6. Finally, add **_emphasis_** if applicable, e.g.: `--uitk-palette-neutral-border-medium`
-
-# Emphasis
-
-Some tokens below have `-low`, `-medium`, or `-high` suffixes. This means that they are values which should change with emphasis. For example,
-
-The characteristic `--uitk-overlayable-background-medium` resolves to `--uitk-palette-neutral-scrim-medium` whilst the characteristic `--uitk-overlayable-background-low` resolves to `--uitk-palette-neutral-scrim-low`.
-
-The characteristic with the respective emphasis should be used within a `uitkEmphasisLow`, `uitkEmphasisMedium`, or `uitkEmphasisHigh` class. For example, if the default input in your app should have a medium emphasis background, but can be styled with low emphasis, your CSS will probably look something like this:
-
-```css
-.MyInputComponent {
-  background: var(--uitk-editable-background-medium);
-}
-
-.MyInputComponent:hover {
-  background: var(--uitk-editable-background-hover-medium);
-}
-
-.uitkEmphasisLow.MyInputComponent {
-  background: var(--uitk-editable-background-low);
-}
-
-.uitkEmphasisLow.MyInputComponent:hover {
-  background: var(--uitk-editable-background-hover-medium);
-}
-```
+- Always begin with `--uitk-palette-`
+- Follow this by the **_semantic meaning_**, e.g. `---uitk-palette-accent-`, `---uitk-palette-interact-`, `--uitk-palette-success-`, `--uitk-palette-neutral-`
+- Append the **_variant_**, if applicable: e.g. `--uitk-palette-interact-cta-`
+- Follow this by **_usage_** : e.g. `--uitk-palette-accent-background`, `--uitk-palette-interact-cta-background-`, `--uitk-palette-success-foreground`, `--uitk-palette-neutral-border-`
+- Next add the **_interaction_**, if applicable : e.g. `--uitk-palette-interact-cta-background-hover`
 
 ## Opacities
 
 Opacity values to adjust different attributes.
 
-### Opacitiy
+### Opacities
 
 <Canvas>
   <Story name="Opacities">
     <DocGrid>
       <OpacityBlock
-        opacity="--uitk-opacity-3"
+        opacity="--uitk-opacity-4"
         cssVariable="--uitk-palette-opacity-background"
       />
       <OpacityBlock
-        opacity="--uitk-opacity-2"
+        opacity="--uitk-opacity-3"
         cssVariable="--uitk-palette-opacity-border"
       />
       <OpacityBlock
+        opacity="--uitk-opacity-3"
+        cssVariable="--uitk-palette-opacity-primary-border"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-2"
+        cssVariable="--uitk-palette-opacity-secondary-border"
+      />
+      <OpacityBlock
         opacity="--uitk-opacity-1"
+        cssVariable="--uitk-palette-opacity-tertiary-border"
+      />
+      <OpacityBlock
+        opacity="--uitk-opacity-2"
         cssVariable="--uitk-palette-opacity-border-readonly"
       />
       <OpacityBlock
-        opacity="--uitk-opacity-3"
+        opacity="--uitk-opacity-4"
         cssVariable="--uitk-palette-opacity-foreground"
       />
       <OpacityBlock
         opacity="--uitk-opacity-4"
-        cssVariable="--uitk-palette-opacity-scrim-medium"
+        cssVariable="--uitk-palette-opacity-backdrop"
       />
       <OpacityBlock
-        opacity="--uitk-opacity-4"
-        cssVariable="--uitk-palette-opacity-scrim-low"
-      />
-      <OpacityBlock
-        opacity="--uitk-opacity-2"
+        opacity="--uitk-opacity-3"
         cssVariable="--uitk-palette-opacity-fill"
       />
       <OpacityBlock
-        opacity="--uitk-opacity-2"
+        opacity="--uitk-opacity-3"
         cssVariable="--uitk-palette-opacity-stroke"
       />
     </DocGrid>
   </Story>
 </Canvas>
-
-- Note: `--uitk-palette-opacity-scrim-medium` is `--uitk-opacity-3` in dark mode
 
 ## Accent
 
@@ -131,11 +110,8 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Interact">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-interact-background-low" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-medium" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-high" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-disabled-medium" />
-      <ColorBlock colorVar="--uitk-palette-interact-background-disabled-high" />
+      <ColorBlock colorVar="--uitk-palette-interact-background" />
+      <ColorBlock colorVar="--uitk-palette-interact-background-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-background-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-background-active" />
       <ColorBlock colorVar="--uitk-palette-interact-background-blurSelected" />
@@ -146,13 +122,10 @@ Opacity values to adjust different attributes.
       <ColorBlock colorVar="--uitk-palette-interact-border-disabled" />
       <ColorBlock colorVar="--uitk-palette-interact-border-readonly" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-active" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-blurSelected" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-disabled" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-partial" />
       <ColorBlock colorVar="--uitk-palette-interact-foreground-partialDisabled" />
-      <ColorBlock colorVar="--uitk-palette-interact-foreground-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-interact-outline" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background-hover" />
       <ColorBlock colorVar="--uitk-palette-interact-cta-background-active" />
@@ -192,9 +165,9 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Error">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-error-background-high" />
+      <ColorBlock colorVar="--uitk-palette-error-background-emphasize" />
       <ColorBlock colorVar="--uitk-palette-error-border" />
-      <ColorBlock colorVar="--uitk-palette-error-icon" />
+      <ColorBlock colorVar="--uitk-palette-error-foreground" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -204,9 +177,9 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Info">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-info-background-high" />
+      <ColorBlock colorVar="--uitk-palette-info-background-emphasize" />
       <ColorBlock colorVar="--uitk-palette-info-border" />
-      <ColorBlock colorVar="--uitk-palette-info-icon" />
+      <ColorBlock colorVar="--uitk-palette-info-foreground" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -216,9 +189,9 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Success">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-success-background-high" />
+      <ColorBlock colorVar="--uitk-palette-success-background-emphasize" />
       <ColorBlock colorVar="--uitk-palette-success-border" />
-      <ColorBlock colorVar="--uitk-palette-success-icon" />
+      <ColorBlock colorVar="--uitk-palette-success-foreground" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -228,9 +201,9 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Warning">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-warning-background-high" />
+      <ColorBlock colorVar="--uitk-palette-warning-background-emphasize" />
       <ColorBlock colorVar="--uitk-palette-warning-border" />
-      <ColorBlock colorVar="--uitk-palette-warning-icon" />
+      <ColorBlock colorVar="--uitk-palette-warning-foreground" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -240,9 +213,16 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Measure">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-measure-background" />
-      <ColorBlock colorVar="--uitk-palette-measure-border" />
-      <ColorBlock colorVar="--uitk-palette-measure-fill" />
+      <ColorBlock colorVar="--uitk-palette-measured-background" />
+      <ColorBlock colorVar="--uitk-palette-measured-background-disabled" />
+      <ColorBlock colorVar="--uitk-palette-measured-foreground" />
+      <ColorBlock colorVar="--uitk-palette-measured-foreground-active" />
+      <ColorBlock colorVar="--uitk-palette-measured-foreground-activeDisabled" />
+      <ColorBlock colorVar="--uitk-palette-measured-foreground-disabled" />
+      <ColorBlock colorVar="--uitk-palette-measured-border" />
+      <ColorBlock colorVar="--uitk-palette-measured-border-disabled" />
+      <ColorBlock colorVar="--uitk-palette-measured-fill" />
+      <ColorBlock colorVar="--uitk-palette-measured-fill-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -252,19 +232,21 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Navigate">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-navigate-background-low" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-medium" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-high" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-hover-low" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-hover-medium" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-hover-high" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-low" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-medium" />
-      <ColorBlock colorVar="--uitk-palette-navigate-background-active-high" />
-      <ColorBlock colorVar="--uitk-palette-navigate-foreground" />
+      <ColorBlock colorVar="--uitk-palette-navigate-primary-background" />
+      <ColorBlock colorVar="--uitk-palette-navigate-primary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-navigate-primary-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-navigate-secondary-background" />
+      <ColorBlock colorVar="--uitk-palette-navigate-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-navigate-secondary-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-navigate-tertiary-background-hover" />
+      <ColorBlock colorVar="--uitk-palette-navigate-tertiary-background-active" />
+      <ColorBlock colorVar="--uitk-palette-navigate-tertiary-background" />
       <ColorBlock colorVar="--uitk-palette-navigate-foreground-hover" />
+      <ColorBlock colorVar="--uitk-palette-navigate-foreground-active" />
+      <ColorBlock colorVar="--uitk-palette-navigate-foreground-visited" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-active" />
       <ColorBlock colorVar="--uitk-palette-navigate-indicator-hover" />
+      <ColorBlock colorVar="--uitk-palette-navigate-indicator-activeDisabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -284,24 +266,29 @@ Opacity values to adjust different attributes.
 <Canvas>
   <Story name="Neutral">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-neutral-background-high" />
-      <ColorBlock colorVar="--uitk-palette-neutral-background-low" />
-      <ColorBlock colorVar="--uitk-palette-neutral-background-medium" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-low" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-medium" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-high" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-low" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-medium" />
-      <ColorBlock colorVar="--uitk-palette-neutral-border-disabled-high" />
-      <ColorBlock colorVar="--uitk-palette-neutral-highlight" />
-      <ColorBlock colorVar="--uitk-palette-neutral-scrim-low" />
-      <ColorBlock colorVar="--uitk-palette-neutral-scrim-medium" />
-      <ColorBlock colorVar="--uitk-palette-neutral-cta-border" />
+      <ColorBlock colorVar="--uitk-palette-neutral-primary-background" />
+      <ColorBlock colorVar="--uitk-palette-neutral-primary-background-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-primary-background-readonly" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-border" />
+      <ColorBlock colorVar="--uitk-palette-neutral-primary-border-disabled" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-foreground" />
       <ColorBlock colorVar="--uitk-palette-neutral-primary-foreground-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-primary-separator" />
+      <ColorBlock colorVar="--uitk-palette-neutral-secondary-background" />
+      <ColorBlock colorVar="--uitk-palette-neutral-secondary-background-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-secondary-background-readonly" />
+      <ColorBlock colorVar="--uitk-palette-neutral-secondary-border-disabled" />
       <ColorBlock colorVar="--uitk-palette-neutral-secondary-foreground" />
       <ColorBlock colorVar="--uitk-palette-neutral-secondary-foreground-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-backdrop" />
+      <ColorBlock colorVar="--uitk-palette-neutral-secondary-separator" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-background" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-background-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-background-readonly" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-border" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-border-disabled" />
+      <ColorBlock colorVar="--uitk-palette-neutral-tertiary-separator" />
+      <ColorBlock colorVar="--uitk-palette-neutral-highlight" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -312,25 +299,6 @@ Opacity values to adjust different attributes.
   <Story name="Positive">
     <DocGrid>
       <ColorBlock colorVar="--uitk-palette-positive-foreground" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Rate
-
-<Canvas>
-  <Story name="Rate">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-palette-rate-background" />
-      <ColorBlock colorVar="--uitk-palette-rate-background-hover" />
-      <ColorBlock colorVar="--uitk-palette-rate-background-active" />
-      <ColorBlock colorVar="--uitk-palette-rate-background-activeDisabled" />
-      <ColorBlock colorVar="--uitk-palette-rate-background-undo" />
-      <ColorBlock colorVar="--uitk-palette-rate-border" />
-      <ColorBlock colorVar="--uitk-palette-rate-border-disabled" />
-      <ColorBlock colorVar="--uitk-palette-rate-border-hover" />
-      <ColorBlock colorVar="--uitk-palette-rate-border-active" />
-      <ColorBlock colorVar="--uitk-palette-rate-border-undo" />
     </DocGrid>
   </Story>
 </Canvas>

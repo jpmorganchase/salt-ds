@@ -1,10 +1,10 @@
 /* Styles applied to the root element */
 .uitkCard {
-  background: var(--uitkCard-background, var(--uitk-container-background-medium));
-  border-width: var(--uitkCard-borderWidth, var(--uitk-container-borderWidth));
+  background: var(--uitkCard-background, var(--uitk-container-primary-background));
+  border-width: var(--uitkCard-borderWidth, var(--uitk-size-border));
   border-style: var(--uitkCard-borderStyle, var(--uitk-container-borderStyle));
-  border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-medium));
-  border-radius: var(--uitkCard-borderRadius, var(--uitk-container-borderRadius));
+  border-color: var(--uitkCard-borderColor, var(--uitk-container-primary-borderColor));
+  border-radius: var(--uitkCard-borderRadius, 0);
   box-shadow: var(--uitkCard-boxShadow, var(--uitk-overlayable-shadow));
   color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
   overflow: hidden;
@@ -13,9 +13,10 @@
 
 /* Styles applied to Card content */
 .uitkCard-content {
+  color: inherit;
   font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
   letter-spacing: var(--uitkCard-content-letterSpacing, normal);
-  line-height: var(--uitk-text-base-lineHeight);
+  line-height: var(--uitk-text-lineHeight);
   min-height: var(--uitkCard-content-minHeight, var(--uitk-text-minHeight));
   padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
 }
@@ -30,7 +31,7 @@
 a:focus .uitkCard-interactable,
 .uitkCard-interactable:hover {
   border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-hover));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-hover));
+  color: var(--uitkCard-color-hover, var(--uitk-text-primary-foreground));
   cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
   position: relative;
   box-shadow: var(--uitkCard-boxShadow-hover, var(--uitk-overlayable-shadow-hover));
@@ -57,7 +58,7 @@ a:focus .uitkCard-interactable.uitkCard-disabled,
 .uitkCard-disabled,
 .uitkCard-disabled.uitkCard-interactable,
 a:focus .uitkCard-interactable.uitkCard-disabled {
-  border-color: var(--uitkCard-borderColor, var(--uitk-container-borderColor-disabled-medium));
+  border-color: var(--uitkCard-borderColor, var(--uitk-container-primary-borderColor-disabled));
   cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
   color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
   outline: none;

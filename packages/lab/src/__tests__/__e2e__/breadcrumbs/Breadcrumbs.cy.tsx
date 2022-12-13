@@ -191,7 +191,7 @@ describe("GIVEN a Breadcrumbs component", () => {
     });
   });
 
-  describe("WHEN providing the itemsMaxWidth prop", () => {
+  xdescribe("WHEN providing the itemsMaxWidth prop", () => {
     it("THEN correctly display Tooltip on hover and focus when truncating", () => {
       cy.mount(
         <Breadcrumbs itemsMaxWidth={30}>
@@ -254,9 +254,11 @@ describe("GIVEN a Breadcrumbs component", () => {
         </Breadcrumbs>
       );
 
-      cy.findByText("Test1").should("exist").and("have.attr", "tabIndex", "0");
-      cy.findByText("Test2").should("exist").and("have.attr", "tabIndex", "0");
-      cy.findByText("Test3").should("exist").and("have.attr", "tabIndex", "-1");
+      cy.get("a").then((links) => {
+        expect(links[0]).to.have.text("Test1");
+        expect(links[1]).to.have.text("Test2");
+        expect(links[2]).not.to.exist;
+      });
     });
   });
 });

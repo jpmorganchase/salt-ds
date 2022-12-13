@@ -261,10 +261,10 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
             <ErrorIcon
               aria-label="error!"
               className={withBaseName("icon")}
-              size={24}
+              size={2}
             />
           ) : (
-            <UploadIcon className={withBaseName("icon")} size={24} />
+            <UploadIcon className={withBaseName("icon")} size={2} />
           )}
           {isRejected && fileDropZoneDescription}
         </div>

@@ -2,8 +2,8 @@
   box-sizing: border-box;
 
   border-style: solid;
-  border-color: var(--grid-row-borderColor);
-  border-width: 1px 0 0 0;
+  border-bottom-color: var(--grid-row-borderColor);
+  border-width: 0 0 1px 0;
 
   overflow: hidden;
   margin: 0;
@@ -12,5 +12,22 @@
   position: relative;
   font-size: var(--grid-fontSize);
   font-weight: normal;
-  z-index: var(--grid-cell-zIndex);
+}
+
+.uitkGridTableRow-first .uitkGridFakeCell {
+  border-width: 1px 0 1px 0;
+  border-top-color: transparent;
+}
+
+.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridFakeCell {
+  border-top-color: var(--grid-row-borderColor);
+}
+
+.uitkGridFakeCell div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--grid-row-background);
 }

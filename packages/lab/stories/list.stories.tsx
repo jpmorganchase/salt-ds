@@ -12,34 +12,30 @@ import {
 } from "react";
 import {
   Button,
-  Input,
-  FlexLayout,
   FlexItem,
+  FlexLayout,
   FormField,
-  useDensity,
+  Input,
   StackLayout,
+  useDensity,
 } from "@jpmorganchase/uitk-core";
 import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
 
 import {
   ContentStatus,
   List,
-  ListProps,
-  ListItemGroup,
   ListItem,
-  ListItemType,
+  ListItemGroup,
   ListItemProps,
+  ListItemType,
+  ListProps,
   ListScrollHandles,
   VirtualizedList,
+  SelectionChangeHandler,
 } from "@jpmorganchase/uitk-lab";
-import { SelectionChangeHandler, SelectHandler } from "../src/common-hooks";
+import { SelectHandler } from "../src/common-hooks";
 
-import {
-  usa_states,
-  // random_1000,
-} from "./list.data";
-
-import "./list.stories.css";
+import { usa_states } from "./list.data";
 
 const containerStyle = {
   display: "flex",
@@ -67,9 +63,14 @@ export default {
   decorators: [withFullViewWidth],
 } as ComponentMeta<typeof List>;
 
-export const Default: Story<ListProps> = () => {
+export const Default: Story<ListProps> = (props) => {
   return (
-    <List aria-label="Listbox example" maxWidth={292} source={usa_states} />
+    <List
+      {...props}
+      aria-label="Listbox example"
+      maxWidth={292}
+      source={usa_states}
+    />
   );
 };
 
@@ -83,9 +84,10 @@ export const BorderlessList: Story<ListProps> = (props) => (
   />
 );
 
-export const DeclarativeList: Story<ListProps> = () => {
+export const DeclarativeList: Story<ListProps> = (props) => {
   return (
     <List
+      {...props}
       aria-label="Declarative List example"
       displayedItemCount={5}
       width={292}
@@ -277,7 +279,7 @@ export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
 export const Grouped: Story<ListProps> = (props) => (
   <>
     <style>{`#grouped-list .uitkListItemHeader {
-      background: var(--uitk-color-grey-20);
+      background: var(--uitk-color-gray-20);
       }`}</style>
     <List
       aria-label="Grouped List example"
@@ -931,13 +933,11 @@ export const EmptyList: Story<ListProps> = (props) => {
 //           border: "solid 1px #ccc",
 //         }}
 //       >
-//         <ComponentAnatomy>
 //           <List
 //             collapsibleHeaders
 //             source={groupByInitialLetter(usa_states, "groups-only")}
 //             style={{ maxHeight: 500 }}
 //           />
-//         </ComponentAnatomy>
 //       </div>
 //     </div>
 //   );
@@ -964,13 +964,11 @@ export const EmptyList: Story<ListProps> = (props) => {
 //           border: "solid 1px #ccc",
 //         }}
 //       >
-//         <ComponentAnatomy>
 //           <List
 //             collapsibleHeaders
 //             source={groupByInitialLetter(usa_states_cities, "groups-only")}
 //             style={{ maxHeight: 500 }}
 //           />
-//         </ComponentAnatomy>
 //       </div>
 //       <input type="text" />
 //     </div>

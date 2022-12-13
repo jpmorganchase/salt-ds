@@ -5,21 +5,19 @@ const maybeReactUseId: undefined | (() => string) = (React as any)[
   `${"useId"}${""}`
 ];
 
-function useIdLegacy(idOverride?: string): string {
+let globalId = BigInt(0);
+function useIdLegacy(idOverride?: string): string | undefined {
   const [defaultId, setDefaultId] = React.useState(idOverride);
   const id = idOverride || defaultId;
   React.useEffect(() => {
     if (defaultId == null) {
-      // Fallback to this default id when possible.
-      // Use the random value for client-side rendering only.
-      // We can't use it server-side.
-      setDefaultId(`uitk-${Math.round(Math.random() * 1e5)}`);
+      setDefaultId(`uitk-${++globalId}`);
     }
   }, [defaultId]);
-  return id as string;
+  return id;
 }
 
-export function useId(idOverride?: string): string {
+export function useId(idOverride?: string): string | undefined {
   if (maybeReactUseId !== undefined) {
     const reactId = maybeReactUseId();
     return idOverride ?? reactId;
@@ -32,7 +30,7 @@ export function useId(idOverride?: string): string {
 // (as with the useEffect solution). This can go away once we totally move to React 18
 export function useIdMemo(idOverride?: string): string {
   const id = React.useMemo(() => {
-    return idOverride ?? `uitk-${Math.round(Math.random() * 1e5)}`;
+    return idOverride ?? `uitk-${++globalId}`;
   }, [idOverride]);
   return id;
 }

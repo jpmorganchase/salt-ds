@@ -1,14 +1,14 @@
 .uitkList {
-  --list-background: var(--uitk-container-background-medium);
+  --list-background: var(--uitk-container-primary-background);
   --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-container-borderWidth);
+  --list-borderWidth: var(--uitk-size-border);
   --list-height: auto;
   --list-item-height: var(--uitk-size-stackable);
   --list-item-gap: 0px;
   --list-maxHeight: 100%;
 
   background: var(--list-background);
-  border-color: var(--uitk-container-borderColor-medium);
+  border-color: var(--uitk-container-primary-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
   height: var(--uitkList-height, var(--list-height));

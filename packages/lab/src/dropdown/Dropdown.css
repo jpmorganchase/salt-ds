@@ -1,6 +1,5 @@
 .uitkDropdown {
-  --uitkIcon-margin: 2px 0 0 0;
-  --uitkIcon-padding: 0 0 0 8px;
+  --uitkIcon-margin: 2px 0 0 8px;
   display: inline-block;
   line-height: 0;
   position: relative;
@@ -11,6 +10,6 @@
 }
 
 .uitkDropdown-popup {
-  background: var(--uitk-container-background-medium);
-  z-index: calc(var(--uitk-zIndex-tooltip) - 1);
+  background: var(--uitk-container-primary-background);
+  z-index: calc(var(--uitk-zIndex-flyover) - 1);
 }

@@ -10,7 +10,6 @@ import {
   CSSClassTable,
   CSSVariableTable,
 } from "css-variable-docgen-components";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Meta
@@ -81,7 +80,7 @@ Icons and text can be used as adornments at the start or end of the component.
         defaultValue="Suffix: Icon"
         endAdornment={
           <StaticInputAdornment>
-            <CalendarIcon size="small" />
+            <CalendarIcon />
           </StaticInputAdornment>
         }
       />
@@ -115,37 +114,6 @@ import { Input } from "@jpmorganchase/uitk-core";
 ## Props
 
 <ArgsTable of={Input} />
-
-## HTML Anatomy of Input component
-
-<Canvas>
-  <ComponentAnatomy>
-    <Input defaultValue={"Default"} style={{ width: "292px" }} />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Input
-      defaultValue={"Read Only Input"}
-      readOnly
-      style={{ width: "292px" }}
-    />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Input
-      defaultValue="Prefix: Icon"
-      startAdornment={
-        <StaticInputAdornment>
-          <CallIcon />
-        </StaticInputAdornment>
-      }
-    />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Input
-      defaultValue="Suffix: Text"
-      endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
-    />
-  </ComponentAnatomy>
-</Canvas>
 
 ## CSS Class
 

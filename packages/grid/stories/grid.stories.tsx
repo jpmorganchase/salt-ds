@@ -1,6 +1,7 @@
 import { Story } from "@storybook/react";
 import "./grid.stories.css";
 import {
+  CellEditor,
   ColumnGroup,
   DropdownCellEditor,
   Grid,
@@ -9,17 +10,14 @@ import {
   GridHeaderValueProps,
   NumericCellEditor,
   NumericColumn,
-  RowKeyGetter,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
-  TextCellEditor,
 } from "../src";
-import { randomAmount, randomString, randomText } from "./utils";
+import { randomString, randomText } from "./utils";
 
 import {
   createContext,
   CSSProperties,
-  FC,
   useCallback,
   useContext,
   useMemo,
@@ -32,9 +30,13 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "../../icons";
-import { CellEditor } from "../src/CellEditor";
-import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
-import { FlexLayout } from "../../core";
+import {
+  allLocations,
+  createDummyInvestors,
+  Investor,
+  investorKeyGetter,
+} from "./dummyData";
+import { Card, Checkbox, FlexLayout } from "../../core";
 
 export default {
   title: "Grid/New Grid",
@@ -42,74 +44,7 @@ export default {
   argTypes: {},
 };
 
-interface Investor {
-  name: string;
-  addedInvestors: string[];
-  location: string;
-  strategy: string[];
-  cohort: string[];
-  notes: string;
-  amount: number;
-}
-
-const allLocations = [
-  "New York, NY",
-  "Jersey City, NJ",
-  "Boston, MA",
-  "San Francisco, CA",
-];
-
-function createDummyInvestors(): Investor[] {
-  const a = [
-    "Apple",
-    "Orange",
-    "Dragonfruit",
-    "Coffee",
-    "Fig",
-    "Grape",
-    "Hazelnut",
-  ];
-  const b = ["Investment", "Venture Capital", "Private Wealth"];
-  const c = ["", "Inc."];
-  const str = [
-    ["FO"],
-    ["PE"],
-    ["VC"],
-    ["FO", "PE"],
-    ["FO", "PE", "VC"],
-    ["VC", "PE"],
-  ];
-  const coh = [
-    ["Potential Leads"],
-    ["Top VCs"],
-    ["Potential Leads", "Top VCs"],
-  ];
-
-  const investors: Investor[] = [];
-  let i = 0;
-  for (let x of a) {
-    for (let y of b) {
-      for (let z of c) {
-        investors.push({
-          name: [x, y, z].join(" "),
-          addedInvestors: [],
-          location: allLocations[i % allLocations.length],
-          cohort: coh[i % coh.length],
-          strategy: str[i % str.length],
-          notes: "",
-          amount: randomAmount(100, 300, 4),
-        });
-        ++i;
-      }
-    }
-  }
-
-  return investors;
-}
-
 const dummyInvestors = createDummyInvestors();
-
-const rowKeyGetter = (rowData: Investor) => rowData.name;
 
 const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].amount = parseFloat(value);
@@ -123,11 +58,11 @@ const GridStoryTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
-      className="table"
+      rowKeyGetter={investorKeyGetter}
+      className="grid"
       zebra={true}
       columnSeparators={true}
-      // hideHeader={true}
+      headerIsFocusable={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionCheckboxColumn id="rowSelection" />
@@ -185,12 +120,10 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
-      className="table"
+      rowKeyGetter={investorKeyGetter}
+      className="grid"
       zebra={true}
-      // columnSeparators={true}
       rowSelectionMode="single"
-      // hideHeader={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionRadioColumn id="rowSelection" />
@@ -242,12 +175,10 @@ const SmallTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors5}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
-      // rowSelectionMode="single"
-      // hideHeader={true}
     >
       <RowSelectionRadioColumn id="rowSelection" />
       <GridColumn
@@ -274,52 +205,83 @@ const SmallTemplate: Story<{}> = (props) => {
 };
 
 const PinnedColumnsTemplate: Story<{}> = (props) => {
+  const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
+  const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
+
+  const onChangeColumnSeparators = (_: any, checked: boolean) => {
+    console.log(`Column separators ${checked ? "enabled" : "disabled"}`);
+    setColumnSeparators(checked);
+  };
+
+  const onChangePinnedSeparators = (_: any, checked: boolean) => {
+    console.log(`Pinned separators ${checked ? "enabled" : "disabled"}`);
+    setPinnedSeparators(checked);
+  };
+
   return (
-    <Grid
-      rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
-      className="table"
-    >
-      <ColumnGroup id="groupOne" name="Group One" pinned="left">
-        <GridColumn
-          name="Name"
-          id="name"
-          defaultWidth={200}
-          getValue={(x) => x.name}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupTwo" name="Group Two">
-        <GridColumn
-          name="Location"
-          id="location"
-          defaultWidth={150}
-          getValue={(x) => x.location}
-        />
-        <GridColumn
-          name="Cohort"
-          id="cohort"
-          defaultWidth={200}
-          getValue={(x) => x.cohort}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupThree" name="Group Three">
-        <GridColumn
-          name="Amount"
-          id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          align="right"
-          onChange={onAmountChange}
-        />
-      </ColumnGroup>
-      <ColumnGroup id="groupFour" name="Group Four" pinned="right">
-        <GridColumn
-          name="Strategy"
-          id="strategy"
-          getValue={(x) => x.strategy.join(", ")}
-        />
-      </ColumnGroup>
-    </Grid>
+    <FlexLayout direction="column" separators={true}>
+      <Card>
+        <FlexLayout direction="row">
+          <Checkbox
+            label="Column separators"
+            checked={columnSeparators}
+            onChange={onChangeColumnSeparators}
+          />
+          <Checkbox
+            label="Pinned separators"
+            checked={pinnedSeparators}
+            onChange={onChangePinnedSeparators}
+          />
+        </FlexLayout>
+      </Card>
+      <Grid
+        rowData={dummyInvestors}
+        rowKeyGetter={investorKeyGetter}
+        className="grid"
+        columnSeparators={columnSeparators}
+        pinnedSeparators={pinnedSeparators}
+      >
+        <ColumnGroup id="groupOne" name="Group One" pinned="left">
+          <GridColumn
+            name="Name"
+            id="name"
+            defaultWidth={200}
+            getValue={(x) => x.name}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupTwo" name="Group Two">
+          <GridColumn
+            name="Location"
+            id="location"
+            defaultWidth={250}
+            getValue={(x) => x.location}
+          />
+          <GridColumn
+            name="Cohort"
+            id="cohort"
+            defaultWidth={300}
+            getValue={(x) => x.cohort}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupThree" name="Group Three">
+          <GridColumn
+            name="Amount"
+            id="amount"
+            defaultWidth={250}
+            getValue={(x) => x.amount.toFixed(4)}
+            align="right"
+            onChange={onAmountChange}
+          />
+        </ColumnGroup>
+        <ColumnGroup id="groupFour" name="Group Four" pinned="right">
+          <GridColumn
+            name="Strategy"
+            id="strategy"
+            getValue={(x) => x.strategy.join(", ")}
+          />
+        </ColumnGroup>
+      </Grid>
+    </FlexLayout>
   );
 };
 
@@ -357,7 +319,7 @@ const LotsOfColumnsTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
-      className="table"
+      className="grid"
       columnSeparators={true}
     >
       {dummyColumnNames.map((name) => (
@@ -379,6 +341,7 @@ const dummyGroups: any[] = [
     columns: [],
   },
 ];
+
 dummyColumnNames.forEach((name) => {
   let groupIdx = dummyGroups.length - 1;
   let group = dummyGroups[groupIdx];
@@ -398,7 +361,7 @@ const LotsOfColumnGroupsTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
-      className="table"
+      className="grid"
       columnSeparators={true}
       rowSelectionMode={"none"}
     >
@@ -439,7 +402,7 @@ const useCustomHeadersStoryContext = () => {
   return c;
 };
 
-const CustomHeader: FC<GridHeaderValueProps<any>> = (props) => {
+const CustomHeader = (props: GridHeaderValueProps<any>) => {
   const { column } = props;
   const { sortBy, sortDesc, sort } = useCustomHeadersStoryContext();
 
@@ -504,7 +467,7 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
       <Grid
         rowData={sortedRows}
         rowKeyGetter={rowIdGetter}
-        className="table"
+        className="grid"
         columnSeparators={true}
         zebra={true}
       >
@@ -523,8 +486,6 @@ const CustomHeadersTemplate: Story<{}> = (props) => {
     </CustomHeadersStoryContext.Provider>
   );
 };
-
-/* Custom cells story */
 
 interface TreeRowData {
   id: string;
@@ -574,7 +535,7 @@ const randomTreeData = (): TreeRowData => {
   };
 };
 
-const CustomCell: FC<GridCellValueProps<TreeRowData>> = (props) => {
+const CustomCell = (props: GridCellValueProps<TreeRowData>) => {
   const { row } = props;
   const { expand } = useCustomCellsStoryContext();
 
@@ -668,7 +629,7 @@ const CustomCellsTemplate: Story<{}> = (props) => {
       <Grid
         rowData={visibleRows}
         rowKeyGetter={rowIdGetter}
-        className="table"
+        className="grid"
         columnSeparators={true}
         zebra={true}
       >
@@ -688,7 +649,6 @@ const CustomCellsTemplate: Story<{}> = (props) => {
   );
 };
 
-/* Column DnD */
 const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   const [columnIds, setColumnIds] = useState<string[]>([
     "name",
@@ -762,7 +722,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
-      rowKeyGetter={rowKeyGetter}
+      rowKeyGetter={investorKeyGetter}
       className="smallGrid"
       zebra={true}
       columnSeparators={true}
@@ -774,152 +734,14 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   );
 };
 
-const serverSideDataRowKeyGetter: RowKeyGetter<Investor> = (row, index) =>
-  `Row${index}`;
-
-const serverSideRowCount = 200000;
-
-const ServerSideDataStoryTemplate: Story<{}> = (props) => {
-  const [rows, setRows] = useState<Investor[]>(() => {
-    const rowData: Investor[] = [];
-    rowData.length = serverSideRowCount;
-    return rowData;
-  });
-
-  const onVisibleRowRangeChange = useCallback((start: number, end: number) => {
-    console.log(`onVisibleRowRangeChange(${start}, ${end}).`);
-    setRows((oldRows) => {
-      const nextRows: Investor[] = [];
-      nextRows.length = serverSideRowCount;
-      for (let i = start; i < end; ++i) {
-        if (oldRows[i]) {
-          nextRows[i] = oldRows[i];
-        } else {
-          nextRows[i] = {
-            name: `Name ${i}`,
-            addedInvestors: [],
-            location: `Location ${i}`,
-            cohort: [`Cohort ${i}`],
-            strategy: [`Strategy ${i}`],
-            notes: "",
-            amount: randomAmount(100, 300, 4),
-          };
-        }
-      }
-      return nextRows;
-    });
-  }, []);
-
-  return (
-    <Grid
-      rowData={rows}
-      rowKeyGetter={serverSideDataRowKeyGetter}
-      className="table"
-      zebra={true}
-      columnSeparators={true}
-      onVisibleRowRangeChange={onVisibleRowRangeChange}
-    >
-      <RowSelectionCheckboxColumn id="rowSelection" />
-      <GridColumn
-        name="Name"
-        id="name"
-        defaultWidth={200}
-        getValue={(x) => x.name}
-      />
-      <GridColumn
-        name="Location"
-        id="location"
-        defaultWidth={150}
-        getValue={(x) => x.location}
-        onChange={onLocationChange}
-      />
-      <GridColumn
-        name="Cohort"
-        id="cohort"
-        defaultWidth={200}
-        getValue={(x) => x.cohort}
-      />
-      <GridColumn
-        name="Amount"
-        id="amount"
-        defaultWidth={200}
-        getValue={(x) => x.amount.toFixed(4)}
-        align="right"
-        onChange={onAmountChange}
-      />
-      <GridColumn
-        name="Strategy"
-        id="strategy"
-        getValue={(x) => x.strategy.join(", ")}
-      />
-    </Grid>
-  );
-};
-
-const PaginationStoryTemplate: Story<{}> = (props) => {
-  const [page, setPage] = useState<number>(1);
-  const pageSize = 7;
-  const pageCount = Math.ceil(dummyInvestors.length / pageSize);
-
-  const onPageChange = (page: number) => {
-    setPage(page);
-  };
-
-  const rowData = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    const end = Math.min(start + pageSize, dummyInvestors.length);
-    return dummyInvestors.slice(start, end);
-  }, [pageSize, page]);
-
-  return (
-    <FlexLayout direction={"column"} align={"end"}>
-      <Grid
-        rowData={rowData}
-        rowKeyGetter={serverSideDataRowKeyGetter}
-        className="paginatedGrid"
-        zebra={true}
-        columnSeparators={true}
-      >
-        <RowSelectionCheckboxColumn id="rowSelection" />
-        <GridColumn
-          name="Name"
-          id="name"
-          defaultWidth={200}
-          getValue={(x) => x.name}
-        />
-        <GridColumn
-          name="Location"
-          id="location"
-          defaultWidth={150}
-          getValue={(x) => x.location}
-          onChange={onLocationChange}
-        />
-        <GridColumn
-          name="Amount"
-          id="amount"
-          defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
-          align="right"
-          onChange={onAmountChange}
-        />
-      </Grid>
-      <Pagination page={page} onPageChange={onPageChange} count={pageCount}>
-        <Paginator />
-      </Pagination>
-    </FlexLayout>
-  );
-};
-
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
 export const SmallGrid = SmallTemplate.bind({});
-export const PinnedColumns = PinnedColumnsTemplate.bind({});
+// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 export const LotsOfColumns = LotsOfColumnsTemplate.bind({});
 export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
-export const CustomHeaders = CustomHeadersTemplate.bind({});
-export const CustomCells = CustomCellsTemplate.bind({});
-export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
-export const ServerSideData = ServerSideDataStoryTemplate.bind({});
-export const GridPagination = PaginationStoryTemplate.bind({});
+// export const CustomHeaders = CustomHeadersTemplate.bind({});
+// export const CustomCells = CustomCellsTemplate.bind({});
+// export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
 
 GridExample.args = {};

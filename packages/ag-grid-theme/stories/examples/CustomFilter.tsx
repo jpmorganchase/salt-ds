@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const CustomFilterExample = function CustomFilterExample(
-  props: AgGridReactProps
-) {
+const CustomFilter = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
+  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -74,43 +80,47 @@ const CustomFilterExample = function CustomFilterExample(
   };
 
   return (
-    <div style={{ marginTop: 25 }}>
-      <div style={{ display: "flex" }}>
-        <Button onClick={handlePopLt100kClick}>Pop &gt; 100k</Button>
-        &nbsp;
-        <Button onClick={handlePopMt100kClick}>Pop &lt; 100k</Button>
-        &nbsp;
-        <Button onClick={filterNewYork}>New York</Button>
-        &nbsp;
-        <Button onClick={saveState}>Save State</Button>
-        &nbsp;
-        <Button disabled={hasSavedState} onClick={restoreState}>
-          Restore State
-        </Button>
-        &nbsp;
-        <Button disabled={hasSavedState} onClick={clearState}>
-          Clear Stored Filter
-        </Button>
-      </div>
-      <div
-        style={{ height: 800, width: 800, marginTop: 25 }}
-        {...containerProps}
-      >
-        <AgGridReact
-          defaultColDef={{ floatingFilter: true, filter: true }}
-          {...agGridProps}
-          {...props}
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
         />
+      </div>
+      <div style={{ marginTop: 25 }}>
+        <div style={{ display: "flex" }}>
+          <Button onClick={handlePopLt100kClick}>Pop &gt; 100k</Button>
+          &nbsp;
+          <Button onClick={handlePopMt100kClick}>Pop &lt; 100k</Button>
+          &nbsp;
+          <Button onClick={filterNewYork}>New York</Button>
+          &nbsp;
+          <Button onClick={saveState}>Save State</Button>
+          &nbsp;
+          <Button disabled={hasSavedState} onClick={restoreState}>
+            Restore State
+          </Button>
+          &nbsp;
+          <Button disabled={hasSavedState} onClick={clearState}>
+            Clear Stored Filter
+          </Button>
+        </div>
+        <div
+          style={{ height: 800, width: 800, marginTop: 25 }}
+          {...containerProps}
+        >
+          <AgGridReact
+            defaultColDef={{ floatingFilter: true, filter: true }}
+            columnDefs={customFilterExampleColumns}
+            rowData={dataGridExampleData}
+            {...agGridProps}
+            {...props}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-CustomFilterExample.defaultProps = {
-  columnDefs: customFilterExampleColumns,
-  rowData: dataGridExampleData,
-};
-
-export default function CustomFilter(props: AgGridReactProps) {
-  return <CustomFilterExample {...props} />;
-}
+export default CustomFilter;

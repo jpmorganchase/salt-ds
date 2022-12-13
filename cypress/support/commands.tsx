@@ -1,9 +1,6 @@
 import "@testing-library/cypress/add-commands";
-import {
-  mount as cypressMount,
-  MountReturn,
-  MountOptions,
-} from "cypress/react";
+import { mount as cypressMount } from "cypress/react18";
+import type { MountOptions, MountReturn } from "cypress/react";
 import "cypress-axe";
 import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
@@ -11,8 +8,8 @@ import { ReactNode } from "react";
 import { ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { AnnouncementListener } from "./AnnouncementListener";
 
-const SupportedThemeValues = ["light", "dark"] as const;
-type SupportedTheme = typeof SupportedThemeValues[number];
+const SupportedThemeModeValues = ["light", "dark"] as const;
+type SupportedThemeMode = typeof SupportedThemeModeValues[number];
 const SupportedDensityValues = ["touch", "low", "medium", "high"];
 type SupportedDensity = typeof SupportedDensityValues[number];
 
@@ -23,11 +20,11 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
       /**
-       * Set Theme
+       * Set Theme Mode
        * @example
-       * cy.setTheme('light')
+       * cy.setMode('light')
        */
-      setTheme(theme: SupportedTheme): Chainable<void>;
+      setMode(theme: SupportedThemeMode): Chainable<void>;
 
       /**
        * Set Density
@@ -47,23 +44,27 @@ declare global {
         options?: Options,
         enableFailures?: boolean
       ): Chainable<void>;
+
       mountPerformance: (
         jsx: ReactNode,
         options?: MountOptions
       ) => Chainable<MountReturn>;
       mount: (jsx: ReactNode, options?: MountOptions) => Chainable<MountReturn>;
+
       getRenderCount(): Chainable<number>;
+
       getRenderTime(): Chainable<number>;
+
       paste(string: string): Chainable<void>;
     }
   }
 }
 
-Cypress.Commands.add("setTheme", function (theme) {
-  if (SupportedThemeValues.includes(theme)) {
-    this.theme;
+Cypress.Commands.add("setMode", function (mode) {
+  if (SupportedThemeModeValues.includes(mode)) {
+    this.mode;
   } else {
-    cy.log("Unsupported theme", theme);
+    cy.log("Unsupported mode", mode);
   }
 });
 
@@ -103,7 +104,7 @@ Cypress.Commands.add("mount", function (children, options) {
   };
 
   return cypressMount(
-    <ToolkitProvider density={this.density} theme={this.theme}>
+    <ToolkitProvider density={this.density} mode={this.mode}>
       {children}
       <AnnouncementListener onAnnouncement={handleAnnouncement} />
     </ToolkitProvider>,

@@ -1,22 +1,15 @@
-.uitk-dark,
-.uitk-light {
+.uitk-theme {
   --uitk-editable-cursor-hover: text;
   --uitk-editable-cursor-active: text;
   --uitk-editable-cursor-disabled: not-allowed;
   --uitk-editable-cursor-readonly: text;
 
-  --uitk-editable-borderRadius: 0;
   --uitk-editable-borderStyle: solid;
   --uitk-editable-borderStyle-hover: solid;
   --uitk-editable-borderStyle-active: solid;
   --uitk-editable-borderStyle-disabled: solid;
   --uitk-editable-borderStyle-readonly: solid;
-
-  --uitk-editable-borderWidth: 1px;
-  --uitk-editable-borderWidth-hover: 1px;
   --uitk-editable-borderWidth-active: 2px;
-  --uitk-editable-borderWidth-disabled: 1px;
-  --uitk-editable-borderWidth-readonly: 1px;
 
   --uitk-editable-borderColor: var(--uitk-palette-interact-border);
   --uitk-editable-borderColor-active: var(--uitk-palette-interact-border-active);
@@ -24,21 +17,23 @@
   --uitk-editable-borderColor-hover: var(--uitk-palette-interact-border-hover);
   --uitk-editable-borderColor-readonly: var(--uitk-palette-interact-border-readonly);
 
-  --uitk-editable-background-low: var(--uitk-palette-interact-background-low);
-  --uitk-editable-background-active-low: var(--uitk-palette-interact-background-low);
-  --uitk-editable-background-disabled-low: var(--uitk-palette-interact-background-low);
-  --uitk-editable-background-hover-low: var(--uitk-palette-interact-background-low);
-  --uitk-editable-background-readonly-low: var(--uitk-palette-interact-background-low);
+  --uitk-editable-primary-background: var(--uitk-palette-neutral-primary-background);
+  --uitk-editable-primary-background-active: var(--uitk-palette-neutral-primary-background);
+  --uitk-editable-primary-background-disabled: var(--uitk-palette-neutral-primary-background-disabled);
+  --uitk-editable-primary-background-hover: var(--uitk-palette-neutral-primary-background);
+  --uitk-editable-primary-background-readonly: var(--uitk-palette-neutral-primary-background-readonly);
 
-  --uitk-editable-background-medium: var(--uitk-palette-interact-background-medium);
-  --uitk-editable-background-active-medium: var(--uitk-palette-interact-background-medium);
-  --uitk-editable-background-disabled-medium: var(--uitk-palette-interact-background-disabled-medium);
-  --uitk-editable-background-hover-medium: var(--uitk-palette-interact-background-medium);
-  --uitk-editable-background-readonly-medium: var(--uitk-palette-interact-background-medium);
+  --uitk-editable-secondary-background: var(--uitk-palette-neutral-secondary-background);
+  --uitk-editable-secondary-background-active: var(--uitk-palette-neutral-secondary-background);
+  --uitk-editable-secondary-background-disabled: var(--uitk-palette-neutral-secondary-background-disabled);
+  --uitk-editable-secondary-background-hover: var(--uitk-palette-neutral-secondary-background);
+  --uitk-editable-secondary-background-readonly: var(--uitk-palette-neutral-secondary-background-readonly);
 
-  --uitk-editable-background-high: var(--uitk-palette-interact-background-high);
-  --uitk-editable-background-active-high: var(--uitk-palette-interact-background-high);
-  --uitk-editable-background-disabled-high: var(--uitk-palette-interact-background-disabled-high);
-  --uitk-editable-background-hover-high: var(--uitk-palette-interact-background-high);
-  --uitk-editable-background-readonly-high: var(--uitk-palette-interact-background-high);
+  --uitk-editable-tertiary-background: var(--uitk-palette-neutral-tertiary-background);
+  --uitk-editable-tertiary-background-active: var(--uitk-palette-neutral-tertiary-background);
+  --uitk-editable-tertiary-background-disabled: var(--uitk-palette-neutral-tertiary-background-disabled);
+  --uitk-editable-tertiary-background-hover: var(--uitk-palette-neutral-tertiary-background);
+  --uitk-editable-tertiary-background-readonly: var(--uitk-palette-neutral-tertiary-background-readonly);
+
+  --uitk-editable-help-fontStyle: italic;
 }

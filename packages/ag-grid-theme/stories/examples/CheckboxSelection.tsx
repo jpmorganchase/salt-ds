@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import "../../uitk-ag-theme.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { Switch } from "@jpmorganchase/uitk-core";
 
 const headerOn = {
   headerName: "On",
@@ -14,10 +15,16 @@ const headerOn = {
 
 const [headerName, , headerCapital] = dataGridExampleColumns;
 
-const CheckboxSelectionExample = function CheckboxSelectionExample(
-  props: AgGridReactProps
-) {
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+const CheckboxSelection = (props: AgGridReactProps) => {
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -26,17 +33,27 @@ const CheckboxSelectionExample = function CheckboxSelectionExample(
   }, [isGridReady]);
 
   return (
-    <div style={{ marginTop: 25, height: 800, width: 800 }} {...containerProps}>
-      <AgGridReact {...agGridProps} {...props} />
+    <div>
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
+        />
+      </div>
+      <div
+        style={{ marginTop: 25, height: 800, width: 800 }}
+        {...containerProps}
+      >
+        <AgGridReact
+          {...agGridProps}
+          {...props}
+          rowData={dataGridExampleData}
+          columnDefs={[headerOn, headerName, headerCapital]}
+        />
+      </div>
     </div>
   );
 };
 
-CheckboxSelectionExample.defaultProps = {
-  columnDefs: [headerOn, headerName, headerCapital],
-  rowData: dataGridExampleData,
-};
-
-export default function CheckboxSelection(props: AgGridReactProps) {
-  return <CheckboxSelectionExample {...props} />;
-}
+export default CheckboxSelection;

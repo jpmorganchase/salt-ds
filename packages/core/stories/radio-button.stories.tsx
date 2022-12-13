@@ -2,6 +2,7 @@ import {
   Density,
   FormField,
   makeRadioIcon,
+  Mode,
   Panel,
   RadioButton,
   RadioButtonGroup,
@@ -13,20 +14,20 @@ import {
 } from "@jpmorganchase/uitk-core/stories";
 import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ChangeEventHandler, FC, ReactNode, useState } from "react";
+import { ChangeEventHandler, ReactNode, useState } from "react";
 
 export default {
   title: "Core/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 
-type ExampleWithTitle = FC<{
+type ExampleWithTitleProps = {
   title: string;
   density: Density;
   name: string;
-}>;
+};
 
-const Radios: ExampleWithTitle = ({ title, density, name }) => (
+const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
   <ColumnLayoutItem>
     <ToolkitProvider density={density}>
       <div data-testid="radio-button-next-density-example">
@@ -50,7 +51,7 @@ const Radios: ExampleWithTitle = ({ title, density, name }) => (
   </ColumnLayoutItem>
 );
 
-const RowGroup: ExampleWithTitle = ({ title, density, name }) => (
+const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <Panel>
     <ToolkitProvider density={density}>
       <RadioButtonGroup legend={title} name={name} row>
@@ -65,7 +66,7 @@ interface DensityExampleProps {
   name: string;
 }
 
-const DensityExample: FC<DensityExampleProps> = ({ name }) => (
+const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
     <ColumnLayoutContainer>
       <Radios name={`${name}-high`} title="High" density="high" />
@@ -82,7 +83,7 @@ const DensityExample: FC<DensityExampleProps> = ({ name }) => (
   </Panel>
 );
 
-const StoryScroller: FC = (props) => (
+const StoryScroller = (props: { children?: ReactNode }) => (
   <div
     style={{
       height: "100%",
@@ -99,10 +100,10 @@ const StoryScroller: FC = (props) => (
 
 export const All: Story = () => (
   <StoryScroller>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <DensityExample name="light" />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <DensityExample name="dark" />
     </ToolkitProvider>
   </StoryScroller>
@@ -186,19 +187,19 @@ export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
 
 /* FormField variants */
 
-type ExampleWithTitleAndVariant = FC<{
+type ExampleWithTitleAndVariantProps = {
   name: string;
   title: string;
-  className?: string;
-}>;
+  variant?: "primary" | "secondary" | "tertiary";
+};
 
-const FormFieldRadios: ExampleWithTitleAndVariant = ({
+const FormFieldRadios = ({
   name,
   title,
-  className,
-}) => (
+  variant,
+}: ExampleWithTitleAndVariantProps) => (
   <div data-testid="radio-button-form-field-variants-example">
-    <FormField className={className}>
+    <FormField variant={variant}>
       <RadioButtonGroup
         aria-label="Variants Example"
         defaultValue="forward"
@@ -218,29 +219,25 @@ const FormFieldRadios: ExampleWithTitleAndVariant = ({
   </div>
 );
 
-const VariantExample = ({ name, theme }: { name: string; theme: string }) => (
-  <ToolkitProvider theme={theme}>
+const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
+  <ToolkitProvider mode={mode}>
     <Panel style={{ height: "unset" }}>
       <ColumnLayoutContainer>
         <ColumnLayoutItem>
-          <FormFieldRadios
-            name={`${name}-1`}
-            title="High emphasis"
-            className="uitkEmphasisHigh"
-          />
+          <FormFieldRadios name="fx2" title="Primary" />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios
-            name="fx2"
-            title="Medium Emphasis"
-            className="uitkEmphasisMedium"
+            name={`${name}-1`}
+            title="Secondary"
+            variant="secondary"
           />
         </ColumnLayoutItem>
         <ColumnLayoutItem>
           <FormFieldRadios
             name={`${name}-2`}
-            title="Low Emphasis"
-            className="uitkEmphasisLow"
+            title="Tertiary"
+            variant="tertiary"
           />
         </ColumnLayoutItem>
       </ColumnLayoutContainer>
@@ -250,8 +247,8 @@ const VariantExample = ({ name, theme }: { name: string; theme: string }) => (
 
 export const FormFieldVariants: Story = () => (
   <StoryScroller>
-    <VariantExample name="fx1" theme="light" />
-    <VariantExample name="fx2" theme="dark" />
+    <VariantExample name="fx1" mode="light" />
+    <VariantExample name="fx2" mode="dark" />
   </StoryScroller>
 );
 
@@ -262,7 +259,7 @@ interface ExampleRowProps {
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ children, name }) => {
+const ExampleRow = ({ children, name }: ExampleRowProps) => {
   const densities: Density[] = ["touch", "low", "medium", "high"];
   const row = densities.map((density) => {
     const exampleKey = `${density}-${name}`.toLowerCase();
@@ -280,8 +277,8 @@ const ExampleRow: FC<ExampleRowProps> = ({ children, name }) => {
   );
 };
 
-const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
-  <ToolkitProvider theme={theme}>
+const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
+  <ToolkitProvider mode={mode}>
     <>
       <ExampleRow name="Basic">
         <FormField
@@ -383,8 +380,8 @@ const GroupFormFieldExamples = ({ theme }: { theme: string }) => (
 
 export const GroupFormFieldRow: Story = () => (
   <StoryScroller>
-    <GroupFormFieldExamples theme="light" />
-    <GroupFormFieldExamples theme="dark" />
+    <GroupFormFieldExamples mode="light" />
+    <GroupFormFieldExamples mode="dark" />
   </StoryScroller>
 );
 
@@ -395,10 +392,10 @@ interface GroupFormFieldExampleRowProps {
   name: string;
 }
 
-const GroupFormFieldVerticalExampleRow: FC<GroupFormFieldExampleRowProps> = ({
+const GroupFormFieldVerticalExampleRow = ({
   children,
   name,
-}) => {
+}: GroupFormFieldExampleRowProps) => {
   const densities: Density[] = ["touch", "low", "medium", "high"];
   const row = densities.map((density) => {
     const exampleKey = `${density}-${name}`.toLowerCase();
@@ -511,10 +508,10 @@ const GroupFormFieldVerticalExamples = () => (
 
 export const GroupFormFieldVertical: Story = () => (
   <StoryScroller>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <GroupFormFieldVerticalExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <GroupFormFieldVerticalExamples />
     </ToolkitProvider>
   </StoryScroller>

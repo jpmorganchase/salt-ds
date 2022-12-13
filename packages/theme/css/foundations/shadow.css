@@ -1,17 +1,24 @@
-.uitk-light {
-  --uitk-shadow-0: none;
-  --uitk-shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --uitk-shadow-2: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  --uitk-shadow-3: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
-  --uitk-shadow-4: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-  --uitk-shadow-5: 0 12px 40px 5px rgba(0, 0, 0, 0.3);
+.uitk-theme[data-mode="light"] {
+  --uitk-shadow-1-color: rgba(0, 0, 0, 0.1);
+  --uitk-shadow-2-color: rgba(0, 0, 0, 0.1);
+  --uitk-shadow-3-color: rgba(0, 0, 0, 0.15);
+  --uitk-shadow-4-color: rgba(0, 0, 0, 0.2);
+  --uitk-shadow-5-color: rgba(0, 0, 0, 0.3);
 }
 
-.uitk-dark {
+.uitk-theme[data-mode="dark"] {
+  --uitk-shadow-1-color: rgba(0, 0, 0, 0.5);
+  --uitk-shadow-2-color: rgba(0, 0, 0, 0.5);
+  --uitk-shadow-3-color: rgba(0, 0, 0, 0.55);
+  --uitk-shadow-4-color: rgba(0, 0, 0, 0.55);
+  --uitk-shadow-5-color: rgba(0, 0, 0, 0.65);
+}
+
+.uitk-theme {
   --uitk-shadow-0: none;
-  --uitk-shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-  --uitk-shadow-2: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  --uitk-shadow-3: 0 4px 8px 0 rgba(0, 0, 0, 0.55);
-  --uitk-shadow-4: 0 6px 10px 0 rgba(0, 0, 0, 0.55);
-  --uitk-shadow-5: 0 12px 40px 5px rgba(0, 0, 0, 0.65);
+  --uitk-shadow-1: 0 1px 3px 0 var(--uitk-shadow-1-color);
+  --uitk-shadow-2: 0 2px 4px 0 var(--uitk-shadow-2-color);
+  --uitk-shadow-3: 0 4px 8px 0 var(--uitk-shadow-3-color);
+  --uitk-shadow-4: 0 6px 10px 0 var(--uitk-shadow-4-color);
+  --uitk-shadow-5: 0 12px 40px 5px var(--uitk-shadow-5-color);
 }

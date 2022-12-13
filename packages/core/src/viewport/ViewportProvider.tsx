@@ -1,31 +1,55 @@
-import { createContext, FC, useEffect, useState, useContext } from "react";
+import {
+  createContext,
+  useLayoutEffect,
+  useState,
+  useContext,
+  ReactNode,
+} from "react";
 
-const ViewportContext = createContext(0);
+const ViewportContext = createContext<number | null>(null);
 
-const ViewportProvider: FC = ({ children }) => {
-  const [viewport, setViewport] = useState(0);
+type ViewportProviderProps = {
+  children?: ReactNode;
+};
 
-  useEffect(() => {
-    const observer = new ResizeObserver(
-      (observerEntries: ResizeObserverEntry[]) => {
-        setViewport(observerEntries[0].contentRect.width);
-      }
-    );
-    observer.observe(document.body);
+const ViewportProvider = ({ children }: ViewportProviderProps) => {
+  // Get value directly from the ViewportContext so we can detect if the value is null (no inherited ViewportProvider)
+  const existingViewport = useContext(ViewportContext);
+  const [viewport, setViewport] = useState(existingViewport);
+
+  const noExistingViewport = existingViewport === null;
+  const viewportValue = existingViewport || viewport || 0;
+
+  useLayoutEffect(() => {
+    let observer: ResizeObserver | null = null;
+
+    if (noExistingViewport) {
+      observer = new ResizeObserver(
+        (observerEntries: ResizeObserverEntry[]) => {
+          setViewport(observerEntries[0].contentRect.width);
+        }
+      );
+
+      observer.observe(document.body);
+    }
+
     return () => {
-      observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
     };
-  }, []);
+  }, [noExistingViewport]);
 
   return (
-    <ViewportContext.Provider value={viewport}>
+    <ViewportContext.Provider value={viewportValue}>
       {children}
     </ViewportContext.Provider>
   );
 };
 
-const useViewport = () => {
-  return useContext(ViewportContext);
+const useViewport = (): number => {
+  const value = useContext(ViewportContext);
+  return value === null ? 0 : value;
 };
 
 export { ViewportProvider, ViewportContext, useViewport };

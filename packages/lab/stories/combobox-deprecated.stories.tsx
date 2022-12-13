@@ -504,7 +504,7 @@ export const Autocomplete: ComponentStory<typeof ComboBoxDeprecated> = (
         InputProps={{
           endAdornment: inputValue ? (
             <Button onClick={clearInput} variant="secondary">
-              <CloseIcon aria-label="clear input" size="small" />
+              <CloseIcon aria-label="clear input" />
             </Button>
           ) : null,
           onBlur: handleBlur,

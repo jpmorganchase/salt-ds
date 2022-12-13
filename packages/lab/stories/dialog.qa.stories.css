@@ -1,13 +1,3 @@
-.uitkDialogQA {
-  width: 700px;
-  background: var(--uitk-color-white);
-}
-
-.uitkDialogQA .uitkScrim {
-  position: unset;
-  background-color: var(--uitk-color-white);
-}
-
 .examples-container .uitkScrim {
   position: unset;
 }

@@ -9,24 +9,24 @@ import "./characteristics.stories.css";
 
 Characteristic design tokens are a level of abstraction sitting between the foundational tokens and the component-specific tokens.
 
-Each grouping of characteristics (also known in other design systems as _semantics_) are a set of CSS variables which encapsulate a specific concept. These tokens can then be reused by multiple components if and when necessary, allowing for sleek consistency across design and logical, reusable patterns.
+Each grouping of characteristics (also known in other design systems as _semantics_) is a set of CSS variables which encapsulates a specific concept. These tokens can then be reused by multiple components where necessary, allowing for consistency across design and logical, reusable patterns.
 
 ### What are characteristics?
 
-Characteristics are semantic groupings of visual attributes that are applied across relevant components. They drive consistency and support theming across complex libraries. They help to define the rules that style each component and aid the cohesiveness of UI.
+Characteristics are semantic groupings of visual attributes that are applied across relevant components. They drive consistency and support theming across complex libraries. They help to define the rules that style each component and aid the cohesiveness of the UI.
 
 ### Why characteristics?
 
-From a design perspective, there is a need for aesthetic flexibility without decreasing the efficiency of build or the effectiveness of the components when implemented. From a dev perspective, it provides an easy way to reuse the same values, without having to remember pesky hex values, for example. Any time we want to tweak the value of a characteristic, we only have to do it in one single place for it to reflect everywhere.
+From a design perspective, there is a need for aesthetic flexibility without decreasing the efficiency of build or the effectiveness of the components when implemented. From a dev perspective, it provides an easy way to reuse the same values, without the overhead of having to remember details such as hex values. Any time you want to tweak the value of a characteristic, you only have to do it in one place for it to reflect everywhere.
 
-Characteristics give us:
+Characteristics offer the following benefits:
 
-- Ability to theme the UITK inline with third-parties or CIB sub brand guidelines
-- Increase consistency across all components, with the knock-on effect of improving the overall user experience e.g. reduced cognitive load
-- Simplified the design of new components and patterns e.g. drag and drop behaviour
-- Steamlined evolution – a single change to a characteristic will automatically cascade down through all related components within the library
+- Ability to theme the UITK inline with third-parties or CIB sub brand guidelines.
+- Increase consistency across all components, with the knock-on effect of improving the overall user experience e.g. reduced cognitive load.
+- Simplified design of new components and patterns e.g. drag-and-drop behavior.
+- Streamlined evolution – a single change to a characteristic will automatically cascade down through all related components within the library.
 
-### Token Name Convention
+### Token name convention
 
 When defining characteristic design tokens, they should generally be in the format `--uitk-<characteristic name>-<variant>-<scale>-<density>`
 
@@ -35,17 +35,12 @@ When defining characteristic design tokens, they should generally be in the form
 3. Append the variant if applicable, e.g. `--uitk-actionable-cta-`, `--uitk-text-h2-`
 4. Append the attribute, e.g. `--uitk-actionable-cta-background`, `--uitk-text-h2-fontSize`, `--uitk-focused-outlineColor`
 5. Append the state if applicable, e.g. `--uitk-actionable-cta-background-hover`, `--uitk-focused-outlineColor-warning`
-6. For tokens that are scoped by emphasis\* or density\*\* the suffix should be the suitable emphasis/density for the defined value, e.g. `--uitk-text-h2-fontSize-high`
-
-\* See emphasis section below for more details.
-
-\*\* Here, it is best practice to avoid directly using the density invariant values, and skip this step in actual usage - i.e., discard the `-<density>` suffix to get the appropriate value in practice e.g. `--uitk-text-h2-fontSize`.
 
 ## Styling with Characteristics
 
 Remember to wrap the characteristic you wish to use inside a `var()` function.
 
-For example, a Button is a component that a user can perform an action on, so we may want to use the following characteristics to style the component:
+For example, a Button is a component on which a user can perform an action, so you could use the following characteristics to style the component:
 
 ```css
 .uitkButton {
@@ -55,71 +50,11 @@ For example, a Button is a component that a user can perform an action on, so we
 ```
 
 Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest ToolkitProvider. Considering the above, we would get that in light
-theme, --uitk-actionable-primary-background resolves to `var(--uitk-action-primary-background)`, which in light theme is `var(--uitk-color-grey-60)` and in dark theme is `var(--uitk-color-grey-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
+theme, --uitk-actionable-primary-background resolves to `var(--uitk-action-primary-background)`, which in light theme is `var(--uitk-color-gray-60)` and in dark theme is `var(--uitk-color-gray-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
 
-## Emphasis
+### Simple customization using characteristics
 
-### Using emphasis
-
-Some characteristic tokens have a concept of emphasis. Components can apply characteristics with emphasis to make them stand out on the page amongst the rest of the UI, or have less prominence so that other components appear exaggerated.
-
-An example of a characteristic token which has emphasis levels is `--uitk-editable-background-` which has the three levels defined, `low`, `medium`, and `high`. By default, the FormField component has been styled to use the `--uitk-editable-background-medium` token in a local variable:
-
-```css
-.uitkFormField {
-  --formField-background: var(--uitk-editable-background-medium);
-}
-```
-
-Which, in the UITK theme, just makes the background white. Let's make it appear on a purple Panel for demo purposes:
-
-<Panel style={{ background: "var(--uitk-color-purple-10)" }}>
-  <FormField
-    style={{ width: "242px" }}
-    label="High emphasis form field"
-    helperText="Helper text value"
-  >
-    <Input defaultValue="Value" />
-  </FormField>
-</Panel>
-
-Perhaps though, you would like a FormField to have more emphasis on the page. In this case, you can pass in the `uitkEmphasisHigh` className directly to FormField. This will then override the above value:
-
-```css
-.uitkEmphasisHigh.uitkFormField {
-  --formField-background: var(--uitk-editable-background-high);
-}
-```
-
-Giving the following appearance:
-
-<Panel style={{ background: "var(--uitk-color-purple-10)" }}>
-  <FormField
-    style={{ width: "242px" }}
-    label="High emphasis form field"
-    helperText="Helper text value"
-    className="uitkEmphasisHigh"
-  >
-    <Input defaultValue="Value" />
-  </FormField>
-</Panel>
-
-Or otherwise, maybe we want it to have a lower emphasis... just as easy: pass in the `uitkEmphasisLow` className to FormField, and voila - a transparent background:
-
-<Panel style={{ background: "var(--uitk-color-purple-10)" }}>
-  <FormField
-    style={{ width: "242px" }}
-    label="High emphasis form field"
-    helperText="Helper text value"
-    className="uitkEmphasisLow"
-  >
-    <Input defaultValue="Value" />
-  </FormField>
-</Panel>
-
-### Extending emphasis to more components
-
-Not all UITK components support emphasis by default. This capability can easily be added though. Suppose you want to add low emphasis to a Card. Currently, Card makes use of the `---uitk-container-background-medium` token for all of it's styling purposes. Here's how it looks by default:
+In the following example, we will show how to customize the Card component through characteristics. Currently, Card only has one variant, using tokens such as `---uitk-container-primary-background` all of its styling purposes. Here's how it looks by default, shown on a purple Panel for demo purposes:
 
 <Panel style={{ background: "var(--uitk-color-purple-10)" }}>
   <Card>
@@ -130,24 +65,47 @@ Not all UITK components support emphasis by default. This capability can easily 
   </Card>
 </Panel>
 
-Let's add the following to `Card.css`:
+Some components, like Button, have different variants such as 'cta' and 'secondary'. But these styling variants aren't limited to only those with a defined variant prop. We can easily add a new variant to Card, and directly use the `secondary` variant container characteristics instead. Let's add the following to `Card.css`:
 
 ```css
-.uitkEmphasisHigh.uitkCard {
-  --uitkCard-background: var(--uitk-container-background-high);
-  --uitkCard-borderColor: var(--uitk-container-borderColor-high);
+.uitkCard.uitkCard-secondary {
+  --uitkCard-background: var(--uitk-container-secondary-background);
+  --uitkCard-borderColor: var(--uitk-container-secondary-borderColor);
   --uitkCard-borderRadius: 10px;
   --uitkCard-borderWidth: 3px;
 }
 ```
 
-Note how we make use of the `-high` emphasis characteristic tokens provided by UITK that weren't used in Card by default as well as raw values to further emphasise the component. Now, all we have to do to make Card have emphasis is pass in the `uitkEmphasisHigh` prop:
+Note the use of `-secondary` container characteristic tokens provided by UITK that weren't used in Card by default, as well as raw values to further emphasize the component. Now, all we have to do to use this secondary variant styling is pass in the `uitkCard-secondary` class name (this name has been chosen to follow convention, but could really be anything you like):
 
 <Panel style={{ background: "var(--uitk-color-purple-10)" }}>
-  <Card className="uitkEmphasisHigh">
+  <Card className="uitkCard-secondary">
     <div>
       <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
-        Card with High Emphasis
+        Card with our secondary styling
+      </h1>
+      <span>Here is some content</span>
+    </div>
+  </Card>
+</Panel>
+
+Alternatively, we could actually redefine our design to mean that all Card components in our app convey an important message which could be accented. In this case, we'll override with accent characteristics:
+
+```css
+.my-app .uitkCard {
+  --uitkCard-background: var(--uitk-accent-background);
+  --uitkCard-borderColor: var(--uitk-accent-borderColor);
+  --uitkCard-color: var(--uitk-accent-foreground);
+}
+```
+
+Note how no class name is needed to be passed in. We have just redefined the Card's styling at a higher specificity, to produce the following styling:
+
+<Panel className="my-app" style={{ background: "var(--uitk-color-purple-10)" }}>
+  <Card className="uitkCard">
+    <div>
+      <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
+        Card with accent styles
       </h1>
       <span>Here is some content</span>
     </div>
@@ -163,7 +121,7 @@ Generally, the characteristics appropriate for the component should be given by 
 - What is the purpose of this component? Will it contain other elements, lead me to a new page, etc?
 - Should this component give feedback? Can it be submitted, does it have a success state, etc?
 
-It is important to note that just because you have assigned a component to a characteristic, does not mean it consumes _all_ of those characteristics. We can freely pick which characteristics we want. A good example of this may be to notice that the `focused` characteristic offers both a border and outline style. From this you would probably want to use an outline if you're setting the outline attribute, and of course border for the border attribute. Yet, there is nothing stopping you from writing `border-style: var(--uitk-focused-outlineStyle)` instead!
+It is important to note that just because you have assigned a characteristic to a component, does not mean it consumes _all_ of those characteristics. We can freely pick which characteristics we want. A good example of this may be to notice that the `focused` characteristic offers both a border and outline style. From this you would probably want to use an outline if you're setting the outline attribute, and of course border for the border attribute. Yet, there is nothing stopping you from writing `border-style: var(--uitk-focused-outlineStyle)` instead.
 
 Think carefully when deciding which characteristics to use. It's up to you to choose which characteristic is most appropriate - for example, should the background color of your component be coming from container, because that's its general purpose, or should it be coming from selectable, since it can be selected? Many characteristics offer the same attribute (like background color), and it's up to you to decide what part of your component you are styling as to which characteristic it should come from. Taking time to consider this will ensure you have the most consistent styling possible across your app.
 
@@ -171,7 +129,7 @@ Think carefully when deciding which characteristics to use. It's up to you to ch
 
 There are two easy ways to check this, depending on what you're interested in:
 
-1. Each component has a breakdown of the characteristics used on its component story.
-2. Each characteristic has a list of components using one or more of that characteristics token, which can be found at the bottom of the characteristics docs page.
+- Each component has a breakdown of the characteristics used on its component story.
+- Each characteristic has a list of components using one or more of that characteristics token, which can be found at the bottom of the characteristics docs page.
 
 You can of course also dive into the components CSS files to see exactly how they are styled.

@@ -1,12 +1,12 @@
 import { createContext, useContext } from "react";
-import { CellRange } from "./internal";
+import { CellRange, SelectRowsOptions } from "./internal";
 
 export interface SelectionContext {
   selectedCellRange: CellRange | undefined;
   selRowIdxs: Set<number>;
   isAnySelected: boolean;
   isAllSelected: boolean;
-  selectRows: (rowIdx: number, shift: boolean, meta: boolean) => void;
+  selectRows: (args: SelectRowsOptions) => void;
   selectAll: () => void;
   unselectAll: () => void;
 }

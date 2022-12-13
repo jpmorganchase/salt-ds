@@ -1,5 +1,4 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { Card } from "@jpmorganchase/uitk-core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
@@ -23,8 +22,6 @@ A Card is a sheet of material that serves as an entry point to more detailed inf
 
 ## Card Component
 
-Card components have two levels of emphasis; medium (default) and high.
-
 <Canvas>
   <Story name="Card" decorators={[withFlexGap]}>
     <Card>
@@ -45,20 +42,6 @@ import { Card } from "@jpmorganchase/uitk-core";
 ## Props
 
 <ArgsTable of={Card} />
-
-## HTML Anatomy of a Card
-
-<Canvas>
-  <ComponentAnatomy>
-    <DefaultCard />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Disabled />
-  </ComponentAnatomy>
-  <ComponentAnatomy>
-    <Interactable />
-  </ComponentAnatomy>
-</Canvas>
 
 ## CSS Class
 

@@ -1,14 +1,18 @@
 /* Styles applied to the root element dependent on density */
 .uitk-density-touch {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
   --input-button-inset: 4px;
 }
 .uitk-density-low {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2 / 3);
   --input-button-inset: 4px;
 }
 .uitk-density-medium {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 0.5);
   --input-button-inset: 2px;
 }
 .uitk-density-high {
+  --input-adornment-height: calc(var(--uitk-size-base) + var(--uitk-size-unit));
   --input-button-inset: 2px;
 }
 
@@ -24,7 +28,7 @@
   font-family: var(--uitkInput-fontFamily, var(--uitk-text-fontFamily));
   font-size: var(--uitkInput-fontSize, var(--uitk-text-fontSize));
   height: var(--uitkInput-height, var(--uitk-size-base));
-  line-height: var(--uitk-text-base-lineHeight);
+  line-height: var(--uitk-text-lineHeight);
   min-height: var(--uitkInput-minHeight, var(--uitk-size-base));
   min-width: var(--uitkInput-minWidth, 8em);
   padding: var(--uitkInput-padding, 0 var(--uitk-size-unit));
@@ -80,7 +84,7 @@
   display: flex;
   align-items: center;
 
-  height: var(--uitk-size-adornment);
+  height: var(--input-adornment-height);
 }
 
 /* Style applied to root element with start adornment */

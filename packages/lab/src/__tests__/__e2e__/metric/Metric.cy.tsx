@@ -1,4 +1,5 @@
 import { Metric, MetricHeader, MetricContent } from "@jpmorganchase/uitk-lab";
+import { DoubleChevronDownIcon } from "@jpmorganchase/uitk-icons";
 
 describe("Metric - by default", () => {
   it("should NOT render the indicator", () => {
@@ -8,7 +9,7 @@ describe("Metric - by default", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("not.exist");
+    cy.get(".uitkMetricContent-indicator").should("not.exist");
   });
 
   it("should render with vertical orientation style", () => {
@@ -31,7 +32,7 @@ describe("Metric - by default", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure2").should("exist");
+    cy.get(".uitkText-display2").should("exist");
   });
 });
 
@@ -42,11 +43,11 @@ describe("Metric - Indicator", () => {
         <MetricHeader title="Revenue YTD" />
         <MetricContent
           value="$801.9B"
-          IndicatorIconComponent={(props) => <div {...props}>icon</div>}
+          IndicatorIconComponent={DoubleChevronDownIcon}
         />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("exist");
+    cy.get(".uitkMetricContent-indicator").should("exist");
   });
   it("should NOT render the indicator if required and IndicatorIconComponent NOT provided", () => {
     cy.mount(
@@ -55,7 +56,7 @@ describe("Metric - Indicator", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.findByTestId("metric-indicator").should("not.exist");
+    cy.get(".uitkMetricContent-indicator").should("not.exist");
   });
 });
 
@@ -90,7 +91,7 @@ describe("Metric - Indicator Position", () => {
       </Metric>
     );
 
-    cy.findByTestId("metric-indicator").then((icon) => {
+    cy.get(".uitkMetricContent-indicator").then((icon) => {
       const iconPos = icon[0].getBoundingClientRect().x;
       cy.findByTestId("metric-value").then((value) => {
         expect(value[0].getBoundingClientRect().x).greaterThan(iconPos);
@@ -106,7 +107,7 @@ describe("Metric - Indicator Position", () => {
       </Metric>
     );
 
-    cy.findByTestId("metric-indicator").then((icon) => {
+    cy.get(".uitkMetricContent-indicator").then((icon) => {
       const iconPos = icon[0].getBoundingClientRect().x;
       cy.findByTestId("metric-value").then((value) => {
         expect(value[0].getBoundingClientRect().x).lessThan(iconPos);
@@ -115,7 +116,7 @@ describe("Metric - Indicator Position", () => {
   });
 });
 
-describe("Metric - Emphasis", () => {
+describe("Metric - Size", () => {
   it(`should render with correct text component for size LARGE`, () => {
     cy.mount(
       <Metric size="large">
@@ -123,7 +124,7 @@ describe("Metric - Emphasis", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure1").should("exist");
+    cy.get(".uitkText-display1").should("exist");
   });
   it(`should render with correct text component for size MEDIUM`, () => {
     cy.mount(
@@ -132,7 +133,7 @@ describe("Metric - Emphasis", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure2").should("exist");
+    cy.get(".uitkText-display2").should("exist");
   });
   it(`should render with correct text component for size SMALL`, () => {
     cy.mount(
@@ -141,7 +142,7 @@ describe("Metric - Emphasis", () => {
         <MetricContent value="$801.9B" />
       </Metric>
     );
-    cy.get(".uitkText-figure3").should("exist");
+    cy.get(".uitkText-display3").should("exist");
   });
 });
 

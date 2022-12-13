@@ -39,7 +39,8 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     [selectedCellRange]
   );
 
-  const { cursorRowIdx, cursorColIdx } = useCursorContext();
+  const { cursorRowIdx, cursorColIdx, focusedPart, headerIsFocusable } =
+    useCursorContext();
 
   const { editMode, startEditMode } = useEditorContext();
 
@@ -61,7 +62,11 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     <tbody onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
       {rows.map((row) => {
         const isSelected = selRowIdxs.has(row.index);
-        const cursorIdx = cursorRowIdx === row.index ? cursorColIdx : undefined;
+        const isFollowedBySelected = selRowIdxs.has(row.index + 1);
+        const cursorIdx =
+          focusedPart === "body" && cursorRowIdx === row.index
+            ? cursorColIdx
+            : undefined;
         const editorColIdx = editMode ? cursorIdx : undefined;
         return (
           <TableRow
@@ -71,11 +76,13 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             columns={columns}
             isHoverOver={row.key === hoverRowKey}
             isSelected={isSelected}
+            isFollowedBySelected={isFollowedBySelected}
             cursorColIdx={cursorIdx}
             gap={gap}
             zebra={zebra && row.index % 2 == 0}
             editorColIdx={editorColIdx}
             isCellSelected={isCellInSelectedRange}
+            headerIsFocusable={headerIsFocusable}
           />
         );
       })}

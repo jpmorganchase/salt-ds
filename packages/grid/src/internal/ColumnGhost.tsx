@@ -13,6 +13,7 @@ export interface ColumnGhostProps<T> {
   dragState?: ColumnDragState;
   columns: GridColumnModel<T>[];
   rows: GridRowModel<T>[];
+  zebra?: boolean;
 }
 
 // When the user drags a column this component renders a partially transparent
@@ -23,7 +24,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
   }
 
   const { columnIndex, x, y } = props.dragState;
-  const { columns, rows } = props;
+  const { columns, rows, zebra } = props;
   const movingColumn = columns[columnIndex];
 
   const style: CSSProperties = {
@@ -33,7 +34,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
 
   return (
     <div className={withBaseName()} style={style}>
-      <table>
+      <table aria-hidden>
         <TableColGroup columns={[movingColumn]} />
         <thead>
           <HeaderRow columns={[movingColumn]} />
@@ -42,6 +43,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
           columns={[movingColumn]}
           rows={rows}
           setHoverRowKey={() => {}}
+          zebra={zebra}
         />
       </table>
     </div>

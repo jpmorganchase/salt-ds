@@ -33,7 +33,7 @@
   height: 520px;
   width: 70vw;
   font-size: 4em;
-  color: var(--uitk-color-grey-200);
+  color: var(--uitk-color-gray-200);
   white-space: normal;
 }
 .carousel-image-placeholder span {
@@ -45,7 +45,7 @@
 }
 
 .carousel-image-placeholder-2 {
-  background-color: var(--uitk-color-grey-40);
+  background-color: var(--uitk-color-gray-40);
 }
 .carousel-image-placeholder-3 {
   background-color: var(--uitk-color-teal-30);

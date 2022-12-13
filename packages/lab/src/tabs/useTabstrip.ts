@@ -168,7 +168,7 @@ export const useTabstrip = ({
   );
 
   const handleClick = useCallback(
-    (evt: MouseEvent<Element>, tabIndex: number) => {
+    (evt: MouseEvent, tabIndex: number) => {
       // releasing the mouse at end of drag will trigger a click, ignore those
       if (!dragDropHook.isDragging) {
         keyboardHook.onClick(evt, tabIndex);
@@ -179,7 +179,7 @@ export const useTabstrip = ({
   );
 
   const handleKeyDown = useCallback(
-    (evt: KeyboardEvent<Element>) => {
+    (evt: KeyboardEvent) => {
       keyboardHook.onKeyDown(evt);
       if (!evt.defaultPrevented) {
         selectionHook.onKeyDown(evt);
@@ -203,7 +203,7 @@ export const useTabstrip = ({
   };
 
   const addTab = useCallback(
-    // The -1 is to account for the AddTab button - we shoudn't assume this
+    // The -1 is to account for the AddTab button - we shouldn't assume this
     (indexPosition: number = collectionHook.data.length - 1) => {
       const tabId =
         (pendingNewTab.current = `${idRoot}-${collectionHook.data.length}`);
@@ -229,7 +229,7 @@ export const useTabstrip = ({
   );
 
   const selectNewTab = useCallback(
-    (tabId) => {
+    (tabId: string) => {
       const tab = collectionHook.data.find((item) => item.id === tabId);
       if (tab) {
         selectionHook.activateTab(tab.index);
@@ -260,7 +260,7 @@ export const useTabstrip = ({
         if (collectionHook.data.length > 1) {
           if (
             indexPosition === selectionHook.selected &&
-            //TODO need to exclude oberflow indicator, addButton
+            //TODO need to exclude overflow indicator, addButton
             indexPosition === collectionHook.data.length - 1
           ) {
             selectionHook.activateTab(indexPosition - 1);

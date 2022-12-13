@@ -77,7 +77,7 @@
 }
 
 .uitkQueryInputValueList {
-  border: solid 1px var(--uitk-container-borderColor-medium);
+  border: solid 1px var(--uitk-container-primary-borderColor);
 }
 
 .uitkQueryInputValueList-back {
@@ -109,7 +109,7 @@
 
 .uitkQueryInputSearchList-categoryTitle {
   color: var(--uitk-text-primary-foreground);
-  background: var(--uitk-container-background-medium);
+  background: var(--uitk-container-primary-background);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-text-fontWeight-strong);
   display: flex;

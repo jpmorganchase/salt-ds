@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Button,
+  Link,
   ParentChildLayout,
   ToolkitProvider,
+  Text,
 } from "@jpmorganchase/uitk-core";
 import {
   EditableLabel,
-  Link,
   Tab,
   TabDescriptor,
   Tabstrip,
@@ -14,7 +15,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Text,
 } from "@jpmorganchase/uitk-lab";
 
 import { AdjustableFlexbox } from "../story-components";
@@ -264,14 +264,14 @@ export const TabstripCentered = () => {
   );
 };
 
-export const LowEmphasisTabstrip = () => {
+export const TertiaryTabstrip = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
   return (
     <div style={{ height: 300, width: 600 }}>
       <Tabstrip
-        emphasis="low"
+        variant="tertiary"
         onActiveChange={handleTabSelection}
         overflowMenu={false}
         activeTabIndex={selectedTab}
@@ -509,7 +509,6 @@ export const TabstripAddNew = () => {
   }, []);
 
   return (
-    // <ComponentAnatomy>
     <div style={{ height: 300, width: 250 }}>
       <Tabstrip enableAddTab onActiveChange={setSelectedTabIndex}>
         {tabs.map((label, i) => (
@@ -518,7 +517,6 @@ export const TabstripAddNew = () => {
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
     </div>
-    // </ComponentAnatomy>
   );
 };
 
@@ -992,7 +990,7 @@ export const DraggableTabs = () => {
 
   const [tabs, setTabs] = useState(tabLabels);
   const handleDrop = useCallback(
-    (fromIndex, toIndex) => {
+    (fromIndex: number, toIndex: number) => {
       const newTabs = tabs.slice();
       const [tab] = newTabs.splice(fromIndex, 1);
       if (toIndex === -1) {
@@ -1041,7 +1039,7 @@ export const DraggableTabsWithOverflow = () => {
     (fromIndex: number, toIndex: number) => {
       const tab = tabs[fromIndex];
       const newTabs = tabs.filter((t) => t !== tab);
-      console.log(`handleDrop from ${fromIndex} to ${toIndex} 
+      console.log(`handleDrop from ${fromIndex} to ${toIndex}
         existing tabs ${tabs.join(",")}
       `);
       if (toIndex === -1) {

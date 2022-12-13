@@ -2,11 +2,26 @@
   position: absolute;
   top: 0;
   right: var(--grid-scrollBar-width);
-  z-index: 2;
+  z-index: var(--grid-right-header-zIndex);
 }
 
-.uitkGridTopRightPart-raised {
-  box-shadow: -6px 0 4px -4px var(--grid-shadow-color);
+.uitkGridTopRightPart-leftShadow {
+  box-shadow: -2px 0 4px 0 var(--grid-shadow-color);
+  clip-path: inset(1px 0 0 -10px);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridTopRightPart-leftShadow {
+  border-left: solid 1px var(--grid-pinnedSeparator-color);
+}
+
+.uitkGridTopRightPart-bottomShadow {
+  box-shadow: 0 2px 4px 0 var(--grid-shadow-color);
+  clip-path: inset(1px 0 -10px 0);
+}
+
+.uitkGridTopRightPart-leftShadow.uitkGridTopRightPart-bottomShadow {
+  box-shadow: -2px 2px 4px 0 var(--grid-shadow-color);
+  clip-path: inset(1px 0 -10px -10px);
 }
 
 .uitkGridTopRightPart table {

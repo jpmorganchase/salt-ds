@@ -1,12 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
-import { StackLayout, FlexItem } from "@jpmorganchase/uitk-core";
-import {
-  CSSClassTable,
-  CSSVariableTable,
-} from "css-variable-docgen-components";
-import { DefaultStackLayout } from "./stack-layout.stories";
-import HelpAndSupport from "../help-and-support.doc.mdx";
+import { StackLayout } from "@jpmorganchase/uitk-core";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Layout/StackLayout"
@@ -35,24 +29,6 @@ You need a layout that is responsive by default and will break into two columns 
 
 You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
 
-### Examples
-
-#### Simple usage
-
-The simple usage example shows a group of panels stacked.
-
-<Canvas>
-  <Story id="core-layout-stacklayout--stack-layout-simple-usage" />
-</Canvas>
-
-#### Composite usage
-
-The composite usage example shows a group of formfields stacked.
-
-<Canvas>
-  <Story id="core-layout-stacklayout--stack-layout-composite" />
-</Canvas>
-
 ## Configuring Stack layout
 
 ### API
@@ -64,16 +40,5 @@ import { StackLayout } from "@jpmorganchase/uitk-core";
 ### Props
 
 <ArgsTable of={StackLayout} />
-
-## Anatomy
-
-<Canvas>
-  <ComponentAnatomy showControls={false}>
-    <StackLayout style={{ border: "dashed 1px black", padding: "1rem" }}>
-      <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
-      <FlexItem style={{ border: "dashed 1px black", padding: "1rem" }} />
-    </StackLayout>
-  </ComponentAnatomy>
-</Canvas>
 
 <HelpAndSupport />

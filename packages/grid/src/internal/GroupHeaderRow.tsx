@@ -19,7 +19,7 @@ export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
     return null;
   }
   return (
-    <tr className={withBaseName()}>
+    <tr className={withBaseName()} role="row">
       {groups.map((group) => {
         const Cell = group.data.headerComponent || GroupHeaderCell;
         const CellValue =

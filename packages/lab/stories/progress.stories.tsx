@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
@@ -15,9 +14,9 @@ interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
 }
 
-const ProgressWithControls: FC<ProgressWithControlsProps> = ({
+const ProgressWithControls = ({
   ProgressComponent: Progress,
-}) => {
+}: ProgressWithControlsProps) => {
   const { handleReset, handleStart, handleStop, isProgressing, value } =
     useProgressingValue();
   return (
@@ -80,10 +79,10 @@ export const CircularAll: ComponentStory<typeof CircularProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <CircularExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <CircularExamples />
     </ToolkitProvider>
   </div>
@@ -186,12 +185,6 @@ export const CircularUnit: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" unit="px" value={38} />
 );
 
-export const CircularBackwardsCompat: ComponentStory<
-  typeof CircularProgress
-> = () => (
-  <CircularProgress className="backwardsCompat" showInfo={false} value={38} />
-);
-
 const LinearExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>
@@ -223,10 +216,10 @@ export const LinearAll: ComponentStory<typeof LinearProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <LinearExamples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <LinearExamples />
     </ToolkitProvider>
   </div>

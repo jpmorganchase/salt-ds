@@ -14,17 +14,20 @@ Components that may form a hierarchy and stack upon or beneath other elements of
 
 ### Shadow (Elevation)
 
-Scroll: Dropshadow found at the top of an overflowing scrollable area (e.g. Comments)
-Border region: Dropshadow found around application regions (e.g. App Header, Drawer)
-Default: Dropshadow default (e.g. Card)
-Hover: Dropshadow found around a component using the default (e.g. Card) on hover state
-Popout: Dropshadow found around temporarily overlaying elements (e.g. Tooltip)
-Drag: Dropshadow found around draggable objects on drag (e.g. Tabs)
-Modal: Dropshadow found around modal windows (e.g. Dialog)
+| Shadow (Elevation) | Description                                                                      |
+| ------------------ | -------------------------------------------------------------------------------- |
+| Scroll             | Dropshadow found at the top of an overflowing scrollable area (e.g. Comments)    |
+| Border region      | Dropshadow found around application regions (e.g. App Header, Drawer)            |
+| Default            | Dropshadow default (e.g. Card)                                                   |
+| Hover              | Dropshadow found around a component using the default (e.g. Card) on hover state |
+| Popout             | Dropshadow found around temporarily overlaying elements (e.g. Tooltip)           |
+| Drag               | Dropshadow found around draggable objects on drag (e.g. Tabs)                    |
+| Modal              | Dropshadow found around modal windows (e.g. Dialog)                              |
 
 <Canvas>
-  <Story name="Shadow">
+  <Story name="Overlayable">
     <DocGrid>
+      <ColorBlock colorVar="--uitk-overlayable-background" />
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-scroll" />
       <BlankBlockCode>--uitk-overlayable-shadow-scroll</BlankBlockCode>
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-borderRegion" />
@@ -39,29 +42,6 @@ Modal: Dropshadow found around modal windows (e.g. Dialog)
       <BlankBlockCode>--uitk-overlayable-shadow-drag</BlankBlockCode>
       <ShadowBlockCell shadowVar="--uitk-overlayable-shadow-modal" />
       <BlankBlockCode>--uitk-overlayable-shadow-modal</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Scrim
-
-<Canvas>
-  <Story name="Scrim">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-overlayable-background-medium" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Low emphasis overrides
-
-<Canvas>
-  <Story name="Low emphasis">
-    <DocGrid>
-      <ColorBlock
-        className="uitkEmphasisLow"
-        colorVar="--uitk-overlayable-background-low"
-      />
     </DocGrid>
   </Story>
 </Canvas>

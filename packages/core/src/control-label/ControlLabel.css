@@ -32,7 +32,7 @@
   font-family: var(--uitk-text-fontFamily);
   font-size: var(--uitk-text-fontSize);
   font-weight: var(--uitk-text-fontWeight);
-  line-height: var(--uitk-text-base-lineHeight);
+  line-height: var(--uitk-text-lineHeight);
   margin-left: var(--uitkControlLabel-marginLeft, var(--controlLabel-marginLeft));
   margin-right: var(--uitkControlLabel-marginRight, var(--controlLabel-marginRight));
   display: block;
@@ -54,23 +54,4 @@
 .uitkControlLabel-disabled .uitkControlLabel-label {
   cursor: var(--uitk-selectable-cursor-disabled);
   color: var(--uitkControlLabel-color-disabled, var(--uitk-text-primary-foreground-disabled));
-}
-
-/* TK1 backwards compatible styling */
-
-.uitk-density-high {
-  --backwardsCompat-controlLabel-marginRight: 4px;
-}
-.uitk-density-medium {
-  --backwardsCompat-controlLabel-marginRight: 6px;
-}
-.uitk-density-low {
-  --backwardsCompat-controlLabel-marginRight: 9px;
-}
-.uitk-density-touch {
-  --backwardsCompat-controlLabel-marginRight: 12px;
-}
-
-.backwardsCompat .uitkControlLabel-label {
-  --controlLabel-marginRight: var(--backwardsCompat-controlLabel-marginRight);
 }

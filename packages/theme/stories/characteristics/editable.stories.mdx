@@ -26,7 +26,6 @@ Components that hold mutable data and allow for data entry.
       <CursorBlock cursor="--uitk-editable-cursor-hover" />
       <CursorBlock cursor="--uitk-editable-cursor-disabled" />
       <CursorBlock cursor="--uitk-editable-cursor-readonly" />
-      <CornerBlock cornerRadius="--uitk-editable-borderRadius" />
       <LineBlockCell />
       <LineBlockCode>--uitk-editable-borderStyle</LineBlockCode>
       <LineBlockCell />
@@ -37,11 +36,19 @@ Components that hold mutable data and allow for data entry.
       <LineBlockCode>--uitk-editable-borderStyle-disabled</LineBlockCode>
       <LineBlockCell />
       <LineBlockCode>--uitk-editable-borderStyle-readonly</LineBlockCode>
-      <LineBlock lineWidth="--uitk-editable-borderWidth" />
-      <LineBlock lineWidth="--uitk-editable-borderWidth-hover" />
       <LineBlock lineWidth="--uitk-editable-borderWidth-active" />
-      <LineBlock lineWidth="--uitk-editable-borderWidth-disabled" />
-      <LineBlock lineWidth="--uitk-editable-borderWidth-readonly" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+## Help text
+
+<Canvas>
+  <Story name="Help text">
+    <TextBlock fontStyle="--uitk-editable-help-fontStyle" />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--uitk-editable-help-fontStyle</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
@@ -60,44 +67,44 @@ Components that hold mutable data and allow for data entry.
   </Story>
 </Canvas>
 
-### Medium emphasis values
+### Primary
 
 <Canvas>
-  <Story name="Medium emphasis">
+  <Story name="Primary">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-editable-background-medium" />
-      <ColorBlock colorVar="--uitk-editable-background-hover-medium" />
-      <ColorBlock colorVar="--uitk-editable-background-active-medium" />
-      <ColorBlock colorVar="--uitk-editable-background-disabled-medium" />
-      <ColorBlock colorVar="--uitk-editable-background-readonly-medium" />
+      <ColorBlock colorVar="--uitk-editable-primary-background" />
+      <ColorBlock colorVar="--uitk-editable-primary-background-hover" />
+      <ColorBlock colorVar="--uitk-editable-primary-background-active" />
+      <ColorBlock colorVar="--uitk-editable-primary-background-disabled" />
+      <ColorBlock colorVar="--uitk-editable-primary-background-readonly" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### High emphasis values
+### Secondary
 
 <Canvas>
-  <Story name="High emphasis">
+  <Story name="Secondary">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-editable-background-high" />
-      <ColorBlock colorVar="--uitk-editable-background-hover-high" />
-      <ColorBlock colorVar="--uitk-editable-background-active-high" />
-      <ColorBlock colorVar="--uitk-editable-background-disabled-high" />
-      <ColorBlock colorVar="--uitk-editable-background-readonly-high" />
+      <ColorBlock colorVar="--uitk-editable-secondary-background" />
+      <ColorBlock colorVar="--uitk-editable-secondary-background-hover-gh" />
+      <ColorBlock colorVar="--uitk-editable-secondary-background-active" />
+      <ColorBlock colorVar="--uitk-editable-secondary-background-disabled" />
+      <ColorBlock colorVar="--uitk-editable-secondary-background-readonly" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### Low emphasis values
+### Tertiary
 
 <Canvas>
-  <Story name="Low emphasis">
+  <Story name="Tertiary">
     <DocGrid>
-      <ColorBlock colorVar="--uitk-editable-background-low" />
-      <ColorBlock colorVar="--uitk-editable-background-hover-low" />
-      <ColorBlock colorVar="--uitk-editable-background-active-low" />
-      <ColorBlock colorVar="--uitk-editable-background-disabled-low" />
-      <ColorBlock colorVar="--uitk-editable-background-readonly-low" />
+      <ColorBlock colorVar="--uitk-editable-tertiary-background" />
+      <ColorBlock colorVar="--uitk-editable-tertiary-background-hover" />
+      <ColorBlock colorVar="--uitk-editable-tertiary-background-active" />
+      <ColorBlock colorVar="--uitk-editable-tertiary-background-disabled" />
+      <ColorBlock colorVar="--uitk-editable-tertiary-background-readonly" />
     </DocGrid>
   </Story>
 </Canvas>

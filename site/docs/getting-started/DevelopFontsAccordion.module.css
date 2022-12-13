@@ -1,0 +1,20 @@
+.accordionWrapper hr {
+  --ifm-hr-margin-vertical: 0;
+  --ifm-hr-background-color: var(--uitk-separable-secondary-borderColor);
+}
+
+.accordionWrapper :global(.uitkIcon) {
+  --uitk-size-icon-base: var(--uitk-size-unit);
+}
+
+.accordionWrapper :global(.uitkAccordionSummary-icon) {
+  right: 0;
+}
+
+.accordionWrapper :global(.uitkAccordionSection) {
+  --accordion-section-padding: 0;
+}
+
+.summary {
+  font-weight: 600;
+}

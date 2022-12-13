@@ -20,7 +20,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       </FormField>
 
       <FormField
-        className={cx("uitkEmphasisHigh", className)}
+        className={cx("uitkFormField-secondary", className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
@@ -41,7 +41,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkEmphasisHigh", className)}
+        className={cx("uitkFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -49,7 +49,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkEmphasisLow", className)}
+        className={cx("uitkFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -66,7 +66,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkEmphasisHigh", className)}
+        className={cx("uitkFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -74,7 +74,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkEmphasisLow", className)}
+        className={cx("uitkFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -88,21 +88,4 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
 
 AllExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
-};
-
-export const BackwardsCompatGrid: Story = () => {
-  return <AllExamplesGrid className="backwardsCompat" />;
-};
-
-BackwardsCompatGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CompareWithOriginalToolkit: Story = () => {
-  return (
-    <AllExamplesGrid
-      className="backwardsCompat"
-      imgSrc="/visual-regression-screenshots/FormField-vr-snapshot.png"
-    />
-  );
 };

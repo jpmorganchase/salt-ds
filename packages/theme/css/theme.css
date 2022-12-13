@@ -8,6 +8,7 @@
 @import url(foundations/color.css);
 @import url(foundations/delay.css);
 @import url(foundations/fade.css);
+@import url(foundations/icon.css);
 @import url(foundations/opacity.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
@@ -23,13 +24,12 @@
 @import url(characteristics/container.css);
 @import url(characteristics/differential.css);
 @import url(characteristics/draggable.css);
-@import url(characteristics/droptarget.css);
+@import url(characteristics/target.css);
 @import url(characteristics/editable.css);
 @import url(characteristics/focused.css);
 @import url(characteristics/measured.css);
 @import url(characteristics/navigable.css);
 @import url(characteristics/overlayable.css);
-@import url(characteristics/ratable.css);
 @import url(characteristics/selectable.css);
 @import url(characteristics/separable.css);
 @import url(characteristics/status.css);

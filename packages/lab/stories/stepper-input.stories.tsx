@@ -5,7 +5,7 @@ import {
 } from "@jpmorganchase/uitk-core/stories";
 import { StepperInput } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, Story } from "@storybook/react";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export default {
   title: "Lab/Stepper Input",
@@ -17,7 +17,7 @@ interface ExampleRowProps {
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
+const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ width: "100vw" }}>
     <h3>{name} - ( Touch, Low, Medium, High )</h3>
     <ColumnLayoutContainer>
@@ -89,10 +89,10 @@ export const Alignment: Story = () => (
 
 export const All: Story = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <Examples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <Examples />
     </ToolkitProvider>
   </div>

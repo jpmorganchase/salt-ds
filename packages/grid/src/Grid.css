@@ -4,14 +4,16 @@
   --grid-fontSize-default: 16px;
   --grid-header-fontSize-default: 14px;
   --grid-separatorGap-default: 20px;
+  --grid-cornerTag-size-default: 14px;
 }
 
 .uitk-density-low {
-  --grid-row-height-default-default: 49px;
-  --grid-padding-default-default: 12px;
+  --grid-row-height-default: 49px;
+  --grid-padding-default: 12px;
   --grid-fontSize-default: 14px;
   --grid-header-fontSize-default: 12px;
   --grid-separatorGap-default: 16px;
+  --grid-cornerTag-size-default: 12px;
 }
 
 .uitk-density-medium {
@@ -20,6 +22,7 @@
   --grid-fontSize-default: 12px;
   --grid-header-fontSize-default: 11px;
   --grid-separatorGap-default: 12px;
+  --grid-cornerTag-size-default: 10px;
 }
 
 .uitk-density-high {
@@ -28,71 +31,7 @@
   --grid-fontSize-default: 11px;
   --grid-header-fontSize-default: 10px;
   --grid-separatorGap-default: 8px;
-}
-
-/* These ideally should be taken from characteristics */
-.uitk-light {
-  --grid-background-primary-default: var(--uitk-color-white);
-  --grid-background-secondary-default: var(--uitk-color-grey-20);
-  --grid-zebraColor-default: var(--uitk-color-grey-20);
-
-  --grid-row-background-hover-default: var(--uitk-color-blue-10);
-  --grid-row-background-selected-default: var(--uitk-color-blue-30);
-
-  --grid-row-borderColor-selected-default: var(--uitk-color-blue-500);
-  --grid-cell-background-selected-default: var(--uitk-color-blue-30);
-  --grid-editableCell-borderColor-default: var(--uitk-color-grey-100);
-  --grid-editableCell-borderColor-hover-default: var(--uitk-color-blue-500);
-  --grid-editableCell-background-active-default: var(--uitk-color-white);
-  --grid-editableCell-color-active-default: var(--uitk-color-grey-900);
-
-  --grid-header-color-default: var(--uitk-color-grey-200);
-
-  --grid-headerColumnSeparator-color-default: rgba(0, 0, 0, 0.1);
-  --grid-headerRowSeparator-color-default: rgba(0, 0, 0, 0.3);
-  --grid-groupHeaderRowSeparator-color-default: rgba(0, 0, 0, 0.1);
-
-  --grid-groupHeader-color-default: var(--uitk-color-grey-200);
-  --grid-shadow-color-default: rgba(0, 0, 0, 0.2);
-  --grid-columnDropTarget-color-default: var(--uitk-color-blue-500);
-  --grid-cursor-borderColor-default: #00477b;
-  --grid-borderColor-default: var(--uitk-color-grey-90);
-
-  --grid-rowSeparator-color-default: rgba(0, 0, 0, 0.1);
-  --grid-columnSeparator-color-default: rgba(0, 0, 0, 0.1);
-  --grid-rowSeparator-color-divided-default: rgba(0, 0, 0, 0.2);
-}
-
-.uitk-dark {
-  --grid-background-primary-default: var(--uitk-color-grey-800);
-  --grid-background-secondary-default: #2f3136;
-  --grid-zebraColor-default: rgba(255, 255, 255, 0.05);
-
-  --grid-row-background-hover-default: var(--uitk-color-blue-900);
-  --grid-row-background-selected-default: var(--uitk-color-blue-800);
-
-  --grid-row-borderColor-selected-default: var(--uitk-color-blue-300);
-  --grid-cell-background-selected-default: var(--uitk-color-blue-800);
-  --grid-editableCell-borderColor-default: var(--uitk-color-grey-200);
-  --grid-editableCell-borderColor-hover-default: var(--uitk-color-blue-300);
-  --grid-editableCell-background-active-default: var(--uitk-color-grey-800);
-  --grid-editableCell-color-active-default: var(--uitk-color-white);
-
-  --grid-header-color-default: var(--uitk-color-grey-70);
-
-  --grid-headerColumnSeparator-color-default: rgba(255, 255, 255, 0.1);
-  --grid-headerRowSeparator-color-default: rgba(255, 255, 255, 0.3);
-  --grid-groupHeaderRowSeparator-color-default: rgba(255, 255, 255, 0.1);
-
-  --grid-groupHeader-color-default: var(--uitk-color-grey-70);
-  --grid-shadow-color-default: rgba(255, 255, 255, 0.4);
-  --grid-columnDropTarget-color-default: var(--uitk-color-blue-100);
-  --grid-cursor-borderColor-default: #7dc3f2;
-  --grid-borderColor-default: var(--uitk-color-grey-100);
-
-  --grid-rowSeparator-color-default: rgba(255, 255, 255, 0.1);
-  --grid-columnSeparator-color-default: rgba(255, 255, 255, 0.1);
-  --grid-rowSeparator-color-divided-default: rgba(255, 255, 255, 0.2);
+  --grid-cornerTag-size-default: 8px;
 }
 
 /* Styles applied to the root element */
@@ -103,57 +42,58 @@
   --grid-separatorGap: var(--uitkGrid-separatorGap, var(--grid-separatorGap-default));
   --grid-header-fontSize: var(--uitkGrid-header-fontSize, var(--grid-header-fontSize-default));
   --grid-groupHeader-fontSize: var(--uitkGrid-groupHeader-fontSize, var(--grid-header-fontSize));
-  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-caption-fontWeight-strong));
+  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-label-fontWeight-strong));
 
   --grid-cell-padding: 0 var(--grid-padding);
-  --grid-rowHover-zIndex: 1;
-  --grid-cell-zIndex: 2;
 
-  --grid-columnSeparator-color: rgba(0, 0, 0, 0);
+  --grid-background-primary: var(--uitkGrid-background-primary, var(--uitk-container-primary-background));
+  --grid-background-secondary: var(--uitkGrid-background-secondary, var(--uitk-container-secondary-background));
+  --grid-zebraColor: var(--uitkGrid-zebraColor, var(--uitk-container-secondary-background));
 
-  --grid-background-primary: var(--uitkGrid-background-primary, var(--grid-background-primary-default));
-  --grid-background-secondary: var(--uitkGrid-background-secondary, var(--grid-background-secondary-default));
-  --grid-zebraColor: var(--uitkGrid-zebraColor, var(--grid-zebraColor-default));
+  --grid-row-background-hover: var(--uitkGrid-row-background-hover, var(--uitk-selectable-background-hover));
+  --grid-row-background-selected: var(--uitkGrid-row-background-selected, var(--uitk-selectable-background-selected));
 
-  --grid-row-background-hover: var(--uitkGrid-row-background-hover, var(--grid-row-background-hover-default));
-  --grid-row-background-selected: var(--uitkGrid-row-background-selected, var(--grid-row-background-selected-default));
+  --grid-row-borderColor-selected: var(--uitkGrid-row-borderColor-selected, var(--uitk-selectable-borderColor-selected));
+  --grid-cell-background-selected: var(--uitkGrid-cell-background-selected, var(--uitk-selectable-background-selected));
+  --grid-editableCell-borderColor: var(--uitkGrid-editableCell-borderColor, var(--uitk-editable-borderColor));
+  --grid-editableCell-borderColor-hover: var(--uitkGrid-editableCell-borderColor-hover, var(--uitk-editable-borderColor-hover));
+  --grid-editableCell-background-active: var(--uitkGrid-editableCell-background-active, var(--uitk-editable-primary-background-active));
+  --grid-editableCell-color-active: var(--uitkGrid-editableCell-color-active, var(--uitk-text-primary-foreground));
+  --grid-editableCell-cornerTag-size: var(--uitkGrid-editableCell-cornerTag-size, var(--grid-cornerTag-size-default));
 
-  --grid-row-borderColor-selected: var(--uitkGrid-row-borderColor-selected, var(--grid-row-borderColor-selected-default));
-  --grid-cell-background-selected: var(--uitkGrid-cell-background-selected, var(--grid-cell-background-selected-default));
-  --grid-editableCell-borderColor: var(--uitkGrid-editableCell-borderColor, var(--grid-editableCell-borderColor-default));
-  --grid-editableCell-borderColor-hover: var(--uitkGrid-editableCell-borderColor-hover, var(--grid-editableCell-borderColor-hover-default));
-  --grid-editableCell-background-active: var(--uitkGrid-editableCell-background-active, var(--grid-editableCell-background-active-default));
-  --grid-editableCell-color-active: var(--uitkGrid-editableCell-color-active, var(--grid-editableCell-color-active-default));
-  --grid-editableCell-cornerTag-size: var(--uitkGrid-editableCell-cornerTag-size, 8px);
+  --grid-header-color: var(--uitkGrid-header-color, var(--uitk-text-secondary-foreground));
 
-  --grid-header-color: var(--uitkGrid-header-color, var(--grid-header-color-default));
-
-  --grid-headerColumnSeparator-color: var(--uitkGrid-headerColumnSeparator-color, var(--grid-headerColumnSeparator-color-default));
-  --grid-headerRowSeparator-color: var(--uitkGrid-headerRowSeparator-color, var(--grid-headerRowSeparator-color-default));
-  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, 4px);
+  --grid-headerColumnSeparator-color: var(--uitkGrid-headerColumnSeparator-color, var(--uitk-separable-tertiary-borderColor));
+  --grid-headerRowSeparator-color: var(--uitkGrid-headerRowSeparator-color, var(--uitk-separable-primary-borderColor));
+  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, var(--uitk-size-unit));
   --grid-headerRowSeparator-height: var(--uitkGrid-headerRowSeparator-height, 1px);
-  --grid-headerRowSeparator-width: var(--uitkGrid-headerRowSeparator-width, 1px);
-  --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--grid-groupHeaderRowSeparator-color-default));
+  --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--uitk-separable-tertiary-borderColor));
 
-  --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--grid-groupHeader-color-default));
-  --grid-shadow-color: var(--uitkGrid-shadow-color, var(--grid-shadow-color-default));
-  --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--grid-columnDropTarget-color-default));
-  --grid-columnDropTarget-width: var(--uitkGrid-columnDropTarget-width, 2px);
-  --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, dotted);
-  --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, 2px);
-  --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--grid-cursor-borderColor-default));
-  --grid-borderColor: var(--uitkGrid-borderColor, var(--grid-borderColor-default));
+  --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--uitk-text-secondary-foreground));
+  --grid-shadow-color: var(--uitkGrid-shadow-color, var(--uitk-overlayable-shadow-scroll-color));
+  --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--uitk-target-borderColor-hover));
+  --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, var(--uitk-focused-outlineStyle));
+  --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, var(--uitk-focused-outlineWidth));
+  --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--uitk-focused-outlineColor));
+  --grid-borderColor: var(--uitkGrid-borderColor, var(--uitk-container-secondary-borderColor));
 
-  --grid-rowSeparator-width: var(--uitkGrid-rowSeparator-width, 1px);
-  --grid-rowSeparator-color: var(--uitkGrid-rowSeparator-color, var(--grid-rowSeparator-color-default));
-  --grid-columnSeparator-color: var(--uitkGrid-columnSeparator-color, var(--grid-columnSeparator-color-default));
-  --grid-rowSeparator-color-divided: var(--uitkGrid-rowSeparator-color-divided, var(--grid-rowSeparator-color-divided-default));
-}
+  --grid-rowSeparator-width: 1px;
+  --grid-rowSeparator-color: var(--uitkGrid-rowSeparator-color, var(--uitk-separable-tertiary-borderColor));
+  --grid-columnSeparator-color: var(--uitkGrid-columnSeparator-color, var(--uitk-separable-tertiary-borderColor));
+  --grid-rowSeparator-color-divided: var(--uitkGrid-rowSeparator-color-divided, var(--uitk-separable-secondary-borderColor));
 
-.uitkGrid {
-  position: relative;
-  outline: none;
-  user-select: none;
+  --grid-pinnedSeparator-color: var(--uitkGrid-pinnedSeparator-color, var(--uitk-separable-primary-borderColor));
+
+  --grid-columnGhost-borderColor: var(--uitkGrid-columnGhost-borderColor, var(--uitk-palette-interact-border-hover));
+  --grid-columnGhost-borderWidth: var(--uitkGrid-columnGhost-borderWidth, 1px);
+  --grid-columnGhost-boxShadow: var(--uitkGrid-columnGhost-boxShadow, var(--uitk-overlayable-shadow-drag));
+
+  --grid-mid-body-zIndex: 0;
+  --grid-left-body-zIndex: 1;
+  --grid-right-body-zIndex: 1;
+  --grid-middle-header-zIndex: 2;
+  --grid-left-header-zIndex: 3;
+  --grid-right-header-zIndex: 3;
 }
 
 .uitkGrid-columnSeparators {
@@ -170,12 +110,19 @@
 
 /* Styles applied to the root element if variant="primary" */
 .uitkGrid-primaryBackground {
-  background: var(--grid-background-primary);
+  --grid-background: var(--grid-background-primary);
 }
 
 /* Styles applied to the root element if variant="secondary" */
 .uitkGrid-secondaryBackground {
-  background: var(--grid-background-secondary);
+  --grid-background: var(--grid-background-secondary);
+}
+
+.uitkGrid {
+  position: relative;
+  outline: none;
+  user-select: none;
+  background: var(--grid-background);
 }
 
 /* Styles applied to the root element if zebra is enabled */

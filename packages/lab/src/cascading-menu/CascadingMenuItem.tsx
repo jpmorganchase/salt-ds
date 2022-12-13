@@ -30,7 +30,6 @@ const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
         className={classnames(withBaseName("menuItemStartAdornment"), {
           [withBaseName("menuItemDisabled")]: isDisabled,
         })}
-        size={12}
       />
     );
   } else {
@@ -184,7 +183,6 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
                 className={classnames(withBaseName("menuItemEndAdornment"), {
                   [withBaseName("menuItemDisabled")]: isDisabled,
                 })}
-                size={12}
               />
             </div>
           )}

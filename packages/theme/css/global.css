@@ -1,0 +1,27 @@
+/**
+ * Have some global styles to simulate more realistic app. Currently only for Storybook.
+ */
+
+.uitk-theme {
+  color: var(--uitk-text-primary-foreground);
+  font-family: var(--uitk-typography-fontFamily);
+  font-size: var(--uitk-text-fontSize);
+  letter-spacing: var(--uitk-text-letterSpacing);
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.uitk-theme[data-mode="light"] {
+  color-scheme: light;
+}
+
+.uitk-theme[data-mode="dark"] {
+  color-scheme: dark;
+}
+
+/* Setting every element's box-sizing to border-box ensures the declared width
+of the element is never exceeded due to padding or border. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

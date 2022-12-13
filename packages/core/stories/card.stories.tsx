@@ -1,11 +1,7 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Link } from "@jpmorganchase/uitk-lab";
-import {
-  ColumnLayoutContainer,
-  ColumnLayoutItem,
-} from "./story-layout/ColumnLayout";
+import { Card, Link, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {
   title: "Core/Card",
@@ -17,7 +13,7 @@ interface ExampleRowProps {
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
+const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset", width: 800 }}>
     <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <ColumnLayoutContainer>
@@ -89,28 +85,12 @@ export const Interactable: ComponentStory<typeof Card> = () => (
   </Link>
 );
 
-export const InteractableDisabled: ComponentStory<typeof Card> = () => (
-  <Link
-    disabled
-    href="https://google.com"
-    style={{ display: "inline-block", textDecoration: "none" }}
-    tab-index="0"
-    target="_parent"
-  >
-    <Card interactable disabled>
-      <div>
-        <p>Visit Google</p>
-      </div>
-    </Card>
-  </Link>
-);
-
 export const All: ComponentStory<typeof Card> = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider theme="light">
+    <ToolkitProvider mode="light">
       <Examples />
     </ToolkitProvider>
-    <ToolkitProvider theme="dark">
+    <ToolkitProvider mode="dark">
       <Examples />
     </ToolkitProvider>
   </div>

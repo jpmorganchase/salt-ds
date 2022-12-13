@@ -5,10 +5,10 @@ import {
   // useTooltip,
   ValidationStatus,
 } from "@jpmorganchase/uitk-core";
+import { Placement } from "@floating-ui/react-dom-interactions";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
-import { InfoIcon } from "@jpmorganchase/uitk-icons";
-import { Placement } from "@floating-ui/react-dom-interactions";
+import { InfoSolidIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
   title: "Core/Tooltip/QA",
@@ -28,7 +28,7 @@ const IconWithTooltip = (props: {
 
   return (
     <Tooltip open text="I am a tooltip" status="info">
-      <InfoIcon />
+      <InfoSolidIcon />
       {/* <InfoIcon {...getTriggerProps<typeof InfoIcon>()} /> */}
       {/* <Tooltip {...getTooltipProps({ render, title, status })} open /> */}
     </Tooltip>

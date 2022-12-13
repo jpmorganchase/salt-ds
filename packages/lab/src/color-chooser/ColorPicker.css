@@ -16,7 +16,7 @@
 }
 
 .uitkColorChooserPicker-textDivOverrides {
-  font-size: var(--uitk-text-caption-fontSize);
+  font-size: var(--uitk-text-label-fontSize);
   font-weight: var(--uitk-text-fontWeight-strong);
   color: var(--uitk-text-primary-foreground);
   padding: 0px !important;
@@ -86,6 +86,6 @@
   margin-top: 0px !important;
   width: 4px !important;
   height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
-  background: var(--uitk-container-background-medium) !important;
-  border-bottom: var(--uitk-editable-borderWidth) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  background: var(--uitk-container-primary-background) !important;
+  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
 }

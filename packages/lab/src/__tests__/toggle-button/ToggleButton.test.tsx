@@ -7,7 +7,7 @@ function renderToggleButton(initialProps: ToggleButtonProps = {}) {
   const onToggleSpy = jest.fn();
   const ToggleButtonComponent = (props: ToggleButtonProps) => (
     <ToggleButton
-      ariaLabel="home"
+      aria-label="home"
       onToggle={onToggleSpy}
       tooltipText="Home"
       {...props}
@@ -92,7 +92,7 @@ describe("GIVEN a disabled ToggleButton with Icon and Text (uncontrolled)", () =
     const toggleButton = getAllByRole("checkbox");
     expect(toggleButton[0]).toHaveTextContent("Home");
     expect(toggleButton[0]).toHaveAttribute("aria-checked", "false");
-    expect(toggleButton[0]).toHaveAttribute("aria-disabled", "true");
+    expect(toggleButton[0]).toBeDisabled();
     expect(toggleButton[0]).toHaveTextContent("Home");
     expect(toggleButton.length).toBe(1);
 

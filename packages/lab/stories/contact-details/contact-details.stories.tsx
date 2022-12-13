@@ -32,7 +32,7 @@ import {
   ValueComponentProps,
 } from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
-import { FC, forwardRef, Fragment } from "react";
+import { forwardRef, Fragment, ReactNode } from "react";
 
 import "./contact-details.stories.css";
 
@@ -444,7 +444,7 @@ const WithinCardTemplate: Story = () => {
 };
 
 // TODO use real tile
-const Tile: FC<{ className?: string }> = (props) => (
+const Tile = (props: { className?: string; children?: ReactNode }) => (
   <div className={props.className}>{props.children}</div>
 );
 

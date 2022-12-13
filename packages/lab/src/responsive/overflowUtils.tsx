@@ -36,7 +36,11 @@ export const getIsOverflowed = (managedItems: OverflowItem[]) =>
 export const measureContainer = (
   ref: ElementRef,
   orientation: orientationType = "horizontal"
-): { innerContainerSize: number; rootContainerDepth: number } => {
+): {
+  innerContainerSize: number;
+  rootContainerDepth: number;
+  innerContainerDepth: number;
+} => {
   const innerElement = ref.current as HTMLElement;
   const container = innerElement.parentElement;
   if (container) {
@@ -44,12 +48,45 @@ export const measureContainer = (
       innerElement.getBoundingClientRect();
     const { width, height } = container.getBoundingClientRect();
     if (orientation === "horizontal") {
-      return { innerContainerSize: innerWidth, rootContainerDepth: height };
+      return {
+        innerContainerSize: innerWidth,
+        rootContainerDepth: height,
+        innerContainerDepth: innerHeight,
+      };
     } else {
-      return { innerContainerSize: innerHeight, rootContainerDepth: width };
+      return {
+        innerContainerSize: innerHeight,
+        rootContainerDepth: width,
+        innerContainerDepth: innerWidth,
+      };
     }
   } else {
     throw Error("measureContainer, innerContainer has no parent element");
+  }
+};
+
+const isContainerOverflowing = (
+  containerDepth: number,
+  parentContainerDepth: number,
+  innerElement: HTMLElement,
+  orientation: orientationType
+) => {
+  const isHorizontal = orientation === "horizontal";
+  // If true, this is a reliable indication of content wrapping, but the containerDepth
+  // is not always correct
+  if (containerDepth > parentContainerDepth) {
+    return true;
+  } else {
+    // ... hence - expensive, but catches those situations where the containerDepth is wrong
+    const { bottom, right } = innerElement.getBoundingClientRect();
+    const maxPos = Array.from(innerElement.childNodes).reduce<number>(
+      (maxVal, child) => {
+        const rect = (child as HTMLElement).getBoundingClientRect();
+        return Math.max(isHorizontal ? rect.bottom : rect.right, maxVal);
+      },
+      isHorizontal ? bottom : right
+    );
+    return isHorizontal ? maxPos > bottom : maxPos > right;
   }
 };
 
@@ -61,17 +98,16 @@ export const measureContainerOverflow = (
   innerContainerSize: number;
   rootContainerDepth: number;
 } => {
+  const { innerContainerDepth, innerContainerSize, rootContainerDepth } =
+    measureContainer(ref, orientation);
   const innerElement = ref.current as HTMLElement;
-  const { innerContainerSize, rootContainerDepth } = measureContainer(
-    ref,
+  const isOverflowing = isContainerOverflowing(
+    innerContainerDepth,
+    rootContainerDepth,
+    innerElement,
     orientation
   );
-  const scrollDepth =
-    orientation === "horizontal"
-      ? innerElement.scrollHeight
-      : innerElement.scrollWidth;
 
-  const isOverflowing = rootContainerDepth < scrollDepth;
   return { isOverflowing, innerContainerSize, rootContainerDepth };
 };
 

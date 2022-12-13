@@ -1,6 +1,6 @@
 .uitkLayerLayout {
   --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
-  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-background-medium));
+  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-primary-background));
   --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
   --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
 }
@@ -14,7 +14,7 @@
   overflow: auto;
   padding: var(--layerLayout-padding);
   box-shadow: var(--uitkLayerLayout-boxShadow, var(--layerLayout-boxShadow));
-  z-index: calc(var(--uitk-zIndex-appheader) - 1);
+  z-index: calc(var(--uitk-zIndex-appHeader) - 1);
 }
 
 .uitkLayerLayout-fullScreen {

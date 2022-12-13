@@ -59,7 +59,7 @@
 }
 
 .uitkTabstrip-overflowMenu.uitkDropdown {
-  --uitkIcon-padding: 0;
+  --uitkIcon-margin: 2px 0 0 0px;
 }
 
 .uitkTabstrip-overflowMenu-open {
@@ -98,7 +98,7 @@
   --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
   --tabs-tabstrip-dragging-display: block;
 
-  --tabs-tab-background: var(--uitk-navigable-background-hover-medium);
+  --tabs-tab-background: var(--uitk-navigable-primary-background-hover);
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--uitk-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
@@ -107,7 +107,7 @@
   --tabs-tab-cursor: var(--uitk-draggable-grab-cursor-active);
   --tabs-tab-position: static;
 
-  font-size: var(--uitk-typography-size-regular-unit, 12px);
+  font-size: 12px;
 }
 
 .uitkDraggable-tabstrip-horizontal {
@@ -143,9 +143,4 @@
   left: 0;
   right: 0;
   bottom: 0;
-}
-
-.uitkTabstrip.backwardsCompat {
-  --tabs-tab-letterSpacing: -0.1px;
-  --tabs-tab-top: -1px;
 }

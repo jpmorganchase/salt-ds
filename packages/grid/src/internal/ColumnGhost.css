@@ -1,8 +1,8 @@
 .uitkGridColumnGhost {
+  background: var(--grid-background);
   position: absolute;
-  z-index: 4;
-  border: solid 1px var(--uitk-color-blue-500);
-  box-shadow: 6px 6px 10px 10px rgba(0, 0, 0, 0.0967821);
+  border: solid var(--grid-columnGhost-borderWidth) var(--grid-columnGhost-borderColor);
+  box-shadow: var(--grid-columnGhost-boxShadow);
   opacity: 0.85;
 }
 

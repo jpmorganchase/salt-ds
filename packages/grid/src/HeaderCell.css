@@ -1,12 +1,14 @@
 .uitkGridHeaderCell {
   text-align: left;
   font-size: var(--grid-header-fontSize);
-  font-weight: var(--uitk-text-caption-fontWeight-strong);
+  font-weight: var(--uitk-text-label-fontWeight-strong);
   line-height: var(--grid-row-height);
   position: relative;
   box-sizing: border-box;
   color: var(--grid-header-color);
   white-space: nowrap;
+
+  outline: 0;
 }
 
 .uitkGridHeaderCell-valueContainer {
@@ -18,6 +20,7 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .uitkGridHeaderCell-alignRight {
@@ -55,7 +58,8 @@
   bottom: var(--grid-separatorGap);
 }
 
-.uitkGridHeaderCell-edgeSeparator {
+.uitkGridHeaderCell-groupEdgeSeparator,
+.uitkGridHeaderCell-pinnedSeparator {
   background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
@@ -63,6 +67,15 @@
   right: 0;
   top: 0;
   bottom: var(--grid-separatorGap);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridHeaderCell-pinnedSeparator {
+  background: var(--grid-pinnedSeparator-color);
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .uitkGridHeaderCell-resizeHandle {

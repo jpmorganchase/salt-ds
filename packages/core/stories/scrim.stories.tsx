@@ -52,31 +52,6 @@ export const ClosableScrim: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const LighterScrim: ComponentStory<typeof Scrim> = () => {
-  const [open, setOpen] = useState(false);
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button onClick={handleRequestOpen}>click to open scrim</Button>
-      <Scrim
-        aria-label="Example Scrim"
-        closeWithEscape
-        className="uitkEmphasisLow"
-        onBackDropClick={handleClose}
-        onClose={handleClose}
-        open={open}
-      >
-        <p>Click or press Escape to close the Scrim</p>
-      </Scrim>
-    </>
-  );
-};
-
 export const ScrimWithContentStatus: ComponentStory<typeof Scrim> = () => {
   return (
     <Scrim aria-label="Example Scrim" open>
@@ -150,7 +125,6 @@ export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
         open={open}
         enableContainerMode
         containerRef={parentRef}
-        className="uitkEmphasisLow"
         zIndex={2}
       >
         <Button onClick={handleClose}>CLOSE SCRIM</Button>

@@ -1,6 +1,10 @@
 import { RefObject, useCallback, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils";
-import { useResizeObserver, WidthOnly } from "./useResizeObserver";
+import {
+  ResizeHandler,
+  useResizeObserver,
+  WidthOnly,
+} from "./useResizeObserver";
 
 const NONE: string[] = [];
 
@@ -10,7 +14,7 @@ export function useWidth<Element extends HTMLElement>(
   const [width, setWidth] = useState<number>();
   const ref = useRef<HTMLElement>(null);
 
-  const handleResize = useCallback(({ width: newWidth }) => {
+  const handleResize: ResizeHandler = useCallback(({ width: newWidth }) => {
     setWidth(newWidth);
   }, []);
 

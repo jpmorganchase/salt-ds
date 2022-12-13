@@ -1,0 +1,6 @@
+a.link {
+  text-decoration: underline;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

@@ -1,6 +1,5 @@
 import { DoubleChevronDownIcon, FavoriteIcon } from "@jpmorganchase/uitk-icons";
-import { Metric, MetricHeader, MetricContent } from "@jpmorganchase/uitk-lab";
-import "./metric.stories.css";
+import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -130,7 +129,7 @@ export const WithAlignmentVertical: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithEmphasisHorizontal: ComponentStory<typeof Metric> = () => (
+export const Horizontal: ComponentStory<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -154,7 +153,7 @@ export const WithEmphasisHorizontal: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithEmphasisVertical: ComponentStory<typeof Metric> = () => (
+export const Vertical: ComponentStory<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -237,33 +236,12 @@ export const WithCustomIndicator: ComponentStory<typeof Metric> = () => (
         IndicatorIconProps={{
           // Updated from `accessibleText`
           "aria-label": "starred",
-          size: 24,
         }}
         // API changes
         // name: "favorite",
         IndicatorIconComponent={FavoriteIcon}
         value="1,1128"
       />
-    </Metric>
-  </div>
-);
-
-export const WithCustomIndicatorColour: ComponentStory<typeof Metric> = () => (
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      width: 400,
-    }}
-    className="CustomIndicatorColor"
-  >
-    <Metric direction="up" showIndicator>
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent value="$801.9B" />
-    </Metric>
-    <Metric direction="down" showIndicator>
-      <MetricHeader subtitle="Total Value" title="Revenue YTD" />
-      <MetricContent value="$801.9B" />
     </Metric>
   </div>
 );

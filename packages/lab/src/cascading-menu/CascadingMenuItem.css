@@ -20,7 +20,7 @@
 }
 
 .uitkMenuItem-menuItemEndAdornment {
-  padding-left: 8px; /* density */
+  margin-left: 8px; /* density */
 }
 
 .uitkMenuItem-menuItemStartAdornmentContainer {
@@ -33,7 +33,7 @@
 }
 
 .uitkMenuItem.uitkMenuItem-menuItemDivider {
-  border-bottom: var(--uitk-separable-borderWidth) var(--uitk-separable-borderStyle) var(--uitk-separable-secondary-borderColor);
+  border-bottom: var(--uitk-size-border) var(--uitk-separable-borderStyle) var(--uitk-separable-secondary-borderColor);
 }
 
 .uitkMenuItem-menuItemHover:hover {

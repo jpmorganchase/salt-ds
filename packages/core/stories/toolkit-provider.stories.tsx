@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Card, Density, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Density,
+  ModeValues,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -19,20 +26,63 @@ const DARK = 1;
 const HIGH = 0;
 const NO_DENSITY = 4;
 
-const THEMES = ["light", "dark"];
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 
+export const ToggleTheme = () => {
+  const [mode, setMode] = useState(LIGHT);
+
+  const handleChangeTheme: ToggleButtonGroupChangeEventHandler = (
+    event,
+    index
+  ) => {
+    setMode(index);
+  };
+
+  return (
+    <ToolkitProvider mode={ModeValues[mode]}>
+      <Card>
+        <div>
+          <h1>This Card is wrapped with a ToolkitProvider</h1>
+          <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={mode}>
+            <ToggleButton aria-label="light theme">Light</ToggleButton>
+            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+          </ToggleButtonGroup>
+          <p>{`This Card is wrapped with a ToolkitProvider, mode is ${ModeValues[mode]}`}</p>
+
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button variant="cta">Continue</Button>
+            <Button>Previous</Button>
+            <Button variant="secondary">Upload File</Button>
+          </div>
+        </div>
+        <br />
+      </Card>
+    </ToolkitProvider>
+  );
+};
+
 export const NestedProviders = () => {
-  const [outerTheme, setOuterTheme] = useState(LIGHT);
+  const [outerMode, setOuterMode] = useState(LIGHT);
   const [outerDensity, setOuterDensity] = useState(HIGH);
-  const [innerTheme, setInnerTheme] = useState(DARK);
+  const [innerMode, setInnerMode] = useState(DARK);
   const [innerDensity, setInnerDensity] = useState(NO_DENSITY);
 
   const handleChangeOuterTheme: ToggleButtonGroupChangeEventHandler = (
     event,
     index
   ) => {
-    setOuterTheme(index);
+    setOuterMode(index);
   };
 
   const handleChangeOuterDensity: ToggleButtonGroupChangeEventHandler = (
@@ -46,7 +96,7 @@ export const NestedProviders = () => {
     event,
     index
   ) => {
-    setInnerTheme(index);
+    setInnerMode(index);
   };
   const handleChangeInnerDensity: ToggleButtonGroupChangeEventHandler = (
     event,
@@ -58,28 +108,28 @@ export const NestedProviders = () => {
   return (
     <ToolkitProvider
       density={DENSITIES[outerDensity]}
-      theme={THEMES[outerTheme]}
+      mode={ModeValues[outerMode]}
     >
       <Card>
         <div>
           <h1>This Card is wrapped with a ToolkitProvider</h1>
           <ToggleButtonGroup
             onChange={handleChangeOuterTheme}
-            selectedIndex={outerTheme}
+            selectedIndex={outerMode}
           >
-            <ToggleButton ariaLabel="light theme">Light</ToggleButton>
-            <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
-            <ToggleButton ariaLabel="no theme">Not set</ToggleButton>
+            <ToggleButton aria-label="light theme">Light</ToggleButton>
+            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+            <ToggleButton aria-label="no theme">Not set</ToggleButton>
           </ToggleButtonGroup>
           <ToggleButtonGroup
             onChange={handleChangeOuterDensity}
             selectedIndex={outerDensity}
           >
-            <ToggleButton ariaLabel="high density">High</ToggleButton>
-            <ToggleButton ariaLabel="medium density">Medium</ToggleButton>
-            <ToggleButton ariaLabel="low density">Low</ToggleButton>
-            <ToggleButton ariaLabel="touch density">Touch</ToggleButton>
-            <ToggleButton ariaLabel="not set">Not set</ToggleButton>
+            <ToggleButton aria-label="high density">High</ToggleButton>
+            <ToggleButton aria-label="medium density">Medium</ToggleButton>
+            <ToggleButton aria-label="low density">Low</ToggleButton>
+            <ToggleButton aria-label="touch density">Touch</ToggleButton>
+            <ToggleButton aria-label="not set">Not set</ToggleButton>
           </ToggleButtonGroup>
           <p>
             This Card is wrapped with a ToolkitProvider, theme is light, density
@@ -88,7 +138,7 @@ export const NestedProviders = () => {
         </div>
         <br />
         <ToolkitProvider
-          theme={THEMES[innerTheme]}
+          mode={ModeValues[innerMode]}
           density={DENSITIES[innerDensity]}
         >
           <Card>
@@ -96,22 +146,22 @@ export const NestedProviders = () => {
               <h1>Nested Card</h1>
               <ToggleButtonGroup
                 onChange={handleChangeInnerTheme}
-                selectedIndex={innerTheme}
+                selectedIndex={innerMode}
               >
-                <ToggleButton ariaLabel="light theme">Light</ToggleButton>
-                <ToggleButton ariaLabel="dark theme">Dark</ToggleButton>
-                <ToggleButton ariaLabel="dark theme">Not set</ToggleButton>
+                <ToggleButton aria-label="light theme">Light</ToggleButton>
+                <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+                <ToggleButton aria-label="dark theme">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <ToggleButtonGroup
                 onChange={handleChangeInnerDensity}
                 selectedIndex={innerDensity}
               >
-                <ToggleButton ariaLabel="high density">High</ToggleButton>
-                <ToggleButton ariaLabel="medium density">Medium</ToggleButton>
-                <ToggleButton ariaLabel="low density">Low</ToggleButton>
-                <ToggleButton ariaLabel="touch density">Touch</ToggleButton>
-                <ToggleButton ariaLabel="not set">Not set</ToggleButton>
+                <ToggleButton aria-label="high density">High</ToggleButton>
+                <ToggleButton aria-label="medium density">Medium</ToggleButton>
+                <ToggleButton aria-label="low density">Low</ToggleButton>
+                <ToggleButton aria-label="touch density">Touch</ToggleButton>
+                <ToggleButton aria-label="not set">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <p>

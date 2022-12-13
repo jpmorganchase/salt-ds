@@ -1,43 +1,45 @@
 import "./HeaderCell.css";
-import { MouseEventHandler, ReactNode, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { makePrefixer } from "@jpmorganchase/uitk-core";
 import cn from "classnames";
-import { ColumnSeparatorType, GridColumnModel } from "./Grid";
+import { ColumnSeparatorType } from "./Grid";
 import { useSizingContext } from "./SizingContext";
 import { useColumnDragContext } from "./ColumnDragContext";
+import { Cursor, useFocusableContent } from "./internal";
+import { HeaderCellProps } from "./GridColumn";
 
 const withBaseName = makePrefixer("uitkGridHeaderCell");
-
-export interface HeaderCellProps<T> {
-  column: GridColumnModel<T>;
-  children: ReactNode;
-}
 
 export interface HeaderCellSeparatorProps {
   separatorType: ColumnSeparatorType;
 }
 
 export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
-  const className = withBaseName(
-    props.separatorType === "regular" ? "regularSeparator" : "edgeSeparator"
-  );
+  const className = withBaseName([props.separatorType, "Separator"].join(""));
   return <div className={className} />;
 }
 
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
-  const { column, children } = props;
+  const { column, children, isFocused } = props;
   const { separator } = column;
   const { onResizeHandleMouseDown } = useSizingContext();
 
   const { columnMove, onColumnMoveHandleMouseDown } = useColumnDragContext();
   const onMouseDown = columnMove ? onColumnMoveHandleMouseDown : undefined;
 
+  const { ref, isFocusableContent, onFocus } =
+    useFocusableContent<HTMLTableHeaderCellElement>();
+
   return (
     <th
+      ref={ref}
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={cn(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
       data-testid="column-header"
+      tabIndex={isFocused && !isFocusableContent ? 0 : -1}
+      onFocus={onFocus}
     >
       <div
         className={cn(withBaseName("valueContainer"), {
@@ -53,15 +55,19 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
         className={withBaseName("resizeHandle")}
         onMouseDown={onResizeHandleMouseDown}
       />
+      {isFocused && !isFocusableContent && <Cursor />}
     </th>
   );
 }
 
 export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
-  const { column, children } = props;
+  const { column, children, isFocused } = props;
   const { separator } = column;
   const valueContainerRef = useRef<HTMLDivElement>(null);
-  const { resizeColumn, rowHeight } = useSizingContext();
+  const { resizeColumn } = useSizingContext();
+
+  const { ref, isFocusableContent, onFocus } =
+    useFocusableContent<HTMLTableHeaderCellElement>();
 
   useLayoutEffect(() => {
     const width = valueContainerRef.current
@@ -74,10 +80,14 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
 
   return (
     <th
+      ref={ref}
+      aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={withBaseName()}
       role="columnheader"
       data-testid="column-header"
+      tabIndex={isFocused && !isFocusableContent ? 0 : -1}
+      onFocus={onFocus}
     >
       <div className={withBaseName("autosizeContainer")}>
         <div
@@ -88,6 +98,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
         </div>
       </div>
       <HeaderCellSeparator separatorType={separator} />
+      {isFocused && !isFocusableContent && <Cursor />}
     </th>
   );
 }

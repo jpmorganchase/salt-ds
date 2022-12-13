@@ -3,10 +3,10 @@
   height: var(--uitk-size-base);
   justify-self: end;
 
-  border-color: var(--uitk-container-borderColor-medium);
+  border-color: var(--uitk-container-primary-borderColor);
   border-style: var(--uitk-container-borderStyle);
-  border-width: var(--uitk-container-borderWidth);
-  border-radius: var(--uitk-container-borderRadius);
+  border-width: var(--uitk-size-border);
+  border-radius: 0;
 
   display: flex;
   align-items: center;
@@ -16,5 +16,5 @@
   width: 100%;
   height: 100%;
 
-  stroke: var(--uitk-container-borderColor-medium);
+  stroke: var(--uitk-container-primary-borderColor);
 }

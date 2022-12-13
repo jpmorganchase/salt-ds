@@ -40,7 +40,6 @@ import {
   ToolbarProps,
   Tooltray,
 } from "@jpmorganchase/uitk-lab";
-import { ComponentAnatomy } from "docs/components/ComponentAnatomy";
 import { CSSProperties, MouseEvent, useState } from "react";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
@@ -130,7 +129,7 @@ export const TooltrayAlignment: Story = () => {
         <Tooltray aria-label="filters tooltray">
           <ToolbarField>
             <ToggleButton
-              ariaLabel=" AND"
+              aria-label=" AND"
               style={{ width: "100%", minWidth: "60px" }}
               toggled
             >
@@ -609,40 +608,6 @@ export const SimpleToolbarCollapsibleItems: Story<AdjustableFlexboxProps> = ({
         </ToolbarButton>
       </Toolbar>
     </AdjustableFlexbox>
-  );
-};
-
-export const SimpleToolbarCollapsibleItemsAnatomy = ({
-  initialWidth = 500,
-  ...toolbarProps
-}) => {
-  return (
-    <>
-      <AdjustableFlexbox height={200} width={initialWidth}>
-        <Toolbar {...toolbarProps} id="toolbar-simple-collapsible">
-          <Button variant="secondary" data-collapsible="instant">
-            <ExportIcon /> Export
-          </Button>
-          <Button variant="secondary" data-collapsible="instant">
-            <ShareIcon /> Share
-          </Button>
-          <Button variant="secondary" data-collapsible="instant">
-            <NotificationIcon /> Alert
-          </Button>
-          <Button variant="secondary" data-collapsible="instant">
-            <TearOutIcon /> Tear Out
-          </Button>
-          <Button variant="secondary" data-collapsible="instant">
-            <MessageIcon /> Message
-          </Button>
-        </Toolbar>
-      </AdjustableFlexbox>
-      <ComponentAnatomy
-        aria-owns="toolbar-simple-collapsible"
-        showControls={false}
-        style={{ marginTop: 50 }}
-      />
-    </>
   );
 };
 

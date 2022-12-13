@@ -1,27 +1,27 @@
-.uitk-light,
-.uitk-dark {
+.uitk-theme {
   --uitk-navigable-cursor-active: pointer;
   --uitk-navigable-cursor-hover: pointer;
   --uitk-navigable-cursor-disabled: not-allowed;
   --uitk-navigable-cursor-edit: text;
 
-  --uitk-navigable-fontWeight: var(--uitk-typography-weight-regular);
-  --uitk-navigable-fontWeight-hover: var(--uitk-typography-weight-regular);
-  --uitk-navigable-fontWeight-active: var(--uitk-typography-weight-semiBold);
-  --uitk-navigable-fontWeight-edit: var(--uitk-typography-weight-regular);
+  --uitk-navigable-fontWeight: var(--uitk-typography-fontWeight-regular);
+  --uitk-navigable-fontWeight-hover: var(--uitk-typography-fontWeight-regular);
+  --uitk-navigable-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);
+  --uitk-navigable-fontWeight-edit: var(--uitk-typography-fontWeight-regular);
 
   --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
   --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
+  --uitk-navigable-indicator-activeDisabled: var(--uitk-palette-navigate-indicator-activeDisabled);
 
-  --uitk-navigable-background-low: var(--uitk-palette-navigate-background-low);
-  --uitk-navigable-background-hover-low: var(--uitk-palette-navigate-background-hover-low);
-  --uitk-navigable-background-active-low: var(--uitk-palette-navigate-background-active-low);
+  --uitk-navigable-primary-background: var(--uitk-palette-navigate-primary-background);
+  --uitk-navigable-primary-background-hover: var(--uitk-palette-navigate-primary-background-hover);
+  --uitk-navigable-primary-background-active: var(--uitk-palette-navigate-primary-background-active);
 
-  --uitk-navigable-background-medium: var(--uitk-palette-navigate-background-medium);
-  --uitk-navigable-background-hover-medium: var(--uitk-palette-navigate-background-hover-medium);
-  --uitk-navigable-background-active-medium: var(--uitk-palette-navigate-background-active-medium);
+  --uitk-navigable-secondary-background: var(--uitk-palette-navigate-secondary-background);
+  --uitk-navigable-secondary-background-hover: var(--uitk-palette-navigate-secondary-background-hover);
+  --uitk-navigable-secondary-background-active: var(--uitk-palette-navigate-secondary-background-active);
 
-  --uitk-navigable-background-high: var(--uitk-palette-navigate-background-high);
-  --uitk-navigable-background-hover-high: var(--uitk-palette-navigate-background-hover-high);
-  --uitk-navigable-background-active-high: var(--uitk-palette-navigate-background-active-high);
+  --uitk-navigable-tertiary-background: var(--uitk-palette-navigate-tertiary-background);
+  --uitk-navigable-tertiary-background-hover: var(--uitk-palette-navigate-tertiary-background-hover);
+  --uitk-navigable-tertiary-background-active: var(--uitk-palette-navigate-tertiary-background-active);
 }

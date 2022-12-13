@@ -67,7 +67,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     defaultSource,
     defaultActiveTabIndex,
     editing,
-    emphasis,
+    variant,
     enableAddTab = false,
     enableCloseTab,
     enableRenameTab,
@@ -100,7 +100,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const overflowItemsRef = useRef<OverflowItem[]>([]);
   const [showOverflowMenu, _setShowOverflowMenu] = useState(false);
 
-  const setShowOverflowMenu = useCallback((value) => {
+  const setShowOverflowMenu = useCallback((value: boolean) => {
     _setShowOverflowMenu(value);
   }, []);
 
@@ -261,7 +261,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   );
 
   const handleOverflowMenuOpen = useCallback(
-    (open) => {
+    (open: boolean) => {
       setShowOverflowMenu(open);
     },
     [setShowOverflowMenu]
@@ -467,7 +467,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     {
       [withBaseName("centered")]: centered,
       [withBaseName("draggingTab")]: tabstripHook.isDragging,
-      uitkEmphasisLow: emphasis === "low",
+      [withBaseName("tertiary")]: variant === "tertiary",
     }
   );
 

@@ -51,9 +51,10 @@ export interface FormActivationIndicatorProps
   hasIcon?: boolean;
 }
 
-export const FormActivationIndicator: React.FC<
-  FormActivationIndicatorProps
-> = ({ hasIcon, validationStatus }: FormActivationIndicatorProps) => {
+export const FormActivationIndicator = ({
+  hasIcon,
+  validationStatus,
+}: FormActivationIndicatorProps) => {
   const rootClass = "uitkFormActivationIndicator";
 
   return (

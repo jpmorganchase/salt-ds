@@ -1,10 +1,11 @@
 {
   "name": "@jpmorganchase/uitk-ag-grid-theme",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "style": "uitk-ag-theme.css",
   "files": [
-    "/uitk-ag-theme.css"
+    "/uitk-ag-theme.css",
+    "/odyssey-ag-theme.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js",
@@ -14,6 +15,8 @@
     "directory": "../../dist/jpmorganchase-uitk-ag-grid-theme"
   },
   "devDependencies": {
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.14",
     "sass": "^1.51.0"
   }
 }

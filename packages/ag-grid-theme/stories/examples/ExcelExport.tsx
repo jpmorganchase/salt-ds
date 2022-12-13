@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button, Switch } from "@jpmorganchase/uitk-core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -10,7 +10,15 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 LicenseManager.setLicenseKey("your license key");
 
 const ExcelExport = (props: AgGridReactProps) => {
-  const { api, containerProps, agGridProps, isGridReady } = useAgGridHelpers();
+  const [isNewTheme, setNewTheme] = useState(false);
+
+  const onThemeChange = () => {
+    setNewTheme(!isNewTheme);
+  };
+
+  const { api, containerProps, agGridProps, isGridReady } = useAgGridHelpers(
+    isNewTheme ? "ag-theme-odyssey" : undefined
+  );
 
   useEffect(() => {
     if (isGridReady) {
@@ -26,20 +34,29 @@ const ExcelExport = (props: AgGridReactProps) => {
 
   return (
     <div>
-      <Button
-        disabled={!isGridReady}
-        onClick={handleButtonClick}
-        style={{ marginBottom: "20px" }}
-      >
-        Export as Excel
-      </Button>
-      <div style={{ width: 800, height: 800 }} {...containerProps}>
-        <AgGridReact
-          columnDefs={dataGridExampleColumns}
-          rowData={dataGridExampleData}
-          {...agGridProps}
-          {...props}
+      <div>
+        <Switch
+          checked={isNewTheme}
+          onChange={onThemeChange}
+          label="New theme"
         />
+      </div>
+      <div>
+        <Button
+          disabled={!isGridReady}
+          onClick={handleButtonClick}
+          style={{ marginBottom: "20px" }}
+        >
+          Export as Excel
+        </Button>
+        <div style={{ width: 800, height: 800 }} {...containerProps}>
+          <AgGridReact
+            columnDefs={dataGridExampleColumns}
+            rowData={dataGridExampleData}
+            {...agGridProps}
+            {...props}
+          />
+        </div>
       </div>
     </div>
   );

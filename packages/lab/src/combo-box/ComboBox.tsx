@@ -47,7 +47,7 @@ export interface ComboBoxProps<
 }
 
 export const ComboBox = forwardRef(function Combobox<
-  Item = "string",
+  Item = string,
   Selection extends SelectionStrategy = "default"
 >(
   {

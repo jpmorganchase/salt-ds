@@ -1,13 +1,17 @@
-import { forwardRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { FlexItem, FlexItemProps } from "../FlexItem";
+import { FlexItem, flexItemAlignment } from "../FlexItem";
 
-import { makePrefixer } from "../../utils";
+import { makePrefixer, ResponsiveProp } from "../../utils";
 import "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";
 
-export interface ParentChildItemProps extends FlexItemProps {
+export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Allows the alignment specified by parent to be overridden for individual items, default is "start".
+   */
+  align?: flexItemAlignment;
   /**
    * Disable all animations.
    */
@@ -17,9 +21,18 @@ export interface ParentChildItemProps extends FlexItemProps {
    */
   direction?: SlideDirection;
   /**
+   * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
+   */
+  grow?: ResponsiveProp<number>;
+  /**
    * Determines whether the component is stacked
    */
   isStacked?: boolean;
+  /**
+   * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
+
+   */
+  shrink?: ResponsiveProp<number>;
 }
 
 const withBaseName = makePrefixer("uitkParentChildItem");

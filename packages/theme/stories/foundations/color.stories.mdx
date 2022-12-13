@@ -1,192 +1,183 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Documentation/Styles and Theming/Foundations/Colors" />
 
-# Palettes
+# Colors
 
-## Red
+<ColorContainer>
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Red"
+      subtitle="--uitk-color-red-"
+      colors={{
+        10: "#FFE3E0",
+        20: "#FFCFC9",
+        30: "#FFBBB2",
+        40: "#FFA79C",
+        50: "#FF9485",
+        100: "#FF806F",
+        200: "#FF6C58",
+        300: "#FF5942",
+        400: "#ED412A",
+        500: "#E32B16",
+        600: "#C42010",
+        700: "#A6150B",
+        800: "#880A05",
+        900: "#412522",
+      }}
+    />
+    <ColorItem
+      title="Orange"
+      subtitle="--uitk-color-orange-"
+      colors={{
+        10: "#FFE8BF",
+        20: "#FEDFA6",
+        30: "#FED68E",
+        40: "#FECD76",
+        50: "#FEC55E",
+        100: "#FAB551",
+        200: "#F6A544",
+        300: "#F29538",
+        400: "#EE852B",
+        500: "#EA7319",
+        600: "#E06519",
+        700: "#D65513",
+        800: "#CC440D",
+        900: "#362C24"
+      }}
+    />
+<ColorItem
+title="Green"
+subtitle="--uitk-color-green-"
+colors={{
+        10: "#D1F4C9",
+        20: "#B8E8B6",
+        30: "#A0DDA4",
+        40: "#88D291",
+        50: "#70C77F",
+        100: "#5DBD74",
+        200: "#4DB469",
+        300: "#3CAB60",
+        400: "#309C5A",
+        500: "#24874B",
+        600: "#18723D",
+        700: "#0C5D2E",
+        800: "#014920",
+        900: "#23342B",
+      }}
+/>
+<ColorItem
+title="Teal"
+subtitle="--uitk-color-teal-"
+colors={{
+        10: "#DAF0F0",
+        20: "#C7E8E8",
+        30: "#B4E0E1",
+        40: "#A2D9DA",
+        50: "#8DCDD1",
+        100: "#7BC1C8",
+        200: "#63B5C0",
+        300: "#49A0AC",
+        400: "#3095A6",
+        500: "#008297",
+        600: "#1B6B85",
+        700: "#005571",
+        800: "#014156",
+        900: "#00314C",
+      }}
+/>
+<ColorItem
+title="Blue"
+subtitle="--uitk-color-blue-"
+colors={{
+        10: "#CBE7F9",
+        20: "#B7DEF6",
+        30: "#A4D5F4",
+        40: "#90CCF2",
+        50: "#7DC3F0",
+        100: "#64B1E4",
+        200: "#4B9FD8",
+        300: "#338DCD",
+        400: "#2E84C6",
+        500: "#2670A9",
+        600: "#155C93",
+        700: "#00477B",
+        800: "#273C4D",
+        900: "#232F38",
+      }}
+/>
+<ColorItem
+title="Purple"
+subtitle="--uitk-color-purple-"
+colors={{
+        10: "#F9E0F7",
+        20: "#F7D4F4",
+        30: "#F5C9F1",
+        40: "#F3BDEE",
+        50: "#F1B2EB",
+        100: "#DF9CE1",
+        200: "#CD87D7",
+        300: "#C074CB",
+        400: "#A961B5",
+        500: "#964EA2",
+        600: "#813C8D",
+        700: "#672E7A",
+        800: "#53256D",
+        900: "#3B1054",
+      }}
+/>
+<ColorItem
+title="Gray"
+subtitle="--uitk-color-gray-"
+colors={{
+        10: "#F2F4F6",
+        20: "#EAEDEF",
+        30: "#E0E4E9",
+        40: "#D9DDE3",
+        50: "#CED2D9",
+        60: "#C5C9D0",
+        70: "#B4B7BE",
+        80: "#9FA3AA",
+        90: "#84878E"
+      }}
+/>
+<ColorItem
+title="Gray"
+subtitle="--uitk-color-gray-"
+colors={{
+        100: "#74777F",
+        200: "#61656E",
+        300: "#4C505B",
+        400: "#44484F",
+        500: "#3B3F46",
+        600: "#2F3136",
+        700: "#2A2C2F",
+        800: "#242526",
+        900: "#161616"
+      }}
+/>
+<ColorItem
+title="White"
+subtitle="--uitk-color-white"
+colors={{
+        White: "#FFFFFF",
+      }}
+/>
+<ColorItem
+title="Black"
+subtitle="--uitk-color-black"
+colors={{
+        Black: "#000000",
+      }}
+/>
 
-<Canvas>
-  <Story name="Red">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-red-10" />
-      <ColorBlock colorVar="--uitk-color-red-20" />
-      <ColorBlock colorVar="--uitk-color-red-30" />
-      <ColorBlock colorVar="--uitk-color-red-40" />
-      <ColorBlock colorVar="--uitk-color-red-50" />
-      <ColorBlock colorVar="--uitk-color-red-100" />
-      <ColorBlock colorVar="--uitk-color-red-200" />
-      <ColorBlock colorVar="--uitk-color-red-300" />
-      <ColorBlock colorVar="--uitk-color-red-400" />
-      <ColorBlock colorVar="--uitk-color-red-500" />
-      <ColorBlock colorVar="--uitk-color-red-600" />
-      <ColorBlock colorVar="--uitk-color-red-700" />
-      <ColorBlock colorVar="--uitk-color-red-800" />
-      <ColorBlock colorVar="--uitk-color-red-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Orange
-
-<Canvas>
-  <Story name="Orange">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-orange-10" />
-      <ColorBlock colorVar="--uitk-color-orange-20" />
-      <ColorBlock colorVar="--uitk-color-orange-30" />
-      <ColorBlock colorVar="--uitk-color-orange-40" />
-      <ColorBlock colorVar="--uitk-color-orange-50" />
-      <ColorBlock colorVar="--uitk-color-orange-100" />
-      <ColorBlock colorVar="--uitk-color-orange-200" />
-      <ColorBlock colorVar="--uitk-color-orange-300" />
-      <ColorBlock colorVar="--uitk-color-orange-400" />
-      <ColorBlock colorVar="--uitk-color-orange-500" />
-      <ColorBlock colorVar="--uitk-color-orange-600" />
-      <ColorBlock colorVar="--uitk-color-orange-700" />
-      <ColorBlock colorVar="--uitk-color-orange-800" />
-      <ColorBlock colorVar="--uitk-color-orange-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Green
-
-<Canvas>
-  <Story name="Green">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-green-10" />
-      <ColorBlock colorVar="--uitk-color-green-20" />
-      <ColorBlock colorVar="--uitk-color-green-30" />
-      <ColorBlock colorVar="--uitk-color-green-40" />
-      <ColorBlock colorVar="--uitk-color-green-50" />
-      <ColorBlock colorVar="--uitk-color-green-100" />
-      <ColorBlock colorVar="--uitk-color-green-200" />
-      <ColorBlock colorVar="--uitk-color-green-300" />
-      <ColorBlock colorVar="--uitk-color-green-400" />
-      <ColorBlock colorVar="--uitk-color-green-500" />
-      <ColorBlock colorVar="--uitk-color-green-600" />
-      <ColorBlock colorVar="--uitk-color-green-700" />
-      <ColorBlock colorVar="--uitk-color-green-800" />
-      <ColorBlock colorVar="--uitk-color-green-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Teal
-
-<Canvas>
-  <Story name="Teal">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-teal-10" />
-      <ColorBlock colorVar="--uitk-color-teal-20" />
-      <ColorBlock colorVar="--uitk-color-teal-30" />
-      <ColorBlock colorVar="--uitk-color-teal-40" />
-      <ColorBlock colorVar="--uitk-color-teal-50" />
-      <ColorBlock colorVar="--uitk-color-teal-100" />
-      <ColorBlock colorVar="--uitk-color-teal-200" />
-      <ColorBlock colorVar="--uitk-color-teal-300" />
-      <ColorBlock colorVar="--uitk-color-teal-400" />
-      <ColorBlock colorVar="--uitk-color-teal-500" />
-      <ColorBlock colorVar="--uitk-color-teal-600" />
-      <ColorBlock colorVar="--uitk-color-teal-700" />
-      <ColorBlock colorVar="--uitk-color-teal-800" />
-      <ColorBlock colorVar="--uitk-color-teal-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Blue
-
-<Canvas>
-  <Story name="Blue">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-blue-10" />
-      <ColorBlock colorVar="--uitk-color-blue-20" />
-      <ColorBlock colorVar="--uitk-color-blue-30" />
-      <ColorBlock colorVar="--uitk-color-blue-40" />
-      <ColorBlock colorVar="--uitk-color-blue-50" />
-      <ColorBlock colorVar="--uitk-color-blue-100" />
-      <ColorBlock colorVar="--uitk-color-blue-200" />
-      <ColorBlock colorVar="--uitk-color-blue-300" />
-      <ColorBlock colorVar="--uitk-color-blue-400" />
-      <ColorBlock colorVar="--uitk-color-blue-500" />
-      <ColorBlock colorVar="--uitk-color-blue-600" />
-      <ColorBlock colorVar="--uitk-color-blue-700" />
-      <ColorBlock colorVar="--uitk-color-blue-800" />
-      <ColorBlock colorVar="--uitk-color-blue-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Purple
-
-<Canvas>
-  <Story name="Purple">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-purple-10" />
-      <ColorBlock colorVar="--uitk-color-purple-20" />
-      <ColorBlock colorVar="--uitk-color-purple-30" />
-      <ColorBlock colorVar="--uitk-color-purple-40" />
-      <ColorBlock colorVar="--uitk-color-purple-50" />
-      <ColorBlock colorVar="--uitk-color-purple-100" />
-      <ColorBlock colorVar="--uitk-color-purple-200" />
-      <ColorBlock colorVar="--uitk-color-purple-300" />
-      <ColorBlock colorVar="--uitk-color-purple-400" />
-      <ColorBlock colorVar="--uitk-color-purple-500" />
-      <ColorBlock colorVar="--uitk-color-purple-600" />
-      <ColorBlock colorVar="--uitk-color-purple-700" />
-      <ColorBlock colorVar="--uitk-color-purple-800" />
-      <ColorBlock colorVar="--uitk-color-purple-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Grey
-
-<Canvas>
-  <Story name="Grey">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-grey-10" />
-      <ColorBlock colorVar="--uitk-color-grey-20" />
-      <ColorBlock colorVar="--uitk-color-grey-30" />
-      <ColorBlock colorVar="--uitk-color-grey-40" />
-      <ColorBlock colorVar="--uitk-color-grey-50" />
-      <ColorBlock colorVar="--uitk-color-grey-60" />
-      <ColorBlock colorVar="--uitk-color-grey-70" />
-      <ColorBlock colorVar="--uitk-color-grey-80" />
-      <ColorBlock colorVar="--uitk-color-grey-90" />
-      <ColorBlock colorVar="--uitk-color-grey-100" />
-      <ColorBlock colorVar="--uitk-color-grey-200" />
-      <ColorBlock colorVar="--uitk-color-grey-300" />
-      <ColorBlock colorVar="--uitk-color-grey-400" />
-      <ColorBlock colorVar="--uitk-color-grey-500" />
-      <ColorBlock colorVar="--uitk-color-grey-600" />
-      <ColorBlock colorVar="--uitk-color-grey-700" />
-      <ColorBlock colorVar="--uitk-color-grey-800" />
-      <ColorBlock colorVar="--uitk-color-grey-900" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## White
-
-<Canvas>
-  <Story name="White">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-white" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Black
-
-<Canvas>
-  <Story name="Black">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-color-black" />
-    </DocGrid>
-  </Story>
-</Canvas>
+  </ColorPalette>
+</ColorContainer>

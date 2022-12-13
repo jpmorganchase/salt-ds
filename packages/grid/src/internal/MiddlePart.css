@@ -7,6 +7,8 @@
   bottom: var(--grid-scrollBar-height);
   left: 0;
   clip-path: inset(var(--grid-topPart-height) var(--grid-rightPart-width) 0 var(--grid-leftPart-width));
+  touch-action: none;
+  z-index: var(--grid-middle-body-zIndex);
 }
 
 .uitkGridMiddlePart-space {

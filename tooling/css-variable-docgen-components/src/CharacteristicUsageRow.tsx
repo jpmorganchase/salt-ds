@@ -1,4 +1,3 @@
-import { FC } from "react";
 import Markdown from "markdown-to-jsx";
 import { Name, Description, StyledTd } from "./common";
 
@@ -7,9 +6,7 @@ interface CharacteristicUsageRowProps {
   tokens: string[];
 }
 
-export const CharacteristicUsageRow: FC<CharacteristicUsageRowProps> = (
-  props
-) => {
+export const CharacteristicUsageRow = (props: CharacteristicUsageRowProps) => {
   const { name, tokens } = props;
 
   return (

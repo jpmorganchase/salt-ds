@@ -50,6 +50,8 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("uitkLayerLayout");
 
+const ariaAttributes = { role: "dialog", "aria-modal": true };
+
 export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
   function LayerLayout(props, ref) {
     const {
@@ -111,6 +113,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
             setShowComponent(false);
           }
         }}
+        {...(disableScrim && ariaAttributes)}
         {...rest}
       >
         {children}
@@ -122,7 +125,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     ) : (
       <Scrim
         open={showComponent}
-        className={cx("uitkEmphasisMedium", {
+        className={cx({
           [withBaseName("enter-animation")]: enterAnimation,
           [withBaseName("exit-animation")]: exitAnimation,
         })}

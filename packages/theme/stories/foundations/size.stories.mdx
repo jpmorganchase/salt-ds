@@ -4,45 +4,36 @@ import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Documentation/Styles and Theming/Foundations/Size" />
 
-# Base Values
+# Base values
 
-All size values are based on 4px, `--uitk-size-basis-unit`. Use `--uitk-size-unit` (see density aware values below) which will adjust this basis according to density.
+All size values are based on 4px, `--uitk-size-basis-unit`. If you need to change this, use `--uitk-size-unit` (see density aware values below) which will adjust this base value according to density.
 
-## Density Invariant
+## Density invariant
 
 <Canvas>
   <Story name="Density Invariant">
     <DocGrid>
       <SpacingBlock spacingVar="--uitk-size-basis-unit" />
-      <SpacingBlock spacingVar="--uitk-size-graphic-small" />
-      <SpacingBlock spacingVar="--uitk-size-graphic-medium" />
-      <SpacingBlock spacingVar="--uitk-size-graphic-large" />
-      <SpacingBlock spacingVar="--uitk-size-sharktooth-width" />
+      <SpacingBlock spacingVar="--uitk-size-border" />
+      <SpacingBlock spacingVar="--uitk-size-brandBar" />
+      <SpacingBlock spacingVar="--uitk-size-divider-strokeWidth" />
       <SpacingBlock spacingVar="--uitk-size-sharktooth-height" />
+      <SpacingBlock spacingVar="--uitk-size-sharktooth-width" />
     </DocGrid>
   </Story>
 </Canvas>
 
-## Density Aware
+## Density aware
 
 <Canvas>
   <Story name="Density Aware">
     <DocGrid>
       <SpacingBlock spacingVar="--uitk-size-unit" />
+      <SpacingBlock spacingVar="--uitk-size-detail" />
       <SpacingBlock spacingVar="--uitk-size-base" />
-      <SpacingBlock spacingVar="--uitk-size-adornment" />
-      <SpacingBlock spacingVar="--uitk-size-appHeader" />
-      <SpacingBlock spacingVar="--uitk-size-bottomBorder" />
-      <SpacingBlock spacingVar="--uitk-size-brandBar" />
-      <SpacingBlock spacingVar="--uitk-size-formField-top" />
-      <SpacingBlock spacingVar="--uitk-size-inlineDivider" />
-      <SpacingBlock spacingVar="--uitk-size-logo" />
-      <SpacingBlock spacingVar="--uitk-size-pill" />
+      <SpacingBlock spacingVar="--uitk-size-divider-height" />
       <SpacingBlock spacingVar="--uitk-size-selection" />
       <SpacingBlock spacingVar="--uitk-size-stackable" />
-      <SpacingBlock spacingVar="--uitk-size-switch" />
-      <SpacingBlock spacingVar="--uitk-size-toggleGroupButton" />
-      <SpacingBlock spacingVar="--uitk-size-toolbar" />
     </DocGrid>
   </Story>
 </Canvas>
