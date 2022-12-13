@@ -1,8 +1,13 @@
-import { Banner, BannerProps, Link } from "@jpmorganchase/uitk-lab";
+import { Banner, BannerProps } from "@jpmorganchase/uitk-lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
-import { Panel, StackLayout, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import {
+  Link,
+  Panel,
+  StackLayout,
+  ToolkitProvider,
+} from "@jpmorganchase/uitk-core";
 
 export default {
   title: "Lab/Banner",
