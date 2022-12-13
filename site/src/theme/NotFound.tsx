@@ -3,17 +3,11 @@ import Layout from "@theme/Layout";
 import styles from "./notfound.module.css";
 import Link from "@docusaurus/Link";
 import { PageMetadata } from "@docusaurus/theme-common";
-import { translate } from "@docusaurus/Translate";
 
 export default function NotFound() {
   return (
     <>
-      <PageMetadata
-        title={translate({
-          id: "theme.NotFound.title",
-          message: "Page Not Found",
-        })}
-      />
+      <PageMetadata title="Page Not Found" />
       <Layout>
         <div className={styles.notFoundContainer}>
           <div className={styles.notFoundContent}>
