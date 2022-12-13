@@ -4,7 +4,7 @@
   /* 468px is height of hatching in illustration */
   grid-template-rows: 468px auto;
   overflow: hidden;
-max-width:var(--max-content-width);
+  max-width: var(--max-content-width);
   margin: auto;
   --keyline-height: 3px;
 }
