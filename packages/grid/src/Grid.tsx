@@ -832,7 +832,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [rangeSelection.selectedCellRange]
   );
 
-  const pageSize = visRowRng.length - 1;
+  const pageSize = Math.max(1, visRowRng.length - 1);
 
   const navigationKeyHandler = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
@@ -955,6 +955,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cols.length,
       rowData.length,
       headerIsFocusable,
+      pageSize,
     ]
   );
 

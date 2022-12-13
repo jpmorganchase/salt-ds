@@ -213,7 +213,7 @@ describe("Grid", () => {
     cy.focused().realPress(["ControlLeft", "Home"]);
     checkCursorPos(0, 0);
     cy.focused().realPress(["PageDown"]);
-    checkCursorPos(14, 0);
+    checkCursorPos(13, 0);
     cy.focused().realPress(["PageUp"]);
     checkCursorPos(0, 0);
     // TODO other hotkeys
@@ -480,8 +480,8 @@ describe("Grid", () => {
   describe("Cell Customisation", () => {
     it("Renders customised cell values", () => {
       cy.mount(<CellCustomization />);
-      cy.get(".bidAskCellValue").should("have.length", 16);
-      cy.get(".uitkLinearProgress").should("have.length", 16);
+      cy.get(".bidAskCellValue").should("have.length", 15);
+      cy.get(".uitkLinearProgress").should("have.length", 15);
     });
   });
 
