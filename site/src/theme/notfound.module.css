@@ -1,0 +1,47 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.notFoundContainer {
+  height: 100vh;
+  background-color: var(--uitk-color-gray-900);
+  background-image: url(@site/static/img/background_gradient.svg);
+  background-repeat: no-repeat;
+  background-size: 250%;
+  background-position: top;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.notFoundContent {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.notFoundContent:before {
+  content: "";
+  border: 1px solid;
+  border-color: var(--uitkAccordion-section-borderColor, var(--uitk-separable-secondary-borderColor));
+  align-self: stretch;
+}
+
+@media (min-width: 700px) {
+  .notFoundContent {
+    flex-direction: row;
+  }
+}
+
+.heroTitle {
+  order: -1;
+  margin: 0;
+  --ifm-heading-line-height: var(--uitk-text-h2-lineHeight);
+  --ifm-h2-font-size: var(--uitk-text-h2-fontSize);
+}
+.errorText {
+  margin: 0;
+}
