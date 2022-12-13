@@ -12,7 +12,6 @@ import {
 } from "react";
 import { useGridContext } from "./GridContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
-import { HeaderCellProps } from "./HeaderCell";
 
 export type GridColumnPin = "left" | "right" | null;
 
@@ -34,8 +33,15 @@ export interface GridCellValueProps<T, U = any> {
   value?: U;
 }
 
+export interface HeaderCellProps<T> {
+  column: GridColumnModel<T>;
+  children: ReactNode;
+  isFocused?: boolean;
+}
+
 export interface GridHeaderValueProps<T> {
   column: GridColumnModel<T>;
+  isFocused?: boolean;
 }
 
 export interface GridEditorProps<T> {
@@ -53,16 +59,20 @@ export interface GridColumnProps<T = any> {
    * */
   name?: string;
   /**
-   * Default width of the column.
+   * Default width of the column in `px`.
    * */
   defaultWidth?: number;
+  /**
+   * Min width of the column.
+   * */
+  minWidth?: number;
   /**
    * Callback invoked when the user resizes the column.
    * */
   onWidthChanged?: (width: number) => void;
   /**
    * Whether the column should be pinned `left` or `right`. By default columns
-   * are unpinned.
+   * are unpinned. Accepts `"left" | "right" | null`.
    * */
   pinned?: GridColumnPin;
   /**
@@ -109,6 +119,9 @@ export interface GridColumnProps<T = any> {
    * A callback to be invoked on key down when the focus is in this column.
    */
   onKeyDown?: (event: KeyboardEvent<HTMLDivElement>, rowIndex: number) => void;
+  /**
+   * Children is optional, and accepts non-rendered elements i.e. `CellEditor`
+   */
   children?: ReactNode;
 }
 

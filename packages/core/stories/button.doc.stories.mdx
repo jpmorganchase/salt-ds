@@ -37,7 +37,7 @@ A Button executes an action when clicked. Button labels should use only one or t
 
 ##### Don't use when
 
-The button navigates the user to a new page or window rather than trigger a function, in that case a `Link` component is more appropriate.
+The Button navigates the user to a new page or window rather than triggering a function, in that case a `Link` component is more appropriate.
 
 ## Features
 
@@ -55,7 +55,7 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
 
 ### Button with icon and label
 
-Icons can be put before or after text, or used alone.
+Icons can be put before or after text, or used alone. Check the [Accessibility](#Accessibility) section for guidance on ensuring your Button remains acessible to all.
 
 #### Design considerations
 
@@ -82,7 +82,7 @@ Icons can be put before or after text, or used alone.
 
 ### Disabled Button
 
-A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
+A Button with the prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need a disabled Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
 
 <Canvas>
   <Story name="Disabled buttons" decorators={[withFlexGap]}>

@@ -14,6 +14,8 @@ export function FakeCell<T>(props: FakeCellProps<T>) {
       className="uitkGridFakeCell"
       data-row-index={row.index}
       data-column-index={-1}
-    />
+    >
+      <div />
+    </td>
   );
 }
