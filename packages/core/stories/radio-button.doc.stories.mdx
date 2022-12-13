@@ -4,7 +4,6 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -98,14 +97,3 @@ import { RadioButton, RadioButtonGroup } from "@jpmorganchase/uitk-core";
 ## Characteristics Used
 
 <CharacteristicUsage of={RadioButton} />
-
-## --uitkRadioButton CSS Custom Property API
-
-The default styling values for most RadioButton attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to RadioButton. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by RadioButton, but not defined by RadioButton. They can be defined via a container or
-a custom class name to override RadioButton styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={RadioButton} />

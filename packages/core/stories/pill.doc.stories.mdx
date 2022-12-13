@@ -4,7 +4,6 @@ import { UserBadgeIcon } from "@jpmorganchase/uitk-icons";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -28,33 +27,33 @@ allow users to trigger actions, make selections or filter results.
 [Checkbox](/?path=/story/core-checkbox--feature-input),
 [Link](/?path=/story/lab-link--default),
 [Switch](/?path=/story/lab-badge--feature-switch),
-[ToggleButton](/?path=/story/toggle-button--default-button)  
+[ToggleButton](/?path=/story/toggle-button--default-button)
 **Uses:** [Button](/?path=/story/core-button--cta),
 [Checkbox](/?path=/story/core-checkbox--feature-input),
 [Icon](/?path=/story/core-icon--toolkit-icon),
 [Tooltip](/?path=/story/core-tooltip--default)
 
-**Usage**  
+**Usage**
 Pill is a versatile, interactive and stand-alone component. It is often used to:
 
-- **Tag content**  
-   Use a Pill to organise content that may be mapped to more than one category. It
+- **Tag content**
+  Use a Pill to organise content that may be mapped to more than one category. It
   provides users with a way of distinguishing among different types of content and
   categories.
-- **Display or remove a value**  
-   A Pill allows users to display or remove a value that’s been selected elsewhere
+- **Display or remove a value**
+  A Pill allows users to display or remove a value that’s been selected elsewhere
   via another mechanism, like a filter or dropdown. Options selected within Auto
   Complete or Combo Box components, for example, may be displayed alongside a Pill.
-- **Trigger a quick action**  
-   You can configure a Pill to trigger an immediate action—such as changing the view
+- **Trigger a quick action**
+  You can configure a Pill to trigger an immediate action—such as changing the view
   of content that’s currently on display or navigating to a new page.
-- **Enable an action that’s subject to change**  
-   Actions that may change depending on the context, and are not fixed, are best
+- **Enable an action that’s subject to change**
+  Actions that may change depending on the context, and are not fixed, are best
   represented by Pills rather than buttons. In a messaging application, for example,
   Pills can be used to display quick stock responses which change so they’re appropriate
   responses to a received message.
-- **Allow multiselection**  
-   When screen space is limited, a Pill can provide a compact way of enabling multiselection
+- **Allow multiselection**
+  When screen space is limited, a Pill can provide a compact way of enabling multiselection
   of items that may be subject to change.
 
 **Best practices**
@@ -72,7 +71,7 @@ page view. It can also be used to trigger an action that is subject to change as
 a result of user Pills or other factors. This Pill, for example, may be used to
 send an auto-generated quick response to a message.
 
-**Navigating to another page**  
+**Navigating to another page**
 If the action triggered by a default Pill navigates the user to a different
 page, the ‘role’ prop must be changed from ‘button’ (the default attribute) to
 ‘link’, to ensure it provides an accurate role to screen readers.
@@ -241,14 +240,3 @@ When `variant` is `'selectable'`
 ## Characteristics Used
 
 <CharacteristicUsage of={Pill} />
-
-## --uitkPill CSS Custom Property API
-
-The default styling values for most Pill attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Pill. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Pill, but not defined by Pill. They can be defined via a container or
-a custom class name to override Pill styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={Pill} />

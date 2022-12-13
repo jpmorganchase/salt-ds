@@ -8,7 +8,6 @@ import { CalendarIcon, CallIcon } from "@jpmorganchase/uitk-icons";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 
@@ -122,14 +121,3 @@ import { Input } from "@jpmorganchase/uitk-core";
 ## Characteristics Used
 
 <CharacteristicUsage of={Input} />
-
-## --uitkInput CSS Custom Property API
-
-The default styling values for most Input attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Input. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Input, but not defined by Input. They can be defined via a container or
-a custom class name to override input styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={Input} />

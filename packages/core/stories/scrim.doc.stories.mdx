@@ -2,7 +2,6 @@ import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
 import { ToolkitProvider, Scrim } from "@jpmorganchase/uitk-core";
 import {
   CSSClassTable,
-  CSSVariableTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
 import { DefaultScrim, ClosableScrim, ScrimContainer } from "./scrim.stories";
@@ -25,12 +24,12 @@ As a backdrop, it brings an overlaying component—such as as [Dialog](/docs/lab
 
 Use a Scrim to focus the user’s attention on the content of an overlaying component within a specific viewport or content area. Place it in an application window, widget, data visualization or panel, such as a [Dialog](/docs/lab-dialog--basic-dialog).
 
-**Best practice**  
+**Best practice**
 Don’t use a Scrim if the user needs to interact with the content beneath the overlaying component at the same time, for example, in a master detail layout.
 
 ## Interactions and behaviors
 
-**Modal experience**  
+**Modal experience**
 The Scrim provides a modal experience by obscuring the underlying content. It also prevents keyboard or mouse interactions from reaching this content until the Scrim and overlaying component are closed by the user or system.
 
 ## Default
@@ -75,21 +74,11 @@ import { Scrim } from "@jpmorganchase/uitk-core";
 
 <CharacteristicUsage of={Scrim} />
 
-## --uitkScrim CSS Custom Property API
-
-The default styling values for most Scrim attributes are hard-coded values local to Scrim.
-
-The CSS custom properties below are consumed by Scrim, but not defined by Scrim. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. See Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={Scrim} />
-
 ## Accessibility
 
 The Scrim component is accessible by screen readers and provides full WAI ARIA support. When Scrim is used directly it requires an `aria-label` or `aria-labelledby` prop for it to be correctly labelled for the screen reader software.
 
-**Focus Trap**  
+**Focus Trap**
 For accessibility purposes, the key responsibility of the Scrim component is to block interaction with the underlying page.
 
 This has two consequences:
@@ -97,7 +86,7 @@ This has two consequences:
 1. The tab order is restricted, only cycling through items within the overlaying component.
 2. Content beneath the scrim is programmatically disabled to stop Assistive Technologies from conveying it to users.
 
-**Keyboard interactions**  
+**Keyboard interactions**
 The following keyboard interactions apply:
 
 | Key               | Function                                                                                                                       |
