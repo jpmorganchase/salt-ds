@@ -8,12 +8,10 @@ import {
   FormField,
   Input,
   FlexLayout,
-  Card,
   LayerLayout,
   LAYER_POSITIONS,
 } from "@jpmorganchase/uitk-core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { ContactDetailsExample } from "../../../core/stories/layout/flex-layout.stories";
 import "./styles.css";
 
 export default {
@@ -393,13 +391,22 @@ const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
+      <LayerLayout
+        isOpen={open}
+        aria-labelledby="layer_label"
+        aria-describedby="layer_description"
+        {...args}
+      >
         <StackLayout>
-          <h2>Section title</h2>
-          {Array.from({ length: 4 }, (_, index) => (
-            <Card key={index}>
-              <ContactDetailsExample index={index} />
-            </Card>
+          <h2 id="layer_label">Section title</h2>
+          <p id="layer_description">
+            Incididunt adipisicing deserunt nostrud ullamco consequat
+            consectetur magna id do irure labore fugiat. Eiusmod pariatur
+            officia elit ad. Ullamco adipisicing Lorem amet velit in do
+            reprehenderit nostrud eu aute voluptate quis quis.
+          </p>
+          {Array.from({ length: 7 }, (_, index) => (
+            <FormFieldExample key={index} />
           ))}
           <FlexItem align="end">
             <Button onClick={hide}>Close layer</Button>
