@@ -3,10 +3,14 @@ sidebar_label: Design
 hide_table_of_contents: true
 ---
 
+import FigmaLogo from "@site/static/img/figma_logo.svg";
+
 import Content from "../../src/components/content/Content.tsx";
 import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
 import FigmaLink from "./FigmaLink";
+
+import styles from "./design.module.css";
 
 # Designing with Salt
 
@@ -43,12 +47,14 @@ To start using a library:
 - Click on the book icon and search for “Salt” in Libraries.
 - Pick the library you need from the set of available libraries (shown in the table below).
 
-<table style={{ tableLayout: "fixed" }}>
+<table className={styles.assetsTable}>
   <thead>
     <tr>
-      <th>Salt asset libraries</th>
+      <th>Assets and styles</th>
       <th>What they contain</th>
-      <th>Design specifications</th>
+      <th>
+        <FigmaLogo /> Salt libraries
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -73,17 +79,6 @@ To start using a library:
         <FigmaLink />
       </td>
     </tr>
-  </tbody>
-</table>
-<table style={{ tableLayout: "fixed" }}>
-  <thead>
-    <tr>
-      <th>Salt style libraries</th>
-      <th>What they contain</th>
-      <th>Design specifications</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <td>Layout Grid</td>
       <td>Layout grid styles for all densities</td>
