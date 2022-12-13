@@ -1,8 +1,12 @@
-import { makePrefixer, TooltipProps, Text } from "@jpmorganchase/uitk-core";
+import {
+  Link,
+  makePrefixer,
+  TooltipProps,
+  Text,
+} from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import classnames from "classnames";
 import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
-import { Link } from "../link";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import "./Breadcrumb.css";
 
