@@ -3316,7 +3316,7 @@ __metadata:
     "@storybook/node-logger": ^6.5.14
     "@storybook/react": ^6.5.14
     "@storybook/testing-react": ^1.3.0
-    "@testing-library/cypress": ^8.0.3
+    "@testing-library/cypress": ^9.0.0
     "@testing-library/dom": ^8.5.0
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.1.0
@@ -5326,15 +5326,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/cypress@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "@testing-library/cypress@npm:8.0.3"
+"@testing-library/cypress@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@testing-library/cypress@npm:9.0.0"
   dependencies:
     "@babel/runtime": ^7.14.6
     "@testing-library/dom": ^8.1.0
   peerDependencies:
-    cypress: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-  checksum: 319f6c7297f85e5673882a71009b5d5b576006f986d87a6ca6f2f8c679d96d9779f3ddbc01654b5a943407fa91192814f250835ce01f153e33ef24818cf1bf20
+    cypress: ^12.0.0
+  checksum: fbd24e8f0b8a60279b336de5f6bc0e7ad6fb31316eacab5128dacc7fccde1eb40935b90f2c3bddc7d814115fe3965c6dbf011785448cd15b5a5b0bc40ef5bb4c
   languageName: node
   linkType: hard
 
