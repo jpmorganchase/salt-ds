@@ -79,7 +79,7 @@ const cards: CardProps[] = [
 
 export default function Home(): JSX.Element {
   return (
-    <Layout description="Description will go into a meta tag in <head />">
+    <Layout>
       <main className={styles.homepageContainer}>
         <HomepageHeader />
         <Features heading="What to expect" listItems={features} />
