@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof BorderItem> = (args) => {
   return (
     <BorderLayout columnGap={1} rowGap={1} className="layout-container">
       <BorderItem position="north" className="border-item">
-        <p>Header</p>
+        <p>North</p>
       </BorderItem>
       <BorderItem {...args} className="border-item layout-active-content">
         <p>{args.position}</p>
@@ -31,13 +31,13 @@ const Template: ComponentStory<typeof BorderItem> = (args) => {
         className="border-item layout-content"
         style={{ minWidth: 100 }}
       >
-        <p>Main</p>
+        <p>Center</p>
       </BorderItem>
       <BorderItem position="east" className="border-item">
-        <p>Right</p>
+        <p>East</p>
       </BorderItem>
       <BorderItem position="south" className="border-item">
-        <p>Bottom</p>
+        <p>South</p>
       </BorderItem>
     </BorderLayout>
   );
