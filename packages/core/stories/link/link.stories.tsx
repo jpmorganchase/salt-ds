@@ -1,23 +1,15 @@
-import { Link } from "@jpmorganchase/uitk-lab";
+import { Link } from "@jpmorganchase/uitk-core";
 
-import "./link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
 
 export default {
-  title: "Lab/Link",
+  title: "Core/Link",
   component: Link,
 } as ComponentMeta<typeof Link>;
 
 export const Default: ComponentStory<typeof Link> = () => {
   return <Link href="https://www.google.com">Link to URL</Link>;
-};
-
-export const Disabled: ComponentStory<typeof Link> = () => {
-  return (
-    <Link href="https://www.google.com" disabled>
-      Link to URL
-    </Link>
-  );
 };
 
 export const TargetBlank: ComponentStory<typeof Link> = () => {
@@ -28,18 +20,10 @@ export const TargetBlank: ComponentStory<typeof Link> = () => {
   );
 };
 
-export const TargetBlankDisabled: ComponentStory<typeof Link> = () => {
-  return (
-    <Link href="https://www.google.com" target="_blank" disabled>
-      Link to URL
-    </Link>
-  );
-};
-
-export const TargetBlankNoIcon: ComponentStory<typeof Link> = () => {
+export const TargetBlankCustomIcon: ComponentStory<typeof Link> = () => {
   return (
     <Link
-      className="uitkTargetBlankNoIcon-Link"
+      IconComponent={StackoverflowIcon}
       href="https://www.google.com"
       target="_blank"
     >
