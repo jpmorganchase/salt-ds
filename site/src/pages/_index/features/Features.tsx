@@ -32,18 +32,20 @@ const Features = ({ heading, listItems }: FeaturesProps): JSX.Element => {
   );
 
   return (
-    <div className={styles.featuresContainer}>
-      <h2>{heading}</h2>
-      <ul className={styles.listItems}>
-        {firstHalf.map((item, index) => (
-          <ListItem key={index} item={item} />
-        ))}
-      </ul>
-      <ul className={styles.listItems}>
-        {secondHalf.map((item, index) => (
-          <ListItem key={index} item={item} />
-        ))}
-      </ul>
+    <div className={styles.featuresContainerWrapper}>
+      <div className={styles.featuresContainer}>
+        <h2>{heading}</h2>
+        <ul className={styles.listItems}>
+          {firstHalf.map((item, index) => (
+            <ListItem key={index} item={item} />
+          ))}
+        </ul>
+        <ul className={styles.listItems}>
+          {secondHalf.map((item, index) => (
+            <ListItem key={index} item={item} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

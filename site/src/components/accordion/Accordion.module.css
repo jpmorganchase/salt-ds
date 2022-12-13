@@ -16,6 +16,9 @@
 .accordion .section {
   padding: var(--accordion-section-padding);
 }
+.accordion .section:last-of-type {
+  border: none;
+}
 
 .accordion .summary h2 {
   padding-left: var(--accordion-padding-left);
