@@ -6,6 +6,10 @@
   table-layout: fixed;
 }
 
+.componentList a svg {
+  --uitkIcon-color: var(--uitk-text-primary-foreground);
+}
+
 .componentList a span {
   text-decoration: underline;
 }
