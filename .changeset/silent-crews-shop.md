@@ -4,6 +4,7 @@
 ---
 
 Moved the following components from Core to Lab:
+
 - Card
 - Checkbox
 - ControlLabel
