@@ -338,9 +338,79 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
-    name: "Layout",
+    name: "Grid Layout",
     description:
-      "Provides a series of versatile, flexible layouts that support the design of components and application UIs and can be used in multiple contexts.",
+      "Defines an equally distributed layout system using columns and rows.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-gridlayout--page",
+  },
+  {
+    name: "Border Layout",
+    description:
+      "Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-borderlayout--page",
+  },
+  {
+    name: "Stack Layout",
+    description: "Dictates a vertical order and direction for UI elements.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-stacklayout--page",
+  },
+  {
+    name: "Flex Layout",
+    description:
+      "Dictates a vertical or horizontal order and direction for UI elements. Does not wrap by default.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-flexlayout--page",
+  },
+  {
+    name: "Flow Layout",
+    description:
+      "Dictates a horizontal order and direction for UI elements. Wraps by default.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-flowlayout--page",
+  },
+  {
+    name: "Split Layout",
+    description:
+      "Defines left and right regions for UI elements within a span, such as a button bar.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Deck Layout",
+    description:
+      "Defines pages of content that appear within the same specified region, one at a time.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Layer Layout",
+    description:
+      "Defines a layer above the existing layout structure for UI elements to be displayed in.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Parent Child Layout",
+    description:
+      "Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.",
     devStatus: ComponentStatus.IN_BACKLOG,
     designStatus: ComponentStatus.NOT_APPLICABLE,
   },

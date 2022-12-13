@@ -4,7 +4,8 @@
   /* 468px is height of hatching in illustration */
   grid-template-rows: 468px auto;
   overflow: hidden;
-
+  max-width: var(--max-content-width);
+  margin: auto;
   --keyline-height: 3px;
 }
 
@@ -46,8 +47,15 @@
   }
 }
 @media screen and (min-width: 1920px) {
-  .accordionWrapper {
+  .accordionContainer {
     margin: auto;
+    overflow: visible;
+  }
+  .accordionWrapper {
+    min-height: unset;
+  }
+  .accordionIllustration {
+    margin-right: -20rem;
   }
 }
 @media screen and (max-width: 1280px) {
