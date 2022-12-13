@@ -50,7 +50,7 @@ const features = [
 const cards: CardProps[] = [
   {
     icon: <PencilIcon />,
-    title: "Design and develop",
+    title: "Designing and developing",
     description:
       "Follow our step-by-step process to access our Figma libraries. If you’re a developer, we show you how to install and start using the Salt packages.",
     url: "/getting-started",
