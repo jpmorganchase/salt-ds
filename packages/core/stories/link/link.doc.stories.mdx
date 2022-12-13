@@ -165,4 +165,10 @@ or declared locally. Again, see Theme documentation for guidance on when to use 
 
 ## Accessibility
 
+We are letting our consumers decide on the user experience they would like to implement for truncation of links. Therefore, it is the application team’s responsibility to remain ADA compliant and provide the correct visual and auditory experience for truncation. Truncated links must meet the WCAG SC 1.4.4 requirement.
+
+- The requirement states any visually rendered text must be accessed and displayed in full. Therefore, a truncated string must be displayed in full - it is the application team’s responsibility to provide a mechanism to achieve that.
+- If you use truncated links, you must ensure that the full value can be read out via a screen reader. This can be achieved by allowing your user to move focus to the parent of the link, or the link itself, within your application.
+- A link is a focusable element.
+
 <HelpAndSupport />
