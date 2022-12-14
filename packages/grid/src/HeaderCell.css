@@ -7,9 +7,7 @@
   box-sizing: border-box;
   color: var(--grid-header-color);
   white-space: nowrap;
-
   outline: 0;
-  overflow: hidden;
 }
 
 .saltGridHeaderCell-valueContainer {
@@ -47,6 +45,7 @@
 
 .saltGridHeaderCell-text {
   color: var(--grid-header-color);
+  overflow: hidden;
 }
 
 .saltGridHeaderCell-regularSeparator {
