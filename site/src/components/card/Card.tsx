@@ -6,8 +6,8 @@ import {
 } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import { useTheme } from "@jpmorganchase/uitk-core";
-import { TearOutIcon } from "@jpmorganchase/uitk-icons";
+import { useTheme } from "@salt-ds/core";
+import { TearOutIcon } from "@salt-ds/icons";
 
 import useOnScreen from "../../utils/useOnScreen";
 

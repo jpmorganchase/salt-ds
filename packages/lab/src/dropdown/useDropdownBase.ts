@@ -1,4 +1,4 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
 import { KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";

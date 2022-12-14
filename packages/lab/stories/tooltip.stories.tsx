@@ -1,10 +1,10 @@
-import { Button, useForkRef } from "@jpmorganchase/uitk-core";
+import { Button, useForkRef } from "@salt-ds/core";
 import {
   Tooltip,
   TooltipProps,
   useTooltip,
   UseTooltipProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
 

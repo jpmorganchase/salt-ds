@@ -7,7 +7,7 @@ import {
   useEffect,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
 import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";

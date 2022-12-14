@@ -9,11 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 import { FormField, FormFieldProps } from "../form-field";

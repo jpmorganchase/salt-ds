@@ -1,4 +1,4 @@
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { IconProps } from "@salt-ds/icons";
 import {
   ComponentType,
   HTMLAttributes,

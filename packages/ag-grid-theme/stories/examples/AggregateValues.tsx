@@ -4,7 +4,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 export const AggregateValues = (props: AgGridReactProps) => {
   const [isNewTheme, setNewTheme] = useState(false);

@@ -4,11 +4,7 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import {
-  makePrefixer,
-  useForkRef,
-  useIdMemo as useId,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import cx from "classnames";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";

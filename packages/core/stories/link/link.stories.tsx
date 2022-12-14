@@ -1,7 +1,7 @@
-import { Link } from "@jpmorganchase/uitk-core";
+import { Link } from "@salt-ds/core";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
+import { StackoverflowIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Link",

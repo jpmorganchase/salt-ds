@@ -2,7 +2,7 @@ import {
   Breakpoints,
   useCurrentBreakpoint,
   useOrderedBreakpoints,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 export const useIsViewportLargerThanBreakpoint = (
   targetedBreakpoint: keyof Breakpoints

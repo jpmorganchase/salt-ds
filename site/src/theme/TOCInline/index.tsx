@@ -1,5 +1,5 @@
 import React from "react";
-import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, ToolkitProvider } from "@salt-ds/core";
 import TOCItems from "@theme-original/TOCItems";
 
 const withBaseName = makePrefixer("uitkTocInline");

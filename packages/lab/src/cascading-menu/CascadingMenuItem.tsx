@@ -1,5 +1,5 @@
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { ChevronRightIcon } from "@salt-ds/icons";
 import classnames from "classnames";
 import {
   forwardRef,

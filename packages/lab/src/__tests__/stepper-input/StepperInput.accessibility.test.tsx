@@ -8,8 +8,8 @@ import { StepperInput } from "../../stepper-input";
 
 const mockAnnounce = jest.fn();
 
-jest.mock("@jpmorganchase/uitk-core", () => ({
-  ...jest.requireActual("@jpmorganchase/uitk-core"),
+jest.mock("@salt-ds/core", () => ({
+  ...jest.requireActual("@salt-ds/core"),
   useAriaAnnouncer: () => ({
     announce: mockAnnounce,
   }),

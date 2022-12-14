@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, DeckLayout, Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
+import { Card, DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import "./layout-stories.css";
 
 export default {

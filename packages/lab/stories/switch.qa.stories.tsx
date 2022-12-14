@@ -1,4 +1,4 @@
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

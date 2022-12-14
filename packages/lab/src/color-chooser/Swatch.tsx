@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 

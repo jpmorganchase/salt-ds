@@ -1,4 +1,4 @@
-import { makePrefixer, Mode, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Mode, ToolkitProvider } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,

@@ -1,4 +1,4 @@
-import { ToolkitProvider, useDensity } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider, useDensity } from "@salt-ds/core";
 import {
   ButtonBar,
   Dialog,
@@ -7,7 +7,7 @@ import {
   DialogProps,
   DialogTitle,
   OrderedButton,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./dialog.qa.stories.css";
 

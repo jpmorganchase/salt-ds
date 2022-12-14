@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useForkRef, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
 import { Tooltip, useTooltip } from "../tooltip";
 import { classBase } from "./constant";

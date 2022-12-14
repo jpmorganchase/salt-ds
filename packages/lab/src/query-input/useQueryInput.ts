@@ -1,4 +1,4 @@
-import { useControlled, useForkRef } from "@jpmorganchase/uitk-core";
+import { useControlled, useForkRef } from "@salt-ds/core";
 import {
   ChangeEventHandler,
   FocusEventHandler,

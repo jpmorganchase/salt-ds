@@ -1,5 +1,5 @@
 import { ComponentType, ReactElement } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import classnames from "classnames";
 import "./RadioButtonIcon.css";
 

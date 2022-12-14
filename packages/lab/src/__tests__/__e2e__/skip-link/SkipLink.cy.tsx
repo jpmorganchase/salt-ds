@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as skipLinkStories from "@stories/skip-link.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
+import { SkipLink, SkipLinks } from "@salt-ds/lab";
 
 const composedStories = composeStories(skipLinkStories);
 const { Default, MultipleLinks } = composedStories;

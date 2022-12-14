@@ -5,7 +5,7 @@ import {
   HTMLAttributes,
   ComponentType,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
 import { RadioButtonBase as Radio } from "./RadioButtonBase";
 import { RadioButtonIconProps } from "./RadioButtonIcon";

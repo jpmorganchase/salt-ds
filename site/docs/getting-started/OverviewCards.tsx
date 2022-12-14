@@ -1,7 +1,7 @@
 import Card, { CardProps } from "@site/src/components/card/Card";
 import DesignIcon from "@site/static/img/design.svg";
 import DevelopIcon from "@site/static/img/develop.svg";
-import { ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider, useTheme } from "@salt-ds/core";
 import styles from "./OverviewCards.module.css";
 
 const cards: CardProps[] = [

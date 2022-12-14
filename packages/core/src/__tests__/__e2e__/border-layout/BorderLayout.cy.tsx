@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as borderStories from "@stories/border-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { BORDER_POSITION as borderAreas } from "@jpmorganchase/uitk-core";
+import { BORDER_POSITION as borderAreas } from "@salt-ds/core";
 
 const composedStories = composeStories(borderStories);
 const { BorderLayoutAllPanels } = composedStories;

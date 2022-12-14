@@ -1,4 +1,4 @@
-import { useForkRef } from "@jpmorganchase/uitk-core";
+import { useForkRef } from "@salt-ds/core";
 
 import {
   forwardRef,

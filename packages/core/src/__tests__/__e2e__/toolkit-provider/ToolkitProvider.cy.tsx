@@ -3,7 +3,7 @@ import {
   useAriaAnnouncer,
   useDensity,
   useTheme,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { mount } from "cypress/react";
 
 const TestComponent = ({

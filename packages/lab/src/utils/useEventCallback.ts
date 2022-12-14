@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 /**
  * https://github.com/facebook/react/issues/14099#issuecomment-440013892

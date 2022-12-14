@@ -1,6 +1,6 @@
 import { forwardRef, ForwardedRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import "./TabPanel.css";
 

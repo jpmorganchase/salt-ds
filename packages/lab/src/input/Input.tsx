@@ -15,11 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  useControlled,
-  useForkRef,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 

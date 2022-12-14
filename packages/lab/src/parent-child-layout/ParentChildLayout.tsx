@@ -3,7 +3,7 @@ import {
   makePrefixer,
   FlexLayout,
   FlexLayoutProps,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 import cx from "classnames";
 import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";

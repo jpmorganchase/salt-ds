@@ -1,10 +1,5 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useId,
-} from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   ComponentPropsWithRef,

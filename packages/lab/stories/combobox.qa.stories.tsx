@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { ComboBox, FormField } from "@jpmorganchase/uitk-lab";
+import { ComboBox, FormField } from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 

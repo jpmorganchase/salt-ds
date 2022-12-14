@@ -4,7 +4,7 @@ import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import "../../uitk-ag-theme.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 const headerOn = {
   headerName: "On",

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Link, ToolkitProvider, Text } from "@jpmorganchase/uitk-core";
+import { Button, Link, ToolkitProvider, Text } from "@salt-ds/core";
 import {
   EditableLabel,
   Tab,
@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogActions,
   ParentChildLayout,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 import { AdjustableFlexbox } from "../story-components";
 

@@ -1,5 +1,5 @@
-import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon, ChevronUpIcon } from "@jpmorganchase/uitk-icons";
+import { Button, makePrefixer, useId } from "@salt-ds/core";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { useContactDetailsContext } from "./internal";

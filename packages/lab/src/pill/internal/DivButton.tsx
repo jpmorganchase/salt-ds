@@ -4,7 +4,7 @@ import {
   ReactElement,
   KeyboardEvent,
 } from "react";
-import { useButton, makePrefixer } from "@jpmorganchase/uitk-core";
+import { useButton, makePrefixer } from "@salt-ds/core";
 import cx from "classnames";
 
 const withBaseName = makePrefixer("uitkButton");

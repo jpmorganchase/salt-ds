@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Story } from "@storybook/react";
 
-import { Tabstrip, TabstripProps } from "@jpmorganchase/uitk-lab";
+import { Tabstrip, TabstripProps } from "@salt-ds/lab";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "../story-components";
 

@@ -1,9 +1,4 @@
-import {
-  Button,
-  GridLayout,
-  makePrefixer,
-  useId,
-} from "@jpmorganchase/uitk-core";
+import { Button, GridLayout, makePrefixer, useId } from "@salt-ds/core";
 import {
   ChangeEventHandler,
   Children,
@@ -12,7 +7,7 @@ import {
   ReactElement,
   useEffect,
 } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { RadioButtonGroup } from "../radio-button";
 import { DeckLayout } from "../deck-layout";
 import cx from "classnames";

@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { useLayoutEffectSkipFirst } from "../utils";
 import { AccordionSectionContext } from "./AccordionSectionContext";
 import cn from "classnames";

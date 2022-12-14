@@ -1,13 +1,13 @@
-import { Density, Mode, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Density, Mode, ToolkitProvider } from "@salt-ds/core";
 import {
   FormField,
   makeRadioIcon,
   Panel,
   RadioButton,
   RadioButtonGroup,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
-import { SuccessTickIcon } from "@jpmorganchase/uitk-icons";
+import { SuccessTickIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { ChangeEventHandler, ReactNode, useState } from "react";
 

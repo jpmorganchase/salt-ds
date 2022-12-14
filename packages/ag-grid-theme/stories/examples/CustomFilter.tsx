@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";

@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from "@jpmorganchase/uitk-lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 import { ChangeEventHandler } from "react";
 
 describe("GIVEN a CheckboxGroup component", () => {

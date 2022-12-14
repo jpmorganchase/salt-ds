@@ -1,5 +1,5 @@
-import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { Button, makePrefixer, useId } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "../window";

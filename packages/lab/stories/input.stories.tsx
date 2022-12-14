@@ -1,19 +1,14 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Button, ToolkitProvider } from "@salt-ds/core";
 import {
   CalendarIcon,
   CallIcon,
   CloseIcon,
   SendIcon,
   UserIcon,
-} from "@jpmorganchase/uitk-icons";
-import {
-  Dropdown,
-  FormField,
-  Input,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/icons";
+import { Dropdown, FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
