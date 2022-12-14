@@ -27,4 +27,7 @@
 .iconsTable > caption {
   text-align: left;
   margin-top: var(--uitk-size-unit);
+  font-style: var(--uitk-editable-help-fontStyle);
+  font-size: var(--uitk-text-label-fontSize);
+  line-height: var(--uitk-text-label-lineHeight);
 }
