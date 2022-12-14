@@ -4,10 +4,7 @@
 @mixin ag-theme-salt($params: ()) {
   @include ag-allow-color-param-access-with-ag-param(false);
 
-  $params: ag-process-theme-variables(
-    $params,
-    $salt-ag-theme-default-params
-  );
+  $params: ag-process-theme-variables($params, $salt-ag-theme-default-params);
   @include ag-theme-base($params);
 
   .ag-root-wrapper {
