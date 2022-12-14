@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-/**
- * Example data can be found here
- * https://bitbucketdc.jpmchase.net/projects/JPMUITK/repos/jpm-ui-toolkit/browse/packages/data-grid/examples/dependencies
- */
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 

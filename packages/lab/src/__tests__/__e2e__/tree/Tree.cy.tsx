@@ -1371,7 +1371,6 @@ describe("GIVEN a Tree", () => {
   //   });
   // });
 
-  // Reproduction of https://jiradc-other.jpmchase.net/browse/UITK-1775
   // describe("AND a controlled node is expanded then the source changes and it is clicked again", () => {
   //   let wrapper;
   //   let onItemClickSpy;
