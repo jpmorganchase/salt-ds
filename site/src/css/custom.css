@@ -46,7 +46,7 @@
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
   --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
-  --image-border: var(--uitk-palette-neutral-border-medium);
+  --image-border: var(--uitk-palette-neutral-primary-border);
   --ifm-menu-color-background-hover: none;
 }
 
