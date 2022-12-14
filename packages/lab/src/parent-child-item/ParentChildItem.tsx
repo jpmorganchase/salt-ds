@@ -5,7 +5,7 @@ import {
   flexItemAlignment,
   makePrefixer,
   ResponsiveProp,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";

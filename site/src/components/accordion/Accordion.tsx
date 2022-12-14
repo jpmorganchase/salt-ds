@@ -3,7 +3,7 @@ import {
   AccordionDetails,
   AccordionSection,
   AccordionSummary,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 import styles from "./Accordion.module.css";
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";

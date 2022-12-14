@@ -1,5 +1,5 @@
-import { useForkRef } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { useForkRef } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { ArrowButton } from "./ArrowButton";

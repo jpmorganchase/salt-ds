@@ -1,4 +1,4 @@
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { IconProps } from "@salt-ds/icons";
 import cn from "classnames";
 import {
   ComponentProps,
@@ -8,7 +8,7 @@ import {
   useCallback,
 } from "react";
 import { Portal, PortalProps } from "../portal";
-import { makePrefixer, StatusIndicator } from "@jpmorganchase/uitk-core";
+import { makePrefixer, StatusIndicator } from "@salt-ds/core";
 import { useWindow } from "../window";
 
 import "./Tooltip.css";

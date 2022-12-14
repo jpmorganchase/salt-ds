@@ -1,4 +1,4 @@
-import { RadioButtonBase } from "@jpmorganchase/uitk-lab";
+import { RadioButtonBase } from "@salt-ds/lab";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";

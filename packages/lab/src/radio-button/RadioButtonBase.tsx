@@ -13,7 +13,7 @@ import {
   useControlled,
   useForkRef,
   useIsFocusVisible,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import {
   RadioButtonIcon as DefaultRadioIcon,

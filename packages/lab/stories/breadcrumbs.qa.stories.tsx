@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Breadcrumb, Breadcrumbs } from "@jpmorganchase/uitk-lab";
-import { HomeIcon, TreeIcon } from "@jpmorganchase/uitk-icons";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
+import { HomeIcon, TreeIcon } from "@salt-ds/icons";
 import { QAContainer } from "docs/components";
 
 export default {

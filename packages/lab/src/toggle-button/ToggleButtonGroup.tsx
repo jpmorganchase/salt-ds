@@ -1,8 +1,4 @@
-import {
-  ButtonVariant,
-  makePrefixer,
-  useControlled,
-} from "@jpmorganchase/uitk-core";
+import { ButtonVariant, makePrefixer, useControlled } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,

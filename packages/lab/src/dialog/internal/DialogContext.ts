@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ValidationStatus } from "@jpmorganchase/uitk-core";
+import { ValidationStatus } from "@salt-ds/core";
 
 export const DialogContext = createContext<{
   status?: ValidationStatus;

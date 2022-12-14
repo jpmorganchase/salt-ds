@@ -1,4 +1,4 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 import Accordion, {
   AccordionBaseProps,
 } from "../../src/components/accordion/Accordion";

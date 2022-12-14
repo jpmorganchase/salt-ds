@@ -1,10 +1,6 @@
 import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
 import cx from "classnames";
-import {
-  Breakpoints,
-  makePrefixer,
-  usePrevious,
-} from "@jpmorganchase/uitk-core";
+import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
 
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 

@@ -1,4 +1,4 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
 import { KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
 import { CollectionItem } from "./collectionTypes";
 import {

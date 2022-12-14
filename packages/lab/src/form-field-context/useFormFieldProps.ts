@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { FormFieldContext, FormFieldContextValue } from "./FormFieldContext";
 
 interface useFormFieldPropsProps {

@@ -1,4 +1,4 @@
-import { Slider } from "@jpmorganchase/uitk-lab";
+import { Slider } from "@salt-ds/lab";
 
 describe("Given a Slider with a single value", () => {
   it("THEN it should have ARIA roles and attributes", () => {

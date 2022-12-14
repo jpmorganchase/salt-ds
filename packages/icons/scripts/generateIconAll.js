@@ -25,9 +25,7 @@ glob(
     });
 
     const importsStatements =
-      "import {\n" +
-      content.join("\n") +
-      `\n} from "@jpmorganchase/uitk-icons";\n\n`;
+      "import {\n" + content.join("\n") + `\n} from "@salt-ds/icons";\n\n`;
     const exportStatements =
       "export const allIcons = [" + content.join("\n") + "\n];\n";
 

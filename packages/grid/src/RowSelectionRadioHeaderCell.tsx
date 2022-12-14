@@ -1,5 +1,5 @@
 import { AutoSizeHeaderCell } from "./HeaderCell";
-import { RadioButtonIcon } from "@jpmorganchase/uitk-lab";
+import { RadioButtonIcon } from "@salt-ds/lab";
 import "./CheckboxCell.css";
 import cx from "classnames";
 import { HeaderCellProps } from "./GridColumn";

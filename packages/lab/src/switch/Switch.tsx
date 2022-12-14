@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
 import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";

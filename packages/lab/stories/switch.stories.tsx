@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 export default {
   title: "Core/Switch",

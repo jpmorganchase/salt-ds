@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { usePrevious } from "@jpmorganchase/uitk-core";
+import { usePrevious } from "@salt-ds/core";
 
 export function useFocusMenuRemount<T extends HTMLElement>(key: string) {
   const ref = useRef<T>(null);

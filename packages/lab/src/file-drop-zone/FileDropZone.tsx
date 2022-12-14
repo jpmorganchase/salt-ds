@@ -1,5 +1,5 @@
-import { Button, makePrefixer, useId } from "@jpmorganchase/uitk-core";
-import { ErrorIcon, UploadIcon } from "@jpmorganchase/uitk-icons";
+import { Button, makePrefixer, useId } from "@salt-ds/core";
+import { ErrorIcon, UploadIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   ChangeEventHandler,

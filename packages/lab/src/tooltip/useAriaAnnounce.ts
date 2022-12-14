@@ -3,10 +3,7 @@ import type {
   FloatingContext,
 } from "@floating-ui/react-dom-interactions";
 import { PointerEvent, useEffect, useRef } from "react";
-import {
-  useAriaAnnouncer,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 function getDocument(floating: HTMLElement | null) {
   return floating?.ownerDocument ?? document;

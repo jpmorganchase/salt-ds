@@ -5,7 +5,7 @@ import {
   MessageIcon,
   SettingsIcon,
   UserIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import {
   ContactAction,
   ContactActions,
@@ -20,7 +20,7 @@ import {
   ContactTertiaryInfo,
   Slider,
   SliderValue,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 
 import { useState } from "react";

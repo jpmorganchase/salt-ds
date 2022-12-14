@@ -5,7 +5,7 @@ import {
   SearchIcon,
   PrintIcon,
   NotificationIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import {
   ToggleButton,
   ToggleButtonGroup,

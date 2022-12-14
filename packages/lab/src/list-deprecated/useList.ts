@@ -4,7 +4,7 @@ import {
   useForkRef,
   useId,
   useIsFocusVisible,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 import {
   AriaAttributes,

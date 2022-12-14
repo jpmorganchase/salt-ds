@@ -7,9 +7,9 @@
  */
 
 import { SyntheticEvent, useState } from "react";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Pill } from "@jpmorganchase/uitk-lab";
-import { FavoriteIcon } from "@jpmorganchase/uitk-icons";
+import { ToolkitProvider } from "@salt-ds/core";
+import { Pill } from "@salt-ds/lab";
+import { FavoriteIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

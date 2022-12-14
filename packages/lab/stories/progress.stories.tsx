@@ -1,10 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import {
-  CircularProgress,
-  LinearProgress,
-  Panel,
-} from "@jpmorganchase/uitk-lab";
+import { Button, ToolkitProvider } from "@salt-ds/core";
+import { CircularProgress, LinearProgress, Panel } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";

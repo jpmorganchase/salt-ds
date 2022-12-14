@@ -6,7 +6,7 @@ import {
   useCallback,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 import { PillBase, PillBaseProps } from "./PillBase";

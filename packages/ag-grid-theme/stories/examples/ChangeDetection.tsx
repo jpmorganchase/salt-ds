@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import "../../uitk-ag-theme.css";
 import changeDetectionExampleColumns from "../dependencies/changeDetectionExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";

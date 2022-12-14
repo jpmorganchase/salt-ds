@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import { AriaAnnouncerProvider } from "@jpmorganchase/uitk-core";
+import { AriaAnnouncerProvider } from "@salt-ds/core";
 import { FormField, FormFieldProps } from "../../form-field";
 import { useFormFieldProps } from "../../form-field-context";
 

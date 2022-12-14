@@ -1,7 +1,4 @@
-import {
-  useControlled,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
   FocusEvent,
   FocusEventHandler,

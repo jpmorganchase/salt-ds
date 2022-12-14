@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { ForwardedRef, forwardRef, useCallback, SyntheticEvent } from "react";
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { pillBaseName } from "./constants";
 import { PillBase, PillBaseProps } from "./PillBase";
 import { PillCheckbox } from "./internal/PillCheckbox";

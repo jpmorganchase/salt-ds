@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {

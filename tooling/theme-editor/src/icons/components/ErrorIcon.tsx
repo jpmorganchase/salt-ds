@@ -1,4 +1,4 @@
-import { Icon, IconProps } from "@jpmorganchase/uitk-icons";
+import { Icon, IconProps } from "@salt-ds/icons";
 import { forwardRef } from "react";
 
 export const ErrorIcon = forwardRef<SVGSVGElement, IconProps>(

@@ -1,6 +1,6 @@
 import "./HeaderCell.css";
 import { useLayoutEffect, useRef } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { ColumnSeparatorType } from "./Grid";
 import { useSizingContext } from "./SizingContext";

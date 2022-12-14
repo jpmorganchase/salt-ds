@@ -1,5 +1,5 @@
-import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
-import { MessageIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useId } from "@salt-ds/core";
+import { MessageIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   cloneElement,

@@ -1,4 +1,4 @@
-import { BorderItem, BorderLayout } from "@jpmorganchase/uitk-core";
+import { BorderItem, BorderLayout } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 

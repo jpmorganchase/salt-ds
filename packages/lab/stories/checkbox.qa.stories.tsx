@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Checkbox } from "@jpmorganchase/uitk-lab";
+import { Checkbox } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {

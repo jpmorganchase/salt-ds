@@ -3,7 +3,7 @@ import {
   ColorChooser,
   getColorPalettes,
   SwatchesPicker,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
 
