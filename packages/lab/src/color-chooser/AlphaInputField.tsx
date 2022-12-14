@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { useState, useEffect } from "react";
-import { Input, makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { Input } from "../input";
 
 import "./RGBAInput.css";
 

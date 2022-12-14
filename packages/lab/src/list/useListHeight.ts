@@ -1,9 +1,5 @@
 import { useMemo, useState, useCallback, RefObject } from "react";
-import {
-  useResizeObserver,
-  HeightOnly,
-  ResizeHandler,
-} from "@jpmorganchase/uitk-core";
+import { useResizeObserver, HeightOnly, ResizeHandler } from "../responsive";
 
 export interface ListHeightHookProps {
   borderless?: boolean;

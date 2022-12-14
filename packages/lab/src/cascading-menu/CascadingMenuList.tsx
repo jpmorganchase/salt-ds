@@ -1,10 +1,6 @@
 import {
-  Portal,
-  useFloatingUI,
-  UseFloatingUIProps,
   useForkRef,
   useIsomorphicLayoutEffect,
-  useWindow,
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
@@ -22,6 +18,9 @@ import { hasIcon, hasSubMenu, menuState } from "./internal/stateUtils";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
 import { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
+import { useWindow } from "../window";
+import { useFloatingUI, UseFloatingUIProps } from "../popper";
+import { Portal } from "../portal";
 
 import "./CascadingMenuList.css";
 

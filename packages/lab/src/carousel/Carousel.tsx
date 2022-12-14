@@ -1,9 +1,7 @@
 import {
   Button,
-  DeckLayout,
   GridLayout,
   makePrefixer,
-  RadioButtonGroup,
   useId,
 } from "@jpmorganchase/uitk-core";
 import {
@@ -15,6 +13,8 @@ import {
   useEffect,
 } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { RadioButtonGroup } from "../radio-button";
+import { DeckLayout } from "../deck-layout";
 import cx from "classnames";
 import "./Carousel.css";
 import { useSlideSelection } from "../utils";

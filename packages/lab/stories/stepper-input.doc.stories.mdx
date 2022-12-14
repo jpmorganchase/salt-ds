@@ -3,7 +3,6 @@ import { StepperInput } from "@jpmorganchase/uitk-lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -104,14 +103,3 @@ import { StepperInput } from "@jpmorganchase/uitk-lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={StepperInput} />
-
-## --uitkStepperInput CSS Custom Property API
-
-The default styling values for most StepperInput attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to StepperInput. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by StepperInput, but not defined by StepperInput. They can be defined via a container or
-a custom class name to override StepperInput styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={StepperInput} />

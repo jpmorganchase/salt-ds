@@ -4,7 +4,6 @@ import {
   ownerWindow,
   useControlled,
   useDensity,
-  useFormFieldProps,
   useId,
 } from "@jpmorganchase/uitk-core";
 import copy from "clipboard-copy";
@@ -27,6 +26,7 @@ import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
 import { TokenizedInputBaseProps } from "./TokenizedInputBase";
+import { useFormFieldProps } from "../form-field-context";
 
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;

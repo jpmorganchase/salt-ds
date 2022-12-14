@@ -1,10 +1,11 @@
-import { useForkRef, UseTooltipProps } from "@jpmorganchase/uitk-core";
+import { useForkRef } from "@jpmorganchase/uitk-core";
 import { ComponentType, ForwardedRef, forwardRef } from "react";
 import {
   TokenizedInputBase,
   TokenizedInputBaseProps,
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
+import { UseTooltipProps } from "../tooltip";
 
 import "./TokenizedInput.css";
 

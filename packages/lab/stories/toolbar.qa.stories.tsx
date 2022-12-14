@@ -1,11 +1,5 @@
 import { Story } from "@storybook/react";
-import {
-  Button,
-  FormField,
-  Input,
-  Pill,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   AddIcon,
   ColumnChooserIcon,
@@ -24,6 +18,10 @@ import {
   Toolbar,
   ToolbarButton,
   Tooltray,
+  FormField,
+  Input,
+  Pill,
+  StaticInputAdornment,
 } from "@jpmorganchase/uitk-lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 

@@ -1,4 +1,4 @@
-import { InputProps, useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@jpmorganchase/uitk-core";
 import {
   ChangeEvent,
   FocusEvent,
@@ -19,6 +19,7 @@ import {
   SelectionStrategy,
   SingleSelectionStrategy,
 } from "../common-hooks";
+import { InputProps } from "../input";
 
 const NULL_REF = { current: null };
 const EnterOnly = ["Enter"];

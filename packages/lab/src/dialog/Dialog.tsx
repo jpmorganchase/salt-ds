@@ -1,11 +1,7 @@
 import {
   makePrefixer,
-  Portal,
   useId,
-  useWindow,
   ValidationStatus,
-  Scrim,
-  ScrimProps,
 } from "@jpmorganchase/uitk-core";
 import classnames from "classnames";
 import {
@@ -17,6 +13,9 @@ import {
   useState,
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
+import { Scrim, ScrimProps } from "../scrim";
+import { useWindow } from "../window";
+import { Portal } from "../portal";
 
 import "./Dialog.css";
 
