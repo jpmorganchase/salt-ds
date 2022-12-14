@@ -3,6 +3,10 @@
   --ifm-hr-background-color: var(--uitk-separable-secondary-borderColor);
 }
 
+.accordionWrapper table thead {
+  position: inherit;
+}
+
 .accordionWrapper :global(.uitkIcon) {
   --uitk-size-icon-base: var(--uitk-size-unit);
 }

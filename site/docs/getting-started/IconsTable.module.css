@@ -11,7 +11,7 @@
 }
 
 .iconsTable {
-  margin: calc(var(--uitk-size-unit) * 2) 0;
+  margin: var(--uitk-size-unit) 0;
   caption-side: bottom;
 }
 
