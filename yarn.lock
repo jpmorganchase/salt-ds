@@ -3979,7 +3979,7 @@ __metadata:
     typescript: 4.6.4
     vite: ^3.1.0
     vite-plugin-istanbul: ^3.0.1
-    vite-tsconfig-paths: ^4.0.0
+    vite-tsconfig-paths: ^4.0.3
     webpack: 5.74.0
   languageName: unknown
   linkType: soft
@@ -25831,16 +25831,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"vite-tsconfig-paths@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "vite-tsconfig-paths@npm:4.0.1"
+"vite-tsconfig-paths@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "vite-tsconfig-paths@npm:4.0.3"
   dependencies:
     debug: ^4.1.1
     globrex: ^0.1.2
     tsconfck: ^2.0.1
   peerDependencies:
     vite: ">2.0.0-0"
-  checksum: 6ffb50b84118405cfe306e62976799567f68463da791d8499517e37de0c58ef8ce5e414245c973d86edf2b6390118196ea5b3f667e540ba2d48e2f188a6d0374
+  checksum: 491bc977e1510ed8481d6492ffa06d3c6510e9fe6b418540b1d818539c91261e7c500a13f60ce2ed2b1435e00b45e62302a8257c365c8ce19a2784fb0f290652
   languageName: node
   linkType: hard
 
