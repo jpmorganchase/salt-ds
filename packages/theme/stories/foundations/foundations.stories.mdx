@@ -3,24 +3,39 @@ import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Documentation/Styles and Theming/Foundations/Introduction" />
 
-## Foundations
+# Foundations
 
-At the core of our CSS Variables are what we call 'Foundations' and have come from our design team.
+The foundations lie at the heart of the Salt design system, and define the core visual elements needed to create a consistent experience.
 
-Foundations are our collection of design tokens which make up the building blocks of our theme.
+The design tokens within each foundation make up the building blocks of the Salt theme.
 
-### Token Name Convention
+## Naming tokens
 
-Foundation design tokens should generally be in the format `--uitk-<foundation name>-<variant>-<scale>-<density>`
+Foundation tokens follow the format `--uitk-<foundation name>-<variant>-<scale>-<density>`
 
 1. Always begin with `--uitk-`
-2. Follow this by the **_foundation name_**, e.g. `---uitk-color-`, `---uitk-shadow-`, `--uitk-size-`, `--uitk-typography-`
-3. Append the **_intent_**, if applicable: e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-size-stackable`, `--uitk-typography-fontWeight-`
-4. Append the **_scale_** or **_rank_**, if applicable: e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`, `--uitk-typography-fontWeight-light`
+2. Followed by the **foundation name**, e.g. `---uitk-color-`, `---uitk-shadow-`, `--uitk-size-`, `--uitk-typography-`
+3. Append the **intent**, if applicable: e.g. `--uitk-color-blue-`, `--uitk-shadow-elevation-`, `--uitk-size-stackable`, `--uitk-typography-fontWeight-`
+4. Append the **scale**, if applicable: e.g. `--uitk-color-blue-700`, `--uitk-shadow-elevation-3`, `--uitk-typography-fontWeight-light`
+
+## Foundation tokens
+
+Foundation tokens are divided into the following groups:
+
+| Foundation | Description                                                 | Example token                          | Example value                     |
+| ---------- | ----------------------------------------------------------- | -------------------------------------- | --------------------------------- |
+| Color      | The core set of colors used in the Salt theme               | `--uitk-color-gray-800`                | `rgb(36, 37, 38)`                 |
+| Delay      | Duration between a users actions and system feedback        | `--uitk-delay-cutoff`                  | `10000`                           |
+| Icon       | The core set of icons available in the Salt theme           | `--uitk-icon-size-base`                | `12px`                            |
+| Opacity    | Opacity percentages for different attributes                | `--uitk-opacity-background`            | `0.7`                             |
+| Shadow     | Shadows used to convey elevation or hierarchy of components | `--uitk-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
+| Size       | Size in px, used for padding, height, border width, etc.    | `--uitk-size-basis-unit`               | `4px`                             |
+| Typography | The fonts and font weights provided by the theme            | `--uitk-typography-fontWeight-regular` | `400`                             |
+| Z-Index    | Numbering indicating appropriate z-index of components      | `--uitk-zIndex-flyover`                | `1500`                            |
 
 ## Using Foundations
 
-Wrap the foundation you wish to use inside a `var()` function. Most commonly, foundations are used when referenced by characteristics, for example:
+Wrap the foundation you want to use inside a `var()` function. Most commonly, foundations are used when referenced by characteristics, for example:
 
 ```css
 .uitk-theme {
@@ -44,7 +59,9 @@ or, even inline!
 <h1 style={{ color: "var(--uitk-color-green-100)" }}>Example</h1>
 ```
 
-For size and spacing foundations, it is highly common to use these within a calculation for width, height, paddings, margins, etc. For example:
+### Using the Size Foundation
+
+Size foundations are commonly used within a calculation for settings such as width, height, paddings, margins. For example:
 
 ```css
 .uitkLogo {
