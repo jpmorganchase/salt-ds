@@ -1,9 +1,9 @@
-@import "./odyssey-ag-theme-mixin";
+@import "./salt-ag-theme-mixin";
 
-.ag-theme-odyssey-high-light,
-.ag-theme-odyssey-medium-light,
-.ag-theme-odyssey-low-light,
-.ag-theme-odyssey-touch-light {
+.ag-theme-salt-high-light,
+.ag-theme-salt-medium-light,
+.ag-theme-salt-low-light,
+.ag-theme-salt-touch-light {
   --agGrid-foreground: var(
     --uitkAgGrid-foreground,
     var(--uitk-text-primary-foreground)
@@ -114,10 +114,10 @@
   );
 }
 
-.ag-theme-odyssey-high-dark,
-.ag-theme-odyssey-medium-dark,
-.ag-theme-odyssey-low-dark,
-.ag-theme-odyssey-touch-dark {
+.ag-theme-salt-high-dark,
+.ag-theme-salt-medium-dark,
+.ag-theme-salt-low-dark,
+.ag-theme-salt-touch-dark {
   --agGrid-foreground: var(--uitkAgGrid-foreground, white);
   --agGrid-foreground-disabled: var(--uitkAgGrid-foreground-disabled, white);
   --agGrid-header-foreground: var(--uitkAgGrid-header-foreground, white);
@@ -220,18 +220,18 @@
   );
 }
 
-$ag-theme-odyssey-params-dark: (
+$ag-theme-salt-params-dark: (
   foreground-color: white,
   background-color: #242526,
 );
 
-$ag-theme-odyssey-params-light: (
+$ag-theme-salt-params-light: (
   foreground-color: #2a2c2f,
   background-color: white,
 );
 
-$ag-theme-odyssey-params-high: map-merge(
-  $odyssey-ag-theme-default-params,
+$ag-theme-salt-params-high: map-merge(
+  $salt-ag-theme-default-params,
   (
     row-height: 24px,
     header-height: 24,
@@ -243,18 +243,18 @@ $ag-theme-odyssey-params-high: map-merge(
   )
 );
 
-$ag-theme-odyssey-params-high-light: map-merge(
-  $ag-theme-odyssey-params-high,
-  $ag-theme-odyssey-params-light
+$ag-theme-salt-params-high-light: map-merge(
+  $ag-theme-salt-params-high,
+  $ag-theme-salt-params-light
 );
 
-$ag-theme-odyssey-params-high-dark: map-merge(
-  $ag-theme-odyssey-params-high,
-  $ag-theme-odyssey-params-dark
+$ag-theme-salt-params-high-dark: map-merge(
+  $ag-theme-salt-params-high,
+  $ag-theme-salt-params-dark
 );
 
-$ag-theme-odyssey-params-medium: map-merge(
-  $odyssey-ag-theme-default-params,
+$ag-theme-salt-params-medium: map-merge(
+  $salt-ag-theme-default-params,
   (
     row-height: 36px,
     header-height: 36,
@@ -266,18 +266,18 @@ $ag-theme-odyssey-params-medium: map-merge(
   )
 );
 
-$ag-theme-odyssey-params-medium-light: map-merge(
-  $ag-theme-odyssey-params-medium,
-  $ag-theme-odyssey-params-light
+$ag-theme-salt-params-medium-light: map-merge(
+  $ag-theme-salt-params-medium,
+  $ag-theme-salt-params-light
 );
 
-$ag-theme-odyssey-params-medium-dark: map-merge(
-  $ag-theme-odyssey-params-medium,
-  $ag-theme-odyssey-params-dark
+$ag-theme-salt-params-medium-dark: map-merge(
+  $ag-theme-salt-params-medium,
+  $ag-theme-salt-params-dark
 );
 
-$ag-theme-odyssey-params-low: map-merge(
-  $odyssey-ag-theme-default-params,
+$ag-theme-salt-params-low: map-merge(
+  $salt-ag-theme-default-params,
   (
     row-height: 48px,
     header-height: 48,
@@ -289,18 +289,18 @@ $ag-theme-odyssey-params-low: map-merge(
   )
 );
 
-$ag-theme-odyssey-params-low-light: map-merge(
-  $ag-theme-odyssey-params-low,
-  $ag-theme-odyssey-params-light
+$ag-theme-salt-params-low-light: map-merge(
+  $ag-theme-salt-params-low,
+  $ag-theme-salt-params-light
 );
 
-$ag-theme-odyssey-params-low-dark: map-merge(
-  $ag-theme-odyssey-params-low,
-  $ag-theme-odyssey-params-dark
+$ag-theme-salt-params-low-dark: map-merge(
+  $ag-theme-salt-params-low,
+  $ag-theme-salt-params-dark
 );
 
-$ag-theme-odyssey-params-touch: map-merge(
-  $odyssey-ag-theme-default-params,
+$ag-theme-salt-params-touch: map-merge(
+  $salt-ag-theme-default-params,
   (
     row-height: 60px,
     header-height: 60,
@@ -312,18 +312,18 @@ $ag-theme-odyssey-params-touch: map-merge(
   )
 );
 
-$ag-theme-odyssey-params-touch-light: map-merge(
-  $ag-theme-odyssey-params-touch,
-  $ag-theme-odyssey-params-light
+$ag-theme-salt-params-touch-light: map-merge(
+  $ag-theme-salt-params-touch,
+  $ag-theme-salt-params-light
 );
 
-$ag-theme-odyssey-params-touch-dark: map-merge(
-  $ag-theme-odyssey-params-touch,
-  $ag-theme-odyssey-params-dark
+$ag-theme-salt-params-touch-dark: map-merge(
+  $ag-theme-salt-params-touch,
+  $ag-theme-salt-params-dark
 );
 
-.ag-theme-odyssey-high-dark,
-.ag-theme-odyssey-high-light {
+.ag-theme-salt-high-dark,
+.ag-theme-salt-high-light {
   --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 12px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 4px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 20px);
@@ -344,16 +344,16 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 11px);
 }
 
-.ag-theme-odyssey-high-dark {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-high-dark);
+.ag-theme-salt-high-dark {
+  @include ag-theme-salt($ag-theme-salt-params-high-dark);
 }
 
-.ag-theme-odyssey-high-light {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-high-light);
+.ag-theme-salt-high-light {
+  @include ag-theme-salt($ag-theme-salt-params-high-light);
 }
 
-.ag-theme-odyssey-medium-dark,
-.ag-theme-odyssey-medium-light {
+.ag-theme-salt-medium-dark,
+.ag-theme-salt-medium-light {
   --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 14px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 8px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 28px);
@@ -373,16 +373,16 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 12px);
 }
 
-.ag-theme-odyssey-medium-dark {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-medium-dark);
+.ag-theme-salt-medium-dark {
+  @include ag-theme-salt($ag-theme-salt-params-medium-dark);
 }
 
-.ag-theme-odyssey-medium-light {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-medium-light);
+.ag-theme-salt-medium-light {
+  @include ag-theme-salt($ag-theme-salt-params-medium-light);
 }
 
-.ag-theme-odyssey-low-dark,
-.ag-theme-odyssey-low-light {
+.ag-theme-salt-low-dark,
+.ag-theme-salt-low-light {
   --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 16px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 12px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 36px);
@@ -402,16 +402,16 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 14px);
 }
 
-.ag-theme-odyssey-low-dark {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-low-dark);
+.ag-theme-salt-low-dark {
+  @include ag-theme-salt($ag-theme-salt-params-low-dark);
 }
 
-.ag-theme-odyssey-low-light {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-low-light);
+.ag-theme-salt-low-light {
+  @include ag-theme-salt($ag-theme-salt-params-low-light);
 }
 
-.ag-theme-odyssey-touch-dark,
-.ag-theme-odyssey-touch-light {
+.ag-theme-salt-touch-dark,
+.ag-theme-salt-touch-light {
   --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 18px);
   --agGrid-input-padding: var(--uitkAgGrid-input-padding, 8px);
   --agGrid-input-height: var(--uitkAgGrid-input-height, 28px);
@@ -431,22 +431,22 @@ $ag-theme-odyssey-params-touch-dark: map-merge(
   --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 16px);
 }
 
-.ag-theme-odyssey-touch-light {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-touch-light);
+.ag-theme-salt-touch-light {
+  @include ag-theme-salt($ag-theme-salt-params-touch-light);
 }
 
-.ag-theme-odyssey-touch-dark {
-  @include ag-theme-odyssey($ag-theme-odyssey-params-touch-dark);
+.ag-theme-salt-touch-dark {
+  @include ag-theme-salt($ag-theme-salt-params-touch-dark);
 }
 
-.ag-theme-odyssey-touch-dark,
-.ag-theme-odyssey-touch-light,
-.ag-theme-odyssey-low-dark,
-.ag-theme-odyssey-low-light,
-.ag-theme-odyssey-medium-dark,
-.ag-theme-odyssey-medium-light,
-.ag-theme-odyssey-high-dark,
-.ag-theme-odyssey-high-light {
+.ag-theme-salt-touch-dark,
+.ag-theme-salt-touch-light,
+.ag-theme-salt-low-dark,
+.ag-theme-salt-low-light,
+.ag-theme-salt-medium-dark,
+.ag-theme-salt-medium-light,
+.ag-theme-salt-high-dark,
+.ag-theme-salt-high-light {
   --agGrid-checkbox-background: var(
     --uitkAgGrid-checkbox-background,
     var(--uitk-selectable-background)

@@ -14,7 +14,7 @@ const Default = (props: AgGridReactProps) => {
   };
 
   const { containerProps, agGridProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   return (
@@ -23,7 +23,7 @@ const Default = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ height: 500, width: 900 }} {...containerProps}>

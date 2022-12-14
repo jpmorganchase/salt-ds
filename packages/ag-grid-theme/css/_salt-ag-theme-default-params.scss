@@ -1,7 +1,7 @@
 @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base-default-params";
-@import "./odyssey-ag-theme-font-vars";
+@import "./salt-ag-theme-font-vars";
 
-$odyssey-ag-theme-default-params: (
+$salt-ag-theme-default-params: (
   row-hover-color: var(--agGrid-row-color-hover),
   header-column-separator: true,
   header-column-separator-width: 1px,
@@ -12,12 +12,12 @@ $odyssey-ag-theme-default-params: (
       "uitk-sans",
       sans-serif,
     ),
-  icon-font-family: $odyssey-ag-theme-icon-font-family,
-  icons-data: $odyssey-ag-theme-icons-data,
-  icons-font-codes: $odyssey-ag-theme-icons-font-codes,
+  icon-font-family: $salt-ag-theme-icon-font-family,
+  icons-data: $salt-ag-theme-icons-data,
+  icons-font-codes: $salt-ag-theme-icons-font-codes,
 );
 
-$odyssey-ag-theme-default-params: map-merge(
+$salt-ag-theme-default-params: map-merge(
   $ag-theme-base-default-params,
-  $odyssey-ag-theme-default-params
+  $salt-ag-theme-default-params
 );

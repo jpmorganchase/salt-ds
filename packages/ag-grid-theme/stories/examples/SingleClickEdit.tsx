@@ -23,7 +23,7 @@ const SingleClickEdit = (props: AgGridReactProps) => {
   };
 
   const { containerProps, agGridProps, api, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const SingleClickEdit = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ marginTop: 25, height: 800, width: 800 }}>
