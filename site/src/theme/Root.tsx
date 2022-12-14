@@ -1,9 +1,6 @@
 import { useMemo } from "react";
-import {
-  ToolkitProvider,
-  useCurrentBreakpoint,
-} from "@jpmorganchase/uitk-core";
-import "@jpmorganchase/uitk-theme/index.css";
+import { ToolkitProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";

@@ -1,5 +1,5 @@
-import { Button } from "@jpmorganchase/uitk-core";
-import { handleThemeUpload, JSONByScope } from "@jpmorganchase/theme-editor";
+import { Button } from "@salt-ds/core";
+import { handleThemeUpload, JSONByScope } from "@salt-ds/theme-editor";
 import "./DefaultView.css";
 
 type DefaultViewProps = {

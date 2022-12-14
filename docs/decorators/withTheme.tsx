@@ -4,8 +4,8 @@ import {
   ModeValues,
   ToolkitProvider,
   useTheme,
-} from "@jpmorganchase/uitk-core";
-import { Panel } from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/core";
+import { Panel } from "@salt-ds/lab";
 import { useEffect } from "react";
 
 // Modified from storybook background addon

@@ -9,7 +9,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
-import { margin, useControlled } from "@jpmorganchase/uitk-core";
+import { margin, useControlled } from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,

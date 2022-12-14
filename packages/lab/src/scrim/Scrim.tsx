@@ -9,12 +9,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import {
-  makePrefixer,
-  ownerDocument,
-  useForkRef,
-  useId,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, ownerDocument, useForkRef, useId } from "@salt-ds/core";
 import { FocusManager, FocusManagerProps } from "../focus-manager";
 import { preventFocusOthers } from "./internal/PreventFocus";
 import { ScrimContext } from "./ScrimContext";

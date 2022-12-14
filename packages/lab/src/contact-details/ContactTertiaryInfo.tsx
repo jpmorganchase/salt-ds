@@ -1,5 +1,5 @@
-import { makePrefixer, useId, Text } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useId, Text } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";

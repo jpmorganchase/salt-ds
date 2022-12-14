@@ -6,10 +6,7 @@ import {
   useCallback,
   CSSProperties,
 } from "react";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { DeckItem, DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
 import "./DeckLayout.css";

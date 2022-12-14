@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import { createContext } from "@jpmorganchase/uitk-core";
+import { createContext } from "@salt-ds/core";
 
 export interface RadioGroupContextValue {
   name?: string;

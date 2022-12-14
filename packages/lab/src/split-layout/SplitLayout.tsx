@@ -4,7 +4,7 @@ import {
   FlexLayoutProps,
   FlexItem,
   FlexItemProps,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import "./SplitLayout.css";
 
 export interface SplitItemProps extends FlexItemProps<ElementType> {

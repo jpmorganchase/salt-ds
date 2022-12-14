@@ -3,7 +3,7 @@ import "./ColumnGhost.css";
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import { TableBody } from "./TableBody";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ColumnDragState } from "./gridHooks";
 import { GridColumnModel, GridRowModel } from "../Grid";
 

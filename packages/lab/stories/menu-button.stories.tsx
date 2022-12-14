@@ -1,5 +1,5 @@
-import { MenuButton, MenuDescriptor } from "@jpmorganchase/uitk-lab";
-import { MicroMenuIcon, UserSolidIcon } from "@jpmorganchase/uitk-icons";
+import { MenuButton, MenuDescriptor } from "@salt-ds/lab";
+import { MicroMenuIcon, UserSolidIcon } from "@salt-ds/icons";
 import { Story } from "@storybook/react";
 
 export default {

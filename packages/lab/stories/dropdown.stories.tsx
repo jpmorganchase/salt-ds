@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { Story } from "@storybook/react";
 
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 
 import {
   FormField,
@@ -19,7 +19,7 @@ import {
   ListItem,
   ListItemType,
   SelectionChangeHandler,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 
 export default {

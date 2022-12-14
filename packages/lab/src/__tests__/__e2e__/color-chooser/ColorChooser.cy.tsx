@@ -1,4 +1,4 @@
-import { ColorChooser, Color } from "@jpmorganchase/uitk-lab";
+import { ColorChooser, Color } from "@salt-ds/lab";
 
 const uitkColor = Color.makeColorFromHex("#D1F4C9");
 const customColor = Color.makeColorFromHex("#30BC67");

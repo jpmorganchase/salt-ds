@@ -1,5 +1,5 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { ColorChooser, Color } from "@jpmorganchase/uitk-lab";
+import { ToolkitProvider } from "@salt-ds/core";
+import { ColorChooser, Color } from "@salt-ds/lab";
 import { useState, useCallback } from "react";
 import { customColorMap } from "./custom-color-map";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

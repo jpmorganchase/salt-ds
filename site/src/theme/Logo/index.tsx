@@ -5,7 +5,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import ThemedImage from "@theme/ThemedImage";
 import useIsMobileView from "../../utils/useIsMobileView";
-import { useViewport } from "@jpmorganchase/uitk-core";
+import { useViewport } from "@salt-ds/core";
 
 function LogoThemedImage({ logo, alt, imageClassName }) {
   const viewport = useViewport();

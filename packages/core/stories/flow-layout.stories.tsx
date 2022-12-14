@@ -1,4 +1,4 @@
-import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@jpmorganchase/uitk-core";
+import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@salt-ds/core";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";

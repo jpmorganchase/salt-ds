@@ -1,5 +1,5 @@
 import "./HeaderRow.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel } from "../Grid";
 import { HeaderCell } from "../HeaderCell";
 import { HeaderCellValue } from "../HeaderCellValue";

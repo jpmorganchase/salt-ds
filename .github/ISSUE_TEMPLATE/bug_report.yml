@@ -16,18 +16,11 @@ body:
         Which package(s) did you observe this bug in? Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them. If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
       multiple: true
       options:
-        - "Core v0.8.0 (@jpmorganchase/uitk-core)"
-        - "Core v0.7.0 (@jpmorganchase/uitk-core)"
-        - "Core v0.6.0 (@jpmorganchase/uitk-core)"
-        - "Icons v0.7.0 (@jpmorganchase/uitk"
-        - "Icons v0.6.0 (@jpmorganchase/uitk-icons)"
-        - "Icons v0.5.0 (@jpmorganchase/uitk-icons)"
-        - "Theme v0.6.0 (@jpmorganchase/uitk-theme)"
-        - "Theme v0.5.0 (@jpmorganchase/uitk-theme)"
-        - "Theme v0.4.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.8.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.7.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.6.0 (@jpmorganchase/uitk-theme)"
+        - "Core v1.0.0 (@salt-ds/core)"
+        - "Icons v1.0.0 (@salt-ds/icons)"
+        - "Theme v1.0.0 (@salt-ds/theme)"
+        - "Lab v1.0.0-alpha.0 (@salt-ds/lab)"
+        - "Data Grid v1.0.0 (@salt-ds/data-grid)"
     validations:
       required: true
   - type: textarea

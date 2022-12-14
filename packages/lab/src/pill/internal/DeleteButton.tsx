@@ -1,5 +1,5 @@
-import { CloseSmallIcon } from "@jpmorganchase/uitk-icons";
-import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
+import { CloseSmallIcon } from "@salt-ds/icons";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { MouseEvent } from "react";
 import { pillBaseName } from "../constants";

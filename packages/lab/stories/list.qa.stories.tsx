@@ -1,7 +1,7 @@
 import type { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
-import { List } from "@jpmorganchase/uitk-lab";
+import { List } from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 

@@ -4,7 +4,7 @@ import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfini
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]

@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { CheckboxIcon } from "../../checkbox";
 import { pillBaseName } from "../constants";
 

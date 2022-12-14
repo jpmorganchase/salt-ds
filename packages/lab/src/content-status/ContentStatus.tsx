@@ -4,7 +4,7 @@ import {
   useAriaAnnouncer,
   useId,
   Text,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
 

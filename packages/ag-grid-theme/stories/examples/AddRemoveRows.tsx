@@ -5,8 +5,8 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 // ideally these css files would be loaded from a link tag
 // pointing to static asset directory for caching
 import { ColDef } from "ag-grid-community";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import "../../uitk-ag-theme.css";

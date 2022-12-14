@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { FormField, Input } from "@jpmorganchase/uitk-lab";
+import { FormField, Input } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

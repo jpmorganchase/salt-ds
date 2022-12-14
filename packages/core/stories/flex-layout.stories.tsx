@@ -1,4 +1,4 @@
-import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";

@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { Tabstrip, TabstripProps, Tab } from "../tabs";
 import { ColorPicker, ColorPickerProps } from "./ColorPicker";
 import { Swatches, SwatchesTabProps } from "./Swatches";

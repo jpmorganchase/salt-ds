@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { ChevronLeftIcon, ThumbsUpIcon } from "@jpmorganchase/uitk-icons";
+import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
 import {
   Tab,
   Tabstrip,
   ParentChildLayout,
   StackedViewElement,
   useIsViewportLargerThanBreakpoint,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import {
   Button,
   FlexItem,
   FlexLayout,
   FlowLayout,
   StackLayout,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 import "./layout-stories.css";
 

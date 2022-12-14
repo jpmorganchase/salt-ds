@@ -4,7 +4,7 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import { useAriaAnnouncer, useForkRef } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";

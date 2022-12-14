@@ -1,4 +1,4 @@
-import { makePrefixer, useId, Text } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, Text } from "@salt-ds/core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";

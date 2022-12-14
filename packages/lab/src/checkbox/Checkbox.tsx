@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { forwardRef, useContext } from "react";
-import { createChainedFunction } from "@jpmorganchase/uitk-core";
+import { createChainedFunction } from "@salt-ds/core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
 import { CheckboxBase, CheckboxBaseProps } from "./CheckboxBase";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";

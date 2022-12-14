@@ -1,9 +1,4 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useForkRef,
-} from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
 import cx from "classnames";
 import {
   forwardRef,

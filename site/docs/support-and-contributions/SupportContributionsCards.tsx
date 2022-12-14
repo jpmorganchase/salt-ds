@@ -4,9 +4,9 @@ import {
   FlagIcon,
   MessageIcon,
   TearOutIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 
-import { GridLayout, GridItem } from "@jpmorganchase/uitk-core";
+import { GridLayout, GridItem } from "@salt-ds/core";
 import Card, { CardProps } from "@site/src/components/card/Card";
 import styles from "./SupportContributionsCards.module.css";
 

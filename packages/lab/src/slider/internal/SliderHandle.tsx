@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";

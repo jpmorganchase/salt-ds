@@ -1,12 +1,12 @@
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   CalendarIcon,
   CallIcon,
   CloseIcon,
   SendIcon,
   UserIcon,
-} from "@jpmorganchase/uitk-icons";
-import { Dropdown, Input, StaticInputAdornment } from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/icons";
+import { Dropdown, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

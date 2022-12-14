@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { useState, useEffect } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { isValidHex } from "./ColorHelpers";
 import { Input } from "../input";
 

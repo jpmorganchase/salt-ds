@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Link, StackLayout, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Banner, BannerProps } from "@jpmorganchase/uitk-lab";
+import { Link, StackLayout, ToolkitProvider } from "@salt-ds/core";
+import { Banner, BannerProps } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {

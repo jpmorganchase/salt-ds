@@ -1,5 +1,5 @@
-import { H1, Text } from "@jpmorganchase/uitk-core";
-import { Card } from "@jpmorganchase/uitk-lab";
+import { H1, Text } from "@salt-ds/core";
+import { Card } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

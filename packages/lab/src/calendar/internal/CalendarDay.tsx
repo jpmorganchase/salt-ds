@@ -1,5 +1,5 @@
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";

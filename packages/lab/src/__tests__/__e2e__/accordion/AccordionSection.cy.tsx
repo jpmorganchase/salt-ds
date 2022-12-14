@@ -5,7 +5,7 @@ import {
   AccordionSection,
   AccordionSectionProps,
   AccordionSummary,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { Component, ReactNode } from "react";
 
 interface DetailsSpyProps {

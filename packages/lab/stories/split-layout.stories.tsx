@@ -1,9 +1,5 @@
-import {
-  Button,
-  FLEX_ALIGNMENT_BASE,
-  FlowLayout,
-} from "@jpmorganchase/uitk-core";
-import { SplitLayout } from "@jpmorganchase/uitk-lab";
+import { Button, FLEX_ALIGNMENT_BASE, FlowLayout } from "@salt-ds/core";
+import { SplitLayout } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
