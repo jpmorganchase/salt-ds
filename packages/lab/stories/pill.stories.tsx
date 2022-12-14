@@ -13,7 +13,7 @@ import { FavoriteIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Core/Pill",
+  title: "Lab/Pill",
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
