@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { forwardRef, HTMLAttributes } from "react";
 import cn from "classnames";
 import "./Cell.css";
-import { ColumnSeparatorType, GridColumnModel } from "../Grid";
+import { ColumnSeparatorType } from "../Grid";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
@@ -28,17 +28,20 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
         className={cn(
           withBaseName(),
           {
+            [withBaseName("selected")]: isSelected,
+            [withBaseName("editable")]: isEditable,
             [withBaseName("regularSeparator")]:
               separator === "regular" || separator === "groupEdge",
             [withBaseName("pinnedSeparator")]: separator === "pinned",
-            [withBaseName("selected")]: isSelected,
-            [withBaseName("editable")]: isEditable,
           },
           className
         )}
         {...tdProps}
       >
         <div className={withBaseName("body")}>{props.children}</div>
+        <div className={withBaseName("columnSeparator")} />
+        <div className={withBaseName("rowSeparator")} />
+        <div className={withBaseName("topSeparator")} />
       </td>
     );
   }

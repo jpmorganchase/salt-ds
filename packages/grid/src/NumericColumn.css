@@ -6,6 +6,7 @@
 }
 
 .saltGridNumericCellEditor {
+  --grid-row-background: var(--grid-background);
 }
 
 .saltGridNumericCellEditor-inputContainer {

@@ -4,10 +4,6 @@
   margin: 0;
   padding: 0;
 
-  border-style: solid;
-  border-bottom-color: var(--grid-row-borderColor);
-  border-width: 0 0 1px 0;
-
   white-space: nowrap;
   position: relative;
   font-size: var(--grid-fontSize);
@@ -16,13 +12,56 @@
   outline: 0;
 }
 
-.uitkGridTableRow-first .uitkGridCell {
-  border-width: 1px 0 1px 0;
-  border-top-color: transparent;
+.uitkGridCell-selected {
+  background: var(--grid-cell-background-selected);
 }
 
-.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridCell {
-  border-top-color: var(--grid-row-borderColor);
+.uitkGridCell-rowSeparator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background-color: var(--grid-row-borderColor);
+}
+
+.uitkGridCell-topSeparator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: transparent;
+  display: none;
+}
+
+.uitkGridTableRow-first .uitkGridCell-topSeparator {
+  display: unset;
+}
+
+.uitkGridCell-columnSeparator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--grid-row-background);
+}
+
+.uitkGrid-columnSeparators .uitkGridCell-regularSeparator .uitkGridCell-columnSeparator {
+  background-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-columnSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-columnSeparator {
+  background-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-columnSeparator {
+  background-color: var(--grid-pinnedSeparator-color);
+}
+
+.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridCell-topSeparator {
+  background-color: var(--grid-row-borderColor);
 }
 
 .uitkGridCell-body {
@@ -30,27 +69,12 @@
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
+  bottom: 1px;
   left: 0;
-
-  border-style: solid;
   background: var(--grid-row-background);
-  border-width: 0 1px 0 0;
-  border-color: var(--grid-row-background);
+  border-right: solid 1px transparent;
 }
 
-.uitkGrid-columnSeparators .uitkGridCell-regularSeparator .uitkGridCell-body {
-  border-color: var(--grid-columnSeparator-color);
-}
-
-.uitkGrid-columnSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-body {
-  border-color: var(--grid-columnSeparator-color);
-}
-
-.uitkGrid-pinnedSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-body {
-  border-color: var(--grid-pinnedSeparator-color);
-}
-
-.uitkGridCell-selected .uitkGridCell-body {
-  background: var(--grid-cell-background-selected);
+.uitkGridTableRow-first .uitkGridCell-body {
+  top: 1px;
 }

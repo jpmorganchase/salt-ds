@@ -1,4 +1,5 @@
 .saltGridTextCellEditor {
+  --grid-row-background: var(--grid-background);
 }
 
 .saltGridTextCellEditor-inputContainer {

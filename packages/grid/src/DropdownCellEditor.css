@@ -1,5 +1,6 @@
 .saltGridDropdownCellEditor {
   font-size: var(--grid-fontSize);
+  --grid-row-background: var(--grid-background);
 }
 
 .saltGridDropdownCellEditor-dropdownContainer {
