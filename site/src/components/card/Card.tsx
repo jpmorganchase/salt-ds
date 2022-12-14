@@ -83,7 +83,6 @@ export const InlineCard = ({
   url,
   footerText,
   keylineColor,
-  keyLineAnimation = true,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
@@ -102,7 +101,7 @@ export const InlineCard = ({
         url={url}
         footerText={footerText}
         keylineColor={keylineColor}
-        keyLineAnimation
+        keyLineAnimation={false}
       />
     );
   }
