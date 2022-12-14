@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ToolkitProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
 import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
@@ -22,13 +22,13 @@ const DensityProvider = ({ children }) => {
     [viewport]
   );
 
-  return <ToolkitProvider density={density}>{children}</ToolkitProvider>;
+  return <SaltProvider density={density}>{children}</SaltProvider>;
 };
 
 export default function Root({ children }) {
   return (
-    <ToolkitProvider mode="dark">
+    <SaltProvider mode="dark">
       <DensityProvider>{children}</DensityProvider>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 }

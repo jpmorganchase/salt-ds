@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 
 const composedStories = composeStories(gridStories);
 const { DefaultGridLayout, GridLayoutNested } = composedStories;
@@ -176,9 +176,9 @@ describe("GIVEN a Grid", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultGridLayout columns={columns} rows={rows} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkGridLayout")
@@ -199,9 +199,9 @@ describe("GIVEN a Grid", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultGridLayout columns={columns} rows={rows} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkGridLayout")
@@ -222,9 +222,9 @@ describe("GIVEN a Grid", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultGridLayout columns={columns} rows={rows} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkGridLayout")
@@ -245,9 +245,9 @@ describe("GIVEN a Grid", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultGridLayout columns={columns} rows={rows} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkGridLayout")

@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/addon-docs";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 
 <Meta title="Documentation/Core/Aria Announcer" />
 
@@ -12,16 +12,16 @@ application.
 
 ## Get Started
 
-`AriaAnnouncer` usually requires no configuration as it is included in your app when you use a `ToolkitProvider`. Because only one instance of
-`AriaAnnouncer` is ever required, only the outermost instance of `ToolkitProvider` will instantiate the `AriaAnnouncer`. If you use
-nested ToolkitProviders, these will not inject further instances of `AriaAnnouncer`.
+`AriaAnnouncer` usually requires no configuration as it is included in your app when you use a `SaltProvider`. Because only one instance of
+`AriaAnnouncer` is ever required, only the outermost instance of `SaltProvider` will instantiate the `AriaAnnouncer`. If you use
+nested SaltProviders, these will not inject further instances of `AriaAnnouncer`.
 
 ```jsx
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 
-<ToolkitProvider>
+<SaltProvider>
   <MyApp />
-</ToolkitProvider>;
+</SaltProvider>;
 ```
 
 Note that some component examples have the provider in their code, but this is

@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as flexStories from "@stories/flex-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 
 const composedStories = composeStories(flexStories);
 const { DefaultFlexLayout, FlexLayoutNested } = composedStories;
@@ -153,9 +153,9 @@ describe("GIVEN a Flex", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultFlexLayout wrap={wrap} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
@@ -170,9 +170,9 @@ describe("GIVEN a Flex", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultFlexLayout wrap={wrap} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
@@ -187,9 +187,9 @@ describe("GIVEN a Flex", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultFlexLayout wrap={wrap} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
@@ -204,9 +204,9 @@ describe("GIVEN a Flex", () => {
       },
       () => {
         cy.mount(
-          <ToolkitProvider breakpoints={breakpoints}>
+          <SaltProvider breakpoints={breakpoints}>
             <DefaultFlexLayout wrap={wrap} />
-          </ToolkitProvider>
+          </SaltProvider>
         );
 
         cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");

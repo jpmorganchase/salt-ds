@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Link, StackLayout, ToolkitProvider } from "@salt-ds/core";
+import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
 import { Banner, BannerProps } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 
@@ -37,26 +37,26 @@ const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <StackLayout gap={2}>
-    <ToolkitProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
+    <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
       <div className="uitkBannerContainerExample">
         <InfoBanner />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
       <div className="uitkBannerContainerExample">
         <ErrorBanner />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
       <div className="uitkBannerContainerExample">
         <WarningBanner />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
       <div className="uitkBannerContainerExample">
         <SuccessBanner />
       </div>
-    </ToolkitProvider>
+    </SaltProvider>
   </StackLayout>
 );
 

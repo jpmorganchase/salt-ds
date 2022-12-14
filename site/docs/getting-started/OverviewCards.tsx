@@ -1,7 +1,7 @@
 import Card, { CardProps } from "@site/src/components/card/Card";
 import DesignIcon from "@site/static/img/design.svg";
 import DevelopIcon from "@site/static/img/develop.svg";
-import { ToolkitProvider, useTheme } from "@salt-ds/core";
+import { SaltProvider, useTheme } from "@salt-ds/core";
 import styles from "./OverviewCards.module.css";
 
 const cards: CardProps[] = [
@@ -38,7 +38,7 @@ const OverviewCards = () => (
     {cards.map((card, index) => {
       const { icon, title, description, url, footerText, keylineColor } = card;
       return (
-        <ToolkitProvider mode="light" key={index}>
+        <SaltProvider mode="light" key={index}>
           <Card
             icon={icon}
             title={title}
@@ -48,7 +48,7 @@ const OverviewCards = () => (
             keylineColor={keylineColor}
             keyLineAnimation={false}
           />
-        </ToolkitProvider>
+        </SaltProvider>
       );
     })}
   </div>

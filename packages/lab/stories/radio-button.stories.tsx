@@ -1,4 +1,4 @@
-import { Density, Mode, ToolkitProvider } from "@salt-ds/core";
+import { Density, Mode, SaltProvider } from "@salt-ds/core";
 import {
   FormField,
   makeRadioIcon,
@@ -24,7 +24,7 @@ type ExampleWithTitleProps = {
 
 const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
   <ColumnLayoutItem>
-    <ToolkitProvider density={density}>
+    <SaltProvider density={density}>
       <div data-testid="radio-button-next-density-example">
         <RadioButtonGroup
           aria-label="Uncontrolled Example"
@@ -42,18 +42,18 @@ const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
           />
         </RadioButtonGroup>
       </div>
-    </ToolkitProvider>
+    </SaltProvider>
   </ColumnLayoutItem>
 );
 
 const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <Panel>
-    <ToolkitProvider density={density}>
+    <SaltProvider density={density}>
       <RadioButtonGroup legend={title} name={name} row>
         <RadioButton key="spot" label="Spot" value="spot" />
         <RadioButton key="forward" label="Forward" value="forward" />
       </RadioButtonGroup>
-    </ToolkitProvider>
+    </SaltProvider>
   </Panel>
 );
 
@@ -95,12 +95,12 @@ const StoryScroller = (props: { children?: ReactNode }) => (
 
 export const All: Story = () => (
   <StoryScroller>
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <DensityExample name="light" />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <DensityExample name="dark" />
-    </ToolkitProvider>
+    </SaltProvider>
   </StoryScroller>
 );
 
@@ -215,7 +215,7 @@ const FormFieldRadios = ({
 );
 
 const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
-  <ToolkitProvider mode={mode}>
+  <SaltProvider mode={mode}>
     <Panel style={{ height: "unset" }}>
       <ColumnLayoutContainer>
         <ColumnLayoutItem>
@@ -237,7 +237,7 @@ const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
         </ColumnLayoutItem>
       </ColumnLayoutContainer>
     </Panel>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const FormFieldVariants: Story = () => (
@@ -260,7 +260,7 @@ const ExampleRow = ({ children, name }: ExampleRowProps) => {
     const exampleKey = `${density}-${name}`.toLowerCase();
     return (
       <ColumnLayoutItem key={exampleKey}>
-        <ToolkitProvider density={density}>{children}</ToolkitProvider>
+        <SaltProvider density={density}>{children}</SaltProvider>
       </ColumnLayoutItem>
     );
   });
@@ -273,7 +273,7 @@ const ExampleRow = ({ children, name }: ExampleRowProps) => {
 };
 
 const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
-  <ToolkitProvider mode={mode}>
+  <SaltProvider mode={mode}>
     <>
       <ExampleRow name="Basic">
         <FormField
@@ -370,7 +370,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
         </FormField>
       </ExampleRow>
     </>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const GroupFormFieldRow: Story = () => (
@@ -396,7 +396,7 @@ const GroupFormFieldVerticalExampleRow = ({
     const exampleKey = `${density}-${name}`.toLowerCase();
     return (
       <ColumnLayoutItem key={exampleKey}>
-        <ToolkitProvider density={density}>{children}</ToolkitProvider>
+        <SaltProvider density={density}>{children}</SaltProvider>
       </ColumnLayoutItem>
     );
   });
@@ -503,12 +503,12 @@ const GroupFormFieldVerticalExamples = () => (
 
 export const GroupFormFieldVertical: Story = () => (
   <StoryScroller>
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <GroupFormFieldVerticalExamples />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <GroupFormFieldVerticalExamples />
-    </ToolkitProvider>
+    </SaltProvider>
   </StoryScroller>
 );
 

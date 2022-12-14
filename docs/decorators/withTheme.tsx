@@ -2,7 +2,7 @@ import { DecoratorFn } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
-  ToolkitProvider,
+  SaltProvider,
   useTheme,
 } from "@salt-ds/core";
 import { Panel } from "@salt-ds/lab";
@@ -78,7 +78,7 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
         }}
       >
         {ModeValues.map((mode) => (
-          <ToolkitProvider
+          <SaltProvider
             applyClassesTo={"child"}
             density={density}
             mode={mode}
@@ -87,16 +87,16 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
             <Panel>
               <StoryFn />
             </Panel>
-          </ToolkitProvider>
+          </SaltProvider>
         ))}
       </div>
     );
   }
 
   return (
-    <ToolkitProvider density={density} mode={mode}>
+    <SaltProvider density={density} mode={mode}>
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
