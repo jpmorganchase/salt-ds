@@ -14,7 +14,7 @@ import { useWidth } from "../list-deprecated/internal/useWidth";
 import { useFormFieldProps } from "../form-field-context";
 import "./ComboBox.css";
 
-const withBaseName = makePrefixer("uitkComboBox");
+const withBaseName = makePrefixer("saltComboBox");
 
 function getMultiSelect<Item>({
   multiSelect,

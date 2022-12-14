@@ -8,7 +8,7 @@ import { useColumnDragContext } from "./ColumnDragContext";
 import { Cursor, useFocusableContent } from "./internal";
 import { HeaderCellProps } from "./GridColumn";
 
-const withBaseName = makePrefixer("uitkGridHeaderCell");
+const withBaseName = makePrefixer("saltGridHeaderCell");
 
 export interface HeaderCellSeparatorProps {
   separatorType: ColumnSeparatorType;

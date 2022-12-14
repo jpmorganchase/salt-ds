@@ -11,7 +11,7 @@ export interface ControlLabelProps
   labelPlacement?: "left" | "right";
 }
 
-export const baseName = "uitkControlLabel";
+export const baseName = "saltControlLabel";
 
 export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
   (

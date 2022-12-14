@@ -11,7 +11,7 @@ export function FakeCell<T>(props: FakeCellProps<T>) {
   const { row } = props;
   return (
     <td
-      className="uitkGridFakeCell"
+      className="saltGridFakeCell"
       data-row-index={row.index}
       data-column-index={-1}
     >

@@ -221,7 +221,7 @@ export const ColorChooserWithCustomColors: ComponentStory<
     <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
-        UITKColorOverrides={customColorMap}
+        saltColorOverrides={customColorMap}
         onSelect={onSelect}
         onClear={onClear}
       />

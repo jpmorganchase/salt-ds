@@ -1,4 +1,4 @@
-.uitkCharacteristicPattern {
-  border-bottom: 1px solid var(--uitk-separable-secondary-borderColor);
-  padding: var(--uitk-size-unit) 0;
+.saltCharacteristicPattern {
+  border-bottom: 1px solid var(--salt-separable-secondary-borderColor);
+  padding: var(--salt-size-unit) 0;
 }

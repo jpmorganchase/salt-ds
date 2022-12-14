@@ -20,7 +20,7 @@ export interface StatusIndicatorProps
   status?: BaseStatusIndicatorProps["status"] | "loading";
 }
 
-const withBaseName = makePrefixer("uitkContentStatus");
+const withBaseName = makePrefixer("saltContentStatus");
 
 export function StatusIndicator({
   status = "info",

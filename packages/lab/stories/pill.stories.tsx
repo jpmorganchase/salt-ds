@@ -13,7 +13,7 @@ import { FavoriteIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Core/Pill",
+  title: "Lab/Pill",
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
@@ -27,7 +27,7 @@ const Template: ComponentStory<typeof Pill> = (args) => {
 
 export const FeaturePill = Template.bind({});
 
-// This story is referenced in stories/toolkit/pill.stories.mdx
+// This story is referenced in stories/salt/pill.stories.mdx
 // named function syntax is used to show the same in code block
 export const ControlledPill: ComponentStory<typeof Pill> = () => {
   const [checked, setChecked] = useState(true);

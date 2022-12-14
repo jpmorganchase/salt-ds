@@ -76,7 +76,7 @@ describe("GIVEN a Pill", () => {
     it(`THEN should apply the keyboard active class when clickable and "${key}" is held down`, () => {
       cy.mount(<Pill label="label" />);
       cy.findByRole("button").focus().trigger("keydown", { key });
-      cy.findByRole("button").should("have.class", "uitkPill-active");
+      cy.findByRole("button").should("have.class", "saltPill-active");
     });
   });
 
@@ -85,7 +85,7 @@ describe("GIVEN a Pill", () => {
       cy.mount(<Pill label="label" />);
       cy.findByRole("button").focus().trigger("keydown", { key });
 
-      cy.findByRole("button").should("not.have.class", "uitkPill-active");
+      cy.findByRole("button").should("not.have.class", "saltPill-active");
     });
   });
 
@@ -118,7 +118,7 @@ describe("GIVEN a Pill", () => {
     it(`THEN should apply the keyboard active class when deletable and ${key} is held down`, () => {
       cy.mount(<Pill label="label" variant="closable" />);
       cy.findByRole("button").focus().trigger("keydown", { key });
-      cy.findByRole("button").should("have.class", "uitkPill-active");
+      cy.findByRole("button").should("have.class", "saltPill-active");
     });
   });
 

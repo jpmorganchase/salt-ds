@@ -33,22 +33,22 @@ describe("Color chooser helpers", () => {
     });
   });
   describe("getColorNameByHexValue", () => {
-    it("should get the correct UITK color name if passed 6 digit hex", () => {
+    it("should get the correct Salt color name if passed 6 digit hex", () => {
       expect(getColorNameByHexValue("#D1F4C9", false)).toEqual("Green10");
     });
-    it("should get the correct UITK color name if passed 8 digit hex", () => {
+    it("should get the correct Salt color name if passed 8 digit hex", () => {
       expect(getColorNameByHexValue("#D1F4C980", false)).toEqual("Green10");
     });
     it("should format White and Black hex values correctly", () => {
       expect(getColorNameByHexValue("WHITE", false)).toEqual("White");
       expect(getColorNameByHexValue("BLACK", false)).toEqual("Black");
     });
-    it("should just return the hex value if it is not a UITK color", () => {
+    it("should just return the hex value if it is not a Salt color", () => {
       expect(getColorNameByHexValue("#D1F4C7", false)).toEqual("#D1F4C7");
 
       expect(getColorNameByHexValue("#D1F4C780", false)).toEqual("#D1F4C780");
     });
-    it("should just return the hex value with no alpha if it is not a UITK color and alpha slider is disabled", () => {
+    it("should just return the hex value with no alpha if it is not a Salt color and alpha slider is disabled", () => {
       expect(getColorNameByHexValue("#D1F4C780", true)).toEqual("#D1F4C7");
     });
   });

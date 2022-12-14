@@ -1,4 +1,4 @@
-.uitkGridFakeCell {
+.saltGridFakeCell {
   box-sizing: border-box;
 
   border-style: solid;
@@ -14,16 +14,16 @@
   font-weight: normal;
 }
 
-.uitkGridTableRow-first .uitkGridFakeCell {
+.saltGridTableRow-first .saltGridFakeCell {
   border-width: 1px 0 1px 0;
   border-top-color: transparent;
 }
 
-.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridFakeCell {
+.saltGridTableRow-selected.saltGridTableRow-first .saltGridFakeCell {
   border-top-color: var(--grid-row-borderColor);
 }
 
-.uitkGridFakeCell div {
+.saltGridFakeCell div {
   position: absolute;
   top: 0;
   right: 0;

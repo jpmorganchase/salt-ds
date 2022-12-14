@@ -1,42 +1,42 @@
-.uitk-theme {
-  --uitk-actionable-cursor-hover: pointer;
-  --uitk-actionable-cursor-active: pointer;
-  --uitk-actionable-cursor-disabled: not-allowed;
+.salt-theme {
+  --salt-actionable-cursor-hover: pointer;
+  --salt-actionable-cursor-active: pointer;
+  --salt-actionable-cursor-disabled: not-allowed;
 
-  --uitk-actionable-letterSpacing: 0.6px;
-  --uitk-actionable-textAlign: center;
-  --uitk-actionable-textTransform: uppercase;
+  --salt-actionable-letterSpacing: 0.6px;
+  --salt-actionable-textAlign: center;
+  --salt-actionable-textTransform: uppercase;
 
   /* Primary variant */
-  --uitk-actionable-primary-foreground: var(--uitk-palette-interact-primary-foreground);
-  --uitk-actionable-primary-foreground-hover: var(--uitk-palette-interact-primary-foreground-hover);
-  --uitk-actionable-primary-foreground-active: var(--uitk-palette-interact-primary-foreground-active);
-  --uitk-actionable-primary-foreground-disabled: var(--uitk-palette-interact-primary-foreground-disabled);
-  --uitk-actionable-primary-background: var(--uitk-palette-interact-primary-background);
-  --uitk-actionable-primary-background-hover: var(--uitk-palette-interact-primary-background-hover);
-  --uitk-actionable-primary-background-active: var(--uitk-palette-interact-primary-background-active);
-  --uitk-actionable-primary-background-disabled: var(--uitk-palette-interact-primary-background-disabled);
-  --uitk-actionable-primary-fontWeight: var(--uitk-typography-fontWeight-bold);
+  --salt-actionable-primary-foreground: var(--salt-palette-interact-primary-foreground);
+  --salt-actionable-primary-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
+  --salt-actionable-primary-foreground-active: var(--salt-palette-interact-primary-foreground-active);
+  --salt-actionable-primary-foreground-disabled: var(--salt-palette-interact-primary-foreground-disabled);
+  --salt-actionable-primary-background: var(--salt-palette-interact-primary-background);
+  --salt-actionable-primary-background-hover: var(--salt-palette-interact-primary-background-hover);
+  --salt-actionable-primary-background-active: var(--salt-palette-interact-primary-background-active);
+  --salt-actionable-primary-background-disabled: var(--salt-palette-interact-primary-background-disabled);
+  --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
 
   /* CTA variant */
-  --uitk-actionable-cta-foreground: var(--uitk-palette-interact-cta-foreground);
-  --uitk-actionable-cta-foreground-hover: var(--uitk-palette-interact-cta-foreground-hover);
-  --uitk-actionable-cta-foreground-active: var(--uitk-palette-interact-cta-foreground-active);
-  --uitk-actionable-cta-foreground-disabled: var(--uitk-palette-interact-cta-foreground-disabled);
-  --uitk-actionable-cta-background: var(--uitk-palette-interact-cta-background);
-  --uitk-actionable-cta-background-hover: var(--uitk-palette-interact-cta-background-hover);
-  --uitk-actionable-cta-background-active: var(--uitk-palette-interact-cta-background-active);
-  --uitk-actionable-cta-background-disabled: var(--uitk-palette-interact-cta-background-disabled);
-  --uitk-actionable-cta-fontWeight: var(--uitk-typography-fontWeight-bold);
+  --salt-actionable-cta-foreground: var(--salt-palette-interact-cta-foreground);
+  --salt-actionable-cta-foreground-hover: var(--salt-palette-interact-cta-foreground-hover);
+  --salt-actionable-cta-foreground-active: var(--salt-palette-interact-cta-foreground-active);
+  --salt-actionable-cta-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
+  --salt-actionable-cta-background: var(--salt-palette-interact-cta-background);
+  --salt-actionable-cta-background-hover: var(--salt-palette-interact-cta-background-hover);
+  --salt-actionable-cta-background-active: var(--salt-palette-interact-cta-background-active);
+  --salt-actionable-cta-background-disabled: var(--salt-palette-interact-cta-background-disabled);
+  --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
 
   /* Secondary variant */
-  --uitk-actionable-secondary-foreground: var(--uitk-palette-interact-secondary-foreground);
-  --uitk-actionable-secondary-foreground-hover: var(--uitk-palette-interact-secondary-foreground-hover);
-  --uitk-actionable-secondary-foreground-active: var(--uitk-palette-interact-secondary-foreground-active);
-  --uitk-actionable-secondary-foreground-disabled: var(--uitk-palette-interact-secondary-foreground-disabled);
-  --uitk-actionable-secondary-background: var(--uitk-palette-interact-secondary-background);
-  --uitk-actionable-secondary-background-hover: var(--uitk-palette-interact-secondary-background-hover);
-  --uitk-actionable-secondary-background-active: var(--uitk-palette-interact-secondary-background-active);
-  --uitk-actionable-secondary-background-disabled: var(--uitk-palette-interact-secondary-background-disabled);
-  --uitk-actionable-secondary-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --salt-actionable-secondary-foreground: var(--salt-palette-interact-secondary-foreground);
+  --salt-actionable-secondary-foreground-hover: var(--salt-palette-interact-secondary-foreground-hover);
+  --salt-actionable-secondary-foreground-active: var(--salt-palette-interact-secondary-foreground-active);
+  --salt-actionable-secondary-foreground-disabled: var(--salt-palette-interact-secondary-foreground-disabled);
+  --salt-actionable-secondary-background: var(--salt-palette-interact-secondary-background);
+  --salt-actionable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
+  --salt-actionable-secondary-background-active: var(--salt-palette-interact-secondary-background-active);
+  --salt-actionable-secondary-background-disabled: var(--salt-palette-interact-secondary-background-disabled);
+  --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }

@@ -36,10 +36,10 @@ export const Tooltray = (props: TooltrayProps) => {
   const tooltrayId = useIdMemo(idProp);
 
   const className = cx(
-    "uitkTooltray",
+    "saltTooltray",
     classNameProp,
-    `uitkTooltray-${orientation}`,
-    { "uitkTooltray-tooltrayOverflowed": isInsidePanel }
+    `saltTooltray-${orientation}`,
+    { "saltTooltray-tooltrayOverflowed": isInsidePanel }
   );
 
   const collectionHook = useOverflowCollectionItems({
@@ -90,7 +90,7 @@ export const Tooltray = (props: TooltrayProps) => {
         )}
         {overflowIndicator || collapsed ? (
           <OverflowPanel
-            className={cx("uitkToolbarField")}
+            className={cx("saltToolbarField")}
             data-index={collectionHook.data.length}
             data-overflow-indicator
             data-priority={1}

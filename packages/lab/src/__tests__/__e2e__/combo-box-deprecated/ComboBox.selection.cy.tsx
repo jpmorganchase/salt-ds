@@ -74,7 +74,7 @@ describe("A combo box", () => {
     // list style stays the same
     cy.findByRole("option", { name: "Alaska" })
       .should("have.attr", "aria-checked", "true")
-      .and("have.class", "uitkListItemDeprecated-highlighted");
+      .and("have.class", "saltListItemDeprecated-highlighted");
 
     // change callback invoked only once
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -161,7 +161,7 @@ describe("A multi-select combo box", () => {
 
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alabama" })
-      .should("have.class", "uitkListItemDeprecated-highlighted");
+      .should("have.class", "saltListItemDeprecated-highlighted");
   });
 
   it("should clear input when an item is selected", () => {

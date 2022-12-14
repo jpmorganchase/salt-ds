@@ -4,7 +4,7 @@ import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
 import { Pill, PillProps } from "../../pill";
 
-const withBaseName = makePrefixer("uitkInputPill");
+const withBaseName = makePrefixer("saltInputPill");
 
 export type InputPillProps = Omit<
   PillProps<"basic" | "closable">,

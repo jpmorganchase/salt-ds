@@ -24,7 +24,7 @@ const getDefaultParent = () =>
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
-const withBaseName = makePrefixer("uitkScrim");
+const withBaseName = makePrefixer("saltScrim");
 
 function preventSelection(parent = getDefaultParent()): () => void {
   if (parent) {

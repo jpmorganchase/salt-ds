@@ -1,5 +1,5 @@
 /* Style applied to the root element */
-.uitkScrim {
+.saltScrim {
   top: 0;
   left: 0;
   right: 0;
@@ -11,16 +11,16 @@
   position: fixed;
   align-items: center;
   justify-content: center;
-  background: var(--uitkScrim-background, var(--uitk-overlayable-background));
+  background: var(--saltScrim-background, var(--salt-overlayable-background));
   -webkit-tap-highlight-color: transparent;
 }
 
-.uitkScrim:focus {
+.saltScrim:focus {
   outline: none;
 }
 
 /* Style applied to the root element when containerFix={true} */
-.uitkScrim-containerFix {
+.saltScrim-containerFix {
   position: absolute;
-  z-index: calc(var(--uitk-zIndex-appHeader) - 1);
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
 }

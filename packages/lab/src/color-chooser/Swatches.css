@@ -1,31 +1,31 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
-.uitkColorChooserSwatches-colorNameTextDiv {
-  font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-text-fontWeight-strong);
+.saltColorChooserSwatches-colorNameTextDiv {
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
-.uitkColorChooserSwatches-colorNameTextDiv,
-.uitkColorChooserSwatches-colorTextDiv,
-.uitkColorChooserSwatches-alphaTextDiv {
-  color: var(--uitk-text-secondary-foreground);
+.saltColorChooserSwatches-colorNameTextDiv,
+.saltColorChooserSwatches-colorTextDiv,
+.saltColorChooserSwatches-alphaTextDiv {
+  color: var(--salt-text-secondary-foreground);
 }
 
-.uitkColorChooserSwatches-colorTextDiv {
-  font-size: var(--uitk-text-fontSize);
-  margin-right: var(--uitk-size-unit);
+.saltColorChooserSwatches-colorTextDiv {
+  font-size: var(--salt-text-fontSize);
+  margin-right: var(--salt-size-unit);
 }
 
-.uitkColorChooserSwatches-alphaTextDiv {
-  font-size: var(--uitk-text-fontSize);
-  margin-right: var(--uitk-size-unit);
+.saltColorChooserSwatches-alphaTextDiv {
+  font-size: var(--salt-text-fontSize);
+  margin-right: var(--salt-size-unit);
 }
 
-.uitkColorChooserSwatches-textDiv {
+.saltColorChooserSwatches-textDiv {
   display: flex;
   justify-content: space-between;
   padding: 8px 8px 0px 8px;
 }
 
-.uitkColorChooserSwatches-pickerDiv {
-  padding-top: calc(2 * var(--uitk-size-unit));
+.saltColorChooserSwatches-pickerDiv {
+  padding-top: calc(2 * var(--salt-size-unit));
 }

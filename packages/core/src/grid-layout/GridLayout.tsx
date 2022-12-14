@@ -42,7 +42,7 @@ type GridLayoutComponent = <T extends ElementType = "div">(
   props: GridLayoutProps<T>
 ) => ReactElement | null;
 
-const withBaseName = makePrefixer("uitkGridLayout");
+const withBaseName = makePrefixer("saltGridLayout");
 
 export const GridLayout: GridLayoutComponent = forwardRef(
   <T extends ElementType = "div">(

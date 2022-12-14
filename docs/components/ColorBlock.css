@@ -1,9 +1,9 @@
 .ColorBlock-cell {
-  --color-block-cell-size: var(--uitk-size-base);
+  --color-block-cell-size: var(--salt-size-base);
 
-  --color-block-cell-borderColor: var(--uitk-container-primary-borderColor);
-  --color-block-cell-borderStyle: var(--uitk-container-borderStyle);
-  --color-block-cell-borderWidth: var(--uitk-size-border);
+  --color-block-cell-borderColor: var(--salt-container-primary-borderColor);
+  --color-block-cell-borderStyle: var(--salt-container-borderStyle);
+  --color-block-cell-borderWidth: var(--salt-size-border);
   --color-block-cell-borderRadius: 0;
 }
 

@@ -81,7 +81,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   status?: BannerStatus;
 }
 
-const withBaseName = makePrefixer("uitkBanner");
+const withBaseName = makePrefixer("saltBanner");
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   {

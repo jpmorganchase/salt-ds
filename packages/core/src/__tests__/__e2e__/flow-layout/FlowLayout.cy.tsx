@@ -12,15 +12,15 @@ describe("GIVEN a Flow", () => {
     it("THEN it should wrap by default", () => {
       cy.mount(<DefaultFlowLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultFlowLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
+      cy.get(".saltFlexLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
+      cy.get(".saltFlexLayout").should("have.css", "row-gap", "24px");
     });
   });
 });

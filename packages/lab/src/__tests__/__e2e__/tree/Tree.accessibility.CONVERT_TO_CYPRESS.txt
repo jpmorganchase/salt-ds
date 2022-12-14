@@ -3,8 +3,8 @@ import {
   fireEvent,
   render,
   screen
-} from '@jpmuitk/react-testing-library-utils';
-import { getClasses } from '@jpmuitk/test-utils';
+} from '@jpmsalt/react-testing-library-utils';
+import { getClasses } from '@jpmsalt/test-utils';
 import userEvent from '@testing-library/user-event';
 
 import Tree, { TreeNode } from '../Tree';

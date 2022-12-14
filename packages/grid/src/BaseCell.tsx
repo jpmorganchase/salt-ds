@@ -5,7 +5,7 @@ import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
 import { Cursor, useFocusableContent } from "./internal";
 
-const withBaseName = makePrefixer("uitkGridBaseCell");
+const withBaseName = makePrefixer("saltGridBaseCell");
 
 export function getCellId<T>(rowKey: string, column: GridColumnModel<T>) {
   return `R${rowKey}C${column.info.props.id}`;

@@ -5,7 +5,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { usStateExampleData } from "./exampleData";
 
 export default {
-  title: "Core/Form Field",
+  title: "Lab/Form Field",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
@@ -211,7 +211,7 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
       display: "grid",
       rowGap: "20px",
       padding: "20px 20px",
-      background: "var(--uitk-container-primary-background)",
+      background: "var(--salt-container-primary-background)",
     }}
   >
     <SaltProvider density="touch">{renderFormField(props)}</SaltProvider>

@@ -31,7 +31,7 @@ describe("GIVEN a Panel", () => {
     describe('WHEN the "secondary" variant is input', () => {
       it('THEN should display "secondary" variant', () => {
         cy.mount(<Panel variant="secondary">Content</Panel>);
-        cy.get("div").should("have.class", "uitkPanel-secondary");
+        cy.get("div").should("have.class", "saltPanel-secondary");
       });
     });
   });

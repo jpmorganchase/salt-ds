@@ -48,14 +48,14 @@ const IconGrid = ({
   );
 };
 
-export const ToolkitIcon: ComponentStory<typeof Icon> = (props) => (
+export const SaltIcon: ComponentStory<typeof Icon> = (props) => (
   <AddDocumentIcon {...props} />
 );
-export const ToolkitIconMultipleSizes: ComponentStory<typeof Icon> = () => (
+export const SaltIconMultipleSizes: ComponentStory<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
 );
 
-export const ToolkitTypes: ComponentStory<typeof Icon> = () => (
+export const SaltTypes: ComponentStory<typeof Icon> = () => (
   <FlexLayout wrap gap={2}>
     <AddDocumentIcon size={4} />
     <AddDocumentSolidIcon size={4} />

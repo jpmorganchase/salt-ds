@@ -20,7 +20,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   };
 
   return (
-    <div className="uitkGridCheckboxContainer" onMouseDown={onMouseDown}>
+    <div className="saltGridCheckboxContainer" onMouseDown={onMouseDown}>
       <CheckboxBase
         data-testid="grid-row-selection-checkbox"
         inputProps={{

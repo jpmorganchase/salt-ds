@@ -164,7 +164,7 @@ export interface ButtonBarProps extends HTMLAttributes<HTMLDivElement> {
   stackAtBreakpoint?: "xs" | "sm" | "md" | "lg" | "xl" | number;
 }
 
-const withBaseName = makePrefixer("uitkButtonBar");
+const withBaseName = makePrefixer("saltButtonBar");
 
 export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
   function ButtonBar(

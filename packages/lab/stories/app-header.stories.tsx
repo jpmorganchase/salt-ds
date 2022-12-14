@@ -76,7 +76,7 @@ export const DefaultAppHeader: ComponentStory<typeof AppHeader> = () => {
           data-index={0}
           data-priority={1}
           src={PlaceholderLogo as string}
-          appTitle="Toolkit"
+          appTitle="Salt"
         />
         <Tabstrip
           data-index={1}

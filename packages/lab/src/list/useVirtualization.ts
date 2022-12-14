@@ -76,7 +76,7 @@ export const useVirtualization = <Item>({
     const viewportEl = viewportRef.current;
     if (viewportEl) {
       // TODO no reference to ListItem className
-      const listItemEl = viewportEl.querySelector(".uitkListItem");
+      const listItemEl = viewportEl.querySelector(".saltListItem");
       if (listItemEl) {
         const { height: viewportHeight } = viewportEl.getBoundingClientRect();
         const { height: rowHeight } = listItemEl.getBoundingClientRect();

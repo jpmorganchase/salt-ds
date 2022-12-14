@@ -1,7 +1,7 @@
-.uitkThemeEditorModeSelector {
+.saltThemeEditorModeSelector {
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  color: var(--uitk-text-secondary-foreground);
-  font-size: var(--uitk-text-fontSize);
+  color: var(--salt-text-secondary-foreground);
+  font-size: var(--salt-text-fontSize);
 }

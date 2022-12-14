@@ -9,7 +9,7 @@ import {
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ChildrenValues } from "../../ChildrenValues";
 export interface ColorPatternProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   patternName: string;
@@ -63,7 +63,7 @@ export const ColorPattern = (props: ColorPatternProps): ReactElement => {
 
                 return (
                   <ChildrenValues
-                    uitkColorOverrides={props.uitkColorOverrides}
+                    saltColorOverrides={props.saltColorOverrides}
                     children={values}
                     extractValue={props.extractValue}
                     fieldName={fieldName}

@@ -40,7 +40,7 @@ const iconComponentMap = {
   up: ArrowUpIcon,
 };
 
-const withBaseName = makePrefixer("uitkMetricContent");
+const withBaseName = makePrefixer("saltMetricContent");
 
 export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
   function MetricContent(

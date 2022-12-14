@@ -5,7 +5,7 @@ import { GridColumnGroupModel } from "./Grid";
 import { ReactNode } from "react";
 import { useColumnDataContext } from "./ColumnDataContext";
 
-const withBaseName = makePrefixer("uitkGridGroupHeaderCell");
+const withBaseName = makePrefixer("saltGridGroupHeaderCell");
 
 export interface GroupHeaderCellProps {
   group: GridColumnGroupModel;

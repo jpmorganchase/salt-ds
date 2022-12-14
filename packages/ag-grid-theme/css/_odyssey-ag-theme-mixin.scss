@@ -69,7 +69,7 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: var(--uitk-size-unit) var(--uitk-size-unit) 0 var(--uitk-size-unit);
+    padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
     color: var(--agGrid-menu-color);
   }
 
@@ -88,11 +88,11 @@
   }
 
   .ag-tab {
-    margin: 0 var(--uitk-size-unit) 0 0;
-    padding: 0 var(--uitk-size-unit);
+    margin: 0 var(--salt-size-unit) 0 0;
+    padding: 0 var(--salt-size-unit);
     transition: color 0.4s;
     flex: 1 1 auto;
-    height: var(--uitk-size-stackable);
+    height: var(--salt-size-stackable);
   }
 
   .ag-tab-selected {
@@ -100,15 +100,15 @@
   }
 
   .ag-menu-option-part {
-    height: var(--uitk-size-stackable);
-    line-height: var(--uitk-text-lineHeight);
-    padding: 0 var(--uitk-size-unit);
-    font-size: var(--uitk-text-fontSize);
+    height: var(--salt-size-stackable);
+    line-height: var(--salt-text-lineHeight);
+    padding: 0 var(--salt-size-unit);
+    font-size: var(--salt-text-fontSize);
   }
 
   .ag-menu-option-text {
-    padding-left: var(--uitk-size-unit);
-    padding-right: var(--uitk-size-unit);
+    padding-left: var(--salt-size-unit);
+    padding-right: var(--salt-size-unit);
   }
 
   .ag-list-item,
@@ -132,7 +132,7 @@
   }
 
   .ag-side-buttons {
-    width: var(--uitk-size-stackable);
+    width: var(--salt-size-stackable);
   }
 
   .ag-ltr .ag-side-bar-right .ag-side-button-button {
@@ -144,9 +144,9 @@
   }
 
   .ag-ltr .ag-side-buttons .ag-selected .ag-side-button-button {
-    border-left-color: var(--uitk-navigable-indicator-active);
+    border-left-color: var(--salt-navigable-indicator-active);
     border-left-style: solid !important;
-    font-weight: var(--uitk-navigable-fontWeight-active);
+    font-weight: var(--salt-navigable-fontWeight-active);
   }
 
   button.ag-side-button-button {
@@ -155,7 +155,7 @@
   }
 
   .ag-pivot-mode-panel {
-    height: var(--uitk-size-stackable);
+    height: var(--salt-size-stackable);
   }
 
   .ag-checkbox-input-wrapper {

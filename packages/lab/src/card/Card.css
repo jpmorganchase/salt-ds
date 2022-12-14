@@ -1,70 +1,70 @@
 /* Styles applied to the root element */
-.uitkCard {
-  background: var(--uitkCard-background, var(--uitk-container-primary-background));
-  border-width: var(--uitkCard-borderWidth, var(--uitk-size-border));
-  border-style: var(--uitkCard-borderStyle, var(--uitk-container-borderStyle));
-  border-color: var(--uitkCard-borderColor, var(--uitk-container-primary-borderColor));
-  border-radius: var(--uitkCard-borderRadius, 0);
-  box-shadow: var(--uitkCard-boxShadow, var(--uitk-overlayable-shadow));
-  color: var(--uitkCard-color, var(--uitk-text-primary-foreground));
+.saltCard {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
+  border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
+  border-color: var(--saltCard-borderColor, var(--salt-container-primary-borderColor));
+  border-radius: var(--saltCard-borderRadius, 0);
+  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+  color: var(--saltCard-color, var(--salt-text-primary-foreground));
   overflow: hidden;
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Styles applied to Card content */
-.uitkCard-content {
+.saltCard-content {
   color: inherit;
-  font-size: var(--uitkCard-content-fontSize, var(--uitk-text-fontSize));
-  letter-spacing: var(--uitkCard-content-letterSpacing, normal);
-  line-height: var(--uitk-text-lineHeight);
-  min-height: var(--uitkCard-content-minHeight, var(--uitk-text-minHeight));
-  padding: var(--uitkCard-padding, calc(var(--uitk-size-unit) * 3));
+  font-size: var(--saltCard-content-fontSize, var(--salt-text-fontSize));
+  letter-spacing: var(--saltCard-content-letterSpacing, normal);
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--saltCard-content-minHeight, var(--salt-text-minHeight));
+  padding: var(--saltCard-padding, calc(var(--salt-size-unit) * 3));
 }
 
 /* Styles applied if `interactable={true}` */
-.uitkCard-interactable {
+.saltCard-interactable {
   display: block;
   transition: none;
 }
 
 /* Styles applied on hover if `interactable={true}` */
-a:focus .uitkCard-interactable,
-.uitkCard-interactable:hover {
-  border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-hover));
-  color: var(--uitkCard-color-hover, var(--uitk-text-primary-foreground));
-  cursor: var(--uitkCard-cursor-hover, var(--uitk-selectable-cursor-hover));
+a:focus .saltCard-interactable,
+.saltCard-interactable:hover {
+  border-color: var(--saltCard-borderColor-hover, var(--salt-selectable-borderColor-hover));
+  color: var(--saltCard-color-hover, var(--salt-text-primary-foreground));
+  cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
   position: relative;
-  box-shadow: var(--uitkCard-boxShadow-hover, var(--uitk-overlayable-shadow-hover));
+  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
 }
 
 /* Styles applied on active state if `interactable={true}` */
-.uitkCard-interactable:active {
-  border-color: var(--uitkCard-borderColor-hover, var(--uitk-selectable-borderColor-selected));
-  box-shadow: var(--uitkCard-boxShadow-active, var(--uitk-overlayable-shadow-hover));
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
+.saltCard-interactable:active {
+  border-color: var(--saltCard-borderColor-hover, var(--salt-selectable-borderColor-selected));
+  box-shadow: var(--saltCard-boxShadow-active, var(--salt-overlayable-shadow-hover));
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 /* Styles applied on hover if `interactable={true}` and `disabled={true}` */
-a:focus .uitkCard-interactable.uitkCard-disabled,
-.uitkCard-interactable.uitkCard-disabled:hover,
-.uitkCard-interactable.uitkCard-disabled:active {
-  box-shadow: var(--uitkCard-boxShadow-hover-disabled, var(--uitk-overlayable-shadow));
+a:focus .saltCard-interactable.saltCard-disabled,
+.saltCard-interactable.saltCard-disabled:hover,
+.saltCard-interactable.saltCard-disabled:active {
+  box-shadow: var(--saltCard-boxShadow-hover-disabled, var(--salt-overlayable-shadow));
 }
 
 /* Styles applied if `disabled={true}` */
-.uitkCard-disabled,
-.uitkCard-disabled.uitkCard-interactable,
-a:focus .uitkCard-interactable.uitkCard-disabled {
-  border-color: var(--uitkCard-borderColor, var(--uitk-container-primary-borderColor-disabled));
-  cursor: var(--uitkCard-cursor-disabled, var(--uitk-selectable-cursor-disabled));
-  color: var(--uitkCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
+.saltCard-disabled,
+.saltCard-disabled.saltCard-interactable,
+a:focus .saltCard-interactable.saltCard-disabled {
+  border-color: var(--saltCard-borderColor, var(--salt-container-primary-borderColor-disabled));
+  cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
   outline: none;
 }
 
 /* Styles applied to nested divs if `disabled={true}` */
-.uitkCard-disabled div {
+.saltCard-disabled div {
   pointer-events: none;
 }

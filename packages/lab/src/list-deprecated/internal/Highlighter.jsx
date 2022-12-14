@@ -3,7 +3,7 @@ import { escapeRegExp } from "../../utils";
 
 import "./Highlighter.css";
 
-const baseName = "uitkHighlighter";
+const baseName = "saltHighlighter";
 
 export const Highlighter = (props) => {
   const { matchPattern, text = "" } = props;

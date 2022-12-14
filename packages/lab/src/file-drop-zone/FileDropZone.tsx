@@ -93,7 +93,7 @@ export interface FileDropZoneProps extends HTMLAttributes<HTMLDivElement> {
   validate?: ReadonlyArray<FilesValidator<any>>;
 }
 
-const withBaseName = makePrefixer("uitkFileDropZone");
+const withBaseName = makePrefixer("saltFileDropZone");
 
 export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
   function FileDropZone(
@@ -226,7 +226,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     );
 
     const fileDropZoneDescription = description ? (
-      <div className="uitkFileDropZone-description" id={descriptionId}>
+      <div className="saltFileDropZone-description" id={descriptionId}>
         {description}
       </div>
     ) : null;

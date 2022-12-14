@@ -47,7 +47,7 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   child: ReactNode;
 }
 
-const withBaseName = makePrefixer("uitkParentChildLayout");
+const withBaseName = makePrefixer("saltParentChildLayout");
 
 const getDirection = (
   orientation: Orientation,

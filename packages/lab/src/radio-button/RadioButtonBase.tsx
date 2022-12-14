@@ -22,7 +22,7 @@ import {
 
 import "./RadioButtonBase.css";
 
-const withBaseName = makePrefixer("uitkRadioButtonBase");
+const withBaseName = makePrefixer("saltRadioButtonBase");
 
 export interface RadioButtonBaseProps {
   checked?: boolean;

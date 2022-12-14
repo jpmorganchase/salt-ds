@@ -6,7 +6,7 @@ import { HeaderCellValue } from "../HeaderCellValue";
 import { FakeHeaderCell } from "./FakeHeaderCell";
 import { useCursorContext } from "../CursorContext";
 
-const withBaseName = makePrefixer("uitkGridHeaderRow");
+const withBaseName = makePrefixer("saltGridHeaderRow");
 
 export interface HeaderRowProps<T> {
   columns: GridColumnModel<T>[];

@@ -7,7 +7,7 @@ export default {
     {
       types: ["font-matter", "string", "attr-value"],
       style: {
-        color: "var(--uitk-color-teal-500)",
+        color: "var(--salt-color-teal-500)",
       },
     },
   ],

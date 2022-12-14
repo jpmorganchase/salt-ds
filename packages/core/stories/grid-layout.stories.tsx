@@ -100,7 +100,7 @@ const Footer: ComponentStory<typeof GridLayout> = (args) => {
         verticalAlignment="center"
         className="footer-column"
       >
-        <p>Logo | Toolkit</p>
+        <p>Logo | Salt</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </GridItem>
       {footerColumns}

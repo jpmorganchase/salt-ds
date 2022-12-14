@@ -1,53 +1,53 @@
-.uitkColorValueEditor-foundationColor {
+.saltColorValueEditor-foundationColor {
   display: flex;
 }
 
-.uitkColorValueEditor-input {
+.saltColorValueEditor-input {
   padding: 0px 10px 2px 0px;
   width: 100%;
 }
 
-.uitkColorValueEditor-colorInput {
+.saltColorValueEditor-colorInput {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
-.uitkColorValueEditor-colorByState {
+.saltColorValueEditor-colorByState {
   padding: 0;
 }
-.uitkColorValueEditor-colorStates {
+.saltColorValueEditor-colorStates {
   flex-direction: column;
   align-items: flex-start;
 }
-.uitkColorValueEditor-colorStatesField {
+.saltColorValueEditor-colorStatesField {
   width: auto;
   height: 14px;
 }
 
-.uitkColorValueEditor-backgroundColorInput {
+.saltColorValueEditor-backgroundColorInput {
   max-width: 80px;
 }
 
-.uitkColorValueEditor-jumpToFoundation {
+.saltColorValueEditor-jumpToFoundation {
   display: flex;
 }
 
-.uitkColorValueEditor-jumpToFoundationButton {
+.saltColorValueEditor-jumpToFoundationButton {
   align-items: flex-end;
 }
 
-.uitkColorValueEditor-jumpToFoundationNotColor {
+.saltColorValueEditor-jumpToFoundationNotColor {
   display: flex;
   align-items: flex-end;
 }
 
-.uitkColorValueEditor-field {
+.saltColorValueEditor-field {
   margin-right: 5px;
   min-width: 20px;
   width: auto;
 }
 
-.uitkFormField-labelContainer {
+.saltFormField-labelContainer {
   padding-left: 0px;
 }

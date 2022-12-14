@@ -21,7 +21,7 @@ import {
 
 import "./ToggleButtonGroup.css";
 
-const withBaseName = makePrefixer("uitkToggleButtonGroup");
+const withBaseName = makePrefixer("saltToggleButtonGroup");
 
 export type ToggleButtonGroupChangeEventHandler = (
   event: SyntheticEvent<HTMLButtonElement>,

@@ -10,7 +10,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
 
-const withBaseName = makePrefixer("uitkGridTextCellEditor");
+const withBaseName = makePrefixer("saltGridTextCellEditor");
 
 export interface TextCellEditorProps<T> {
   row?: GridRowModel<T>;

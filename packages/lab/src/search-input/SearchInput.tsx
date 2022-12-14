@@ -13,7 +13,7 @@ import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
 import "./SearchInput.css";
 
-const baseName = "uitkSearchInput";
+const baseName = "saltSearchInput";
 
 //TODO formfield integration
 

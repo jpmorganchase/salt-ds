@@ -1,11 +1,11 @@
 .CornerBlock-cell {
-  width: var(--uitk-size-base);
-  height: var(--uitk-size-base);
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
   justify-self: end;
 
-  border-color: var(--uitk-container-primary-borderColor);
-  border-style: var(--uitk-container-borderStyle);
-  border-width: var(--uitk-size-border);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
   border-radius: 0;
 
   display: flex;
@@ -19,13 +19,13 @@
   bottom: 0;
   left: 0;
 
-  width: calc(var(--uitk-size-base) * 3 / 4);
-  height: calc(var(--uitk-size-base) * 3 / 4);
+  width: calc(var(--salt-size-base) * 3 / 4);
+  height: calc(var(--salt-size-base) * 3 / 4);
 
-  border-color: var(--uitk-container-primary-borderColor);
-  border-style: var(--uitk-container-borderStyle);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
   border-bottom-width: 0;
   border-left-width: 0;
-  border-top-width: var(--uitk-size-border);
-  border-right-width: var(--uitk-size-border);
+  border-top-width: var(--salt-size-border);
+  border-right-width: var(--salt-size-border);
 }

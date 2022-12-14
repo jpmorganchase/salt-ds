@@ -7,7 +7,7 @@ import { TooltipProps } from "../tooltip";
 
 import "./Breadcrumb.css";
 
-const withBaseName = makePrefixer("uitkBreadcrumb");
+const withBaseName = makePrefixer("saltBreadcrumb");
 
 export interface BreadcrumbProps {
   children?: ReactNode;

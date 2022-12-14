@@ -11,6 +11,6 @@
 
 .query-result {
   margin-top: 64px;
-  border-top: solid 1px var(--uitk-separable-tertiary-borderColor);
+  border-top: solid 1px var(--salt-separable-tertiary-borderColor);
   flex-grow: 1;
 }

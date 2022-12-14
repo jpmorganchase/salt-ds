@@ -26,7 +26,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   disablePortal?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkDialog");
+const withBaseName = makePrefixer("saltDialog");
 
 /**
  * The Dialog is a window that contains text and interactive components.

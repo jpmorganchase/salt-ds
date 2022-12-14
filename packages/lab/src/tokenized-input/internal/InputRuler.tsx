@@ -2,7 +2,7 @@ import { ForwardedRef, forwardRef, InputHTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import "./InputRuler.css";
 
-const withBaseName = makePrefixer("uitkInputRuler");
+const withBaseName = makePrefixer("saltInputRuler");
 
 /**
  * This hidden component is used to wrap a copy of an input value

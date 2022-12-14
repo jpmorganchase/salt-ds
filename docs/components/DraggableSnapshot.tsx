@@ -11,7 +11,7 @@ import { Button } from "@salt-ds/core";
 
 import "./DraggableSnapshot.css";
 
-const classBase = "uitkDraggableSnapshot";
+const classBase = "saltDraggableSnapshot";
 
 const Shift: Record<string, string> = {
   true: "Shift",
@@ -112,8 +112,8 @@ export const DraggableImg = ({
 
   const style = {
     ...styleProp,
-    "--uitkDraggableSnapshot-opacity": opacity,
-    "--uitkDraggableSnapshot-url": `url(${src})`,
+    "--saltDraggableSnapshot-opacity": opacity,
+    "--saltDraggableSnapshot-url": `url(${src})`,
     left,
     top,
   };

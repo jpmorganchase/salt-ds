@@ -1,9 +1,9 @@
-.uitkGridDefaultCellValue {
+.saltGridDefaultCellValue {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: var(--grid-cell-padding);
 }
 
-.uitkGridDefaultCellValue-alignRight {
+.saltGridDefaultCellValue-alignRight {
   text-align: right;
 }

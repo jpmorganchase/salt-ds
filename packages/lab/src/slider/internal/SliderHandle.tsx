@@ -6,7 +6,7 @@ import { Tooltip, useTooltip } from "../../tooltip";
 
 import "../Slider.css";
 
-const withBaseName = makePrefixer("uitkSliderHandle");
+const withBaseName = makePrefixer("saltSliderHandle");
 
 export interface SliderHandleProps {
   min: number;

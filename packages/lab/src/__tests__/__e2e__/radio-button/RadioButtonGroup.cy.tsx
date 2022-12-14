@@ -35,7 +35,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
       );
       cy.findByTestId("radio-button-group-test").should(
         "have.class",
-        "uitkFormGroup-row"
+        "saltFormGroup-row"
       );
     });
   });

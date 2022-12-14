@@ -22,7 +22,7 @@ export interface SwitchProps
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }
 
-const withBaseName = makePrefixer("uitkSwitch");
+const withBaseName = makePrefixer("saltSwitch");
 
 export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   props,

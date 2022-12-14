@@ -26,7 +26,7 @@ import { DropdownBase, DropdownBaseProps } from "../../dropdown";
 
 import "./OverflowPanel.css";
 
-const withBaseName = makePrefixer("uitkOverflowPanel");
+const withBaseName = makePrefixer("saltOverflowPanel");
 
 export interface DropdownPanelProps extends DropdownBaseProps {
   /**

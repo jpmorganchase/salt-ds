@@ -1,31 +1,31 @@
-.uitkOverflowPanel.uitkDropdown-popup {
-  background: var(--uitk-container-primary-background);
-  border: solid 1px var(--uitk-selectable-borderColor-hover);
-  box-shadow: var(--uitk-overlayable-shadow-popout);
+.saltOverflowPanel.saltDropdown-popup {
+  background: var(--salt-container-primary-background);
+  border: solid 1px var(--salt-selectable-borderColor-hover);
+  box-shadow: var(--salt-overlayable-shadow-popout);
 }
 
-.uitkOverflowPanel-content {
-  --uitkButton-justifyContent: flex-start;
-  --uitkDropdown-popup-maxHeight: auto;
+.saltOverflowPanel-content {
+  --saltButton-justifyContent: flex-start;
+  --saltDropdown-popup-maxHeight: auto;
   align-items: stretch;
-  color: var(--uitk-text-primary-foreground);
-  border: var(--uitk-size-border) var(--uitk-container-borderStyle) var(--uitk-container-primary-borderColor);
+  color: var(--salt-text-primary-foreground);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   display: flex;
   flex-direction: column;
-  padding: calc(var(--uitk-size-unit) * 1.5) 0;
+  padding: calc(var(--salt-size-unit) * 1.5) 0;
   outline: none;
 }
 
-.uitkOverflowPanel [aria-expanded="true"] {
-  --uitkButton-background: var(--uitk-actionable-secondary-background-active);
-  --uitkButton-background-hover: var(--uitk-actionable-secondary-background-active);
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-active);
+.saltOverflowPanel [aria-expanded="true"] {
+  --saltButton-background: var(--salt-actionable-secondary-background-active);
+  --saltButton-background-hover: var(--salt-actionable-secondary-background-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
-.uitkOverflowPanel.uitkDropdown {
-  --uitkIcon-margin: 2px 0 0 0px;
+.saltOverflowPanel.saltDropdown {
+  --saltIcon-margin: 2px 0 0 0px;
 }
 
-.uitkOverflowPanel.uitkDropdown-popup .uitkFormField:not(.uitkFormField-toolbarButton) {
-  --uitkFormField-margin: 0 12px 8px 12px;
+.saltOverflowPanel.saltDropdown-popup .saltFormField:not(.saltFormField-toolbarButton) {
+  --saltFormField-margin: 0 12px 8px 12px;
 }

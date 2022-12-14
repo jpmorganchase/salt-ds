@@ -17,7 +17,7 @@ import "./SaltProvider.css";
 
 export const DEFAULT_DENSITY = "medium";
 
-const DEFAULT_THEME_NAME = "uitk-theme";
+const DEFAULT_THEME_NAME = "salt-theme";
 
 const DEFAULT_MODE = "light";
 
@@ -55,7 +55,7 @@ const createThemedChildren = (
         className: cx(
           children.props?.className,
           ...themeNames,
-          `uitk-density-${density}`
+          `salt-density-${density}`
         ),
         // @ts-ignore
         "data-mode": mode,
@@ -74,7 +74,7 @@ const createThemedChildren = (
         className={cx(
           `salt-provider`,
           ...themeNames,
-          `uitk-density-${density}`
+          `salt-density-${density}`
         )}
         data-mode={mode}
       >
@@ -157,7 +157,7 @@ export function SaltProvider({
         // add the styles we want to apply
         document.documentElement.classList.add(
           ...themeNames,
-          `uitk-density-${density}`
+          `salt-density-${density}`
         );
         document.documentElement.dataset.mode = mode;
       } else {
@@ -171,7 +171,7 @@ export function SaltProvider({
         // When unmounting/remounting, remove the applied styles from the root
         document.documentElement.classList.remove(
           ...themeNames,
-          `uitk-density-${density}`
+          `salt-density-${density}`
         );
         document.documentElement.dataset.mode = undefined;
       }

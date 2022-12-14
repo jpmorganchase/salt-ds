@@ -12,7 +12,7 @@ import { useWindow } from "../../window";
 import { useFloatingUI } from "../../popper";
 import { Portal } from "../../portal";
 
-const withBaseName = makePrefixer("uitkQueryInputValueSelector");
+const withBaseName = makePrefixer("saltQueryInputValueSelector");
 
 export interface ValueSelectorProps {
   isOpen: boolean;

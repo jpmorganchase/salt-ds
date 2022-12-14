@@ -57,7 +57,7 @@ declare global {
        * */
       (chainer: "announce"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkHighlighted className has been applied.
+       * Checks if the approriate saltHighlighted className has been applied.
        *
        * @example
        ```
@@ -66,7 +66,7 @@ declare global {
        * */
       (chainer: "be.highlighted"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkHighlighted className has been applied.
+       * Checks if the approriate saltHighlighted className has been applied.
        *
        * @example
        ```
@@ -93,7 +93,7 @@ declare global {
        * */
       (chainer: "not.have.ariaSelected"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkFocusVisible className has been applied.
+       * Checks if the approriate saltFocusVisible className has been applied.
        *
        * @example
        ```
@@ -103,7 +103,7 @@ declare global {
       (chainer: "be.focusVisible"): Chainable<Subject>;
       (chainer: "have.focusVisible"): Chainable<Subject>;
       /**
-       * Checks if the approriate uitkFocusVisible className has been applied.
+       * Checks if the approriate saltFocusVisible className has been applied.
        *
        * @example
        ```
@@ -229,12 +229,12 @@ const isHighlighted: ChaiPlugin = (_chai, utils) => {
     const className = this._obj.attr("class");
 
     this.assert(
-      className.match(/uitkHighlighted/),
+      className.match(/saltHighlighted/),
       `expected \n${elementToString(
         root
       )} to include CSS class #{exp}, got #{act} instead.`,
       `expected \n${elementToString(root)} not to have class #{exp}.`,
-      "uitkHighlighted",
+      "saltHighlighted",
       className
     );
   }
@@ -246,7 +246,7 @@ const isHighlighted: ChaiPlugin = (_chai, utils) => {
 chai.use(isHighlighted);
 
 /**
- * Checks if the class includes the expected uitkFocusVisible class
+ * Checks if the class includes the expected saltFocusVisible class
  *
  * @example
  * cy.findByRole('option).should('have.focusVisible')
@@ -263,12 +263,12 @@ const hasFocusVisible: ChaiPlugin = (_chai, utils) => {
     const className = this._obj.attr("class");
 
     this.assert(
-      className.match(/uitkFocusVisible/),
+      className.match(/saltFocusVisible/),
       `expected \n${elementToString(
         root
       )} to include CSS class #{exp}, got #{act} instead.`,
       `expected \n${elementToString(root)} not to have class #{exp}.`,
-      "uitkFocusVisible",
+      "saltFocusVisible",
       className
     );
   }

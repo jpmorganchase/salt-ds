@@ -3,21 +3,21 @@
   --ifm-link-hover-color: none;
   --ifm-link-decoration: none;
   --ifm-link-hover-decoration: none;
-  --card-color: var(--uitk-color-white);
+  --card-color: var(--salt-color-white);
   --card-icon-background: #0e1b23;
-  --uitkIcon-color: var(--uitk-color-gray-900);
+  --saltIcon-color: var(--salt-color-gray-900);
 }
 
 .card.lightTheme,
 .inlineCard.lightTheme {
-  --card-background: var(--uitk-color-white);
-  --card-color: var(--uitk-color-gray-900);
-  --card-icon-background: var(--uitk-color-gray-10);
+  --card-background: var(--salt-color-white);
+  --card-color: var(--salt-color-gray-900);
+  --card-icon-background: var(--salt-color-gray-10);
 }
 
 .cardTitle h2 {
-  margin-top: var(--uitk-size-unit);
-  margin-bottom: var(--uitk-size-unit);
+  margin-top: var(--salt-size-unit);
+  margin-bottom: var(--salt-size-unit);
 }
 
 .card {
@@ -25,7 +25,7 @@
   color: var(--card-color);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--uitk-size-unit) * 3);
+  gap: calc(var(--salt-size-unit) * 3);
   flex: 1;
 }
 
@@ -36,7 +36,7 @@
 
 .card:hover,
 .inlineCardContent:hover {
-  box-shadow: var(--uitk-overlayable-shadow-borderRegion);
+  box-shadow: var(--salt-overlayable-shadow-borderRegion);
 }
 
 .card:hover .icon,
@@ -57,7 +57,7 @@
 .iconContainer {
   width: 100%;
   text-align: center;
-  padding: calc(var(--uitk-size-unit) * 5) 0;
+  padding: calc(var(--salt-size-unit) * 5) 0;
   background-color: var(--card-icon-background);
 }
 
@@ -72,7 +72,7 @@
 }
 
 .cardContent {
-  padding: 0 calc(var(--uitk-size-unit) * 2);
+  padding: 0 calc(var(--salt-size-unit) * 2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -80,11 +80,12 @@
 }
 
 .cardDescription {
-  color: var(--uitk-text-secondary-foreground);
+  color: var(--salt-text-secondary-foreground);
 }
 
 .inlineCardContent {
   display: flex;
+  margin-bottom: calc(var(--uitk-size-unit) * 3);
 }
 
 .inlineCardContent .textContainer {
@@ -95,11 +96,11 @@
 }
 
 .inlineCard .cardText {
-  margin: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 5) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 2);
+  margin: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 5) var(--salt-size-unit) calc(var(--salt-size-unit) * 2);
 }
 
 .inlineCard .cardDescription {
-  margin-bottom: var(--uitk-size-unit);
+  margin-bottom: var(--salt-size-unit);
 }
 
 .inlineCard .cardFooter {
@@ -117,15 +118,15 @@
 
 .inlineCard .cardFooter > p {
   text-decoration: underline;
-  padding-right: calc(var(--uitk-size-unit) / 3);
+  padding-right: calc(var(--salt-size-unit) / 3);
 }
 
 .cardFooter > svg {
-  margin-top: calc(var(--uitk-size-unit) / 4);
+  margin-top: calc(var(--salt-size-unit) / 4);
 }
 
 .cardFooter:hover {
-  color: var(--uitk-text-link-foreground-hover);
+  color: var(--salt-text-link-foreground-hover);
 }
 
 .keyline {
@@ -151,16 +152,16 @@
 
 @media screen and (max-width: 1200px) {
   .inlineCard .cardText {
-    margin-right: calc(var(--uitk-size-unit) * 2);
+    margin-right: calc(var(--salt-size-unit) * 2);
   }
 }
 
 @media screen and (max-width: 996px) {
   .iconContainer {
-    padding: calc(var(--uitk-size-unit) * 2) 0;
+    padding: calc(var(--salt-size-unit) * 2) 0;
   }
 
   .card {
-    gap: calc(var(--uitk-size-unit) * 2);
+    gap: calc(var(--salt-size-unit) * 2);
   }
 }

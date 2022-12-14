@@ -1,14 +1,14 @@
 .NumberBlock-cell {
-  width: calc(var(--uitk-size-base) * 1.3);
-  height: var(--uitk-size-base);
-  line-height: var(--uitk-size-base);
+  width: calc(var(--salt-size-base) * 1.3);
+  height: var(--salt-size-base);
+  line-height: var(--salt-size-base);
   justify-self: end;
 
-  border-color: var(--uitk-container-primary-borderColor);
-  border-style: var(--uitk-container-borderStyle);
-  border-width: var(--uitk-size-border);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
   border-radius: 0;
 
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--salt-text-fontSize);
   text-align: center;
 }
