@@ -20,7 +20,7 @@ const cards: CardProps[] = [
         the design system.
       </p>
     ),
-    url: "https://github.com/jpmorganchase/uitk/discussions/categories/feedback",
+    url: "https://github.com/jpmorganchase/salt-ds/discussions/categories/feedback",
     footerText: "Share your thoughts on GitHub",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
@@ -33,7 +33,7 @@ const cards: CardProps[] = [
         them to our backlog.
       </p>
     ),
-    url: "https://github.com/jpmorganchase/uitk/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
+    url: "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
     footerText: "Report a bug on GitHub",
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
@@ -46,7 +46,7 @@ const cards: CardProps[] = [
         provided, we may be able to assist.
       </p>
     ),
-    url: "https://github.com/jpmorganchase/uitk/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml",
+    url: "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml",
     footerText: "Ask on GitHub",
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
