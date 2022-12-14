@@ -100,7 +100,7 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-storybook": "^0.6.7",
     "glob": "^8.0.0",
-    "modular-scripts": "patch:modular-scripts@npm:3.4.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch",
+    "modular-scripts": "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch",
     "no-scroll": "^2.1.1",
     "nyse-holidays": "^1.2.0",
     "prettier": "^2.6.2",
