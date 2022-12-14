@@ -18,7 +18,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkScrim").should("be.visible");
+      cy.get(".saltScrim").should("be.visible");
     });
   });
 
@@ -28,7 +28,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkScrim").should("not.exist");
+      cy.get(".saltScrim").should("not.exist");
     });
   });
 
@@ -38,7 +38,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.class", "uitkLayerLayout-center");
+      cy.get(".saltLayerLayout").should("have.class", "saltLayerLayout-center");
     });
   });
 
@@ -48,7 +48,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.css", "top", "0px");
+      cy.get(".saltLayerLayout").should("have.css", "top", "0px");
     });
 
     it("THEN it should render on the right hand side", () => {
@@ -56,7 +56,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.css", "right", "0px");
+      cy.get(".saltLayerLayout").should("have.css", "right", "0px");
     });
 
     it("THEN it should render on the left hand side", () => {
@@ -64,7 +64,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.css", "left", "0px");
+      cy.get(".saltLayerLayout").should("have.css", "left", "0px");
     });
 
     it("THEN it should render at the bottom", () => {
@@ -72,7 +72,7 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("have.css", "bottom", "0px");
+      cy.get(".saltLayerLayout").should("have.css", "bottom", "0px");
     });
   });
 
@@ -88,9 +88,9 @@ describe("GIVEN a Layer", () => {
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".uitkLayerLayout").should(
+        cy.get(".saltLayerLayout").should(
           "have.class",
-          "uitkLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen"
         );
       }
     );
@@ -108,9 +108,9 @@ describe("GIVEN a Layer", () => {
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".uitkLayerLayout").should(
+        cy.get(".saltLayerLayout").should(
           "have.class",
-          "uitkLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen"
         );
       }
     );
@@ -126,9 +126,9 @@ describe("GIVEN a Layer", () => {
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".uitkLayerLayout").should(
+        cy.get(".saltLayerLayout").should(
           "have.class",
-          "uitkLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen"
         );
       }
     );
@@ -140,16 +140,16 @@ describe("GIVEN a Layer", () => {
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should("be.visible");
+      cy.get(".saltLayerLayout").should("be.visible");
 
       cy.findByRole("button", { name: /Close Layer/i }).click();
 
-      cy.get(".uitkLayerLayout").should(
+      cy.get(".saltLayerLayout").should(
         "have.class",
-        "uitkLayerLayout-exit-animation"
+        "saltLayerLayout-exit-animation"
       );
 
-      cy.get(".uitkLayerLayout").should("not.exist");
+      cy.get(".saltLayerLayout").should("not.exist");
     });
   });
 
@@ -165,16 +165,16 @@ describe("GIVEN a Layer", () => {
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
-        cy.get(".uitkLayerLayout").should("be.visible");
+        cy.get(".saltLayerLayout").should("be.visible");
 
-        cy.get(".uitkLayerLayout").should(
+        cy.get(".saltLayerLayout").should(
           "have.class",
-          "uitkLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen"
         );
 
         cy.findByRole("button", { name: /Close Layer/i }).click();
 
-        cy.get(".uitkLayerLayout").should("not.exist");
+        cy.get(".saltLayerLayout").should("not.exist");
       }
     );
   });

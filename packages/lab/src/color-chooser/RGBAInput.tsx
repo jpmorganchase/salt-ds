@@ -7,7 +7,7 @@ import { RGBInput } from "./RGBAInputField";
 
 import "./RGBAInput.css";
 
-const withBaseName = makePrefixer("uitkColorChooser");
+const withBaseName = makePrefixer("saltColorChooser");
 
 interface RGBAInputProps {
   disableAlphaChooser: boolean;

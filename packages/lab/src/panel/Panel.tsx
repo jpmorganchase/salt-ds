@@ -23,7 +23,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   variant?: "primary" | "secondary";
 }
 
-const withBaseName = makePrefixer("uitkPanel");
+const withBaseName = makePrefixer("saltPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
   { className, children, variant = "primary", ...restProps },

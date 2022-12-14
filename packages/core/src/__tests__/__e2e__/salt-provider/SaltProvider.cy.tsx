@@ -44,7 +44,7 @@ describe("Given a SaltProvider", () => {
       cy.get("html")
         .should("exist")
         .and("have.attr", "data-mode", "light")
-        .and("have.class", "uitk-density-medium");
+        .and("have.class", "salt-density-medium");
     });
     it("should apply correct default values for Density and Theme and add an AriaAnnouncer", () => {
       mount(
@@ -152,8 +152,8 @@ describe("Given a SaltProvider", () => {
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-mode", "dark")
-        .and("have.class", "uitk-theme")
-        .and("have.class", "uitk-density-high");
+        .and("have.class", "salt-theme")
+        .and("have.class", "salt-density-high");
     });
   });
 
@@ -170,7 +170,7 @@ describe("Given a SaltProvider", () => {
       cy.get("html")
         .should("exist")
         .and("have.attr", "data-mode", "dark")
-        .and("have.class", "uitk-density-high");
+        .and("have.class", "salt-density-high");
     });
   });
 
@@ -185,7 +185,7 @@ describe("Given a SaltProvider", () => {
       cy.get("div.salt-provider")
         .should("have.length", 1)
         .and("have.attr", "data-mode", "dark")
-        .and("have.class", "uitk-density-high");
+        .and("have.class", "salt-density-high");
     });
   });
 });

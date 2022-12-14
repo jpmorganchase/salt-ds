@@ -16,7 +16,7 @@ interface SkipLinkProps extends LinkProps {
   targetRef?: RefObject<HTMLElement>;
 }
 
-const withBaseName = makePrefixer("uitkSkipLink");
+const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {

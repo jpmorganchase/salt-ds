@@ -47,7 +47,7 @@ export const EditorView = (props: EditorViewProps): JSX.Element => {
   );
 
   return (
-    <div className="uitkEditorView">
+    <div className="saltEditorView">
       <Routes>
         <Route
           path="/foundations/*"

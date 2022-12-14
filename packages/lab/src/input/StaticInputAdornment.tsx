@@ -6,7 +6,7 @@ import "./StaticInputAdornment.css";
 
 export type StaticInputAdornmentProps = HTMLAttributes<HTMLDivElement>;
 
-const withBaseName = makePrefixer("uitkStaticInputAdornment");
+const withBaseName = makePrefixer("saltStaticInputAdornment");
 
 export const StaticInputAdornment = forwardRef<
   HTMLDivElement,

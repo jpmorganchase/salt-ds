@@ -4,7 +4,7 @@ import cn from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 
-const withBaseName = makePrefixer("uitkContactTertiaryInfo");
+const withBaseName = makePrefixer("saltContactTertiaryInfo");
 
 export interface ContactTertiaryInfoProps
   extends HTMLAttributes<HTMLDivElement> {

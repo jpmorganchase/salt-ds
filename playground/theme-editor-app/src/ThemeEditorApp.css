@@ -1,20 +1,20 @@
-.uitkThemeEditorApp {
+.saltThemeEditorApp {
   display: flex;
   inset: 0;
   position: absolute;
 }
 
-.uitkThemeEditorAppOutput {
-  color: var(--uitk-text-secondary-foreground);
-  background-color: var(--uitk-container-primary-background);
+.saltThemeEditorAppOutput {
+  color: var(--salt-text-secondary-foreground);
+  background-color: var(--salt-container-primary-background);
 }
 
-.uitkThemeEditorApp-leftPane {
+.saltThemeEditorApp-leftPane {
   flex: 0 0 240px;
   overflow: hidden;
 }
 
-.uitkThemeEditorApp-Spinner {
+.saltThemeEditorApp-Spinner {
   width: 100%;
   top: 30%;
 }

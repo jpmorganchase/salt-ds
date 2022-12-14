@@ -80,7 +80,7 @@ export const CascadingMenuList = forwardRef<
     rootPlacement = "bottom-start",
   } = props;
 
-  const baseClass = "uitkCascadingMenuList";
+  const baseClass = "saltCascadingMenuList";
 
   const [menuRef, setInternalMenuRef] = useState<HTMLElement | null>(null);
   const setMenuRef = useCallback(

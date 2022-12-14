@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 
 import "./ScopeLabel.css";
 
-const withBaseName = makePrefixer("uitkThemeScopeLabel");
+const withBaseName = makePrefixer("saltThemeScopeLabel");
 
 interface ScopeLabelProps {
   scope: string;

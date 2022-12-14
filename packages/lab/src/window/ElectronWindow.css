@@ -1,6 +1,6 @@
-.uitkWindow {
-  --uitkDialog-boxShadow: none;
-  --uitkDialog-margin: 0;
+.saltWindow {
+  --saltDialog-boxShadow: none;
+  --saltDialog-margin: 0;
   width: max-content;
   height: max-content;
   position: fixed;

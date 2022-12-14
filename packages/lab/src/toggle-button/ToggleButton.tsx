@@ -14,7 +14,7 @@ import { Tooltip, useTooltip } from "../tooltip";
 
 import "./ToggleButton.css";
 
-const withBaseName = makePrefixer("uitkToggleButton");
+const withBaseName = makePrefixer("saltToggleButton");
 
 export type ToggleButtonToggleEventHandler = (
   event: SyntheticEvent<HTMLButtonElement>,
@@ -53,7 +53,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const handleIconOnlyButton = useCallback(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
-          button?.querySelector(".uitkIcon") != null &&
+          button?.querySelector(".saltIcon") != null &&
             button?.childElementCount === 1
         );
       },

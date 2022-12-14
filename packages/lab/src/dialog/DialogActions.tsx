@@ -6,7 +6,7 @@ import "./DialogActions.css";
 
 export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {}
 
-const withBaseName = makePrefixer("uitkDialogActions");
+const withBaseName = makePrefixer("saltDialogActions");
 
 export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
   function DialogActions(props, ref) {

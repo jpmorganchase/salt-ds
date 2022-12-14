@@ -11,44 +11,44 @@ describe("Given a deck layout", () => {
   describe("WHEN no custom values are provided", () => {
     it("THEN it should render with default values", () => {
       cy.mount(<DefaultDeckLayout />);
-      cy.get(".uitkDeckItem").should("have.length", 6);
-      cy.get(".uitkDeckItem")
+      cy.get(".saltDeckItem").should("have.length", 6);
+      cy.get(".saltDeckItem")
         .eq(0)
-        .should("have.class", "uitkDeckItem-static-current");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-static-current");
+      cy.get(".saltDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-static-next");
+        .should("have.class", "saltDeckItem-static-next");
     });
   });
   describe("WHEN an active index is provided", () => {
     it("THEN it should render in right DeckItem", () => {
       cy.mount(<DefaultDeckLayout activeIndex={1} />);
-      cy.get(".uitkDeckItem")
+      cy.get(".saltDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-static-current");
+        .should("have.class", "saltDeckItem-static-current");
     });
     it("THEN it should navigate trough items", () => {
       cy.mount(<DefaultDeckLayout activeIndex={1} animation="slide" />);
-      cy.get(".uitkDeckItem")
+      cy.get(".saltDeckItem")
         .eq(0)
-        .should("have.class", "uitkDeckItem-slide-previous");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-slide-previous");
+      cy.get(".saltDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-slide-current");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-slide-current");
+      cy.get(".saltDeckItem")
         .eq(2)
-        .should("have.class", "uitkDeckItem-slide-next");
+        .should("have.class", "saltDeckItem-slide-next");
 
       cy.findByRole("button", {
         name: "Previous",
       }).realClick();
 
-      cy.get(".uitkDeckItem")
+      cy.get(".saltDeckItem")
         .eq(0)
-        .should("have.class", "uitkDeckItem-slide-current");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-slide-current");
+      cy.get(".saltDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-slide-next");
+        .should("have.class", "saltDeckItem-slide-next");
 
       cy.findByRole("button", {
         name: "Next",
@@ -57,31 +57,31 @@ describe("Given a deck layout", () => {
         name: "Next",
       }).realClick();
 
-      cy.get(".uitkDeckItem")
+      cy.get(".saltDeckItem")
         .eq(1)
-        .should("have.class", "uitkDeckItem-slide-previous");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-slide-previous");
+      cy.get(".saltDeckItem")
         .eq(2)
-        .should("have.class", "uitkDeckItem-slide-current");
-      cy.get(".uitkDeckItem")
+        .should("have.class", "saltDeckItem-slide-current");
+      cy.get(".saltDeckItem")
         .eq(3)
-        .should("have.class", "uitkDeckItem-slide-next");
+        .should("have.class", "saltDeckItem-slide-next");
     });
   });
   describe("WHEN animation and direction values are provided", () => {
     it("THEN deck should have vertical animation classes if direction is vertical", () => {
       cy.mount(<DefaultDeckLayout direction="vertical" animation="slide" />);
 
-      cy.get(".uitkDeckLayout-animate").should(
+      cy.get(".saltDeckLayout-animate").should(
         "have.class",
-        "uitkDeckLayout-slide-vertical"
+        "saltDeckLayout-slide-vertical"
       );
     });
     it("THEN deck should have horizontal animation classes if direction is horizontal", () => {
       cy.mount(<DefaultDeckLayout animation="slide" />);
-      cy.get(".uitkDeckLayout-animate").should(
+      cy.get(".saltDeckLayout-animate").should(
         "have.class",
-        "uitkDeckLayout-slide-horizontal"
+        "saltDeckLayout-slide-horizontal"
       );
     });
   });

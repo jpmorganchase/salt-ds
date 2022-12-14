@@ -1,17 +1,17 @@
-.uitkThemeEditor {
-  border-right: 1px solid var(--uitk-container-primary-borderColor);
-  background-color: var(--uitk-container-primary-background);
+.saltThemeEditor {
+  border-right: 1px solid var(--salt-container-primary-borderColor);
+  background-color: var(--salt-container-primary-background);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.uitkThemeEditorAppOutputHeader {
-  color: var(--uitk-text-primary-foreground);
-  background-color: var(--uitk-container-primary-background);
+.saltThemeEditorAppOutputHeader {
+  color: var(--salt-text-primary-foreground);
+  background-color: var(--salt-container-primary-background);
   flex: 240 0;
 }
 
-.uitkThemeEditor h1 {
+.saltThemeEditor h1 {
   padding: 20px 20px 0px 20px;
 }

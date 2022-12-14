@@ -7,7 +7,7 @@ import { BooleanOperator, useQueryInput } from "./useQueryInput";
 
 import "./QueryInput.css";
 
-const withBaseName = makePrefixer("uitkQueryInput");
+const withBaseName = makePrefixer("saltQueryInput");
 
 export interface QueryInputProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {

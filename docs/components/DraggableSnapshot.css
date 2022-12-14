@@ -1,9 +1,9 @@
-.uitkDraggableSnapshot {
+.saltDraggableSnapshot {
   --header-height: 120px;
-  --img-height: var(--uitkDraggableSnapshot-img-height, 900px);
-  --img-opacity: var(--uitkDraggableSnapshot-opacity, 0.5);
-  --img-width: var(--uitkDraggableSnapshot-img-width, 1600px);
-  --snapshot-url: var(--uitkDraggableSnapshot-url);
+  --img-height: var(--saltDraggableSnapshot-img-height, 900px);
+  --img-opacity: var(--saltDraggableSnapshot-opacity, 0.5);
+  --img-width: var(--saltDraggableSnapshot-img-width, 1600px);
+  --snapshot-url: var(--saltDraggableSnapshot-url);
   cursor: grab;
   left: 0;
   position: absolute;
@@ -14,25 +14,25 @@
   z-index: 1000;
 }
 
-.uitkDraggableSnapshot-sliding {
+.saltDraggableSnapshot-sliding {
   transition-property: left, top;
   transition-duration: 0.3s;
 }
 
-.uitkDraggableSnapshot-header {
-  background-color: var(--uitk-container-secondary-background);
+.saltDraggableSnapshot-header {
+  background-color: var(--salt-container-secondary-background);
   height: var(--header-height);
   padding: 8px;
 }
 
-.uitkDraggableSnapshot-actions {
+.saltDraggableSnapshot-actions {
   display: flex;
   gap: 6px;
 }
 
-.uitkDraggableSnapshot-img {
+.saltDraggableSnapshot-img {
   background: var(--snapshot-url) no-repeat;
-  background-size: var(--uitkDraggableSnapshot-background-size, var(--img-width) var(--img-height));
+  background-size: var(--saltDraggableSnapshot-background-size, var(--img-width) var(--img-height));
   width: var(--img-width);
   height: var(--img-height);
   opacity: var(--img-opacity);

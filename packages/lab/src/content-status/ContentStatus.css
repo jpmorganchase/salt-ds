@@ -1,31 +1,31 @@
 /* Styles applied to root component (ContentStatus) */
-.uitkContentStatus {
+.saltContentStatus {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: var(--uitk-text-textAlign-embedded);
-  gap: var(--uitk-size-unit);
+  text-align: var(--salt-text-textAlign-embedded);
+  gap: var(--salt-size-unit);
 }
 
 /* Styles applied to inner content */
-.uitkContentStatus-content {
-  color: var(--uitkContentStatus-content-color, var(--uitk-text-primary-foreground));
+.saltContentStatus-content {
+  color: var(--saltContentStatus-content-color, var(--salt-text-primary-foreground));
   display: flex;
   flex-direction: column;
-  gap: var(--uitk-size-unit);
+  gap: var(--salt-size-unit);
 }
 
 /* Styles applied to status title */
-.uitkContentStatus-title {
-  font-weight: var(--uitk-typography-fontWeight-semiBold);
+.saltContentStatus-title {
+  font-weight: var(--salt-typography-fontWeight-semiBold);
 }
 
 /* Styles applied to status message */
-.uitkContentStatus-message {
+.saltContentStatus-message {
 }
 
 /* Styles applied to status actions */
-.uitkContentStatus-actions {
-  margin-top: var(--uitkContentStatus-actions-marginTop, var(--uitk-size-unit));
+.saltContentStatus-actions {
+  margin-top: var(--saltContentStatus-actions-marginTop, var(--salt-size-unit));
 }

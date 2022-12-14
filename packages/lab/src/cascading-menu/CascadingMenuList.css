@@ -1,8 +1,8 @@
-.uitkCascadingMenuList-popper {
-  background: var(--uitk-container-primary-background);
+.saltCascadingMenuList-popper {
+  background: var(--salt-container-primary-background);
 }
 
-.uitkCascadingMenuList-popper {
+.saltCascadingMenuList-popper {
   --list-box-content: content-box;
-  --list-boxShadow: var(--uitk-overlayable-shadow-popout);
+  --list-boxShadow: var(--salt-overlayable-shadow-popout);
 }

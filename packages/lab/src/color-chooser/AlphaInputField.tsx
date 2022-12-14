@@ -5,7 +5,7 @@ import { Input } from "../input";
 
 import "./RGBAInput.css";
 
-const withBaseName = makePrefixer("uitkColorChooser");
+const withBaseName = makePrefixer("saltColorChooser");
 
 interface AlphaInputProps {
   alphaValue: number;

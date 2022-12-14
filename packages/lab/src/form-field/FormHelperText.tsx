@@ -17,7 +17,7 @@ export const FormHelperText = <E extends React.ElementType = "p">({
   if (helperText) {
     if (helperTextPlacement === "bottom") {
       return (
-        <p className={`uitkFormFieldHelperText`} {...restProps}>
+        <p className={`saltFormFieldHelperText`} {...restProps}>
           {helperText}
         </p>
       );

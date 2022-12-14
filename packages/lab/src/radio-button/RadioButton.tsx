@@ -12,7 +12,7 @@ import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButton.css";
 
-const withBaseName = makePrefixer("uitkRadioButton");
+const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {

@@ -1,15 +1,15 @@
-.uitkDialog {
-  --dialog-background: var(--uitkDialog-background, var(--uitk-container-primary-background));
-  --dialog-borderBottomWidth: var(--uitkDialog-borderBottomWidth, 2px);
-  --dialog-borderColor: var(--uitkDialog-borderColor, var(--uitk-container-primary-borderColor));
-  --dialog-borderStyle: var(--uitkDialog-borderStyle, var(--uitk-container-borderStyle));
-  --dialog-borderWidth: var(--uitkDialog-borderColor, var(--uitk-size-border));
-  --dialog-boxShadow: var(--uitkDialog-boxShadow, var(--uitk-overlayable-shadow-modal));
-  --dialog-margin: var(--uitkDialog-margin, calc(3 * var(--uitk-size-unit)));
-  --dialog-padding: var(--uitkDialog-padding, calc(3 * var(--uitk-size-unit)));
+.saltDialog {
+  --dialog-background: var(--saltDialog-background, var(--salt-container-primary-background));
+  --dialog-borderBottomWidth: var(--saltDialog-borderBottomWidth, 2px);
+  --dialog-borderColor: var(--saltDialog-borderColor, var(--salt-container-primary-borderColor));
+  --dialog-borderStyle: var(--saltDialog-borderStyle, var(--salt-container-borderStyle));
+  --dialog-borderWidth: var(--saltDialog-borderColor, var(--salt-size-border));
+  --dialog-boxShadow: var(--saltDialog-boxShadow, var(--salt-overlayable-shadow-modal));
+  --dialog-margin: var(--saltDialog-margin, calc(3 * var(--salt-size-unit)));
+  --dialog-padding: var(--saltDialog-padding, calc(3 * var(--salt-size-unit)));
 }
 
-.uitkDialog {
+.saltDialog {
   background: var(--dialog-background);
   border-color: var(--dialog-borderColor);
   border-width: var(--dialog-borderWidth);
@@ -23,6 +23,6 @@
   overflow: auto;
   padding: var(--dialog-padding);
   position: relative;
-  box-shadow: var(--uitkDialog-boxShadow, var(--dialog-boxShadow));
-  margin: var(--uitkDialog-margin, var(--dialog-margin));
+  box-shadow: var(--saltDialog-boxShadow, var(--dialog-boxShadow));
+  margin: var(--saltDialog-margin, var(--dialog-margin));
 }

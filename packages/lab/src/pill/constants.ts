@@ -1,1 +1,1 @@
-export const pillBaseName = "uitkPill";
+export const pillBaseName = "saltPill";

@@ -6,7 +6,7 @@ import { Input } from "../input";
 
 import "./HexInput.css";
 
-const withBaseName = makePrefixer("uitkColorChooserHexInput");
+const withBaseName = makePrefixer("saltColorChooserHexInput");
 
 interface HexInputProps {
   hexValue: string | undefined;

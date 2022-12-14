@@ -23,7 +23,7 @@ import {
 import { QueryInputItem } from "../queryInputTypes";
 import { BooleanOperator } from "../useQueryInput";
 
-const withBaseName = makePrefixer("uitkQueryInputBody");
+const withBaseName = makePrefixer("saltQueryInputBody");
 
 export interface QueryInputBodyProps {
   inputRef: Ref<HTMLInputElement>;

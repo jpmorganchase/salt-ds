@@ -15,12 +15,12 @@ export const jsonReducer: Reducer<JSONByScope[], Action> = (
     state
       .filter((element) => element.scope === action.payload.scope)
       .forEach((s) => {
-        if (s.jsonObj.uitk.hasOwnProperty(action.payload.patternName)) {
+        if (s.jsonObj.salt.hasOwnProperty(action.payload.patternName)) {
           const replaceScope = {
             ...s,
             jsonObj: {
-              uitk: replaceJSONPaths(
-                s.jsonObj.uitk,
+              salt: replaceJSONPaths(
+                s.jsonObj.salt,
                 action.payload.newValue,
                 action.payload.pathToUpdate,
                 0

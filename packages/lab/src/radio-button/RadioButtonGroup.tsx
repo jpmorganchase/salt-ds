@@ -18,7 +18,7 @@ import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButtonGroup.css";
 
-const withBaseName = makePrefixer("uitkRadioButtonGroup");
+const withBaseName = makePrefixer("saltRadioButtonGroup");
 
 export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;

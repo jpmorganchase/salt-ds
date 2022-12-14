@@ -7,7 +7,7 @@ import { HeaderCellProps } from "./GridColumn";
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
   return (
     <AutoSizeHeaderCell {...props}>
-      <div className={cx("uitkGridCheckboxContainer", "uitkGrid-hidden")}>
+      <div className={cx("saltGridCheckboxContainer", "saltGrid-hidden")}>
         <RadioButtonIcon />
       </div>
     </AutoSizeHeaderCell>

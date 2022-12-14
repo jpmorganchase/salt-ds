@@ -2,19 +2,19 @@
  * Have some global styles to simulate more realistic app. Currently only for Storybook.
  */
 
-.uitk-theme {
-  color: var(--uitk-text-primary-foreground);
-  font-family: var(--uitk-typography-fontFamily);
-  font-size: var(--uitk-text-fontSize);
-  letter-spacing: var(--uitk-text-letterSpacing);
-  line-height: var(--uitk-text-lineHeight);
+.salt-theme {
+  color: var(--salt-text-primary-foreground);
+  font-family: var(--salt-typography-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
 }
 
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   color-scheme: light;
 }
 
-.uitk-theme[data-mode="dark"] {
+.salt-theme[data-mode="dark"] {
   color-scheme: dark;
 }
 

@@ -15,7 +15,7 @@ import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./CheckboxBase.css";
 
-const withBaseName = makePrefixer("uitkCheckboxBase");
+const withBaseName = makePrefixer("saltCheckboxBase");
 
 export interface CheckboxBaseProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -102,7 +102,7 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
     );
 
     const className = classnames(withBaseName(), classNameProp, {
-      uitkFocusVisible: focusVisible,
+      saltFocusVisible: focusVisible,
     });
     return (
       <span {...rest} className={className} ref={ref}>

@@ -38,7 +38,7 @@ export interface OrderedButtonProps extends ButtonProps {
   stackOrder?: number;
 }
 
-const withBasename = makePrefixer("uitkOrderedButton");
+const withBasename = makePrefixer("saltOrderedButton");
 
 export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
   function OrderedButton(

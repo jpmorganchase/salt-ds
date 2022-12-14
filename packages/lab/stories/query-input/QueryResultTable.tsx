@@ -3,7 +3,7 @@ import "./QueryResultTable.css";
 import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 
-const withBaseName = makePrefixer("uitkQueryResultTable");
+const withBaseName = makePrefixer("saltQueryResultTable");
 
 export interface QueryResultRow {
   name: string;

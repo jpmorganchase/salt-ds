@@ -161,7 +161,7 @@ describe.skip("A multi-select combo box", () => {
 
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alabama" })
-      .should("have.class", "uitkHighlighted");
+      .should("have.class", "saltHighlighted");
   });
 
   it("should clear input when an item is selected", () => {

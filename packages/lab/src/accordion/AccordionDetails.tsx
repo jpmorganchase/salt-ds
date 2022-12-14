@@ -9,7 +9,7 @@ import { useAccordionSectionContext } from "./AccordionSectionContext";
 
 import "./Accordion.css";
 
-const withBaseName = makePrefixer("uitkAccordionDetails");
+const withBaseName = makePrefixer("saltAccordionDetails");
 
 export interface AccordionDetailsProps extends HTMLAttributes<HTMLDivElement> {
   /**

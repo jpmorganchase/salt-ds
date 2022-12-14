@@ -6,7 +6,7 @@ import { JSONObj } from "../../helpers/parseToJson";
 import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
 
-const withBaseName = makePrefixer("uitkInnerFieldLabel");
+const withBaseName = makePrefixer("saltInnerFieldLabel");
 
 interface InnerFieldLabelProps {
   fieldName: string;

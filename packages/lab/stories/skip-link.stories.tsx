@@ -36,9 +36,9 @@ export const Default: ComponentStory<typeof SkipLink> = () => {
 
         <article id="main" ref={articleRef}>
           <section>
-            <h1>UI Toolkit</h1>
+            <h1>Salt</h1>
             <p>
-              UITK provides you with a suite of UI components and a flexible
+              Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an
               attractive and modern look-and-feel, with both light and dark
               variants and support for a range of UI densities. We have included
@@ -48,7 +48,7 @@ export const Default: ComponentStory<typeof SkipLink> = () => {
           </section>
           <section>
             <h1>Goals</h1>
-            <p>The UITK has been developed with the following design goals:</p>
+            <p>Salt has been developed with the following design goals:</p>
             <ul className="goalsList">
               <li>
                 Providing a comprehensive set of commonly-used UI controls
@@ -99,9 +99,9 @@ export const MultipleLinks: ComponentStory<typeof SkipLink> = () => {
 
         <article>
           <section id="introduction" ref={sectionRef1}>
-            <h1>UI Toolkit</h1>
+            <h1>Salt</h1>
             <p>
-              UITK provides you with a suite of UI components and a flexible
+              Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an
               attractive and modern look-and-feel, with both light and dark
               variants and support for a range of UI densities. We have included
@@ -111,7 +111,7 @@ export const MultipleLinks: ComponentStory<typeof SkipLink> = () => {
           </section>
           <section id="goals" ref={sectionRef2}>
             <h1>Goals</h1>
-            <p>The UITK has been developed with the following design goals:</p>
+            <p>Salt has been developed with the following design goals:</p>
             <ul className="goalsList">
               <li>
                 Providing a comprehensive set of commonly-used UI controls

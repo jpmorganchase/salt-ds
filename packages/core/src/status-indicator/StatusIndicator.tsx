@@ -34,7 +34,7 @@ const statusToAriaLabelMap: Record<ValidationStatus, string> = {
   info: "info",
 };
 
-const withBaseName = makePrefixer("uitkStatusIndicator");
+const withBaseName = makePrefixer("saltStatusIndicator");
 
 export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
   function StatusIndicator(

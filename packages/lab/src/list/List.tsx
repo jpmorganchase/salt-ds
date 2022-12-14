@@ -29,7 +29,7 @@ import "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 
-const withBaseName = makePrefixer("uitkList");
+const withBaseName = makePrefixer("saltList");
 
 export const List = forwardRef(function List<
   Item,
@@ -169,7 +169,7 @@ export const List = forwardRef(function List<
     const header = (
       <ListItem
         {...listItemHeaderHandlers}
-        className={cx("uitkListItemHeader", {
+        className={cx("saltListItemHeader", {
           focusVisible: collapsibleHeaders && appliedFocusVisible === idx.value,
         })}
         aria-expanded={expanded}
@@ -205,8 +205,8 @@ export const List = forwardRef(function List<
       "data-idx": number;
     } = {
       className: cx({
-        uitkHighlighted: idx.value === highlightedIndex,
-        uitkFocusVisible: appliedFocusVisible === idx.value,
+        saltHighlighted: idx.value === highlightedIndex,
+        saltFocusVisible: appliedFocusVisible === idx.value,
       }),
       disabled: disabled || listDisabled,
       id: itemId,
@@ -321,9 +321,9 @@ export const List = forwardRef(function List<
       className={cx(withBaseName(), className, {
         // TODO low-emphasis
         [withBaseName("borderless")]: borderless,
-        uitkDisabled: listDisabled,
+        saltDisabled: listDisabled,
         [withBaseName("collapsible")]: collapsibleHeaders,
-        uitkFocusVisible: highlightedIndex === LIST_FOCUS_VISIBLE,
+        saltFocusVisible: highlightedIndex === LIST_FOCUS_VISIBLE,
       })}
       id={`${id}`}
       ref={useForkRef<HTMLDivElement>(rootRef, forwardedRef)}

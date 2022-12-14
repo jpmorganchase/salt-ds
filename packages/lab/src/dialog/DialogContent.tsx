@@ -7,7 +7,7 @@ import "./DialogContent.css";
 
 export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {}
 
-const withBaseName = makePrefixer("uitkDialogContent");
+const withBaseName = makePrefixer("saltDialogContent");
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {

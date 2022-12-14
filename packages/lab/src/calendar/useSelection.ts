@@ -90,7 +90,7 @@ function isRangeOrOffsetSelectionValue(
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
-const withBaseName = makePrefixer("uitkCalendarDay");
+const withBaseName = makePrefixer("saltCalendarDay");
 
 export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const {

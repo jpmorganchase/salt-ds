@@ -21,7 +21,7 @@ import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./Input.css";
 
-const withBaseName = makePrefixer("uitkInput");
+const withBaseName = makePrefixer("saltInput");
 
 // TODO: Double confirm whether this should be extending DivElement given root is `<div>`.
 // And forwarded ref is not assigned to the root like other components.

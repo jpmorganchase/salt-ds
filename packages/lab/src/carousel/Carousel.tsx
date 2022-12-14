@@ -15,7 +15,7 @@ import "./Carousel.css";
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
 
-const withBaseName = makePrefixer("uitkCarousel");
+const withBaseName = makePrefixer("saltCarousel");
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**

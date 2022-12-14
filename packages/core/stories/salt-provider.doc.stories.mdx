@@ -8,7 +8,7 @@ import { NestedProviders } from "./salt-provider.stories";
 
 # Salt Provider
 
-The UI Toolkit `SaltProvider` is a multi-purpose React Context provider. It allows values for cross-cutting concerns like `Theme` and `Density`
+The `SaltProvider` is a multi-purpose React Context provider. It allows values for cross-cutting concerns like `Theme` and `Density`
 to be injected into an application. This will commonly be done at the root level of an application, making these values available throughout the
 application. SaltProviders can also be nested to effect local overrides. Note that because almost all styling effects related to theme and density
 are managed using CSS variables, it will very rarely be necessary for React components to access the theme or density directly. The main purpose of
@@ -33,7 +33,7 @@ import { SaltProvider } from "@salt-ds/core";
 
 ## Theme
 
-You can use the `theme` prop to change the default theme (set to `uitk-theme`) by passing a theme name. For more details on Theme please go to <a href="?path=/story/documentation-styles-and-theming-introduction--page">Styles and Theming</a>
+You can use the `theme` prop to change the default theme (set to `salt-theme`) by passing a theme name. For more details on Theme please go to <a href="?path=/story/documentation-styles-and-theming-introduction--page">Styles and Theming</a>
 
 ### useTheme
 
@@ -171,12 +171,12 @@ Given the following JSX:
 then we would see the following HTML:
 
 ```html
-<div class="uitk-theme uitk-density-medium" data-mode="light">
-  <div class="uitkCard">...</div>
+<div class="salt-theme salt-density-medium" data-mode="light">
+  <div class="saltCard">...</div>
 </div>
 ```
 
-The `div` element is styled with `display: contents` using the class `uitk-theme` which generally ensures that it does not break any layout or formatting style rules that may be in effect. Child elements are styled and laid out as though the containing `div` element were not present.
+The `div` element is styled with `display: contents` using the class `salt-theme` which generally ensures that it does not break any layout or formatting style rules that may be in effect. Child elements are styled and laid out as though the containing `div` element were not present.
 
 Some browser implementations of `display: contents` are buggy (Safari, for example). Further, your code may rely on CSS query selectors in JavaScript that might be broken if they do not anticipate the additional `div` element inserted by the SaltProvider.
 
@@ -194,7 +194,7 @@ There is (currently) one limitation to this pattern, you must only use a single 
 Then we would see the following HTML.
 
 ```html
-<div class="uitkCard uitk-theme uitk-density-medium" data-mode="light">...</div>
+<div class="saltCard salt-theme salt-density-medium" data-mode="light">...</div>
 ```
 
 The `SaltProvider` can also be configured to add the required CSS classes to the root HTML element. This would allow you to apply styles to the whole of the document. Some use cases for this would be to prevent overscroll or to apply styling to the whole background of the page.
@@ -210,13 +210,13 @@ This would look as follows:
 Then we would see the following HTML.
 
 ```html
-<html class="uitk-theme uitk-density-high" data-mode="light" lang="en">
+<html class="salt-theme salt-density-high" data-mode="light" lang="en">
   <head>
     <title>Example</title>
   </head>
   <body>
     <div id="root">
-      <div class="uitkCard">...</div>
+      <div class="saltCard">...</div>
     </div>
   </body>
 </html>
@@ -243,8 +243,8 @@ Then we would see the following HTML.
   </head>
   <body>
     <div id="root">
-      <div class="salt-provider uitk-theme uitk-density-high" data-mode="light">
-        <div class="uitkCard">...</div>
+      <div class="salt-provider salt-theme salt-density-high" data-mode="light">
+        <div class="saltCard">...</div>
       </div>
     </div>
   </body>

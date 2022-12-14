@@ -3,7 +3,7 @@ import "../Slider.css";
 
 export interface SliderRailProps {}
 
-const withBaseName = makePrefixer("uitkSliderRail");
+const withBaseName = makePrefixer("saltSliderRail");
 
 export function SliderRail(props: SliderRailProps) {
   return <div className={withBaseName()} />;

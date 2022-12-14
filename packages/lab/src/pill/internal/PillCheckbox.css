@@ -1,14 +1,14 @@
 /* Styles applied to the Pill checkbox */
-.uitkPill-checkbox {
+.saltPill-checkbox {
   height: var(--pill-checkbox-size);
   margin-left: 1px;
   padding-right: 0;
   width: var(--pill-checkbox-size);
 
-  --uitkCheckbox-icon-stroke: var(--uitk-selectable-borderColor);
-  --uitkCheckbox-icon-stroke-hover: var(--uitk-selectable-borderColor);
-  --uitkCheckbox-icon-fill: none;
-  --uitkCheckbox-icon-fill-checked: none;
-  --uitkCheckbox-icon-borderWidth-checked: var(--uitk-size-border);
-  --uitkCheckbox-icon-tick-color: var(--uitk-taggable-foreground);
+  --saltCheckbox-icon-stroke: var(--salt-selectable-borderColor);
+  --saltCheckbox-icon-stroke-hover: var(--salt-selectable-borderColor);
+  --saltCheckbox-icon-fill: none;
+  --saltCheckbox-icon-fill-checked: none;
+  --saltCheckbox-icon-borderWidth-checked: var(--salt-size-border);
+  --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground);
 }

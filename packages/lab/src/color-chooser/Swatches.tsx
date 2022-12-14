@@ -5,7 +5,7 @@ import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
 import "./Swatches.css";
 
-const withBaseName = makePrefixer("uitkColorChooserSwatches");
+const withBaseName = makePrefixer("saltColorChooserSwatches");
 
 export interface SwatchesTabProps {
   allColors: string[][];

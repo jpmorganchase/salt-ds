@@ -1,4 +1,4 @@
-.uitk-density-touch {
+.salt-density-touch {
   --grid-row-height-default: 61px;
   --grid-padding-default: 16px;
   --grid-fontSize-default: 16px;
@@ -7,7 +7,7 @@
   --grid-cornerTag-size-default: 14px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --grid-row-height-default: 49px;
   --grid-padding-default: 12px;
   --grid-fontSize-default: 14px;
@@ -16,7 +16,7 @@
   --grid-cornerTag-size-default: 12px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --grid-row-height-default: 37px;
   --grid-padding-default: 8px;
   --grid-fontSize-default: 12px;
@@ -25,7 +25,7 @@
   --grid-cornerTag-size-default: 10px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --grid-row-height-default: 25px;
   --grid-padding-default: 8px;
   --grid-fontSize-default: 11px;
@@ -35,58 +35,58 @@
 }
 
 /* Styles applied to the root element */
-.uitkGrid {
-  --grid-row-height: var(--uitkGrid-row-height, var(--grid-row-height-default));
-  --grid-padding: var(--uitkGrid-padding, var(--grid-padding-default));
-  --grid-fontSize: var(--uitkGrid-fontSize, var(--grid-fontSize-default));
-  --grid-separatorGap: var(--uitkGrid-separatorGap, var(--grid-separatorGap-default));
-  --grid-header-fontSize: var(--uitkGrid-header-fontSize, var(--grid-header-fontSize-default));
-  --grid-groupHeader-fontSize: var(--uitkGrid-groupHeader-fontSize, var(--grid-header-fontSize));
-  --grid-groupHeader-fontWeight: var(--uitkGrid-groupHeader-fontWeight, var(--uitk-text-label-fontWeight-strong));
+.saltGrid {
+  --grid-row-height: var(--saltGrid-row-height, var(--grid-row-height-default));
+  --grid-padding: var(--saltGrid-padding, var(--grid-padding-default));
+  --grid-fontSize: var(--saltGrid-fontSize, var(--grid-fontSize-default));
+  --grid-separatorGap: var(--saltGrid-separatorGap, var(--grid-separatorGap-default));
+  --grid-header-fontSize: var(--saltGrid-header-fontSize, var(--grid-header-fontSize-default));
+  --grid-groupHeader-fontSize: var(--saltGrid-groupHeader-fontSize, var(--grid-header-fontSize));
+  --grid-groupHeader-fontWeight: var(--saltGrid-groupHeader-fontWeight, var(--salt-text-label-fontWeight-strong));
 
   --grid-cell-padding: 0 var(--grid-padding);
 
-  --grid-background-primary: var(--uitkGrid-background-primary, var(--uitk-container-primary-background));
-  --grid-background-secondary: var(--uitkGrid-background-secondary, var(--uitk-container-secondary-background));
-  --grid-zebraColor: var(--uitkGrid-zebraColor, var(--uitk-container-secondary-background));
+  --grid-background-primary: var(--saltGrid-background-primary, var(--salt-container-primary-background));
+  --grid-background-secondary: var(--saltGrid-background-secondary, var(--salt-container-secondary-background));
+  --grid-zebraColor: var(--saltGrid-zebraColor, var(--salt-container-secondary-background));
 
-  --grid-row-background-hover: var(--uitkGrid-row-background-hover, var(--uitk-selectable-background-hover));
-  --grid-row-background-selected: var(--uitkGrid-row-background-selected, var(--uitk-selectable-background-selected));
+  --grid-row-background-hover: var(--saltGrid-row-background-hover, var(--salt-selectable-background-hover));
+  --grid-row-background-selected: var(--saltGrid-row-background-selected, var(--salt-selectable-background-selected));
 
-  --grid-row-borderColor-selected: var(--uitkGrid-row-borderColor-selected, var(--uitk-selectable-borderColor-selected));
-  --grid-cell-background-selected: var(--uitkGrid-cell-background-selected, var(--uitk-selectable-background-selected));
-  --grid-editableCell-borderColor: var(--uitkGrid-editableCell-borderColor, var(--uitk-editable-borderColor));
-  --grid-editableCell-borderColor-hover: var(--uitkGrid-editableCell-borderColor-hover, var(--uitk-editable-borderColor-hover));
-  --grid-editableCell-background-active: var(--uitkGrid-editableCell-background-active, var(--uitk-editable-primary-background-active));
-  --grid-editableCell-color-active: var(--uitkGrid-editableCell-color-active, var(--uitk-text-primary-foreground));
-  --grid-editableCell-cornerTag-size: var(--uitkGrid-editableCell-cornerTag-size, var(--grid-cornerTag-size-default));
+  --grid-row-borderColor-selected: var(--saltGrid-row-borderColor-selected, var(--salt-selectable-borderColor-selected));
+  --grid-cell-background-selected: var(--saltGrid-cell-background-selected, var(--salt-selectable-background-selected));
+  --grid-editableCell-borderColor: var(--saltGrid-editableCell-borderColor, var(--salt-editable-borderColor));
+  --grid-editableCell-borderColor-hover: var(--saltGrid-editableCell-borderColor-hover, var(--salt-editable-borderColor-hover));
+  --grid-editableCell-background-active: var(--saltGrid-editableCell-background-active, var(--salt-editable-primary-background-active));
+  --grid-editableCell-color-active: var(--saltGrid-editableCell-color-active, var(--salt-text-primary-foreground));
+  --grid-editableCell-cornerTag-size: var(--saltGrid-editableCell-cornerTag-size, var(--grid-cornerTag-size-default));
 
-  --grid-header-color: var(--uitkGrid-header-color, var(--uitk-text-secondary-foreground));
+  --grid-header-color: var(--saltGrid-header-color, var(--salt-text-secondary-foreground));
 
-  --grid-headerColumnSeparator-color: var(--uitkGrid-headerColumnSeparator-color, var(--uitk-separable-tertiary-borderColor));
-  --grid-headerRowSeparator-color: var(--uitkGrid-headerRowSeparator-color, var(--uitk-separable-primary-borderColor));
-  --grid-headerRowSeparator-gap: var(--uitkGrid-headerRowSeparator-gap, var(--uitk-size-unit));
-  --grid-headerRowSeparator-height: var(--uitkGrid-headerRowSeparator-height, 1px);
-  --grid-groupHeaderRowSeparator-color: var(--uitkGrid-groupHeaderRowSeparator-color, var(--uitk-separable-tertiary-borderColor));
+  --grid-headerColumnSeparator-color: var(--saltGrid-headerColumnSeparator-color, var(--salt-separable-tertiary-borderColor));
+  --grid-headerRowSeparator-color: var(--saltGrid-headerRowSeparator-color, var(--salt-separable-primary-borderColor));
+  --grid-headerRowSeparator-gap: var(--saltGrid-headerRowSeparator-gap, var(--salt-size-unit));
+  --grid-headerRowSeparator-height: var(--saltGrid-headerRowSeparator-height, 1px);
+  --grid-groupHeaderRowSeparator-color: var(--saltGrid-groupHeaderRowSeparator-color, var(--salt-separable-tertiary-borderColor));
 
-  --grid-groupHeader-color: var(--uitkGrid-groupHeader-color, var(--uitk-text-secondary-foreground));
-  --grid-shadow-color: var(--uitkGrid-shadow-color, var(--uitk-overlayable-shadow-scroll-color));
-  --grid-columnDropTarget-color: var(--uitkGrid-columnDropTarget-color, var(--uitk-target-borderColor-hover));
-  --grid-cursor-border-style: var(--uitkGrid-cursor-borderStyle, var(--uitk-focused-outlineStyle));
-  --grid-cursor-border-width: var(--uitkGrid-cursor-borderWidth, var(--uitk-focused-outlineWidth));
-  --grid-cursor-borderColor: var(--uitkGrid-cursor-borderColor, var(--uitk-focused-outlineColor));
-  --grid-borderColor: var(--uitkGrid-borderColor, var(--uitk-container-secondary-borderColor));
+  --grid-groupHeader-color: var(--saltGrid-groupHeader-color, var(--salt-text-secondary-foreground));
+  --grid-shadow-color: var(--saltGrid-shadow-color, var(--salt-overlayable-shadow-scroll-color));
+  --grid-columnDropTarget-color: var(--saltGrid-columnDropTarget-color, var(--salt-target-borderColor-hover));
+  --grid-cursor-border-style: var(--saltGrid-cursor-borderStyle, var(--salt-focused-outlineStyle));
+  --grid-cursor-border-width: var(--saltGrid-cursor-borderWidth, var(--salt-focused-outlineWidth));
+  --grid-cursor-borderColor: var(--saltGrid-cursor-borderColor, var(--salt-focused-outlineColor));
+  --grid-borderColor: var(--saltGrid-borderColor, var(--salt-container-secondary-borderColor));
 
   --grid-rowSeparator-width: 1px;
-  --grid-rowSeparator-color: var(--uitkGrid-rowSeparator-color, var(--uitk-separable-tertiary-borderColor));
-  --grid-columnSeparator-color: var(--uitkGrid-columnSeparator-color, var(--uitk-separable-tertiary-borderColor));
-  --grid-rowSeparator-color-divided: var(--uitkGrid-rowSeparator-color-divided, var(--uitk-separable-secondary-borderColor));
+  --grid-rowSeparator-color: var(--saltGrid-rowSeparator-color, var(--salt-separable-tertiary-borderColor));
+  --grid-columnSeparator-color: var(--saltGrid-columnSeparator-color, var(--salt-separable-tertiary-borderColor));
+  --grid-rowSeparator-color-divided: var(--saltGrid-rowSeparator-color-divided, var(--salt-separable-secondary-borderColor));
 
-  --grid-pinnedSeparator-color: var(--uitkGrid-pinnedSeparator-color, var(--uitk-separable-primary-borderColor));
+  --grid-pinnedSeparator-color: var(--saltGrid-pinnedSeparator-color, var(--salt-separable-primary-borderColor));
 
-  --grid-columnGhost-borderColor: var(--uitkGrid-columnGhost-borderColor, var(--uitk-palette-interact-border-hover));
-  --grid-columnGhost-borderWidth: var(--uitkGrid-columnGhost-borderWidth, 1px);
-  --grid-columnGhost-boxShadow: var(--uitkGrid-columnGhost-boxShadow, var(--uitk-overlayable-shadow-drag));
+  --grid-columnGhost-borderColor: var(--saltGrid-columnGhost-borderColor, var(--salt-palette-interact-border-hover));
+  --grid-columnGhost-borderWidth: var(--saltGrid-columnGhost-borderWidth, 1px);
+  --grid-columnGhost-boxShadow: var(--saltGrid-columnGhost-boxShadow, var(--salt-overlayable-shadow-drag));
 
   --grid-mid-body-zIndex: 0;
   --grid-left-body-zIndex: 1;
@@ -96,29 +96,29 @@
   --grid-right-header-zIndex: 3;
 }
 
-.uitkGrid-columnSeparators {
+.saltGrid-columnSeparators {
 }
 
-.uitkGrid table {
+.saltGrid table {
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.uitkGrid-framed {
+.saltGrid-framed {
   border: solid 1px var(--grid-borderColor);
 }
 
 /* Styles applied to the root element if variant="primary" */
-.uitkGrid-primaryBackground {
+.saltGrid-primaryBackground {
   --grid-background: var(--grid-background-primary);
 }
 
 /* Styles applied to the root element if variant="secondary" */
-.uitkGrid-secondaryBackground {
+.saltGrid-secondaryBackground {
   --grid-background: var(--grid-background-secondary);
 }
 
-.uitkGrid {
+.saltGrid {
   position: relative;
   outline: none;
   user-select: none;
@@ -126,10 +126,10 @@
 }
 
 /* Styles applied to the root element if zebra is enabled */
-.uitkGrid.uitkGrid-zebra {
+.saltGrid.saltGrid-zebra {
   --grid-rowSeparator-color: transparent;
 }
 
-.uitkGrid-hidden {
+.saltGrid-hidden {
   visibility: hidden;
 }

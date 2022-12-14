@@ -1,16 +1,16 @@
 /* TODO check multiline styles */
 
-.uitkFormattedInput {
-  --formattedInput-mask-color: var(--uitk-text-secondary-foreground);
+.saltFormattedInput {
+  --formattedInput-mask-color: var(--salt-text-secondary-foreground);
 }
 
-.uitkFormattedInput-inputWrapper {
+.saltFormattedInput-inputWrapper {
   position: relative;
   width: 100%;
   display: inline-flex;
 }
 
-.uitkFormattedInput-mask {
+.saltFormattedInput-mask {
   position: absolute;
   color: var(--formattedInput-mask-color);
   pointer-events: none;
@@ -20,7 +20,7 @@
   left: 0;
 }
 
-.uitkFormattedInput-mask i {
+.saltFormattedInput-mask i {
   color: transparent;
   opacity: 0;
   visibility: hidden;

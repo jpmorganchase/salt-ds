@@ -1,6 +1,6 @@
 import "./PackageList.css";
 
-const classBase = "uitkPackageList";
+const classBase = "saltPackageList";
 
 export const PackageList = ({ packages }: { packages: string[] }) => {
   return (

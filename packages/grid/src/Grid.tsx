@@ -57,7 +57,7 @@ import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
 
-const withBaseName = makePrefixer("uitkGrid");
+const withBaseName = makePrefixer("saltGrid");
 
 export type ColumnSeparatorType = "regular" | "none" | "groupEdge" | "pinned";
 export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";

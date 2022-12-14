@@ -17,7 +17,7 @@ import "./Spinner.css";
 
 export const SpinnerSizeValues = ["small", "medium", "large"] as const;
 export type SpinnerSize = typeof SpinnerSizeValues[number];
-const baseName = "uitkSvgSpinner";
+const baseName = "saltSvgSpinner";
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   /**

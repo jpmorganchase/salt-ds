@@ -3,7 +3,7 @@ import { ChildrenValues } from "./ChildrenValues";
 import { ColorTokensByState } from "./foundations/color/ColorTokensByState";
 
 interface TokenWithColorsProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
   children: JSONObj;
   extractValue: (value: string) => string;
@@ -14,12 +14,12 @@ interface TokenWithColorsProps {
   scope: string;
 }
 
-/** 
+/**
 Special view for tokens that have a color attribute -
  display all colors first by state, followed by remaining attrs
 **/
 export const TokenWithColors = ({
-  uitkColorOverrides,
+  saltColorOverrides,
   characteristicsView,
   children,
   extractValue,
@@ -32,7 +32,7 @@ export const TokenWithColors = ({
   return (
     <>
       <ColorTokensByState
-        uitkColorOverrides={uitkColorOverrides}
+        saltColorOverrides={saltColorOverrides}
         extractValue={extractValue}
         characteristicsView={characteristicsView}
         children={
@@ -55,7 +55,7 @@ export const TokenWithColors = ({
           .filter((childNode) => childNode !== "color" && childNode !== "value")
           .map((childNode) => (
             <ChildrenValues
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
               extractValue={extractValue}
               characteristicsView={characteristicsView}
               children={children[node][childNode]}

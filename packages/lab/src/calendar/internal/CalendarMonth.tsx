@@ -21,7 +21,7 @@ export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   TooltipProps?: CalendarDayProps["TooltipProps"];
 }
 
-const withBaseName = makePrefixer("uitkCalendarMonth");
+const withBaseName = makePrefixer("saltCalendarMonth");
 
 export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
   function CalendarMonth(props, ref) {

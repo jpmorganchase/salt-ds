@@ -12,7 +12,7 @@ export interface CheckboxProps extends CheckboxBaseProps {
   LabelProps?: Partial<ControlLabelProps>;
 }
 
-const classBase = "uitkCheckbox";
+const classBase = "saltCheckbox";
 
 export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   function Checkbox(props, ref) {

@@ -1,43 +1,43 @@
 /** Size */
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
-  --uitk-size-basis-unit: 4px;
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
+  --salt-size-basis-unit: 4px;
 
-  --uitk-size-border: 1px;
-  --uitk-size-brandBar: 4px;
-  --uitk-size-divider-strokeWidth: 1px;
-  --uitk-size-sharktooth-height: 5px;
-  --uitk-size-sharktooth-width: 10px;
+  --salt-size-border: 1px;
+  --salt-size-brandBar: 4px;
+  --salt-size-divider-strokeWidth: 1px;
+  --salt-size-sharktooth-height: 5px;
+  --salt-size-sharktooth-width: 10px;
 
-  --uitk-size-divider-height: calc(var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) - (0.5 * var(--uitk-size-basis-unit)));
-  --uitk-size-selection: calc(var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) - (0.5 * var(--uitk-size-basis-unit)));
-  --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
+  --salt-size-divider-height: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
+  --salt-size-selection: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
+  --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
 
   /* TODO: Remove on size/density design work completion */
-  --uitk-size-graphic-small: 12px;
-  --uitk-size-graphic-medium: 24px;
-  --uitk-size-graphic-large: 48px;
+  --salt-size-graphic-small: 12px;
+  --salt-size-graphic-medium: 24px;
+  --salt-size-graphic-large: 48px;
 }
 
-.uitk-density-high {
-  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 1);
-  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 1.5);
-  --uitk-size-base: calc(var(--uitk-size-basis-unit) * 5);
+.salt-density-high {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
+  --salt-size-detail: calc(var(--salt-size-basis-unit) * 1.5);
+  --salt-size-base: calc(var(--salt-size-basis-unit) * 5);
 }
-.uitk-density-medium {
-  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 2);
-  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 2);
-  --uitk-size-base: calc(var(--uitk-size-basis-unit) * 7);
+.salt-density-medium {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
+  --salt-size-detail: calc(var(--salt-size-basis-unit) * 2);
+  --salt-size-base: calc(var(--salt-size-basis-unit) * 7);
 }
-.uitk-density-low {
-  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 3);
-  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 2.5);
-  --uitk-size-base: calc(var(--uitk-size-basis-unit) * 9);
+.salt-density-low {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
+  --salt-size-detail: calc(var(--salt-size-basis-unit) * 2.5);
+  --salt-size-base: calc(var(--salt-size-basis-unit) * 9);
 }
-.uitk-density-touch {
-  --uitk-size-unit: calc(var(--uitk-size-basis-unit) * 4);
-  --uitk-size-detail: calc(var(--uitk-size-basis-unit) * 3);
-  --uitk-size-base: calc(var(--uitk-size-basis-unit) * 11);
+.salt-density-touch {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
+  --salt-size-detail: calc(var(--salt-size-basis-unit) * 3);
+  --salt-size-base: calc(var(--salt-size-basis-unit) * 11);
 }

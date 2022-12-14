@@ -13,7 +13,7 @@ import { Input } from "../input";
 
 import "./EditableLabel.css";
 
-const classBase = "uitkEditableLabel";
+const classBase = "saltEditableLabel";
 
 export interface EditableLabelProps {
   className?: string;

@@ -17,11 +17,11 @@ describe("GIVEN a Grid", () => {
       // Passing empty columns to test default, as example needs columns for accessibility purposes.
       cy.mount(<DefaultGridLayout columns={{}} />);
 
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .invoke("css", "grid-template-columns")
         .should("match", testElementsNumber(12));
 
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .invoke("css", "grid-template-rows")
         .should("match", testElementsNumber(1));
     });
@@ -29,29 +29,29 @@ describe("GIVEN a Grid", () => {
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultGridLayout />);
 
-      cy.get(".uitkGridLayout").should("have.css", "column-gap", "24px");
+      cy.get(".saltGridLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkGridLayout").should("have.css", "row-gap", "24px");
+      cy.get(".saltGridLayout").should("have.css", "row-gap", "24px");
     });
     it("THEN nested items should not inherit css variables from parent", () => {
       cy.mount(<GridLayoutNested />);
 
-      cy.get(".uitkGridLayout").eq(0).should("have.css", "column-gap", "48px");
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout").eq(0).should("have.css", "column-gap", "48px");
+      cy.get(".saltGridLayout")
         .eq(0)
         .invoke("css", "grid-template-columns")
         .should("match", testElementsNumber(2));
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .eq(0)
         .invoke("css", "grid-template-rows")
         .should("match", testElementsNumber(1));
 
-      cy.get(".uitkGridLayout").eq(1).should("have.css", "column-gap", "24px");
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout").eq(1).should("have.css", "column-gap", "24px");
+      cy.get(".saltGridLayout")
         .eq(1)
         .invoke("css", "grid-template-columns")
         .should("match", testElementsNumber(1));
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .eq(1)
         .invoke("css", "grid-template-rows")
         .should("match", testElementsNumber(2));
@@ -65,11 +65,11 @@ describe("GIVEN a Grid", () => {
     it("THEN it should render multiple columns and rows", () => {
       cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .invoke("css", "grid-template-columns")
         .should("match", testElementsNumber(columns));
 
-      cy.get(".uitkGridLayout")
+      cy.get(".saltGridLayout")
         .invoke("css", "grid-template-rows")
         .should("match", testElementsNumber(rows));
     });
@@ -88,11 +88,11 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(1));
       }
@@ -107,11 +107,11 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(4));
       }
@@ -126,11 +126,11 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(2));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(6));
       }
@@ -145,11 +145,11 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(1));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(12));
       }
@@ -181,11 +181,11 @@ describe("GIVEN a Grid", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(1));
       }
@@ -204,11 +204,11 @@ describe("GIVEN a Grid", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(12));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(4));
       }
@@ -227,11 +227,11 @@ describe("GIVEN a Grid", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(2));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(6));
       }
@@ -250,11 +250,11 @@ describe("GIVEN a Grid", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
           .should("match", testElementsNumber(1));
 
-        cy.get(".uitkGridLayout")
+        cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(12));
       }

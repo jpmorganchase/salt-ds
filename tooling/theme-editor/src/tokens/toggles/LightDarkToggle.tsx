@@ -9,7 +9,7 @@ import {
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 
-const withBaseName = makePrefixer("uitkThemeEditorModeSelector");
+const withBaseName = makePrefixer("saltThemeEditorModeSelector");
 
 export const LightDarkToggle = (props: {
   mode: ThemeMode;

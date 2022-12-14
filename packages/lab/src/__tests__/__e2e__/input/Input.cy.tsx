@@ -76,7 +76,7 @@ describe("GIVEN an Input", () => {
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "uitkInput-leftTextAlign"
+          "saltInput-leftTextAlign"
         );
       });
     });
@@ -92,7 +92,7 @@ describe("GIVEN an Input", () => {
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "uitkInput-rightTextAlign"
+          "saltInput-rightTextAlign"
         );
       });
     });
