@@ -27,14 +27,17 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
-
-  return "backlog";
+  if (status === ComponentStatus.IN_BACKLOG) {
+    return "backlog";
+  }
+  return "none";
 };
 
 const statusSortList = [
   ComponentStatus.READY,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
+  ComponentStatus.NOT_APPLICABLE,
 ];
 
 const componentsListSortedByName = (ascendingOrder: boolean = true) =>
@@ -87,7 +90,7 @@ const ComponentStatusData = ({
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
-      <StepActiveIcon />
+      {status !== ComponentStatus.NOT_APPLICABLE ? <StepActiveIcon /> : null}
       {isMobileView ? (
         mobileView
       ) : (
