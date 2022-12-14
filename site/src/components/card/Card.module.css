@@ -35,7 +35,7 @@
 }
 
 .card:hover,
-.inlineCard:hover {
+.inlineCardContent:hover {
   box-shadow: var(--uitk-overlayable-shadow-borderRegion);
 }
 
