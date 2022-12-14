@@ -2,9 +2,7 @@ import {
   Button,
   ButtonProps,
   makePrefixer,
-  Tooltip,
   useForkRef,
-  useTooltip,
 } from "@jpmorganchase/uitk-core";
 import cx from "classnames";
 import {
@@ -17,6 +15,7 @@ import {
   useState,
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./ToggleButton.css";
 

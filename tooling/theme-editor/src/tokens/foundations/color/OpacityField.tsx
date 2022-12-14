@@ -1,4 +1,5 @@
-import { FormField, makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { FormField } from "@jpmorganchase/uitk-lab";
 import cn from "classnames";
 import { ReactElement } from "react";
 import {

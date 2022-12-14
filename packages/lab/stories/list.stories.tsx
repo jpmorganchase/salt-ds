@@ -14,8 +14,6 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  FormField,
-  Input,
   StackLayout,
   useDensity,
 } from "@jpmorganchase/uitk-core";
@@ -32,8 +30,10 @@ import {
   ListScrollHandles,
   VirtualizedList,
   SelectionChangeHandler,
+  FormField,
+  Input,
+  SelectHandler,
 } from "@jpmorganchase/uitk-lab";
-import { SelectHandler } from "../src/common-hooks";
 
 import { usa_states } from "./list.data";
 

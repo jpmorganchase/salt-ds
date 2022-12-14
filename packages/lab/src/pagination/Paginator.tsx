@@ -1,4 +1,4 @@
-import { FormFieldProps, useForkRef } from "@jpmorganchase/uitk-core";
+import { useForkRef } from "@jpmorganchase/uitk-core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
@@ -7,6 +7,7 @@ import { CompactControls } from "./CompactControls";
 import { RegularControls } from "./RegularControls";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
+import { FormFieldProps } from "../form-field";
 
 import "./Pagination.css";
 

@@ -1,13 +1,11 @@
 import {
-  isDesktop,
   ToolkitProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
-  Window as ToolkitWindow,
-  WindowProps,
 } from "@jpmorganchase/uitk-core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import { isDesktop, Window as ToolkitWindow, WindowProps } from "../window";
 
 import "./ElectronWindow.css";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";

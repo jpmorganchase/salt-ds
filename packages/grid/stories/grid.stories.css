@@ -3,6 +3,11 @@
   width: 958px;
 }
 
+.grid-uhd {
+  --uitkGrid-row-height: 21px;
+  --uitkGrid-separatorGap: 6px;
+}
+
 .grid-small {
   height: 200px;
   width: 300px;

@@ -6,7 +6,8 @@ import {
   IconProps,
 } from "@jpmorganchase/uitk-icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexLayout, FormField, Input, StackLayout } from "../../core";
+import { FlexLayout, StackLayout } from "@jpmorganchase/uitk-core";
+import { FormField, Input } from "@jpmorganchase/uitk-lab";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {
