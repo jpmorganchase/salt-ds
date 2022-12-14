@@ -1,16 +1,17 @@
 ---
-sidebar_label: Design
+sidebar_label: Designing
 hide_table_of_contents: true
 ---
 
-import FigmaLogo from "@site/static/img/figma_logo.svg";
+import JPMLogo from "@site/static/img/design-getting-started/jpmIcon.svg";
+import Globe from "@site/static/img/design-getting-started/globe.svg";
+import { InlineCard, CardProps } from "@site/src/components/card/Card";
+import Content from "@site/src/components/content/Content.tsx";
 
-import Content from "../../src/components/content/Content.tsx";
 import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
-import FigmaLink from "./FigmaLink";
 
-import styles from "./design.module.css";
+import styles from "./designing.module.css";
 
 # Designing with Salt
 
@@ -22,7 +23,7 @@ Salt provides a comprehensive set of components and styles, which include themes
 
 One of our main objectives is to offer a complete solution for building great, accessible experiences.
 
-To ensure the Salt Design System is fully accessible and inclusive, we thoroughly test all our components against WCAG 2.1 AA criteria. This includes checking that they:
+To ensure the Salt Design System is as accessible and inclusive as possible, we thoroughly test all our components against WCAG 2.1 AA criteria. This includes checking that they:
 
 - Meet color contrast ratios across small and large text, for best legibility.
 - Reduce users’ cognitive load—with imagery, text size and behavior collectively indicating a clear hierarchy of information.
@@ -37,91 +38,67 @@ To start designing with Salt, you should:
 
 ## The step-by-step process
 
-### 1. Enable the Figma libraries
+### 1. Set up the Figma libraries
 
-We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently-designed UIs and applications.
+We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently designed UIs and applications.
 
-To start using a library:
+There are two ways of accessing the libraries—as a J.P. Morgan employee or as a Figma Community user.
 
-- Select the “Assets” tab on the left-hand panel to access the libraries.
-- Click on the book icon and search for “Salt” in Libraries.
-- Pick the library you need from the set of available libraries (shown in the table below).
+#### J.P. Morgan employees
 
-<table className={styles.assetsTable}>
-  <thead>
-    <tr>
-      <th>Assets and styles</th>
-      <th>What they contain</th>
-      <th>
-        <FigmaLogo /> Salt libraries
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Components: Dark</td>
-      <td>Dark-themed components in high, medium, low and touch densities</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Components: Light</td>
-      <td>Light-themed components in high, medium, low and touch densities</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Icons</td>
-      <td>Salt’s icon set</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Layout Grid</td>
-      <td>Layout grid styles for all densities</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Mode: Dark</td>
-      <td>Semantic palette for dark mode UIs, components and shadows</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Mode: Light</td>
-      <td>Semantic palette for light mode UIs, components and shadows</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Theme Palette</td>
-      <td>The Salt theme’s full foundational color palette</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-    <tr>
-      <td>Typography</td>
-      <td>Typography ramp that’s suitable for all densities</td>
-      <td>
-        <FigmaLink />
-      </td>
-    </tr>
-  </tbody>
-</table>
+Use the Salt Design System team space to view working files and our comprehensive component guides. You can also instantly add components and styling to your designs.
+
+<InlineCard
+  icon={<JPMLogo />}
+  description={
+    <p>
+      To start using the Salt libraries, enable them directly from the “Assets”
+      panel within your Figma file.
+    </p>
+  }
+  url="https://www.figma.com/files/project/72279506"
+  footerText="Explore the Salt team space"
+  keylineColor="var(--site-tertiary-accent-orange)"
+  keyLineAnimation={false}
+/>
+
+#### Community users
+
+If you’re not a J.P. Morgan employee, you can still use Salt components. Our asset and style libraries are publicly available via the Figma Community.
+
+To use the libraries, duplicate them to your own Figma account. Once the libraries are in your drafts, publish the Salt components within your own team or organization space to use them in your design work. Read more about [Community files](https://help.figma.com/hc/en-us/articles/360038510873).
+
+<InlineCard
+  icon={<Globe />}
+  description={
+    <p>
+      To start using the Salt libraries, search for the{" "}
+      <span className={styles.strong}>@jpmorgan_salt</span> handle in the Figma
+      Community.
+    </p>
+  }
+  url="https://www.figma.com/@jpmorgan_salt"
+  footerText="Explore the Community"
+  keylineColor="var(--site-tertiary-accent-purple)"
+  keyLineAnimation={false}
+/>
+
+:::info Migrating your workspace in Figma
+
+If you’re a community user, you’ll need to follow a migration process once you’ve duplicated the Salt libraries to your Figma project. This involves relinking the components, from your drafts.
+
+To simplify this process, [install this relinker plugin](https://www.figma.com/community/plugin/981892464363185469/Component-Relinker). It automatically relinks components from one organization to another.
+
+For more guidance on migrating files, [watch this video from Figma](https://www.loom.com/share/c85f866041e146e3855c7db38a1ae4bc).
+:::
 
 ### 2. Add components to your designs
 
+To start using our components, follow the instructions below.
+
 <DesignCards />
 
-#### Swapping from light to dark theme and vice versa
+#### Swapping from light to dark mode and vice versa
 
 If you’ve created your design in one mode and need to change it, use Figma’s Swap Library function to update it instantly—without having to start again.
 
@@ -131,7 +108,7 @@ Learn more about [how to swap libraries in Figma](https://help.figma.com/hc/en-u
 
 Semantic colors are the light and dark theme libraries that define colors for specific uses, for example, for containers, separators, actionable components, etc. Colors are preassigned to components, but you can also apply them in your designs.
 
-To access the full range of semantic colors in Figma, you need to enable the theme palette library as follows:
+To access the full range of semantic colors in Figma, you need to enable the Theme Palette library as follows:
 
 - Open the “Assets” panel on the left-hand menu.
 - Select the book icon to open the libraries, and then search for “Theme Palette.”
@@ -158,7 +135,7 @@ The default icon set is 12px for both high and medium density, 14px for low dens
 
 :::info Need support?
 
-For installation help when manually installing Figma, visit the [support page on the Figma website](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).<br />
+For installation help when manually installing Figma, visit the [Figma support page](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).<br />
 If you have any questions about Salt’s Figma libraries, please [contact us](/support-and-contributions/).
 
 :::

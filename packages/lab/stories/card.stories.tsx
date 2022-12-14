@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, ToolkitProvider } from "@salt-ds/core";
+import { Link, SaltProvider } from "@salt-ds/core";
 import { Card, Panel } from "@salt-ds/lab";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
@@ -20,19 +20,19 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
         Touch
-        <ToolkitProvider density="touch">{children}</ToolkitProvider>
+        <SaltProvider density="touch">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         Low
-        <ToolkitProvider density="low">{children}</ToolkitProvider>
+        <SaltProvider density="low">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         Medium
-        <ToolkitProvider density="medium">{children}</ToolkitProvider>
+        <SaltProvider density="medium">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         High
-        <ToolkitProvider density="high">{children}</ToolkitProvider>
+        <SaltProvider density="high">{children}</SaltProvider>
       </ColumnLayoutItem>
     </ColumnLayoutContainer>
   </Panel>
@@ -88,11 +88,11 @@ export const Interactable: ComponentStory<typeof Card> = () => (
 
 export const All: ComponentStory<typeof Card> = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <Examples />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <Examples />
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );

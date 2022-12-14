@@ -1,4 +1,4 @@
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import { Dropdown, FormField, FormFieldProps, Input } from "@salt-ds/lab";
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -214,22 +214,22 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
       background: "var(--uitk-container-primary-background)",
     }}
   >
-    <ToolkitProvider density="touch">{renderFormField(props)}</ToolkitProvider>
-    <ToolkitProvider density="low"> {renderFormField(props)}</ToolkitProvider>
-    <ToolkitProvider density="medium">{renderFormField(props)}</ToolkitProvider>
-    <ToolkitProvider density="high"> {renderFormField(props)}</ToolkitProvider>
-    <ToolkitProvider density="touch">
+    <SaltProvider density="touch">{renderFormField(props)}</SaltProvider>
+    <SaltProvider density="low"> {renderFormField(props)}</SaltProvider>
+    <SaltProvider density="medium">{renderFormField(props)}</SaltProvider>
+    <SaltProvider density="high"> {renderFormField(props)}</SaltProvider>
+    <SaltProvider density="touch">
       {renderFormField({ ...props, labelPlacement: "left" })}
-    </ToolkitProvider>
-    <ToolkitProvider density="low">
+    </SaltProvider>
+    <SaltProvider density="low">
       {renderFormField({ ...props, labelPlacement: "left" })}
-    </ToolkitProvider>
-    <ToolkitProvider density="medium">
+    </SaltProvider>
+    <SaltProvider density="medium">
       {renderFormField({ ...props, labelPlacement: "left" })}
-    </ToolkitProvider>
-    <ToolkitProvider density="high">
+    </SaltProvider>
+    <SaltProvider density="high">
       {renderFormField({ ...props, labelPlacement: "left" })}
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );
 
@@ -237,8 +237,8 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
 export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
-      <ToolkitProvider mode="light">{renderAllDensities()}</ToolkitProvider>
-      <ToolkitProvider mode="dark">{renderAllDensities()}</ToolkitProvider>
+      <SaltProvider mode="light">{renderAllDensities()}</SaltProvider>
+      <SaltProvider mode="dark">{renderAllDensities()}</SaltProvider>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { Banner, BannerProps, Panel } from "@salt-ds/lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
-import { Link, StackLayout, ToolkitProvider } from "@salt-ds/core";
+import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
 
 export default {
   title: "Lab/Banner",
@@ -19,13 +19,13 @@ const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
     <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <StackLayout gap={2}>
       Touch
-      <ToolkitProvider density="touch">{children}</ToolkitProvider>
+      <SaltProvider density="touch">{children}</SaltProvider>
       Low
-      <ToolkitProvider density="low">{children}</ToolkitProvider>
+      <SaltProvider density="low">{children}</SaltProvider>
       Medium
-      <ToolkitProvider density="medium">{children}</ToolkitProvider>
+      <SaltProvider density="medium">{children}</SaltProvider>
       High
-      <ToolkitProvider density="high">{children}</ToolkitProvider>
+      <SaltProvider density="high">{children}</SaltProvider>
     </StackLayout>
   </Panel>
 );

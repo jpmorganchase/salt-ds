@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Density, ModeValues, ToolkitProvider } from "@salt-ds/core";
+import { Button, Density, ModeValues, SaltProvider } from "@salt-ds/core";
 import {
   Card,
   Checkbox,
@@ -11,8 +11,8 @@ import {
 import "docs/story.css";
 
 export default {
-  title: "Core/Toolkit Provider",
-  component: ToolkitProvider,
+  title: "Core/Salt Provider",
+  component: SaltProvider,
 };
 
 const LIGHT = 0;
@@ -34,15 +34,15 @@ export const ToggleTheme = () => {
   };
 
   return (
-    <ToolkitProvider mode={ModeValues[mode]}>
+    <SaltProvider mode={ModeValues[mode]}>
       <Card>
         <div>
-          <h1>This Card is wrapped with a ToolkitProvider</h1>
+          <h1>This Card is wrapped with a SaltProvider</h1>
           <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={mode}>
             <ToggleButton aria-label="light theme">Light</ToggleButton>
             <ToggleButton aria-label="dark theme">Dark</ToggleButton>
           </ToggleButtonGroup>
-          <p>{`This Card is wrapped with a ToolkitProvider, mode is ${ModeValues[mode]}`}</p>
+          <p>{`This Card is wrapped with a SaltProvider, mode is ${ModeValues[mode]}`}</p>
 
           <Checkbox label="Example Choice 1" />
           <Checkbox defaultChecked label="Example Choice 2" />
@@ -63,7 +63,7 @@ export const ToggleTheme = () => {
         </div>
         <br />
       </Card>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -101,13 +101,13 @@ export const NestedProviders = () => {
   };
 
   return (
-    <ToolkitProvider
+    <SaltProvider
       density={DENSITIES[outerDensity]}
       mode={ModeValues[outerMode]}
     >
       <Card>
         <div>
-          <h1>This Card is wrapped with a ToolkitProvider</h1>
+          <h1>This Card is wrapped with a SaltProvider</h1>
           <ToggleButtonGroup
             onChange={handleChangeOuterTheme}
             selectedIndex={outerMode}
@@ -127,12 +127,12 @@ export const NestedProviders = () => {
             <ToggleButton aria-label="not set">Not set</ToggleButton>
           </ToggleButtonGroup>
           <p>
-            This Card is wrapped with a ToolkitProvider, theme is light, density
-            is high.
+            This Card is wrapped with a SaltProvider, theme is light, density is
+            high.
           </p>
         </div>
         <br />
-        <ToolkitProvider
+        <SaltProvider
           mode={ModeValues[innerMode]}
           density={DENSITIES[innerDensity]}
         >
@@ -160,14 +160,14 @@ export const NestedProviders = () => {
               </ToggleButtonGroup>
 
               <p>
-                This nested Card is also wrapped with a ToolkitProvider, theme
-                is dark. Density is not specified, so inherits high value from
-                outer ToolkitProvider
+                This nested Card is also wrapped with a SaltProvider, theme is
+                dark. Density is not specified, so inherits high value from
+                outer SaltProvider
               </p>
             </div>
           </Card>
-        </ToolkitProvider>
+        </SaltProvider>
       </Card>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

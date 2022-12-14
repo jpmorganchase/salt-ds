@@ -7,7 +7,7 @@
  */
 
 import { SyntheticEvent, useState } from "react";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import { Pill } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -138,18 +138,18 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
         gridColumnGap: 16,
       }}
     >
-      <ToolkitProvider density="touch">
+      <SaltProvider density="touch">
         <Pill label="TD Pill" deletable />
-      </ToolkitProvider>
-      <ToolkitProvider density="low">
+      </SaltProvider>
+      <SaltProvider density="low">
         <Pill label="LD Pill" deletable />
-      </ToolkitProvider>
-      <ToolkitProvider density="medium">
+      </SaltProvider>
+      <SaltProvider density="medium">
         <Pill label="MD Pill" deletable />
-      </ToolkitProvider>
-      <ToolkitProvider density="high">
+      </SaltProvider>
+      <SaltProvider density="high">
         <Pill label="HD Pill" deletable />
-      </ToolkitProvider>
+      </SaltProvider>
     </div>
   );
 };

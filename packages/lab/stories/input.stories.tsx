@@ -1,6 +1,6 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
-import { Button, ToolkitProvider } from "@salt-ds/core";
+import { Button, SaltProvider } from "@salt-ds/core";
 import {
   CalendarIcon,
   CallIcon,
@@ -104,25 +104,25 @@ export const Spellcheck: ComponentStory<typeof Input> = () => {
 
 export const TouchDensityInput: ComponentStory<typeof Input> = () => {
   return (
-    <ToolkitProvider density="touch">
+    <SaltProvider density="touch">
       <Input defaultValue="Touch Density Input" style={{ width: "292px" }} />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const LowDensityInput: ComponentStory<typeof Input> = () => {
   return (
-    <ToolkitProvider density="low">
+    <SaltProvider density="low">
       <Input defaultValue="Low Density Input" style={{ width: "292px" }} />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const HighDensityInput: ComponentStory<typeof Input> = () => {
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <Input defaultValue="High Density Input" style={{ width: "292px" }} />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 

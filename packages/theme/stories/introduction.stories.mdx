@@ -167,22 +167,22 @@ In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the s
 
 In this case the UI Toolkit theme variables will be available throughout the app, and components that consume theme variables (all the UI Toolkit Odyssey components) will be styled appropriately.
 
-The UI Toolkit provides a component `ToolkitProvider` for React users that takes care of injecting the appropriate CSS class names into the HTML. Usage would be something like the following:
+The UI Toolkit provides a component `SaltProvider` for React users that takes care of injecting the appropriate CSS class names into the HTML. Usage would be something like the following:
 
 ```jsx
-<ToolkitProvider density="high" mode="light">
+<SaltProvider density="high" mode="light">
   <RestOfMyApplication />
-</ToolkitProvider>
+</SaltProvider>
 ```
 
-Refer to the ToolkitProvider docs for more detail.
+Refer to the SaltProvider docs for more detail.
 
 #### Theme variants - Light/Dark, Density
 
-The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. By default, the UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `ToolkitProvider` the application is using the light and high density variants. The HTML for this app will look like this:
+The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. By default, the UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `SaltProvider` the application is using the light and high density variants. The HTML for this app will look like this:
 
 ```html
-<div class="uitk-provider uitk-theme uitk-density-high" data-mode="light">
+<div class="salt-provider uitk-theme uitk-density-high" data-mode="light">
   <rest-of-my-application />
 </div>
 ```

@@ -3,7 +3,7 @@ import {
   FlowLayout,
   GridItem,
   GridLayout,
-  ToolkitProvider,
+  SaltProvider,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ThumbsUpIcon } from "@salt-ds/icons";
@@ -45,7 +45,7 @@ DefaultGridLayout.args = {
 
 const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
   return (
-    <ToolkitProvider breakpoints={customBreakpoints}>
+    <SaltProvider breakpoints={customBreakpoints}>
       <GridLayout {...args} className="layout-container custom-breaks">
         <GridItem colSpan={{ xs: 1, md: 6, lg: 9 }}>
           <p>GridItem 1</p>
@@ -64,7 +64,7 @@ const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
           <p>GridItem 8</p>
         </GridItem>
       </GridLayout>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 

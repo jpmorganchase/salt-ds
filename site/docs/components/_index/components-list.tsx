@@ -505,7 +505,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-salt-provider--simple-salt-provider-touch-density",
   },
   {
     name: "Scrim",

@@ -38,15 +38,15 @@ You will then need to import the .css files into your application, along with an
 Here’s a quick example of a Call-to-Action (CTA) button for your reference:
 
 ```JSX
-import { Button, ToolkitProvider } from "@salt-ds/core";
+import { Button, SaltProvider } from "@salt-ds/core";
 
 import "@salt-ds/theme/index.css";
 
 function App() {
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Button variant="cta">CTA Button</Button>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 }
 ```
