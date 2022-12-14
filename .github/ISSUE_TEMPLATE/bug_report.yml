@@ -13,7 +13,7 @@ body:
     attributes:
       label: Affects
       description: |
-        Which package(s) did you observe this bug in? If you’re not sure which version your project is using, run npm ls [package name] or yarn why [package name] to find out.
+        Which package(s) did you observe this bug in? If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
 
         We only accept bug reports for packages shown in the menu below. If a package isn’t listed, then it’s not one that we support.
       multiple: true
