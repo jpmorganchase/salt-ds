@@ -132,10 +132,6 @@
   height: 3px;
 }
 
-.inlineCard .keyline {
-  margin-left: 2px;
-}
-
 .animate {
   animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
