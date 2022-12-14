@@ -184,7 +184,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-borderlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-borderlayout--page",
   },
   {
     name: "Breadcrumbs",
@@ -338,7 +338,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flexlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-flexlayout--page",
   },
   {
     name: "Flow Layout",
@@ -348,7 +348,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flowlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-flowlayout--page",
   },
   {
     name: "Form Field",
@@ -371,7 +371,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-gridlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-gridlayout--page",
   },
   {
     name: "Icon",
@@ -579,7 +579,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-stacklayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-layout-stacklayout--page",
   },
   {
     name: "Status Indicator",
