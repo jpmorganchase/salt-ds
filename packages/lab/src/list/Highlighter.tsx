@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ReactElement } from "react";
 import { escapeRegExp } from "../utils";
 

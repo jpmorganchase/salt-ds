@@ -11,7 +11,7 @@ import {
   ContactMetadataItem,
   ContactFavoriteToggle,
   ContactAvatar,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 const variants: ContactDetailsVariant[] = ["default", "compact", "mini"];
 

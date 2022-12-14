@@ -6,7 +6,7 @@ import { EditorView } from "./tokens/TokenEditorView";
 import { ThemeHeader } from "./header/ThemeHeader";
 import { foundationPathnames } from "./tokens/foundations/FoundationsView";
 import { useTabsWithRouting } from "./utils/useTabsWithRouting";
-import "@jpmorganchase/uitk-theme/index.css";
+import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";

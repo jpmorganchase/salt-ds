@@ -1,4 +1,4 @@
-import { ChevronRightIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import { ChevronRightIcon, IconProps } from "@salt-ds/icons";
 
 export const BreadcrumbsSeparator = (props: IconProps) => (
   <ChevronRightIcon {...props} />

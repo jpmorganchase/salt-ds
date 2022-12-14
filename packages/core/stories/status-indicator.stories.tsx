@@ -3,7 +3,7 @@ import {
   StatusIndicator,
   FlowLayout,
   VALIDATION_NAMED_STATUS as status,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 export default {
   title: "Core/StatusIndicator",

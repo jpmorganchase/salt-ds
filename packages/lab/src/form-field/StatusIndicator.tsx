@@ -1,10 +1,10 @@
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { IconProps } from "@salt-ds/icons";
 import cx from "classnames";
 import { ElementType } from "react";
 import {
   StatusIndicator as BaseStatusIndicator,
   makePrefixer,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 const withBaseName = makePrefixer("uitkFormField");

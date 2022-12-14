@@ -1,8 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import cn from "classnames";
 import { Overlay, useOverlay } from "../overlay";
-import { Button, ButtonProps, makePrefixer } from "@jpmorganchase/uitk-core";
-import { RefreshIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 

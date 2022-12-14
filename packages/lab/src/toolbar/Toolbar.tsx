@@ -1,4 +1,4 @@
-import { useForkRef, useIdMemo } from "@jpmorganchase/uitk-core";
+import { useForkRef, useIdMemo } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,

@@ -7,7 +7,7 @@ import {
   KeyboardEvent,
 } from "react";
 import cx from "classnames";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 
 import "./DraggableSnapshot.css";
 

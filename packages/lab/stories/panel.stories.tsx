@@ -1,4 +1,4 @@
-import { Panel } from "@jpmorganchase/uitk-lab";
+import { Panel } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 

@@ -1,4 +1,4 @@
-import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, ToolkitProvider } from "@salt-ds/core";
 import {
   capitalize,
   Color,
@@ -6,7 +6,7 @@ import {
   getColorNameByHexValue,
   Tooltip,
   useTooltip,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import cn from "classnames";
 import { useEffect, useMemo, useState } from "react";
 

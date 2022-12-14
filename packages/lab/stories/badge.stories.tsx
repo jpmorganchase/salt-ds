@@ -1,10 +1,6 @@
-import { Badge } from "@jpmorganchase/uitk-lab";
+import { Badge } from "@salt-ds/lab";
 
-import {
-  ClockIcon,
-  SettingsSolidIcon,
-  UserBadgeIcon,
-} from "@jpmorganchase/uitk-icons";
+import { ClockIcon, SettingsSolidIcon, UserBadgeIcon } from "@salt-ds/icons";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

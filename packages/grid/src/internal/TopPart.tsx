@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 import { TableColGroup } from "./TableColGroup";
 import "./TopPart.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { HeaderRow } from "./HeaderRow";
 import { GroupHeaderRow } from "./GroupHeaderRow";

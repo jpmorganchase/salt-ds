@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button, useDensity } from "@jpmorganchase/uitk-core";
+import { Button, useDensity } from "@salt-ds/core";
 import {
   ButtonBar,
   Dialog,
@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   OrderedButton,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 import "./dialog.stories.css";
 import { ComponentStory, ComponentMeta } from "@storybook/react";

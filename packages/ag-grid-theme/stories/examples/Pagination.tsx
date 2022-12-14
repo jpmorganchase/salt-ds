@@ -4,7 +4,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 const generateData = (states: typeof dataGridExampleData) =>
   states.reduce((result, row) => {

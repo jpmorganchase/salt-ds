@@ -1,4 +1,4 @@
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import cn from "classnames";
 import {
   CSSProperties,

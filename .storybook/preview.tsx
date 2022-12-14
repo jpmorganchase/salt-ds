@@ -1,6 +1,6 @@
 import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
-import "@jpmorganchase/uitk-theme/index.css";
+import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";
@@ -20,7 +20,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];

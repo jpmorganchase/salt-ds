@@ -1,8 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { QueryInputCategory } from "../queryInputTypes";
 import { SelectHandler } from "../../common-hooks";
 import { List } from "../../list";

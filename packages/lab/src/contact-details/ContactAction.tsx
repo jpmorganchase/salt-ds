@@ -1,5 +1,5 @@
-import { Button, ButtonProps, useForkRef } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, useForkRef } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import { ComponentType, forwardRef } from "react";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 

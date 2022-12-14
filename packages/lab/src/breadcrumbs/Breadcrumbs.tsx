@@ -1,5 +1,5 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { makePrefixer } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import classnames from "classnames";
 import React, {
   HTMLAttributes,

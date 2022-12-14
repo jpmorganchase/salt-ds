@@ -1,5 +1,5 @@
 import { Pill } from "../../../pill";
-import { CallIcon } from "@jpmorganchase/uitk-icons";
+import { CallIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/testing-react";
 import * as pillStories from "@stories/pill.stories";
 

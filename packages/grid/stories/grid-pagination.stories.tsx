@@ -1,8 +1,8 @@
 import { Story } from "@storybook/react";
 import { useMemo, useState } from "react";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "@salt-ds/core";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
-import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
+import { Pagination, Paginator } from "@salt-ds/lab";
 import { createDummyInvestors, investorKeyGetter } from "./dummyData";
 
 export default {

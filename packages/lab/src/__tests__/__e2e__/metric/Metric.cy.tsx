@@ -1,5 +1,5 @@
-import { Metric, MetricHeader, MetricContent } from "@jpmorganchase/uitk-lab";
-import { DoubleChevronDownIcon } from "@jpmorganchase/uitk-icons";
+import { Metric, MetricHeader, MetricContent } from "@salt-ds/lab";
+import { DoubleChevronDownIcon } from "@salt-ds/icons";
 
 describe("Metric - by default", () => {
   it("should NOT render the indicator", () => {

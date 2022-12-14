@@ -31,26 +31,13 @@ if (isCI) {
   viteConfig = mergeConfig(viteConfig, {
     resolve: {
       alias: {
-        "@jpmorganchase/uitk-core": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-core"
-        ),
-        "@jpmorganchase/uitk-lab": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-lab"
-        ),
-        "@jpmorganchase/uitk-icons": path.resolve(
-          __dirname,
-          "./dist/jpmorganchase-uitk-icons"
-        ),
+        "@salt-ds/core": path.resolve(__dirname, "./dist/salt-ds-core"),
+        "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
+        "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),
       },
     },
     optimizeDeps: {
-      include: [
-        "@jpmorganchase/uitk-core",
-        "@jpmorganchase/uitk-lab",
-        "@jpmorganchase/uitk-icons",
-      ],
+      include: ["@salt-ds/core", "@salt-ds/lab", "@salt-ds/icons"],
     },
   } as UserConfig);
 }

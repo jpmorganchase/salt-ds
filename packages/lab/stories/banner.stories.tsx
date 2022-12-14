@@ -1,8 +1,8 @@
-import { Banner, BannerProps, Panel } from "@jpmorganchase/uitk-lab";
+import { Banner, BannerProps, Panel } from "@salt-ds/lab";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
-import { Link, StackLayout, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { Link, StackLayout, ToolkitProvider } from "@salt-ds/core";
 
 export default {
   title: "Lab/Banner",

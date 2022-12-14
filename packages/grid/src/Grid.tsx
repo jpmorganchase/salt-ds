@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnInfo } from "./GridColumn";
 import { GridContext } from "./GridContext";
 import cx from "classnames";

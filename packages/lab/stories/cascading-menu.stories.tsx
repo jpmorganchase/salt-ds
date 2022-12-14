@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { MouseEvent, useMemo, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { CallIcon, UserIcon } from "@jpmorganchase/uitk-icons";
-import { CascadingMenu, MenuDescriptor } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { CallIcon, UserIcon } from "@salt-ds/icons";
+import { CascadingMenu, MenuDescriptor } from "@salt-ds/lab";
 
 const initialSource: MenuDescriptor = {
   menuItems: [

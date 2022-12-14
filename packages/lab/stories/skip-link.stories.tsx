@@ -1,8 +1,8 @@
 import "./skip-link.stories.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
+import { SkipLink, SkipLinks } from "@salt-ds/lab";
 import { useRef } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 
 export default {
   title: "Lab/Skip Link",

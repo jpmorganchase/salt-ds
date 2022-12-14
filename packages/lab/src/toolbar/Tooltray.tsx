@@ -1,4 +1,4 @@
-import { useIdMemo } from "@jpmorganchase/uitk-core";
+import { useIdMemo } from "@salt-ds/core";
 import cx from "classnames";
 import { cloneElement } from "react";
 import { OverflowPanel } from "./overflow-panel/OverflowPanel";

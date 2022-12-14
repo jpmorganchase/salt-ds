@@ -1,17 +1,12 @@
 import { useState } from "react";
-import {
-  Button,
-  Density,
-  ModeValues,
-  ToolkitProvider,
-} from "@jpmorganchase/uitk-core";
+import { Button, Density, ModeValues, ToolkitProvider } from "@salt-ds/core";
 import {
   Card,
   Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 import "docs/story.css";
 

@@ -1,4 +1,4 @@
-import { Spinner } from "@jpmorganchase/uitk-lab";
+import { Spinner } from "@salt-ds/lab";
 
 const ariaLabel = "Loading component";
 

@@ -1,4 +1,4 @@
-import { useIdMemo as useId } from "@jpmorganchase/uitk-core";
+import { useIdMemo as useId } from "@salt-ds/core";
 import { ForwardedRef, forwardRef, ReactElement, useCallback } from "react";
 
 import { DropdownBase, DropdownBaseProps } from "../dropdown";

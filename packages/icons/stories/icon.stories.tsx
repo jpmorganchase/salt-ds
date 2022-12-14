@@ -4,10 +4,10 @@ import {
   AddDocumentSolidIcon,
   Icon,
   IconProps,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexLayout, StackLayout } from "@jpmorganchase/uitk-core";
-import { FormField, Input } from "@jpmorganchase/uitk-lab";
+import { FlexLayout, StackLayout } from "@salt-ds/core";
+import { FormField, Input } from "@salt-ds/lab";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {

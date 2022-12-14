@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 
 const composedStories = composeStories(gridStories);
 const { DefaultGridLayout, GridLayoutNested } = composedStories;

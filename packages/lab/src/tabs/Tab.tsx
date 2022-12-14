@@ -1,11 +1,6 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useForkRef,
-} from "@jpmorganchase/uitk-core";
-import { CloseIcon, CloseSmallIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
+import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   forwardRef,

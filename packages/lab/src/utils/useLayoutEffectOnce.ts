@@ -1,5 +1,5 @@
 import { DependencyList, EffectCallback, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 export const useLayoutEffectOnce = (
   condition: boolean,
   callback: EffectCallback,

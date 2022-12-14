@@ -3,7 +3,7 @@ import {
   useDensity,
   useForkRef,
   ownerWindow,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import {
   cloneElement,
   forwardRef,
@@ -19,7 +19,7 @@ import {
   KeyboardEvent,
 } from "react";
 import { useEventCallback } from "../utils";
-import { usePrevious } from "@jpmorganchase/uitk-core";
+import { usePrevious } from "@salt-ds/core";
 import { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";

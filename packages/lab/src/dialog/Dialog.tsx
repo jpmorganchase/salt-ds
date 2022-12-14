@@ -1,8 +1,4 @@
-import {
-  makePrefixer,
-  useId,
-  ValidationStatus,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, ValidationStatus } from "@salt-ds/core";
 import classnames from "classnames";
 import {
   forwardRef,

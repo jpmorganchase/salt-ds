@@ -17,7 +17,7 @@ import {
   makePrefixer,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";

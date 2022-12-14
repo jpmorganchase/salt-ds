@@ -2,7 +2,7 @@ import {
   ToolkitProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { isDesktop, Window as ToolkitWindow, WindowProps } from "../window";

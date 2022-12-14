@@ -1,4 +1,4 @@
-import { Logo } from "@jpmorganchase/uitk-lab";
+import { Logo } from "@salt-ds/lab";
 
 const CustomLogoImage = ({ src }: any) => <div>{src}</div>;
 

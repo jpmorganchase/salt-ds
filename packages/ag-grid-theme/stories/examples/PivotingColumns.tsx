@@ -5,7 +5,7 @@ import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 const PivotingColumnsExample = function PivotingColumnsExample(
   props: AgGridReactProps
