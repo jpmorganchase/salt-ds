@@ -5,7 +5,7 @@ import { ListItem, ListItemProps, ListItemType } from "../../list";
 import { QueryInputCategory } from "../queryInputTypes";
 import { useCategoryListContext } from "./CategoryListContext";
 
-const withBaseName = makePrefixer("uitkCategoryListItem");
+const withBaseName = makePrefixer("saltCategoryListItem");
 
 export interface CategoryListItemProps
   extends ListItemProps<QueryInputCategory> {

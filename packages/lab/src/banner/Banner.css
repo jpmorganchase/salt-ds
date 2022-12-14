@@ -1,5 +1,5 @@
 /* Styles applied to root component */
-.uitkBanner {
+.saltBanner {
   --banner-background: var(--saltBanner-background, var(--salt-container-primary-background));
   --banner-fontSize: var(--saltBanner-fontSize, var(--salt-text-fontSize));
   --banner-lineHeight: var(--saltBanner-lineHeight, var(--salt-text-lineHeight));
@@ -7,7 +7,7 @@
   --banner-label-color: var(--saltBanner-label-color, var(--salt-text-primary-foreground));
 }
 
-.uitkBanner {
+.saltBanner {
   background: var(--banner-background);
   border-color: var(--saltBanner-borderColor, var(--banner-status-borderColor));
   border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
@@ -23,11 +23,11 @@
   align-items: center;
 }
 
-.uitkBanner-closeButton {
+.saltBanner-closeButton {
   margin: calc(var(--salt-size-unit) * 0.5) auto calc(var(--salt-size-unit) * 0.5) var(--salt-size-unit);
 }
 
-.uitkBanner-label {
+.saltBanner-label {
   flex: 1 0;
   padding: calc(var(--banner-padding) + 2px) 0 calc(var(--banner-padding));
   font-weight: var(--salt-typography-fontWeight-semiBold);
@@ -37,54 +37,54 @@
 }
 
 /* Styles applied to status indicator */
-.uitkBanner-icon {
+.saltBanner-icon {
   color: var(--saltBanner-icon-color, var(--banner-status-icon-color));
   fill: var(--saltBanner-icon-color, var(--banner-status-icon-color));
   margin-right: var(--saltTooltip-icon-marginRight, 6px);
   flex: 0 0 auto;
 }
 
-.uitkBanner-link {
+.saltBanner-link {
   font-weight: var(--salt-typography-fontWeight-semiBold);
   margin-left: 1ch;
 }
 
 /* Styles applied when state = "info" */
-.uitkBanner-info {
+.saltBanner-info {
   --banner-status-borderColor: var(--salt-status-info-borderColor);
   --banner-status-icon-color: var(--salt-status-info-foreground);
 }
 
 /* Styles applied when state = "error" */
-.uitkBanner-error {
+.saltBanner-error {
   --banner-status-borderColor: var(--salt-status-error-borderColor);
   --banner-status-icon-color: var(--salt-status-error-foreground);
 }
 
 /* Styles applied when state = "warning" */
-.uitkBanner-warning {
+.saltBanner-warning {
   --banner-status-borderColor: var(--salt-status-warning-borderColor);
   --banner-status-icon-color: var(--salt-status-warning-foreground);
 }
 
 /* Styles applied when state = "success" */
-.uitkBanner-success {
+.saltBanner-success {
   --banner-status-borderColor: var(--salt-status-success-borderColor);
   --banner-status-icon-color: var(--salt-status-success-foreground);
 }
 
-.uitkBanner-emphasize.uitkBanner-info {
+.saltBanner-emphasize.saltBanner-info {
   --banner-background: var(--salt-status-info-background-emphasize);
 }
 
-.uitkBanner-emphasize.uitkBanner-error {
+.saltBanner-emphasize.saltBanner-error {
   --banner-background: var(--salt-status-error-background-emphasize);
 }
 
-.uitkBanner-emphasize.uitkBanner-warning {
+.saltBanner-emphasize.saltBanner-warning {
   --banner-background: var(--salt-status-warning-background-emphasize);
 }
 
-.uitkBanner-emphasize.uitkBanner-success {
+.saltBanner-emphasize.saltBanner-success {
   --banner-background: var(--salt-status-success-background-emphasize);
 }

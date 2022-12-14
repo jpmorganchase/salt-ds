@@ -1,23 +1,23 @@
 /* Styles applied to the root element dependent on density */
-.uitk-density-touch {
+.salt-density-touch {
   --input-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
   --input-button-inset: 4px;
 }
-.uitk-density-low {
+.salt-density-low {
   --input-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 2 / 3);
   --input-button-inset: 4px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --input-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
   --input-button-inset: 2px;
 }
-.uitk-density-high {
+.salt-density-high {
   --input-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit));
   --input-button-inset: 2px;
 }
 
 /* Style applied to the root element */
-.uitkInput {
+.saltInput {
   align-items: center;
   background: var(--saltInput-background, none);
   border: var(--saltInput-border, none);
@@ -37,12 +37,12 @@
 }
 
 /* Reset in the next class */
-.uitkInput-input:focus {
+.saltInput-input:focus {
   outline: none;
 }
 
 /* Pseudo-class applied to the root element when focused */
-.uitkInput-focused {
+.saltInput-focused {
   outline-style: var(--saltInput-focused-outlineStyle, var(--salt-focused-outlineStyle));
   outline-width: var(--saltInput-focused-outlineWidth, var(--salt-focused-outlineWidth));
   outline-color: var(--saltInput-focused-outlineColor, var(--salt-focused-outlineColor));
@@ -50,12 +50,12 @@
 }
 
 /* Style applied to selected input */
-.uitkInput-input::selection {
+.saltInput-input::selection {
   background-color: var(--saltInput-highlight-color, var(--salt-text-background-selected));
 }
 
 /* Style applied to inner input component */
-.uitkInput-input {
+.saltInput-input {
   background: var(--saltInput-background, none);
   border: none;
   box-sizing: content-box;
@@ -73,14 +73,14 @@
 }
 
 /* Style applied to input if `disabled={true}` */
-.uitkInput-disabled .uitkInput-input {
+.saltInput-disabled .saltInput-input {
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInput-text-color-disabled, var(--salt-text-primary-foreground-disabled));
 }
 
 /* Style applied to adornment containers */
-.uitkInput-suffixContainer,
-.uitkInput-prefixContainer {
+.saltInput-suffixContainer,
+.saltInput-prefixContainer {
   display: flex;
   align-items: center;
 
@@ -88,50 +88,50 @@
 }
 
 /* Style applied to root element with start adornment */
-.uitkInput-inputAdornedStart {
+.saltInput-inputAdornedStart {
   padding-left: var(--saltInput-adornedStart-padding, 0);
 }
 
 /* Style applied to inner input element with start adornment */
-.uitkInput-inputAdornedStart .uitkInput-input {
+.saltInput-inputAdornedStart .saltInput-input {
   padding-left: var(--saltInput-adornedStart-input-padding, var(--salt-size-unit));
 }
 
 /* Style applied to root element with end adornment */
-.uitkInput-inputAdornedEnd {
+.saltInput-inputAdornedEnd {
   padding-right: var(--saltInput-adornedEnd-padding, 0);
 }
 
 /* Style applied to inner input element with end adornment */
-.uitkInput-inputAdornedEnd .uitkInput-input {
+.saltInput-inputAdornedEnd .saltInput-input {
   padding-right: var(--saltInput-adornedEnd-input-padding, var(--salt-size-unit));
 }
 
-/* Style applied to uitk Button used within Input component adornments */
-.uitkInput .uitkInput-suffixContainer > .uitkButton,
-.uitkInput .uitkInput-prefixContainer > .uitkButton {
+/* Style applied to salt Button used within Input component adornments */
+.saltInput .saltInput-suffixContainer > .saltButton,
+.saltInput .saltInput-prefixContainer > .saltButton {
   height: calc(var(--saltButton-height, var(--salt-size-base)) - (var(--input-button-inset) * 2));
   margin: var(--input-button-inset);
   padding: 0 calc(var(--salt-size-unit) - var(--input-button-inset));
 }
 
 /* Style applied if `textAlign={"left"}` */
-.uitkInput-leftTextAlign .uitkInput-input {
+.saltInput-leftTextAlign .saltInput-input {
   text-align: left;
 }
 
 /* Style applied if `textAlign={"center"}` */
-.uitkInput-centerTextAlign .uitkInput-input {
+.saltInput-centerTextAlign .saltInput-input {
   text-align: center;
 }
 
 /* Style applied if `textAlign={"right"}` */
-.uitkInput-rightTextAlign .uitkInput-input {
+.saltInput-rightTextAlign .saltInput-input {
   text-align: right;
 }
 
 /* Style applied if `inFormField={true}` */
-.uitkInput-formField {
+.saltInput-formField {
   min-width: var(--saltFormField-input-minWidth, 0px);
   width: 100%;
 }

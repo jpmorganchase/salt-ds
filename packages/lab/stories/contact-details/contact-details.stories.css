@@ -1,8 +1,8 @@
-.uitk-theme[data-mode="light"] .withoutAvatar {
+.salt-theme[data-mode="light"] .withoutAvatar {
   --heading-color: var(--salt-color-gray-700);
 }
 
-.uitk-theme[data-mode="dark"] .withoutAvatar {
+.salt-theme[data-mode="dark"] .withoutAvatar {
   --heading-color: var(--salt-color-gray-10);
 }
 
@@ -104,10 +104,10 @@
   margin-bottom: 16px;
 }
 
-.uitk-theme[data-mode="dark"] .allVariants-withBackground {
+.salt-theme[data-mode="dark"] .allVariants-withBackground {
   background: var(--salt-color-blue-900);
 }
 
-.uitk-theme[data-mode="light"] .allVariants-withBackground {
+.salt-theme[data-mode="light"] .allVariants-withBackground {
   background: var(--salt-color-blue-10);
 }

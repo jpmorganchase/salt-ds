@@ -60,7 +60,7 @@ export const FoundationPatternByDensity = (
 
               return (
                 <ChildrenValues
-                  uitkColorOverrides={props.uitkColorOverrides}
+                  uitkColorOverrides={props.saltColorOverrides}
                   children={values}
                   extractValue={props.extractValue}
                   fieldName={fieldName}

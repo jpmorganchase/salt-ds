@@ -1,4 +1,4 @@
-.uitkTree {
+.saltTree {
   --tree-node-collapse: var(--saltTree-node-collapse, var(--list-svg-tree-node-collapse));
   --tree-node-expand: var(--saltTree-node-expand, var(--list-svg-tree-node-expand));
   --tree-node-expanded-transform: var(--saltTree-node-expanded-transform, none);
@@ -29,11 +29,11 @@
   user-select: none;
 }
 
-.uitkTree-child-nodes {
+.saltTree-child-nodes {
   width: 100%;
 }
 
-.uitkTree-scrollingContentContainer {
+.saltTree-scrollingContentContainer {
   box-sizing: inherit;
   list-style: none;
   margin: 0;

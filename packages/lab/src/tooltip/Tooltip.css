@@ -1,12 +1,12 @@
 /* Styles applied to root component */
-.uitkTooltip {
+.saltTooltip {
   --tooltip-background: var(--saltTooltip-background, var(--salt-container-primary-background));
   --tooltip-fontSize: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
   --tooltip-lineHeight: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
 }
 
-.uitkTooltip {
+.saltTooltip {
   background: var(--tooltip-background);
   border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
@@ -22,111 +22,111 @@
   z-index: var(--tooltip-zIndex);
 }
 
-.uitkTooltip[data-placement^="top"] {
+.saltTooltip[data-placement^="top"] {
   transform-origin: bottom;
 }
 
-.uitkTooltip[data-placement^="bottom"] {
+.saltTooltip[data-placement^="bottom"] {
   transform-origin: top;
 }
 
-.uitkTooltip[data-placement^="left"] {
+.saltTooltip[data-placement^="left"] {
   transform-origin: right;
 }
 
-.uitkTooltip[data-placement^="right"] {
+.saltTooltip[data-placement^="right"] {
   transform-origin: left;
 }
 
 /* Styles applied to inner content */
-.uitkTooltip-content {
+.saltTooltip-content {
   display: flex;
   align-items: center;
   position: relative;
 }
 
 /* Styles applied to body */
-.uitkTooltip-body {
+.saltTooltip-body {
   overflow: hidden;
 }
 
 /* Styles applied to status indicator */
-.uitkTooltip-icon {
+.saltTooltip-icon {
   margin-right: var(--saltTooltip-icon-marginRight, 6px);
   vertical-align: top;
 }
 
 /* Styles applied to Tooltip arrow */
-.uitkTooltip-arrow,
-.uitkTooltip-arrow::after {
+.saltTooltip-arrow,
+.saltTooltip-arrow::after {
   border: var(--salt-size-sharktooth-height) solid transparent;
   position: absolute;
 }
 
-.uitkTooltip-arrow::after {
+.saltTooltip-arrow::after {
   content: "";
 }
 
-.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow {
+.saltTooltip[data-placement^="top"] .saltTooltip-arrow {
   border-top-color: var(--tooltip-status-borderColor);
   bottom: -11px;
 }
 
-.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow {
+.saltTooltip[data-placement^="bottom"] .saltTooltip-arrow {
   border-bottom-color: var(--tooltip-status-borderColor);
   top: -11px;
 }
 
-.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow {
+.saltTooltip[data-placement^="left"] .saltTooltip-arrow {
   border-left-color: var(--tooltip-status-borderColor);
   right: -11px;
 }
 
-.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow {
+.saltTooltip[data-placement^="right"] .saltTooltip-arrow {
   border-right-color: var(--tooltip-status-borderColor);
   left: -11px;
 }
 
-.uitkTooltip[data-placement^="top"] .uitkTooltip-arrow::after {
+.saltTooltip[data-placement^="top"] .saltTooltip-arrow::after {
   border-top-color: var(--tooltip-background);
   bottom: -4px;
   left: calc(100% - var(--salt-size-sharktooth-height));
 }
 
-.uitkTooltip[data-placement^="bottom"] .uitkTooltip-arrow::after {
+.saltTooltip[data-placement^="bottom"] .saltTooltip-arrow::after {
   border-bottom-color: var(--tooltip-background);
   top: -4px;
   left: calc(100% - var(--salt-size-sharktooth-height));
 }
 
-.uitkTooltip[data-placement^="left"] .uitkTooltip-arrow::after {
+.saltTooltip[data-placement^="left"] .saltTooltip-arrow::after {
   border-left-color: var(--tooltip-background);
   right: -4px;
   top: calc(100% - var(--salt-size-sharktooth-height));
 }
 
-.uitkTooltip[data-placement^="right"] .uitkTooltip-arrow::after {
+.saltTooltip[data-placement^="right"] .saltTooltip-arrow::after {
   border-right-color: var(--tooltip-background);
   left: -4px;
   top: calc(100% - var(--salt-size-sharktooth-height));
 }
 
 /* Styles applied when status = "info" */
-.uitkTooltip-info {
+.saltTooltip-info {
   --tooltip-status-borderColor: var(--salt-status-info-borderColor);
 }
 
 /* Styles applied when status = "error" */
-.uitkTooltip-error {
+.saltTooltip-error {
   --tooltip-status-borderColor: var(--salt-status-error-borderColor);
 }
 
 /* Styles applied when status = "warning" */
-.uitkTooltip-warning {
+.saltTooltip-warning {
   --tooltip-status-borderColor: var(--salt-status-warning-borderColor);
 }
 
 /* Styles applied when status = "success" */
-.uitkTooltip-success {
+.saltTooltip-success {
   --tooltip-status-borderColor: var(--salt-status-success-borderColor);
 }

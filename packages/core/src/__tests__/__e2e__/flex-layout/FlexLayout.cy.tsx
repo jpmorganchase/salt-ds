@@ -13,37 +13,37 @@ describe("GIVEN a Flex", () => {
     it("THEN it should render with flex direction row", () => {
       cy.mount(<DefaultFlexLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-direction", "row");
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
 
     it("THEN it should render with flex wrap", () => {
       cy.mount(<DefaultFlexLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultFlexLayout />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "column-gap", "24px");
+      cy.get(".saltFlexLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkFlexLayout").should("have.css", "row-gap", "24px");
+      cy.get(".saltFlexLayout").should("have.css", "row-gap", "24px");
     });
 
     it("THEN nested items should not inherit css variables from parent", () => {
       cy.mount(<FlexLayoutNested />);
 
-      cy.get(".uitkFlexLayout").eq(0).should("have.css", "flex-wrap", "wrap");
-      cy.get(".uitkFlexLayout")
+      cy.get(".saltFlexLayout").eq(0).should("have.css", "flex-wrap", "wrap");
+      cy.get(".saltFlexLayout")
         .eq(0)
         .should("have.css", "justify-content", "space-between");
-      cy.get(".uitkFlexLayout").eq(0).should("have.css", "row-gap", "48px");
+      cy.get(".saltFlexLayout").eq(0).should("have.css", "row-gap", "48px");
 
-      cy.get(".uitkFlexLayout").eq(1).should("have.css", "flex-wrap", "nowrap");
-      cy.get(".uitkFlexLayout")
+      cy.get(".saltFlexLayout").eq(1).should("have.css", "flex-wrap", "nowrap");
+      cy.get(".saltFlexLayout")
         .eq(1)
         .should("have.css", "justify-content", "flex-start");
-      cy.get(".uitkFlexLayout").eq(1).should("have.css", "row-gap", "24px");
+      cy.get(".saltFlexLayout").eq(1).should("have.css", "row-gap", "24px");
     });
   });
 
@@ -51,9 +51,9 @@ describe("GIVEN a Flex", () => {
     it("THEN it should render a separator", () => {
       cy.mount(<DefaultFlexLayout separators wrap={false} />);
 
-      cy.get(".uitkFlexLayout").should(
+      cy.get(".saltFlexLayout").should(
         "have.class",
-        "uitkFlexLayout-separator"
+        "saltFlexLayout-separator"
       );
     });
   });
@@ -62,7 +62,7 @@ describe("GIVEN a Flex", () => {
     it("THEN it should render with no flex wrap", () => {
       cy.mount(<DefaultFlexLayout wrap={false} />);
 
-      cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
     });
   });
 
@@ -84,7 +84,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(<DefaultFlexLayout wrap={wrap} />);
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
       }
     );
 
@@ -97,7 +97,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(<DefaultFlexLayout wrap={wrap} />);
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
 
@@ -110,7 +110,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(<DefaultFlexLayout wrap={wrap} />);
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
 
@@ -123,7 +123,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(<DefaultFlexLayout wrap={wrap} />);
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
   });
@@ -158,7 +158,7 @@ describe("GIVEN a Flex", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "nowrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
       }
     );
 
@@ -175,7 +175,7 @@ describe("GIVEN a Flex", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
 
@@ -192,7 +192,7 @@ describe("GIVEN a Flex", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
 
@@ -209,7 +209,7 @@ describe("GIVEN a Flex", () => {
           </SaltProvider>
         );
 
-        cy.get(".uitkFlexLayout").should("have.css", "flex-wrap", "wrap");
+        cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
     );
   });

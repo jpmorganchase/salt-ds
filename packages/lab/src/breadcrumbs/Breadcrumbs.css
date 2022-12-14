@@ -1,4 +1,4 @@
-.uitkBreadcrumbs-ol {
+.saltBreadcrumbs-ol {
   --breadcrumbs-ol-gap: var(--salt-size-unit);
 
   display: flex;
@@ -9,7 +9,7 @@
   gap: var(--breadcrumbs-ol-gap);
 }
 
-.uitkBreadcrumbs-li {
+.saltBreadcrumbs-li {
   --breadcrumbs-li-marginRight: 0px;
   --breadcrumbs-li-padding: 0px;
 
@@ -19,7 +19,7 @@
   padding: var(--breadcrumbs-li-padding);
 }
 
-.uitkBreadcrumbs-separator {
+.saltBreadcrumbs-separator {
   --breadcrumbs-separator-marginRight: 0px;
 
   display: flex;
@@ -27,12 +27,12 @@
   user-select: none;
 }
 
-.uitkBreadcrumbs-ol-wrap {
+.saltBreadcrumbs-ol-wrap {
   flex-wrap: wrap;
 }
 
-.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-li,
-.uitkBreadcrumbs-ol-wrap .uitkBreadcrumbs-separator {
+.saltBreadcrumbs-ol-wrap .saltBreadcrumbs-li,
+.saltBreadcrumbs-ol-wrap .saltBreadcrumbs-separator {
   --breadcrumbs-ol-wrap-li-marginBottom: 0px;
 
   margin-bottom: var(--breadcrumbs-ol-wrap-li-marginBottom);

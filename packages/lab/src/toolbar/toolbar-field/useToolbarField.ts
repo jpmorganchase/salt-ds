@@ -59,9 +59,9 @@ export const getToolbarFormFieldProps = (
   return {
     ActivationIndicatorComponent: activationIndicator,
     className: cx({
-      "uitkFormField-toolbarButton":
+      "saltFormField-toolbarButton":
         isOverflowPanel && isToolbarButton(element),
-      [`uitkFormField-${variant}`]: variant,
+      [`saltFormField-${variant}`]: variant,
     }),
     fullWidth: false,
   };
@@ -102,7 +102,7 @@ export const useToolbarField = (
   return {
     ActivationIndicatorComponent:
       ActivationIndicatorComponentProp ?? ActivationIndicatorComponent,
-    className: cx("uitkToolbarField", classNameProp, className),
+    className: cx("saltToolbarField", classNameProp, className),
     labelPlacement,
     onClick: handleClick,
     ...rest,

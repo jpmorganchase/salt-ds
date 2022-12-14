@@ -1,18 +1,18 @@
-.uitk-density-high {
+.salt-density-high {
   --formField-label-top-marginBottom: 2px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --formField-label-top-marginBottom: 2px;
 }
-.uitk-density-low {
+.salt-density-low {
   --formField-label-top-marginBottom: 4px;
 }
-.uitk-density-touch {
+.salt-density-touch {
   --formField-label-top-marginBottom: 8px;
 }
 
 /* Style applied to the root element */
-.uitkFormField {
+.saltFormField {
   --formField-activationIndicator-color: var(--salt-editable-borderColor);
   --formField-activationIndicator-size: var(--salt-size-border);
   --formField-activationIndicator-style: var(--salt-editable-borderStyle);
@@ -22,15 +22,15 @@
   --formField-helperText-height: 0px;
 }
 
-.uitkFormField-tertiary.uitkFormField {
+.saltFormField-tertiary.saltFormField {
   --formField-background: var(--salt-editable-tertiary-background);
 }
 
-.uitkFormField-secondary.uitkFormField {
+.saltFormField-secondary.saltFormField {
   --formField-background: var(--salt-editable-secondary-background);
 }
 
-.uitkFormField {
+.saltFormField {
   border: 0;
   display: inline-grid;
   font-size: var(--saltFormField-fontSize, var(--salt-text-fontSize));
@@ -43,7 +43,7 @@
 }
 
 /* Class applied to the root element on hover */
-.uitkFormField:hover {
+.saltFormField:hover {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-hover);
   --formField-activationIndicator-size: var(--salt-size-border);
   --formField-activationIndicator-style: var(--salt-editable-borderStyle-hover);
@@ -52,10 +52,10 @@
 }
 
 /* Class applied to the root element when focused */
-.uitkFormField-focused,
-.uitkFormField-lowFocused,
-.uitkFormField.uitkFormField-focused:hover,
-.uitkFormField.uitkFormField-lowFocused:hover {
+.saltFormField-focused,
+.saltFormField-lowFocused,
+.saltFormField.saltFormField-focused:hover,
+.saltFormField.saltFormField-lowFocused:hover {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-active);
   --formField-activationIndicator-size: var(--salt-editable-borderWidth-active);
   --formField-activationIndicator-style: var(--salt-editable-borderStyle-active);
@@ -64,19 +64,19 @@
 }
 
 /* Class applied when helper text is provided */
-.uitkFormField-withHelperText {
+.saltFormField-withHelperText {
   --formField-helperText-marginTop: var(--formField-helperText-marginTop-default);
   --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop) + var(--saltFormField-helperText-lineHeight, var(--formField-helperText-height)));
 }
 
 /* Class applied if `fullWidth={true}` and helper text is provided */
-.uitkFormField-fullWidth.uitkFormField-withHelperText {
+.saltFormField-fullWidth.saltFormField-withHelperText {
   --formField-helperText-marginTop: var(--formField-helperText-marginTop-fullWidth);
   --formField-activationIndicator-offsetBottom: calc(var(--formField-helperText-marginTop-fullWidth) + var(--saltFormField-helperText-lineHeight, var(--formField-helperText-height)));
 }
 
 /* Class applied when helper text is provided */
-.uitkFormField-withHelperText {
+.saltFormField-withHelperText {
   --formField-helperText-fontSize: var(--saltFormField-helperText-fontSize, var(--salt-text-fontSize));
   --formField-helperText-baseHeight: calc(1.3 * var(--formField-helperText-fontSize));
   --formField-helperText-calculatedHeight: max(var(--salt-text-label-minHeight), var(--formField-helperText-baseHeight));
@@ -84,12 +84,12 @@
 }
 
 /* Class applied to the root element if `fillWidth={true}` */
-.uitkFormField-fullWidth {
+.saltFormField-fullWidth {
   width: 100%;
 }
 
 /* Class applied to the root element if `disabled={true}` */
-.uitkFormField-disabled {
+.saltFormField-disabled {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-disabled);
   --formField-activationIndicator-opacity: var(--salt-palette-opacity-foreground);
   --formField-activationIndicator-size: var(--salt-size-border);
@@ -102,7 +102,7 @@
 }
 
 /* Class applied to the root element on hover if `disabled={true}` */
-.uitkFormField.uitkFormField-disabled:hover {
+.saltFormField.saltFormField-disabled:hover {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-disabled);
   --formField-activationIndicator-size: var(--salt-size-border);
   --formField-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
@@ -111,39 +111,39 @@
 }
 
 /* Class applied to the root element on warning state */
-.uitkFormField.uitkFormField-warning {
+.saltFormField.saltFormField-warning {
   --formField-focused-outlineColor: var(--salt-status-warning-borderColor);
   --formField-activationIndicator-color: var(--salt-status-warning-borderColor);
 }
 
 /* Class applied to the root element on warning state on hover */
-.uitkFormField.uitkFormField-warning:hover {
+.saltFormField.saltFormField-warning:hover {
   --formField-activationIndicator-color: var(--salt-status-warning-borderColor);
 }
 
 /* Class applied to the root element on error state */
-.uitkFormField.uitkFormField-error {
+.saltFormField.saltFormField-error {
   --formField-focused-outlineColor: var(--salt-status-error-borderColor);
   --formField-activationIndicator-color: var(--salt-status-error-borderColor);
 }
 
 /* Class applied to the root element on error state on hover */
-.uitkFormField.uitkFormField-error:hover {
+.saltFormField.saltFormField-error:hover {
   --formField-activationIndicator-color: var(--salt-status-error-borderColor);
 }
 
 /* Error state styling when `variant="secondary"` */
-.uitkFormField-secondary.uitkFormField-error {
+.saltFormField-secondary.saltFormField-error {
   --formField-background: var(--salt-status-error-background-emphasize);
 }
 
 /* Warning state styling when `variant="secondary"` */
-.uitkFormField-secondary.uitkFormField-warning {
+.saltFormField-secondary.saltFormField-warning {
   --formField-background: var(--salt-status-warning-background-emphasize);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */
-.uitkFormField-labelLeft {
+.saltFormField-labelLeft {
   --formField-label-marginTop: var(--salt-size-unit);
   --formField-label-paddingLeft: 0px;
   --formField-label-paddingRight: calc(0.75 * var(--salt-size-unit));
@@ -153,7 +153,7 @@
 }
 
 /* Class applied to the root element if `labelPlacement="top"` or labelPlacement omitted (default is 'top') */
-.uitkFormField-labelTop {
+.saltFormField-labelTop {
   --formField-label-marginBottom: var(--formField-label-top-marginBottom);
   --formField-label-marginTop: 0;
   --formField-label-paddingLeft: var(--salt-size-unit);
@@ -165,52 +165,52 @@
 }
 
 /* Class applied if `labelPlacement="top"` and helper text is provided */
-.uitkFormField-labelTop.uitkFormField-withHelperText {
+.saltFormField-labelTop.saltFormField-withHelperText {
   /* Uses density aware value from FormHelperText */
   --formField-background-offset-height: var(--formField-helperText-background-offset-height);
 }
 
-.uitkFormField > * {
+.saltFormField > * {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
 }
 
-.uitkFormField-labelLeft > * {
+.saltFormField-labelLeft > * {
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
-.uitkFormField > .uitkFormLabel {
+.saltFormField > .saltFormLabel {
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
-.uitkFormField > .uitkFormActivationIndicator {
+.saltFormField > .saltFormActivationIndicator {
   grid-row-start: 3;
   grid-row-end: 4;
 }
 
-.uitkFormField > .uitkFormFieldHelperText {
+.saltFormField > .saltFormFieldHelperText {
   grid-row-start: 4;
   grid-row-end: 5;
 }
 
-.uitkFormField-labelLeft > .uitkFormLabel ~ * {
+.saltFormField-labelLeft > .saltFormLabel ~ * {
   grid-column-start: 2;
   grid-column-end: 2;
 }
 
 /* Class applied if `readOnly={true}"` */
-.uitkFormField-readOnly {
+.saltFormField-readOnly {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-readonly);
 
   --saltInput-cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Class applied to the root element if `readOnly={true}"` on hover */
-.uitkFormField.uitkFormField-readOnly:hover {
+.saltFormField.saltFormField-readOnly:hover {
   --formField-activationIndicator-color: var(--salt-editable-borderColor-readonly);
   --formField-activationIndicator-size: var(--salt-size-border);
   --formField-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
@@ -219,7 +219,7 @@
 }
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */
-.uitkFormField:not(.uitkFormField-withHelperText):not(.uitkFormField-labelLeft).uitkFormField-focused:before {
+.saltFormField:not(.saltFormField-withHelperText):not(.saltFormField-labelLeft).saltFormField-focused:before {
   content: " ";
   position: absolute;
   top: 0;
@@ -232,7 +232,7 @@
 }
 
 /* Class applied on focus with `labelTop={true}` and helper text provided */
-.uitkFormField-withHelperText:not(.uitkFormField-labelLeft).uitkFormField-focused:before {
+.saltFormField-withHelperText:not(.saltFormField-labelLeft).saltFormField-focused:before {
   content: " ";
   position: absolute;
   top: 0;
@@ -244,12 +244,12 @@
   outline-width: var(--salt-focused-outlineWidth);
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused:before {
+.saltFormField-labelLeft.saltFormField-focused:before {
   content: none;
 }
 
 /* Class applied on focus with `labelLeft={true}` */
-.uitkFormField-labelLeft.uitkFormField-focused > *:before {
+.saltFormField-labelLeft.saltFormField-focused > *:before {
   content: " ";
   position: absolute;
   top: 0;
@@ -262,31 +262,31 @@
   z-index: -1;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormActivationIndicator, .uitkFormFieldHelperText, .uitkFormLabel):before {
+.saltFormField-labelLeft.saltFormField-focused > :is(.saltFormActivationIndicator, .saltFormFieldHelperText, .saltFormLabel):before {
   content: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused {
+.saltFormField-labelLeft.saltFormField-focused {
   outline: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused > :is(.uitkFormField-activationIndicator, .uitkFormField-helperText, .uitkFormLabel):before {
+.saltFormField-labelLeft.saltFormField-focused > :is(.saltFormField-activationIndicator, .saltFormField-helperText, .saltFormLabel):before {
   content: none;
 }
 
-.uitkFormField-labelLeft.uitkFormField-focused .uitkFormLabel + * {
+.saltFormField-labelLeft.saltFormField-focused .saltFormLabel + * {
   outline: none;
 }
 
-.uitkFormField-tertiary.uitkFormField.uitkFormField-labelLeft > .uitkFormLabel ~ * {
+.saltFormField-tertiary.saltFormField.saltFormField-labelLeft > .saltFormLabel ~ * {
   background: var(--saltFormField-background, var(--formField-background));
 }
 
 /* TODO: I don't think this is needed, but commenting until work on FF done
-.uitkFormField-primary.uitkFormField > :not(.uitkFormLabel):first-child {
+.saltFormField-primary.saltFormField > :not(.saltFormLabel):first-child {
   background: var(--saltFormField-background, var(--formField-background));
 } */
 
-.uitkFormField-labelLeft > .uitkFormLabel ~ :not(.uitkFormFieldHelperText) {
+.saltFormField-labelLeft > .saltFormLabel ~ :not(.saltFormFieldHelperText) {
   background: var(--saltFormField-background, var(--formField-background));
 }

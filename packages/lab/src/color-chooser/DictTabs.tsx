@@ -4,7 +4,7 @@ import { Tabstrip, TabstripProps, Tab } from "../tabs";
 import { ColorPicker, ColorPickerProps } from "./ColorPicker";
 import { Swatches, SwatchesTabProps } from "./Swatches";
 
-const withBaseName = makePrefixer("uitkColorChooserDictTabs");
+const withBaseName = makePrefixer("saltColorChooserDictTabs");
 
 export type ColorChooserTabs = {
   Swatches?: {

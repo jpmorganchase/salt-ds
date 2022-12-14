@@ -1,8 +1,8 @@
-/* .uitkToolbarButton {
+/* .saltToolbarButton {
     outline: none !important;
 } */
 
-.uitkToolbarButton:not([data-is-inside-panel]) {
+.saltToolbarButton:not([data-is-inside-panel]) {
   --saltButton-fontSize: 0;
   --saltButton-letterSpacing: 0;
 }

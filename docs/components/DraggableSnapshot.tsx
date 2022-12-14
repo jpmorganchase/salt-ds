@@ -11,7 +11,7 @@ import { Button } from "@salt-ds/core";
 
 import "./DraggableSnapshot.css";
 
-const classBase = "uitkDraggableSnapshot";
+const classBase = "saltDraggableSnapshot";
 
 const Shift: Record<string, string> = {
   true: "Shift",

@@ -1,4 +1,4 @@
-.uitk-density-touch {
+.salt-density-touch {
   --grid-row-height-default: 61px;
   --grid-padding-default: 16px;
   --grid-fontSize-default: 16px;
@@ -7,7 +7,7 @@
   --grid-cornerTag-size-default: 14px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --grid-row-height-default: 49px;
   --grid-padding-default: 12px;
   --grid-fontSize-default: 14px;
@@ -16,7 +16,7 @@
   --grid-cornerTag-size-default: 12px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --grid-row-height-default: 37px;
   --grid-padding-default: 8px;
   --grid-fontSize-default: 12px;
@@ -25,7 +25,7 @@
   --grid-cornerTag-size-default: 10px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --grid-row-height-default: 25px;
   --grid-padding-default: 8px;
   --grid-fontSize-default: 11px;
@@ -35,7 +35,7 @@
 }
 
 /* Styles applied to the root element */
-.uitkGrid {
+.saltGrid {
   --grid-row-height: var(--saltGrid-row-height, var(--grid-row-height-default));
   --grid-padding: var(--saltGrid-padding, var(--grid-padding-default));
   --grid-fontSize: var(--saltGrid-fontSize, var(--grid-fontSize-default));
@@ -96,29 +96,29 @@
   --grid-right-header-zIndex: 3;
 }
 
-.uitkGrid-columnSeparators {
+.saltGrid-columnSeparators {
 }
 
-.uitkGrid table {
+.saltGrid table {
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.uitkGrid-framed {
+.saltGrid-framed {
   border: solid 1px var(--grid-borderColor);
 }
 
 /* Styles applied to the root element if variant="primary" */
-.uitkGrid-primaryBackground {
+.saltGrid-primaryBackground {
   --grid-background: var(--grid-background-primary);
 }
 
 /* Styles applied to the root element if variant="secondary" */
-.uitkGrid-secondaryBackground {
+.saltGrid-secondaryBackground {
   --grid-background: var(--grid-background-secondary);
 }
 
-.uitkGrid {
+.saltGrid {
   position: relative;
   outline: none;
   user-select: none;
@@ -126,10 +126,10 @@
 }
 
 /* Styles applied to the root element if zebra is enabled */
-.uitkGrid.uitkGrid-zebra {
+.saltGrid.saltGrid-zebra {
   --grid-rowSeparator-color: transparent;
 }
 
-.uitkGrid-hidden {
+.saltGrid-hidden {
   visibility: hidden;
 }

@@ -11,7 +11,7 @@ describe("GIVEN an Input", () => {
       );
       cy.findByTestId("WarningIndicatorIcon").should(
         "have.class",
-        "uitkFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon"
       );
     });
   });
@@ -25,7 +25,7 @@ describe("GIVEN an Input", () => {
       );
       cy.findByTestId("ErrorIndicatorIcon").should(
         "have.class",
-        "uitkFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon"
       );
     });
   });
@@ -39,7 +39,7 @@ describe("GIVEN an Input", () => {
       );
 
       cy.findByRole("textbox").focus();
-      cy.get(".uitkFormField-focused").should("exist");
+      cy.get(".saltFormField-focused").should("exist");
     });
 
     it("SHOULD not put focus ring on input", () => {
@@ -52,7 +52,7 @@ describe("GIVEN an Input", () => {
       cy.findByRole("textbox").focus();
       cy.findByTestId("test-id-1").should(
         "not.have.class",
-        "uitkInput-focused"
+        "saltInput-focused"
       );
     });
     it("SHOULD have no a11y violations on load", () => {

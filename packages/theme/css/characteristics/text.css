@@ -1,4 +1,4 @@
-.uitk-theme {
+.salt-theme {
   /* Misc */
   --salt-text-letterSpacing: 0;
   --salt-text-textAlign: left;
@@ -71,7 +71,7 @@
 }
 
 /* Sizes by density */
-.uitk-density-touch {
+.salt-density-touch {
   --salt-text-h1-fontSize: 42px;
   --salt-text-h1-lineHeight: 54px;
 
@@ -101,7 +101,7 @@
   --salt-text-display3-lineHeight: 54px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --salt-text-h1-fontSize: 32px;
   --salt-text-h1-lineHeight: 42px;
 
@@ -131,7 +131,7 @@
   --salt-text-display3-lineHeight: 42px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --salt-text-h1-fontSize: 24px;
   --salt-text-h1-lineHeight: 32px;
 
@@ -161,7 +161,7 @@
   --salt-text-display3-lineHeight: 32px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --salt-text-h1-fontSize: 18px;
   --salt-text-h1-lineHeight: 24px;
 

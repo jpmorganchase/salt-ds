@@ -84,7 +84,7 @@ export const CharacteristicPattern = (
                       <ChildrenValuesWithinSection
                         characteristicsView={true}
                         children={values}
-                        uitkColorOverrides={props.uitkColorOverrides}
+                        uitkColorOverrides={props.saltColorOverrides}
                         extractValue={props.extractValue}
                         fieldName={fieldName}
                         onUpdateJSON={props.onUpdateJSON}

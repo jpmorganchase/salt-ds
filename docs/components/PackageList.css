@@ -1,11 +1,11 @@
-.uitkPackageList {
+.saltPackageList {
   display: flex;
   flex-direction: var(--saltPackageList-flex-direction, row);
   gap: var(--saltPackageList-gap, 10px);
   margin: var(--saltPackageList-margin, 24px 0 24px 0);
 }
 
-.uitkPackageList-package {
+.saltPackageList-package {
   background-color: blue;
   color: white;
   font-weight: bold;

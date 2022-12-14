@@ -35,7 +35,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   hideYearDropdown?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkCalendarNavigation");
+const withBaseName = makePrefixer("saltCalendarNavigation");
 
 function useCalendarNavigation() {
   const {

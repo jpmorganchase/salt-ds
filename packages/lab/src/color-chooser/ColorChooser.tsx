@@ -12,24 +12,24 @@ import {
   convertColorMapValueToHex,
   getHexValue,
 } from "./ColorHelpers";
-import { uitkColorMap } from "./colorMap";
+import { saltColorMap } from "./colorMap";
 import { ColorChooserTabs, DictTabs } from "./DictTabs";
 import { getColorPalettes } from "./GetColorPalettes";
 import { createTabsMapping } from "./createTabsMapping";
 
 import "./ColorChooser.css";
 
-const withBaseName = makePrefixer("uitkColorChooser");
+const withBaseName = makePrefixer("saltColorChooser");
 
 function getActiveTab(
   hexValue: string | undefined,
   tabs: ColorChooserTabs,
-  UITKColorOverrides: Record<string, string> | undefined
+  SALTColorOverrides: Record<string, string> | undefined
 ): number {
   if (tabs["Swatches"] && tabs["Color Picker"]) {
     const hexNoAlpha: string | undefined = hexValueWithoutAlpha(hexValue);
-    const colors = UITKColorOverrides ?? uitkColorMap;
-    // if hexNoAlpha is a UITK color or null/undefined then set the active tab as Swatches
+    const colors = SALTColorOverrides ?? saltColorMap;
+    // if hexNoAlpha is a SALT color or null/undefined then set the active tab as Swatches
     if (
       hexNoAlpha &&
       !Object.keys(colors).find(
@@ -58,7 +58,7 @@ export interface ColorChooserProps {
   ) => void;
   placeholder?: string;
   buttonProps?: Partial<ButtonProps>;
-  UITKColorOverrides?: Record<string, string>;
+  SALTColorOverrides?: Record<string, string>;
   showSwatches?: boolean;
   showColorPicker?: boolean;
   readOnly?: boolean;
@@ -75,21 +75,21 @@ export const ColorChooser = ({
   hideLabel = false,
   placeholder,
   buttonProps,
-  UITKColorOverrides,
+  SALTColorOverrides,
   readOnly = false,
   displayHexOnly = false,
 }: ColorChooserProps): JSX.Element => {
   const [open, setOpen] = useState(false);
 
-  const allColors: string[][] = UITKColorOverrides
-    ? getColorPalettes(UITKColorOverrides)
+  const allColors: string[][] = SALTColorOverrides
+    ? getColorPalettes(SALTColorOverrides)
     : getColorPalettes();
   const displayColorName = displayHexOnly
     ? getHexValue(color?.hex, disableAlphaChooser)
     : getColorNameByHexValue(
         color?.hex,
         disableAlphaChooser,
-        UITKColorOverrides
+        SALTColorOverrides
       );
 
   const handleOpenChange = (open: boolean) => setOpen(open);
@@ -114,7 +114,7 @@ export const ColorChooser = ({
   });
 
   const [activeTab, setActiveTab] = useState<number>(
-    getActiveTab(color?.hex, tabsMapping, UITKColorOverrides)
+    getActiveTab(color?.hex, tabsMapping, SALTColorOverrides)
   );
   const onDefaultSelected = (): void => {
     if (activeTab === 0 && showSwatches) {

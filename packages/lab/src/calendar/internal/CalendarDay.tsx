@@ -21,7 +21,7 @@ export interface CalendarDayProps
   TooltipProps?: Partial<TooltipProps>;
 }
 
-const withBaseName = makePrefixer("uitkCalendarDay");
+const withBaseName = makePrefixer("saltCalendarDay");
 
 export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
   function CalendarDay(props, ref) {

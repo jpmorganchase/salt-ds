@@ -1,4 +1,4 @@
-.uitkAccordion {
+.saltAccordion {
   --accordion-borderStyle: var(--saltAccordion-borderStyle, none);
   --accordion-borderColor: var(--saltAccordion-borderColor, transparent);
   --accordion-borderWidth: var(--saltAccordion-borderWidth, 0);
@@ -7,7 +7,7 @@
   --accordion-margin: var(--saltAccordion-margin, 0);
 }
 
-.uitkAccordion {
+.saltAccordion {
   border-style: var(--accordion-borderStyle);
   border-color: var(--accordion-borderColor);
   border-width: var(--accordion-borderWidth);
@@ -16,27 +16,27 @@
   border-radius: var(--accordion-borderRadius);
 }
 
-.uitk-density-high {
+.salt-density-high {
   --accordion-summary-paddingLeft: 20px;
   --accordion-details-padding: 3px 4px 5px 20px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --accordion-summary-paddingLeft: 28px;
   --accordion-details-padding: 8px 8px 9px 28px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --accordion-summary-paddingLeft: 36px;
   --accordion-details-padding: 12px 12px 13px 38px;
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --accordion-summary-paddingLeft: 44px;
   --accordion-details-padding: 18px 16px 17px 44px;
 }
 
-.uitkAccordionSection {
+.saltAccordionSection {
   --accordion-summary-height: var(--saltAccordion-summary-height, var(--salt-size-stackable));
   --accordion-summary-fontWeight: var(--saltAccordion-summary-fontWeight, initial);
 
@@ -55,7 +55,7 @@
   --accordion-summary-icon-transition: var(--saltAccordion-summary-icon-transition, var(--accordion-summary-icon-transition-default));
 }
 
-.uitkAccordionSection {
+.saltAccordionSection {
   border-color: var(--saltAccordion-section-borderColor, var(--salt-separable-secondary-borderColor));
   border-style: var(--saltAccordion-section-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltAccordion-section-borderWidth, 0 0 1px 0);
@@ -63,17 +63,17 @@
   position: relative;
 }
 
-.uitkAccordionSection:focus-within {
+.saltAccordionSection:focus-within {
   z-index: var(--salt-zIndex-default);
 }
 
-.uitkAccordionSection-expanded {
+.saltAccordionSection-expanded {
 }
 
-.uitkAccordionSection-disabled {
+.saltAccordionSection-disabled {
 }
 
-.uitkAccordionSummary {
+.saltAccordionSummary {
   height: var(--accordion-summary-height);
   line-height: var(--accordion-summary-height);
   font-weight: var(--accordion-summary-fontWeight);
@@ -85,32 +85,32 @@
   align-items: center;
 }
 
-.uitkAccordionSummary:focus-visible {
+.saltAccordionSummary:focus-visible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-.uitkAccordionSummary:hover {
+.saltAccordionSummary:hover {
   background: var(--accordion-summary-background-hover);
   color: var(--accordion-summary-text-color-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.uitkAccordionSummary-expanded {
+.saltAccordionSummary-expanded {
   background: var(--accordion-summary-background-active);
   color: var(--accordion-summary-text-color-active);
 }
 
-.uitkAccordionSummary-disabled,
-.uitkAccordionSummary.uitkAccordionSummary-disabled:hover {
+.saltAccordionSummary-disabled,
+.saltAccordionSummary.saltAccordionSummary-disabled:hover {
   background: var(--accordion-summary-background-disabled);
   color: var(--accordion-summary-text-color-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkAccordionSummary-icon {
+.saltAccordionSummary-icon {
   width: var(--accordion-summary-paddingLeft);
   display: flex;
   flex-direction: row;
@@ -119,23 +119,23 @@
   transition: var(--accordion-summary-icon-transition);
 }
 
-.uitkAccordionSummary-expanded .uitkAccordionSummary-icon {
+.saltAccordionSummary-expanded .saltAccordionSummary-icon {
   transform: var(--accordion-summary-icon-transform);
 }
 
-.uitkAccordionDetails {
+.saltAccordionDetails {
   transition: height 150ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
-.uitkAccordionDetails-content {
+.saltAccordionDetails-content {
   padding: var(--saltAccordion-details-padding, var(--accordion-details-padding));
 }
 
-.uitkAccordionDetails-disabled {
+.saltAccordionDetails-disabled {
 }
 
-.uitkAccordionDetails-dummy {
+.saltAccordionDetails-dummy {
   position: fixed;
   top: -10000px;
   left: 0;

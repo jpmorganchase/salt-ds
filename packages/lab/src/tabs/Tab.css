@@ -1,5 +1,5 @@
 /* Class applied to root Tab element */
-.uitkTab {
+.saltTab {
   --saltEditableLabel-padding: 0;
   --saltEditableLabel-height: var(--tabs-tabstrip-height);
   --saltInput-minWidth: 4em;
@@ -10,7 +10,7 @@
   --tabs-tab-position: relative;
 }
 
-.uitkTab {
+.saltTab {
   align-items: center;
   align-self: stretch;
   background: var(--saltTabs-tab-background, var(--tabs-tab-background));
@@ -27,26 +27,26 @@
   user-select: none;
 }
 
-/* Overrides characteristic used in uitkFocusVisible */
-.uitkTab.uitkFocusVisible:after {
+/* Overrides characteristic used in saltFocusVisible */
+.saltTab.saltFocusVisible:after {
   inset: 2px 2px 4px 2px;
 }
 
-.uitkTab:not(.uitkTab-vertical) {
+.saltTab:not(.saltTab-vertical) {
   margin: 0 var(--tabs-tab-spacing) 0 0;
 }
 
-.uitkTab[aria-selected="true"] {
+.saltTab[aria-selected="true"] {
   color: var(--salt-text-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
 
-.uitkTab-dragAway {
+.saltTab-dragAway {
   display: none;
 }
 
 /* main content aria of Tab */
-.uitkTab-main {
+.saltTab-main {
   background: inherit;
   border: none;
   color: inherit;
@@ -60,32 +60,32 @@
   position: relative;
 }
 
-.uitkTab-closeable .uitkTab-main {
+.saltTab-closeable .saltTab-main {
   border-right: solid transparent var(--salt-size-unit);
 }
 
-.uitkTab .uitkTab-closeButton {
+.saltTab .saltTab-closeButton {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 /* the close Button on a closeable Tab*/
-.uitkTab-close-icon {
+.saltTab-close-icon {
   display: none;
 }
 
-.uitk-density-touch .uitkTab-close-icon,
-.uitk-density-low .uitkTab-close-icon {
+.salt-density-touch .saltTab-close-icon,
+.salt-density-low .saltTab-close-icon {
   display: block;
 }
 
-.uitk-density-touch .uitkTab-close-icon-small,
-.uitk-density-low .uitkTab-close-icon-small {
+.salt-density-touch .saltTab-close-icon-small,
+.salt-density-low .saltTab-close-icon-small {
   display: none;
 }
 
-.uitkTab .uitkTab-text {
+.saltTab .saltTab-text {
   display: inline-block;
   position: relative;
   overflow: hidden;
@@ -97,11 +97,11 @@
   z-index: var(--salt-zIndex-default);
 }
 
-.uitkTab-vertical .uitkTab-text {
+.saltTab-vertical .saltTab-text {
   text-align: var(--salt-text-textAlign);
 }
 
-.uitkTab .uitkTab-text:before {
+.saltTab .saltTab-text:before {
   height: 0;
   content: attr(data-text);
   display: block;
@@ -110,7 +110,7 @@
 }
 
 /* FIXME: these are all focusVisible styles, but with a bespoke inset */
-.uitkTab-editing:after {
+.saltTab-editing:after {
   content: "";
   position: absolute;
   top: 0;
@@ -123,23 +123,23 @@
   outline-offset: -2px;
 }
 
-.uitkTab-vertical.uitkTab-editing:after {
+.saltTab-vertical.saltTab-editing:after {
   right: 2px;
   bottom: 0;
 }
 
-.uitkTab-vertical .uitkFocusVisible:not([aria-selected="true"]):before {
+.saltTab-vertical .saltFocusVisible:not([aria-selected="true"]):before {
   left: auto;
   height: auto;
   top: 0;
   width: 2px;
 }
 
-.uitkTab.uitkFocusVisible {
+.saltTab.saltFocusVisible {
   background: var(--saltTabs-tab-hover-background, var(--salt-navigable-primary-background-hover));
 }
 
-.uitkTab:before {
+.saltTab:before {
   content: var(--tabs-tab-before-content, none);
   background: var(--tabs-tab-before-background);
   height: var(--tabs-tab-before-height);
@@ -149,7 +149,7 @@
   z-index: 1;
 }
 
-.uitkTabstrip-draggingTab .uitkTab[aria-selected="true"]:before {
+.saltTabstrip-draggingTab .saltTab[aria-selected="true"]:before {
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-color-active);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
@@ -158,8 +158,8 @@
 }
 
 /* Hover styling */
-.uitkTab:not([aria-selected="true"]).uitkFocusVisible:before,
-.uitkTab:hover:not([aria-selected="true"]):before {
+.saltTab:not([aria-selected="true"]).saltFocusVisible:before,
+.saltTab:hover:not([aria-selected="true"]):before {
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
@@ -167,6 +167,6 @@
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
 }
 
-.uitkTab:hover:not(.uitkTab-closeHover) {
+.saltTab:hover:not(.saltTab-closeHover) {
   background: var(--saltTabs-tab-hover-background, var(--salt-navigable-primary-background-hover));
 }

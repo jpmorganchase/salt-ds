@@ -12,7 +12,7 @@ interface TabActivationIndicatorProps {
   tabId?: string;
 }
 
-const withBaseName = makePrefixer("uitkTabActivationIndicator");
+const withBaseName = makePrefixer("saltTabActivationIndicator");
 
 export const TabActivationIndicator = ({
   hideThumb = false,

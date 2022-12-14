@@ -1,4 +1,4 @@
-.uitkCheckboxBase {
+.saltCheckboxBase {
   background: var(--saltCheckbox-background, none);
   line-height: 0;
   padding-top: 1px;
@@ -7,7 +7,7 @@
 }
 
 /* Styles applied to input element */
-.uitkCheckboxBase-input {
+.saltCheckboxBase-input {
   cursor: inherit;
   height: 10px;
   left: 0;

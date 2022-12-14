@@ -1,25 +1,25 @@
 /* Styles applied to the root element dependent on density */
-.uitk-density-high {
+.salt-density-high {
   --formField-helperText-marginTop-default: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
 
   --formField-helperText-background-offset-height: 17px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --formField-helperText-marginTop-default: 2px;
   --formField-helperText-marginTop-fullWidth: 3px;
   --formField-helperText-transform: translate(0, 2px);
 
   --formField-helperText-background-offset-height: 19px;
 }
-.uitk-density-touch {
+.salt-density-touch {
   --formField-helperText-marginTop-default: 8px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, -3px);
 
   --formField-helperText-background-offset-height: 21px;
 }
-.uitk-density-low {
+.salt-density-low {
   --formField-helperText-marginTop-default: 4px;
   --formField-helperText-marginTop-fullWidth: 5px;
   --formField-helperText-transform: translate(0, 1px);
@@ -28,12 +28,12 @@
 }
 
 /* Class applied if `fullWidth={true}` */
-.uitkFormField-fullWidth {
+.saltFormField-fullWidth {
   --formField-helperText-transform: none;
 }
 
 /* Class applied to the helper text container */
-.uitkFormFieldHelperText {
+.saltFormFieldHelperText {
   --formField-helperText-opacity: 1;
 
   color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));

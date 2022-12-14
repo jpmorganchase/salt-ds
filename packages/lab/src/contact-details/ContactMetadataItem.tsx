@@ -4,7 +4,7 @@ import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { MailLinkComponent } from "./MailLinkComponent";
 import { ValueComponentProps } from "./types";
 
-const withBaseName = makePrefixer("uitkContactMetadataItem");
+const withBaseName = makePrefixer("saltContactMetadataItem");
 
 export interface ContactMetadataItemProps
   extends HTMLAttributes<HTMLDivElement> {

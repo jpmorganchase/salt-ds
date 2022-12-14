@@ -1,21 +1,21 @@
-.uitk-density-high {
+.salt-density-high {
   --salt-accent-fontSize: 8px;
   --salt-accent-lineHeight: 11px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --salt-accent-fontSize: 10px;
   --salt-accent-lineHeight: 13px;
 }
-.uitk-density-low {
+.salt-density-low {
   --salt-accent-fontSize: 12px;
   --salt-accent-lineHeight: 16px;
 }
-.uitk-density-touch {
+.salt-density-touch {
   --salt-accent-fontSize: 14px;
   --salt-accent-lineHeight: 18px;
 }
 
-.uitk-theme {
+.salt-theme {
   --salt-accent-background: var(--salt-palette-accent-background);
   --salt-accent-borderColor: var(--salt-palette-accent-border);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);

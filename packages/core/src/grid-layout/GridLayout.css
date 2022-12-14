@@ -1,16 +1,16 @@
-.uitk-density-touch {
+.salt-density-touch {
   --gridLayout-gap-density-multiplier: 2;
 }
 
 /* Default variables applied to the root element */
-.uitkGridLayout {
+.saltGridLayout {
   --gridLayout-space: 1fr;
   --gridLayout-rowGap: var(--gridLayout-gap-density-multiplier, 3);
   --gridLayout-columnGap: var(--gridLayout-gap-density-multiplier, 3);
 }
 
 /* Style applied to the root element */
-.uitkGridLayout {
+.saltGridLayout {
   display: grid;
   column-gap: calc(var(--salt-size-unit) * var(--gridLayout-columnGap));
   row-gap: calc(var(--salt-size-unit) * var(--gridLayout-rowGap));
@@ -20,7 +20,7 @@
   grid-auto-rows: auto;
 }
 
-.uitkGridLayout-area {
+.saltGridLayout-area {
   grid-template: var(--gridLayout-gridTemplate);
   grid-template-columns: min-content 1fr min-content;
   grid-template-rows: min-content 1fr min-content;

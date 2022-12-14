@@ -25,7 +25,7 @@ describe("getColorPalettes", () => {
     });
   });
   describe("getColorPalettes", () => {
-    it("should return all the shades of the UITK Colors", () => {
+    it("should return all the shades of the SALT Colors", () => {
       expect(getColorPalettes()).toEqual([
         [
           "rgb(203, 231, 249)",

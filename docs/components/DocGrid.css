@@ -1,4 +1,4 @@
-.uitkDocGrid {
+.saltDocGrid {
   --doc-grid-gap: var(--salt-size-unit);
   --doc-grid-paddingBlockStart: var(--salt-size-unit);
   --doc-grid-paddingBlockEnd: var(--salt-size-unit);
@@ -7,7 +7,7 @@
   --doc-grid-code-text-color: var(--salt-text-primary-foreground);
 }
 
-.uitkDocGrid {
+.saltDocGrid {
   align-items: center;
   background: var(--salt-container-primary-background);
   display: grid;
@@ -20,6 +20,6 @@
   width: var(--saltDocGrid-width, auto);
 }
 
-.uitkDocGrid-textExample {
+.saltDocGrid-textExample {
   width: fit-content;
 }

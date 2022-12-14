@@ -1,18 +1,18 @@
-.uitkDeckLayout {
+.saltDeckLayout {
   overflow: hidden;
 }
 
-.uitkDeckLayout-animate {
+.saltDeckLayout-animate {
   white-space: nowrap;
 }
 
-.uitkDeckLayout-slide-horizontal {
+.saltDeckLayout-slide-horizontal {
   width: var(--deckLayout-width);
   transition: transform var(--salt-animation-duration);
   transform: translateX(var(--deckLayout-transform-value));
 }
 
-.uitkDeckLayout-slide-vertical {
+.saltDeckLayout-slide-vertical {
   height: var(--deckLayout-height);
   transition: transform var(--salt-animation-duration);
   transform: translateY(var(--deckLayout-transform-value));

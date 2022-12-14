@@ -32,7 +32,7 @@ export const CharacteristicPatternsList = (
 
   const jsonByScopeInView = Object.values(props.jsonInCurrentScope).filter(
     (js) =>
-      Object.keys(js.jsonObj.uitk).some((k) =>
+      Object.keys(js.jsonObj.salt).some((k) =>
         props.patternsInScope.includes(k)
       )
   );
@@ -42,12 +42,12 @@ export const CharacteristicPatternsList = (
     props.patternsInScope.forEach((pattern) => {
       const values: JSONObj = {};
       for (const s of jsonByScopeInView) {
-        Object.keys(s.jsonObj.uitk)
+        Object.keys(s.jsonObj.salt)
           .filter((k) => pattern === k)
           .forEach((k) => {
             values[pattern] = {
               ...values[pattern],
-              [s.scope]: s.jsonObj.uitk[k],
+              [s.scope]: s.jsonObj.salt[k],
             };
           });
       }

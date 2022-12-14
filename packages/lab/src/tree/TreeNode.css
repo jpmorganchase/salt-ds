@@ -1,4 +1,4 @@
-.uitkTreeNode {
+.saltTreeNode {
   /* Color */
   --tree-item-text-color: var(--salt-text-primary-foreground);
   --tree-item-background: var(--salt-selectable-background);
@@ -17,21 +17,21 @@
   text-align: var(--list-item-textAlign);
 }
 
-.uitkTreeNode-highlighted {
+.saltTreeNode-highlighted {
   --tree-item-background: var(--salt-selectable-background-hover);
 }
 
-.uitkTreeNode-item[aria-selected="true"] {
+.saltTreeNode-item[aria-selected="true"] {
   background: var(--salt-selectable-background-selected);
   color: var(--salt-text-primary-foreground);
   --saltIcon-color: var(--salt-text-primary-foreground);
 }
 
-.uitkTreeNode[aria-expanded="true"] {
+.saltTreeNode[aria-expanded="true"] {
   --tree-node-icon-transform: rotate(45deg) translate(1px, 1px);
 }
 
-.uitkTreeNode-item {
+.saltTreeNode-item {
   align-items: center;
   background: var(--tree-item-background);
   display: flex;
@@ -40,7 +40,7 @@
   position: relative;
 }
 
-.uitkTreeNode-toggle {
+.saltTreeNode-toggle {
   display: inline-block;
   flex: 0 0 18px;
   height: var(--tree-node-icon-size);
@@ -48,12 +48,12 @@
   transition: transform 0.1s ease;
 }
 
-.uitkTreeNode-label {
+.saltTreeNode-label {
   align-items: center;
   display: inline-flex;
   height: var(--tree-node-height);
 }
-.uitkTreeNode-description {
+.saltTreeNode-description {
   align-items: center;
   display: inline-flex;
   height: var(--tree-node-height);
@@ -61,8 +61,8 @@
 }
 
 /* Leaf node or the div child of a collapsible node */
-/* .uitkTreeNode:not([aria-expanded="true"]), */
-.uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
+/* .saltTreeNode:not([aria-expanded="true"]), */
+.saltTreeNode[aria-expanded] > .saltTreeNode-label {
   --checkbox-borderColor: black;
   --checkbox-borderWidth: 1px;
   --checkbox-tick: black;
@@ -79,24 +79,24 @@
   white-space: nowrap;
 }
 
-.uitkTreeNode:not([aria-expanded]) {
+.saltTreeNode:not([aria-expanded]) {
   padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
-.uitkTreeNode[aria-expanded] > .uitkTreeNode-label {
+.saltTreeNode[aria-expanded] > .saltTreeNode-label {
   padding-left: calc(var(--tree-node-paddingLeft) + var(--tree-toggle-width) + var(--tree-node-indent));
 }
 
-.uitkTreeNode[aria-expanded] {
+.saltTreeNode[aria-expanded] {
   flex-direction: column;
 }
 
-.uitkTreeNode[aria-expanded] {
+.saltTreeNode[aria-expanded] {
   flex-direction: column;
   height: auto;
 }
 
-.uitkTreeNode > *[role="group"] {
+.saltTreeNode > *[role="group"] {
   padding-left: 0px;
 }
 
@@ -110,25 +110,25 @@
   --tree-node-indent: 48px;
 }
 
-.uitkTreeNode:not(.focusVisible):not([aria-expanded])[data-highlighted],
-.uitkTreeNode:not(.focusVisible)[aria-expanded][data-highlighted] > div:first-child {
+.saltTreeNode:not(.focusVisible):not([aria-expanded])[data-highlighted],
+.saltTreeNode:not(.focusVisible)[aria-expanded][data-highlighted] > div:first-child {
   background: var(--list-background-highlighted);
 }
 
-.uitkTree-toggle {
+.saltTree-toggle {
   cursor: pointer;
 }
 
-.uitkTreeNode[aria-selected="true"] {
+.saltTreeNode[aria-selected="true"] {
   --list-item-header-twisty-color: var(--list-item-selected-color);
 }
 
-.uitkTreeNode:not(.focusVisible):focus {
+.saltTreeNode:not(.focusVisible):focus {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.uitkTreeNode:not([aria-expanded]).focusVisible:before,
-.uitkTreeNode[aria-expanded].focusVisible > div:first-child:before {
+.saltTreeNode:not([aria-expanded]).focusVisible:before,
+.saltTreeNode[aria-expanded].focusVisible > div:first-child:before {
   content: "";
   position: absolute;
   top: 0px;
@@ -139,30 +139,30 @@
   background: var(--list-background-highlighted);
 }
 
-/* .uitkTreeNode[aria-level='2'] {
+/* .saltTreeNode[aria-level='2'] {
     --tree-offset-left-focusVisible: -13px;
   }
 
-  .uitkTreeNode[aria-level='3'] {
+  .saltTreeNode[aria-level='3'] {
     --tree-offset-left-focusVisible: -24px;
   }
 
-  .uitkTreeNode[aria-level='4'] {
+  .saltTreeNode[aria-level='4'] {
     --tree-offset-left-focusVisible: -36px;
   } */
 
-.uitkTreeNode[aria-expanded="false"] > *:first-child:after {
+.saltTreeNode[aria-expanded="false"] > *:first-child:after {
   --list-svg-toggle: var(--tree-node-expand);
 }
 
-.uitkTreeNode[aria-expanded="true"] > *:first-child:after {
+.saltTreeNode[aria-expanded="true"] > *:first-child:after {
   transform: var(--tree-node-expanded-transform);
 }
 
 /* Selection */
 
-.uitkTree:not(.checkbox-only) .uitkTreeNode:not([aria-expanded])[aria-selected="true"],
-.uitkTree:not(.checkbox-only) .uitkTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
+.saltTree:not(.checkbox-only) .saltTreeNode:not([aria-expanded])[aria-selected="true"],
+.saltTree:not(.checkbox-only) .saltTreeNode[aria-expanded][aria-selected="true"] > div:first-child {
   --checkbox-borderColor: var(--list-item-selected-color);
   --checkbox-tick: var(--list-item-selected-color);
   --tree-borderColor-focusVisible: var(--list-item-selected-color);
@@ -170,11 +170,11 @@
   color: var(--list-item-selected-color);
 }
 
-.with-checkbox .uitkTreeNode {
+.with-checkbox .saltTreeNode {
   padding-left: 28px;
 }
 
-.with-checkbox .uitkTreeNode:before {
+.with-checkbox .saltTreeNode:before {
   border-style: solid;
   border-width: var(--checkbox-borderWidth);
   border-color: var(--checkbox-borderColor);

@@ -16,7 +16,7 @@ import "./Breadcrumbs.css";
 
 const iconWidth = 12;
 
-const withBaseName = makePrefixer("uitkBreadcrumbs");
+const withBaseName = makePrefixer("saltBreadcrumbs");
 
 function insertSeparators(
   items: ReactNode[],

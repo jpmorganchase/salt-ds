@@ -3,14 +3,14 @@ import {
   render,
   screen,
   fireEvent
-} from '@jpmuitk/react-testing-library-utils';
-import { AriaAnnouncerProvider } from '@jpmuitk/aria-announcer';
+} from '@jpmsalt/react-testing-library-utils';
+import { AriaAnnouncerProvider } from '@jpmsalt/aria-announcer';
 
 import Tree from '../Tree';
 
 const mockAnnounce = jest.fn();
 
-jest.mock('@jpmuitk/aria-announcer/useAriaAnnouncer', () => () => ({
+jest.mock('@jpmsalt/aria-announcer/useAriaAnnouncer', () => () => ({
   announce: mockAnnounce
 }));
 

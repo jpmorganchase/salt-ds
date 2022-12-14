@@ -32,22 +32,22 @@
 
 /* Override Salt accordion styles */
 
-.summary :global(.uitkAccordionSummary-icon:hover) {
+.summary :global(.saltAccordionSummary-icon:hover) {
   background: var(--accordion-summary-background-hover);
 }
 
-.summary :global(.uitkIcon) {
+.summary :global(.saltIcon) {
   --salt-size-icon-base: calc(var(--salt-size-unit) * 2);
 }
 
-.accordion :global(.uitkAccordionDetails .uitkAccordionDetails-content) {
+.accordion :global(.saltAccordionDetails .saltAccordionDetails-content) {
   padding-left: var(--salt-size-unit);
 }
 
 /* ----------------------------- */
 
 @media screen and (max-width: 768px) {
-  .summary :global(.uitkIcon) {
+  .summary :global(.saltIcon) {
     --salt-size-icon-base: var(--salt-size-unit);
   }
 }

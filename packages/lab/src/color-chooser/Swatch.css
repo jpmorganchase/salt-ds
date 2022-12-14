@@ -1,71 +1,71 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
-.uitkColorChooserSwatch-swatch,
-.uitkColorChooserSwatch-graySwatch {
+.saltColorChooserSwatch-swatch,
+.saltColorChooserSwatch-graySwatch {
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
 }
 
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
   --colorChooser-swatch-density-high-size: calc(5 * var(--salt-size-unit));
   --colorChooser-swatch-density-medium-size: calc(3 * var(--salt-size-unit));
   --colorChooser-swatch-density-low-size: calc(3 * var(--salt-size-unit));
   --colorChooser-swatch-density-touch-size: calc(2 * var(--salt-size-unit));
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-touch-size);
 }
-.uitk-density-low {
+.salt-density-low {
   --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-low-size);
 }
-.uitk-density-medium {
+.salt-density-medium {
   --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-medium-size);
 }
-.uitk-density-high {
+.salt-density-high {
   --colorChooser-swatch-size-unit: var(--colorChooser-swatch-density-high-size);
 }
 
-.uitkColorChooserSwatch-swatch,
-.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-graySwatch {
+.saltColorChooserSwatch-swatch,
+.salt-theme[data-mode="light"] .saltColorChooserSwatch-graySwatch {
   width: var(--colorChooser-swatch-size-unit);
   height: var(--colorChooser-swatch-size-unit);
 }
 
-.uitkColorChooserSwatch-whiteSwatch {
+.saltColorChooserSwatch-whiteSwatch {
   margin-bottom: 1px;
   margin-left: 1px;
   cursor: pointer;
 }
 
-.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-whiteSwatch {
+.salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch {
   border: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
 }
 
-.uitk-theme[data-mode="light"] .uitkColorChooserSwatch-whiteSwatch,
-.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-graySwatch {
+.salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch,
+.salt-theme[data-mode="dark"] .saltColorChooserSwatch-graySwatch {
   width: calc(var(--colorChooser-swatch-size-unit) - 2);
   height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
-.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-whiteSwatch,
-.uitkColorChooserSwatch-graySwatch {
+.salt-theme[data-mode="dark"] .saltColorChooserSwatch-whiteSwatch,
+.saltColorChooserSwatch-graySwatch {
   border: 0px;
 }
 
-.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-whiteSwatch {
+.salt-theme[data-mode="dark"] .saltColorChooserSwatch-whiteSwatch {
   width: calc(var(--colorChooser-swatch-size-unit) - 2);
   height: calc(var(--colorChooser-swatch-size-unit) - 2);
 }
 
-.uitk-theme[data-mode="dark"] .uitkColorChooserSwatch-graySwatch {
+.salt-theme[data-mode="dark"] .saltColorChooserSwatch-graySwatch {
   border: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
 }
 
-.uitkColorChooserSwatch-active {
+.saltColorChooserSwatch-active {
   outline: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
   border: var(--salt-focused-outlineWidth) var(--salt-container-borderStyle) var(--salt-actionable-cta-foreground-active) !important;
   margin-bottom: 1px;
@@ -73,7 +73,7 @@
   cursor: pointer;
 }
 
-.uitkColorChooserSwatch-transparent {
+.saltColorChooserSwatch-transparent {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-negative-foreground) !important;
   width: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;

@@ -1,4 +1,4 @@
-.uitkEditableLabel {
+.saltEditableLabel {
   --saltInput-minWidth: 14px;
   --saltInput-position: absolute;
   --editableLabel-padding: var(--saltEditableLabel-padding, 6px);
@@ -14,7 +14,7 @@
   z-index: var(--salt-zIndex-default);
 }
 
-.uitkEditableLabel:before {
+.saltEditableLabel:before {
   content: attr(data-text);
   display: block;
   height: 0px;
@@ -22,7 +22,7 @@
   white-space: pre-wrap;
 }
 
-.uitkEditableLabel .uitkInput {
+.saltEditableLabel .saltInput {
   font-weight: var(--salt-text-fontWeight);
   left: var(--editableLabel-padding, 0);
   padding: 0;
@@ -30,6 +30,6 @@
   right: var(--editableLabel-padding, 0);
 }
 
-.uitkEditableLabel-input {
+.saltEditableLabel-input {
   outline: none;
 }

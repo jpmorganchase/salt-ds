@@ -1,5 +1,5 @@
 /* Styles applied to root component (ContentStatus) */
-.uitkContentStatus {
+.saltContentStatus {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,7 +9,7 @@
 }
 
 /* Styles applied to inner content */
-.uitkContentStatus-content {
+.saltContentStatus-content {
   color: var(--saltContentStatus-content-color, var(--salt-text-primary-foreground));
   display: flex;
   flex-direction: column;
@@ -17,15 +17,15 @@
 }
 
 /* Styles applied to status title */
-.uitkContentStatus-title {
+.saltContentStatus-title {
   font-weight: var(--salt-typography-fontWeight-semiBold);
 }
 
 /* Styles applied to status message */
-.uitkContentStatus-message {
+.saltContentStatus-message {
 }
 
 /* Styles applied to status actions */
-.uitkContentStatus-actions {
+.saltContentStatus-actions {
   margin-top: var(--saltContentStatus-actions-marginTop, var(--salt-size-unit));
 }

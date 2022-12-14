@@ -114,7 +114,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
               id: id,
             }}
           >
-            <div className="uitkWindow" ref={forkedRef}>
+            <div className="saltWindow" ref={forkedRef}>
               <div className={className} style={{ ...styleRest }} {...rest}>
                 {children}
               </div>

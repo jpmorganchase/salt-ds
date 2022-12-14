@@ -1,4 +1,4 @@
-.uitkThemeEditor {
+.saltThemeEditor {
   border-right: 1px solid var(--salt-container-primary-borderColor);
   background-color: var(--salt-container-primary-background);
   display: flex;
@@ -6,12 +6,12 @@
   height: 100%;
 }
 
-.uitkThemeEditorAppOutputHeader {
+.saltThemeEditorAppOutputHeader {
   color: var(--salt-text-primary-foreground);
   background-color: var(--salt-container-primary-background);
   flex: 240 0;
 }
 
-.uitkThemeEditor h1 {
+.saltThemeEditor h1 {
   padding: 20px 20px 0px 20px;
 }

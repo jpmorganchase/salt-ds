@@ -36,7 +36,7 @@ export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
               setSearchParams={setSearchParams}
               shadowPattern={props.shadowPattern[innerPattern]}
               themeName={props.themeName}
-              uitkColorOverrides={props.uitkColorOverrides}
+              uitkColorOverrides={props.saltColorOverrides}
             />
           );
         })}
@@ -59,7 +59,7 @@ export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
               setSearchParams={setSearchParams}
               shadowPattern={props.shadowPattern[innerPattern]}
               themeName={props.themeName}
-              uitkColorOverrides={props.uitkColorOverrides}
+              uitkColorOverrides={props.saltColorOverrides}
             />
           );
         })}

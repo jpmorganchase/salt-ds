@@ -238,7 +238,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   showColorPicker={props.characteristicsView ? false : true}
                   onSelect={onSelect}
                   onClear={onClear}
-                  UITKColorOverrides={props.uitkColorOverrides}
+                  UITKColorOverrides={props.saltColorOverrides}
                 />
               </SaltProvider>
             </div>

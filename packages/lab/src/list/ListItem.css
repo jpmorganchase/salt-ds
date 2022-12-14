@@ -1,4 +1,4 @@
-.uitkListItem {
+.saltListItem {
   /* Color */
   --list-item-text-color: var(--salt-text-primary-foreground);
   --list-item-background: var(--saltList-item-background, var(--salt-selectable-background));
@@ -8,22 +8,22 @@
   --list-item-alignItems: center;
 }
 
-.uitkListItem.uitkHighlighted {
+.saltListItem.saltHighlighted {
   --saltCheckbox-icon-stroke: var(--salt-selectable-borderColor-hover);
   --list-item-background: var(--salt-selectable-background-hover);
 }
 
-.uitkListItemHeader {
+.saltListItemHeader {
   font-weight: var(--salt-typography-fontWeight-bold);
 }
 
-.uitkListItemHeader[data-sticky] {
+.saltListItemHeader[data-sticky] {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.uitkListItem {
+.saltListItem {
   color: var(--list-item-text-color);
   cursor: var(--saltList-item-cursor, pointer);
   background: var(--saltList-item-background, var(--list-item-background));
@@ -42,42 +42,42 @@
   white-space: nowrap;
 }
 
-.uitkListItem:last-child {
+.saltListItem:last-child {
   margin-bottom: 0px;
 }
 
-.uitkListItem-checkbox {
+.saltListItem-checkbox {
   --list-item-background-active: var(--salt-selectable-background);
   --list-item-text-color-active: var(--salt-text-primary-foreground);
   --list-item-text-padding: 0 0 0 var(--salt-size-unit);
 }
 
-.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox) {
+.saltListItem[aria-selected="true"]:not(.saltListItem-checkbox) {
   --list-item-background: var(--list-item-background-active);
   color: var(--list-item-text-color-active);
 }
 
-.uitkListItem.uitkDisabled {
+.saltListItem.saltDisabled {
   --list-item-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkListItem.uitkFocusVisible {
+.saltListItem.saltFocusVisible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: -2px;
   outline-color: var(--salt-focused-outlineColor);
 }
 
-.uitkListItem.uitkFocusVisible:after {
+.saltListItem.saltFocusVisible:after {
   content: none;
 }
 
-.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox).uitkFocusVisible {
+.saltListItem[aria-selected="true"]:not(.saltListItem-checkbox).saltFocusVisible {
   outline-color: var(--list-item-selected-focus-outlineColor);
 }
 
-.uitkListItem-textWrapper {
+.saltListItem-textWrapper {
   flex: 1;
   overflow: hidden;
   padding: var(--list-item-text-padding, 0px);
@@ -85,7 +85,7 @@
   text-overflow: ellipsis;
 }
 
-.uitkListItem-proxy {
+.saltListItem-proxy {
   position: absolute !important;
   visibility: hidden;
 }

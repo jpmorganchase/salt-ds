@@ -1,7 +1,7 @@
-.uitk-density-touch,
-.uitk-density-low,
-.uitk-density-medium,
-.uitk-density-high {
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
   --salt-animation-opacity-start: 0;
   --salt-animation-opacity-end: 1;
   --salt-animation-scale-start: 0;

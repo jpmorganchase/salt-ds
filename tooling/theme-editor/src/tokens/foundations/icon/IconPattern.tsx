@@ -29,7 +29,7 @@ export const IconPattern = (props: IconPatternProps): ReactElement => {
 
           return (
             <ChildrenValues
-              uitkColorOverrides={props.uitkColorOverrides}
+              uitkColorOverrides={props.saltColorOverrides}
               children={values}
               extractValue={props.extractValue}
               fieldName={fieldName}

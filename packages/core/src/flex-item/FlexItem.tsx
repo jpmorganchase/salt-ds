@@ -9,7 +9,7 @@ import {
 import "./FlexItem.css";
 import cx from "classnames";
 
-const withBaseName = makePrefixer("uitkFlexItem");
+const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
   "start",
   "end",

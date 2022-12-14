@@ -1,4 +1,4 @@
-.uitkGridRightPart {
+.saltGridRightPart {
   position: absolute;
   top: 0;
   right: var(--grid-scrollBar-width);
@@ -9,21 +9,21 @@
   z-index: var(--grid-right-body-zIndex);
 }
 
-.uitkGridRightPart-leftShadow {
+.saltGridRightPart-leftShadow {
   box-shadow: -2px 0 4px 0 var(--grid-shadow-color);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridRightPart-leftShadow {
+.saltGrid-pinnedSeparators .saltGridRightPart-leftShadow {
   border-left: solid 1px var(--grid-pinnedSeparator-color);
 }
 
-.uitkGridRightPart-space {
+.saltGridRightPart-space {
   position: relative;
   height: var(--grid-total-height);
   width: var(--grid-rightPart-width);
 }
 
-.uitkGridRightPart table {
+.saltGridRightPart table {
   table-layout: fixed;
   position: absolute;
 

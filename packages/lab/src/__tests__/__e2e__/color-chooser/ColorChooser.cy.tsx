@@ -1,19 +1,19 @@
 import { ColorChooser, Color } from "@salt-ds/lab";
 
-const uitkColor = Color.makeColorFromHex("#D1F4C9");
+const saltColor = Color.makeColorFromHex("#D1F4C9");
 const customColor = Color.makeColorFromHex("#30BC67");
 
 describe("ColorChooser", () => {
   it("Renders an overlay", () => {
     cy.mount(
-      <ColorChooser color={uitkColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
     );
     cy.findByRole("button", { name: "Green10" }).should("be.visible");
   });
 
   it("Renders the SwatchesPicker upon clicking on the Swatches tab", () => {
     cy.mount(
-      <ColorChooser color={uitkColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByText("Swatches").realClick();
@@ -33,9 +33,9 @@ describe("ColorChooser", () => {
     cy.findByTestId("swatches").should("be.visible");
   });
 
-  it("Renders the Swatches tab first if a UITK color is selected", () => {
+  it("Renders the Swatches tab first if a SALT color is selected", () => {
     cy.mount(
-      <ColorChooser color={uitkColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Swatches" }).should(
@@ -46,7 +46,7 @@ describe("ColorChooser", () => {
     cy.findByTestId("swatches-picker").should("be.visible");
   });
 
-  it("Renders the Color Picker tab first if a non UITK color is selected", () => {
+  it("Renders the Color Picker tab first if a non SALT color is selected", () => {
     cy.mount(
       <ColorChooser
         color={customColor}
@@ -81,7 +81,7 @@ describe("ColorChooser", () => {
   it("Dismisses the overlay if Swatches tab is selected and Default is pressed", () => {
     cy.mount(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
@@ -97,7 +97,7 @@ describe("ColorChooser", () => {
   it.skip("ColorPicker should default to 0 if users leave alpha value empty", () => {
     cy.mount(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
@@ -114,7 +114,7 @@ describe("ColorChooser", () => {
   it.skip("ColorPicker should default to 0 if users leave r/g/b value empty", () => {
     cy.mount(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
@@ -130,7 +130,7 @@ describe("ColorChooser", () => {
   it.skip("Sets hex inputs and rgb value inputs correctly on the color picker panel after Default button is pressed with specific color value", () => {
     cy.mount(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         disableAlphaChooser={true}
         onSelect={() => {}}
         onClear={() => {}}

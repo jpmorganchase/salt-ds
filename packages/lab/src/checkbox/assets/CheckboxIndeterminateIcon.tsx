@@ -12,9 +12,9 @@ export function CheckboxIndeterminateIcon({
       viewBox="0 0 14 14"
     >
       <g fillRule="evenodd" strokeWidth="1">
-        <rect className={`uitkCheckboxIcon-box`} />
+        <rect className={`saltCheckboxIcon-box`} />
         <rect
-          className={`uitkCheckboxIcon-tick`}
+          className={`saltCheckboxIcon-tick`}
           height="2"
           strokeWidth="0"
           width="8"

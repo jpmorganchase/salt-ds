@@ -59,13 +59,13 @@ function transformToCSS(patternJsonByScope) {
   patternJsonByScope.forEach((element) => {
     let selector;
     if (element.scope === "mode-all") {
-      selector = `.uitk-theme`;
+      selector = `.salt-theme`;
     } else if (element.scope === "density-all") {
-      selector = `.uitk-density-low, .uitk-density-medium, .uitk-density-high, .uitk-density-touch`;
+      selector = `.salt-density-low, .salt-density-medium, .salt-density-high, .salt-density-touch`;
     } else if (element.scope.includes("emphasis")) {
-      selector = `.uitkEmphasis${capitalize(element.scope.split("-")[1])}`;
+      selector = `.saltEmphasis${capitalize(element.scope.split("-")[1])}`;
     } else {
-      selector = `.uitk-${element.scope}`;
+      selector = `.salt-${element.scope}`;
     }
     stringCSS = stringCSS + selector + "{";
 
@@ -90,10 +90,10 @@ export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
   for (var patternName of UITK_FOUNDATIONS.concat(UITK_CHARACTERISTICS)) {
     const patternJsonByScope = jsonByScope
       .filter((element) => {
-        return element.jsonObj.uitk[patternName];
+        return element.jsonObj.salt[patternName];
       })
       .map((element) => {
-        const patternJSON = element.jsonObj.uitk[patternName];
+        const patternJSON = element.jsonObj.salt[patternName];
         return {
           scope: element.scope,
           jsonObj: { [patternName]: patternJSON },

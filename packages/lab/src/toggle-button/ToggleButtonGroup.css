@@ -1,24 +1,24 @@
-.uitk-density-high {
+.salt-density-high {
   --toggleButton-group-height: calc(var(--salt-size-base) - var(--salt-size-unit) + 2px);
 }
-.uitk-density-medium {
+.salt-density-medium {
   --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
 }
-.uitk-density-low {
+.salt-density-low {
   --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 2 / 3) + 2px);
 }
-.uitk-density-touch {
+.salt-density-touch {
   --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
 }
 
-.uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
+.saltToggleButtonGroup.saltToggleButtonGroup-cta {
   --toggleButton-group-borderColor: var(--saltToggleButton-group-cta-borderColor, var(--salt-container-secondary-borderColor));
 }
-.uitkToggleButtonGroup.uitkToggleButtonGroup-primary {
+.saltToggleButtonGroup.saltToggleButtonGroup-primary {
   --toggleButton-group-borderColor: var(--saltToggleButton-group-primary-borderColor, var(--salt-container-primary-borderColor));
 }
 
-.uitkToggleButtonGroup {
+.saltToggleButtonGroup {
   --toggleButton-group-borderWidth: var(--saltToggleButton-group-borderWidth, var(--salt-size-border));
   --toggleButton-group-borderStyle: var(--saltToggleButton-group-borderWidth, var(--salt-container-borderStyle));
 
@@ -28,22 +28,22 @@
   border: var(--toggleButton-group-borderWidth) var(--toggleButton-group-borderStyle) var(--toggleButton-group-borderColor);
 }
 
-.uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
+.saltToggleButtonGroup.saltToggleButtonGroup-secondary {
   --toggleButton-group-borderColor: var(--saltToggleButton-group-secondary-borderColor, var(--salt-container-tertiary-borderColor));
 }
 
-.uitkToggleButtonGroup-horizontal .uitkToggleButton {
+.saltToggleButtonGroup-horizontal .saltToggleButton {
   height: var(--toggleButton-group-height);
 }
 
-.uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {
+.saltToggleButtonGroup-horizontal .saltToggleButton:not(:first-child) {
   margin-left: 2px;
 }
 
-.uitkToggleButtonGroup-vertical {
+.saltToggleButtonGroup-vertical {
   flex-direction: column;
 }
 
-.uitkToggleButtonGroup-vertical .uitkToggleButton:not(:first-child) {
+.saltToggleButtonGroup-vertical .saltToggleButton:not(:first-child) {
   margin-top: 2px;
 }

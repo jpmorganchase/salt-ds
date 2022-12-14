@@ -1,4 +1,4 @@
-.uitkOverflowSeparator {
+.saltOverflowSeparator {
   background: var(--salt-separable-tertiary-borderColor);
   height: var(--salt-size-border);
   margin: calc(var(--salt-size-unit) / 2) 0;

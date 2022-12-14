@@ -39,7 +39,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   max?: number;
 }
 
-const withBaseName = makePrefixer("uitkBadge");
+const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   {

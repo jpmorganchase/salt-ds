@@ -1,30 +1,30 @@
-.uitk-density-high {
+.salt-density-high {
   --controlLabel-right-marginLeft: 3px;
   --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --controlLabel-right-marginLeft: 6px;
   --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-low {
+.salt-density-low {
   --controlLabel-right-marginLeft: 9px;
   --controlLabel-right-marginRight: 0px;
 }
-.uitk-density-touch {
+.salt-density-touch {
   --controlLabel-right-marginLeft: 12px;
   --controlLabel-right-marginRight: 0px;
 }
 
 /* Styles applied to root component */
-.uitkControlLabel {
+.saltControlLabel {
   align-items: center;
   cursor: pointer;
   display: inline-flex;
 }
 
 /* Styles applied to label */
-.uitkControlLabel-label,
-.uitkControlLabel-labelRight {
+.saltControlLabel-label,
+.saltControlLabel-labelRight {
   --controlLabel-marginLeft: 0;
   --controlLabel-marginRight: calc(var(--salt-size-unit) / 1.5);
 
@@ -39,19 +39,19 @@
 }
 
 /* Overrides on `labelPlacement="right"` */
-.uitkControlLabel-labelRight {
+.saltControlLabel-labelRight {
   --controlLabel-marginLeft: var(--saltControlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
   --controlLabel-marginRight: var(--saltControlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
 
 /* Styles applied if `disabled={true}` or nested in FormField where `disabled={true}` */
-.uitkControlLabel-disabled,
-.uitkFormField-disabled .uitkControlLabel {
+.saltControlLabel-disabled,
+.saltFormField-disabled .saltControlLabel {
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to label if `disabled={true}` */
-.uitkControlLabel-disabled .uitkControlLabel-label {
+.saltControlLabel-disabled .saltControlLabel-label {
   cursor: var(--salt-selectable-cursor-disabled);
   color: var(--saltControlLabel-color-disabled, var(--salt-text-primary-foreground-disabled));
 }

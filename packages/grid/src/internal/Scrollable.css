@@ -1,4 +1,4 @@
-.uitkGridScrollable {
+.saltGridScrollable {
   overflow-y: auto;
   overflow-x: auto;
   position: absolute;
@@ -8,7 +8,7 @@
   left: 0;
 }
 
-.uitkGridScrollable-space {
+.saltGridScrollable-space {
   position: relative;
   height: var(--grid-total-height);
   width: var(--grid-total-width);

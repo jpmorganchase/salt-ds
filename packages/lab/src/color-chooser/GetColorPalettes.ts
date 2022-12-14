@@ -1,72 +1,72 @@
-import { uitkColorMap } from "./colorMap";
+import { saltColorMap } from "./colorMap";
 
 export function makePalette(
   colorScheme: string,
-  UITKColorOverrides?: Record<string, string>
+  SALTColorOverrides?: Record<string, string>
 ): string[] {
   //Doesn't matter which theme you use here as the color names are the same
   const colorNames = Array.from(
-    Object.keys(UITKColorOverrides ?? uitkColorMap)
+    Object.keys(SALTColorOverrides ?? saltColorMap)
   );
 
   const colorArray: string[] = [];
   for (const colorName of colorNames) {
     if (colorName.includes(colorScheme) && !(colorName === colorScheme)) {
       colorArray.push(
-        UITKColorOverrides
-          ? UITKColorOverrides[colorName]
-          : uitkColorMap[colorName]
+        SALTColorOverrides
+          ? SALTColorOverrides[colorName]
+          : saltColorMap[colorName]
       );
     }
   }
   return colorArray;
 }
 
-const bluePalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("blue", UITKColorOverrides);
-const greenPalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("green", UITKColorOverrides);
-const redPalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("red", UITKColorOverrides);
-const orangePalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("orange", UITKColorOverrides);
-const tealPalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("teal", UITKColorOverrides);
-const purplePalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("purple", UITKColorOverrides);
-const grayPalette = (UITKColorOverrides?: Record<string, string>) =>
-  makePalette("gray", UITKColorOverrides);
+const bluePalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("blue", SALTColorOverrides);
+const greenPalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("green", SALTColorOverrides);
+const redPalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("red", SALTColorOverrides);
+const orangePalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("orange", SALTColorOverrides);
+const tealPalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("teal", SALTColorOverrides);
+const purplePalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("purple", SALTColorOverrides);
+const grayPalette = (SALTColorOverrides?: Record<string, string>) =>
+  makePalette("gray", SALTColorOverrides);
 
 export function getColorPalettes(
-  UITKColorOverrides?: Record<string, string>
+  SALTColorOverrides?: Record<string, string>
 ): string[][] {
   return [
-    bluePalette(UITKColorOverrides).slice(0, 7),
-    bluePalette(UITKColorOverrides).slice(7, 14),
-    greenPalette(UITKColorOverrides).slice(0, 7),
-    greenPalette(UITKColorOverrides).slice(7, 14),
-    tealPalette(UITKColorOverrides).slice(0, 7),
-    tealPalette(UITKColorOverrides).slice(7, 14),
-    orangePalette(UITKColorOverrides).slice(0, 7),
-    orangePalette(UITKColorOverrides).slice(7, 14),
-    redPalette(UITKColorOverrides).slice(0, 7),
-    redPalette(UITKColorOverrides).slice(7, 14),
-    purplePalette(UITKColorOverrides).slice(0, 7),
-    purplePalette(UITKColorOverrides).slice(7, 14),
-    grayPalette(UITKColorOverrides).slice(0, 7),
-    grayPalette(UITKColorOverrides).slice(7, 14),
+    bluePalette(SALTColorOverrides).slice(0, 7),
+    bluePalette(SALTColorOverrides).slice(7, 14),
+    greenPalette(SALTColorOverrides).slice(0, 7),
+    greenPalette(SALTColorOverrides).slice(7, 14),
+    tealPalette(SALTColorOverrides).slice(0, 7),
+    tealPalette(SALTColorOverrides).slice(7, 14),
+    orangePalette(SALTColorOverrides).slice(0, 7),
+    orangePalette(SALTColorOverrides).slice(7, 14),
+    redPalette(SALTColorOverrides).slice(0, 7),
+    redPalette(SALTColorOverrides).slice(7, 14),
+    purplePalette(SALTColorOverrides).slice(0, 7),
+    purplePalette(SALTColorOverrides).slice(7, 14),
+    grayPalette(SALTColorOverrides).slice(0, 7),
+    grayPalette(SALTColorOverrides).slice(7, 14),
     [
-      UITKColorOverrides
-        ? UITKColorOverrides["uitkwhite"]
-          ? UITKColorOverrides["uitkwhite"]
+      SALTColorOverrides
+        ? SALTColorOverrides["saltwhite"]
+          ? SALTColorOverrides["saltwhite"]
           : "rgb(255, 255, 255)"
-        : uitkColorMap["uitkwhite"],
-      ...grayPalette(UITKColorOverrides).slice(14, 18),
-      UITKColorOverrides
-        ? UITKColorOverrides["uitkblack"]
-          ? UITKColorOverrides["uitkblack"]
+        : saltColorMap["saltwhite"],
+      ...grayPalette(SALTColorOverrides).slice(14, 18),
+      SALTColorOverrides
+        ? SALTColorOverrides["saltblack"]
+          ? SALTColorOverrides["saltblack"]
           : "rgb(0, 0, 0)"
-        : uitkColorMap["uitkblack"],
+        : saltColorMap["saltblack"],
       "rgba(0, 0, 0, 0)",
     ],
   ];

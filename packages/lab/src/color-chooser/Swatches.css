@@ -1,31 +1,31 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
-.uitkColorChooserSwatches-colorNameTextDiv {
+.saltColorChooserSwatches-colorNameTextDiv {
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
 }
 
-.uitkColorChooserSwatches-colorNameTextDiv,
-.uitkColorChooserSwatches-colorTextDiv,
-.uitkColorChooserSwatches-alphaTextDiv {
+.saltColorChooserSwatches-colorNameTextDiv,
+.saltColorChooserSwatches-colorTextDiv,
+.saltColorChooserSwatches-alphaTextDiv {
   color: var(--salt-text-secondary-foreground);
 }
 
-.uitkColorChooserSwatches-colorTextDiv {
+.saltColorChooserSwatches-colorTextDiv {
   font-size: var(--salt-text-fontSize);
   margin-right: var(--salt-size-unit);
 }
 
-.uitkColorChooserSwatches-alphaTextDiv {
+.saltColorChooserSwatches-alphaTextDiv {
   font-size: var(--salt-text-fontSize);
   margin-right: var(--salt-size-unit);
 }
 
-.uitkColorChooserSwatches-textDiv {
+.saltColorChooserSwatches-textDiv {
   display: flex;
   justify-content: space-between;
   padding: 8px 8px 0px 8px;
 }
 
-.uitkColorChooserSwatches-pickerDiv {
+.saltColorChooserSwatches-pickerDiv {
   padding-top: calc(2 * var(--salt-size-unit));
 }

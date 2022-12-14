@@ -7,15 +7,15 @@
   position: inherit;
 }
 
-.accordionWrapper :global(.uitkIcon) {
+.accordionWrapper :global(.saltIcon) {
   --salt-size-icon-base: var(--salt-size-unit);
 }
 
-.accordionWrapper :global(.uitkAccordionSummary-icon) {
+.accordionWrapper :global(.saltAccordionSummary-icon) {
   right: 0;
 }
 
-.accordionWrapper :global(.uitkAccordionSection) {
+.accordionWrapper :global(.saltAccordionSection) {
   --accordion-section-padding: 0;
 }
 

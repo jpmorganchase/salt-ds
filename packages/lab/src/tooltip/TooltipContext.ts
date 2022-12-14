@@ -1,5 +1,5 @@
 import { createContext, ComponentType, useContext, useDebugValue } from "react";
-import { Tooltip as UITKTooltip, TooltipProps } from "./Tooltip";
+import { Tooltip as SALTTooltip, TooltipProps } from "./Tooltip";
 import { UseTooltipProps } from "./useTooltip";
 
 // TODO see also below. what is the intention od the context.toolTip - that users can supply
@@ -36,7 +36,7 @@ export const useTooltipContext = () => {
   // TODO what is the intention od the context.toolTip - that users can supply
   // a component or an element
   return {
-    Tooltip: /* context.Tooltip ||*/ UITKTooltip,
+    Tooltip: /* context.Tooltip ||*/ SALTTooltip,
     enterDelay: context.enterDelay || 1500,
     leaveDelay: context.leaveDelay || 0,
     placement: context.placement || "top",

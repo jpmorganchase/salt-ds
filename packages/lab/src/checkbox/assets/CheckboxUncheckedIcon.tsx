@@ -12,7 +12,7 @@ export function CheckboxUncheckedIcon({
       viewBox="0 0 14 14"
     >
       <g fillRule="evenodd">
-        <rect className={`uitkCheckboxIcon-box`} />
+        <rect className={`saltCheckboxIcon-box`} />
       </g>
     </svg>
   );

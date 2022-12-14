@@ -130,7 +130,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       cols={4}
       vertical
       transposeDensity
-      className="uitkContactDetailsQA"
+      className="saltContactDetailsQA"
       imgSrc={imgSrc}
       height={1150}
     >

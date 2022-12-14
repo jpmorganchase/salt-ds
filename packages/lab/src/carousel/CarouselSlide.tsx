@@ -18,7 +18,7 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   contentAlignment?: "center" | "left" | "right";
 }
 
-const withBaseName = makePrefixer("uitkCarouselSlide");
+const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(

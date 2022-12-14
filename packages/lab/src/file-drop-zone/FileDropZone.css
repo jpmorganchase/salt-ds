@@ -1,5 +1,5 @@
 /* Styles applied to root component */
-.uitkFileDropZone {
+.saltFileDropZone {
   --fileDropZone-background: var(--salt-container-secondary-background);
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
   --fileDropZone-borderWidth: var(--salt-size-border);
@@ -11,7 +11,7 @@
   --fileDropZone-title-lineHeight: var(--salt-text-lineHeight);
 }
 
-.uitkFileDropZone {
+.saltFileDropZone {
   color: var(--saltFileDropZone-text-color, var(--fileDropZone-text-color));
   display: inline-flex;
   background: var(--saltFileDropZone-background, var(--fileDropZone-background));
@@ -25,82 +25,82 @@
   padding: var(--saltFileDropZone-padding, var(--fileDropZone-padding));
 }
 
-.uitkFileDropZone *:not(.uitkFileDropZone-inputRoot, .uitkFileDropZone-inputRoot *) {
+.saltFileDropZone *:not(.saltFileDropZone-inputRoot, .saltFileDropZone-inputRoot *) {
   pointer-events: none;
 }
 
 /* Styles applied to icon */
-.uitkFileDropZone-icon {
+.saltFileDropZone-icon {
   fill: var(--fileDropZone-icon-color);
   margin-bottom: var(--salt-size-unit);
 }
 
-.uitkFileDropZone .uitkFileDropZone-title:not(:last-child),
-.uitkFileDropZone .uitkFileDropZone-inputRoot:not(:last-child) {
+.saltFileDropZone .saltFileDropZone-title:not(:last-child),
+.saltFileDropZone .saltFileDropZone-inputRoot:not(:last-child) {
   margin-bottom: calc(var(--salt-size-unit) * 2);
 }
 
 /* Styles applied if `isActive={true}` */
-.uitkFileDropZone-active:not(.uitkFileDropZone-disabled) {
+.saltFileDropZone-active:not(.saltFileDropZone-disabled) {
   --fileDropZone-background: var(--salt-dropTarget-background-hover);
 }
 
 /* Styles applied to description if `isRejected={true}`  */
-.uitkFileDropZone-error .uitkFileDropZone-description {
+.saltFileDropZone-error .saltFileDropZone-description {
   margin-bottom: calc(var(--salt-size-unit) * 2);
 }
 
 /* Styles applied if `isRejected={true}`  */
-.uitkFileDropZone-error {
+.saltFileDropZone-error {
   --fileDropZone-background: var(--salt-status-error-background-emphasize);
   --fileDropZone-borderColor: var(--salt-status-error-borderColor);
   --fileDropZone-icon-color: var(--salt-status-error-foreground);
 }
 
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
-.uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active {
+.saltFileDropZone-error:not(.saltFileDropZone-disabled).saltFileDropZone-active {
   --fileDropZone-background: var(--salt-dropTarget-background-hover);
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied to title and description */
-.uitkFileDropZone-title,
-.uitkFileDropZone-description {
+.saltFileDropZone-title,
+.saltFileDropZone-description {
   font-size: var(--saltFileDropZone-title-fontSize, var(--fileDropZone-title-fontSize));
   line-height: var(--saltFileDropZone-title-lineHeight, var(--fileDropZone-title-lineHeight));
 }
 
 /* Styles applied to title */
-.uitkFileDropZone-title {
+.saltFileDropZone-title {
   font-weight: var(--saltFileDropZone-fontWeight, var(--salt-text-fontWeight-strong));
 }
 
 /* Styles applied to input button */
-.uitkFileDropZone-inputButton {
+.saltFileDropZone-inputButton {
   display: inline-flex;
 }
 
 /* Styles applied to input root */
-.uitkFileDropZone-inputRoot {
+.saltFileDropZone-inputRoot {
   line-height: 1;
 }
 
-.uitkFileDropZone-inputRoot .input-hidden {
+.saltFileDropZone-inputRoot .input-hidden {
   position: absolute;
   clip: rect(0, 0, 0, 0);
   visibility: hidden;
 }
 
 /* Styles applied if `disabled={true}` */
-.uitkFileDropZone-disabled {
+.saltFileDropZone-disabled {
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor-disabled);
 
   cursor: var(--salt-dropTarget-cursor-disabled);
 }
 
 /* Styles applied if `disabled={true}` to icon and title */
-.uitkFileDropZone-disabled .uitkFileDropZone-icon,
-.uitkFileDropZone-disabled .uitkFileDropZone-title {
+.saltFileDropZone-disabled .saltFileDropZone-icon,
+.saltFileDropZone-disabled .saltFileDropZone-title {
   --fileDropZone-text-color: var(--salt-text-primary-foreground-disabled);
   --fileDropZone-icon-color: var(--salt-text-primary-foreground-disabled);
 }

@@ -1,4 +1,4 @@
-.carousel-container .uitkCarouselSlide-fixedContainer {
+.carousel-container .saltCarouselSlide-fixedContainer {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -7,25 +7,25 @@
   gap: calc(var(--salt-size-unit) * 1);
 }
 
-.carousel-container .uitkCarouselSlide-fixedContainer .uitkOrderedButton {
+.carousel-container .saltCarouselSlide-fixedContainer .saltOrderedButton {
   margin-right: 0;
 }
 
-.carousel-container .uitkCarouselSlide-textContainerLeft {
+.carousel-container .saltCarouselSlide-textContainerLeft {
   line-height: var(--salt-text-lineHeight);
 }
 
-.carousel-container .uitkCarouselSlide-titleContainer {
+.carousel-container .saltCarouselSlide-titleContainer {
   font-size: var(--salt-text-h4-fontSize);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.carousel-container .uitkCarouselSlide-descriptionContainer {
+.carousel-container .saltCarouselSlide-descriptionContainer {
   font-size: var(--salt-text-fontSize);
 }
 
-.carousel-container .uitkCarousel-prev-button,
-.carousel-container .uitkCarousel-next-button {
+.carousel-container .saltCarousel-prev-button,
+.carousel-container .saltCarousel-next-button {
   max-height: 520px;
 }
 

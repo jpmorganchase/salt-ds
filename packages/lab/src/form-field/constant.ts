@@ -1,1 +1,1 @@
-export const classBase = "uitkFormField";
+export const classBase = "saltFormField";

@@ -1,8 +1,8 @@
-.uitkTabActivationIndicator-no-background {
+.saltTabActivationIndicator-no-background {
   --tabs-activationIndicator-background: transparent !important;
 }
 
-.uitkTabActivationIndicator {
+.saltTabActivationIndicator {
   --tabs-activationIndicator-background: var(--salt-container-primary-borderColor);
 
   background: var(--saltTabs-activationIndicator-background, var(--tabs-activationIndicator-background));
@@ -14,7 +14,7 @@
 }
 
 /* the Active Tab indicator, uses navigable styles */
-.uitkTabActivationIndicator-thumb {
+.saltTabActivationIndicator-thumb {
   inset: var(--tabs-activationIndicator-thumb-inset);
   position: absolute;
   height: var(--tabs-activationIndicator-thumb-height, auto);

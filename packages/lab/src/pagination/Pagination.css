@@ -1,63 +1,63 @@
-.uitk-density-medium {
+.salt-density-medium {
   --pagination-button-size: 28px;
   --pagination-fontSize: 12px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --pagination-button-size: 20px;
   --pagination-fontSize: 11px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --pagination-button-size: 36px;
   --pagination-fontSize: 14px;
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --pagination-button-size: 44px;
   --pagination-fontSize: 16px;
 }
 
-.uitkPagination {
+.saltPagination {
   display: flex;
   flex-direction: row;
 }
 
-.uitkPagination-arrowButton {
+.saltPagination-arrowButton {
   width: var(--pagination-button-size);
   height: var(--pagination-button-size);
 }
 
-.uitkPagination-previousButton {
+.saltPagination-previousButton {
   margin-right: var(--salt-size-unit);
 }
 
-.uitkPagination-nextButton {
+.saltPagination-nextButton {
   margin-left: var(--salt-size-unit);
 }
 
-.uitkPagination-pageButton {
+.saltPagination-pageButton {
   min-width: var(--pagination-button-size);
   height: var(--pagination-button-size);
   --saltButton-fontWeight: var(--salt-text-fontWeight);
 }
 
-.uitkPagination-pageButtonSelected {
+.saltPagination-pageButtonSelected {
   background: var(--salt-selectable-background-selected);
   color: var(--salt-selectable-cta-foreground-selected);
 }
 
-.uitkPagination-pageButtonFixed {
+.saltPagination-pageButtonFixed {
   padding: 0;
 }
 
-.uitkPagination-ellipsis {
+.saltPagination-ellipsis {
   width: var(--pagination-button-size);
   height: var(--pagination-button-size);
   text-align: center;
 }
 
-.uitkPagination-accessibleText {
+.saltPagination-accessibleText {
   display: block;
   position: absolute;
   width: 1px;
@@ -68,20 +68,20 @@
   opacity: 0;
 }
 
-.uitkPagination-compactInputField {
+.saltPagination-compactInputField {
 }
 
-.uitkPagination-compactInput {
+.saltPagination-compactInput {
   height: var(--pagination-button-size);
   min-width: unset;
 }
 
-.uitkPagination-compactInputFixed {
+.saltPagination-compactInputFixed {
   min-width: var(--pagination-button-size);
   width: var(--pagination-button-size);
 }
 
-.uitkPagination-compactSeparator {
+.saltPagination-compactSeparator {
   height: var(--pagination-button-size);
   width: var(--pagination-button-size);
   text-align: center;
@@ -89,27 +89,27 @@
   line-height: var(--pagination-button-size);
 }
 
-.uitkPagination-goToInputWrapper {
+.saltPagination-goToInputWrapper {
 }
 
-.uitkPagination-leftGoToInput {
+.saltPagination-leftGoToInput {
   margin-right: var(--salt-size-unit);
 }
 
-.uitkPagination-rightGoToInput {
+.saltPagination-rightGoToInput {
   margin-left: var(--salt-size-unit);
   min-width: unset;
 }
 
-.uitkPagination-goToInputField {
+.saltPagination-goToInputField {
 }
 
-.uitkPagination-goToInput {
+.saltPagination-goToInput {
   height: var(--pagination-button-size);
   min-width: unset;
 }
 
-.uitkPagination-goToInputFixed {
+.saltPagination-goToInputFixed {
   min-width: var(--pagination-button-size);
   width: var(--pagination-button-size);
 }

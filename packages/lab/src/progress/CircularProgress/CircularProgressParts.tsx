@@ -3,12 +3,12 @@ import "./CircularProgress.css";
 
 export const SIZE = 44;
 
-export const circularGradientId = "uitk-circular-progress-gradient";
+export const circularGradientId = "salt-circular-progress-gradient";
 
 export const ViewBox = (props: { children?: ReactNode }) => {
   return (
     <svg
-      className="uitkCircularProgress-svg"
+      className="saltCircularProgress-svg"
       viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}
     >
       {props.children}
@@ -19,8 +19,8 @@ export const ViewBox = (props: { children?: ReactNode }) => {
 export const LinearGradient = () => (
   <defs>
     <linearGradient gradientTransform="rotate(90)" id={circularGradientId}>
-      <stop className="uitkCircularProgress-gradientStart" offset="0%" />
-      <stop className="uitkCircularProgress-gradientStop" offset="100%" />
+      <stop className="saltCircularProgress-gradientStart" offset="0%" />
+      <stop className="saltCircularProgress-gradientStop" offset="100%" />
     </linearGradient>
   </defs>
 );

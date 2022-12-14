@@ -1,4 +1,4 @@
-.uitkGridHeaderCell {
+.saltGridHeaderCell {
   text-align: left;
   font-size: var(--grid-header-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
@@ -11,7 +11,7 @@
   outline: 0;
 }
 
-.uitkGridHeaderCell-valueContainer {
+.saltGridHeaderCell-valueContainer {
   line-height: var(--grid-row-height);
   padding: var(--grid-cell-padding);
   position: absolute;
@@ -23,11 +23,11 @@
   text-overflow: ellipsis;
 }
 
-.uitkGridHeaderCell-alignRight {
+.saltGridHeaderCell-alignRight {
   text-align: right;
 }
 
-.uitkGridHeaderCell-autosizeContainer {
+.saltGridHeaderCell-autosizeContainer {
   line-height: var(--grid-row-height);
   padding: 0;
   position: absolute;
@@ -38,17 +38,17 @@
   overflow: hidden;
 }
 
-.uitkGridHeaderCell-measuredContent {
+.saltGridHeaderCell-measuredContent {
   height: 100%;
   display: inline-block;
   padding: var(--grid-cell-padding);
 }
 
-.uitkGridHeaderCell-text {
+.saltGridHeaderCell-text {
   color: var(--grid-header-color);
 }
 
-.uitkGridHeaderCell-regularSeparator {
+.saltGridHeaderCell-regularSeparator {
   background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
@@ -58,8 +58,8 @@
   bottom: var(--grid-separatorGap);
 }
 
-.uitkGridHeaderCell-groupEdgeSeparator,
-.uitkGridHeaderCell-pinnedSeparator {
+.saltGridHeaderCell-groupEdgeSeparator,
+.saltGridHeaderCell-pinnedSeparator {
   background: var(--grid-headerColumnSeparator-color);
   width: 1px;
   height: auto;
@@ -69,7 +69,7 @@
   bottom: var(--grid-separatorGap);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridHeaderCell-pinnedSeparator {
+.saltGrid-pinnedSeparators .saltGridHeaderCell-pinnedSeparator {
   background: var(--grid-pinnedSeparator-color);
   width: 1px;
   position: absolute;
@@ -78,7 +78,7 @@
   bottom: 0;
 }
 
-.uitkGridHeaderCell-resizeHandle {
+.saltGridHeaderCell-resizeHandle {
   position: absolute;
   right: -8px;
   top: 0;

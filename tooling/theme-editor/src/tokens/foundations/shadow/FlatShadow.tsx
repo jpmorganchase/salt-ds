@@ -82,7 +82,7 @@ export const FlatShadow = (props: FlatShadowProps): ReactElement => {
             }
             return (
               <ShadowInnerPattern
-                uitkColorOverrides={props.uitkColorOverrides}
+                uitkColorOverrides={props.saltColorOverrides}
                 entireValue={patternParts.join(" ")}
                 key={`${props.themeName}-${props.pattern}-${props.innerPattern}-${label}`}
                 patternName={`${props.pattern}-${props.innerPattern}`}

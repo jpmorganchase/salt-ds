@@ -1,4 +1,4 @@
-.uitkThemeHeader {
+.saltThemeHeader {
   display: flex;
   flex: 0 0 auto;
   height: 93px;
@@ -28,10 +28,10 @@
   width: 28px;
 }
 
-.ThemeHeaderMicroMenu .uitkDropdownButton {
+.ThemeHeaderMicroMenu .saltDropdownButton {
   width: 100% !important;
 }
 
-.ThemeHeaderMicroMenu .uitkDropdownButton-buttonLabel {
+.ThemeHeaderMicroMenu .saltDropdownButton-buttonLabel {
   display: none;
 }

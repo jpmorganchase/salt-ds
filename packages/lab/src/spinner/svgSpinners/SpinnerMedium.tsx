@@ -1,6 +1,6 @@
 import { SVGAttributes } from "react";
 
-const baseName = "uitkSvgSpinner";
+const baseName = "saltSvgSpinner";
 
 // Note: the structure here is mainly for backwards compatibility where 2 colors were used
 export const SpinnerMedium = (props: SVGAttributes<SVGSVGElement>) => (

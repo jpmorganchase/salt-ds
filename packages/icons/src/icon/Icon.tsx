@@ -9,7 +9,7 @@ export const makePrefixer =
   (...names: string[]): string =>
     [prefix, ...names].join("-");
 
-const withBaseName = makePrefixer("uitkIcon");
+const withBaseName = makePrefixer("saltIcon");
 
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
   /**

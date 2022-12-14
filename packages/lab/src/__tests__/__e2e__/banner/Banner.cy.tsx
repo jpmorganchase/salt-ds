@@ -73,7 +73,7 @@ describe("GIVEN a Banner", () => {
 
       cy.findByTestId("bannerRoot").should(
         "have.class",
-        "uitkBanner-emphasize"
+        "saltBanner-emphasize"
       );
     });
   });

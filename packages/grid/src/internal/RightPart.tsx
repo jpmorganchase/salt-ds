@@ -7,7 +7,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
 
-const withBaseName = makePrefixer("uitkGridRightPart");
+const withBaseName = makePrefixer("saltGridRightPart");
 
 export interface RightPartProps<T> {
   rightRef: RefObject<HTMLDivElement>;

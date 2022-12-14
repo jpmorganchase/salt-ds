@@ -1,4 +1,4 @@
-.uitk-theme {
+.salt-theme {
   --salt-color-blue-100-fade-foreground: rgba(100, 177, 228, var(--salt-palette-opacity-foreground));
   --salt-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--salt-palette-opacity-foreground));
   --salt-color-gray-70-fade-foreground: rgba(180, 183, 190, var(--salt-palette-opacity-foreground));

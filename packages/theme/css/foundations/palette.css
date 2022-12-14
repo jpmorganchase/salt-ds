@@ -1,5 +1,5 @@
 /* Opacities */
-.uitk-theme {
+.salt-theme {
   --salt-palette-opacity-background: var(--salt-opacity-3);
   --salt-palette-opacity-border: var(--salt-opacity-3);
   --salt-palette-opacity-border-readonly: var(--salt-opacity-2);
@@ -12,7 +12,7 @@
   --salt-palette-opacity-tertiary-border: var(--salt-opacity-1);
 }
 
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   /* Accent */
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-border: var(--salt-color-blue-500);
@@ -142,7 +142,7 @@
   --salt-palette-positive-foreground: var(--salt-color-green-700);
 }
 
-.uitk-theme[data-mode="dark"] {
+.salt-theme[data-mode="dark"] {
   /* Accent */
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-border: var(--salt-color-blue-500);

@@ -24,7 +24,7 @@ export interface OverlayProps
   variant?: "primary" | "secondary";
 }
 
-const withBaseName = makePrefixer("uitkOverlay");
+const withBaseName = makePrefixer("saltOverlay");
 
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
   (

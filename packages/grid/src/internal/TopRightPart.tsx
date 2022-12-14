@@ -7,7 +7,7 @@ import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";
 import { useActiveOnWheel } from "./gridHooks";
 
-const withBaseName = makePrefixer("uitkGridTopRightPart");
+const withBaseName = makePrefixer("saltGridTopRightPart");
 
 export interface TopRightPartProps<T> {
   onWheel: EventListener;

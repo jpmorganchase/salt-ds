@@ -1,4 +1,4 @@
-.uitkQAContainer {
+.saltQAContainer {
   --qaContainer-cols: 3;
   --qaContainer-height: 900px;
   --qaContainer-width: 1600px;
@@ -22,7 +22,7 @@
   width: var(--qaContainer-width);
 }
 
-.uitkQAContainer-vertical {
+.saltQAContainer-vertical {
   --qaContainer-mode-cols: 1;
 }
 
@@ -36,7 +36,7 @@
   width: var(--bgBlock-outer-width);
 }
 
-.uitkQAContainer-vertical {
+.saltQAContainer-vertical {
   --qaContainer-mode-cols: 1;
 }
 
@@ -48,6 +48,6 @@
   vertical-align: top;
   width: var(--qaContainer-item-width, var(--itemWrapper-calculated-item-width));
 }
-.uitkFormFieldQA.uitkQAContainer {
+.saltFormFieldQA.saltQAContainer {
   height: unset !important;
 }

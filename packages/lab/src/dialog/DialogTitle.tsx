@@ -13,7 +13,7 @@ export interface DialogTitleProps extends HTMLAttributes<HTMLDivElement> {
   onClose?: (event: SyntheticEvent) => void;
 }
 
-const withBaseName = makePrefixer("uitkDialogTitle");
+const withBaseName = makePrefixer("saltDialogTitle");
 
 export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
   function DialogTitle(props, ref) {

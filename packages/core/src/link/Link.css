@@ -1,4 +1,4 @@
-.uitkLink {
+.saltLink {
   --link-color-hover: var(--saltLink-color-hover, var(--salt-text-link-foreground-hover));
   --link-color-active: var(--saltLink-color-active, var(--salt-text-link-foreground-active));
   --link-color-visited: var(--saltLink-color-visited, var(--salt-text-link-foreground-visited));
@@ -13,7 +13,7 @@
 }
 
 /* Main css class */
-.uitkLink {
+.saltLink {
   color: var(--link-color);
   letter-spacing: 0px;
   text-decoration: var(--link-textDecoration);
@@ -21,48 +21,48 @@
 }
 
 /* Primary variant */
-.uitkText-primary {
+.saltText-primary {
   --link-color: var(--salt-text-primary-foreground);
 }
 
 /* Secondary variant */
-.uitkText-secondary {
+.saltText-secondary {
   --link-color: var(--salt-text-secondary-foreground);
 }
 
 /* External link's icon */
-.uitkLink-icon {
+.saltLink-icon {
   margin-left: calc(var(--salt-size-unit) * 0.75);
   margin-bottom: -2px;
 }
 
 /* Set color for visited link */
-.uitkLink:visited {
+.saltLink:visited {
   --saltIcon-color: var(--link-color-visited);
   color: var(--link-color-visited);
 }
 
 /* Set color for hovered link */
-.uitkLink:hover {
+.saltLink:hover {
   --saltIcon-color: var(--link-color-hover);
   color: var(--link-color-hover);
 }
 
 /* Set color for active link */
-.uitkLink:active {
+.saltLink:active {
   --saltIcon-color: var(--link-color-active);
   color: var(--link-color-active);
 }
 
 /* Set color for focused link */
-.uitkLink:focus {
+.saltLink:focus {
   --saltIcon-color: var(--link-color-focus);
   outline: var(--link-focus-outline);
   color: var(--link-color-focus);
 }
 
 /* Class for ADA content */
-.uitkLink-externalLinkADA {
+.saltLink-externalLinkADA {
   display: block;
   position: absolute;
   width: 1px;

@@ -1,34 +1,34 @@
 /* Styles applied to root element */
-.uitk-density-touch {
+.salt-density-touch {
   --formField-label-default-top: 11px;
   --formField-label-left-top: 16px;
   --formField-label-minHeight: 16px;
 }
-.uitk-density-low {
+.salt-density-low {
   --formField-label-default-top: 7px;
   --formField-label-left-top: 12px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --formField-label-default-top: 5px;
   --formField-label-left-top: 8px;
 }
-.uitk-density-high {
+.salt-density-high {
   --formField-label-default-top: 3px;
   --formField-label-left-top: 4px;
 }
 
-.uitkFormLabel {
+.saltFormLabel {
   --formField-label-fontSize: var(--saltFormField-label-fontSize, var(--salt-text-label-fontSize));
   --formField-label-top: var(--formField-label-default-top);
   --formField-label-width: 100%;
 }
 
-.uitkFormField-labelLeft .uitkFormLabel {
+.saltFormField-labelLeft .saltFormLabel {
   --formField-label-top: var(--formField-label-left-top);
   --formField-label-width: auto;
 }
 
-.uitkFormLabel {
+.saltFormLabel {
   align-items: center;
   color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
   display: block;
@@ -49,24 +49,24 @@
   width: var(--saltFormField-label-width, var(--formField-label-width, 100%));
 }
 
-.uitkFormLabel ~ * {
+.saltFormLabel ~ * {
   z-index: 1;
 }
 
 /* Styles applied when `disabled={true}` */
-.uitkFormLabel-disabled {
+.saltFormLabel-disabled {
   color: var(--saltFormField-label-text-color-disabled, var(--salt-text-secondary-foreground-disabled));
   cursor: var(--salt-editable-cursor-disabled);
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */
-.uitkFormLabel-necessityIndicator {
+.saltFormLabel-necessityIndicator {
   font-style: var(--saltFormField-label-necessityIndicator-fontStyle, var(--salt-editable-help-fontStyle));
   margin-left: 1ch;
 }
 
 /* Styles applied if `hasStatusIndicator={true}` */
-.uitkFormLabel-statusIndicator {
+.saltFormLabel-statusIndicator {
   margin-left: 6px;
   vertical-align: top;
 }

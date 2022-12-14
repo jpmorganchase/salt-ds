@@ -16,7 +16,7 @@ import { Tooltip, useTooltip } from "../tooltip";
 import "./CascadingMenuItem.css";
 
 const noop = () => undefined;
-const withBaseName = makePrefixer("uitkMenuItem");
+const withBaseName = makePrefixer("saltMenuItem");
 
 const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
   const CustomIcon = sourceItem.icon;

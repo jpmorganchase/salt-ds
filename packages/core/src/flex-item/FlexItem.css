@@ -1,18 +1,18 @@
 /* Default variables applied to the root element */
-.uitkFlexItem {
+.saltFlexItem {
   --saltFlexItem-alignment: auto;
   --saltFlexItem-shrink: 1;
   --saltFlexItem-grow: 0;
 }
 
 /* Style applied to the root element */
-.uitkFlexItem {
+.saltFlexItem {
   position: relative;
   align-self: var(--saltFlexItem-alignment);
   flex-grow: var(--saltFlexItem-grow);
   flex-shrink: var(--saltFlexItem-shrink);
 }
 
-.uitkFlexItem-stacked {
+.saltFlexItem-stacked {
   flex-grow: 2;
 }

@@ -1,21 +1,21 @@
-.uitk-density-high {
+.salt-density-high {
   --pill-icon-offset: 1px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --pill-icon-offset: 2px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --pill-icon-offset: 3px;
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --pill-icon-offset: 4px;
 }
 
 /* Styles applied to the root element */
-.uitkPill {
+.saltPill {
   --pill-background: var(--saltPill-background, var(--salt-taggable-background));
   --pill-background-active: var(--saltPill-background-active, var(--salt-taggable-background-active));
   --pill-background-disabled: var(--saltPill-background-disabled, var(--salt-taggable-background-disabled));
@@ -39,7 +39,7 @@
   --saltButton-cursor: normal;
 }
 
-.uitkPill {
+.saltPill {
   align-items: center;
   background: var(--pill-background);
   border-radius: var(--saltPill-borderRadius, 0);
@@ -56,7 +56,7 @@
   position: relative;
 }
 
-.uitkPill:hover {
+.saltPill:hover {
   --saltButton-background-active: var(--pill-background-active);
   --saltButton-background-hover: var(--pill-background-hover);
 
@@ -67,13 +67,13 @@
 }
 
 /* Style applied to Pill when active */
-.uitkPill:active,
-.uitkPill-active {
+.saltPill:active,
+.saltPill-active {
   --saltButton-background-active: var(--pill-background-active);
 }
 
 /* Style applied to Pill on focus */
-.uitkPill:focus {
+.saltPill:focus {
   outline-color: var(--saltPill-focused-outlineColor, var(--salt-focused-outlineColor));
   outline-style: var(--saltPill-focused-outlineStyle, var(--salt-focused-outlineStyle));
   outline-width: var(--salt-focused-outlineWidth);
@@ -81,7 +81,7 @@
 }
 
 /* Style applied to Pill icon if `clickable={true}`  */
-.uitkPill-clickable {
+.saltPill-clickable {
   --saltButton-background-active: var(--pill-background);
   --saltButton-background-hover: var(--pill-background);
 
@@ -90,27 +90,27 @@
 }
 
 /* Style applied to Pill when `deletable={true}` */
-.uitkPill-deletable {
+.saltPill-deletable {
   --saltButton-background-active: var(--pill-background);
   --saltButton-background-hover: var(--pill-background);
 }
 
-.uitkPill-selectable:hover,
-.uitkPill-deletable:hover {
+.saltPill-selectable:hover,
+.saltPill-deletable:hover {
   --saltButton-background-active: var(--pill-background);
   --saltButton-background-hover: var(--pill-background);
 }
 
 /* Style applied to Pill when active if `selectable={true}` */
-.uitkPill-selectable:active,
-.uitkPill-active.uitkPill-selectable {
+.saltPill-selectable:active,
+.saltPill-active.saltPill-selectable {
   --saltButton-background-active: var(--pill-background);
 }
 
 /* Style applied to Pill when disabled */
-.uitkPill-disabled,
-.uitkPill-disabled:hover,
-.uitkPill-disabled:active {
+.saltPill-disabled,
+.saltPill-disabled:hover,
+.saltPill-disabled:active {
   --saltButton-background-active: var(--pill-background-disabled);
   --saltButton-background-hover: var(--pill-background-disabled);
   --saltButton-text-color-active: var(--pill-text-color);
@@ -123,14 +123,14 @@
 }
 
 /* Checkbox styles for selectable Pill when `disabled={true}` */
-.uitkPill-disabled .uitkPill-checkbox {
+.saltPill-disabled .saltPill-checkbox {
   --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground-disabled);
   --saltCheckbox-icon-stroke: var(--salt-selectable-borderColor-disabled);
   --saltCheckbox-icon-stroke-hover: var(--salt-selectable-borderColor-disabled);
 }
 
 /* Style applied to Pill label */
-.uitkPill-label {
+.saltPill-label {
   color: var(--saltPill-text-color, var(--pill-text-color));
   display: inline;
   flex-grow: 1;
@@ -145,19 +145,19 @@
 }
 
 /* Style applied to Pill label when `deletable={true}` */
-.uitkPill-deletable .uitkPill-label {
+.saltPill-deletable .saltPill-label {
   padding-right: 0px;
 }
 
 /* Style applied to Pill label inner text */
-.uitkPill-innerLabel {
+.saltPill-innerLabel {
   vertical-align: top;
   line-height: var(--pill-height);
 }
 
 /* Style applied to Pill label and icon when `disabled={true}` */
-.uitkPill-disabled .uitkPill-label,
-.uitkPill-disabled .uitkIcon {
+.saltPill-disabled .saltPill-label,
+.saltPill-disabled .saltIcon {
   cursor: var(--salt-selectable-cursor-disabled);
   opacity: var(--salt-palette-opacity-foreground);
 
@@ -166,7 +166,7 @@
 }
 
 /* Style applied to Pill delete button */
-.uitkPill-deleteButton {
+.saltPill-deleteButton {
   --saltButton-background-hover: var(--pill-background-hover);
   --saltButton-background-active: var(--pill-background-active);
   --saltButton-cursor: pointer;
@@ -179,31 +179,31 @@
 }
 
 /* Style applied to Pill delete button if `disabled={true}` */
-.uitkPill-deleteButton-disabled {
+.saltPill-deleteButton-disabled {
   --saltButton-background-hover: var(--pill-background-disabled);
   --saltButton-background-active: var(--pill-background-disabled);
   --saltButton-background-disabled: initial;
 }
 
 /* Style applied to Pill delete button icon  */
-.uitkPill-deleteButton .uitkPill-deleteIcon {
+.saltPill-deleteButton .saltPill-deleteIcon {
   left: var(--saltPill-deleteButton-left, var(--pill-icon-offset));
   position: relative;
 }
 
 /* Style applied to Pill delete button icon on active state  */
-.uitkPill-deleteButton:active .uitkPill-deleteIcon {
+.saltPill-deleteButton:active .saltPill-deleteIcon {
   --saltIcon-color: var(--saltPill-deleteButton-color-active, var(--pill-icon-color-active));
 }
 
 /* Style applied to Pill delete button icon if `disabled={true}` on active state  */
-.uitkPill-disabled:active .uitkPill-deleteIcon {
+.saltPill-disabled:active .saltPill-deleteIcon {
   --saltButton-background-active: var(--pill-background-disabled);
   --saltIcon-color: var(--saltPill-deleteButton-color-disabled, var(--pill-icon-color));
 }
 
 /* Style applied to Pill icon */
-.uitkPill .uitkPill-icon {
+.saltPill .saltPill-icon {
   fill: var(--pill-icon-color);
   height: var(--salt-size-graphic-small);
   margin-left: calc(var(--salt-size-unit) * 0.75);
@@ -211,37 +211,37 @@
 }
 
 /* Style applied to Pill icon on active state */
-.uitkPill:active .uitkPill-icon,
-.uitkPill-active .uitkPill-icon {
+.saltPill:active .saltPill-icon,
+.saltPill-active .saltPill-icon {
   fill: var(--pill-icon-color-active);
 }
 
-.uitkPill:not(.uitkPill-deletable) .uitkPill-icon + .uitkPill-label {
+.saltPill:not(.saltPill-deletable) .saltPill-icon + .saltPill-label {
   padding-left: 0;
 }
 
 /* Pill label styles on hover */
-.uitkPill:hover .uitkPill-label {
+.saltPill:hover .saltPill-label {
   color: var(--pill-text-color-hover);
 }
 
 /* Pill label styles on active state */
-.uitkPill:active .uitkPill-label {
+.saltPill:active .saltPill-label {
   color: var(--pill-text-color-active);
 }
 
 /* Pill label styles when `selectable={true}` or `deletable={true}` */
-.uitkPill-selectable .uitkPill-label,
-.uitkPill-selectable:active .uitkPill-label,
-.uitkPill-deletable .uitkPill-label,
-.uitkPill-deletable:active .uitkPill-label {
+.saltPill-selectable .saltPill-label,
+.saltPill-selectable:active .saltPill-label,
+.saltPill-deletable .saltPill-label,
+.saltPill-deletable:active .saltPill-label {
   background: var(--pill-background);
   color: var(--pill-text-color);
 }
 
 /* Pill label styles when  `disabled={true}` */
-.uitkPill-disabled .uitkPill-label,
-.uitkPill-disabled:active .uitkPill-label {
+.saltPill-disabled .saltPill-label,
+.saltPill-disabled:active .saltPill-label {
   background: initial;
   color: var(--pill-text-color-disabled);
 }

@@ -19,7 +19,7 @@ import "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 
-const withBaseName = makePrefixer("uitkList");
+const withBaseName = makePrefixer("saltList");
 
 export const VirtualizedList = forwardRef(function List<
   Item,
@@ -160,8 +160,8 @@ export const VirtualizedList = forwardRef(function List<
         aria-setsize={collectionHook.data.length}
         aria-posinset={pos}
         className={cx(className, {
-          uitkHighlighted: index === highlightedIndex,
-          uitkFocusVisible: focusVisible === index,
+          saltHighlighted: index === highlightedIndex,
+          saltFocusVisible: focusVisible === index,
         })}
         data-idx={index}
         key={key}

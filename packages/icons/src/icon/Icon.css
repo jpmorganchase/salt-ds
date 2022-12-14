@@ -1,5 +1,5 @@
 /* Style applied to the root element */
-.uitkIcon {
+.saltIcon {
   --icon-color: var(--saltIcon-color, var(--salt-text-secondary-foreground));
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1);
   --icon-base-size: var(--salt-size-icon-base, 12px);
@@ -10,7 +10,7 @@
   --icon-size: max(calc(var(--icon-base-size) * var(--icon-size-multiplier)), 12px);
 }
 
-.uitkIcon {
+.saltIcon {
   fill: var(--saltIcon-color, var(--icon-color));
   display: inline-block;
   margin: var(--saltIcon-margin, 0);
@@ -21,10 +21,10 @@
   min-height: var(--icon-size);
 }
 
-.uitkIcon:hover {
+.saltIcon:hover {
   --icon-color: var(--saltIcon-color-hover, var(--salt-text-secondary-foreground));
 }
 
-.uitkIcon:active {
+.saltIcon:active {
   --icon-color: var(--saltIcon-color-active, var(--salt-text-secondary-foreground));
 }

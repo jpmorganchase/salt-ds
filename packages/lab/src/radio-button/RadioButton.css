@@ -1,43 +1,43 @@
 /* Styles applied to root component  */
-.uitk-density-medium {
+.salt-density-medium {
   --radioButton-label-marginTop: 6px;
   --radioButton-row-marginRight: 24px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --radioButton-label-marginTop: 3px;
   --radioButton-row-marginRight: 12px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --radioButton-label-marginTop: 9px;
   --radioButton-row-marginRight: 36px;
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --radioButton-label-marginTop: 12px;
   --radioButton-row-marginRight: 48px;
 }
 
-.uitkRadioButton {
+.saltRadioButton {
   cursor: pointer;
   display: block;
 }
 
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
-.uitkRadioButton-disabled,
-.uitkFormField-disabled .uitkRadioButton {
+.saltRadioButton-disabled,
+.saltFormField-disabled .saltRadioButton {
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkRadioButton-disabled {
+.saltRadioButton-disabled {
   --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
 
   pointer-events: visible;
 }
 
 /* Styles applied to container of label and Radio component */
-.uitkRadioButton-labelContainer {
+.saltRadioButton-labelContainer {
   display: inline-flex;
   align-items: flex-start;
   margin-left: 0;
@@ -46,12 +46,12 @@
   vertical-align: baseline;
 }
 
-.uitkRadioButton-labelContainer .uitkRadioButton {
+.saltRadioButton-labelContainer .saltRadioButton {
   display: inline-flex;
   align-content: flex-start;
   vertical-align: baseline;
 }
 
-.uitkFormGroup-row > .uitkRadioButton {
+.saltFormGroup-row > .saltRadioButton {
   margin-right: var(--saltFormGroup-row-marginRight, var(--radioButton-row-marginRight));
 }

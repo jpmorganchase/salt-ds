@@ -1,24 +1,24 @@
-.uitkMetric {
+.saltMetric {
   display: flex;
   align-items: flex-start;
   padding: 0px;
   color: var(--saltMetric-color, var(--salt-text-primary-foreground));
 }
 
-.uitkMetric-orientation-horizontal {
+.saltMetric-orientation-horizontal {
   flex-direction: row;
   gap: var(--metric-horizontal-gap, 16px);
   margin-top: var(--metric-horizontal-marginTop, 0px);
 }
 
-.uitkMetric-orientation-vertical {
+.saltMetric-orientation-vertical {
   flex-direction: column;
   justify-content: center;
 }
 
-.uitkMetric-orientation-vertical.uitkMetric-align-center {
+.saltMetric-orientation-vertical.saltMetric-align-center {
   align-items: center;
 }
-.uitkMetric-orientation-vertical.uitkMetric-align-right {
+.saltMetric-orientation-vertical.saltMetric-align-right {
   align-items: flex-end;
 }

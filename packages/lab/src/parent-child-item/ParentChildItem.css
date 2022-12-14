@@ -1,12 +1,12 @@
-.uitkParentChildItem-slide-top {
+.saltParentChildItem-slide-top {
   animation: var(--salt-animation-slide-in-top);
 }
-.uitkParentChildItem-slide-bottom {
+.saltParentChildItem-slide-bottom {
   animation: var(--salt-animation-slide-in-bottom);
 }
-.uitkParentChildItem-slide-left {
+.saltParentChildItem-slide-left {
   animation: var(--salt-animation-slide-in-left);
 }
-.uitkParentChildItem-slide-right {
+.saltParentChildItem-slide-right {
   animation: var(--salt-animation-slide-in-right);
 }

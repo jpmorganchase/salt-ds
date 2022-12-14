@@ -1,11 +1,11 @@
-.uitkCard-secondary {
+.saltCard-secondary {
   --saltCard-background: var(--salt-container-secondary-background);
   --saltCard-borderColor: var(--salt-container-secondary-borderColor);
   --saltCard-borderRadius: 10px;
   --saltCard-borderWidth: 3px;
 }
 
-.my-app .uitkCard {
+.my-app .saltCard {
   --saltCard-background: var(--salt-accent-background);
   --saltCard-borderColor: var(--salt-accent-borderColor);
   --saltCard-color: var(--salt-accent-foreground);

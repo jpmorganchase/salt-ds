@@ -1,9 +1,9 @@
-.uitkColumnLayout-container {
+.saltColumnLayout-container {
   display: flex;
   flex-direction: row;
 }
 
-.uitkColumnLayout-item {
+.saltColumnLayout-item {
   flex-grow: 1;
   margin: calc(var(--salt-size-basis-unit) * 2);
 }

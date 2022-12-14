@@ -38,7 +38,7 @@ type TextComponent = <T extends ElementType = "div">(
   props: TextProps<T>
 ) => ReactElement | null;
 
-const withBaseName = makePrefixer("uitkText");
+const withBaseName = makePrefixer("saltText");
 
 export const Text: TextComponent = forwardRef(
   <T extends ElementType = "div">(

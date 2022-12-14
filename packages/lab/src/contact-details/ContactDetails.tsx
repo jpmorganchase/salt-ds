@@ -5,7 +5,7 @@ import { ContactDetailsContext, useComponentSize } from "./internal";
 
 import "./ContactDetails.css";
 
-const withBaseName = makePrefixer("uitkContactDetails");
+const withBaseName = makePrefixer("saltContactDetails");
 
 export type ContactDetailsVariant = "default" | "compact" | "mini";
 

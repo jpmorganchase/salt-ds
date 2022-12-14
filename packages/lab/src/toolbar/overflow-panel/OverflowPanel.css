@@ -1,10 +1,10 @@
-.uitkOverflowPanel.uitkDropdown-popup {
+.saltOverflowPanel.saltDropdown-popup {
   background: var(--salt-container-primary-background);
   border: solid 1px var(--salt-selectable-borderColor-hover);
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
 
-.uitkOverflowPanel-content {
+.saltOverflowPanel-content {
   --saltButton-justifyContent: flex-start;
   --saltDropdown-popup-maxHeight: auto;
   align-items: stretch;
@@ -16,16 +16,16 @@
   outline: none;
 }
 
-.uitkOverflowPanel [aria-expanded="true"] {
+.saltOverflowPanel [aria-expanded="true"] {
   --saltButton-background: var(--salt-actionable-secondary-background-active);
   --saltButton-background-hover: var(--salt-actionable-secondary-background-active);
   --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
-.uitkOverflowPanel.uitkDropdown {
+.saltOverflowPanel.saltDropdown {
   --saltIcon-margin: 2px 0 0 0px;
 }
 
-.uitkOverflowPanel.uitkDropdown-popup .uitkFormField:not(.uitkFormField-toolbarButton) {
+.saltOverflowPanel.saltDropdown-popup .saltFormField:not(.saltFormField-toolbarButton) {
   --saltFormField-margin: 0 12px 8px 12px;
 }

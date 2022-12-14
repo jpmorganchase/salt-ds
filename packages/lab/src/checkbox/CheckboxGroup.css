@@ -1,5 +1,5 @@
 /* Styles applied to root component */
-.uitkCheckboxGroup {
+.saltCheckboxGroup {
   border: 0;
   margin: 0;
   padding: 0;
@@ -9,7 +9,7 @@
 }
 
 /* Styles applied to root component if `row={true}` */
-.uitkCheckboxGroup-horizontal {
+.saltCheckboxGroup-horizontal {
   --saltControlLabel-right-marginRight: calc(var(--salt-size-unit) * 3);
 
   display: block;

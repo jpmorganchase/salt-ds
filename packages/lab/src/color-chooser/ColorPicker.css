@@ -1,28 +1,28 @@
-.uitkColorChooserPicker {
+.saltColorChooserPicker {
   display: flex;
   flex-direction: row;
 }
 
-.uitkColorChooserPicker-inputContainer {
+.saltColorChooserPicker-inputContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   border-left: 1px solid var(--salt-separable-secondary-borderColor);
 }
 
-.uitkColorChooserPicker-applyButtonDiv {
+.saltColorChooserPicker-applyButtonDiv {
   padding: var(--salt-size-unit) calc(2 * var(--salt-size-unit)) 0px calc(1.5 * var(--salt-size-unit));
   align-self: center;
 }
 
-.uitkColorChooserPicker-textDivOverrides {
+.saltColorChooserPicker-textDivOverrides {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
   color: var(--salt-text-primary-foreground);
   padding: 0px !important;
 }
 
-.uitkColorChooserPicker-inputDivs {
+.saltColorChooserPicker-inputDivs {
   display: flex;
   flex-direction: column;
   align-content: stretch;
@@ -52,31 +52,31 @@
   display: none !important;
 }
 /* Height of hue and saturation boxes */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div {
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div {
   height: calc(var(--salt-size-stackable) / 2) !important;
 }
 /* Height of saturation slider container */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div {
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div {
   height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Height of saturation slider */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div > div {
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div > div {
   height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Width of color preview box */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div {
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div {
   width: calc(var(--salt-size-stackable) / 2) !important;
 }
 /* Height of hue slider container */
-.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div {
+.saltColorChooserPicker-swatchPickerStyles .hue-horizontal > div {
   height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Height of hue slider */
-.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div > div {
+.saltColorChooserPicker-swatchPickerStyles .hue-horizontal > div > div {
   height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 
-.uitkColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
+.saltColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
   width: calc(var(--salt-size-base) / 4) !important;
   height: calc(var(--salt-size-base) / 4) !important;
 }

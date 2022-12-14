@@ -1,5 +1,5 @@
 /* Style applied to the root element */
-.uitkScrim {
+.saltScrim {
   top: 0;
   left: 0;
   right: 0;
@@ -15,12 +15,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.uitkScrim:focus {
+.saltScrim:focus {
   outline: none;
 }
 
 /* Style applied to the root element when containerFix={true} */
-.uitkScrim-containerFix {
+.saltScrim-containerFix {
   position: absolute;
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
 }

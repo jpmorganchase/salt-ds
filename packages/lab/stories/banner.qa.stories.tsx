@@ -38,22 +38,22 @@ const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 export const ExamplesGrid: Story = () => (
   <StackLayout gap={2}>
     <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
-      <div className="uitkBannerContainerExample">
+      <div className="saltBannerContainerExample">
         <InfoBanner />
       </div>
     </SaltProvider>
     <SaltProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
-      <div className="uitkBannerContainerExample">
+      <div className="saltBannerContainerExample">
         <ErrorBanner />
       </div>
     </SaltProvider>
     <SaltProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
-      <div className="uitkBannerContainerExample">
+      <div className="saltBannerContainerExample">
         <WarningBanner />
       </div>
     </SaltProvider>
     <SaltProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
-      <div className="uitkBannerContainerExample">
+      <div className="saltBannerContainerExample">
         <SuccessBanner />
       </div>
     </SaltProvider>

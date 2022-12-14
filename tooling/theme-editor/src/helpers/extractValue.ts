@@ -47,7 +47,7 @@ export const extractValueFromJSON = (
   value: string,
   jsonInCurrentScope: JSONByScope[]
 ): string => {
-  const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.uitk));
+  const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.salt));
 
   function recursePath(v: string): string {
     let path = mergedJSON;

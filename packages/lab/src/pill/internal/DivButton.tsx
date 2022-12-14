@@ -7,7 +7,7 @@ import {
 import { useButton, makePrefixer } from "@salt-ds/core";
 import cx from "classnames";
 
-const withBaseName = makePrefixer("uitkButton");
+const withBaseName = makePrefixer("saltButton");
 
 export interface DivButtonProps extends ComponentPropsWithoutRef<"div"> {
   /**

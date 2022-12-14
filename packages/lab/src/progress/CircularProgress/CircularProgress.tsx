@@ -16,7 +16,7 @@ import "./CircularProgress.css";
 const MAX = 100;
 const MIN = 0;
 
-const withBaseName = makePrefixer("uitkCircularProgress");
+const withBaseName = makePrefixer("saltCircularProgress");
 
 export const SIZE_OPTIONS = {
   small: {
@@ -178,7 +178,7 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={classnames(className, "uitkCircularProgress", {
+      className={classnames(className, "saltCircularProgress", {
         [withBaseName("small")]: size === "small",
         [withBaseName("medium")]: size === "medium",
         [withBaseName("large")]: size === "large",

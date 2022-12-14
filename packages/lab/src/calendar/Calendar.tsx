@@ -23,7 +23,7 @@ export type CalendarProps = useCalendarProps & {
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
 };
 
-const withBaseName = makePrefixer("uitkCalendar");
+const withBaseName = makePrefixer("saltCalendar");
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   function Calendar(props, ref) {

@@ -1,4 +1,4 @@
-.uitkDialog {
+.saltDialog {
   --dialog-background: var(--saltDialog-background, var(--salt-container-primary-background));
   --dialog-borderBottomWidth: var(--saltDialog-borderBottomWidth, 2px);
   --dialog-borderColor: var(--saltDialog-borderColor, var(--salt-container-primary-borderColor));
@@ -9,7 +9,7 @@
   --dialog-padding: var(--saltDialog-padding, calc(3 * var(--salt-size-unit)));
 }
 
-.uitkDialog {
+.saltDialog {
   background: var(--dialog-background);
   border-color: var(--dialog-borderColor);
   border-width: var(--dialog-borderWidth);

@@ -1,13 +1,13 @@
-.uitk-density-touch {
+.salt-density-touch {
   --salt-size-icon-base: 16px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --salt-size-icon-base: 14px;
 }
-.uitk-density-medium {
+.salt-density-medium {
   --salt-size-icon-base: 12px;
 }
-.uitk-density-high {
+.salt-density-high {
   --salt-size-icon-base: 10px;
 }

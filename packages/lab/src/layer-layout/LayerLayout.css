@@ -1,11 +1,11 @@
-.uitkLayerLayout {
+.saltLayerLayout {
   --layerLayout-boxShadow: var(--saltLayerLayout-boxShadow, var(--salt-overlayable-shadow-modal));
   --layerLayout-background: var(--saltLayerLayout-background, var(--salt-container-primary-background));
   --layerLayout-padding: var(--saltLayerLayout-padding, calc(3 * var(--salt-size-unit)));
   --layerLayout-margin: var(--saltLayerLayout-margin, calc(3 * var(--salt-size-unit)));
 }
 
-.uitkLayerLayout {
+.saltLayerLayout {
   background: var(--layerLayout-background);
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
 }
 
-.uitkLayerLayout-fullScreen {
+.saltLayerLayout-fullScreen {
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -26,81 +26,81 @@
   left: 0;
 }
 
-.uitkLayerLayout-center {
+.saltLayerLayout-center {
   margin: var(--saltLayerLayout-margin, var(--layerLayout-margin));
 }
 
-.uitkLayerLayout-center.uitkLayerLayout-enter-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
-.uitkScrim.uitkLayerLayout-enter-animation {
+.saltLayerLayout-center.saltLayerLayout-enter-animation,
+.saltLayerLayout-fullScreen.saltLayerLayout-enter-animation,
+.saltScrim.saltLayerLayout-enter-animation {
   animation: var(--salt-animation-fade-in-center);
 }
 
-.uitkLayerLayout-center.uitkLayerLayout-exit-animation,
-.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
-.uitkScrim.uitkLayerLayout-exit-animation {
+.saltLayerLayout-center.saltLayerLayout-exit-animation,
+.saltLayerLayout-fullScreen.saltLayerLayout-exit-animation,
+.saltScrim.saltLayerLayout-exit-animation {
   animation: var(--salt-animation-fade-out-back);
 }
 
-.uitkLayerLayout-anchor {
+.saltLayerLayout-anchor {
   position: fixed;
   max-height: 100%;
   top: 0;
 }
 
-.uitkLayerLayout-top {
+.saltLayerLayout-top {
   left: 0;
   right: 0;
   bottom: auto;
 }
 
-.uitkLayerLayout-top.uitkLayerLayout-enter-animation {
+.saltLayerLayout-top.saltLayerLayout-enter-animation {
   animation: var(--salt-animation-slide-in-bottom);
 }
 
-.uitkLayerLayout-top.uitkLayerLayout-exit-animation {
+.saltLayerLayout-top.saltLayerLayout-exit-animation {
   animation: var(--salt-animation-slide-out-bottom);
 }
 
-.uitkLayerLayout-right {
+.saltLayerLayout-right {
   left: auto;
   right: 0;
   height: 100%;
 }
 
-.uitkLayerLayout-right.uitkLayerLayout-enter-animation {
+.saltLayerLayout-right.saltLayerLayout-enter-animation {
   animation: var(--salt-animation-slide-in-right);
 }
 
-.uitkLayerLayout-right.uitkLayerLayout-exit-animation {
+.saltLayerLayout-right.saltLayerLayout-exit-animation {
   animation: var(--salt-animation-slide-out-right);
 }
 
-.uitkLayerLayout-left {
+.saltLayerLayout-left {
   left: 0;
   right: auto;
   height: 100%;
 }
 
-.uitkLayerLayout-left.uitkLayerLayout-enter-animation {
+.saltLayerLayout-left.saltLayerLayout-enter-animation {
   animation: var(--salt-animation-slide-in-left);
 }
 
-.uitkLayerLayout-left.uitkLayerLayout-exit-animation {
+.saltLayerLayout-left.saltLayerLayout-exit-animation {
   animation: var(--salt-animation-slide-out-left);
 }
 
-.uitkLayerLayout-bottom {
+.saltLayerLayout-bottom {
   left: 0;
   right: 0;
   bottom: 0;
   top: auto;
 }
 
-.uitkLayerLayout-bottom.uitkLayerLayout-enter-animation {
+.saltLayerLayout-bottom.saltLayerLayout-enter-animation {
   animation: var(--salt-animation-slide-in-top);
 }
 
-.uitkLayerLayout-bottom.uitkLayerLayout-exit-animation {
+.saltLayerLayout-bottom.saltLayerLayout-exit-animation {
   animation: var(--salt-animation-slide-out-top);
 }

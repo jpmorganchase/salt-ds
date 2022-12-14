@@ -1,22 +1,22 @@
-.uitkStatusIndicator {
+.saltStatusIndicator {
   --statusIndicator-warning-color: var(--salt-status-warning-foreground);
   --statusIndicator-info-color: var(--salt-status-info-foreground);
   --statusIndicator-success-color: var(--salt-status-success-foreground);
   --statusIndicator-error-color: var(--salt-status-error-foreground);
 }
 
-.uitkStatusIndicator-error {
+.saltStatusIndicator-error {
   --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-error-color));
 }
 
-.uitkStatusIndicator-warning {
+.saltStatusIndicator-warning {
   --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-warning-color));
 }
 
-.uitkStatusIndicator-success {
+.saltStatusIndicator-success {
   --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-success-color));
 }
 
-.uitkStatusIndicator-info {
+.saltStatusIndicator-info {
   --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-info-color));
 }

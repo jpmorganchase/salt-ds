@@ -10,7 +10,7 @@ describe("GIVEN a CascadingMenu component", () => {
       cy.mount(<DefaultCascadingMenu />);
       cy.findByTestId("cascading-menu-trigger").should(
         "have.class",
-        "uitkButton"
+        "saltButton"
       );
       cy.findByRole("menu").should("not.exist");
     });
@@ -121,9 +121,9 @@ describe("GIVEN a CascadingMenu component", () => {
     specify("Focus shifts from trigger to 'topmost' menu", () => {
       cy.mount(<DefaultCascadingMenu />);
       cy.findByTestId("cascading-menu-trigger").focus();
-      cy.focused().should("have.class", "uitkButton");
+      cy.focused().should("have.class", "saltButton");
       cy.realPress("{downarrow}");
-      cy.focused().should("have.class", "uitkCascadingMenuList");
+      cy.focused().should("have.class", "saltCascadingMenuList");
     });
   });
 });

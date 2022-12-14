@@ -4,7 +4,7 @@ import { Meta } from "@storybook/addon-docs";
 
 ## UI Toolkit styling
 
-You can use styling attributes from the UITK theme to style many elements of your application - native HTML used for structural and layout purposes, your own custom components, etc.
+You can use styling attributes from the Salt theme to style many elements of your application - native HTML used for structural and layout purposes, your own custom components, etc.
 
 ### Explaining our approach
 
@@ -152,15 +152,15 @@ Consider the example given above:
 In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
 
 ```css
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   --property-my-color: red;
 }
 ```
 
-In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.uitk-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode="light"]` or `.uitk-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
+In this case, the CSS selector `.salt-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.salt-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.salt-theme[data-mode="light"]` or `.salt-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
 
 ```html
-<div class="MyApplication uitk-theme" data-mode="light">
+<div class="MyApplication salt-theme" data-mode="light">
   <rest-of-my-application />
 </div>
 ```
@@ -182,7 +182,7 @@ Refer to the SaltProvider docs for more detail.
 The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. By default, the UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `SaltProvider` the application is using the light and high density variants. The HTML for this app will look like this:
 
 ```html
-<div class="salt-provider uitk-theme uitk-density-high" data-mode="light">
+<div class="salt-provider salt-theme salt-density-high" data-mode="light">
   <rest-of-my-application />
 </div>
 ```
@@ -190,7 +190,7 @@ The combination of CSS variables with CSS selector scoping is very flexible. It 
 In the CSS where the theme variables are declared, there are sections declared as follows:
 
 ```css
-.uitk-theme {
+.salt-theme {
   --salt-actionable-primary-foreground: var(
     --salt-palette-interact-primary-foreground
   );
@@ -200,10 +200,10 @@ In the CSS where the theme variables are declared, there are sections declared a
 The palette token then resolves down to:
 
 ```css
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   --salt-palette-interact-primary-foreground: var(--salt-color-gray-900);
 }
-.uitk-theme[data-mode="dark"] {
+.salt-theme[data-mode="dark"] {
   --salt-palette-interact-primary-foreground: var(--salt-color-white);
 }
 ```
@@ -216,12 +216,12 @@ Component styles work with theme styles to give a complete theme-based styling s
 We have already mentioned that components will reference Theme variables, the example below is from Button. It shows a single style declaration but illustrates some important concepts:
 
 ```css
-.uitkButton {
+.saltButton {
   font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
 }
 ```
 
-- All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
+- All UI Toolkit components have a CSS class on the root element, of the form `salt<ComponentName>`. This is a rule with no exceptions.
 - The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
 - A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
   `var(--primary-variable-value, var(--fallback-value))`.

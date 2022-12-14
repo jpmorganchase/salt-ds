@@ -69,7 +69,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
       {props.isStateValue || isColor(props.extractValue(value)).length ? (
         <div className={cn(withBaseName("colorInput"))}>
           <ColorValueEditor
-            uitkColorOverrides={props.uitkColorOverrides}
+            uitkColorOverrides={props.saltColorOverrides}
             characteristicsView={props.characteristicsView}
             extractValue={props.extractValue}
             isStateValue={props.isStateValue}

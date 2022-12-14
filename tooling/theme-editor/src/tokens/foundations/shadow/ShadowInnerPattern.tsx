@@ -64,7 +64,7 @@ export const ShadowInnerPattern = (
 
   return (
     <ValueEditor
-      uitkColorOverrides={props.uitkColorOverrides}
+      uitkColorOverrides={props.saltColorOverrides}
       extractValue={props.extractValue}
       characteristicsView={false}
       key={`${props.patternName}-editor`}

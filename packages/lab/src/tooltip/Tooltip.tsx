@@ -17,7 +17,7 @@ import "./Tooltip.css";
 
 export type TooltipStatus = "error" | "info" | "success" | "warning";
 
-const withBaseName = makePrefixer("uitkTooltip");
+const withBaseName = makePrefixer("saltTooltip");
 
 // FIXME: Fix types
 export interface TooltipRenderProp {

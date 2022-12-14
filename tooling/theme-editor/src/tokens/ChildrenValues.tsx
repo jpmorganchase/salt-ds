@@ -121,7 +121,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
           <ChildrenValuesWithinSection
             characteristicsView={props.characteristicsView}
             children={props.children}
-            uitkColorOverrides={props.uitkColorOverrides}
+            uitkColorOverrides={props.saltColorOverrides}
             extractValue={props.extractValue}
             fieldName={props.fieldName}
             onUpdateJSON={props.onUpdateJSON}
@@ -140,7 +140,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
           .map((node) =>
             node !== "value" ? (
               <ChildrenValues
-                uitkColorOverrides={props.uitkColorOverrides}
+                uitkColorOverrides={props.saltColorOverrides}
                 extractValue={props.extractValue}
                 characteristicsView={props.characteristicsView}
                 children={props.children[node]}
@@ -152,7 +152,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
               />
             ) : (
               <ValueEditor
-                uitkColorOverrides={props.uitkColorOverrides}
+                uitkColorOverrides={props.saltColorOverrides}
                 extractValue={props.extractValue}
                 characteristicsView={props.characteristicsView}
                 key={`${props.patternName}-${props.fieldName}-${node}-editor`}

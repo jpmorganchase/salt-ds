@@ -1,25 +1,25 @@
-.uitk-density-touch {
+.salt-density-touch {
   --toggleButton-icon-padding: 11px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --toggleButton-icon-padding: 7px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --toggleButton-icon-padding: 5px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --toggleButton-icon-padding: 1px;
 }
 
-.uitkToggleButton-horizontal.uitkToggleButton-iconOnly {
+.saltToggleButton-horizontal.saltToggleButton-iconOnly {
   padding: var(--saltToggleButton-icon-padding, var(--toggleButton-icon-padding));
 }
 
 /* CTA */
-.uitkToggleButton-cta {
+.saltToggleButton-cta {
   --saltButton-background: var(--salt-selectable-background);
   --saltButton-background-hover: var(--salt-selectable-cta-background-hover);
   --saltButton-background-active: var(--salt-selectable-cta-background-selected);
@@ -32,7 +32,7 @@
 
   --saltIcon-color: var(--salt-selectable-cta-foreground);
 }
-.uitkToggleButton-cta.uitkToggleButton-disabled.uitkButton-disabled {
+.saltToggleButton-cta.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
   --saltButton-background-active: var(--salt-selectable-cta-background-disabled);
 
@@ -41,12 +41,12 @@
 
   --saltIcon-color: var(--salt-selectable-cta-foreground-disabled);
 }
-.uitkToggleButton-cta.uitkToggleButton-disabled {
+.saltToggleButton-cta.saltToggleButton-disabled {
   --saltButton-background-active: var(--salt-selectable-cta-background-selectedDisabled);
   --saltButton-text-color-active: var(--salt-selectable-cta-foreground-selectedDisabled);
   --saltIcon-color-active: var(--salt-selectable-cta-foreground-selectedDisabled);
 }
-.uitkToggleButton-cta.uitkToggleButton-toggled {
+.saltToggleButton-cta.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-cta-background-selected);
   --saltButton-background-hover: var(--salt-selectable-cta-background-selected);
 
@@ -55,7 +55,7 @@
 
   --saltIcon-color: var(--salt-selectable-cta-foreground-selected);
 }
-.uitkToggleButton-cta.uitkToggleButton-toggled.uitkToggleButton-disabled {
+.saltToggleButton-cta.saltToggleButton-toggled.saltToggleButton-disabled {
   --saltButton-background-disabled: var(--salt-selectable-cta-background-selectedDisabled);
   --saltButton-background-hover: var(--salt-selectable-cta-background-selectedDisabled);
 
@@ -66,7 +66,7 @@
 }
 
 /* Primary */
-.uitkToggleButton-primary {
+.saltToggleButton-primary {
   --saltButton-background: var(--salt-selectable-background);
   --saltButton-background-hover: var(--salt-selectable-primary-background-hover);
   --saltButton-background-active: var(--salt-selectable-primary-background-selected);
@@ -79,7 +79,7 @@
 
   --saltIcon-color: var(--salt-selectable-primary-foreground);
 }
-.uitkToggleButton-primary.uitkToggleButton-disabled.uitkButton-disabled {
+.saltToggleButton-primary.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-active: var(--salt-selectable-primary-background-disabled);
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
 
@@ -88,11 +88,11 @@
 
   --saltIcon-color: var(--salt-selectable-primary-foreground-disabled);
 }
-.uitkToggleButton-primary.uitkToggleButton-disabled.uitkButton-active {
+.saltToggleButton-primary.saltToggleButton-disabled.saltButton-active {
   --saltButton-background-active: var(--salt-selectable-primary-background-selectedDisabled);
   --saltButton-text-color-active: var(--salt-selectable-primary-foreground-selectedDisabled);
 }
-.uitkToggleButton-primary.uitkToggleButton-toggled {
+.saltToggleButton-primary.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-primary-background-selected);
   --saltButton-background-hover: var(--salt-selectable-primary-background-selected);
 
@@ -101,7 +101,7 @@
 
   --saltIcon-color: var(--salt-selectable-primary-foreground-selected);
 }
-.uitkToggleButton-primary.uitkToggleButton-toggled.uitkToggleButton-disabled {
+.saltToggleButton-primary.saltToggleButton-toggled.saltToggleButton-disabled {
   --saltButton-background-disabled: var(--salt-selectable-primary-background-selectedDisabled);
   --saltButton-background-hover: var(--salt-selectable-primary-background-selectedDisabled);
 
@@ -112,7 +112,7 @@
 }
 
 /* Secondary */
-.uitkToggleButton-secondary {
+.saltToggleButton-secondary {
   --saltButton-background: var(--salt-selectable-background);
   --saltButton-background-hover: var(--salt-selectable-secondary-background-hover);
   --saltButton-background-active: var(--salt-selectable-secondary-background-selected);
@@ -125,7 +125,7 @@
 
   --saltIcon-color: var(--salt-selectable-secondary-foreground);
 }
-.uitkToggleButton-secondary.uitkToggleButton-disabled.uitkButton-disabled {
+.saltToggleButton-secondary.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-active: var(--salt-selectable-secondary-background-disabled);
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
 
@@ -134,12 +134,12 @@
 
   --saltIcon-color: var(--salt-selectable-secondary-foreground-disabled);
 }
-.uitkToggleButton-secondary.uitkToggleButton-disabled.uitkButton-active {
+.saltToggleButton-secondary.saltToggleButton-disabled.saltButton-active {
   --saltButton-background-active: var(--salt-selectable-secondary-background-selectedDisabled);
   --saltButton-text-color-active: var(--salt-selectable-secondary-foreground-selectedDisabled);
   --saltIcon-color-active: var(--salt-selectable-secondary-foreground-selectedDisabled);
 }
-.uitkToggleButton-secondary.uitkToggleButton-toggled {
+.saltToggleButton-secondary.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-secondary-background-selected);
   --saltButton-background-hover: var(--salt-selectable-secondary-background-selected);
 
@@ -148,7 +148,7 @@
 
   --saltIcon-color: var(--salt-selectable-secondary-foreground-selected);
 }
-.uitkToggleButton-secondary.uitkToggleButton-toggled.uitkToggleButton-disabled {
+.saltToggleButton-secondary.saltToggleButton-toggled.saltToggleButton-disabled {
   --saltButton-background-disabled: var(--salt-selectable-secondary-background-selectedDisabled);
   --saltButton-background-hover: var(--salt-selectable-secondary-background-selectedDisabled);
   --saltButton-text-color-disabled: var(--salt-selectable-secondary-foreground-selectedDisabled);

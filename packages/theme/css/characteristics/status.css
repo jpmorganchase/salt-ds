@@ -1,4 +1,4 @@
-.uitk-theme {
+.salt-theme {
   --salt-status-info-foreground: var(--salt-palette-info-foreground);
   --salt-status-success-foreground: var(--salt-palette-success-foreground);
   --salt-status-warning-foreground: var(--salt-palette-warning-foreground);

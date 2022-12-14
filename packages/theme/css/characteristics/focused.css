@@ -1,4 +1,4 @@
-.uitk-theme {
+.salt-theme {
   --salt-focused-outlineColor: var(--salt-palette-interact-outline);
   --salt-focused-outlineStyle: dotted;
   --salt-focused-outlineWidth: 2px;
@@ -8,7 +8,7 @@
   --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
 }
 
-.uitkFocusVisible:after,
+.saltFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";

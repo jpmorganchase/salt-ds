@@ -5,12 +5,12 @@
   flex-direction: column;
 }
 
-.Flexbox > .uitkAppHeader ~ *,
+.Flexbox > .saltAppHeader ~ *,
 .Flexbox > [role="tablist"] ~ * {
   display: none;
 }
 
-.Flexbox .uitkAppHeader ~ [aria-hidden="false"],
+.Flexbox .saltAppHeader ~ [aria-hidden="false"],
 .Flexbox [role="tablist"] ~ [aria-hidden="false"] {
   display: block;
   flex: 1 1 0;

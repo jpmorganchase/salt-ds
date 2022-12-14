@@ -1,4 +1,4 @@
-.uitkDialogContent {
+.saltDialogContent {
   --dialog-content-fontSize: var(--saltDialog-content-fontSize, var(--salt-text-fontSize));
   --dialog-content-lineHeight: var(--saltDialog-content-lineHeight, var(--salt-text-lineHeight));
   --dialog-content-paddingTop: var(--saltDialog-content-paddingTop, calc(var(--salt-size-unit) * 2));
@@ -7,7 +7,7 @@
   --dialog-content-color: var(--saltDialog-content-color, var(--salt-text-primary-foreground));
 }
 
-.uitkDialogContent {
+.saltDialogContent {
   flex: 1 1 auto;
   overflow: visible;
   font-weight: var(--salt-text-fontWeight);
@@ -19,6 +19,6 @@
   color: var(--dialog-content-color);
 }
 
-.uitkDialogContent-leftGutter {
+.saltDialogContent-leftGutter {
   padding-left: 32px;
 }

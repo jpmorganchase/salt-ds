@@ -1,14 +1,14 @@
-.uitkColorChooser-overlayButtonSwatch {
+.saltColorChooser-overlayButtonSwatch {
   margin-right: 10px;
   height: calc(2 * var(--salt-size-unit));
   width: calc(2 * var(--salt-size-unit));
 }
 
-.uitkColorChooser-overlayButtonSwatchWithBorder {
+.saltColorChooser-overlayButtonSwatchWithBorder {
   border: 0.2px solid var(--salt-editable-borderColor);
 }
 
-.uitkColorChooser-overlayButtonSwatchTransparent {
+.saltColorChooser-overlayButtonSwatchTransparent {
   height: calc(3 * var(--salt-size-unit) - 2px) !important;
   width: calc(3 * var(--salt-size-unit) - 2px) !important;
   border: 1px solid var(--salt-differential-negative-foreground);
@@ -23,43 +23,43 @@
   );
 }
 
-.uitkColorChooser-overlayButtonText {
+.saltColorChooser-overlayButtonText {
   font-weight: var(--salt-text-fontWeight);
   font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
   font-size: var(--salt-text-fontSize);
   letter-spacing: normal;
 }
 
-.uitkColorChooser-overlayButton {
+.saltColorChooser-overlayButton {
   background: transparent;
   text-transform: none;
   justify-content: flex-start;
 }
 
-.uitkColorChooser-overlayButtonHiddenLabel {
+.saltColorChooser-overlayButtonHiddenLabel {
   width: calc(var(--salt-size-unit) * 3);
   display: contents;
 }
 
-.uitkColorChooser-overlayButtonClose {
+.saltColorChooser-overlayButtonClose {
   margin: 5px;
 }
 
-.uitkColorChooser-defaultButton {
+.saltColorChooser-defaultButton {
   float: right;
   background: transparent;
   padding: 6px 2px 6px 2px;
   height: var(--salt-size-stackable);
 }
 
-.uitkColorChooser-defaultButton {
+.saltColorChooser-defaultButton {
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }
 
-.uitkColorChooser-overlayContent {
+.saltColorChooser-overlayContent {
   max-width: 100%;
 }
 
-.uitkColorChooser-refreshIcon {
+.saltColorChooser-refreshIcon {
   padding-right: 5px;
 }

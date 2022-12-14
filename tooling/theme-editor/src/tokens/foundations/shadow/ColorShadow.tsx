@@ -88,7 +88,7 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
                   }
                   return (
                     <ShadowInnerPattern
-                      uitkColorOverrides={props.uitkColorOverrides}
+                      uitkColorOverrides={props.saltColorOverrides}
                       entireValue={
                         props.shadowPattern[shadowKey]["value"] ?? ""
                       }

@@ -1,30 +1,30 @@
 /* Style applied to the separator */
-.uitkSplitLayout-separator {
+.saltSplitLayout-separator {
   --saltFlexLayout-gap: calc(var(--salt-size-unit) * var(--saltFlexLayout-gap-multiplier) + var(--saltFlexLayout-separator));
 }
 
-.uitkSplitLayout-separator > *:first-child::after,
-.uitkSplitLayout-separator > *:last-child::before,
-.uitkSplitLayout-separator-center::after {
+.saltSplitLayout-separator > *:first-child::after,
+.saltSplitLayout-separator > *:last-child::before,
+.saltSplitLayout-separator-center::after {
   background-color: var(--salt-separable-secondary-borderColor);
   width: var(--saltFlexLayout-separator);
   top: 0;
   height: 100%;
 }
 
-.uitkSplitLayout-separator-start > *:first-child::after {
+.saltSplitLayout-separator-start > *:first-child::after {
   content: "";
   right: calc(var(--saltFlexLayout-separator) * -1);
 }
 
-.uitkSplitLayout-separator-end > *:last-child::before {
+.saltSplitLayout-separator-end > *:last-child::before {
   content: "";
   right: calc(var(--saltFlexLayout-separator) * -1);
 }
-.uitkSplitLayout-separator-center {
+.saltSplitLayout-separator-center {
   position: relative;
 }
-.uitkSplitLayout-separator-center::after {
+.saltSplitLayout-separator-center::after {
   position: absolute;
   content: "";
   right: calc(var(--saltFlexLayout-separator) * -1);

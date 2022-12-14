@@ -1,21 +1,21 @@
-.uitkDeckItem {
+.saltDeckItem {
   display: inline-block;
 }
 
-.uitkDeckLayout-slide-vertical .uitkDeckItem {
+.saltDeckLayout-slide-vertical .saltDeckItem {
   display: block;
 }
 
-.uitkDeckItem-fade-previous,
-.uitkDeckItem-fade-next,
-.uitkDeckItem-static-previous,
-.uitkDeckItem-static-next {
+.saltDeckItem-fade-previous,
+.saltDeckItem-fade-next,
+.saltDeckItem-static-previous,
+.saltDeckItem-static-next {
   display: none;
 }
 
-.uitkDeckItem-fade-in {
+.saltDeckItem-fade-in {
   animation: var(--salt-animation-fade-in-center);
 }
-.uitkDeckItem-fade-out {
+.saltDeckItem-fade-out {
   animation: var(--salt-animation-fade-out-back);
 }

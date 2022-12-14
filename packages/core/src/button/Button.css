@@ -1,5 +1,5 @@
 /* Styles applied to the root element if variant="cta" */
-.uitkButton-cta {
+.saltButton-cta {
   --button-background: var(--salt-actionable-cta-background);
   --button-background-active: var(--salt-actionable-cta-background-active);
   --button-background-disabled: var(--salt-actionable-cta-background-disabled);
@@ -12,22 +12,22 @@
 }
 
 /* Icon API in "CTA" variant @ignore */
-.uitkButton-cta {
+.saltButton-cta {
   --saltIcon-color: var(--salt-actionable-cta-foreground);
 }
-.uitkButton-cta:hover {
+.saltButton-cta:hover {
   --saltIcon-color: var(--salt-actionable-cta-foreground-hover);
 }
-.uitkButton-cta:active,
-.uitkButton-cta.uitkButton-active {
+.saltButton-cta:active,
+.saltButton-cta.saltButton-active {
   --saltIcon-color: var(--salt-actionable-cta-foreground-active);
 }
-.uitkButton-cta.uitkButton-disabled {
+.saltButton-cta.saltButton-disabled {
   --saltIcon-color: var(--salt-actionable-cta-foreground-disabled);
 }
 
 /* Styles applied to the root element if variant="primary" (or no variant specified) */
-.uitkButton-primary {
+.saltButton-primary {
   --button-background: var(--salt-actionable-primary-background);
   --button-background-active: var(--salt-actionable-primary-background-active);
   --button-background-disabled: var(--salt-actionable-primary-background-disabled);
@@ -40,22 +40,22 @@
 }
 
 /* Icon API in "primary" variant @ignore */
-.uitkButton-primary {
+.saltButton-primary {
   --saltIcon-color: var(--salt-actionable-primary-foreground);
 }
-.uitkButton-primary:hover {
+.saltButton-primary:hover {
   --saltIcon-color: var(--salt-actionable-primary-foreground-hover);
 }
-.uitkButton-primary:active,
-.uitkButton-primary.uitkButton-active {
+.saltButton-primary:active,
+.saltButton-primary.saltButton-active {
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }
-.uitkButton-primary.uitkButton-disabled {
+.saltButton-primary.saltButton-disabled {
   --saltIcon-color: var(--salt-actionable-primary-foreground-disabled);
 }
 
 /* Styles applied to the root element if variant="secondary" */
-.uitkButton-secondary {
+.saltButton-secondary {
   --button-background: var(--salt-actionable-secondary-background);
   --button-background-active: var(--salt-actionable-secondary-background-active);
   --button-background-disabled: var(--salt-actionable-secondary-background-disabled);
@@ -68,22 +68,22 @@
 }
 
 /* Icon API in "secondary" variant @ignore */
-.uitkButton-secondary {
+.saltButton-secondary {
   --saltIcon-color: var(--salt-actionable-secondary-foreground);
 }
 
-.uitkButton-secondary:hover {
+.saltButton-secondary:hover {
   --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
 }
-.uitkButton-secondary:active,
-.uitkButton-secondary.uitkButton-active {
+.saltButton-secondary:active,
+.saltButton-secondary.saltButton-active {
   --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
-.uitkButton-secondary.uitkButton-disabled {
+.saltButton-secondary.saltButton-disabled {
   --saltIcon-color: var(--salt-actionable-secondary-foreground-disabled);
 }
 
-.uitkButton {
+.saltButton {
   align-items: var(--saltButton-alignItems, center);
   appearance: none;
   background: var(--saltButton-background, var(--button-background));
@@ -119,7 +119,7 @@
 }
 
 /* Pseudo-class applied to the root element on focus */
-.uitkButton:focus-visible {
+.saltButton:focus-visible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
@@ -129,37 +129,37 @@
 }
 
 /* Pseudo-class applied to the root element on focus when Button is active */
-.uitkButton.uitkButton-active:focus-visible,
-.uitkButton:focus-visible(:active) {
+.saltButton.saltButton-active:focus-visible,
+.saltButton:focus-visible(:active) {
   background: var(--saltButton-background-active-hover, var(--button-background));
   color: var(--saltButton-text-color-active-hover, var(--button-text-color));
 }
 
 /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
-.uitkButton:hover {
+.saltButton:hover {
   background: var(--saltButton-background-hover, var(--button-background-hover));
   color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
-.uitkButton:active,
-.uitkButton.uitkButton-active {
+.saltButton:active,
+.saltButton.saltButton-active {
   background: var(--saltButton-background-active, var(--button-background-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
 }
 
 /* Pseudo-class applied to the root element if disabled={true} */
-.uitkButton:disabled,
-.uitkButton-disabled,
+.saltButton:disabled,
+.saltButton-disabled,
   /* Overrides to apply the disabled style when the button is focusable while also disabled */
-.uitkButton-disabled:active,
-.uitkButton-disabled:focus-visible,
-.uitkButton-disabled:hover {
+.saltButton-disabled:active,
+.saltButton-disabled:focus-visible,
+.saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background-disabled));
   color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--saltButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
 }
 
-.uitkButton[href] {
+.saltButton[href] {
   display: inline-flex;
 }

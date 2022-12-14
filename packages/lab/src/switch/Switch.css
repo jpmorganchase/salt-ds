@@ -1,5 +1,5 @@
 /* Styles applied to root element */
-.uitk-density-touch {
+.salt-density-touch {
   --switch-width: 44px;
   --switch-thumb-margin: 3px 0 0 3px;
   --switch-thumb-size: 18px;
@@ -7,7 +7,7 @@
   --switch-height: 24px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --switch-width: 38px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 16px;
@@ -15,7 +15,7 @@
   --switch-height: 20px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --switch-width: 34px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 14px;
@@ -23,7 +23,7 @@
   --switch-height: 18px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --switch-width: 30px;
   --switch-thumb-margin: 2px 0 0 2px;
   --switch-thumb-size: 12px;
@@ -31,7 +31,7 @@
   --switch-height: 16px;
 }
 
-.uitkSwitch {
+.saltSwitch {
   --switch-label-color: var(--salt-text-secondary-foreground);
   --switch-thumb-background: var(--salt-selectable-primary-foreground-selected);
   --switch-track-color: var(--salt-selectable-borderColor);
@@ -43,7 +43,7 @@
   --switch-tick-color-disabled: var(--salt-selectable-borderColor-selectedDisabled);
 }
 
-.uitkSwitch {
+.saltSwitch {
   box-sizing: content-box;
   display: inline-flex;
   flex-shrink: 0;
@@ -58,7 +58,7 @@
 }
 
 /* Styles applied to outer ControlLabel component */
-.uitkSwitch-label {
+.saltSwitch-label {
   position: relative;
   margin-left: 0;
   margin-right: 0;
@@ -66,29 +66,29 @@
 }
 
 /* Styles applied to outer ControlLabel component's text */
-.uitkSwitch-label .uitkControlLabel-text {
+.saltSwitch-label .saltControlLabel-text {
   color: var(--saltSwitch-label-color, var(--switch-label-color));
   line-height: var(--saltSwitch-label-lineHeight, var(--salt-text-lineHeight));
   text-align: right;
 }
 
 /* Styles applied to track on hover  */
-.uitkSwitch-label:hover .uitkSwitch-track {
+.saltSwitch-label:hover .saltSwitch-track {
   background: var(--saltSwitch-track-color-hover, var(--switch-track-color-hover));
 }
 
 /* Styles applied to track on hover if `disabled={true}` */
-.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-track {
+.saltSwitch-label.saltSwitch-disabled:hover .saltSwitch-track {
   background: var(--saltSwitch-track-color-disabled, var(--switch-track-color-disabled));
 }
 
 /* Styles applied to track on hover when checked  */
-.uitkSwitch-label:hover .uitkSwitch-checked + .uitkSwitch-track {
+.saltSwitch-label:hover .saltSwitch-checked + .saltSwitch-track {
   background: var(--saltSwitch-track-color-checked-hover, var(--switch-track-color-checked));
 }
 
 /* Styles applied to base */
-.uitkSwitch-base {
+.saltSwitch-base {
   background: transparent;
   display: inline-flex;
   flex: 0 0 auto;
@@ -105,7 +105,7 @@
 }
 
 /* Styles applied to track */
-.uitkSwitch-track {
+.saltSwitch-track {
   background: var(--saltSwitch-track-color, var(--switch-track-color));
   border-radius: var(--saltSwitch-track-borderRadius, 0);
   height: var(--saltSwitch-track-height, var(--switch-height));
@@ -121,7 +121,7 @@
 }
 
 /* Styles applied to input element and icon container */
-.uitkSwitch-inputContainer {
+.saltSwitch-inputContainer {
   align-items: inherit;
   display: flex;
   justify-content: inherit;
@@ -131,7 +131,7 @@
 }
 
 /* Styles applied to input element */
-.uitkSwitch-input {
+.saltSwitch-input {
   cursor: inherit;
   height: 100%;
   left: -100%;
@@ -145,8 +145,8 @@
 }
 
 /* Styles applied to thumb, and icon if `checked={true}` */
-.uitkSwitch-thumb,
-.uitkSwitch-checked .uitkSwitch-icon {
+.saltSwitch-thumb,
+.saltSwitch-checked .saltSwitch-icon {
   background: var(--saltSwitch-thumb-background, var(--switch-thumb-background));
   border-radius: var(--saltSwitch-thumb-borderRadius, 0);
   border: var(--saltSwitch-thumb-border, none);
@@ -158,33 +158,33 @@
 }
 
 /* Styles applied to base if `checked={true}` */
-.uitkSwitch-base.uitkSwitch-checked {
+.saltSwitch-base.saltSwitch-checked {
   transform: none;
 }
 
 /* Styles applied to input container if `checked={true}` */
-.uitkSwitch-base.uitkSwitch-checked .uitkSwitch-inputContainer {
+.saltSwitch-base.saltSwitch-checked .saltSwitch-inputContainer {
   transform: translateX(var(--saltSwitch-thumb-translate, var(--switch-thumb-translate)));
 }
 
 /* Styles applied to tracks where `checked={true}` */
-.uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track {
+.saltSwitch-base.saltSwitch-checked + .saltSwitch-track {
   background: var(--saltSwitch-track-color-checked, var(--switch-track-color-checked));
   border: var(--saltSwitch-track-border-checked, 1px solid var(--switch-track-color-checked));
 }
 
 /* Styles applied to icon tick shown when `checked={true}` */
-.uitkSwitch-iconTick {
+.saltSwitch-iconTick {
   fill: var(--saltSwitch-icon-color-checked, var(--switch-tick-color));
 }
 
 /* Styles applied to icon tick shown when `checked={true}` and `disabled={true}` */
-.uitkSwitch-disabled .uitkSwitch-iconTick {
+.saltSwitch-disabled .saltSwitch-iconTick {
   fill: var(--saltSwitch-icon-color-checked-disabled, var(--switch-tick-color-disabled));
 }
 
 /* Styles applied when `focusVisible={true}` */
-.uitkSwitch-focusVisible:before {
+.saltSwitch-focusVisible:before {
   background: transparent;
   content: "";
   display: block;
@@ -200,29 +200,29 @@
 }
 
 /* Styles applied to tracks when `focusVisible={true}` */
-.uitkSwitch-focusVisible + .uitkSwitch-track {
+.saltSwitch-focusVisible + .saltSwitch-track {
   background: var(--saltSwitch-track-color-hover, var(--switch-track-color-hover));
 }
 
 /* Styles applied to track if `disabled={true}` */
-.uitkSwitch-disabled .uitkSwitch-base + .uitkSwitch-track {
+.saltSwitch-disabled .saltSwitch-base + .saltSwitch-track {
   background: var(--switch-track-color-disabled);
   border: transparent;
 }
 
 /* Styles applied to track if `disabled={true}` and `checked={true}` */
-.uitkSwitch-disabled .uitkSwitch-base.uitkSwitch-checked + .uitkSwitch-track,
-.uitkSwitch-label.uitkSwitch-disabled:hover .uitkSwitch-checked + .uitkSwitch-track {
+.saltSwitch-disabled .saltSwitch-base.saltSwitch-checked + .saltSwitch-track,
+.saltSwitch-label.saltSwitch-disabled:hover .saltSwitch-checked + .saltSwitch-track {
   background: var(--saltSwitch-track-color-checked-disabled, var(--switch-track-color-checked-disabled));
   border: transparent;
 }
 
 /* Styles applied to thumb and icon if `disabled={true}`  */
-.uitkSwitch-disabled .uitkSwitch-thumb,
-.uitkSwitch-disabled:hover .uitkSwitch-thumb,
-.uitkSwitch-disabled .uitkSwitch-checked .uitkSwitch-icon,
-.uitkSwitch-disabled:hover .uitkSwitch-checked .uitkSwitch-icon,
-.uitkSwitch-disabled,
-.uitkSwitch-disabled:hover {
+.saltSwitch-disabled .saltSwitch-thumb,
+.saltSwitch-disabled:hover .saltSwitch-thumb,
+.saltSwitch-disabled .saltSwitch-checked .saltSwitch-icon,
+.saltSwitch-disabled:hover .saltSwitch-checked .saltSwitch-icon,
+.saltSwitch-disabled,
+.saltSwitch-disabled:hover {
   --switch-thumb-background: var(--salt-selectable-primary-foreground-selectedDisabled);
 }

@@ -28,7 +28,7 @@ export const FoundationPatternsList = (
 ): ReactElement => {
   let jsonByScopeInView = useMemo(() => {
     return Object.values(props.jsonInCurrentScope).filter((js) =>
-      Object.keys(js.jsonObj.uitk).some((k) =>
+      Object.keys(js.jsonObj.salt).some((k) =>
         props.patternsInScope.includes(k)
       )
     );
@@ -60,7 +60,7 @@ export const FoundationPatternsList = (
       )}
       <Accordion>
         {jsonByScopeInView.map((s) => {
-          return Object.keys(s.jsonObj.uitk)
+          return Object.keys(s.jsonObj.salt)
             .filter((pattern) => props.patternsInScope.includes(pattern))
             .map(function (pattern) {
               return s.scope.includes("density") ||
@@ -70,7 +70,7 @@ export const FoundationPatternsList = (
                 <FoundationPatternByDensity
                   key={`${props.themeName}-${pattern}`}
                   patternName={pattern}
-                  values={s.jsonObj.uitk[pattern]}
+                  values={s.jsonObj.salt[pattern]}
                   themeName={props.themeName}
                   onUpdateJSON={props.onUpdateJSON}
                   extractValue={props.extractValue}
@@ -86,14 +86,14 @@ export const FoundationPatternsList = (
                     extractValue={props.extractValue}
                     scope={s.scope}
                     pattern={pattern}
-                    shadowPattern={s.jsonObj.uitk[pattern]}
+                    shadowPattern={s.jsonObj.salt[pattern]}
                   />
                 </div>
               ) : pattern === "icon" ? (
                 <IconPattern
                   key={`${props.themeName}-${pattern}`}
                   patternName={pattern}
-                  values={s.jsonObj.uitk[pattern]}
+                  values={s.jsonObj.salt[pattern]}
                   themeName={props.themeName}
                   onUpdateJSON={props.onUpdateJSON}
                   extractValue={props.extractValue}
@@ -106,7 +106,7 @@ export const FoundationPatternsList = (
                     uitkColorOverrides={uitkColorOverrides}
                     key={`${props.themeName}-${pattern}`}
                     patternName={pattern}
-                    values={s.jsonObj.uitk[pattern]}
+                    values={s.jsonObj.salt[pattern]}
                     themeName={props.themeName}
                     onUpdateJSON={props.onUpdateJSON}
                     extractValue={props.extractValue}

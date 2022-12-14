@@ -21,7 +21,7 @@ From a design perspective, there is a need for aesthetic flexibility without dec
 
 Characteristics offer the following benefits:
 
-- Ability to theme the UITK inline with third-parties or CIB sub brand guidelines.
+- Ability to theme the Salt inline with third-parties or CIB sub brand guidelines.
 - Increase consistency across all components, with the knock-on effect of improving the overall user experience e.g. reduced cognitive load.
 - Simplified design of new components and patterns e.g. drag-and-drop behavior.
 - Streamlined evolution – a single change to a characteristic will automatically cascade down through all related components within the library.
@@ -43,7 +43,7 @@ Remember to wrap the characteristic you wish to use inside a `var()` function.
 For example, a Button is a component on which a user can perform an action, so you could use the following characteristics to style the component:
 
 ```css
-.uitkButton {
+.saltButton {
   background: var(--salt-actionable-primary-background);
   font-weight: var(--salt-actionable-fontWeight);
 }
@@ -68,7 +68,7 @@ In the following example, we will show how to customize the Card component throu
 Some components, like Button, have different variants such as 'cta' and 'secondary'. But these styling variants aren't limited to only those with a defined variant prop. We can easily add a new variant to Card, and directly use the `secondary` variant container characteristics instead. Let's add the following to `Card.css`:
 
 ```css
-.uitkCard.uitkCard-secondary {
+.saltCard.saltCard-secondary {
   --saltCard-background: var(--salt-container-secondary-background);
   --saltCard-borderColor: var(--salt-container-secondary-borderColor);
   --saltCard-borderRadius: 10px;
@@ -76,10 +76,10 @@ Some components, like Button, have different variants such as 'cta' and 'seconda
 }
 ```
 
-Note the use of `-secondary` container characteristic tokens provided by UITK that weren't used in Card by default, as well as raw values to further emphasize the component. Now, all we have to do to use this secondary variant styling is pass in the `uitkCard-secondary` class name (this name has been chosen to follow convention, but could really be anything you like):
+Note the use of `-secondary` container characteristic tokens provided by Salt that weren't used in Card by default, as well as raw values to further emphasize the component. Now, all we have to do to use this secondary variant styling is pass in the `saltCard-secondary` class name (this name has been chosen to follow convention, but could really be anything you like):
 
 <Panel style={{ background: "var(--salt-color-purple-10)" }}>
-  <Card className="uitkCard-secondary">
+  <Card className="saltCard-secondary">
     <div>
       <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
         Card with our secondary styling
@@ -92,7 +92,7 @@ Note the use of `-secondary` container characteristic tokens provided by UITK th
 Alternatively, we could actually redefine our design to mean that all Card components in our app convey an important message which could be accented. In this case, we'll override with accent characteristics:
 
 ```css
-.my-app .uitkCard {
+.my-app .saltCard {
   --saltCard-background: var(--salt-accent-background);
   --saltCard-borderColor: var(--salt-accent-borderColor);
   --saltCard-color: var(--salt-accent-foreground);
@@ -102,7 +102,7 @@ Alternatively, we could actually redefine our design to mean that all Card compo
 Note how no class name is needed to be passed in. We have just redefined the Card's styling at a higher specificity, to produce the following styling:
 
 <Panel className="my-app" style={{ background: "var(--salt-color-purple-10)" }}>
-  <Card className="uitkCard">
+  <Card className="saltCard">
     <div>
       <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
         Card with accent styles

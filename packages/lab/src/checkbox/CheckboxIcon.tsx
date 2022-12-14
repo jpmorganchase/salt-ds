@@ -15,7 +15,7 @@ export interface CheckboxIconProps {
   indeterminate?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkCheckboxIcon");
+const withBaseName = makePrefixer("saltCheckboxIcon");
 
 export const CheckboxIcon = ({
   checked = false,

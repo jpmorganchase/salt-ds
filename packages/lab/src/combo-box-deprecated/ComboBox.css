@@ -1,13 +1,13 @@
-.uitkComboBox {
+.saltComboBox {
   width: 100%;
 }
 
-.uitkComboBox-field {
+.saltComboBox-field {
 }
 
-.uitkComboBox-disabled {
+.saltComboBox-disabled {
 }
 
-.uitkComboBox-listWindowRoot {
+.saltComboBox-listWindowRoot {
   z-index: calc(var(--salt-zIndex-flyover) - 1);
 }

@@ -4,7 +4,7 @@ import { makePrefixer } from "@salt-ds/core";
 
 import "./SkipLinks.css";
 
-const withBaseName = makePrefixer("uitkSkipLinks");
+const withBaseName = makePrefixer("saltSkipLinks");
 
 export const SkipLinks = forwardRef<
   HTMLUListElement,

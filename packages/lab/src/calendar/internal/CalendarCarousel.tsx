@@ -25,7 +25,7 @@ function usePreviousMonth(visibleMonth: DateValue) {
   return previous ?? today(getLocalTimeZone());
 }
 
-const withBaseName = makePrefixer("uitkCalendarCarousel");
+const withBaseName = makePrefixer("saltCalendarCarousel");
 
 export const CalendarCarousel = forwardRef<
   HTMLDivElement,

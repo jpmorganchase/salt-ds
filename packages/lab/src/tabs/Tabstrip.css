@@ -1,5 +1,5 @@
 /* Component class applied to the root element */
-.uitkTabstrip {
+.saltTabstrip {
   --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-tabstrip-dragging-display: none;
   --tabs-tabstrip-display: inline-flex;
@@ -17,7 +17,7 @@
 }
 
 /* Tabstrip orientation is horizontal */
-.uitkTabstrip-horizontal {
+.saltTabstrip-horizontal {
   --tabs-activationIndicator-borderStyle: none none solid none;
   --tabs-activationIndicator-height: 1px;
   --tabs-activationIndicator-inset: auto 0px 0px 0px;
@@ -27,7 +27,7 @@
 }
 
 /* Tabstrip orientation is vertical */
-.uitkTabstrip-vertical {
+.saltTabstrip-vertical {
   --tabs-activationIndicator-transition: top 0.3s ease;
   --tabs-activationIndicator-borderStyle: none solid none none;
   --tabs-activationIndicator-inset: 0px 0px 0px auto;
@@ -40,38 +40,38 @@
   display: inline-flex;
 }
 
-.uitkTabstrip-draggingTab {
+.saltTabstrip-draggingTab {
   --saltTabs-activationIndicator-transition: none;
 }
 
-.uitkTabstrip-draggingTab .uitkTab {
+.saltTabstrip-draggingTab .saltTab {
   pointer-events: none;
 }
 
 /* Tabstrip orientation is horizontal */
-.uitkTabstrip-horizontal {
+.saltTabstrip-horizontal {
   height: var(--tabs-tabstrip-height);
 }
 
-.uitkTabstrip-addButton,
-.uitkDropdown.uitkTabstrip-overflowMenu {
+.saltTabstrip-addButton,
+.saltDropdown.saltTabstrip-overflowMenu {
   margin-left: var(--salt-size-unit);
 }
 
-.uitkTabstrip-overflowMenu.uitkDropdown {
+.saltTabstrip-overflowMenu.saltDropdown {
   --saltIcon-margin: 2px 0 0 0px;
 }
 
-.uitkTabstrip-overflowMenu-open {
+.saltTabstrip-overflowMenu-open {
   --saltButton-background: var(--salt-actionable-secondary-background-active);
   --saltButton-text-color: var(--salt-actionable-secondary-text-color-active);
 }
 
-.uitkTabstrip-overflowMenu-open .uitkButton {
+.saltTabstrip-overflowMenu-open .saltButton {
   --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
-.uitkTabstrip-inner {
+.saltTabstrip-inner {
   width: 100%;
   align-items: center;
   display: flex;
@@ -83,17 +83,17 @@
   line-height: var(--tabs-tabstrip-height);
 }
 
-.uitkTabstrip-vertical .uitkTabstrip-inner {
+.saltTabstrip-vertical .saltTabstrip-inner {
   flex-direction: column;
   height: auto;
 }
 
-.uitkTabstrip-centered .uitkTabstrip-inner {
+.saltTabstrip-centered .saltTabstrip-inner {
   justify-content: center;
 }
 
 /* Styling applied to Draggable wrapper when used to drag a Tab */
-.uitkDraggable[class*="tabstrip"] {
+.saltDraggable[class*="tabstrip"] {
   --tabs-tabstrip-display: flex;
   --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-tabstrip-dragging-display: block;
@@ -110,23 +110,23 @@
   font-size: 12px;
 }
 
-.uitkDraggable-tabstrip-horizontal {
+.saltDraggable-tabstrip-horizontal {
   --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-activationIndicator-thumb-height: 2px;
   --tabs-activationIndicator-inset: auto 0px 0px 0px;
 
   line-height: var(--tabs-tabstrip-height);
 }
-.uitkDraggable-tabstrip-vertical {
+.saltDraggable-tabstrip-vertical {
   --tabs-activationIndicator-inset: 0px 0px 0px auto;
   --tabs-activationIndicator-thumb-width: 2px;
 }
 
-.uitkDraggable[class*="tabstrip"] .uitkTab[aria-selected="true"]:before {
+.saltDraggable[class*="tabstrip"] .saltTab[aria-selected="true"]:before {
   --tabs-tab-before-background: var(--salt-navigable-indicator-active);
 }
 
-.uitkDraggable[class*="tabstrip"] .uitkTab {
+.saltDraggable[class*="tabstrip"] .saltTab {
   box-shadow: var(--salt-overlayable-shadow-drag);
 }
 
@@ -135,7 +135,7 @@
   visibility: hidden;
 }
 
-.uitkTabstrip-overflowMenu-dropTarget:after {
+.saltTabstrip-overflowMenu-dropTarget:after {
   background: var(--salt-palette-interact-background-active);
   content: "";
   position: absolute;

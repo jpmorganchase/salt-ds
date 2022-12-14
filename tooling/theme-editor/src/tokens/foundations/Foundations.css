@@ -1,8 +1,8 @@
-.uitkFoundationsView-tabs {
+.saltFoundationsView-tabs {
   background-color: var(--salt-container-primary-background);
 }
 
-.uitkFoundationsView-routingError {
+.saltFoundationsView-routingError {
   font-size: var(--salt-text-fontSize);
   padding: 10px;
 }

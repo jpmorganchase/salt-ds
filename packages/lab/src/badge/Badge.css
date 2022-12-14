@@ -1,5 +1,5 @@
 /* Default variables applied to the root element */
-.uitkBadge {
+.saltBadge {
   /* Colors */
   --badge-content-text-color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
   --badge-content-icon-color: var(--saltBadge-content-icon-color, var(--salt-accent-background));
@@ -17,7 +17,7 @@
 }
 
 /* Style applied to the root element */
-.uitkBadge {
+.saltBadge {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-flex;
@@ -29,12 +29,12 @@
 }
 
 /* Give automatic margin when they sit next to each other */
-.uitkBadge + .uitkBadge {
+.saltBadge + .saltBadge {
   margin-left: var(--badge-sequence-gap);
 }
 
 /* Style applied to the badge in the corner of the node */
-.uitkBadge-badge {
+.saltBadge-badge {
   color: var(--badge-content-text-color);
   display: inline-block;
   font-weight: 700; /* TODO: Use characteristic once aligned */

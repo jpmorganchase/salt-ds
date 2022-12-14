@@ -74,7 +74,7 @@ export interface TokenizedInputBaseProps<Item>
 }
 
 const INITIAL_INPUT_WIDTH = 5;
-const withBaseName = makePrefixer("uitkTokenizedInput");
+const withBaseName = makePrefixer("saltTokenizedInput");
 
 const getItemsAriaLabel = (itemCount: number) =>
   itemCount === 0

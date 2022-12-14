@@ -11,7 +11,7 @@ import { DraggableImg } from "./DraggableSnapshot";
 
 import "./QAContainer.css";
 
-const withBaseName = makePrefixer("uitkQAContainer");
+const withBaseName = makePrefixer("saltQAContainer");
 
 export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
   cols?: number;
@@ -87,7 +87,7 @@ export const QAContainer = ({
     <div
       {...htmlAttributes}
       className={cx(withBaseName(), className, {
-        "uitkQAContainer-vertical": vertical,
+        "saltQAContainer-vertical": vertical,
       })}
       style={style}
     >

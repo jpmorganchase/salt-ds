@@ -1,23 +1,23 @@
-import { uitkColorMap } from "./colorMap";
+import { saltColorMap } from "./colorMap";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 
 export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
-  UITKColorOverrides?: Record<string, string>
+  SALTColorOverrides?: Record<string, string>
 ): string | undefined {
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
-  const uitkColors = UITKColorOverrides ?? uitkColorMap;
+  const saltColors = SALTColorOverrides ?? saltColorMap;
 
   // Special case
   if (isTransparent(hexValue)) return "Transparent";
 
-  let colorName = Object.keys(uitkColors).find((key: string) => {
-    if (uitkColors[key]) {
-      const rgbVals = uitkColors[key].startsWith("rgba")
-        ? uitkColors[key].substring(5, uitkColors[key].length - 1)
-        : uitkColors[key].substring(4, uitkColors[key].length - 1);
+  let colorName = Object.keys(saltColors).find((key: string) => {
+    if (saltColors[key]) {
+      const rgbVals = saltColors[key].startsWith("rgba")
+        ? saltColors[key].substring(5, saltColors[key].length - 1)
+        : saltColors[key].substring(4, saltColors[key].length - 1);
       const [r, g, b] = [...rgbVals.replace(" ", "").split(",")];
       return (
         Color.makeColorFromRGB(Number(r), Number(g), Number(b)).hex ===

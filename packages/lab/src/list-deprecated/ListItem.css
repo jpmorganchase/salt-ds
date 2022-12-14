@@ -1,4 +1,4 @@
-.uitkListItemDeprecated {
+.saltListItemDeprecated {
   /* Color */
   --list-item-text-color: var(--salt-selectable-foreground);
   --list-item-background: var(--salt-selectable-background);
@@ -26,7 +26,7 @@
   --list-item-disabled-regular-opacity: var(--salt-palette-opacity-foreground);
 }
 
-.uitkListItemDeprecated {
+.saltListItemDeprecated {
   color: var(--list-item-text-color);
   background: var(--list-item-background);
   text-align: var(--list-item-textAlign);
@@ -41,43 +41,43 @@
   white-space: nowrap;
 }
 
-.uitkListItemDeprecated {
+.saltListItemDeprecated {
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);
   cursor: var(--list-item-selectable-cursor);
 }
 
-.uitkListItemDeprecated:last-child {
+.saltListItemDeprecated:last-child {
   margin-bottom: 0px;
 }
 
-.uitkListItemDeprecated.uitkListItemDeprecated-highlighted:not(.uitkListItemDeprecated-selected) {
+.saltListItemDeprecated.saltListItemDeprecated-highlighted:not(.saltListItemDeprecated-selected) {
   background: var(--list-item-background-hover);
 }
 
-.uitkListItemDeprecated.uitkListItemDeprecated-deselectable {
+.saltListItemDeprecated.saltListItemDeprecated-deselectable {
   cursor: var(--list-item-selectable-cursor);
 }
 
-.uitkListItemDeprecated-textWrapper {
+.saltListItemDeprecated-textWrapper {
   flex: 1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.uitkListItemDeprecated-selected {
+.saltListItemDeprecated-selected {
   color: var(--list-item-text-color-active);
   background: var(--list-item-background-active);
   cursor: var(--list-item-cursor);
 }
 
-.uitkListItemDeprecated-disabled {
+.saltListItemDeprecated-disabled {
   cursor: var(--list-item-disabled-cursor);
   opacity: var(--list-item-disabled-regular-opacity);
 }
 
-.uitkListItemDeprecated-focusVisible:after {
+.saltListItemDeprecated-focusVisible:after {
   top: 2px;
   left: 2px;
   right: 2px;
@@ -91,6 +91,6 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-.uitkListItemDeprecated-focusVisible.uitkListItemDeprecated-selected:after {
+.saltListItemDeprecated-focusVisible.saltListItemDeprecated-selected:after {
   outline-color: var(--list-item-selected-focus-outlineColor);
 }

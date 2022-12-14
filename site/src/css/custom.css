@@ -18,7 +18,7 @@
   background: var(--salt-text-background-selected);
 }
 
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   --site-tertiary-accent-green: var(--salt-color-green-500);
   --site-tertiary-accent-teal: var(--salt-color-teal-500);
   --site-tertiary-accent-blue: var(--salt-color-blue-900);
@@ -27,7 +27,7 @@
   --site-tertiary-accent-orange: var(--salt-color-orange-600);
 }
 
-.uitk-theme[data-mode="dark"] {
+.salt-theme[data-mode="dark"] {
   --site-tertiary-accent-green: var(--salt-color-green-20);
   --site-tertiary-accent-teal: var(--salt-color-teal-50);
   --site-tertiary-accent-blue: var(--salt-color-blue-50);
@@ -36,7 +36,7 @@
   --site-tertiary-accent-orange: var(--salt-color-orange-30);
 }
 
-.uitk-theme {
+.salt-theme {
   --ifm-heading-color: var(--salt-text-primary-foreground);
   --ifm-h2-font-size: var(--salt-text-h2-fontSize);
   --ifm-heading-font-weight: var(--salt-text-h2-fontWeight);
@@ -550,7 +550,7 @@ table tr th + th {
   .docs-page-content {
     padding: calc(var(--salt-size-unit) * 2);
   }
-  .uitk-theme {
+  .salt-theme {
     --ifm-h2-font-size: var(--salt-text-h3-fontSize);
     --ifm-heading-font-weight: var(--salt-text-h3-fontWeight);
     --ifm-heading-line-height: var(--salt-text-h3-lineHeight);

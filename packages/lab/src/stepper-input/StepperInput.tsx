@@ -9,7 +9,7 @@ import "./StepperInput.css";
 
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 
-const withBaseName = makePrefixer("uitkStepperInput");
+const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps {
   ButtonProps?: Partial<ButtonProps>;

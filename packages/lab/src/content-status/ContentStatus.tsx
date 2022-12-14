@@ -15,7 +15,7 @@ import {
 
 import "./ContentStatus.css";
 
-const withBaseName = makePrefixer("uitkContentStatus");
+const withBaseName = makePrefixer("saltContentStatus");
 
 export interface ContentStatusProps
   extends HTMLAttributes<HTMLDivElement>,

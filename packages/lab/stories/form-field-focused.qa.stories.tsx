@@ -12,26 +12,26 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
     <QAContainer {...props} itemPadding={6}>
       <FormField
         label="Default Form Field description label"
-        className="uitkFormField-focused"
+        className="saltFormField-focused"
       >
         <Input value="Value" />
       </FormField>
 
       <FormField
-        className="uitkFormField-secondary uitkFormField-focused"
+        className="saltFormField-secondary saltFormField-focused"
         label="Default Form Field description label"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className="uitkFormField-focused"
+        className="saltFormField-focused"
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className="uitkFormField-focused"
+        className="saltFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -39,7 +39,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkFormField-secondary uitkFormField-focused"
+        className="saltFormField-secondary saltFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -47,7 +47,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkFormField-tertiary uitkFormField-focused"
+        className="saltFormField-tertiary saltFormField-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -56,7 +56,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkFormField-tertiary uitkFormField-focused"
+        className="saltFormField-tertiary saltFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -64,7 +64,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkFormField-secondary uitkFormField-focused"
+        className="saltFormField-secondary saltFormField-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -72,7 +72,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="uitkFormField-tertiary uitkFormField-focused"
+        className="saltFormField-tertiary saltFormField-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
