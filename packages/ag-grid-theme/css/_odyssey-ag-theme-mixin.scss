@@ -183,6 +183,10 @@
     z-index: 2;
   }
 
+  .ag-cell-inline-editing.ag-cell-focus {
+    background-color: var(--agGrid-background);
+  }
+
   .ag-cell-inline-editing.ag-cell-focus:before {
     opacity: 0;
   }
