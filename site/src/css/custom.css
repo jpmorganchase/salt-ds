@@ -141,11 +141,11 @@
   margin: 0;
 }
 
-.theme-doc-sidebar-container li:has(> .menu__link--active)::before {
+.theme-doc-sidebar-container li:has(> .menu__link--active)::after  {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
   content: "";
   position: relative;
-  left: 0;
+  right: calc(var(--doc-sidebar-width) - 6px);
   font-weight: bold;
 }
 
@@ -164,6 +164,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
 }
 
 .docs-wrapper .pagination-nav {
