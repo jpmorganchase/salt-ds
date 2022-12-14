@@ -1,6 +1,6 @@
 import { JSONByScope } from "./parseToJson";
 
-const UITK_COLORS = [
+const SALT_COLORS = [
   "white",
   "black",
   "red",
@@ -19,7 +19,7 @@ export function createColorMap(
 
   jsonByScope.forEach((element) => {
     if (["mode-all", "light", "dark"].includes(element.scope)) {
-      for (const color of UITK_COLORS) {
+      for (const color of SALT_COLORS) {
         if (element.jsonObj.salt.color[color]) {
           Object.keys(element.jsonObj.salt.color[color]).forEach((key) => {
             if (
@@ -45,7 +45,7 @@ export function createColorMap(
               ].includes(key)
             ) {
               if (element.jsonObj.salt.color[color][key].value !== undefined) {
-                colorMap[`uitk${color}${key}`] = element.jsonObj.salt.color[
+                colorMap[`salt${color}${key}`] = element.jsonObj.salt.color[
                   color
                 ][key].value as string;
               }
@@ -55,7 +55,7 @@ export function createColorMap(
               key === "value" &&
               element.jsonObj.salt.color[color].value !== undefined
             ) {
-              colorMap[`uitk${color}`] = element.jsonObj.salt.color[color]
+              colorMap[`salt${color}`] = element.jsonObj.salt.color[color]
                 .value as string;
             }
           });

@@ -76,7 +76,7 @@ describe("ColorChooser", () => {
     expect(swatch.style.backgroundColor).toEqual("rgba(203, 231, 249, 0.102)");
   });
 
-  it("Renders the Swatches tab first if a SALT color is selected", () => {
+  it("Renders the Swatches tab first if a Salt color is selected", () => {
     const element = render(
       <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
@@ -91,7 +91,7 @@ describe("ColorChooser", () => {
     expect(element.queryByTestId("swatches-picker")).toBeInTheDocument();
   });
 
-  it("Renders the Color Picker tab first if a non SALT color is selected", () => {
+  it("Renders the Color Picker tab first if a non Salt color is selected", () => {
     const element = render(
       <ColorChooser
         color={customColor}
@@ -109,7 +109,7 @@ describe("ColorChooser", () => {
     expect(element.queryByTestId("color-picker")).toBeInTheDocument();
   });
 
-  it("Renders the Color Picker tab correctly if a non SALT color is selected and showSwatches is false", () => {
+  it("Renders the Color Picker tab correctly if a non Salt color is selected and showSwatches is false", () => {
     const element = render(
       <ColorChooser
         color={customColor}
@@ -313,7 +313,7 @@ describe("ColorChooser", () => {
     expect(element.queryByText("Color Picker")).not.toBeInTheDocument();
   });
 
-  it("Renders the SwatchesPicker with Swatches created from SALT colours", async () => {
+  it("Renders the SwatchesPicker with Swatches created from Salt colours", async () => {
     const element = render(
       <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
@@ -333,14 +333,14 @@ describe("ColorChooser", () => {
     }
   });
 
-  it("If prop color is a part of SALT's Swatches, it displays the name on the overlay", () => {
+  it("If prop color is a part of Salt's Swatches, it displays the name on the overlay", () => {
     const element = render(
       <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     expect(element.queryByText("Green10")).toBeInTheDocument();
   });
 
-  it("If prop color is not a part of SALT's Swatches, it displays the hex value on the overlay", () => {
+  it("If prop color is not a part of Salt's Swatches, it displays the hex value on the overlay", () => {
     const element = render(
       <ColorChooser
         color={Color.makeColorFromHex("#D1F4C1")}

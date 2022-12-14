@@ -5,7 +5,7 @@ import { ValueEditor } from "../../editor/ValueEditor";
 interface ShadowInnerPatternProps {
   patternName: string;
   entireValue: string;
-  uitkColorOverrides: Record<string, string>;
+  saltColorOverrides: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   scope: string;
@@ -64,7 +64,7 @@ export const ShadowInnerPattern = (
 
   return (
     <ValueEditor
-      uitkColorOverrides={props.saltColorOverrides}
+      saltColorOverrides={props.saltColorOverrides}
       extractValue={props.extractValue}
       characteristicsView={false}
       key={`${props.patternName}-editor`}

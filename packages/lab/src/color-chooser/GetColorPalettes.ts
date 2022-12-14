@@ -2,19 +2,19 @@ import { saltColorMap } from "./colorMap";
 
 export function makePalette(
   colorScheme: string,
-  SALTColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>
 ): string[] {
   //Doesn't matter which theme you use here as the color names are the same
   const colorNames = Array.from(
-    Object.keys(SALTColorOverrides ?? saltColorMap)
+    Object.keys(saltColorOverrides ?? saltColorMap)
   );
 
   const colorArray: string[] = [];
   for (const colorName of colorNames) {
     if (colorName.includes(colorScheme) && !(colorName === colorScheme)) {
       colorArray.push(
-        SALTColorOverrides
-          ? SALTColorOverrides[colorName]
+        saltColorOverrides
+          ? saltColorOverrides[colorName]
           : saltColorMap[colorName]
       );
     }
@@ -22,49 +22,49 @@ export function makePalette(
   return colorArray;
 }
 
-const bluePalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("blue", SALTColorOverrides);
-const greenPalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("green", SALTColorOverrides);
-const redPalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("red", SALTColorOverrides);
-const orangePalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("orange", SALTColorOverrides);
-const tealPalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("teal", SALTColorOverrides);
-const purplePalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("purple", SALTColorOverrides);
-const grayPalette = (SALTColorOverrides?: Record<string, string>) =>
-  makePalette("gray", SALTColorOverrides);
+const bluePalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("blue", saltColorOverrides);
+const greenPalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("green", saltColorOverrides);
+const redPalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("red", saltColorOverrides);
+const orangePalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("orange", saltColorOverrides);
+const tealPalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("teal", saltColorOverrides);
+const purplePalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("purple", saltColorOverrides);
+const grayPalette = (saltColorOverrides?: Record<string, string>) =>
+  makePalette("gray", saltColorOverrides);
 
 export function getColorPalettes(
-  SALTColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>
 ): string[][] {
   return [
-    bluePalette(SALTColorOverrides).slice(0, 7),
-    bluePalette(SALTColorOverrides).slice(7, 14),
-    greenPalette(SALTColorOverrides).slice(0, 7),
-    greenPalette(SALTColorOverrides).slice(7, 14),
-    tealPalette(SALTColorOverrides).slice(0, 7),
-    tealPalette(SALTColorOverrides).slice(7, 14),
-    orangePalette(SALTColorOverrides).slice(0, 7),
-    orangePalette(SALTColorOverrides).slice(7, 14),
-    redPalette(SALTColorOverrides).slice(0, 7),
-    redPalette(SALTColorOverrides).slice(7, 14),
-    purplePalette(SALTColorOverrides).slice(0, 7),
-    purplePalette(SALTColorOverrides).slice(7, 14),
-    grayPalette(SALTColorOverrides).slice(0, 7),
-    grayPalette(SALTColorOverrides).slice(7, 14),
+    bluePalette(saltColorOverrides).slice(0, 7),
+    bluePalette(saltColorOverrides).slice(7, 14),
+    greenPalette(saltColorOverrides).slice(0, 7),
+    greenPalette(saltColorOverrides).slice(7, 14),
+    tealPalette(saltColorOverrides).slice(0, 7),
+    tealPalette(saltColorOverrides).slice(7, 14),
+    orangePalette(saltColorOverrides).slice(0, 7),
+    orangePalette(saltColorOverrides).slice(7, 14),
+    redPalette(saltColorOverrides).slice(0, 7),
+    redPalette(saltColorOverrides).slice(7, 14),
+    purplePalette(saltColorOverrides).slice(0, 7),
+    purplePalette(saltColorOverrides).slice(7, 14),
+    grayPalette(saltColorOverrides).slice(0, 7),
+    grayPalette(saltColorOverrides).slice(7, 14),
     [
-      SALTColorOverrides
-        ? SALTColorOverrides["saltwhite"]
-          ? SALTColorOverrides["saltwhite"]
+      saltColorOverrides
+        ? saltColorOverrides["saltwhite"]
+          ? saltColorOverrides["saltwhite"]
           : "rgb(255, 255, 255)"
         : saltColorMap["saltwhite"],
-      ...grayPalette(SALTColorOverrides).slice(14, 18),
-      SALTColorOverrides
-        ? SALTColorOverrides["saltblack"]
-          ? SALTColorOverrides["saltblack"]
+      ...grayPalette(saltColorOverrides).slice(14, 18),
+      saltColorOverrides
+        ? saltColorOverrides["saltblack"]
+          ? saltColorOverrides["saltblack"]
           : "rgb(0, 0, 0)"
         : saltColorMap["saltblack"],
       "rgba(0, 0, 0, 0)",

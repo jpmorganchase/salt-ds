@@ -33,7 +33,7 @@ export const NoTargetRef = () => {
             <section>
               <h1>UI Toolkit</h1>
               <p>
-                SALT provides you with a suite of UI components and a flexible
+                Salt provides you with a suite of UI components and a flexible
                 theming system. With no customisation, the default theme offers
                 an attractive and modern look-and-feel, with both light and dark
                 variants and support for a range of UI densities. We have
@@ -43,9 +43,7 @@ export const NoTargetRef = () => {
             </section>
             <section>
               <h1>Goals</h1>
-              <p>
-                The SALT has been developed with the following design goals:
-              </p>
+              <p>Salt has been developed with the following design goals:</p>
               <ul>
                 <li>
                   Providing a comprehensive set of commonly-used UI controls

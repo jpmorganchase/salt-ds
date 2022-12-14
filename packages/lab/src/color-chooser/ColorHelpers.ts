@@ -5,10 +5,10 @@ import { isTransparent } from "./color-utils";
 export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
-  SALTColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>
 ): string | undefined {
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
-  const saltColors = SALTColorOverrides ?? saltColorMap;
+  const saltColors = saltColorOverrides ?? saltColorMap;
 
   // Special case
   if (isTransparent(hexValue)) return "Transparent";

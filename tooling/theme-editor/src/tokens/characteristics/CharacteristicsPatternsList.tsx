@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import { createColorMap } from "../../helpers/createColorMap";
 import "./Characteristics.css";
 
-const withBaseName = makePrefixer("uitkCharacteristicPatternsList");
+const withBaseName = makePrefixer("saltCharacteristicPatternsList");
 interface CharacteristicPatternsListProps {
   extractValue: (value: string) => string;
   patternsInScope: string[];
@@ -58,7 +58,7 @@ export const CharacteristicPatternsList = (
     return patternvals;
   }, [props.patternsInScope, jsonByScopeInView]);
 
-  const uitkColorOverrides = useMemo(() => {
+  const saltColorOverrides = useMemo(() => {
     return createColorMap(jsonByScopeInView);
   }, [jsonByScopeInView]);
 
@@ -76,7 +76,7 @@ export const CharacteristicPatternsList = (
               scope={props.scope}
               themeName={props.themeName}
               values={patternValuesInScope[pattern]}
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
             />
           );
         })}

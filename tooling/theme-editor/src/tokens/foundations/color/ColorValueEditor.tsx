@@ -16,12 +16,12 @@ import { ErrorIcon } from "../../../icons/components/ErrorIcon";
 import { HoverIcon } from "../../../icons/components/HoverIcon";
 import { RegularIcon } from "../../../icons/components/RegularIcon";
 import { WarningIcon } from "../../../icons/components/WarningIcon";
-import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";
+import { SALT_FOUNDATIONS } from "../../../utils/saltValues";
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 
 import "./ColorValueEditor.css";
 
-const withBaseName = makePrefixer("uitkColorValueEditor");
+const withBaseName = makePrefixer("saltColorValueEditor");
 
 const rgbRegex = new RegExp(
   "^rgb\\((25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9]), ?(25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9]), ?(25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9])\\)$"
@@ -47,7 +47,7 @@ type ColorValueEditorProps = {
   pathToUpdate: string;
   scope: string;
   setValue: (value: string) => void;
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   value: string;
 };
 
@@ -59,7 +59,7 @@ export function isLinearGradient(value: string): boolean {
 }
 
 export function isRGBAColor(value: string): boolean {
-  // separated for now so we can find uitk alpha value
+  // separated for now so we can find salt alpha value
   if (value.startsWith("rgba")) {
     return true;
   }
@@ -136,7 +136,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
       ) {
         const colorParts = colorName.match(/[a-z]+|[^a-z]+/gi);
         if (colorParts?.length === 2) {
-          const token = `uitk-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
+          const token = `salt-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
           props.onUpdateJSON(token, props.pathToUpdate, props.scope);
         }
       } else {
@@ -187,7 +187,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
             })}
           >
             {!props.isStateValue && (
-              <div className={cn(withBaseName("field"), "uitkFormLabel")}>
+              <div className={cn(withBaseName("field"), "saltFormLabel")}>
                 {formFieldLabel}
               </div>
             )}
@@ -205,7 +205,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 <div
                   {...getTriggerProps({
                     className: cn(
-                      "uitkFormLabel",
+                      "saltFormLabel",
                       withBaseName("colorStatesField")
                     ),
                   })}
@@ -238,7 +238,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   showColorPicker={props.characteristicsView ? false : true}
                   onSelect={onSelect}
                   onClear={onClear}
-                  UITKColorOverrides={props.saltColorOverrides}
+                  saltColorOverrides={props.saltColorOverrides}
                 />
               </SaltProvider>
             </div>
@@ -247,7 +247,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
             <JumpToTokenButton
               disabled={props.value.split("-").length < 2}
               value={props.value.split("-").slice(1)[0]}
-              sectionToJumpTo={UITK_FOUNDATIONS}
+              sectionToJumpTo={SALT_FOUNDATIONS}
               pathname={"/foundations/color"}
               search={`?open=${props.value.split("-").slice(1)[0]}`}
             />

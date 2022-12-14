@@ -1,4 +1,4 @@
-import { UITK_CHARACTERISTICS } from "@salt-ds/theme-editor/src/utils/uitkValues";
+import { SALT_CHARACTERISTICS } from "@salt-ds/theme-editor/src/utils/saltValues";
 import { Component } from "@storybook/addon-docs";
 
 export function hasDocgen(component: Component): boolean {
@@ -21,7 +21,7 @@ export function getCharacteristics<T>(
       const characteristicName = token.replace("--salt-", "").split("-")[0];
       if (
         characteristicName.length &&
-        UITK_CHARACTERISTICS.includes(characteristicName)
+        SALT_CHARACTERISTICS.includes(characteristicName)
       ) {
         if (!characteristicFoundationTokenMap[characteristicName]) {
           characteristicFoundationTokenMap[characteristicName] = [token];

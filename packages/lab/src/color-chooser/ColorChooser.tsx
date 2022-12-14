@@ -24,12 +24,12 @@ const withBaseName = makePrefixer("saltColorChooser");
 function getActiveTab(
   hexValue: string | undefined,
   tabs: ColorChooserTabs,
-  SALTColorOverrides: Record<string, string> | undefined
+  saltColorOverrides: Record<string, string> | undefined
 ): number {
   if (tabs["Swatches"] && tabs["Color Picker"]) {
     const hexNoAlpha: string | undefined = hexValueWithoutAlpha(hexValue);
-    const colors = SALTColorOverrides ?? saltColorMap;
-    // if hexNoAlpha is a SALT color or null/undefined then set the active tab as Swatches
+    const colors = saltColorOverrides ?? saltColorMap;
+    // if hexNoAlpha is a Salt color or null/undefined then set the active tab as Swatches
     if (
       hexNoAlpha &&
       !Object.keys(colors).find(
@@ -58,7 +58,7 @@ export interface ColorChooserProps {
   ) => void;
   placeholder?: string;
   buttonProps?: Partial<ButtonProps>;
-  SALTColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   showSwatches?: boolean;
   showColorPicker?: boolean;
   readOnly?: boolean;
@@ -75,21 +75,21 @@ export const ColorChooser = ({
   hideLabel = false,
   placeholder,
   buttonProps,
-  SALTColorOverrides,
+  saltColorOverrides,
   readOnly = false,
   displayHexOnly = false,
 }: ColorChooserProps): JSX.Element => {
   const [open, setOpen] = useState(false);
 
-  const allColors: string[][] = SALTColorOverrides
-    ? getColorPalettes(SALTColorOverrides)
+  const allColors: string[][] = saltColorOverrides
+    ? getColorPalettes(saltColorOverrides)
     : getColorPalettes();
   const displayColorName = displayHexOnly
     ? getHexValue(color?.hex, disableAlphaChooser)
     : getColorNameByHexValue(
         color?.hex,
         disableAlphaChooser,
-        SALTColorOverrides
+        saltColorOverrides
       );
 
   const handleOpenChange = (open: boolean) => setOpen(open);
@@ -114,7 +114,7 @@ export const ColorChooser = ({
   });
 
   const [activeTab, setActiveTab] = useState<number>(
-    getActiveTab(color?.hex, tabsMapping, SALTColorOverrides)
+    getActiveTab(color?.hex, tabsMapping, saltColorOverrides)
   );
   const onDefaultSelected = (): void => {
     if (activeTab === 0 && showSwatches) {

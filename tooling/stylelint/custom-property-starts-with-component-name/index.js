@@ -38,7 +38,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-starts-with-component-name";
+const ruleName = "salt/custom-property-starts-with-component-name";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>

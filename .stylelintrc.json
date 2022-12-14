@@ -5,13 +5,13 @@
     "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
   ],
   "rules": {
-    "uitk/custom-property-no-foundations": {
+    "salt/custom-property-no-foundations": {
       "logLevel": "default"
     },
-    "uitk/custom-property-attributes-kebab-case": {
+    "salt/custom-property-attributes-kebab-case": {
       "logLevel": "default"
     },
-    "uitk/custom-property-starts-with-component-name": {
+    "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
     }
   }

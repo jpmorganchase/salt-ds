@@ -98,7 +98,7 @@ export const ThemeHeader = (props: ThemeHeaderProps): ReactElement => {
   };
 
   return (
-    <div className="uitkThemeHeader">
+    <div className="saltThemeHeader">
       <div className="ThemeTitleBar">
         <span className="ThemeTitle">Theme</span>
         <span>

@@ -5,10 +5,10 @@ import { ValueEditor } from "../../editor/ValueEditor";
 import { InnerFieldLabel } from "../../labels/InnerFieldLabel";
 import "./ColorTokensByState.css";
 
-const withBaseName = makePrefixer("uitkColorTokenByStateValues");
+const withBaseName = makePrefixer("saltColorTokenByStateValues");
 
 interface ColorTokensByStateProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
   children: JSONObj;
   extractValue: (value: string) => string;
@@ -19,7 +19,7 @@ interface ColorTokensByStateProps {
 }
 
 const TokenStateValue = ({
-  uitkColorOverrides,
+  saltColorOverrides,
   characteristicsView,
   children,
   extractValue,
@@ -41,14 +41,14 @@ const TokenStateValue = ({
               onUpdateJSON={onUpdateJSON}
               patternName={patternName}
               scope={scope}
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
               value={children.value}
               valueName={fieldName}
             />
           )
         ) : (
           <TokenStateValue
-            uitkColorOverrides={uitkColorOverrides}
+            saltColorOverrides={saltColorOverrides}
             extractValue={extractValue}
             characteristicsView={characteristicsView}
             children={children[node]}
@@ -65,7 +65,7 @@ const TokenStateValue = ({
 };
 
 export const ColorTokensByState = ({
-  uitkColorOverrides,
+  saltColorOverrides,
   characteristicsView,
   children,
   extractValue,
@@ -98,14 +98,14 @@ export const ColorTokensByState = ({
                   onUpdateJSON={onUpdateJSON}
                   patternName={patternName}
                   scope={scope}
-                  uitkColorOverrides={uitkColorOverrides}
+                  saltColorOverrides={saltColorOverrides}
                   value={children.value}
                   valueName={fieldName}
                 />
               )
             ) : (
               <TokenStateValue
-                uitkColorOverrides={uitkColorOverrides}
+                saltColorOverrides={saltColorOverrides}
                 extractValue={extractValue}
                 characteristicsView={characteristicsView}
                 children={children[node]}

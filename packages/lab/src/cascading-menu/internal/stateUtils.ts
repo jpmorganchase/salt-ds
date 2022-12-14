@@ -22,7 +22,7 @@ export function deriveFlatStateFromTree(
   tree: MenuDescriptor,
   parentId: string | null = null,
   level = 0,
-  generatedId = "SALT-cascading-menu"
+  generatedId = "salt-cascading-menu"
 ): flattenedMenuState {
   const { id = generatedId, menuItems = [] } = tree;
   return menuItems.reduce(

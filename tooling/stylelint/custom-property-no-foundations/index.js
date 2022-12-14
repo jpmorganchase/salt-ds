@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundations";
+const ruleName = "salt/custom-property-no-foundations";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
@@ -55,7 +55,7 @@ const meta = {
  * - `--salt-xyz` from theme
  * - `--saltAbc` from a component
  */
-const isUitkThemeCustomProperty = function (property) {
+const isSaltThemeCustomProperty = function (property) {
   return property.startsWith("--salt-");
 };
 
@@ -104,7 +104,7 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isUitkThemeCustomProperty(property) ||
+          !isSaltThemeCustomProperty(property) ||
           regexpPattern.test(property) ||
           !isBackwardsCompatToken(property);
         verboseLog && console.log("Checking", checkResult, property);

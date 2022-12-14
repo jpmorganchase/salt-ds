@@ -33,7 +33,7 @@ describe("ColorChooser", () => {
     cy.findByTestId("swatches").should("be.visible");
   });
 
-  it("Renders the Swatches tab first if a SALT color is selected", () => {
+  it("Renders the Swatches tab first if a Salt color is selected", () => {
     cy.mount(
       <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
     );
@@ -46,7 +46,7 @@ describe("ColorChooser", () => {
     cy.findByTestId("swatches-picker").should("be.visible");
   });
 
-  it("Renders the Color Picker tab first if a non SALT color is selected", () => {
+  it("Renders the Color Picker tab first if a non Salt color is selected", () => {
     cy.mount(
       <ColorChooser
         color={customColor}

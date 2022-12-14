@@ -19,7 +19,7 @@ export const jsonReducer: Reducer<JSONByScope[], Action> = (
           const replaceScope = {
             ...s,
             jsonObj: {
-              uitk: replaceJSONPaths(
+              salt: replaceJSONPaths(
                 s.jsonObj.salt,
                 action.payload.newValue,
                 action.payload.pathToUpdate,

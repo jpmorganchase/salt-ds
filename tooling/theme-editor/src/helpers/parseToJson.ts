@@ -73,7 +73,7 @@ function parseVal(value) {
   var quoteRegex = new RegExp('"', "gi");
   value = value.replace(quoteRegex, "");
 
-  if (value.startsWith("uitk")) {
+  if (value.startsWith("salt")) {
     value = value.replace(")", "");
   }
 
