@@ -1,5 +1,5 @@
 import { Breakpoints } from "../breakpoints";
-import { useBreakpoints } from "../toolkit-provider";
+import { useBreakpoints } from "../salt-provider";
 import { useViewport } from "../viewport";
 
 type BreakpointProp<T> = {

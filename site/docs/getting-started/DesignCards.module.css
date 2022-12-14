@@ -15,7 +15,7 @@
   flex-direction: column;
   flex: 1;
   max-width: var(--img-width);
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
+  margin-bottom: calc(var(--uitk-size-unit));
 }
 
 .card > img {

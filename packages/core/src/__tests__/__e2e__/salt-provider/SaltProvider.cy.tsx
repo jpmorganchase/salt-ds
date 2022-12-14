@@ -1,5 +1,5 @@
 import {
-  ToolkitProvider,
+  SaltProvider,
   useAriaAnnouncer,
   useDensity,
   useTheme,
@@ -30,16 +30,16 @@ const TestComponent = ({
   );
 };
 
-describe("Given a ToolkitProvider", () => {
+describe("Given a SaltProvider", () => {
   describe("with no props set", () => {
     it("should apply the given theme and density class names to the html element", () => {
       mount(
-        <ToolkitProvider>
+        <SaltProvider>
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
 
-      cy.get("div.uitk-provider").should("have.length", 0);
+      cy.get("div.salt-provider").should("have.length", 0);
 
       cy.get("html")
         .should("exist")
@@ -48,9 +48,9 @@ describe("Given a ToolkitProvider", () => {
     });
     it("should apply correct default values for Density and Theme and add an AriaAnnouncer", () => {
       mount(
-        <ToolkitProvider>
+        <SaltProvider>
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
       cy.get("#test-1")
         .should("exist")
@@ -64,9 +64,9 @@ describe("Given a ToolkitProvider", () => {
   describe("with props set", () => {
     it("should apply correct default value for Density and add an AriaAnnouncer", () => {
       mount(
-        <ToolkitProvider mode="dark">
+        <SaltProvider mode="dark">
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
       cy.get("#test-1")
         .should("exist")
@@ -77,9 +77,9 @@ describe("Given a ToolkitProvider", () => {
 
     it("should apply correct default value for Theme and add an AriaAnnouncer", () => {
       mount(
-        <ToolkitProvider density="high">
+        <SaltProvider density="high">
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
       cy.get("#test-1")
         .should("exist")
@@ -90,9 +90,9 @@ describe("Given a ToolkitProvider", () => {
 
     it("should apply values specified in props", () => {
       mount(
-        <ToolkitProvider density="high" mode="dark">
+        <SaltProvider density="high" mode="dark">
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
       cy.get("#test-1")
         .should("exist")
@@ -105,11 +105,11 @@ describe("Given a ToolkitProvider", () => {
   describe("when nested", () => {
     it("should only create a single AriaAnnouncer", () => {
       mount(
-        <ToolkitProvider>
-          <ToolkitProvider>
+        <SaltProvider>
+          <SaltProvider>
             <TestComponent />
-          </ToolkitProvider>
-        </ToolkitProvider>
+          </SaltProvider>
+        </SaltProvider>
       );
 
       cy.get("[aria-live]").should("have.length", 1);
@@ -117,12 +117,12 @@ describe("Given a ToolkitProvider", () => {
 
     it("should inherit values not passed as props", () => {
       mount(
-        <ToolkitProvider density="high" mode="dark">
+        <SaltProvider density="high" mode="dark">
           <TestComponent />
-          <ToolkitProvider density="medium">
+          <SaltProvider density="medium">
             <TestComponent id="test-2" />
-          </ToolkitProvider>
-        </ToolkitProvider>
+          </SaltProvider>
+        </SaltProvider>
       );
 
       cy.get("#test-1")
@@ -142,12 +142,12 @@ describe("Given a ToolkitProvider", () => {
   describe("when child is passed to applyClassesTo", () => {
     it("should not create a div element", () => {
       mount(
-        <ToolkitProvider density="high" mode="dark" applyClassesTo={"child"}>
+        <SaltProvider density="high" mode="dark" applyClassesTo={"child"}>
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
 
-      cy.get("div.uitk-provider").should("have.length", 0);
+      cy.get("div.salt-provider").should("have.length", 0);
 
       cy.get("#test-1")
         .should("exist")
@@ -160,12 +160,12 @@ describe("Given a ToolkitProvider", () => {
   describe("when root is passed to applyClassesTo", () => {
     it("should apply the given theme and density class names to the html element", () => {
       mount(
-        <ToolkitProvider density="high" mode="dark" applyClassesTo={"root"}>
+        <SaltProvider density="high" mode="dark" applyClassesTo={"root"}>
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
 
-      cy.get("div.uitk-provider").should("have.length", 0);
+      cy.get("div.salt-provider").should("have.length", 0);
 
       cy.get("html")
         .should("exist")
@@ -177,12 +177,12 @@ describe("Given a ToolkitProvider", () => {
   describe("when scope is passed to applyClassesTo", () => {
     it("should create div element with correct classes applied even if it is the root level provider", () => {
       mount(
-        <ToolkitProvider density="high" mode="dark" applyClassesTo={"scope"}>
+        <SaltProvider density="high" mode="dark" applyClassesTo={"scope"}>
           <TestComponent />
-        </ToolkitProvider>
+        </SaltProvider>
       );
 
-      cy.get("div.uitk-provider")
+      cy.get("div.salt-provider")
         .should("have.length", 1)
         .and("have.attr", "data-mode", "dark")
         .and("have.class", "uitk-density-high");

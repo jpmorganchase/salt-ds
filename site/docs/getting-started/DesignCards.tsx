@@ -15,8 +15,8 @@ const cardInfo: CardInfoType[] = [
       'Screenshot of Figma\'s assets panel displaying the "Salt: Components Light" library',
     content: (
       <p>
-        Use the “Assets” tab In the left-hand panel to access the components,
-        which are organized in alphabetical order.
+        Access the components in the left-hand panel using the “Assets” tab.
+        Click on the book icon and search for “Salt” in Libraries.
       </p>
     ),
   },
@@ -26,8 +26,8 @@ const cardInfo: CardInfoType[] = [
       "Screenshot of a light mode Button compponent being dragged out of Figma's assets panel",
     content: (
       <p>
-        Select a mode, choose the component you need and simply drag it to the
-        Canvas or a Frame in your project.
+        Switch on the library you need, for example, Components (Light or Dark),
+        Mode, Theme Palette, Typography, Icons, Layout Grid, etc.
       </p>
     ),
   },
@@ -37,8 +37,8 @@ const cardInfo: CardInfoType[] = [
       "Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed",
     content: (
       <p>
-        Or, if you prefer, you can use the search function to find the component
-        you need.
+        Use the search function to find the component you need and then drag it
+        to your canvas to use it.
       </p>
     ),
   },

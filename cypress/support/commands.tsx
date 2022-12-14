@@ -5,7 +5,7 @@ import "cypress-axe";
 import { Options } from "cypress-axe";
 import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import { AnnouncementListener } from "./AnnouncementListener";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
@@ -104,10 +104,10 @@ Cypress.Commands.add("mount", function (children, options) {
   };
 
   return cypressMount(
-    <ToolkitProvider density={this.density} mode={this.mode}>
+    <SaltProvider density={this.density} mode={this.mode}>
       {children}
       <AnnouncementListener onAnnouncement={handleAnnouncement} />
-    </ToolkitProvider>,
+    </SaltProvider>,
     options
   );
 });
