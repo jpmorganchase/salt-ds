@@ -1,4 +1,4 @@
-import { useControlled, useForkRef, useWidth } from "@jpmorganchase/uitk-core";
+import { useControlled, useForkRef } from "@salt-ds/core";
 import {
   ChangeEventHandler,
   FocusEventHandler,
@@ -15,6 +15,7 @@ import { usePopperStatus } from "./internal/usePopperStatus";
 import { ValueSelectorProps } from "./internal/ValueSelector";
 import { QueryInputProps } from "./QueryInput";
 import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
+import { useWidth } from "../responsive";
 
 export type BooleanOperator = "or" | "and";
 

@@ -1,5 +1,5 @@
-import { PrintIcon } from "@jpmorganchase/uitk-icons";
-import { ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
+import { PrintIcon } from "@salt-ds/icons";
+import { SaltProvider, useTheme } from "@salt-ds/core";
 
 import styles from "./IconsTable.module.css";
 
@@ -24,81 +24,81 @@ const IconsTable = () => (
             1X <span className={styles.colored}>(default)</span>
           </td>
           <td>
-            <ToolkitProvider density="high">
+            <SaltProvider density="high">
               <PrintIcon />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>12px</p>
           </td>
           <td>
-            <ToolkitProvider density="medium">
+            <SaltProvider density="medium">
               <PrintIcon />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>12px</p>
           </td>
           <td>
-            <ToolkitProvider density="low">
+            <SaltProvider density="low">
               <PrintIcon />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>14px</p>
           </td>
           <td>
-            <ToolkitProvider density="touch">
+            <SaltProvider density="touch">
               <PrintIcon />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>16px</p>
           </td>
         </tr>
         <tr>
           <td>2X</td>
           <td>
-            <ToolkitProvider density="high">
+            <SaltProvider density="high">
               <PrintIcon size={2} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>20px</p>
           </td>
           <td>
-            <ToolkitProvider density="medium">
+            <SaltProvider density="medium">
               <PrintIcon size={2} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>24px</p>
           </td>
           <td>
-            <ToolkitProvider density="low">
+            <SaltProvider density="low">
               <PrintIcon size={2} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>28px</p>
           </td>
           <td>
-            <ToolkitProvider density="touch">
+            <SaltProvider density="touch">
               <PrintIcon size={2} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>32px</p>
           </td>
         </tr>
         <tr>
           <td>3X</td>
           <td>
-            <ToolkitProvider density="high">
+            <SaltProvider density="high">
               <PrintIcon size={3} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>30px</p>
           </td>
           <td>
-            <ToolkitProvider density="medium">
+            <SaltProvider density="medium">
               <PrintIcon size={3} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>36px</p>
           </td>
           <td>
-            <ToolkitProvider density="low">
+            <SaltProvider density="low">
               <PrintIcon size={3} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>42px</p>
           </td>
           <td>
-            <ToolkitProvider density="touch">
+            <SaltProvider density="touch">
               <PrintIcon size={3} />
-            </ToolkitProvider>
+            </SaltProvider>
             <p className={styles.colored}>48px</p>
           </td>
         </tr>

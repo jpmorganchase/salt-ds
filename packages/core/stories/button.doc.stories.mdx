@@ -1,16 +1,15 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
@@ -100,7 +99,7 @@ A Button with the prop `disabled="true"` will suppress all functionality along w
 ### API
 
 ```
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 ```
 
 ### Props
@@ -121,17 +120,6 @@ The button component can contain the following components:
 ### Characteristics used
 
 <CharacteristicUsage of={Button} />
-
-### --uitkButton CSS custom property API
-
-The default styling values for most Button attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Button. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Button, but not defined by Button. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
-
-<CSSVariableTable of={Button} />
 
 ## Accessibility
 

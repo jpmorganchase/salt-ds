@@ -1,4 +1,4 @@
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { RefObject, useCallback, useRef, useState } from "react";
 
 export function useWidth<Element extends HTMLElement>(

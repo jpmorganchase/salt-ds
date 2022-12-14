@@ -1,4 +1,4 @@
-import { Link, Text } from "@jpmorganchase/uitk-core";
+import { Link, Text } from "@salt-ds/core";
 
 import { isEmail } from "../utils";
 import { ValueComponentProps } from "./types";

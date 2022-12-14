@@ -1,4 +1,4 @@
-import { ToolkitProvider, useDensity } from "@jpmorganchase/uitk-core";
+import { SaltProvider, useDensity } from "@salt-ds/core";
 import {
   ButtonBar,
   Dialog,
@@ -7,7 +7,7 @@ import {
   DialogProps,
   DialogTitle,
   OrderedButton,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./dialog.qa.stories.css";
 
@@ -63,26 +63,26 @@ const SuccessDialog = () => <BasicDialogExample status={"success"} />;
 
 export const ExamplesGrid: Story = () => (
   <div className={"examples-container"}>
-    <ToolkitProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
+    <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
       <div>
         <BasicDialog />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
       <div>
         <ErrorDialog />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
       <div>
         <WarningDialog />
       </div>
-    </ToolkitProvider>
-    <ToolkitProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
+    </SaltProvider>
+    <SaltProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
       <div>
         <SuccessDialog />
       </div>
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );
 

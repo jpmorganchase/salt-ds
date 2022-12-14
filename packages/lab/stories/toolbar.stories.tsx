@@ -1,10 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import {
-  Button,
-  Input,
-  Pill,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -29,7 +24,7 @@ import {
   UserGroupIcon,
   UserIcon,
   VisibleIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import {
   Avatar,
   Dropdown,
@@ -39,7 +34,10 @@ import {
   ToolbarField,
   ToolbarProps,
   Tooltray,
-} from "@jpmorganchase/uitk-lab";
+  Input,
+  Pill,
+  StaticInputAdornment,
+} from "@salt-ds/lab";
 import { CSSProperties, MouseEvent, useState } from "react";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";

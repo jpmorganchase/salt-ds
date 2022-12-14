@@ -5,10 +5,10 @@ import {
   ReactElement,
   useRef,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import cx from "classnames";
-import { ButtonBarProps } from "../buttonbar";
+import { ButtonBarProps } from "../button-bar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   ButtonBar?: ElementType<Partial<ButtonBarProps>>;

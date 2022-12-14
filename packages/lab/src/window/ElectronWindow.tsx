@@ -1,13 +1,11 @@
 import {
-  isDesktop,
-  ToolkitProvider,
+  SaltProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
-  Window as ToolkitWindow,
-  WindowProps,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import { isDesktop, Window as ToolkitWindow, WindowProps } from "../window";
 
 import "./ElectronWindow.css";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
@@ -108,7 +106,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
 
   return mountNode
     ? ReactDOM.createPortal(
-        <ToolkitProvider>
+        <SaltProvider>
           <WindowParentContext.Provider
             value={{
               top: (style.top as number) + parentWindow.top,
@@ -122,7 +120,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
               </div>
             </div>
           </WindowParentContext.Provider>
-        </ToolkitProvider>,
+        </SaltProvider>,
         mountNode
       )
     : null;

@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, Ref } from "react";
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 export interface ListAutosizerProps {
   responsive: boolean;

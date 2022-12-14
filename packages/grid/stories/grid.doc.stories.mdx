@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Grid, GridColumn } from "@jpmorganchase/uitk-grid";
+import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
@@ -29,20 +29,20 @@ The grid is virtualized. Only the visible part is rendered to the DOM.
 
 ## Configuring Grid
 
-To install the `@jpmorganchase/uitk-grid` package, run the command relevant to your environment:
+To install the `@salt-ds/data-grid` package, run the command relevant to your environment:
 
 ```sh
-yarn add @jpmorganchase/uitk-grid;
+yarn add @salt-ds/data-grid;
 ```
 
 ```sh
-npm install @jpmorganchase/uitk-grid;
+npm install @salt-ds/data-grid;
 ```
 
 To import the grid into your application, run the following call:
 
 ```
-import { Grid } from "@jpmorganchase/uitk-grid";
+import { Grid } from "@salt-ds/data-grid";
 ```
 
 Note: ensure the CSS `height` property for `.uitkGrid` has been set appropriately to see grid on screen.
@@ -197,7 +197,7 @@ To trigger edit mode on cells on your:
 _Note: the paginator component is currently an experimental feature, works are in progress._
 
 ```
-import { Pagination, Paginator } from "@jpmorganchase/uitk-lab";
+import { Pagination, Paginator } from "@salt-ds/lab";
 
 interface PaginationProps {
   count: number
@@ -235,21 +235,6 @@ To make tests work, ensure your grid is big enough and have scrolling implemente
 ### Characteristics used
 
 <CharacteristicUsage of={Grid} />
-
-### --uitkGrid CSS custom property API
-
-The default styling values for most grid attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to the grid. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by the grid, but not defined by the grid. They can be defined via a container or
-a custom class name to override grid styling. They will always take precedence over default styles, whether from theme variables
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
-
-The grid below is editable. Change the values of CSS variables to view their effect on the grid.
-
-<Canvas>
-  <Story id="grid-new-grid--css-variables" decorators={[withFlexGap]} />
-</Canvas>
 
 # Accessibility
 

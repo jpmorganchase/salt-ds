@@ -9,16 +9,11 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  FormField,
-  FormFieldProps,
-  Input,
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
+import { FormField, FormFieldProps } from "../form-field";
+import { Input } from "../input";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;

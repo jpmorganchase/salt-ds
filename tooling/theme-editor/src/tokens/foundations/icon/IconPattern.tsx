@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
 import "./IconPattern.css";

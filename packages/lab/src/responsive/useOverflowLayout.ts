@@ -11,7 +11,7 @@ import { useDynamicCollapse } from "./useDynamicCollapse";
 import { useInstantCollapse } from "./useInstantCollapse";
 import { useOverflow } from "./useOverflow";
 import { useReclaimSpace } from "./useReclaimSpace";
-import { ResizeHandler, useResizeObserver } from "@jpmorganchase/uitk-core";
+import { ResizeHandler, useResizeObserver } from "../responsive";
 
 import { measureContainerOverflow } from "./overflowUtils";
 

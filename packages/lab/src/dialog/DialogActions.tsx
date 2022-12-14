@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import "./DialogActions.css";
 

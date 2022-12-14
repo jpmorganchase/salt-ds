@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
 
-/**
- * Example data can be found here
- * https://bitbucketdc.jpmchase.net/projects/JPMUITK/repos/jpm-ui-toolkit/browse/packages/data-grid/examples/dependencies
- */
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleRowGroupPanel from "../dependencies/dataGridExampleRowGroupPanel";
 
@@ -14,7 +10,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 LicenseManager.setLicenseKey("your license key");
 

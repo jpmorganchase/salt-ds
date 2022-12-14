@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer } from "@salt-ds/core";
 
 // Dynamically append a string to aria-label if the component
 // is controlled and the display value can be refreshed

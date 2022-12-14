@@ -1,7 +1,7 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { useRef, useState } from "react";
-import { Link } from "@jpmorganchase/uitk-core";
-import { EditableLabel, Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
+import { Link } from "@salt-ds/core";
+import { EditableLabel, Tab, Tabstrip } from "@salt-ds/lab";
 
 import { Default as DefaultTabstripStrings } from "./tabs.stories";
 
@@ -33,9 +33,9 @@ Simplest possible `Tabstrip`, uncontrolled tab labels are passed as strings
 />
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <DefaultTabstripStrings height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 <br />
 
@@ -57,9 +57,9 @@ Same uncontrolled `Tabstrip` with two additional attributes
 />
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripUncontrolledStringTabsAddNewWithRename height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 3) controlled tabs, with addTab
 
@@ -96,9 +96,9 @@ const handleAddTab = () => {
 </Tabstrip>;
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripControlledAddNew height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 4) Closeable Tabs
 
@@ -118,9 +118,9 @@ Same uncontrolled `Tabstrip` with two additional attributes
 />
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripCloseDeclarative height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 5) Custom Tab content
 
@@ -147,6 +147,6 @@ easier.
 </Tabstrip>
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripLink height={100} />
-</ToolkitProvider>
+</SaltProvider>

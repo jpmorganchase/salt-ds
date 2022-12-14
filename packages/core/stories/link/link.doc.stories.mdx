@@ -1,14 +1,14 @@
 import { Meta, ArgsTable, Canvas, Story } from "@storybook/addon-docs";
-import { Link } from "@jpmorganchase/uitk-core";
+import { Link } from "@salt-ds/core";
 import {
+  CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 import { withFlexGap } from "docs/decorators/withFlexGap";
 
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
-import { StackoverflowIcon } from "@jpmorganchase/uitk-icons";
+import { StackoverflowIcon } from "@salt-ds/icons";
 
 <Meta
   title="Documentation/Core/Link"
@@ -144,7 +144,7 @@ If you use truncated text, please ensure you are remaining ADA compliant by revi
 # API
 
 ```
-import { Link } from "@jpmorganchase/uitk-core";
+import { Link } from "@salt-ds/core";
 ```
 
 ## Props
@@ -158,17 +158,6 @@ import { Link } from "@jpmorganchase/uitk-core";
 ### Characteristics used
 
 <CharacteristicUsage of={Link} />
-
-### --uitkLink CSS custom property API
-
-The default styling values for most Link attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Link. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Link, but not defined by Link. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
-
-<CSSVariableTable of={Link} />
 
 ## Accessibility
 

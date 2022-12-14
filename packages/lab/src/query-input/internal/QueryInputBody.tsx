@@ -1,5 +1,5 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { FilterIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer } from "@salt-ds/core";
+import { FilterIcon } from "@salt-ds/icons";
 import {
   ChangeEventHandler,
   FocusEventHandler,

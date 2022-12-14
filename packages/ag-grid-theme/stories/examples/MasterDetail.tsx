@@ -5,7 +5,7 @@ import columnDefs from "../dependencies/masterDetailExampleData";
 import rowData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 LicenseManager.setLicenseKey("your license key");
 

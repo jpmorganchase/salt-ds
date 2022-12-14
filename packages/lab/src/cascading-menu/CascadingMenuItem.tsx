@@ -1,10 +1,5 @@
-import {
-  makePrefixer,
-  Tooltip,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { ChevronRightIcon } from "@salt-ds/icons";
 import classnames from "classnames";
 import {
   forwardRef,
@@ -16,6 +11,7 @@ import {
 } from "react";
 import { ListItem, ListItemProps } from "../list-deprecated";
 import { MenuDescriptor } from "./CascadingMenuProps";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./CascadingMenuItem.css";
 

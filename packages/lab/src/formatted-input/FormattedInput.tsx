@@ -1,7 +1,8 @@
 import cx from "classnames";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
-import { Input, InputProps, useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
+import { Input, InputProps } from "../input";
 import {
   baseName,
   InputWithMask,

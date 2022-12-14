@@ -6,7 +6,7 @@ import {
   ReactNode,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import "./LinearProgress.css";
 
 import { Info as DefaultInfo } from "../Info";

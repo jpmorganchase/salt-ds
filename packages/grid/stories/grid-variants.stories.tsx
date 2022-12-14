@@ -8,14 +8,16 @@ import {
 } from "../src";
 import { ChangeEvent, useState } from "react";
 import {
+  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
-import { Checkbox, FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import cn from "classnames";
 
 export default {
   title: "Grid/New Grid",
@@ -25,7 +27,10 @@ export default {
 
 const GridVariantsTemplate: Story<{}> = () => {
   const [separators, setSeparators] = useState(false);
+  const [uhd, setUhd] = useState(false);
   const [index, setIndex] = useState(0);
+
+  const density = useDensity();
 
   const onChange: ToggleButtonGroupChangeEventHandler = (
     event,
@@ -35,9 +40,12 @@ const GridVariantsTemplate: Story<{}> = () => {
     setIndex(index);
   };
 
+  const onUhdChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUhd(event.target.checked);
+  };
+
   const onSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const checked = event.target.checked;
-    setSeparators(checked);
+    setSeparators(event.target.checked);
   };
 
   return (
@@ -64,12 +72,20 @@ const GridVariantsTemplate: Story<{}> = () => {
               onChange={onSeparatorsChange}
             />
           </FlexItem>
+          <FlexItem>
+            <Checkbox
+              checked={density === "high" && uhd}
+              label="Compact (for high density only)"
+              onChange={onUhdChange}
+              disabled={density !== "high"}
+            />
+          </FlexItem>
         </FlexLayout>
       </FlexItem>
       <Grid
         rowData={rowData}
         rowKeyGetter={dummyRowKeyGetter}
-        className="grid"
+        className={cn("grid", { ["grid-uhd"]: uhd })}
         variant={index === 1 ? "secondary" : "primary"}
         zebra={index === 2 ? true : false}
         columnSeparators={separators}

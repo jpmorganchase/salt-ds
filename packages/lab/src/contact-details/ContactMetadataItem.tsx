@@ -1,5 +1,5 @@
-import { makePrefixer, Text } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, Text } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { MailLinkComponent } from "./MailLinkComponent";
 import { ValueComponentProps } from "./types";

@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { RGBAValue } from "./Color";
 import { RGBInput } from "./RGBAInputField";

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps } from "@salt-ds/core";
 import "./ToolbarButton.css";
 
 export type ToolbarButtonProps = ButtonProps & {

@@ -19,14 +19,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
-import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  MenuIcon,
-  HomeIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/lab";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon, MenuIcon, HomeIcon } from "@salt-ds/icons";
 import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";

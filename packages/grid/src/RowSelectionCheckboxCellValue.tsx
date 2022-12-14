@@ -1,4 +1,4 @@
-import { CheckboxBase } from "@jpmorganchase/uitk-core";
+import { CheckboxBase } from "@salt-ds/lab";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";

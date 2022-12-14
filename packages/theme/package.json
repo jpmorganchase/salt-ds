@@ -1,6 +1,6 @@
 {
-  "name": "@jpmorganchase/uitk-theme",
-  "version": "0.7.0",
+  "name": "@salt-ds/theme",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "style": "index.css",
   "files": [
@@ -11,6 +11,6 @@
     "build": "yarn node ./scripts/build.js"
   },
   "publishConfig": {
-    "directory": "../../dist/jpmorganchase-uitk-theme"
+    "directory": "../../dist/salt-ds-theme"
   }
 }

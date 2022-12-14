@@ -4,12 +4,8 @@ import {
   Display1,
   Display2,
   Display3,
-} from "@jpmorganchase/uitk-core";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  IconProps,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon, IconProps } from "@salt-ds/icons";
 import cx from "classnames";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { useMetricContext } from "./internal";

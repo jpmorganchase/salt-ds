@@ -1,9 +1,5 @@
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  IconProps,
-} from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon, IconProps } from "@salt-ds/icons";
 import cn from "classnames";
 import { ComponentType, KeyboardEventHandler, MouseEventHandler } from "react";
 import { withBaseName } from "./utils";

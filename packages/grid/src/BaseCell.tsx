@@ -1,6 +1,6 @@
 import cn from "classnames";
 import "./BaseCell.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
 import { Cursor, useFocusableContent } from "./internal";
@@ -44,7 +44,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
           [withBaseName("regularSeparator")]:
             column.separator === "regular" || column.separator === "groupEdge",
           [withBaseName("pinnedSeparator")]: column.separator === "pinned",
-          [withBaseName("editable")]: !isFocused && isEditable,
+          [withBaseName("editable")]: isEditable,
           [withBaseName("selected")]: isSelected,
         },
         className

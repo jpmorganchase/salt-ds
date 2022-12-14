@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode, useCallback, useState } from "react";
-import { ButtonProps } from "@jpmorganchase/uitk-core";
+import { ButtonProps } from "@salt-ds/core";
 import { CascadingMenu, CascadingMenuProps } from "../cascading-menu";
 import { MenuButtonTrigger } from "./MenuButtonTrigger";
 

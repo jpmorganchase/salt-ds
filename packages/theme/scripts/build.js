@@ -3,10 +3,7 @@ const path = require("path");
 const del = require("del");
 const fs = require("fs");
 
-const buildFolder = path.join(
-  __dirname,
-  "../../../dist/jpmorganchase-uitk-theme"
-);
+const buildFolder = path.join(__dirname, "../../../dist/salt-ds-theme");
 
 del.sync([buildFolder], { force: true });
 

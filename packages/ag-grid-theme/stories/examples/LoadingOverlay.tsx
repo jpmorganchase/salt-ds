@@ -3,8 +3,7 @@ import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Card, Switch } from "@jpmorganchase/uitk-core";
-import { Spinner } from "@jpmorganchase/uitk-lab";
+import { Card, Switch, Spinner } from "@salt-ds/lab";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const LoadingOverlay = (props: AgGridReactProps) => {

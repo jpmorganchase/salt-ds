@@ -1,4 +1,4 @@
-import { isDesktop } from "@jpmorganchase/uitk-core";
+import { isDesktop } from "@salt-ds/lab";
 import { JSONByScope, parseCSStoJSON, tidyUp } from "../helpers/parseToJson";
 import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
 

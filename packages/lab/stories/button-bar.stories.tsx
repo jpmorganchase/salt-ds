@@ -1,5 +1,5 @@
-import { ButtonBar, OrderedButton } from "@jpmorganchase/uitk-lab";
-import { ExportIcon, ImportIcon } from "@jpmorganchase/uitk-icons";
+import { ButtonBar, OrderedButton } from "@salt-ds/lab";
+import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
