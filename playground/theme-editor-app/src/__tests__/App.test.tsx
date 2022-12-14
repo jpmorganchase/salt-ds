@@ -4,6 +4,6 @@ import App from "../App";
 
 test("renders theme editor welcome page", () => {
   render(<App />);
-  const themeEditor = screen.getByText(/USE UITK THEME/i);
+  const themeEditor = screen.getByText(/USE SALT THEME/i);
   expect(themeEditor).toBeInTheDocument();
 });

@@ -138,7 +138,7 @@ export const useTabstrip = ({
     extendedDropZone: overflowedItems.length > 0,
     onDrop: handleDrop,
     orientation: "horizontal",
-    itemQuery: ".uitkTab",
+    itemQuery: ".saltTab",
   });
 
   const editableHook = useEditableItem({

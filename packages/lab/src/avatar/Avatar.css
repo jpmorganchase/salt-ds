@@ -1,11 +1,11 @@
 /* Default variables applied to the root element */
-.uitkAvatar {
-  --avatar-background: var(--uitkAvatar-background, var(--uitk-accent-background));
-  --avatar-foreground: var(--uitkAvatar-foreground, var(--uitk-accent-foreground));
+.saltAvatar {
+  --avatar-background: var(--saltAvatar-background, var(--salt-accent-background));
+  --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
 }
 
 /* Style applied to the root element */
-.uitkAvatar {
+.saltAvatar {
   background: var(--avatar-background);
   color: var(--avatar-foreground);
   font-size: var(--avatar-fontSize);
@@ -24,7 +24,7 @@
 }
 
 /* Style applied to the image element */
-.uitkAvatar-image {
+.saltAvatar-image {
   width: 100%;
   height: 100%;
   text-align: center;
@@ -34,33 +34,33 @@
 }
 
 /* Style applied to the svg element */
-.uitkAvatar > svg {
+.saltAvatar > svg {
   width: var(--avatar-container-size);
   height: var(--avatar-container-size);
 }
 
-.uitkAvatar-svgDisc {
+.saltAvatar-svgDisc {
   fill: var(--avatar-background);
 }
 
-.uitkAvatar-svgHead {
+.saltAvatar-svgHead {
   fill: var(--avatar-foreground);
 }
 
 /* Style applied when size is small */
-.uitkAvatar-small {
+.saltAvatar-small {
   --avatar-fontSize: 8px;
-  --avatar-container-size: var(--uitk-size-graphic-small);
+  --avatar-container-size: var(--salt-size-graphic-small);
 }
 
 /* Style applied when size is medium */
-.uitkAvatar-medium {
+.saltAvatar-medium {
   --avatar-fontSize: 11px;
-  --avatar-container-size: var(--uitk-size-graphic-medium);
+  --avatar-container-size: var(--salt-size-graphic-medium);
 }
 
 /* Style applied when size is large */
-.uitkAvatar-large {
+.saltAvatar-large {
   --avatar-fontSize: 14px;
-  --avatar-container-size: var(--uitk-size-graphic-large);
+  --avatar-container-size: var(--salt-size-graphic-large);
 }

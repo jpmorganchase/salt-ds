@@ -84,7 +84,7 @@ describe("A declarative list with a disabled item", () => {
   });
 
   it("should render disabled style for the disabled item", () => {
-    cy.get("#list-item-1").should("have.class", "uitkDisabled");
+    cy.get("#list-item-1").should("have.class", "saltDisabled");
   });
 
   describe("when clicked on the disabled item", () => {
@@ -117,7 +117,7 @@ describe("A disabled declarative list", () => {
   });
 
   it("should have the disabled list style", () => {
-    cy.findByRole("listbox").should("have.class", "uitkDisabled");
+    cy.findByRole("listbox").should("have.class", "saltDisabled");
   });
 
   describe("when clicked its items", () => {

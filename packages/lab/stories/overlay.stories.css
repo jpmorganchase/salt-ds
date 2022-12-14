@@ -1,9 +1,9 @@
 .content-heading {
-  margin: 0 0 calc(var(--uitk-size-unit) / 2);
-  font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-text-fontWeight-strong);
+  margin: 0 0 calc(var(--salt-size-unit) / 2);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .content-body {
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--salt-text-fontSize);
 }

@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 import { GridColumnModel, GridRowModel } from "./Grid";
 
-const withBaseName = makePrefixer("uitkGridDropdownCellEditor");
+const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
 export interface DropdownCellEditorProps<T> {
   options: string[];

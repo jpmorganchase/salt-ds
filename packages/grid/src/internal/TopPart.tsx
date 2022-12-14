@@ -8,7 +8,7 @@ import { GroupHeaderRow } from "./GroupHeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
 import cx from "classnames";
 
-const withBaseName = makePrefixer("uitkGridTopPart");
+const withBaseName = makePrefixer("saltGridTopPart");
 
 export interface TopPartProps<T> {
   topRef: RefObject<HTMLDivElement>;

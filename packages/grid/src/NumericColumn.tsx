@@ -24,7 +24,7 @@ export function NumericCellValue<T>(props: GridCellValueProps<T>) {
   const columnProps = column.info.props as NumericColumnProps<T>;
   const { precision } = columnProps;
   const text = isNumber(value) ? value.toFixed(precision) : "";
-  return <div className="uitkGridNumericCellValue">{text}</div>;
+  return <div className="saltGridNumericCellValue">{text}</div>;
 }
 
 export interface NumericEditorProps<T> {
@@ -74,8 +74,8 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   }, [inputRef.current]);
 
   return (
-    <td className="uitkGridNumericCellEditor">
-      <div className="uitkGridNumericCellEditor-inputContainer">
+    <td className="saltGridNumericCellEditor">
+      <div className="saltGridNumericCellEditor-inputContainer">
         <input
           ref={inputRef}
           data-testid="grid-cell-editor-input"

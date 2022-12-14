@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Logo> = (args) => {
 export const FeatureLogo = Template.bind({});
 
 FeatureLogo.args = {
-  appTitle: "Toolkit",
+  appTitle: "Salt",
   src: PlaceholderLogo as string,
 };
 

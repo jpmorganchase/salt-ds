@@ -4,7 +4,7 @@ import { escapeRegExp } from "../utils";
 
 import "./Highlighter.css";
 
-const withBaseName = makePrefixer("uitkHighlighter");
+const withBaseName = makePrefixer("saltHighlighter");
 
 export interface HighlighterProps {
   matchPattern?: RegExp | string;

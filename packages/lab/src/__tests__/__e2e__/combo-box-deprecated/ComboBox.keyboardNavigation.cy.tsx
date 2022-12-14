@@ -20,7 +20,7 @@ describe("A combo box", () => {
         cy.realPress("Tab");
         cy.findAllByRole("option").should(
           "not.have.class",
-          "uitkListItemDeprecated-highlighted"
+          "saltListItemDeprecated-highlighted"
         );
       });
     });
@@ -70,15 +70,15 @@ describe("A combo box", () => {
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alabama" })
-          .should("have.class", "uitkListItemDeprecated-highlighted")
-          .and("have.class", "uitkListItemDeprecated-focusVisible");
+          .should("have.class", "saltListItemDeprecated-highlighted")
+          .and("have.class", "saltListItemDeprecated-focusVisible");
 
         cy.realPress("ArrowDown");
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alaska" })
-          .should("have.class", "uitkListItemDeprecated-highlighted")
-          .and("have.class", "uitkListItemDeprecated-focusVisible");
+          .should("have.class", "saltListItemDeprecated-highlighted")
+          .and("have.class", "saltListItemDeprecated-focusVisible");
       });
     });
 
@@ -93,7 +93,7 @@ describe("A combo box", () => {
           cy.realType("A");
           // TODO QuickSelected is not supported by the new list yet.
           // expect(getByRole(list, "option", { name: /item.+1/i })).toHaveClass(
-          //   "uitkListItem-quickSelected"
+          //   "saltListItem-quickSelected"
           // );
 
           cy.realPress("Enter");
@@ -229,8 +229,8 @@ describe("A combo box", () => {
                 .findByRole("option", {
                   name: "Brown",
                 })
-                .should("have.class", "uitkListItemDeprecated-highlighted")
-                .and("have.class", "uitkListItemDeprecated-focusVisible");
+                .should("have.class", "saltListItemDeprecated-highlighted")
+                .and("have.class", "saltListItemDeprecated-focusVisible");
             }
           : undefined
       );
@@ -321,7 +321,7 @@ describe("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("not.have.class", "uitkListItemDeprecated-highlighted");
+          .should("not.have.class", "saltListItemDeprecated-highlighted");
       });
     });
 
@@ -382,15 +382,15 @@ describe("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alabama" })
-          .should("have.class", "uitkListItemDeprecated-highlighted")
-          .and("have.class", "uitkListItemDeprecated-focusVisible");
+          .should("have.class", "saltListItemDeprecated-highlighted")
+          .and("have.class", "saltListItemDeprecated-focusVisible");
 
         cy.realPress("ArrowDown");
 
         cy.findByRole("listbox")
           .findByRole("option", { name: "Alaska" })
-          .should("have.class", "uitkListItemDeprecated-highlighted")
-          .and("have.class", "uitkListItemDeprecated-focusVisible");
+          .should("have.class", "saltListItemDeprecated-highlighted")
+          .and("have.class", "saltListItemDeprecated-focusVisible");
       });
     });
 
@@ -406,7 +406,7 @@ describe("A multi-select combo box", () => {
           cy.realType("A");
           // TODO uncomment when quickSelected is implemented in the list
           // expect(getByRole(list, "option", { name: /item.+1/i })).toHaveClass(
-          //   "uitkListItem-quickSelected"
+          //   "saltListItem-quickSelected"
           // );
           cy.realPress("Enter");
 
@@ -470,7 +470,7 @@ describe("A multi-select combo box", () => {
         cy.findByRole("listbox")
           .findByRole("option", { name: "Arizona" })
           .should("have.attr", "aria-selected", "true")
-          .and("have.class", "uitkListItemDeprecated-highlighted");
+          .and("have.class", "saltListItemDeprecated-highlighted");
       });
     });
 
@@ -569,7 +569,7 @@ describe("A multi-select combo box", () => {
 
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("not.have.class", "uitkListItemDeprecated-highlighted");
+          .should("not.have.class", "saltListItemDeprecated-highlighted");
       });
     });
 
@@ -581,7 +581,7 @@ describe("A multi-select combo box", () => {
 
         cy.findAllByTestId("pill").should(
           "not.have.class",
-          "uitkInputPill-pillActive"
+          "saltInputPill-pillActive"
         );
 
         // start navigating through pill group so the focus should be removed from list
@@ -589,7 +589,7 @@ describe("A multi-select combo box", () => {
 
         cy.findAllByTestId("pill")
           .eq(-1)
-          .should("have.class", "uitkInputPill-pillActive");
+          .should("have.class", "saltInputPill-pillActive");
       });
     });
 
@@ -603,23 +603,23 @@ describe("A multi-select combo box", () => {
 
         cy.findAllByTestId("pill")
           .eq(-1)
-          .should("have.class", "uitkInputPill-pillActive");
+          .should("have.class", "saltInputPill-pillActive");
 
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("not.have.class", "uitkListItemDeprecated-focusVisible");
+          .should("not.have.class", "saltListItemDeprecated-focusVisible");
 
         // start navigating through list so focus should be removed from pill group
         cy.realPress("ArrowDown");
 
         cy.findAllByTestId("pill").should(
           "not.have.class",
-          "uitkInputPill-pillActive"
+          "saltInputPill-pillActive"
         );
 
         cy.findByRole("listbox")
           .findAllByRole("option", { name: "Alabama" })
-          .should("have.class", "uitkListItemDeprecated-focusVisible");
+          .should("have.class", "saltListItemDeprecated-focusVisible");
       });
     });
 

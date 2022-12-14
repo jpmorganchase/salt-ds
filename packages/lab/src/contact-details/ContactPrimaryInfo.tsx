@@ -3,7 +3,7 @@ import cn from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 
-const withBaseName = makePrefixer("uitkContactPrimaryInfo");
+const withBaseName = makePrefixer("saltContactPrimaryInfo");
 
 export interface ContactPrimaryInfoProps
   extends HTMLAttributes<HTMLDivElement> {

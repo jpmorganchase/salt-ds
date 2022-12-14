@@ -1,6 +1,6 @@
 import { SVGAttributes } from "react";
 
-const baseName = "uitkSvgSpinner";
+const baseName = "saltSvgSpinner";
 
 export const SpinnerLarge = (props: SVGAttributes<SVGSVGElement>) => (
   <svg className={`${baseName}-spinner`} viewBox="0 0 48 48" {...props}>

@@ -1,37 +1,37 @@
-.uitkCircularProgress {
-  --circularProgress-gradient-color: var(--uitk-measured-fill);
+.saltCircularProgress {
+  --circularProgress-gradient-color: var(--salt-measured-fill);
 
-  color: var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
   display: inline-flex;
   position: relative;
 }
 
-.uitkCircularProgress-disabled .uitkCircularProgress-progressValue,
-.uitkCircularProgress-disabled circle {
-  color: var(--uitk-text-primary-foreground-disabled);
-  cursor: var(--uitk-selectable-cursor-disabled);
+.saltCircularProgress-disabled .saltCircularProgress-progressValue,
+.saltCircularProgress-disabled circle {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkCircularProgress-circle {
-  stroke: url("#uitk-circular-progress-gradient");
+.saltCircularProgress-circle {
+  stroke: url("#salt-circular-progress-gradient");
   stroke-width: 2px;
 }
 
-.uitkCircularProgress-small {
+.saltCircularProgress-small {
   font-size: 11px;
 }
 
-.uitkCircularProgress-medium {
+.saltCircularProgress-medium {
   font-size: 14px;
 }
 
-.uitkCircularProgress-large {
+.saltCircularProgress-large {
   font-size: 16px;
 }
 
-.uitkCircularProgress-progressValue {
+.saltCircularProgress-progressValue {
   align-items: center;
-  color: var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
   display: flex;
   height: 100%;
   justify-content: center;
@@ -40,48 +40,48 @@
   width: 100%;
 }
 
-.uitkCircularProgress-disabled {
+.saltCircularProgress-disabled {
 }
 
-.uitkCircularProgress-completed {
+.saltCircularProgress-completed {
 }
 
-.uitkCircularProgress-railCircle {
-  stroke: var(--uitk-measured-background);
+.saltCircularProgress-railCircle {
+  stroke: var(--salt-measured-background);
   stroke-width: 1px;
 }
 
-.uitkCircularProgress-gradientStart,
-.uitkCircularProgress-gradientStop {
-  stop-color: var(--uitkCircularProgress-gradient-color, var(--circularProgress-gradient-color));
+.saltCircularProgress-gradientStart,
+.saltCircularProgress-gradientStop {
+  stop-color: var(--saltCircularProgress-gradient-color, var(--circularProgress-gradient-color));
 }
 
-.uitkCircularProgress-container {
+.saltCircularProgress-container {
   display: inline-block;
 }
 
-.uitkCircularProgress-static {
+.saltCircularProgress-static {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
-.uitkCircularProgress-indeterminate {
+.saltCircularProgress-indeterminate {
   animation: circular-rotate 1.4s linear infinite;
 }
 
-.uitkCircularProgress-svg {
-  fill: var(--uitk-measured-background);
+.saltCircularProgress-svg {
+  fill: var(--salt-measured-background);
   display: block;
 }
 
-.uitkCircularProgress-circle {
-  stroke: url("#uitk-circular-progress-gradient");
+.saltCircularProgress-circle {
+  stroke: url("#salt-circular-progress-gradient");
 }
 
-.uitkCircularProgress-circleStatic {
+.saltCircularProgress-circleStatic {
   transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
-.uitkCircularProgress-circleIndeterminate {
+.saltCircularProgress-circleIndeterminate {
   animation: circular-dash 1.4s ease-in-out infinite;
 }
 

@@ -1,27 +1,27 @@
 /* Experimental - Overlay css variable API */
-.uitkOverlay {
-  --overlay-text-color: var(--uitk-text-primary-foreground);
-  --overlay-spacing: var(--uitk-size-unit);
-  --overlay-fontSize: var(--uitk-text-fontSize);
-  --overlay-background: var(--uitk-container-primary-background);
-  --overlay-borderColor: var(--uitk-container-primary-borderColor);
+.saltOverlay {
+  --overlay-text-color: var(--salt-text-primary-foreground);
+  --overlay-spacing: var(--salt-size-unit);
+  --overlay-fontSize: var(--salt-text-fontSize);
+  --overlay-background: var(--salt-container-primary-background);
+  --overlay-borderColor: var(--salt-container-primary-borderColor);
   /* TODO: z-index audit, provide z index here or rely on popper */
-  --overlay-zindex: var(--uitk-zIndex-flyover);
+  --overlay-zindex: var(--salt-zIndex-flyover);
 }
 
-.uitkOverlay-secondary.uitkOverlay {
-  --overlay-background: var(--uitk-container-secondary-background);
-  --overlay-borderColor: var(--uitk-container-secondary-borderColor);
+.saltOverlay-secondary.saltOverlay {
+  --overlay-background: var(--salt-container-secondary-background);
+  --overlay-borderColor: var(--salt-container-secondary-borderColor);
 }
 
-.uitkOverlay-content {
+.saltOverlay-content {
   display: flex;
   padding: calc(var(--overlay-spacing) * 2);
   font-size: var(--overlay-fontSize);
 
   border: 1px solid var(--overlay-borderColor);
-  box-shadow: var(--uitk-overlayable-shadow-popout);
-  line-height: var(--uitk-text-lineHeight);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  line-height: var(--salt-text-lineHeight);
   background: var(--overlay-background);
   color: var(--overlay-text-color);
   position: relative;
@@ -30,64 +30,64 @@
   z-index: var(--overlay-zindex);
 }
 
-.uitkOverlay-arrow,
-.uitkOverlay-arrow::after {
+.saltOverlay-arrow,
+.saltOverlay-arrow::after {
   border: 8px solid transparent;
   position: absolute;
 }
 
-.uitkOverlay-arrow::after {
+.saltOverlay-arrow::after {
   content: "";
 }
 
-.uitkOverlay[data-placement^="top"] .uitkOverlay-arrow {
+.saltOverlay[data-placement^="top"] .saltOverlay-arrow {
   border-top-color: var(--overlay-borderColor);
   bottom: -17px;
 }
 
-.uitkOverlay[data-placement^="bottom"] .uitkOverlay-arrow {
+.saltOverlay[data-placement^="bottom"] .saltOverlay-arrow {
   border-bottom-color: var(--overlay-borderColor);
   top: -17px;
 }
 
-.uitkOverlay[data-placement^="left"] .uitkOverlay-arrow {
+.saltOverlay[data-placement^="left"] .saltOverlay-arrow {
   border-left-color: var(--overlay-borderColor);
   right: -17px;
 }
 
-.uitkOverlay[data-placement^="right"] .uitkOverlay-arrow {
+.saltOverlay[data-placement^="right"] .saltOverlay-arrow {
   border-right-color: var(--overlay-borderColor);
   left: -17px;
 }
 
-.uitkOverlay[data-placement^="top"] .uitkOverlay-arrow::after {
+.saltOverlay[data-placement^="top"] .saltOverlay-arrow::after {
   border-top-color: var(--overlay-background);
   bottom: -7px;
   left: calc(100% - 8px);
 }
 
-.uitkOverlay[data-placement^="bottom"] .uitkOverlay-arrow::after {
+.saltOverlay[data-placement^="bottom"] .saltOverlay-arrow::after {
   border-bottom-color: var(--overlay-background);
   top: -7px;
   left: calc(100% - 8px);
 }
 
-.uitkOverlay[data-placement^="left"] .uitkOverlay-arrow::after {
+.saltOverlay[data-placement^="left"] .saltOverlay-arrow::after {
   border-left-color: var(--overlay-background);
   right: -7px;
   top: calc(100% - 8px);
 }
 
-.uitkOverlay[data-placement^="right"] .uitkOverlay-arrow::after {
+.saltOverlay[data-placement^="right"] .saltOverlay-arrow::after {
   border-right-color: var(--overlay-background);
   left: -7px;
   top: calc(100% - 8px);
 }
 
 /* Close Button */
-.uitkOverlay-close {
+.saltOverlay-close {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }

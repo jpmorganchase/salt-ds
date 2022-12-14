@@ -4,7 +4,7 @@ import {
   Color,
   convertColorMapValueToHex,
   getColorPalettes,
-  uitkColorMap,
+  saltColorMap,
 } from "../../color-chooser";
 
 HTMLCanvasElement.prototype.getContext = jest.fn();
@@ -15,11 +15,11 @@ describe("ColorChooser", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  const uitkColor = Color.makeColorFromHex("#D1F4C9");
+  const saltColor = Color.makeColorFromHex("#D1F4C9");
   const customColor = Color.makeColorFromHex("#30BC67");
   it("Renders an overlay", () => {
     const element = render(
-      <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
+      <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     expect(
       element.getByTestId("color-chooser-overlay-button")
@@ -28,7 +28,7 @@ describe("ColorChooser", () => {
 
   it("Renders the SwatchesPicker upon clicking on the Swatches tab", () => {
     const element = render(
-      <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
+      <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     const colorChooserOverlayButton = element.getByTestId(
       "color-chooser-overlay-button"
@@ -71,14 +71,14 @@ describe("ColorChooser", () => {
     fireEvent.click(colorChooserOverlayButton);
     expect(element.queryByTestId("swatches")).toBeInTheDocument();
     const swatch = element.getByTestId(
-      `swatch-${convertColorMapValueToHex(uitkColorMap.uitkblue10)}`
+      `swatch-${convertColorMapValueToHex(saltColorMap.saltblue10)}`
     );
     expect(swatch.style.backgroundColor).toEqual("rgba(203, 231, 249, 0.102)");
   });
 
-  it("Renders the Swatches tab first if a UITK color is selected", () => {
+  it("Renders the Swatches tab first if a Salt color is selected", () => {
     const element = render(
-      <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
+      <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     const colorChooserOverlayButton = element.getByTestId(
       "color-chooser-overlay-button"
@@ -91,7 +91,7 @@ describe("ColorChooser", () => {
     expect(element.queryByTestId("swatches-picker")).toBeInTheDocument();
   });
 
-  it("Renders the Color Picker tab first if a non UITK color is selected", () => {
+  it("Renders the Color Picker tab first if a non Salt color is selected", () => {
     const element = render(
       <ColorChooser
         color={customColor}
@@ -109,7 +109,7 @@ describe("ColorChooser", () => {
     expect(element.queryByTestId("color-picker")).toBeInTheDocument();
   });
 
-  it("Renders the Color Picker tab correctly if a non UITK color is selected and showSwatches is false", () => {
+  it("Renders the Color Picker tab correctly if a non Salt color is selected and showSwatches is false", () => {
     const element = render(
       <ColorChooser
         color={customColor}
@@ -131,7 +131,7 @@ describe("ColorChooser", () => {
   it("Renders the ColorPicker only if the showColorPicker prop is true and colorLibrary is false", () => {
     const element = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         showColorPicker={true}
         showSwatches={false}
         onSelect={selectSpy}
@@ -152,7 +152,7 @@ describe("ColorChooser", () => {
     expect(() =>
       render(
         <ColorChooser
-          color={uitkColor}
+          color={saltColor}
           showSwatches={false}
           showColorPicker={false}
           onSelect={selectSpy}
@@ -178,7 +178,7 @@ describe("ColorChooser", () => {
   it("onClearMock is called after Default button is pressed with undefined value", async () => {
     const { getByTestId, getByText } = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         defaultAlpha={0.1}
         onSelect={selectSpy}
         onClear={clearSpy}
@@ -196,7 +196,7 @@ describe("ColorChooser", () => {
   it("Sets hex inputs and rgb value inputs correctly when Default button is pressed with null value from within the Color Picker tab", async () => {
     const { getByTestId, getByText } = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         disableAlphaChooser={false}
         onSelect={selectSpy}
         onClear={clearSpy}
@@ -224,7 +224,7 @@ describe("ColorChooser", () => {
     };
     const { getByTestId, getByText, queryAllByRole, rerender } = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={onSelectMock}
         onClear={onClearMock}
         defaultAlpha={0.65}
@@ -267,7 +267,7 @@ describe("ColorChooser", () => {
     const { getByTestId, getByText, getByRole, queryAllByRole, rerender } =
       render(
         <ColorChooser
-          color={uitkColor}
+          color={saltColor}
           defaultAlpha={0.1}
           onSelect={onSelectMock}
           onClear={onClearMock}
@@ -298,7 +298,7 @@ describe("ColorChooser", () => {
   it("Renders the ColorLibrary only if the showSwatches prop is true and showColorPicker is false", () => {
     const element = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         showColorPicker={false}
         showSwatches={true}
         onSelect={selectSpy}
@@ -313,9 +313,9 @@ describe("ColorChooser", () => {
     expect(element.queryByText("Color Picker")).not.toBeInTheDocument();
   });
 
-  it("Renders the SwatchesPicker with Swatches created from UITK colours", async () => {
+  it("Renders the SwatchesPicker with Swatches created from Salt colours", async () => {
     const element = render(
-      <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
+      <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     const colorChooserOverlayButton = element.getByTestId(
       "color-chooser-overlay-button"
@@ -333,14 +333,14 @@ describe("ColorChooser", () => {
     }
   });
 
-  it("If prop color is a part of UITK's Swatches, it displays the name on the overlay", () => {
+  it("If prop color is a part of Salt's Swatches, it displays the name on the overlay", () => {
     const element = render(
-      <ColorChooser color={uitkColor} onSelect={selectSpy} onClear={clearSpy} />
+      <ColorChooser color={saltColor} onSelect={selectSpy} onClear={clearSpy} />
     );
     expect(element.queryByText("Green10")).toBeInTheDocument();
   });
 
-  it("If prop color is not a part of UITK's Swatches, it displays the hex value on the overlay", () => {
+  it("If prop color is not a part of Salt's Swatches, it displays the hex value on the overlay", () => {
     const element = render(
       <ColorChooser
         color={Color.makeColorFromHex("#D1F4C1")}
@@ -400,7 +400,7 @@ describe("ColorChooser", () => {
   // it("Does not save the chosen color if Apply is not clicked and the user clicks outside of the Overlay", () => {
   //   const element = render(
   //     <ColorChooser
-  //       color={uitkColor}
+  //       color={saltColor}
   //       onSelect={selectSpy}
   //       disableAlphaChooser={false}
   //       onClear={clearSpy}
@@ -424,7 +424,7 @@ describe("ColorChooser", () => {
   it("Does not dismiss the overlay if Color Picker tab is selected and Default is pressed", () => {
     const element = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={selectSpy}
         disableAlphaChooser={false}
         onClear={clearSpy}
@@ -445,7 +445,7 @@ describe("ColorChooser", () => {
   it("Does not dismiss the overlay if there is no Swatches tab and Color Picker tab is selected and Default is pressed", () => {
     const element = render(
       <ColorChooser
-        color={uitkColor}
+        color={saltColor}
         onSelect={selectSpy}
         showSwatches={false}
         disableAlphaChooser={false}

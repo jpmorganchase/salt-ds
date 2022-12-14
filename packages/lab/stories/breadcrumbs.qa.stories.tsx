@@ -18,7 +18,7 @@ export const AllExamplesGrid: Story = (props: {
       cols={4}
       transposeDensity
       vertical
-      className="uitkMetricQA"
+      className="saltMetricQA"
       imgSrc={props.imgSrc}
     >
       <Breadcrumbs

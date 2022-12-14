@@ -1,16 +1,16 @@
-.uitkStaticInputAdornment {
-  --input-staticAdornment-padding: var(--uitk-size-unit);
+.saltStaticInputAdornment {
+  --input-staticAdornment-padding: var(--salt-size-unit);
 }
 
-.uitkStaticInputAdornment {
+.saltStaticInputAdornment {
   display: flex;
   align-items: center;
 }
 
-.uitkInput-prefixContainer .uitkStaticInputAdornment {
+.saltInput-prefixContainer .saltStaticInputAdornment {
   padding-left: var(--input-staticAdornment-padding);
 }
 
-.uitkInput-suffixContainer .uitkStaticInputAdornment {
+.saltInput-suffixContainer .saltStaticInputAdornment {
   padding-right: var(--input-staticAdornment-padding);
 }

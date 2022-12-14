@@ -211,7 +211,7 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
       display: "grid",
       rowGap: "20px",
       padding: "20px 20px",
-      background: "var(--uitk-container-primary-background)",
+      background: "var(--salt-container-primary-background)",
     }}
   >
     <SaltProvider density="touch">{renderFormField(props)}</SaltProvider>

@@ -4,7 +4,7 @@ import { makePrefixer } from "@salt-ds/core";
 
 import "./TabPanel.css";
 
-const withBaseName = makePrefixer("uitkTabPanel");
+const withBaseName = makePrefixer("saltTabPanel");
 
 export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
   enableClose?: boolean;

@@ -1,7 +1,7 @@
-The UITK provides you with a suite of UI components and a flexible theming system. With no customisation, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities.
+Salt provides you with a suite of UI components and a flexible theming system. With no customisation, the default theme offers an attractive and modern look-and-feel, with both light and dark variants and support for a range of UI densities.
 We have included a theming system which allows you to easily create theme variations, or in fact substitute alternate themes.
 
-The UITK has been developed with the following design goals:
+Salt has been developed with the following design goals:
 
 - Providing a comprehensive set of commonly-used UI controls.
 - Complying with WCAG 2.1 accessibility guidelines.
@@ -15,9 +15,9 @@ There are four packages you can install:
 
 - @salt-ds/core is required, this contains stable components and receives
   new features and patch updates when needed.
-- @salt-ds/lab is where we introduce new components which are under initial development until they are stable and moved over to uitk-core. This is typically an unstable environment and may have major breaking changes.
-- @salt-ds/theme is required, this contains the UITK .css files required
-  for any application you develop with UITK.
+- @salt-ds/lab is where we introduce new components which are under initial development until they are stable and moved over to core. This is typically an unstable environment and may have major breaking changes.
+- @salt-ds/theme is required, this contains the Salt .css files required
+  for any application you develop with Salt.
 - @salt-ds/icons contains SVG-based icons you can use in your
   application.
 
@@ -53,7 +53,7 @@ function App() {
 
 # Accessibility
 
-The UITK is a high-quality, WCAG 2.1 compliant solution for building great, accessible experiences for your users.
+Salt is a high-quality, WCAG 2.1 compliant solution for building great, accessible experiences for your users.
 
 ## Screen reader support & compatibility
 

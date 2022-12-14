@@ -7,7 +7,7 @@ import { SelectionChangeHandler } from "../../common-hooks";
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import "../QueryInput.css";
 
-const withBaseName = makePrefixer("uitkQueryInputSearchList");
+const withBaseName = makePrefixer("saltQueryInputSearchList");
 
 export interface SearchListProps {
   inputValue?: string;

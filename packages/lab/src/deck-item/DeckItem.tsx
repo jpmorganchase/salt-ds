@@ -4,7 +4,7 @@ import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { LayoutAnimation } from "../deck-layout";
 import "./DeckItem.css";
 
-const withBaseName = makePrefixer("uitkDeckItem");
+const withBaseName = makePrefixer("saltDeckItem");
 
 export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
   activeIndex?: number;

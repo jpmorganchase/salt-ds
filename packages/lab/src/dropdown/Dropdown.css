@@ -1,15 +1,15 @@
-.uitkDropdown {
-  --uitkIcon-margin: 2px 0 0 8px;
+.saltDropdown {
+  --saltIcon-margin: 2px 0 0 8px;
   display: inline-block;
   line-height: 0;
   position: relative;
 }
 
-.uitkDropdown-fullWidth {
+.saltDropdown-fullWidth {
   width: 100%;
 }
 
-.uitkDropdown-popup {
-  background: var(--uitk-container-primary-background);
-  z-index: calc(var(--uitk-zIndex-flyover) - 1);
+.saltDropdown-popup {
+  background: var(--salt-container-primary-background);
+  z-index: calc(var(--salt-zIndex-flyover) - 1);
 }

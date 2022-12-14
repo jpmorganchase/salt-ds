@@ -5,7 +5,7 @@ import { ChevronLeftIcon } from "@salt-ds/icons";
 import { List, ListItem } from "../../list";
 import { SelectHandler } from "../../common-hooks";
 
-const withBaseName = makePrefixer("uitkQueryInputValueList");
+const withBaseName = makePrefixer("saltQueryInputValueList");
 
 export interface ValueListProps {
   category: QueryInputCategory | null;

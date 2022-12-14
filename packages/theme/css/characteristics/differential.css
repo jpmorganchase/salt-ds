@@ -1,4 +1,4 @@
-.uitk-theme {
-  --uitk-differential-positive-foreground: var(--uitk-palette-positive-foreground);
-  --uitk-differential-negative-foreground: var(--uitk-palette-negative-foreground);
+.salt-theme {
+  --salt-differential-positive-foreground: var(--salt-palette-positive-foreground);
+  --salt-differential-negative-foreground: var(--salt-palette-negative-foreground);
 }

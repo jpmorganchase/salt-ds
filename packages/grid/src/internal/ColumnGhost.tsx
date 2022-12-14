@@ -7,7 +7,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { ColumnDragState } from "./gridHooks";
 import { GridColumnModel, GridRowModel } from "../Grid";
 
-const withBaseName = makePrefixer("uitkGridColumnGhost");
+const withBaseName = makePrefixer("saltGridColumnGhost");
 
 export interface ColumnGhostProps<T> {
   dragState?: ColumnDragState;

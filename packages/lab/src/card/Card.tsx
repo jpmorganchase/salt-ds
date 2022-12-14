@@ -3,7 +3,7 @@ import cx from "classnames";
 import { makePrefixer } from "@salt-ds/core";
 import "./Card.css";
 
-const withBaseName = makePrefixer("uitkCard");
+const withBaseName = makePrefixer("saltCard");
 
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**

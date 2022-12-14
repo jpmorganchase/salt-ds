@@ -20,7 +20,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       </FormField>
 
       <FormField
-        className={cx("uitkFormField-secondary", className)}
+        className={cx("saltFormField-secondary", className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
@@ -41,7 +41,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkFormField-secondary", className)}
+        className={cx("saltFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -49,7 +49,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkFormField-tertiary", className)}
+        className={cx("saltFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -66,7 +66,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkFormField-secondary", className)}
+        className={cx("saltFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -74,7 +74,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("uitkFormField-tertiary", className)}
+        className={cx("saltFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"

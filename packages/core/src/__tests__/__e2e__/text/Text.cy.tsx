@@ -46,7 +46,7 @@ describe("GIVEN a Text Component", () => {
       const Component = component;
 
       cy.mount(<Component>{textExample}</Component>);
-      cy.get(tag).should("have.class", "uitkText");
+      cy.get(tag).should("have.class", "saltText");
     });
   });
 });
@@ -58,7 +58,7 @@ describe('GIVEN a Text Component with as="p"', () => {
       const Component = component;
 
       cy.mount(<Component as="p">{textExample}</Component>);
-      cy.get("p").should("have.class", "uitkText");
+      cy.get("p").should("have.class", "saltText");
     });
   });
 });
@@ -70,8 +70,8 @@ describe("GIVEN a Text component with maxRows=2 ", () => {
       const Component = component;
 
       cy.mount(<Component maxRows={2}>{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-lineClamp")
+      cy.get(".saltText")
+        .should("have.class", "saltText-lineClamp")
         .and("have.css", "-webkit-line-clamp", "2");
     });
   });
@@ -80,21 +80,21 @@ describe("GIVEN a Text component with maxRows=2 ", () => {
 // Variant
 describe("GIVEN a Text component with variant=primary ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should have class uitkText-primary`, () => {
+    it(`${name} should have class saltText-primary`, () => {
       const Component = component;
 
       cy.mount(<Component variant="primary">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-primary");
+      cy.get(".saltText").should("have.class", "saltText-primary");
     });
   });
 });
 describe("GIVEN a Text component with variant=secondary ", () => {
   componentsArray.forEach(({ component, name }) => {
-    it(`${name} should have class uitkText-secondary`, () => {
+    it(`${name} should have class saltText-secondary`, () => {
       const Component = component;
 
       cy.mount(<Component variant="secondary">{textExample}</Component>);
-      cy.get(".uitkText").should("have.class", "uitkText-secondary");
+      cy.get(".saltText").should("have.class", "saltText-secondary");
     });
   });
 });
@@ -112,8 +112,8 @@ describe("GIVEN Text component with styleAs=h1", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h1">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-h1")
+      cy.get(".saltText")
+        .should("have.class", "saltText-h1")
         .and("have.css", "font-size", "24px");
     });
   });
@@ -130,8 +130,8 @@ describe("GIVEN Text component with styleAs=h2", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h2">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-h2")
+      cy.get(".saltText")
+        .should("have.class", "saltText-h2")
         .and("have.css", "font-size", "18px");
     });
   });
@@ -148,8 +148,8 @@ describe("GIVEN Text component with styleAs=h3", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h3">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-h3")
+      cy.get(".saltText")
+        .should("have.class", "saltText-h3")
         .and("have.css", "font-size", "14px");
     });
   });
@@ -166,8 +166,8 @@ describe("GIVEN Text component with styleAs=h4", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h4">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-h4")
+      cy.get(".saltText")
+        .should("have.class", "saltText-h4")
         .and("have.css", "font-size", "12px");
     });
   });
@@ -184,8 +184,8 @@ describe("GIVEN Text component with styleAs=label", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="label">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-label")
+      cy.get(".saltText")
+        .should("have.class", "saltText-label")
         .and("have.css", "font-size", "11px");
     });
   });
@@ -204,8 +204,8 @@ describe("GIVEN Text component with styleAs=display1", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="display1">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-display1")
+      cy.get(".saltText")
+        .should("have.class", "saltText-display1")
         .and("have.css", "font-size", "54px");
     });
   });
@@ -224,8 +224,8 @@ describe("GIVEN Text component with styleAs=display2", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="display2">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-display2")
+      cy.get(".saltText")
+        .should("have.class", "saltText-display2")
         .and("have.css", "font-size", "36px");
     });
   });
@@ -244,8 +244,8 @@ describe("GIVEN Text component with styleAs=display3", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="display3">{textExample}</Component>);
-      cy.get(".uitkText")
-        .should("have.class", "uitkText-display3")
+      cy.get(".saltText")
+        .should("have.class", "saltText-display3")
         .and("have.css", "font-size", "24px");
     });
   });

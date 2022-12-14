@@ -1,9 +1,9 @@
-.uitkChildrenValues {
+.saltChildrenValues {
   padding-bottom: 2px;
   flex-wrap: wrap;
   /*justify-content: flex-start;*/
 }
-.uitkChildrenValues-colorStates {
+.saltChildrenValues-colorStates {
   padding-bottom: 2px;
   display: flex;
   flex-wrap: wrap;

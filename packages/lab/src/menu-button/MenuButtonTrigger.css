@@ -1,28 +1,28 @@
-.uitkMenuButtonTrigger {
-  --menuButton-trigger-open-color: var(--uitkMenuButton-trigger-open-color, var(--uitk-actionable-primary-foreground-active));
+.saltMenuButtonTrigger {
+  --menuButton-trigger-open-color: var(--saltMenuButton-trigger-open-color, var(--salt-actionable-primary-foreground-active));
 }
 
-.uitkMenuButtonTrigger {
+.saltMenuButtonTrigger {
   display: inline-flex;
   line-height: 1;
 }
 
-.uitkMenuButtonTrigger-buttonOpen {
-  background: var(--uitkMenuButton-trigger-open-background, var(--uitk-actionable-primary-background-active));
+.saltMenuButtonTrigger-buttonOpen {
+  background: var(--saltMenuButton-trigger-open-background, var(--salt-actionable-primary-background-active));
   color: var(--menuButton-trigger-open-color);
 }
 
-.uitkMenuButtonTrigger-buttonOpen:not(:hover) .uitkMenuButtonTrigger-caretIcon {
+.saltMenuButtonTrigger-buttonOpen:not(:hover) .saltMenuButtonTrigger-caretIcon {
   color: var(--menuButton-trigger-open-color);
 }
 
-.uitkMenuButtonTrigger-buttonOpen:not(:hover) .uitkMenuButtonTrigger-icon {
+.saltMenuButtonTrigger-buttonOpen:not(:hover) .saltMenuButtonTrigger-icon {
   color: var(--menuButton-trigger-open-color);
 }
 
-.uitkMenuButtonTrigger-icon {
+.saltMenuButtonTrigger-icon {
 }
 
-.uitkMenuButtonTrigger-caretIcon {
-  --uitkIcon-margin: 0 0 0 var(--uitk-size-unit);
+.saltMenuButtonTrigger-caretIcon {
+  --saltIcon-margin: 0 0 0 var(--salt-size-unit);
 }

@@ -1,16 +1,16 @@
-.uitkDialogContent {
-  --dialog-content-fontSize: var(--uitkDialog-content-fontSize, var(--uitk-text-fontSize));
-  --dialog-content-lineHeight: var(--uitkDialog-content-lineHeight, var(--uitk-text-lineHeight));
-  --dialog-content-paddingTop: var(--uitkDialog-content-paddingTop, calc(var(--uitk-size-unit) * 2));
-  --dialog-content-paddingBottom: var(--uitkDialog-content-paddingBottom, calc(var(--uitk-size-unit) * 3));
-  --dialog-content-minHeight: var(--uitkDialog-content-minHeight, var(--dialog-content-fontSize));
-  --dialog-content-color: var(--uitkDialog-content-color, var(--uitk-text-primary-foreground));
+.saltDialogContent {
+  --dialog-content-fontSize: var(--saltDialog-content-fontSize, var(--salt-text-fontSize));
+  --dialog-content-lineHeight: var(--saltDialog-content-lineHeight, var(--salt-text-lineHeight));
+  --dialog-content-paddingTop: var(--saltDialog-content-paddingTop, calc(var(--salt-size-unit) * 2));
+  --dialog-content-paddingBottom: var(--saltDialog-content-paddingBottom, calc(var(--salt-size-unit) * 3));
+  --dialog-content-minHeight: var(--saltDialog-content-minHeight, var(--dialog-content-fontSize));
+  --dialog-content-color: var(--saltDialog-content-color, var(--salt-text-primary-foreground));
 }
 
-.uitkDialogContent {
+.saltDialogContent {
   flex: 1 1 auto;
   overflow: visible;
-  font-weight: var(--uitk-text-fontWeight);
+  font-weight: var(--salt-text-fontWeight);
   font-size: var(--dialog-content-fontSize);
   padding-top: var(--dialog-content-paddingTop);
   padding-bottom: var(--dialog-content-paddingBottom);
@@ -19,6 +19,6 @@
   color: var(--dialog-content-color);
 }
 
-.uitkDialogContent-leftGutter {
+.saltDialogContent-leftGutter {
   padding-left: 32px;
 }

@@ -1,45 +1,45 @@
-.uitkMetricContent {
+.saltMetricContent {
   display: flex;
   flex-direction: column;
   margin-top: var(--metric-content-marginTop, 0px);
 }
 
-.uitkMetricContent-value-container {
+.saltMetricContent-value-container {
   align-items: baseline;
   display: flex;
   flex-direction: row;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: calc(var(--salt-size-unit) / 2);
   margin-top: var(--metric-content-valueContainer-marginTop, 0px);
 }
 
-.uitkMetric-direction-up .uitkMetricContent-indicator {
-  fill: var(--uitk-differential-positive-foreground);
+.saltMetric-direction-up .saltMetricContent-indicator {
+  fill: var(--salt-differential-positive-foreground);
 }
-.uitkMetric-direction-up .uitkMetricContent-subvalue {
-  color: var(--uitk-differential-positive-foreground);
-}
-
-.uitkMetric-direction-down .uitkMetricContent-indicator {
-  fill: var(--uitk-differential-negative-foreground);
-}
-.uitkMetric-direction-down .uitkMetricContent-subvalue {
-  color: var(--uitk-differential-negative-foreground);
+.saltMetric-direction-up .saltMetricContent-subvalue {
+  color: var(--salt-differential-positive-foreground);
 }
 
-.uitkMetricContent-subvalue {
+.saltMetric-direction-down .saltMetricContent-indicator {
+  fill: var(--salt-differential-negative-foreground);
+}
+.saltMetric-direction-down .saltMetricContent-subvalue {
+  color: var(--salt-differential-negative-foreground);
+}
+
+.saltMetricContent-subvalue {
   margin-top: var(--metric-content-subvalue-marginTop, 0px);
 }
 
-.uitkMetric-align-left .uitkMetricContent {
+.saltMetric-align-left .saltMetricContent {
   text-align: left;
 }
 
-.uitkMetric-align-center .uitkMetricContent {
+.saltMetric-align-center .saltMetricContent {
   align-items: center;
   text-align: center;
 }
 
-.uitkMetric-align-right .uitkMetricContent {
+.saltMetric-align-right .saltMetricContent {
   align-items: flex-end;
   text-align: right;
 }

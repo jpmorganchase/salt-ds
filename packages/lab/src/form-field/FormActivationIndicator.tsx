@@ -30,7 +30,7 @@ const WarningIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   );
 };
 
-const withBaseName = makePrefixer("uitkFormActivationIndicator");
+const withBaseName = makePrefixer("saltFormActivationIndicator");
 
 const ActivationIndicatorIcon = ({
   validationStatus,
@@ -55,7 +55,7 @@ export const FormActivationIndicator = ({
   hasIcon,
   validationStatus,
 }: FormActivationIndicatorProps) => {
-  const rootClass = "uitkFormActivationIndicator";
+  const rootClass = "saltFormActivationIndicator";
 
   return (
     <div className={withBaseName()}>

@@ -6,7 +6,7 @@ import { MenuIcon } from "@salt-ds/icons";
 import "./AppHeader.css";
 import { forwardRef, HTMLAttributes } from "react";
 
-const withBaseName = makePrefixer("uitkAppHeader");
+const withBaseName = makePrefixer("saltAppHeader");
 
 export type AppHeaderProps = HTMLAttributes<HTMLDivElement>;
 

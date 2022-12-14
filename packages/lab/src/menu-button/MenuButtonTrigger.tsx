@@ -4,7 +4,7 @@ import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
 import { ChevronDownIcon } from "@salt-ds/icons";
 import "./MenuButtonTrigger.css";
 
-const withBaseName = makePrefixer("uitkMenuButtonTrigger");
+const withBaseName = makePrefixer("saltMenuButtonTrigger");
 
 export interface MenuButtonTriggerProps extends ButtonProps {
   className?: string;

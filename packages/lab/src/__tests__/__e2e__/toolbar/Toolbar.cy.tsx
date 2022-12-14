@@ -20,7 +20,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       it("THEN all the content items will be visible", () => {
         cy.mount(<SimpleToolbar width={400} />);
         const toolbar = cy.findByRole("toolbar");
-        toolbar.should("have.class", "uitkToolbar");
+        toolbar.should("have.class", "saltToolbar");
         cy.get(".Responsive-inner > *")
           .should("have.length", 10)
           .filter(":visible")
@@ -29,7 +29,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       it("THEN no items will be overflowed", () => {
         cy.mount(<SimpleToolbar width={400} />);
         const toolbar = cy.findByRole("toolbar");
-        toolbar.should("have.class", "uitkToolbar");
+        toolbar.should("have.class", "saltToolbar");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           0
@@ -38,7 +38,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       it("THEN no overflow indicator will be present", () => {
         cy.mount(<SimpleToolbar width={400} />);
         const toolbar = cy.findByRole("toolbar");
-        toolbar.should("have.class", "uitkToolbar");
+        toolbar.should("have.class", "saltToolbar");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           0
@@ -50,14 +50,14 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       it("THEN overflowed items will be hidden", () => {
         // Test with the default overflow indicator
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
           .should("have.length", 9);
         // Test with the a custom overflow indicator, whose size is not known in advance
         cy.mount(<SimpleToolbarOverflowLabel />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -65,13 +65,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN items will be overflowed", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           2
         );
         cy.mount(<SimpleToolbarOverflowLabel />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           3
@@ -79,13 +79,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN overflowIndicator will be rendered", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           1
         );
         cy.mount(<SimpleToolbarOverflowLabel />);
-        cy.get(".uitkToolbar").invoke("css", "width", "350px");
+        cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           1
@@ -96,7 +96,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized slightly further", () => {
       it("THEN another item will be hidden", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "300px");
+        cy.get(".saltToolbar").invoke("css", "width", "300px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -104,7 +104,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN another item will be overflowed", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "300px");
+        cy.get(".saltToolbar").invoke("css", "width", "300px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           3
@@ -112,7 +112,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN overflowIndicator will still be rendered", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "300px");
+        cy.get(".saltToolbar").invoke("css", "width", "300px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           1
@@ -123,7 +123,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized so small that only one item can be displayed", () => {
       it("THEN all items except overflow indicator will be hidden", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "50px");
+        cy.get(".saltToolbar").invoke("css", "width", "50px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -131,7 +131,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN all items except for overflow indicator will be overflowed", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "50px");
+        cy.get(".saltToolbar").invoke("css", "width", "50px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           10
@@ -139,7 +139,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN overflowIndicator will still be rendered", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "50px");
+        cy.get(".saltToolbar").invoke("css", "width", "50px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           1
@@ -150,7 +150,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized to less than the width of a single item", () => {
       it("THEN all items except overflow indicator will be hidden", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "30px");
+        cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -158,7 +158,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN all items except for overflow indicator will be overflowed", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "30px");
+        cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           10
@@ -166,7 +166,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       });
       it("THEN overflowIndicator will still be rendered", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "30px");
+        cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
           1
@@ -175,7 +175,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
 
       it("THEN minimum size will be applied to the Responsive-inner", () => {
         cy.mount(<SimpleToolbar width={400} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "30px");
+        cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get(".Responsive-inner").should("have.css", "min-width", "36px");
       });
     });
@@ -187,9 +187,9 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         !version.startsWith("18")
           ? () => {
               cy.mount(<SimpleToolbar width={400} />);
-              cy.get(".uitkToolbar").invoke("css", "width", "100px");
+              cy.get(".saltToolbar").invoke("css", "width", "100px");
               cy.wait(50);
-              cy.get(".uitkToolbar").invoke("css", "width", "600px");
+              cy.get(".saltToolbar").invoke("css", "width", "600px");
               cy.wait(50);
               cy.get(".Responsive-inner > *").should("have.length", 10);
               cy.get(".Responsive-inner > *")
@@ -251,7 +251,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         "have.length",
         1
       );
-      cy.get(".uitkToolbar").invoke("css", "width", "350px");
+      cy.get(".saltToolbar").invoke("css", "width", "350px");
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
         2
@@ -269,7 +269,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized to trigger first overflow", () => {
       it("THEN rightmost priority 5 item will overflow", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "520px");
+        cy.get(".saltToolbar").invoke("css", "width", "520px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -286,9 +286,9 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized further to trigger second overflow", () => {
       it("THEN remaining priority 5 item will overflow", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "520px");
+        cy.get(".saltToolbar").invoke("css", "width", "520px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "500px");
+        cy.get(".saltToolbar").invoke("css", "width", "500px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -308,11 +308,11 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
     describe("WHEN resized further to trigger third overflow", () => {
       it("THEN priority 3 item will overflow", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "520px");
+        cy.get(".saltToolbar").invoke("css", "width", "520px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "510px");
+        cy.get(".saltToolbar").invoke("css", "width", "510px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "450px");
+        cy.get(".saltToolbar").invoke("css", "width", "450px");
         cy.get(".Responsive-inner > *")
           .should("have.length", 11)
           .filter(":visible")
@@ -355,7 +355,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       // commented out until we understand why this test fails (in CI only)
       // it("THEN priority 2 items will be first to be displayed", () => {
       //   cy.mount(<ToolbarUsingOverflowPriorities width={200} />);
-      //   cy.get(".uitkToolbar").invoke("css", "width", "250px");
+      //   cy.get(".saltToolbar").invoke("css", "width", "250px");
       //   cy.wait(50);
       //   cy.get(".Responsive-inner > *")
       //     .filter(":visible")
@@ -368,20 +368,20 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       //   cy.get(
       //     `.Responsive-inner > *${NOT_OVERFLOW_IND}${NOT_OVERFLOWED}[data-priority="2"]`
       //   ).should("have.length", 4);
-      //   cy.get(".uitkToolbar").invoke("css", "width", "310px");
+      //   cy.get(".saltToolbar").invoke("css", "width", "310px");
       //   cy.get(
       //     `.Responsive-inner > *${NOT_OVERFLOW_IND}${NOT_OVERFLOWED}[data-priority="2"]`
       //   ).should("have.length", 5);
-      //   cy.get(".uitkToolbar").invoke("css", "width", "420px");
+      //   cy.get(".saltToolbar").invoke("css", "width", "420px");
       //   cy.get(
       //     `.Responsive-inner > *${NOT_OVERFLOW_IND}${NOT_OVERFLOWED}[data-priority="2"]`
       //   ).should("have.length", 7);
       // });
       it("THEN priority 3 item will be displayed next", () => {
         cy.mount(<ToolbarUsingOverflowPriorities width={600} />);
-        cy.get(".uitkToolbar").invoke("css", "width", "420px");
+        cy.get(".saltToolbar").invoke("css", "width", "420px");
         cy.wait(50);
-        cy.get(".uitkToolbar").invoke("css", "width", "470px");
+        cy.get(".saltToolbar").invoke("css", "width", "470px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
           2
@@ -430,7 +430,7 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
     it("THEN last item will collapse", () => {
       // Test with the default overflow indicator
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-      cy.get(".uitkToolbar").invoke("css", "width", "450px");
+      cy.get(".saltToolbar").invoke("css", "width", "450px");
       cy.get(".Responsive-inner > *")
         .should("have.length", 5)
         .filter(":visible")
@@ -453,8 +453,8 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
     it("THEN next item will collapse", () => {
       // Test with the default overflow indicator
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-      cy.get(".uitkToolbar").invoke("css", "width", "450px");
-      cy.get(".uitkToolbar").invoke("css", "width", "350px");
+      cy.get(".saltToolbar").invoke("css", "width", "450px");
+      cy.get(".saltToolbar").invoke("css", "width", "350px");
       cy.get(".Responsive-inner > *")
         .should("have.length", 5)
         .filter(":visible")
@@ -480,9 +480,9 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
     it("THEN all items will collapse and no overflow indicator will be present", () => {
       // Test with the default overflow indicator
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-      cy.get(".uitkToolbar").invoke("css", "width", "450px");
-      cy.get(".uitkToolbar").invoke("css", "width", "350px");
-      cy.get(".uitkToolbar").invoke("css", "width", "210px");
+      cy.get(".saltToolbar").invoke("css", "width", "450px");
+      cy.get(".saltToolbar").invoke("css", "width", "350px");
+      cy.get(".saltToolbar").invoke("css", "width", "210px");
       cy.get(".Responsive-inner > *")
         .should("have.length", 5)
         .filter(":visible")
@@ -510,13 +510,13 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         ? () => {
             // Test with the default overflow indicator
             cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-            cy.get(".uitkToolbar").invoke("css", "width", "450px");
+            cy.get(".saltToolbar").invoke("css", "width", "450px");
             cy.wait(50);
-            cy.get(".uitkToolbar").invoke("css", "width", "350px");
+            cy.get(".saltToolbar").invoke("css", "width", "350px");
             cy.wait(50);
-            cy.get(".uitkToolbar").invoke("css", "width", "210px");
+            cy.get(".saltToolbar").invoke("css", "width", "210px");
             cy.wait(50);
-            cy.get(".uitkToolbar").invoke("css", "width", "180px");
+            cy.get(".saltToolbar").invoke("css", "width", "180px");
             cy.get(".Responsive-inner > *")
               .should("have.length", 6)
               .filter(":visible")
@@ -543,7 +543,7 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         ? () => {
             // Test with the default overflow indicator
             cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-            cy.get(".uitkToolbar").invoke("css", "width", "180px");
+            cy.get(".saltToolbar").invoke("css", "width", "180px");
             cy.get(".Responsive-inner > *")
               .should("have.length", 6)
               .filter(":visible")
@@ -567,9 +567,9 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
     it("THEN all items will collapse and overflow indicator will be present", () => {
       // Test with the default overflow indicator
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
-      cy.get(".uitkToolbar").invoke("css", "width", "300px");
+      cy.get(".saltToolbar").invoke("css", "width", "300px");
       cy.wait(50);
-      cy.get(".uitkToolbar").invoke("css", "width", "500px");
+      cy.get(".saltToolbar").invoke("css", "width", "500px");
       cy.get(".Responsive-inner > *")
         .should("have.length", 5)
         .filter(":visible")
@@ -587,8 +587,8 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
     describe("WHEN it initially renders", () => {
       // Tooltray contains 10 buttons, each 28px with 8px margin right
       // 10 * 36 = 360px + 8px margin left on the Tooltray = 368px total.
-      const TOOLBAR_ITEMS_SELECTOR = ".uitkToolbar > .Responsive-inner > *";
-      const TOOLTRAY_ITEMS_SELECTOR = ".uitkTooltray > .Responsive-inner > *";
+      const TOOLBAR_ITEMS_SELECTOR = ".saltToolbar > .Responsive-inner > *";
+      const TOOLTRAY_ITEMS_SELECTOR = ".saltTooltray > .Responsive-inner > *";
       it("THEN the Tooltray will be visible", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(TOOLBAR_ITEMS_SELECTOR)
@@ -612,7 +612,7 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
       it("THEN the Toolbar Responsive inner will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(
-          `.uitkToolbar > .Responsive-inner[data-collapsing="true"]`
+          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`
         ).should("have.length", 1);
       });
       it("THEN the tooltray will be collapsing", () => {
@@ -646,8 +646,8 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
   });
   describe("WHEN initial size is not sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
-      const TOOLBAR_ITEMS_SELECTOR = ".uitkToolbar > .Responsive-inner > *";
-      const TOOLTRAY_ITEMS_SELECTOR = ".uitkTooltray > .Responsive-inner > *";
+      const TOOLBAR_ITEMS_SELECTOR = ".saltToolbar > .Responsive-inner > *";
+      const TOOLTRAY_ITEMS_SELECTOR = ".saltTooltray > .Responsive-inner > *";
       it("THEN the Tooltray will be visible", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(TOOLBAR_ITEMS_SELECTOR)
@@ -671,7 +671,7 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
       it("THEN the Toolbar Responsive inner will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(
-          `.uitkToolbar > .Responsive-inner[data-collapsing="true"]`
+          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`
         ).should("have.length", 1);
       });
       it("THEN the tooltray will be collapsing", () => {

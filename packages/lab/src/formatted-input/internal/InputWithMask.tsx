@@ -3,7 +3,7 @@ import cx from "classnames";
 import { forwardRef, InputHTMLAttributes } from "react";
 import { FormattedInputProps } from "../FormattedInput";
 
-export const baseName = "uitkFormattedInput";
+export const baseName = "saltFormattedInput";
 
 function getClippedMask(
   mask: FormattedInputProps["mask"],

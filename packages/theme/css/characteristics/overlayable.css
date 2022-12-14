@@ -1,12 +1,12 @@
-.uitk-theme {
-  --uitk-overlayable-shadow-scroll: var(--uitk-shadow-1);
-  --uitk-overlayable-shadow-scroll-color: var(--uitk-shadow-1-color);
-  --uitk-overlayable-shadow-borderRegion: var(--uitk-shadow-2);
-  --uitk-overlayable-shadow: var(--uitk-shadow-2);
-  --uitk-overlayable-shadow-hover: var(--uitk-shadow-3);
-  --uitk-overlayable-shadow-popout: var(--uitk-shadow-4);
-  --uitk-overlayable-shadow-drag: var(--uitk-shadow-4);
-  --uitk-overlayable-shadow-modal: var(--uitk-shadow-5);
+.salt-theme {
+  --salt-overlayable-shadow-scroll: var(--salt-shadow-1);
+  --salt-overlayable-shadow-scroll-color: var(--salt-shadow-1-color);
+  --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
+  --salt-overlayable-shadow: var(--salt-shadow-2);
+  --salt-overlayable-shadow-hover: var(--salt-shadow-3);
+  --salt-overlayable-shadow-popout: var(--salt-shadow-4);
+  --salt-overlayable-shadow-drag: var(--salt-shadow-4);
+  --salt-overlayable-shadow-modal: var(--salt-shadow-5);
 
-  --uitk-overlayable-background: var(--uitk-palette-neutral-backdrop);
+  --salt-overlayable-background: var(--salt-palette-neutral-backdrop);
 }

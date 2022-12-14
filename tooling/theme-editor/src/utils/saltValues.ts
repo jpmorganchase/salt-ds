@@ -1,4 +1,4 @@
-export const UITK_CHARACTERISTICS = [
+export const SALT_CHARACTERISTICS = [
   "accent",
   "actionable",
   "container",
@@ -18,7 +18,7 @@ export const UITK_CHARACTERISTICS = [
   "text",
 ];
 
-export const UITK_FOUNDATIONS = [
+export const SALT_FOUNDATIONS = [
   "color",
   "fade",
   "icon",

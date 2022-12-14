@@ -67,7 +67,7 @@ describe("GIVEN an Input", () => {
           />
         );
         expect(screen.getByTestId("parent")).toHaveClass(
-          "uitkInput-leftTextAlign"
+          "saltInput-leftTextAlign"
         );
       });
     });
@@ -82,7 +82,7 @@ describe("GIVEN an Input", () => {
           />
         );
         expect(screen.getByTestId("parent")).toHaveClass(
-          "uitkInput-rightTextAlign"
+          "saltInput-rightTextAlign"
         );
       });
     });

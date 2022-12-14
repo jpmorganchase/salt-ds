@@ -35,7 +35,7 @@ const clickCell = (row: number, col: number) => {
 const checkRowSelected = (row: number, expectedSelected: boolean) => {
   cy.get(`tr[data-row-index="${row}"]`).should(
     expectedSelected ? "have.class" : "not.have.class",
-    "uitkGridTableRow-selected"
+    "saltGridTableRow-selected"
   );
 };
 
@@ -93,25 +93,25 @@ describe("Grid", () => {
 
     assertGridReady();
 
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(0)
       .find("th")
       .eq(0)
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-colspan", "2");
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(1)
       .find("th")
       .eq(0)
       .should("have.attr", "aria-colindex", "1");
 
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(0)
       .find("th")
       .eq(1)
       .should("have.attr", "aria-colindex", "3")
       .should("have.attr", "aria-colspan", "1");
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(1)
       .find("th")
       .eq(2)
@@ -121,7 +121,7 @@ describe("Grid", () => {
   it("Column virtualization", () => {
     cy.mount(<LotsOfColumns />);
     cy.findByTestId("grid-middle-part")
-      .find(".uitkGridTableRow")
+      .find(".saltGridTableRow")
       .should("exist")
       .findAllByRole("gridcell")
       .should("have.length", 16);
@@ -133,7 +133,7 @@ describe("Grid", () => {
         const getCol = (n: number) =>
           cy
             .findByTestId("grid-middle-part")
-            .find(".uitkGridTableRow")
+            .find(".saltGridTableRow")
             .find(`[aria-colindex="${n + 1}"]`);
 
         // Columns A and B have widths of 60, they should be scrolled out
@@ -168,11 +168,11 @@ describe("Grid", () => {
 
   it("Header virtualization in grouped mode", () => {
     cy.mount(<LotsOfColumnGroups />);
-    cy.get(".uitkGridGroupHeaderCell").should("have.length", 4);
+    cy.get(".saltGridGroupHeaderCell").should("have.length", 4);
 
-    cy.get(".uitkGridGroupHeaderCell").eq(0).should("have.text", "Group A");
-    cy.get(".uitkGridGroupHeaderCell").eq(3).should("have.text", "Group D");
-    cy.get(".uitkGridGroupHeaderCell").eq(4).should("not.exist");
+    cy.get(".saltGridGroupHeaderCell").eq(0).should("have.text", "Group A");
+    cy.get(".saltGridGroupHeaderCell").eq(3).should("have.text", "Group D");
+    cy.get(".saltGridGroupHeaderCell").eq(4).should("not.exist");
 
     cy.findByTestId("grid-scrollable")
       .scrollTo(650, 0, { easing: "linear", duration: 300 })
@@ -180,7 +180,7 @@ describe("Grid", () => {
         const getGroup = (n: number) =>
           cy
             .findByTestId("grid-top-part")
-            .find(".uitkGridGroupHeaderRow")
+            .find(".saltGridGroupHeaderRow")
             .find(`[data-group-index="${n}"]`);
 
         getGroup(0).should("not.exist");
@@ -359,8 +359,8 @@ describe("Grid", () => {
     it("displays 'Primary' variant by default", () => {
       cy.mount(<GridVariants />);
       cy.findByRole("grid")
-        .should("have.class", "uitkGrid-primaryBackground")
-        .and("not.have.class", "uitkGrid-secondaryBackground");
+        .should("have.class", "saltGrid-primaryBackground")
+        .and("not.have.class", "saltGrid-secondaryBackground");
     });
 
     it("displays 'Secondary' variant", () => {
@@ -368,7 +368,7 @@ describe("Grid", () => {
       cy.findByLabelText("secondary").click();
       cy.findByRole("grid").should(
         "have.class",
-        "uitkGrid-secondaryBackground"
+        "saltGrid-secondaryBackground"
       );
     });
 
@@ -376,19 +376,19 @@ describe("Grid", () => {
       cy.mount(<GridVariants />);
       cy.findByLabelText("zebra").click();
       cy.findByRole("grid")
-        .should("have.class", "uitkGrid-primaryBackground")
-        .and("have.class", "uitkGrid-zebra");
+        .should("have.class", "saltGrid-primaryBackground")
+        .and("have.class", "saltGrid-zebra");
     });
   });
 
   describe("Column Groups", () => {
     it("Shows correct groups", () => {
       cy.mount(<ColumnGroups />);
-      cy.get(".uitkGridGroupHeaderCell")
+      cy.get(".saltGridGroupHeaderCell")
         .eq(0)
         .should("have.attr", "colspan", 2)
         .and("have.text", "Group One");
-      cy.get(".uitkGridGroupHeaderCell")
+      cy.get(".saltGridGroupHeaderCell")
         .eq(1)
         .should("have.attr", "colspan", 1)
         .and("have.text", "Group Two");
@@ -454,7 +454,7 @@ describe("Grid", () => {
           cy.findAllByRole("grid").should("have.length", 2);
           cy.findAllByRole("grid")
             .findAllByTestId("grid-row-selection-checkbox")
-            .should("not.have.class", "uitkGridTableRow-selected");
+            .should("not.have.class", "saltGridTableRow-selected");
 
           // select two rows on the first grid
           cy.findAllByRole("grid")
@@ -473,12 +473,12 @@ describe("Grid", () => {
           cy.findAllByRole("grid")
             .eq(1)
             .get(`tr[data-row-index="2"]`)
-            .should("have.class", "uitkGridTableRow-selected");
+            .should("have.class", "saltGridTableRow-selected");
 
           cy.findAllByRole("grid")
             .eq(1)
             .get(`tr[data-row-index="3"]`)
-            .should("have.class", "uitkGridTableRow-selected");
+            .should("have.class", "saltGridTableRow-selected");
         });
       });
     });
@@ -488,7 +488,7 @@ describe("Grid", () => {
     it("Renders customised cell values", () => {
       cy.mount(<CellCustomization />);
       cy.get(".bidAskCellValue").should("have.length", 15);
-      cy.get(".uitkLinearProgress").should("have.length", 15);
+      cy.get(".saltLinearProgress").should("have.length", 15);
     });
   });
 

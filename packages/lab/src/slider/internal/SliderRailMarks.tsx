@@ -5,7 +5,7 @@ import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
 import { isMarkAtMax } from "./utils";
 import "../Slider.css";
 
-const withBaseName = makePrefixer("uitkSliderRailMarks");
+const withBaseName = makePrefixer("saltSliderRailMarks");
 
 export interface LabeledMark {
   value: number;

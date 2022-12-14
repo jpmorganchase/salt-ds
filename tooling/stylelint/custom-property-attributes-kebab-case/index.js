@@ -37,7 +37,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-attributes-kebab-case";
+const ruleName = "salt/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
@@ -64,7 +64,7 @@ const includesCssAttribute = function (property) {
       (attr) =>
         property.includes(`-${attr}-`) ||
         (property.endsWith(`-${attr}`) &&
-          property !== `--uitk-${attr}`) /* --uitk-animation-duration */
+          property !== `--salt-${attr}`) /* --salt-animation-duration */
     )
   );
 };

@@ -1,11 +1,11 @@
-.uitkDraggable {
+.saltDraggable {
   background: transparent;
-  box-shadow: var(--uitk-overlayable-shadow-drag);
-  cursor: var(--uitk-draggable-grab-cursor-active);
+  box-shadow: var(--salt-overlayable-shadow-drag);
+  cursor: var(--salt-draggable-grab-cursor-active);
   position: absolute;
 }
 
-.uitkDraggable-spacer {
+.saltDraggable-spacer {
   display: inline-block;
   height: var(--tabs-tabstrip-height);
   transition: width 0.4s ease;

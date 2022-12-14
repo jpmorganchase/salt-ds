@@ -3,15 +3,15 @@ import { FormField } from "@salt-ds/lab";
 import cn from "classnames";
 import { ReactElement } from "react";
 import {
-  UITK_CHARACTERISTICS,
-  UITK_FOUNDATIONS,
-} from "../../../utils/uitkValues";
+  SALT_CHARACTERISTICS,
+  SALT_FOUNDATIONS,
+} from "../../../utils/saltValues";
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 import { OpacityInput } from "./OpacityInput";
 
 import "./OpacityField.css";
 
-const withBaseName = makePrefixer("uitkOpacityField");
+const withBaseName = makePrefixer("saltOpacityField");
 
 interface OpacityFieldProps {
   alphaValue: string | undefined;
@@ -31,31 +31,31 @@ export const OpacityField = (props: OpacityFieldProps): ReactElement => {
           onClose={props.onAlphaClose}
         />
       </FormField>
-      {props.alphaValue?.startsWith("uitk") && (
+      {props.alphaValue?.startsWith("salt") && (
         <JumpToTokenButton
           disabled={
             !props.alphaValuePattern.length ||
             !(
-              UITK_FOUNDATIONS.includes(props.alphaValuePattern) ||
-              UITK_CHARACTERISTICS.includes(props.alphaValuePattern)
+              SALT_FOUNDATIONS.includes(props.alphaValuePattern) ||
+              SALT_CHARACTERISTICS.includes(props.alphaValuePattern)
             )
           }
           sectionToJumpTo={
             props.alphaValuePattern &&
-            UITK_FOUNDATIONS.includes(props.alphaValuePattern)
-              ? UITK_FOUNDATIONS
-              : UITK_CHARACTERISTICS
+            SALT_FOUNDATIONS.includes(props.alphaValuePattern)
+              ? SALT_FOUNDATIONS
+              : SALT_CHARACTERISTICS
           }
           value={props.alphaValuePattern}
           search={
             props.alphaValuePattern &&
-            UITK_FOUNDATIONS.includes(props.alphaValuePattern)
+            SALT_FOUNDATIONS.includes(props.alphaValuePattern)
               ? ``
               : `?open=${props.alphaValuePattern}`
           }
           pathname={
             props.alphaValuePattern &&
-            UITK_FOUNDATIONS.includes(props.alphaValuePattern)
+            SALT_FOUNDATIONS.includes(props.alphaValuePattern)
               ? `/foundations/${props.alphaValuePattern}`
               : `/characteristics`
           }

@@ -3,7 +3,7 @@ import * as parentChildStories from "@stories/parent-child-layout.stories";
 
 const composedStories = composeStories(parentChildStories);
 
-const { DefaultParentChildLayout, ToolkitParentChildLayoutStacked } =
+const { DefaultParentChildLayout, SaltParentChildLayoutStacked } =
   composedStories;
 
 describe("GIVEN a Parent and Child", () => {
@@ -11,9 +11,9 @@ describe("GIVEN a Parent and Child", () => {
     it("THEN it should display a gap by default", () => {
       cy.mount(<DefaultParentChildLayout />);
 
-      cy.get(".uitkParentChildLayout").should("have.css", "column-gap", "24px");
+      cy.get(".saltParentChildLayout").should("have.css", "column-gap", "24px");
 
-      cy.get(".uitkParentChildLayout").should("have.css", "row-gap", "24px");
+      cy.get(".saltParentChildLayout").should("have.css", "row-gap", "24px");
     });
   });
 
@@ -23,7 +23,7 @@ describe("GIVEN a Parent and Child", () => {
     it("THEN it should render as expected", () => {
       cy.mount(<DefaultParentChildLayout parent={parent} />);
 
-      cy.get(".uitkParentChildItem")
+      cy.get(".saltParentChildItem")
         .first()
         .should("have.text", parent.join(""));
     });
@@ -36,8 +36,8 @@ describe("GIVEN a Parent and Child", () => {
       cy.mount(<DefaultParentChildLayout child={child} />);
 
       // Make sure both child and parent are rendered before running next test `eq`
-      cy.get(".uitkParentChildItem").should("have.length", 2);
-      cy.get(".uitkParentChildItem").eq(1).should("have.text", child.join(""));
+      cy.get(".saltParentChildItem").should("have.length", 2);
+      cy.get(".saltParentChildItem").eq(1).should("have.text", child.join(""));
     });
   });
 
@@ -50,7 +50,7 @@ describe("GIVEN a Parent and Child", () => {
       },
       () => {
         cy.mount(<DefaultParentChildLayout />);
-        cy.get(".uitkParentChildItem").should("have.length", 2);
+        cy.get(".saltParentChildItem").should("have.length", 2);
       }
     );
 
@@ -62,47 +62,47 @@ describe("GIVEN a Parent and Child", () => {
       },
       () => {
         cy.mount(<DefaultParentChildLayout />);
-        cy.get(".uitkParentChildItem").should("have.length", 1);
+        cy.get(".saltParentChildItem").should("have.length", 1);
       }
     );
   });
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked />);
+      cy.mount(<SaltParentChildLayoutStacked />);
 
-      cy.get(".uitkParentChildItem").should("have.length", 1);
+      cy.get(".saltParentChildItem").should("have.length", 1);
 
-      cy.get(".uitkParentChildItem > div").should(($div) => {
+      cy.get(".saltParentChildItem > div").should(($div) => {
         expect($div).to.contain("Parent");
       });
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked />);
+      cy.mount(<SaltParentChildLayoutStacked />);
 
       cy.findByRole("button", { name: /Show child/i }).click();
 
-      cy.get(".uitkParentChildItem").should("have.length", 1);
+      cy.get(".saltParentChildItem").should("have.length", 1);
 
-      cy.get(".uitkParentChildItem > div").should(($div) => {
+      cy.get(".saltParentChildItem > div").should(($div) => {
         expect($div).to.contain("Child");
       });
     });
 
     it("THEN it should change the direction of animations", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked orientation="vertical" />);
+      cy.mount(<SaltParentChildLayoutStacked orientation="vertical" />);
 
-      cy.get(".uitkParentChildItem").should(
+      cy.get(".saltParentChildItem").should(
         "have.class",
-        "uitkParentChildItem-slide-bottom"
+        "saltParentChildItem-slide-bottom"
       );
 
-      cy.mount(<ToolkitParentChildLayoutStacked orientation="horizontal" />);
+      cy.mount(<SaltParentChildLayoutStacked orientation="horizontal" />);
 
-      cy.get(".uitkParentChildItem").should(
+      cy.get(".saltParentChildItem").should(
         "have.class",
-        "uitkParentChildItem-slide-left"
+        "saltParentChildItem-slide-left"
       );
     });
   });

@@ -14,8 +14,8 @@ export const DocGrid = ({
 }) => {
   return (
     <div
-      className={cx("uitkDocGrid", className, {
-        ["uitkDocGrid-textExample"]: textExample,
+      className={cx("saltDocGrid", className, {
+        ["saltDocGrid-textExample"]: textExample,
       })}
     >
       {children}

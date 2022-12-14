@@ -5,7 +5,7 @@ import { GridColumnGroupModel } from "../Grid";
 import { FakeGroupCell } from "./FakeGroupCell";
 import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
 
-const withBaseName = makePrefixer("uitkGridGroupHeaderRow");
+const withBaseName = makePrefixer("saltGridGroupHeaderRow");
 
 export interface GroupHeaderRowProps<T> {
   groups: GridColumnGroupModel[];

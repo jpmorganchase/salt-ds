@@ -11,7 +11,7 @@ function useIdLegacy(idOverride?: string): string | undefined {
   const id = idOverride || defaultId;
   React.useEffect(() => {
     if (defaultId == null) {
-      setDefaultId(`uitk-${++globalId}`);
+      setDefaultId(`salt-${++globalId}`);
     }
   }, [defaultId]);
   return id;
@@ -30,7 +30,7 @@ export function useId(idOverride?: string): string | undefined {
 // (as with the useEffect solution). This can go away once we totally move to React 18
 export function useIdMemo(idOverride?: string): string {
   const id = React.useMemo(() => {
-    return idOverride ?? `uitk-${++globalId}`;
+    return idOverride ?? `salt-${++globalId}`;
   }, [idOverride]);
   return id;
 }

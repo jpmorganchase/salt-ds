@@ -26,7 +26,7 @@ export type MaybeChildProps = {
   width: number | string;
 };
 
-const withBaseName = makePrefixer("uitkDropdown");
+const withBaseName = makePrefixer("saltDropdown");
 
 export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
   function Dropdown(

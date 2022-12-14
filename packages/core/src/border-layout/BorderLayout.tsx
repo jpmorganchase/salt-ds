@@ -38,7 +38,7 @@ export type BorderLayoutProps<T extends ElementType> =
     }
   >;
 
-const withBaseName = makePrefixer("uitkBorderLayout");
+const withBaseName = makePrefixer("saltBorderLayout");
 
 const numberOfColumns = 3;
 
@@ -91,7 +91,7 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
 
     return (
       <GridLayout
-        className={cx(withBaseName(), className, "uitkGridLayout-area")}
+        className={cx(withBaseName(), className, "saltGridLayout-area")}
         columns={numberOfColumns}
         gap={gap || 0}
         style={borderLayoutStyles}

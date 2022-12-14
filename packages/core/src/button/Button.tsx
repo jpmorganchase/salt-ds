@@ -5,7 +5,7 @@ import { makePrefixer } from "../utils";
 import "./Button.css";
 import { useButton } from "./useButton";
 
-const withBaseName = makePrefixer("uitkButton");
+const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export type ButtonVariant = typeof ButtonVariantValues[number];

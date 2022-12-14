@@ -47,7 +47,7 @@ export const ScopeSelector = (): JSX.Element => {
   };
 
   return (
-    <div className="uitkScopeSelector">
+    <div className="saltScopeSelector">
       <Tabstrip
         centered
         onActiveChange={onChange}

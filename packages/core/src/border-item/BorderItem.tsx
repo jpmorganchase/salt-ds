@@ -41,7 +41,7 @@ export type BorderItemProps<T extends ElementType> =
     }
   >;
 
-const withBaseName = makePrefixer("uitkBorderItem");
+const withBaseName = makePrefixer("saltBorderItem");
 
 type BorderItemComponent = <T extends ElementType = "div">(
   props: BorderItemProps<T>
@@ -67,7 +67,7 @@ export const BorderItem: BorderItemComponent = forwardRef(
     return (
       <GridItem
         ref={ref}
-        className={cx(withBaseName(), className, "uitkGridItem-area", {
+        className={cx(withBaseName(), className, "saltGridItem-area", {
           [withBaseName("sticky")]: sticky,
         })}
         style={gridItemStyles}

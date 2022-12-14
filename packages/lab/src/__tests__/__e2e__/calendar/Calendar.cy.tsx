@@ -234,10 +234,10 @@ describe("GIVEN a Calendar component", () => {
       }).realHover({ position: "bottom" });
       cy.findByRole("button", {
         name: formatDate(testDate),
-      }).should("have.class", "uitkCalendarDay-hovered");
+      }).should("have.class", "saltCalendarDay-hovered");
 
       cy.get("body").realHover({ position: "topLeft" });
-      cy.get(".uitkCalendarDay-hovered").should("not.exist");
+      cy.get(".saltCalendarDay-hovered").should("not.exist");
     });
     it("SHOULD only allow one date to be selected at a time", () => {
       cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
@@ -352,7 +352,7 @@ describe("GIVEN a Calendar component", () => {
       for (let dateInRange of datesInRange) {
         cy.findByRole("button", {
           name: formatDate(dateInRange),
-        }).should("have.class", "uitkCalendarDay-hoveredOffset");
+        }).should("have.class", "saltCalendarDay-hoveredOffset");
       }
 
       cy.findByRole("button", {
@@ -410,10 +410,10 @@ describe("GIVEN a Calendar component", () => {
       }).realHover();
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 1 })),
-      }).should("have.class", "uitkCalendarDay-hoveredSpan");
+      }).should("have.class", "saltCalendarDay-hoveredSpan");
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 2 })),
-      }).should("have.class", "uitkCalendarDay-hoveredSpan");
+      }).should("have.class", "saltCalendarDay-hoveredSpan");
 
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 2 })),
@@ -422,17 +422,17 @@ describe("GIVEN a Calendar component", () => {
         name: formatDate(testDate),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedStart");
+        .and("have.class", "saltCalendarDay-selectedStart");
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 1 })),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedSpan");
+        .and("have.class", "saltCalendarDay-selectedSpan");
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 2 })),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedEnd");
+        .and("have.class", "saltCalendarDay-selectedEnd");
 
       cy.findByRole("button", {
         name: formatDate(testDate.add({ weeks: 1 })),
@@ -456,23 +456,23 @@ describe("GIVEN a Calendar component", () => {
 
       cy.realPress("ArrowRight");
       cy.realPress("ArrowRight");
-      cy.get(".uitkCalendarDay-hoveredSpan").should("not.exist");
+      cy.get(".saltCalendarDay-hoveredSpan").should("not.exist");
       cy.realPress("Enter");
       cy.findByRole("button", {
         name: formatDate(testDate),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedStart");
+        .and("have.class", "saltCalendarDay-selectedStart");
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 1 })),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedSpan");
+        .and("have.class", "saltCalendarDay-selectedSpan");
       cy.findByRole("button", {
         name: formatDate(testDate.add({ days: 2 })),
       })
         .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "uitkCalendarDay-selectedEnd");
+        .and("have.class", "saltCalendarDay-selectedEnd");
     });
   });
 

@@ -1,24 +1,24 @@
 .ShadowBlock {
   grid-column: 1 / 2;
 
-  margin: var(--uitk-size-unit);
-  padding: var(--uitk-size-unit);
+  margin: var(--salt-size-unit);
+  padding: var(--salt-size-unit);
 
-  color: var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
 
-  border-color: var(--uitk-container-primary-borderColor);
-  border-style: var(--uitk-container-borderStyle);
-  border-width: var(--uitk-size-border);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
   border-radius: 0;
 }
 
 .ShadowBlock-cell {
-  width: var(--uitk-size-base);
-  height: var(--uitk-size-base);
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
   justify-self: end;
 
-  border-color: var(--uitk-container-primary-borderColor);
-  border-style: var(--uitk-container-borderStyle);
-  border-width: var(--uitk-size-border);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
   border-radius: 0;
 }

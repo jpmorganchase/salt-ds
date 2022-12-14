@@ -20,7 +20,7 @@ import {
   JSONByScope,
   parseJSONtoCSS,
   ThemeEditor,
-  uitkTheme,
+  saltTheme,
 } from "@salt-ds/theme-editor";
 import { ThemeMode } from "@salt-ds/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
@@ -64,13 +64,13 @@ export const ThemeEditorApp = (props: {
     props.initialTheme ?? ThemeMode.LIGHT
   );
   const [currentTheme, setThemeWithCallback] = useTheme({
-    themeName: "UITK (Default)",
-    jsonByScope: uitkTheme,
+    themeName: "Salt (Default)",
+    jsonByScope: saltTheme,
   });
   const [directoryName, saveDirectoryName] = useState<string>();
   const [themes, setThemes] = useState<
     { themeName: string; jsonByScope: JSONByScope[] }[]
-  >([{ themeName: "UITK (Default)", jsonByScope: uitkTheme }]);
+  >([{ themeName: "Salt (Default)", jsonByScope: saltTheme }]);
 
   const [jsonByScope, dispatch] = useReducer(jsonReducer, []);
 
@@ -94,7 +94,7 @@ export const ThemeEditorApp = (props: {
 
   const onUseToolkitTheme = useCallback(() => {
     setThemeWithCallback(
-      { themeName: "UITK (Default)", jsonByScope: uitkTheme },
+      { themeName: "Salt (Default)", jsonByScope: saltTheme },
       dispatch
     );
   }, [dispatch, setThemeWithCallback]);
@@ -232,10 +232,10 @@ export const ThemeEditorApp = (props: {
 
   return (
     <SaltProvider>
-      <div className="uitkThemeEditorApp">
-        <div className="uitkThemeEditorApp-leftPane">
+      <div className="saltThemeEditorApp">
+        <div className="saltThemeEditorApp-leftPane">
           {props.isLoading ? (
-            <Spinner className="uitkThemeEditorApp-Spinner" />
+            <Spinner className="saltThemeEditorApp-Spinner" />
           ) : (
             <Routes>
               <Route
@@ -279,7 +279,7 @@ export const ThemeEditorApp = (props: {
             </Routes>
           )}
         </div>
-        <div className="uitkThemeEditorAppOutputHeader">
+        <div className="saltThemeEditorAppOutputHeader">
           {isDesktop && (
             <AppHeader>
               <SearchInput

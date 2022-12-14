@@ -8,9 +8,9 @@ const { SimpleTabstrip, SimpleTabstripAddRemoveTab } =
   composeStories(tabstripStories);
 const { AddNew, Close, Controlled } = composeStories(tabsStories);
 
-const OVERFLOWED_ITEMS = '.uitkTabstrip-inner > *[data-overflowed="true"]';
-const OVERFLOW_IND = '.uitkTabstrip-inner > *[data-overflow-indicator="true"]';
-const ADD_BUTTON = '.uitkTabstrip-inner  > *[aria-label="Create Tab"]';
+const OVERFLOWED_ITEMS = '.saltTabstrip-inner > *[data-overflowed="true"]';
+const OVERFLOW_IND = '.saltTabstrip-inner > *[data-overflow-indicator="true"]';
+const ADD_BUTTON = '.saltTabstrip-inner  > *[aria-label="Create Tab"]';
 
 describe("Responsive rendering, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
@@ -18,8 +18,8 @@ describe("Responsive rendering, Given a Tabstrip", () => {
       it("THEN all the content items will be visible", () => {
         cy.mount(<SimpleTabstrip width={400} />);
         const tabstrip = cy.findByRole("tablist");
-        tabstrip.should("have.class", "uitkTabstrip");
-        cy.get(".uitkTabstrip-inner > *")
+        tabstrip.should("have.class", "saltTabstrip");
+        cy.get(".saltTabstrip-inner > *")
           .should("have.length", 5)
           .filter(":visible")
           .should("have.length", 5);
@@ -37,14 +37,14 @@ describe("Responsive rendering, Given a Tabstrip", () => {
     describe("WHEN resized such that space is sufficient for only 4 tabs (first tab selected)", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<SimpleTabstrip width={400} />);
-        cy.get(".uitkTabstrip").invoke("css", "width", "320px");
-        cy.get(".uitkTabstrip-inner > *")
+        cy.get(".saltTabstrip").invoke("css", "width", "320px");
+        cy.get(".saltTabstrip-inner > *")
           .should("have.length", 5)
           .filter(":visible")
           .should("have.length", 4);
         cy.get(OVERFLOWED_ITEMS).should("have.length", 1);
         cy.get(
-          '.uitkTabstrip-inner > *:nth-child(5)[data-overflowed="true"]'
+          '.saltTabstrip-inner > *:nth-child(5)[data-overflowed="true"]'
         ).should("have.length", 1);
         cy.get(OVERFLOW_IND).should("have.length", 1);
       });
@@ -53,14 +53,14 @@ describe("Responsive rendering, Given a Tabstrip", () => {
     describe("WHEN resized such that space is sufficient for only 4 tabs (LAST tab selected)", () => {
       it("THEN  as last tab is selected, last but one will be overflowed", () => {
         cy.mount(<SimpleTabstrip activeTabIndex={4} width={400} />);
-        cy.get(".uitkTabstrip").invoke("css", "width", "340px");
-        cy.get(".uitkTabstrip-inner > *")
+        cy.get(".saltTabstrip").invoke("css", "width", "340px");
+        cy.get(".saltTabstrip-inner > *")
           .should("have.length", 5)
           .filter(":visible")
           .should("have.length", 4);
         cy.get(OVERFLOWED_ITEMS).should("have.length", 1);
         cy.get(
-          '.uitkTabstrip-inner > *:nth-child(4)[data-overflowed="true"]'
+          '.saltTabstrip-inner > *:nth-child(4)[data-overflowed="true"]'
         ).should("have.length", 1);
         cy.get(OVERFLOW_IND).should("have.length", 1);
       });
@@ -70,7 +70,7 @@ describe("Responsive rendering, Given a Tabstrip", () => {
     describe("WHEN it initially renders", () => {
       it("THEN not all content items will be visible", () => {
         cy.mount(<SimpleTabstrip width={320} />);
-        cy.get(".uitkTabstrip-inner > *")
+        cy.get(".saltTabstrip-inner > *")
           .should("have.length", 6)
           .filter(":visible")
           .should("have.length", 5);
@@ -87,7 +87,7 @@ describe("Tab selection, Given a Tabstrip", () => {
       describe("WHEN the selected Tab has not been specified", () => {
         it("THEN the first tab will be selected", () => {
           cy.mount(<SimpleTabstrip width={400} />);
-          cy.get(".uitkTabstrip-inner > *:first-child").should(
+          cy.get(".saltTabstrip-inner > *:first-child").should(
             "have.ariaSelected"
           );
         });
@@ -104,7 +104,7 @@ describe("Navigation, Given a Tabstrip", () => {
           cy.mount(<SimpleTabstrip width={400} />);
           cy.findByTestId("tabstop-1").focus();
           cy.realPress("Tab");
-          cy.get(".uitkTabstrip-inner > *:nth-child(1)")
+          cy.get(".saltTabstrip-inner > *:nth-child(1)")
             .should("be.focused")
             .should("be.focusVisible");
         });
@@ -113,12 +113,12 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.findByTestId("tabstop-1").focus();
             cy.realPress("Tab");
-            cy.get(".uitkTabstrip-inner > *:nth-child(1)")
+            cy.get(".saltTabstrip-inner > *:nth-child(1)")
               .should("be.focused")
               .should("be.focusVisible");
             cy.wait(50);
             cy.realPress("ArrowRight");
-            cy.get(".uitkTabstrip-inner > *:nth-child(2)")
+            cy.get(".saltTabstrip-inner > *:nth-child(2)")
               .should("be.focused")
               .should("be.focusVisible");
           });
@@ -129,23 +129,23 @@ describe("Navigation, Given a Tabstrip", () => {
         it("THEN focus will be transfered to the selected tab", () => {
           cy.mount(<SimpleTabstrip width={400} />);
           cy.findByTestId("tabstop-1").focus();
-          cy.get(".uitkTabstrip-inner > *:first-child").realClick();
-          cy.get(".uitkTabstrip-inner > *:first-child").should(
+          cy.get(".saltTabstrip-inner > *:first-child").realClick();
+          cy.get(".saltTabstrip-inner > *:first-child").should(
             "not.be.focusVisible"
           );
-          cy.get(".uitkTab").eq(0).should("be.focused");
+          cy.get(".saltTab").eq(0).should("be.focused");
         });
 
         describe("WHEN the left arrow key is pressed (from first tab)", () => {
           it("THEN no navigation will occur", () => {
             cy.mount(<SimpleTabstrip width={400} />);
-            cy.get(".uitkTabstrip-inner > *:nth-child(1)").realClick();
-            cy.get(".uitkTabstrip-inner > *:nth-child(1)").should(
+            cy.get(".saltTabstrip-inner > *:nth-child(1)").realClick();
+            cy.get(".saltTabstrip-inner > *:nth-child(1)").should(
               "not.be.focusVisible"
             );
             cy.wait(100); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowLeft");
-            cy.get(".uitkTabstrip-inner > *:nth-child(1)").should(
+            cy.get(".saltTabstrip-inner > *:nth-child(1)").should(
               "be.focusVisible"
             );
           });
@@ -154,10 +154,10 @@ describe("Navigation, Given a Tabstrip", () => {
         describe("WHEN the right arrow key is pressed", () => {
           it("THEN focus will be transfered to the next tab", () => {
             cy.mount(<SimpleTabstrip width={400} />);
-            cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.get(".saltTabstrip-inner > *:first-child").realClick();
             cy.wait(100); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowRight");
-            cy.get(".uitkTabstrip-inner > *:nth-child(2)")
+            cy.get(".saltTabstrip-inner > *:nth-child(2)")
               .should("be.focused")
               .should("be.focusVisible");
           });
@@ -166,12 +166,12 @@ describe("Navigation, Given a Tabstrip", () => {
         describe("WHEN the tab key is pressed", () => {
           it("THEN focus will leave the tabstrip", () => {
             cy.mount(<SimpleTabstrip width={400} />);
-            cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.get(".saltTabstrip-inner > *:first-child").realClick();
             cy.realPress("ArrowRight");
             cy.wait(50);
             cy.realPress("Tab");
             cy.findByTestId("tabstop-2").should("be.focused");
-            cy.get(".uitkTabstrip-inner > .uitkFocusVisible").should(
+            cy.get(".saltTabstrip-inner > .saltFocusVisible").should(
               "have.length",
               0
             );
@@ -181,15 +181,15 @@ describe("Navigation, Given a Tabstrip", () => {
         describe("WHEN focus returns to the tabstrip", () => {
           it("THEN the selected tab receives focus", () => {
             cy.mount(<SimpleTabstrip width={400} />);
-            cy.get(".uitkTabstrip-inner > *:first-child").should("be.visible");
-            cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.get(".saltTabstrip-inner > *:first-child").should("be.visible");
+            cy.get(".saltTabstrip-inner > *:first-child").realClick();
             cy.realPress("ArrowRight");
             cy.wait(50);
             cy.realPress("Tab");
             cy.wait(50);
             cy.realPress(["Shift", "Tab"]);
             cy.wait(50);
-            cy.get(".uitkTabstrip-inner > *:first-child")
+            cy.get(".saltTabstrip-inner > *:first-child")
               .should("be.focused")
               .should("be.focusVisible")
               .should("have.ariaSelected");
@@ -199,7 +199,7 @@ describe("Navigation, Given a Tabstrip", () => {
         describe("WHEN the right arrow key is pressed repeatedly", () => {
           it("THEN focus will be transfered until last tab is reached", () => {
             cy.mount(<SimpleTabstrip width={400} />);
-            cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+            cy.get(".saltTabstrip-inner > *:first-child").realClick();
             cy.realPress("ArrowRight");
             cy.wait(50);
             cy.realPress("ArrowRight");
@@ -207,11 +207,11 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.realPress("ArrowRight");
             cy.wait(50);
             cy.realPress("ArrowRight");
-            cy.get(".uitkTabstrip-inner > *:nth-child(5)")
+            cy.get(".saltTabstrip-inner > *:nth-child(5)")
               .should("be.focused")
               .should("be.focusVisible");
             cy.realPress("ArrowRight");
-            cy.get(".uitkTabstrip-inner > *:nth-child(5)")
+            cy.get(".saltTabstrip-inner > *:nth-child(5)")
               .should("be.focused")
               .should("be.focusVisible");
           });
@@ -227,7 +227,7 @@ describe("Navigation, Given a Tabstrip", () => {
         !version.startsWith("18")
           ? () => {
               cy.mount(<SimpleTabstrip width={320} />);
-              cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+              cy.get(".saltTabstrip-inner > *:first-child").realClick();
               cy.wait(50);
               cy.realPress("ArrowRight");
               cy.wait(50);
@@ -236,7 +236,7 @@ describe("Navigation, Given a Tabstrip", () => {
               cy.realPress("ArrowRight");
               cy.wait(50);
               cy.realPress("ArrowRight");
-              cy.get(`${OVERFLOW_IND} > .uitkButton`).should("be.focused");
+              cy.get(`${OVERFLOW_IND} > .saltButton`).should("be.focused");
             }
           : undefined
       );
@@ -248,14 +248,14 @@ describe("Editable Tabs", () => {
   describe("WHEN enableRenameTab is set", () => {
     it("THEN all tabs are editable", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner .uitkEditableLabel").should("have.length", 5);
+      cy.get(".saltTabstrip-inner .saltEditableLabel").should("have.length", 5);
     });
   });
 
   describe("WHEN ENTER is pressed on tab selected via keyboard", () => {
     it("THEN tab enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.wait(100); // ArrowRight need some time to move focus after click
       // Navigate to second tab ...
       cy.realPress("ArrowRight");
@@ -263,12 +263,12 @@ describe("Editable Tabs", () => {
       cy.realPress("Enter");
       // Second press enters edit mode ...
       cy.realPress("Enter");
-      cy.get(".uitkTabstrip-inner  > *:nth-child(2) .uitkEditableLabel").should(
+      cy.get(".saltTabstrip-inner  > *:nth-child(2) .saltEditableLabel").should(
         "have.class",
-        "uitkEditableLabel-editing"
+        "saltEditableLabel-editing"
       );
       cy.get(
-        ".uitkTabstrip-inner  > *:nth-child(2) .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:nth-child(2) .saltEditableLabel-input"
       ).should("be.focused");
     });
   });
@@ -276,14 +276,14 @@ describe("Editable Tabs", () => {
   describe("WHEN ENTER is pressed on tab selected via click", () => {
     it("THEN tab label enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.realPress("Enter");
-      cy.get(".uitkTabstrip-inner  > *:first-child .uitkEditableLabel").should(
+      cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.class",
-        "uitkEditableLabel-editing"
+        "saltEditableLabel-editing"
       );
       cy.get(
-        ".uitkTabstrip-inner  > *:first-child .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
       ).should("be.focused");
     });
   });
@@ -291,13 +291,13 @@ describe("Editable Tabs", () => {
   describe("WHEN editable tab is double clicked", () => {
     it("THEN tab label enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").dblclick();
-      cy.get(".uitkTabstrip-inner  > *:first-child .uitkEditableLabel").should(
+      cy.get(".saltTabstrip-inner > *:first-child").dblclick();
+      cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.class",
-        "uitkEditableLabel-editing"
+        "saltEditableLabel-editing"
       );
       cy.get(
-        ".uitkTabstrip-inner  > *:first-child .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
       ).should("be.focused");
     });
   });
@@ -305,46 +305,46 @@ describe("Editable Tabs", () => {
   describe("WHEN characters are typed during edit state", () => {
     it("THEN editable input value is updated", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.realPress("Enter");
       cy.realType("test");
       cy.get(
-        ".uitkTabstrip-inner  > *:first-child .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
       ).should("have.attr", "value", "test");
     });
   });
   describe("WHEN ENTER is pressed after edit", () => {
     it("THEN edited value is applied to tab label", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.realPress("Enter");
       cy.realType("test");
       cy.realPress("Enter");
       cy.get(
-        ".uitkTabstrip-inner  > *:first-child .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
       ).should("have.length", 0);
-      cy.get(".uitkTabstrip-inner  > *:first-child .uitkEditableLabel").should(
+      cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.text",
         "test"
       );
-      cy.get(".uitkTabstrip-inner  > *:first-child").should("be.focused");
+      cy.get(".saltTabstrip-inner  > *:first-child").should("be.focused");
     });
   });
   describe("WHEN ESC is pressed after edit", () => {
     it("THEN edited value is not applied to tab label", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.realPress("Enter");
       cy.realType("test");
       cy.realPress("Escape");
       cy.get(
-        ".uitkTabstrip-inner  > *:first-child .uitkEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
       ).should("have.length", 0);
-      cy.get(".uitkTabstrip-inner  > *:first-child .uitkEditableLabel").should(
+      cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.text",
         "Home"
       );
-      cy.get(".uitkTabstrip-inner  > *:first-child").should("be.focused");
+      cy.get(".saltTabstrip-inner  > *:first-child").should("be.focused");
     });
   });
 });
@@ -354,7 +354,7 @@ describe("Removing Tabs.", () => {
     describe("WHEN enableCloseTab is set", () => {
       it("THEN all tabs are closeable", () => {
         cy.mount(<SimpleTabstripAddRemoveTab enableCloseTab width={600} />);
-        cy.get(".uitkTabstrip-inner .uitkTab-closeButton").should(
+        cy.get(".saltTabstrip-inner .saltTab-closeButton").should(
           "have.length",
           5
         );
@@ -364,9 +364,9 @@ describe("Removing Tabs.", () => {
         it("THEN tab is closed", () => {
           cy.mount(<SimpleTabstripAddRemoveTab enableCloseTab width={600} />);
           cy.get(
-            ".uitkTabstrip-inner > *:first-child .uitkTab-closeButton"
+            ".saltTabstrip-inner > *:first-child .saltTab-closeButton"
           ).realClick();
-          cy.get(".uitkTabstrip-inner > .uitkTab").should("have.length", 4);
+          cy.get(".saltTabstrip-inner > .saltTab").should("have.length", 4);
         });
       });
 
@@ -374,13 +374,13 @@ describe("Removing Tabs.", () => {
         it("THEN tab is closed", () => {
           cy.mount(<SimpleTabstripAddRemoveTab enableCloseTab width={600} />);
           // Select the first tab ...
-          cy.get(".uitkTab").eq(0).realClick();
+          cy.get(".saltTab").eq(0).realClick();
           // Close the selected tab
           cy.realPress("Backspace");
-          cy.get(".uitkTab").should("have.length", 4);
+          cy.get(".saltTab").should("have.length", 4);
           // The (new) first tab should now be selected and focused
-          cy.get(".uitkTab").eq(0).should("have.ariaSelected");
-          cy.get(".uitkTab").eq(0).should("be.focused");
+          cy.get(".saltTab").eq(0).should("have.ariaSelected");
+          cy.get(".saltTab").eq(0).should("be.focused");
         });
       });
     });
@@ -390,13 +390,13 @@ describe("Removing Tabs.", () => {
     describe("WHEN enableCloseTab is set", () => {
       it("THEN tabs are by default closeable", () => {
         cy.mount(<Controlled />);
-        cy.get(".uitkTab-closeButton").should("have.length", 5);
+        cy.get(".saltTab-closeButton").should("have.length", 5);
       });
     });
     describe("WHEN enableCloseTab is not set", () => {
       it("THEN tabPanels are closeable if individually configured", () => {
         cy.mount(<Close />);
-        cy.get(".uitkTab:not([data-overflowed]) .uitkTab-closeButton").should(
+        cy.get(".saltTab:not([data-overflowed]) .saltTab-closeButton").should(
           "have.length",
           3
         );
@@ -410,8 +410,8 @@ describe("Adding Tabs", () => {
     describe("WHEN enableAddTab is set", () => {
       it("THEN add button is rendered", () => {
         cy.mount(<SimpleTabstripAddRemoveTab enableAddTab width={600} />);
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 6);
-        cy.get(".uitkTabstrip-inner > *:nth-child(6)").should(
+        cy.get(".saltTabstrip-inner > *").should("have.length", 6);
+        cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
           "have.attr",
           "aria-label",
           "Create Tab"
@@ -419,7 +419,7 @@ describe("Adding Tabs", () => {
       });
       it("THEN add button is included in navigation", () => {
         cy.mount(<SimpleTabstripAddRemoveTab enableAddTab width={600} />);
-        cy.get(".uitkTabstrip-inner > *:nth-child(3)").realClick();
+        cy.get(".saltTabstrip-inner > *:nth-child(3)").realClick();
         cy.wait(100); // ArrowRight need some time to move focus after click
         cy.realPress("ArrowRight");
         cy.realPress("ArrowRight");
@@ -436,19 +436,19 @@ describe("Adding Tabs", () => {
             />
           );
           cy.get(ADD_BUTTON).realClick();
-          cy.get(".uitkTabstrip-inner > *").should("have.length", 7);
+          cy.get(".saltTabstrip-inner > *").should("have.length", 7);
           cy.get(
-            ".uitkTabstrip-inner > *:nth-child(6) .uitkEditableLabel-input"
+            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input"
           ).should("have.value", "Tab 6");
-          cy.get(".uitkTabstrip-inner > *:nth-child(6)").should(
+          cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
             "have.attr",
             "aria-selected"
           );
           cy.get(
-            ".uitkTabstrip-inner  > *:nth-child(6) .uitkEditableLabel-input"
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input"
           ).should("be.focused");
 
-          cy.get(".uitkTabstrip-inner > *:nth-child(7)").should(
+          cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
             "have.attr",
             "aria-label",
             "Create Tab"
@@ -464,21 +464,21 @@ describe("Adding Tabs", () => {
               width={600}
             />
           );
-          cy.get(".uitkTab").eq(4).realClick();
+          cy.get(".saltTab").eq(4).realClick();
           cy.wait(100);
           cy.realPress("ArrowRight");
           cy.wait(100);
           cy.realPress("Enter");
-          cy.get(".uitkTabstrip-inner > *").should("have.length", 7);
+          cy.get(".saltTabstrip-inner > *").should("have.length", 7);
           cy.get(
-            ".uitkTabstrip-inner > *:nth-child(6) .uitkEditableLabel-input"
+            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input"
           ).should("have.value", "Tab 6");
-          cy.get(".uitkTabstrip-inner > *:nth-child(6)").should(
+          cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
             "have.attr",
             "aria-selected"
           );
           cy.get(
-            ".uitkTabstrip-inner  > *:nth-child(6) .uitkEditableLabel-input"
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input"
           ).should("be.focused");
         });
       });
@@ -495,20 +495,20 @@ describe("Adding Tabs", () => {
           );
           cy.get(ADD_BUTTON).realClick();
           cy.get(
-            ".uitkTabstrip-inner  > *:nth-child(6) .uitkEditableLabel"
-          ).should("not.have.class", "uitkEditableLabel-editing");
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel"
+          ).should("not.have.class", "saltEditableLabel-editing");
         });
 
         // it("THEN new Tab is editable", () => {
         //   cy.mount(<SimpleTabstripAddRemoveTab enableAddTab />);
-        //   cy.get(".uitkTabstrip-inner > *:nth-child(5)").realClick();
+        //   cy.get(".saltTabstrip-inner > *:nth-child(5)").realClick();
         //   cy.realPress("ArrowRight");
         //   cy.realPress("Enter");
-        //   cy.get(".uitkTabstrip-inner > *:nth-child(6)").should("be.focused");
+        //   cy.get(".saltTabstrip-inner > *:nth-child(6)").should("be.focused");
         //   cy.realPress("Enter");
         //   cy.get(
-        //     ".uitkTabstrip-inner  > *:nth-child(6) .uitkEditableLabel"
-        //   ).should("have.class", "uitkEditableLabel-editing");
+        //     ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel"
+        //   ).should("have.class", "saltEditableLabel-editing");
         // });
       });
     });
@@ -518,8 +518,8 @@ describe("Adding Tabs", () => {
     describe("WHEN enableAddTab is set", () => {
       it("THEN add button is rendered", () => {
         cy.mount(<AddNew />);
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 6);
-        cy.get(".uitkTabstrip-inner > *")
+        cy.get(".saltTabstrip-inner > *").should("have.length", 6);
+        cy.get(".saltTabstrip-inner > *")
           .eq(5)
           .should("have.attr", "aria-label", "Create Tab");
       });
@@ -540,12 +540,12 @@ describe("Adding Tabs", () => {
       it("THEN new last Tab is created in last position, selected and focused, but not focusVisible", () => {
         cy.mount(<AddNew />);
         cy.findByRole("button", { name: "Create Tab" }).realClick();
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 7);
-        cy.get(".uitkFocusVisible").should("have.length", 0);
-        cy.get(".uitkTab-text").eq(5).should("have.text", "Tab 6");
-        cy.get(".uitkTab").eq(5).should("have.ariaSelected");
-        cy.get(".uitkTab").eq(5).should("be.focused");
-        cy.get(".uitkTabstrip-inner > *:nth-child(7)").should(
+        cy.get(".saltTabstrip-inner > *").should("have.length", 7);
+        cy.get(".saltFocusVisible").should("have.length", 0);
+        cy.get(".saltTab-text").eq(5).should("have.text", "Tab 6");
+        cy.get(".saltTab").eq(5).should("have.ariaSelected");
+        cy.get(".saltTab").eq(5).should("be.focused");
+        cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
           "have.attr",
           "aria-label",
           "Create Tab"
@@ -557,17 +557,17 @@ describe("Adding Tabs", () => {
       it("THEN new last Tab is created in last position, selected and focused, and is focusVisible", () => {
         cy.mount(<AddNew />);
         cy.wait(50);
-        cy.get(".uitkTab").eq(4).realClick();
+        cy.get(".saltTab").eq(4).realClick();
         cy.wait(100);
         cy.realPress("ArrowRight");
         cy.wait(100);
         cy.realPress("Enter");
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 7);
-        cy.get(".uitkTab-text").eq(5).should("have.text", "Tab 6");
-        cy.get(".uitkTab").eq(5).should("have.ariaSelected");
-        cy.get(".uitkTab").eq(5).should("be.focusVisible");
-        cy.get(".uitkTab").eq(5).should("be.focused");
-        cy.get(".uitkTabstrip-inner > *:nth-child(7)").should(
+        cy.get(".saltTabstrip-inner > *").should("have.length", 7);
+        cy.get(".saltTab-text").eq(5).should("have.text", "Tab 6");
+        cy.get(".saltTab").eq(5).should("have.ariaSelected");
+        cy.get(".saltTab").eq(5).should("be.focusVisible");
+        cy.get(".saltTab").eq(5).should("be.focused");
+        cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
           "have.attr",
           "aria-label",
           "Create Tab"
@@ -583,14 +583,14 @@ describe("Adding Tabs", () => {
           .realClick()
           .realClick();
 
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 9);
-        cy.get(".uitkFocusVisible").should("have.length", 0);
-        cy.get(".uitkTab-text").eq(5).should("have.text", "Tab 6");
-        cy.get(".uitkTab-text").eq(6).should("have.text", "Tab 7");
-        cy.get(".uitkTab-text").eq(7).should("have.text", "Tab 8");
-        cy.get(".uitkTab").eq(7).should("have.ariaSelected");
-        cy.get(".uitkTab").eq(7).should("be.focused");
-        cy.get(".uitkTabstrip-inner > *:nth-child(9)").should(
+        cy.get(".saltTabstrip-inner > *").should("have.length", 9);
+        cy.get(".saltFocusVisible").should("have.length", 0);
+        cy.get(".saltTab-text").eq(5).should("have.text", "Tab 6");
+        cy.get(".saltTab-text").eq(6).should("have.text", "Tab 7");
+        cy.get(".saltTab-text").eq(7).should("have.text", "Tab 8");
+        cy.get(".saltTab").eq(7).should("have.ariaSelected");
+        cy.get(".saltTab").eq(7).should("be.focused");
+        cy.get(".saltTabstrip-inner > *:nth-child(9)").should(
           "have.attr",
           "aria-label",
           "Create Tab"
@@ -607,16 +607,16 @@ describe("Adding Tabs", () => {
           .realClick()
           .realClick();
 
-        cy.get(".uitkTabstrip-inner > *").should("have.length", 10);
+        cy.get(".saltTabstrip-inner > *").should("have.length", 10);
         cy.get('[data-overflow-indicator="true"]').should("have.length", 1);
 
-        cy.get(".uitkTab-text").eq(8).should("have.text", "Tab 9");
-        cy.get(".uitkTabstrip-inner > *:nth-child(10)").should(
+        cy.get(".saltTab-text").eq(8).should("have.text", "Tab 9");
+        cy.get(".saltTabstrip-inner > *:nth-child(10)").should(
           "have.attr",
           "data-overflow-indicator",
           "true"
         );
-        cy.get(".uitkTabstrip-inner > *:nth-child(11)").should(
+        cy.get(".saltTabstrip-inner > *:nth-child(11)").should(
           "have.attr",
           "aria-label",
           "Create Tab"
@@ -630,14 +630,14 @@ describe("Adding Tabs", () => {
           .realClick()
           .realClick();
 
-        cy.get(".uitkTabstrip-inner > *")
+        cy.get(".saltTabstrip-inner > *")
           .filter(":visible")
           .should("have.length", 10);
 
-        cy.get(".uitkTab").eq(7).should("not.be.visible");
-        cy.get(".uitkTab").eq(8).should("be.visible");
-        cy.get(".uitkTab").eq(8).should("have.ariaSelected");
-        cy.get(".uitkTab").eq(8).should("be.focused");
+        cy.get(".saltTab").eq(7).should("not.be.visible");
+        cy.get(".saltTab").eq(8).should("be.visible");
+        cy.get(".saltTab").eq(8).should("have.ariaSelected");
+        cy.get(".saltTab").eq(8).should("be.focused");
       });
 
       it(
@@ -656,15 +656,15 @@ describe("Adding Tabs", () => {
               cy.findByRole("button", { name: "Create Tab" })
                 .realClick()
                 .then(() => {
-                  cy.get(".uitkTabstrip-inner > *")
+                  cy.get(".saltTabstrip-inner > *")
                     .filter(":visible")
                     .should("have.length", 10);
 
-                  cy.get(".uitkTab").eq(7).should("not.be.visible");
-                  cy.get(".uitkTab").eq(8).should("not.be.visible");
-                  cy.get(".uitkTab").eq(9).should("be.visible");
-                  cy.get(".uitkTab").eq(9).should("have.ariaSelected");
-                  cy.get(".uitkTab").eq(9).should("be.focused");
+                  cy.get(".saltTab").eq(7).should("not.be.visible");
+                  cy.get(".saltTab").eq(8).should("not.be.visible");
+                  cy.get(".saltTab").eq(9).should("be.visible");
+                  cy.get(".saltTab").eq(9).should("have.ariaSelected");
+                  cy.get(".saltTab").eq(9).should("be.focused");
                 });
             }
           : undefined
@@ -677,12 +677,12 @@ describe("7) Focus management", () => {
   describe("WHEN initially rendered", () => {
     it("THEN all tabs have tabindex -1, except for selected tab which has 0", () => {
       cy.mount(<SimpleTabstrip enableAddTab width={600} />);
-      cy.get('.uitkTabstrip-inner > .uitkTab[tabindex="-1"]').should(
+      cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
         4
       );
       cy.get(
-        '.uitkTabstrip-inner > .uitkTab[tabindex="0"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]'
       ).should("have.length", 1);
     });
   });
@@ -690,13 +690,13 @@ describe("7) Focus management", () => {
   describe("WHEN Tabstrip receives focus", () => {
     it("THEN all tabs have tabindex -1, including selected tab", () => {
       cy.mount(<SimpleTabstrip enableAddTab width={600} />);
-      cy.get(".uitkTabstrip-inner > *:first-child").realClick();
-      cy.get('.uitkTabstrip-inner > .uitkTab[tabindex="-1"]').should(
+      cy.get(".saltTabstrip-inner > *:first-child").realClick();
+      cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
         5
       );
       cy.get(
-        '.uitkTabstrip-inner > .uitkTab[tabindex="-1"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="-1"][aria-selected="true"]'
       ).should("have.length", 1);
     });
   });
@@ -704,15 +704,15 @@ describe("7) Focus management", () => {
   describe("WHEN Tab key is pressed", () => {
     it("THEN Tabstrip loses focus", () => {
       cy.mount(<SimpleTabstrip enableAddTab width={600} />);
-      cy.get(".uitkTabstrip-inner > *:nth-child(2)").realClick();
+      cy.get(".saltTabstrip-inner > *:nth-child(2)").realClick();
       cy.wait(100); // ArrowRight need some time to move focus after click
       cy.realPress("Tab");
-      cy.get('.uitkTabstrip-inner > .uitkTab[tabindex="-1"]').should(
+      cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
         4
       );
       cy.get(
-        '.uitkTabstrip-inner > .uitkTab[tabindex="0"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]'
       ).should("have.length", 1);
     });
   });

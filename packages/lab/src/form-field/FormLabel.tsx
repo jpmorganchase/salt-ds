@@ -10,7 +10,7 @@ import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
 import "./FormLabel.css";
 
-const withBaseName = makePrefixer("uitkFormLabel");
+const withBaseName = makePrefixer("saltFormLabel");
 export interface FormLabelProps
   extends HTMLAttributes<HTMLLabelElement>,
     NecessityIndicatorOptions {

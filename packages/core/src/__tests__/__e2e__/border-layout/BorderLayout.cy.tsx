@@ -13,13 +13,13 @@ describe("GIVEN a Border", () => {
     it("THEN it should render them in the right positions", () => {
       cy.mount(<BorderLayoutAllPanels />);
 
-      cy.get(".uitkBorderLayout").should(
+      cy.get(".saltBorderLayout").should(
         "have.css",
         "grid-template-areas",
         '"north north north" "west center east" "south south south"'
       );
 
-      cy.get(".uitkBorderLayout > .uitkBorderItem").then((items) => {
+      cy.get(".saltBorderLayout > .saltBorderItem").then((items) => {
         Array.from(items).forEach((item, index) => {
           cy.wrap(item).should(
             "have.css",
@@ -49,9 +49,9 @@ describe("GIVEN a Border", () => {
     it("THEN it should not display a gap by default", () => {
       cy.mount(<BorderLayoutAllPanels />);
 
-      cy.get(".uitkBorderLayout").should("have.css", "column-gap", "0px");
+      cy.get(".saltBorderLayout").should("have.css", "column-gap", "0px");
 
-      cy.get(".uitkBorderLayout").should("have.css", "row-gap", "0px");
+      cy.get(".saltBorderLayout").should("have.css", "row-gap", "0px");
     });
   });
 });

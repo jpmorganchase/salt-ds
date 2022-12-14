@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import "../Slider.css";
 
-const withBaseName = makePrefixer("uitkSliderSelection");
+const withBaseName = makePrefixer("saltSliderSelection");
 
 export interface SliderSelectionProps {
   valueLength: number;
