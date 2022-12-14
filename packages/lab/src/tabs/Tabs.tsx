@@ -13,7 +13,7 @@ import { FocusAPI, TabstripProps } from "./TabsTypes";
 
 import "./Tabs.css";
 
-const withBaseName = makePrefixer("uitkTabs");
+const withBaseName = makePrefixer("saltTabs");
 
 export type TabsProps = Omit<TabstripProps, "defaultSource">;
 

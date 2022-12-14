@@ -127,7 +127,7 @@ describe("A combo box", () => {
 
       cy.findAllByRole("option").should("have.length", 1);
 
-      cy.findByText("Connec").should("have.class", "uitkHighlighter-highlight");
+      cy.findByText("Connec").should("have.class", "saltHighlighter-highlight");
     });
   });
 });

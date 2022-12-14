@@ -1,5 +1,5 @@
 /* Style applied to BorderItem when `sticky` positioning is on */
-.uitkBorderItem-sticky {
+.saltBorderItem-sticky {
   position: sticky;
   overflow: auto;
   top: 0;

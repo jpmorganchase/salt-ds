@@ -23,7 +23,7 @@ function parseVal(value) {
 
     if (parts[0].startsWith("rgba")) {
       for (var p of parts.slice(1)) {
-        if (p.startsWith("--uitk")) {
+        if (p.startsWith("--salt")) {
           cssVar +=
             "*" +
             p.replace(cssVarDashRegex, "").replace(closeBracketRegex, "") +
@@ -35,7 +35,7 @@ function parseVal(value) {
     }
     if (parts[0].startsWith("linear-gradient")) {
       for (var p of parts.slice(1)) {
-        if (p.startsWith("--uitk")) {
+        if (p.startsWith("--salt")) {
           var cssVarPart = p.split(")")[0];
           cssVar +=
             "*" +
@@ -53,7 +53,7 @@ function parseVal(value) {
     }
     if (!parts[0].length && parts.length > 2) {
       for (var p of parts.slice(1)) {
-        if (p.startsWith("--uitk")) {
+        if (p.startsWith("--salt")) {
           cssVar +=
             "*" +
             p
@@ -73,7 +73,7 @@ function parseVal(value) {
   var quoteRegex = new RegExp('"', "gi");
   value = value.replace(quoteRegex, "");
 
-  if (value.startsWith("uitk")) {
+  if (value.startsWith("salt")) {
     value = value.replace(")", "");
   }
 

@@ -11,7 +11,7 @@ import "./LinearProgress.css";
 
 import { Info as DefaultInfo } from "../Info";
 
-const withBaseName = makePrefixer("uitkLinearProgress");
+const withBaseName = makePrefixer("saltLinearProgress");
 
 export interface InfoRendererProps<T, U> {
   unit: string;

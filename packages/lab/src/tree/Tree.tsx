@@ -30,7 +30,7 @@ import { useTree } from "./useTree";
 import { TreeNode } from "./TreeNode";
 import "./Tree.css";
 
-const withBaseName = makePrefixer("uitkTree");
+const withBaseName = makePrefixer("saltTree");
 
 const getSelectedItemsFromSource = (
   source: any[],

@@ -1,6 +1,6 @@
 /* Styles applied to root component */
-.uitkRadioButtonBase {
-  color: var(--uitk-text-secondary-foreground);
+.saltRadioButtonBase {
+  color: var(--salt-text-secondary-foreground);
   padding: 1px 0;
   flex: 0 0 auto;
   overflow: visible;
@@ -22,7 +22,7 @@
 }
 
 /* Styles applied to container of Radio input and icon */
-.uitkRadioButtonBase-radioContainer {
+.saltRadioButtonBase-radioContainer {
   width: 100%;
   display: flex;
   align-items: inherit;
@@ -30,7 +30,7 @@
 }
 
 /* Styles applied to input component */
-.uitkRadioButtonBase-input {
+.saltRadioButtonBase-input {
   cursor: inherit;
   position: absolute;
   opacity: 0;
@@ -40,12 +40,12 @@
   left: 0;
   margin: 0;
   padding: 0;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }
 
 /* Styles applied to root component when state `focusVisible={true}` */
-.uitkRadioButtonBase-focusVisible,
-.uitkRadioButtonBase:focus {
-  outline: var(--uitk-focused-outline);
-  outline-offset: var(--uitk-focused-outlineOffset);
+.saltRadioButtonBase-focusVisible,
+.saltRadioButtonBase:focus {
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
 }

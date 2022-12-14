@@ -43,7 +43,7 @@ export type GridItemProps<T extends ElementType> =
     }
   >;
 
-const withBaseName = makePrefixer("uitkGridItem");
+const withBaseName = makePrefixer("saltGridItem");
 
 const colStart = "auto";
 const colEnd = "auto";

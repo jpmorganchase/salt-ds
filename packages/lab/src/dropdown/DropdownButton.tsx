@@ -52,7 +52,7 @@ export interface DropdownButtonProps extends ButtonProps {
   >;
 }
 
-const withBaseName = makePrefixer("uitkDropdownButton");
+const withBaseName = makePrefixer("saltDropdownButton");
 
 export const DropdownButton = forwardRef(function DropdownButton(
   {

@@ -7,7 +7,7 @@ import "./CalendarWeekHeader.css";
 
 export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div">;
 
-const withBaseName = makePrefixer("uitkCalendarWeekHeader");
+const withBaseName = makePrefixer("saltCalendarWeekHeader");
 
 export const CalendarWeekHeader = forwardRef<
   HTMLDivElement,

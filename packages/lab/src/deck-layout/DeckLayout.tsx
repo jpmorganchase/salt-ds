@@ -36,7 +36,7 @@ export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
   deckItemProps?: Partial<DeckItemProps>;
 }
 
-const withBaseName = makePrefixer("uitkDeckLayout");
+const withBaseName = makePrefixer("saltDeckLayout");
 
 export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
   function DeckLayout(

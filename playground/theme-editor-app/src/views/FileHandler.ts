@@ -1,9 +1,9 @@
 /* eslint-disable */
 import { CSSByPattern } from "@salt-ds/theme-editor/src/helpers/parseToCss";
 import {
-  UITK_CHARACTERISTICS,
-  UITK_FOUNDATIONS,
-} from "@salt-ds/theme-editor/src/utils/uitkValues";
+  SALT_CHARACTERISTICS,
+  SALT_FOUNDATIONS,
+} from "@salt-ds/theme-editor/src/utils/saltValues";
 
 declare const window: any;
 
@@ -16,11 +16,11 @@ export async function saveToDirectory(cssByPattern: CSSByPattern[]) {
       create: true,
     });
     const stream = await newFile.createWritable();
-    UITK_FOUNDATIONS.forEach(
+    SALT_FOUNDATIONS.forEach(
       async (foundation) =>
         await stream.write(`@import url(foundations/${foundation}.css);\n`)
     );
-    UITK_CHARACTERISTICS.forEach(
+    SALT_CHARACTERISTICS.forEach(
       async (characteristic) =>
         await stream.write(
           `@import url(characteristics/${characteristic}.css);\n`
@@ -37,7 +37,7 @@ export async function saveToDirectory(cssByPattern: CSSByPattern[]) {
     });
 
     for (var element of cssByPattern) {
-      let subDirHandle = UITK_FOUNDATIONS.includes(element.pattern)
+      let subDirHandle = SALT_FOUNDATIONS.includes(element.pattern)
         ? foundationsFolder
         : characteristicsFolder;
 

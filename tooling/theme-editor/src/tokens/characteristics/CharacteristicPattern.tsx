@@ -13,7 +13,7 @@ import { ChildrenValuesWithinSection } from "../ChildrenValues";
 import { ScopeLabel } from "../labels/ScopeLabel";
 import "./Characteristics.css";
 
-const withBaseName = makePrefixer("uitkCharacteristicPattern");
+const withBaseName = makePrefixer("saltCharacteristicPattern");
 export interface CharacteristicPatternProps {
   expandedCharacteristics: string[];
   extractValue: (value: string) => string;
@@ -21,7 +21,7 @@ export interface CharacteristicPatternProps {
   patternName: string;
   scope: string;
   themeName: string;
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   values: JSONObj;
 }
 
@@ -63,7 +63,7 @@ export const CharacteristicPattern = (
             return (
               <div
                 key={`${props.patternName}-${scope}`}
-                className={cn("uitkEmphasisHigh", withBaseName())}
+                className={cn("saltEmphasisHigh", withBaseName())}
               >
                 <ScopeLabel scope={scope} />
                 {Object.keys(props.values[scope])
@@ -84,7 +84,7 @@ export const CharacteristicPattern = (
                       <ChildrenValuesWithinSection
                         characteristicsView={true}
                         children={values}
-                        uitkColorOverrides={props.uitkColorOverrides}
+                        saltColorOverrides={props.saltColorOverrides}
                         extractValue={props.extractValue}
                         fieldName={fieldName}
                         onUpdateJSON={props.onUpdateJSON}

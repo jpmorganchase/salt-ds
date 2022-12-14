@@ -1,6 +1,6 @@
 import { isDesktop } from "@salt-ds/lab";
 import { JSONByScope, parseCSStoJSON, tidyUp } from "../helpers/parseToJson";
-import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
+import { SALT_CHARACTERISTICS, SALT_FOUNDATIONS } from "../utils/saltValues";
 
 export const handleThemeUpload = async (
   onFileUpload: (jsonByScope: JSONByScope[], themeName: string) => void
@@ -77,7 +77,7 @@ async function recurseDirectory(fileContents: string, dirHandle: any) {
         const url = importURL[1];
         const importedContents = await getImportedContents(url, dirHandle);
         if (
-          UITK_CHARACTERISTICS.concat(UITK_FOUNDATIONS).indexOf(
+          SALT_CHARACTERISTICS.concat(SALT_FOUNDATIONS).indexOf(
             url.split("/")[1].replace(".css", "")
           ) !== -1
         ) {

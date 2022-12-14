@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import { createColorMap } from "../../helpers/createColorMap";
 import "./Characteristics.css";
 
-const withBaseName = makePrefixer("uitkCharacteristicPatternsList");
+const withBaseName = makePrefixer("saltCharacteristicPatternsList");
 interface CharacteristicPatternsListProps {
   extractValue: (value: string) => string;
   patternsInScope: string[];
@@ -32,7 +32,7 @@ export const CharacteristicPatternsList = (
 
   const jsonByScopeInView = Object.values(props.jsonInCurrentScope).filter(
     (js) =>
-      Object.keys(js.jsonObj.uitk).some((k) =>
+      Object.keys(js.jsonObj.salt).some((k) =>
         props.patternsInScope.includes(k)
       )
   );
@@ -42,12 +42,12 @@ export const CharacteristicPatternsList = (
     props.patternsInScope.forEach((pattern) => {
       const values: JSONObj = {};
       for (const s of jsonByScopeInView) {
-        Object.keys(s.jsonObj.uitk)
+        Object.keys(s.jsonObj.salt)
           .filter((k) => pattern === k)
           .forEach((k) => {
             values[pattern] = {
               ...values[pattern],
-              [s.scope]: s.jsonObj.uitk[k],
+              [s.scope]: s.jsonObj.salt[k],
             };
           });
       }
@@ -58,7 +58,7 @@ export const CharacteristicPatternsList = (
     return patternvals;
   }, [props.patternsInScope, jsonByScopeInView]);
 
-  const uitkColorOverrides = useMemo(() => {
+  const saltColorOverrides = useMemo(() => {
     return createColorMap(jsonByScopeInView);
   }, [jsonByScopeInView]);
 
@@ -76,7 +76,7 @@ export const CharacteristicPatternsList = (
               scope={props.scope}
               themeName={props.themeName}
               values={patternValuesInScope[pattern]}
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
             />
           );
         })}

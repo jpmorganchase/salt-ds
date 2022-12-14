@@ -5,7 +5,7 @@ import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 import { ValueComponentProps } from "./types";
 
-const withBaseName = makePrefixer("uitkContactSecondaryInfo");
+const withBaseName = makePrefixer("saltContactSecondaryInfo");
 
 export interface ContactSecondaryInfoProps
   extends HTMLAttributes<HTMLDivElement> {

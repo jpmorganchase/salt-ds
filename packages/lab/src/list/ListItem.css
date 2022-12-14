@@ -1,39 +1,39 @@
-.uitkListItem {
+.saltListItem {
   /* Color */
-  --list-item-text-color: var(--uitk-text-primary-foreground);
-  --list-item-background: var(--uitkList-item-background, var(--uitk-selectable-background));
-  --list-item-selected-focus-outlineColor: var(--uitk-color-white); /* TODO: Check token with design */
-  --list-item-text-color-active: var(--uitk-text-primary-foreground);
-  --list-item-background-active: var(--uitk-selectable-background-selected);
+  --list-item-text-color: var(--salt-text-primary-foreground);
+  --list-item-background: var(--saltList-item-background, var(--salt-selectable-background));
+  --list-item-selected-focus-outlineColor: var(--salt-color-white); /* TODO: Check token with design */
+  --list-item-text-color-active: var(--salt-text-primary-foreground);
+  --list-item-background-active: var(--salt-selectable-background-selected);
   --list-item-alignItems: center;
 }
 
-.uitkListItem.uitkHighlighted {
-  --uitkCheckbox-icon-stroke: var(--uitk-selectable-borderColor-hover);
-  --list-item-background: var(--uitk-selectable-background-hover);
+.saltListItem.saltHighlighted {
+  --saltCheckbox-icon-stroke: var(--salt-selectable-borderColor-hover);
+  --list-item-background: var(--salt-selectable-background-hover);
 }
 
-.uitkListItemHeader {
-  font-weight: var(--uitk-typography-fontWeight-bold);
+.saltListItemHeader {
+  font-weight: var(--salt-typography-fontWeight-bold);
 }
 
-.uitkListItemHeader[data-sticky] {
+.saltListItemHeader[data-sticky] {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.uitkListItem {
+.saltListItem {
   color: var(--list-item-text-color);
-  cursor: var(--uitkList-item-cursor, pointer);
-  background: var(--uitkList-item-background, var(--list-item-background));
-  font-size: var(--uitk-text-fontSize);
-  text-align: var(--uitk-text-textAlign);
-  line-height: var(--uitk-text-lineHeight);
-  height: var(--uitkList-item-height, var(--list-item-height, auto));
+  cursor: var(--saltList-item-cursor, pointer);
+  background: var(--saltList-item-background, var(--list-item-background));
+  font-size: var(--salt-text-fontSize);
+  text-align: var(--salt-text-textAlign);
+  line-height: var(--salt-text-lineHeight);
+  height: var(--saltList-item-height, var(--list-item-height, auto));
   /* Replaced border-bottom with margin. In design spec, the height of the items should not include gap */
   margin-bottom: var(--list-item-gap);
-  padding: 0 var(--uitk-size-unit);
+  padding: 0 var(--salt-size-unit);
   left: 0;
   right: 0;
   display: flex;
@@ -42,42 +42,42 @@
   white-space: nowrap;
 }
 
-.uitkListItem:last-child {
+.saltListItem:last-child {
   margin-bottom: 0px;
 }
 
-.uitkListItem-checkbox {
-  --list-item-background-active: var(--uitk-selectable-background);
-  --list-item-text-color-active: var(--uitk-text-primary-foreground);
-  --list-item-text-padding: 0 0 0 var(--uitk-size-unit);
+.saltListItem-checkbox {
+  --list-item-background-active: var(--salt-selectable-background);
+  --list-item-text-color-active: var(--salt-text-primary-foreground);
+  --list-item-text-padding: 0 0 0 var(--salt-size-unit);
 }
 
-.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox) {
+.saltListItem[aria-selected="true"]:not(.saltListItem-checkbox) {
   --list-item-background: var(--list-item-background-active);
   color: var(--list-item-text-color-active);
 }
 
-.uitkListItem.uitkDisabled {
-  --list-item-text-color: var(--uitk-text-primary-foreground-disabled);
-  cursor: var(--uitk-selectable-cursor-disabled);
+.saltListItem.saltDisabled {
+  --list-item-text-color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkListItem.uitkFocusVisible {
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
+.saltListItem.saltFocusVisible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
   outline-offset: -2px;
-  outline-color: var(--uitk-focused-outlineColor);
+  outline-color: var(--salt-focused-outlineColor);
 }
 
-.uitkListItem.uitkFocusVisible:after {
+.saltListItem.saltFocusVisible:after {
   content: none;
 }
 
-.uitkListItem[aria-selected="true"]:not(.uitkListItem-checkbox).uitkFocusVisible {
+.saltListItem[aria-selected="true"]:not(.saltListItem-checkbox).saltFocusVisible {
   outline-color: var(--list-item-selected-focus-outlineColor);
 }
 
-.uitkListItem-textWrapper {
+.saltListItem-textWrapper {
   flex: 1;
   overflow: hidden;
   padding: var(--list-item-text-padding, 0px);
@@ -85,7 +85,7 @@
   text-overflow: ellipsis;
 }
 
-.uitkListItem-proxy {
+.saltListItem-proxy {
   position: absolute !important;
   visibility: hidden;
 }

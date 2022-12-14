@@ -6,7 +6,7 @@ import { FlatShadow } from "./FlatShadow";
 import { useSearchParams } from "react-router-dom";
 import { ShadowPatternProps } from "./ShadowPatternProps";
 
-const withBaseName = makePrefixer("uitkShadow");
+const withBaseName = makePrefixer("saltShadow");
 
 export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
@@ -36,7 +36,7 @@ export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
               setSearchParams={setSearchParams}
               shadowPattern={props.shadowPattern[innerPattern]}
               themeName={props.themeName}
-              uitkColorOverrides={props.uitkColorOverrides}
+              saltColorOverrides={props.saltColorOverrides}
             />
           );
         })}
@@ -59,7 +59,7 @@ export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
               setSearchParams={setSearchParams}
               shadowPattern={props.shadowPattern[innerPattern]}
               themeName={props.themeName}
-              uitkColorOverrides={props.uitkColorOverrides}
+              saltColorOverrides={props.saltColorOverrides}
             />
           );
         })}

@@ -41,7 +41,7 @@ describe("A highlighter", () => {
         </span>
       );
 
-      cy.get(`.uitkHighlighter-highlight`).should("have.length", 2);
+      cy.get(`.saltHighlighter-highlight`).should("have.length", 2);
       // And full text is returned
       cy.findByTestId("test-string").should(
         "have.text",
@@ -72,9 +72,9 @@ describe("A highlighter", () => {
           </span>
         );
 
-        cy.findByText("rem").should("have.class", "uitkHighlighter-highlight");
-        cy.findByText("sum").should("have.class", "uitkHighlighter-highlight");
-        cy.findByText("am").should("have.class", "uitkHighlighter-highlight");
+        cy.findByText("rem").should("have.class", "saltHighlighter-highlight");
+        cy.findByText("sum").should("have.class", "saltHighlighter-highlight");
+        cy.findByText("am").should("have.class", "saltHighlighter-highlight");
 
         // And full text is returned
         cy.findByTestId("test-string").should(

@@ -7,7 +7,7 @@ import { Portal } from "../../portal";
 import "./Draggable.css";
 
 const makeClassNames = (classNames: string) =>
-  classNames.split(" ").map((className) => `uitkDraggable-${className}`);
+  classNames.split(" ").map((className) => `saltDraggable-${className}`);
 export const Draggable = forwardRef<
   HTMLDivElement,
   { wrapperClassName: string; element: HTMLElement; rect: Rect; scale?: number }
@@ -34,7 +34,7 @@ export const Draggable = forwardRef<
   return (
     <Portal>
       <div
-        className={cx("uitkDraggable", ...makeClassNames(wrapperClassName))}
+        className={cx("saltDraggable", ...makeClassNames(wrapperClassName))}
         ref={forkedRef}
         style={{ left, top, width, height }}
       />
@@ -46,7 +46,7 @@ export const createDragSpacer = (
   transitioning?: MutableRefObject<boolean>
 ): HTMLElement => {
   const spacer = document.createElement("div");
-  spacer.className = "uitkDraggable-spacer";
+  spacer.className = "saltDraggable-spacer";
   if (transitioning) {
     spacer.addEventListener("transitionend", () => {
       transitioning.current = false;

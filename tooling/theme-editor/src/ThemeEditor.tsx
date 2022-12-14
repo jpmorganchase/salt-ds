@@ -46,7 +46,7 @@ export const ThemeEditor = (props: ThemeEditorProps): ReactElement => {
     useTabsWithRouting(foundationPathnames, false);
 
   return (
-    <div className="uitkThemeEditor">
+    <div className="saltThemeEditor">
       <ThemeHeader
         currentTheme={props.currentTheme}
         onChangeTheme={props.onChangeTheme}

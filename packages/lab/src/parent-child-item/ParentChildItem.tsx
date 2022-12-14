@@ -38,7 +38,7 @@ export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
   shrink?: ResponsiveProp<number>;
 }
 
-const withBaseName = makePrefixer("uitkParentChildItem");
+const withBaseName = makePrefixer("saltParentChildItem");
 export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem(
     {
@@ -57,7 +57,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
           ...(direction && {
             [withBaseName(`slide-${direction}`)]: !disableAnimations,
           }),
-          "uitkFlexItem-stacked": isStacked,
+          "saltFlexItem-stacked": isStacked,
         })}
         ref={ref}
         {...rest}

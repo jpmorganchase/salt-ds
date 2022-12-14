@@ -3,7 +3,7 @@ import cx from "classnames";
 import { forwardRef } from "react";
 import { Text, TextProps } from "./Text";
 
-const withBaseName = makePrefixer("uitkText");
+const withBaseName = makePrefixer("saltText");
 
 export const Display1 = forwardRef<
   HTMLSpanElement,

@@ -38,7 +38,7 @@ export function useActivationIndicatorPosition(
     }
     if (formFieldRef && formFieldRef.current && offset) {
       const activationIndicator = formFieldRef.current.getElementsByClassName(
-        "uitkFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon"
       ) as HTMLCollectionOf<HTMLElement>;
       if (activationIndicator.length > 0) {
         activationIndicator[0].style.transform = `translateX(-${offset}px)`;

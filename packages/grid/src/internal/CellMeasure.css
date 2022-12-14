@@ -1,17 +1,17 @@
-.uitkGridCellMeasure {
+.saltGridCellMeasure {
   position: fixed;
   top: -1000px;
   left: 0;
 }
 
-.uitkGridCellMeasure table {
+.saltGridCellMeasure table {
 }
 
-.uitkGridCellMeasure tr {
+.saltGridCellMeasure tr {
   height: var(--grid-row-height);
 }
 
-.uitkGridCellMeasure th {
+.saltGridCellMeasure th {
   box-sizing: border-box;
   overflow: hidden;
 }

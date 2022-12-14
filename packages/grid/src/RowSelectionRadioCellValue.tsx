@@ -10,7 +10,7 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
   const isSelected = selRowIdxs.has(row.index);
 
   return (
-    <div className="uitkGridCheckboxContainer">
+    <div className="saltGridCheckboxContainer">
       <RadioButtonBase
         checked={isSelected}
         tabIndex={isFocused ? 0 : -1}

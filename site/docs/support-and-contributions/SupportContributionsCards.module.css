@@ -1,8 +1,8 @@
 .supportContributionsCards {
   display: flex;
   flex-wrap: wrap;
-  gap: calc(var(--uitk-size-unit) * 3);
-  padding: calc(var(--uitk-size-unit) * 3) 0;
+  gap: calc(var(--salt-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 3) 0;
 }
 
 .supportContributionsCards a {

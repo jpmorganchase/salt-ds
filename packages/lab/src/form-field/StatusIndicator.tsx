@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
-const withBaseName = makePrefixer("uitkFormField");
+const withBaseName = makePrefixer("saltFormField");
 
 export type StatusIndicatorStatus = "error" | "info" | "warning" | "success";
 

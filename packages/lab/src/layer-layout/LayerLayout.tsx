@@ -44,7 +44,7 @@ export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   scrimProps?: Partial<ScrimProps>;
 }
 
-const withBaseName = makePrefixer("uitkLayerLayout");
+const withBaseName = makePrefixer("saltLayerLayout");
 
 const ariaAttributes = { role: "dialog", "aria-modal": true };
 

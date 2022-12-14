@@ -1,21 +1,21 @@
-.uitk-theme {
-  --uitk-focused-outlineColor: var(--uitk-palette-interact-outline);
-  --uitk-focused-outlineStyle: dotted;
-  --uitk-focused-outlineWidth: 2px;
-  --uitk-focused-outlineInset: 0;
-  --uitk-focused-outlineOffset: 0;
+.salt-theme {
+  --salt-focused-outlineColor: var(--salt-palette-interact-outline);
+  --salt-focused-outlineStyle: dotted;
+  --salt-focused-outlineWidth: 2px;
+  --salt-focused-outlineInset: 0;
+  --salt-focused-outlineOffset: 0;
 
-  --uitk-focused-outline: var(--uitk-focused-outlineWidth) var(--uitk-focused-outlineStyle) var(--uitk-focused-outlineColor); /* CSS shortcut token: not in Figma */
+  --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
 }
 
-.uitkFocusVisible:after,
+.saltFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
-  inset: var(--uitk-focused-outlineInset);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
   position: absolute;
 }

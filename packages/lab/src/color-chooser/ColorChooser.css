@@ -1,17 +1,17 @@
-.uitkColorChooser-overlayButtonSwatch {
+.saltColorChooser-overlayButtonSwatch {
   margin-right: 10px;
-  height: calc(2 * var(--uitk-size-unit));
-  width: calc(2 * var(--uitk-size-unit));
+  height: calc(2 * var(--salt-size-unit));
+  width: calc(2 * var(--salt-size-unit));
 }
 
-.uitkColorChooser-overlayButtonSwatchWithBorder {
-  border: 0.2px solid var(--uitk-editable-borderColor);
+.saltColorChooser-overlayButtonSwatchWithBorder {
+  border: 0.2px solid var(--salt-editable-borderColor);
 }
 
-.uitkColorChooser-overlayButtonSwatchTransparent {
-  height: calc(3 * var(--uitk-size-unit) - 2px) !important;
-  width: calc(3 * var(--uitk-size-unit) - 2px) !important;
-  border: 1px solid var(--uitk-differential-negative-foreground);
+.saltColorChooser-overlayButtonSwatchTransparent {
+  height: calc(3 * var(--salt-size-unit) - 2px) !important;
+  width: calc(3 * var(--salt-size-unit) - 2px) !important;
+  border: 1px solid var(--salt-differential-negative-foreground);
   /* RGBA using red-700 */
   background: linear-gradient(
     to top left,
@@ -23,43 +23,43 @@
   );
 }
 
-.uitkColorChooser-overlayButtonText {
-  font-weight: var(--uitk-text-fontWeight);
-  font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
-  font-size: var(--uitk-text-fontSize);
+.saltColorChooser-overlayButtonText {
+  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
+  font-size: var(--salt-text-fontSize);
   letter-spacing: normal;
 }
 
-.uitkColorChooser-overlayButton {
+.saltColorChooser-overlayButton {
   background: transparent;
   text-transform: none;
   justify-content: flex-start;
 }
 
-.uitkColorChooser-overlayButtonHiddenLabel {
-  width: calc(var(--uitk-size-unit) * 3);
+.saltColorChooser-overlayButtonHiddenLabel {
+  width: calc(var(--salt-size-unit) * 3);
   display: contents;
 }
 
-.uitkColorChooser-overlayButtonClose {
+.saltColorChooser-overlayButtonClose {
   margin: 5px;
 }
 
-.uitkColorChooser-defaultButton {
+.saltColorChooser-defaultButton {
   float: right;
   background: transparent;
   padding: 6px 2px 6px 2px;
-  height: var(--uitk-size-stackable);
+  height: var(--salt-size-stackable);
 }
 
-.uitkColorChooser-defaultButton {
-  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+.saltColorChooser-defaultButton {
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }
 
-.uitkColorChooser-overlayContent {
+.saltColorChooser-overlayContent {
   max-width: 100%;
 }
 
-.uitkColorChooser-refreshIcon {
+.saltColorChooser-refreshIcon {
   padding-right: 5px;
 }

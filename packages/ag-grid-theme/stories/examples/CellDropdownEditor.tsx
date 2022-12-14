@@ -10,7 +10,7 @@ import { Switch } from "@salt-ds/lab";
 /**
  * Based on the examples provided by
  * https://www.ag-grid.com/javascript-grid-cell-editor/
- * This examples uses a JPM UI Toolkit Dropdown as a cell editor
+ * This examples uses a Salt Dropdown as a cell editor
  * complete with focus and keyboard navigation support
  */
 const CellDropdownEditor = (props: AgGridReactProps) => {

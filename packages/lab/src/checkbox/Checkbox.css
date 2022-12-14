@@ -1,43 +1,43 @@
 /* Styles applied to root component */
-.uitk-density-medium {
+.salt-density-medium {
   --checkbox-fontSize: 12px;
 }
-.uitk-density-touch {
+.salt-density-touch {
   --checkbox-fontSize: 16px;
 }
-.uitk-density-low {
+.salt-density-low {
   --checkbox-fontSize: 14px;
 }
-.uitk-density-high {
+.salt-density-high {
   --checkbox-fontSize: 11px;
 }
 
-.uitkCheckbox {
-  --checkbox-label-marginTop: calc(var(--uitk-size-unit) * var(--checkbox-top-multiplier));
-  --checkbox-space-multiplier: var(--uitkCheckbox-space-multiplier, 3);
-  --checkbox-top-multiplier: var(--uitkCheckbox-top-multiplier, 0.75);
+.saltCheckbox {
+  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
+  --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
+  --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
 }
 
-.uitkCheckbox {
-  line-height: var(--uitkCheckbox-lineHeight, 1);
+.saltCheckbox {
+  line-height: var(--saltCheckbox-lineHeight, 1);
 }
 
 /* Styles applied to root component if `disabled={true}` */
-.uitkCheckbox-disabled {
+.saltCheckbox-disabled {
   pointer-events: visible;
 }
 
 /* Styles applied to label element */
-.uitkCheckbox-label {
+.saltCheckbox-label {
   align-items: flex-start;
   margin-top: var(--checkbox-label-marginTop);
 }
 
-.uitkCheckbox .uitkControlLabel-label {
+.saltCheckbox .saltControlLabel-label {
   vertical-align: baseline;
-  min-height: var(--uitkCheckbox-label-minHeight, var(--uitk-text-minHeight));
+  min-height: var(--saltCheckbox-label-minHeight, var(--salt-text-minHeight));
 }
 
-.uitkCheckbox-disabled {
-  --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
+.saltCheckbox-disabled {
+  --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
 }

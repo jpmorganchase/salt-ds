@@ -4,7 +4,7 @@ import cn from "classnames";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { useContactDetailsContext } from "./internal";
 
-const withBaseName = makePrefixer("uitkContactMetadata");
+const withBaseName = makePrefixer("saltContactMetadata");
 
 export interface ContactMetadataProps extends HTMLAttributes<HTMLDivElement> {
   collapsible?: boolean;

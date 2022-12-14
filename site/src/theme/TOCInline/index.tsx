@@ -2,7 +2,7 @@ import React from "react";
 import { makePrefixer, SaltProvider } from "@salt-ds/core";
 import TOCItems from "@theme-original/TOCItems";
 
-const withBaseName = makePrefixer("uitkTocInline");
+const withBaseName = makePrefixer("saltTocInline");
 
 import "./TOCInline.css";
 

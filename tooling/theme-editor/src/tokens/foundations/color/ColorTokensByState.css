@@ -1,9 +1,9 @@
-.uitkColorTokenByStateValues {
+.saltColorTokenByStateValues {
   display: flex;
   justify-content: space-between;
   height: 34px;
 }
-.uitkColorTokenByStateValues-container {
+.saltColorTokenByStateValues-container {
   display: flex;
   min-width: 100px;
 }

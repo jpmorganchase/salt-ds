@@ -156,8 +156,11 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "AG Grid Theme",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-grid-ag-grid-theme--page",
   },
   {
     name: "Badge",
@@ -181,7 +184,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-layout-borderlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-borderlayout--page",
   },
   {
     name: "Breadcrumbs",
@@ -279,8 +282,11 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "Data Grid",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-grid-grid--page",
   },
   {
     name: "Deck Layout",
@@ -332,7 +338,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-layout-flexlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flexlayout--page",
   },
   {
     name: "Flow Layout",
@@ -342,7 +348,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-layout-flowlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flowlayout--page",
   },
   {
     name: "Form Field",
@@ -362,10 +368,10 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Defines an equally distributed layout system using columns and rows.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.NOT_APPLICABLE,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-layout-gridlayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-gridlayout--page",
   },
   {
     name: "Icon",
@@ -395,8 +401,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Link",
     description:
       "Navigates the user to a new page, and displays link text with a meaningful description.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.NOT_APPLICABLE,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-core-link--internal-link",
   },
   {
     name: "List",
@@ -505,7 +514,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-salt-provider--simple-salt-provider-touch-density",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
   {
     name: "Scrim",
@@ -570,7 +579,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-layout-stacklayout--page",
+      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-stacklayout--page",
   },
   {
     name: "Status Indicator",
@@ -621,15 +630,20 @@ export const componentDetails: ComponentDetails[] = [
     name: "Text",
     description:
       "Includes attributes such as font weight, letter spacing, size, line height, paragraph spacing, case, text decoration and emphasis levels.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.NOT_APPLICABLE,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-core-text--primary",
   },
   {
     name: "Theme",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://uitk.pages.dev/?path=/docs/documentation-styles-and-theming-introduction--page",
   },
   {
     name: "Toast",

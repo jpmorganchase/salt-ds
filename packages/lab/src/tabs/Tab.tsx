@@ -20,7 +20,7 @@ import "./Tab.css";
 
 const noop = () => undefined;
 
-const withBaseName = makePrefixer("uitkTab");
+const withBaseName = makePrefixer("saltTab");
 
 //TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
 const CloseTabButton = (props: ButtonProps) => (
@@ -153,7 +153,7 @@ export const Tab = forwardRef(function Tab(
     if (editableRef.current) {
       const editable = editableRef.current as HTMLElement;
       const input = editable.querySelector(
-        ".uitkEditableLabel-input"
+        ".saltEditableLabel-input"
       ) as HTMLInputElement;
       input?.focus();
     }
@@ -171,7 +171,7 @@ export const Tab = forwardRef(function Tab(
         [withBaseName("dragAway")]: dragging,
         [withBaseName("editing")]: editing,
         [withBaseName("vertical")]: orientation === "vertical",
-        [`uitkFocusVisible`]: focusVisible,
+        [`saltFocusVisible`]: focusVisible,
       })}
       data-editable={editable || undefined}
       onClick={handleClick}

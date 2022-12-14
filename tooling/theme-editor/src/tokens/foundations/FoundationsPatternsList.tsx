@@ -12,7 +12,7 @@ import { IconPattern } from "./icon/IconPattern";
 import { ShadowPattern } from "./shadow/ShadowPattern";
 import "./Foundations.css";
 
-const withBaseName = makePrefixer("uitkFoundationsPatternsList");
+const withBaseName = makePrefixer("saltFoundationsPatternsList");
 interface FoundationPatternsListProps {
   extractValue: (val: string) => string;
   jsonInCurrentScope: JSONByScope[];
@@ -28,13 +28,13 @@ export const FoundationPatternsList = (
 ): ReactElement => {
   let jsonByScopeInView = useMemo(() => {
     return Object.values(props.jsonInCurrentScope).filter((js) =>
-      Object.keys(js.jsonObj.uitk).some((k) =>
+      Object.keys(js.jsonObj.salt).some((k) =>
         props.patternsInScope.includes(k)
       )
     );
   }, [props.jsonInCurrentScope, props.patternsInScope]);
 
-  const uitkColorOverrides = useMemo(() => {
+  const saltColorOverrides = useMemo(() => {
     return createColorMap(jsonByScopeInView);
   }, [jsonByScopeInView]);
 
@@ -60,7 +60,7 @@ export const FoundationPatternsList = (
       )}
       <Accordion>
         {jsonByScopeInView.map((s) => {
-          return Object.keys(s.jsonObj.uitk)
+          return Object.keys(s.jsonObj.salt)
             .filter((pattern) => props.patternsInScope.includes(pattern))
             .map(function (pattern) {
               return s.scope.includes("density") ||
@@ -70,43 +70,43 @@ export const FoundationPatternsList = (
                 <FoundationPatternByDensity
                   key={`${props.themeName}-${pattern}`}
                   patternName={pattern}
-                  values={s.jsonObj.uitk[pattern]}
+                  values={s.jsonObj.salt[pattern]}
                   themeName={props.themeName}
                   onUpdateJSON={props.onUpdateJSON}
                   extractValue={props.extractValue}
                   scope={s.scope}
-                  uitkColorOverrides={uitkColorOverrides}
+                  saltColorOverrides={saltColorOverrides}
                 />
               ) : pattern === "shadow" ? (
                 <div className={cn(withBaseName("ColorsAndShadows"))}>
                   <ShadowPattern
-                    uitkColorOverrides={uitkColorOverrides}
+                    saltColorOverrides={saltColorOverrides}
                     themeName={props.themeName}
                     onUpdateJSON={props.onUpdateJSON}
                     extractValue={props.extractValue}
                     scope={s.scope}
                     pattern={pattern}
-                    shadowPattern={s.jsonObj.uitk[pattern]}
+                    shadowPattern={s.jsonObj.salt[pattern]}
                   />
                 </div>
               ) : pattern === "icon" ? (
                 <IconPattern
                   key={`${props.themeName}-${pattern}`}
                   patternName={pattern}
-                  values={s.jsonObj.uitk[pattern]}
+                  values={s.jsonObj.salt[pattern]}
                   themeName={props.themeName}
                   onUpdateJSON={props.onUpdateJSON}
                   extractValue={props.extractValue}
                   scope={s.scope}
-                  uitkColorOverrides={uitkColorOverrides}
+                  saltColorOverrides={saltColorOverrides}
                 />
               ) : (
                 ["mode-all"].includes(s.scope) && (
                   <ColorPattern
-                    uitkColorOverrides={uitkColorOverrides}
+                    saltColorOverrides={saltColorOverrides}
                     key={`${props.themeName}-${pattern}`}
                     patternName={pattern}
-                    values={s.jsonObj.uitk[pattern]}
+                    values={s.jsonObj.salt[pattern]}
                     themeName={props.themeName}
                     onUpdateJSON={props.onUpdateJSON}
                     extractValue={props.extractValue}

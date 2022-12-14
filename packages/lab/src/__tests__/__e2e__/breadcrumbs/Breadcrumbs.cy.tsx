@@ -207,7 +207,7 @@ describe("GIVEN a Breadcrumbs component", () => {
 
       cy.realPress("Escape");
 
-      cy.get(".uitkText").realHover();
+      cy.get(".saltText").realHover();
       cy.findByRole("tooltip").should("be.visible");
     });
   });

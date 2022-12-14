@@ -10,7 +10,7 @@ export interface FormGroupProps extends HTMLAttributes<HTMLDivElement> {
   row?: boolean;
 }
 
-const baseName = "uitkFormGroup";
+const baseName = "saltFormGroup";
 
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
   function FormGroup({ className, row, ...other }, ref) {

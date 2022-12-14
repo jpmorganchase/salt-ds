@@ -21,7 +21,7 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
 }
 
-const withBaseName = makePrefixer("uitkMetricHeader");
+const withBaseName = makePrefixer("saltMetricHeader");
 
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(

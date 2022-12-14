@@ -9,7 +9,7 @@ import { RGBAInput } from "./RGBAInput";
 
 import "./ColorPicker.css";
 
-const withBaseName = makePrefixer("uitkColorChooserPicker");
+const withBaseName = makePrefixer("saltColorChooserPicker");
 
 export interface ColorPickerProps {
   disableAlphaChooser: boolean;

@@ -1,12 +1,12 @@
 /* Main css class. Style for body text */
-.uitkText {
-  font-size: var(--uitk-text-fontSize);
-  line-height: var(--uitk-text-lineHeight);
-  color: var(--uitkText-color, var(--text-color));
+.saltText {
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  color: var(--saltText-color, var(--text-color));
 }
 
 /* Allows truncation */
-.uitkText-lineClamp {
+.saltText-lineClamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--text-max-rows, 0);
@@ -15,142 +15,142 @@
 }
 
 /* Primary variant */
-.uitkText-primary {
-  --text-color: var(--uitk-text-primary-foreground);
+.saltText-primary {
+  --text-color: var(--salt-text-primary-foreground);
 }
 
 /* Secondary variant */
-.uitkText-secondary {
-  --text-color: var(--uitk-text-secondary-foreground);
+.saltText-secondary {
+  --text-color: var(--salt-text-secondary-foreground);
 }
 
 /* Body emphasis strong */
-.uitkText strong {
-  font-weight: var(--uitk-text-fontWeight-strong);
+.saltText strong {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 /* Body emphasis small */
-.uitkText small {
+.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-small);
 }
 
 /* Display 1 */
-.uitkText-display1.uitkText {
-  font-size: var(--uitk-text-display1-fontSize);
-  font-weight: var(--uitk-text-display1-fontWeight);
-  line-height: var(--uitk-text-display1-lineHeight);
+.saltText-display1.saltText {
+  font-size: var(--salt-text-display1-fontSize);
+  font-weight: var(--salt-text-display1-fontWeight);
+  line-height: var(--salt-text-display1-lineHeight);
 }
 
 /* Display 2 */
-.uitkText-display2.uitkText {
-  font-size: var(--uitk-text-display2-fontSize);
-  font-weight: var(--uitk-text-display2-fontWeight);
-  line-height: var(--uitk-text-display2-lineHeight);
+.saltText-display2.saltText {
+  font-size: var(--salt-text-display2-fontSize);
+  font-weight: var(--salt-text-display2-fontWeight);
+  line-height: var(--salt-text-display2-lineHeight);
 }
 
 /* Display 3 */
-.uitkText-display3.uitkText {
-  font-size: var(--uitk-text-display3-fontSize);
-  font-weight: var(--uitk-text-display3-fontWeight);
-  line-height: var(--uitk-text-display3-lineHeight);
+.saltText-display3.saltText {
+  font-size: var(--salt-text-display3-fontSize);
+  font-weight: var(--salt-text-display3-fontWeight);
+  line-height: var(--salt-text-display3-lineHeight);
 }
 
 /* Heading 1 */
-h1.uitkText,
-.uitkText-h1.uitkText {
-  font-size: var(--uitk-text-h1-fontSize);
-  font-weight: var(--uitk-text-h1-fontWeight);
-  line-height: var(--uitk-text-h1-lineHeight);
+h1.saltText,
+.saltText-h1.saltText {
+  font-size: var(--salt-text-h1-fontSize);
+  font-weight: var(--salt-text-h1-fontWeight);
+  line-height: var(--salt-text-h1-lineHeight);
 }
 
 /* H1 emphasis strong */
-h1.uitkText strong,
-.uitkText-h1.uitkText strong {
-  font-weight: var(--uitk-text-h1-fontWeight-strong);
+h1.saltText strong,
+.saltText-h1.saltText strong {
+  font-weight: var(--salt-text-h1-fontWeight-strong);
 }
 /* H1 emphasis small */
-h1.uitkText small,
-.uitkText-h1.uitkText small {
+h1.saltText small,
+.saltText-h1.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h1-fontWeight-small);
+  font-weight: var(--salt-text-h1-fontWeight-small);
 }
 
 /* Heading 2 */
-h2.uitkText,
-.uitkText-h2.uitkText {
-  font-size: var(--uitk-text-h2-fontSize);
-  font-weight: var(--uitk-text-h2-fontWeight);
-  line-height: var(--uitk-text-h2-lineHeight);
+h2.saltText,
+.saltText-h2.saltText {
+  font-size: var(--salt-text-h2-fontSize);
+  font-weight: var(--salt-text-h2-fontWeight);
+  line-height: var(--salt-text-h2-lineHeight);
 }
 
 /* H2 emphasis strong */
-h2.uitkText strong,
-.uitkText-h2.uitkText strong {
-  font-weight: var(--uitk-text-h2-fontWeight-strong);
+h2.saltText strong,
+.saltText-h2.saltText strong {
+  font-weight: var(--salt-text-h2-fontWeight-strong);
 }
 /* H2 emphasis small */
-h2.uitkText small,
-.uitkText-h2.uitkText small {
+h2.saltText small,
+.saltText-h2.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h2-fontWeight-small);
+  font-weight: var(--salt-text-h2-fontWeight-small);
 }
 
 /* Heading 3 */
-h3.uitkText,
-.uitkText-h3.uitkText {
-  font-size: var(--uitk-text-h3-fontSize);
-  font-weight: var(--uitk-text-h3-fontWeight);
-  line-height: var(--uitk-text-h3-lineHeight);
+h3.saltText,
+.saltText-h3.saltText {
+  font-size: var(--salt-text-h3-fontSize);
+  font-weight: var(--salt-text-h3-fontWeight);
+  line-height: var(--salt-text-h3-lineHeight);
 }
 
 /* H3 emphasis strong */
-h3.uitkText strong,
-.uitkText-h3.uitkText strong {
-  font-weight: var(--uitk-text-h3-fontWeight-strong);
+h3.saltText strong,
+.saltText-h3.saltText strong {
+  font-weight: var(--salt-text-h3-fontWeight-strong);
 }
 /* H3 emphasis small */
-h3.uitkText small,
-.uitkText-h3.uitkText small {
+h3.saltText small,
+.saltText-h3.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h3-fontWeight-small);
+  font-weight: var(--salt-text-h3-fontWeight-small);
 }
 
 /* Heading 4 */
-h4.uitkText,
-.uitkText-h4.uitkText {
-  font-size: var(--uitk-text-h4-fontSize);
-  font-weight: var(--uitk-text-h4-fontWeight);
-  line-height: var(--uitk-text-h4-lineHeight);
+h4.saltText,
+.saltText-h4.saltText {
+  font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
+  line-height: var(--salt-text-h4-lineHeight);
 }
 
 /* H4 emphasis strong */
-h4.uitkText strong,
-.uitkText-h4.uitkText strong {
-  font-weight: var(--uitk-text-h4-fontWeight-strong);
+h4.saltText strong,
+.saltText-h4.saltText strong {
+  font-weight: var(--salt-text-h4-fontWeight-strong);
 }
 /* H4 emphasis small */
-h4.uitkText small,
-.uitkText-h4.uitkText small {
+h4.saltText small,
+.saltText-h4.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-h4-fontWeight-small);
+  font-weight: var(--salt-text-h4-fontWeight-small);
 }
 
 /* Label */
-label.uitkText,
-.uitkText-label.uitkText {
-  font-size: var(--uitk-text-label-fontSize);
-  line-height: var(--uitk-text-label-lineHeight);
-  font-weight: var(--uitk-text-fontWeight);
+label.saltText,
+.saltText-label.saltText {
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 /* Label emphasis strong */
-label.uitkText strong,
-.uitkText-label.uitkText strong {
-  font-weight: var(--uitk-text-fontWeight-strong);
+label.saltText strong,
+.saltText-label.saltText strong {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 /* Label emphasis small */
-label.uitkText small,
-.uitkText-label.uitkText small {
+label.saltText small,
+.saltText-label.saltText small {
   font-size: inherit;
-  font-weight: var(--uitk-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-small);
 }

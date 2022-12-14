@@ -11,7 +11,7 @@ import { ChevronRightIcon } from "@salt-ds/icons";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
 import "./Accordion.css";
 
-const withBaseName = makePrefixer("uitkAccordionSummary");
+const withBaseName = makePrefixer("saltAccordionSummary");
 
 export interface AccordionSummaryProps extends HTMLAttributes<HTMLDivElement> {
   icon?: ReactNode;

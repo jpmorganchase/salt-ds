@@ -4,7 +4,7 @@ import { Avatar, AvatarProps } from "../avatar";
 import { useContactDetailsContext } from "./internal";
 import cn from "classnames";
 
-const withBaseName = makePrefixer("uitkContactAvatar");
+const withBaseName = makePrefixer("saltContactAvatar");
 
 export interface ContactAvatarProps extends AvatarProps {}
 

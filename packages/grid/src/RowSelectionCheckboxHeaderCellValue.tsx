@@ -35,7 +35,7 @@ export function RowSelectionCheckboxHeaderCellValue<T>(
   return (
     <div
       onMouseDown={onMousedown}
-      className="uitkGridCheckboxContainer"
+      className="saltGridCheckboxContainer"
       onKeyDown={onKeyDown}
     >
       <CheckboxBase

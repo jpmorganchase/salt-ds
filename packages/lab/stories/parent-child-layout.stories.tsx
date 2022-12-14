@@ -94,8 +94,8 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
   );
 };
 
-export const ToolkitParentChildLayoutStacked = Stacked.bind({});
-ToolkitParentChildLayoutStacked.args = {
+export const SaltParentChildLayoutStacked = Stacked.bind({});
+SaltParentChildLayoutStacked.args = {
   stackedAtBreakpoint: "xl",
 };
 
@@ -135,8 +135,8 @@ const ReducedMotion: ComponentStory<typeof ParentChildLayout> = (args) => {
   );
 };
 
-export const ToolkitParentChildLayoutReducedMotion = ReducedMotion.bind({});
-ToolkitParentChildLayoutReducedMotion.args = {
+export const SaltParentChildLayoutReducedMotion = ReducedMotion.bind({});
+SaltParentChildLayoutReducedMotion.args = {
   stackedAtBreakpoint: "xl",
 };
 

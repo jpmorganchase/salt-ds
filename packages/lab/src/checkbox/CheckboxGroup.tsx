@@ -44,7 +44,7 @@ export interface CheckboxGroupProps extends FormGroupProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-const classBase = "uitkCheckboxGroup";
+const classBase = "saltCheckboxGroup";
 
 export const CheckboxGroup = forwardRef<
   HTMLFieldSetElement,

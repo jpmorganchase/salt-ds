@@ -14,7 +14,7 @@ import { ShadowInnerPattern } from "./ShadowInnerPattern";
 import { URLSearchParamsInit } from "react-router-dom";
 import "./FlatShadow.css";
 
-const withBaseName = makePrefixer("uitkFlatShadow");
+const withBaseName = makePrefixer("saltFlatShadow");
 
 interface FlatShadowProps extends ShadowPatternProps {
   innerPattern: string;
@@ -82,7 +82,7 @@ export const FlatShadow = (props: FlatShadowProps): ReactElement => {
             }
             return (
               <ShadowInnerPattern
-                uitkColorOverrides={props.uitkColorOverrides}
+                saltColorOverrides={props.saltColorOverrides}
                 entireValue={patternParts.join(" ")}
                 key={`${props.themeName}-${props.pattern}-${props.innerPattern}-${label}`}
                 patternName={`${props.pattern}-${props.innerPattern}`}

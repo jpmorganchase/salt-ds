@@ -5,8 +5,8 @@ export const ColumnLayoutContainer = ({
   children,
 }: {
   children?: ReactNode;
-}) => <div className="uitkColumnLayout-container">{children}</div>;
+}) => <div className="saltColumnLayout-container">{children}</div>;
 
 export const ColumnLayoutItem = ({ children }: { children?: ReactNode }) => (
-  <div className="uitkColumnLayout-item">{children}</div>
+  <div className="saltColumnLayout-item">{children}</div>
 );

@@ -3,7 +3,7 @@ import { makePrefixer } from "@salt-ds/core";
 import classnames from "classnames";
 import "./RadioButtonIcon.css";
 
-const withBaseName = makePrefixer("uitkRadioButtonIcon");
+const withBaseName = makePrefixer("saltRadioButtonIcon");
 
 export interface RadioButtonIconProps {
   checked?: boolean;

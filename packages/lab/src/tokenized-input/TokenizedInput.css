@@ -1,33 +1,33 @@
 /* Styles applied to root component (TokenizedInput) */
-.uitk-density-medium {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2);
-  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
+.salt-density-medium {
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2);
+  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
-.uitk-density-touch {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 2px);
-  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
-}
-
-.uitk-density-low {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
+.salt-density-touch {
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 2px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
-.uitk-density-high {
-  --tokenizedInput-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
+.salt-density-low {
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
-.uitkTokenizedInput {
-  --tokenizedInput-spacing: var(--uitk-size-unit);
-  --tokenizedInput-height: var(--uitk-size-base);
+.salt-density-high {
+  --tokenizedInput-gutter-size: calc(var(--salt-size-basis-unit) - 1px);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
 
-.uitkTokenizedInput {
+.saltTokenizedInput {
+  --tokenizedInput-spacing: var(--salt-size-unit);
+  --tokenizedInput-height: var(--salt-size-base);
+}
+
+.saltTokenizedInput {
   display: inline-flex;
   justify-content: space-between;
   min-width: 8em; /* same min-width as Input component */
@@ -35,17 +35,17 @@
 }
 
 /* Styles applied to root component on hover state  */
-.uitkTokenizedInput:hover {
-  cursor: var(--uitk-selectable-cursor-hover);
+.saltTokenizedInput:hover {
+  cursor: var(--salt-selectable-cursor-hover);
 }
 
 /* Styles applied to root component on hover state if `disabled={true}` */
-.uitkTokenizedInput.uitkTokenizedInput-disabled:hover {
-  cursor: var(--uitk-selectable-cursor-disabled);
+.saltTokenizedInput.saltTokenizedInput-disabled:hover {
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to container of pills */
-.uitkTokenizedInput-pillGroup {
+.saltTokenizedInput-pillGroup {
   align-content: flex-start;
   display: flex;
   flex: 1;
@@ -55,34 +55,34 @@
 }
 
 /* Styles applied to root component if `disabled={true}` */
-.uitkTokenizedInput-disabled {
-  cursor: var(--uitk-editable-cursor-disabled);
-  opacity: var(--uitkTokenizedInput-disabled-opacity, var(--uitk-palette-opacity-foreground));
+.saltTokenizedInput-disabled {
+  cursor: var(--salt-editable-cursor-disabled);
+  opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-foreground));
 }
 
 /* Styles applied to root component if `focused={true}` */
-.uitkTokenizedInput-focused {
-  outline: var(--uitkTokenizedInput-focused-outline, var(--uitk-focused-outline));
+.saltTokenizedInput-focused {
+  outline: var(--saltTokenizedInput-focused-outline, var(--salt-focused-outline));
 }
 
 /* Styles applied to root component if `expanded={true}` */
-.uitkTokenizedInput-expanded {
+.saltTokenizedInput-expanded {
   height: auto;
 
   /* Pill CSS API */
-  --uitkPill-maxWidth: calc(100px - var(--uitk-size-unit));
+  --saltPill-maxWidth: calc(100px - var(--salt-size-unit));
 }
 
 /* Styles applied to Input and Clear Button if `expanded={false}` */
-.uitkTokenizedInput-hidden {
+.saltTokenizedInput-hidden {
   display: none;
 }
 
-/** 
+/**
   Styles applied to inner Input component
-  Used to be .inputRoot 
+  Used to be .inputRoot
 **/
-.uitkTokenizedInput-input {
+.saltTokenizedInput-input {
   align-items: flex-start;
   cursor: text;
   flex-grow: 1;
@@ -95,65 +95,65 @@
 }
 
 /* Styles applied to Clear Button  */
-.uitkTokenizedInput-clearButton {
+.saltTokenizedInput-clearButton {
   flex: none;
   align-self: flex-end;
 }
 
 /* Styles applied to Expand Button  */
-.uitkTokenizedInput-expandButton {
+.saltTokenizedInput-expandButton {
   padding: 0 calc(var(--tokenizedInput-spacing) / 4);
 }
 
 /* Styles applied to root component and pill container if `expanded={true}` */
-.uitkTokenizedInput-expanded,
-.uitkTokenizedInput-expanded .uitkTokenizedInput-pillGroup {
+.saltTokenizedInput-expanded,
+.saltTokenizedInput-expanded .saltTokenizedInput-pillGroup {
   height: auto;
 }
 
-/* TODO: Adjust specificity of .InputPill depending on styling solution. 
+/* TODO: Adjust specificity of .InputPill depending on styling solution.
   This is an example of internal sub-component naming convension. */
-.uitkTokenizedInput .uitkInputPill,
-.uitkTokenizedInput-expandButton,
-.uitkTokenizedInput-input,
-.uitkTokenizedInput-inputField.uitkTokenizedInput-inputMultiline .uitkTokenizedInput-input {
+.saltTokenizedInput .saltInputPill,
+.saltTokenizedInput-expandButton,
+.saltTokenizedInput-input,
+.saltTokenizedInput-inputField.saltTokenizedInput-inputMultiline .saltTokenizedInput-input {
   margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
   height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);
 }
 
 /* Styles applied to inner Pills */
-.uitkTokenizedInput .uitkInputPill {
+.saltTokenizedInput .saltInputPill {
   min-width: 0;
   margin-right: var(--tokenizedInput-gutter-size);
-  --uitkPill-maxWidth: 100px;
+  --saltPill-maxWidth: 100px;
 }
 
-.uitkTokenizedInput .uitkInputPill > * {
+.saltTokenizedInput .saltInputPill > * {
   min-width: 0;
 }
 
 /* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
-.uitkTokenizedInput .uitkInputPill.uitkInputPill-hidden {
+.saltTokenizedInput .saltInputPill.saltInputPill-hidden {
   display: none;
 }
 
 /* Styles applied to the last visible Pill when all visible */
-.uitkTokenizedInput .uitkInputPill-pillLastVisible {
-  margin-right: var(--uitkTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
+.saltTokenizedInput .saltInputPill-pillLastVisible {
+  margin-right: var(--saltTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
 }
 
 /* Styles applied to a Pill when active */
-.uitkTokenizedInput .uitkInputPill-pillActive {
-  background: var(--uitkTokenizedInput-pill-background-active, var(--uitk-selectable-background-hover));
+.saltTokenizedInput .saltInputPill-pillActive {
+  background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
 }
 
 /* Styles applied to a Pills delete icon */
-.uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
-  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-cta-foreground-hover));
+.saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteIcon {
+  color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
 }
 
 /* Styles applied to a Pills delete button */
-.uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
-  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-cta-foreground-hover));
-  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-cta-background-hover));
+.saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteButton {
+  color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
+  background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
 }

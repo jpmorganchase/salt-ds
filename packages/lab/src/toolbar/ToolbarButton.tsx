@@ -13,7 +13,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
       <Button
         variant="secondary"
         {...props}
-        className="uitkToolbarButton"
+        className="saltToolbarButton"
         data-overflow-label={label}
         ref={forwardedRef}
       />

@@ -1,13 +1,13 @@
 /* Styles applied to the root element */
-.uitkPanel {
-  background: var(--uitkPanel-background, var(--uitk-container-primary-background));
-  color: var(--uitkPanel-color, var(--uitk-text-primary-foreground));
-  height: var(--uitkPanel-height, auto);
+.saltPanel {
+  background: var(--saltPanel-background, var(--salt-container-primary-background));
+  color: var(--saltPanel-color, var(--salt-text-primary-foreground));
+  height: var(--saltPanel-height, auto);
   overflow: auto;
-  padding: var(--uitkPanel-padding, calc(var(--uitk-size-unit) * 3));
-  width: var(--uitkPanel-width, 100%);
+  padding: var(--saltPanel-padding, calc(var(--salt-size-unit) * 3));
+  width: var(--saltPanel-width, 100%);
 }
 
-.uitkPanel-secondary.uitkPanel {
-  background: var(--uitkPanel-background, var(--uitk-container-secondary-background));
+.saltPanel-secondary.saltPanel {
+  background: var(--saltPanel-background, var(--salt-container-secondary-background));
 }

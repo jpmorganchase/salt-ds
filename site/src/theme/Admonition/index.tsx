@@ -2,7 +2,7 @@ import React from "react";
 import { makePrefixer } from "@salt-ds/core";
 import Admonition from "@theme-original/Admonition";
 
-const withBaseName = makePrefixer("uitkAdmonition");
+const withBaseName = makePrefixer("saltAdmonition");
 
 import "./Admonition.css";
 

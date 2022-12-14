@@ -33,7 +33,7 @@ import { useListItem, useVirtualizedListItem } from "./useListItem";
 
 import "./List.css";
 
-const withBaseName = makePrefixer("uitkListDeprecated");
+const withBaseName = makePrefixer("saltListDeprecated");
 
 export interface ListboxContextProps<Item> {
   borderless?: boolean;

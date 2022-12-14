@@ -12,7 +12,7 @@ export const DropIndicator = forwardRef<
   return (
     <Portal>
       <div
-        className={`uitkDropIndicator`}
+        className={`saltDropIndicator`}
         ref={forwardedRef}
         style={{ left, top, width, height }}
       />

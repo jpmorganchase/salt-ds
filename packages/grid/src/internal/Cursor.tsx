@@ -1,7 +1,7 @@
 import "./Cursor.css";
 import { makePrefixer } from "@salt-ds/core";
 
-const withBaseName = makePrefixer("uitkGridCursor");
+const withBaseName = makePrefixer("saltGridCursor");
 
 export interface CursorProps {}
 

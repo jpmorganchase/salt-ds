@@ -13,7 +13,7 @@ import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";
 
-const withBaseName = makePrefixer("uitkGridTableRow");
+const withBaseName = makePrefixer("saltGridTableRow");
 
 export interface TableRowProps<T> {
   row: GridRowModel<T>;

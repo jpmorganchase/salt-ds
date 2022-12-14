@@ -1,27 +1,27 @@
-.uitkGridLayout.uitkCarousel {
+.saltGridLayout.saltCarousel {
   grid-template-columns: min-content auto min-content;
   grid-template-areas: "prev-button slider next-button" "dots dots dots";
 }
 
-.uitkCarousel.uitkCarousel-compact {
+.saltCarousel.saltCarousel-compact {
   grid-template-areas: "slider slider slider" "prev-button dots next-button";
 }
 
-.uitkCarousel-prev-button {
+.saltCarousel-prev-button {
   grid-area: prev-button;
   height: 100%;
 }
 
-.uitkCarousel-next-button {
+.saltCarousel-next-button {
   grid-area: next-button;
   height: 100%;
 }
 
-.uitkCarousel-slider {
+.saltCarousel-slider {
   grid-area: slider;
 }
 
-.uitkCarousel-dots {
+.saltCarousel-dots {
   grid-area: dots;
   justify-self: center;
 }

@@ -5,7 +5,7 @@ import { MetricContextProvider, MetricContextValue } from "./internal";
 
 import "./Metric.css";
 
-const withBaseName = makePrefixer("uitkMetric");
+const withBaseName = makePrefixer("saltMetric");
 
 export interface MetricProps
   extends MetricContextValue,

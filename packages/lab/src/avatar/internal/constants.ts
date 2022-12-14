@@ -1,1 +1,1 @@
-export const classBase = "uitkAvatar";
+export const classBase = "saltAvatar";

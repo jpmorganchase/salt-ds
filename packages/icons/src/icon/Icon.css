@@ -1,8 +1,8 @@
 /* Style applied to the root element */
-.uitkIcon {
-  --icon-color: var(--uitkIcon-color, var(--uitk-text-secondary-foreground));
-  --icon-size-multiplier: var(--uitkIcon-size-multiplier, 1);
-  --icon-base-size: var(--uitk-size-icon-base, 12px);
+.saltIcon {
+  --icon-color: var(--saltIcon-color, var(--salt-text-secondary-foreground));
+  --icon-size-multiplier: var(--saltIcon-size-multiplier, 1);
+  --icon-base-size: var(--salt-size-icon-base, 12px);
   /**
    * Icon size will be the multiplier (an integer from the size prop) * the base size (set by the theme per density)
    * Icons should never be smaller than 12px for readability so we've added a max() to enforce this
@@ -10,10 +10,10 @@
   --icon-size: max(calc(var(--icon-base-size) * var(--icon-size-multiplier)), 12px);
 }
 
-.uitkIcon {
-  fill: var(--uitkIcon-color, var(--icon-color));
+.saltIcon {
+  fill: var(--saltIcon-color, var(--icon-color));
   display: inline-block;
-  margin: var(--uitkIcon-margin, 0);
+  margin: var(--saltIcon-margin, 0);
   position: relative;
   width: var(--icon-size);
   height: var(--icon-size);
@@ -21,10 +21,10 @@
   min-height: var(--icon-size);
 }
 
-.uitkIcon:hover {
-  --icon-color: var(--uitkIcon-color-hover, var(--uitk-text-secondary-foreground));
+.saltIcon:hover {
+  --icon-color: var(--saltIcon-color-hover, var(--salt-text-secondary-foreground));
 }
 
-.uitkIcon:active {
-  --icon-color: var(--uitkIcon-color-active, var(--uitk-text-secondary-foreground));
+.saltIcon:active {
+  --icon-color: var(--saltIcon-color-active, var(--salt-text-secondary-foreground));
 }

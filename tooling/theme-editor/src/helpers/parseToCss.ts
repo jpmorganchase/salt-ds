@@ -2,7 +2,7 @@
 //@ts-nocheck
 import { capitalize } from "@salt-ds/lab";
 import { JSONByScope } from "./parseToJson";
-import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../utils/uitkValues";
+import { SALT_CHARACTERISTICS, SALT_FOUNDATIONS } from "../utils/saltValues";
 
 export type CSSByPattern = {
   pattern: string;
@@ -25,7 +25,7 @@ function transformToCSS(patternJsonByScope) {
           stringCSS += tokenPrefix;
         }
       } else {
-        if (node[path].startsWith("uitk")) {
+        if (node[path].startsWith("salt")) {
           stringCSS += ": var(--" + node[path] + ");";
         } else if (node[path].startsWith("*")) {
           const cssVars = node[path].split("*").filter((v) => v.length > 1);
@@ -42,7 +42,7 @@ function transformToCSS(patternJsonByScope) {
           const cssParts = node[path].split("*");
           stringCSS += ":";
           for (var p of cssParts) {
-            if (p.startsWith("uitk")) {
+            if (p.startsWith("salt")) {
               stringCSS += "var(--" + p + ") ";
             } else {
               stringCSS += p + " ";
@@ -59,19 +59,19 @@ function transformToCSS(patternJsonByScope) {
   patternJsonByScope.forEach((element) => {
     let selector;
     if (element.scope === "mode-all") {
-      selector = `.uitk-theme`;
+      selector = `.salt-theme`;
     } else if (element.scope === "density-all") {
-      selector = `.uitk-density-low, .uitk-density-medium, .uitk-density-high, .uitk-density-touch`;
+      selector = `.salt-density-low, .salt-density-medium, .salt-density-high, .salt-density-touch`;
     } else if (element.scope.includes("emphasis")) {
-      selector = `.uitkEmphasis${capitalize(element.scope.split("-")[1])}`;
+      selector = `.saltEmphasis${capitalize(element.scope.split("-")[1])}`;
     } else {
-      selector = `.uitk-${element.scope}`;
+      selector = `.salt-${element.scope}`;
     }
     stringCSS = stringCSS + selector + "{";
 
     Object.keys(element.jsonObj).forEach((path) => {
       if (path !== "value") {
-        stringCSS += "--uitk-" + path;
+        stringCSS += "--salt-" + path;
         recurse(element.jsonObj[path]);
       } else {
         stringCSS += ": " + element.jsonObj[path];
@@ -87,13 +87,13 @@ function transformToCSS(patternJsonByScope) {
 export function parseJSONtoCSS(jsonByScope: JSONByScope[]): CSSByPattern[] {
   let cssByPattern = [];
 
-  for (var patternName of UITK_FOUNDATIONS.concat(UITK_CHARACTERISTICS)) {
+  for (var patternName of SALT_FOUNDATIONS.concat(SALT_CHARACTERISTICS)) {
     const patternJsonByScope = jsonByScope
       .filter((element) => {
-        return element.jsonObj.uitk[patternName];
+        return element.jsonObj.salt[patternName];
       })
       .map((element) => {
-        const patternJSON = element.jsonObj.uitk[patternName];
+        const patternJSON = element.jsonObj.salt[patternName];
         return {
           scope: element.scope,
           jsonObj: { [patternName]: patternJSON },

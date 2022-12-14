@@ -11,7 +11,7 @@ import {
 
 import "./FlexLayout.css";
 
-const withBaseName = makePrefixer("uitkFlexLayout");
+const withBaseName = makePrefixer("saltFlexLayout");
 
 export type LayoutSeparator = "start" | "center" | "end";
 export type LayoutDirection = "row" | "column";

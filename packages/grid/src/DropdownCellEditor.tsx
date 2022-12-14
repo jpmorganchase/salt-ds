@@ -5,8 +5,10 @@ import "./DropdownCellEditor.css";
 import { useEffect, useRef } from "react";
 
 import { GridColumnModel, GridRowModel } from "./Grid";
+import { CornerTag } from "./CornerTag";
+import { Cell } from "./internal";
 
-const withBaseName = makePrefixer("uitkGridDropdownCellEditor");
+const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
 export interface DropdownCellEditorProps<T> {
   options: string[];
@@ -47,7 +49,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   );
 
   return (
-    <td className={withBaseName()}>
+    <Cell separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("dropdownContainer")}>
         <Dropdown
           isOpen={true}
@@ -58,6 +60,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
           width={column!.info.width! - 5}
         />
       </div>
-    </td>
+      <CornerTag />
+    </Cell>
   );
 }

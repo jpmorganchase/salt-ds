@@ -20,8 +20,8 @@ const ProgressWithControls = ({
   const { handleReset, handleStart, handleStop, isProgressing, value } =
     useProgressingValue();
   return (
-    <div className="uitk-ProgressWithControls-root">
-      <div className="uitk-ProgressWithControls-controls">
+    <div className="salt-ProgressWithControls-root">
+      <div className="salt-ProgressWithControls-controls">
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
         </Button>
@@ -30,16 +30,16 @@ const ProgressWithControls = ({
         </Button>
         <Button onClick={handleReset}>Reset</Button>
       </div>
-      <div className="uitk-ProgressWithControls-progressComponentContainer">
-        <div className="uitk-ProgressWithControls-container">
+      <div className="salt-ProgressWithControls-progressComponentContainer">
+        <div className="salt-ProgressWithControls-container">
           <Progress aria-label="Download" size="small" value={value} />
           <h3>small</h3>
         </div>
-        <div className="uitk-ProgressWithControls-container">
+        <div className="salt-ProgressWithControls-container">
           <Progress aria-label="Download" size="medium" value={value} />
           <h3>medium</h3>
         </div>
-        <div className="uitk-ProgressWithControls-container">
+        <div className="salt-ProgressWithControls-container">
           <Progress aria-label="Download" size="large" value={value} />
           <h3>large</h3>
         </div>
