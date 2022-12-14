@@ -1,0 +1,56 @@
+.uitkGridCell {
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+  border-style: solid;
+  border-bottom-color: var(--grid-row-borderColor);
+  border-width: 0 0 1px 0;
+
+  white-space: nowrap;
+  position: relative;
+  font-size: var(--grid-fontSize);
+  font-weight: normal;
+
+  outline: 0;
+}
+
+.uitkGridTableRow-first .uitkGridCell {
+  border-width: 1px 0 1px 0;
+  border-top-color: transparent;
+}
+
+.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridCell {
+  border-top-color: var(--grid-row-borderColor);
+}
+
+.uitkGridCell-body {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-style: solid;
+  background: var(--grid-row-background);
+  border-width: 0 1px 0 0;
+  border-color: var(--grid-row-background);
+}
+
+.uitkGrid-columnSeparators .uitkGridCell-regularSeparator .uitkGridCell-body {
+  border-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-columnSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-body {
+  border-color: var(--grid-columnSeparator-color);
+}
+
+.uitkGrid-pinnedSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-body {
+  border-color: var(--grid-pinnedSeparator-color);
+}
+
+.uitkGridCell-selected .uitkGridCell-body {
+  background: var(--grid-cell-background-selected);
+}
