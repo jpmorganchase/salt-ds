@@ -590,3 +590,11 @@ table tr th + th {
     gap: calc(var(--uitk-size-unit) / 2);
   }
 }
+
+
+@media screen and (max-width: 768px) {
+  .footer {
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
+  }
+}
