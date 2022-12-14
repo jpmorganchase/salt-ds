@@ -18,7 +18,7 @@ const ExcelExport = (props: AgGridReactProps) => {
   };
 
   const { api, containerProps, agGridProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const ExcelExport = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div>

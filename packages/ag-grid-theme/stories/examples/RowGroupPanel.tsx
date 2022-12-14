@@ -22,7 +22,7 @@ const RowGroupPanel = (props: AgGridReactProps) => {
   };
 
   const { agGridProps, containerProps, api, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const RowGroupPanel = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ height: 800, width: 800 }} {...containerProps}>

@@ -37,7 +37,7 @@ const CellDropdownEditor = (props: AgGridReactProps) => {
   ]);
 
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   const [rowData] = useState(dataGridExampleData);
@@ -54,7 +54,11 @@ const CellDropdownEditor = (props: AgGridReactProps) => {
 
   return (
     <div>
-      <Switch checked={isNewTheme} onChange={onThemeChange} label="New theme" />
+      <Switch
+        checked={isNewTheme}
+        onChange={onThemeChange}
+        label="Salt AG Grid theme"
+      />
       <div style={{ height: 800, width: 800 }} {...containerProps}>
         <AgGridReact
           columnDefs={columnDefs}

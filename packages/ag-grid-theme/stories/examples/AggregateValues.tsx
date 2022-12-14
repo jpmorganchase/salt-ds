@@ -72,7 +72,7 @@ export const AggregateValues = (props: AgGridReactProps) => {
   });
 
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const AggregateValues = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div
