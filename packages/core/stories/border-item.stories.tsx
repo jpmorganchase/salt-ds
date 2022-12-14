@@ -2,7 +2,7 @@ import { BorderLayout, BorderItem } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 export default {
-  title: "Core/Layout/BorderLayout/BorderItem",
+  title: "Layout/BorderLayout/BorderItem",
   component: BorderItem,
   argTypes: {
     position: {

@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/FlowLayout",
+  title: "Layout/FlowLayout",
   component: FlowLayout,
   argTypes: {
     align: {

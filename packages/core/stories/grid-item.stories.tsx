@@ -2,7 +2,7 @@ import { GridItem, GridLayout } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 export default {
-  title: "Core/Layout/GridLayout/GridItem",
+  title: "Layout/GridLayout/GridItem",
   component: GridItem,
   argTypes: {
     colSpan: { control: { type: "number" } },

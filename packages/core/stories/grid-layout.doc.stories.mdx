@@ -4,7 +4,7 @@ import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Core/Layout/GridLayout"
+  title="Documentation/Layout/GridLayout"
   component={GridLayout}
   subcomponents={{ GridItem }}
   parameters={{
@@ -19,7 +19,7 @@ The grid layout defaults to a 12 column grid with one row, but you can customize
 For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--default-grid-layout" />
+  <Story id="layout-gridlayout--default-grid-layout" />
 </Canvas>
 
 ## Use Grid layout when...
@@ -33,7 +33,7 @@ Grid layout is useful when you want to control the layout in both row and column
 
 ### Don't use Grid layout when...
 
-You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page), [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page) or [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-layout-stacklayout--page), [Flow layout](?path=/docs/documentation-layout-flowlayout--page) or [Flex layout](?path=/docs/documentation-layout-flexlayout--page).
 
 ### Examples
 
@@ -46,7 +46,7 @@ A grid item allows more complex controls to the default behavior of a grid child
 You have an item that needs to take the space of more than one row/column or when you have an item that requires a different alignment to the component's default.
 
 <Canvas>
-  <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
+  <Story id="layout-gridlayout-griditem--grid-item-wrapper" />
 </Canvas>
 
 #### Responsive
@@ -60,7 +60,7 @@ You can use the default breakpoints or pass in your own to the `SaltProvider`.
 The flow of the grid is dependent on the viewport size.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-responsive-view-with-custom-breakpoints" />
+  <Story id="layout-gridlayout--grid-layout-responsive-view-with-custom-breakpoints" />
 </Canvas>
 
 #### Simple usage
@@ -68,7 +68,7 @@ The flow of the grid is dependent on the viewport size.
 The simple usage example shows `GridLayout` and `GridItems` being used to build a page footer where the first column takes up the most amount of space.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-footer" />
+  <Story id="layout-gridlayout--grid-layout-footer" />
 </Canvas>
 
 #### Composite usage
@@ -76,7 +76,7 @@ The simple usage example shows `GridLayout` and `GridItems` being used to build 
 The composite usage example shows a responsive blog built using `ResponsiveProps`.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-composite" />
+  <Story id="layout-gridlayout--grid-layout-composite" />
 </Canvas>
 
 ## Configuring Grid layout
@@ -102,7 +102,7 @@ columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 
 The grid layout is used in the following components
 
-- [Border layout](?path=/docs/documentation-core-layout-borderlayout--page)
+- [Border layout](?path=/docs/documentation-layout-borderlayout--page)
 
 ### Classes
 

@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/BorderLayout",
+  title: "Layout/BorderLayout",
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {

@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/FlexLayout/FlexItem",
+  title: "Layout/FlexLayout/FlexItem",
   component: FlexItem,
   argTypes: {
     align: {

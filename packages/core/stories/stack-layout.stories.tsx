@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/stack-layout",
+  title: "Layout/StackLayout",
   component: StackLayout,
   argTypes: {
     align: {

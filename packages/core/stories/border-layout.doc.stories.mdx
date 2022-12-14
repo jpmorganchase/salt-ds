@@ -4,7 +4,7 @@ import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Core/Layout/BorderLayout"
+  title="Documentation/Layout/BorderLayout"
   component={BorderLayout}
   subcomponents={{ BorderItem }}
   parameters={{
@@ -15,10 +15,10 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Border layout
 
 Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
-The border layout is built using [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
+The border layout is built using [Grid layout](?path=/docs/documentation-layout-gridlayout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
 
 <Canvas>
-  <Story id="core-layout-borderlayout--border-layout-all-panels" />
+  <Story id="layout-borderlayout--border-layout-all-panels" />
 </Canvas>
 
 ## Use Border layout when...
@@ -27,7 +27,7 @@ You want a fixed layout with a flexible main region.
 
 ### Don't use Border layout when...
 
-You want a customized layout that you can control in both row and column dimensions. In this case we recommend you having a look at [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page).
+You want a customized layout that you can control in both row and column dimensions. In this case we recommend you having a look at [Grid layout](?path=/docs/documentation-layout-gridlayout--page).
 
 ### Examples
 
@@ -37,7 +37,7 @@ The border item wrapper allows you to select the right position for your content
 It also provides access to other properties such as alignment and sticky behavior.
 
 <Canvas>
-  <Story id="core-layout-borderlayout-borderitem--border-item-wrapper" />
+  <Story id="layout-borderlayout-borderitem--border-item-wrapper" />
 </Canvas>
 
 #### Fixed panels
@@ -45,7 +45,7 @@ It also provides access to other properties such as alignment and sticky behavio
 You can have a responsive `center` region while the `west` and `east` panels remain with a fixed width as the content changes.
 
 <Canvas>
-  <Story id="core-layout-borderlayout--border-layout-fixed-panels" />
+  <Story id="layout-borderlayout--border-layout-fixed-panels" />
 </Canvas>
 
 ## Configuring Border layout

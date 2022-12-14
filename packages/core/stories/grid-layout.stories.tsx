@@ -10,7 +10,7 @@ import { ThumbsUpIcon } from "@salt-ds/icons";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/GridLayout",
+  title: "Layout/GridLayout",
   component: GridLayout,
   subcomponents: { GridItem },
   argTypes: {
