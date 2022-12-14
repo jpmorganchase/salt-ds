@@ -1,31 +1,31 @@
 .layout-container > div,
 .layout-content {
-  background: var(--uitk-color-orange-20);
+  background: var(--salt-color-orange-20);
   padding: 1rem;
 }
 .layout-container > .layout-active-content,
 .layout-active-content {
-  background: var(--uitk-color-gray-40);
+  background: var(--salt-color-gray-40);
   padding: 1rem;
 }
 .layout-content-right {
-  background: var(--uitk-color-orange-20);
+  background: var(--salt-color-orange-20);
   padding: 2rem 1rem;
 }
 
 .footer-column p {
-  color: var(--uitk-color-gray-200);
+  color: var(--salt-color-gray-200);
 }
 
 .footer-column p:first-child {
-  color: var(--uitk-color-gray-200);
+  color: var(--salt-color-gray-200);
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 .copy-right {
-  color: var(--uitk-color-gray-200);
-  border-top: 1px solid var(--uitk-color-gray-300);
+  color: var(--salt-color-gray-200);
+  border-top: 1px solid var(--salt-color-gray-300);
   text-align: center;
 }
 
@@ -39,35 +39,35 @@
 .border-header,
 .grid-blog-featured,
 .grid-blog-image-five {
-  background-color: var(--uitk-color-orange-20);
+  background-color: var(--salt-color-orange-20);
 }
 
 .border-left,
 .grid-blog-image-one,
 .flex-blog-image-one,
 .grid-blog-image-six {
-  background-color: var(--uitk-color-gray-40);
+  background-color: var(--salt-color-gray-40);
 }
 .border-right,
 .grid-blog-image-two,
 .flex-blog-image-two {
-  background-color: var(--uitk-color-teal-30);
+  background-color: var(--salt-color-teal-30);
 }
 
 .border-main,
 .grid-blog-image-three,
 .flex-blog-image-three {
-  background-color: var(--uitk-color-red-30);
+  background-color: var(--salt-color-red-30);
 }
 
 .border-bottom,
 .grid-blog-image-four {
-  background-color: var(--uitk-color-purple-30);
+  background-color: var(--salt-color-purple-30);
 }
 
 .flow-layout-container {
-  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
-  background-color: var(--uitk-container-secondary-background);
+  padding: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
+  background-color: var(--salt-container-secondary-background);
 }
 
 .flow-layout-container p,
@@ -90,52 +90,52 @@
 }
 
 .border-layout-custom-form .uitkInput-suffixContainer {
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 .border-layout-switch-container {
-  padding: var(--uitk-size-unit);
+  padding: var(--salt-size-unit);
 }
 
 .border-layout-button-container,
 .flow-layout-form-container {
-  padding: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
 }
 
 .border-layout-pill {
-  margin: calc(var(--uitk-size-unit) * 2) calc(var(--uitk-size-unit) * 3);
-  --uitkPill-background: var(--uitk-status-success-foreground);
-  --uitkPill-text-color: var(--uitk-color-white);
-  --uitkPill-borderRadius: 10px;
+  margin: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
+  --saltPill-background: var(--salt-status-success-foreground);
+  --saltPill-text-color: var(--salt-color-white);
+  --saltPill-borderRadius: 10px;
 }
 
 .border-layout-form-header,
 .border-layout-form-footer {
-  background-color: var(--uitk-color-white);
+  background-color: var(--salt-color-white);
   z-index: 10;
 }
 .border-layout-form-footer button {
-  margin-top: calc(var(--uitk-size-unit) * 2);
+  margin-top: calc(var(--salt-size-unit) * 2);
   margin-bottom: 16px;
 }
 
 .border-layout-form-steps {
-  background-color: var(--uitk-container-secondary-background);
+  background-color: var(--salt-container-secondary-background);
 }
 
 .border-layout-contacts {
-  padding: calc(var(--uitk-size-unit) * 3) 0 calc(var(--uitk-size-unit) * 3) 0;
+  padding: calc(var(--salt-size-unit) * 3) 0 calc(var(--salt-size-unit) * 3) 0;
 }
 
 .border-layout-contacts h2 {
   margin-top: 0;
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
+  margin-bottom: calc(var(--salt-size-unit) * 3);
 }
 
 .border-layout-contacts-footer {
   border-top: 1px solid;
-  border-color: var(--uitk-separable-secondary-borderColor);
-  padding: calc(var(--uitk-size-unit) * 3) 0 calc(var(--uitk-size-unit) * 2) 0;
+  border-color: var(--salt-separable-secondary-borderColor);
+  padding: calc(var(--salt-size-unit) * 3) 0 calc(var(--salt-size-unit) * 2) 0;
   text-align: center;
 }
 
@@ -175,7 +175,7 @@
 }
 
 .grid-blog-container {
-  padding: calc(var(--uitk-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 3);
 }
 
 .grid-blog-container .uitkCard {
@@ -185,7 +185,7 @@
 .parent-child-composite-container {
   max-width: 1200px;
   min-height: 800px;
-  padding: calc(var(--uitk-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 3);
 }
 
 .parent-child-composite-container h2 {
@@ -193,12 +193,12 @@
 }
 
 .parent-child-composite-title {
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
+  margin-bottom: calc(var(--salt-size-unit) * 3);
 }
 
 .parent-child-composite-empty-container {
   width: 12px;
-  padding: var(--uitk-size-unit);
+  padding: var(--salt-size-unit);
 }
 
 .parent-child-composite-container p,
@@ -208,7 +208,7 @@
 
 .parent-child-composite-container {
   max-width: 1200px;
-  padding: calc(var(--uitk-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 3);
 }
 
 .parent-child-composite-container h2 {
@@ -216,12 +216,12 @@
 }
 
 .parent-child-composite-title {
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
+  margin-bottom: calc(var(--salt-size-unit) * 3);
 }
 
 .parent-child-composite-empty-container {
   width: 12px;
-  padding: var(--uitk-size-unit);
+  padding: var(--salt-size-unit);
 }
 
 .parent-child-composite-container p,
@@ -265,15 +265,15 @@
   min-width: 350px;
   width: 100%;
   height: 140px;
-  background-color: var(--uitk-color-gray-40);
+  background-color: var(--salt-color-gray-40);
 }
 
 .custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-slide-in-top);
+  animation: var(--salt-animation-slide-in-top);
 }
 
 .custom-layer-container .custom-animation.uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-slide-out-top);
+  animation: var(--salt-animation-slide-out-top);
 }
 
 .custom-layer-container .uitkScrim.uitkLayerLayout-exit-animation {

@@ -36,16 +36,16 @@
 .uitkFormFieldHelperText {
   --formField-helperText-opacity: 1;
 
-  color: var(--uitkFormField-helperText-color, var(--uitk-text-secondary-foreground));
+  color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
   font-size: var(--formField-helperText-fontSize);
-  font-style: var(--uitkFormField-helperText-fontStyle, var(--uitk-editable-help-fontStyle));
-  letter-spacing: var(--uitkFormField-helperText-letterSpacing, 0);
-  line-height: var(--uitkFormField-helperText-lineHeight, var(--uitk-text-lineHeight));
-  min-height: var(--uitkFormField-helperText-minHeight, var(--uitk-text-label-minHeight));
-  margin-bottom: var(--uitkFormField-helperText-marginBottom, 0);
-  margin-top: var(--uitkFormField-helperText-marginTop, var(--formField-helperText-marginTop));
-  opacity: var(--uitkFormField-helperText-opacity, var(--formField-helperText-opacity));
-  padding-left: var(--uitkFormField-helperText-paddingLeft, var(--uitk-size-unit));
-  padding-right: var(--uitkFormField-helperText-paddingRight, var(--uitk-size-unit));
-  transform: var(--uitkFormField-helperText-transform, var(--formField-helperText-transform, none));
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  letter-spacing: var(--saltFormField-helperText-letterSpacing, 0);
+  line-height: var(--saltFormField-helperText-lineHeight, var(--salt-text-lineHeight));
+  min-height: var(--saltFormField-helperText-minHeight, var(--salt-text-label-minHeight));
+  margin-bottom: var(--saltFormField-helperText-marginBottom, 0);
+  margin-top: var(--saltFormField-helperText-marginTop, var(--formField-helperText-marginTop));
+  opacity: var(--saltFormField-helperText-opacity, var(--formField-helperText-opacity));
+  padding-left: var(--saltFormField-helperText-paddingLeft, var(--salt-size-unit));
+  padding-right: var(--saltFormField-helperText-paddingRight, var(--salt-size-unit));
+  transform: var(--saltFormField-helperText-transform, var(--formField-helperText-transform, none));
 }

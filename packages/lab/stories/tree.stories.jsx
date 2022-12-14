@@ -140,9 +140,9 @@ export const DefaultTree = () => {
 
 const iconTreeStyle = `
   .arrow-toggle {
-    --uitkTree-toggle-collapse: var(--svg-triangle-right);
-    --uitkTree-toggle-expand: var(--svg-triangle-right);
-    --uitkTree-node-expanded-transform: rotate(45deg) translate(1px, 1px);
+    --saltTree-toggle-collapse: var(--svg-triangle-right);
+    --saltTree-toggle-expand: var(--svg-triangle-right);
+    --saltTree-node-expanded-transform: rotate(45deg) translate(1px, 1px);
    }
 `;
 

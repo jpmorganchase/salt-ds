@@ -31,20 +31,20 @@
 
 /* .uitkTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
 .uitkTooltray-horizontal > .Responsive-inner > * {
-  margin-top: var(--uitk-size-unit);
-  margin-right: var(--uitk-size-unit);
+  margin-top: var(--salt-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 /* .uitkTooltray-horizontal:first-child {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
 } */
 /* .uitkTooltray-horizontal:last-child {
-  padding-right: var(--uitk-size-unit);
+  padding-right: var(--salt-size-unit);
 } */
 
 .uitkTooltray-horizontal:not(:first-child) {
-  margin-left: var(--uitk-size-unit);
-  padding-left: calc(var(--uitk-size-unit) * 2);
+  margin-left: var(--salt-size-unit);
+  padding-left: calc(var(--salt-size-unit) * 2);
 }
 .uitkTooltray-horizontal:not(:first-child):before {
   content: "";

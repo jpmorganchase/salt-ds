@@ -1,13 +1,13 @@
 .uitkToolbar {
-  --toolbar-background: var(--uitk-container-secondary-background);
-  --toolbar-fontSize: var(--uitk-text-fontSize);
-  /* --uitkFormField-activationIndicator-size: 0; */
+  --toolbar-background: var(--salt-container-secondary-background);
+  --toolbar-fontSize: var(--salt-text-fontSize);
+  /* --saltFormField-activationIndicator-size: 0; */
 }
 
 .uitkToolbar {
-  --toolbar-size: calc(var(--uitk-size-base) + var(--uitk-size-unit) * 2);
+  --toolbar-size: calc(var(--salt-size-base) + var(--salt-size-unit) * 2);
 
-  background: var(--uitkToolbar-background, var(--toolbar-background));
+  background: var(--saltToolbar-background, var(--toolbar-background));
   font-size: var(--toolbar-fontSize);
   justify-content: flex-start;
   overflow: hidden;
@@ -15,8 +15,8 @@
 }
 
 /* .uitkToolbarField:not([data-overflow-indicator]) > .uitkButton {
-  --uitkButton-fontSize: 0;
-  --uitkButton-letterSpacing: 0;
+  --saltButton-fontSize: 0;
+  --saltButton-letterSpacing: 0;
 } */
 
 .uitkToolbar > .Responsive-inner {
@@ -31,11 +31,11 @@
 
 .uitkToolbar[aria-orientation="horizontal"] {
   display: flex;
-  height: var(--uitkToolbar-height, var(--toolbar-size));
+  height: var(--saltToolbar-height, var(--toolbar-size));
   line-height: normal;
   min-width: 0;
   white-space: nowrap;
-  width: var(--uitkToolbar-width, 100%);
+  width: var(--saltToolbar-width, 100%);
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner {
@@ -45,13 +45,13 @@
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > :not(.uitkTooltray) {
-  margin-top: var(--uitk-size-unit);
-  margin-right: var(--uitk-size-unit);
+  margin-top: var(--salt-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > .uitkTooltray > .Responsive-inner > * {
-  margin-top: var(--uitk-size-unit);
-  /* margin-right: var(--uitk-size-unit); */
+  margin-top: var(--salt-size-unit);
+  /* margin-right: var(--salt-size-unit); */
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > .uitkTooltray {
@@ -67,7 +67,7 @@
 }
 
 .uitkToolbar[aria-orientation="horizontal"] > .Responsive-inner > *:first-child {
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--salt-size-unit);
 }
 
 .uitkToolbar[aria-orientation="vertical"] {
@@ -111,18 +111,18 @@
 }
 
 .uitkToolbarField.uitkFormField-labelLeft > .uitkFormLabel {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
 }
 
 .uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton {
   background: var(--toolbar-background);
 }
 .uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton:hover {
-  background: var(--uitk-actionable-secondary-background-hover);
+  background: var(--salt-actionable-secondary-background-hover);
 }
 .uitkToolbar .uitkFormField-primary.uitkFormField > .uitkButton-active,
 .uitkToolbar .uitkFormField-primary.uitkFormField > .uitkToolbarButton:active {
-  background: var(--uitk-actionable-secondary-background-active) !important;
+  background: var(--salt-actionable-secondary-background-active) !important;
 }
 
 /* .Responsive-inner > [data-collapsed='true'] {

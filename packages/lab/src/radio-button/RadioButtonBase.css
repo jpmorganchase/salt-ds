@@ -1,6 +1,6 @@
 /* Styles applied to root component */
 .uitkRadioButtonBase {
-  color: var(--uitk-text-secondary-foreground);
+  color: var(--salt-text-secondary-foreground);
   padding: 1px 0;
   flex: 0 0 auto;
   overflow: visible;
@@ -40,12 +40,12 @@
   left: 0;
   margin: 0;
   padding: 0;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }
 
 /* Styles applied to root component when state `focusVisible={true}` */
 .uitkRadioButtonBase-focusVisible,
 .uitkRadioButtonBase:focus {
-  outline: var(--uitk-focused-outline);
-  outline-offset: var(--uitk-focused-outlineOffset);
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
 }

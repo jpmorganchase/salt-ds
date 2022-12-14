@@ -1,5 +1,5 @@
 .uitkStaticInputAdornment {
-  --input-staticAdornment-padding: var(--uitk-size-unit);
+  --input-staticAdornment-padding: var(--salt-size-unit);
 }
 
 .uitkStaticInputAdornment {

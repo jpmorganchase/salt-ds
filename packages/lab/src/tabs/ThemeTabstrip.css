@@ -1,19 +1,19 @@
 .uitk-density-touch {
   /* Component specific, what semantic concept would cover these */
-  --toolbar-depth: calc(var(--uitk-size-basis-unit) * 13);
+  --toolbar-depth: calc(var(--salt-size-basis-unit) * 13);
 }
 
 .uitk-density-low {
   /* Component specific, what semantic concept would cover these */
-  --toolbar-depth: calc(var(--uitk-size-basis-unit) * 11);
+  --toolbar-depth: calc(var(--salt-size-basis-unit) * 11);
 }
 
 .uitk-density-medium {
   /* Component specific, what semantic concept would cover these */
-  --toolbar-depth: calc(var(--uitk-size-basis-unit) * 9);
+  --toolbar-depth: calc(var(--salt-size-basis-unit) * 9);
 }
 
 .uitk-density-high {
   /* Component specific, what semantic concept would cover these */
-  --toolbar-depth: calc(var(--uitk-size-basis-unit) * 7);
+  --toolbar-depth: calc(var(--salt-size-basis-unit) * 7);
 }

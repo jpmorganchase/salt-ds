@@ -1,9 +1,9 @@
 .uitk-theme[data-mode="light"] .withoutAvatar {
-  --heading-color: var(--uitk-color-gray-700);
+  --heading-color: var(--salt-color-gray-700);
 }
 
 .uitk-theme[data-mode="dark"] .withoutAvatar {
-  --heading-color: var(--uitk-color-gray-10);
+  --heading-color: var(--salt-color-gray-10);
 }
 
 .withoutAvatar {
@@ -14,7 +14,7 @@
 }
 
 .withoutAvatar-firstColumn {
-  margin-right: calc(var(--uitk-size-unit) * 2);
+  margin-right: calc(var(--salt-size-unit) * 2);
   width: 400px;
 }
 
@@ -24,9 +24,9 @@
 
 .withoutAvatar-heading {
   color: var(--heading-color);
-  margin-bottom: calc(var(--uitk-size-unit) * 2);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
   font-size: 16px;
-  font-weight: var(--uitk-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .favoriteToggle {
@@ -74,8 +74,8 @@
 
 .withinTile-tile {
   width: 320px;
-  padding: var(--uitk-size-unit);
-  border: solid 1px var(--uitk-container-primary-borderColor);
+  padding: var(--salt-size-unit);
+  border: solid 1px var(--salt-container-primary-borderColor);
 }
 
 .withinOverlay {
@@ -105,9 +105,9 @@
 }
 
 .uitk-theme[data-mode="dark"] .allVariants-withBackground {
-  background: var(--uitk-color-blue-900);
+  background: var(--salt-color-blue-900);
 }
 
 .uitk-theme[data-mode="light"] .allVariants-withBackground {
-  background: var(--uitk-color-blue-10);
+  background: var(--salt-color-blue-10);
 }

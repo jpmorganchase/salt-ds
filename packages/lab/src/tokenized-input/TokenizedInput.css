@@ -1,30 +1,30 @@
 /* Styles applied to root component (TokenizedInput) */
 .uitk-density-medium {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2);
-  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2);
+  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
 .uitk-density-touch {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 2px);
-  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 2px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
 .uitk-density-low {
-  --tokenizedInput-gutter-size: var(--uitk-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: calc(var(--uitk-size-unit) / 2);
+  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
 .uitk-density-high {
-  --tokenizedInput-gutter-size: calc(var(--uitk-size-basis-unit) - 1px);
-  --tokenizedInput-pill-group-y-padding: calc(var(--uitk-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: var(--uitk-size-unit);
+  --tokenizedInput-gutter-size: calc(var(--salt-size-basis-unit) - 1px);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
 
 .uitkTokenizedInput {
-  --tokenizedInput-spacing: var(--uitk-size-unit);
-  --tokenizedInput-height: var(--uitk-size-base);
+  --tokenizedInput-spacing: var(--salt-size-unit);
+  --tokenizedInput-height: var(--salt-size-base);
 }
 
 .uitkTokenizedInput {
@@ -36,12 +36,12 @@
 
 /* Styles applied to root component on hover state  */
 .uitkTokenizedInput:hover {
-  cursor: var(--uitk-selectable-cursor-hover);
+  cursor: var(--salt-selectable-cursor-hover);
 }
 
 /* Styles applied to root component on hover state if `disabled={true}` */
 .uitkTokenizedInput.uitkTokenizedInput-disabled:hover {
-  cursor: var(--uitk-selectable-cursor-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to container of pills */
@@ -56,13 +56,13 @@
 
 /* Styles applied to root component if `disabled={true}` */
 .uitkTokenizedInput-disabled {
-  cursor: var(--uitk-editable-cursor-disabled);
-  opacity: var(--uitkTokenizedInput-disabled-opacity, var(--uitk-palette-opacity-foreground));
+  cursor: var(--salt-editable-cursor-disabled);
+  opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-foreground));
 }
 
 /* Styles applied to root component if `focused={true}` */
 .uitkTokenizedInput-focused {
-  outline: var(--uitkTokenizedInput-focused-outline, var(--uitk-focused-outline));
+  outline: var(--saltTokenizedInput-focused-outline, var(--salt-focused-outline));
 }
 
 /* Styles applied to root component if `expanded={true}` */
@@ -70,7 +70,7 @@
   height: auto;
 
   /* Pill CSS API */
-  --uitkPill-maxWidth: calc(100px - var(--uitk-size-unit));
+  --saltPill-maxWidth: calc(100px - var(--salt-size-unit));
 }
 
 /* Styles applied to Input and Clear Button if `expanded={false}` */
@@ -78,9 +78,9 @@
   display: none;
 }
 
-/** 
+/**
   Styles applied to inner Input component
-  Used to be .inputRoot 
+  Used to be .inputRoot
 **/
 .uitkTokenizedInput-input {
   align-items: flex-start;
@@ -111,7 +111,7 @@
   height: auto;
 }
 
-/* TODO: Adjust specificity of .InputPill depending on styling solution. 
+/* TODO: Adjust specificity of .InputPill depending on styling solution.
   This is an example of internal sub-component naming convension. */
 .uitkTokenizedInput .uitkInputPill,
 .uitkTokenizedInput-expandButton,
@@ -125,7 +125,7 @@
 .uitkTokenizedInput .uitkInputPill {
   min-width: 0;
   margin-right: var(--tokenizedInput-gutter-size);
-  --uitkPill-maxWidth: 100px;
+  --saltPill-maxWidth: 100px;
 }
 
 .uitkTokenizedInput .uitkInputPill > * {
@@ -139,21 +139,21 @@
 
 /* Styles applied to the last visible Pill when all visible */
 .uitkTokenizedInput .uitkInputPill-pillLastVisible {
-  margin-right: var(--uitkTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
+  margin-right: var(--saltTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
 }
 
 /* Styles applied to a Pill when active */
 .uitkTokenizedInput .uitkInputPill-pillActive {
-  background: var(--uitkTokenizedInput-pill-background-active, var(--uitk-selectable-background-hover));
+  background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
 }
 
 /* Styles applied to a Pills delete icon */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteIcon {
-  color: var(--uitkTokenizedInput-pill-delete-icon-color, var(--uitk-actionable-cta-foreground-hover));
+  color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
 }
 
 /* Styles applied to a Pills delete button */
 .uitkTokenizedInput .uitkInputPill-pillActive .uitkPill-deleteButton {
-  color: var(--uitkTokenizedInput-pill-delete-button-color-active, var(--uitk-actionable-cta-foreground-hover));
-  background: var(--uitkTokenizedInput-pill-delete-button-background-active, var(--uitk-actionable-cta-background-hover));
+  color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
+  background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
 }

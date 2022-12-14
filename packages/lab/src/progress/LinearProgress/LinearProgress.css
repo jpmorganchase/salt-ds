@@ -1,6 +1,6 @@
 .uitkLinearProgress {
   align-items: center;
-  color: var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
   display: flex;
   min-width: 200px;
   font-size: var(--linearProgress-fontSize);
@@ -29,16 +29,16 @@
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-bar {
-  background: var(--uitk-measured-fill-disabled);
+  background: var(--salt-measured-fill-disabled);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-barContainer :after {
-  background: var(--uitk-measured-fill-disabled);
+  background: var(--salt-measured-fill-disabled);
 }
 
 .uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
-  color: var(--uitk-text-primary-foreground-disabled);
-  cursor: var(--uitk-selectable-cursor-disabled);
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
 .uitkLinearProgress-barContainer {
@@ -52,7 +52,7 @@
 /* Horizontal line under the progress indicator bar */
 .uitkLinearProgress-barContainer:after {
   top: var(--linearProgress-after-top);
-  background: var(--uitk-measured-background);
+  background: var(--salt-measured-background);
   content: "";
   display: block;
   height: 1px;
@@ -79,7 +79,7 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--uitk-measured-fill);
+  background: var(--salt-measured-fill);
   z-index: 2;
 }
 

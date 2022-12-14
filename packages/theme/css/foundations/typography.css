@@ -1,11 +1,11 @@
 .uitk-theme {
-  --uitk-typography-fontFamily: "Open Sans";
-  --uitk-typography-fontFamily-code: "PT Mono";
+  --salt-typography-fontFamily: "Open Sans";
+  --salt-typography-fontFamily-code: "PT Mono";
 
-  --uitk-typography-fontWeight-light: 300;
-  --uitk-typography-fontWeight-regular: 400;
-  --uitk-typography-fontWeight-medium: 500;
-  --uitk-typography-fontWeight-semiBold: 600;
-  --uitk-typography-fontWeight-bold: 700;
-  --uitk-typography-fontWeight-extraBold: 800;
+  --salt-typography-fontWeight-light: 300;
+  --salt-typography-fontWeight-regular: 400;
+  --salt-typography-fontWeight-medium: 500;
+  --salt-typography-fontWeight-semiBold: 600;
+  --salt-typography-fontWeight-bold: 700;
+  --salt-typography-fontWeight-extraBold: 800;
 }

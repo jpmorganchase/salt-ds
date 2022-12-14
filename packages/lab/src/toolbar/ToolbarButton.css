@@ -3,6 +3,6 @@
 } */
 
 .uitkToolbarButton:not([data-is-inside-panel]) {
-  --uitkButton-fontSize: 0;
-  --uitkButton-letterSpacing: 0;
+  --saltButton-fontSize: 0;
+  --saltButton-letterSpacing: 0;
 }

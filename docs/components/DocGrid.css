@@ -1,23 +1,23 @@
 .uitkDocGrid {
-  --doc-grid-gap: var(--uitk-size-unit);
-  --doc-grid-paddingBlockStart: var(--uitk-size-unit);
-  --doc-grid-paddingBlockEnd: var(--uitk-size-unit);
+  --doc-grid-gap: var(--salt-size-unit);
+  --doc-grid-paddingBlockStart: var(--salt-size-unit);
+  --doc-grid-paddingBlockEnd: var(--salt-size-unit);
 
-  --doc-grid-code-fontSize: var(--uitk-text-fontSize);
-  --doc-grid-code-text-color: var(--uitk-text-primary-foreground);
+  --doc-grid-code-fontSize: var(--salt-text-fontSize);
+  --doc-grid-code-text-color: var(--salt-text-primary-foreground);
 }
 
 .uitkDocGrid {
   align-items: center;
-  background: var(--uitk-container-primary-background);
+  background: var(--salt-container-primary-background);
   display: grid;
-  height: var(--uitkDocGrid-height, unset);
-  gap: var(--uitkDocGrid-gap, var(--doc-grid-gap));
+  height: var(--saltDocGrid-height, unset);
+  gap: var(--saltDocGrid-gap, var(--doc-grid-gap));
   grid-template-columns: repeat(2, auto);
-  padding-block-start: var(--uitkDocGrid-paddingBlockStart, var(--doc-grid-paddingBlockStart));
-  padding-block-end: var(--uitkDocGrid-paddingBlockEnd, var(--doc-grid-paddingBlockEnd));
+  padding-block-start: var(--saltDocGrid-paddingBlockStart, var(--doc-grid-paddingBlockStart));
+  padding-block-end: var(--saltDocGrid-paddingBlockEnd, var(--doc-grid-paddingBlockEnd));
   line-height: 1;
-  width: var(--uitkDocGrid-width, auto);
+  width: var(--saltDocGrid-width, auto);
 }
 
 .uitkDocGrid-textExample {

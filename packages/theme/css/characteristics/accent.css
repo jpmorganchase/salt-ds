@@ -1,23 +1,23 @@
 .uitk-density-high {
-  --uitk-accent-fontSize: 8px;
-  --uitk-accent-lineHeight: 11px;
+  --salt-accent-fontSize: 8px;
+  --salt-accent-lineHeight: 11px;
 }
 .uitk-density-medium {
-  --uitk-accent-fontSize: 10px;
-  --uitk-accent-lineHeight: 13px;
+  --salt-accent-fontSize: 10px;
+  --salt-accent-lineHeight: 13px;
 }
 .uitk-density-low {
-  --uitk-accent-fontSize: 12px;
-  --uitk-accent-lineHeight: 16px;
+  --salt-accent-fontSize: 12px;
+  --salt-accent-lineHeight: 16px;
 }
 .uitk-density-touch {
-  --uitk-accent-fontSize: 14px;
-  --uitk-accent-lineHeight: 18px;
+  --salt-accent-fontSize: 14px;
+  --salt-accent-lineHeight: 18px;
 }
 
 .uitk-theme {
-  --uitk-accent-background: var(--uitk-palette-accent-background);
-  --uitk-accent-borderColor: var(--uitk-palette-accent-border);
-  --uitk-accent-foreground: var(--uitk-palette-accent-foreground);
-  --uitk-accent-fontWeight: var(--uitk-typography-fontWeight-semiBold);
+  --salt-accent-background: var(--salt-palette-accent-background);
+  --salt-accent-borderColor: var(--salt-palette-accent-border);
+  --salt-accent-foreground: var(--salt-palette-accent-foreground);
+  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }

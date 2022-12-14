@@ -1,8 +1,8 @@
 .uitkBreadcrumb {
-  --breadcrumbs-crumb-color: var(--uitkBreadcrumbs-crumb-color, var(--uitk-actionable-primary-foreground));
-  --breadcrumbs-crumb-color-hover: var(--uitkBreadcrumbs-crumb-color-hover, var(--uitk-actionable-primary-foreground-hover));
-  --breadcrumbs-crumb-color-active: var(--uitkBreadcrumbs-crumb-color-active, var(--uitk-actionable-primary-foreground-active));
-  --breadcrumbs-crumb-icon-color: var(--uitkBreadcrumbs-crumb-icon-color, var(--breadcrumbs-crumb-color));
+  --breadcrumbs-crumb-color: var(--saltBreadcrumbs-crumb-color, var(--salt-actionable-primary-foreground));
+  --breadcrumbs-crumb-color-hover: var(--saltBreadcrumbs-crumb-color-hover, var(--salt-actionable-primary-foreground-hover));
+  --breadcrumbs-crumb-color-active: var(--saltBreadcrumbs-crumb-color-active, var(--salt-actionable-primary-foreground-active));
+  --breadcrumbs-crumb-icon-color: var(--saltBreadcrumbs-crumb-icon-color, var(--breadcrumbs-crumb-color));
   --breadcrumbs-crumb-marginLeft: 0px;
 }
 
@@ -12,7 +12,7 @@
 
 .uitkBreadcrumb-regular {
   display: flex;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: calc(var(--salt-size-unit) / 2);
   align-items: center;
   color: var(--breadcrumbs-crumb-color);
 }
@@ -47,7 +47,7 @@
 
 .uitkBreadcrumb-icon {
   color: var(--breadcrumbs-crumb-icon-color);
-  margin-left: var(--uitkBreadcrumbs-crumb-marginLeft, var(--breadcrumbs-crumb-marginLeft));
+  margin-left: var(--saltBreadcrumbs-crumb-marginLeft, var(--breadcrumbs-crumb-marginLeft));
 }
 
 .uitkBreadcrumb-justifyContentCenter {

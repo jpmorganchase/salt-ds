@@ -1,7 +1,7 @@
 .uitkTree {
-  --tree-node-collapse: var(--uitkTree-node-collapse, var(--list-svg-tree-node-collapse));
-  --tree-node-expand: var(--uitkTree-node-expand, var(--list-svg-tree-node-expand));
-  --tree-node-expanded-transform: var(--uitkTree-node-expanded-transform, none);
+  --tree-node-collapse: var(--saltTree-node-collapse, var(--list-svg-tree-node-collapse));
+  --tree-node-expand: var(--saltTree-node-expand, var(--list-svg-tree-node-expand));
+  --tree-node-expanded-transform: var(--saltTree-node-expanded-transform, none);
   --tree-node-indent: 0px;
   --tree-toggle-width: 12px;
 
@@ -21,7 +21,7 @@
 
   margin: 0;
   padding: 0 1px;
-  font-size: var(--uitkTree-fontSize, 14px);
+  font-size: var(--saltTree-fontSize, 14px);
   max-height: inherit;
   outline: none;
   overflow-y: auto;

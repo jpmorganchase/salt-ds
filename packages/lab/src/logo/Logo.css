@@ -1,27 +1,27 @@
 .uitk-density-high {
-  --logo-height: var(--uitkLogo-logo-height, 14px);
+  --logo-height: var(--saltLogo-logo-height, 14px);
 }
 .uitk-density-medium {
-  --logo-height: var(--uitkLogo-logo-height, 20px);
+  --logo-height: var(--saltLogo-logo-height, 20px);
 }
 .uitk-density-low {
-  --logo-height: var(--uitkLogo-logo-height, 26px);
+  --logo-height: var(--saltLogo-logo-height, 26px);
 }
 .uitk-density-touch {
-  --logo-height: var(--uitkLogo-logo-height, 32px);
+  --logo-height: var(--saltLogo-logo-height, 32px);
 }
 
 .uitkLogo {
-  --logo-color: var(--uitkLogo-color, var(--uitk-palette-neutral-secondary-foreground));
-  --logo-divider-color: var(--uitkLogo-pipe-color, var(--uitk-separable-secondary-borderColor));
-  --logo-divider-height: var(--uitkLogo-title-height, var(--uitk-size-divider-height));
-  --logo-divider-margin: 0 calc(var(--uitk-size-unit) * 2);
-  --logo-fontSize: var(--uitk-text-fontSize);
-  --logo-lineHeight: var(--uitk-text-lineHeight);
+  --logo-color: var(--saltLogo-color, var(--salt-palette-neutral-secondary-foreground));
+  --logo-divider-color: var(--saltLogo-pipe-color, var(--salt-separable-secondary-borderColor));
+  --logo-divider-height: var(--saltLogo-title-height, var(--salt-size-divider-height));
+  --logo-divider-margin: 0 calc(var(--salt-size-unit) * 2);
+  --logo-fontSize: var(--salt-text-fontSize);
+  --logo-lineHeight: var(--salt-text-lineHeight);
 }
 
 .uitkLogo-compact {
-  --logo-pipe-margin: 0 calc(var(--uitk-size-unit) * 1.5);
+  --logo-pipe-margin: 0 calc(var(--salt-size-unit) * 1.5);
 }
 
 .uitkLogo {

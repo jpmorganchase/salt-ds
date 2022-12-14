@@ -64,7 +64,7 @@ const includesCssAttribute = function (property) {
       (attr) =>
         property.includes(`-${attr}-`) ||
         (property.endsWith(`-${attr}`) &&
-          property !== `--uitk-${attr}`) /* --uitk-animation-duration */
+          property !== `--salt-${attr}`) /* --salt-animation-duration */
     )
   );
 };

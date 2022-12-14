@@ -8,8 +8,8 @@
   --qaContainer-mode-cols: 2;
   --qaContainer-inner-width: calc(var(--qaContainer-width) - (2px + (2 * var(--qaContainer-padding))));
 
-  --uitkDraggableSnapshot-img-height: var(--qaContainer-height);
-  --uitkDraggableSnapshot-img-width: var(--qaContainer-width);
+  --saltDraggableSnapshot-img-height: var(--qaContainer-height);
+  --saltDraggableSnapshot-img-width: var(--qaContainer-width);
 
   border: solid 1px #ccc;
   height: var(--qaContainer-height);

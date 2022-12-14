@@ -5,5 +5,5 @@
 
 .uitkColumnLayout-item {
   flex-grow: 1;
-  margin: calc(var(--uitk-size-basis-unit) * 2);
+  margin: calc(var(--salt-size-basis-unit) * 2);
 }

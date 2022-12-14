@@ -4,8 +4,8 @@
 }
 
 .grid-uhd {
-  --uitkGrid-row-height: 21px;
-  --uitkGrid-separatorGap: 6px;
+  --saltGrid-row-height: 21px;
+  --saltGrid-separatorGap: 6px;
 }
 
 .grid-small {
@@ -23,12 +23,12 @@
 }
 
 .bid {
-  color: var(--uitk-color-green-800);
+  color: var(--salt-color-green-800);
   padding-right: 4px;
 }
 
 .ask {
-  color: var(--uitk-color-red-800);
+  color: var(--salt-color-red-800);
   padding-left: 4px;
 }
 
@@ -66,7 +66,7 @@
 
 .miniChartBar {
   width: 7%;
-  background-color: var(--uitk-palette-accent-background);
+  background-color: var(--salt-palette-accent-background);
 }
 
 .paginatedGrid {
@@ -87,7 +87,7 @@
 }
 
 .customHeaderText {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
   flex-grow: 1;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .treeNodeName {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
 }
 
 .paginatedStory {

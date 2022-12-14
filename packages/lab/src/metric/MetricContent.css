@@ -8,22 +8,22 @@
   align-items: baseline;
   display: flex;
   flex-direction: row;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: calc(var(--salt-size-unit) / 2);
   margin-top: var(--metric-content-valueContainer-marginTop, 0px);
 }
 
 .uitkMetric-direction-up .uitkMetricContent-indicator {
-  fill: var(--uitk-differential-positive-foreground);
+  fill: var(--salt-differential-positive-foreground);
 }
 .uitkMetric-direction-up .uitkMetricContent-subvalue {
-  color: var(--uitk-differential-positive-foreground);
+  color: var(--salt-differential-positive-foreground);
 }
 
 .uitkMetric-direction-down .uitkMetricContent-indicator {
-  fill: var(--uitk-differential-negative-foreground);
+  fill: var(--salt-differential-negative-foreground);
 }
 .uitkMetric-direction-down .uitkMetricContent-subvalue {
-  color: var(--uitk-differential-negative-foreground);
+  color: var(--salt-differential-negative-foreground);
 }
 
 .uitkMetricContent-subvalue {

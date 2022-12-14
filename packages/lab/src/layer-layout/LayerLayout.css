@@ -1,8 +1,8 @@
 .uitkLayerLayout {
-  --layerLayout-boxShadow: var(--uitkLayerLayout-boxShadow, var(--uitk-overlayable-shadow-modal));
-  --layerLayout-background: var(--uitkLayerLayout-background, var(--uitk-container-primary-background));
-  --layerLayout-padding: var(--uitkLayerLayout-padding, calc(3 * var(--uitk-size-unit)));
-  --layerLayout-margin: var(--uitkLayerLayout-margin, calc(3 * var(--uitk-size-unit)));
+  --layerLayout-boxShadow: var(--saltLayerLayout-boxShadow, var(--salt-overlayable-shadow-modal));
+  --layerLayout-background: var(--saltLayerLayout-background, var(--salt-container-primary-background));
+  --layerLayout-padding: var(--saltLayerLayout-padding, calc(3 * var(--salt-size-unit)));
+  --layerLayout-margin: var(--saltLayerLayout-margin, calc(3 * var(--salt-size-unit)));
 }
 
 .uitkLayerLayout {
@@ -13,8 +13,8 @@
   max-width: 100%;
   overflow: auto;
   padding: var(--layerLayout-padding);
-  box-shadow: var(--uitkLayerLayout-boxShadow, var(--layerLayout-boxShadow));
-  z-index: calc(var(--uitk-zIndex-appHeader) - 1);
+  box-shadow: var(--saltLayerLayout-boxShadow, var(--layerLayout-boxShadow));
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
 }
 
 .uitkLayerLayout-fullScreen {
@@ -27,19 +27,19 @@
 }
 
 .uitkLayerLayout-center {
-  margin: var(--uitkLayerLayout-margin, var(--layerLayout-margin));
+  margin: var(--saltLayerLayout-margin, var(--layerLayout-margin));
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-enter-animation,
 .uitkLayerLayout-fullScreen.uitkLayerLayout-enter-animation,
 .uitkScrim.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-fade-in-center);
+  animation: var(--salt-animation-fade-in-center);
 }
 
 .uitkLayerLayout-center.uitkLayerLayout-exit-animation,
 .uitkLayerLayout-fullScreen.uitkLayerLayout-exit-animation,
 .uitkScrim.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-fade-out-back);
+  animation: var(--salt-animation-fade-out-back);
 }
 
 .uitkLayerLayout-anchor {
@@ -55,11 +55,11 @@
 }
 
 .uitkLayerLayout-top.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-slide-in-bottom);
+  animation: var(--salt-animation-slide-in-bottom);
 }
 
 .uitkLayerLayout-top.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-slide-out-bottom);
+  animation: var(--salt-animation-slide-out-bottom);
 }
 
 .uitkLayerLayout-right {
@@ -69,11 +69,11 @@
 }
 
 .uitkLayerLayout-right.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-slide-in-right);
+  animation: var(--salt-animation-slide-in-right);
 }
 
 .uitkLayerLayout-right.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-slide-out-right);
+  animation: var(--salt-animation-slide-out-right);
 }
 
 .uitkLayerLayout-left {
@@ -83,11 +83,11 @@
 }
 
 .uitkLayerLayout-left.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-slide-in-left);
+  animation: var(--salt-animation-slide-in-left);
 }
 
 .uitkLayerLayout-left.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-slide-out-left);
+  animation: var(--salt-animation-slide-out-left);
 }
 
 .uitkLayerLayout-bottom {
@@ -98,9 +98,9 @@
 }
 
 .uitkLayerLayout-bottom.uitkLayerLayout-enter-animation {
-  animation: var(--uitk-animation-slide-in-top);
+  animation: var(--salt-animation-slide-in-top);
 }
 
 .uitkLayerLayout-bottom.uitkLayerLayout-exit-animation {
-  animation: var(--uitk-animation-slide-out-top);
+  animation: var(--salt-animation-slide-out-top);
 }

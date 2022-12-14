@@ -51,12 +51,12 @@ const meta = {
 /**
  * Test whether a property value is from theme.
  *
- * We have 2 type of `--uitk` prefixes
- * - `--uitk-xyz` from theme
- * - `--uitkAbc` from a component
+ * We have 2 type of `--salt` prefixes
+ * - `--salt-xyz` from theme
+ * - `--saltAbc` from a component
  */
 const isUitkThemeCustomProperty = function (property) {
-  return property.startsWith("--uitk-");
+  return property.startsWith("--salt-");
 };
 
 /**
@@ -93,7 +93,7 @@ const allAllowedKeys = [
 ];
 
 const regexpPattern = new RegExp(
-  `--uitk(w+)?-(${allAllowedKeys.join("|")})-.+`
+  `--salt(w+)?-(${allAllowedKeys.join("|")})-.+`
 );
 
 module.exports = stylelint.createPlugin(

@@ -1,28 +1,28 @@
 /* Styles applied to root component */
 .uitkFileDropZone {
-  --fileDropZone-background: var(--uitk-container-secondary-background);
-  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor);
-  --fileDropZone-borderWidth: var(--uitk-size-border);
-  --fileDropZone-borderStyle: var(--uitk-dropTarget-borderStyle);
-  --fileDropZone-text-color: var(--uitk-text-primary-foreground);
-  --fileDropZone-icon-color: var(--uitk-text-primary-foreground);
-  --fileDropZone-padding: calc(var(--uitk-size-unit) * 3);
-  --fileDropZone-title-fontSize: var(--uitk-text-fontSize);
-  --fileDropZone-title-lineHeight: var(--uitk-text-lineHeight);
+  --fileDropZone-background: var(--salt-container-secondary-background);
+  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
+  --fileDropZone-borderWidth: var(--salt-size-border);
+  --fileDropZone-borderStyle: var(--salt-dropTarget-borderStyle);
+  --fileDropZone-text-color: var(--salt-text-primary-foreground);
+  --fileDropZone-icon-color: var(--salt-text-primary-foreground);
+  --fileDropZone-padding: calc(var(--salt-size-unit) * 3);
+  --fileDropZone-title-fontSize: var(--salt-text-fontSize);
+  --fileDropZone-title-lineHeight: var(--salt-text-lineHeight);
 }
 
 .uitkFileDropZone {
-  color: var(--uitkFileDropZone-text-color, var(--fileDropZone-text-color));
+  color: var(--saltFileDropZone-text-color, var(--fileDropZone-text-color));
   display: inline-flex;
-  background: var(--uitkFileDropZone-background, var(--fileDropZone-background));
+  background: var(--saltFileDropZone-background, var(--fileDropZone-background));
   text-align: center;
   align-items: stretch;
   justify-content: center;
-  border-color: var(--uitkFileDropZone-borderColor, var(--fileDropZone-borderColor));
-  border-style: var(--uitkFileDropZone-borderStyle, var(--fileDropZone-borderStyle));
-  border-width: var(--uitkFileDropZone-borderWidth, var(--fileDropZone-borderWidth));
+  border-color: var(--saltFileDropZone-borderColor, var(--fileDropZone-borderColor));
+  border-style: var(--saltFileDropZone-borderStyle, var(--fileDropZone-borderStyle));
+  border-width: var(--saltFileDropZone-borderWidth, var(--fileDropZone-borderWidth));
   flex-direction: column;
-  padding: var(--uitkFileDropZone-padding, var(--fileDropZone-padding));
+  padding: var(--saltFileDropZone-padding, var(--fileDropZone-padding));
 }
 
 .uitkFileDropZone *:not(.uitkFileDropZone-inputRoot, .uitkFileDropZone-inputRoot *) {
@@ -32,47 +32,47 @@
 /* Styles applied to icon */
 .uitkFileDropZone-icon {
   fill: var(--fileDropZone-icon-color);
-  margin-bottom: var(--uitk-size-unit);
+  margin-bottom: var(--salt-size-unit);
 }
 
 .uitkFileDropZone .uitkFileDropZone-title:not(:last-child),
 .uitkFileDropZone .uitkFileDropZone-inputRoot:not(:last-child) {
-  margin-bottom: calc(var(--uitk-size-unit) * 2);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
 }
 
 /* Styles applied if `isActive={true}` */
 .uitkFileDropZone-active:not(.uitkFileDropZone-disabled) {
-  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
+  --fileDropZone-background: var(--salt-dropTarget-background-hover);
 }
 
 /* Styles applied to description if `isRejected={true}`  */
 .uitkFileDropZone-error .uitkFileDropZone-description {
-  margin-bottom: calc(var(--uitk-size-unit) * 2);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
 }
 
 /* Styles applied if `isRejected={true}`  */
 .uitkFileDropZone-error {
-  --fileDropZone-background: var(--uitk-status-error-background-emphasize);
-  --fileDropZone-borderColor: var(--uitk-status-error-borderColor);
-  --fileDropZone-icon-color: var(--uitk-status-error-foreground);
+  --fileDropZone-background: var(--salt-status-error-background-emphasize);
+  --fileDropZone-borderColor: var(--salt-status-error-borderColor);
+  --fileDropZone-icon-color: var(--salt-status-error-foreground);
 }
 
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
 .uitkFileDropZone-error:not(.uitkFileDropZone-disabled).uitkFileDropZone-active {
-  --fileDropZone-background: var(--uitk-dropTarget-background-hover);
-  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor);
+  --fileDropZone-background: var(--salt-dropTarget-background-hover);
+  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied to title and description */
 .uitkFileDropZone-title,
 .uitkFileDropZone-description {
-  font-size: var(--uitkFileDropZone-title-fontSize, var(--fileDropZone-title-fontSize));
-  line-height: var(--uitkFileDropZone-title-lineHeight, var(--fileDropZone-title-lineHeight));
+  font-size: var(--saltFileDropZone-title-fontSize, var(--fileDropZone-title-fontSize));
+  line-height: var(--saltFileDropZone-title-lineHeight, var(--fileDropZone-title-lineHeight));
 }
 
 /* Styles applied to title */
 .uitkFileDropZone-title {
-  font-weight: var(--uitkFileDropZone-fontWeight, var(--uitk-text-fontWeight-strong));
+  font-weight: var(--saltFileDropZone-fontWeight, var(--salt-text-fontWeight-strong));
 }
 
 /* Styles applied to input button */
@@ -93,14 +93,14 @@
 
 /* Styles applied if `disabled={true}` */
 .uitkFileDropZone-disabled {
-  --fileDropZone-borderColor: var(--uitk-container-secondary-borderColor-disabled);
+  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor-disabled);
 
-  cursor: var(--uitk-dropTarget-cursor-disabled);
+  cursor: var(--salt-dropTarget-cursor-disabled);
 }
 
 /* Styles applied if `disabled={true}` to icon and title */
 .uitkFileDropZone-disabled .uitkFileDropZone-icon,
 .uitkFileDropZone-disabled .uitkFileDropZone-title {
-  --fileDropZone-text-color: var(--uitk-text-primary-foreground-disabled);
-  --fileDropZone-icon-color: var(--uitk-text-primary-foreground-disabled);
+  --fileDropZone-text-color: var(--salt-text-primary-foreground-disabled);
+  --fileDropZone-icon-color: var(--salt-text-primary-foreground-disabled);
 }

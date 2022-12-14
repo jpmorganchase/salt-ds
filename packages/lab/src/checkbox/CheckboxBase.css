@@ -1,5 +1,5 @@
 .uitkCheckboxBase {
-  background: var(--uitkCheckbox-background, none);
+  background: var(--saltCheckbox-background, none);
   line-height: 0;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -17,5 +17,5 @@
   position: absolute;
   top: 0;
   width: 10px;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }

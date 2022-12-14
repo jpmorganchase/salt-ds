@@ -2,7 +2,7 @@
   display: flex;
   align-items: flex-start;
   padding: 0px;
-  color: var(--uitkMetric-color, var(--uitk-text-primary-foreground));
+  color: var(--saltMetric-color, var(--salt-text-primary-foreground));
 }
 
 .uitkMetric-orientation-horizontal {

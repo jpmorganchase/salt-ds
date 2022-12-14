@@ -26,7 +26,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
 ) {
   const style = {
     ...styleProp,
-    "--uitkIcon-size-multiplier": `${size}`,
+    "--saltIcon-size-multiplier": `${size}`,
   };
 
   return (

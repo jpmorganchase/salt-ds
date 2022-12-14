@@ -1,14 +1,14 @@
 .uitkCard-secondary {
-  --uitkCard-background: var(--uitk-container-secondary-background);
-  --uitkCard-borderColor: var(--uitk-container-secondary-borderColor);
-  --uitkCard-borderRadius: 10px;
-  --uitkCard-borderWidth: 3px;
+  --saltCard-background: var(--salt-container-secondary-background);
+  --saltCard-borderColor: var(--salt-container-secondary-borderColor);
+  --saltCard-borderRadius: 10px;
+  --saltCard-borderWidth: 3px;
 }
 
 .my-app .uitkCard {
-  --uitkCard-background: var(--uitk-accent-background);
-  --uitkCard-borderColor: var(--uitk-accent-borderColor);
-  --uitkCard-color: var(--uitk-accent-foreground);
+  --saltCard-background: var(--salt-accent-background);
+  --saltCard-borderColor: var(--salt-accent-borderColor);
+  --saltCard-color: var(--salt-accent-foreground);
 }
 
 .sbdocs h1 {

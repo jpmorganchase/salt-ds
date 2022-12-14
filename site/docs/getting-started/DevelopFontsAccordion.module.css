@@ -1,6 +1,6 @@
 .accordionWrapper hr {
   --ifm-hr-margin-vertical: 0;
-  --ifm-hr-background-color: var(--uitk-separable-secondary-borderColor);
+  --ifm-hr-background-color: var(--salt-separable-secondary-borderColor);
 }
 
 .accordionWrapper table thead {
@@ -8,7 +8,7 @@
 }
 
 .accordionWrapper :global(.uitkIcon) {
-  --uitk-size-icon-base: var(--uitk-size-unit);
+  --salt-size-icon-base: var(--salt-size-unit);
 }
 
 .accordionWrapper :global(.uitkAccordionSummary-icon) {

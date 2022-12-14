@@ -1,5 +1,5 @@
 .uitkBreadcrumbs-ol {
-  --breadcrumbs-ol-gap: var(--uitk-size-unit);
+  --breadcrumbs-ol-gap: var(--salt-size-unit);
 
   display: flex;
   align-items: center;

@@ -27,11 +27,11 @@
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
 .uitkRadioButton-disabled,
 .uitkFormField-disabled .uitkRadioButton {
-  cursor: var(--uitk-selectable-cursor-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
 .uitkRadioButton-disabled {
-  --uitkControlLabel-color: var(--uitk-text-primary-foreground-disabled);
+  --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
 
   pointer-events: visible;
 }
@@ -42,7 +42,7 @@
   align-items: flex-start;
   margin-left: 0;
   margin-right: 0;
-  margin-top: var(--uitkRadioButton-label-marginTop, var(--radioButton-label-marginTop));
+  margin-top: var(--saltRadioButton-label-marginTop, var(--radioButton-label-marginTop));
   vertical-align: baseline;
 }
 
@@ -53,5 +53,5 @@
 }
 
 .uitkFormGroup-row > .uitkRadioButton {
-  margin-right: var(--uitkFormGroup-row-marginRight, var(--radioButton-row-marginRight));
+  margin-right: var(--saltFormGroup-row-marginRight, var(--radioButton-row-marginRight));
 }

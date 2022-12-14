@@ -1,20 +1,20 @@
 /* TODO: Should the outer most container being 'wrapper'? */
 .uitkListDeprecated-wrapper {
   /* Color */
-  --list-background: var(--uitk-container-primary-background);
+  --list-background: var(--salt-container-primary-background);
   /* Border */
-  --list-borderColor: var(--uitk-container-primary-borderColor);
-  --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-size-border);
+  --list-borderColor: var(--salt-container-primary-borderColor);
+  --list-borderStyle: var(--salt-container-borderStyle);
+  --list-borderWidth: var(--salt-size-border);
   --list-borderRadius: 0;
 
   /* Text, Font */
   /* TODO: Do we necessary want to set this? Should rely on inheritance? */
-  /* --list-fontFamily: var(--uitk-typography-fontFamily); */
+  /* --list-fontFamily: var(--salt-typography-fontFamily); */
 
   /* Misc. */
   --list-boxShadow: none;
-  --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
+  --list-disabled-cursor: var(--salt-actionable-cursor-disabled);
 }
 
 .uitkListDeprecated-wrapper {

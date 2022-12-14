@@ -8,21 +8,21 @@
 }
 
 .uitkQueryInputBody > .uitkIcon {
-  padding: var(--uitk-size-unit);
+  padding: var(--salt-size-unit);
   align-self: start;
 }
 
 .uitkQueryInputBody-separator {
   width: 1px;
-  background: var(--uitk-separable-secondary-borderColor);
-  margin: 0 var(--uitk-size-unit);
+  background: var(--salt-separable-secondary-borderColor);
+  margin: 0 var(--salt-size-unit);
   align-self: stretch;
 }
 
 .uitkQueryInputBody-buttonGroup {
   flex-shrink: 0;
   align-self: start;
-  margin-bottom: var(--uitk-size-unit);
+  margin-bottom: var(--salt-size-unit);
 }
 
 .uitkQueryInputBody-input {
@@ -45,17 +45,17 @@
 }
 
 .uitkCategoryList-category {
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--salt-text-fontSize);
 }
 
 .uitkCategoryListItem-text {
   flex-shrink: 0;
-  margin-right: calc(var(--uitk-size-unit) * 1.5);
+  margin-right: calc(var(--salt-size-unit) * 1.5);
 }
 
 .uitkCategoryListItem-valuesContainer {
   font-style: italic;
-  color: var(--uitk-text-secondary-foreground);
+  color: var(--salt-text-secondary-foreground);
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -69,7 +69,7 @@
 
 .uitkCategoryListItem-chevron {
   flex-shrink: 0;
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--salt-size-unit);
 }
 
 .uitkListItem-selected .uitkIcon {
@@ -77,23 +77,23 @@
 }
 
 .uitkQueryInputValueList {
-  border: solid 1px var(--uitk-container-primary-borderColor);
+  border: solid 1px var(--salt-container-primary-borderColor);
 }
 
 .uitkQueryInputValueList-back {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom: solid 1px var(--uitk-separable-secondary-borderColor);
+  border-bottom: solid 1px var(--salt-separable-secondary-borderColor);
   cursor: pointer;
 }
 
 .uitkQueryInputValueList-back .uitkIcon {
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 .uitkQueryInputValueList-category {
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--salt-text-fontSize);
   flex-grow: 1;
 }
 
@@ -104,20 +104,20 @@
 }
 
 .uitkQueryInputSearchList-addKeyword {
-  border-top: solid 1px var(--uitk-separable-secondary-borderColor);
+  border-top: solid 1px var(--salt-separable-secondary-borderColor);
 }
 
 .uitkQueryInputSearchList-categoryTitle {
-  color: var(--uitk-text-primary-foreground);
-  background: var(--uitk-container-primary-background);
-  font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-text-fontWeight-strong);
+  color: var(--salt-text-primary-foreground);
+  background: var(--salt-container-primary-background);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
   display: flex;
   align-items: center;
-  padding: 0 var(--uitk-size-unit);
+  padding: 0 var(--salt-size-unit);
   position: sticky;
   top: 0;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }
 
 .uitkQueryInputSearchList-value {

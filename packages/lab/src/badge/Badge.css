@@ -1,19 +1,19 @@
 /* Default variables applied to the root element */
 .uitkBadge {
   /* Colors */
-  --badge-content-text-color: var(--uitkBadge-content-text-color, var(--uitk-accent-foreground));
-  --badge-content-icon-color: var(--uitkBadge-content-icon-color, var(--uitk-accent-background));
+  --badge-content-text-color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
+  --badge-content-icon-color: var(--saltBadge-content-icon-color, var(--salt-accent-background));
   /* Font, Typography */
   --badge-content-borderRadius: 16px;
   --badge-content-lineHeight: 15px;
   --badge-content-padding: 0px 4px;
-  --badge-fontSize: var(--uitkBadge-fontSize, var(--uitk-text-label-fontSize));
+  --badge-fontSize: var(--saltBadge-fontSize, var(--salt-text-label-fontSize));
 
   /* Derived */
   /* Same as content padding in x */
   --badge-offset-inline: -4px;
 
-  --badge-sequence-gap: var(--uitk-size-unit);
+  --badge-sequence-gap: var(--salt-size-unit);
 }
 
 /* Style applied to the root element */
@@ -24,8 +24,8 @@
   position: relative;
   flex-shrink: 0;
   vertical-align: middle;
-  line-height: var(--uitk-text-lineHeight);
-  font-size: var(--uitk-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
 }
 
 /* Give automatic margin when they sit next to each other */

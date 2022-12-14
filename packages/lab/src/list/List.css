@@ -1,23 +1,23 @@
 .uitkList {
-  --list-background: var(--uitk-container-primary-background);
-  --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-size-border);
+  --list-background: var(--salt-container-primary-background);
+  --list-borderStyle: var(--salt-container-borderStyle);
+  --list-borderWidth: var(--salt-size-border);
   --list-height: auto;
-  --list-item-height: var(--uitk-size-stackable);
+  --list-item-height: var(--salt-size-stackable);
   --list-item-gap: 0px;
   --list-maxHeight: 100%;
 
   background: var(--list-background);
-  border-color: var(--uitk-container-primary-borderColor);
+  border-color: var(--salt-container-primary-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
-  height: var(--uitkList-height, var(--list-height));
+  height: var(--saltList-height, var(--list-height));
   max-height: var(--list-maxHeight);
   outline: none;
   overflow-y: auto;
   position: relative;
   user-select: none;
-  width: var(--uitkList-width, auto);
+  width: var(--saltList-width, auto);
 }
 
 .uitkList-borderless {
@@ -32,12 +32,12 @@
 }
 
 .uitkListItemHeader {
-  --uitkList-item-background: var(--list-item-header-background);
+  --saltList-item-background: var(--list-item-header-background);
   color: var(--list-item-header-color);
 }
 
 .uitkListItemHeader[data-sticky="true"] {
-  --uitkList-item-background: var(--list-background);
+  --saltList-item-background: var(--list-background);
   position: sticky;
   top: 0;
   z-index: 1;

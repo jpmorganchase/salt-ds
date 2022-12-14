@@ -1,25 +1,25 @@
 /* Style applied to the separator */
 .uitkSplitLayout-separator {
-  --uitkFlexLayout-gap: calc(var(--uitk-size-unit) * var(--uitkFlexLayout-gap-multiplier) + var(--uitkFlexLayout-separator));
+  --saltFlexLayout-gap: calc(var(--salt-size-unit) * var(--saltFlexLayout-gap-multiplier) + var(--saltFlexLayout-separator));
 }
 
 .uitkSplitLayout-separator > *:first-child::after,
 .uitkSplitLayout-separator > *:last-child::before,
 .uitkSplitLayout-separator-center::after {
-  background-color: var(--uitk-separable-secondary-borderColor);
-  width: var(--uitkFlexLayout-separator);
+  background-color: var(--salt-separable-secondary-borderColor);
+  width: var(--saltFlexLayout-separator);
   top: 0;
   height: 100%;
 }
 
 .uitkSplitLayout-separator-start > *:first-child::after {
   content: "";
-  right: calc(var(--uitkFlexLayout-separator) * -1);
+  right: calc(var(--saltFlexLayout-separator) * -1);
 }
 
 .uitkSplitLayout-separator-end > *:last-child::before {
   content: "";
-  right: calc(var(--uitkFlexLayout-separator) * -1);
+  right: calc(var(--saltFlexLayout-separator) * -1);
 }
 .uitkSplitLayout-separator-center {
   position: relative;
@@ -27,5 +27,5 @@
 .uitkSplitLayout-separator-center::after {
   position: absolute;
   content: "";
-  right: calc(var(--uitkFlexLayout-separator) * -1);
+  right: calc(var(--saltFlexLayout-separator) * -1);
 }

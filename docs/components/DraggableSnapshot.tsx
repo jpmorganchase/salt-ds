@@ -112,8 +112,8 @@ export const DraggableImg = ({
 
   const style = {
     ...styleProp,
-    "--uitkDraggableSnapshot-opacity": opacity,
-    "--uitkDraggableSnapshot-url": `url(${src})`,
+    "--saltDraggableSnapshot-opacity": opacity,
+    "--saltDraggableSnapshot-url": `url(${src})`,
     left,
     top,
   };

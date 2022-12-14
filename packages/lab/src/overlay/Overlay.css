@@ -1,17 +1,17 @@
 /* Experimental - Overlay css variable API */
 .uitkOverlay {
-  --overlay-text-color: var(--uitk-text-primary-foreground);
-  --overlay-spacing: var(--uitk-size-unit);
-  --overlay-fontSize: var(--uitk-text-fontSize);
-  --overlay-background: var(--uitk-container-primary-background);
-  --overlay-borderColor: var(--uitk-container-primary-borderColor);
+  --overlay-text-color: var(--salt-text-primary-foreground);
+  --overlay-spacing: var(--salt-size-unit);
+  --overlay-fontSize: var(--salt-text-fontSize);
+  --overlay-background: var(--salt-container-primary-background);
+  --overlay-borderColor: var(--salt-container-primary-borderColor);
   /* TODO: z-index audit, provide z index here or rely on popper */
-  --overlay-zindex: var(--uitk-zIndex-flyover);
+  --overlay-zindex: var(--salt-zIndex-flyover);
 }
 
 .uitkOverlay-secondary.uitkOverlay {
-  --overlay-background: var(--uitk-container-secondary-background);
-  --overlay-borderColor: var(--uitk-container-secondary-borderColor);
+  --overlay-background: var(--salt-container-secondary-background);
+  --overlay-borderColor: var(--salt-container-secondary-borderColor);
 }
 
 .uitkOverlay-content {
@@ -20,8 +20,8 @@
   font-size: var(--overlay-fontSize);
 
   border: 1px solid var(--overlay-borderColor);
-  box-shadow: var(--uitk-overlayable-shadow-popout);
-  line-height: var(--uitk-text-lineHeight);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  line-height: var(--salt-text-lineHeight);
   background: var(--overlay-background);
   color: var(--overlay-text-color);
   position: relative;
@@ -89,5 +89,5 @@
   position: absolute;
   right: 0;
   top: 0;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }

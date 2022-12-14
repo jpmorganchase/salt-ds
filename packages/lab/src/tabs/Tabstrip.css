@@ -1,14 +1,14 @@
 /* Component class applied to the root element */
 .uitkTabstrip {
-  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-tabstrip-dragging-display: none;
   --tabs-tabstrip-display: inline-flex;
   --tabs-tabstrip-background: transparent;
 
   align-items: flex-start;
-  align-self: var(--uitkTabs-tabstrip-alignSelf, stretch);
-  font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-text-fontWeight);
+  align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -41,7 +41,7 @@
 }
 
 .uitkTabstrip-draggingTab {
-  --uitkTabs-activationIndicator-transition: none;
+  --saltTabs-activationIndicator-transition: none;
 }
 
 .uitkTabstrip-draggingTab .uitkTab {
@@ -55,20 +55,20 @@
 
 .uitkTabstrip-addButton,
 .uitkDropdown.uitkTabstrip-overflowMenu {
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--salt-size-unit);
 }
 
 .uitkTabstrip-overflowMenu.uitkDropdown {
-  --uitkIcon-margin: 2px 0 0 0px;
+  --saltIcon-margin: 2px 0 0 0px;
 }
 
 .uitkTabstrip-overflowMenu-open {
-  --uitkButton-background: var(--uitk-actionable-secondary-background-active);
-  --uitkButton-text-color: var(--uitk-actionable-secondary-text-color-active);
+  --saltButton-background: var(--salt-actionable-secondary-background-active);
+  --saltButton-text-color: var(--salt-actionable-secondary-text-color-active);
 }
 
 .uitkTabstrip-overflowMenu-open .uitkButton {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
 .uitkTabstrip-inner {
@@ -95,23 +95,23 @@
 /* Styling applied to Draggable wrapper when used to drag a Tab */
 .uitkDraggable[class*="tabstrip"] {
   --tabs-tabstrip-display: flex;
-  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-tabstrip-dragging-display: block;
 
-  --tabs-tab-background: var(--uitk-navigable-primary-background-hover);
+  --tabs-tab-background: var(--salt-navigable-primary-background-hover);
   --tabs-tab-before-content: "";
-  --tabs-tab-before-background: var(--uitk-navigable-indicator-hover);
+  --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
   --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
-  --tabs-tab-cursor: var(--uitk-draggable-grab-cursor-active);
+  --tabs-tab-cursor: var(--salt-draggable-grab-cursor-active);
   --tabs-tab-position: static;
 
   font-size: 12px;
 }
 
 .uitkDraggable-tabstrip-horizontal {
-  --tabs-tabstrip-height: var(--uitkTabs-tabstrip-height, var(--uitk-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-activationIndicator-thumb-height: 2px;
   --tabs-activationIndicator-inset: auto 0px 0px 0px;
 
@@ -123,11 +123,11 @@
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab[aria-selected="true"]:before {
-  --tabs-tab-before-background: var(--uitk-navigable-indicator-active);
+  --tabs-tab-before-background: var(--salt-navigable-indicator-active);
 }
 
 .uitkDraggable[class*="tabstrip"] .uitkTab {
-  box-shadow: var(--uitk-overlayable-shadow-drag);
+  box-shadow: var(--salt-overlayable-shadow-drag);
 }
 
 [data-overflowed] {
@@ -136,7 +136,7 @@
 }
 
 .uitkTabstrip-overflowMenu-dropTarget:after {
-  background: var(--uitk-palette-interact-background-active);
+  background: var(--salt-palette-interact-background-active);
   content: "";
   position: absolute;
   height: 2px;

@@ -1,27 +1,27 @@
 .uitk-theme {
-  --uitk-navigable-cursor-active: pointer;
-  --uitk-navigable-cursor-hover: pointer;
-  --uitk-navigable-cursor-disabled: not-allowed;
-  --uitk-navigable-cursor-edit: text;
+  --salt-navigable-cursor-active: pointer;
+  --salt-navigable-cursor-hover: pointer;
+  --salt-navigable-cursor-disabled: not-allowed;
+  --salt-navigable-cursor-edit: text;
 
-  --uitk-navigable-fontWeight: var(--uitk-typography-fontWeight-regular);
-  --uitk-navigable-fontWeight-hover: var(--uitk-typography-fontWeight-regular);
-  --uitk-navigable-fontWeight-active: var(--uitk-typography-fontWeight-semiBold);
-  --uitk-navigable-fontWeight-edit: var(--uitk-typography-fontWeight-regular);
+  --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
+  --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
 
-  --uitk-navigable-indicator-hover: var(--uitk-palette-navigate-indicator-hover);
-  --uitk-navigable-indicator-active: var(--uitk-palette-navigate-indicator-active);
-  --uitk-navigable-indicator-activeDisabled: var(--uitk-palette-navigate-indicator-activeDisabled);
+  --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
+  --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
+  --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
 
-  --uitk-navigable-primary-background: var(--uitk-palette-navigate-primary-background);
-  --uitk-navigable-primary-background-hover: var(--uitk-palette-navigate-primary-background-hover);
-  --uitk-navigable-primary-background-active: var(--uitk-palette-navigate-primary-background-active);
+  --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);
+  --salt-navigable-primary-background-hover: var(--salt-palette-navigate-primary-background-hover);
+  --salt-navigable-primary-background-active: var(--salt-palette-navigate-primary-background-active);
 
-  --uitk-navigable-secondary-background: var(--uitk-palette-navigate-secondary-background);
-  --uitk-navigable-secondary-background-hover: var(--uitk-palette-navigate-secondary-background-hover);
-  --uitk-navigable-secondary-background-active: var(--uitk-palette-navigate-secondary-background-active);
+  --salt-navigable-secondary-background: var(--salt-palette-navigate-secondary-background);
+  --salt-navigable-secondary-background-hover: var(--salt-palette-navigate-secondary-background-hover);
+  --salt-navigable-secondary-background-active: var(--salt-palette-navigate-secondary-background-active);
 
-  --uitk-navigable-tertiary-background: var(--uitk-palette-navigate-tertiary-background);
-  --uitk-navigable-tertiary-background-hover: var(--uitk-palette-navigate-tertiary-background-hover);
-  --uitk-navigable-tertiary-background-active: var(--uitk-palette-navigate-tertiary-background-active);
+  --salt-navigable-tertiary-background: var(--salt-palette-navigate-tertiary-background);
+  --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
+  --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
 }

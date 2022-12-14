@@ -1,30 +1,30 @@
 .uitkTreeNode {
   /* Color */
-  --tree-item-text-color: var(--uitk-text-primary-foreground);
-  --tree-item-background: var(--uitk-selectable-background);
-  --tree-item-background-hover: var(--uitk-selectable-background-hover);
+  --tree-item-text-color: var(--salt-text-primary-foreground);
+  --tree-item-background: var(--salt-selectable-background);
+  --tree-item-background-hover: var(--salt-selectable-background-hover);
 
-  --tree-node-height: var(--uitkTree-node-height, var(--uitk-size-stackable));
+  --tree-node-height: var(--saltTree-node-height, var(--salt-size-stackable));
   --tree-node-icon-size: 12px;
   --tree-node-icon-transform: none;
   --tree-node-paddingLeft: 6px;
 
   align-items: flex-start;
   min-height: var(--tree-node-height, auto);
-  line-height: var(--uitk-text-lineHeight);
+  line-height: var(--salt-text-lineHeight);
   list-style: none;
   position: relative;
   text-align: var(--list-item-textAlign);
 }
 
 .uitkTreeNode-highlighted {
-  --tree-item-background: var(--uitk-selectable-background-hover);
+  --tree-item-background: var(--salt-selectable-background-hover);
 }
 
 .uitkTreeNode-item[aria-selected="true"] {
-  background: var(--uitk-selectable-background-selected);
-  color: var(--uitk-text-primary-foreground);
-  --uitkIcon-color: var(--uitk-text-primary-foreground);
+  background: var(--salt-selectable-background-selected);
+  color: var(--salt-text-primary-foreground);
+  --saltIcon-color: var(--salt-text-primary-foreground);
 }
 
 .uitkTreeNode[aria-expanded="true"] {
@@ -57,7 +57,7 @@
   align-items: center;
   display: inline-flex;
   height: var(--tree-node-height);
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
 }
 
 /* Leaf node or the div child of a collapsible node */

@@ -2,14 +2,14 @@
 .uitk-density-low,
 .uitk-density-medium,
 .uitk-density-high {
-  --uitk-zIndex-default: 1;
-  --uitk-zIndex-popout: 1000;
-  --uitk-zIndex-docked: 1050;
-  --uitk-zIndex-appHeader: 1100;
-  --uitk-zIndex-drawer: 1200;
-  --uitk-zIndex-modal: 1300;
-  --uitk-zIndex-notification: 1400;
-  --uitk-zIndex-dragObject: 1420;
-  --uitk-zIndex-contextMenu: 1450;
-  --uitk-zIndex-flyover: 1500;
+  --salt-zIndex-default: 1;
+  --salt-zIndex-popout: 1000;
+  --salt-zIndex-docked: 1050;
+  --salt-zIndex-appHeader: 1100;
+  --salt-zIndex-drawer: 1200;
+  --salt-zIndex-modal: 1300;
+  --salt-zIndex-notification: 1400;
+  --salt-zIndex-dragObject: 1420;
+  --salt-zIndex-contextMenu: 1450;
+  --salt-zIndex-flyover: 1500;
 }

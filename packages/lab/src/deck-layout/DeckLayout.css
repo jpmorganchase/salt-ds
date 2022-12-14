@@ -8,12 +8,12 @@
 
 .uitkDeckLayout-slide-horizontal {
   width: var(--deckLayout-width);
-  transition: transform var(--uitk-animation-duration);
+  transition: transform var(--salt-animation-duration);
   transform: translateX(var(--deckLayout-transform-value));
 }
 
 .uitkDeckLayout-slide-vertical {
   height: var(--deckLayout-height);
-  transition: transform var(--uitk-animation-duration);
+  transition: transform var(--salt-animation-duration);
   transform: translateY(var(--deckLayout-transform-value));
 }

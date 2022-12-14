@@ -1,18 +1,18 @@
 /* CSS Variables for the Skip Link */
 .uitkSkipLink {
-  --skipLink-padding: var(--uitkSkipLink-padding, var(--uitk-size-unit));
-  --skipLink-margin: var(--uitkSkipLink-margin, var(--uitk-size-unit));
-  --skipLink-background: var(--uitkSkipLink-background, var(--uitk-actionable-primary-background));
-  --skipLink-color: var(--uitkSkipLink-color, var(--uitk-text-primary-foreground));
+  --skipLink-padding: var(--saltSkipLink-padding, var(--salt-size-unit));
+  --skipLink-margin: var(--saltSkipLink-margin, var(--salt-size-unit));
+  --skipLink-background: var(--saltSkipLink-background, var(--salt-actionable-primary-background));
+  --skipLink-color: var(--saltSkipLink-color, var(--salt-text-primary-foreground));
 }
 
 /* Overrides */
 .uitkSkipLink {
-  --uitkLink-color-focus: var(--skipLink-color);
+  --saltLink-color-focus: var(--skipLink-color);
 }
 
 .uitkSkipLink-target {
-  --skipLink-target-focus: var(--uitk-focused-outline);
+  --skipLink-target-focus: var(--salt-focused-outline);
 }
 
 /*Styles applied when the link is focused to hide the Skip Link when not in focus*/
@@ -37,13 +37,13 @@
   padding: calc(var(--skipLink-padding) - 1px) var(--skipLink-padding) var(--skipLink-padding);
   background: var(--skipLink-background);
   color: var(--skipLink-color);
-  box-shadow: var(--uitk-overlayable-shadow-popout);
+  box-shadow: var(--salt-overlayable-shadow-popout);
 }
 
 .uitkSkipLink {
-  font-size: var(--uitk-text-fontSize);
-  font-family: var(--uitkSkipLink-fontFamily, var(--uitk-typography-fontFamily));
-  line-height: var(--uitkSkipLink-lineHeight, var(--uitk-text-lineHeight));
+  font-size: var(--salt-text-fontSize);
+  font-family: var(--saltSkipLink-fontFamily, var(--salt-typography-fontFamily));
+  line-height: var(--saltSkipLink-lineHeight, var(--salt-text-lineHeight));
 }
 
 /*Styles applied to the skip link focus target*/

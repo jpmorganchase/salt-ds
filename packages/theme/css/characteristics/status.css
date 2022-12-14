@@ -1,16 +1,16 @@
 .uitk-theme {
-  --uitk-status-info-foreground: var(--uitk-palette-info-foreground);
-  --uitk-status-success-foreground: var(--uitk-palette-success-foreground);
-  --uitk-status-warning-foreground: var(--uitk-palette-warning-foreground);
-  --uitk-status-error-foreground: var(--uitk-palette-error-foreground);
+  --salt-status-info-foreground: var(--salt-palette-info-foreground);
+  --salt-status-success-foreground: var(--salt-palette-success-foreground);
+  --salt-status-warning-foreground: var(--salt-palette-warning-foreground);
+  --salt-status-error-foreground: var(--salt-palette-error-foreground);
 
-  --uitk-status-info-borderColor: var(--uitk-palette-info-border);
-  --uitk-status-success-borderColor: var(--uitk-palette-success-border);
-  --uitk-status-warning-borderColor: var(--uitk-palette-warning-border);
-  --uitk-status-error-borderColor: var(--uitk-palette-error-border);
+  --salt-status-info-borderColor: var(--salt-palette-info-border);
+  --salt-status-success-borderColor: var(--salt-palette-success-border);
+  --salt-status-warning-borderColor: var(--salt-palette-warning-border);
+  --salt-status-error-borderColor: var(--salt-palette-error-border);
 
-  --uitk-status-info-background-emphasize: var(--uitk-palette-info-background-emphasize);
-  --uitk-status-success-background-emphasize: var(--uitk-palette-success-background-emphasize);
-  --uitk-status-warning-background-emphasize: var(--uitk-palette-warning-background-emphasize);
-  --uitk-status-error-background-emphasize: var(--uitk-palette-error-background-emphasize);
+  --salt-status-info-background-emphasize: var(--salt-palette-info-background-emphasize);
+  --salt-status-success-background-emphasize: var(--salt-palette-success-background-emphasize);
+  --salt-status-warning-background-emphasize: var(--salt-palette-warning-background-emphasize);
+  --salt-status-error-background-emphasize: var(--salt-palette-error-background-emphasize);
 }

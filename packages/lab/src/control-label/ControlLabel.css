@@ -26,32 +26,32 @@
 .uitkControlLabel-label,
 .uitkControlLabel-labelRight {
   --controlLabel-marginLeft: 0;
-  --controlLabel-marginRight: calc(var(--uitk-size-unit) / 1.5);
+  --controlLabel-marginRight: calc(var(--salt-size-unit) / 1.5);
 
-  color: var(--uitkControlLabel-color, var(--uitk-text-primary-foreground));
-  font-family: var(--uitk-text-fontFamily);
-  font-size: var(--uitk-text-fontSize);
-  font-weight: var(--uitk-text-fontWeight);
-  line-height: var(--uitk-text-lineHeight);
-  margin-left: var(--uitkControlLabel-marginLeft, var(--controlLabel-marginLeft));
-  margin-right: var(--uitkControlLabel-marginRight, var(--controlLabel-marginRight));
+  color: var(--saltControlLabel-color, var(--salt-text-primary-foreground));
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  margin-left: var(--saltControlLabel-marginLeft, var(--controlLabel-marginLeft));
+  margin-right: var(--saltControlLabel-marginRight, var(--controlLabel-marginRight));
   display: block;
 }
 
 /* Overrides on `labelPlacement="right"` */
 .uitkControlLabel-labelRight {
-  --controlLabel-marginLeft: var(--uitkControlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
-  --controlLabel-marginRight: var(--uitkControlLabel-right-marginRight, var(--controlLabel-right-marginRight));
+  --controlLabel-marginLeft: var(--saltControlLabel-right-marginLeft, var(--controlLabel-right-marginLeft));
+  --controlLabel-marginRight: var(--saltControlLabel-right-marginRight, var(--controlLabel-right-marginRight));
 }
 
 /* Styles applied if `disabled={true}` or nested in FormField where `disabled={true}` */
 .uitkControlLabel-disabled,
 .uitkFormField-disabled .uitkControlLabel {
-  cursor: var(--uitk-selectable-cursor-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to label if `disabled={true}` */
 .uitkControlLabel-disabled .uitkControlLabel-label {
-  cursor: var(--uitk-selectable-cursor-disabled);
-  color: var(--uitkControlLabel-color-disabled, var(--uitk-text-primary-foreground-disabled));
+  cursor: var(--salt-selectable-cursor-disabled);
+  color: var(--saltControlLabel-color-disabled, var(--salt-text-primary-foreground-disabled));
 }

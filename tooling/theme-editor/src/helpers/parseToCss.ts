@@ -71,7 +71,7 @@ function transformToCSS(patternJsonByScope) {
 
     Object.keys(element.jsonObj).forEach((path) => {
       if (path !== "value") {
-        stringCSS += "--uitk-" + path;
+        stringCSS += "--salt-" + path;
         recurse(element.jsonObj[path]);
       } else {
         stringCSS += ": " + element.jsonObj[path];

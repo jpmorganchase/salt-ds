@@ -29,22 +29,22 @@
 }
 
 .uitkPagination-previousButton {
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 .uitkPagination-nextButton {
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--salt-size-unit);
 }
 
 .uitkPagination-pageButton {
   min-width: var(--pagination-button-size);
   height: var(--pagination-button-size);
-  --uitkButton-fontWeight: var(--uitk-text-fontWeight);
+  --saltButton-fontWeight: var(--salt-text-fontWeight);
 }
 
 .uitkPagination-pageButtonSelected {
-  background: var(--uitk-selectable-background-selected);
-  color: var(--uitk-selectable-cta-foreground-selected);
+  background: var(--salt-selectable-background-selected);
+  color: var(--salt-selectable-cta-foreground-selected);
 }
 
 .uitkPagination-pageButtonFixed {
@@ -93,11 +93,11 @@
 }
 
 .uitkPagination-leftGoToInput {
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
 .uitkPagination-rightGoToInput {
-  margin-left: var(--uitk-size-unit);
+  margin-left: var(--salt-size-unit);
   min-width: unset;
 }
 

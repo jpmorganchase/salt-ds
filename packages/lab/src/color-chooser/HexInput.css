@@ -1,18 +1,18 @@
 .uitkColorChooserHexInput {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px calc(3 * var(--uitk-size-unit)) 0px;
+  padding: 0px 0px calc(3 * var(--salt-size-unit)) 0px;
 }
 
 .uitkColorChooserHexInput-hashSign {
   margin-top: 5px;
-  font-size: var(--uitk-text-label-fontSize);
+  font-size: var(--salt-text-label-fontSize);
   padding-right: 6px;
-  color: var(--uitk-text-secondary-foreground);
+  color: var(--salt-text-secondary-foreground);
   padding-left: 6px;
 }
 
 .uitkColorChooserHexInput-input {
-  width: var(--uitk-size-unit);
-  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  width: var(--salt-size-unit);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }

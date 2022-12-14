@@ -1,151 +1,151 @@
 /* Styles applied to the root element if variant="cta" */
 .uitkButton-cta {
-  --button-background: var(--uitk-actionable-cta-background);
-  --button-background-active: var(--uitk-actionable-cta-background-active);
-  --button-background-disabled: var(--uitk-actionable-cta-background-disabled);
-  --button-background-hover: var(--uitk-actionable-cta-background-hover);
-  --button-fontWeight: var(--uitk-actionable-cta-fontWeight);
-  --button-text-color: var(--uitk-actionable-cta-foreground);
-  --button-text-color-active: var(--uitk-actionable-cta-foreground-active);
-  --button-text-color-disabled: var(--uitk-actionable-cta-foreground-disabled);
-  --button-text-color-hover: var(--uitk-actionable-cta-foreground-hover);
+  --button-background: var(--salt-actionable-cta-background);
+  --button-background-active: var(--salt-actionable-cta-background-active);
+  --button-background-disabled: var(--salt-actionable-cta-background-disabled);
+  --button-background-hover: var(--salt-actionable-cta-background-hover);
+  --button-fontWeight: var(--salt-actionable-cta-fontWeight);
+  --button-text-color: var(--salt-actionable-cta-foreground);
+  --button-text-color-active: var(--salt-actionable-cta-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-cta-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
 }
 
 /* Icon API in "CTA" variant @ignore */
 .uitkButton-cta {
-  --uitkIcon-color: var(--uitk-actionable-cta-foreground);
+  --saltIcon-color: var(--salt-actionable-cta-foreground);
 }
 .uitkButton-cta:hover {
-  --uitkIcon-color: var(--uitk-actionable-cta-foreground-hover);
+  --saltIcon-color: var(--salt-actionable-cta-foreground-hover);
 }
 .uitkButton-cta:active,
 .uitkButton-cta.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-cta-foreground-active);
+  --saltIcon-color: var(--salt-actionable-cta-foreground-active);
 }
 .uitkButton-cta.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-cta-foreground-disabled);
+  --saltIcon-color: var(--salt-actionable-cta-foreground-disabled);
 }
 
 /* Styles applied to the root element if variant="primary" (or no variant specified) */
 .uitkButton-primary {
-  --button-background: var(--uitk-actionable-primary-background);
-  --button-background-active: var(--uitk-actionable-primary-background-active);
-  --button-background-disabled: var(--uitk-actionable-primary-background-disabled);
-  --button-background-hover: var(--uitk-actionable-primary-background-hover);
-  --button-fontWeight: var(--uitk-actionable-primary-fontWeight);
-  --button-text-color: var(--uitk-actionable-primary-foreground);
-  --button-text-color-active: var(--uitk-actionable-primary-foreground-active);
-  --button-text-color-disabled: var(--uitk-actionable-primary-foreground-disabled);
-  --button-text-color-hover: var(--uitk-actionable-primary-foreground-hover);
+  --button-background: var(--salt-actionable-primary-background);
+  --button-background-active: var(--salt-actionable-primary-background-active);
+  --button-background-disabled: var(--salt-actionable-primary-background-disabled);
+  --button-background-hover: var(--salt-actionable-primary-background-hover);
+  --button-fontWeight: var(--salt-actionable-primary-fontWeight);
+  --button-text-color: var(--salt-actionable-primary-foreground);
+  --button-text-color-active: var(--salt-actionable-primary-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-primary-foreground-hover);
 }
 
 /* Icon API in "primary" variant @ignore */
 .uitkButton-primary {
-  --uitkIcon-color: var(--uitk-actionable-primary-foreground);
+  --saltIcon-color: var(--salt-actionable-primary-foreground);
 }
 .uitkButton-primary:hover {
-  --uitkIcon-color: var(--uitk-actionable-primary-foreground-hover);
+  --saltIcon-color: var(--salt-actionable-primary-foreground-hover);
 }
 .uitkButton-primary:active,
 .uitkButton-primary.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-primary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }
 .uitkButton-primary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-primary-foreground-disabled);
+  --saltIcon-color: var(--salt-actionable-primary-foreground-disabled);
 }
 
 /* Styles applied to the root element if variant="secondary" */
 .uitkButton-secondary {
-  --button-background: var(--uitk-actionable-secondary-background);
-  --button-background-active: var(--uitk-actionable-secondary-background-active);
-  --button-background-disabled: var(--uitk-actionable-secondary-background-disabled);
-  --button-background-hover: var(--uitk-actionable-secondary-background-hover);
-  --button-fontWeight: var(--uitk-actionable-secondary-fontWeight);
-  --button-text-color: var(--uitk-actionable-secondary-foreground);
-  --button-text-color-active: var(--uitk-actionable-secondary-foreground-active);
-  --button-text-color-disabled: var(--uitk-actionable-secondary-foreground-disabled);
-  --button-text-color-hover: var(--uitk-actionable-secondary-foreground-hover);
+  --button-background: var(--salt-actionable-secondary-background);
+  --button-background-active: var(--salt-actionable-secondary-background-active);
+  --button-background-disabled: var(--salt-actionable-secondary-background-disabled);
+  --button-background-hover: var(--salt-actionable-secondary-background-hover);
+  --button-fontWeight: var(--salt-actionable-secondary-fontWeight);
+  --button-text-color: var(--salt-actionable-secondary-foreground);
+  --button-text-color-active: var(--salt-actionable-secondary-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-secondary-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-secondary-foreground-hover);
 }
 
 /* Icon API in "secondary" variant @ignore */
 .uitkButton-secondary {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
 }
 
 .uitkButton-secondary:hover {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-hover);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
 }
 .uitkButton-secondary:active,
 .uitkButton-secondary.uitkButton-active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 .uitkButton-secondary.uitkButton-disabled {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground-disabled);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-disabled);
 }
 
 .uitkButton {
-  align-items: var(--uitkButton-alignItems, center);
+  align-items: var(--saltButton-alignItems, center);
   appearance: none;
-  background: var(--uitkButton-background, var(--button-background));
-  border-color: var(--uitkButton-borderColor, transparent);
-  border-style: var(--uitkButton-borderStyle, solid);
-  border-width: var(--uitkButton-borderWidth, 0);
-  border-radius: var(--uitkButton-borderRadius, 0);
-  color: var(--uitkButton-text-color, var(--button-text-color));
-  cursor: var(--uitkButton-cursor, pointer);
+  background: var(--saltButton-background, var(--button-background));
+  border-color: var(--saltButton-borderColor, transparent);
+  border-style: var(--saltButton-borderStyle, solid);
+  border-width: var(--saltButton-borderWidth, 0);
+  border-radius: var(--saltButton-borderRadius, 0);
+  color: var(--saltButton-text-color, var(--button-text-color));
+  cursor: var(--saltButton-cursor, pointer);
   display: inline-flex;
-  justify-content: var(--uitkButton-justifyContent, center);
-  font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
-  font-family: var(--uitkButton-fontFamily, var(--uitk-text-fontFamily));
-  line-height: var(--uitkButton-lineHeight, var(--uitk-text-lineHeight));
-  letter-spacing: var(--uitkButton-letterSpacing, var(--uitk-actionable-letterSpacing));
-  text-transform: var(--uitkButton-textTransform, var(--uitk-actionable-textTransform));
-  padding: 0 var(--uitkButton-padding, var(--uitk-size-unit));
-  margin: var(--uitkButton-margin, 0);
-  height: var(--uitkButton-height, var(--uitk-size-base));
-  min-width: var(--uitkButton-minWidth, unset);
+  justify-content: var(--saltButton-justifyContent, center);
+  font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
+  font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
+  line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--saltButton-letterSpacing, var(--salt-actionable-letterSpacing));
+  text-transform: var(--saltButton-textTransform, var(--salt-actionable-textTransform));
+  padding: 0 var(--saltButton-padding, var(--salt-size-unit));
+  margin: var(--saltButton-margin, 0);
+  height: var(--saltButton-height, var(--salt-size-base));
+  min-width: var(--saltButton-minWidth, unset);
   min-height: 0;
   position: relative;
-  text-align: var(--uitkButton-textAlign, var(--uitk-actionable-textAlign));
+  text-align: var(--saltButton-textAlign, var(--salt-actionable-textAlign));
   text-decoration: none;
   transition: none;
   user-select: none;
-  width: var(--uitkButton-width, auto);
+  width: var(--saltButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   /* Styles applied to align children*/
-  font-weight: var(--uitkButton-fontWeight, var(--button-fontWeight));
+  font-weight: var(--saltButton-fontWeight, var(--button-fontWeight));
   white-space: pre;
 }
 
 /* Pseudo-class applied to the root element on focus */
 .uitkButton:focus-visible {
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
-  background: var(--uitkButton-background-hover, var(--button-background-hover));
-  color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  background: var(--saltButton-background-hover, var(--button-background-hover));
+  color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
 }
 
 /* Pseudo-class applied to the root element on focus when Button is active */
 .uitkButton.uitkButton-active:focus-visible,
 .uitkButton:focus-visible(:active) {
-  background: var(--uitkButton-background-active-hover, var(--button-background));
-  color: var(--uitkButton-text-color-active-hover, var(--button-text-color));
+  background: var(--saltButton-background-active-hover, var(--button-background));
+  color: var(--saltButton-text-color-active-hover, var(--button-text-color));
 }
 
 /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
 .uitkButton:hover {
-  background: var(--uitkButton-background-hover, var(--button-background-hover));
-  color: var(--uitkButton-text-color-hover, var(--button-text-color-hover));
+  background: var(--saltButton-background-hover, var(--button-background-hover));
+  color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .uitkButton:active,
 .uitkButton.uitkButton-active {
-  background: var(--uitkButton-background-active, var(--button-background-active));
-  color: var(--uitkButton-text-color-active, var(--button-text-color-active));
+  background: var(--saltButton-background-active, var(--button-background-active));
+  color: var(--saltButton-text-color-active, var(--button-text-color-active));
 }
 
 /* Pseudo-class applied to the root element if disabled={true} */
@@ -155,9 +155,9 @@
 .uitkButton-disabled:active,
 .uitkButton-disabled:focus-visible,
 .uitkButton-disabled:hover {
-  background: var(--uitkButton-background-disabled, var(--button-background-disabled));
-  color: var(--uitkButton-text-color-disabled, var(--button-text-color-disabled));
-  cursor: var(--uitkButton-cursor-disabled, var(--uitk-actionable-cursor-disabled));
+  background: var(--saltButton-background-disabled, var(--button-background-disabled));
+  color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
+  cursor: var(--saltButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
 }
 
 .uitkButton[href] {

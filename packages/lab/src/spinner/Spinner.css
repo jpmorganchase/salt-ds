@@ -2,28 +2,28 @@
 .uitkSvgSpinner-gradientStop2,
 .uitkSvgSpinner-gradientStop3,
 .uitkSvgSpinner-gradientStop4 {
-  stop-color: var(--uitkSpinner-gradient-color, var(--spinner-gradient-color));
+  stop-color: var(--saltSpinner-gradient-color, var(--spinner-gradient-color));
 }
 
 .uitkSvgSpinner {
-  --spinner-gradient-color: var(--uitk-measured-fill);
+  --spinner-gradient-color: var(--salt-measured-fill);
 
   position: relative;
 }
 
 .uitkSvgSpinner-small {
-  height: var(--uitk-size-graphic-small);
-  width: var(--uitk-size-graphic-small);
+  height: var(--salt-size-graphic-small);
+  width: var(--salt-size-graphic-small);
 }
 
 .uitkSvgSpinner-medium {
-  height: var(--uitk-size-graphic-medium);
-  width: var(--uitk-size-graphic-medium);
+  height: var(--salt-size-graphic-medium);
+  width: var(--salt-size-graphic-medium);
 }
 
 .uitkSvgSpinner-large {
-  height: var(--uitk-size-graphic-large);
-  width: var(--uitk-size-graphic-large);
+  height: var(--salt-size-graphic-large);
+  width: var(--salt-size-graphic-large);
 }
 
 .uitkSvgSpinner-spinner {

@@ -16,12 +16,12 @@
 
 .ThemeTitle {
   font-weight: 600;
-  font-size: var(--uitk-text-h3-fontSize);
-  color: var(--uitk-text-primary-foreground);
+  font-size: var(--salt-text-h3-fontSize);
+  color: var(--salt-text-primary-foreground);
 }
 
 .themeSelector {
-  border-bottom: 1px solid var(--uitk-editable-borderColor);
+  border-bottom: 1px solid var(--salt-editable-borderColor);
 }
 
 .ThemeHeaderMicroMenu {

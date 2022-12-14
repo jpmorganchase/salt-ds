@@ -44,14 +44,14 @@
 .uitkStepperInput-adornmentContainer {
   display: flex;
   position: relative;
-  top: var(--uitkStepperInput-adornment-container-top, var(--stepperInput-adornment-container-top));
+  top: var(--saltStepperInput-adornment-container-top, var(--stepperInput-adornment-container-top));
 }
 
 /* Styles applied to refresh button */
 .uitkStepperInput-secondaryButton {
-  --uitkButton-height: var(--stepperInput-secondary-button-height);
-  --uitkButton-margin: var(--stepperInput-button-margin) var(--stepperInput-secondary-button-marginRight) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
-  --uitkButton-width: var(--stepperInput-secondary-button-width);
+  --saltButton-height: var(--stepperInput-secondary-button-height);
+  --saltButton-margin: var(--stepperInput-button-margin) var(--stepperInput-secondary-button-marginRight) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
+  --saltButton-width: var(--stepperInput-secondary-button-width);
 }
 
 .uitkStepperInput-hideSecondaryButton {
@@ -67,9 +67,9 @@
 
 /* Styles applied to stepper buttons */
 .uitkStepperInput-stepperButton {
-  --uitkButton-height: var(--stepperInput-button-height);
-  --uitkButton-margin: var(--stepperInput-button-margin);
-  --uitkButton-width: var(--stepperInput-button-width);
+  --saltButton-height: var(--stepperInput-button-height);
+  --saltButton-margin: var(--stepperInput-button-margin);
+  --saltButton-width: var(--stepperInput-button-width);
 }
 
 /* Styles applied to increment button */
@@ -87,5 +87,5 @@
 
 /* Styles applied to input component */
 .uitkStepperInput-input {
-  max-height: var(--uitkStepperInput-maxHeight, unset);
+  max-height: var(--saltStepperInput-maxHeight, unset);
 }

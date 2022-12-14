@@ -12,8 +12,8 @@
 /* Style applied to the root element */
 .uitkGridLayout {
   display: grid;
-  column-gap: calc(var(--uitk-size-unit) * var(--gridLayout-columnGap));
-  row-gap: calc(var(--uitk-size-unit) * var(--gridLayout-rowGap));
+  column-gap: calc(var(--salt-size-unit) * var(--gridLayout-columnGap));
+  row-gap: calc(var(--salt-size-unit) * var(--gridLayout-rowGap));
   grid-template-columns: repeat(var(--gridLayout-columns), var(--gridLayout-space));
   grid-template-rows: repeat(var(--gridLayout-rows), var(--gridLayout-space));
   grid-auto-columns: auto;

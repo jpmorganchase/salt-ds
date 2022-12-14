@@ -14,8 +14,8 @@
 }
 
 .uitkDeckItem-fade-in {
-  animation: var(--uitk-animation-fade-in-center);
+  animation: var(--salt-animation-fade-in-center);
 }
 .uitkDeckItem-fade-out {
-  animation: var(--uitk-animation-fade-out-back);
+  animation: var(--salt-animation-fade-out-back);
 }

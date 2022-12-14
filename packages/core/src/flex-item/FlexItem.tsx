@@ -62,9 +62,9 @@ export const FlexItem: FlexItemComponent = forwardRef(
     const flexItemGrow = useResponsiveProp(grow, 0);
 
     const itemStyle = {
-      "--uitkFlexItem-alignment": align,
-      "--uitkFlexItem-shrink": flexItemShrink,
-      "--uitkFlexItem-grow": flexItemGrow,
+      "--saltFlexItem-alignment": align,
+      "--saltFlexItem-shrink": flexItemShrink,
+      "--saltFlexItem-grow": flexItemGrow,
       ...style,
     };
     return (

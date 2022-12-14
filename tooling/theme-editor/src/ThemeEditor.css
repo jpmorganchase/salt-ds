@@ -1,14 +1,14 @@
 .uitkThemeEditor {
-  border-right: 1px solid var(--uitk-container-primary-borderColor);
-  background-color: var(--uitk-container-primary-background);
+  border-right: 1px solid var(--salt-container-primary-borderColor);
+  background-color: var(--salt-container-primary-background);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 .uitkThemeEditorAppOutputHeader {
-  color: var(--uitk-text-primary-foreground);
-  background-color: var(--uitk-container-primary-background);
+  color: var(--salt-text-primary-foreground);
+  background-color: var(--salt-container-primary-background);
   flex: 240 0;
 }
 

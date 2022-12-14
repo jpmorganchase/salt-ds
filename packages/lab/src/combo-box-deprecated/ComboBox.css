@@ -9,5 +9,5 @@
 }
 
 .uitkComboBox-listWindowRoot {
-  z-index: calc(var(--uitk-zIndex-flyover) - 1);
+  z-index: calc(var(--salt-zIndex-flyover) - 1);
 }

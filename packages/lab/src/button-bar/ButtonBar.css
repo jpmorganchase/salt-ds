@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  gap: var(--uitk-size-unit);
+  gap: var(--salt-size-unit);
 }
 
 .uitkButtonBar-alignLeft {

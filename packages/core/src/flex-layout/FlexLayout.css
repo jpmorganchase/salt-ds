@@ -10,8 +10,8 @@
   --flexLayout-wrap: nowrap;
   --flexLayout-justify: flex-start;
   --flexLayout-align: stretch;
-  --flexLayout-separator: var(--uitk-size-border);
-  --flexLayout-gap: calc(var(--uitk-size-unit) * var(--flexLayout-gap-multiplier));
+  --flexLayout-separator: var(--salt-size-border);
+  --flexLayout-gap: calc(var(--salt-size-unit) * var(--flexLayout-gap-multiplier));
 }
 
 /* Style applied to the root element */
@@ -31,7 +31,7 @@
   position: relative;
   display: block;
   content: "";
-  background-color: var(--uitk-separable-secondary-borderColor);
+  background-color: var(--salt-separable-secondary-borderColor);
 }
 
 /* Row separator */

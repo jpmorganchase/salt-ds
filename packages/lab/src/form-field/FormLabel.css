@@ -18,7 +18,7 @@
 }
 
 .uitkFormLabel {
-  --formField-label-fontSize: var(--uitkFormField-label-fontSize, var(--uitk-text-label-fontSize));
+  --formField-label-fontSize: var(--saltFormField-label-fontSize, var(--salt-text-label-fontSize));
   --formField-label-top: var(--formField-label-default-top);
   --formField-label-width: 100%;
 }
@@ -30,23 +30,23 @@
 
 .uitkFormLabel {
   align-items: center;
-  color: var(--uitkFormField-label-text-color, var(--uitk-text-secondary-foreground));
+  color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
   display: block;
   font-size: var(--formField-label-fontSize);
-  margin-bottom: var(--uitkFormField-label-marginBottom, var(--formField-label-marginBottom));
-  min-height: var(--uitkFormField-label-minHeight, var(--formField-label-minHeight, var(--uitk-text-label-minHeight)));
-  margin-top: var(--uitkFormField-label-marginTop, 0px);
-  line-height: var(--uitkFormField-label-lineHeight, var(--uitk-text-label-lineHeight));
+  margin-bottom: var(--saltFormField-label-marginBottom, var(--formField-label-marginBottom));
+  min-height: var(--saltFormField-label-minHeight, var(--formField-label-minHeight, var(--salt-text-label-minHeight)));
+  margin-top: var(--saltFormField-label-marginTop, 0px);
+  line-height: var(--saltFormField-label-lineHeight, var(--salt-text-label-lineHeight));
   overflow: hidden;
-  padding-left: var(--uitkFormField-label-paddingLeft, var(--formField-label-paddingLeft));
-  padding-right: var(--uitkFormField-label-paddingRight, var(--formField-label-paddingRight));
-  padding-top: var(--uitkFormField-label-paddingTop, 0);
-  padding-bottom: var(--uitkFormField-label-paddingBottom, 0);
+  padding-left: var(--saltFormField-label-paddingLeft, var(--formField-label-paddingLeft));
+  padding-right: var(--saltFormField-label-paddingRight, var(--formField-label-paddingRight));
+  padding-top: var(--saltFormField-label-paddingTop, 0);
+  padding-bottom: var(--saltFormField-label-paddingBottom, 0);
   text-overflow: ellipsis;
-  top: var(--uitkFormField-label-top, var(--formField-label-top));
-  transform: translate(var(--uitkFormField-label-transform-x, 0), var(--uitkFormField-label-transform-y, var(--formField-label-top)));
+  top: var(--saltFormField-label-top, var(--formField-label-top));
+  transform: translate(var(--saltFormField-label-transform-x, 0), var(--saltFormField-label-transform-y, var(--formField-label-top)));
   white-space: nowrap;
-  width: var(--uitkFormField-label-width, var(--formField-label-width, 100%));
+  width: var(--saltFormField-label-width, var(--formField-label-width, 100%));
 }
 
 .uitkFormLabel ~ * {
@@ -55,13 +55,13 @@
 
 /* Styles applied when `disabled={true}` */
 .uitkFormLabel-disabled {
-  color: var(--uitkFormField-label-text-color-disabled, var(--uitk-text-secondary-foreground-disabled));
-  cursor: var(--uitk-editable-cursor-disabled);
+  color: var(--saltFormField-label-text-color-disabled, var(--salt-text-secondary-foreground-disabled));
+  cursor: var(--salt-editable-cursor-disabled);
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */
 .uitkFormLabel-necessityIndicator {
-  font-style: var(--uitkFormField-label-necessityIndicator-fontStyle, var(--uitk-editable-help-fontStyle));
+  font-style: var(--saltFormField-label-necessityIndicator-fontStyle, var(--salt-editable-help-fontStyle));
   margin-left: 1ch;
 }
 

@@ -17,8 +17,8 @@ export function getCharacteristics<T>(
   const characteristicFoundationTokenMap: Record<string, string[]> = {};
 
   Object.keys(cssVariablesApi).forEach((token) => {
-    if (token.startsWith("--uitk-")) {
-      const characteristicName = token.replace("--uitk-", "").split("-")[0];
+    if (token.startsWith("--salt-")) {
+      const characteristicName = token.replace("--salt-", "").split("-")[0];
       if (
         characteristicName.length &&
         UITK_CHARACTERISTICS.includes(characteristicName)

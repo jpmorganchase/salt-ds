@@ -1,17 +1,17 @@
 .uitkEditableLabel {
-  --uitkInput-minWidth: 14px;
-  --uitkInput-position: absolute;
-  --editableLabel-padding: var(--uitkEditableLabel-padding, 6px);
-  --editableLabel-height: var(--uitkEditableLabel-height, 26px);
+  --saltInput-minWidth: 14px;
+  --saltInput-position: absolute;
+  --editableLabel-padding: var(--saltEditableLabel-padding, 6px);
+  --editableLabel-height: var(--saltEditableLabel-height, 26px);
   color: inherit;
   display: flex;
   flex-direction: column;
-  font-size: var(--uitk-text-fontSize);
+  font-size: var(--salt-text-fontSize);
   height: var(--editableLabel-height);
   justify-content: center;
   padding: 0 var(--editableLabel-padding);
   position: relative;
-  z-index: var(--uitk-zIndex-default);
+  z-index: var(--salt-zIndex-default);
 }
 
 .uitkEditableLabel:before {
@@ -23,7 +23,7 @@
 }
 
 .uitkEditableLabel .uitkInput {
-  font-weight: var(--uitk-text-fontWeight);
+  font-weight: var(--salt-text-fontWeight);
   left: var(--editableLabel-padding, 0);
   padding: 0;
   outline-style: none;

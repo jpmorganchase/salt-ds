@@ -1,5 +1,5 @@
 .componentList {
-  margin: calc(var(--uitk-size-unit) * 3) 0;
+  margin: calc(var(--salt-size-unit) * 3) 0;
 }
 
 .componentList table {
@@ -7,7 +7,7 @@
 }
 
 .componentList a svg {
-  --uitkIcon-color: currentColor;
+  --saltIcon-color: currentColor;
 }
 
 .componentList a span {
@@ -17,7 +17,7 @@
 .componentList td :first-child {
   display: flex;
   align-items: baseline;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: calc(var(--salt-size-unit) / 2);
 }
 
 .componentList th {
@@ -26,19 +26,19 @@
 
 .componentList th button {
   /* Remove button default styles so it's not visible but we retain its functionality for ADA purposes */
-  --uitkButton-background-hover: transparent;
-  --uitkButton-background: transparent;
-  --uitkButton-background-active: transparent;
+  --saltButton-background-hover: transparent;
+  --saltButton-background: transparent;
+  --saltButton-background-active: transparent;
   --button-text-color-active: var(--button-text-color-hover);
-  --uitkButton-width: 100%;
-  --uitkButton-padding: 0;
-  --uitkButton-text-color: none;
-  --uitkButton-textTransform: none;
-  --uitkButton-fontWeight: none;
-  --uitkButton-letterSpacing: normal;
-  --uitkButton-height: auto;
-  --uitkIcon-color: inherit;
-  --uitk-actionable-primary-foreground-active: var(--button-text-color-hover);
+  --saltButton-width: 100%;
+  --saltButton-padding: 0;
+  --saltButton-text-color: none;
+  --saltButton-textTransform: none;
+  --saltButton-fontWeight: none;
+  --saltButton-letterSpacing: normal;
+  --saltButton-height: auto;
+  --saltIcon-color: inherit;
+  --salt-actionable-primary-foreground-active: var(--button-text-color-hover);
 
   display: inline;
   padding: var(--ifm-table-cell-padding);
@@ -52,7 +52,7 @@
 
 .componentList th .headerContainer div {
   display: flex;
-  gap: calc(var(--uitk-size-unit) / 2);
+  gap: calc(var(--salt-size-unit) / 2);
 }
 
 .componentList .status svg {
@@ -60,13 +60,13 @@
 }
 
 .componentList .status.ready {
-  --uitkIcon-color: var(--uitk-status-success-foreground);
+  --saltIcon-color: var(--salt-status-success-foreground);
 }
 
 .componentList .status.progress {
-  --uitkIcon-color: var(--uitk-status-warning-foreground);
+  --saltIcon-color: var(--salt-status-warning-foreground);
 }
 
 .componentList .status.backlog {
-  --uitkIcon-color: var(--uitk-status-error-foreground);
+  --saltIcon-color: var(--salt-status-error-foreground);
 }

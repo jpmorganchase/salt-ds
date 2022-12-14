@@ -1,9 +1,9 @@
 .uitkAdmonition {
-  background: var(--uitk-container-tertiary-background);
+  background: var(--salt-container-tertiary-background);
 }
 .uitkAdmonition hr {
-  margin-bottom: var(--uitk-size-unit);
-  margin-top: calc(3 * var(--uitk-size-unit));
+  margin-bottom: var(--salt-size-unit);
+  margin-top: calc(3 * var(--salt-size-unit));
 }
 
 .uitkAdmonition-info {
@@ -12,8 +12,8 @@
 }
 
 .uitkAdmonition .theme-admonition {
-  --ifm-alert-foreground-color: var(--uitk-color-gray-900);
-  --ifm-alert-background-color: var(--uitk-color-white);
+  --ifm-alert-foreground-color: var(--salt-color-gray-900);
+  --ifm-alert-background-color: var(--salt-color-white);
   --ifm-alert-shadow: none;
   --ifm-alert-padding-horizontal: 0;
   --ifm-alert-padding-vertical: 0;
@@ -21,8 +21,8 @@
 }
 
 .uitkAdmonition .theme-admonition a {
-  text-decoration-color: var(--uitk-color-gray-900);
-  --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
+  text-decoration-color: var(--salt-color-gray-900);
+  --ifm-link-hover-color: var(--salt-text-link-foreground-hover);
 }
 
 .uitkAdmonition .theme-admonition a:hover {

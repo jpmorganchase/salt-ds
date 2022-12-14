@@ -1,7 +1,7 @@
 .uitk-density-medium,
 .uitk-density-touch,
 .uitk-density-low {
-  --calendar-navigation-gap: calc(var(--uitk-size-unit) * 0.5);
+  --calendar-navigation-gap: calc(var(--salt-size-unit) * 0.5);
 }
 
 .uitk-density-high {
@@ -9,7 +9,7 @@
 }
 
 .uitkCalendarNavigation-hideYearDropdown {
-  --calendar-navigation-gap: calc(var(--uitk-size-unit) * 2);
+  --calendar-navigation-gap: calc(var(--salt-size-unit) * 2);
 }
 
 .uitkCalendarNavigation {
