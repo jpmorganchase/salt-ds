@@ -98,7 +98,7 @@ The grid rows are created by providing an array of objects in the `rowData` prop
 `rowData` also accepts [sparse arrays](https://www.geeksforgeeks.org/what-is-meant-by-sparse-array/), array where most of the elemeents have values zero or null.
 When used in combination with the `onVisibleRowRangeChange` callback this allows for lazy loading (server-side data) scenarios.
 
-[Here's an example](https://uitk.pages.dev/?path=/story/grid-new-grid--server-side-data) that details using sparse array and `onVisibleRowRangeChange` callback.
+[Here's an example](https://saltdesignsystem-storybook.pages.dev/?path=/story/data-grid-data-grid--server-side-data) that details using sparse array and `onVisibleRowRangeChange` callback.
 
 <Canvas>
   <Story id="grid-new-grid--server-side-data" />
@@ -143,7 +143,7 @@ The grid allows the use of any renderable react components for cell customizatio
 - `cellComponent`
 
 The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. It handles cell values and functionalities like on-hover highlighting, selection, cursor and focus.
-Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns, [more details here](https://uitk.pages.dev/?path=/story/grid-new-grid--cell-customization).
+Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns, [more details here](https://saltdesignsystem-storybook.pages.dev/?path=/story/grid-new-grid--cell-customization).
 
 <Canvas>
   <Story id="grid-new-grid--cell-customization" decorators={[withFlexGap]} />
@@ -178,7 +178,7 @@ i.e. `return null`, used mainly to manage data and state.
 `CellEditor` is expected to have one child representing the specific editor component to use for the column.
 The child of the `CellEditor` component gets rendered in the focused cell when the grid goes to edit mode.
 
-We have [two sample components](https://uitk.pages.dev/?path=/story/grid-new-grid--editable-cells) created for use as `CellEditor`'s child,
+We have [two sample components](https://saltdesignsystem-storybook.pages.dev/?path=/story/grid-new-grid--editable-cells) created for use as `CellEditor`'s child,
 i.e. `TextCellEditor` and `NumericCellEditor`.
 You can easily create any components tailored to your needs using the same approach.
 
@@ -193,7 +193,7 @@ To trigger edit mode on cells on your:
 
 ### Pagination
 
-[Implement pagination](https://uitk.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.
+[Implement pagination](https://saltdesignsystem-storybook.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.
 
 _Note: the paginator component is currently an experimental feature, works are in progress._
 
