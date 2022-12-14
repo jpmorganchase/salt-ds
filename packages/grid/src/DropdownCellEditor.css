@@ -4,24 +4,15 @@
   margin: 0;
   padding: 0;
 
-  border-style: solid;
-  border-top-color: var(--grid-row-borderColor);
-  border-right-color: transparent;
-  border-width: 1px 1px 0 0;
-
   position: relative;
   font-size: var(--grid-fontSize);
-}
-
-.saltGrid-columnSeparators .saltGridDropdownCellEditor {
-  border-right-color: var(--grid-columnSeparator-color);
 }
 
 .saltGridDropdownCellEditor-dropdownContainer {
   position: absolute;
   top: 0;
-  right: 0;
-  bottom: 0;
+  right: 1px;
+  bottom: 1px;
   left: 0;
   box-sizing: border-box;
 

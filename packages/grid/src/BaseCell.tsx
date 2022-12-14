@@ -4,6 +4,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
 import { Cursor, useFocusableContent } from "./internal";
+import { CornerTag } from "./CornerTag";
 
 const withBaseName = makePrefixer("saltGridBaseCell");
 
@@ -55,9 +56,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     >
       <div className={withBaseName("body")}>
         <div className={cn(withBaseName("valueContainer"))}>{children}</div>
-        {isFocused && isEditable && (
-          <div className={withBaseName("cornerTag")} />
-        )}
+        {isFocused && isEditable && <CornerTag focusOnly={true} />}
         {isFocused && !isFocusableContent && <Cursor />}
       </div>
     </td>

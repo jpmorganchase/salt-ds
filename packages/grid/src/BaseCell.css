@@ -78,22 +78,10 @@
   border-color: var(--grid-editableCell-borderColor);
 }
 
-.saltGridBaseCell-editable:focus-visible .saltGridBaseCell-valueContainer {
-  border-color: transparent;
-}
-
 .saltGridBaseCell-editable:hover .saltGridBaseCell-valueContainer {
   border-color: var(--grid-editableCell-borderColor-hover);
 }
 
-.saltGridBaseCell-cornerTag {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 0 solid transparent;
-  border-left: var(--grid-editableCell-cornerTag-size) solid var(--grid-cursor-borderColor);
-  border-bottom: var(--grid-editableCell-cornerTag-size) solid transparent;
-  /*z-index: 10;*/
+.saltGridBaseCell-editable:focus .saltGridBaseCell-valueContainer {
+  border-color: transparent;
 }

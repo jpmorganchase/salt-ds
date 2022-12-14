@@ -9,6 +9,7 @@ import "./TextCellEditor.css";
 import { makePrefixer } from "@salt-ds/core";
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
+import { CornerTag } from "./CornerTag";
 
 const withBaseName = makePrefixer("saltGridTextCellEditor");
 
@@ -69,6 +70,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
           onKeyDown={onKeyDown}
         />
       </div>
+      <CornerTag />
     </td>
   );
 }

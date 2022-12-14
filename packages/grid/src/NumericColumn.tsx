@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { useEditorContext } from "./EditorContext";
+import { CornerTag } from "./CornerTag";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
@@ -85,6 +86,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
           onKeyDown={onKeyDown}
         />
       </div>
+      <CornerTag />
     </td>
   );
 }

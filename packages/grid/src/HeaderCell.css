@@ -9,6 +9,7 @@
   white-space: nowrap;
 
   outline: 0;
+  overflow: hidden;
 }
 
 .saltGridHeaderCell-valueContainer {

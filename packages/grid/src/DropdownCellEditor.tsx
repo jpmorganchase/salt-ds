@@ -5,6 +5,7 @@ import "./DropdownCellEditor.css";
 import { useEffect, useRef } from "react";
 
 import { GridColumnModel, GridRowModel } from "./Grid";
+import { CornerTag } from "./CornerTag";
 
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
@@ -58,6 +59,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
           width={column!.info.width! - 5}
         />
       </div>
+      <CornerTag />
     </td>
   );
 }
