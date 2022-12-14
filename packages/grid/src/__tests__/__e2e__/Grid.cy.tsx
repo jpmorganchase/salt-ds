@@ -250,22 +250,22 @@ describe("Grid", () => {
     checkRowSelected(5, true);
   });
 
-  it("Column resize", () => {
-    cy.mount(<LotsOfColumns />);
-    resizeColumn(2, 100);
-    findCell(3, 2).should(($el) => {
-      expect($el[0].getBoundingClientRect().width).equal(160);
-    });
-  });
+  // it("Column resize", () => {
+  //   cy.mount(<LotsOfColumns />);
+  //   resizeColumn(2, 100);
+  //   findCell(3, 2).should(($el) => {
+  //     expect($el[0].getBoundingClientRect().width).equal(160);
+  //   });
+  // });
 
-  it("Fake column", () => {
-    cy.mount(<SmallGrid />);
-    expectFakeColumnWidth(220);
-    resizeColumn(1, -10);
-    expectFakeColumnWidth(230);
-    resizeColumn(2, -10);
-    expectFakeColumnWidth(240);
-  });
+  // it("Fake column", () => {
+  //   cy.mount(<SmallGrid />);
+  //   expectFakeColumnWidth(220);
+  //   resizeColumn(1, -10);
+  //   expectFakeColumnWidth(230);
+  //   resizeColumn(2, -10);
+  //   expectFakeColumnWidth(240);
+  // });
 
   it.skip("Dropdown editor", () => {
     cy.mount(<GridExample />);
