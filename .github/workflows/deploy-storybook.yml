@@ -1,13 +1,11 @@
-name: Site Publish
+name: Storybook Publish
 
 on:
-  pull_request:
-    paths:
-      - "site/**"
   push:
     branches:
       - main
   workflow_dispatch:
+  pull_request:
 
 jobs:
   deploy:
@@ -34,7 +32,9 @@ jobs:
         run: yarn
 
       - name: Run build
-        run: yarn build:site
+        run: yarn build-storybook
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
 
       - name: Publish
         uses: cloudflare/pages-action@1
@@ -42,8 +42,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
-          projectName: "saltdesignsystem"
-          directory: ./site/build
+          projectName: "saltdesignsystem-storybook"
+          directory: ./storybook-static
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}
 
@@ -53,7 +53,7 @@ jobs:
           script: |
             if (context.eventName == 'pull_request') {
               const previewUrl = "${{ steps.publish.outputs.url }}";
-              const commentText = `Site Preview Link `;
+              const commentText = `Storybook Preview Link `;
               const {data: comments} = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
