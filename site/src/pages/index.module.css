@@ -28,7 +28,7 @@
 .heroContainer {
   display: flex;
   padding: 0 calc(var(--uitk-size-unit) * 5);
-  max-width: var(--max-content-width);
+  max-width: var(--max-container-width);
   margin: auto;
 }
 
@@ -86,7 +86,7 @@
 
 .cardContainer {
   display: flex;
-  max-width: var(--max-content-width);
+  max-width: var(--max-container-width);
   margin: auto;
   flex-wrap: wrap;
   gap: calc(var(--uitk-size-unit) * 4);

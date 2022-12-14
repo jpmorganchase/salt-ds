@@ -12,6 +12,7 @@
 
 .iconsTable {
   caption-side: bottom;
+  margin-bottom: 0;
 }
 
 .iconsTable > tbody tr td:not(:first-child) {

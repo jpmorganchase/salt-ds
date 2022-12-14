@@ -9,7 +9,8 @@
   --ifm-font-family-base: var(--uitk-typography-fontFamily);
   --ifm-link-decoration: underline;
   --card-background: #10212b;
-  --max-content-width: 1920px;
+  --max-container-width: 1920px;
+  --max-content-width: min(var(--max-container-width), 120ch);
   --site-navigable-fontWeight-active: var(--uitk-typography-fontWeight-bold);
 }
 
@@ -165,6 +166,7 @@
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+  height: 100%;
 }
 
 .docs-wrapper .pagination-nav {
