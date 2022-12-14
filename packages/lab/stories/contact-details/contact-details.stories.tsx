@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  FormField,
-  Tooltip,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@jpmorganchase/uitk-core";
 import {
   CallIcon,
   ChatIcon,
@@ -30,6 +24,10 @@ import {
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
+  Card,
+  FormField,
+  Tooltip,
+  useTooltip,
 } from "@jpmorganchase/uitk-lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";

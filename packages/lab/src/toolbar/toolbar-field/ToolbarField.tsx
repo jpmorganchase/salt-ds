@@ -2,7 +2,7 @@ import { ForwardedRef, forwardRef } from "react";
 import { ToolbarFieldProps } from "./toolbarFieldTypes";
 import { useToolbarField } from "./useToolbarField";
 
-import { FormField } from "@jpmorganchase/uitk-core";
+import { FormField } from "../../form-field";
 
 export const ToolbarField = forwardRef(function ToolbarField(
   props: ToolbarFieldProps,

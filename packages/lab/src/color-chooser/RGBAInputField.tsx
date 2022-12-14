@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Input, makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@jpmorganchase/uitk-core";
 import { RGBAValue } from "./Color";
+import { Input } from "../input";
 
 import "./RGBAInput.css";
 

@@ -1,14 +1,11 @@
-import {
-  makePrefixer,
-  ToolkitProvider,
-  Tooltip,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, ToolkitProvider } from "@jpmorganchase/uitk-core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
+  Tooltip,
+  useTooltip,
 } from "@jpmorganchase/uitk-lab";
 import cn from "classnames";
 import { useEffect, useMemo, useState } from "react";

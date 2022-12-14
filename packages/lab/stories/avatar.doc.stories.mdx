@@ -4,7 +4,6 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -70,13 +69,3 @@ import { Avatar } from "@jpmorganchase/uitk-lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={Avatar} />
-
-## --uitkAvatar CSS Custom Property API
-
-The default foreground and background colors of the Avatar are provided by the theme variables. See Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Avatar, but not defined by Avatar. They can be defined via a container or
-a custom class name to override avatar styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={Avatar} />

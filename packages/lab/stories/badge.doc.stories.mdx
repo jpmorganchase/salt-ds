@@ -8,7 +8,6 @@ import {
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 <Meta
@@ -84,13 +83,3 @@ import { Badge } from "@jpmorganchase/uitk-lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={Badge} />
-
-## --uitkBadge CSS Custom Property API
-
-The default colors of the badge are provided by the theme variables. See Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Badge, but not defined by Badge. They can be defined via a container or
-a custom class name to override badge styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the Custom Property API.
-
-<CSSVariableTable of={Badge} />

@@ -1,12 +1,9 @@
-import {
-  Input,
-  InputProps,
-  useIdMemo as useId,
-} from "@jpmorganchase/uitk-core";
+import { useIdMemo as useId } from "@jpmorganchase/uitk-core";
 import { ForwardedRef, forwardRef, ReactElement, useCallback } from "react";
 
 import { DropdownBase, DropdownBaseProps } from "../dropdown";
 import { List, ListProps } from "../list";
+import { Input, InputProps } from "../input";
 
 import {
   CollectionItem,

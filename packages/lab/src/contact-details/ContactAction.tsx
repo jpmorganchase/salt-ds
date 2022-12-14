@@ -1,13 +1,7 @@
-import {
-  Button,
-  ButtonProps,
-  Tooltip,
-  TooltipProps,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps, useForkRef } from "@jpmorganchase/uitk-core";
 import { IconProps } from "@jpmorganchase/uitk-icons";
 import { ComponentType, forwardRef } from "react";
+import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 export type ContactActionProps = ButtonProps & {
   accessibleText?: string;

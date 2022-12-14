@@ -1,4 +1,4 @@
-import { PortalProps } from "@jpmorganchase/uitk-core";
+import { PortalProps } from "../portal";
 import { HTMLAttributes, KeyboardEvent, ReactElement, RefObject } from "react";
 
 export type DropdownPlacement =
