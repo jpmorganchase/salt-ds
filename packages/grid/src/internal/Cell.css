@@ -1,4 +1,4 @@
-.uitkGridCell {
+.saltGridCell {
   box-sizing: border-box;
   overflow: hidden;
   margin: 0;
@@ -12,11 +12,11 @@
   outline: 0;
 }
 
-.uitkGridCell-selected {
+.saltGridCell-selected {
   background: var(--grid-cell-background-selected);
 }
 
-.uitkGridCell-rowSeparator {
+.saltGridCell-rowSeparator {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -25,7 +25,7 @@
   background-color: var(--grid-row-borderColor);
 }
 
-.uitkGridCell-topSeparator {
+.saltGridCell-topSeparator {
   position: absolute;
   top: 0;
   right: 0;
@@ -35,11 +35,11 @@
   display: none;
 }
 
-.uitkGridTableRow-first .uitkGridCell-topSeparator {
+.saltGridTableRow-first .saltGridCell-topSeparator {
   display: unset;
 }
 
-.uitkGridCell-columnSeparator {
+.saltGridCell-columnSeparator {
   position: absolute;
   top: 0;
   right: 0;
@@ -48,23 +48,23 @@
   background-color: var(--grid-row-background);
 }
 
-.uitkGrid-columnSeparators .uitkGridCell-regularSeparator .uitkGridCell-columnSeparator {
+.saltGrid-columnSeparators .saltGridCell-regularSeparator .saltGridCell-columnSeparator {
   background-color: var(--grid-columnSeparator-color);
 }
 
-.uitkGrid-columnSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-columnSeparator {
+.saltGrid-columnSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
   background-color: var(--grid-columnSeparator-color);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridCell-pinnedSeparator .uitkGridCell-columnSeparator {
+.saltGrid-pinnedSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
   background-color: var(--grid-pinnedSeparator-color);
 }
 
-.uitkGridTableRow-selected.uitkGridTableRow-first .uitkGridCell-topSeparator {
+.saltGridTableRow-selected.saltGridTableRow-first .saltGridCell-topSeparator {
   background-color: var(--grid-row-borderColor);
 }
 
-.uitkGridCell-body {
+.saltGridCell-body {
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -75,6 +75,6 @@
   border-right: solid 1px transparent;
 }
 
-.uitkGridTableRow-first .uitkGridCell-body {
+.saltGridTableRow-first .saltGridCell-body {
   top: 1px;
 }

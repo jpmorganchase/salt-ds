@@ -8,7 +8,7 @@ export function CornerTag(props: CornerTagProps) {
   return (
     <div
       className={
-        props.focusOnly ? "uitkGridCornerTag-focusOnly" : "uitkGridCornerTag"
+        props.focusOnly ? "saltGridCornerTag-focusOnly" : "saltGridCornerTag"
       }
     />
   );

@@ -10,7 +10,7 @@ export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   separator?: ColumnSeparatorType;
 }
 
-const withBaseName = makePrefixer("uitkGridCell");
+const withBaseName = makePrefixer("saltGridCell");
 
 export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
   function CellFrame(props, ref) {
