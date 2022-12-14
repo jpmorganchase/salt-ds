@@ -8,19 +8,27 @@ const cards: CardProps[] = [
   {
     icon: <DesignIcon />,
     title: "Designing",
-    description:
-      "Find out how to access Salt’s comprehensive libraries in Figma, add components and apply styling to your designs.",
+    description: (
+      <p>
+        Find out how to access Salt’s comprehensive libraries in Figma, add
+        components and apply styling to your designs.
+      </p>
+    ),
     url: "/getting-started/designing",
-    footer: { footerText: "Start designing" },
+    footerText: "Start designing",
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
     icon: <DevelopIcon />,
     title: "Developing",
-    description:
-      "Learn how to install the Salt packages, integrate them into your React project, add the web fonts you need and import components.",
+    description: (
+      <p>
+        Learn how to install the Salt packages, integrate them into your React
+        project, add the web fonts you need and import components.
+      </p>
+    ),
     url: "/getting-started/developing",
-    footer: { footerText: "Start developing" },
+    footerText: "Start developing",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
 ];
@@ -28,7 +36,7 @@ const cards: CardProps[] = [
 const OverviewCards = () => (
   <div className={styles.overviewCards}>
     {cards.map((card, index) => {
-      const { icon, title, description, url, footer, keylineColor } = card;
+      const { icon, title, description, url, footerText, keylineColor } = card;
       return (
         <ToolkitProvider mode="light" key={index}>
           <Card
@@ -36,7 +44,7 @@ const OverviewCards = () => (
             title={title}
             description={description}
             url={url}
-            footer={footer}
+            footerText={footerText}
             keylineColor={keylineColor}
             keyLineAnimation={false}
           />

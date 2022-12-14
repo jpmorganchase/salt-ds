@@ -81,7 +81,6 @@
 
 .cardDescription {
   color: var(--uitk-text-secondary-foreground);
-  margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
 .inlineCardContent {
@@ -114,7 +113,6 @@
 .cardFooter > p {
   margin-bottom: 0;
   text-decoration: underline;
-  margin-left: calc(var(--uitk-size-unit) * 2);
 }
 
 .inlineCard .cardFooter > p {

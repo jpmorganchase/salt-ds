@@ -14,18 +14,13 @@ import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Card.module.css";
 
-export interface FooterProps {
-  isExternalLink?: boolean;
-  footerText: string;
-}
-
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   icon?: JSX.Element;
   inlineIcon?: JSX.Element;
   title?: string;
-  description: string;
+  description: JSX.Element;
   url: string;
-  footer: FooterProps;
+  footerText: string;
   keylineColor: CSSProperties["color"];
   keyLineAnimation?: boolean;
 }
@@ -36,7 +31,7 @@ const Card = ({
   title,
   description,
   url,
-  footer: { footerText, isExternalLink },
+  footerText,
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
@@ -63,9 +58,9 @@ const Card = ({
           {title && <h2>{title}</h2>}
           {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
         </span>
-        <p className={styles.cardDescription}>{description}</p>
+        <div className={styles.cardDescription}>{description}</div>
         <div className={styles.cardFooter}>
-          <p>{footerText}</p> {isExternalLink && <TearOutIcon />}
+          <p>{footerText}</p>
         </div>
       </div>
       <div
@@ -87,7 +82,7 @@ export const InlineCard = ({
   icon,
   description,
   url,
-  footer: { footerText, isExternalLink },
+  footerText,
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
@@ -97,7 +92,6 @@ export const InlineCard = ({
 
   const viewport = useViewport();
   const isTabletView = viewport <= 1070;
-  console.log(isTabletView);
 
   const useLightTheme = mode !== "dark";
 
@@ -107,7 +101,7 @@ export const InlineCard = ({
         icon={icon}
         description={description}
         url={url}
-        footer={{ footerText }}
+        footerText={footerText}
         keylineColor={keylineColor}
         keyLineAnimation
       />
@@ -127,7 +121,7 @@ export const InlineCard = ({
         </div>
         <div className={styles.textContainer}>
           <div className={styles.cardText}>
-            <p className={styles.cardDescription}>{description}</p>
+            <div className={styles.cardDescription}>{description}</div>
             <p className={styles.cardFooter}>{footerText}</p>
           </div>
 
