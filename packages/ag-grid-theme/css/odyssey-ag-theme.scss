@@ -98,6 +98,10 @@ div[class*="ag-theme-odyssey"] {
     --uitkAgGrid-row-borderColor,
     var(--uitk-separable-tertiary-borderColor)
   );
+  --agGrid-header-borderColor: var(
+    --uitkAgGrid-header-borderColor,
+    var(--uitk-separable-primary-borderColor)
+  );
   --agGrid-header-column-separator-color: var(
     --uitkAgGrid-header-column-separator-color,
     var(--uitk-separable-tertiary-borderColor)

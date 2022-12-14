@@ -130,6 +130,10 @@
     background-color: var(--agGrid-list-item-color-hover) !important;
   }
 
+  .ag-header {
+    border-color: var(--agGrid-header-borderColor);
+  }
+
   .ag-header-row {
     color: var(--agGrid-header-foreground);
     font-size: var(--agGrid-header-fontSize);
