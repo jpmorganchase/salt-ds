@@ -6,7 +6,7 @@ import { Pagination, Paginator } from "@salt-ds/lab";
 import { createDummyInvestors, investorKeyGetter } from "./dummyData";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
