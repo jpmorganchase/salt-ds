@@ -40,7 +40,7 @@ import {
 } from "./dummyData";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
