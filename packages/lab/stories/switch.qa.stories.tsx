@@ -3,7 +3,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Switch/QA",
+  title: "Lab/Switch/QA",
   component: Switch,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension

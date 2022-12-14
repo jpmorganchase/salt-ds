@@ -4,7 +4,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Core/Tooltip/QA",
+  title: "Lab/Tooltip/QA",
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 

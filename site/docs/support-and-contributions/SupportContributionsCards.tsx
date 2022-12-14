@@ -16,7 +16,7 @@ const cards: CardProps[] = [
     title: "Provide feedback",
     description: (
       <p>
-        Join the Salt community on Github to give us feedback and help improve
+        Join the Salt community on GitHub to give us feedback and help improve
         the design system.
       </p>
     ),

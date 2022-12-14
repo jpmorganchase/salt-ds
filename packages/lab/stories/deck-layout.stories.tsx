@@ -4,7 +4,7 @@ import { Card, DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/DeckLayout",
+  title: "Lab/Layout/DeckLayout",
   component: DeckLayout,
   argTypes: {
     activeIndex: {

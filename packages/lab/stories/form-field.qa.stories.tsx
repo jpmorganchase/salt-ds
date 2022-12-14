@@ -4,7 +4,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Form Field/QA",
+  title: "Lab/Form Field/QA",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 

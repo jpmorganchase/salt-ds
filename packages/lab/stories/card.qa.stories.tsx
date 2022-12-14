@@ -4,7 +4,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Card/QA",
+  title: "Lab/Card/QA",
   component: Card,
 } as ComponentMeta<typeof Card>;
 

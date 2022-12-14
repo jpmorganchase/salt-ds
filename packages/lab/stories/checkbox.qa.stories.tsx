@@ -3,7 +3,7 @@ import { Checkbox } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Checkbox/QA",
+  title: "Lab/Checkbox/QA",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
