@@ -3,12 +3,13 @@ sidebar_label: Designing
 hide_table_of_contents: true
 ---
 
-import FigmaLogo from "@site/static/img/figma_logo.svg";
+import JPMLogo from "@site/static/img/design-getting-started/jpmIcon.svg";
+import Globe from "@site/static/img/design-getting-started/globe.svg";
+import { InlineCard, CardProps } from "@site/src/components/card/Card";
+import Content from "@site/src/components/content/Content.tsx";
 
-import Content from "../../src/components/content/Content.tsx";
 import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
-import FigmaLink from "./FigmaLink";
 
 import styles from "./design.module.css";
 
@@ -47,6 +48,15 @@ There are two ways of accessing the libraries—as a J.P. Morgan employee or as 
 
 Use the Salt Design System team space to view working files and our comprehensive component guides. You can also instantly add components and styling to your designs.
 
+<InlineCard
+  icon={<JPMLogo />}
+  description="To start using the Salt libraries, enable them directly from the “Assets” panel within your Figma file."
+  url="/"
+  footer={{ footerText: "Explore the Salt team space" }}
+  keylineColor="var(--site-tertiary-accent-orange)"
+  keyLineAnimation={false}
+/>
+
 #### Community users
 
 If you’re not a J.P. Morgan employee, you can still use Salt components. Our asset and style libraries are publicly available via the Figma Community.
@@ -61,6 +71,15 @@ To simplify this process, [use this re-linker plugin](/). It automatically relin
 
 For more guidance on migrating files, [watch this video from Figma](/).
 :::
+
+<InlineCard
+  icon={<Globe />}
+  description="To start using the Salt libraries, search for the @jpmorgan_salt handle in the Figma Community."
+  url="/"
+  footer={{ footerText: "Explore the Salt team space" }}
+  keylineColor="var(--site-tertiary-accent-purple)"
+  keyLineAnimation={false}
+/>
 
 ### 2. Add components to your designs
 

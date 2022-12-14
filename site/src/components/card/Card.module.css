@@ -1,4 +1,5 @@
-.card {
+.card,
+.inlineCard {
   --ifm-link-hover-color: none;
   --ifm-link-decoration: none;
   --ifm-link-hover-decoration: none;
@@ -7,7 +8,8 @@
   --uitkIcon-color: var(--uitk-color-gray-900);
 }
 
-.card.lightTheme {
+.card.lightTheme,
+.inlineCard.lightTheme {
   --card-background: var(--uitk-color-white);
   --card-color: var(--uitk-color-gray-900);
   --card-icon-background: var(--uitk-color-gray-10);
@@ -27,11 +29,18 @@
   flex: 1;
 }
 
-.card:hover {
+.inlineCard {
+  background-color: var(--card-background);
+  color: var(--card-color);
+}
+
+.card:hover,
+.inlineCard:hover {
   box-shadow: var(--uitk-overlayable-shadow-borderRegion);
 }
 
-.card:hover .icon {
+.card:hover .icon,
+.inlineCard:hover .icon {
   transform: scale(1.1);
 }
 
@@ -50,6 +59,10 @@
   text-align: center;
   padding: calc(var(--uitk-size-unit) * 5) 0;
   background-color: var(--card-icon-background);
+}
+
+.inlineCard .iconContainer {
+  flex: 1;
 }
 
 .icon {
@@ -71,12 +84,40 @@
   margin-bottom: calc(var(--uitk-size-unit) * 2);
 }
 
+.inlineCardContent {
+  display: flex;
+}
+
+.inlineCardContent .textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.inlineCard .cardText {
+  margin: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 5) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 2);
+}
+
+.inlineCard .cardDescription {
+  margin-bottom: var(--uitk-size-unit);
+}
+
+.inlineCard .cardFooter {
+  text-decoration: underline;
+}
+
 .cardFooter {
   display: flex;
 }
 
 .cardFooter > p {
   margin-bottom: 0;
+  text-decoration: underline;
+  margin-left: calc(var(--uitk-size-unit) * 2);
+}
+
+.inlineCard .cardFooter > p {
   text-decoration: underline;
   padding-right: calc(var(--uitk-size-unit) / 3);
 }
@@ -93,6 +134,10 @@
   height: 3px;
 }
 
+.inlineCard .keyline {
+  margin-left: 2px;
+}
+
 .animate {
   animation: swing-in-left-bck 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
@@ -107,6 +152,12 @@
     transform: rotateY(0);
     transform-origin: left;
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .inlineCard .cardText {
+    margin-right: calc(var(--uitk-size-unit) * 2);
   }
 }
 
