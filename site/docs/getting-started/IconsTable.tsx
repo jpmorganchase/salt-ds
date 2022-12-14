@@ -1,5 +1,5 @@
-import { PrintIcon } from "@jpmorganchase/uitk-icons";
-import { ToolkitProvider, useTheme } from "@jpmorganchase/uitk-core";
+import { PrintIcon } from "@salt-ds/icons";
+import { ToolkitProvider, useTheme } from "@salt-ds/core";
 
 import styles from "./IconsTable.module.css";
 

@@ -2,7 +2,7 @@ import {
   makePrefixer,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { Dispatch, Ref, SetStateAction, useMemo } from "react";
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";

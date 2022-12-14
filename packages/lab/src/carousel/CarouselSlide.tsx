@@ -5,7 +5,7 @@ import {
   ReactElement,
   useRef,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import cx from "classnames";
 import { ButtonBarProps } from "../button-bar";

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Card, Panel } from "@jpmorganchase/uitk-lab";
+import { Link, ToolkitProvider } from "@salt-ds/core";
+import { Card, Panel } from "@salt-ds/lab";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {

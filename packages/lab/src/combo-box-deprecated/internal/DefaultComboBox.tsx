@@ -4,7 +4,7 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import { useAriaAnnouncer, useForkRef } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import {
   ComponentType,
   HTMLAttributes,

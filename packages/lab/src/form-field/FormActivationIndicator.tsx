@@ -1,5 +1,5 @@
 import { SVGAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { FormFieldProps } from "./FormField";
 
 import "./FormActivationIndicator.css";

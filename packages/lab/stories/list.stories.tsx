@@ -16,8 +16,8 @@ import {
   FlexLayout,
   StackLayout,
   useDensity,
-} from "@jpmorganchase/uitk-core";
-import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 import {
   ContentStatus,
@@ -33,7 +33,7 @@ import {
   FormField,
   Input,
   SelectHandler,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 

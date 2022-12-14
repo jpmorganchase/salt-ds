@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Text } from "@jpmorganchase/uitk-core";
+import { Text } from "@salt-ds/core";
 
 export default {
   title: "Core/Text",

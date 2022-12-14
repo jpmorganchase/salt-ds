@@ -6,7 +6,7 @@ import {
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 

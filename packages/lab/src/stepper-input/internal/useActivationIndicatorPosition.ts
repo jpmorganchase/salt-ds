@@ -1,7 +1,4 @@
-import {
-  useDensity,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useDensity, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useFormFieldProps } from "../../form-field-context";
 import { MutableRefObject } from "react";
 

@@ -1,4 +1,4 @@
-import { TokenizedInput } from "@jpmorganchase/uitk-lab";
+import { TokenizedInput } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 

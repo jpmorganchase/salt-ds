@@ -4,7 +4,7 @@ import {
   AccordionProps,
   AccordionSection,
   AccordionSummary,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { useReducer, useState } from "react";
 
 const AccordionExample = (props: AccordionProps) => {

@@ -1,4 +1,4 @@
-import { BorderItem } from "@jpmorganchase/uitk-core";
+import { BorderItem } from "@salt-ds/core";
 
 /*
  * Important: These tests are meant for testing TypeScript type errors only

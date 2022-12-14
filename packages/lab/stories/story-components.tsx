@@ -1,6 +1,6 @@
 import { CSSProperties, useRef, useState, useReducer, ReactNode } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Input, InputProps } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Input, InputProps } from "@salt-ds/lab";
 
 export interface AdjustableFlexboxProps {
   children?: ReactNode;

@@ -12,7 +12,7 @@ import {
   ownerDocument,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 export interface PortalProps {
   /**

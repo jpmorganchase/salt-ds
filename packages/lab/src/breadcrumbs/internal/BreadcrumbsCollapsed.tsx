@@ -7,7 +7,7 @@ import {
   KeyboardEvent,
   Component,
 } from "react";
-import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+import { OverflowMenuIcon } from "@salt-ds/icons";
 import { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
 import { useFocusMenuRemount } from "./useFocusMenuRemount";
 import { MenuButton, MenuButtonProps } from "../../menu-button";

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import clsx from "clsx";
 import type { TOCItem } from "@docusaurus/mdx-loader";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 import TOCInline from "@site/src/theme/TOCInline";
 
 const Content = ({

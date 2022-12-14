@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import { Link } from "@jpmorganchase/uitk-core";
+import { Link } from "@salt-ds/core";
 
 import * as linkStories from "@stories/link/link.stories";
 

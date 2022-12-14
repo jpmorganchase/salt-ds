@@ -1,6 +1,6 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
-import { StepperInput, FormField, Panel } from "@jpmorganchase/uitk-lab";
+import { StepperInput, FormField, Panel } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { ReactNode, useEffect, useState } from "react";
 

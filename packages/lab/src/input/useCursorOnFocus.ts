@@ -1,4 +1,4 @@
-import { ownerDocument } from "@jpmorganchase/uitk-core";
+import { ownerDocument } from "@salt-ds/core";
 import { MouseEvent, MutableRefObject, useEffect, useRef } from "react";
 
 function getSelectionRange(

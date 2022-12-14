@@ -1,5 +1,5 @@
 import React from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import Admonition from "@theme-original/Admonition";
 
 const withBaseName = makePrefixer("uitkAdmonition");

@@ -1,11 +1,6 @@
 //TODO remove when popout code has been migrated
 /* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
-import {
-  ownerWindow,
-  useControlled,
-  useDensity,
-  useId,
-} from "@jpmorganchase/uitk-core";
+import { ownerWindow, useControlled, useDensity, useId } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
   ChangeEvent,

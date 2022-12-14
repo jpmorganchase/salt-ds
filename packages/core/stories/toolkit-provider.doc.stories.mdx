@@ -1,6 +1,6 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { Card } from "@jpmorganchase/uitk-lab";
+import { ToolkitProvider } from "@salt-ds/core";
+import { Card } from "@salt-ds/lab";
 
 import { NestedProviders } from "./toolkit-provider.stories";
 
@@ -24,7 +24,7 @@ these providers is to inject the appropriate CSS classes into the page so that t
 ## API
 
 ```js static
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 ```
 
 ## Props
@@ -40,7 +40,7 @@ You can use the `theme` prop to change the default theme (set to `uitk-theme`) b
 You can use the `useTheme` hook to access the value which indicates which theme and mode are currently active. The `useTheme` hook returns an object which contains string values of the currently set theme and mode in scope. You can optionally override these values by providing theme name and mode strings to `ToolkitProvider` via the `theme` and `mode` props.
 
 ```tsx
-import { useTheme } from "@jpmorganchase/uitk-core";
+import { useTheme } from "@salt-ds/core";
 
 function MyComponent() {
   const { mode, theme } = useTheme();
@@ -62,7 +62,7 @@ You can use the `density` prop to change the density on the wrapped component or
 You can use the `useDensity` hook to access the currently active density of your app in the provided scope. The `useDensity` hook returns the string value of the currently set density. The possible values are `touch`, `low`, `medium` and `high`. You can optionally override this value by passing your new value as the first parameter to the function.
 
 ```tsx
-import { useDensity } from "@jpmorganchase/uitk-core";
+import { useDensity } from "@salt-ds/core";
 import cx from "classnames";
 
 function MyComponent() {
@@ -110,7 +110,7 @@ The default value is the following breakpoint size mapping object.
 You can use the `useBreakpoints` hook to access the current value of `breakpoints` in the `ToolkitProvider` context. This is a low-level hook that is used internally in other hooks such as `useResponsiveProp`. You can read more about this in the [breakpoints section](#breakpoints).
 
 ```tsx
-import { useBreakpoints } from "@jpmorganchase/uitk-core";
+import { useBreakpoints } from "@salt-ds/core";
 
 function MyApp() {
   return (

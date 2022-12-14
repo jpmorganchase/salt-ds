@@ -1,4 +1,4 @@
-import { useViewport } from "@jpmorganchase/uitk-core";
+import { useViewport } from "@salt-ds/core";
 
 const useIsMobileView = (): boolean => {
   const viewport = useViewport();

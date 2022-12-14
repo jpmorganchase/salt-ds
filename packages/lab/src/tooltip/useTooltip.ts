@@ -13,7 +13,7 @@ import {
   useRole,
 } from "@floating-ui/react-dom-interactions";
 import { useAriaAnnounce } from "./useAriaAnnounce";
-import { margin, useControlled } from "@jpmorganchase/uitk-core";
+import { margin, useControlled } from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,

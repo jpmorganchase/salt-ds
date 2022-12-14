@@ -1,4 +1,4 @@
-import { Checkbox } from "@jpmorganchase/uitk-lab";
+import { Checkbox } from "@salt-ds/lab";
 
 describe("GIVEN a Checkbox", () => {
   describe("WHEN in an indeterminate state", () => {

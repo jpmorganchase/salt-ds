@@ -29,9 +29,9 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   FavoriteIcon,
-} from "@jpmorganchase/uitk-icons";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
-import { Card, Checkbox } from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/icons";
+import { FlexLayout } from "@salt-ds/core";
+import { Card, Checkbox } from "@salt-ds/lab";
 import {
   allLocations,
   createDummyInvestors,

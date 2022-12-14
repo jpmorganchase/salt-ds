@@ -4,9 +4,9 @@ import {
   GridItem,
   GridLayout,
   ToolkitProvider,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { ThumbsUpIcon } from "@jpmorganchase/uitk-icons";
+import { ThumbsUpIcon } from "@salt-ds/icons";
 import "./layout-stories.css";
 
 export default {

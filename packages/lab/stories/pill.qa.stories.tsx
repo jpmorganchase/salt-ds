@@ -1,4 +1,4 @@
-import { Pill } from "@jpmorganchase/uitk-lab";
+import { Pill } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

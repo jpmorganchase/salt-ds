@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/addon-docs";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 
 <Meta title="Documentation/Core/Aria Announcer" />
 
@@ -17,7 +17,7 @@ application.
 nested ToolkitProviders, these will not inject further instances of `AriaAnnouncer`.
 
 ```jsx
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { ToolkitProvider } from "@salt-ds/core";
 
 <ToolkitProvider>
   <MyApp />
@@ -53,7 +53,7 @@ The example below demonstrates how text can be announced during a button click
 event.
 
 ```jsx
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer } from "@salt-ds/core";
 
 function MyComponent() {
   const { announce } = useAriaAnnouncer();
@@ -73,7 +73,7 @@ function MyComponent() {
 The `announce` function takes an optional second argument which is the delay in milliseconds before the message should be announced.
 
 ```jsx
-import { useAriaAnnouncer } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer } from "@salt-ds/core";
 
 function MyComponent() {
   const { announce } = useAriaAnnouncer();

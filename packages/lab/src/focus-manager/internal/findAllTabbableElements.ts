@@ -1,4 +1,4 @@
-import { ownerWindow } from "@jpmorganchase/uitk-core";
+import { ownerWindow } from "@salt-ds/core";
 
 /**
  * Used to reduce the number of initial nodes that are checked to see if tabbable.

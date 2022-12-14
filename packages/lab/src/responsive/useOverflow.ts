@@ -14,7 +14,7 @@ import {
   OverflowHookResult,
 } from "./overflowTypes";
 import { partition } from "../utils";
-import { useIdMemo } from "@jpmorganchase/uitk-core";
+import { useIdMemo } from "@salt-ds/core";
 
 const NO_OVERFLOW_INDICATOR = { size: 0 };
 

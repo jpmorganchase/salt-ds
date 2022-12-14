@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { ContactDetailsContext, useComponentSize } from "./internal";

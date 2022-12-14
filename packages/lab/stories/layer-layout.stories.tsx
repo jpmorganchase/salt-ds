@@ -1,18 +1,13 @@
 import { useState, MouseEvent } from "react";
-import { ContentStatus, ContentStatusProps } from "@jpmorganchase/uitk-lab";
+import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
 import {
   Button,
   FlowLayout,
   StackLayout,
   FlexItem,
   FlexLayout,
-} from "@jpmorganchase/uitk-core";
-import {
-  FormField,
-  Input,
-  LayerLayout,
-  LAYER_POSITIONS,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/core";
+import { FormField, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 

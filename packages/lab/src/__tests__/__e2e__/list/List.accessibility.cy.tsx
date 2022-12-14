@@ -1,4 +1,4 @@
-import { List, ListItem } from "@jpmorganchase/uitk-lab";
+import { List, ListItem } from "@salt-ds/lab";
 import { version } from "react";
 
 const ITEMS = [{ label: "list item 1" }, { label: "list item 2" }];

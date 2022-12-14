@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { useIsomorphicLayoutEffect } from "@jpmorganchase/uitk-core";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useCallback, useRef, RefObject } from "react";
 export const WidthHeight = ["height", "width"];
 export const HeightOnly = ["height"];

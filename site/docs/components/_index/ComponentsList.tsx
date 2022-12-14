@@ -11,8 +11,8 @@ import {
   StepActiveIcon,
   ArrowUpIcon,
   ArrowDownIcon,
-} from "@jpmorganchase/uitk-icons";
-import { Button } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/icons";
+import { Button } from "@salt-ds/core";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";

@@ -1,4 +1,4 @@
-import { SearchInput } from "@jpmorganchase/uitk-lab";
+import { SearchInput } from "@salt-ds/lab";
 import { useState } from "react";
 
 describe("GIVEN a Search", () => {

@@ -18,10 +18,10 @@ import {
   useAriaAnnouncer,
   useForkRef,
   ValidationStatus,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 import getInnerText from "./internal/getInnerText";
-import { CloseIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import { CloseIcon, IconProps } from "@salt-ds/icons";
 import cx from "classnames";
 
 import "./Banner.css";

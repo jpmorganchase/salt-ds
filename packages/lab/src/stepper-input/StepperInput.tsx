@@ -1,11 +1,7 @@
 import classnames from "classnames";
 import React, { forwardRef, ReactNode, useRef } from "react";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import {
-  RefreshIcon,
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from "@jpmorganchase/uitk-icons";
+import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
+import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
 

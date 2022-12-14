@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
+import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {

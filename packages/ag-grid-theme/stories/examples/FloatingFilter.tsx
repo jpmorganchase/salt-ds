@@ -4,7 +4,7 @@ import customFilterExampleColumns from "../dependencies/customFilterExampleColum
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-lab";
+import { Switch } from "@salt-ds/lab";
 
 const FloatingFilter = (props: AgGridReactProps) => {
   const [isNewTheme, setNewTheme] = useState(false);

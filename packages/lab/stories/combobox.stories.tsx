@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemProps,
   ListItemType,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {

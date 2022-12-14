@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
-import { makePrefixer, useForkRef, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { LayoutAnimation } from "../deck-layout";
 import "./DeckItem.css";
 

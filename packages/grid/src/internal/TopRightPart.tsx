@@ -1,7 +1,7 @@
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import "./TopRightPart.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";

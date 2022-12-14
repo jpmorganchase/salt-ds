@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Icon, IconProps } from "@jpmorganchase/uitk-icons";
+import { Icon, IconProps } from "@salt-ds/icons";
 
 export const RegularIcon = forwardRef<SVGSVGElement, IconProps>(
   function RegularIcon(props, ref) {

@@ -1,12 +1,7 @@
-import {
-  Tooltip,
-  TooltipProps,
-  TooltipStatus,
-  useTooltip,
-} from "@jpmorganchase/uitk-lab";
+import { Tooltip, TooltipProps, TooltipStatus, useTooltip } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
-import { InfoSolidIcon } from "@jpmorganchase/uitk-icons";
+import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Tooltip/QA",

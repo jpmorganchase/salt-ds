@@ -1,7 +1,4 @@
-import {
-  useForkRef,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useForkRef, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import classnames from "classnames";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { List, ListProps } from "../list-deprecated";

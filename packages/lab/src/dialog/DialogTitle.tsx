@@ -1,9 +1,5 @@
-import {
-  Button,
-  makePrefixer,
-  StatusIndicator,
-} from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { Button, makePrefixer, StatusIndicator } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import classnames from "classnames";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";

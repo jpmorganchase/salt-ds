@@ -4,8 +4,8 @@ import {
   AccordionSection,
   AccordionSummary,
   AccordionDetails,
-} from "@jpmorganchase/uitk-lab";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { makePrefixer } from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
 import "../Foundations.css";

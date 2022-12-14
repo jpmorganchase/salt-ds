@@ -8,10 +8,7 @@ import React, {
   ReactElement,
   useRef,
 } from "react";
-import {
-  useControlled,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { Input } from "../input";
 
 import "./EditableLabel.css";

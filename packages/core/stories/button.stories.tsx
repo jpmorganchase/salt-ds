@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import { SearchIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps } from "@salt-ds/core";
+import { SearchIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

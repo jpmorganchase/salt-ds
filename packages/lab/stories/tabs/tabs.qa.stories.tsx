@@ -1,5 +1,5 @@
 import { Story } from "@storybook/react";
-import { Tabstrip } from "@jpmorganchase/uitk-lab";
+import { Tabstrip } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 import "docs/story.css";
