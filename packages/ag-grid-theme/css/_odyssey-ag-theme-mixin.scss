@@ -30,8 +30,12 @@
       border: 2px dotted var(--agGrid-color-focus) !important;
       padding-left: ag-param(cell-horizontal-padding) - 2px;
       padding-right: ag-param(cell-horizontal-padding) - 2px;
-      line-height: calc(min(var(--ag-line-height, 34px), 34px) - 2px);
     }
+  }
+
+  .ag-cell {
+    display: flex;
+    align-items: center;
   }
 
   .ag-toggle-button-input-wrapper {
