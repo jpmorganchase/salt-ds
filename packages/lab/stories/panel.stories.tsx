@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
-  title: "Core/Panel",
+  title: "Lab/Panel",
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 

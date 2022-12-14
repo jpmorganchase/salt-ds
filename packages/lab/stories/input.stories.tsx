@@ -12,7 +12,7 @@ import { Dropdown, FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Core/Input",
+  title: "Lab/Input",
   component: Input,
 } as ComponentMeta<typeof Input>;
 

@@ -1,7 +1,5 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { ParentChildLayout, ParentChildItem } from "@salt-ds/lab";
-import { CSSClassTable } from "css-variable-docgen-components";
-import { DefaultParentChildLayout } from "./parent-child-layout.stories";
+import { ParentChildLayout } from "@salt-ds/lab";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
@@ -18,7 +16,7 @@ Displays a hierarchical structure comprising of a main content area and an accom
 The parent and child layout is built using [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page) and it is intended for displaying two related layers such as navigation and associated content or a preferences dialog.
 
 <Canvas>
-  <Story id="core-layout-parentchildlayout--default-parent-child-layout" />
+  <Story id="lab-layout-parentchildlayout--default-parent-child-layout" />
 </Canvas>
 
 ## Use Parent Child layout when...
@@ -36,7 +34,7 @@ You want your layout to flow in a single dimension. In this case we recommend yo
 The parent and child component changes to a stacked view once it approaches a specified breakpoint that can be customized via the `stackedAtBreakpoint` prop.
 
 <Canvas>
-  <Story id="core-layout-parentchildlayout--toolkit-parent-child-layout-stacked" />
+  <Story id="lab-layout-parentchildlayout--toolkit-parent-child-layout-stacked" />
 </Canvas>
 
 #### Reduced motion
@@ -44,7 +42,7 @@ The parent and child component changes to a stacked view once it approaches a sp
 You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
 <Canvas>
-  <Story id="core-layout-parentchildlayout--toolkit-parent-child-layout-reduced-motion" />
+  <Story id="lab-layout-parentchildlayout--toolkit-parent-child-layout-reduced-motion" />
 </Canvas>
 
 #### Composite usage
@@ -52,7 +50,7 @@ You can customize or disable the animations using the `prefers-reduced-motion` C
 This example shows a number of UITK components being used in conjunction with Parent Child layout to build a responsive page.
 
 <Canvas>
-  <Story id="core-layout-parentchildlayout--parent-child-layout-composite" />
+  <Story id="lab-layout-parentchildlayout--parent-child-layout-composite" />
 </Canvas>
 
 ## Configuring Parent Child layout

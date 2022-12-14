@@ -12,7 +12,7 @@ import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { ChangeEventHandler, ReactNode, useState } from "react";
 
 export default {
-  title: "Core/Radio Button",
+  title: "Lab/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 

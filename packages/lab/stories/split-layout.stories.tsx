@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/SplitLayout",
+  title: "Lab/Layout/SplitLayout",
   component: SplitLayout,
   argTypes: {
     align: {

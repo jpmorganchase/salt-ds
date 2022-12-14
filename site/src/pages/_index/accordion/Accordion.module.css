@@ -4,7 +4,7 @@
   /* 468px is height of hatching in illustration */
   grid-template-rows: 468px auto;
   overflow: hidden;
-  max-width: var(--max-content-width);
+  max-width: var(--max-container-width);
   margin: auto;
   --keyline-height: 3px;
 }
@@ -15,7 +15,7 @@
 
 .accordionWrapper {
   background-color: var(--card-background);
-  width: min(55vw, var(--max-content-width));
+  width: min(55vw, var(--max-container-width));
   padding: calc(var(--uitk-size-unit) * 10);
   grid-area: 2 / 1 / 3 / 3;
   min-height: 70vh;
