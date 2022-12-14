@@ -1,4 +1,4 @@
-import { makePrefixer, Mode, ToolkitProvider } from "@salt-ds/core";
+import { makePrefixer, Mode, SaltProvider } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,
@@ -54,9 +54,9 @@ const DensityBlock = ({
 }) => (
   <BackgroundBlock background={mode === "light" ? "white" : undefined}>
     {DensityValues.map((d, i) => (
-      <ToolkitProvider mode={mode} density={d} key={i}>
+      <SaltProvider mode={mode} density={d} key={i}>
         <div className="background-item-wrapper">{children}</div>
-      </ToolkitProvider>
+      </SaltProvider>
     ))}
   </BackgroundBlock>
 );
@@ -107,12 +107,12 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <ToolkitProvider mode="light" density={d}>
+            <SaltProvider mode="light" density={d}>
               <BackgroundBlock background="white">{children}</BackgroundBlock>
-            </ToolkitProvider>
-            <ToolkitProvider mode="dark" density={d}>
+            </SaltProvider>
+            <SaltProvider mode="dark" density={d}>
               <BackgroundBlock>{children}</BackgroundBlock>
-            </ToolkitProvider>
+            </SaltProvider>
           </Fragment>
         ))
       )}

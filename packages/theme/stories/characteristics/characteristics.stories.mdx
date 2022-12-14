@@ -49,7 +49,7 @@ For example, a Button is a component on which a user can perform an action, so y
 }
 ```
 
-Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest ToolkitProvider. Considering the above, we would get that in light
+Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest SaltProvider. Considering the above, we would get that in light
 theme, --uitk-actionable-primary-background resolves to `var(--uitk-action-primary-background)`, which in light theme is `var(--uitk-color-gray-60)` and in dark theme is `var(--uitk-color-gray-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
 
 ### Simple customization using characteristics

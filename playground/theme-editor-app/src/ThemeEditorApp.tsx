@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import {
   AppHeader,
   SearchInput,
@@ -231,7 +231,7 @@ export const ThemeEditorApp = (props: {
   }, []);
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <div className="uitkThemeEditorApp">
         <div className="uitkThemeEditorApp-leftPane">
           {props.isLoading ? (
@@ -296,6 +296,6 @@ export const ThemeEditorApp = (props: {
           )}
         </div>
       </div>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

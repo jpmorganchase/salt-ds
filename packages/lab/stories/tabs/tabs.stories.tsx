@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ComponentStory } from "@storybook/react";
 
-import { Button, ToolkitProvider, Text } from "@salt-ds/core";
+import { Button, SaltProvider, Text } from "@salt-ds/core";
 import { TabPanel, Tabs } from "@salt-ds/lab";
 import { CloseTabWarningDialog } from "./CloseTabWarningDialog";
 export default {
@@ -14,7 +14,7 @@ type TabsStory = ComponentStory<typeof Tabs>;
 export const Default: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs style={{ width: 600, height: 300 }}>
         <TabPanel label="Home" {...style}>
           <Text>Content for Home tab</Text>
@@ -32,7 +32,7 @@ export const Default: TabsStory = () => {
           <Text>Content for Liquidity tab</Text>
         </TabPanel>
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -54,7 +54,7 @@ export const Overflow: TabsStory = () => {
     []
   );
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs style={{ width: 600, height: 300 }}>
         {tabs.map((label, i) => (
           <TabPanel key={i} label={label} {...style}>
@@ -62,7 +62,7 @@ export const Overflow: TabsStory = () => {
           </TabPanel>
         ))}
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -84,7 +84,7 @@ export const WithoutOverflow: TabsStory = () => {
     []
   );
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs overflowMenu={false} style={{ width: 600, height: 300 }}>
         {tabs.map((label) => (
           <TabPanel key={label} label={label} {...style}>
@@ -92,14 +92,14 @@ export const WithoutOverflow: TabsStory = () => {
           </TabPanel>
         ))}
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const Centered: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs centered style={{ width: 600, height: 300 }}>
         <TabPanel label="Home" {...style}>
           <Text>Content for Home tab</Text>
@@ -114,14 +114,14 @@ export const Centered: TabsStory = () => {
           <Text>Content for Checks tab</Text>
         </TabPanel>
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const Tertiary: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs variant="tertiary" style={{ width: 600, height: 300 }}>
         <TabPanel label="Home" {...style}>
           <Text>Content for Home tab</Text>
@@ -139,7 +139,7 @@ export const Tertiary: TabsStory = () => {
           <Text>Content for Liquidity tab</Text>
         </TabPanel>
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -206,7 +206,7 @@ export const Controlled: TabsStory = () => {
   };
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs
         activeTabIndex={activeTabIndex}
         enableAddTab
@@ -231,7 +231,7 @@ export const Controlled: TabsStory = () => {
           open
         />
       )}
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -254,7 +254,7 @@ export const AddNew: TabsStory = () => {
   };
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs
         activeTabIndex={activeTabIndex}
         enableAddTab
@@ -269,7 +269,7 @@ export const AddNew: TabsStory = () => {
           </TabPanel>
         ))}
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -326,7 +326,7 @@ export const AddNewNoFocus: TabsStory = () => {
   };
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Button onClick={handleAddTab}>Add Tab</Button>
       <Tabs
         onCloseTab={onTabShouldClose}
@@ -348,7 +348,7 @@ export const AddNewNoFocus: TabsStory = () => {
           open
         />
       )}
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -377,7 +377,7 @@ export const AddNewWithRename: TabsStory = () => {
   };
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs
         activeTabIndex={activeTabIndex}
         editing={editing}
@@ -396,7 +396,7 @@ export const AddNewWithRename: TabsStory = () => {
           </TabPanel>
         ))}
       </Tabs>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -445,7 +445,7 @@ export const Close: TabsStory = () => {
   const resetTabs = () => setTabs(initialTabs);
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabs
         activeTabIndex={activeTabIndex}
         onActiveChange={setActiveTabIndex}
@@ -467,6 +467,6 @@ export const Close: TabsStory = () => {
       <Button onClick={resetTabs} disabled={tabs === initialTabs}>
         Reset
       </Button>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

@@ -1,4 +1,4 @@
-import { makePrefixer, ToolkitProvider } from "@salt-ds/core";
+import { makePrefixer, SaltProvider } from "@salt-ds/core";
 import {
   capitalize,
   Color,
@@ -229,7 +229,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   formFieldLabel.includes("Background"),
               })}
             >
-              <ToolkitProvider density="high">
+              <SaltProvider density="high">
                 <ColorChooser
                   color={selectedColor}
                   displayHexOnly={!props.characteristicsView}
@@ -240,7 +240,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   onClear={onClear}
                   UITKColorOverrides={props.uitkColorOverrides}
                 />
-              </ToolkitProvider>
+              </SaltProvider>
             </div>
           </div>
           {props.characteristicsView && !props.isStateValue && (
