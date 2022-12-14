@@ -85,7 +85,7 @@
 
 .inlineCardContent {
   display: flex;
-  margin-bottom: calc(var(--uitk-size-unit) * 3);
+  margin-bottom: calc(var(--salt-size-unit) * 3);
 }
 
 .inlineCardContent .textContainer {
