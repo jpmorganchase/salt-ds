@@ -38,8 +38,8 @@ div[class*="ag-theme-salt-high"] {
 
 div[class*="ag-theme-salt"] {
   --agGrid-background: var(
-    --uitkAgGrid-background,
-    var(--uitk-container-primary-background)
+    --saltAgGrid-background,
+    var(--salt-container-primary-background)
   );
   --agGrid-foreground: var(
     --saltAgGrid-foreground,
@@ -51,68 +51,76 @@ div[class*="ag-theme-salt"] {
   );
 
   --agGrid-menu-color: var(
-    --uitkAgGrid-menu-color,
-    var(--uitk-text-primary-foreground)
+    --saltAgGrid-menu-color,
+    var(--salt-text-primary-foreground)
   );
 
   --agGrid-row-color-hover: var(
-    --uitkAgGrid-row-color-hover,
-    var(--uitk-selectable-background-hover)
+    --saltAgGrid-row-color-hover,
+    var(--salt-selectable-background-hover)
   );
 
   --agGrid-row-background-hover: var(
-    --uitkAgGrid-row-color-hover,
-    var(--uitk-selectable-background-hover)
+    --saltAgGrid-row-color-hover,
+    var(--salt-selectable-background-hover)
+  );
+
+  --agGrid-row-background-secondary: var(
+    --saltAgGrid-row-color-secondary,
+    var(--salt-container-secondary-background)
   );
 
   --agGrid-color-focus: var(
-    --uitkAgGrid-color-focus,
-    var(--uitk-focused-outlineColor)
+    --saltAgGrid-color-focus,
+    var(--salt-focused-outlineColor)
   );
 
   --agGrid-header-foreground: var(
-    --uitkAgGrid-header-foreground,
-    var(--uitk-text-secondary-foreground)
+    --saltAgGrid-header-foreground,
+    var(--salt-text-secondary-foreground)
   );
 
   --agGrid-header-fontWeight: var(
-    --uitkAgGrid-header-fontWeight,
-    var(--uitk-text-label-fontWeight-strong)
+    --saltAgGrid-header-fontWeight,
+    var(--salt-text-label-fontWeight-strong)
   );
 
   --agGrid-separatorGap: var(
-    --uitkAgGrid-separatorGap,
+    --saltAgGrid-separatorGap,
     var(--agGrid-separatorGap-default)
   );
 
   --agGrid-row-background-selected: var(
-    --uitkAgGrid-row-background-selected,
-    var(--uitk-selectable-background-selected)
+    --saltAgGrid-row-background-selected,
+    var(--salt-selectable-background-selected)
   );
 
   --agGrid-row-borderColor-selected: var(
-    --uitkAgGrid-row-borderColor-selected,
-    var(--uitk-selectable-borderColor-selected)
+    --saltAgGrid-row-borderColor-selected,
+    var(--salt-selectable-borderColor-selected)
   );
   --agGrid-row-borderColor: var(
-    --uitkAgGrid-row-borderColor,
-    var(--uitk-separable-tertiary-borderColor)
+    --saltAgGrid-row-borderColor,
+    var(--salt-separable-tertiary-borderColor)
   );
   --agGrid-header-borderColor: var(
-    --uitkAgGrid-header-borderColor,
-    var(--uitk-separable-primary-borderColor)
+    --saltAgGrid-header-borderColor,
+    var(--salt-separable-primary-borderColor)
   );
   --agGrid-header-column-separator-color: var(
-    --uitkAgGrid-header-column-separator-color,
-    var(--uitk-separable-tertiary-borderColor)
+    --saltAgGrid-header-column-separator-color,
+    var(--salt-separable-tertiary-borderColor)
   );
   --agGrid-cell-borderColor-editable: var(
-    --uitkAgGrid-cell-borderColor-editable,
-    var(--uitk-editable-borderColor)
+    --saltAgGrid-cell-borderColor-editable,
+    var(--salt-editable-borderColor)
   );
-
+  --agGrid-zebraColor: var(
+    --saltAgGrid-zebraColor,
+    var(--salt-container-secondary-background)
+  );
   --agGrid-borderColor: var(
-    --uitkAgGrid-borderColor,
+    --saltAgGrid-borderColor,
     var(--separable-tertiary-borderColor)
   );
 }
@@ -154,7 +162,7 @@ div[class*="ag-theme-salt"] {
     --saltAgGrid-toggle-button-background,
     var(--salt-selectable-borderColor)
   );
-  --agGrid-filter-borderColor: var(--uitkAgGrid-filter-borderColor, #eaedef);
+  --agGrid-filter-borderColor: var(--saltAgGrid-filter-borderColor, #eaedef);
   --agGrid-filter-apply-button-color: var(
     --saltAgGrid-filter-apply-button-color,
     #242526
@@ -222,7 +230,7 @@ div[class*="ag-theme-salt"] {
     #84878e
   );
 
-  --agGrid-filter-borderColor: var(--uitkAgGrid-filter-borderColor, #44484f);
+  --agGrid-filter-borderColor: var(--saltAgGrid-filter-borderColor, #44484f);
   --agGrid-filter-apply-button-color: var(
     --saltAgGrid-filter-apply-button-color,
     #eaedef
@@ -357,10 +365,10 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-high-dark,
 .ag-theme-salt-high-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 12px);
-  --agGrid-input-padding: var(--uitkAgGrid-input-padding, 4px);
-  --agGrid-input-height: var(--uitkAgGrid-input-height, 20px);
-  --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 10px);
+  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 12px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
+  --agGrid-input-height: var(--saltAgGrid-input-height, 20px);
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 10px);
   --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 11px);
   --agGrid-button-height: var(--saltAgGrid-button-height, 20px);
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 4px);
@@ -372,8 +380,8 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
   --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 10px);
 
-  --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 20px);
-  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 11px);
+  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 20px);
+  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 11px);
 
   --agGrid-editableCell-cornerTag-size-default: 10px;
 }
@@ -388,10 +396,10 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-medium-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 14px);
-  --agGrid-input-padding: var(--uitkAgGrid-input-padding, 8px);
-  --agGrid-input-height: var(--uitkAgGrid-input-height, 28px);
-  --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 12px);
+  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 14px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
+  --agGrid-input-height: var(--saltAgGrid-input-height, 28px);
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 12px);
 
   --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 12px);
   --agGrid-button-height: var(--saltAgGrid-button-height, 28px);
@@ -402,9 +410,9 @@ $ag-theme-salt-params-touch-dark: map-merge(
   --agGrid-switch-height: var(--saltAgGrid-switch-height, 18px);
   --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
 
-  --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 11px);
-  --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 28px);
-  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 12px);
+  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 11px);
+  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 28px);
+  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 12px);
 
   --agGrid-editableCell-cornerTag-size-default: 12px;
 }
@@ -419,10 +427,10 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-low-dark,
 .ag-theme-salt-low-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 16px);
-  --agGrid-input-padding: var(--uitkAgGrid-input-padding, 12px);
-  --agGrid-input-height: var(--uitkAgGrid-input-height, 36px);
-  --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 14px);
+  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 16px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 12px);
+  --agGrid-input-height: var(--saltAgGrid-input-height, 36px);
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
 
   --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 14px);
   --agGrid-button-height: var(--saltAgGrid-button-height, 36px);
@@ -433,9 +441,9 @@ $ag-theme-salt-params-touch-dark: map-merge(
   --agGrid-switch-height: var(--saltAgGrid-switch-height, 20px);
   --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
 
-  --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 12px);
-  --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 36px);
-  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 14px);
+  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 12px);
+  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 36px);
+  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 14px);
 
   --agGrid-editableCell-cornerTag-size-default: 14px;
 }
@@ -450,10 +458,10 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-touch-light {
-  --agGrid-checkbox-size: var(--uitkAgGrid-checkbox-size, 18px);
-  --agGrid-input-padding: var(--uitkAgGrid-input-padding, 8px);
-  --agGrid-input-height: var(--uitkAgGrid-input-height, 28px);
-  --agGrid-input-fontSize: var(--uitkAgGrid-input-fontSize, 14px);
+  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 18px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
+  --agGrid-input-height: var(--saltAgGrid-input-height, 28px);
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
 
   --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 16px);
   --agGrid-button-height: var(--saltAgGrid-button-height, 44px);
@@ -464,9 +472,9 @@ $ag-theme-salt-params-touch-dark: map-merge(
   --agGrid-switch-height: var(--saltAgGrid-switch-height, 24px);
   --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 3px);
 
-  --agGrid-header-fontSize: var(--uitkAgGrid-header-fontSize, 14px);
-  --agGrid-paging-button-width: var(--uitkAgGrid-paging-button-width, 44px);
-  --agGrid-paging-fontSize: var(--uitkAgGrid-paging-fontSize, 16px);
+  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 14px);
+  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 44px);
+  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 16px);
 
   --agGrid-editableCell-cornerTag-size-default: 16px;
 }
@@ -492,19 +500,19 @@ $ag-theme-salt-params-touch-dark: map-merge(
     var(--salt-selectable-background)
   );
   --agGrid-checkbox-background-selected: var(
-    --uitkAgGrid-checkbox-background-selected,
-    var(--uitk-selectable-borderColor-selected)
+    --saltAgGrid-checkbox-background-selected,
+    var(--salt-selectable-borderColor-selected)
   );
   --agGrid-checkbox-foreground: var(
-    --uitkAgGrid-checkbox-foreground,
-    var(--uitk-selectable-foreground)
+    --saltAgGrid-checkbox-foreground,
+    var(--salt-selectable-foreground)
   );
   --agGrid-checkbox-foreground-selected: var(
-    --uitkAgGrid-checkbox-foreground-selected,
-    var(--uitk-selectable-primary-foreground-selected)
+    --saltAgGrid-checkbox-foreground-selected,
+    var(--salt-selectable-primary-foreground-selected)
   );
-  --_agGrid-checkbox-border: 1px var(--uitk-selectable-borderStyle)
-    var(--uitk-selectable-borderColor);
+  --_agGrid-checkbox-border: 1px var(--salt-selectable-borderStyle)
+    var(--salt-selectable-borderColor);
   --agGrid-checkbox-border: var(
     --saltAgGrid-checkbox-border,
     var(--_agGrid-checkbox-border)
@@ -521,11 +529,11 @@ $ag-theme-salt-params-touch-dark: map-merge(
     --salt-actionable-secondary-background-hover
   );
   --agGrid-editableCell-cornerTag-size: var(
-    --uitkAgGrid-editableCell-cornerTag-size,
+    --saltAgGrid-editableCell-cornerTag-size,
     var(--agGrid-editableCell-cornerTag-size-default)
   );
   --agGrid-cursor-borderColor: var(
-    --uitkGrid-cursor-borderColor,
-    var(--uitk-focused-outlineColor)
+    --saltGrid-cursor-borderColor,
+    var(--salt-focused-outlineColor)
   );
 }

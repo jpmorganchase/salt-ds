@@ -36,4 +36,5 @@ export {
   SetFilter,
   SingleClickEdit,
   StatusBar,
+  Variants,
 } from "./examples";

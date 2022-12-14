@@ -160,6 +160,17 @@
     border-color: var(--agGrid-row-borderColor-selected);
     // position: relative;
   }
+
+  &.ag-theme-salt-variant-zebra
+    .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
+    background-color: var(--agGrid-zebraColor);
+  }
+
+  &.ag-theme-salt-variant-secondary
+    .ag-row:not(.ag-row-hover, .ag-row-selected) {
+    background-color: var(--agGrid-row-background-secondary);
+  }
+
   .ag-row-selected::before {
     content: "";
     height: 1px;
