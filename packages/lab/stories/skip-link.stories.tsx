@@ -36,7 +36,7 @@ export const Default: ComponentStory<typeof SkipLink> = () => {
 
         <article id="main" ref={articleRef}>
           <section>
-            <h1>UI Toolkit</h1>
+            <h1>Salt</h1>
             <p>
               Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an
@@ -99,7 +99,7 @@ export const MultipleLinks: ComponentStory<typeof SkipLink> = () => {
 
         <article>
           <section id="introduction" ref={sectionRef1}>
-            <h1>UI Toolkit</h1>
+            <h1>Salt</h1>
             <p>
               Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an

@@ -27,9 +27,7 @@ export const useTooltipContext = () => {
 
   useDebugValue(
     `${
-      context && context.Tooltip !== undefined
-        ? "Customized"
-        : "Default UIToolkit"
+      context && context.Tooltip !== undefined ? "Customized" : "Default Salt"
     } Tooltip.`
   );
 

@@ -3,7 +3,7 @@ import * as parentChildStories from "@stories/parent-child-layout.stories";
 
 const composedStories = composeStories(parentChildStories);
 
-const { DefaultParentChildLayout, ToolkitParentChildLayoutStacked } =
+const { DefaultParentChildLayout, SaltParentChildLayoutStacked } =
   composedStories;
 
 describe("GIVEN a Parent and Child", () => {
@@ -69,7 +69,7 @@ describe("GIVEN a Parent and Child", () => {
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked />);
+      cy.mount(<SaltParentChildLayoutStacked />);
 
       cy.get(".saltParentChildItem").should("have.length", 1);
 
@@ -79,7 +79,7 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked />);
+      cy.mount(<SaltParentChildLayoutStacked />);
 
       cy.findByRole("button", { name: /Show child/i }).click();
 
@@ -91,14 +91,14 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change the direction of animations", () => {
-      cy.mount(<ToolkitParentChildLayoutStacked orientation="vertical" />);
+      cy.mount(<SaltParentChildLayoutStacked orientation="vertical" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",
         "saltParentChildItem-slide-bottom"
       );
 
-      cy.mount(<ToolkitParentChildLayoutStacked orientation="horizontal" />);
+      cy.mount(<SaltParentChildLayoutStacked orientation="horizontal" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",

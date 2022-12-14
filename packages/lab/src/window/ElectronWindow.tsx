@@ -5,7 +5,7 @@ import {
 } from "@salt-ds/core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { isDesktop, Window as ToolkitWindow, WindowProps } from "../window";
+import { isDesktop, Window as SaltWindow, WindowProps } from "../window";
 
 import "./ElectronWindow.css";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
@@ -126,4 +126,4 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
     : null;
 });
 
-export const ElectronWindow = isDesktop ? Window : ToolkitWindow;
+export const ElectronWindow = isDesktop ? Window : SaltWindow;

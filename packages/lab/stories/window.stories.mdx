@@ -45,7 +45,7 @@ object to append the styles. This method will not work with external windows tha
 is due to how the styles are inserted into the document.
 
 One way of overcoming the issue of injecting the style into the correct document is to use context
-to pass the document to the toolkit components. The components will then inject the style into the
+to pass the document to the salt components. The components will then inject the style into the
 given document.
 
 ```ts
@@ -229,7 +229,7 @@ return (
 ```
 
 Delegating the responsibility of style injection to the components would require each component to call
-the `injectStyleIntoGivenDocument` function. Developers of the toolkit will have to remember to do this.
+the `injectStyleIntoGivenDocument` function. Developers of SALT will have to remember to do this.
 One could draw parallels to MUI's styled components API which requires users to used the `styled` function
 and pass in their components. The function returns a styled component.
 
