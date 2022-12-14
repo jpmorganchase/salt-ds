@@ -6,7 +6,7 @@ import {
 } from "react";
 import "./TableRow.css";
 import { BaseCell } from "../BaseCell";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { FakeCell } from "./FakeCell";

@@ -45,8 +45,8 @@
   --ifm-menu-link-padding-horizontal: calc(var(--uitk-size-unit) * 2);
   --ifm-menu-link-padding-vertical: var(--uitk-size-unit);
   --ifm-paragraph-margin-bottom: calc(var(--uitk-size-unit) * 2);
-  --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with TKProvider - use separable-tertiary-borderColor */
-  --image-border: var(--uitk-palette-neutral-border-medium);
+  --ifm-toc-border-color: var(--uitk-color-gray-30); /* TODO: see if we can wrap sidebar with SaltProvider - use separable-tertiary-borderColor */
+  --image-border: var(--uitk-palette-neutral-primary-border);
   --ifm-menu-color-background-hover: none;
 }
 
@@ -104,15 +104,15 @@
 }
 
 .theme-doc-sidebar-container {
-  --ifm-menu-color: var(--uitk-color-gray-200); /* TODO: see if we can wrap sidebar with TKProvider */
-  --ifm-menu-color-active: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with TKProvider */
-  background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with TKProvider */
+  --ifm-menu-color: var(--uitk-color-gray-200); /* TODO: see if we can wrap sidebar with SaltProvider */
+  --ifm-menu-color-active: var(--uitk-color-gray-900); /* TODO: see if we can wrap sidebar with SaltProvider */
+  background-color: var(--uitk-color-white); /* TODO: see if we can wrap sidebar with SaltProvider */
 }
 .theme-doc-sidebar-container > div:first-child {
   height: unset;
 }
 .theme-doc-sidebar-container *::selection {
-  background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with TKProvider */
+  background: var(--uitk-color-blue-30); /* TODO: see if we can wrap sidebar with SaltProvider */
 }
 
 .menu {
@@ -141,11 +141,11 @@
   margin: 0;
 }
 
-.theme-doc-sidebar-container li:has(> .menu__link--active)::before {
+.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
   border-left: 4px solid var(--uitk-navigable-indicator-active);
   content: "";
   position: relative;
-  left: 0;
+  right: calc(var(--doc-sidebar-width) - 6px);
   font-weight: bold;
 }
 
@@ -162,6 +162,9 @@
 
 .docs-wrapper .container .col {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
 }
 
 .docs-wrapper .pagination-nav {
@@ -220,6 +223,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex: 1;
 }
 
 .docs-toc-container {
@@ -273,7 +277,6 @@ ul.table-of-contents li > ul li {
   --ifm-list-margin: calc(var(--uitk-size-unit) * 2);
   padding: calc(var(--uitk-size-unit) * 3);
   max-width: var(--max-content-width);
-  margin: auto;
 }
 
 .docs-page-content.withToc {
@@ -321,6 +324,12 @@ ul.table-of-contents li > ul li {
   margin-top: calc(var(--uitk-size-unit) * 2);
 }
 
+.theme-doc-markdown.markdown {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .theme-doc-markdown.markdown > h1:first-child {
   --ifm-h1-font-size: var(--uitk-text-display2-fontSize);
   --ifm-heading-font-weight: var(--uitk-text-display2-fontWeight);
@@ -335,11 +344,36 @@ ul.table-of-contents li > ul li {
   --ifm-leading: var(--ifm-paragraph-margin-bottom);
 }
 
+main .container > div > div > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container article {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .row {
+  height: 100%;
+}
+
 .footer {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
   --ifm-footer-link-color: var(--uitk-text-secondary-foreground);
   --footer-items-separator-height: 16px;
+  --ifm-footer-padding-horizontal: calc(var(--uitk-size-unit) * 3);
   --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) * 1);
+}
+
+.footer__link-item {
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.footer .container {
+  padding: 0;
 }
 
 .footer__title {
@@ -366,7 +400,7 @@ ul.table-of-contents li > ul li {
 .footer__items > *:not(:last-child):after {
   width: var(--uitk-size-border);
   content: "";
-  background-color: var(--uitk-text-secondary-foreground);
+  background-color: var(--uitk-separable-secondary-borderColor);
   height: var(--footer-items-separator-height);
   align-self: center;
 }
@@ -484,6 +518,11 @@ table tr td:not(:last-child) {
     --ifm-navbar-height: 76px;
   }
 
+  .footer {
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
+  }
+
   .navbar__item {
     /* custom padding so the orange border perfectly aligns with the navbar */
     --ifm-navbar-item-padding-vertical: calc(var(--uitk-size-unit) + 3px);
@@ -544,10 +583,18 @@ table tr th + th {
   }
 
   .footer {
-    --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) / 2);
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
   }
 
   .footer .container {
     gap: calc(var(--uitk-size-unit) / 2);
+  }
+}
+
+@media (max-width: 996px) {
+  .footer {
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
   }
 }

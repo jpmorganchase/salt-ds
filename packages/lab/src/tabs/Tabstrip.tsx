@@ -1,12 +1,10 @@
 import {
   Button,
   makePrefixer,
-  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import React, {
   ForwardedRef,
@@ -40,6 +38,7 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";

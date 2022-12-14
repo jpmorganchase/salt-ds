@@ -1,5 +1,5 @@
 import { forwardRef, RefObject } from "react";
-import { LinkProps, Link, makePrefixer } from "@jpmorganchase/uitk-core";
+import { LinkProps, Link, makePrefixer } from "@salt-ds/core";
 import "./SkipLink.css";
 import cx from "classnames";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";

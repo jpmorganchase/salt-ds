@@ -1,4 +1,4 @@
-import { ContentStatus } from "@jpmorganchase/uitk-lab";
+import { ContentStatus } from "@salt-ds/lab";
 
 describe("GIVEN Content Status", () => {
   it("renders the info status with NO title AND NO message and NO actions WHEN no props are passed", () => {

@@ -4,7 +4,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import columnSpanningExampleColumns from "../dependencies/columnSpanningExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const ColumnSpanning = (props: AgGridReactProps) => {
   const [isNewTheme, setNewTheme] = useState(false);

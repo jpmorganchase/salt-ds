@@ -5,7 +5,7 @@ import {
   SyntheticEvent,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { DateValue } from "@internationalized/date";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
 import { formatDate, generateVisibleDays } from "./utils";

@@ -5,7 +5,7 @@ import {
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@jpmorganchase/uitk-lab";
+import { LinearProgress } from "@salt-ds/lab";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 

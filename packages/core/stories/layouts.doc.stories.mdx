@@ -1,0 +1,54 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+
+<Meta
+  title="Documentation/Core/Layout/Introduction"
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Layout components
+
+Layout componentry was created to help you build consistent and responsive layouts while using Toolkit components.
+Built on top of CSS Grid and Flexbox, the layout components give spacial consistency out of the box,
+they allow for easy responsive behavior and customization.
+
+## [Border layout](/docs/documentation-core-layout-borderlayout--page)
+
+Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
+
+<Canvas>
+  <Story id="core-layout-borderlayout--border-layout-all-panels" />
+</Canvas>
+
+## [Flex layout](/docs/documentation-core-layout-flexlayout--page)
+
+Dictates a vertical or horizontal order and direction for UI elements. Does not wrap by default.
+
+<Canvas>
+  <Story id="core-layout-flexlayout--default-flex-layout" />
+</Canvas>
+
+## [Flow layout](/docs/documentation-core-layout-flowlayout--page)
+
+Dictates a horizontal order and direction for UI elements. Wraps by default.
+
+<Canvas>
+  <Story id="core-layout-flowlayout--default-flow-layout" />
+</Canvas>
+
+## [Grid layout](/docs/documentation-core-layout-gridlayout--page)
+
+Defines an equally distributed layout system using columns and rows.
+
+<Canvas>
+  <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
+</Canvas>
+
+## [Stack layout](/docs/documentation-core-layout-stacklayout--page)
+
+Dictates a vertical order and direction for UI elements.
+
+<Canvas>
+  <Story id="core-layout-stacklayout--default-stack-layout" />
+</Canvas>

@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemProps } from "@jpmorganchase/uitk-lab";
+import { List, ListItem, ListItemProps } from "@salt-ds/lab";
 import { version } from "react";
 
 describe("A declarative list", () => {

@@ -4,19 +4,7 @@ import {
   shift,
   size,
 } from "@floating-ui/react-dom-interactions";
-import {
-  Input,
-  InputProps,
-  isDesktop,
-  Portal,
-  TooltipContext,
-  TooltipContextProps,
-  useAriaAnnouncer,
-  useFloatingUI,
-  useForkRef,
-  Window,
-  WindowProps,
-} from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import {
   ComponentType,
   HTMLAttributes,
@@ -38,6 +26,11 @@ import {
 import { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
+import { Window, WindowProps, isDesktop } from "../../window";
+import { TooltipContext, TooltipContextProps } from "../../tooltip";
+import { Input, InputProps } from "../../input";
+import { useFloatingUI } from "../../popper";
+import { Portal } from "../../portal";
 
 export type BaseComboBoxProps<
   Item,

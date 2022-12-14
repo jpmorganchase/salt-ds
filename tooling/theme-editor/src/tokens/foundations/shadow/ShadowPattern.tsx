@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ColorShadow } from "./ColorShadow";
 import { FlatShadow } from "./FlatShadow";
 import { useSearchParams } from "react-router-dom";

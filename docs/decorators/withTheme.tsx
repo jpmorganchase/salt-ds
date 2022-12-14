@@ -2,10 +2,10 @@ import { DecoratorFn } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
-  Panel,
-  ToolkitProvider,
+  SaltProvider,
   useTheme,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
+import { Panel } from "@salt-ds/lab";
 import { useEffect } from "react";
 
 // Modified from storybook background addon
@@ -78,7 +78,7 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
         }}
       >
         {ModeValues.map((mode) => (
-          <ToolkitProvider
+          <SaltProvider
             applyClassesTo={"child"}
             density={density}
             mode={mode}
@@ -87,16 +87,16 @@ export const withTheme: DecoratorFn = (StoryFn, context) => {
             <Panel>
               <StoryFn />
             </Panel>
-          </ToolkitProvider>
+          </SaltProvider>
         ))}
       </div>
     );
   }
 
   return (
-    <ToolkitProvider density={density} mode={mode}>
+    <SaltProvider density={density} mode={mode}>
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

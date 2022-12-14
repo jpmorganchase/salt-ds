@@ -8,17 +8,13 @@ import {
 } from "../src";
 import { ChangeEvent, useMemo, useState } from "react";
 import {
+  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
-import {
-  Button,
-  Checkbox,
-  FlexItem,
-  FlexLayout,
-} from "@jpmorganchase/uitk-core";
-import { DeleteIcon, UndoIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/lab";
+import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
+import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 

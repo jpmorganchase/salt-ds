@@ -1,6 +1,6 @@
 {
-  "name": "@jpmorganchase/uitk-core",
-  "version": "0.9.0",
+  "name": "@salt-ds/core",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": [
@@ -18,6 +18,6 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/jpmorganchase-uitk-core"
+    "directory": "../../dist/salt-ds-core"
   }
 }

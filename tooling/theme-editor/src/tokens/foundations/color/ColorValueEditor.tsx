@@ -1,15 +1,12 @@
-import {
-  makePrefixer,
-  ToolkitProvider,
-  Tooltip,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, SaltProvider } from "@salt-ds/core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-} from "@jpmorganchase/uitk-lab";
+  Tooltip,
+  useTooltip,
+} from "@salt-ds/lab";
 import cn from "classnames";
 import { useEffect, useMemo, useState } from "react";
 
@@ -232,7 +229,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   formFieldLabel.includes("Background"),
               })}
             >
-              <ToolkitProvider density="high">
+              <SaltProvider density="high">
                 <ColorChooser
                   color={selectedColor}
                   displayHexOnly={!props.characteristicsView}
@@ -243,7 +240,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   onClear={onClear}
                   UITKColorOverrides={props.uitkColorOverrides}
                 />
-              </ToolkitProvider>
+              </SaltProvider>
             </div>
           </div>
           {props.characteristicsView && !props.isStateValue && (

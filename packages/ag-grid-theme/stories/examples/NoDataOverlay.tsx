@@ -1,8 +1,9 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Card, Switch } from "@jpmorganchase/uitk-core";
-import { WarningIcon } from "@jpmorganchase/uitk-icons";
+import { Button } from "@salt-ds/core";
+import { Card, Switch } from "@salt-ds/lab";
+import { WarningIcon } from "@salt-ds/icons";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 

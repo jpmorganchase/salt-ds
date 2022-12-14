@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Panel, ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { CircularProgress, LinearProgress } from "@jpmorganchase/uitk-lab";
+import { Button, SaltProvider } from "@salt-ds/core";
+import { CircularProgress, LinearProgress, Panel } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
@@ -79,12 +79,12 @@ export const CircularAll: ComponentStory<typeof CircularProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <CircularExamples />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <CircularExamples />
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );
 
@@ -216,12 +216,12 @@ export const LinearAll: ComponentStory<typeof LinearProgress> = () => (
       right: 0,
     }}
   >
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <LinearExamples />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <LinearExamples />
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );
 

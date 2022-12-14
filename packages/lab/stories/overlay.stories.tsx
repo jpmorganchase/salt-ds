@@ -1,10 +1,10 @@
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   Overlay,
   OverlayProps,
   useOverlay,
   UseOverlayProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 
 import "./overlay.stories.css";

@@ -1,12 +1,12 @@
 import { Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   ExportIcon,
   NotificationIcon,
   ShareIcon,
   TearOutIcon,
-} from "@jpmorganchase/uitk-icons";
-import { Toolbar } from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/icons";
+import { Toolbar } from "@salt-ds/lab";
 import { CollapsibleToolbarItem } from "./sample-components";
 
 <Meta title="Lab/Toolbar/Doc" />
@@ -40,7 +40,7 @@ contains an Icon.
 
 <Canvas>
   <Story name="Simple Toolbar Example">
-    <ToolkitProvider>
+    <SaltProvider>
       <Toolbar>
         <Button variant="secondary">
           <ExportIcon /> Export
@@ -56,7 +56,7 @@ contains an Icon.
         </Button>
         <Button variant="secondary">More</Button>
       </Toolbar>
-    </ToolkitProvider>
+    </SaltProvider>
   </Story>
 </Canvas>
 
@@ -68,7 +68,7 @@ Example 1, use CSS alone to style compact state
 
 <Canvas>
   <Story name="Toolbar with instant collapse items CSS">
-    <ToolkitProvider>
+    <SaltProvider>
       {/* <Toolbar style={{ width: 440 }}>
         <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
         <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
@@ -89,6 +89,6 @@ Example 1, use CSS alone to style compact state
         <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
         <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
       </Toolbar>
-    </ToolkitProvider>
+    </SaltProvider>
   </Story>
 </Canvas>

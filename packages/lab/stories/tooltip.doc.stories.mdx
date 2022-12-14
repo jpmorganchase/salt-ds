@@ -1,0 +1,42 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Tooltip } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Lab/Tooltip"
+  component={Tooltip}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Tooltip
+
+A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a certain amount of time.
+
+## Default
+
+<Canvas>
+  <Story id="core-tooltip--default" />
+</Canvas>
+
+# API
+
+```
+import { Tooltip } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Tooltip} />
+
+## CSS Class
+
+<CSSClassTable of={Tooltip} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Tooltip} />

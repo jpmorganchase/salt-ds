@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";

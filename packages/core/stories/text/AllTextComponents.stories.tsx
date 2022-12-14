@@ -10,7 +10,7 @@ import {
   H3,
   H4,
   Label as LabelText,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
 export default {
   title: "Core/Text",

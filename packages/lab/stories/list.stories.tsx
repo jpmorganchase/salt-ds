@@ -14,12 +14,10 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  FormField,
-  Input,
   StackLayout,
   useDensity,
-} from "@jpmorganchase/uitk-core";
-import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 import {
   ContentStatus,
@@ -32,8 +30,10 @@ import {
   ListScrollHandles,
   VirtualizedList,
   SelectionChangeHandler,
-} from "@jpmorganchase/uitk-lab";
-import { SelectHandler } from "../src/common-hooks";
+  FormField,
+  Input,
+  SelectHandler,
+} from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 

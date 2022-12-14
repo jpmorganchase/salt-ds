@@ -1,11 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  Button,
-  Link,
-  ParentChildLayout,
-  ToolkitProvider,
-  Text,
-} from "@jpmorganchase/uitk-core";
+import { Button, Link, SaltProvider, Text } from "@salt-ds/core";
 import {
   EditableLabel,
   Tab,
@@ -15,7 +9,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from "@jpmorganchase/uitk-lab";
+  ParentChildLayout,
+} from "@salt-ds/lab";
 
 import { AdjustableFlexbox } from "../story-components";
 
@@ -120,7 +115,7 @@ export const Default = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <Tabstrip
         onActiveChange={setActiveTabIndex}
         style={{ width: 600 }}
@@ -142,7 +137,7 @@ export const Default = () => {
       </div>
       <br />
       <br />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -150,7 +145,7 @@ export const Overflow = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <div>1) Tab definitions as an array of strings</div>
       <div style={{ height: 30, width: 600 }}>
         <Tabstrip
@@ -161,7 +156,7 @@ export const Overflow = () => {
       </div>
       <br />
       <br />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 

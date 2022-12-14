@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode } from "react";
 import classnames from "classnames";
-import { makePrefixer, Button, ButtonProps } from "@jpmorganchase/uitk-core";
-import { ChevronDownIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
+import { ChevronDownIcon } from "@salt-ds/icons";
 import "./MenuButtonTrigger.css";
 
 const withBaseName = makePrefixer("uitkMenuButtonTrigger");

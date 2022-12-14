@@ -1,14 +1,6 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useFormFieldProps,
-} from "@jpmorganchase/uitk-core";
-import {
-  ChevronDownIcon,
-  IconProps,
-  DEFAULT_ICON_SIZE,
-} from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
+import { useFormFieldProps } from "../form-field-context";
 import classnames from "classnames";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 

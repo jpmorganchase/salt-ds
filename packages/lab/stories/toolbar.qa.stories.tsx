@@ -1,11 +1,5 @@
 import { Story } from "@storybook/react";
-import {
-  Button,
-  FormField,
-  Input,
-  Pill,
-  StaticInputAdornment,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   AddIcon,
   ColumnChooserIcon,
@@ -16,7 +10,7 @@ import {
   ShareIcon,
   SwapIcon,
   TearOutIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 
 import {
   Dropdown,
@@ -24,7 +18,11 @@ import {
   Toolbar,
   ToolbarButton,
   Tooltray,
-} from "@jpmorganchase/uitk-lab";
+  FormField,
+  Input,
+  Pill,
+  StaticInputAdornment,
+} from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 import "docs/story.css";

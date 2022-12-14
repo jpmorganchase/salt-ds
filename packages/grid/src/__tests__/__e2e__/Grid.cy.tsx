@@ -6,7 +6,7 @@ import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
 import * as groupedStories from "@stories/grid-columnGroups.stories";
-import { Grid, GridColumn, ColumnGroup } from "@jpmorganchase/uitk-grid";
+import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);

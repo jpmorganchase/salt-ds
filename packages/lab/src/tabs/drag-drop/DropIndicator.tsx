@@ -1,4 +1,4 @@
-import { Portal } from "@jpmorganchase/uitk-core";
+import { Portal } from "../../portal";
 import { forwardRef } from "react";
 import { Rect } from "./dragDropTypes";
 

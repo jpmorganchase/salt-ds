@@ -1,9 +1,4 @@
-import {
-  makePrefixer,
-  useForkRef,
-  useTooltip,
-  useTooltipContext,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import cn from "classnames";
 import {
   ForwardedRef,
@@ -16,6 +11,7 @@ import {
 } from "react";
 import { useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
+import { useTooltip, useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 

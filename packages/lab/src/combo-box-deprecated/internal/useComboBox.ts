@@ -1,10 +1,9 @@
 import {
-  InputProps,
   useControlled,
   useForkRef,
   useId,
   useIsFocusVisible,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import {
   ChangeEvent,
   FocusEvent,
@@ -22,6 +21,7 @@ import { defaultItemToString } from "../../tokenized-input/internal/defaultItemT
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
+import { InputProps } from "../../input";
 
 export type UseComboBoxProps<Item> = Omit<
   DefaultComboBoxProps<Item>,

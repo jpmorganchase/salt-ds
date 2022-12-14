@@ -1,0 +1,11 @@
+.assetsTable {
+  table-layout: fixed;
+}
+
+.assetsTable svg {
+  margin-right: calc(var(--uitk-size-unit) / 2);
+}
+
+.strong {
+  font-weight: bold;
+}

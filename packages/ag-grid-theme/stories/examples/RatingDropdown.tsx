@@ -1,4 +1,4 @@
-import { Dropdown, SelectHandler } from "@jpmorganchase/uitk-lab";
+import { Dropdown, SelectHandler } from "@salt-ds/lab";
 import { ICellEditorParams } from "ag-grid-community";
 import { forwardRef, useEffect, useRef, useState } from "react";
 

@@ -1,4 +1,4 @@
-import { useControlled, useIdMemo } from "@jpmorganchase/uitk-core";
+import { useControlled, useIdMemo } from "@salt-ds/core";
 import { ReactNode, useCallback } from "react";
 import { TabDescriptor } from "./TabsTypes";
 import { useItemsWithIds } from "./useItemsWithIds";

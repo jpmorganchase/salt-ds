@@ -1,13 +1,7 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { useRef, useState } from "react";
-import { Link, ToolkitProvider, Text } from "@jpmorganchase/uitk-core";
-import {
-  EditableLabel,
-  TabPanel,
-  Tabs,
-  Tab,
-  Tabstrip,
-} from "@jpmorganchase/uitk-lab";
+import { Link, SaltProvider, Text } from "@salt-ds/core";
+import { EditableLabel, TabPanel, Tabs, Tab, Tabstrip } from "@salt-ds/lab";
 
 import {
   Default as DefaultTabstrip,
@@ -36,11 +30,11 @@ The `Tabs` component is the recommended (and easiest) way to employ a tabbed int
 The simplest possible `Tabstrip` can be created by passing an array of string labels to the `Tabstrip` component.
 
 <Canvas withSource="open">
-  <ToolkitProvider>
+  <SaltProvider>
     <Tabstrip
       source={["Home", "Transactions", "Loans", "Checks", "Liquidity"]}
     />
-  </ToolkitProvider>
+  </SaltProvider>
 </Canvas>
 
 However, you will almost certainly never do this, as the resulting code will fail to meet accessibility guidelines. Typically, a `Tabstrip` will be linked to other UI elements on a page and changing the `active` tab will also affect those linked elements. Normally, we will make visible only the element associated with the `active` tab and hide elements associated with remaining tabs. A `Tabstrip` effectively labels a number of alternative views and allows users to switch between those views. In order to make the relationships between these components clear to assistive technology software (screen readers) `id` values are used. Each `Tab` is assigned an `id` value and the target element with which each `Tab` is associated should also carry an `id` value. `aria` attributes are employed to establish a controls/labelled-by relationship between the `Tab` and target element.
@@ -48,7 +42,7 @@ However, you will almost certainly never do this, as the resulting code will fai
 The easiest way to create a Tabbed view with all the appropriate `aria` relationships in place, is to use the `Tabs` component with `TabPanel`, rather than create a `Tabstrip` directly.
 
 <Canvas withSource="open">
-  <ToolkitProvider>
+  <SaltProvider>
     <Tabs>
       <TabPanel label="Home">
         <Text>Home Page</Text>
@@ -66,7 +60,7 @@ The easiest way to create a Tabbed view with all the appropriate `aria` relation
         <Text>Liquidity Page</Text>
       </TabPanel>
     </Tabs>
-  </ToolkitProvider>
+  </SaltProvider>
 </Canvas>
 
 This not only ensures that the correct `aria` attributes are applied, but also takes
@@ -104,9 +98,9 @@ Same uncontrolled `Tabstrip` with two additional attributes
 />
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripUncontrolledStringTabsAddNewWithRename height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 3) controlled tabs, with addTab
 
@@ -143,9 +137,9 @@ const handleAddTab = () => {
 </Tabstrip>;
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripControlledAddNew height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 4) Closeable Tabs
 
@@ -165,9 +159,9 @@ Same uncontrolled `Tabstrip` with two additional attributes
 />
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripCloseDeclarative height={120} />
-</ToolkitProvider>
+</SaltProvider>
 
 #### Example 5) Custom Tab content
 
@@ -194,6 +188,6 @@ easier.
 </Tabstrip>
 ```
 
-<ToolkitProvider>
+<SaltProvider>
   <TabstripLink height={100} />
-</ToolkitProvider>
+</SaltProvider>

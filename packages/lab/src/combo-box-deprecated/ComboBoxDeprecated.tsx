@@ -1,9 +1,4 @@
-import {
-  makePrefixer,
-  useForkRef,
-  useFormFieldProps,
-  useId,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import classnames from "classnames";
 import { ComponentType, forwardRef, Ref, useRef } from "react";
 
@@ -16,6 +11,7 @@ import {
   MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
 import { useWidth } from "../list-deprecated/internal/useWidth";
+import { useFormFieldProps } from "../form-field-context";
 import "./ComboBox.css";
 
 const withBaseName = makePrefixer("uitkComboBox");

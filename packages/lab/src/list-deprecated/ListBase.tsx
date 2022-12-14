@@ -3,7 +3,7 @@ import {
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import classnames from "classnames";
 import {
   Children,

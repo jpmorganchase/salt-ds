@@ -4,7 +4,7 @@ import parentChildExampleData from "../dependencies/parentChildExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const ParentChildRows = (props: AgGridReactProps) => {
   const [isNewTheme, setNewTheme] = useState(false);
