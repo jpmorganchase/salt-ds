@@ -1,61 +1,3 @@
-/* Styles applied to the cell element */
-.saltGridBaseCell {
-  box-sizing: border-box;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-
-  border-style: solid;
-  border-bottom-color: var(--grid-row-borderColor);
-  border-width: 0 0 1px 0;
-
-  white-space: nowrap;
-  position: relative;
-  font-size: var(--grid-fontSize);
-  font-weight: normal;
-
-  outline: 0;
-}
-
-.saltGridTableRow-first .saltGridBaseCell {
-  border-width: 1px 0 1px 0;
-  border-top-color: transparent;
-}
-
-.saltGridTableRow-selected.saltGridTableRow-first .saltGridBaseCell {
-  border-top-color: var(--grid-row-borderColor);
-}
-
-.saltGridBaseCell-body {
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  border-style: solid;
-  background: var(--grid-row-background);
-  border-width: 0 1px 0 0;
-  border-color: var(--grid-row-background);
-}
-
-.saltGrid-columnSeparators .saltGridBaseCell-regularSeparator .saltGridBaseCell-body {
-  border-color: var(--grid-columnSeparator-color);
-}
-
-.saltGrid-columnSeparators .saltGridBaseCell-pinnedSeparator .saltGridBaseCell-body {
-  border-color: var(--grid-columnSeparator-color);
-}
-
-.saltGrid-pinnedSeparators .saltGridBaseCell-pinnedSeparator .saltGridBaseCell-body {
-  border-color: var(--grid-pinnedSeparator-color);
-}
-
-.saltGridBaseCell-selected .saltGridBaseCell-body {
-  background: var(--grid-cell-background-selected);
-}
-
 .saltGridBaseCell-valueContainer {
   position: absolute;
   top: 0;
@@ -72,28 +14,16 @@
   --grid-cell-padding: 0 calc(var(--grid-padding) - 1px);
 }
 
-.saltGridBaseCell-editable .saltGridBaseCell-valueContainer {
+.saltGridCell-editable .saltGridBaseCell-valueContainer {
   border-style: solid;
   border-width: 1px;
   border-color: var(--grid-editableCell-borderColor);
 }
 
-.saltGridBaseCell-editable:focus-visible .saltGridBaseCell-valueContainer {
-  border-color: transparent;
-}
-
-.saltGridBaseCell-editable:hover .saltGridBaseCell-valueContainer {
+.saltGridCell-editable:hover .saltGridBaseCell-valueContainer {
   border-color: var(--grid-editableCell-borderColor-hover);
 }
 
-.saltGridBaseCell-cornerTag {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-top: 0 solid transparent;
-  border-left: var(--grid-editableCell-cornerTag-size) solid var(--grid-cursor-borderColor);
-  border-bottom: var(--grid-editableCell-cornerTag-size) solid transparent;
-  /*z-index: 10;*/
+.saltGridCell-editable:focus .saltGridBaseCell-valueContainer {
+  border-color: transparent;
 }

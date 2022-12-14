@@ -6,11 +6,6 @@
 }
 
 .saltGridNumericCellEditor {
-  margin: 0;
-  padding: 0;
-  height: var(--grid-row-height);
-  overflow: hidden;
-  position: relative;
 }
 
 .saltGridNumericCellEditor-inputContainer {
@@ -19,6 +14,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  background: var(--grid-background);
   box-sizing: border-box;
   border-style: dotted;
   border-width: 2px;

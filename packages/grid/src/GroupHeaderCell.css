@@ -4,6 +4,7 @@
   position: relative;
   color: var(--grid-groupHeader-color);
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 
   font-size: var(--grid-groupHeader-fontSize);

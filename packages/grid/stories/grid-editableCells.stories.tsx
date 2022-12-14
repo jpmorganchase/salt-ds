@@ -106,6 +106,7 @@ const EditableCellsTemplate: Story<{}> = () => {
       rowKeyGetter={(row) => row.id}
       className="grid"
       zebra={true}
+      // columnSeparators={true}
     >
       <GridColumn
         id="name"

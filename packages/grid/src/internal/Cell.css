@@ -1,0 +1,80 @@
+.saltGridCell {
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  position: relative;
+  font-size: var(--grid-fontSize);
+  font-weight: normal;
+
+  outline: 0;
+}
+
+.saltGridCell-selected {
+  background: var(--grid-cell-background-selected);
+}
+
+.saltGridCell-rowSeparator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background-color: var(--grid-row-borderColor);
+}
+
+.saltGridCell-topSeparator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: transparent;
+  display: none;
+}
+
+.saltGridTableRow-first .saltGridCell-topSeparator {
+  display: unset;
+}
+
+.saltGridCell-columnSeparator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--grid-row-background);
+}
+
+.saltGrid-columnSeparators .saltGridCell-regularSeparator .saltGridCell-columnSeparator {
+  background-color: var(--grid-columnSeparator-color);
+}
+
+.saltGrid-columnSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
+  background-color: var(--grid-columnSeparator-color);
+}
+
+.saltGrid-pinnedSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
+  background-color: var(--grid-pinnedSeparator-color);
+}
+
+.saltGridTableRow-selected.saltGridTableRow-first .saltGridCell-topSeparator {
+  background-color: var(--grid-row-borderColor);
+}
+
+.saltGridCell-body {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1px;
+  left: 0;
+  background: var(--grid-row-background);
+  border-right: solid 1px transparent;
+}
+
+.saltGridTableRow-first .saltGridCell-body {
+  top: 1px;
+}
