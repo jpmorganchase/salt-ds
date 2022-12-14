@@ -4,7 +4,7 @@ import { ContentStatus, Scrim } from "@salt-ds/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {
-  title: "Core/Scrim",
+  title: "Lab/Scrim",
   component: Scrim,
 } as ComponentMeta<typeof Scrim>;
 

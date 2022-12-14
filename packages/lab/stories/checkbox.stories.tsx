@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 
 export default {
-  title: "Core/Checkbox",
+  title: "Lab/Checkbox",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 

@@ -20,7 +20,7 @@ import {
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/ParentChildLayout",
+  title: "Lab/Layout/ParentChildLayout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {

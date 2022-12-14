@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Switch } from "@salt-ds/lab";
 
 export default {
-  title: "Core/Switch",
+  title: "Lab/Switch",
   component: Switch,
 } as ComponentMeta<typeof Switch>;
 

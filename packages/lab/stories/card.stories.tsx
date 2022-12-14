@@ -5,7 +5,7 @@ import { Card, Panel } from "@salt-ds/lab";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {
-  title: "Core/Card",
+  title: "Lab/Card",
   component: Card,
 } as ComponentMeta<typeof Card>;
 

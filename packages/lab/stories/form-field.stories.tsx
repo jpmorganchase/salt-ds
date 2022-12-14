@@ -5,7 +5,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { usStateExampleData } from "./exampleData";
 
 export default {
-  title: "Core/Form Field",
+  title: "Lab/Form Field",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 

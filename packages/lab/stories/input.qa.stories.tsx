@@ -11,7 +11,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Input/QA",
+  title: "Lab/Input/QA",
   component: Input,
 } as ComponentMeta<typeof Input>;
 
