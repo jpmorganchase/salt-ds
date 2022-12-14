@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any any company-internal code or sensitive data in your bug report**.
+        This is a public repository, so **please do not include any company-internal code or sensitive data in your bug report**.
   - type: dropdown
     attributes:
       label: Area
