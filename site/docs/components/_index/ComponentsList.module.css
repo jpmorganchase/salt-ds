@@ -7,7 +7,7 @@
 }
 
 .componentList a svg {
-  --uitkIcon-color: var(--uitk-text-primary-foreground);
+  --uitkIcon-color: currentColor;
 }
 
 .componentList a span {
