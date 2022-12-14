@@ -30,7 +30,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   };
 
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

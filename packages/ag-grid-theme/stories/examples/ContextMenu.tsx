@@ -17,7 +17,7 @@ const ContextMenu = (props: AgGridReactProps) => {
   };
 
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isNewTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -160,7 +160,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         <Switch
           checked={isNewTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

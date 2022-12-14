@@ -26,13 +26,13 @@ export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
         return [32, 48];
       case "ag-theme-uitk-touch":
         return [32, 60];
-      case "ag-theme-odyssey-high":
+      case "ag-theme-salt-high":
         return [24, 24];
-      case "ag-theme-odyssey-medium":
+      case "ag-theme-salt-medium":
         return [36, 36];
-      case "ag-theme-odyssey-low":
+      case "ag-theme-salt-low":
         return [48, 48];
-      case "ag-theme-odyssey-touch":
+      case "ag-theme-salt-touch":
         return [60, 60];
       default:
         return [20, 24];
