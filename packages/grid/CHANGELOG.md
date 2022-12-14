@@ -1,5 +1,16 @@
 # @jpmorganchase/uitk-grid
 
+## 0.4.1
+
+### Patch Changes
+
+- f9589d76: Grid variants story updated to include "compact" variant of high density grid
+  Editable cell border fixed (when grid is not focused)
+- bca5e407: Move aria-rowindex to row elements
+- 3ea035de: Focusable headers
+  Design update (separators, shadows and focus)
+  Characteristics updated
+
 ## 0.4.0
 
 ### Minor Changes

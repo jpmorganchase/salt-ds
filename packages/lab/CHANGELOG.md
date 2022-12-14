@@ -1,5 +1,46 @@
 # @jpmorganchase/uitk-lab
 
+## 0.10.0
+
+### Minor Changes
+
+- 171927c8: Remove default and disabled selectable foreground tokens, replace usages with text primary foreground
+
+  ```diff
+  - --uitk-selectable-foreground
+  - --uitk-selectable-foreground-disabled
+  ```
+
+- b2c3b21d: Moved the following components from Core to Lab:
+
+  - Card
+  - Checkbox
+  - ControlLabel
+  - FormField
+  - FormGroup
+  - Input
+  - Panel
+  - Pill
+  - Popper
+  - Portal
+  - RadioButton
+  - Scrim
+  - Switch
+  - Tooltip
+  - Window
+  - DeckItem
+  - DeckLayout
+  - LayerLayout
+  - ParentChildItem
+  - ParentchildLayout
+  - SplitLayout
+
+### Patch Changes
+
+- 5c98da3a: Move Link to Core
+  Remove 'disabled' prop from Link
+- f4795266: Move to global incrementing counter for useId
+
 ## 0.9.0
 
 ### Minor Changes

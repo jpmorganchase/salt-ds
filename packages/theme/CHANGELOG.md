@@ -1,5 +1,31 @@
 # @jpmorganchase/uitk-theme
 
+## 0.8.0
+
+### Minor Changes
+
+- 171927c8: Remove default and disabled selectable foreground tokens, replace usages with text primary foreground
+
+  ```diff
+  - --uitk-selectable-foreground
+  - --uitk-selectable-foreground-disabled
+  ```
+
+- 54e0bf2e: Change to Scrim styling; remove variant prop from Scrim component
+
+  ```diff
+  - --uitk-palette-opacity-primary-scrim
+  - --uitk-palette-opacity-secondary-scrim
+  - --uitk-palette-neutral-primary-background-scrim
+  - --uitk-palette-neutral-secondary-background-scrim
+  - --uitk-overlayable-primary-background
+  - --uitk-overlayable-secondary-background
+  + --uitk-palette-neutral-background-backdrop
+  + --uitk-overlayable-background: var(--uitk-palette-neutral-background-backdrop)
+  ```
+
+- 0a0d3a2d: Add accent line height `--uitk-accent-lineHeight` per density
+
 ## 0.7.0
 
 ### Minor Changes

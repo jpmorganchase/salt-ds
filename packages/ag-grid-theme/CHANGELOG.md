@@ -1,5 +1,16 @@
 # @jpmorganchase/uitk-ag-grid-theme
 
+## 0.4.0
+
+### Minor Changes
+
+- 171927c8: Remove default and disabled selectable foreground tokens, replace usages with text primary foreground
+
+  ```diff
+  - --uitk-selectable-foreground
+  - --uitk-selectable-foreground-disabled
+  ```
+
 ## 0.3.0
 
 ### Minor Changes
