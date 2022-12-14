@@ -94,7 +94,7 @@ const config = {
             label: "Support and contributions",
           },
           {
-            href: "https://github.com/jpmorganchase/uitk",
+            href: "https://github.com/jpmorganchase/salt-ds",
             "aria-label": "GitHub",
             position: "right",
             className: "header-github-link",
