@@ -11,7 +11,7 @@ import Content from "@site/src/components/content/Content.tsx";
 import DesignCards, { SoloImgCard } from "./DesignCards";
 import IconsTable from "./IconsTable";
 
-import styles from "./design.module.css";
+import styles from "./designing.module.css";
 
 # Designing with Salt
 
@@ -50,9 +50,14 @@ Use the Salt Design System team space to view working files and our comprehensiv
 
 <InlineCard
   icon={<JPMLogo />}
-  description="To start using the Salt libraries, enable them directly from the “Assets” panel within your Figma file."
-  url="/"
-  footer={{ footerText: "Explore the Salt team space" }}
+  description={
+    <p>
+      To start using the Salt libraries, enable them directly from the “Assets”
+      panel within your Figma file.
+    </p>
+  }
+  url="https://www.figma.com/files/project/72279506"
+  footerText="Explore the Salt team space"
   keylineColor="var(--site-tertiary-accent-orange)"
   keyLineAnimation={false}
 />
@@ -61,25 +66,31 @@ Use the Salt Design System team space to view working files and our comprehensiv
 
 If you’re not a J.P. Morgan employee, you can still use Salt components. Our asset and style libraries are publicly available via the Figma Community.
 
-To use the libraries, duplicate them to your drafts in your own Figma account. Once the libraries are in your drafts, you can then publish the Salt components within your own team space or organization to use them in your design work. Read more about Community files.
-
-:::info Migrating your workspace in Figma
-
-If you’re a community user, you’ll need to follow a migration process once you’ve duplicated Salt’s libraries to your Figma project. This involves relinking the components, from your drafts.
-
-To simplify this process, [use this re-linker plugin](/). It automatically relinks components from one organization to another.
-
-For more guidance on migrating files, [watch this video from Figma](/).
-:::
+To use the libraries, duplicate them to your own Figma account. Once the libraries are in your drafts, publish the Salt components within your own team or organization space to use them in your design work. Read more about Community files.
 
 <InlineCard
   icon={<Globe />}
-  description="To start using the Salt libraries, search for the @jpmorgan_salt handle in the Figma Community."
-  url="/"
-  footer={{ footerText: "Explore the Salt team space" }}
+  description={
+    <p>
+      To start using the Salt libraries, search for the{" "}
+      <span className={styles.strong}>@jpmorgan_salt</span> handle in the Figma
+      Community.
+    </p>
+  }
+  url="https://www.figma.com/@jpmorgan_salt"
+  footerText="Explore the Community"
   keylineColor="var(--site-tertiary-accent-purple)"
   keyLineAnimation={false}
 />
+
+:::info Migrating your workspace in Figma
+
+If you’re a community user, you’ll need to follow a migration process once you’ve duplicated the Salt libraries to your Figma project. This involves relinking the components, from your drafts.
+
+To simplify this process, [use this re-linker plugin](https://www.figma.com/community/plugin/981892464363185469/Component-Relinker). It automatically relinks components from one organization to another.
+
+For more guidance on migrating files, [watch this video from Figma](https://www.loom.com/share/c85f866041e146e3855c7db38a1ae4bc).
+:::
 
 ### 2. Add components to your designs
 
@@ -124,7 +135,7 @@ The default icon set is 12px for both high and medium density, 14px for low dens
 
 :::info Need support?
 
-For installation help when manually installing Figma, visit the [support page on the Figma website](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).<br />
+For installation help when manually installing Figma, visit the [Figma support page](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).<br />
 If you have any questions about Salt’s Figma libraries, please [contact us](/support-and-contributions/).
 
 :::
