@@ -344,7 +344,7 @@ ul.table-of-contents li > ul li {
   --ifm-leading: var(--ifm-paragraph-margin-bottom);
 }
 
-.container > div > div > div {
+main .container > div > div > div {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -364,7 +364,16 @@ ul.table-of-contents li > ul li {
   --ifm-footer-background-color: var(--uitk-color-gray-900);
   --ifm-footer-link-color: var(--uitk-text-secondary-foreground);
   --footer-items-separator-height: 16px;
+  --ifm-footer-padding-horizontal: calc(var(--uitk-size-unit) * 3);
   --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) * 1);
+}
+
+.footer__link-item {
+  line-height: var(--uitk-text-lineHeight);
+}
+
+.footer .container {
+  padding: 0;
 }
 
 .footer__title {
@@ -391,7 +400,7 @@ ul.table-of-contents li > ul li {
 .footer__items > *:not(:last-child):after {
   width: var(--uitk-size-border);
   content: "";
-  background-color: var(--uitk-text-secondary-foreground);
+  background-color: var(--uitk-separable-secondary-borderColor);
   height: var(--footer-items-separator-height);
   align-self: center;
 }
@@ -509,6 +518,11 @@ table tr td:not(:last-child) {
     --ifm-navbar-height: 76px;
   }
 
+  .footer {
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
+  }
+
   .navbar__item {
     /* custom padding so the orange border perfectly aligns with the navbar */
     --ifm-navbar-item-padding-vertical: calc(var(--uitk-size-unit) + 3px);
@@ -569,10 +583,18 @@ table tr th + th {
   }
 
   .footer {
-    --ifm-footer-padding-vertical: calc(var(--uitk-size-unit) / 2);
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
   }
 
   .footer .container {
     gap: calc(var(--uitk-size-unit) / 2);
+  }
+}
+
+@media (max-width: 996px) {
+  .footer {
+    --ifm-footer-padding-horizontal: var(--uitk-size-unit);
+    --ifm-footer-padding-vertical: var(--uitk-size-unit);
   }
 }
