@@ -15,8 +15,8 @@ const cardInfo: CardInfoType[] = [
       'Screenshot of Figma\'s assets panel displaying the "Salt: Components Light" library',
     content: (
       <p>
-        You can access the components in the left-hand panel using the “Assets”
-        tab. Click on the book icon and search for “Salt” in Libraries.
+        Access the components in the left-hand panel using the “Assets” tab.
+        Click on the book icon and search for “Salt” in Libraries.
       </p>
     ),
   },
