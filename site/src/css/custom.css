@@ -591,8 +591,7 @@ table tr th + th {
   }
 }
 
-
-@media screen and (max-width: 768px) {
+@media (max-width: 996px) {
   .footer {
     --ifm-footer-padding-horizontal: var(--uitk-size-unit);
     --ifm-footer-padding-vertical: var(--uitk-size-unit);
