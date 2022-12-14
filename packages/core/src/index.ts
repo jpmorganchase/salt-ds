@@ -13,6 +13,6 @@ export * from "./stack-layout";
 export * from "./status-indicator";
 export * from "./text";
 export * from "./theme";
-export * from "./toolkit-provider";
+export * from "./salt-provider";
 export * from "./utils";
 export * from "./viewport";

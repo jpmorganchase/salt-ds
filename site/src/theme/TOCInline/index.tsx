@@ -1,5 +1,5 @@
 import React from "react";
-import { makePrefixer, ToolkitProvider } from "@salt-ds/core";
+import { makePrefixer, SaltProvider } from "@salt-ds/core";
 import TOCItems from "@theme-original/TOCItems";
 
 const withBaseName = makePrefixer("uitkTocInline");
@@ -11,7 +11,7 @@ export default function TOCInline(props) {
   return (
     <div className="docs-toc-container">
       <div className="docs-toc-intro">On this page</div>
-      <ToolkitProvider density="medium">
+      <SaltProvider density="medium">
         <TOCItems
           toc={toc}
           minHeadingLevel={minHeadingLevel}
@@ -20,7 +20,7 @@ export default function TOCInline(props) {
           linkClassName={withBaseName("link")}
           linkActiveClassName={withBaseName("activeLink")}
         />
-      </ToolkitProvider>
+      </SaltProvider>
     </div>
   );
 }

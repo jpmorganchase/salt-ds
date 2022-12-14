@@ -87,7 +87,7 @@ example below.
 </Portal>
 ```
 
-Components that import a style, render a window, but are not encased in a ToolkitProvider such as Tooltip
+Components that import a style, render a window, but are not encased in a SaltProvider such as Tooltip
 won't work properly because they themselves render a window while importing their own CSS. The CSS would
 be injected into the parent document context instead of the components own window.
 
@@ -236,7 +236,7 @@ and pass in their components. The function returns a styled component.
 ### Theme insertion
 
 Theme insertion could be handled by using a form of selectively copying styles. Themes have an id and name that could
-be used to get the style tags containing the theme CSS. The theme can be fetched using the toolkit provider and theme context.
+be used to get the style tags containing the theme CSS. The theme can be fetched using the salt Provider and theme context.
 It would not account for any extra global CSS that a user would import at the top level of their application that is not
 part of their theme. This would also require app developers to mark their theme with a dataID attribute, so the theme
 insertion code can search for the style tags and insert them.

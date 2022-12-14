@@ -1,5 +1,5 @@
 import {
-  ToolkitProvider,
+  SaltProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -106,7 +106,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
 
   return mountNode
     ? ReactDOM.createPortal(
-        <ToolkitProvider>
+        <SaltProvider>
           <WindowParentContext.Provider
             value={{
               top: (style.top as number) + parentWindow.top,
@@ -120,7 +120,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
               </div>
             </div>
           </WindowParentContext.Provider>
-        </ToolkitProvider>,
+        </SaltProvider>,
         mountNode
       )
     : null;

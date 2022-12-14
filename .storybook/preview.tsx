@@ -20,7 +20,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];
@@ -126,9 +126,7 @@ export const parameters: Parameters = {
     }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
       // @ts-ignore DocsContainer does not support React18 types
       <DocsContainer context={context}>
-        <ToolkitProvider mode={context.globals?.mode}>
-          {children}
-        </ToolkitProvider>
+        <SaltProvider mode={context.globals?.mode}>{children}</SaltProvider>
       </DocsContainer>
     ),
   },
@@ -138,7 +136,7 @@ export const parameters: Parameters = {
 
 // Bottom most is outermost
 export const decorators = [
-  // When theme provider alone is outside of density provider, some variables can't be resolved. Use withToolkitProvider
+  // When theme provider alone is outside of density provider, some variables can't be resolved. Use withSaltProvider
   withResponsiveWrapper,
   withTestIdWrapper,
   withTheme,

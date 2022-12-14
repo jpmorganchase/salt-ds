@@ -13,7 +13,7 @@ import { Density, Mode, ThemeName } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
-import "./ToolkitProvider.css";
+import "./SaltProvider.css";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -62,7 +62,7 @@ const createThemedChildren = (
       });
     } else {
       console.warn(
-        `\nToolkitProvider can only apply CSS classes for theming to a single nested child element of the ToolkitProvider.
+        `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
         div element will wrap your child elements`
       );
@@ -72,7 +72,7 @@ const createThemedChildren = (
     return (
       <div
         className={cx(
-          `uitk-provider`,
+          `salt-provider`,
           ...themeNames,
           `uitk-density-${density}`
         )}
@@ -86,7 +86,7 @@ const createThemedChildren = (
 
 type TargetElement = "root" | "scope" | "child";
 
-type ToolkitProviderBaseProps = {
+type SaltProviderBaseProps = {
   applyClassesTo?: TargetElement;
   density?: Density;
   theme?: ThemeName;
@@ -94,35 +94,33 @@ type ToolkitProviderBaseProps = {
   breakpoints?: Breakpoints;
 };
 
-interface ToolkitProviderThatAppliesClassesToChild
-  extends ToolkitProviderBaseProps {
+interface SaltProviderThatAppliesClassesToChild extends SaltProviderBaseProps {
   children: ReactElement;
   applyClassesTo: "child";
 }
 
-interface ToolkitProviderThatInjectsThemeElement
-  extends ToolkitProviderBaseProps {
+interface SaltProviderThatInjectsThemeElement extends SaltProviderBaseProps {
   children: ReactNode;
 }
 
-interface ToolkitProviderThatClassesToRoot
-  extends ToolkitProviderThatInjectsThemeElement {
+interface SaltProviderThatClassesToRoot
+  extends SaltProviderThatInjectsThemeElement {
   applyClassesTo: "root";
 }
 
-type ToolkitProviderProps =
-  | ToolkitProviderThatAppliesClassesToChild
-  | ToolkitProviderThatInjectsThemeElement
-  | ToolkitProviderThatClassesToRoot;
+type SaltProviderProps =
+  | SaltProviderThatAppliesClassesToChild
+  | SaltProviderThatInjectsThemeElement
+  | SaltProviderThatClassesToRoot;
 
-export function ToolkitProvider({
+export function SaltProvider({
   applyClassesTo: applyClassesToProp,
   children,
   density: densityProp,
   theme: themeProp,
   mode: modeProp,
   breakpoints: breakpointsProp,
-}: ToolkitProviderProps) {
+}: SaltProviderProps) {
   const inheritedDensity = useContext(DensityContext);
   const { theme: inheritedThemes, mode: inheritedMode } = useTheme();
 
@@ -164,7 +162,7 @@ export function ToolkitProvider({
         document.documentElement.dataset.mode = mode;
       } else {
         console.warn(
-          "\nToolkitProvider can only apply CSS classes to the root if it is the root level ToolkitProvider."
+          "\nSaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
         );
       }
     }
@@ -180,7 +178,7 @@ export function ToolkitProvider({
     };
   }, [applyClassesTo, density, isRoot, mode, themeName]);
 
-  const toolkitProvider = (
+  const saltProvider = (
     <DensityContext.Provider value={density}>
       <ThemeContext.Provider value={themeContextValue}>
         <BreakpointContext.Provider value={breakpoints}>
@@ -191,9 +189,9 @@ export function ToolkitProvider({
   );
 
   if (isRoot) {
-    return <AriaAnnouncerProvider>{toolkitProvider}</AriaAnnouncerProvider>;
+    return <AriaAnnouncerProvider>{saltProvider}</AriaAnnouncerProvider>;
   } else {
-    return toolkitProvider;
+    return saltProvider;
   }
 }
 

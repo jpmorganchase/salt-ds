@@ -1,4 +1,4 @@
-import { ToolkitProvider } from "@salt-ds/core";
+import { SaltProvider } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 import { StepperInput, FormField, Panel } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
@@ -20,19 +20,19 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
         Touch
-        <ToolkitProvider density="touch">{children}</ToolkitProvider>
+        <SaltProvider density="touch">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         Low
-        <ToolkitProvider density="low">{children}</ToolkitProvider>
+        <SaltProvider density="low">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         Medium
-        <ToolkitProvider density="medium">{children}</ToolkitProvider>
+        <SaltProvider density="medium">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         High
-        <ToolkitProvider density="high">{children}</ToolkitProvider>
+        <SaltProvider density="high">{children}</SaltProvider>
       </ColumnLayoutItem>
     </ColumnLayoutContainer>
   </Panel>
@@ -59,7 +59,7 @@ const Examples = () => (
 );
 
 export const Alignment: Story = () => (
-  <ToolkitProvider>
+  <SaltProvider>
     <FormField
       helperText="Please enter a number"
       label="Left-aligned value"
@@ -81,17 +81,17 @@ export const Alignment: Story = () => (
     >
       <StepperInput textAlign="right" />
     </FormField>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const All: Story = () => (
   <div style={{ marginTop: -200 }}>
-    <ToolkitProvider mode="light">
+    <SaltProvider mode="light">
       <Examples />
-    </ToolkitProvider>
-    <ToolkitProvider mode="dark">
+    </SaltProvider>
+    <SaltProvider mode="dark">
       <Examples />
-    </ToolkitProvider>
+    </SaltProvider>
   </div>
 );
 
@@ -107,7 +107,7 @@ export const Controlled: Story = () => {
   };
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <FormField
         helperText="Please enter a number"
         label="Controlled Stepper Input"
@@ -137,12 +137,12 @@ export const Controlled: Story = () => {
       {/*    value={value}*/}
       {/*  />*/}
       {/*</div>*/}
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const CustomValues: Story = () => (
-  <ToolkitProvider>
+  <SaltProvider>
     <FormField
       helperText="Please enter a number"
       label="Custom values"
@@ -150,11 +150,11 @@ export const CustomValues: Story = () => (
     >
       <StepperInput defaultValue={1000} step={100} />
     </FormField>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const Decimals: Story = () => (
-  <ToolkitProvider>
+  <SaltProvider>
     <FormField
       helperText="Please enter a currency value"
       label="U.S. Dollars ($)"
@@ -162,7 +162,7 @@ export const Decimals: Story = () => (
     >
       <StepperInput decimalPlaces={2} defaultValue={0.99} step={0.01} />
     </FormField>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const Default: Story = () => {
@@ -175,7 +175,7 @@ export const Default: Story = () => {
     value > max || value < min ? setIsOutOfRange(true) : setIsOutOfRange(false);
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <FormField
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Default Stepper Input"
@@ -189,7 +189,7 @@ export const Default: Story = () => {
           onChange={handleChange}
         />
       </FormField>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -217,7 +217,7 @@ export const Error: Story = () => {
   }, []);
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <FormField
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Error validation state"
@@ -235,7 +235,7 @@ export const Error: Story = () => {
           step={0.001}
         />
       </FormField>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -266,7 +266,7 @@ export const LiveDefaultValue: Story = () => {
   }, []);
 
   return (
-    <ToolkitProvider>
+    <SaltProvider>
       <FormField
         helperText={`Current live 'value' prop: ${formatValue(value)}`}
         label="Live Default Value"
@@ -283,12 +283,12 @@ export const LiveDefaultValue: Story = () => {
           step={0.01}
         />
       </FormField>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
 export const NumericLimits: Story = () => (
-  <ToolkitProvider>
+  <SaltProvider>
     <FormField
       helperText="Must be below 1000"
       label="Maximum limit"
@@ -312,11 +312,11 @@ export const NumericLimits: Story = () => (
     >
       <StepperInput defaultValue={500} max={1000} min={0} />
     </FormField>
-  </ToolkitProvider>
+  </SaltProvider>
 );
 
 export const RefreshButton: Story = () => (
-  <ToolkitProvider>
+  <SaltProvider>
     <FormField
       helperText="Please enter a number"
       label="Refresh Button"
@@ -333,5 +333,5 @@ export const RefreshButton: Story = () => (
         textAlign="center"
       />
     </FormField>
-  </ToolkitProvider>
+  </SaltProvider>
 );

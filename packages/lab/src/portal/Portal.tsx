@@ -8,7 +8,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
-  ToolkitProvider,
+  SaltProvider,
   ownerDocument,
   useForkRef,
   useIsomorphicLayoutEffect,
@@ -97,7 +97,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
 
   if (mounted && portalRef.current && children) {
     return createPortal(
-      <ToolkitProvider>{children}</ToolkitProvider>,
+      <SaltProvider>{children}</SaltProvider>,
       portalRef.current
     );
   }
