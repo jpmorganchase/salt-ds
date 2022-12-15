@@ -52,7 +52,9 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
           breadcrumbs: false,
-          editUrl: "https://github.com/jpmorganchase/salt-ds/edit/main/site/",
+          // Intentionally disabling this for now, until we can incorporate the
+          // "Edit page" links properly into our page layouts.
+          //editUrl: "https://github.com/jpmorganchase/salt-ds/edit/main/site/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
