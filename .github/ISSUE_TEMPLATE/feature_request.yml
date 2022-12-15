@@ -1,5 +1,5 @@
 name: Feature request 💡
-description: Suggest new functionality, components or ideas for the Salt Design System
+description: Suggest new functionality, components or ideas for the Salt Design System.
 labels:
   - "type: enhancement 💡"
   - "status: awaiting triage"
@@ -8,12 +8,12 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any company-internal code or sensitive data in your bug report**.
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
   - type: dropdown
     attributes:
       label: Area
       description: |
-        Which aspect(s) of the Salt design system does your proposed feature relate to? Select all that apply.
+        Which aspect(s) of the Salt Design System does your proposed feature relate to? Select all that apply.
       multiple: true
       options:
         - UI Components
@@ -27,7 +27,7 @@ body:
     attributes:
       label: The problem
       description: |
-        Provide a clear and concise description of what the problem is. Make sure that you copy and paste—as text—any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+        Provide a clear and concise description of what the problem is. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
@@ -40,7 +40,7 @@ body:
     attributes:
       label: Alternatives and examples
       description: |
-        Describe or share alternative solutions or features you've considered that you may have seen elsewhere. Make sure that you copy and paste—as text—any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+        Describe or share alternative solutions or features you've considered that you may have seen elsewhere. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: checkboxes
