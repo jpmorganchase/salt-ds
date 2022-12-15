@@ -191,7 +191,7 @@
     text-align: right;
   }
 
-  .ag-cell.editable-numeric-cell.ag-cell-focus:before {
+  .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before {
     content: "";
     position: absolute;
     top: 0;
