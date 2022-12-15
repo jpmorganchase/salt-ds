@@ -1,15 +1,5 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import {
-  Text,
-  H1,
-  H2,
-  H3,
-  H4,
-  Label,
-  Display1,
-  Display2,
-  Display3,
-} from "@salt-ds/core";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Text } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -83,7 +73,7 @@ The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for pla
 
 <Canvas>
   <Story name="StyleAs">
-    <Text elementType="p" styleAs="h1">
+    <Text as="p" styleAs="h1">
       This is a styleAs h1 example
     </Text>
   </Story>
