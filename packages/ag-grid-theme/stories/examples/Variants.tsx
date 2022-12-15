@@ -13,10 +13,13 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const dataGridExampleColumns = [
   {
-    headerName: "On",
+    headerName: "",
     field: "on",
     checkboxSelection: true,
     headerCheckboxSelection: true,
+    width: 38,
+    pinned: "left",
+    suppressMenu: true,
   },
   {
     headerName: "Name",
