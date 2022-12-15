@@ -9,17 +9,21 @@
 
 Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.
 
-With this initial release we are providing:
+With this initial release we're providing:
+
+- AG Grid Theme
+- Border Layout
 - Button
-- Icon
-- StatusIndicator
-- Text
-- Link
-- Stack Layout
+- Data Grid
+- Flex Layout
 - Flow Layout
 - Grid Layout
-- Flex Layout
-- Border Layout
-- Salt theme
-- Data Grid
-- AG Grid Theme
+- Icon
+- Link
+- Salt Provider
+- Stack Layout
+- Status Indicator
+- Text
+- Theme
+
+And a number of other lab components.
