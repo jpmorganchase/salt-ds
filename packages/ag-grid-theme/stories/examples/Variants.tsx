@@ -121,6 +121,7 @@ const Variants = (props: AgGridReactProps) => {
           {...props}
           rowData={dataGridExampleData}
           columnDefs={dataGridExampleColumns}
+          rowSelection="multiple"
         />
       </div>
     </FlexLayout>

@@ -50,6 +50,7 @@ const CheckboxSelection = (props: AgGridReactProps) => {
           {...props}
           rowData={dataGridExampleData}
           columnDefs={[headerOn, headerName, headerCapital]}
+          rowSelection="multiple"
         />
       </div>
     </div>
