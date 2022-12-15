@@ -1,17 +1,15 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
-import { FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
-import { Story } from "@storybook/react";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
 import cn from "classnames";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@salt-ds/lab";
+// import { Switch } from "@salt-ds/lab";
 
 const dataGridExampleColumns = [
   {
@@ -46,7 +44,10 @@ const dataGridExampleColumns = [
   },
 ];
 
-const Variants = (props) => {
+// const [uhd, setUhd] = useState(false);
+
+const Variants = (props: AgGridReactProps) => {
+  // const [separators, setSeparators] = useState(false);
   // const [uhd, setUhd] = useState(false);
   const [index, setIndex] = useState(0);
   // const density = useDensity();
@@ -69,13 +70,13 @@ const Variants = (props) => {
     }
   }, [isGridReady]);
 
-  const onUhdChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUhd(event.target.checked);
-  };
+  // const onUhdChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setUhd(event.target.checked);
+  // };
 
-  const onSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSeparators(event.target.checked);
-  };
+  // const onSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setSeparators(event.target.checked);
+  // };
 
   return (
     <FlexLayout direction="column">

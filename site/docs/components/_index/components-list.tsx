@@ -160,7 +160,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-grid-ag-grid-theme--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-data-grid-ag-grid-theme--page",
   },
   {
     name: "Badge",
@@ -184,7 +184,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-borderlayout--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-layout-borderlayout--page",
   },
   {
     name: "Breadcrumbs",
@@ -201,7 +201,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-button--button-variants",
   },
   {
     name: "Button Bar",
@@ -286,7 +286,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-grid-grid--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-grid-grid--page",
   },
   {
     name: "Deck Layout",
@@ -338,7 +338,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flexlayout--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-layout-flexlayout--page",
   },
   {
     name: "Flow Layout",
@@ -348,7 +348,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-flowlayout--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-layout-flowlayout--page",
   },
   {
     name: "Form Field",
@@ -371,7 +371,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-gridlayout--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-layout-gridlayout--page",
   },
   {
     name: "Icon",
@@ -381,7 +381,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-icons-icon--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-icons-icon--page",
   },
   {
     name: "Input",
@@ -405,7 +405,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-link--internal-link",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-link--internal-link",
   },
   {
     name: "List",
@@ -514,7 +514,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
   {
     name: "Scrim",
@@ -579,7 +579,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-layout-stacklayout--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-layout-stacklayout--page",
   },
   {
     name: "Status Indicator",
@@ -589,7 +589,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-statusindicator--page",
   },
   {
     name: "Stepped Tracker",
@@ -634,7 +634,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-text--primary",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-core-text--primary",
   },
   {
     name: "Theme",
@@ -643,7 +643,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-styles-and-theming-introduction--page",
+      "https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-styles-and-theming-introduction--page",
   },
   {
     name: "Toast",
