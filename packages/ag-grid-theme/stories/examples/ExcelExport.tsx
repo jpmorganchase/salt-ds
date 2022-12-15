@@ -11,14 +11,14 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 LicenseManager.setLicenseKey("your license key");
 
 const ExcelExport = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { api, containerProps, agGridProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-salt" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ExcelExport = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
           label="Salt AG Grid theme"
         />

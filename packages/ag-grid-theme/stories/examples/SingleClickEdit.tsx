@@ -12,14 +12,14 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { Switch } from "@salt-ds/lab";
 
 const SingleClickEdit = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { containerProps, agGridProps, api, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-salt" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const SingleClickEdit = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
           label="Salt AG Grid theme"
         />
