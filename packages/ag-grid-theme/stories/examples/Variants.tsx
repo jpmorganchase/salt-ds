@@ -12,13 +12,44 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { Switch } from "@salt-ds/lab";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+
+const dataGridExampleColumns = [
+  {
+    headerName: "On",
+    field: "on",
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+  },
+  {
+    headerName: "Name",
+    field: "name",
+    filterParams: {
+      buttons: ["reset", "apply"],
+    },
+    editable: false,
+  },
+  {
+    headerName: "Code",
+    field: "code",
+  },
+  {
+    headerName: "Capital",
+    field: "capital",
+  },
+  {
+    headerName: "Population",
+    type: "numericColumn",
+    field: "population",
+    filter: "agNumberColumnFilter",
+    editable: true,
+    cellClass: ["editable-numeric-cell"],
+  },
+];
 
 const Variants = (props) => {
-  const [separators, setSeparators] = useState(false);
-  const [uhd, setUhd] = useState(false);
+  // const [uhd, setUhd] = useState(false);
   const [index, setIndex] = useState(0);
-  const density = useDensity();
+  // const density = useDensity();
 
   const onChange: ToggleButtonGroupChangeEventHandler = (
     event,
@@ -84,8 +115,8 @@ const Variants = (props) => {
         <AgGridReact
           {...agGridProps}
           {...props}
-          columnDefs={dataGridExampleColumns}
           rowData={dataGridExampleData}
+          columnDefs={dataGridExampleColumns}
         />
       </div>
     </FlexLayout>

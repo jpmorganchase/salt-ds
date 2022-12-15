@@ -171,6 +171,10 @@
     background-color: var(--agGrid-row-background-secondary);
   }
 
+  &.ag-theme-salt-variant-secondary .ag-header {
+    background-color: var(--agGrid-row-background-secondary);
+  }
+
   .ag-row-selected::before {
     content: "";
     height: 1px;
