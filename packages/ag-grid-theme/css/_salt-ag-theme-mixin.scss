@@ -189,6 +189,7 @@
   .ag-cell.editable-numeric-cell {
     border: solid 1px var(--agGrid-cell-borderColor-editable);
     text-align: right;
+    justify-content: flex-end;
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before {
